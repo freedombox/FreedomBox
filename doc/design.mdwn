@@ -1,0 +1,196 @@
+# Freedom Box Design and Architecture
+
+This article describes and documents architectural considerations for
+my vision of Freedom Box.  It is not specific to the user interface
+and instead contains thoughts about the Freedom Box as a whole.
+
+The major immediate design problems that I see are authentication, ip
+addressing, and backup.  I'm sure there are others.
+
+If the Freedom Box front end pulls together basic pieces and
+configures them properly, we'll have the start of the freedom stack.
+Then we can build things like free social networking applications on
+top.
+
+## Design Goals
+
+The target hardware for this project is the
+[GuruPlug](http://www.globalscaletechnologies.com/t-guruplugdetails.aspx).
+It has low power consumption, two wired network interfaces, one
+wireless hostapd-capable interface (802.11b), and two usb slots for
+connecting external drives and peripherals.  The hardware target might
+change if a better unit becomes available (for example, with 802.11n
+or USB 3 capability).  The GuruPlug is reputed to have availability
+problems involving shipping delays, and targetting a unit that cannot
+satsify high demand might be an issue.
+
+Freedom Boxes are not giant honking servers.  They are small boxes
+that do perform a lot of functions.  They are not heavily resourced.
+So keep things small and light.
+
+By the same token, there is no need to scale up to thousands of users.
+A box should happily serve a person and her family, maybe an extended
+group of friends.  Call it 100 people at the most.
+
+The target user for this project is the home consumer of network
+appliances.  It ranges from the most basic user (the kind of person
+who might have spent all of three minutes setting up her LinkSys
+WRT54G) to the home enthusiast who wants a local file server for media
+and backups, print server and dns service.
+
+
+## Authentication
+
+Authentication in the context of the Freedom Box is a diffiult
+problem.  You need to be able to trust your box, and it needs to be
+able to trust you.  What's more, security must withstand forgotten
+passwords, server destruction, changing email addresses and any other
+possible disaster scenario.
+
+In addition, your friends (and their boxes) need to trust your box
+when it acts on your behalf, even if it does so when you're not around
+to enter passphrases or otherwise confirm agency.  But even as it
+needs to operate in your absence, it can't itself have authority to
+access all your data, because you might lack exclusive physical
+control of the box (e.g. if you have a roommate).  If the box can act
+as you without limits, anybody who takes control of the box takes
+control of your online identity.
+
+What's more, security should be high.  Freedom Boxes might contain
+emails or other sensitive documents.  The box mediates network
+traffic, which means rooting it would allow an attacker to spy on or
+even change traffic.  Demonstrating control of an email address should
+not be enough to gain access to the box and its admin functions.
+
+### Passphrases
+
+Most users habitually think of passwords.  We need to force them to
+think of passphrases.  It starts by using 'passphrase' in the
+literature.  Second, we need to encourage users to pick phrases, and
+prompts should urge them to do so.  We also need minimum password
+lengths and maybe even a requirement of at least a few spaces.
+
+Even better than passphrases are passfiles.  We should keep a lookout
+for ways to use files instead of phrases when securing the Freedom
+Box.
+
+### A Scheme for Secure Web Login
+
+Passphrases should
+[never be stored in plain text](http://www.codinghorror.com/blog/2007/09/rainbow-hash-cracking.html).
+[MD5 is too fast for passphrases.](http://chargen.matasano.com/chargen/2007/9/7/enough-with-the-rainbow-tables-what-you-need-to-know-about-s.html)
+Therefore, my current plan for secure website login involves bcrypt:
+
+The server sends the client a permanent salt, PS, a random session
+salt, SS and a number of rounds, R.  It brcypts the password using PS
+and stores the result, B.
+
+The browser
+[bcrypts the passphrase using javascript](https://code.google.com/p/javascript-bcrypt/)
+and PS.  Then, it bcrypts that result with SS.  It does R rounds of
+bcrypt with S.  The browser then sends the result, C, back to the
+server.
+
+The server retrieves bcrypts its stored, hashed passphrase and does R
+rounds of bcrypt on it with SS.  If that matches C, the passphrase is
+a match.
+
+The server must be able to keep track of sessions, as it needs to
+remember SS between giving it to the client and getting it back.  The
+Server cannot rely on the client to remind it of SS.  This would allow
+an attacker to dictate SS and leave the server vulnerable to replay
+attacks.
+
+This scheme has the dual advantage of not storing any cleartext
+passphrases and also never sending any cleartext passphrases between
+client and server.
+
+TODO: consult a security expert as to the strength of this scheme
+
+### Other Schemes
+
+#### Monkeysphere
+
+[Monkeysphere](http://web.monkeysphere.info/) is a promising project.
+Monkeysphere's major win is that it avoids the clunkiness of SSL
+certificate authorities.  That's huge, except it replaces the
+certificate authority structure with the PGP web of trust.  Relying on
+the web of trust is a good idea
+([much better than relying on SSL certificate authorities](http://www.crypto.com/blog/spycerts/)),
+except that new users might not have joined the web.  It also requires
+a bunch of GPG infrastructure that might be difficult to setup
+automatically and with little user intervention.
+
+As of this writing, it does not appear to support Windows or Macintosh
+clients, making it unsuitable for this project.
+
+#### Secure Remote Password
+
+[SRP](http://srp.stanford.edu/) is an interesting technique.  Patents
+are a concern.  What does it buy us that my scheme, above does not?
+
+There is a
+[python implementation](http://members.tripod.com/professor_tom/archives/srpsocket.html),
+although it is not clear that it has been through the crucible.  Even
+if SRP is solid, this implementation might be flawed.
+
+
+
+## Finding Each Other
+
+### Dynamic DNS
+
+Each box might need multiple dynamic DNS pointers.  Every box is going
+to require its own set of dynamic names.  For example, my Freedom Box
+might be known as both `fb.hackervisions.org` and
+`james.softwarefreedom.org`.  My work colleagues might know me as
+`james@james.softwarefreedom.org` while my friends might reach me at
+`james@fb.hackervisions.org`.  By default, when contacts come in via
+different names, my box might be smart enough to treat those contacts
+differently.
+
+If I share this box with my partner, Emily, she might be
+`emily@jv187.fboxes.columbia.edu`, in which case my box will need
+another dynamic DNS pointer.
+
+### Mesh Networking
+
+Freedom Boxes should be meshed.  Rather than run in infrastructure
+mode, they should route for each other and create strong local meshes
+that will carry data for anybody that passes through.
+
+There are some problems, though.
+
+* I'm not sure how well nodes in ad-hoc mesh mode interact with
+others in infrastructure mode.
+
+* The Freedom Box only has one wireless radio, which will drastically
+hurt speed.
+
+* Routing can be difficult when connecting mesh network nodes to the WAN.
+
+## Backup
+
+Everybody should automatically and redundantly store encrypted backups
+on their friend's freedom boxes.  Recovery should not assume you kept
+your key or know a password.  We can recover the decryption key by
+having a bunch of friends encrypt the key in various combinations.  If
+enough of my friends get together, they can decrypt it for me.
+Optionally, a passphrase can serve to slow my friends down if they
+turn against me.  Maybe it takes 5 friends acting in concert to
+recover my key, but only 3 to recover a version protected by the
+passphrase.
+
+## Push vs Pull
+
+For a social network, real time communication is key.  Asynch
+communication is good, but sometimes people just want to bash comments
+back and forth.  For that, you need push, which is just a web fetch
+meaning "pull my rss feed".
+
+If, however, you have a lot of friends and they have a lot of friends,
+your extended network can be large, resulting in many "pull my rss
+feed" commands.  We should only process push requests for friends to
+reduce load.  You really don't need real time updates of the social
+networking activity of strangers.  Friends of friends is as far out as
+things should ever go.

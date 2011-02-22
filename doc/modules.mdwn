@@ -1,0 +1,71 @@
+# Modules
+
+Almost all of the front end's functionality is contained in small,
+separate modules that reside in the directory tree beneath
+`/modules/installed`.  Some are installed by default, some are
+required for operation, and some are entirely optional.
+
+## Installing and Loading Modules
+
+Eventually, the goal is for module to be separate Debian package so
+installation is as simple as `aptitude install freedombox-foo`.  As an
+intermediate step, we'll start scripting module installation.  But
+until then, we can install them manually.
+
+Modules are installed by copying them into the tree beneath the
+`/modules/installed` directory.  They are activated by linking their
+.py files into the modules directory.  (Freedom Box will not load
+modules unless they are symlinks.)  If the module provides other
+resources, they can be linked from wherever in the working tree they
+need to be.  So if a module provides a template, that template can be
+linked from `/templates`.
+
+Modules can be organized into subdirectories beneath the installed
+directory.  As an initial matter, I've made separate directories for
+each major tab.  Modules that extend the functionality of the Freedom
+Box code base (as opposed to being user-visible interface modules
+under specific major tabs) go in `modules/installed/lib`.  This
+convention can be adjusted or ignored as needed.  In fact, modules can
+be installed anywhere in the file system as long as the symlinks are
+in `/modules`.
+
+The names of the symlinks in the `modules` directory can be arbitrary,
+and if a name is already taken, (e.g. if `router/info.py` and
+`apps/info.p`y both exist), append a counter to the end (e.g. link
+`info.py` to `router/info.py` and `info1.py` to `apps/info.py`).
+
+If a module cannot be imported for any reason (e.g. it's a dead
+symlink), freedombox.py will log an error but will otherwise just keep
+going.
+
+TODO: automatically prune dead links to clear out old module installs.
+This is something the install scripts should do.
+
+## Pluggable Module Structure
+
+Plugin interfaces are contained in `plugin_mount.py`.  Each interface
+is a metaclass.  Classes that implement a given interface should
+inherit the metaclass and then provide the indicated properties.  New
+metaclasses can be created to make new classes of plugins.
+
+Any place that might be affected by arbitrary addition of modules
+should have its own metaclass.
+
+### FromPlugin
+
+Each form displayed in the interface should inherit from FormPlugin.
+This will allow the system to display multiple forms on the page in
+the correct order.  Forms will likely also want to inherit from
+PagePlugin because after the user clicks submit, the plugin usually
+displays a responsive message or an error (along with the form to fill
+out again).
+
+## Coding Practices for Modules
+
+All the
+[coding practices for hacking on the front end](#hacking_code_practices)
+also apply to modules.  In addition, I try to stick to the other
+practices listed in this section.
+
+* Every module should `from gettext import gettext as _` and wrap
+displayed strings with _().

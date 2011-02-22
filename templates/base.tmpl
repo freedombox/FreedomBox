@@ -1,0 +1,112 @@
+#def default($text, $default)
+#if $text
+   $text
+#else
+   $default
+#end if
+#end def
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+  <title>$default($title, "Plinth Front End to the Freedom Box")
+  </title>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+  <meta name="description" content="Plint admin frontend for Freedom Box" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" type="text/css" href="/static/theme/style.tiny.css" media="screen" />
+  $css
+  <script type="text/javascript" src="/static/theme/menu.js"></script>
+  <script type="text/javascript" src="/static/theme/plinth.js"></script>
+  $js
+  $main_menu_js
+  $sub_menu_js
+  <script LANGUAGE="JavaScript">
+    <!--
+      $onload
+    // --> 
+  </script>
+</head>
+<body onLoad="javascript:onload_handler();"> 
+  <div id="header">
+    <div id="headerleft">
+      <a href="/"><img src="/static/theme/freedombox.png" /></a>
+    </div>
+    <div id="headerright">
+      <br /><br /><br />
+      <h1><a href="/">Freedom Box</a></h1>
+      <h2><a href="/">Plinth Administration Control Panel</a></h2>
+      <SCRIPT LANGUAGE="JavaScript"> 
+	<!--
+           main_menu(main_menu_items); 
+	// --> 
+      </SCRIPT>
+    </div>
+    #if $username
+    <p id="layoutdims">Logged in as $username. <a href="/auth/logout" title="Log out">Logout.</a></p>
+    #else
+    <p id="layoutdims">Not logged in. <a href="/auth/login" title="Log in">Log in.</a></p>
+    #end if
+
+  </div>
+<div class="colmask threecol">
+  <div class="colmid">
+    <div class="colleft">
+      <div class="col1">
+	<!-- Column 1 start -->
+	<h2>
+	  #block title_block
+	  $title
+	  #end block title_block
+	</h2>
+	#block main_block
+	$main
+	#end block main_block
+	<!-- Column 1 end -->
+      </div>
+      <div class="col2">
+	<!-- Column 2 start -->
+	#block nav_block
+	$nav
+	#end block nav_block
+	#block sidebar_left_block
+	$sidebar_left
+	#end block sidebar_left_block
+	<!-- Column 2 end -->
+      </div>
+      <div class="col3">
+	<!-- Column 3 start -->
+	<div id="ads">
+	  <!--<a href="http://matthewjamestaylor.com">
+	    <img src="mjt-125x125.gif" width="125" border="0" height="125" alt="Art and Design by Matthew James Taylor" />
+	  </a>
+	    -->
+	</div>
+	#block sidebar_right_block
+	$sidebar_right
+	#end block sidebar_right_block
+	<!-- Column 3 end -->
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  #block footer_block
+  <p>
+    Plinth is copyright 2011 <a href="http://hackervisions.org">James Vasile</a>.  It is
+    free software offered to you under the terms of
+    the <a href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public
+    License</a>, Version 3 or later.
+  </p>
+  <!--<p>Current page: $current_url</p>-->
+  <p>
+  This page uses
+  the <a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm">Perfect
+  'Holy Grail' 3 Column Liquid Layout</a>
+  by <a href="http://matthewjamestaylor.com">Matthew James Taylor</a>.
+  </p>
+  #end block footer_block
+</div>
+
+</body>
+</html>
