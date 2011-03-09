@@ -8,7 +8,7 @@ from util import *
 import cfg
 
 class router(PagePlugin):
-    order = 10 # order of running init in PagePlugins
+    order = 9 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         self.register_page("router")
         self.menu = cfg.main_menu.add_item("Router Admin", "/router", 10)
