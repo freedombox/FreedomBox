@@ -23,8 +23,10 @@ def error_page_404(status, message, traceback, version):
 
 def error_page_500(status, message, traceback, version):
     cfg.log.error("500 Internal Server Error.  Trackback is above.")
-    more="""<p>This is an internal error and not something you caused or can fix.  You are welcome to report it. 
-    TODO: add link to bug tracker.</p>"""
+    more="""<p>This is an internal error and not something you caused
+    or can fix.  Please report the error on the <a
+    href="https://github.com/jvasile/Plinth/issues">bug tracker</a> so
+    we can fix it.</p>"""
     return error_page(status, message, "<p>%s</p><pre>%s</pre>" % (more, "\n".join(traceback.split("\n"))))
 
 class Root(plugin_mount.PagePlugin):
