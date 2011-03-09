@@ -51,6 +51,7 @@ html:
 	@$(MAKE) -s -C doc html
 
 clean:
+	@rm -f cherrpy.config
 	@find themes -name "*.tiny.css" -exec rm {} \;
 	@find . -name "*~" -exec rm {} \;
 	@find . -name ".#*" -exec rm {} \;
