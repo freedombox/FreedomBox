@@ -5,6 +5,8 @@ from plugin_mount import PagePlugin
 import cfg
 
 class Sharing(PagePlugin):
+    order = 9 # order of running init in PagePlugins
+
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sharing")

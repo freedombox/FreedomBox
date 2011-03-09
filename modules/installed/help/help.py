@@ -4,6 +4,7 @@ from gettext import gettext as _
 from plugin_mount import PagePlugin
 import cfg
 class Help(PagePlugin):
+    order = 20 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("help")

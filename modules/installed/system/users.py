@@ -7,6 +7,7 @@ from forms import Form
 from util import *
 
 class users(PagePlugin):
+    order = 20 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys.users")

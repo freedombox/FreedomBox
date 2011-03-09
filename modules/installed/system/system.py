@@ -16,7 +16,6 @@ sys_dir = "modules/installed/sys"
 class Sys(PagePlugin):
     order = 10
     def __init__(self, *args, **kwargs):
-        cfg.log("!!!!!!!!!!!!!!!!!!!!")
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys")
         self.menu = cfg.main_menu.add_item(_("%s System" % cfg.product_name), "/sys", 100)

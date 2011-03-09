@@ -5,13 +5,35 @@ MAKE=make
 CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
 COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
+PWD=`pwd`
 
 ## Catch-all tagets
-default: template docs css dirs
+default: cherrypy.config dirs template css docs 
 all: default
 
 dirs:
-	mkdir -p data/cherrypy_sessions
+	@mkdir -p data/cherrypy_sessions
+
+cherrypy.config: Makefile
+	@echo [global]\\n\
+server.socket_host = \'0.0.0.0\'\\n\
+server.socket_port = 8000\\n\
+server.thread_pool = 10\\n\
+tools.staticdir.root = \"$(PWD)\"\\n\
+tools.sessions.on = True\\n\
+tools.auth.on = True\\n\
+tools.sessions.storage_type = \"file\"\\n\
+tools.sessions.timeout = 90\\n\
+tools.sessions.storage_path = \"$(PWD)/data/cherrypy_sessions\"\\n\
+\\n\
+[/static]\\n\
+tools.staticdir.on = True\\n\
+tools.staticdir.dir = \"static\"\\n\
+\\n\
+[/favicon.ico]\\n\
+tools.staticfile.on = True\\n\
+tools.staticfile.filename = \"$(PWD)/static/theme/favicon.ico\"\\n\
+> cherrypy.config
 
 %.tiny.css: %.css
 	@cat $< | python -c 'import re,sys;print re.sub("\s*([{};,:])\s*", "\\1", re.sub("/\*.*?\*/", "", re.sub("\s+", " ", sys.stdin.read())))' > $@
