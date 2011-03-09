@@ -40,7 +40,7 @@ class Message():
         self.text += "<br />%s" % text
 
 def page_template(template='base', **kwargs):
-    for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css']:
+    for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title']:
         if not k in kwargs:
             kwargs[k] = ''
 
