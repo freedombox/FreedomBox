@@ -20,12 +20,13 @@ LATEX=plinth.tex $(patsubst %.mdwn,%.tex,$(SOURCES))
 PDF=plinth.pdf $(patsubst %.mdwn,%.pdf,$(SOURCES))
 MAN=plinth.1
 
-OUTPUTS=$(HTML) $(LATEX) $(MAN) $(PDF) $(HTML_PART)
+## If you want PDF or Latex files, do them separately.  They're not made by default.
+
+OUTPUTS=$(HTML) $(MAN) $(HTML_PART)
 DIST_OUTPUT=$(patsubst %,$(DOCDIR)/%,$(OUTPUTS))
 
 # Yes, do it twice. TODO created during the process requires a second run
 default:
-	make all
 	make all
 all: oneline.txt $(OUTPUTS) Makefile
 
