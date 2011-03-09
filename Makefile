@@ -7,8 +7,11 @@ CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
 COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 
 ## Catch-all tagets
-default: template docs css
+default: template docs css dirs
 all: default
+
+dirs:
+	mkdir -p data/cherrypy_sessions
 
 %.tiny.css: %.css
 	@cat $< | python -c 'import re,sys;print re.sub("\s*([{};,:])\s*", "\\1", re.sub("/\*.*?\*/", "", re.sub("\s+", " ", sys.stdin.read())))' > $@
