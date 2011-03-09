@@ -51,7 +51,7 @@ html:
 	@$(MAKE) -s -C doc html
 
 clean:
-	@rm -f cherrypy.config
+	@rm -f cherrypy.config data/cherrypy_sessions/*
 	@find themes -name "*.tiny.css" -exec rm {} \;
 	@find . -name "*~" -exec rm {} \;
 	@find . -name ".#*" -exec rm {} \;
