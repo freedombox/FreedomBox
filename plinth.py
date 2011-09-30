@@ -10,6 +10,14 @@ from util import *
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
+__version__ = "0.2.14"
+__author__ = "James Vasile"
+__copyright__ = "Copyright 2010-11, James Vasile"
+__license__ = "GPLv3 or later"
+__maintainer__ = "James Vasile"
+__email__ = "james@hackervisions.org"
+__status__ = "Development"
+
 def error_page(status, dynamic_msg, stock_msg):
     return page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
