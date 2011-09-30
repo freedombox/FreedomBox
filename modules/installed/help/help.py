@@ -13,7 +13,6 @@ class Help(PagePlugin):
         self.menu.add_item(_("Developer's Manual"), "/help/view/plinth", 10)
         self.menu.add_item(_("FAQ"), "/help/view/faq", 20)
         self.menu.add_item(_("%s Wiki" % cfg.box_name), "http://wiki.debian.org/FreedomBox", 30)
-        self.menu.add_item(_("Design and Architecture"), "/help/view/design", 40)
 	self.menu.add_item(_("About"), "/help/about", 100)
 
     @cherrypy.expose
@@ -32,10 +31,6 @@ class Help(PagePlugin):
         the Debian wiki</a> is devoted to the %(box)s.  At some
         point the documentation in the wiki and the documentation in
         the manual should dovetail.</p>
-
-        <p>I have collected some of my thoughts about the %(box)s
-        in a <a href="/help/view/design">document focused on its
-        design and architecture</a>.</p>
 
         <p>There
         are Debian gurus in the \#debian channels of both
