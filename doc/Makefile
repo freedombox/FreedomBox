@@ -113,8 +113,8 @@ pdf: $(PDF)
 ###############################################################################
 
 clean-latex:
-	rm -f *.log *.out *.aux *.toc
+	rm -f *.log *.out *.aux *.toc *.tex
 
 clean: clean-latex
 	rm -f $(OUTPUTS) README.mdwn INSTALL.mdwn TODO.mdwn COPYING.mdwn \
-	     copyright_notice0? \#*\# ../TODO oneline.txt
+	     copyright_notice0? \#*\# ../TODO oneline.txt *.pdf
