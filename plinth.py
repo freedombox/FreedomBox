@@ -12,7 +12,7 @@ from logger import Logger
 
 __version__ = "0.2.14"
 __author__ = "James Vasile"
-__copyright__ = "Copyright 2010-11, James Vasile"
+__copyright__ = "Copyright 2011, James Vasile"
 __license__ = "GPLv3 or later"
 __maintainer__ = "James Vasile"
 __email__ = "james@hackervisions.org"
