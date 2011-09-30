@@ -54,7 +54,7 @@ def load_modules():
         if name.endswith(".py") and not name.startswith('.'):
             cfg.log.info("importing modules/%s" % name)
             try:
-                exec("import modules.%s" % (name[:-3]))
+                __import__("modules.%s"  % (name[:-3]))
             except ImportError, e:
                 cfg.log.error(_("Couldn't import modules/%s: %s") % (name, e))
         else:
