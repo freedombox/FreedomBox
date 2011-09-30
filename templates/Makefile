@@ -11,5 +11,5 @@ templates: $(TEMPLATE_PYFILES)
 template: templates
 
 clean:
-	rm -rf .\#* \#* *.pyz *.bak
+	rm -rf .\#* \#* *.pyc *.bak
 	@rm -f $(TEMPLATE_PYFILES)
