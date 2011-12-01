@@ -15,7 +15,7 @@ __author__ = "James Vasile"
 __copyright__ = "Copyright 2011, James Vasile"
 __license__ = "GPLv3 or later"
 __maintainer__ = "James Vasile"
-__email__ = "james@hackervisions.org"
+__email__ = "james@jamesvasile.com"
 __status__ = "Development"
 
 def error_page(status, dynamic_msg, stock_msg):
