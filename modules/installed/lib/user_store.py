@@ -4,8 +4,19 @@ import cherrypy
 import cfg
 from model import User
 from plugin_mount import UserStoreModule
+from withsqlite.withsqlite import sqlite_db
 
-class UserStore(UserStoreModule):
+class UserStore(UserStoreModule, sqlite_db):
+    def __init__(self):
+        self.data_dir = cfg.users_dir
+        self.db_file = cfg.user_db
+        sqlite_db.__init__(self, self.db_file)
+        self.__enter__()
+    def close(self):
+        self.__exit__()
+
+class UserStoreOld():
+#class UserStore(UserStoreModule):
     """The user storage is on disk.  Rather than slurp the entire
     thing, we read from the disk as needed.  Writes are immediate,
     though.
