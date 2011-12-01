@@ -51,11 +51,11 @@ class add(FormPlugin, PagePlugin):
         if not username: msg = add_message(msg, _("Must specify a username!"))
         if not md5_password: msg = add_message(msg, _("Must specify a password!"))
         
-        if cfg.users.get(username):
+        if username in cfg.users:
             msg = add_message(msg, _("User already exists!"))
         else:
             try:
-                cfg.users.set(User(dict={'username':username, 'name':name, 'email':email, 'password':md5_password}))
+                cfg.users[username]= User(dict={'username':username, 'name':name, 'email':email, 'password':md5_password})
             except:
                 msg = add_message(msg, _("Error storing user!"))
 
@@ -77,7 +77,7 @@ class edit(FormPlugin, PagePlugin):
     system.</p><p>Deleting users is permanent!</p>""" % (cfg.product_name, cfg.box_name))
 
     def main(self, msg=''):
-        users = cfg.users.get_all()
+        users = cfg.users.keys()
         add_form = Form(title=_("Edit or Delete User"), action="/sys/users/edit", message=msg)
         add_form.html('<span class="indent"><b>Delete</b><br /></span>')
         for uname in sorted(users.keys()):
@@ -95,12 +95,12 @@ class edit(FormPlugin, PagePlugin):
             cfg.log.info("%s asked to delete %s" % (cherrypy.session.get(cfg.session_key), usernames))
             if usernames:
                 for username in usernames:
-                    if cfg.users.exists(username):
+                    if username in cfg.users:
                         try:
-                            cfg.users.remove(username)
+                            del cfg.users[username]
                             msg.add(_("Deleted user %s." % username))
                         except IOError, e:
-                            if cfg.users.get('username', reload=True):
+                            if 'username' in cfg.users:
                                 m = _("Error on deletion, user %s not fully deleted: %s" % (username, e))
                                 cfg.log.error(m)
                                 msg.add(m)
@@ -117,7 +117,7 @@ class edit(FormPlugin, PagePlugin):
             return self.fill_template(title="", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
         sidebar_right = ''
-        u = cfg.users.get(kwargs['username'])
+        u = cfg.users[kwargs['username']]
         if not u:
             main = _("<p>Could not find a user with username of %s!</p>" % kwargs['username'])
             return self.fill_template(template="err", title=_("Unnown User"), main=main, 
