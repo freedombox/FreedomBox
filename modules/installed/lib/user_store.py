@@ -15,6 +15,8 @@ class UserStore(UserStoreModule, sqlite_db):
     def close(self):
         self.__exit__()
 
+    #TODO: at exit, commit db
+
 class UserStoreOld():
 #class UserStore(UserStoreModule):
     """The user storage is on disk.  Rather than slurp the entire
