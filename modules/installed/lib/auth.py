@@ -18,7 +18,7 @@ def check_credentials(username, passphrase):
     """Verifies credentials for username and passphrase.
     Returns None on success or a string describing the error on failure"""
 
-    u = cfg.users.get(username)
+    u = cfg.users[username]
     if u is None:
         cfg.log("Unknown user: %s" % username)
         return u"Username %s is unknown to me." % username

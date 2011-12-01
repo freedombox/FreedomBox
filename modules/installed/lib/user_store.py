@@ -14,6 +14,8 @@ class UserStore(UserStoreModule, sqlite_db):
         self.__enter__()
     def close(self):
         self.__exit__()
+    def expert(self):
+        return False
 
 class UserStoreOld():
 #class UserStore(UserStoreModule):

@@ -60,7 +60,7 @@ router does.  With the addition of some extra modules, its abilities
 can rival those of high-end routers costing hundreds of dollars.</p>
 """ % cfg.box_name + parts['sidebar_right']
         if not cfg.users.expert():
-            main += """<p>In basic mode, you don't need to do any
+            parts['main'] += """<p>In basic mode, you don't need to do any
             router setup before you can go online.  Just plug your
             %(product)s in to your cable or DSL modem and the router
             will try to get you on the internet using DHCP.</p>
