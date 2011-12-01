@@ -2,6 +2,7 @@ import cherrypy
 from modules.auth import require
 import cfg
 from util import *
+import util as u
 
 class PluginMount(type):
     """See http://martyalchin.com/2008/jan/10/simple-plugin-framework/ for documentation"""
@@ -72,7 +73,7 @@ class PagePlugin:
         cfg.log.info("Registering page: %s" % url)
         exec "cfg.html_root.%s = self" % (url)
     def fill_template(self, *args, **kwargs):
-        return page_template(*args, **kwargs)
+        return u.page_template(*args, **kwargs)
 
     def forms(self, url, *args, **kwargs):
         for form in cfg.forms:
@@ -152,7 +153,7 @@ class FormPlugin():
             except AttributeError:
                 pass
         cfg.log("%%%%%%%%%%% %s" % kwargs)
-        return page_template(*args, **kwargs)
+        return u.page_template(*args, **kwargs)
 
 class UserStoreModule:
     """
