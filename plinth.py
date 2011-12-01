@@ -4,8 +4,12 @@
 import os, sys
 #import logging
 from gettext import gettext as _
+import cfg
+if not os.path.join(cfg.file_root, "vendor") in sys.path:
+   sys.path.append(os.path.join(cfg.file_root, "vendor"))
+
 import cherrypy
-import cfg, plugin_mount
+import plugin_mount
 from util import *
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
@@ -100,10 +104,11 @@ def setup():
    cfg.log = Logger()
    load_modules()
    cfg.html_root = Root()
+   cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
    cfg.page_plugins = plugin_mount.PagePlugin.get_plugins()
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
-   cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
    cfg.forms = plugin_mount.FormPlugin.get_plugins()
+
 def main():
    setup()
    cherrypy.quickstart(cfg.html_root, script_name='/', config="cherrypy.config")

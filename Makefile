@@ -8,8 +8,13 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: cherrypy.config dirs template css docs 
+default: cherrypy.config dirs template css docs dbs
 all: default
+
+dbs: data/users.sqlite3
+
+data/users.sqlite3: data/users.sqlite3.distrib
+	cp data/users.sqlite3.distrib data/users.sqlite3
 
 dirs:
 	@mkdir -p data/cherrypy_sessions
