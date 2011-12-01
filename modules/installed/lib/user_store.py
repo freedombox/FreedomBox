@@ -10,12 +10,10 @@ class UserStore(UserStoreModule, sqlite_db):
     def __init__(self):
         self.data_dir = cfg.users_dir
         self.db_file = cfg.user_db
-        sqlite_db.__init__(self, self.db_file)
+        sqlite_db.__init__(self, self.db_file, autocommit=True)
         self.__enter__()
     def close(self):
         self.__exit__()
-
-    #TODO: at exit, commit db
 
 class UserStoreOld():
 #class UserStore(UserStoreModule):
