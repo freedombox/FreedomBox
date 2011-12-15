@@ -1,3 +1,4 @@
+#SHELL := /bin/bash
 MAKE=make
 
 #TODO: add install target
@@ -8,7 +9,7 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: cherrypy.config dirs template css docs dbs
+default: cfg cherrypy.config dirs template css docs dbs
 all: default
 
 dbs: data/users.sqlite3
@@ -18,6 +19,9 @@ data/users.sqlite3: data/users.sqlite3.distrib
 
 dirs:
 	@mkdir -p data/cherrypy_sessions
+
+cfg: Makefile
+	test -f cfg.py || cp cfg.sample.py cfg.py
 
 cherrypy.config: Makefile
 	@echo [global]\\n\
