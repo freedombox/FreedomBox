@@ -81,14 +81,14 @@ def write_cherrypy_config():
 
 [global]
 server.socket_host = '0.0.0.0'
-server.socket_port = 8000
+server.socket_port = %(port)s
 server.thread_pool = 10
-tools.staticdir.root = "{fileroot}"
+tools.staticdir.root = "%(fileroot)s"
 tools.sessions.on = True
 tools.auth.on = True
 tools.sessions.storage_type = "file"
 tools.sessions.timeout = 90
-tools.sessions.storage_path = "{fileroot}/data/cherrypy_sessions"
+tools.sessions.storage_path = "%(fileroot)s/data/cherrypy_sessions"
 
 [/static]
 tools.staticdir.on = True
@@ -96,8 +96,8 @@ tools.staticdir.dir = "static"
 
 [/favicon.ico]
 tools.staticfile.on = True
-tools.staticfile.filename = "{fileroot}/static/theme/favicon.ico"
-""".format(fileroot=cfg.file_root))
+tools.staticfile.filename = "%(fileroot)s/static/theme/favicon.ico"
+""" % {'port':cfg.port, 'fileroot':cfg.file_root})
 
 def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinht web interface for the FreedomBox.')
