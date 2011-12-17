@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# Start listener, just for testing
-import os, sys
+import os, sys, argparse
 #import logging
 from gettext import gettext as _
 import cfg
@@ -9,6 +8,10 @@ if not os.path.join(cfg.file_root, "vendor") in sys.path:
    sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
 import cherrypy
+from cherrypy import _cpserver
+from cherrypy.process.plugins import Daemonizer
+Daemonizer(cherrypy.engine).subscribe()
+
 import plugin_mount
 from util import *
 from logger import Logger
@@ -96,7 +99,24 @@ tools.staticfile.on = True
 tools.staticfile.filename = "{fileroot}/static/theme/favicon.ico"
 """.format(fileroot=cfg.file_root))
 
+def parse_arguments():
+   parser = argparse.ArgumentParser(description='Plinht web interface for the FreedomBox.')
+   parser.add_argument('--pidfile', default="",
+                       help='specify a file in which the server may write its pid')
+   args=parser.parse_args()
+   if args.pidfile:
+      cfg.pidfile = args.pidfile
+
 def setup():
+   parse_arguments()
+
+   try:
+      if cfg.pidfile:
+         from cherrypy.process.plugins import PIDFile
+         PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
+   except AttributeError:
+      pass
+
    os.chdir(cfg.file_root)
    cherrypy.config.update({'error_page.404': error_page_404})
    cherrypy.config.update({'error_page.500': error_page_500})

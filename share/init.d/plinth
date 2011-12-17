@@ -1,0 +1,38 @@
+#!/bin/bash
+# This file is /etc/init.d/plinth
+DAEMON=/usr/bin/plinth.py
+PID_FILE=/var/run/plinth.pid
+    
+start_plinth (){
+    if [ -f $PID_FILE ]; then
+	echo Already running with a pid of `cat $PID_FILE`.
+    else
+	$DAEMON --pidfile=$PID_FILE
+    fi
+}
+
+stop_plinth () {
+    if [ -f $PID_FILE ]; then
+	kill -15 `cat $PID_FILE`
+	rm -rf $PID_FILE
+    else
+	echo "No pid file at $PID_FILE suggests plinth is not running."
+    fi
+}
+
+test -x $DAEMON || exit 0
+case "$1" in 
+    start)
+        echo "Starting Plinth."
+        start_plinth
+        ;;
+    stop)
+        echo "Stoping Plinth."
+        stop_plinth
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+        
+esac
