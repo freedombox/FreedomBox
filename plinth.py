@@ -67,38 +67,6 @@ def load_modules():
       else:
          cfg.log("skipping %s" % name)
 
-def write_cherrypy_config():
-   """Write the cherrpy.config file.
-
-   We could just make a dict instead of writing a data file and then
-   reading it back, but I like the output for debugging purposes.
-   Future versions might do the more efficient thing.
-   """
-
-   with open(os.path.join(cfg.file_root, "cherrypy.config"), 'w') as OUTF:
-      OUTF.write(
-"""### Generated file, do not edit! ###
-
-[global]
-server.socket_host = '0.0.0.0'
-server.socket_port = %(port)s
-server.thread_pool = 10
-tools.staticdir.root = "%(fileroot)s"
-tools.sessions.on = True
-tools.auth.on = True
-tools.sessions.storage_type = "file"
-tools.sessions.timeout = 90
-tools.sessions.storage_path = "%(fileroot)s/data/cherrypy_sessions"
-
-[/static]
-tools.staticdir.on = True
-tools.staticdir.dir = "static"
-
-[/favicon.ico]
-tools.staticfile.on = True
-tools.staticfile.filename = "%(fileroot)s/static/theme/favicon.ico"
-""" % {'port':cfg.port, 'fileroot':cfg.file_root})
-
 def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinht web interface for the FreedomBox.')
    parser.add_argument('--pidfile', default="",
@@ -120,7 +88,6 @@ def setup():
    os.chdir(cfg.file_root)
    cherrypy.config.update({'error_page.404': error_page_404})
    cherrypy.config.update({'error_page.500': error_page_500})
-   write_cherrypy_config()
    cfg.log = Logger()
    load_modules()
    cfg.html_root = Root()
