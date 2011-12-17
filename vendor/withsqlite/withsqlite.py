@@ -112,7 +112,7 @@ True
 
    def __init__(self, fname, autocommit=False, check_same_thread=False):
       self.fname = fname + ".sqlite3"
-      self.autocomit = autocommit
+      self.autocommit = autocommit
       self.check_same_thread = check_same_thread
    def __enter__(self):
       if not os.path.exists(self.fname):
