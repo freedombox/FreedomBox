@@ -129,11 +129,43 @@ def setup():
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
    cfg.forms = plugin_mount.FormPlugin.get_plugins()
 
+   # Add an extra server
+   server = _cpserver.Server()
+   server.socket_host = '127.0.0.1'
+   server.socket_port = 52854
+   server.subscribe()
+
+   # Configure default server
+   cherrypy.config.update({'server.socket_host': '0.0.0.0',
+                            'server.socket_port': cfg.port,
+                           'server.thread_pool':10,
+                           'tools.staticdir.root': cfg.file_root,
+                           'tools.sessions.on':True,
+                           'tools.auth.on':True,
+                           'tools.sessions.storage_type':"file",
+                           'tools.sessions.timeout':90,
+                           'tools.sessions.storage_path':"%s/data/cherrypy_sessions" % cfg.file_root,
+                           
+                           })
+
+   config = {'/': {'tools.staticdir.root': '%s/static' % cfg.file_root},
+             '/static': {'tools.staticdir.on': True,
+                         'tools.staticdir.dir':"."},
+             '/favicon.ico':{'tools.staticfile.on':True,
+                             'tools.staticfile.filename': "%s/static/theme/favicon.ico" % cfg.file_root}
+             }
+   cherrypy.tree.mount(cfg.html_root, '/', config=config)
+
+    
+   cherrypy.engine.signal_handler.subscribe()
+    
+
 def main():
    setup()
-   cherrypy.quickstart(cfg.html_root, script_name='/', config="cherrypy.config")
+   print "localhost %d" % cfg.port
 
-
+   cherrypy.engine.start()
+   cherrypy.engine.block()
 
 if __name__ == '__main__':
     main()
