@@ -27,9 +27,15 @@ class Menu():
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
-    def add_item(self, label, url, order=50):
+    def add_item(self, label, url, order=50, basehref=True):
         """This method creates a menu item with the parameters, adds
-        that menu item to this menu, and returns the item."""
+        that menu item to this menu, and returns the item.
+
+        If BASEHREF is true and url start with a slash, prepend the cfg.base_href to it"""
+
+        if basehref and url.startswith("/"):
+            url = cfg.base_href + url
+
         item = Menu(label=label, url=url, order=order)
         self.items.append(item)
         self.sort_items()
