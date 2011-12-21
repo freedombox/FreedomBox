@@ -13,11 +13,11 @@
   <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
   <meta name="description" content="Plint admin frontend for Freedom Box" />
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" href="/static/theme/style.tiny.css" media="screen" />
+  <link rel="shortcut icon" href="$basehref/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" type="text/css" href="$basehref/static/theme/style.tiny.css" media="screen" />
   $css
-  <script type="text/javascript" src="/static/theme/menu.js"></script>
-  <script type="text/javascript" src="/static/theme/plinth.js"></script>
+  <script type="text/javascript" src="$basehref/static/theme/menu.js"></script>
+  <script type="text/javascript" src="$basehref/static/theme/plinth.js"></script>
   $js
   $main_menu_js
   $sub_menu_js
@@ -30,12 +30,12 @@
 <body onLoad="javascript:onload_handler();"> 
   <div id="header">
     <div id="headerleft">
-      <a href="/"><img src="/static/theme/images/freedombox.png" /></a>
+      <a href="$basehref/"><img src="$basehref/static/theme/images/freedombox.png" /></a>
     </div>
     <div id="headerright">
       <br /><br /><br />
-      <h1><a href="/">Freedom Box</a></h1>
-      <h2><a href="/">Plinth Administration Control Panel</a></h2>
+      <h1><a href="$basehref/">Freedom Box</a></h1>
+      <h2><a href="$basehref/">Plinth Administration Control Panel</a></h2>
       <SCRIPT LANGUAGE="JavaScript"> 
 	<!--
            main_menu(main_menu_items); 
@@ -43,9 +43,9 @@
       </SCRIPT>
     </div>
     #if $username
-    <p id="layoutdims">Logged in as $username. <a href="/auth/logout" title="Log out">Logout.</a></p>
+    <p id="layoutdims">Logged in as $username. <a href="$basehref/auth/logout" title="Log out">Logout.</a></p>
     #else
-    <p id="layoutdims">Not logged in. <a href="/auth/login" title="Log in">Log in.</a></p>
+    <p id="layoutdims">Not logged in. <a href="$basehref/auth/login" title="Log in">Log in.</a></p>
     #end if
 
   </div>
