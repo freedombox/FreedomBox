@@ -58,10 +58,12 @@ class Message():
         self.text += "<br />%s" % text
 
 def page_template(template='base', **kwargs):
-    for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title']:
+    for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title', 'basehref']:
         if not k in kwargs:
             kwargs[k] = ''
 
+    if kwargs['basehref'] == '':
+       kwargs['basehref'] = cfg.base_href
     if template=='base' and kwargs['sidebar_right']=='':
         template='two_col'
     if isinstance(template, basestring):
