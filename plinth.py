@@ -103,8 +103,8 @@ def setup():
    server.subscribe()
 
    # Configure default server
-   cherrypy.config.update({'server.socket_host': '0.0.0.0',
-                            'server.socket_port': cfg.port,
+   cherrypy.config.update({'server.socket_host': '127.0.0.1',
+                           'server.socket_port': cfg.port,
                            'server.thread_pool':10,
                            'tools.staticdir.root': cfg.file_root,
                            'tools.sessions.on':True,
@@ -115,15 +115,14 @@ def setup():
                            
                            })
 
-   config = {'/': {'tools.staticdir.root': '%s/static' % cfg.file_root},
+   config = {'/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
+                   'tools.proxy.on':True,},
              '/static': {'tools.staticdir.on': True,
                          'tools.staticdir.dir':"."},
              '/favicon.ico':{'tools.staticfile.on':True,
                              'tools.staticfile.filename': "%s/static/theme/favicon.ico" % cfg.file_root}
              }
    cherrypy.tree.mount(cfg.html_root, '/', config=config)
-
-    
    cherrypy.engine.signal_handler.subscribe()
     
 
