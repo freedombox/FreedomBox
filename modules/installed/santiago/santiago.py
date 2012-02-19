@@ -5,7 +5,7 @@ with information.  There is authentication involved, although I
 haven't figured that one all the way through yet.
 """
 
-import os
+import os, sys
 import cherrypy
 import simplejson as json
 from gettext import gettext as _
@@ -16,22 +16,22 @@ import util as u
 
 santiago_port = 52854
 
-import gnupg
+#import gnupg
 
-def check_sig(query, sig):
-    "Verify that the sig and the query match"
-    gpg = gnupg.GPG(gnupghome='/home/james/')
-    return True
+#def check_sig(query, sig):
+#    "Verify that the sig and the query match"
+#    gpg = gnupg.GPG(gnupghome='/home/james/')
+#    return True
 
 class Santiago(PagePlugin):
-    order = 90 # order of running init in PagePlugins
-    def __init__(self, *args, **kwargs):
+   order = 90 # order of running init in PagePlugins
+   def __init__(self, *args, **kwargs):
 
         self.register_page("santiago")
         self.santiago_address = self.get_santiago_address() #TODO: multiple santiago ports
         #set a listener on the santiago address
 
-    def get_santiago_address(self):
+   def get_santiago_address(self):
         if 'santiago' in cfg.users['admin'] and 'address' in cfg.users['admin']['santiago']:
             return cfg.users['admin']['santiago']['address']
         else:
@@ -55,11 +55,11 @@ class Santiago(PagePlugin):
         print "Need to add these two lines to /etc/torrc:\n%s" % hidden_service_config
         return ""
 
-    def check_for_hidden_service(self):
+   def check_for_hidden_service(self):
         pass
 
-    @cherrypy.expose
-    def index(self, *args, **kw):
+   @cherrypy.expose
+   def index(self, *args, **kw):
 
         """
         A request is a dict with some required keys:
@@ -112,12 +112,12 @@ class Santiago(PagePlugin):
 
 ## Plinth page to config santiago
 class santiago(PagePlugin):
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
-        self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "/privacy/santiago", 10)
-        self.register_page("privacy.santiago")
+   def __init__(self, *args, **kwargs):
+      PagePlugin.__init__(self, *args, **kwargs)
+      self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "/privacy/santiago", 10)
+      self.register_page("privacy.santiago")
 
-    @cherrypy.expose
-    @require()
-    def index(self):
-        return "Santiago's config goes here."
+   @cherrypy.expose
+   @require()
+   def index(self):
+      return "Santiago's config goes here."
