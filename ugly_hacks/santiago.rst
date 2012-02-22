@@ -24,31 +24,56 @@ for the service.
    information, in the form of:
 
    - Will *X* do *Y* for me?
-   - (By the way I'm at *Z*)
+   - Optional: Reply to my Santiago at *Z*.
+
 #. If B does not recognize A or does not trust A, it stays silent.
+
 #. If B recognizes and trusts A, it replies with a signed (and encrypted?)
    message to A's Santiago, giving the location of A's usable service.  If no
-   service is available, it reples with a rejection.
+   service is available, it replies with a rejection.
 
 In a nutshell, that's the important part.  There are additional details to
-manage, but they're implied and build on the system above.
+manage, but they're implied and built on the system above.
+
+Our Cheats
+----------
+
+Right now, we're cheating.  We start by pairing boxes, exchanging both
+box-specific PGP keys and Tor Hidden Service IDs.  This allows boxes to trust
+and communicate with one another, regardless of any adverserial interference.
+Or, rather, any adverserial interference will be obvious and ignorable.
 
 Message Exchange
 ----------------
 
-The Santiago service is running on ``B``, waiting for connections.  When it
+The Santiago service is running on *B*, waiting for connections.  When it
 receives a request message, that message must be signed by a known and trusted
-party.  If it is acceptably signed (with a known, and valid ID), ``B`` will
-reply to ``A``'s Santiago with an acceptably signed message.
+party.  If it is acceptably signed (with a known, and valid ID), *B* will
+reply to *A*'s Santiago with an acceptably signed message.
 
 The contents of the request message are as follows:
 
 - I am requesting service *X*.
 - I am requesting that the service be performed by *Y*.
-- Optional: I am located at *Z*.
+- Optional: Reply to this message at *Z*.
 
-The message is signed by ``A``, and optionally encrypted (if the message is
-proxied, it must contain a "To" header).
+The message is signed by *A*, and optionally encrypted (if the message is
+proxied, it must contain a "To" header).  If *A* includes a location stanza,
+*B* MUST respect that location in its response and update that location for
+its Santiago service from *A* going forward.
+
+In this document, I elide the Santiago acknowledgements (because they add a lot
+of unnecessary noise - we can assume communication failures are failures of
+acknolwedgement receipt).  But, after each message that needs a response, an
+acceptably signed acknowledgement message is returned.  Otherwise the sender
+preferentially moves on to the recipient's next Santiago address after a
+sufficient amount of time has passed.  An example of this communication, with
+these details specified, follows:
+
+:B -> A: I'll gladly serve *X* for you, at *Z*, my good fellow.
+:A -> B: (No response)
+:B -> A: *(using a different Santiago address)* I'm serving *X* for *A* at *Z*.
+:A -> B: (Acknowledgment)
 
 Storing Service Data and Network Structure
 ------------------------------------------
@@ -88,8 +113,10 @@ I consume these services, they are offered by others.
 
 These data are stored as a triple-key dictionary, with the following mappings::
 
-    Service -> [ GPG, ID ]
-    GPG ID -> [ Location, location, location ]
+    Service X: { GPG ID1: [ location, location, location ],
+                 GPG ID2: [ location, location ], }
+    Service Y: { GPG ID2: [ location, location, location ],
+                 GPG ID3: [ location, location ], }
 
 This allows fast lookup from the service desired to the users that host the
 service, to the actual locations that service is offered.  This allows the user
@@ -102,36 +129,111 @@ Data Use
 :TODO: Revise to reduce communication to logical minimum number of connections,
        exchanges, and communications.
 
-When ``A`` is connecting to ``B``'s service, it will attempt to connect to that
-service (and verify ``B``'s identity with a signed handshake before using the
-service?).  If the service is non-responsive, ``A`` will query ``B`` for the
-service.  If ``B`` is generally non-responsive, ``A`` will move on to ``C``.
-``A`` will ask ``C`` for the service.  If ``C`` cannot provide the service,
-``A`` will ask ``C`` to request the service from ``B``.  If ``C`` can reach
-``B`` and ``B`` authorizes ``A``, ``B`` will respond affirmatively to ``A`` with
-the service's location.
+When *A* is connecting to *B*'s service, it will attempt to connect to that
+service, which B will validate before permitting the connection.  If the service
+is non-responsive, *A* will query *B* for the service.  If *B* is generally
+non-responsive, *A* will move on to *C*.  *A* will ask *C* for the service.  If
+*C* cannot provide the service, *A* will ask *C* to request the service from
+*B*.  If *C* can reach *B* and *B* authorizes *A*, *B* will respond
+affirmatively to *A* with the service's location.
 
-Our Cheats
-----------
-
-Right now, we're cheating.  We start by pairing boxes, exchanging both
-box-specific PGP keys and Tor Hidden Service IDs.  This allows boxes to trust
-and communicate with one another, regardless of any adverserial interference.
-Or, rather, any adverserial interference will be obvious and ignorable.
-
-Next Steps
-==========
+:A -> B: (Connecting to Service!)
+:B: (Validating Service and rejecting for some reason, e.x., A hasn't been
+    reauthorized for this service recently enough, and because it's Wednesday.)
+:B -> A: (No response)
+:A -> B: Will you serve X?
+:B -> A: (No response, A can't reach B's Santiago.)
+:A -> C: Will you serve X?
+:C -> A: No!
+:A -> C: Will B serve X?
+:C -> B: Will you serve X for A?
+:B -> A: Hey, buddy, here's X!
 
 Proxied service requesting
 --------------------------
 
-``Me`` sends a request to ``B``, and ``B`` doesn't respond.  ``Me`` requests the
-service from ``A`` and ``A`` NAKs.  ``Me`` requests that ``A`` proxy my request
-to ``B``, in case ``A`` can reach ``B``.  ``B`` replies directly to ``Me``, and
-we begin communicating on that service.
+The Simple Case
+~~~~~~~~~~~~~~~
 
-:TODO: What is the maximum number of hops that we can securely achieve from this
-       system while keeping intermedia hops secret?  One?  More?
+I'm looking for somebody to provide a service, *X*.
+
+*A* sends a request to *C*, and *C* doesn't respond.  *A* requests the
+service from *B* and *B* NBKs.  *A* requests that *B* proxy my request
+to *C*, in case *B* can reach *C*.  *C* replies directly to *A*, and
+we begin communicating on that service:
+
+:A -> C: Will you serve X?
+:C -> A: (No response)
+:A -> B: Will you serve X?
+:B -> A: No!
+:A -> B: Will C serve X?
+:B -> C: Will you serve X for A?
+:C -> A: Hey, buddy, here's X!  Let's go out for beer later.
+
+More Complicated Cases
+~~~~~~~~~~~~~~~~~~~~~~
+
+I know *D* offers a service, *X*, but I can't get in touch with it.
+
+*A* requests *X* from *D*, and *D* never responds.  *A* requests that *B* find
+*D*.  *B* doesn't know *D* and forwards the request to a friend *C*.  *C* knows
+*D* and sends the message along.  *D* tries to respond directly to *A*, but
+can't, so it sends replies back up the chain.
+
+:A -> D: Will you serve X?
+:D -> A: (No response)
+:A -> B: Will D serve X for me?
+:B -> C: Will D serve X for A?
+:C -> D: Will you serve X for A?
+:D -> A: Hey, buddy, here's X!
+:A -> D: (No response)
+:D -> C: I'm serving X for A.
+:C -> B: D's serving X for A.
+:B -> A: D's serving X for you.
+
+Each message is signed, but only the first message (A's message) is inviolable.
+Each client then passes the message, stripping off intermediary signatures, and
+then signing the message for each of its friends.
+
+A message looks like::
+
+    ---- A's Signed Message Starts Here ----
+        To: D's GPG key.
+        ---- D's Encrypted Message Starts Here ----
+            Hey *D*, will you serve *X* for me?
+            Please reply to 5.onion.
+        ---- D's Encrypted Message Ends Here ----
+    ---- A's Signed Message Ends Here ----
+
+A forwarded message, from B to C, looks like::
+
+    ---- B's Signed Message Starts Here ----
+    ---- A's Signed Message Starts Here ----
+        To: D's GPG key.
+        ---- D's Encrypted Message Starts Here ----
+            Hey *D*, will you serve *X* for me?
+            Please reply to 5.onion.
+        ---- D's Encrypted Message Ends Here ----
+    ---- A's Signed Message Ends Here ----
+    ---- B's Signed Message Ends Here ----
+
+When forwarded over again, from C to D, it looks like::
+
+    ---- C's Signed Message Starts Here ----
+    ---- A's Signed Message Starts Here ----
+        To: D's GPG key.
+        ---- D's Encrypted Message Starts Here ----
+            Hey *D*, will you serve *X* for me?
+            Please reply to 5.onion.
+        ---- D's Encrypted Message Ends Here ----
+    ---- A's Signed Message Ends Here ----
+    ---- C's Signed Message Ends Here ----
+
+Note that:
+
+- The original message is unchanged.
+- Irrelevant signatures (intermediate links in the WOT) are stripped, hiding the
+  WOT's structure from friends.
 
 Unit Tests
 ==========
@@ -157,4 +259,26 @@ identifies one user to another.
 Deception
 ---------
 
-This is probably the largest worry, where B spoofs A's responses.
+This is probably the largest worry, where B fakes A's responses.
+
+Mitigations
+===========
+
+We gain a lot by relying on the WOT, and only direct links in the WOT.  We also
+gain a lot by requiring every communication to be signed (and maximally
+encrypted).
+
+Once a key is compromised, we're vulnerable, but to what exactly?  What attacks
+can an adversary who's compromised a secret key perform?  As long as you don't
+have any publicly identifiable (or public-facing) services in your Santiago,
+then not much.  If you're identifiable by your Santiago, and you've permitted
+the attacker to see an identifiable service (including your Santiago instances),
+that service and all co-located services could be shut down.  If the service
+identifies you (and not just your box), you're vulnerable.  An attacker will
+shortly identify all the services you've given it access to.
+
+An attacker can try to identify your friends, though will have trouble if you
+send your proxied requests with non-public methods, or you don't proxy at all.
+
+Outstanding Questions
+=====================
