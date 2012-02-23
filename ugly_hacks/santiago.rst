@@ -357,14 +357,15 @@ Design Questions
     Santiago sender sends two messages: "Will X serve Y for Z? Please respond at
     W.", and "X will (not) serve Y for Z at U."
 
-:Fucking-with-you Replies: During World War II (IIRC), the RAF confused the
-    German air force by alternating the altitudes of their fighters and bombers
-    (doing it wrong, flying the fighters *beneath* the bombers).  Apparently the
-    Germans were most confused when the RAF did it wrong once every seven
-    flights.  Perhaps we should do the same?
+:Fucking-with-you Replies: An urban legend: During World War II, the RAF
+    confused the German air force by alternating the altitudes of their fighters
+    and bombers (doing it wrong, flying the fighters *beneath* the bombers).
+    Apparently the Germans were most confused when the RAF did it wrong once
+    every seven flights.  Whether or not it's true, it implies a lesson:
 
-    Confuse adversaries by intentionally doing it wrong, sometimes.  Answer a
-    request with garbage, irrelevant HTTP codes, or silence.
+    Confuse adversaries by intentionally doing it wrong, sometimes.  We could
+    answer a bum Santiago request with garbage, irrelevant HTTP codes, or
+    silence.
 
 :Onion Routing: What can we learn from Tor itself?  Maybe not a lot.  Maybe a
     bit.  That we don't allow untrusted connections is an incredible limitation
