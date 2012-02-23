@@ -29,11 +29,14 @@ for the service.
 #. If B does not recognize A or does not trust A, it stays silent.
 
 #. If B recognizes and trusts A, it replies with a signed (and encrypted?)
-   message to A's Santiago, giving the location of A's usable service.  If no
-   service is available, it replies with a rejection.
+   message to A's Santiago, giving the location of A's usable service.  If B
+   will not (cannot or won't) provide A the service, B replies with a
+   rejection.  This message is in the form of:
+
+   - *X* will (not) do *Y* for *Z*.
 
 In a nutshell, that's the important part.  There are additional details to
-manage, but they're implied and built on the system above.
+manage, but they're implied by and built on the system above.
 
 Our Cheats
 ----------
@@ -105,13 +108,14 @@ These data are stored as pair of dictionaries:
       "wiki": [ 192.168.1.1, "superduperwiki.onion" ]
       "proxy": [ 8.8.8.8 ]
       "restricted_proxy": [ 4.4.4.4 ]
+      "drinking_buddy": [ "Artopolis, Amsterdam and 114th" ]
 
 Others' Services I Know Of
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 I consume these services, they are offered by others.
 
-These data are stored as a triple-key dictionary, with the following mappings::
+These data are stored as a dual-key dictionary, with the following mappings::
 
     Service X: { GPG ID1: [ location, location, location ],
                  GPG ID2: [ location, location ], }
@@ -259,11 +263,25 @@ connecting clients.  If the client is compromisable (within reach), it also can
 be compromised.  We can try, but every service that isn't run directly over Tor
 identifies one user to another.
 
+What attacks can an adversary who's compromised a secret key perform?  The same
+as any trusted narc-node.  As long as you don't have any publicly identifiable
+(or public-facing) services in your Santiago, then not much.  If you're
+identifiable by your Santiago, and you've permitted the attacker to see an
+identifiable service (including your Santiago instances), that service and all
+co-located services could be shut down.  If the service identifies you (and not
+just your box), you're vulnerable.  Any attacker will shortly identify all the
+services you've given it access to.
+
+An attacker can try to identify your friends, though will have trouble if you
+send your proxied requests with non-public methods, or you don't proxy at all.
+
 Deception
 ~~~~~~~~~
 
 This is probably the largest worry, where B fakes A's responses or provides
-invalid data.
+invalid data.  Because we rely on signed messages, B can fake only B's services.
+B can direct A to an adversary, so A's boned, but only insofar as A uses B's
+services.  If A relies primarily on C's services, A isn't very boned at all.
 
 Methods
 -------
@@ -278,13 +296,17 @@ How vulnerable are we to out-of-order responses?  Not very, *at this point*,
 because there isn't too much going on.  However, I'll need to think further
 about the vulnerabilities.
 
+The dangerous message is the service response.  If B can send A any response, B
+could modify A's service table at a whim.  Therefore, A should accept service
+updates only for services it expects an update for.
+
 Flood
 ~~~~~
 
-Since messages are signed and/or encrypted many huge, invalid, requests could easily
-overwhelm a box.  The signature verification alone could overheat one of the
-buggers.  We need a rate-limiter to make sure it tries to never handle more than
-X MB of data and Y requests per friend at one time.  Data beyond that limit
+Since messages are signed and/or encrypted many huge, invalid, requests could
+easily overwhelm a box.  The signature verification alone could overheat one of
+the buggers.  We need a rate-limiter to make sure it tries to never handle more
+than X MB of data and Y requests per friend at one time.  Data beyond that limit
 could be queued for later.
 
 Network Loops
@@ -301,19 +323,6 @@ Mitigations
 We gain a lot by relying on the WOT, and only direct links in the WOT.  We also
 gain a lot by requiring every communication to be signed (and maximally
 encrypted).
-
-Once a key is compromised, we're vulnerable, but to what exactly?  What attacks
-can an adversary who's compromised a secret key perform?  The same as any
-trusted narc-node.  As long as you don't have any publicly identifiable (or
-public-facing) services in your Santiago, then not much.  If you're identifiable
-by your Santiago, and you've permitted the attacker to see an identifiable
-service (including your Santiago instances), that service and all co-located
-services could be shut down.  If the service identifies you (and not just your
-box), you're vulnerable.  Any attacker will shortly identify all the services
-you've given it access to.
-
-An attacker can try to identify your friends, though will have trouble if you
-send your proxied requests with non-public methods, or you don't proxy at all.
 
 Outstanding Questions
 =====================
@@ -344,14 +353,24 @@ Design Questions
     Germans were most confused when the RAF did it wrong once every seven
     flights.  Perhaps we should do the same?
 
-    Confuse adversaries by intentionally doing it wrong, sometimes.  Return a
+    Confuse adversaries by intentionally doing it wrong, sometimes.  Answer a
     request with garbage, irrelevant HTTP codes, or silence.
+
+:Onion Routing: What can we learn from Tor itself?  Maybe not a lot.  Maybe a
+    bit.  That we don't allow untrusted connections is an incredible limitation
+    on the routing system.
 
 Functional Questions
 --------------------
 
 :Queuing Messages: Queue actions, dispatching X MB over Y requests per friend
     per unit time, unless the request is preempted by another reply.
+
+:Process Separation: Santiagi should be separated at the process/message-handler
+    level, so that trouble in one Santiago doesn't tear down the rest (makes
+    queuing harder with multiple listeners).  Services should be recorded and
+    messages should be queued at a file-level so that each process who needs
+    access can have it.
 
 References
 ==========
