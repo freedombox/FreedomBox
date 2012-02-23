@@ -8,18 +8,15 @@ Santiagi" or "Santiago's Dance").  The idea is that systems can share
 identification information without ever revealing their location (where in the
 world is Santiago?).
 
-This *is* signed identity statements, just on a
-service-by-service-for-individual-people level.  Granularity, bitches!
-
-hackyhackyhacky hacks, but the right structure sans details (a tracer-bullet
-structure, see "The Pragmatic Programmer", Hunt & Thomas, 2000, pg. 48).  If
-you have a copy of TPP around, also see pgs: 111 120 161 186 192 238 248 258.
-
-This file is distributed under the GPL, version 3 or later, at your discretion.
+This *is* signed identity statements, just on a service per person level.
 
                                   Santiago, he
                           smiles like a Buddah, 'neath
                                his red sombrero.
+
+This file is distributed under the GNU Affero General Public License, Version 3
+or later.  A copy of GPLv3 is available [from the Free Software Foundation]
+<http://www.gnu.org/licenses/gpl.html>.
 
 """
 
@@ -43,6 +40,8 @@ from simplejson import JSONEncoder
 DEBUG = 0
 encoder = JSONEncoder()
 
+# random setup tools
+# ==================
 
 if DEBUG:
     for x in range(0, 3):
@@ -72,6 +71,9 @@ def fix_old_cherrypy():
 if cherrypy.__version__ < "3.2":
     fix_old_cherrypy()
 
+
+# actual Santiago
+# ===============
 
 class Santiago(object):
     """Santiago's base class, containing listener and sender defaults."""
@@ -210,7 +212,7 @@ class SantiagoListener(Santiago):
 
 class SantiagoSender(Santiago):
     """Sendss the Santiago request to a Santiago service."""
-    
+
     def __init__(self, instance, proxy):
         super(SantiagoSender, self).__init__(instance=instance)
 
