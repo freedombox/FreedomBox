@@ -247,8 +247,11 @@ Attacks
 
 Of *course* this is vulnerable.  It's on the internet, isn't it?
 
+Concepts
+--------
+
 Discovery
----------
+~~~~~~~~~
 
 A discovered box is shut down or compromised.  It can lie to its requestors and
 not perform its functions.  It can also allow connections and expose
@@ -257,9 +260,40 @@ be compromised.  We can try, but every service that isn't run directly over Tor
 identifies one user to another.
 
 Deception
----------
+~~~~~~~~~
 
-This is probably the largest worry, where B fakes A's responses.
+This is probably the largest worry, where B fakes A's responses or provides
+invalid data.
+
+Methods
+-------
+
+:TODO: I'll need to think about all these a lot more.  I'm really far from
+       exhaustive logical proof at this point.
+
+Out of Order
+~~~~~~~~~~~~
+
+How vulnerable are we to out-of-order responses?  Not very, *at this point*,
+because there isn't too much going on.  However, I'll need to think further
+about the vulnerabilities.
+
+Flood
+~~~~~
+
+Since messages are signed and/or encrypted many huge, invalid, requests could easily
+overwhelm a box.  The signature verification alone could overheat one of the
+buggers.  We need a rate-limiter to make sure it tries to never handle more than
+X MB of data and Y requests per friend at one time.  Data beyond that limit
+could be queued for later.
+
+Network Loops
+~~~~~~~~~~~~~
+
+Look into how BATMAN and its ilk handle network loops.  Each box could keep a
+list of recently-proxied-requests so that no box sends the same request to its
+friends within a time-range.  Might we need to look into other request proxying
+methods when the DHT comes up?
 
 Mitigations
 ===========
@@ -269,16 +303,57 @@ gain a lot by requiring every communication to be signed (and maximally
 encrypted).
 
 Once a key is compromised, we're vulnerable, but to what exactly?  What attacks
-can an adversary who's compromised a secret key perform?  As long as you don't
-have any publicly identifiable (or public-facing) services in your Santiago,
-then not much.  If you're identifiable by your Santiago, and you've permitted
-the attacker to see an identifiable service (including your Santiago instances),
-that service and all co-located services could be shut down.  If the service
-identifies you (and not just your box), you're vulnerable.  An attacker will
-shortly identify all the services you've given it access to.
+can an adversary who's compromised a secret key perform?  The same as any
+trusted narc-node.  As long as you don't have any publicly identifiable (or
+public-facing) services in your Santiago, then not much.  If you're identifiable
+by your Santiago, and you've permitted the attacker to see an identifiable
+service (including your Santiago instances), that service and all co-located
+services could be shut down.  If the service identifies you (and not just your
+box), you're vulnerable.  Any attacker will shortly identify all the services
+you've given it access to.
 
 An attacker can try to identify your friends, though will have trouble if you
 send your proxied requests with non-public methods, or you don't proxy at all.
 
 Outstanding Questions
 =====================
+
+Sure, there's been a lot of work so far, but there's a lot more to do.
+
+Design Questions
+----------------
+
+:Really weird proxies: Email, Twitter, bit.ly, paste buckets, etc.
+    This implies listener polling.
+
+:Add Expiry: Add both service and proxy (search) hop expiry.
+
+:Clarify interactions: Clarify controller/sender/listener interactions.  Who
+    knows what and how much?  We need multiple listener ports.
+
+:Moar Unit Testing!: Add real Unit Testing.  Spec out the system through test
+    harnesses.  If the tests can run the system, it's complete.
+
+:Clarify Actions: Actions probably aren't necessary with hop expiry, since each
+    Santiago sender sends two messages: "Will X serve Y for Z? Please respond at
+    W.", and "X will (not) serve Y for Z at U."
+
+:Fucking-with-you Replies: During World War II (IIRC), the RAF confused the
+    German air force by alternating the altitudes of their fighters and bombers
+    (doing it wrong, flying the fighters *beneath* the bombers).  Apparently the
+    Germans were most confused when the RAF did it wrong once every seven
+    flights.  Perhaps we should do the same?
+
+    Confuse adversaries by intentionally doing it wrong, sometimes.  Return a
+    request with garbage, irrelevant HTTP codes, or silence.
+
+Functional Questions
+--------------------
+
+:Queuing Messages: Queue actions, dispatching X MB over Y requests per friend
+    per unit time, unless the request is preempted by another reply.
+
+References
+==========
+
+None yet.  How odd ;)
