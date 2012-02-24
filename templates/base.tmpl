@@ -5,108 +5,179 @@
    $default
 #end if
 #end def
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
-<head>
-  <title>$default($title, "Plinth Front End to the Freedom Box")
-  </title>
-  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-  <meta name="description" content="Plint admin frontend for Freedom Box" />
-  <meta name="robots" content="noindex, nofollow" />
-  <link rel="shortcut icon" href="$basehref/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" href="$basehref/static/theme/style.tiny.css" media="screen" />
-  $css
-  <script type="text/javascript" src="$basehref/static/theme/menu.js"></script>
-  <script type="text/javascript" src="$basehref/static/theme/plinth.js"></script>
-  $js
-  $main_menu_js
-  $sub_menu_js
-  <script LANGUAGE="JavaScript">
-    <!--
-      $onload
-    // --> 
-  </script>
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head id="www-sitename-com" data-template-set="html5-reset">
+
+	<meta charset="utf-8" />
+	
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>$default($title, "Plinth Front End to the Freedom Box")</title>
+	
+	<meta name="title" content="$default($title, 'Plinth Front End to the Freedom Box')" />
+	<meta name="description" content="Plinth admin frontend for Freedom Box" />
+
+	<!-- I believe that robots should only have faces if they truly need them. -->
+	<meta name="robots" content="noindex, nofollow, noarchive" />
+	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate" />
+	<meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
+	<meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
+	
+	<!--  Mobile Viewport Fix
+	j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag 
+	device-width : Occupy full width of the screen in its current orientation
+	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+	-->
+	<!-- Uncomment to use; use thoughtfully!
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	-->
+
+	<link rel="shortcut icon" href="$basehref/static/theme/img/favicon.ico" />
+	<!-- This is the traditional favicon.
+		 - size: 16x16 or 32x32
+		 - transparency is OK
+		 - see wikipedia for info on browser support: http://mky.be/favicon/ -->
+		 
+	<link rel="apple-touch-icon" href="$basehref/static/theme/img/freedombox-button-114px.png" />
+	<!-- The is the icon for iOS's Web Clip.
+		 - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
+		 - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+		 - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+	
+	<!-- HTML5-Reset CSS: screen, mobile & print are all in the same file -->
+	<link rel="stylesheet" href="$basehref/static/theme/css/style-html5reset.css" />
+	
+	<!-- Original Plinth CSS, not sure if this should all be integrated into "style-html5reset.css" -->
+	<link rel="stylesheet" href="$basehref/static/theme/css/style-plinth.css" />
+	<!--<link rel="stylesheet" href="$basehref/static/theme/css/style-plinth-2col.css" />-->
+	$css
+
+	<!-- Local copy of Modernizr -->
+	<script type="text/javascript" src="$basehref/static/theme/js/modernizr-1.7.min.js"></script>
+	<!-- Local copy of JQuery -->
+	<script type="text/javascript" src="$basehref/static/theme/js/jquery-1.5.1.min.js"></script>
+	<!-- HTML5-Reset functions -->
+	<script type="text/javascript" src="$basehref/static/theme/js/functions.js"></script>
+
+	<!-- JS required for Plinth menus and UI -->
+	<script type="text/javascript" src="$basehref/static/theme/js/menu.js"></script>
+	<script type="text/javascript" src="$basehref/static/theme/js/plinth.js"></script>
+	$js
+	$main_menu_js
+	$sub_menu_js
+	<script type="text/javascript">
+	  <!--
+	    $onload
+	  // --> 
+	</script>
 </head>
-<body onLoad="javascript:onload_handler();"> 
-  <div id="header">
-    <div id="headerleft">
-      <a href="$basehref/"><img src="$basehref/static/theme/images/freedombox.png" /></a>
-    </div>
-    <div id="headerright">
-      <br /><br /><br />
-      <h1><a href="$basehref/"><img src="$basehref/static/theme/images/freedombox-logotype.png" /></a></h1>
-      <h2><a href="$basehref/">Plinth Administration Control Panel</a></h2>
-      <SCRIPT LANGUAGE="JavaScript"> 
-	<!--
-           main_menu(main_menu_items); 
-	// --> 
-      </SCRIPT>
-    </div>
-    #if $username
-    <p id="layoutdims">Logged in as $username. <a href="$basehref/auth/logout" title="Log out">Logout.</a></p>
-    #else
-    <p id="layoutdims">Not logged in. <a href="$basehref/auth/login" title="Log in">Log in.</a></p>
-    #end if
+<body onload="javascript:onload_handler();">
+<div class="wrapper"><!-- may not be necessary: http://camendesign.com/code/developpeurs_sans_frontieres -->
 
-  </div>
-<div class="colmask threecol">
-  <div class="colmid">
-    <div class="colleft">
-      <div class="col1">
-	<!-- Column 1 start -->
-	<h2>
-	  #block title_block
-	  $title
-	  #end block title_block
-	</h2>
-	#block main_block
-	$main
-	#end block main_block
-	<!-- Column 1 end -->
-      </div>
-      <div class="col2">
-	<!-- Column 2 start -->
-	#block nav_block
-	$nav
-	#end block nav_block
-	#block sidebar_left_block
-	$sidebar_left
-	#end block sidebar_left_block
-	<!-- Column 2 end -->
-      </div>
-      <div class="col3">
-	<!-- Column 3 start -->
-	<div id="ads">
-	  <!--<a href="http://matthewjamestaylor.com">
-	    <img src="mjt-125x125.gif" width="125" border="0" height="125" alt="Art and Design by Matthew James Taylor" />
-	  </a>
-	    -->
+	<header>
+	<div id="header"> <!-- should be replaced by <header> for HTML5 transition -->
+
+	<div id="headerleft">
+		<a href="$basehref/"><img src="$basehref/static/theme/img/freedombox.png" /></a>
+	</div> <!-- End headerleft -->
+
+	<div id="headerright">
+		<br /><br /><br />
+		<h1><a href="$basehref/"><img src="$basehref/static/theme/img/freedombox-logotype.png" /></a></h1>
+		<h2><a href="$basehref/">Plinth Administration Control Panel</a></h2>
+		<nav>
+		<script> 
+		<!--
+		   main_menu(main_menu_items); 
+		// --> 
+		</script>
+		</nav> <!-- End main menu -->
+	</div> <!-- End headerright -->
+
+		#if $username
+		<p id="layoutdims">Logged in as $username. <a href="$basehref/auth/logout" title="Log out">Logout.</a></p>
+		#else
+		<p id="layoutdims">Not logged in. <a href="$basehref/auth/login" title="Log in">Log in.</a></p>
+		#end if
+	</div> <!-- should be replaced by </header> for HTML5 transition -->
+	</header> <!-- End header -->
+
+	<div class="colmask threecol">
+	<div class="colmid">
+	<div class="colleft">
+
+	<article>
+	<div class="col1">
+		<h2>
+		#block title_block
+		$title
+		#end block title_block
+		</h2>
+		#block main_block
+		$main
+		#end block main_block
 	</div>
-	#block sidebar_right_block
-	$sidebar_right
-	#end block sidebar_right_block
-	<!-- Column 3 end -->
-      </div>
-    </div>
-  </div>
-</div>
-<div id="footer">
-  #block footer_block
-  <p>
-    Plinth is copyright 2011 <a href="http://hackervisions.org">James Vasile</a>.  It is
-    free software offered to you under the terms of
-    the <a href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public
-    License</a>, Version 3 or later.
-  </p>
-  <!--<p>Current page: $current_url</p>-->
-  <p>
-  This page uses
-  the <a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm">Perfect
-  'Holy Grail' 3 Column Liquid Layout</a>
-  by <a href="http://matthewjamestaylor.com">Matthew James Taylor</a>.
-  </p>
-  #end block footer_block
-</div>
+	</article> <!-- End column 1 -->
 
+	<div class="col2">
+		#block nav_block
+		$nav
+		#end block nav_block
+		#block sidebar_left_block
+		$sidebar_left
+		#end block sidebar_left_block
+
+	</div> <!-- End column 2 -->
+
+	<aside>
+	<div class="col3">
+		<div id="ads">
+		<!--<a href="http://matthewjamestaylor.com">
+		<img src="mjt-125x125.gif" width="125" border="0" height="125" alt="Art and Design by Matthew James Taylor" />
+		</a>
+		-->
+		</div>
+		#block sidebar_right_block
+		$sidebar_right
+		#end block sidebar_right_block
+	</div>
+	</aside> <!-- End column 3 -->
+
+	</div>
+	</div>
+	</div>
+
+	<footer>
+	<div id="footer">  <!-- should be replaced by <footer> for HTML5 transition -->
+		#block footer_block
+		<p>
+		Plinth is &copy; Copyright 2012 <a href="http://hackervisions.org" target="_blank">James Vasile</a>.  It is
+		free software offered to you under the terms of
+		the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
+		License</a>, Version 3 or later.
+		</p>
+		<!--<p>Current page: $current_url</p>-->
+		<p>
+		This page uses
+		the <a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm" target="_blank">Perfect
+		'Holy Grail' 3 Column Liquid Layout</a>
+		by <a href="http://matthewjamestaylor.com" target="_blank">Matthew James Taylor</a>.
+		And the <a href="http://html5reset.org" target="_blank">HTML5-Reset</a> boilerplate template.
+		</p>
+		#end block footer_block
+	</div> <!-- should be replaced by </footer> for HTML5 transition -->
+	</footer>
+
+</div> <!-- End wrapper -->
 </body>
 </html>
