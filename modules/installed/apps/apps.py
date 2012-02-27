@@ -7,7 +7,7 @@ class Apps(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("apps")
-        self.menu = cfg.main_menu.add_item("User Apps", "/apps", 80)
+        self.menu = cfg.main_menu.add_item("Apps", "/apps", 80)
         self.menu.add_item("Photo Gallery", "/apps/photos", 35)
 
     @cherrypy.expose
@@ -27,7 +27,7 @@ class Apps(PagePlugin):
     @require()
     def photos(self):
         return self.fill_template(title="Open ID", main='', sidebar_right="""
-<h2>Photo Gallery</h2><p>Your photos might well be the most valuable
+<strong>Photo Gallery</strong><p>Your photos might well be the most valuable
 digital property you have, so why trust it to companies that have no
 investment in the sentimental value of your family snaps?  Keep those
 photos local, backed up, easily accessed and free from the whims of

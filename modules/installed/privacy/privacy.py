@@ -9,7 +9,7 @@ class Privacy(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("privacy")
-        self.menu = cfg.main_menu.add_item("Privacy Controls", "/privacy", 12)
+        self.menu = cfg.main_menu.add_item("Privacy", "/privacy", 12)
         self.menu.add_item("General Config", "/privacy/config", 10)
         self.menu.add_item("Ad Blocking", "/privacy/adblock", 20)
         self.menu.add_item("TOR", "/privacy/TOR", 30)
@@ -29,7 +29,7 @@ class Privacy(PagePlugin):
         is a founding consideration, not an afterthought.</p>
         """
         return self.fill_template(title=_("Privacy Control Panel"), main=main,
-sidebar_right=_("""<h2>Statement of Principles</h2><p>When we say your
+sidebar_right=_("""<strong>Statement of Principles</strong><p>When we say your
 privacy is important, it's not just an empty pleasantry.  We really
 mean it.  Your privacy control panel should give you fine-grained
 control over exactly who can access your %s and the
@@ -37,6 +37,6 @@ information on it.</p>
 
 <p>Your personal information should not leave this box without your
 knowledge and direction.  And if companies or government wants this
-information, they have to ask <b>you</b> for it.  This gives you a
+information, they have to ask <strong>you</strong> for it.  This gives you a
 change to refuse and also tells you who wants your data.</p>
 """) % cfg.product_name)

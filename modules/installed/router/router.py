@@ -11,7 +11,7 @@ class router(PagePlugin):
     order = 9 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         self.register_page("router")
-        self.menu = cfg.main_menu.add_item("Router Admin", "/router", 10)
+        self.menu = cfg.main_menu.add_item("Router", "/router", 10)
 	self.menu.add_item("Wireless", "/router/wireless", 12)
 	self.menu.add_item("Firewall", "/router/firewall", 18)
 	self.menu.add_item("Hotspot and Mesh", "/router/hotspot")
@@ -54,7 +54,7 @@ class setup(PagePlugin):
     def index(self):
         parts = self.forms('/router/setup')
         parts['title'] = "General Router Setup"
-        parts['sidebar_right']="""<h2>Introduction</h2><p>Your %s is a replacement for your
+        parts['sidebar_right']="""<strong>Introduction</strong><p>Your %s is a replacement for your
 wireless router.  By default, it should do everything your usual
 router does.  With the addition of some extra modules, its abilities
 can rival those of high-end routers costing hundreds of dollars.</p>
@@ -88,7 +88,7 @@ class wan(FormPlugin, PagePlugin):
     url = ["/router/setup"]
     order = 10
 
-    js = """<script LANGUAGE="JavaScript">
+    js = """<script type="text/javascript">
     <!--
      function hideshow_static() {
          var d = document.getElementById('connect_type');
@@ -105,7 +105,7 @@ class wan(FormPlugin, PagePlugin):
     def sidebar_right(self, *args, **kwargs):
         side=''
         if cfg.users.expert():
-            side += """<h2>WAN Connection Type</h2>
+            side += """<strong>WAN Connection Type</strong>
         <h3>DHCP</h3><p>DHCP allows your router to automatically
         connect with the upstream network.  If you are unsure what
         option to choose, stick with DHCP.  It is usually
@@ -150,7 +150,7 @@ class wan(FormPlugin, PagePlugin):
         form.dotted_quad("Static DNS 2", name="dns2", quad=[dns20, dns21, dns22, dns23])
         form.dotted_quad("Static DNS 3", name="dns3", quad=[dns30, dns31, dns32, dns33])
         form.html('</div>')
-        form.html("""  <script LANGUAGE="JavaScript">
+        form.html("""  <script type="text/javascript">
     <!--
       hideshow_static();
     // --> 

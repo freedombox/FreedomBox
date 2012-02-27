@@ -8,7 +8,7 @@ class Help(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("help")
-        self.menu = cfg.main_menu.add_item(_("Documentation and FAQ"), "/help", 101)
+        self.menu = cfg.main_menu.add_item(_("Documentation"), "/help", 101)
         self.menu.add_item(_("Where to Get Help"), "/help/index", 5)
         self.menu.add_item(_("Developer's Manual"), "/help/view/plinth", 10)
         self.menu.add_item(_("FAQ"), "/help/view/faq", 20)
@@ -27,7 +27,7 @@ class Help(PagePlugin):
         offer suggestions, edits, and screenshots for completing
         it!</p>
 
-        <p><a href="http://wiki.debian.org/FreedomBox">A section of
+        <p><a href="http://wiki.debian.org/FreedomBox" target="_blank">A section of
         the Debian wiki</a> is devoted to the %(box)s.  At some
         point the documentation in the wiki and the documentation in
         the manual should dovetail.</p>
@@ -48,8 +48,9 @@ class Help(PagePlugin):
     @cherrypy.expose
     def about(self):
         return self.fill_template(title=_("About the %s" % cfg.box_name), main="""
-        <p> We live in a world where our use of the network is
-        mediated by organizations that often do not have our best
+        <img src="/static/theme/img/freedombox-logo-200px.png" style="float:right;padding:25px;" />
+        <p>We live in a world where our use of the network is
+        mediated by those who often do not have our best
         interests at heart. By building software that does not rely on
         a central service, we can regain control and privacy. By
         keeping our data in our homes, we gain useful legal
@@ -62,14 +63,15 @@ class Help(PagePlugin):
 	runs on must be cheap. The software it runs on must be easy to
 	install and administrate by anybody. It must be easy to
 	transition from existing services.</p>
-
-	<p>There are a number of projects working to realize a future
+	<p><a class="btn btn-primary btn-large" href="http://wiki.debian.org/FreedomBox" target="_blank">Learn more &raquo;</a></p>""",
+	sidebar_right=_("""<strong>Our Goal</strong><p>There are a number of projects working to realize a future
 	of distributed services; we aim to bring them all together in
 	a convenient package.</p>
 
-	<p>For more information about the Freedom Box project, see the
+	<p>For more information about the FreedomBox project, see the
 	<a href="http://wiki.debian.org/FreedomBox">Debian
-	Wiki</a>.</p>""")
+	Wiki</a>.</p>
+	"""))
 
 class View(PagePlugin):
     def __init__(self, *args, **kwargs):

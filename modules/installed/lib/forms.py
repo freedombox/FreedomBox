@@ -50,9 +50,9 @@ class Form():
             quad = [0,0,0,0]
         self.text += """             <label>
                 <span>%(label)s</span>
-                <input type="text" class="inputtextnowidth" name="%(name)s0" id="%(id)s0" value="%(q0)s" maxlength="3" size="1"/><b>.</b>
-                <input type="text" class="inputtextnowidth" name="%(name)s1" id="%(id)s1" value="%(q1)s" maxlength="3" size="1"/><b>.</b>
-                <input type="text" class="inputtextnowidth" name="%(name)s2" id="%(id)s2" value="%(q2)s" maxlength="3" size="1"/><b>.</b>
+                <input type="text" class="inputtextnowidth" name="%(name)s0" id="%(id)s0" value="%(q0)s" maxlength="3" size="1"/><strong>.</strong>
+                <input type="text" class="inputtextnowidth" name="%(name)s1" id="%(id)s1" value="%(q1)s" maxlength="3" size="1"/><strong>.</strong>
+                <input type="text" class="inputtextnowidth" name="%(name)s2" id="%(id)s2" value="%(q2)s" maxlength="3" size="1"/><strong>.</strong>
                 <input type="text" class="inputtextnowidth" name="%(name)s3" id="%(id)s3" value="%(q3)s" maxlength="3" size="1"/>
              </label>""" % {'label':label, 'name':name, 'id':id, 'q0':quad[0], 'q1':quad[1], 'q2':quad[2], 'q3':quad[3]}
 
@@ -77,7 +77,7 @@ class Form():
         self.text += """
              <div class="submit">
              <label><span></span>
-                 <input type="submit" class="button" value="%s" name="%s" id="%s" />
+                 <input type="submit" class="btn-primary" value="%s" name="%s" id="%s" />
              </label></div>\n""" % (label, name, id)
     def submit_row(self, buttons):
         """buttons is a list of tuples, each containing label, name, id.  Name and id are optional."""
@@ -99,7 +99,7 @@ class Form():
 
             if button_text != '':
                 button_text += "&nbsp;"
-            button_text += '<input type="submit" class="button" value="%s" name="%s" id="%s" />\n' % (label, name, id)
+            button_text += '<input type="submit" class="btn-primary" value="%s" name="%s" id="%s" />\n' % (label, name, id)
         self.text += '%s</div></label>' % button_text
     def name_or_id(self, name, id):
         if not name: name = id

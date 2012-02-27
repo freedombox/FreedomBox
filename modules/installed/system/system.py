@@ -18,7 +18,7 @@ class Sys(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys")
-        self.menu = cfg.main_menu.add_item(_("%s System" % cfg.product_name), "/sys", 100)
+        self.menu = cfg.main_menu.add_item(_("System"), "/sys", 100)
 	self.menu.add_item(_("Configure"), "/sys/config", 10)
 	self.menu.add_item(_("Package Manager"), "/sys/packages", 20)
 	self.menu.add_item(_("Users and Groups"), "/sys/users", 15)
@@ -37,7 +37,7 @@ class Sys(PagePlugin):
     @require()
     def packages(self):
         side=_("""
-<h2>Help</h2>
+<strong>Help</strong>
 <p>On this page, you can add or remove %s plugins to your %s.</p>
 <p>Plugins are just Debian packages, so Debian's usual package management features should make this job fairly easy.</p>
 """ % (cfg.product_name, cfg.box_name))

@@ -10,7 +10,7 @@ class Sharing(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sharing")
-        self.menu = cfg.main_menu.add_item("Resource Sharing", "/sharing", 35)
+        self.menu = cfg.main_menu.add_item("Sharing", "/sharing", 35)
         self.menu.add_item("File Server", "/sharing/files", 10)
 
     @cherrypy.expose
@@ -25,7 +25,7 @@ class Sharing(PagePlugin):
     @require()
     def files(self):
         return self.fill_template(title="File Server", main='', sidebar_right=_("""
-<h2>Freedom NAS</h2><p> The %s can make your spare hard drives accessible to your
+<strong>Freedom NAS</strong><p> The %s can make your spare hard drives accessible to your
 local network, thus acting as a NAS server.  We currently support
 sharing files via NFS and SMB. 
 
@@ -47,7 +47,7 @@ class PrinterSharing(PagePlugin):
 <p>TODO: Setup and install CUPS</p>
 """
         return self.fill_template(title="Printer Sharing", main=main, sidebar_right="""
-<h2>Share Your Printer</h2><p> The %s can share your printer via Samba and CUPS.</p>
+<strong>Share Your Printer</strong><p> The %s can share your printer via Samba and CUPS.</p>
 """ % cfg.box_name)
 
  

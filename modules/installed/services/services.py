@@ -8,7 +8,7 @@ class Services(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("services")
-        self.menu = cfg.main_menu.add_item("Other Services", "/services", 90)
+        self.menu = cfg.main_menu.add_item("Services", "/services", 90)
         self.menu.add_item("Open ID", "/services/openid", 35)
 
     @cherrypy.expose
@@ -19,7 +19,7 @@ class Services(PagePlugin):
     @require()
     def openid(self):
         return self.fill_template(title="Open ID", main='', sidebar_right="""
-<h2>One Login for Every Site</h2><p>Your %s is also an OpenID
+<strong>One Login for Every Site</strong><p>Your %s is also an OpenID
 machine.  It can generate credentials that allow you to log in to many
 websites without the need to remember or enter a separate username and
 password at each one.</p>

@@ -14,5 +14,5 @@ class Info(PagePlugin):
     @require()
     def index(self):
         return self.fill_template(title="Router Information", main="""
-<p> Eventually we will display a bunch of info, graphs and logs about the routing functions here.</p>
+<p>Eventually we will display a bunch of info, graphs and logs about the routing functions here.</p>
 """)

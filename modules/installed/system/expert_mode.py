@@ -15,7 +15,7 @@ class experts(FormPlugin, PagePlugin):
     order = 10
 
     def help(self, *args, **kwargs):
-        side = _(#"""<h2>Expert Mode</h2>
+        side = _(#"""<strong>Expert Mode</strong>
         """ 
         <p>The %(box)s can be administered in two modes, 'basic'
         and 'expert'.  Basic mode hides a lot of features and

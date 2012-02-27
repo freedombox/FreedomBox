@@ -64,7 +64,7 @@ class general(FormPlugin, PagePlugin):
         ## only expert users are going to get deep enough to see any timestamps
         if not cfg.users.expert():
             return ''
-        return _(#"""<h2>Time Zone</h2> 
+        return _(#"""<strong>Time Zone</strong> 
         """<p>Set your timezone to get accurate
         timestamps.  %(product)s will use this information to set your
         %(box)s's systemwide timezone.</p>

@@ -1,15 +1,13 @@
-#  HTML5 Reset (http://html5reset.org)
+#  Plinth HTML5 Bootstrap Theme by Sean "Diggity" O'Brien (https://github.com/seandiggity/Plinth)
 
 ## Summary:
 
-HTML5 Reset is a simple set of best practices to get web projects off on the right foot.
+This theme is free software offered to you under the terms of the GNU Affero General Public License, Version 3 or later:
+http://www.gnu.org/licenses/agpl.html
 
-1. A style sheet designed to strip initial files from browsers, meaning you start off with a blank slate.
-2. Easy to customize -- remove whatever you don't need, keep what you do.
-3. Analytics and jQuery snippets in place
-4. Meta tags ready for population
-5. Empty mobile and print style sheets, including blocks for device orientation
-6. Modernizr.js [http://www.modernizr.com/](http://www.modernizr.com/) enables HTML5 compatibility with IE (and a dozen other great features)
-7. IE-specific classes for simple CSS-targeting
-8. iPhone/iPad/iTouch icon snippets
-9. Lots of other keen stuff...
+It is based upon Twitter's Bootstrap (http://twitter.github.com/bootstrap) with some pieces from HTML5 Boilerplate 
+(http://html5boilerplate.com) and HTML5-Reset (http://html5reset.org).  As such, it includes code from a variety of 
+HTML5, CSS3, and JavaScript projects.  Please see the individual files included with this theme for author information.
+
+Refer to the Plinth documentation for information about editing themes and templates.
+

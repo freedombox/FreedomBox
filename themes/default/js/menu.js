@@ -1,11 +1,11 @@
 function main_menu(items) {
-    output = "<ul>"
+    output = '<ul class="nav">'
     for (item in items) {
 	i = items[item];
 
 	// Handle active page
         if (i["active"]) {
-	    active = 'class = "active"';
+	    active = ' class="active"';
         } else {
 	    active = '';
 	}
@@ -18,25 +18,25 @@ function main_menu(items) {
 	    label = "&nbsp;<br />" + label;
 	}
 
-	output = output +'<li><a href="' + i["url"] + '" ' + active + '>' + label + "</a></li>";
+	output = output +'<li' + active + '><a href="' + i["url"] + '"' + active + '>' + label + "</a></li>";
     }
     output = output + "</ul>";
     document.write(output);
 }
 
 function render_items(items) {
-    output = "<ul>";
+    output = '<ul class="nav nav-list"><li class="nav-header">Menu</li>';
     for (item in items) {
 	i = items[item];
 
 	// Handle active page
         if (i["active"]) {
-	    active = 'class = "active"';
+	    active = ' class="active"';
         } else {
 	    active = '';
 	}
 
-	output = output +'<li><a href="' + i["url"] + '" ' + active + '>' + i['label'] + "</a></li>";
+	output = output +'<li' + active + '><a href="' + i["url"] + '"' + active + '>' + i['label'] + "</a></li>";
 	if (i['subs']) {
 	    output += render_items(i['subs']);
 	}
@@ -49,6 +49,6 @@ function side_menu(items) {
     if (items.length == 0) {
 	return 0;
     }
-    output = "<h2>Menu</h2>" + render_items(items);
+    output = render_items(items);
     document.write(output);
 }
