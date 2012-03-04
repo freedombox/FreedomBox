@@ -29,18 +29,18 @@ connections between arbitrary servers and services.  In essence, A requests a
 service from B, B replies with the service's location, and A uses that location
 for the service.
 
-#. A sends a signed (and encrypted?) message to B's Santiago, requesting
-   information, in the form of:
+#. A requests service information from B with a signed and encrypted message in
+   the form of:
 
    - Will *X* do *Y* for me?
    - Optional: Reply to my Santiago at *Z*.
 
 #. If B does not recognize A or does not trust A, it stays silent.
 
-#. If B recognizes and trusts A, it replies with a signed (and encrypted?)
-   message to A's Santiago, giving the location of A's usable service.  If B
-   will not (cannot or won't) provide A the service, B replies with a
-   rejection.  This message is in the form of:
+#. If B recognizes and trusts A, it replies with a signed and encrypted message
+   to A's Santiago, giving the location of A's usable service.  If B will not
+   (cannot or won't) provide A the service, B replies with a rejection.  This
+   message is in the form of:
 
    - *X* will (not) do *Y* for *Z*.
 
@@ -51,22 +51,13 @@ Each Santiago process is responsible for managing a single key and set of
 friendships, so multiple Santiagi per box (each with a different purpose or
 social circle) is completely possible and intended.
 
-Our Cheats
-----------
-
-Right now, we're cheating.  There's no discovery.  We start by pairing boxes,
-exchanging both box-specific PGP keys and Tor Hidden Service IDs.  This allows
-boxes to trust and communicate with one another, regardless of any adverserial
-interference.  Or, rather, any adverserial interference will be obvious and
-ignorable.
-
 Message Exchange
 ----------------
 
 The Santiago service is running on *B*, waiting for connections.  When it
 receives a request message, that message must be signed by a known and trusted
-party.  If it is acceptably signed (with a known, and valid ID), *B* will
-reply to *A*'s Santiago with an acceptably signed message.
+party.  If it is acceptably signed (with a known and valid ID), *B* will reply
+to *A*'s Santiago with an acceptably signed message.
 
 The contents of the request message are as follows:
 
@@ -79,10 +70,10 @@ proxied, it must contain a "To" header).  If *A* includes a location stanza,
 *B* MUST respect that location in its response and update that location for
 its Santiago service from *A* going forward.
 
-In this document, I elide the Santiago acknowledgements (because they add a lot
+In this document, I elide the Santiago acknowledgments (because they add a lot
 of unnecessary noise - we can assume communication failures are failures of
-acknolwedgement receipt).  But, after each message that needs a response, an
-acceptably signed acknowledgement message is returned.  Otherwise the sender
+acknowledgment receipt).  But, after each message that needs a response, an
+acceptably signed acknowledgment message is returned.  Otherwise the sender
 preferentially moves on to the recipient's next Santiago address after a
 sufficient amount of time has passed.  An example of this communication, with
 these details specified, follows:
@@ -101,8 +92,6 @@ Santiago for each and every request?
 Each node contains two dictionaries/hash-tables listing (1) what they serve and
 who they serve it to, and (2) what services they use, who from, and where that
 service is located.
-
-These are stored in the "Santiago" database, as three individual tables.
 
 What I Host and Serve
 ~~~~~~~~~~~~~~~~~~~~~
@@ -178,7 +167,7 @@ The Simple Case
 I'm looking for somebody to provide a service, *X*.
 
 *A* sends a request to *C*, and *C* doesn't respond.  *A* requests the
-service from *B* and *B* NBKs.  *A* requests that *B* proxy my request
+service from *B* and *B* NAKs.  *A* requests that *B* proxy my request
 to *C*, in case *B* can reach *C*.  *C* replies directly to *A*, and
 we begin communicating on that service:
 
@@ -261,18 +250,27 @@ Anachronisms
 It's odd because this has a potential for a number of irrelevant communications.
 
 It's possible for A to send multiple requests to B and for B to receive multiple
-requests before A acknowledges responses.
+requests before A acknowledges responses.  Removing these oddly timed messages
+requires A and B to exchange more information (acknowledgments and replies would
+need to include the service location that responded).  I'm not sure whether
+sending more messages or identifying the active service to friends is the better
+option.  Probably the latter, because it allows for communication to take fewer
+messages (an order of magnitude less, if proxying is involved).
 
-A -> B, A -> B, B -> A, A -> B.
-
-Code Structure
---------------
-
-Yeah, I really need to hammer this part out.  Stupid MVC model.
+Code/Object Structure
+---------------------
 
 So, listeners receive responses and pass them up to the controller that queues
-it for the responder.  Lots of listeners, a single responder.  Listeners have a
-single method, while responders have multiple (per type of response?).
+it for the sender.  Up to one listener and sender per protocol.
+
+Our Cheats
+----------
+
+Right now, we're cheating.  There's no discovery.  We start by pairing boxes,
+exchanging both box-specific PGP keys and Tor Hidden Service IDs.  This allows
+boxes to trust and communicate with one another, regardless of any adverserial
+interference.  Or, rather, any adverserial interference will be obvious and
+ignorable.
 
 Unit Tests
 ==========

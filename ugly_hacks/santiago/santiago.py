@@ -254,9 +254,9 @@ class SantiagoSender(object):
         """Sends the request to another server."""
         
         # TODO pull this off, another day.
-        return (self.santiago.instance +" is not %(server)s.  proxying request. " +
-                "%(key)s is requesting the %(service)s from %(server)s. " +
-                "%(hops)d hops remain.") % locals()
+        return ("%(key)s is requesting the %(service)s from %(server)s. " +
+                self.santiago.instance + " is not %(server)s. " +
+                "proxying request. %(hops)d hops remain.") % locals()
 
 
 if __name__ == "__main__":
