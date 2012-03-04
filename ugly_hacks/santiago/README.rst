@@ -47,6 +47,10 @@ for the service.
 In a nutshell, that's the important part.  There are additional details to
 manage, but they're implied by and built on the system above.
 
+Each Santiago process is responsible for managing a single key and set of
+friendships, so multiple Santiagi per box (each with a different purpose or
+social circle) is completely possible and intended.
+
 Our Cheats
 ----------
 
@@ -98,6 +102,8 @@ Each node contains two dictionaries/hash-tables listing (1) what they serve and
 who they serve it to, and (2) what services they use, who from, and where that
 service is located.
 
+These are stored in the "Santiago" database, as three individual tables.
+
 What I Host and Serve
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -108,9 +114,9 @@ These data are stored as pair of dictionaries:
 - The GPG ID to Service dictionary.  This lists which service each user is
   authorized for::
 
-      0x0928: [ "proxy": "proxy", "wiki": "wiki",
-                "drinking buddy": "drinking buddy" ]
-      0x7747: [ "wiki": "wiki", "proxy": "restricted_proxy" ]
+      0x0928: { "proxy": "proxy", "wiki": "wiki",
+                "drinking buddy": "drinking buddy" }
+      0x7747: { "wiki": "wiki", "proxy": "restricted_proxy" }
 
 - The Service to Location dictionary.  This lists the locations each service
   runs on::
@@ -249,6 +255,25 @@ Note that:
 - Irrelevant signatures (intermediate links in the WOT) are stripped, hiding the
   WOT's structure from friends.
 
+Anachronisms
+~~~~~~~~~~~~
+
+It's odd because this has a potential for a number of irrelevant communications.
+
+It's possible for A to send multiple requests to B and for B to receive multiple
+requests before A acknowledges responses.
+
+A -> B, A -> B, B -> A, A -> B.
+
+Code Structure
+--------------
+
+Yeah, I really need to hammer this part out.  Stupid MVC model.
+
+So, listeners receive responses and pass them up to the controller that queues
+it for the responder.  Lots of listeners, a single responder.  Listeners have a
+single method, while responders have multiple (per type of response?).
+
 Unit Tests
 ==========
 
@@ -382,6 +407,52 @@ Functional Questions
     queuing harder with multiple listeners).  Services should be recorded and
     messages should be queued at a file-level so that each process who needs
     access can have it.
+
+:Santiago Updates: Updates are tricky things.  They're when we're most
+    vulnerable.  The question becomes: since both boxes need to know where they
+    are to communicate successfully, but at least one box may have changed its
+    location (even its Santiago), how do we handle those updates, while reducing
+    the vulnerability as much as possible?  Let's assume that A (the requester)
+    changes its locations frequently, while B (the server) does not.  A requests
+    a service from B and B then needs to reply.  How does B know where to reply?
+    It has a few old Santiago ports left over in the database.  A might also
+    have sent Santiago updates with the request message.  How does B handle
+    those updates?
+
+    Does B queue those Santiagi last in the update queue, are they checked
+    first, or is appending Santiagi not allowed?  Each creates a different
+    vulnerability.
+
+    If A's key is compromised, but his box is not, then the request is fake and
+    so are the new Santiagi.  The old ones are still valid.
+
+    If A's box is compromised, then his key is probably compromised too, and all
+    existing Santiagi are compromised.  This could be A trying to transition to
+    a new box without changing keys, though, so the new Santiagi are valid.
+
+    If A NAKs B's update message when A didn't ask for it, causing B to consider
+    that request from A (and the related Santiago) compromised, then that too
+    could be used by adversaries with a compromised key to deny A service.
+
+    What a bloody circle.  Both options are bad, but some worse than others?
+
+    Well, if we prevent Santiagi updates in messages altogether, B might never
+    find A again, if A moved.  So that sucks.  But, that's also overloading
+    messages and implicitly allowing push-updating.  If we allow pull-updating
+    only, then both boxes need to be accessible to one another at all times.
+    More secure, but a *lot* less useful.
+
+    Is it meaningful to consider some forms of signed communication more
+    vulnerable than others, or are we just saying that if the communication is
+    successfully signed, then it must be valid, damn the consequences?  I think
+    so, actually.  Otherwise, we start jumping at shadows.  There's no way to
+    know whether a key's been compromised until the revocation certificate is
+    deployed, and I can't verify anybody else's security measures.  Perhaps your
+    definition of security is "this key I share between me, my wife, our three
+    kids, and the dog's neighbor."  If I happen to trust the dog's neighbor
+    (but, oddly, not the dog itself), then I might trust the key.  If I don't
+    trust the second of three kids, then why am I trusting the key?  Trust is an
+    annoyingly deep subject, and one of the few good uses of the word "faith."
 
 References
 ==========

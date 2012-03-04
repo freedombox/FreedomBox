@@ -8,6 +8,8 @@ user_db = os.path.join(data_dir, "users")
 status_log_file = os.path.join(data_dir, "status.log")
 access_log_file =  os.path.join(data_dir, "access.log")
 users_dir = os.path.join(data_dir, "users")
+santiago = os.path.join(data_dir, "santiago.sqlite3")
+
 
 product_name = "Plinth"
 box_name = "Freedom Plug"

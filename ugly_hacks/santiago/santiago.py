@@ -20,178 +20,149 @@ or later.  A copy of GPLv3 is available [from the Free Software Foundation]
 
 """
 
-# If you're crazy like me, you can turn this script into its own
-# documentation by running::
-#
-#     python pylit.py -c backup - | rst2html > backup.html
-#
-# You'll need PyLit_ and ReStructuredText_ for this to work correctly.
-#
-# .. _pylit: http://pylit.berlios.de/
-# .. _restructuredtext: http://docutils.sourceforge.net/rst.html
-#
-# .. contents::
+# debug hacks
+# ===========
 
-import cherrypy
-import os
-from simplejson import JSONEncoder
-
-
-DEBUG = 0
-encoder = JSONEncoder()
-
-# random setup tools
-# ==================
+DEBUG = 1
 
 if DEBUG:
-    for x in range(0, 3):
-        for y in range(0, 7):
-            print "WARNING",
-        print ""
-    print "You're in DEBUG MODE!  You are surprisingly vulnerable!  Raar!"
+    """A few hacks to make testing easier."""
 
-def fix_old_cherrypy():
-    """Make Lenny's CherryPy forward-compatible."""
+    def cfg_hack():
+        import sys
+        sys.path.append("../../")
+        import cfg
 
-    for x in range(0,3):
-        for y in range(0, 7):
-            print "WARNING",
-        print ""
+    def ohnoes():
+        for y in range(0, 3):
+            for x in range(0, 7):
+                print "WARNING",
+            print ""
+        print "You're in DEBUG MODE!  You are surprisingly vulnerable!  Raar!"
 
-    print("You're using an old CherryPy version!  We're faking it!")
-    print("Expect the unexpected!  Raar!")
-
-    def jsonify_tool_callback(*args, **kwargs):
-        response = cherrypy.response
-        response.headers['Content-Type'] = 'application/json'
-        response.body = encoder.iterencode(response.body)
-
-    cherrypy.tools.json_out = cherrypy.Tool('before_finalize', jsonify_tool_callback, priority=30)
-
-if cherrypy.__version__ < "3.2":
-    fix_old_cherrypy()
+    ohnoes()
+    cfg_hack()
 
 
-# actual Santiago
-# ===============
+# normal imports
+# ==============
+
+from collections import defaultdict as DefaultDict
+import util
+
 
 class Santiago(object):
     """Santiago's base class, containing listener and sender defaults."""
 
-    DEFAULT_RESPONSE = """\
-<html><head><title>Use it right.</title></head><body>
-
-    <p>Nice try, now try again with a request like:</p>
-    <p>http://localhost:8080/santiago/(gpgId)/(service)/(server)</p>
-
-    <dl>
-        <dt>gpgId</dt><dd>james, ian</dd>
-        <dt>service</dt><dd>wiki, web</dd>
-        <dt>server</dt><dd>nick</dd>
-    </dl>
-
-    <p>This'll get you good results:</p>
-    <code><a href="http://localhost:8080/santiago/james/wiki/nick">
-        http://localhost:8080/santiago/james/wiki/nick</a></code>
-
-    <p>See the <code>serving_to</code>, <code>serving_what</code>, and
-    <code>me</code> variables.</p>
-
-</body></html>"""
-
     def __init__(self, instance):
-        self.load_instance(instance)
+        """Initializes the Santiago service.
 
-        # TODO Does the listener need to know what services others are running?
-        # TODO Does the sender need to know what services I'm running?
-        self.load_serving_to()
-        self.load_serving_what()
-        self.load_known_services()
+        instance is the PGP key this Santiago service is responsible for.
+
+        Each service contains one or more senders and listeners, primarily
+        divided by protocol, all pulling from and adding to the same pool of
+        services.
+
+        Each Santiago keeps track of the services it hosts, and other servers'
+        Santiago services.  A Santiago has no idea of and is not responsible for
+        anybody else's services.
+        
+        """
+        self.instance = instance
+        self.hosting = self.load_dict("hosting")
+        self.keys = self.load_dict("keys")
+        self.servers = self.load_dict("servers")
+
+        self.listeners = list()
+        self.senders = list()
+
+        # load settings by name
+        settings = self.load_dict("settings")
+        for key in ("socket_port", "max_hops", "proxy_list"):
+            setattr(self, key, settings[key] if key in settings else None)
+
+    def load_dict(self, name):
+        """Loads a dictionary from file."""
+
+        # FIXME: figure out the threading issue.
+        #return util.filedict_con("%s_%s " % (cfg.santiago, self.instance), name)
+        return {
+            "hosting": DefaultDict(list),
+            "keys": DefaultDict(list),
+            "servers": DefaultDict(lambda: DefaultDict(list)),
+            "settings": DefaultDict(None)
+            }[name]
 
     def am_i(self, server):
-        return str(self.me) == str(server)
+        """Hello?  Is it me you're looking for?"""
+        
+        return self.instance == server
 
-    def load_instance(self, instance):
-        """Load instance settings from a file.
+    # Server-related tags
+    # -------------------
 
-        A terrible, unforgivable hack.  But it's a pretty effective prototype,
-        allowing us to add and remove attributes really easily.
+    def provide_at_location(self, service, location):
+        """Serve service at location.
 
-        """
-        settings = run_file("%s%ssettings.py" % (instance, os.sep))
-        for key, value in settings.iteritems():
-            setattr(self, key, value)
+        post::
 
-        self.instance = instance
-
-    # FIXME I need to handle instance vs controller correctly.  this is the
-    # wrong place.
-    #
-    # I'm putting instance data into the controller, which is nutters.  Too
-    # tired to fix tonight, though.
-    #
-    # These data should probably be loaded in the server and listener,
-    # respectively, but I don't know whether one needs to know about the other's
-    # services.
-
-    def load_serving_to(self):
-        """Who can see which of my services?"""
-
-        self.serving_to = run_file("%s%sserving_to.py" % (self.instance,
-                                                          os.sep))
-    def load_serving_what(self):
-        """What location does that service translate to?"""
-
-        self.serving_what = run_file("%s%sserving_what.py" % (self.instance,
-                                                              os.sep))
-    def load_known_services(self):
-        """What services do I know of?"""
-
-        self.known_services = run_file("%s%sknown_services.py" % (self.instance,
-                                                                  os.sep))
-    @cherrypy.expose
-    def index(self):
-        """Do nothing, unless we're debugging."""
-
-        if DEBUG:
-            return DEFAULT_RESPONSE
-
-
-class SantiagoListener(Santiago):
-    """Listens for requests on the santiago port."""
-
-    def __init__(self, instance, port=8080):
-        super(SantiagoListener, self).__init__(instance=instance)
-
-        self.socket_port = port
-
-    @cherrypy.expose
-    @cherrypy.tools.json_out()
-    def santiago(self, from_id=None, to_id=None, service=None, hops=0): #, new_santiago_id=""):
-        """Handles an incoming request.
-
-        FIXME: handle new Santiago ID list.
+            location in cfg.santiago.hosting[service]
 
         """
-        message = { "requester": from_id,
-                    "server": to_id,
-                    "service": service,
-                    "hops": hops, }
-                    #"santiago": new_santiago_id }
+        self.hosting[service].append(location)
 
-        # FIXME: this is being dumb and not working how I expect it.  later.
-        # if not self.i_am(message["server"]):
-        #     return self.proxy_santiago_request(message)
+    def provide_for_key(self, service, key):
+        """Serve service for user.
 
-        try:
-            return self.serving_what[
-                self.serving_to[message["requester"]][message["service"]]]
-        except KeyError:
-            # TODO: handle responses.  should a fail just timeout?
-            return None
+        post::
 
-    @cherrypy.tools.json_out()
-    def proxy_santiago_request(self, message, hops=3):
+            service in cfg.santiago.keys[key]
+
+        """
+        self.keys[key].append(service)
+
+    # client-related tags
+    # -------------------
+
+    def learn_service(self, service, key, locations):
+        """Learn a service to use, as a client.
+
+        post::
+
+            forall(locations, lambda x: x in cfg.santiago.servers[service][key])
+
+        """
+        self.servers[service][key] += locations
+
+    def consume_service(self, service, key):
+        return self.servers[service][key]
+
+    def add_listener(self, listener):
+        """Registers a protocol-specific listener."""
+        
+        self.listeners.append(listener)
+
+    def add_sender(self, sender):
+        """Registers a sender."""
+
+        self.senders.append(sender)
+
+    # processing related tags
+    # -----------------------
+        
+    def serve(self, key, service, server, hops, santiagi):
+        """Provide a requested service to a client."""
+
+        if santiagi is not None:
+            self.learn_service("santiago", key, santiagi)
+
+        if not self.am_i(server):
+            return self.proxy(key, service, server, hops=hops)
+
+        if service in self.keys[key]:
+            return self.hosting[service]
+
+    def proxy(self, key, service, server, hops=3):
         """Passes a Santiago request off to another known host.
 
         We're trying to search the friend list for the target server.
@@ -203,20 +174,27 @@ class SantiagoListener(Santiago):
         if (hops < 1):
             return
 
-        # this counts as a hop.
         hops -= 1
 
-        # TODO pull this off, another day.
-        return str(message)
+        # TODO pick the senders more intelligently.
+        return self.senders[0].proxy(key, service, server, hops)
 
 
-class SantiagoSender(Santiago):
-    """Sendss the Santiago request to a Santiago service."""
+class SantiagoListener(object):
+    """Listens for requests on the santiago port."""
 
-    def __init__(self, instance, proxy):
-        super(SantiagoSender, self).__init__(instance=instance)
+    def __init__(self, santiago):
+        self.santiago = santiago
 
-        self.proxy = proxy if proxy in self.proxy_list else None
+    def serve(self, key, service, server, hops, santiagi):
+        return self.santiago.serve(key, service, server, hops, santiagi)
+
+
+class SantiagoSender(object):
+    """Sends the Santiago request to a Santiago service."""
+
+    def __init__(self, santiago):
+        self.santiago = santiago
 
     def request(self, destination, resource):
         """Sends a request for a resource to a known Santiago.
@@ -231,7 +209,8 @@ class SantiagoSender(Santiago):
         - Other Santiago listeners.
         - An action.
 
-        post:
+        post::
+
             not (__return__["destination"] is None)
             not (__return__["service"] is None)
             # TODO my request is signed with my GPG key, recipient encrypted.
@@ -239,24 +218,64 @@ class SantiagoSender(Santiago):
         """
         pass # TODO: do.
 
+    def nak(self):
+        """Denies a requested resource to a Santiago.
 
-# utility functions
-# =================
+        No reason is given.  All the recipient knows is that the host did not
+        have that resource for that client.
 
-def run_file(filename):
-    """Returns the result of executing the Python file.  Terrible idea.  Effective
-    hack.
+        """
+        pass
 
-    TODO: Replace this with James's database stuff!
+    def ack(self):
+        """A successful reply to a Santiago request.
 
-    If you try to use this in the wild, I will hunt you down and cut you.
+        The response must include:
 
-    """
-    with open(filename) as in_file:
-        return eval("".join(in_file.readlines()))
+        - A server.
+
+        The response may include:
+
+        - The Santiago listener that received and accepted the request.
+
+        """
+        pass
+
+    def end(self):
+        """Sent by the original requester, when it receives the server's
+        response, telling the server it needs to send no more responses.
+
+        Sent to the Santiago that first received the request.
+
+        """
+        pass
+
+    def proxy(self, key, service, server, hops):
+        """Sends the request to another server."""
+        
+        # TODO pull this off, another day.
+        return (self.santiago.instance +" is not %(server)s.  proxying request. " +
+                "%(key)s is requesting the %(service)s from %(server)s. " +
+                "%(hops)d hops remain.") % locals()
 
 
 if __name__ == "__main__":
-    santiago = SantiagoListener("fbx")
+    import cherrypy
+    import sys
+    sys.path.append(".")
+    from protocols.http import SantiagoHttpListener, SantiagoHttpSender
 
-    cherrypy.quickstart(santiago)
+    # build the Santiago
+    santiago = Santiago("nick")
+    http_listener = SantiagoHttpListener(santiago)
+    http_sender = SantiagoHttpSender(santiago)
+    santiago.add_listener(http_listener)
+    santiago.add_sender(http_sender)
+
+    # TODO move this into the table loading.
+    santiago.provide_at_location("wiki", "192.168.0.13")
+    santiago.provide_for_key("wiki", "james")
+    santiago.max_hops = 3
+    santiago.proxy_list = ("tor")
+
+    cherrypy.quickstart(http_listener)
