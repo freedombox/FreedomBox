@@ -370,9 +370,6 @@ Design Questions
 
 :Add Expiry: Add both service and proxy (search) hop expiry.
 
-:Clarify interactions: Clarify controller/sender/listener interactions.  Who
-    knows what and how much?  We need multiple listener ports.
-
 :Moar Unit Testing!: Add real Unit Testing.  Spec out the system through test
     harnesses.  If the tests can run the system, it's complete.
 
