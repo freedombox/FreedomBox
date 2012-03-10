@@ -114,7 +114,7 @@ class Santiago(PagePlugin):
 class santiago(PagePlugin):
    def __init__(self, *args, **kwargs):
       PagePlugin.__init__(self, *args, **kwargs)
-      self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "/privacy/santiago", 10)
+      self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "icon-leaf", "/privacy/santiago", 10)
       self.register_page("privacy.santiago")
 
    @cherrypy.expose

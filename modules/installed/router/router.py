@@ -11,11 +11,11 @@ class router(PagePlugin):
     order = 9 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         self.register_page("router")
-        self.menu = cfg.main_menu.add_item("Router", "/router", 10)
-	self.menu.add_item("Wireless", "/router/wireless", 12)
-	self.menu.add_item("Firewall", "/router/firewall", 18)
-	self.menu.add_item("Hotspot and Mesh", "/router/hotspot")
-	self.menu.add_item("Info", "/router/info", 100)
+        self.menu = cfg.main_menu.add_item("Router", "icon-retweet", "/router", 10)
+	self.menu.add_item("Wireless", "icon-signal", "/router/wireless", 12)
+	self.menu.add_item("Firewall", "icon-fire", "/router/firewall", 18)
+	self.menu.add_item("Hotspot and Mesh", "icon-map-marker", "/router/hotspot")
+	self.menu.add_item("Info", "icon-list-alt", "/router/info", 100)
 
     @cherrypy.expose
     def index(self):
@@ -45,9 +45,9 @@ class router(PagePlugin):
 class setup(PagePlugin):
     def __init__(self, *args, **kwargs):
         self.register_page("router.setup")
-        self.menu = cfg.html_root.router.menu.add_item("General Setup", "/router/setup", 10)
-        self.menu.add_item("Dynamic DNS", "/router/setup/ddns", 20)
-        self.menu.add_item("MAC Address Clone", "/router/setup/mac_address", 30)
+        self.menu = cfg.html_root.router.menu.add_item("General Setup", "icon-cog", "/router/setup", 10)
+        self.menu.add_item("Dynamic DNS", "icon-flag", "/router/setup/ddns", 20)
+        self.menu.add_item("MAC Address Clone", "icon-barcode", "/router/setup/mac_address", 30)
 
     @cherrypy.expose
     @require()

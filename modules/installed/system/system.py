@@ -18,10 +18,10 @@ class Sys(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys")
-        self.menu = cfg.main_menu.add_item(_("System"), "/sys", 100)
-	self.menu.add_item(_("Configure"), "/sys/config", 10)
-	self.menu.add_item(_("Package Manager"), "/sys/packages", 20)
-	self.menu.add_item(_("Users and Groups"), "/sys/users", 15)
+        self.menu = cfg.main_menu.add_item(_("System"), "icon-cog", "/sys", 100)
+	self.menu.add_item(_("Configure"), "icon-cog", "/sys/config", 10)
+	self.menu.add_item(_("Package Manager"), "icon-gift", "/sys/packages", 20)
+	self.menu.add_item(_("Users and Groups"), "icon-user", "/sys/users", 15)
 
     @cherrypy.expose
     def index(self):

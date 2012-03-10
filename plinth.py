@@ -40,7 +40,7 @@ def error_page_500(status, message, traceback, version):
    cfg.log.error("500 Internal Server Error.  Trackback is above.")
    more="""<p>This is an internal error and not something you caused
    or can fix.  Please report the error on the <a
-   href="https://github.com/jvasile/Plinth/issues">bug tracker</a> so
+   href="https://github.com/seandiggity/Plinth/issues">bug tracker</a> so
    we can fix it.</p>"""
    return error_page(status, message, "<p>%s</p><pre>%s</pre>" % (more, "\n".join(traceback.split("\n"))))
 

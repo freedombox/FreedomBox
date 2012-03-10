@@ -10,7 +10,7 @@ access_log_file =  os.path.join(data_dir, "access.log")
 users_dir = os.path.join(data_dir, "users")
 
 product_name = "Plinth"
-box_name = "Freedom Plug"
+box_name = "FreedomBox"
 
 port = 8000
 

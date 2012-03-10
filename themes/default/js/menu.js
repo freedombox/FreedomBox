@@ -11,12 +11,16 @@ function main_menu(items) {
 	}
 
 	// Line break labels
-	label = i["label"];
+	/*label = i["label"];
 	if (label.search(" ") != -1) {
 	    label = label.replace(" ", "<br />");
 	} else {
 	    label = "&nbsp;<br />" + label;
-	}
+	}*/
+
+	// Add icon before labels
+	icon = '<i class="' + i["icon"] + ' icon-white nav-icon"></i>';
+	label = icon + i["label"];
 
 	output = output +'<li' + active + '><a href="' + i["url"] + '"' + active + '>' + label + "</a></li>";
     }
@@ -32,11 +36,20 @@ function render_items(items) {
 	// Handle active page
         if (i["active"]) {
 	    active = ' class="active"';
+
+	    // Add icon before labels
+	    icon = '<i class="' + i["icon"] + ' icon-white sidenav-icon"></i>';
+	    label = icon + i["label"];
         } else {
 	    active = '';
+
+	    // Add icon before labels
+	    icon = '<i class="' + i["icon"] + ' sidenav-icon"></i>';
+	    label = icon + i["label"];
 	}
 
-	output = output +'<li' + active + '><a href="' + i["url"] + '"' + active + '>' + i['label'] + "</a></li>";
+	output = output +'<li' + active + '><a href="' + i["url"] + '"' + active + '>' + label + "</a></li>";
+
 	if (i['subs']) {
 	    output += render_items(i['subs']);
 	}

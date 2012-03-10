@@ -10,8 +10,8 @@ class Sharing(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sharing")
-        self.menu = cfg.main_menu.add_item("Sharing", "/sharing", 35)
-        self.menu.add_item("File Server", "/sharing/files", 10)
+        self.menu = cfg.main_menu.add_item("Sharing", "icon-share-alt", "/sharing", 35)
+        self.menu.add_item("File Server", "icon-inbox", "/sharing/files", 10)
 
     @cherrypy.expose
     def index(self):
@@ -37,7 +37,7 @@ class PrinterSharing(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sharing.printer")
-        cfg.html_root.sharing.menu.add_item("Printer Sharing", "/sharing/printer", 35)
+        cfg.html_root.sharing.menu.add_item("Printer Sharing", "icon-print", "/sharing/printer", 35)
 
     @cherrypy.expose
     @require()

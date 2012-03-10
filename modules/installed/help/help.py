@@ -8,12 +8,12 @@ class Help(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("help")
-        self.menu = cfg.main_menu.add_item(_("Documentation"), "/help", 101)
-        self.menu.add_item(_("Where to Get Help"), "/help/index", 5)
-        self.menu.add_item(_("Developer's Manual"), "/help/view/plinth", 10)
-        self.menu.add_item(_("FAQ"), "/help/view/faq", 20)
-        self.menu.add_item(_("%s Wiki" % cfg.box_name), "http://wiki.debian.org/FreedomBox", 30)
-	self.menu.add_item(_("About"), "/help/about", 100)
+        self.menu = cfg.main_menu.add_item(_("Documentation"), "icon-book", "/help", 101)
+        self.menu.add_item(_("Where to Get Help"), "icon-search", "/help/index", 5)
+        self.menu.add_item(_("Developer's Manual"), "icon-info-sign", "/help/view/plinth", 10)
+        self.menu.add_item(_("FAQ"), "icon-question-sign", "/help/view/faq", 20)
+        self.menu.add_item(_("%s Wiki" % cfg.box_name), "icon-pencil", "http://wiki.debian.org/FreedomBox", 30)
+	self.menu.add_item(_("About"), "icon-star", "/help/about", 100)
 
     @cherrypy.expose
     def index(self):
@@ -48,7 +48,7 @@ class Help(PagePlugin):
     @cherrypy.expose
     def about(self):
         return self.fill_template(title=_("About the %s" % cfg.box_name), main="""
-        <img src="/static/theme/img/freedombox-logo-200px.png" style="float:right;padding:25px;" />
+        <img src="/static/theme/img/freedombox-logo-250px.png" class="main-graphic" />
         <p>We live in a world where our use of the network is
         mediated by those who often do not have our best
         interests at heart. By building software that does not rely on

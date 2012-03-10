@@ -8,8 +8,8 @@ class Services(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("services")
-        self.menu = cfg.main_menu.add_item("Services", "/services", 90)
-        self.menu.add_item("Open ID", "/services/openid", 35)
+        self.menu = cfg.main_menu.add_item("Services", "icon-list", "/services", 90)
+        self.menu.add_item("Open ID", "icon-user", "/services/openid", 35)
 
     @cherrypy.expose
     def index(self):

@@ -7,7 +7,7 @@ class FileExplorer(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sharing.explorer")
-        cfg.html_root.sharing.menu.add_item("File Explorer", "/sharing/explorer", 30)
+        cfg.html_root.sharing.menu.add_item("File Explorer", "icon-folder-open", "/sharing/explorer", 30)
 
     @cherrypy.expose
     @require()

@@ -45,14 +45,22 @@
 	<link rel="apple-touch-icon" sizes="72x72" href="$basehref/static/theme/img/apple-touch-icon-72px-precomposed.png" />
 	<link rel="apple-touch-icon" sizes="114x114" href="$basehref/static/theme/img/apple-touch-icon-114px-precomposed.png" />
 
-	<!-- CSS from previous template, not sure what to keep yet -->
-	$css
-	<!-- Bootstrap CSS -->
+	<!-- Bootstrap base CSS -->
 	<link rel="stylesheet" href="$basehref/static/theme/css/bootstrap.css" />
+	<style type="text/css">
+	/* custom styles, load before bootstrap responsive styles */
+	body {
+        padding-top:60px;
+        padding-bottom:40px;
+      	}
+	.sidebar-nav {
+	padding: 9px 0;
+	}
+	</style>
+	<!-- Bootstrap responsive CSS -->
 	<link rel="stylesheet" href="$basehref/static/theme/css/bootstrap-responsive.css" />
 	<style type="text/css">
-	<style type="text/css">
-	/* custom styles */
+	/* custom styles, load after all bootstrap styles */
 	.super-hero {
 	margin-top:25px;
 	}
@@ -63,31 +71,28 @@
 	.brand {
 	padding-top:8px;
 	}
-	.icon-top {
-	margin:0 5px 0 8px;
-	}
-	.icon-top-right {
-	margin:0 5px 0 10px;
-	}
 	.white {
 	color:#fff;
 	}
-	.nav-top-right {
-	color:#999;
+	.error-large {
+	font-size:1.2em;
+	padding:10px;
 	}
-	.nav-top-right a:link {
-	color:#999;
-	text-decoration:none;
+	.main-graphic {
+	float:right;
+	padding:25px;
 	}
-	.nav-top-right a:hover {
-	color:#fff;
-	text-decoration:none;
+	.nav-icon {
+	margin-right:8px;
 	}
-	.nav-top-right a:active {
-	color:#fff;
-	text-decoration:none;
+	.sidenav-icon {
+	margin-right:8px;
+	padding-right:5px;
 	}
 	</style>
+	<!-- CSS from previous Plinth template, not sure what to keep yet -->
+	$css
+	<!-- End Plinth CSS -->
 	<!-- JS from previous Plinth template, not sure what to keep yet -->
 	<script type="text/javascript" src="$basehref/static/theme/js/menu.js"></script>
 	<script type="text/javascript" src="$basehref/static/theme/js/plinth.js"></script>
@@ -112,7 +117,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a href="$basehref/" class="logo-top"><img src="$basehref/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="$basehref/">FreedomBox</a>
+          <a href="$basehref/" class="logo-top"><img src="$basehref/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="$basehref/">FreedomBox Dashboard</a>
           <div class="nav-collapse">
 		<script type="text/javascript"> 
 		<!--
@@ -120,9 +125,9 @@
 		// --> 
 		</script>
             #if $username
-            <p class="navbar-text pull-right"><i class="icon-user icon-white icon-top-right"></i>Logged in as <a href="$username">$username</a>. <a href="$basehref/auth/logout" title="Log out">Log out</a>.</p>
+            <p class="navbar-text pull-right"><i class="icon-user icon-white nav-icon"></i>Logged in as <a href="$username">$username</a>. <a href="$basehref/auth/logout" title="Log out">Log out</a>.</p>
             #else
-            <p class="navbar-text pull-right">Not logged in. <i class="icon-user icon-white icon-top-right"></i><a href="$basehref/auth/login" title="Log in">Log in</a>.</p>
+            <p class="navbar-text pull-right">Not logged in. <i class="icon-user icon-white nav-icon"></i><a href="$basehref/auth/login" title="Log in">Log in</a>.</p>
             #end if
           </div><!--/.nav-collapse -->
         </div>
@@ -130,7 +135,7 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid super-hero">
+      <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
 		#block nav_block
@@ -152,6 +157,7 @@
 		$main
 		#end block main_block
           </div>
+
           <div class="row-fluid">
             <div class="span8 alert alert-info">
               	#block sidebar_right_block
@@ -191,22 +197,22 @@
 	<script type="text/javascript" src="$basehref/static/theme/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 	<!-- Local copy of jQuery -->
 	<script type="text/javascript" src="$basehref/static/theme/js/libs/jquery-1.7.1.min.js"></script>
-	<!-- Bootstrap JS, commented out until we know what we need -->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-transition.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-alert.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-modal.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-dropdown.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-scrollspy.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-tab.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-tooltip.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-popover.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-button.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-collapse.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-carousel.js"></script>-->
-	<!--<script type="text/javascript" src="js/bootstrap/bootstrap-typeahead.js"></script>-->
+	<!-- Bootstrap JS, most files commented out until we know what we need -->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/bootstrap.js"></script>-->
+	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/bootstrap-min.js"></script>
+	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/button.js"></script>
+	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/dropdown.js"></script>
+	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/collapse.js"></script>
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/transition.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/alert.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/modal.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/scrollspy.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/tab.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/tooltip.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/popover.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/carousel.js"></script>-->
+	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/typeahead.js"></script>-->
 	<!-- JS plugins -->
 	<script type="text/javascript" src="$basehref/static/theme/js/plugins.js"></script>
-	<!-- Additional JS -->
-	<script type="text/javascript" src="$basehref/static/theme/js/functions.js"></script>
 </body>
 </html>

@@ -9,3 +9,26 @@ window.log = function f(){ log.history = log.history || []; log.history.push(arg
 
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
 
+// remap jQuery to $
+(function($){})(window.jQuery);
+
+
+/* trigger when page is ready */
+$(document).ready(function (){
+
+	// your functions go here
+
+});
+
+
+/* optional triggers
+
+$(window).load(function() {
+	
+});
+
+$(window).resize(function() {
+	
+});
+
+*/

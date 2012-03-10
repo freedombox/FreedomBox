@@ -7,8 +7,8 @@ class Apps(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("apps")
-        self.menu = cfg.main_menu.add_item("Apps", "/apps", 80)
-        self.menu.add_item("Photo Gallery", "/apps/photos", 35)
+        self.menu = cfg.main_menu.add_item("Apps", "icon-download-alt", "/apps", 80)
+        self.menu.add_item("Photo Gallery", "icon-picture", "/apps/photos", 35)
 
     @cherrypy.expose
     def index(self):

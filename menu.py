@@ -5,11 +5,15 @@ import cfg
 
 class Menu():
     """One menu item."""
-    def __init__(self, label="", url="#", order=50):
+    def __init__(self, label="", icon="", url="#", order=50):
         """label is the text that is displayed on the menu.
 
+	icon is the icon to be displayed next to the label.
+	Choose from the Glyphicon set:
+	http://twitter.github.com/bootstrap/base-css.html#icons
+
         url is the url location that will be activated when the menu
-        item is selected
+        item is selected.
 
         order is the numerical rank of this item within the menu.
         Lower order items appear closest to the top/left of the menu.
@@ -20,14 +24,15 @@ class Menu():
         """
 
         self.label = label
-        self.order = order
+        self.icon = icon
         self.url = url
+        self.order = order
         self.items = []
 
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
-    def add_item(self, label, url, order=50, basehref=True):
+    def add_item(self, label, icon, url, order=50, basehref=True):
         """This method creates a menu item with the parameters, adds
         that menu item to this menu, and returns the item.
 
@@ -36,7 +41,7 @@ class Menu():
         if basehref and url.startswith("/"):
             url = cfg.base_href + url
 
-        item = Menu(label=label, url=url, order=order)
+        item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
         self.sort_items()
         return item
@@ -61,7 +66,7 @@ class Menu():
 
         so = []
         for item in self.items:
-            i = { 'label':item.label, 'url':item.url}
+            i = { 'label':item.label, 'icon':item.icon, 'url':item.url}
             if item.active_p():
                 i['active']=True
             if item.items and render_subs:
@@ -74,7 +79,7 @@ class Menu():
 
         if render_subs is True, we render submenus too"""
 
-        return ('<SCRIPT LANGUAGE="JavaScript">\n    <!--\n      var %s_items=' % name
+        return ('<script type="text/javascript">\n    <!--\n      var %s_items=' % name
                 #+ json.dumps(self.serializable(render_subs=render_subs), separators=(',',':')) # compact
                 + "\n"+ json.dumps(self.serializable(render_subs=render_subs), sort_keys=True, indent=4) # pretty print
-                + ';\n    // -->\n    </SCRIPT>')
+                + ';\n    // -->\n    </script>')
