@@ -9,4 +9,3 @@ It is based upon Twitter's Bootstrap (http://twitter.github.com/bootstrap)  Boot
 Icons from Bootstrap originate from Glyphicons Free, licensed under Creative Commons Attribution 3.0.
 
 Refer to the Plinth documentation for information about editing themes and templates.
-
