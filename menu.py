@@ -32,7 +32,7 @@ class Menu():
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
-    def add_item(self, label, icon, url, order=50, basehref=True):
+    def add_item(self, label, url, order=50, basehref=True):
         """This method creates a menu item with the parameters, adds
         that menu item to this menu, and returns the item.
 
