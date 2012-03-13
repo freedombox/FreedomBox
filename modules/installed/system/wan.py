@@ -22,13 +22,13 @@ class wan(FormPlugin, PagePlugin):
         end will be reachable from the WAN.  If your %(box)s
         connects you to the internet, that means you'll be able to log
         in to the front end from the internet.  This might be
-        convenient, but it is also <b>dangerous</b>, since it can
+        convenient, but it is also <strong>dangerous</strong>, since it can
         enable attackers to gain access to your %(box)s from the
         outside world.  All they'll need is your username and
         passphrase, which they might guess or they might simply try
         every posible combination of letters and numbers until they
         get in.  If you enable the WAN administration option, you
-        <b>must</b> use long and complex passphrases.</p>
+        <strong>must</strong> use long and complex passphrases.</p>
 
         <p>For security reasons, neither WAN Administration nor WAN
         SSH is available to the `admin` user account.</p>

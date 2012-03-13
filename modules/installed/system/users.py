@@ -24,8 +24,8 @@ class add(FormPlugin, PagePlugin):
     order = 30
 
     sidebar_left = ''
-    sidebar_right = _("""<h2>Add User</h2><p>Adding a user via this
-        administrative interface <b>might</b> create a system user.
+    sidebar_right = _("""<strong>Add User</strong><p>Adding a user via this
+        administrative interface <strong>might</strong> create a system user.
         For example, if you provide a user with ssh access, she will
         need a system account.  If you don't know what that means,
         don't worry about it.</p>""")
@@ -70,16 +70,16 @@ class edit(FormPlugin, PagePlugin):
     order = 35
     
     sidebar_left = ''
-    sidebar_right = _("""<h2>Edit Users</h2><p>Click on a user's name to
-    go to a screen for editing that user's account.</p><h2>Delete
-    Users</h2><p>Check the box next to a users' names and then click
+    sidebar_right = _("""<strong>Edit Users</strong><p>Click on a user's name to
+    go to a screen for editing that user's account.</p><strong>Delete
+    Users</strong><p>Check the box next to a users' names and then click
     "Delete User" to remove users from %s and the %s
     system.</p><p>Deleting users is permanent!</p>""" % (cfg.product_name, cfg.box_name))
 
     def main(self, msg=''):
         users = cfg.users.keys()
         add_form = Form(title=_("Edit or Delete User"), action="/sys/users/edit", message=msg)
-        add_form.html('<span class="indent"><b>Delete</b><br /></span>')
+        add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
         for uname in sorted(users.keys()):
             add_form.html('<span class="indent">&nbsp;&nbsp;%s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' % 
                           add_form.get_checkbox(name=uname) +
@@ -123,6 +123,6 @@ class edit(FormPlugin, PagePlugin):
             return self.fill_template(template="err", title=_("Unnown User"), main=main, 
                              sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
             
-        main = _("""<h2>Edit User '%s'</h2>""" % u['username'])
+        main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
         sidebar_right = ''
         return self.fill_template(title="", main=main, sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)

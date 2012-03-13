@@ -12,7 +12,7 @@ santiago = os.path.join(data_dir, "santiago.sqlite3")
 
 
 product_name = "Plinth"
-box_name = "Freedom Plug"
+box_name = "FreedomBox"
 
 port = 8000
 

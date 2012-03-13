@@ -79,11 +79,11 @@ def page_template(template='base', **kwargs):
     kwargs['current_url'] = cherrypy.url()
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
 
-    if not kwargs['nav']: kwargs['nav'] = """	<SCRIPT LANGUAGE="JavaScript"> 
+    if not kwargs['nav']: kwargs['nav'] = """	<script type="text/javascript"> 
           <!--
               side_menu(sub_menu_items); 
 	  // --> 
-	</SCRIPT>"""
+	</script>"""
 
     return str(template(searchList=[kwargs]))
 
