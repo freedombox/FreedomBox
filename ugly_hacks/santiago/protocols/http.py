@@ -40,7 +40,7 @@ class SantiagoHttpListener(santiago.SantiagoListener):
 <html><head><title>Use it right.</title></head><body>
 
     <p>Nice try, now try again with a request like:</p>
-    <p>http://localhost:8080/santiago/(requester)/(server)/(service)</p>
+    <p>http://localhost:8080/serve/(requester)/(server)/(service)</p>
 
     <dl>
         <dt>requster</dt><dd>james, ian</dd>
@@ -49,17 +49,17 @@ class SantiagoHttpListener(santiago.SantiagoListener):
     </dl>
 
     <p>This'll get you good results:</p>
-    <code><a href="http://localhost:8080/santiago/james/nick/wiki">
-        http://localhost:8080/santiago/james/nick/wiki</a></code>
+    <code><a href="http://localhost:8080/serve/james/wiki/nick">
+        http://localhost:8080/serve/james/wiki/nick</a></code>
 
     <p>See the <code>serving_to</code>, <code>serving_what</code>, and
     <code>me</code> variables.</p>
 
 </body></html>"""
 
-    def __init__(self, instance, port=8080):
-        super(SantiagoHttpListener, self).__init__(instance)
-        self.socket_port = port
+    def __init__(self, instance, location="localhost:8080"):
+        super(SantiagoHttpListener, self).__init__(instance, location)
+        self.socket_port = location.rpartition(":")[2]
 
     @cherrypy.expose
     @cherrypy.tools.json_out()

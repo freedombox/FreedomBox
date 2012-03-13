@@ -66,7 +66,7 @@ class Santiago(object):
         Each Santiago keeps track of the services it hosts, and other servers'
         Santiago services.  A Santiago has no idea of and is not responsible for
         anybody else's services.
-        
+
         """
         self.instance = instance
         self.hosting = self.load_dict("hosting")
@@ -95,7 +95,7 @@ class Santiago(object):
 
     def am_i(self, server):
         """Hello?  Is it me you're looking for?"""
-        
+
         return self.instance == server
 
     # Server-related tags
@@ -106,7 +106,7 @@ class Santiago(object):
 
         post::
 
-            location in cfg.santiago.hosting[service]
+            location in self.hosting[service]
 
         """
         self.hosting[service].append(location)
@@ -116,7 +116,7 @@ class Santiago(object):
 
         post::
 
-            service in cfg.santiago.keys[key]
+            service in self.keys[key]
 
         """
         self.keys[key].append(service)
@@ -129,7 +129,7 @@ class Santiago(object):
 
         post::
 
-            forall(locations, lambda x: x in cfg.santiago.servers[service][key])
+            forall(locations, lambda x: x in self.servers[service][key])
 
         """
         self.servers[service][key] += locations
@@ -139,7 +139,7 @@ class Santiago(object):
 
     def add_listener(self, listener):
         """Registers a protocol-specific listener."""
-        
+
         self.listeners.append(listener)
 
     def add_sender(self, sender):
@@ -149,18 +149,19 @@ class Santiago(object):
 
     # processing related tags
     # -----------------------
-        
-    def serve(self, key, service, server, hops, santiagi):
+
+    def serve(self, key, service, server, hops, santiagi, listener):
         """Provide a requested service to a client."""
 
         if santiagi is not None:
             self.learn_service("santiago", key, santiagi)
 
         if not self.am_i(server):
-            return self.proxy(key, service, server, hops=hops)
+            self.proxy(key, service, server, hops=hops)
 
         if service in self.keys[key]:
-            return self.hosting[service]
+            # TODO pick the senders more intelligently.
+            self.senders[0].ack(key, self.hosting[service], listener)
 
     def proxy(self, key, service, server, hops=3):
         """Passes a Santiago request off to another known host.
@@ -183,11 +184,12 @@ class Santiago(object):
 class SantiagoListener(object):
     """Listens for requests on the santiago port."""
 
-    def __init__(self, santiago):
+    def __init__(self, santiago, location):
         self.santiago = santiago
+        self.location = location
 
     def serve(self, key, service, server, hops, santiagi):
-        return self.santiago.serve(key, service, server, hops, santiagi)
+        return self.santiago.serve(key, service, server, hops, santiagi, self.location)
 
 
 class SantiagoSender(object):
@@ -195,6 +197,14 @@ class SantiagoSender(object):
 
     def __init__(self, santiago):
         self.santiago = santiago
+        self.messages = list()
+
+    def send(self):
+        """Sends all messages on the queue."""
+
+        answer = self.messages
+        self.messages = list()
+        return answer
 
     def request(self, destination, resource):
         """Sends a request for a resource to a known Santiago.
@@ -216,7 +226,7 @@ class SantiagoSender(object):
             # TODO my request is signed with my GPG key, recipient encrypted.
 
         """
-        pass # TODO: do.
+        pass # TODO: queue a request message.
 
     def nak(self):
         """Denies a requested resource to a Santiago.
@@ -227,7 +237,7 @@ class SantiagoSender(object):
         """
         pass
 
-    def ack(self):
+    def ack(self, key, location, listener=None):
         """A successful reply to a Santiago request.
 
         The response must include:
@@ -239,7 +249,10 @@ class SantiagoSender(object):
         - The Santiago listener that received and accepted the request.
 
         """
-        pass
+        self.messages.append({
+                "to": key,
+                "location": location,
+                "reply-to": listener,})
 
     def end(self):
         """Sent by the original requester, when it receives the server's
@@ -252,7 +265,7 @@ class SantiagoSender(object):
 
     def proxy(self, key, service, server, hops):
         """Sends the request to another server."""
-        
+
         # TODO pull this off, another day.
         return ("%(key)s is requesting the %(service)s from %(server)s. " +
                 self.santiago.instance + " is not %(server)s. " +
