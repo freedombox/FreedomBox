@@ -99,6 +99,13 @@ class TestServing(SantiagoTest):
 
         self.assertEqual(self.sender.send(), expected)
 
+    def test_handle_requests_once(self):
+        """Verify that we send each request out only once."""
+
+        self.listener.serve("0x2", "wiki", "0x1", 0, None)
+        self.sender.send()
+
+        self.assertEqual(self.sender.send(), list())
 
 class TestConsuming(SantiagoTest):
     """TODO: tests for:
