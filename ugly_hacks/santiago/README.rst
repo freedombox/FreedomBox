@@ -350,6 +350,25 @@ list of recently-proxied-requests so that no box sends the same request to its
 friends within a time-range.  Might we need to look into other request proxying
 methods when the DHT comes up?
 
+False Flags / False Friends
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:TODO: Add unit tests for these behaviors.
+
+Since we allow request proxying, an attacker (C) who knows where my Santiago (B)
+is located and has captured a real request from a trusted party (A) can later
+forward that request to me, again, for the fun of it.  However, requiring both
+the proxier and client to be trusted means that such falsely forwarded requests
+will go unanswered.
+
+However, if the key is compromised, an attacker could modify the message's
+"reply-to" header to allow communication with an untrusted third party.
+Santiago cannot protect against this manner of attack because the data we use to
+validate the request (the key) is compromised.  We can't enforce a reverse-DNS
+style callback very well, because there's no guarantee we can reach the client
+in the first place.  We could try, but I don't know how much trust it would add
+to the system beyond that which we can guarantee by signed messages alone.
+
 Mitigations
 ===========
 
@@ -390,6 +409,11 @@ Design Questions
 :Onion Routing: What can we learn from Tor itself?  Maybe not a lot.  Maybe a
     bit.  That we don't allow untrusted connections is an incredible limitation
     on the routing system.
+
+:Reverse DNS: Should we check with the original requester before replying?  What
+    if we can't reach that requester outside of the reply-to address they sent?
+    Verifying the requester's identity by their self-reported address seems to
+    add little confidence to the requester's identity.
 
 Functional Questions
 --------------------

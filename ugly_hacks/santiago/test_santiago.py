@@ -56,10 +56,10 @@ class SantiagoTest(unittest.TestCase):
 class TestServerInitialRequest(SantiagoTest):
     """Test how the Santiago server replies to initial service requests.
 
-    TODO: tests for:
-
-    (normal serving + proxying) * (learning santiagi + not learning)
-
+    TODO: Add a mock listener to represent A.
+    TODO: Transform the data structure tests into the mock-response tests.
+    TODO tests: (normal serving + proxying) * (learning santiagi + not learning)
+    
     """
     def test_acknowledgement(self):
         """If B receives an authorized request, then it replies with a location.
