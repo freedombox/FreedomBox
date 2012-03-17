@@ -59,7 +59,14 @@ class TestServerInitialRequest(SantiagoTest):
     TODO: Add a mock listener to represent A.
     TODO: Transform the data structure tests into the mock-response tests.
     TODO tests: (normal serving + proxying) * (learning santiagi + not learning)
-    
+
+    Proxying
+    ~~~~~~~~
+
+    A host/listener (B) trusts proxied requests according to the minimum trust
+    in the request.  If the request comes from an untrusted proxy or is for an
+    untrusted client, B ignores it.
+
     """
     def test_acknowledgement(self):
         """If B receives an authorized request, then it replies with a location.
@@ -83,7 +90,7 @@ class TestServerInitialRequest(SantiagoTest):
                            "locations": ["192.168.0.13"],
                            "reply-to": "localhost:8000"}])
 
-    def test_negative_acknowledgement_bad_service(self)
+    def test_reject_bad_service(self)
         """Does B reject requests for unsupported services?
 
         In this case, B should reply with an empty list of locations.
@@ -102,7 +109,7 @@ class TestServerInitialRequest(SantiagoTest):
                            "locations": [],
                            "reply-to": "localhost:8000"}])
 
-    def test_deny_bad_key(self):
+    def test_reject_bad_key(self):
         """If B receives a request from an unauthorized key, it does not reply.
 
         An "unauthorized request" in this case is for a service from a client
@@ -117,6 +124,33 @@ class TestServerInitialRequest(SantiagoTest):
                                 service="wiki", reply_to=None)
 
         self.assertEqual(self.santiago_b.outgoing_messages, [])
+
+    def test_reject_good_source_bad_client(self):
+        """B is silent when a trusted key proxies anything for an untrusted key.
+
+        B doesn't know who the client is and should consider it an
+        untrusted key connection attempt.
+
+        """
+        self.fail()
+
+    def test_reject_bad_source_good_client(self):
+        """B is silent when an untrusted key proxies anything for a trusted key.
+
+        B doesn't know who the proxy is and should consider it an
+        untrusted key connection attempt.
+
+        """
+        self.fail()
+
+    def test_reject_bad_source_bad_client(self):
+        """B is silent when untrusted keys proxy anything for untrusted keys.
+
+        B doesn't know who anybody is and considers this an untrusted
+        connection attempt.
+
+        """
+        self.fail()
 
     def test_learn_santaigo(self):
         """Does B learn new Santiago locations from trusted requests?
