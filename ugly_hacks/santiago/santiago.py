@@ -67,10 +67,35 @@ class Santiago(object):
         Santiago services.  A Santiago has no idea of and is not responsible for
         anybody else's services.
 
+        Serving-related variables:
+
+        :hosting: service to location mappings: This dictionary maps service
+            names to service locations.
+
+        :keys: key to service mappings: This dictionary maps keys to service
+            names.
+
+        Between the two, we can provide services for keys at particular
+        locations.  These aren't necessarily services owned by this box, it
+        merely points the way and acts as a directory service.
+
+        Client-related variables:
+
+        :servers: This dual-key dictionary stores service: key: location
+        mappings, allowing for fast service-based lookup when I'm seeking
+        somebody to perform a specific service for me.
+
+        Both the client and server dictionaries can contain one another's data.
+        I'm not sure whether they should or not, yet.  The data separation seems
+        valuable but perhaps highly over-engineered.
+
         """
         self.instance = instance
+        # what I host where
         self.hosting = self.load_dict("hosting")
+        # who I host for
         self.keys = self.load_dict("keys")
+        # other folks
         self.servers = self.load_dict("servers")
 
         self.listeners = list()
@@ -101,30 +126,22 @@ class Santiago(object):
     # Server-related tags
     # -------------------
 
-    def provide_at_location(self, service, location):
-        """Serve service at location.
+    def provide_service(self, key, service, location):
+        """Serve a service for user at location.
 
         post::
 
             location in self.hosting[service]
-
-        """
-        self.hosting[service].append(location)
-
-    def provide_for_key(self, service, key):
-        """Serve service for user.
-
-        post::
-
             service in self.keys[key]
 
         """
         self.keys[key].append(service)
+        self.hosting[service].append(location)
 
     # client-related tags
     # -------------------
 
-    def learn_service(self, service, key, locations):
+    def learn_service(self, key, service, locations):
         """Learn a service to use, as a client.
 
         post::
@@ -132,7 +149,7 @@ class Santiago(object):
             forall(locations, lambda x: x in self.servers[service][key])
 
         """
-        self.servers[service][key] += locations
+        self.servers[service][key].extend(locations)
 
     def consume_service(self, service, key):
         return self.servers[service][key]
@@ -154,7 +171,7 @@ class Santiago(object):
         """Provide a requested service to a client."""
 
         if santiagi is not None:
-            self.learn_service("santiago", key, santiagi)
+            self.learn_service(key, "santiago", santiagi)
 
         if not self.am_i(server):
             self.proxy(key, service, server, hops=hops)
@@ -286,9 +303,6 @@ if __name__ == "__main__":
     santiago.add_sender(http_sender)
 
     # TODO move this into the table loading.
-    santiago.provide_at_location("wiki", "192.168.0.13")
-    santiago.provide_for_key("wiki", "james")
-    santiago.max_hops = 3
-    santiago.proxy_list = ("tor")
+    santiago.provide_service("james", "wiki", "192.168.0.13")
 
     cherrypy.quickstart(http_listener)

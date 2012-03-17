@@ -23,7 +23,25 @@ class SantiagoTest(unittest.TestCase):
     """The base class for tests."""
 
     def setUp(self):
-        self.santiago = santiago.Santiago("0x1")
+        super(TestServing, self).setUp()
+
+        port_a = "localhost:9000"
+        port_b = "localhost:8000"
+
+        listeners_a = [santiago.SantiagoListener(port_a)]
+        senders_a = [santiago.SantiagoSender()]
+        listeners_b = [santiago.SantiagoListener(port_b)]
+        senders_b = [santiago.SantiagoSender()]
+
+        hosting_a = { "b": { "santiago": [ port_a ]}}
+        consuming_a = { "santiagao": { "b": [ port_b ]}}
+
+        hosting_b = { "a": { "santiago": [ port_b ],
+                             "wiki": [ "localhost:8001" ]}}
+        consuming_b = { "santiagao": { "a": [ port_a ]}}
+
+        self.santiago_a = Santiago(listeners_a, senders_a, hosting_a, consuming_a)
+        self.santiago_b = Santiago(listeners_b, senders_b, hosting_b, consuming_b)
 
     if sys.version_info < (2, 7):
         """Add a poor man's forward compatibility."""
@@ -35,95 +53,147 @@ class SantiagoTest(unittest.TestCase):
             if not a in b:
                 raise self.ContainsError("%s not in %s" % (a, b))
 
-class TestDataModel(SantiagoTest):
-    """Test adding and removing services and data."""
+class TestServerInitialRequest(SantiagoTest):
+    """Test how the Santiago server replies to initial service requests.
 
-    def test_add_listener(self):
-        """Verify that we can add a listener."""
-
-        http_listener = SantiagoHttpListener(self.santiago, "localhost:8080")
-        self.santiago.add_listener(http_listener)
-
-        self.assertIn(http_listener, self.santiago.listeners)
-
-    def test_add_sender(self):
-        """Verify that we can add a sender."""
-
-        http_sender = SantiagoHttpSender(self.santiago)
-        self.santiago.add_sender(http_sender)
-
-        self.assertIn(http_sender, self.santiago.senders)
-
-    def test_provide_at_location(self):
-        """Verify that we can provide a service somewhere."""
-
-        service, location = ("something", "there")
-        self.santiago.provide_at_location(service, location)
-
-        self.assertIn(location, self.santiago.hosting[service])
-
-    def test_provide_for_key(self):
-        """Verify we can provide a specific service to someone."""
-
-        service, key = ("something", "0x1")
-        self.santiago.provide_for_key(service, key)
-
-        self.assertIn(service, self.santiago.keys[key])
-
-
-class TestServing(SantiagoTest):
-    """TODO: tests for:
+    TODO: tests for:
 
     (normal serving + proxying) * (learning santiagi + not learning)
 
     """
-    def setUp(self):
-        super(TestServing, self).setUp()
+    def test_acknowledgement(self):
+        """If B receives an authorized request, then it replies with a location.
 
-        self.santiago.provide_at_location("wiki", "192.168.0.13")
-        self.santiago.provide_for_key("wiki", "0x2")
+        An "authorized request" in this case is for a service from a client that
+        B is willing to host that service for.
 
-        self.listener = santiago.SantiagoListener(self.santiago, "localhost:8080")
-        self.sender = santiago.SantiagoSender(self.santiago)
-        self.santiago.add_listener(self.listener)
-        self.santiago.add_sender(self.sender)
+        In this case, B will answer with the wiki's location.
 
-    def test_successful_serve(self):
-        """Make sure we get an expected, successful serving message back."""
+        """
+        self.santiago_b.receive(from_=None, to=None,
+                                client="a", host="b",
+                                service="wiki", reply_to=None)
 
-        self.listener.serve("0x2", "wiki", "0x1", 0, None)
-        expected = [
-            { "to": "0x2",
-              "location": ["192.168.0.13"],
-              "reply-to": self.listener.location, }, ]
+        self.assertEqual(self.santiago_b.outgoing_messages,
+                         [{"from": "b",
+                           "to": "a",
+                           "client": "a",
+                           "host": "b",
+                           "service": "wiki",
+                           "locations": ["192.168.0.13"],
+                           "reply-to": "localhost:8000"}])
 
-        self.assertEqual(self.sender.send(), expected)
+    def test_negative_acknowledgement_bad_service(self)
+        """Does B reject requests for unsupported services?
+
+        In this case, B should reply with an empty list of locations.
+
+        """
+        self.santiago_b.receive(from_=None, to=None,
+                                client="a", host="b",
+                                service="wiki", reply_to=None)
+
+        self.assertEqual(self.santiago_b.outgoing_messages,
+                         [{"from": "b",
+                           "to": "a",
+                           "client": "a",
+                           "host": "b",
+                           "service": "wiki",
+                           "locations": [],
+                           "reply-to": "localhost:8000"}])
+
+    def test_deny_bad_key(self):
+        """If B receives a request from an unauthorized key, it does not reply.
+
+        An "unauthorized request" in this case is for a service from a client
+        that B does not trust.  This is different than clients B hosts no
+        services for.
+
+        In this case, B will never answer the request.
+
+        """
+        self.santiago_b.receive(from_=None, to=None,
+                                client="z", host="b",
+                                service="wiki", reply_to=None)
+
+        self.assertEqual(self.santiago_b.outgoing_messages, [])
+
+    def test_learn_santaigo(self):
+        """Does B learn new Santiago locations from trusted requests?
+
+        If A sends B a request with a new Santiago location, B should learn it.
+
+        """
+        self.santiago_b.receive(from_=None, to=None,
+                                client="a", host="b",
+                                service="wiki", reply_to="localhost:9001")
+
+        self.assertEqual(self.santiago_b.consuming["santiago"]["a"],
+                         ["localhost:9000", "localhost:9001"])
 
     def test_handle_requests_once(self):
-        """Verify that we send each request out only once."""
+        """Verify that we reply to each request only once."""
 
-        self.listener.serve("0x2", "wiki", "0x1", 0, None)
-        self.sender.send()
+        self.santiago_b.receive(from_=None, to=None,
+                                client="a", host="b",
+                                service="wiki", reply_to=None)
+        self.santiago_b.process()
 
-        self.assertEqual(self.sender.send(), list())
+        self.assertEqual(self.santiago_b.outgoing_messages, [])
 
-class TestConsuming(SantiagoTest):
-    """TODO: tests for:
+class TestClientInitialRequest(SantiagoTest):
+    """Does the client send a correctly formed request?
 
-    (learning services)
-
-    """
-    pass
-
-class TestInitialRequest(SantiagoTest):
-    """Testing the initial request.
-
-    Does Santiago produce well-formed output when creating a service request?
+    In these tests, we're sending requests to a mock listener which merely
+    records that the requests were well-formed.
 
     """
+    def setUp(self):
+        super(SantiagoTest, self).setUp()
+
+        import cherrypy
+        class RequestReceiver(object):
+
+            def index(self, *args, **kwargs):
+                self.args = *args
+                self.kwargs = **kwargs
+
+            index.exposed = True
+            self.socket_port = 8000
+
+        self.receiver = RequestReceiver()
+        cherrypy.quickstart(self.receiver)
+
+    def test_request(self):
+        """Verify that A queues a properly formatted initial request."""
+
+        self.santiago_a.request(from_="a", to="b",
+                                client="a", host="b",
+                                service="wiki", reply_to="localhost:9001")
+
+        self.assertEqual(self.santiago_a.outgoing_messages,
+                         [{ "from": "a", "to": "b",
+                            "client": "a", "host": "b",
+                            "service": "wiki", "reply-to": "localhost:9001"})]
+
+    def test_request(self):
+        """Verify that A sends out a properly formatted initial request."""
+
+        self.santiago_a.request(from_="a", to="b",
+                                client="a", host="b",
+                                service="wiki", reply_to="localhost:9001")
+
+        self.santiago_a.process()
+
+        self.assertEqual(self.receiver.kwargs,
+                         [{ "from": "a", "to": "b",
+                            "client": "a", "host": "b",
+                            "service": "wiki", "reply-to": "localhost:9001"})]
+
+class TestServerInitialResponse(SantiagoTest):
     pass
 
-class TestInitialResponse(SantiagoTest):
+class TestClientInitialResponse(SantiagoTest):
     pass
 
 class TestForwardedRequest(SantiagoTest):

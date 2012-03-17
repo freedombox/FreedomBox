@@ -80,8 +80,18 @@ class SantiagoHttpListener(santiago.SantiagoListener):
 class SantiagoHttpSender(santiago.SantiagoSender):
     """Responsible for answering HTTP requests."""
 
+    import urllib, urllib2
+
     @cherrypy.tools.json_out()
     def proxy(self, key, service, server, hops=3):
         """Forwards on a request to another Santiago."""
 
         return super(SantiagoHttpSender, self).proxy(key, service, server, hops)
+
+    @cherrypy.tools.json_out()
+    def send(self):
+        """Send messages to other Santiagi."""
+
+        for message in super(SantiagoSender, self).send():
+            if message["location"].startswith("http"):
+                urllib2.Request(message["location"],urllib.urlencode(message))
