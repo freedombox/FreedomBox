@@ -20,30 +20,28 @@ against it.
 If I produce a listener that just echoes the parameters, I can validate the response:
 
     import httplib, urllib
-    
+
     params = urllib.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
     headers = {"Content-type": "application/x-www-form-urlencoded",
                "Accept": "text/plain"}
     conn = httplib.HTTPConnection("bugs.python.org")
     print params, headers, conn
-    
+
     conn.request("POST", "", params, headers)
     response = conn.getresponse()
     print response.status, response.reason
-    
+
     data = response.read()
     print data
-    
+
     conn.close()
-    
+
 
 """
 
 
-import cherrypy
 import unittest
-from protocols.http import SantiagoHttpSender, SantiagoHttpListener
-import santiago
+import os
 import sys
 
 
@@ -293,6 +291,40 @@ class TestForwardedRequest(SantiagoTest):
 class TestForwardedResponse(SantiagoTest):
     pass
 
+class TestSimpleSantiago(unittest.TestCase):
+    def setUp(self):
+
+        port_a = "localhost:9000"
+        port_b = "localhost:8000"
+
+        listeners_a = {"http": {"port": port_a}}
+        senders_a = ({ "protocol": "http", "proxy": tor_proxy_port },)
+
+        listeners_b = {"http": {"port": port_b}}
+        senders_b = ({ "protocol": "http", "proxy": tor_proxy_port },)
+
+        hosting_a = { "b": { "santiago": set( ["aDifferentHexNumber.onion"])}}
+        consuming_a = { "santiagao": {"b": set(["iAmAHexadecimalNumber.onion"])}}
+
+        hosting_b = { "a": { "santiago": set( ["iAmAHexadecimalNumber.onion"])}}
+        consuming_b = { "santiagao": { "a": set( ["aDifferentHexNumber.onion"])}}
+
+        self.santiago_a = SimpleSantiago(listeners_a, senders_a,
+                                         hosting_a, consuming_a, "a")
+        self.santiago_b = SimpleSantiago(listeners_b, senders_b,
+                                         hosting_b, consuming_b, "b")
+
+        cherrypy.Application(self.santiago_a, "/")
+        cherrypy.Application(self.santiago_b, "/")
+
+        cherrypy.engine.start()
+
+    def testRequest(self):
+        self.santiago_a.request(from_="a", to="b",
+                                client="a", host="b",
+                                service="wiki", reply_to="localhost:9000")
+
 
 if __name__ == "__main__":
+    # os.fork("python simple_santiago.py")
     unittest.main()

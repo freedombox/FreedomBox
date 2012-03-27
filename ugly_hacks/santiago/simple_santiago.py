@@ -1,17 +1,63 @@
-#! /usr/bin/python -*- mode: auto-fill; fill-column: 80; -*-
+#! /usr/bin/python -*- mode: python; mode: auto-fill; fill-column: 80; -*-
 
 """A simple Santiago service.
 
-I'm tired of overanalyzing this, so I'll write something simple and work from
-there.
+Start me with:
+
+    $ python -i simple_santiago.py
+
+This will provide you with a running Santiago service.  The important tags in
+this file are:
+
+- query
+- request
+- index
+- handle_request
+- handle_reply
+
+They operate, essentially, in that order.  The first Santiago service queries
+another's index with a request.  That request is handled and a request is
+returned.  Then, the reply is handled.  The upshot is that we learn a new set of
+locations for the service.
+
+This is currently incomplete.  We don't sign, encrypt, verify, or decrypt
+request messages.  I wanted to get the functional fundamentals in place first.
+
+We also don't:
+
+- Proxy requests.
+- Use a reasonable data-store.
+- Have a decent control mechanism.
 
 FIXME: add that whole pgp thing.
+FIXME: remove @cherrypy.expose from everything but index.
+TODO: add doctests
 
 """
-
 import cherrypy
-import gnupg
+from collections import defaultdict as DefaultDict
+#import gnupg
 import httplib, urllib
+import sys
+
+try:
+    import cfg
+except ImportError:
+    # try a little harder to import cfg.  Bomb out if we still fail.
+    sys.path.append("../..")
+    import cfg
+
+
+def load_data(server, item):
+    """Return evaluated file contents.
+
+    FIXME: use withsqlite instead.
+
+    """
+    data = ""
+    with open("%s_%s" % (server, item)) as infile:
+        data = eval(infile.read())
+    return data
 
 
 class SimpleSantiago(object):
@@ -39,49 +85,69 @@ class SimpleSantiago(object):
             consuming: { "someService": { "someKey": ( "http://a.list",
                                                        "http://of.locations" )}}
 
+        Messages are delivered by defining both the source and destination
+        ("from" and "to", respectively).  Separating this from the hosting and
+        consuming allows users to safely proxy requests for one another, if some
+        hosts are unreachable from some points.
+
         """
         self.senders = senders
         self.hosting = hosting
         self.consuming = consuming
+        self.requests = DefaultDict(set)
+        self.listeners = listeners
 
-        self._create_listeners(listeners)
+        self._create_listeners()
         self.me = me
 
-    def _create_listeners(self, listeners):
-        """Iterates through each known protocol creating listeners for all.
+    def _create_listeners(self):
+        """Iterates through each known protocol creating listeners for all."""
 
-        Unfortunately, I won't be able to do this for real because this implies
-        a control flow inversion, treating servers as clients to my meta-server,
-        and most servers aren't built to tolerate that very well (or I don't
-        know how to handle it).  I'll work on it though.
-
-        """
-        for protocol in listeners.iterkeys():
+        for protocol in self.listeners.iterkeys():
             method =  "_create_%s_listener" % protocol
 
             try:
-                getattr(self, method)(**listeners[protocol])
+                getattr(self, method)(**self.listeners[protocol])
             except KeyError:
-                continue
+                pass
 
-    def _create_https_listener(self, port=1):
-        """Registers an HTTPS listener.
+    def _create_http_listener(self, *args, **kwargs):
+        """Register an HTTP listener.
 
-        TODO: complete.  that cherrypy daemon thing.
+        Merely a wrapper for _create_https_listener.
 
         """
-        self.socket_port = port
-        index.exposed = True
+        self._create_https_listener(*args, **kwargs)
+
+    def _create_https_listener(self, socket_port=0,
+                               ssl_certificate="", ssl_private_key=""):
+        """Registers an HTTPS listener."""
+
+        cherrypy.server.socket_port = socket_port
+        cherrypy.server.ssl_certificate = ssl_certificate
+        cherrypy.server.ssl_private_key = ssl_private_key
+
+        # reach deep into the voodoo to actually serve the index
+        SimpleSantiago.index.__dict__["exposed"] = True
 
     def am_i(self, server):
+        """Verify whether this server is the specified server."""
+
         return self.me == server
 
-    def learn_service(self, client, service, locations):
+    def learn_service(self, host, service, locations):
         """Learn a service somebody else hosts for me."""
 
-        self.hosting[client][santiago].update(set(locations))
+        if locations:
+            self.consuming[service][host].union(locations)
 
-    def get_locations(self, client, service):
+    def provide_service(self, client, service, locations):
+        """Start hosting a service for somebody else."""
+
+        if locations:
+            self.hosting[client][service].union(locations)
+
+    def get_host_locations(self, client, service):
         """Return where I'm hosting the service for the client.
 
         Return nothing if the client or service are unrecognized.
@@ -92,8 +158,71 @@ class SimpleSantiago(object):
         except KeyError:
             pass
 
+    def get_client_locations(self, host, service):
+        """Return where the host serves the service for me, the client."""
+
+        try:
+            return self.consuming[service][host]
+        except KeyError:
+            pass
+
+    @cherrypy.expose
+    def query(self, host, service):
+        """Request a service from another Santiago.
+
+        This tag starts the entire Santiago request process.
+
+        """
+        self.requests[host].add(service)
+
+        self.request(host, self.me, host, self.me,
+                     service, None, self.get_client_locations(host, "santiago"))
+
+    def request(self, from_, to, host, client,
+                service, locations, reply_to):
+        """Send a request to another Santiago service.
+
+        This tag is used when sending queries or replies to other Santiagi.
+
+        """
+        # best guess reply_to if we don't know.
+        reply_to = reply_to or self.get_host_locations(to, "santiago")
+
+        for destination in self.get_client_locations(to, "santiago"):
+            getattr(self, destination.split(":")[0] + "_request") \
+                (from_, to, host, client,
+                 service, locations, destination, reply_to)
+
+    def https_request(self, from_, to, host, client,
+                      service, locations, destination, reply_to):
+        """Send an HTTPS request to each Santiago client.
+
+        Don't queue, just immediately send the reply to each location we know.
+
+        It's both simple and as reliable as possible.
+
+        TODO: pgp sign and encrypt
+
+        """
+        params = urllib.urlencode(
+            {"from": from_, "to": to, "host": host, "client": client,
+             "service": service, "locations": locations or "",
+             "reply_to": reply_to})
+
+        proxy = self.senders["https"]
+
+        # TODO: Does HTTPSConnection require the cert and key?
+        # Is the fact that the server has it sufficient?  I think so.
+        connection = httplib.HTTPSConnection(destination.split("//")[1])
+
+        if sys.version_info >= (2, 7):
+            connection.set_tunnel(proxy["host"], proxy["port"])
+
+        connection.request("GET", "/?%s" % params)
+        connection.close()
+
     def index(self, **kwargs):
-        """Process an incoming Santiago request.
+        """Provide a service to a client.
 
         This tag doesn't do any real processing, it just catches and hides
         errors from the sender, so that every request is met with silence.
@@ -104,20 +233,30 @@ class SimpleSantiago(object):
         - The round-trip time for that response.
         - Whether the server is up or down.
 
-        Worst case scenario, a client causes the Python interpreter to segfault
-        and the Santiago process comes down, so the system starts rejecting
-        connections by default.
+        Worst case scenario, a client causes the Python interpreter to
+        segfault and the Santiago process comes down, while the system
+        is set up to reject connections by default.  Then, the
+        attacker knows that the last request brought down a system.
 
         """
         # no matter what happens, the sender will never hear about it.
         try:
-            request = unpack_request(kwargs)
+            request = self.unpack_request(kwargs)
 
-            handle_request(request["from"], request["to"],
-                           request["client"], request["host"],
-                           request["service"], request["reply_to"])
-        except Exception:
-            pass
+            # is this appropriate for both sending and receiving?
+            # nope.
+            if request["locations"]:
+                self.handle_reply(request["from"], request["to"],
+                                  request["host"], request["client"],
+                                  request["service"], request["locations"],
+                                  request["reply_to"])
+            else:
+                self.handle_request(request["from"], request["to"],
+                                    request["host"], request["client"],
+                                    request["service"], request["reply_to"])
+        except Exception, e:
+            #raise e
+            print "Exception!", e
 
     def unpack_request(self, kwargs):
         """Decrypt and verify the request.
@@ -127,9 +266,13 @@ class SimpleSantiago(object):
         TODO: complete.
 
         """
-        return kwargs
+        request = DefaultDict(lambda: None)
+        for k,v in kwargs.iteritems():
+            request[k] = v
+        return request
 
-    def handle_request(self, from_, to, client, host, service, reply_to):
+    def handle_request(self, from_, to, host, client,
+                       service, reply_to):
         """Actually do the request processing.
 
         #. Verify we're willing to host for both the client and proxy.  If we
@@ -139,7 +282,7 @@ class SimpleSantiago(object):
 
         #. Learn new Santiagi if they were sent.
 
-        #. Reply to the client.
+        #. Reply to the client on the appropriate protocol.
 
         """
         try:
@@ -149,13 +292,16 @@ class SimpleSantiago(object):
             return
 
         if not self.am_i(to):
-            self.proxy()
+            return
 
-        if reply_to is not None:
+        if not self.am_i(host):
+            self.proxy()
+        else:
             self.learn_service(client, "santiago", reply_to)
 
-        self.reply(client, self.get_hosting_locations(client, service), service,
-                   self.get_serving_locations(client, service))
+            self.request(self.me, client, self.me, client,
+                         service, self.get_host_locations(client, service),
+                         self.get_host_locations(client, "santiago"))
 
     def proxy(self):
         """Pass off a request to another Santiago.
@@ -165,35 +311,77 @@ class SimpleSantiago(object):
         """
         pass
 
-    def reply(self, client, location, service, reply_to):
-        """Send the reply to each Santiago client.
+    def handle_reply(self, from_, to, host, client,
+                     service, locations, reply_to):
+        """Process a reply from a Santiago service.
 
-        Don't queue, just immediately send the reply to each location we know.
-
-        It's both simple and as reliable as possible.
+        The last call in the chain that makes up the Santiago system, we now
+        take the reply from the other Santiago server and learn any new service
+        locations, if we've requested locations for that service.
 
         """
-        params = urllib.urlencode({ "request": pgp.signencrypt(
-            {"from": self.me, "to": client,
-             "host": self.me, "client": client,
-             "service": service, "locations": location,
-             "reply_to": self.get_hosting_locations(client, "santiago")})})
+        try:
+            self.consuming[service][from_]
+            self.consuming[service][host]
+        except KeyError:
+            return
 
-        for reply in reply_to:
-            connection = httplib.HTTPSConnection(reply)
-            connection.request("POST", "", params)
-            connection.close()
+        if not self.am_i(to):
+            return
+
+        if not self.am_i(client):
+            self.proxy()
+            return
+
+        self.learn_service(host, "santiago", reply_to)
+
+        if service in self.requests[host]:
+            self.learn_service(host, service, locations)
+            self.requests[host].remove(service)
+
+    @cherrypy.expose
+    def save_server(self):
+        """Save all operational data to files.
+
+        Save all files with the ``self.me`` prefix.
+
+        """
+        for datum in ("hosting", "consuming", "listeners", "senders"):
+            name = "%s_%s" % (self.me, datum)
+
+            try:
+                with open(name, "w") as output:
+                    output.write(str(getattr(self, datum)))
+            except:
+                pass
+
 
 if __name__ == "__main__":
-    port = 8090
+    # FIXME: convert this to the withsqlite setup.
+    for datum in ("listeners", "senders", "hosting", "consuming"):
+        locals()[datum] = load_data("b", datum)
 
-    listeners = { "https": { "port": port } }
-    senders = ({ "protocol": "http",
-                 "proxy": "localhost:4030" },)
+    # Dummy Settings:
+    #
+    # https_port = 8090
+    # cert = "/etc/ssl-certificates/santiago.crt"
+    # listeners = { "https": { "socket_port": https_port,
+    #                          "ssl_certificate": cert,
+    #                          "ssl_private_key": cert } }
+    # senders = { "https": { "host": tor_proxy,
+    #                       "port": tor_proxy_port} }
+    # hosting = { "a": { "santiago": set( ["https://localhost:8090"] )},
+    #             "b": { "santiago": set( ["https://localhost:8090"] )}}
+    # consuming = { "santiago": { "b": set( ["https://localhost:8090"] ),
+    #                             "a": set( ["someAddress.onion"] )}}
 
-    hosting = { "a": { "santiago": set( "localhost:%s" % port )}}
-    consuming = { "santiagao": { "a": set( "localhost:4030" )}}
+    santiago_b = SimpleSantiago(listeners, senders,
+                                hosting, consuming, "b")
 
-    cherrypy.quickstart(SimpleSantiago(listeners, senders,
-                                       hosting, consuming, "b"),
-                        '/')
+    # TODO: integrate multiple servers:
+    # http://docs.cherrypy.org/dev/refman/process/servers.html
+
+    cherrypy.Application(
+    # cherrypy.quickstart(
+        santiago_b, '/')
+    cherrypy.engine.start()
