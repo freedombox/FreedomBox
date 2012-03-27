@@ -267,7 +267,7 @@ class SimpleSantiago(object):
 
         """
         request = DefaultDict(lambda: None)
-        for k,v in kwargs.iteritems():
+        for k, v in kwargs.iteritems():
             request[k] = v
         return request
 
@@ -295,7 +295,7 @@ class SimpleSantiago(object):
             return
 
         if not self.am_i(host):
-            self.proxy()
+            self.proxy(to, host, client, service, reply_to)
         else:
             self.learn_service(client, "santiago", reply_to)
 
@@ -303,13 +303,17 @@ class SimpleSantiago(object):
                          service, self.get_host_locations(client, service),
                          self.get_host_locations(client, "santiago"))
 
-    def proxy(self):
+    def proxy(self, to, host, client, service, reply_to):
         """Pass off a request to another Santiago.
 
-        TODO: complete.
+        Attempt to contact the other Santiago and ask it to reply both to the
+        original host as well as me.
 
         """
-        pass
+        self.request(self.me, to, host, client,
+                     service, reply_to)
+        self.request(self.me, to, host, client,
+                     service, self.get_client_locations(host, "santiago"))
 
     def handle_reply(self, from_, to, host, client,
                      service, locations, reply_to):
@@ -358,29 +362,45 @@ class SimpleSantiago(object):
 
 if __name__ == "__main__":
     # FIXME: convert this to the withsqlite setup.
-    for datum in ("listeners", "senders", "hosting", "consuming"):
-        locals()[datum] = load_data("b", datum)
 
-    # Dummy Settings:
-    #
-    # https_port = 8090
-    # cert = "/tmp/santiagoTest/santiagoTest1.crt"
-    # listeners = { "https": { "socket_port": https_port,
-    #                          "ssl_certificate": cert,
-    #                          "ssl_private_key": cert }, }
-    # senders = { "https": { "host": tor_proxy,
-    #                       "port": tor_proxy_port} }
-    # hosting = { "a": { "santiago": set( ["https://localhost:8090"] )},
-    #             "b": { "santiago": set( ["https://localhost:8090"] )}}
-    # consuming = { "santiago": { "b": set( ["https://localhost:8090"] ),
-    #                             "a": set( ["someAddress.onion"] )}}
+    # load listeners
+    try:
+        listeners = load_data("b", "listeners")
+    except IOError:
+        https_port = 8090
+        cert = "/tmp/santiagoTest/santiagoTest1.crt"
+        listeners = { "https": { "socket_port": https_port,
+                                 "ssl_certificate": cert,
+                                 "ssl_private_key": cert }, }
+    # load senders
+    try:
+        senders = load_data("b", "senders")
+    except IOError:
+        tor_proxy = "localhost"
+        tor_proxy_port = 8118
+        senders = { "https": { "host": tor_proxy,
+                               "port": tor_proxy_port} }
+    # load hosting
+    try:
+        hosting = load_data("b", "hosting")
+    except IOError:
+        hosting = { "a": { "santiago": set( ["https://localhost:8090"] )},
+                    "b": { "santiago": set( ["https://localhost:8090"] )}}
+    # load consuming
+    try:
+        consuming = load_data("b", "consuming")
+    except IOError:
+        consuming = { "santiago": { "b": set( ["https://localhost:8090"] ),
+                                    "a": set( ["someAddress.onion"] )}}
 
+    # load the Santiago
     santiago_b = SimpleSantiago(listeners, senders,
                                 hosting, consuming, "b")
 
     # TODO: integrate multiple servers:
     # http://docs.cherrypy.org/dev/refman/process/servers.html
 
+    # Start the application.
     # cherrypy.Application(
     cherrypy.quickstart(
         santiago_b, '/')
