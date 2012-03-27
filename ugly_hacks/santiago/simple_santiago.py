@@ -364,10 +364,10 @@ if __name__ == "__main__":
     # Dummy Settings:
     #
     # https_port = 8090
-    # cert = "/etc/ssl-certificates/santiago.crt"
+    # cert = "/tmp/santiagoTest/santiagoTest1.crt"
     # listeners = { "https": { "socket_port": https_port,
     #                          "ssl_certificate": cert,
-    #                          "ssl_private_key": cert } }
+    #                          "ssl_private_key": cert }, }
     # senders = { "https": { "host": tor_proxy,
     #                       "port": tor_proxy_port} }
     # hosting = { "a": { "santiago": set( ["https://localhost:8090"] )},
@@ -381,7 +381,7 @@ if __name__ == "__main__":
     # TODO: integrate multiple servers:
     # http://docs.cherrypy.org/dev/refman/process/servers.html
 
-    cherrypy.Application(
-    # cherrypy.quickstart(
+    # cherrypy.Application(
+    cherrypy.quickstart(
         santiago_b, '/')
-    cherrypy.engine.start()
+    # cherrypy.engine.start()
