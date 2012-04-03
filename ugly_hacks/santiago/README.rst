@@ -473,6 +473,52 @@ Functional Questions
     trust the second of three kids, then why am I trusting the key?  Trust is an
     annoyingly deep subject, and one of the few good uses of the word "faith."
 
+Using Santiago
+==============
+
+The Santiago service is mostly working now.  I still need to add PGP encryption,
+signing, decryption, and verification (and handle all the ``FIXME``\s and
+``TODO``\s in the code).
+
+First, you'll need to create a certificate to serve Santiago over HTTPS::
+
+    # make-ssl-cert generate-default-snakeoil
+    # make-ssl-cert /usr/share/ssl-cert/ssleay.cnf santiago.crt
+    # chgrp 1000 santiago.crt
+    # chmod g+r santiago.crt
+
+Next, you'll need to open up "start.py" and update the system path to locate the
+"gnupg_" and "cfg" modules.
+
+.. _gnupg: https://code.google.com/p/python-gnupg/
+
+Finally, start the Santiago process in a console with ``start.py``.  Test it out
+by navigating to:
+
+    https://localhost:8080/query?to=b&service=santiago
+
+You should see three requests appear in the console.
+
+Tasks
+-----
+
+- |TODO| TODOs and FIXMEs.
+
+- |TODO| PGP Signing and Verification.
+
+- |TODO| Verify I successfully split into protocol-specific listeners and
+  senders.
+
+- |TODO| add unit tests and doctests
+
+- |TODO| Create startup script that adds all necessary things to the PYTHONPATH.
+
+- |TODO| allow multiple listeners and senders per protocol (with different
+  proxies?)
+
+.. |TODO| unicode:: U+2610
+.. |DONE| unicode:: U+2611
+
 References
 ==========
 

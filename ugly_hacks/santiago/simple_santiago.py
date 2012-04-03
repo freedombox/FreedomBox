@@ -29,14 +29,16 @@ We also don't:
 - Use a reasonable data-store.
 - Have a decent control mechanism.
 
-FIXME: Split into protocol-specific listeners and senders.
-FIXME: add that whole pgp thing.
-FIXME: remove @cherrypy.expose from everything but index.
-TODO: add doctests
+:FIXME: add that whole pgp thing.
+:TODO: add doctests
+:TODO: Create startup script that adds all necessary things to the PYTHONPATH.
+:FIXME: allow multiple listeners and senders per protocol (with different
+    proxies)
 
 """
 from collections import defaultdict as DefaultDict
 import gnupg
+import logging
 import sys
 
 try:
@@ -88,39 +90,64 @@ class SimpleSantiago(object):
         hosts are unreachable from some points.
 
         """
-        self.senders = senders
         self.hosting = hosting
         self.consuming = consuming
         self.requests = DefaultDict(set)
-        self.listeners = listeners
-
-        self._create_listeners()
         self.me = me
 
-    def _create_listeners(self):
-        """Iterates through each known protocol creating listeners for all."""
+        self.listeners = self._create_connectors(listeners, "Listener")
+        self.senders = self._create_connectors(senders, "Sender")
 
-        # FIXME: Split into protocol-specific listeners and senders.
+    def _create_connectors(self, settings, connector):
+        """Iterates through each protocol given, creating connectors for all.
 
-        # def configure_gui(self):
-        #     """Launch the gui specified in the launcher's config files.
-        #
-        #     """
-        #     gui_name = self.config.get(self.META_DATA, "gui")
-        #     import_name = "guis.%(gui_name)s.gemrb_gui_%(gui_name)s" % locals()
-        #     __import__(import_name) # TODO import every gui in the gui dir until one succeeds
-        #
-        #     gui_module = sys.modules[import_name]
-        #
-        #     self.gui = gui_module.Gui(self)
+        This assumes that the caller correctly passes parameters for each
+        connector.  If not, we log a TypeError and continue to serve any
+        connectors we can create successfully.  If other types of errors occur,
+        we quit.
 
-        for protocol in self.listeners.iterkeys():
-            method =  "_create_%s_listener" % protocol
+        """
+        connectors = dict()
+
+        for protocol in settings.iterkeys():
+            module = SimpleSantiago._get_protocol_module(protocol)
 
             try:
-                getattr(self, method)(**self.listeners[protocol])
-            except KeyError:
-                pass
+                connectors[protocol] = \
+                    getattr(module, connector)(self, **settings[protocol])
+
+            # log a type error, assume all others are fatal.
+            except TypeError:
+                logging.error("Could not create %s %s with %s",
+                              protocol, connector, str(settings[protocol]))
+
+        return connectors
+
+    @classmethod
+    def _get_protocol_module(cls, protocol):
+        """Return the requested protocol module.
+
+        FIXME: Assumes the current directory is in sys.path
+
+        """
+        import_name = "protocols." + protocol
+
+        if not import_name in sys.modules:
+            __import__(import_name)
+
+        return sys.modules[import_name]
+
+    def start(self):
+        """Start all listeners and senders attached to this Santiago.
+
+        When this has finished, the Santiago will be ready to go.
+
+        """
+        for connector in list(self.listeners.itervalues()) + \
+                         list(self.senders.itervalues()):
+            connector.start()
+
+        logging.debug("Santiago started!")
 
     def am_i(self, server):
         """Verify whether this server is the specified server."""
@@ -147,16 +174,16 @@ class SimpleSantiago(object):
         """
         try:
             return self.hosting[client][service]
-        except KeyError:
-            pass
+        except KeyError as e:
+            logging.exception(e)
 
     def get_client_locations(self, host, service):
         """Return where the host serves the service for me, the client."""
 
         try:
             return self.consuming[service][host]
-        except KeyError:
-            pass
+        except KeyError as e:
+            logging.exception(e)
 
     def query(self, host, service):
         """Request a service from another Santiago.
@@ -164,10 +191,14 @@ class SimpleSantiago(object):
         This tag starts the entire Santiago request process.
 
         """
-        self.requests[host].add(service)
+        try:
+            self.requests[host].add(service)
 
-        self.request(host, self.me, host, self.me,
-                     service, None, self.get_client_locations(host, "santiago"))
+            self.outgoing_request(
+                host, self.me, host, self.me,
+                service, None, self.get_client_locations(host, "santiago"))
+        except Exception as e:
+            logging.exception("Couldn't handle %s.%s", host, service)
 
     def outgoing_request(self, from_, to, host, client,
                 service, locations, reply_to):
@@ -179,13 +210,14 @@ class SimpleSantiago(object):
         # best guess reply_to if we don't know.
         reply_to = reply_to or self.get_host_locations(to, "santiago")
 
-        request = self.gpg.sign_encrypt({
-                "from": from_, "to": to, "host": host, "client": client,
-                "service": service, "locations": locations or "",
-                "reply_to": reply_to})
+        # FIXME: pgp sign + encrypt here.
+        request = {"from": from_, "to": to, "host": host, "client": client,
+                   "service": service, "locations": locations or "",
+                   "reply_to": reply_to}
 
         for destination in self.get_client_locations(to, "santiago"):
-            getattr(self, destination.split(":")[0] + "_request")(request)
+            protocol = destination.split(":")[0]
+            self.senders[protocol].outgoing_request(request, destination)
 
     def incoming_request(self, **kwargs):
         """Provide a service to a client.
@@ -205,9 +237,13 @@ class SimpleSantiago(object):
         attacker knows that the last request brought down a system.
 
         """
+        logging.debug("Incoming request: ", str(kwargs))
+
         # no matter what happens, the sender will never hear about it.
         try:
-            request = self.unpack_request(kwargs)
+            request = self._unpack_request(kwargs)
+
+            logging.debug("Unpacked request: ", str(request))
 
             # is this appropriate for both sending and receiving?
             # nope.
@@ -220,11 +256,10 @@ class SimpleSantiago(object):
                 self.handle_request(request["from"], request["to"],
                                     request["host"], request["client"],
                                     request["service"], request["reply_to"])
-        except Exception, e:
-            #raise e
-            print "Exception!", e
+        except Exception as e:
+            logging.exception("Error: ", str(e))
 
-    def unpack_request(self, kwargs):
+    def _unpack_request(self, kwargs):
         """Decrypt and verify the request.
 
         Give up if it doesn't pass muster.
@@ -254,7 +289,7 @@ class SimpleSantiago(object):
         try:
             self.hosting[from_]
             self.hosting[client]
-        except KeyError:
+        except KeyError as e:
             return
 
         if not self.am_i(to):
@@ -265,9 +300,10 @@ class SimpleSantiago(object):
         else:
             self.learn_service(client, "santiago", reply_to)
 
-            self.request(self.me, client, self.me, client,
-                         service, self.get_host_locations(client, service),
-                         self.get_host_locations(client, "santiago"))
+            self.outgoing_request(
+                self.me, client, self.me, client,
+                service, self.get_host_locations(client, service),
+                self.get_host_locations(client, "santiago"))
 
     def proxy(self, to, host, client, service, reply_to):
         """Pass off a request to another Santiago.
@@ -276,12 +312,14 @@ class SimpleSantiago(object):
         original host as well as me.
 
         TODO: add tests.
+        TODO: improve proxying.
 
         """
-        self.request(self.me, to, host, client,
-                     service, reply_to)
-        self.request(self.me, to, host, client,
-                     service, self.get_client_locations(host, "santiago"))
+        self.outgoing_request(self.me, to, host, client,
+                              service, reply_to)
+        self.outgoing_request(
+            self.me, to, host, client,
+            service, self.get_client_locations(host, "santiago"))
 
     def handle_reply(self, from_, to, host, client,
                      service, locations, reply_to):
@@ -295,7 +333,7 @@ class SimpleSantiago(object):
         try:
             self.consuming[service][from_]
             self.consuming[service][host]
-        except KeyError:
+        except KeyError as e:
             return
 
         if not self.am_i(to):
@@ -323,64 +361,73 @@ class SimpleSantiago(object):
             try:
                 with open(name, "w") as output:
                     output.write(str(getattr(self, datum)))
-            except:
-                pass
+            except Exception as e:
+                logging.exception("Could not save %s as %s", datum, name)
 
-class SantiagoListener(object):
-    """Generic Santiago Listener superclass."""
+class SantiagoConnector(object):
+    """Generic Santiago connector superclass.
 
+    All types of connectors should inherit from this class.  These are the
+    "controllers" in the MVC paradigm.
+
+    """
     def __init__(self, santiago):
         self.santiago = santiago
 
-class SantiagoSender(object):
-    """Generic Santiago Sender superclass."""
+    def start(self):
+        """Called when initialization is complete.
 
-    def __init__(self, santiago):
-        self.santiago = santiago
+        Cannot block.
 
+        """
+        pass
+
+class SantiagoListener(SantiagoConnector):
+    """Generic Santiago Listener superclass.
+
+    This class contains one optional method, the request receiving method.  This
+    method passes the request along to the Santiago host.
+
+    """
+    def incoming_request(self, **kwargs):
+        self.santiago.incoming_request(**kwargs)
+
+class SantiagoSender(SantiagoConnector):
+    """Generic Santiago Sender superclass.
+
+    This class contains one required method, the request sending method.  This
+    method sends a Santiago request via that protocol.
+
+    """
+    def outgoing_request(self):
+        raise Exception(
+            "santiago.SantiagoSender.outgoing_request not implemented.")
 
 if __name__ == "__main__":
     # FIXME: convert this to the withsqlite setup.
 
-    # load listeners
-    try:
-        listeners = load_data("b", "listeners")
-    except IOError:
-        https_port = 8090
-        cert = "/tmp/santiagoTest/santiagoTest1.crt"
-        listeners = { "https": { "socket_port": https_port,
-                                 "ssl_certificate": cert,
-                                 "ssl_private_key": cert }, }
-    # load senders
-    try:
-        senders = load_data("b", "senders")
-    except IOError:
-        tor_proxy = "localhost"
-        tor_proxy_port = 8118
-        senders = { "https": { "host": tor_proxy,
-                               "port": tor_proxy_port} }
+    cert = "santiago.crt"
+    listeners = { "https": { "socket_port": 8080,
+                             "ssl_certificate": cert,
+                             "ssl_private_key": cert }, }
+    senders = { "https": { "proxy_host": "localhost",
+                           "proxy_port": 8118} }
+
     # load hosting
     try:
         hosting = load_data("b", "hosting")
     except IOError:
-        hosting = { "a": { "santiago": set( ["https://localhost:8090"] )},
-                    "b": { "santiago": set( ["https://localhost:8090"] )}}
+        hosting = { "a": { "santiago": set( ["https://localhost:8080"] )},
+                    "b": { "santiago": set( ["https://localhost:8080"] )}}
     # load consuming
     try:
         consuming = load_data("b", "consuming")
     except IOError:
-        consuming = { "santiago": { "b": set( ["https://localhost:8090"] ),
+        consuming = { "santiago": { "b": set( ["https://localhost:8080"] ),
                                     "a": set( ["someAddress.onion"] )}}
 
     # load the Santiago
     santiago_b = SimpleSantiago(listeners, senders,
                                 hosting, consuming, "b")
 
-    # TODO: integrate multiple servers:
-    # http://docs.cherrypy.org/dev/refman/process/servers.html
-
-    # Start the application.
-    # cherrypy.Application(
-    cherrypy.quickstart(
-        santiago_b, '/')
-    # cherrypy.engine.start()
+    santiago_b.start()
