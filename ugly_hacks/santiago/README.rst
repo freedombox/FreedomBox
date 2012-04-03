@@ -495,7 +495,7 @@ Next, you'll need to open up "start.py" and update the system path to locate the
 Finally, start the Santiago process in a console with ``start.py``.  Test it out
 by navigating to:
 
-    https://localhost:8080/query?to=b&service=santiago
+    https://localhost:8080/query?host=b&service=santiago
 
 You should see three requests appear in the console.
 
@@ -515,6 +515,8 @@ Tasks
 
 - |TODO| allow multiple listeners and senders per protocol (with different
   proxies?)
+
+- |TODO| Move SimpleSantiago onto Santiago, merge documentation.
 
 .. |TODO| unicode:: U+2610
 .. |DONE| unicode:: U+2611
