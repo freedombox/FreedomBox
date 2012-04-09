@@ -487,12 +487,12 @@ First, you'll need to create a certificate to serve Santiago over HTTPS::
     # chgrp 1000 santiago.crt
     # chmod g+r santiago.crt
 
-Next, you'll need to open up "start.py" and update the system path to locate the
+Next, you'll need to open up ``start.sh`` and update the system path to locate the
 "gnupg_" and "cfg" modules.
 
 .. _gnupg: https://code.google.com/p/python-gnupg/
 
-Finally, start the Santiago process in a console with ``start.py``.  Test it out
+Finally, start the Santiago process in a console with ``start.sh``.  Test it out
 by navigating to:
 
     https://localhost:8080/query?host=b&service=santiago
@@ -517,6 +517,11 @@ Tasks
   proxies?)
 
 - |TODO| Move SimpleSantiago onto Santiago, merge documentation.
+
+- |TODO| Properly integrate the WOT into Santiago so that trust can be used,
+  even if services aren't available.  This will allow us to use a box-specific
+  key for Santiago serving, as long as the box's owner signs and publishes that
+  box's key.  Then, we can very effectively use the public WOT.
 
 .. |TODO| unicode:: U+2610
 .. |DONE| unicode:: U+2611

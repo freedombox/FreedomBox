@@ -34,19 +34,15 @@ We also don't:
 :TODO: Create startup script that adds all necessary things to the PYTHONPATH.
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
+:TODO: move to santiago.py, merge the documentation.
 
 """
+
+import cfg
 from collections import defaultdict as DefaultDict
 import gnupg
 import logging
 import sys
-
-try:
-    import cfg
-except ImportError:
-    # try a little harder to import cfg.  Bomb out if we still fail.
-    sys.path.append("../..")
-    import cfg
 
 
 def load_data(server, item):
