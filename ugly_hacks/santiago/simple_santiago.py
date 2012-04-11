@@ -90,6 +90,7 @@ class SimpleSantiago(object):
         self.consuming = consuming
         self.requests = DefaultDict(set)
         self.me = me
+        self.gpg = gnupg.GPG(use_agent = True)
 
         self.listeners = self._create_connectors(listeners, "Listener")
         self.senders = self._create_connectors(senders, "Sender")
@@ -203,13 +204,13 @@ class SimpleSantiago(object):
         This tag is used when sending queries or replies to other Santiagi.
 
         """
-        # best guess reply_to if we don't know.
-        reply_to = reply_to or self.get_host_locations(to, "santiago")
-
-        # FIXME: pgp sign + encrypt here.
-        request = {"from": from_, "to": to, "host": host, "client": client,
-                   "service": service, "locations": locations or "",
-                   "reply_to": reply_to}
+        # FIXME sign the encrypted payload.
+        # FIXME move it out of here so proxying can work.
+        payload = self.gpg.encrypt(
+                {"host": host, "client": client,
+                 "service": service, "locations": locations or "",
+                 "reply_to": reply_to}, to, sign=self.me)
+        request = self.gpg.sign({"request": payload, "to", to})
 
         for destination in self.get_client_locations(to, "santiago"):
             protocol = destination.split(":")[0]
@@ -237,12 +238,14 @@ class SimpleSantiago(object):
 
         # no matter what happens, the sender will never hear about it.
         try:
-            request = self._unpack_request(kwargs)
+            try:
+                request = self.unpack_request(kwargs)
+            except ValueError as e:
+                self.proxy(kwargs)
+                return
 
             logging.debug("Unpacked request: ", str(request))
 
-            # is this appropriate for both sending and receiving?
-            # nope.
             if request["locations"]:
                 self.handle_reply(request["from"], request["to"],
                                   request["host"], request["client"],
@@ -255,18 +258,116 @@ class SimpleSantiago(object):
         except Exception as e:
             logging.exception("Error: ", str(e))
 
-    def _unpack_request(self, kwargs):
+    def unpack_request(self, kwargs):
         """Decrypt and verify the request.
 
-        Give up if it doesn't pass muster.
+        Raise an (unhandled) error if there're any inconsistencies in the
+        message.
+
+        The message is wrapped in up to three ways:
+
+        1. The outermost signature: This layer is applied to the message by the
+           message's sender.  This allows for proxying signed messages between
+           clients.
+
+        2. The inner signature: This layer is applied to the message by the
+           original sender (the requesting client or replying host).  The
+           message's destination is recorded in plain-text in this layer so
+           proxiers can deliver the message.
+
+        3. The encrypted message: This layer is used by the host and client to
+           coordinate the service, hidden from prying eyes.
+
+        Yes, each host and client requires two verifications and one decryption
+        per message.  Each proxier requires two verifications: the inner
+        signature must be valid, not necessarily trusted.  The host and client
+        are the only folks who must trust the inner signature.  Proxiers must
+        only verify that signature.
+        
+        XXX: if we duplicate any keys in the signed message (for addressing)
+             they could (should?) be overwritten by the contents of the
+             encrypted message.
+
+        TODO: Do we use "to" or "host" the plain-text inner signature?  If we
+              use "host", we'll need to use "client" on the way back, but that
+              feels like it gives up far too much information.
+
+        """
+        request = kwargs["request"]
+
+        request = verify_sender(request)
+        request = verify_client(request)
+
+        if not self.am_i(request["host"]):
+            self.proxy(request)
+            return
+
+        request = decrypt_client(request)
+
+        return request
+
+    def verify_sender(self, request):
+        """Verify the signature of the message's sender.
+
+        TODO Raises an InvalidSignature error when the signature is incorrect.
+
+        TODO Raises an UntrustedSignature error when the signer is not trusted
+        in the web-of-trust.
+
+        TODO Returns the signed message's contents.
+
+        """
+        pass
+
+    def verify_client(self, request)
+        """Verify the signature of the message's source.
+
+        TODO Raises an InvalidSignature error when the signature is incorrect.
+
+        TODO Raises an UntrustedSignature error when the signer is not trusted
+        in the web-of-trust.
+
+        TODO Returns the signed message's contents.
+
+        """
+        pass
+
+    def decrypt_client(self, request):
+        """Decrypt the message and validates the encrypted signature.
+
+        TODO Raises an InvalidSignature error when the signature is incorrect.
+
+        TODO Raises an UntrustedSignature error when the signer is not trusted
+        in the web-of-trust.
+
+        TODO Returns the contents of the encrypted request.
+
+        pre::
+
+            self.me == request["host"]
+
+        post::
+
+            False not in map(("host", "client", "service", "locations",
+                "reply_to"), request.__haskey__)
+
+        """
+        pass
+
+    @staticmethod
+    def signed_contents(request):
+        """Return the contents of the signed message.
 
         TODO: complete.
 
         """
-        request = DefaultDict(lambda: None)
-        for k, v in kwargs.iteritems():
-            request[k] = v
-        return request
+        if not request.readline() == "-----BEGIN PGP SIGNED MESSAGE-----":
+            return
+
+        # skip the blank line
+        # contents = the thingie.
+        # contents end at "-----BEGIN PGP SIGNATURE-----"
+        # message ends at "-----END PGP SIGNATURE-----"
 
     def handle_request(self, from_, to, host, client,
                        service, reply_to):
@@ -288,9 +389,6 @@ class SimpleSantiago(object):
         except KeyError as e:
             return
 
-        if not self.am_i(to):
-            return
-
         if not self.am_i(host):
             self.proxy(to, host, client, service, reply_to)
         else:
@@ -301,21 +399,17 @@ class SimpleSantiago(object):
                 service, self.get_host_locations(client, service),
                 self.get_host_locations(client, "santiago"))
 
-    def proxy(self, to, host, client, service, reply_to):
+    def proxy(self, request):
         """Pass off a request to another Santiago.
 
         Attempt to contact the other Santiago and ask it to reply both to the
         original host as well as me.
 
         TODO: add tests.
-        TODO: improve proxying.
+        TODO: create.
 
         """
-        self.outgoing_request(self.me, to, host, client,
-                              service, reply_to)
-        self.outgoing_request(
-            self.me, to, host, client,
-            service, self.get_client_locations(host, "santiago"))
+        pass
 
     def handle_reply(self, from_, to, host, client,
                      service, locations, reply_to):
@@ -399,6 +493,16 @@ class SantiagoSender(SantiagoConnector):
         raise Exception(
             "santiago.SantiagoSender.outgoing_request not implemented.")
 
+class SignatureError(Exception):
+    pass
+
+class InvalidSignatureError(SignatureError):
+    pass
+
+class UntrustedSignatureError(SignatureError):
+    pass
+
+
 if __name__ == "__main__":
     # FIXME: convert this to the withsqlite setup.
 
@@ -408,22 +512,24 @@ if __name__ == "__main__":
                              "ssl_private_key": cert }, }
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
+    mykey = "D95C32042EE54FFDB25EC3489F2733F40928D23A"
+    # mykey = "0928D23A" # my short key
 
     # load hosting
     try:
-        hosting = load_data("b", "hosting")
+        hosting = load_data(mykey, "hosting")
     except IOError:
         hosting = { "a": { "santiago": set( ["https://localhost:8080"] )},
-                    "b": { "santiago": set( ["https://localhost:8080"] )}}
+                    mykey: { "santiago": set( ["https://localhost:8080"] )}}
     # load consuming
     try:
-        consuming = load_data("b", "consuming")
+        consuming = load_data(mykey, "consuming")
     except IOError:
-        consuming = { "santiago": { "b": set( ["https://localhost:8080"] ),
+        consuming = { "santiago": { mykey: set( ["https://localhost:8080"] ),
                                     "a": set( ["someAddress.onion"] )}}
 
     # load the Santiago
     santiago_b = SimpleSantiago(listeners, senders,
-                                hosting, consuming, "b")
+                                hosting, consuming, mykey)
 
     santiago_b.start()
