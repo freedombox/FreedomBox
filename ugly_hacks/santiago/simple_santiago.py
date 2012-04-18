@@ -210,7 +210,7 @@ class SimpleSantiago(object):
                 {"host": host, "client": client,
                  "service": service, "locations": locations or "",
                  "reply_to": reply_to}, to, sign=self.me)
-        request = self.gpg.sign({"request": payload, "to", to})
+        request = self.gpg.sign({"request": payload, "to": to})
 
         for destination in self.get_client_locations(to, "santiago"):
             protocol = destination.split(":")[0]
@@ -283,7 +283,7 @@ class SimpleSantiago(object):
         signature must be valid, not necessarily trusted.  The host and client
         are the only folks who must trust the inner signature.  Proxiers must
         only verify that signature.
-        
+
         XXX: if we duplicate any keys in the signed message (for addressing)
              they could (should?) be overwritten by the contents of the
              encrypted message.
@@ -311,21 +311,21 @@ class SimpleSantiago(object):
 
         TODO Raises an InvalidSignature error when the signature is incorrect.
 
-        TODO Raises an UntrustedSignature error when the signer is not trusted
-        in the web-of-trust.
+        TODO Raises an UntrustedClient error when the signer is not a client
+        authorized to send us Santiago messages.
 
         TODO Returns the signed message's contents.
 
         """
-        pass
+        return request
 
-    def verify_client(self, request)
+    def verify_client(self, request):
         """Verify the signature of the message's source.
 
         TODO Raises an InvalidSignature error when the signature is incorrect.
 
-        TODO Raises an UntrustedSignature error when the signer is not trusted
-        in the web-of-trust.
+        TODO Raises an UntrustedClient error when the signer is not a client
+        authorized to send us Santiago messages.
 
         TODO Returns the signed message's contents.
 
@@ -337,8 +337,8 @@ class SimpleSantiago(object):
 
         TODO Raises an InvalidSignature error when the signature is incorrect.
 
-        TODO Raises an UntrustedSignature error when the signer is not trusted
-        in the web-of-trust.
+        TODO Raises an UntrustedClient error when the signer is not a client
+        authorized to send us Santiago messages.
 
         TODO Returns the contents of the encrypted request.
 
@@ -499,8 +499,169 @@ class SignatureError(Exception):
 class InvalidSignatureError(SignatureError):
     pass
 
-class UntrustedSignatureError(SignatureError):
+class UntrustedClientError(SignatureError):
     pass
+
+class PgpUnwrapper(object):
+    """Removes one layer of PGP message header and footer per iteration.
+
+    Good for singly- or multiply-wrapped messages.
+
+    FIXME: replace with a real library for this.  Why doesn't gnupg do this?
+
+    After a single iteration, the original message is available in
+    ``original_message`` while the message's contents are in
+    ``str(PgpUnwrapper)``.
+
+    Sucessive iterations unwrap additional layers of the message.  Good for
+    onion-signed or -encrypted messages.
+
+    """
+    START, HEAD, BODY, FOOTER, END = "start", "header", "body", "footer", "end"
+
+    SIG, CRYPT = "sig", "crypt"
+
+    SIG_HEAD, SIG_BODY, SIG_FOOTER, SIG_END = (
+            "-----BEGIN PGP SIGNED MESSAGE-----",
+            "",
+            "-----BEGIN PGP SIGNATURE-----",
+            "-----END PGP SIGNATURE-----")
+
+    CRYPT_HEAD, CRYPT_END = ("-----BEGIN PGP MESSAGE-----",
+                             "-----END PGP MESSAGE-----")
+
+    def __init__(self, message,
+                 gnupg_new = None, gnupg_verify = None, gnupg_decrypt = None):
+
+        if gnupg_new == None:
+            gnupg_new = dict()
+        if gnupg_verify == None:
+            gnupg_verify = dict()
+        if gnupg_decrypt == None:
+            gnupg_decrypt = dict()
+
+        self.message = message
+        self.gnupg_new = gnupg_new
+        self.gnupg_verify = gnupg_verify
+        self.gnupg_decrypt = gnupg_decrypt
+        self.type = ""
+
+        self.gpg = gnupg.GPG(**self.gnupg_new)
+        self.reset_fields()
+
+    def reset_fields(self):
+        """Removes all extracted data from the iterator.
+
+        This resets it to a new or clean state, ready for the next iteration.
+
+        """
+        self.start = list()
+        self.header = list()
+        self.body = list()
+        self.footer = list()
+        self.end = list()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """Remove one layer of PGP message wrapping.
+
+        Return the message's contents, and set self.body as the message's body.
+        Also, set the message's header and footer in self, respectively.
+
+        Raise an InvalidSignature Error if signature isn't valid.
+
+        This is a really simple state-machine: certain lines advance the state
+        of the machine, and until the machine is advanced again, all lines are
+        added to that part of the message.  We ignore any part of the message
+        that comes before the opening stanza.
+
+        """
+        point = PgpUnwrapper.START
+        type_ = ""
+
+        self.reset_fields()
+
+        for line in self.message.splitlines():
+            if point == PgpUnwrapper.START and line == PgpUnwrapper.SIG_HEAD:
+                point = PgpUnwrapper.HEAD
+                type_ = PgpUnwrapper.SIG
+            elif point == PgpUnwrapper.START and line == PgpUnwrapper.CRYPT_HEAD:
+                point = PgpUnwrapper.HEAD
+                type_ = PgpUnwrapper.CRYPT
+            elif point == PgpUnwrapper.HEAD and line == PgpUnwrapper.SIG_BODY:
+                point = PgpUnwrapper.BODY
+            elif (point == PgpUnwrapper.BODY and line == PgpUnwrapper.SIG_FOOTER and
+                  type_ == PgpUnwrapper.SIG):
+                point = PgpUnwrapper.FOOTER
+            elif ((point == PgpUnwrapper.FOOTER and line == PgpUnwrapper.SIG_END and type_ == PgpUnwrapper.SIG) or
+                  (point == PgpUnwrapper.BODY and line == PgpUnwrapper.CRYPT_END and type_ == PgpUnwrapper.CRYPT)):
+                self.footer.append(line)
+                point = PgpUnwrapper.END
+                continue
+
+            getattr(self, point).append(line)
+
+        self.handle_message(point, type_)
+
+        return "\n".join(self.body)
+
+    def handle_message(self, point, type_):
+        """Handle end-conditions of message.
+
+        Do the right thing based on the state machine's results.
+
+        """
+        if point != PgpUnwrapper.END or type_ not in (PgpUnwrapper.CRYPT,
+                                                      PgpUnwrapper.SIG):
+            raise StopIteration("No valid PGP data.")
+
+        args = (self.gnupg_verify if type_ == PgpUnwrapper.SIG
+                else self.gnupg_decrypt)
+
+        data = { PgpUnwrapper.SIG: self.gpg.verify,
+                 PgpUnwrapper.CRYPT: self.gpg.decrypt}[type_](str(self), **args)
+
+        self.body = PgpUnwrapper.unwrap(self.body)
+        self.type = type_
+
+        if not data:
+            raise InvalidSignatureError()
+
+        # reset the state machine, now that we've unwrapped a layer.
+        self.message = "\n".join(self.body)
+
+    @classmethod
+    def unwrap(cls, message):
+        lines = (PgpUnwrapper.SIG_HEAD, PgpUnwrapper.SIG_FOOTER,
+                 PgpUnwrapper.SIG_END,
+                 PgpUnwrapper.CRYPT_HEAD, PgpUnwrapper.CRYPT_END)
+
+        for line in message:
+            if True in map(str.endswith, [line] * len(lines), lines):
+                message[message.index(line)] = line[2:]
+
+        return message
+
+    def __str__(self):
+        """Returns the GPG-part of the current message.
+
+        Non-PGP-message data are not returned.
+
+        """
+        return "\n".join([
+                "\n".join(x) for x in (self.header, self.body, self.footer) ])
+
+    def original_message(self):
+        """Returns the current wrapped message.
+
+        It's an iterator, so it discards previous iterations' data.
+
+        """
+        return "\n".join([
+                "\n".join(x) for x in (self.start, self.header, self.body,
+                                       self.footer, self.end) ])
 
 
 if __name__ == "__main__":
