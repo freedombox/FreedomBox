@@ -410,6 +410,24 @@ Design Questions
     bit.  That we don't allow untrusted connections is an incredible limitation
     on the routing system.
 
+    However, we can reinterpret the onion concept, by permitting the signed and
+    encrypted parts of messages to conflict.  A's signed message is to B, but
+    the encrypted part is to C.  B, named as an intermediate destination, reads
+    the encrypted message and forwards it on to C, as it's own message.  This
+    allows users to force messages through specific hops in the system.
+
+    I don't know if that's a good thing or not.  It lets a trusted attacker (A)
+    validate that specific nodes are part of a trust-web (that B and C can
+    communicate), but it also allows nodes to control their routing, while
+    revealing some aspects of their communication to the named intermediates.
+    Also, it implies network loops, which could be minimized by rate-limiting.
+
+    This also implies infinite named intermediates.  There's nothing in this
+    setup preventing A also using C as a proxy for D through J.
+
+    I'm still not sure whether the benefits outweigh the costs, but that's still
+    an interesting question.
+
 :Reverse DNS: Should we check with the original requester before replying?  What
     if we can't reach that requester outside of the reply-to address they sent?
     Verifying the requester's identity by their self-reported address seems to
@@ -472,6 +490,34 @@ Functional Questions
     (but, oddly, not the dog itself), then I might trust the key.  If I don't
     trust the second of three kids, then why am I trusting the key?  Trust is an
     annoyingly deep subject, and one of the few good uses of the word "faith."
+
+:Encryption Keys: So, being able to sign and encrypt messages is necessary
+    functional requirement.  However, that implies that the Santiago process
+    always has access to the public key's secret key.  That's right, it's an
+    always-on web service that has access to a secret key, in Python.  That's
+    bad, Python makes it (slightly) worse.
+
+    So, how do we make the system less vulnerable?  The first step is to avoid
+    storing the secret key (or the key's password) in memory whenever possible.
+    The system should pick up and then put down the password as quickly as
+    possible.  There are two ways we can do this:
+
+    #. Using gpg-agent.  We pass the agent the password, once, and the agent
+       takes care of it from then on.  This is what I'll use unless something
+       goes terribly wrong with the setup.
+    #. Read the password from a file, shoveling it into the GnuPG request
+       whenever required.  Not particularly secure, unless the Santiago service
+       is running as a custom user, reading from an only-owner-readable file.
+       However, then any other Santiago-user-owned process could harvest
+       passwords from files.
+
+    The second allows for un-attended startup, because the passwords can be read
+    from files, but I don't trust it.  It feels like I'm going out on a limb
+    enough before this point.
+
+    Going to the other extreme, we can make un-passworded secret keys, so that
+    no hard-coded passwords or gpg-agents are required.  Then, it's just
+    plug-and-play.  That might be an acceptable option in some circumstances.
 
 Using Santiago
 ==============
