@@ -113,11 +113,10 @@ def unwrapper_test(data):
     global key_id, pass_phrase, gpg
 
     # create a new key if we don't have one.
-    if not key_id or not pass_phrase:
-        pass_phrase = "foo"
+    if not key_id: # or not pass_phrase:
         key_id = None
 
-        gpg = gnupg.GPG(gnupghome="keys")
+        gpg = gnupg.GPG(gnupghome="keys", useagent=True)
 
         print "key input..."
         input_ = gpg.gen_key_input(key_length = 1, passphrase=pass_phrase)
@@ -127,14 +126,14 @@ def unwrapper_test(data):
     # first signing
 
     print "sign..."
-    data = gpg.sign(data, keyid=key_id, passphrase=pass_phrase)
+    data = gpg.sign(data, keyid=key_id) #, passphrase=pass_phrase)
     # believe it or not, this is transformative.
     data = str(data)
     print "data:\n", data, "\n:data"
 
     # second signing
 
-    data = gpg.sign(data, keyid=key_id, passphrase=pass_phrase)
+    data = gpg.sign(data, keyid=key_id) #, passphrase=pass_phrase)
     data = str(data)
     print "data:\n", data, "\n:data"
 
@@ -159,7 +158,7 @@ if __name__ == "__main__":
 
     """
     key_id = "D95C32042EE54FFDB25EC3489F2733F40928D23A"
-    pass_phrase = raw_input("Passphrase: "); print
+    # pass_phrase = raw_input("Passphrase: "); print
     recipient = "nick.m.daly@gmail.com"
 
     data = {'lol': 'cats'}
