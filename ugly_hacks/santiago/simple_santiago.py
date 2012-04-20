@@ -42,6 +42,8 @@ import cfg
 from collections import defaultdict as DefaultDict
 import gnupg
 import logging
+from pgpprocessor import PgpUnwrapper
+import re
 import sys
 
 
@@ -293,44 +295,69 @@ class SimpleSantiago(object):
               feels like it gives up far too much information.
 
         """
-        request = kwargs["request"]
+        request = PgpUnwrapper(str(kwargs["request"]), gpg=self.gpg)
 
-        request = verify_sender(request)
-        request = verify_client(request)
+        request = self.verify_sender(request)
 
-        if not self.am_i(request["host"]):
+        if not request:
+            return
+
+        request = self.verify_client(request)
+
+        if not request:
+            return
+
+        # TODO this stuff.
+        if not self.am_i(dict(str(request))["host"]):
             self.proxy(request)
             return
 
-        request = decrypt_client(request)
+        request = self.decrypt_client(request)
+
+        if not request:
+            return
+
+        # TODO this stuff.
+        if not self.am_i(dict(str(request))["host"]):
+            self.proxy(request)
+            return
 
         return request
 
     def verify_sender(self, request):
         """Verify the signature of the message's sender.
 
-        TODO Raises an InvalidSignature error when the signature is incorrect.
+        Raises an InvalidSignature error when the signature is incorrect.
 
         TODO Raises an UntrustedClient error when the signer is not a client
         authorized to send us Santiago messages.
 
-        TODO Returns the signed message's contents.
-
         """
-        return request
+        request_body = dict(request.next())
+
+        if not request.gpg.valid:
+            raise InvalidSignatureError()
+
+        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
+            raise UntrustedClientError(
+                "{0} is not trusted.".format(request.gpg.fingerprint))
+
+        if not self.get_client_locations(request_body["to"], "santiago"):
+            self.proxy(request_body)
+            return
+
+        return request_body
 
     def verify_client(self, request):
         """Verify the signature of the message's source.
 
-        TODO Raises an InvalidSignature error when the signature is incorrect.
+        Raises an InvalidSignature error when the signature is incorrect.
 
         TODO Raises an UntrustedClient error when the signer is not a client
         authorized to send us Santiago messages.
 
-        TODO Returns the signed message's contents.
-
         """
-        pass
+        request.next()
 
     def decrypt_client(self, request):
         """Decrypt the message and validates the encrypted signature.
@@ -339,8 +366,6 @@ class SimpleSantiago(object):
 
         TODO Raises an UntrustedClient error when the signer is not a client
         authorized to send us Santiago messages.
-
-        TODO Returns the contents of the encrypted request.
 
         pre::
 
@@ -352,7 +377,7 @@ class SimpleSantiago(object):
                 "reply_to"), request.__haskey__)
 
         """
-        pass
+        request.next()
 
     @staticmethod
     def signed_contents(request):
@@ -501,167 +526,6 @@ class InvalidSignatureError(SignatureError):
 
 class UntrustedClientError(SignatureError):
     pass
-
-class PgpUnwrapper(object):
-    """Removes one layer of PGP message header and footer per iteration.
-
-    Good for singly- or multiply-wrapped messages.
-
-    FIXME: replace with a real library for this.  Why doesn't gnupg do this?
-
-    After a single iteration, the original message is available in
-    ``original_message`` while the message's contents are in
-    ``str(PgpUnwrapper)``.
-
-    Sucessive iterations unwrap additional layers of the message.  Good for
-    onion-signed or -encrypted messages.
-
-    """
-    START, HEAD, BODY, FOOTER, END = "start", "header", "body", "footer", "end"
-
-    SIG, CRYPT = "sig", "crypt"
-
-    SIG_HEAD, SIG_BODY, SIG_FOOTER, SIG_END = (
-            "-----BEGIN PGP SIGNED MESSAGE-----",
-            "",
-            "-----BEGIN PGP SIGNATURE-----",
-            "-----END PGP SIGNATURE-----")
-
-    CRYPT_HEAD, CRYPT_END = ("-----BEGIN PGP MESSAGE-----",
-                             "-----END PGP MESSAGE-----")
-
-    def __init__(self, message,
-                 gnupg_new = None, gnupg_verify = None, gnupg_decrypt = None):
-
-        if gnupg_new == None:
-            gnupg_new = dict()
-        if gnupg_verify == None:
-            gnupg_verify = dict()
-        if gnupg_decrypt == None:
-            gnupg_decrypt = dict()
-
-        self.message = message
-        self.gnupg_new = gnupg_new
-        self.gnupg_verify = gnupg_verify
-        self.gnupg_decrypt = gnupg_decrypt
-        self.type = ""
-
-        self.gpg = gnupg.GPG(**self.gnupg_new)
-        self.reset_fields()
-
-    def reset_fields(self):
-        """Removes all extracted data from the iterator.
-
-        This resets it to a new or clean state, ready for the next iteration.
-
-        """
-        self.start = list()
-        self.header = list()
-        self.body = list()
-        self.footer = list()
-        self.end = list()
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        """Remove one layer of PGP message wrapping.
-
-        Return the message's contents, and set self.body as the message's body.
-        Also, set the message's header and footer in self, respectively.
-
-        Raise an InvalidSignature Error if signature isn't valid.
-
-        This is a really simple state-machine: certain lines advance the state
-        of the machine, and until the machine is advanced again, all lines are
-        added to that part of the message.  We ignore any part of the message
-        that comes before the opening stanza.
-
-        """
-        point = PgpUnwrapper.START
-        type_ = ""
-
-        self.reset_fields()
-
-        for line in self.message.splitlines():
-            if point == PgpUnwrapper.START and line == PgpUnwrapper.SIG_HEAD:
-                point = PgpUnwrapper.HEAD
-                type_ = PgpUnwrapper.SIG
-            elif point == PgpUnwrapper.START and line == PgpUnwrapper.CRYPT_HEAD:
-                point = PgpUnwrapper.HEAD
-                type_ = PgpUnwrapper.CRYPT
-            elif point == PgpUnwrapper.HEAD and line == PgpUnwrapper.SIG_BODY:
-                point = PgpUnwrapper.BODY
-            elif (point == PgpUnwrapper.BODY and line == PgpUnwrapper.SIG_FOOTER and
-                  type_ == PgpUnwrapper.SIG):
-                point = PgpUnwrapper.FOOTER
-            elif ((point == PgpUnwrapper.FOOTER and line == PgpUnwrapper.SIG_END and type_ == PgpUnwrapper.SIG) or
-                  (point == PgpUnwrapper.BODY and line == PgpUnwrapper.CRYPT_END and type_ == PgpUnwrapper.CRYPT)):
-                self.footer.append(line)
-                point = PgpUnwrapper.END
-                continue
-
-            getattr(self, point).append(line)
-
-        self.handle_message(point, type_)
-
-        return "\n".join(self.body)
-
-    def handle_message(self, point, type_):
-        """Handle end-conditions of message.
-
-        Do the right thing based on the state machine's results.
-
-        """
-        if point != PgpUnwrapper.END or type_ not in (PgpUnwrapper.CRYPT,
-                                                      PgpUnwrapper.SIG):
-            raise StopIteration("No valid PGP data.")
-
-        args = (self.gnupg_verify if type_ == PgpUnwrapper.SIG
-                else self.gnupg_decrypt)
-
-        data = { PgpUnwrapper.SIG: self.gpg.verify,
-                 PgpUnwrapper.CRYPT: self.gpg.decrypt}[type_](str(self), **args)
-
-        self.body = PgpUnwrapper.unwrap(self.body)
-        self.type = type_
-
-        if not data:
-            raise InvalidSignatureError()
-
-        # reset the state machine, now that we've unwrapped a layer.
-        self.message = "\n".join(self.body)
-
-    @classmethod
-    def unwrap(cls, message):
-        lines = (PgpUnwrapper.SIG_HEAD, PgpUnwrapper.SIG_FOOTER,
-                 PgpUnwrapper.SIG_END,
-                 PgpUnwrapper.CRYPT_HEAD, PgpUnwrapper.CRYPT_END)
-
-        for line in message:
-            if True in map(str.endswith, [line] * len(lines), lines):
-                message[message.index(line)] = line[2:]
-
-        return message
-
-    def __str__(self):
-        """Returns the GPG-part of the current message.
-
-        Non-PGP-message data are not returned.
-
-        """
-        return "\n".join([
-                "\n".join(x) for x in (self.header, self.body, self.footer) ])
-
-    def original_message(self):
-        """Returns the current wrapped message.
-
-        It's an iterator, so it discards previous iterations' data.
-
-        """
-        return "\n".join([
-                "\n".join(x) for x in (self.start, self.header, self.body,
-                                       self.footer, self.end) ])
 
 
 if __name__ == "__main__":
