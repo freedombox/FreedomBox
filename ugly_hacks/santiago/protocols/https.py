@@ -1,6 +1,6 @@
 """The HTTPS Santiago listener and sender."""
 
-from simple_santiago import SantiagoListener, SantiagoSender
+from simplesantiago import SantiagoListener, SantiagoSender
 
 import cherrypy
 import httplib, urllib

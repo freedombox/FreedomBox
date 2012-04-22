@@ -326,5 +326,5 @@ class TestSimpleSantiago(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # os.fork("python simple_santiago.py")
+    # os.fork("python simplesantiago.py")
     unittest.main()

@@ -4,7 +4,7 @@
 
 Start me with:
 
-    $ python -i simple_santiago.py
+    $ python -i simplesantiago.py
 
 This will provide you with a running Santiago service.  The important tags in
 this file are:
