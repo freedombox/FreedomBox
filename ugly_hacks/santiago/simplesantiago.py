@@ -325,36 +325,22 @@ class SimpleSantiago(object):
         are the only folks who must trust the inner signature.  Proxiers must
         only verify that signature.
 
-        FIXME: If we duplicate any keys in the signed message (for addressing)
-               they must be ignored.
+        :FIXME: If we duplicate any keys in the signed message (for addressing)
+                they must be ignored.
+
+        :FIXME: Handle weird requests. what if the client isn't the encrypter??
+                in that case, it must be ignored.
 
         """
         request = PgpUnwrapper(str(kwargs["request"]), gpg=self.gpg)
 
-        proxied_request = self.verify_sender(request)
-        encrypted_body = dict(self.verify_client(request))
-
-        if not encrypted_body:
-            return
-
-        if not self.i_am(encrypted_body["to"]):
-            self.proxy(proxied_request)
-            return
-
-        request_body = dict(self.decrypt_client(request))
-
-        if not request_body:
-            return
-
-        # we could proxy misdirected requests here, but I'm not.
-        if not (self.i_am(request_body["to"]) and
-                self.i_am(request_body["host"])):
-            # self.proxy(proxied_request)
-            return
+        proxied_request = self.verify_sender(request.next())
+        encrypted_body = dict(self.verify_client(request.next()))
+        request_body = dict(self.decrypt_client(request.next()))
 
         return request_body
 
-    def verify_sender(self, request):
+    def verify_sender(self, request_body):
         """Verify the signature of the message's sender.
 
         This is part (A) in the message diagram.
@@ -371,8 +357,6 @@ class SimpleSantiago(object):
         allowed to send us messages.
 
         """
-        proxied_request = request.next()
-
         if not request.gpg.valid:
             raise InvalidSignatureError()
 
@@ -380,9 +364,9 @@ class SimpleSantiago(object):
             raise UnwillingHostError(
                 "{0} is not a Santiago client.".format(request.gpg.fingerprint))
 
-        return proxied_request
+        return request_body
 
-    def verify_client(self, request):
+    def verify_client(self, request_body, proxied_request):
         """Verify the signature of the message's source.
 
         This is part (B) in the message diagram.
@@ -395,39 +379,33 @@ class SimpleSantiago(object):
         We shouldn't verify the Santiago client here, it the request goes to
         somebody else.
 
-        :FIXME: Handle weird requests. what if the client isn't the encrypter??
-
         """
-        encrypted_body = request.next()
+        self.verify_client(request_body)
 
-        if not request.gpg.valid:
-            raise InvalidSignatureError()
+        if not request_body:
+            return
 
-        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
-            raise UnwillingHostError(
-                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
+        if not self.i_am(request_body["to"]):
+            self.proxy(proxied_request)
+            return
 
-        return encrypted_body
+        return request_body
 
-    def decrypt_client(self, request):
+    def decrypt_client(self, request_body):
         """Decrypt the message and validates the encrypted signature.
 
         This is part (C) in the message diagram.
 
-        TODO Raises an InvalidSignature error when the signature is incorrect.
+        Raises an InvalidSignature error when the signature is incorrect.
 
-        TODO Raises an UnwillingHost error when the signer is not a client
-        authorized to send us Santiago messages.
+        Raises an UnwillingHost error when the signer is not a client authorized
+        to send us Santiago messages.
 
         """
-        request_body = dict(request.next())
+        self.verify_client(request_body)
 
-        if not request.gpg.valid:
-            raise InvalidSignatureError()
-
-        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
-            raise UnwillingHostError(
-                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
+        if not self.i_am(request_body["host"]):
+            return
 
         return request_body
 
