@@ -36,6 +36,43 @@ We also don't:
     proxies)
 :TODO: move to santiago.py, merge the documentation.
 
+Each request is built like the following.  Parenthesized items are inferred from
+context and not included explicitly.  Bracketed items are lists.  The initial
+request is a signed message whose source is inferred from the message's
+signature, while the destination assumed to be the recipient.  That message
+contains another signed message with two parts: an intended recipient and an
+encrypted request.  That encrypted request contains the important details, like
+the requested host or client, the service, where the replies go, and any service
+locations::
+
+    Request -----+
+                 |
+                 v
+    /--------------------------\
+    |     Signed Data (A)      |
+    |                          |
+    | (From: X)                |
+    | (To: Y)                  |
+    | (Request)---+            |
+    |             |            |
+    |             v            |
+    +--------------------------+
+    |     Signed Data (B)      |
+    |                          |
+    | (From: A)                |
+    | To: B                    |
+    | Request:----+            |
+    |             |            |
+    |             v            |
+    +--------------------------+
+    |    Encrypted Data (C)    |
+    |                          |
+    | Host/Client: B           |
+    | Service: C               |
+    | Reply To: [A1, A2]       |
+    | Locations: [B1]          |
+    \--------------------------/
+
 """
 
 import cfg
@@ -148,7 +185,7 @@ class SimpleSantiago(object):
 
         logging.debug("Santiago started!")
 
-    def am_i(self, server):
+    def i_am(self, server):
         """Verify whether this server is the specified server."""
 
         return self.me == server
@@ -243,7 +280,9 @@ class SimpleSantiago(object):
             try:
                 request = self.unpack_request(kwargs)
             except ValueError as e:
-                self.proxy(kwargs)
+                return
+
+            if not request:
                 return
 
             logging.debug("Unpacked request: ", str(request))
@@ -286,50 +325,98 @@ class SimpleSantiago(object):
         are the only folks who must trust the inner signature.  Proxiers must
         only verify that signature.
 
-        XXX: if we duplicate any keys in the signed message (for addressing)
-             they could (should?) be overwritten by the contents of the
-             encrypted message.
-
-        TODO: Do we use "to" or "host" the plain-text inner signature?  If we
-              use "host", we'll need to use "client" on the way back, but that
-              feels like it gives up far too much information.
+        FIXME: If we duplicate any keys in the signed message (for addressing)
+               they must be ignored.
 
         """
         request = PgpUnwrapper(str(kwargs["request"]), gpg=self.gpg)
 
-        request = self.verify_sender(request)
+        proxied_request = self.verify_sender(request)
+        encrypted_body = dict(self.verify_client(request))
 
-        if not request:
+        if not encrypted_body:
             return
 
-        request = self.verify_client(request)
-
-        if not request:
+        if not self.i_am(encrypted_body["to"]):
+            self.proxy(proxied_request)
             return
 
-        # TODO this stuff.
-        if not self.am_i(dict(str(request))["host"]):
-            self.proxy(request)
+        request_body = dict(self.decrypt_client(request))
+
+        if not request_body:
             return
 
-        request = self.decrypt_client(request)
-
-        if not request:
+        # we could proxy misdirected requests here, but I'm not.
+        if not (self.i_am(request_body["to"]) and
+                self.i_am(request_body["host"])):
+            # self.proxy(proxied_request)
             return
 
-        # TODO this stuff.
-        if not self.am_i(dict(str(request))["host"]):
-            self.proxy(request)
-            return
-
-        return request
+        return request_body
 
     def verify_sender(self, request):
         """Verify the signature of the message's sender.
 
+        This is part (A) in the message diagram.
+
         Raises an InvalidSignature error when the signature is incorrect.
 
-        TODO Raises an UntrustedClient error when the signer is not a client
+        Raises an UnwillingHost error when the signer is not a client
+        authorized to send us Santiago messages.
+
+        At this point (the initial unwrap) request.next() returns a signed
+        message body that contains, but isn't, the request's body.
+
+        We're verifying the Santiago message sender to make sure the proxier is
+        allowed to send us messages.
+
+        """
+        proxied_request = request.next()
+
+        if not request.gpg.valid:
+            raise InvalidSignatureError()
+
+        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
+            raise UnwillingHostError(
+                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
+
+        return proxied_request
+
+    def verify_client(self, request):
+        """Verify the signature of the message's source.
+
+        This is part (B) in the message diagram.
+
+        Raises an InvalidSignature error when the signature is incorrect.
+
+        Raises an UnwillingHost error when the signer is not a client authorized
+        to send us Santiago messages.
+
+        We shouldn't verify the Santiago client here, it the request goes to
+        somebody else.
+
+        :FIXME: Handle weird requests. what if the client isn't the encrypter??
+
+        """
+        encrypted_body = request.next()
+
+        if not request.gpg.valid:
+            raise InvalidSignatureError()
+
+        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
+            raise UnwillingHostError(
+                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
+
+        return encrypted_body
+
+    def decrypt_client(self, request):
+        """Decrypt the message and validates the encrypted signature.
+
+        This is part (C) in the message diagram.
+
+        TODO Raises an InvalidSignature error when the signature is incorrect.
+
+        TODO Raises an UnwillingHost error when the signer is not a client
         authorized to send us Santiago messages.
 
         """
@@ -339,45 +426,10 @@ class SimpleSantiago(object):
             raise InvalidSignatureError()
 
         if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
-            raise UntrustedClientError(
-                "{0} is not trusted.".format(request.gpg.fingerprint))
-
-        if not self.get_client_locations(request_body["to"], "santiago"):
-            self.proxy(request_body)
-            return
+            raise UnwillingHostError(
+                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
 
         return request_body
-
-    def verify_client(self, request):
-        """Verify the signature of the message's source.
-
-        Raises an InvalidSignature error when the signature is incorrect.
-
-        TODO Raises an UntrustedClient error when the signer is not a client
-        authorized to send us Santiago messages.
-
-        """
-        request.next()
-
-    def decrypt_client(self, request):
-        """Decrypt the message and validates the encrypted signature.
-
-        TODO Raises an InvalidSignature error when the signature is incorrect.
-
-        TODO Raises an UntrustedClient error when the signer is not a client
-        authorized to send us Santiago messages.
-
-        pre::
-
-            self.me == request["host"]
-
-        post::
-
-            False not in map(("host", "client", "service", "locations",
-                "reply_to"), request.__haskey__)
-
-        """
-        request.next()
 
     @staticmethod
     def signed_contents(request):
@@ -414,7 +466,7 @@ class SimpleSantiago(object):
         except KeyError as e:
             return
 
-        if not self.am_i(host):
+        if not self.i_am(host):
             self.proxy(to, host, client, service, reply_to)
         else:
             self.learn_service(client, "santiago", reply_to)
@@ -451,10 +503,10 @@ class SimpleSantiago(object):
         except KeyError as e:
             return
 
-        if not self.am_i(to):
+        if not self.i_am(to):
             return
 
-        if not self.am_i(client):
+        if not self.i_am(client):
             self.proxy()
             return
 
@@ -524,7 +576,7 @@ class SignatureError(Exception):
 class InvalidSignatureError(SignatureError):
     pass
 
-class UntrustedClientError(SignatureError):
+class UnwillingHostError(SignatureError):
     pass
 
 
