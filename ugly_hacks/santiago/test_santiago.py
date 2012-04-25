@@ -325,6 +325,126 @@ class TestSimpleSantiago(unittest.TestCase):
                                 service="wiki", reply_to="localhost:9000")
 
 
+class Unwrapping(unittest.TestCase):
+
+    def testVerifySigner():
+        pass
+
+    def testVerifyClient():
+        pass
+
+    def testDecryptClient():
+        pass
+
+class IncomingProxyRequest(unittest.TestCase):
+
+    """Do we correctly handle valid, incoming, proxied messages?
+
+    These tests are for the first wrapped layer of the message, that which is
+    signed by the sender.  The sender is not necessarily the client who wants us
+    to host the message.
+
+    """
+    def testPassingMessage():
+        """Does a valid proxied message pass?"""
+
+        pass
+
+    def testInvalidSig():
+        """Does an invalid signature raise an error?"""
+
+        pass
+
+    def testUnknownClient():
+        """Does an unknown client raise an error?"""
+
+        pass
+
+class IncomingSignedRequest(IncomingProxyRequest):
+
+    """Do we correctly handle valid, incoming, messages?
+
+    These tests focus on the second layer of the message which is signed by the
+    host/client and lists a destination.
+
+    """
+    def testProxyOtherHosts():
+        """Messages to others are sent to them directly or proxied."""
+
+        pass
+
+    def testHandleMyHosting():
+        """Messages to me are not proxied and handled normally."""
+
+        pass
+
+    def testNoDestination():
+        """Messages without destinations are ignored."""
+
+        pass
+
+class IncomingRequestBody(IncomingSignedRequest):
+
+    """Do we correctly handle the body of a request?
+
+    This is the last layer of the message which is encrypted by the original
+    sender.  This validation also depends on the previous layer's data, making
+    it a bit more complicated.
+
+    """
+    def testHandleGoodMessage():
+        """Sanity check: no errors are thrown for a valid message."""
+
+        pass
+
+    def testCantDecryptMessage():
+        """This message isn't for me.  I can't decrypt it."""
+
+        pass
+
+    def testImNotHost():
+        """Bail out if someone else is the host, yet I am the "to"."""
+
+        pass
+
+    def testImNotClient():
+        """Bail out if someone else is the client, yet I am the "to"."""
+
+        pass
+
+    def testHostAndClient():
+        """Bail out if the message includes a host and a client.
+
+        A circular response?
+
+        """
+        pass
+
+    def testImNotTo():
+        """This message isn't for me.
+
+        The "To" has been repeated from the signed message, but I'm not the
+        recipient in the encrypted message.
+
+        """
+        pass
+
+    def testNoDestinations():
+        """No host, client, or to."""
+
+        pass
+
+    def testSignersDiffer():
+        """The signed message and encrypted message have different signers."""
+
+        pass
+
+    def testSignerAndClientDiffer():
+        """The encrypted message is signed by someone other than the cilent."""
+
+        pass
+
+
 if __name__ == "__main__":
     # os.fork("python simplesantiago.py")
     unittest.main()
