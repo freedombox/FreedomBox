@@ -16,14 +16,32 @@ gpg = gnupg.GPG(use_agent=True)
 # utility functions
 
 def show(name, item, iterations=1):
-    print "#" * iterations, name
+    format = "rst"
+    if format == "rst":
+        headers = "=-+~`*'"
+        print name
+        print headers[iterations-1] * 40
+    elif format == "mkdn":
+        print "#" * iterations, name
+
     if hasattr(item, "__dict__"):
         for k, v in item.__dict__.iteritems():
             show(k, v, iterations + 1)
     elif type(item) in (str, unicode):
-        print item
+        if format == "rst":
+            print "::\n    "
+            print "\n    ".join(str(item).splitlines())
+        elif format == "mkdn":
+            print item
     else:
-        pprint(item)
+        if format == "rst":
+            print "::\n    "
+            pprint("\n    ".join(str(item).splitlines()))
+        elif format == "mkdn":
+            pprint(item)
+    if format == "rst":
+        print
+
 
 # basic data printing tests.
 
