@@ -45,8 +45,6 @@ import os
 import sys
 
 from pprint import pprint
-sys.path.extend(["../..", ".",
-                 "/home/nick/programs/python-gnupg/python-gnupg-0.2.9"])
 import gnupg
 import simplesantiago
 
