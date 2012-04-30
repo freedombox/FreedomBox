@@ -77,9 +77,10 @@ locations::
 
 import cfg
 from collections import defaultdict as DefaultDict
+from errors import InvalidSignatureError, UnwillingHostError
 import gnupg
 import logging
-from pgpprocessor import PgpUnwrapper
+from pgpprocessor import Unwrapper
 import re
 import sys
 
@@ -302,8 +303,11 @@ class SimpleSantiago(object):
     def unpack_request(self, kwargs):
         """Decrypt and verify the request.
 
-        Raise an (unhandled) error if there're any inconsistencies in the
+        Raise an (unhandled?) error if there're any inconsistencies in the
         message.
+
+        I realize the following is a bit complicated, but this is the only way
+        we've yet found to avoid bug (####, in Tor).
 
         The message is wrapped in up to three ways:
 
@@ -332,7 +336,7 @@ class SimpleSantiago(object):
                 in that case, it must be ignored.
 
         """
-        request = PgpUnwrapper(str(kwargs["request"]), gpg=self.gpg)
+        request = Unwrapper(str(kwargs["request"]), gpg=self.gpg)
 
         proxied_request = self.verify_sender(request.next())
         encrypted_body = dict(self.verify_client(request.next()))
@@ -547,15 +551,6 @@ class SantiagoSender(SantiagoConnector):
     def outgoing_request(self):
         raise Exception(
             "santiago.SantiagoSender.outgoing_request not implemented.")
-
-class SignatureError(Exception):
-    pass
-
-class InvalidSignatureError(SignatureError):
-    pass
-
-class UnwillingHostError(SignatureError):
-    pass
 
 
 if __name__ == "__main__":
