@@ -44,6 +44,12 @@ import unittest
 import os
 import sys
 
+from pprint import pprint
+sys.path.extend(["../..", ".",
+                 "/home/nick/programs/python-gnupg/python-gnupg-0.2.9"])
+import gnupg
+import simplesantiago
+
 
 class SantiagoTest(unittest.TestCase):
     """The base class for tests."""
@@ -327,13 +333,13 @@ class TestSimpleSantiago(unittest.TestCase):
 
 class Unwrapping(unittest.TestCase):
 
-    def testVerifySigner():
+    def testVerifySigner(self):
         pass
 
-    def testVerifyClient():
+    def testVerifyClient(self):
         pass
 
-    def testDecryptClient():
+    def testDecryptClient(self):
         pass
 
 class IncomingProxyRequest(unittest.TestCase):
@@ -341,21 +347,27 @@ class IncomingProxyRequest(unittest.TestCase):
     """Do we correctly handle valid, incoming, proxied messages?
 
     These tests are for the first wrapped layer of the message, that which is
-    signed by the sender.  The sender is not necessarily the client who wants us
-    to host the message.
+    signed by the sender.  The sender is not necessarily the original requester
+    who's asking us to do something with the message.
 
     """
-    def testPassingMessage():
+
+    def setUp(self):
+        pass
+
+    def testPassingMessage(self):
         """Does a valid proxied message pass?"""
+
+        
 
         pass
 
-    def testInvalidSig():
+    def testInvalidSig(self):
         """Does an invalid signature raise an error?"""
 
         pass
 
-    def testUnknownClient():
+    def testUnknownClient(self):
         """Does an unknown client raise an error?"""
 
         pass
@@ -368,17 +380,17 @@ class IncomingSignedRequest(IncomingProxyRequest):
     host/client and lists a destination.
 
     """
-    def testProxyOtherHosts():
+    def testProxyOtherHosts(self):
         """Messages to others are sent to them directly or proxied."""
 
         pass
 
-    def testHandleMyHosting():
+    def testHandleMyHosting(self):
         """Messages to me are not proxied and handled normally."""
 
         pass
 
-    def testNoDestination():
+    def testNoDestination(self):
         """Messages without destinations are ignored."""
 
         pass
@@ -392,27 +404,27 @@ class IncomingRequestBody(IncomingSignedRequest):
     it a bit more complicated.
 
     """
-    def testHandleGoodMessage():
+    def testHandleGoodMessage(self):
         """Sanity check: no errors are thrown for a valid message."""
 
         pass
 
-    def testCantDecryptMessage():
+    def testCantDecryptMessage(self):
         """This message isn't for me.  I can't decrypt it."""
 
         pass
 
-    def testImNotHost():
+    def testImNotHost(self):
         """Bail out if someone else is the host, yet I am the "to"."""
 
         pass
 
-    def testImNotClient():
+    def testImNotClient(self):
         """Bail out if someone else is the client, yet I am the "to"."""
 
         pass
 
-    def testHostAndClient():
+    def testHostAndClient(self):
         """Bail out if the message includes a host and a client.
 
         A circular response?
@@ -420,7 +432,7 @@ class IncomingRequestBody(IncomingSignedRequest):
         """
         pass
 
-    def testImNotTo():
+    def testImNotTo(self):
         """This message isn't for me.
 
         The "To" has been repeated from the signed message, but I'm not the
@@ -429,22 +441,30 @@ class IncomingRequestBody(IncomingSignedRequest):
         """
         pass
 
-    def testNoDestinations():
+    def testNoDestinations(self):
         """No host, client, or to."""
 
         pass
 
-    def testSignersDiffer():
+    def testSignersDiffer(self):
         """The signed message and encrypted message have different signers."""
 
         pass
 
-    def testSignerAndClientDiffer():
+    def testSignerAndClientDiffer(self):
         """The encrypted message is signed by someone other than the cilent."""
 
         pass
 
+def show(name, item, iterations=1):
+    print "#" * iterations, name, "#" * iterations
+    if hasattr(item, "__dict__"):
+        for k, v in item.__dict__.iteritems():
+            show(k, v, iterations + 1)
+    elif type(item) in (str, unicode):
+        print item
+    else:
+        pprint(item)
 
 if __name__ == "__main__":
-    # os.fork("python simplesantiago.py")
     unittest.main()
