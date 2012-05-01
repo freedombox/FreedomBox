@@ -8,12 +8,16 @@ can be no trustworthy trust.
 
 """
 
-from pprint import pprint
+import sys
+sys.path.extend(["../..", ".", "/home/nick/programs/python-gnupg/python-gnupg-0.2.9"])
 
+from pprint import pprint
 import ConfigParser as configparser
 import gnupg
 import pgpprocessor
 import unittest
+
+ITERATIONS = 3
 
 class ProcessorCase(unittest.TestCase):
     """The superclass for pgpprocessor tests, containing shared setup:
@@ -27,9 +31,9 @@ class ProcessorCase(unittest.TestCase):
     CONFIG = configparser.ConfigParser({"KEYID": "0928D23A"})
     CONFIG.read(["test.cfg"])
     KEYID = CONFIG.get("pgpprocessor", "keyid")
-    
+
     # sign the message a few times.
-    for i in range(0, 3):
+    for i in range(ITERATIONS):
         MESSAGES.append(str(GPG.sign(MESSAGES[i], keyid = KEYID)))
 
 class UnwrapperTest(ProcessorCase):
@@ -40,6 +44,16 @@ class UnwrapperTest(ProcessorCase):
         self.messages = list(ProcessorCase.MESSAGES)
         self.unwrapper = pgpprocessor.Unwrapper(self.messages[-1],
                                                 ProcessorCase.GPG)
+
+    def test_messages_wrapped(self):
+        """Were the messages correctly wrapped in the first place?"""
+
+        self.assertEqual(len(self.messages), ITERATIONS + 1)
+
+    def test_unwrap_all_messages(self):
+        """Do we actually hit all the messages?"""
+
+        self.assertEqual(len([self.unwrapper]), ITERATIONS + 1)
 
     def test_creating_message_doesnt_unwrap(self):
         """Creating an unwrapper shouldn't unwrap the message.
@@ -54,15 +68,18 @@ class UnwrapperTest(ProcessorCase):
     def test_iterator_unwraps_correctly(self):
         """The iterator should correctly unwrap each stage of the message."""
 
-        for i, message in enumerate(self.unwrapper):
-            self.assertEqual(message, self.messages[-i-2])
+        for i, message in enumerate(self.messages):
+            unwrapped = self.unwrapper.next()
+
+            self.assertEqual(message, unwrapped)
 
     def test_original_message(self):
         """Unwrapper.original_message actually returns the original message."""
 
-        print (self.unwrapper.message)
-        self.assertEqual(self.unwrapper.next(), self.messages[-1])
+        for i, message in enumerate(self.messages):
+            unwrapped = self.unwrapper.next()
 
+            self.assertEqual(self.unwrapper.original_message(), message)
 
 if __name__ == "__main__":
     unittest.main()

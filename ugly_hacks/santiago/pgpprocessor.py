@@ -25,10 +25,10 @@ class Unwrapper(object):
     TYPES = (SIG, CRYPT) = "sig", "crypt"
 
     SIG_LINES = (SIG_HEAD, SIG_BODY, SIG_FOOTER, SIG_END) = (
-            "-----BEGIN PGP SIGNED MESSAGE-----",
-            "",
-            "-----BEGIN PGP SIGNATURE-----",
-            "-----END PGP SIGNATURE-----")
+        "-----BEGIN PGP SIGNED MESSAGE-----",
+        "",
+        "-----BEGIN PGP SIGNATURE-----",
+        "-----END PGP SIGNATURE-----")
 
     CRYPT_LINES = (CRYPT_HEAD, CRYPT_END) = ("-----BEGIN PGP MESSAGE-----",
                                              "-----END PGP MESSAGE-----")
@@ -133,7 +133,7 @@ class Unwrapper(object):
 
         """
         if point != Unwrapper.END or type_ not in (Unwrapper.CRYPT,
-                                                      Unwrapper.SIG):
+                                                   Unwrapper.SIG):
             raise StopIteration("No valid PGP data.")
 
         args = (self.gnupg_verify if type_ == Unwrapper.SIG
@@ -142,7 +142,7 @@ class Unwrapper(object):
         self.gpg_data = {
             Unwrapper.SIG: self.gpg.verify,
             Unwrapper.CRYPT: self.gpg.decrypt
-        }[type_](str(self), **args)
+            }[type_](str(self), **args)
 
         self.type = type_
         self.body = Unwrapper.unwrap(self.body, self.type)
@@ -194,3 +194,6 @@ class Unwrapper(object):
         return "\n".join([
                 "\n".join(x) for x in (self.start, self.header, self.body,
                                        self.footer, self.end) ])
+
+if __name__ == "__main__":
+    unittest.main()
