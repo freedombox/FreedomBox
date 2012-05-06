@@ -3,8 +3,8 @@
 """Tests for the PGP Processing Tools.
 
 All aspects of each PGP processor should be fully tested: this verifies
-identity, allowing trust to exist in the system.  If this is mucked up, there
-can be no trustworthy trust.
+identity, allowing trust to exist in the system.  If this is mucked up, trust
+isn't verifiable.
 
 """
 
@@ -18,6 +18,14 @@ import pgpprocessor
 import unittest
 
 ITERATIONS = 3
+
+def remove_line(string, line, preserve_newlines = True):
+    """Remove a line from a multi-line string."""
+
+    if preserve_newlines and not line.endswith("\n"):
+        line =+ "\n"
+
+    return str(string.splitlines(preserve_newlines).remove(line))
 
 class ProcessorCase(unittest.TestCase):
     """The superclass for pgpprocessor tests, containing shared setup:
@@ -48,12 +56,13 @@ class UnwrapperTest(ProcessorCase):
     def test_messages_wrapped(self):
         """Were the messages correctly wrapped in the first place?"""
 
-        self.assertEqual(len(self.messages), ITERATIONS + 1)
+        self.assertEqual(ITERATIONS + 1, len(self.messages))
 
     def test_unwrap_all_messages(self):
-        """Do we actually hit all the messages?"""
+        """Do we unwrap the right number of messages?"""
 
-        self.assertEqual(len([self.unwrapper]), ITERATIONS + 1)
+        # count each element in the iterator once, skipping the first.
+        self.assertEqual(ITERATIONS, sum([1 for e in self.unwrapper]))
 
     def test_creating_message_doesnt_unwrap(self):
         """Creating an unwrapper shouldn't unwrap the message.
@@ -68,18 +77,55 @@ class UnwrapperTest(ProcessorCase):
     def test_iterator_unwraps_correctly(self):
         """The iterator should correctly unwrap each stage of the message."""
 
-        for i, message in enumerate(self.messages):
+        unwrapped_messages = self.messages[:-1]
+        
+        for i, message in enumerate(reversed(unwrapped_messages)):
             unwrapped = self.unwrapper.next()
 
-            self.assertEqual(message, unwrapped)
+            self.assertEqual(message.strip(), unwrapped.strip())
 
     def test_original_message(self):
         """Unwrapper.original_message actually returns the original message."""
 
-        for i, message in enumerate(self.messages):
+        unwrapped_messages = self.messages[:-1]
+
+        for i, message in enumerate(reversed(unwrapped_messages)):
             unwrapped = self.unwrapper.next()
 
-            self.assertEqual(self.unwrapper.original_message(), message)
+            self.assertEqual(self.unwrapper.original_message().strip(),
+                             message.strip())
+
+    def test_no_header_invalid(self):
+        """Messages without heads are considered invalid."""
+
+        self.unwrapper.message = remove_line(
+            self.unwrapper.message, "-----BEGIN PGP SIGNED MESSAGE-----\n")
+
+        self.assertRaises(StopIteration, self.unwrapper.next)
+
+    def test_no_body_invalid(self):
+        """Messages without bodies are considered invalid."""
+
+        self.unwrapper.message = remove_line(self.unwrapper.message, "\n")
+
+        self.assertRaises(StopIteration, self.unwrapper.next)
+
+    def test_no_footer_invalid(self):
+        """Messages without feet are considered invalid."""
+
+        self.unwrapper.message = remove_line(
+            self.unwrapper.message, "-----BEGIN PGP SIGNATURE-----\n")
+
+        self.assertRaises(StopIteration, self.unwrapper.next)
+
+    def test_no_end_invalid(self):
+        """Messages without tails are considered invalid."""
+
+        self.unwrapper.message = remove_line(
+            self.unwrapper.message, "-----END PGP SIGNATURE-----\n")
+
+        self.assertRaises(StopIteration, self.unwrapper.next)
+
 
 if __name__ == "__main__":
     unittest.main()

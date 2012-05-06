@@ -25,13 +25,13 @@ class Unwrapper(object):
     TYPES = (SIG, CRYPT) = "sig", "crypt"
 
     SIG_LINES = (SIG_HEAD, SIG_BODY, SIG_FOOTER, SIG_END) = (
-        "-----BEGIN PGP SIGNED MESSAGE-----",
-        "",
-        "-----BEGIN PGP SIGNATURE-----",
-        "-----END PGP SIGNATURE-----")
+        "-----BEGIN PGP SIGNED MESSAGE-----\n",
+        "\n",
+        "-----BEGIN PGP SIGNATURE-----\n",
+        "-----END PGP SIGNATURE-----\n")
 
-    CRYPT_LINES = (CRYPT_HEAD, CRYPT_END) = ("-----BEGIN PGP MESSAGE-----",
-                                             "-----END PGP MESSAGE-----")
+    CRYPT_LINES = (CRYPT_HEAD, CRYPT_END) = ("-----BEGIN PGP MESSAGE-----\n",
+                                             "-----END PGP MESSAGE-----\n")
 
     # ^- - - (-----SOMETHING-----|-----OTHERTHING-----)$
     _TARGET = "^(- )+({0})$"
@@ -121,15 +121,16 @@ class Unwrapper(object):
                 continue
 
             getattr(self, point).append(line)
-            
-        self.handle_message(point, type_)
 
-        return "\n".join(self.body)
+        self.handle_end_conditions(point, type_)
 
-    def handle_message(self, point, type_):
+        return "".join(self.body)
+
+    def handle_end_conditions(self, point, type_):
         """Handle end-conditions of message.
 
-        Do the right thing based on the state machine's results.
+        Do the right thing based on the state machine's results.  If there is no
+        PGP data in the message, raise a StopIteration error.
 
         """
         if point != Unwrapper.END or type_ not in (Unwrapper.CRYPT,
@@ -148,9 +149,9 @@ class Unwrapper(object):
         self.body = Unwrapper.unwrap(self.body, self.type)
 
         # reset the state machine, now that we've unwrapped a layer.
-        self.message = "\n".join(self.body)
+        self.message = "".join(self.body)
 
-        if not self.gpg_data:
+        if not (self.gpg_data and self.gpg_data.valid):
             raise InvalidSignatureError()
 
     @classmethod
@@ -179,20 +180,20 @@ class Unwrapper(object):
     def __str__(self):
         """Returns the GPG-part of the current message.
 
-        Non-PGP-message data are not returned.
+        Non-PGP-message data (before and after the message) are not returned.
 
         """
-        return "\n".join([
-                "\n".join(x) for x in (self.header, self.body, self.footer) ])
+        return "".join([
+                "".join(x) for x in (self.header, self.body, self.footer) ])
 
     def original_message(self):
         """Returns the current wrapped message.
 
-        It's an iterator, so it discards previous iterations' data.
+        It's an iterator, so previous iterations' data isn't available.
 
         """
-        return "\n".join([
-                "\n".join(x) for x in (self.start, self.header, self.body,
+        return "".join([
+                "".join(x) for x in (self.start, self.header, self.body,
                                        self.footer, self.end) ])
 
 if __name__ == "__main__":
