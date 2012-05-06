@@ -134,7 +134,7 @@ def unwrapper_test(data):
     if not key_id:
         key_id = None
 
-        gpg = gnupg.GPG(gnupghome="keys", useagent=True)
+        gpg = gnupg.GPG(gnupghome="keys", use_agent=True)
 
         print "key input..."
         input_ = gpg.gen_key_input(key_length = 1, passphrase=pass_phrase)
