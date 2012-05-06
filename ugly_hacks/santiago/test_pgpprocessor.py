@@ -8,10 +8,6 @@ isn't verifiable.
 
 """
 
-import sys
-sys.path.extend(["../..", ".", "/home/nick/programs/python-gnupg/python-gnupg-0.2.9"])
-
-from pprint import pprint
 import ConfigParser as configparser
 import gnupg
 import pgpprocessor
@@ -23,7 +19,7 @@ def remove_line(string, line, preserve_newlines = True):
     """Remove a line from a multi-line string."""
 
     if preserve_newlines and not line.endswith("\n"):
-        line =+ "\n"
+        line += "\n"
 
     return str(string.splitlines(preserve_newlines).remove(line))
 
@@ -45,9 +41,8 @@ class ProcessorCase(unittest.TestCase):
         MESSAGES.append(str(GPG.sign(MESSAGES[i], keyid = KEYID)))
 
 class UnwrapperTest(ProcessorCase):
-    """Verify that we can unwrap multiply-signed PGP messages correctly.
+    """Verify that we can unwrap multiply-signed PGP messages correctly."""
 
-    """
     def setUp(self):
         self.messages = list(ProcessorCase.MESSAGES)
         self.unwrapper = pgpprocessor.Unwrapper(self.messages[-1],
@@ -64,7 +59,7 @@ class UnwrapperTest(ProcessorCase):
         # count each element in the iterator once, skipping the first.
         self.assertEqual(ITERATIONS, sum([1 for e in self.unwrapper]))
 
-    def test_creating_message_doesnt_unwrap(self):
+    def test_dont_uwrap(self):
         """Creating an unwrapper shouldn't unwrap the message.
 
         Only iterating through the unwrapper should unwrap it.  We don't want to
@@ -78,22 +73,9 @@ class UnwrapperTest(ProcessorCase):
         """The iterator should correctly unwrap each stage of the message."""
 
         unwrapped_messages = self.messages[:-1]
-        
-        for i, message in enumerate(reversed(unwrapped_messages)):
-            unwrapped = self.unwrapper.next()
 
-            self.assertEqual(message.strip(), unwrapped.strip())
-
-    def test_original_message(self):
-        """Unwrapper.original_message actually returns the original message."""
-
-        unwrapped_messages = self.messages[:-1]
-
-        for i, message in enumerate(reversed(unwrapped_messages)):
-            unwrapped = self.unwrapper.next()
-
-            self.assertEqual(self.unwrapper.original_message().strip(),
-                             message.strip())
+        for message in reversed(unwrapped_messages):
+            self.assertEqual(message.strip(), self.unwrapper.next().strip())
 
     def test_no_header_invalid(self):
         """Messages without heads are considered invalid."""
