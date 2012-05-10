@@ -256,7 +256,7 @@ class SimpleSantiago(object):
             protocol = destination.split(":")[0]
             self.senders[protocol].outgoing_request(request, destination)
 
-    def incoming_request(self, **kwargs):
+    def incoming_request(self, request):
         """Provide a service to a client.
 
         This tag doesn't do any real processing, it just catches and hides
@@ -274,33 +274,33 @@ class SimpleSantiago(object):
         attacker knows that the last request brought down a system.
 
         """
-        logging.debug("Incoming request: ", str(kwargs))
+        logging.debug("Incoming request: ", str(request))
 
         # no matter what happens, the sender will never hear about it.
         try:
             try:
-                request = self.unpack_request(kwargs)
+                unpacked = self.unpack_request(request)
             except ValueError as e:
                 return
 
-            if not request:
+            if not unpacked:
                 return
 
-            logging.debug("Unpacked request: ", str(request))
+            logging.debug("Unpacked request: ", str(unpacked))
 
-            if request["locations"]:
-                self.handle_reply(request["from"], request["to"],
-                                  request["host"], request["client"],
-                                  request["service"], request["locations"],
-                                  request["reply_to"])
+            if unpacked["locations"]:
+                self.handle_reply(unpacked["from"], unpacked["to"],
+                                  unpacked["host"], unpacked["client"],
+                                  unpacked["service"], unpacked["locations"],
+                                  unpacked["reply_to"])
             else:
-                self.handle_request(request["from"], request["to"],
-                                    request["host"], request["client"],
-                                    request["service"], request["reply_to"])
+                self.handle_request(unpacked["from"], unpacked["to"],
+                                    unpacked["host"], unpacked["client"],
+                                    unpacked["service"], unpacked["reply_to"])
         except Exception as e:
             logging.exception("Error: ", str(e))
 
-    def unpack_request(self, kwargs):
+    def unpack_request(self, request):
         """Decrypt and verify the request.
 
         Raise an (unhandled?) error if there're any inconsistencies in the

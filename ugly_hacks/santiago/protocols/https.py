@@ -31,7 +31,10 @@ class Listener(SantiagoListener):
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
-        self.incoming_request(**kwargs)
+        try:
+            self.incoming_request(kwargs["request"])
+        except:
+            pass
 
     @cherrypy.expose
     def query(self, host, service):
