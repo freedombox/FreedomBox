@@ -23,7 +23,7 @@ def remove_line(string, line, preserve_newlines = True):
 
     return str(string.splitlines(preserve_newlines).remove(line))
 
-class ProcessorCase(unittest.TestCase):
+class MessageWrapper(unittest.TestCase):
     """The superclass for pgpprocessor tests, containing shared setup:
 
     - Sign a message several times with a specified key.
@@ -32,7 +32,9 @@ class ProcessorCase(unittest.TestCase):
     MESSAGES = [ str({"host": "somebody"}), ]
     GPG = gnupg.GPG(use_agent = True)
 
-    CONFIG = configparser.ConfigParser({"KEYID": "0928D23A"})
+    CONFIG = configparser.ConfigParser(
+        {"KEYID":
+             "D95C32042EE54FFDB25EC3489F2733F40928D23A"})
     CONFIG.read(["test.cfg"])
     KEYID = CONFIG.get("pgpprocessor", "keyid")
 
@@ -40,13 +42,20 @@ class ProcessorCase(unittest.TestCase):
     for i in range(ITERATIONS):
         MESSAGES.append(str(GPG.sign(MESSAGES[i], keyid = KEYID)))
 
-class UnwrapperTest(ProcessorCase):
+    def setUp(self):
+        super(MessageWrapper, self).setUp()
+
+        self.messages = list(MessageWrapper.MESSAGES)
+        self.keyid = MessageWrapper.KEYID
+
+class UnwrapperTest(MessageWrapper):
     """Verify that we can unwrap multiply-signed PGP messages correctly."""
 
     def setUp(self):
-        self.messages = list(ProcessorCase.MESSAGES)
+        super(UnwrapperTest, self).setUp()
+
         self.unwrapper = pgpprocessor.Unwrapper(self.messages[-1],
-                                                ProcessorCase.GPG)
+                                                MessageWrapper.GPG)
 
     def test_messages_wrapped(self):
         """Were the messages correctly wrapped in the first place?"""
@@ -75,7 +84,8 @@ class UnwrapperTest(ProcessorCase):
         unwrapped_messages = self.messages[:-1]
 
         for message in reversed(unwrapped_messages):
-            self.assertEqual(message.strip(), self.unwrapper.next().strip())
+            self.unwrapper.next()
+            self.assertEqual(message.strip(), self.unwrapper.message.strip())
 
     def test_no_header_invalid(self):
         """Messages without heads are considered invalid."""

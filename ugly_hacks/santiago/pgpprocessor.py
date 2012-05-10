@@ -156,9 +156,9 @@ class Unwrapper(object):
         self.handle_end_conditions(point, msg_type)
 
         self.type = msg_type
-        self.message = "".join(Unwrapper.unwrap(self.body, self.type))
+        self.message = "".join(Unwrapper.unwrap(self.body, self.type)).lstrip()
 
-        return self.message
+        return self.gpg_data
 
     def handle_end_conditions(self, point, msg_type):
         """Handle end-conditions of message.
