@@ -95,14 +95,15 @@ def load_data(server, item):
         return eval(infile.read())
 
 
-class SimpleSantiago(object):
+class Santiago(object):
     """This Santiago is a less extensible Santiago.
 
     The client and server are unified, and it has hardcoded support for
     protocols.
 
     """
-    def __init__(self, listeners, senders, hosting, consuming, me):
+    def __init__(self, listeners = None, senders = None,
+                 hosting = None, consuming = None, me = 0):
         """Create a Santiago with the specified parameters.
 
         listeners and senders are both protocol-specific dictionaries containing
@@ -132,8 +133,10 @@ class SimpleSantiago(object):
         self.me = me
         self.gpg = gnupg.GPG(use_agent = True)
 
-        self.listeners = self._create_connectors(listeners, "Listener")
-        self.senders = self._create_connectors(senders, "Sender")
+        if listeners:
+            self.listeners = self._create_connectors(listeners, "Listener")
+        if senders:
+            self.senders = self._create_connectors(senders, "Sender")
 
     def _create_connectors(self, settings, connector):
         """Iterates through each protocol given, creating connectors for all.
