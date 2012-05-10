@@ -364,16 +364,18 @@ class Santiago(object):
         allowed to send us messages.
 
         """
-        if not request.gpg.valid:
+        gpg_data = request.next()
+
+        if not gpg_data:
             raise InvalidSignatureError()
 
-        if not self.get_host_locations(request.gpg.fingerprint, "santiago"):
+        if not self.get_host_locations(gpg_data.fingerprint, "santiago"):
             raise UnwillingHostError(
-                "{0} is not a Santiago client.".format(request.gpg.fingerprint))
+                "{0} is not a Santiago client.".format(gpg_data.fingerprint))
 
-        return request_body
+        return request
 
-    def verify_client(self, request_body, proxied_request):
+    def verify_client(self, request):
         """Verify the signature of the message's source.
 
         This is part (B) in the message diagram.
@@ -387,16 +389,19 @@ class Santiago(object):
         somebody else.
 
         """
-        self.verify_client(request_body)
+        self.verify_sender(request)
 
-        if not request_body:
+        adict = None
+        try:
+            adict = dict(request.message)
+        except:
             return
 
-        if not self.i_am(request_body["to"]):
-            self.proxy(proxied_request)
+        if not self.i_am(adict["to"]):
+            self.proxy(adict["request"])
             return
 
-        return request_body
+        return request
 
     def decrypt_client(self, request_body):
         """Decrypt the message and validates the encrypted signature.
