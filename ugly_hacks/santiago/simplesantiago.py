@@ -339,15 +339,22 @@ class Santiago(object):
                 in that case, it must be ignored.
 
         """
-        request = Unwrapper(str(kwargs["request"]), gpg=self.gpg)
+        request = self.gpg.decrypt(request)
 
-        proxied_request = self.verify_sender(request.next())
-        encrypted_body = dict(self.verify_client(request.next()))
-        request_body = dict(self.decrypt_client(request.next()))
+        if not str(request):
+            raise InvalidSignatureError()
+
+        if not request.keyid:
+            # an unsigned or invalid request!
+            return
+
+        request_body = dict(request)
+        reqeust_body["to"] = self.me
+        request_body["from"] = request.keyid
 
         return request_body
 
-    def verify_sender(self, request_body):
+    def verify_sender(self, request):
         """Verify the signature of the message's sender.
 
         This is part (A) in the message diagram.
