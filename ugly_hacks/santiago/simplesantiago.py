@@ -20,9 +20,6 @@ another's index with a request.  That request is handled and a request is
 returned.  Then, the reply is handled.  The upshot is that we learn a new set of
 locations for the service.
 
-This is currently incomplete.  We don't sign, encrypt, verify, or decrypt
-request messages.  I wanted to get the functional fundamentals in place first.
-
 We also don't:
 
 - Proxy requests.
@@ -36,45 +33,11 @@ We also don't:
     proxies)
 :TODO: move to santiago.py, merge the documentation.
 
-Each request is built like the following.  Parenthesized items are inferred from
-context and not included explicitly.  Bracketed items are lists.  The initial
-request is a signed message whose source is inferred from the message's
-signature, while the destination assumed to be the recipient.  That message
-contains another signed message with two parts: an intended recipient and an
-encrypted request.  That encrypted request contains the important details, like
-the requested host or client, the service, where the replies go, and any service
-locations::
-
-    Request -----+
-                 |
-                 v
-    /--------------------------\
-    |     Signed Data (A)      |
-    |                          |
-    | (From: X)                |
-    | (To: Y)                  |
-    | (Request)---+            |
-    |             |            |
-    |             v            |
-    +--------------------------+
-    |     Signed Data (B)      |
-    |                          |
-    | (From: A)                |
-    | To: B                    |
-    | Request:----+            |
-    |             |            |
-    |             v            |
-    +--------------------------+
-    |    Encrypted Data (C)    |
-    |                          |
-    | Host/Client: B           |
-    | Service: C               |
-    | Reply To: [A1, A2]       |
-    | Locations: [B1]          |
-    \--------------------------/
+This dead-drop is what came of my trying to learn from bug 4185.
 
 """
 
+import ast
 import cfg
 from collections import defaultdict as DefaultDict
 from errors import InvalidSignatureError, UnwillingHostError
@@ -248,7 +211,6 @@ class Santiago(object):
 
         """
         # FIXME sign the encrypted payload.
-        # FIXME move it out of here so proxying can work.
         payload = self.gpg.encrypt(
                 {"host": host, "client": client,
                  "service": service, "locations": locations or "",
