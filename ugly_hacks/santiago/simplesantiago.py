@@ -65,6 +65,8 @@ class Santiago(object):
     protocols.
 
     """
+    supported_protocols = set([1])
+
     def __init__(self, listeners = None, senders = None,
                  hosting = None, consuming = None, me = 0):
         """Create a Santiago with the specified parameters.
@@ -239,190 +241,96 @@ class Santiago(object):
         attacker knows that the last request brought down a system.
 
         """
-        logging.debug("Incoming request: ", str(request))
-
         # no matter what happens, the sender will never hear about it.
         try:
-            try:
-                unpacked = self.unpack_request(request)
-            except ValueError as e:
+            if not verify_message(request):
                 return
+
+            unpacked = self.unpack_request(request)
 
             if not unpacked:
                 return
 
-            logging.debug("Unpacked request: ", str(unpacked))
-
             if unpacked["locations"]:
-                self.handle_reply(unpacked["from"], unpacked["to"],
-                                  unpacked["host"], unpacked["client"],
-                                  unpacked["service"], unpacked["locations"],
-                                  unpacked["reply_to"])
+                self.handle_reply(
+                    unpacked["from"], unpacked["to"],
+                    unpacked["host"], unpacked["client"],
+                    unpacked["service"], unpacked["locations"],
+                    unpacked["reply_to"],
+                    unpacked["request_version"],
+                    unpacked["reply_version"])
             else:
-                self.handle_request(unpacked["from"], unpacked["to"],
-                                    unpacked["host"], unpacked["client"],
-                                    unpacked["service"], unpacked["reply_to"])
+                self.handle_request(
+                    unpacked["from"], unpacked["to"],
+                    unpacked["host"], unpacked["client"],
+                    unpacked["service"], unpacked["reply_to"],
+                    unpacked["request_version"],
+                    unpacked["reply_version"])
+
         except Exception as e:
             logging.exception("Error: ", str(e))
+
+    def verify_request(self, request):
+        """Make sure the request meets minimum criteria before we process it.
+
+        - The request must contain required keys.
+        - The request and client must be of and support protocol versions I
+          understand.
+
+        """
+        if False in map(request.__contains__,
+                        ("request", "request_version", "reply_versions")):
+            return False
+
+        if not (Santiago.supported_protocols & set(request["reply_versions"])):
+            return False
+
+        if not (Santiago.supported_protocols &
+              set([request["request_version"]])):
+            return False
+
+        return True
 
     def unpack_request(self, request):
         """Decrypt and verify the request.
 
-        Raise an (unhandled?) error if there're any inconsistencies in the
-        message.
-
-        I realize the following is a bit complicated, but this is the only way
-        we've yet found to avoid bug (####, in Tor).
-
-        The message is wrapped in up to three ways:
-
-        1. The outermost signature: This layer is applied to the message by the
-           message's sender.  This allows for proxying signed messages between
-           clients.
-
-        2. The inner signature: This layer is applied to the message by the
-           original sender (the requesting client or replying host).  The
-           message's destination is recorded in plain-text in this layer so
-           proxiers can deliver the message.
-
-        3. The encrypted message: This layer is used by the host and client to
-           coordinate the service, hidden from prying eyes.
-
-        Yes, each host and client requires two verifications and one decryption
-        per message.  Each proxier requires two verifications: the inner
-        signature must be valid, not necessarily trusted.  The host and client
-        are the only folks who must trust the inner signature.  Proxiers must
-        only verify that signature.
-
-        :FIXME: If we duplicate any keys in the signed message (for addressing)
-                they must be ignored.
-
-        :FIXME: Handle weird requests. what if the client isn't the encrypter??
-                in that case, it must be ignored.
+        The request comes in encrypted and it's decrypted here.  If I can't
+        decrypt it, it's not for me.  If it has no signature, I don't want it.
 
         """
         request = self.gpg.decrypt(request)
 
-        if not str(request):
-            raise InvalidSignatureError()
-
-        if not request.keyid:
-            # an unsigned or invalid request!
+        # skip badly signed messages or ones for other folks.
+        if not (str(request) and request.fingerprint):
             return
 
-        request_body = dict(request)
-        reqeust_body["to"] = self.me
-        request_body["from"] = request.keyid
-
-        return request_body
-
-    def verify_sender(self, request):
-        """Verify the signature of the message's sender.
-
-        This is part (A) in the message diagram.
-
-        Raises an InvalidSignature error when the signature is incorrect.
-
-        Raises an UnwillingHost error when the signer is not a client
-        authorized to send us Santiago messages.
-
-        At this point (the initial unwrap) request.next() returns a signed
-        message body that contains, but isn't, the request's body.
-
-        We're verifying the Santiago message sender to make sure the proxier is
-        allowed to send us messages.
-
-        """
-        gpg_data = request.next()
-
-        if not gpg_data:
-            raise InvalidSignatureError()
-
-        if not self.get_host_locations(gpg_data.fingerprint, "santiago"):
-            raise UnwillingHostError(
-                "{0} is not a Santiago client.".format(gpg_data.fingerprint))
-
-        return request
-
-    def verify_client(self, request):
-        """Verify the signature of the message's source.
-
-        This is part (B) in the message diagram.
-
-        Raises an InvalidSignature error when the signature is incorrect.
-
-        Raises an UnwillingHost error when the signer is not a client authorized
-        to send us Santiago messages.
-
-        We shouldn't verify the Santiago client here, it the request goes to
-        somebody else.
-
-        """
-        self.verify_sender(request)
-
-        adict = None
+        # copy required keys from dictionary
+        adict = ast.literal_eval(str(request))
+        request_body = dict()
         try:
-            adict = dict(request.message)
-        except:
+            for key in ("host", "client", "service", "locations", "reply_to"):
+                request_body = adict[key]
+        except KeyError:
             return
 
-        if not self.i_am(adict["to"]):
-            self.proxy(adict["request"])
-            return
-
-        return request
-
-    def decrypt_client(self, request_body):
-        """Decrypt the message and validates the encrypted signature.
-
-        This is part (C) in the message diagram.
-
-        Raises an InvalidSignature error when the signature is incorrect.
-
-        Raises an UnwillingHost error when the signer is not a client authorized
-        to send us Santiago messages.
-
-        """
-        self.verify_client(request_body)
-
-        if not self.i_am(request_body["host"]):
-            return
+        # set implied keys
+        request_body["from"] = request.fingerprint
+        reqeust_body["to"] = self.me
 
         return request_body
-
-    @staticmethod
-    def signed_contents(request):
-        """Return the contents of the signed message.
-
-        TODO: complete.
-
-        """
-        if not request.readline() == "-----BEGIN PGP SIGNED MESSAGE-----":
-            return
-
-        # skip the blank line
-        # contents = the thingie.
-        # contents end at "-----BEGIN PGP SIGNATURE-----"
-        # message ends at "-----END PGP SIGNATURE-----"
 
     def handle_request(self, from_, to, host, client,
                        service, reply_to):
         """Actually do the request processing.
 
-        #. Verify we're willing to host for both the client and proxy.  If we
-           aren't, quit and return nothing.
-
-        #. Forward the request if it's not for me.
-
-        #. Learn new Santiagi if they were sent.
-
-        #. Reply to the client on the appropriate protocol.
+        - Verify we're willing to host for both the client and proxy.  If we
+          aren't, quit and return nothing.
+        - Forward the request if it's not for me.
+        - Learn new Santiagi if they were sent.
+        - Reply to the client on the appropriate protocol.
 
         """
-        try:
-            self.hosting[from_]
-            self.hosting[client]
-        except KeyError as e:
+        if False in map(self.hosting.__contains__, (from_, client)):
             return
 
         if not self.i_am(host):

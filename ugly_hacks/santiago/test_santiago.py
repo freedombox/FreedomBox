@@ -45,7 +45,6 @@ import os
 import sys
 import unittest
 
-from pprint import pprint
 import gnupg
 import logging
 from errors import InvalidSignatureError, UnwillingHostError
@@ -457,106 +456,167 @@ import pgpprocessor
 #
 #         pass
 
-class VerifySender(test_pgpprocessor.MessageWrapper):
-    """Santiago.verify_sender performs as expected.
 
-    It must unwrap the message and return the message's (decrypted) body.  If
-    stuff is weird about the message, raise errors:
+class VerifyRequest(unittest.TestCase):
 
-    - Raise an InvalidSignature error when the signature is incorrect.
+    """Are incoming requests handled correctly?
 
-    - Raise an UnwillingHost error when the signer is not a client authorized to
-      send us Santiago messages.
+    - Messages come with a request.
+    - Each message identifies the Santiago protocol version it uses.
+    - Messages come with a range of Santiago protocol versions I can reply with.
+    - Messages that don't share any of my versions are ignored (either the
+      client or I won't be able to understand the message).
+
+    Test this in a fairly hacky way.
 
     """
-
     def setUp(self):
-        super(VerifySender, self).setUp()
+        self.santiago = santiago.Santiago()
+        self.request = { "request_version": 1,
+                         "reply_versions": [1],
+                         "request": None }
 
-        self.santiago = santiago.Santiago(
-            hosting = { self.keyid: {"santiago": ["1"] }},
-            me = self.keyid)
+    def test_pass_acceptable_request(self):
+        """A known good request passes."""
 
-        self.method = "verify_sender"
+        self.assertTrue(self.santiago.verify_request(self.request))
 
-        self.unwrapper = pgpprocessor.Unwrapper(str(self.messages[2]))
+    def test_required_keys_are_required(self):
+        """Messages without required keys fail.
+
+        The following keys are required in the un-encrypted part of the message:
+
+        - request
+        - request_version
+        - reply_versions
+
+        """
+        for key in ("request", "request_version", "reply_versions"):
+            del self.request[key]
+
+            self.assertFalse(self.santiago.verify_request(self.request))
+
+    def test_require_protocol_version_overlap(self):
+        """Clients that can't accept protocols I can send are ignored."""
+
+        santiago.Santiago.supported_protocols, unsupported = \
+            set(["e"]), santiago.Santiago.supported_protocols
+
+        self.assertFalse(self.santiago.verify_request(self.request))
+
+        santiago.Santiago.supported_protocols, unsupported = \
+            unsupported, santiago.Santiago.supported_protocols
+
+    def test_require_protocol_version_understanding(self):
+        """I must ignore any protocol versions I can't understand."""
+
+        self.request["request_version"] = "e"
+
+        self.assertFalse(self.santiago.verify_request(self.request))
+
+
+class UnpackRequest(test_pgpprocessor.MessageWrapper):
+
+    """Are requests unpacked as expected?
+
+    - Messages that aren't for me (that I can't decrypt) are ignored.
+    - Messages with invalid signatures are rejected.
+    - The request keys are unpacked correctly:
+
+      - client
+      - host
+      - service
+      - locations
+      - reply_to
+
+    - Only passing messages return the dictionary.
+
+    """
+    def setUp(self):
+        """Create a request."""
+
+        self.gpg = gnupg.GPG(use_agent = True)
+
+        self.request = { "host": None, "client": None,
+                         "service": None, "reply_to": None,
+                         "locations": None }
+
+        config = configparser.ConfigParser(
+        {"KEYID":
+             "D95C32042EE54FFDB25EC3489F2733F40928D23A"})
+        config.read(["test.cfg"])
+        self.keyid = config.get("pgpprocessor", "keyid")
+
+        self.santiago = santiago.Santiago()
+
+    def test_requred_keys_are_required(self):
+        """If any required keys are missing, the message is skipped."""
+
+        for key in ("host", "client", "service", "reply_to", "locations"):
+            del self.request[key]
+
+            encrypted_data = self.gpg.encrypt(str(self.request),
+                                              recipients=[self.keyid],
+                                              sign=self.keyid)
+
+            self.assertEqual(
+                self.santiago.unpack_request(str(encrypted_data)),
+                None)
+
+    def test_skip_undecryptable_messages(self):
+        """Mesasges that I can't decrypt (for other folks) are skipped.
+
+        I don't know how I'll encrypt to a key that isn't there though.
+
+        """
+        pass
+
+    def test_skip_invalid_signatures(self):
+        """Messages with invalid signatures are skipped."""
+
+        self.request = str(self.gpg.sign(str(self.request), keyid=self.keyid))
+
+        # delete the 7th line for the fun of it.
+        mangled = self.request.splitlines(True)
+        del mangled[7]
+        self.request = "".join(mangled)
+
+        self.assertEqual(self.santiago.unpack_request(self.request), None)
+
+class HandleRequest(unittest.TestCase):
+    """Process an incoming request, from a client, for to host services.
+
+    - Verify we're willing to host for both the client and proxy.  If we
+      aren't, quit and return nothing.
+    - Forward the request if it's not for me.
+    - Learn new Santiagi if they were sent.
+    - Reply to the client on the appropriate protocol.
+
+    """
+    def setUp(self):
+        self.santiago = santiago.Santiago(hosting = {})
+        self.santiago.outgoing_request = (lambda **x: self.call_request())
+        self.santiago.requested = False
+
+    def call_request(self):
+        self.santiago.requested = True
 
     def test_valid_message(self):
-        """A valid message (correctly signed and from a trusted host) passes."""
 
-        gpg_data = getattr(self.santiago, self.method)(self.unwrapper)
+        self.assertTrue(self.santiago.requested)
 
-        self.assertEqual(self.messages[1], gpg_data.message)
+    def test_unwilling_client(self):
+        """Don't handle the request if the cilent isn't trusted."""
 
-    def test_fail_invalid_signature(self):
-        """A message with an invalid signature fails
+        self.santiago.handle_request()
 
-        It raises an InvalidSignature error.
+        self.assertFalse(self.santiago.requested)
 
-        """
-        message = self.unwrapper.message.splitlines(True)
-        message[7] += "q"
-        self.unwrapper.message = "".join(message)
+    def test_unwilling_proxy(self):
+        """Don't handle the request if the proxy isn't trusted."""
 
-        self.assertRaises(InvalidSignatureError,
-                          getattr(self.santiago, self.method), self.unwrapper)
+        self.assertFalse(self.santiago.requested)
 
-    def test_fail_invalid_signer(self):
-        """A message with a valid signature from an untrusted signer fails.
-
-        It raises an UntrustedClient error.
-
-        """
-        self.santiago.hosting = { 1: { "santiago": ["1"] }}
-
-        self.assertRaises(UnwillingHostError,
-                          getattr(self.santiago, self.method), self.unwrapper)
-
-class VerifyClient(VerifySender):
-    """Santiago.verify_client performs as expected.
-
-    It must unwrap the message and return the message's (decrypted) body.  If
-    stuff is weird about the message, raise errors:
-
-    - Raise an InvalidSignature error when the signature is incorrect.
-
-    - Raise an UnwillingHost error when the signer is not a client authorized to
-      send us Santiago messages.
-
-    Is this just unnecessarily fucking complicating all of this?  Yes.  Screw
-    proxying, just get it out the door by sending the encrypted bits directly.
-
-    """
-    def setUp(self):
-        super(VerifyClient, self).__init__()
-
-        self.method = "verify_client"
-
-    def test_proxy_request(self):
-        """When the message is for somebody else, it gets proxied."""
-
-        pass
-
-    def test_return_only_valid_message(self):
-        """Invalid messages (without "to" and "request" keys) return nothing."""
-
-        pass
-
-    def test_dont_verify_source(self):
-        """If the message is being proxied, we don't care who sent the message.
-
-        """
-        pass
-
-def show(name, item, iterations=1):
-    print "#" * iterations, name, "#" * iterations
-    if hasattr(item, "__dict__"):
-        for k, v in item.__dict__.iteritems():
-            show(k, v, iterations + 1)
-    elif type(item) in (str, unicode):
-        print item
-    else:
-        pprint(item)
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
