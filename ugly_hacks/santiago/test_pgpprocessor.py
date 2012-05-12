@@ -34,7 +34,7 @@ def load_config():
 
 def multi_sign(message="hi", iterations=3, keyid=None, gpg=None):
     """Sign a message several times with a specified key."""
-    
+
     messages = [message]
 
     if not gpg:
@@ -49,7 +49,14 @@ def multi_sign(message="hi", iterations=3, keyid=None, gpg=None):
 
 
 class MessageWrapper(unittest.TestCase):
+    """Basic setup for message-signing tests.
 
+    These tests would run much faster if I could use setUpClass (>30x faster:
+    signing four messages for each test consumes lots of entropy that needs to
+    be rebuilt?), but that's a Python 2.7 feature.  I'll rewrite this when
+    Debian Stable includes Python 2.7 or Python 3.X.  It's much prettier.
+
+    """
     def setUp(self):
 
         self.iterations = 3
