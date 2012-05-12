@@ -13,8 +13,6 @@ import gnupg
 import pgpprocessor
 import unittest
 
-ITERATIONS = 3
-
 def remove_line(string, line, preserve_newlines = True):
     """Remove a line from a multi-line string."""
 
@@ -23,30 +21,40 @@ def remove_line(string, line, preserve_newlines = True):
 
     return str(string.splitlines(preserve_newlines).remove(line))
 
-class MessageWrapper(unittest.TestCase):
-    """The superclass for pgpprocessor tests, containing shared setup:
 
-    - Sign a message several times with a specified key.
+def load_config():
+    """Returns data from the test.cfg file."""
 
-    """
-    MESSAGES = [ str({"host": "somebody"}), ]
-    GPG = gnupg.GPG(use_agent = True)
-
-    CONFIG = configparser.ConfigParser(
+    config = configparser.ConfigParser(
         {"KEYID":
              "D95C32042EE54FFDB25EC3489F2733F40928D23A"})
-    CONFIG.read(["test.cfg"])
-    KEYID = CONFIG.get("pgpprocessor", "keyid")
+    config.read(["test.cfg"])
+    return config
 
-    # sign the message a few times.
-    for i in range(ITERATIONS):
-        MESSAGES.append(str(GPG.sign(MESSAGES[i], keyid = KEYID)))
+
+def multi_sign(message="hi", iterations=3, keyid=None, gpg=None):
+    """Sign a message several times with a specified key."""
+    
+    messages = list(message)
+
+    if not gpg:
+        gpg = gnupg.GPG(use_agent = True)
+    if not keyid:
+        keyid = load_config().get("pgpprocessor", "keyid")
+
+    for i in range(iterations):
+        messages.append(str(gpg.sign(messages[i], keyid=keyid)))
+
+    return messages
+
+
+class MessageWrapper(unittest.TestCase):
 
     def setUp(self):
-        super(MessageWrapper, self).setUp()
 
-        self.messages = list(MessageWrapper.MESSAGES)
-        self.keyid = MessageWrapper.KEYID
+        self.iterations = 3
+        self.gpg = gnupg.GPG(use_agent = True)
+        self.messages = multi_sign(gpg = self.gpg, iterations = self.iterations)
 
 class UnwrapperTest(MessageWrapper):
     """Verify that we can unwrap multiply-signed PGP messages correctly."""
@@ -55,18 +63,18 @@ class UnwrapperTest(MessageWrapper):
         super(UnwrapperTest, self).setUp()
 
         self.unwrapper = pgpprocessor.Unwrapper(self.messages[-1],
-                                                MessageWrapper.GPG)
+                                                self.gpg)
 
     def test_messages_wrapped(self):
         """Were the messages correctly wrapped in the first place?"""
 
-        self.assertEqual(ITERATIONS + 1, len(self.messages))
+        self.assertEqual(self.iterations + 1, len(self.messages))
 
     def test_unwrap_all_messages(self):
         """Do we unwrap the right number of messages?"""
 
         # count each element in the iterator once, skipping the first.
-        self.assertEqual(ITERATIONS, sum([1 for e in self.unwrapper]))
+        self.assertEqual(self.iterations, sum([1 for e in self.unwrapper]))
 
     def test_dont_uwrap(self):
         """Creating an unwrapper shouldn't unwrap the message.
