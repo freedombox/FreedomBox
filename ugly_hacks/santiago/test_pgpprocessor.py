@@ -35,7 +35,7 @@ def load_config():
 def multi_sign(message="hi", iterations=3, keyid=None, gpg=None):
     """Sign a message several times with a specified key."""
     
-    messages = list(message)
+    messages = [message]
 
     if not gpg:
         gpg = gnupg.GPG(use_agent = True)
