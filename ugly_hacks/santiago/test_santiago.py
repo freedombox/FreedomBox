@@ -1,4 +1,4 @@
-#! /usr/bin/python  -*- mode: autofill; fill-column: 80 -*-
+#! /usr/bin/python  -*- mode: auto-fill; fill-column: 80 -*-
 
 
 """Making Santiago dance, in 4 parts:
@@ -40,17 +40,14 @@ If I produce a listener that just echoes the parameters, I can validate the resp
 """
 
 
-import ConfigParser as configparser
 import os
 import sys
 import unittest
 
 import gnupg
 import logging
-from errors import InvalidSignatureError, UnwillingHostError
 import simplesantiago as santiago
-import test_pgpprocessor
-import pgpprocessor
+import utilities
 
 
 # class SantiagoTest(unittest.TestCase):

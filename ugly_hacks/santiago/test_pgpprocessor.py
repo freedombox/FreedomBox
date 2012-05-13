@@ -8,10 +8,10 @@ isn't verifiable.
 
 """
 
-import ConfigParser as configparser
 import gnupg
 import pgpprocessor
 import unittest
+import utilities
 
 def remove_line(string, line, preserve_newlines = True):
     """Remove a line from a multi-line string."""
@@ -22,37 +22,11 @@ def remove_line(string, line, preserve_newlines = True):
     return str(string.splitlines(preserve_newlines).remove(line))
 
 
-def load_config():
-    """Returns data from the test.cfg file."""
-
-    config = configparser.ConfigParser(
-        {"KEYID":
-             "D95C32042EE54FFDB25EC3489F2733F40928D23A"})
-    config.read(["test.cfg"])
-    return config
-
-
-def multi_sign(message="hi", iterations=3, keyid=None, gpg=None):
-    """Sign a message several times with a specified key."""
-
-    messages = [message]
-
-    if not gpg:
-        gpg = gnupg.GPG(use_agent = True)
-    if not keyid:
-        keyid = load_config().get("pgpprocessor", "keyid")
-
-    for i in range(iterations):
-        messages.append(str(gpg.sign(messages[i], keyid=keyid)))
-
-    return messages
-
-
 class MessageWrapper(unittest.TestCase):
     """Basic setup for message-signing tests.
 
     These tests would run much faster if I could use setUpClass (>30x faster:
-    signing four messages for each test consumes lots of entropy that needs to
+    signing three messages for each test consumes lots of entropy that needs to
     be rebuilt?), but that's a Python 2.7 feature.  I'll rewrite this when
     Debian Stable includes Python 2.7 or Python 3.X.  It's much prettier.
 
@@ -61,7 +35,9 @@ class MessageWrapper(unittest.TestCase):
 
         self.iterations = 3
         self.gpg = gnupg.GPG(use_agent = True)
-        self.messages = multi_sign(gpg = self.gpg, iterations = self.iterations)
+        self.messages = utilities.multi_sign(
+            gpg = self.gpg,
+            iterations = self.iterations)
 
 class UnwrapperTest(MessageWrapper):
     """Verify that we can unwrap multiply-signed PGP messages correctly."""
