@@ -496,13 +496,13 @@ class VerifyRequest(unittest.TestCase):
     def test_require_protocol_version_overlap(self):
         """Clients that can't accept protocols I can send are ignored."""
 
-        santiago.Santiago.supported_protocols, unsupported = \
-            set(["e"]), santiago.Santiago.supported_protocols
+        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
+            set(["e"]), santiago.Santiago.SUPPORTED_PROTOCOLS
 
         self.assertFalse(self.santiago.verify_request(self.request))
 
-        santiago.Santiago.supported_protocols, unsupported = \
-            unsupported, santiago.Santiago.supported_protocols
+        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
+            unsupported, santiago.Santiago.SUPPORTED_PROTOCOLS
 
     def test_require_protocol_version_understanding(self):
         """I must ignore any protocol versions I can't understand."""

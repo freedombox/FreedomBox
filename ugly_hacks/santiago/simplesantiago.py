@@ -65,7 +65,13 @@ class Santiago(object):
     protocols.
 
     """
-    supported_protocols = set([1])
+    SUPPORTED_PROTOCOLS = set([1])
+    ALL_KEYS = ("host", "client", "service", "locations", "reply_to",
+                "request_version", "reply_versions")
+    REQUIRED_KEYS = ("client", "host", "service",
+                     "request_version", "reply_versions")
+    OPTIONAL_KEYS = ("locations", "reply_to")
+    LIST_KEYS = ("reply_to", "locations", "reply_versions")
 
     def __init__(self, listeners = None, senders = None,
                  hosting = None, consuming = None, me = 0):
@@ -282,10 +288,10 @@ class Santiago(object):
                         ("request", "request_version", "reply_versions")):
             return False
 
-        if not (Santiago.supported_protocols & set(request["reply_versions"])):
+        if not (Santiago.SUPPORTED_PROTOCOLS & set(request["reply_versions"])):
             return False
 
-        if not (Santiago.supported_protocols &
+        if not (Santiago.SUPPORTED_PROTOCOLS &
               set([request["request_version"]])):
             return False
 
