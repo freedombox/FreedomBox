@@ -39,7 +39,6 @@ If I produce a listener that just echoes the parameters, I can validate the resp
 
 """
 
-
 import os
 import sys
 import unittest
@@ -559,7 +558,7 @@ class UnpackRequest(unittest.TestCase):
 
       The really odd ones out are "locations" and "reply_to", which fall into
       all three categories.
-    
+
     """
     def setUp(self):
         """Create a request."""
@@ -568,7 +567,7 @@ class UnpackRequest(unittest.TestCase):
 
         self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
 
-        self.santiago = santiago.Santiago()
+        self.santiago = santiago.Santiago(me = self.keyid)
 
         self.request = { "host": self.keyid, "client": self.keyid,
                          "service": "santiago", "reply_to": [1],
@@ -585,14 +584,27 @@ class UnpackRequest(unittest.TestCase):
     def test_valid_message(self):
         """A message that should pass does pass normally."""
 
-        self.fail()
+        adict = self.validate_request(dict(self.request))
+        self.request = self.wrap_message(self.request)
+
+        self.assertEqual(self.santiago.unpack_request(str(self.request)), adict)
+
+    def validate_request(self, adict):
+        # convert non-None elements to sets, like unpack does.
+        adict.update(dict([ (k, set(adict[k])) for
+                            k in self.LIST_KEYS
+                            if adict[k] is not None ]))
+        adict.update({ "from": self.keyid,
+                       "to": self.keyid })
+
+        return adict
 
     def test_request_contains_all_keys(self):
         """The test request needs all supported keys."""
 
         for key in self.ALL_KEYS:
             self.assertTrue(key in self.request)
-        
+
     def wrap_message(self, message):
         """The standard wrapping method for these tests."""
 
@@ -612,7 +624,7 @@ class UnpackRequest(unittest.TestCase):
 
         self.assertEqual(set(self.ALL_KEYS),
                          set(self.REQUIRED_KEYS) | set(self.OPTIONAL_KEYS))
-            
+
     def test_requred_keys_are_required(self):
         """If any required keys are missing, the message is skipped."""
 
@@ -645,12 +657,7 @@ class UnpackRequest(unittest.TestCase):
             broken_dict[key] = None
             encrypted_data = str(self.wrap_message(str(broken_dict)))
 
-            # convert non-None elements to sets, like unpack does.
-            broken_dict.update(dict([ (k, set(broken_dict[k])) for
-                                      k in self.LIST_KEYS
-                                      if broken_dict[k] is not None ]))
-            broken_dict.update({ "from": self.keyid,
-                                 "to": 0 })
+            broken_dict = self.validate_request(broken_dict)
 
             self.assertEqual(
                 self.santiago.unpack_request(encrypted_data),
@@ -685,7 +692,7 @@ class UnpackRequest(unittest.TestCase):
             broken_request = self.wrap_message(str(broken_request))
 
             self.assertEqual(self.santiago.unpack_request(broken_request), None)
-        
+
     def test_sets_are_sets(self):
         """Any variables that must be sets, after processing, actually are."""
 
@@ -767,15 +774,22 @@ class HandleRequest(unittest.TestCase):
     def test_unwilling_proxy(self):
         """Don't handle the request if the proxy isn't trusted."""
 
-        self.fail()
+        self.from_ = 0
+
+        self.test_call()
 
         self.assertFalse(self.santiago.requested)
 
     def test_learn_services(self):
         """New reply_to locations are learned."""
 
-        self.fail()
+        self.reply_to.update([2])
 
+        self.test_call()
+
+        self.assertTrue(self.santiago.requested)
+        self.assertEqual(self.santiago.consuming["santiago"][self.keyid],
+                         set([1, 2]))
 
 
 if __name__ == "__main__":

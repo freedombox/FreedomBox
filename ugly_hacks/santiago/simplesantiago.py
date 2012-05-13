@@ -169,7 +169,8 @@ class Santiago(object):
         """Learn a service somebody else hosts for me."""
 
         if locations:
-            self.consuming[service][host].union(locations)
+            self.consuming[service][host] = (
+                self.consuming[service][host] | locations)
 
     def provide_service(self, client, service, locations):
         """Start hosting a service for somebody else."""
@@ -367,9 +368,11 @@ class Santiago(object):
         - Reply to the client on the appropriate protocol.
 
         """
+        # return if we won't host for the proxy or the client.
         if False in map(self.hosting.__contains__, (from_, client)):
             return
 
+        # if we don't proxy, learn new reply locations and send the request.
         if not self.i_am(host):
             self.proxy(to, host, client, service, reply_to)
         else:
