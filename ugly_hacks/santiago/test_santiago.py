@@ -473,7 +473,7 @@ class VerifyRequest(unittest.TestCase):
                          "reply_versions": [1],
                          "request": None }
 
-    def test_pass_acceptable_request(self):
+    def test_valid_message(self):
         """A known good request passes."""
 
         self.assertTrue(self.santiago.verify_request(self.request))
@@ -512,53 +512,149 @@ class VerifyRequest(unittest.TestCase):
         self.assertFalse(self.santiago.verify_request(self.request))
 
 
-class UnpackRequest(test_pgpprocessor.MessageWrapper):
+class UnpackRequest(unittest.TestCase):
 
     """Are requests unpacked as expected?
 
     - Messages that aren't for me (that I can't decrypt) are ignored.
     - Messages with invalid signatures are rejected.
-    - The request keys are unpacked correctly:
+    - Only passing messages return the dictionary.
+    - The message is unpacked correctly.  This is a bit difficult because of the
+      number of overlapping data types.
+
+      First, we have the keys that must be present in each message:
 
       - client
       - host
       - service
       - locations
       - reply_to
+      - request_version
+      - reply_versions
 
-    - Only passing messages return the dictionary.
+      Next the list-keys which must be lists (they'll later be converted
+      directly to sets):
 
+      - reply_to
+      - locations
+      - reply_versions
+
+      Finally, we have the keys that may be empty:
+
+      - locations
+      - reply_to
+
+      ``locations`` is empty on an incoming (request) message, while
+      ``reply_to`` may be assumed if the reply destinations haven't changed
+      since the previous message.  If they have, and the client still doesn't
+      send the reply_to, then the host will be unable to communicate with it, so
+      it's in the client's best interests to send it whenever reasonable.
+
+      So, the structure of a message is a little weird here.  We have three sets
+      of overlapping requirements:
+
+      #. Certain keys must be present.
+      #. Certain keys must be lists.
+      #. Certain keys may be unset.
+
+      The really odd ones out are "locations" and "reply_to", which fall into
+      all three categories.
+    
     """
     def setUp(self):
         """Create a request."""
 
         self.gpg = gnupg.GPG(use_agent = True)
 
-        self.request = { "host": None, "client": None,
-                         "service": None, "reply_to": None,
-                         "locations": None }
-
-        config = configparser.ConfigParser(
-        {"KEYID":
-             "D95C32042EE54FFDB25EC3489F2733F40928D23A"})
-        config.read(["test.cfg"])
-        self.keyid = config.get("pgpprocessor", "keyid")
+        self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
 
         self.santiago = santiago.Santiago()
 
+        self.request = { "host": self.keyid, "client": self.keyid,
+                         "service": "santiago", "reply_to": [1],
+                         "locations": [1],
+                         "request_version": 1, "reply_versions": [1], }
+
+        self.ALL_KEYS = ("host", "client", "service", "locations", "reply_to",
+                         "request_version", "reply_versions")
+        self.REQUIRED_KEYS = ("client", "host", "service",
+                              "request_version", "reply_versions")
+        self.OPTIONAL_KEYS = ("locations", "reply_to")
+        self.LIST_KEYS = ("reply_to", "locations", "reply_versions")
+
+    def test_valid_message(self):
+        """A message that should pass does pass normally."""
+
+        self.fail()
+
+    def test_request_contains_all_keys(self):
+        """The test request needs all supported keys."""
+
+        for key in self.ALL_KEYS:
+            self.assertTrue(key in self.request)
+        
+    def wrap_message(self, message):
+        """The standard wrapping method for these tests."""
+
+        return str(self.gpg.encrypt(str(message),
+                                    recipients=[self.keyid],
+                                    sign=self.keyid))
+
+    def test_key_lists_updated(self):
+        """Are the lists of keys up-to-date?"""
+
+        for key in ("ALL_KEYS", "REQUIRED_KEYS", "OPTIONAL_KEYS", "LIST_KEYS"):
+            self.assertEqual(getattr(self, key),
+                             getattr(santiago.Santiago, key))
+
+    def test_all_keys_accounted_for(self):
+        """All the keys in the ALL_KEYS list are either required or optional."""
+
+        self.assertEqual(set(self.ALL_KEYS),
+                         set(self.REQUIRED_KEYS) | set(self.OPTIONAL_KEYS))
+            
     def test_requred_keys_are_required(self):
         """If any required keys are missing, the message is skipped."""
 
-        for key in ("host", "client", "service", "reply_to", "locations"):
-            del self.request[key]
-
-            encrypted_data = self.gpg.encrypt(str(self.request),
-                                              recipients=[self.keyid],
-                                              sign=self.keyid)
+        for key in self.ALL_KEYS:
+            broken_dict = dict(self.request)
+            del broken_dict[key]
+            encrypted_data = self.wrap_message(str(broken_dict))
 
             self.assertEqual(
                 self.santiago.unpack_request(str(encrypted_data)),
                 None)
+
+    def test_non_null_keys_are_set(self):
+        """If any keys that can't be empty are empty, the message is skipped."""
+
+        for key in self.REQUIRED_KEYS:
+            broken_dict = dict(self.request)
+            broken_dict[key] = None
+            encrypted_data = self.wrap_message(str(broken_dict))
+
+            self.assertEqual(
+                self.santiago.unpack_request(str(encrypted_data)),
+                None)
+
+    def test_null_keys_are_null(self):
+        """If any optional keys are null, the message's still processed."""
+
+        for key in self.OPTIONAL_KEYS:
+            broken_dict = dict(self.request)
+            broken_dict[key] = None
+            encrypted_data = str(self.wrap_message(str(broken_dict)))
+
+            # convert non-None elements to sets, like unpack does.
+            broken_dict.update(dict([ (k, set(broken_dict[k])) for
+                                      k in self.LIST_KEYS
+                                      if broken_dict[k] is not None ]))
+            broken_dict.update({ "from": self.keyid,
+                                 "to": 0 })
+
+            self.assertEqual(
+                self.santiago.unpack_request(encrypted_data),
+                broken_dict)
 
     def test_skip_undecryptable_messages(self):
         """Mesasges that I can't decrypt (for other folks) are skipped.
@@ -571,7 +667,7 @@ class UnpackRequest(test_pgpprocessor.MessageWrapper):
     def test_skip_invalid_signatures(self):
         """Messages with invalid signatures are skipped."""
 
-        self.request = str(self.gpg.sign(str(self.request), keyid=self.keyid))
+        self.request = self.wrap_message(str(self.request))
 
         # delete the 7th line for the fun of it.
         mangled = self.request.splitlines(True)
@@ -579,6 +675,27 @@ class UnpackRequest(test_pgpprocessor.MessageWrapper):
         self.request = "".join(mangled)
 
         self.assertEqual(self.santiago.unpack_request(self.request), None)
+
+    def test_incoming_lists_are_lists(self):
+        """Any variables that must be lists, before processing, actually are."""
+
+        for key in self.LIST_KEYS:
+            broken_request = dict(self.request)
+            broken_request[key] = 1
+            broken_request = self.wrap_message(str(broken_request))
+
+            self.assertEqual(self.santiago.unpack_request(broken_request), None)
+        
+    def test_sets_are_sets(self):
+        """Any variables that must be sets, after processing, actually are."""
+
+        self.request = self.wrap_message(str(self.request))
+
+        unpacked = self.santiago.unpack_request(self.request)
+
+        for key in self.LIST_KEYS:
+            for attribute in ("union", "intersection"):
+                self.assertTrue(hasattr(unpacked[key], attribute))
 
 class HandleRequest(unittest.TestCase):
     """Process an incoming request, from a client, for to host services.
@@ -591,28 +708,74 @@ class HandleRequest(unittest.TestCase):
 
     """
     def setUp(self):
-        self.santiago = santiago.Santiago(hosting = {})
-        self.santiago.outgoing_request = (lambda **x: self.call_request())
-        self.santiago.requested = False
+        """Do a good bit of setup to make this a nicer test-class.
 
-    def call_request(self):
+        Successful tests will call ``Santiago.outgoing_request``, so that's
+        overridden to record that the method is called.
+
+        """
+        self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
+
+        self.santiago = santiago.Santiago(
+            hosting = {self.keyid: {"santiago": set([1]) }},
+            consuming = {"santiago": {self.keyid: set([1]) }},
+            me = self.keyid)
+
+        self.santiago.requested = False
+        self.santiago.outgoing_request = (lambda *args, **kwargs:
+                                              self.record_success())
+
+        self.from_ = self.keyid
+        self.to = self.keyid
+        self.host = self.keyid
+        self.client = self.keyid
+        self.service = "santiago"
+        self.reply_to = set([1])
+        self.request_version = 1
+        self.reply_versions = set([1])
+
+    def record_success(self):
+        """Record that we tried to reply to the request."""
+
         self.santiago.requested = True
 
+    def test_call(self):
+        """A short-hand for calling handle_request with all 8 arguments.  Oy."""
+
+        self.santiago.handle_request(
+                self.from_, self.to,
+                self.host, self.client,
+                self.service, self.reply_to,
+                self.request_version, self.reply_versions)
+
     def test_valid_message(self):
+        """Reply to valid messages."""
+
+        self.test_call()
 
         self.assertTrue(self.santiago.requested)
 
     def test_unwilling_client(self):
         """Don't handle the request if the cilent isn't trusted."""
 
-        self.santiago.handle_request()
+        self.client = 0
+
+        self.test_call()
 
         self.assertFalse(self.santiago.requested)
 
     def test_unwilling_proxy(self):
         """Don't handle the request if the proxy isn't trusted."""
 
+        self.fail()
+
         self.assertFalse(self.santiago.requested)
+
+    def test_learn_services(self):
+        """New reply_to locations are learned."""
+
+        self.fail()
+
 
 
 if __name__ == "__main__":

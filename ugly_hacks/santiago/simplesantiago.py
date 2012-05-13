@@ -303,6 +303,9 @@ class Santiago(object):
         The request comes in encrypted and it's decrypted here.  If I can't
         decrypt it, it's not for me.  If it has no signature, I don't want it.
 
+        Some lists are changed to sets here.  This allows for set-operations
+        (union, intersection, etc) later, making things much more intuitive.
+
         """
         request = self.gpg.decrypt(request)
 
@@ -310,23 +313,51 @@ class Santiago(object):
         if not (str(request) and request.fingerprint):
             return
 
-        # copy required keys from dictionary
-        adict = ast.literal_eval(str(request))
+        # copy out only required keys from request, throwing away cruft
         request_body = dict()
+        source = ast.literal_eval(str(request))
         try:
-            for key in ("host", "client", "service", "locations", "reply_to"):
-                request_body = adict[key]
+            for key in Santiago.ALL_KEYS:
+                request_body[key] = source[key]
         except KeyError:
+            return
+
+        # required keys are non-null
+        if None in [request_body[x] for x in Santiago.REQUIRED_KEYS]:
+            return
+
+        # move lists to sets
+        request_body = self.setify_lists(request_body)
+        if not request_body:
             return
 
         # set implied keys
         request_body["from"] = request.fingerprint
-        reqeust_body["to"] = self.me
+        request_body["to"] = self.me
 
         return request_body
 
+    def setify_lists(self, request_body):
+        """Convert list nodes to sets."""
+
+        try:
+            for key in ("locations", "reply_to"):
+                if request_body[key] is not None:
+                    request_body[key] = set(request_body[key])
+        except TypeError:
+            return
+
+        try:
+            for key in ("reply_versions",):
+                request_body[key] = set(request_body[key])
+        except TypeError:
+            return
+
+        return request_body
+
+
     def handle_request(self, from_, to, host, client,
-                       service, reply_to):
+                       service, reply_to, request_version, reply_versions):
         """Actually do the request processing.
 
         - Verify we're willing to host for both the client and proxy.  If we
