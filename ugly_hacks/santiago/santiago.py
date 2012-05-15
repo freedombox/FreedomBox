@@ -1,37 +1,34 @@
 #! /usr/bin/python -*- mode: python; mode: auto-fill; fill-column: 80; -*-
 
-"""A simple Santiago service.
+"""The Santiago service.
 
 Start me with:
 
-    $ python -i simplesantiago.py
+    $ python -i santiago.py
 
-This will provide you with a running Santiago service.  The important tags in
-this file are:
+The first Santiago service queries another's index with a request.  That request
+is handled and a request is returned.  Then, the reply is handled.  The upshot
+is that we learn a new set of locations for the service.
 
-- query
-- request
-- index
-- handle_request
-- handle_reply
-
-They operate, essentially, in that order.  The first Santiago service queries
-another's index with a request.  That request is handled and a request is
-returned.  Then, the reply is handled.  The upshot is that we learn a new set of
-locations for the service.
-
-We also don't:
+We don't:
 
 - Proxy requests.
 - Use a reasonable data-store.
-- Have a decent control mechanism.
+- Have a decent control (rate-limiting) mechanism.
 
 :TODO: add doctests
-:TODO: move to santiago.py, merge the documentation.
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
 
 This dead-drop is what came of my trying to learn from bug 4185.
+
+                                  Santiago, he
+                          smiles like a Buddah, 'neath
+                               his red sombrero.
+
+This file is distributed under the GNU Affero General Public License, Version 3
+or later.  A copy of GPLv3 is available [from the Free Software Foundation]
+<http://www.gnu.org/licenses/gpl.html>.
 
 """
 
@@ -259,7 +256,7 @@ class Santiago(object):
 
             if unpacked["locations"]:
                 logging.debug("santiago.Santiago.incoming_request: handling reply")
-                
+
                 self.handle_reply(
                     unpacked["from"], unpacked["to"],
                     unpacked["host"], unpacked["client"],
@@ -514,20 +511,19 @@ class SantiagoSender(SantiagoConnector):
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
-    logging.raiseExceptions = False
 
     cert = "santiago.crt"
+    mykey = load_config("production.cfg").get("pgpprocessor", "keyid")
+
     listeners = { "https": { "socket_port": 8080,
                              "ssl_certificate": cert,
                              "ssl_private_key": cert }, }
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
-    mykey = "D95C32042EE54FFDB25EC3489F2733F40928D23A"
-
     hosting = { mykey: { "santiago": set( ["https://localhost:8080",
                                            "https://somestuff" ] )}}
     consuming = { "santiago": { mykey: set( ["https://localhost:8080"] )}}
-                      
+
     # load the Santiago
     santiago_b = Santiago(listeners, senders,
                           hosting, consuming, mykey)
