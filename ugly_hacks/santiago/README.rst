@@ -550,24 +550,10 @@ Tasks
 
 - |TODO| TODOs and FIXMEs.
 
-- |TODO| PGP Signing and Verification.
-
-- |TODO| Verify I successfully split into protocol-specific listeners and
-  senders.
-
 - |TODO| add unit tests and doctests
-
-- |TODO| Create startup script that adds all necessary things to the PYTHONPATH.
 
 - |TODO| allow multiple listeners and senders per protocol (with different
   proxies?)
-
-- |TODO| Move SimpleSantiago onto Santiago, merge documentation.
-
-- |TODO| Properly integrate the WOT into Santiago so that trust can be used,
-  even if services aren't available.  This will allow us to use a box-specific
-  key for Santiago serving, as long as the box's owner signs and publishes that
-  box's key.  Then, we can very effectively use the public WOT.
 
 .. |TODO| unicode:: U+2610
 .. |DONE| unicode:: U+2611
