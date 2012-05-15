@@ -43,6 +43,7 @@ import os
 import sys
 import unittest
 
+import ast
 import gnupg
 import logging
 import simplesantiago as santiago
@@ -452,65 +453,6 @@ import utilities
 #
 #         pass
 
-
-class VerifyRequest(unittest.TestCase):
-
-    """Are incoming requests handled correctly?
-
-    - Messages come with a request.
-    - Each message identifies the Santiago protocol version it uses.
-    - Messages come with a range of Santiago protocol versions I can reply with.
-    - Messages that don't share any of my versions are ignored (either the
-      client or I won't be able to understand the message).
-
-    Test this in a fairly hacky way.
-
-    """
-    def setUp(self):
-        self.santiago = santiago.Santiago()
-        self.request = { "request_version": 1,
-                         "reply_versions": [1],
-                         "request": None }
-
-    def test_valid_message(self):
-        """A known good request passes."""
-
-        self.assertTrue(self.santiago.verify_request(self.request))
-
-    def test_required_keys_are_required(self):
-        """Messages without required keys fail.
-
-        The following keys are required in the un-encrypted part of the message:
-
-        - request
-        - request_version
-        - reply_versions
-
-        """
-        for key in ("request", "request_version", "reply_versions"):
-            del self.request[key]
-
-            self.assertFalse(self.santiago.verify_request(self.request))
-
-    def test_require_protocol_version_overlap(self):
-        """Clients that can't accept protocols I can send are ignored."""
-
-        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
-            set(["e"]), santiago.Santiago.SUPPORTED_PROTOCOLS
-
-        self.assertFalse(self.santiago.verify_request(self.request))
-
-        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
-            unsupported, santiago.Santiago.SUPPORTED_PROTOCOLS
-
-    def test_require_protocol_version_understanding(self):
-        """I must ignore any protocol versions I can't understand."""
-
-        self.request["request_version"] = "e"
-
-        self.assertFalse(self.santiago.verify_request(self.request))
-
-
 class UnpackRequest(unittest.TestCase):
 
     """Are requests unpacked as expected?
@@ -518,6 +460,10 @@ class UnpackRequest(unittest.TestCase):
     - Messages that aren't for me (that I can't decrypt) are ignored.
     - Messages with invalid signatures are rejected.
     - Only passing messages return the dictionary.
+    - Each message identifies the Santiago protocol version it uses.
+    - Messages come with a range of Santiago protocol versions I can reply with.
+    - Messages that don't share any of my versions are ignored (either the
+      client or I won't be able to understand the message).
     - The message is unpacked correctly.  This is a bit difficult because of the
       number of overlapping data types.
 
@@ -574,12 +520,13 @@ class UnpackRequest(unittest.TestCase):
                          "locations": [1],
                          "request_version": 1, "reply_versions": [1], }
 
-        self.ALL_KEYS = ("host", "client", "service", "locations", "reply_to",
-                         "request_version", "reply_versions")
-        self.REQUIRED_KEYS = ("client", "host", "service",
-                              "request_version", "reply_versions")
-        self.OPTIONAL_KEYS = ("locations", "reply_to")
-        self.LIST_KEYS = ("reply_to", "locations", "reply_versions")
+        self.ALL_KEYS = set(("host", "client", "service",
+                             "locations", "reply_to",
+                             "request_version", "reply_versions"))
+        self.REQUIRED_KEYS = set(("client", "host", "service",
+                                  "request_version", "reply_versions"))
+        self.OPTIONAL_KEYS = set(("locations", "reply_to"))
+        self.LIST_KEYS = set(("reply_to", "locations", "reply_versions"))
 
     def test_valid_message(self):
         """A message that should pass does pass normally."""
@@ -704,6 +651,28 @@ class UnpackRequest(unittest.TestCase):
             for attribute in ("union", "intersection"):
                 self.assertTrue(hasattr(unpacked[key], attribute))
 
+    def test_require_protocol_version_overlap(self):
+        """Clients that can't accept protocols I can send are ignored."""
+
+        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
+            set(["e"]), santiago.Santiago.SUPPORTED_PROTOCOLS
+
+        self.request = self.wrap_message(str(self.request))
+
+        self.assertFalse(self.santiago.unpack_request(self.request))
+
+        santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
+            unsupported, santiago.Santiago.SUPPORTED_PROTOCOLS
+
+    def test_require_protocol_version_understanding(self):
+        """The service must ignore any protocol versions it can't understand."""
+
+        self.request["request_version"] = "e"
+
+        self.request = self.wrap_message(str(self.request))
+
+        self.assertFalse(self.santiago.unpack_request(self.request))
+
 class HandleRequest(unittest.TestCase):
     """Process an incoming request, from a client, for to host services.
 
@@ -762,23 +731,20 @@ class HandleRequest(unittest.TestCase):
 
         self.assertTrue(self.santiago.requested)
 
-    def test_unwilling_client(self):
-        """Don't handle the request if the cilent isn't trusted."""
+    def test_unwilling_source(self):
+        """Don't handle the request if the cilent or proxy isn't trusted.
 
-        self.client = 0
+        Ok, so, "isn't trusted" is the wrong turn of phrase here.  Technically,
+        it's "this Santiago isn't willing to host services for", but the
+        former's much easier to type.
 
-        self.test_call()
+        """
+        for key in ("client", ):
+            setattr(self, key, 0)
 
-        self.assertFalse(self.santiago.requested)
+            self.test_call()
 
-    def test_unwilling_proxy(self):
-        """Don't handle the request if the proxy isn't trusted."""
-
-        self.from_ = 0
-
-        self.test_call()
-
-        self.assertFalse(self.santiago.requested)
+            self.assertFalse(self.santiago.requested)
 
     def test_learn_services(self):
         """New reply_to locations are learned."""
@@ -791,7 +757,152 @@ class HandleRequest(unittest.TestCase):
         self.assertEqual(self.santiago.consuming["santiago"][self.keyid],
                          set([1, 2]))
 
+# class HandleReply(unittest.TestCase):
 
+#     """
+#     def handle_reply(self, from_, to, host, client,
+#                      service, locations, reply_to):
+#         "Process a reply from a Santiago service.
+
+#         The last call in the chain that makes up the Santiago system, we now
+#         take the reply from the other Santiago server and learn any new service
+#         locations, if we've requested locations for that service."
+
+#     """
+#     def test_valid_message(self):
+#         """A valid message should teach new service locations."""
+
+#         self.fail()
+
+#     def test_no_request_to_host(self):
+#         """If I haven't asked the host for any services, ignore the reply."""
+
+#         self.fail()
+
+#     def test_no_request_for_service(self):
+#         """If I haven't asked the host for this service, ignore the reply."""
+
+#         self.fail()
+
+#     def test_not_to_me(self):
+#         """Ignore messages to another Santiago service.
+
+#         if not self.i_am(to):
+
+#         """
+
+#         self.fail()
+
+#     def test_for_other_client(self):
+#         """Ignore messages that another Santiago is the client for.
+
+#         if not self.i_am(client):
+
+#         """
+
+#         self.fail()
+
+#     def test_learn_santiago_locations(self):
+#         """New Santiago locations are learned."""
+
+#         self.fail()
+
+#     def test_learn_service_locations(self):
+#         """New service locations are learned."""
+
+#         self.fail()
+
+#     def test_dequeue_service_request(self):
+#         """Don't accept further service requests after the request is handled.
+
+#         Of course, this has its limits.  Multiple requests to the same host
+#         would create multiple outstanding requests. Should they?  Think on that.
+
+#         """
+#         self.fail()
+
+class OutgoingRequest(unittest.TestCase):
+    """Are outgoing requests properly formed?
+
+    Here, we'll use a faux Santiago Sender that merely records and decodes the
+    request when it goes out.
+
+    """
+    class TestRequestSender(object):
+        """A barebones sender that records details about the request."""
+
+        def __init__(self):
+            self.gpg = gnupg.GPG(use_agent = True)
+
+        def outgoing_request(self, request, destination):
+            """Decrypt and record the pertinent details about the request."""
+
+            self.destination = destination
+            self.crypt = request
+            self.request = ast.literal_eval(str(self.gpg.decrypt(str(request))))
+
+    def setUp(self):
+        """Create an encryptable request."""
+
+        self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
+
+        self.santiago = santiago.Santiago(
+            me = self.keyid,
+            consuming = { "santiago": { self.keyid: ( "https://1", )}})
+
+        self.request_sender = OutgoingRequest.TestRequestSender()
+        self.santiago.senders = { "https": self.request_sender }
+
+        self.host = self.keyid
+        self.client = self.keyid
+        self.service = "santiago"
+        self.reply_to = [ "https://1" ]
+        self.locations = [1]
+        self.request_version = 1
+        self.reply_versions = [1]
+
+        self.request = {
+            "host": self.host, "client": self.client,
+            "service": self.service,
+            "reply_to": self.reply_to, "locations": self.locations,
+            "request_version": self.request_version,
+            "reply_versions": self.reply_versions }
+
+    def outgoing_call(self):
+        """A short-hand for calling outgoing_request with all 8 arguments."""
+
+        self.santiago.outgoing_request(
+            None, None, self.host, self.client,
+            self.service, self.locations, self.reply_to)
+
+    def test_valid_message(self):
+        """Are valid messages properly encrypted and delivered?"""
+
+        self.outgoing_call()
+
+        self.assertEqual(self.request_sender.request,
+                         self.request)
+        self.assertEqual(self.request_sender.destination, self.reply_to[0])
+
+    def test_queue_service_request(self):
+        """Add the host's service to the request queue."""
+
+        self.outgoing_call()
+
+        self.assertTrue(self.service in self.santiago.requests[self.host])
+
+    def test_transparent_unwrapping(self):
+        """Is the unwrapping process transparent?"""
+
+        import urlparse, urllib
+        
+        self.outgoing_call()
+
+        request = {"request": str(self.request_sender.crypt) }
+
+        self.assertEqual(request["request"],
+                         urlparse.parse_qs(urllib.urlencode(request))["request"][0])
+        
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
     unittest.main()

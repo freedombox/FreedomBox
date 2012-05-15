@@ -3,9 +3,9 @@
 from simplesantiago import SantiagoListener, SantiagoSender
 
 import cherrypy
-import httplib, urllib
+import httplib, urllib, urlparse
 import sys
-
+import logging
 
 class Listener(SantiagoListener):
 
@@ -31,10 +31,11 @@ class Listener(SantiagoListener):
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
+        logging.debug("protocols.https.index: Received request {0}".format(str(kwargs)))
         try:
             self.incoming_request(kwargs["request"])
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
 
     @cherrypy.expose
     def query(self, host, service):
@@ -44,6 +45,7 @@ class Listener(SantiagoListener):
 
         """
         if not cherrypy.request.remote.ip.startswith("127.0.0"):
+            logging.debug("protocols.https.query: Request from non-local IP")
             return
 
         self.santiago.query(host, service)
@@ -51,6 +53,7 @@ class Listener(SantiagoListener):
     @cherrypy.expose
     def save_server(self):
         if not cherrypy.request.remote.ip.startswith("127.0.0"):
+            logging.debug("protocols.https.save_server: Request from non-local IP")
             return
 
         self.santiago.save_server()
@@ -70,8 +73,15 @@ class Sender(SantiagoSender):
 
         It's both simple and as reliable as possible.
 
+        ``request`` is literally the request's text.  It needs to be wrapped for
+        transport across the protocol.
+        
         """
-        params = urllib.urlencode(request)
+        logging.debug("protocols.https.Sender.outgoing_request: request {0}".format(str(request)))
+        to_send = { "request": request }
+        
+        params = urllib.urlencode(to_send)
+        logging.debug("protocols.https.Sender.outgoing_request: params {0}".format(str(params)))
 
         # TODO: Does HTTPSConnection require the cert and key?
         # Is the fact that the server has it sufficient?  I think so.

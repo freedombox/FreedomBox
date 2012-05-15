@@ -26,12 +26,10 @@ We also don't:
 - Use a reasonable data-store.
 - Have a decent control mechanism.
 
-:FIXME: add that whole pgp thing.
 :TODO: add doctests
-:TODO: Create startup script that adds all necessary things to the PYTHONPATH.
+:TODO: move to santiago.py, merge the documentation.
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
-:TODO: move to santiago.py, merge the documentation.
 
 This dead-drop is what came of my trying to learn from bug 4185.
 
@@ -66,12 +64,12 @@ class Santiago(object):
 
     """
     SUPPORTED_PROTOCOLS = set([1])
-    ALL_KEYS = ("host", "client", "service", "locations", "reply_to",
-                "request_version", "reply_versions")
-    REQUIRED_KEYS = ("client", "host", "service",
-                     "request_version", "reply_versions")
-    OPTIONAL_KEYS = ("locations", "reply_to")
-    LIST_KEYS = ("reply_to", "locations", "reply_versions")
+    ALL_KEYS = set(("host", "client", "service", "locations", "reply_to",
+                    "request_version", "reply_versions"))
+    REQUIRED_KEYS = set(("client", "host", "service",
+                         "request_version", "reply_versions"))
+    OPTIONAL_KEYS = ALL_KEYS ^ REQUIRED_KEYS
+    LIST_KEYS = set(("reply_to", "locations", "reply_versions"))
 
     def __init__(self, listeners = None, senders = None,
                  hosting = None, consuming = None, me = 0):
@@ -121,7 +119,7 @@ class Santiago(object):
         connectors = dict()
 
         for protocol in settings.iterkeys():
-            module = SimpleSantiago._get_protocol_module(protocol)
+            module = Santiago._get_protocol_module(protocol)
 
             try:
                 connectors[protocol] = \
@@ -154,8 +152,8 @@ class Santiago(object):
         When this has finished, the Santiago will be ready to go.
 
         """
-        for connector in list(self.listeners.itervalues()) + \
-                         list(self.senders.itervalues()):
+        for connector in (list(self.listeners.itervalues()) +
+                          list(self.senders.itervalues())):
             connector.start()
 
         logging.debug("Santiago started!")
@@ -197,6 +195,7 @@ class Santiago(object):
         except KeyError as e:
             logging.exception(e)
 
+
     def query(self, host, service):
         """Request a service from another Santiago.
 
@@ -204,8 +203,6 @@ class Santiago(object):
 
         """
         try:
-            self.requests[host].add(service)
-
             self.outgoing_request(
                 host, self.me, host, self.me,
                 service, None, self.get_client_locations(host, "santiago"))
@@ -218,15 +215,25 @@ class Santiago(object):
 
         This tag is used when sending queries or replies to other Santiagi.
 
-        """
-        # FIXME sign the encrypted payload.
-        payload = self.gpg.encrypt(
-                {"host": host, "client": client,
-                 "service": service, "locations": locations or "",
-                 "reply_to": reply_to}, to, sign=self.me)
-        request = self.gpg.sign({"request": payload, "to": to})
+        Each incoming item must be a single item or a list.
 
-        for destination in self.get_client_locations(to, "santiago"):
+        The outgoing ``request`` is literally the request's text.  It needs to
+        be wrapped for transport across the protocol.
+
+        """
+        self.requests[host].add(service)
+
+        request = self.gpg.encrypt(
+            str({ "host": host, "client": client,
+                  "service": service, "locations": list(locations or ""),
+                  "reply_to": list(reply_to),
+                  "request_version": 1,
+                  "reply_versions": list(Santiago.SUPPORTED_PROTOCOLS),}),
+            host,
+            sign=self.me)
+
+        # FIXME use urlparse.urlparse instead!
+        for destination in self.get_client_locations(host, "santiago"):
             protocol = destination.split(":")[0]
             self.senders[protocol].outgoing_request(request, destination)
 
@@ -250,13 +257,15 @@ class Santiago(object):
         """
         # no matter what happens, the sender will never hear about it.
         try:
-            if not verify_message(request):
-                return
+            logging.debug("santiago.Santiago.incoming_request: request: {0}".format(str(request)))
 
             unpacked = self.unpack_request(request)
 
             if not unpacked:
+                logging.debug("santiago.Santiago.incoming_request: opaque request.")
                 return
+
+            logging.debug("santiago.Santiago.incoming_request: unpacked {0}".format(str(unpacked)))
 
             if unpacked["locations"]:
                 self.handle_reply(
@@ -277,27 +286,6 @@ class Santiago(object):
         except Exception as e:
             logging.exception("Error: ", str(e))
 
-    def verify_request(self, request):
-        """Make sure the request meets minimum criteria before we process it.
-
-        - The request must contain required keys.
-        - The request and client must be of and support protocol versions I
-          understand.
-
-        """
-        if False in map(request.__contains__,
-                        ("request", "request_version", "reply_versions")):
-            return False
-
-        if not (Santiago.SUPPORTED_PROTOCOLS & set(request["reply_versions"])):
-            return False
-
-        if not (Santiago.SUPPORTED_PROTOCOLS &
-              set([request["request_version"]])):
-            return False
-
-        return True
-
     def unpack_request(self, request):
         """Decrypt and verify the request.
 
@@ -307,11 +295,20 @@ class Santiago(object):
         Some lists are changed to sets here.  This allows for set-operations
         (union, intersection, etc) later, making things much more intuitive.
 
+        The request and client must be of and support protocol versions I
+        understand.
+
         """
         request = self.gpg.decrypt(request)
 
         # skip badly signed messages or ones for other folks.
         if not (str(request) and request.fingerprint):
+            logging.debug(
+                "santiago.Santiago.unpack_request: fail request {0}".format(
+                    str(request)))
+            logging.debug(
+                "santiago.Santiago.unpack_request: fail fingerprint {0}".format(
+                    str(request.fingerprint)))
             return
 
         # copy out only required keys from request, throwing away cruft
@@ -321,15 +318,31 @@ class Santiago(object):
             for key in Santiago.ALL_KEYS:
                 request_body[key] = source[key]
         except KeyError:
+            logging.debug(
+                "santiago.Santiago.unpack_request: missing key {0}".format(
+                    str(source)))
             return
 
         # required keys are non-null
         if None in [request_body[x] for x in Santiago.REQUIRED_KEYS]:
+            logging.debug(
+                "santiago.Santiago.unpack_request: blank key {0}: {1}".format(
+                    key, str(request_body)))
             return
 
         # move lists to sets
         request_body = self.setify_lists(request_body)
         if not request_body:
+            logging.debug(
+                "santiago.Santiago.unpack_request: not sets {0}".format(
+                    str(request_body)))
+            return
+
+        # versions must overlap.
+        if not (Santiago.SUPPORTED_PROTOCOLS & request_body["reply_versions"]):
+            return
+        if not (Santiago.SUPPORTED_PROTOCOLS &
+              set([request_body["request_version"]])):
             return
 
         # set implied keys
@@ -342,7 +355,7 @@ class Santiago(object):
         """Convert list nodes to sets."""
 
         try:
-            for key in ("locations", "reply_to"):
+            for key in Santiago.LIST_KEYS:
                 if request_body[key] is not None:
                     request_body[key] = set(request_body[key])
         except TypeError:
@@ -368,8 +381,13 @@ class Santiago(object):
         - Reply to the client on the appropriate protocol.
 
         """
-        # return if we won't host for the proxy or the client.
-        if False in map(self.hosting.__contains__, (from_, client)):
+        # give up if we won't host the service for the client.
+        try:
+            self.hosting[client][service]
+        except KeyError:
+            logging.debug(
+                "santiago.Santiago.handle_request: no host for you".format(
+                    self.hosting))
             return
 
         # if we don't proxy, learn new reply locations and send the request.
@@ -404,24 +422,36 @@ class Santiago(object):
         locations, if we've requested locations for that service.
 
         """
+        logging.debug("santiago.Santiago.handle_reply: local {0}".format(str(locals())))
+
+        # give up if we won't consume the service from the proxy or the client.
         try:
-            self.consuming[service][from_]
-            self.consuming[service][host]
-        except KeyError as e:
+            if service not in self.requests[host]:
+                logging.debug(
+                    "santiago.Santiago.handle_reply: unrequested service {0}: ".format(
+                        service, self.requests))
+                return
+        except KeyError:
+            logging.debug(
+                "santiago.Santiago.handle_reply: unrequested host {0}: ".format(
+                    host, self.requests))
             return
 
+        # give up or proxy if the message isn't for me.
         if not self.i_am(to):
+            logging.debug(
+                "santiago.Santiago.handle_reply: not to {0}".format(to))
             return
-
         if not self.i_am(client):
+            logging.debug(
+                "santiago.Santiago.handle_reply: not client {0}".format(client))
             self.proxy()
             return
 
         self.learn_service(host, "santiago", reply_to)
+        self.learn_service(host, service, locations)
 
-        if service in self.requests[host]:
-            self.learn_service(host, service, locations)
-            self.requests[host].remove(service)
+        self.requests[host].remove(service)
 
     def save_server(self):
         """Save all operational data to files.
@@ -429,14 +459,14 @@ class Santiago(object):
         Save all files with the ``self.me`` prefix.
 
         """
-        for datum in ("hosting", "consuming"):
-            name = "%s_%s" % (self.me, datum)
+        for key in ("hosting", "consuming"):
+            name = "%s_%s" % (self.me, key)
 
             try:
                 with open(name, "w") as output:
-                    output.write(str(getattr(self, datum)))
+                    output.write(str(getattr(self, key)))
             except Exception as e:
-                logging.exception("Could not save %s as %s", datum, name)
+                logging.exception("Could not save %s as %s", key, name)
 
 class SantiagoConnector(object):
     """Generic Santiago connector superclass.
@@ -463,8 +493,8 @@ class SantiagoListener(SantiagoConnector):
     method passes the request along to the Santiago host.
 
     """
-    def incoming_request(self, **kwargs):
-        self.santiago.incoming_request(**kwargs)
+    def incoming_request(self, request):
+        self.santiago.incoming_request(request)
 
 class SantiagoSender(SantiagoConnector):
     """Generic Santiago Sender superclass.
@@ -479,8 +509,8 @@ class SantiagoSender(SantiagoConnector):
 
 
 if __name__ == "__main__":
-    # FIXME: convert this to the withsqlite setup.
-
+    logging.getLogger().setLevel(logging.DEBUG)
+    logging.raiseExceptions = False
     cert = "santiago.crt"
     listeners = { "https": { "socket_port": 8080,
                              "ssl_certificate": cert,
@@ -488,23 +518,24 @@ if __name__ == "__main__":
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
     mykey = "D95C32042EE54FFDB25EC3489F2733F40928D23A"
-    # mykey = "0928D23A" # my short key
 
     # load hosting
     try:
         hosting = load_data(mykey, "hosting")
     except IOError:
         hosting = { "a": { "santiago": set( ["https://localhost:8080"] )},
+                    "b": { "santiago": set( ["https://localhost:8080"] )},
                     mykey: { "santiago": set( ["https://localhost:8080"] )}}
     # load consuming
     try:
         consuming = load_data(mykey, "consuming")
     except IOError:
         consuming = { "santiago": { mykey: set( ["https://localhost:8080"] ),
+                                    "b": set( ["https://localhost:8080"] ),
                                     "a": set( ["someAddress.onion"] )}}
 
     # load the Santiago
-    santiago_b = SimpleSantiago(listeners, senders,
-                                hosting, consuming, mykey)
+    santiago_b = Santiago(listeners, senders,
+                          hosting, consuming, mykey)
 
     santiago_b.start()
