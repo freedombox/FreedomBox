@@ -46,16 +46,6 @@ import re
 import sys
 
 
-def load_data(server, item):
-    """Return evaluated file contents.
-
-    FIXME: use withsqlite instead.
-
-    """
-    with open("%s_%s" % (server, item)) as infile:
-        return eval(infile.read())
-
-
 class Santiago(object):
     """This Santiago is a less extensible Santiago.
 
@@ -511,6 +501,7 @@ class SantiagoSender(SantiagoConnector):
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
     logging.raiseExceptions = False
+
     cert = "santiago.crt"
     listeners = { "https": { "socket_port": 8080,
                              "ssl_certificate": cert,
@@ -519,21 +510,10 @@ if __name__ == "__main__":
                            "proxy_port": 8118} }
     mykey = "D95C32042EE54FFDB25EC3489F2733F40928D23A"
 
-    # load hosting
-    try:
-        hosting = load_data(mykey, "hosting")
-    except IOError:
-        hosting = { "a": { "santiago": set( ["https://localhost:8080"] )},
-                    "b": { "santiago": set( ["https://localhost:8080"] )},
-                    mykey: { "santiago": set( ["https://localhost:8080"] )}}
-    # load consuming
-    try:
-        consuming = load_data(mykey, "consuming")
-    except IOError:
-        consuming = { "santiago": { mykey: set( ["https://localhost:8080"] ),
-                                    "b": set( ["https://localhost:8080"] ),
-                                    "a": set( ["someAddress.onion"] )}}
-
+    hosting = { mykey: { "santiago": set( ["https://localhost:8080",
+                                           "https://somestuff" ] )}}
+    consuming = { "santiago": { mykey: set( ["https://localhost:8080"] )}}
+                      
     # load the Santiago
     santiago_b = Santiago(listeners, senders,
                           hosting, consuming, mykey)
