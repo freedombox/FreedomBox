@@ -6,7 +6,7 @@ an onion-wrapped PGP message.
 FIXME: replace this with a real library.  Why doesn't gnupg do this?
 
 """
-from errors import InvalidSignatureError
+from utilities import InvalidSignatureError
 import gnupg
 import re
 

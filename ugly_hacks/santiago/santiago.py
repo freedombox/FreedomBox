@@ -2,6 +2,12 @@
 
 """The Santiago service.
 
+Santiago is designed to let users negotiate services without third party
+interference.  By sending OpenPGP signed and encrypted messages over HTTPS (or
+other protocols) between parties, I hope to reduce or even prevent MITM attacks.
+Santiago can also use the Tor network as a proxy (with Python 2.7 or later),
+allowing this negotiation to happen very quietly.
+
 Start me with:
 
     $ python -i santiago.py
@@ -35,12 +41,13 @@ or later.  A copy of GPLv3 is available [from the Free Software Foundation]
 import ast
 import cfg
 from collections import defaultdict as DefaultDict
-from errors import InvalidSignatureError, UnwillingHostError
 import gnupg
 import logging
-from pgpprocessor import Unwrapper
 import re
 import sys
+
+from pgpprocessor import Unwrapper
+import utilities
 
 
 class Santiago(object):
@@ -513,7 +520,7 @@ if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
 
     cert = "santiago.crt"
-    mykey = load_config("production.cfg").get("pgpprocessor", "keyid")
+    mykey = utilities.load_config("production.cfg").get("pgpprocessor", "keyid")
 
     listeners = { "https": { "socket_port": 8080,
                              "ssl_certificate": cert,
