@@ -50,14 +50,6 @@ class Listener(SantiagoListener):
 
         self.santiago.query(host, service)
 
-    @cherrypy.expose
-    def save_server(self):
-        if not cherrypy.request.remote.ip.startswith("127.0.0"):
-            logging.debug("protocols.https.save_server: Request from non-local IP")
-            return
-
-        self.santiago.save_server()
-
 class Sender(SantiagoSender):
 
     def __init__(self, santiago, proxy_host, proxy_port):

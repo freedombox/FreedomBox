@@ -536,3 +536,4 @@ if __name__ == "__main__":
                           hosting, consuming, mykey)
 
     santiago_b.start()
+    logging.debug("Santiago finished!")
