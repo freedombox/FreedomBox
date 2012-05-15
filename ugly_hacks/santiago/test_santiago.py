@@ -46,7 +46,7 @@ import unittest
 import ast
 import gnupg
 import logging
-import simplesantiago as santiago
+import santiago
 import utilities
 
 

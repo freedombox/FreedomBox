@@ -3,7 +3,7 @@ import sys
 sys.path.extend(["../..", ".",
                  "/home/nick/programs/python-gnupg/python-gnupg-0.2.9"])
 import gnupg
-import simplesantiago
+import santiago
 
 
 # important variables.
@@ -157,7 +157,7 @@ def unwrapper_test(data):
 
     # unwrap it!
 
-    dog = simplesantiago.PgpUnwrapper(str(data))
+    dog = santiago.PgpUnwrapper(str(data))
 
     print "unwrapping..."
     for message in dog:

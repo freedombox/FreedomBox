@@ -75,11 +75,11 @@ class Sender(SantiagoSender):
 
         ``request`` is literally the request's text.  It needs to be wrapped for
         transport across the protocol.
-        
+
         """
         logging.debug("protocols.https.Sender.outgoing_request: request {0}".format(str(request)))
         to_send = { "request": request }
-        
+
         params = urllib.urlencode(to_send)
         logging.debug("protocols.https.Sender.outgoing_request: params {0}".format(str(params)))
 
