@@ -258,23 +258,27 @@ class Santiago(object):
             logging.debug("santiago.Santiago.incoming_request: unpacked {0}".format(str(unpacked)))
 
             if unpacked["locations"]:
+                logging.debug("santiago.Santiago.incoming_request: handling reply")
+                
                 self.handle_reply(
                     unpacked["from"], unpacked["to"],
                     unpacked["host"], unpacked["client"],
                     unpacked["service"], unpacked["locations"],
                     unpacked["reply_to"],
                     unpacked["request_version"],
-                    unpacked["reply_version"])
+                    unpacked["reply_versions"])
             else:
+                logging.debug("santiago.Santiago.incoming_request: handling request")
+
                 self.handle_request(
                     unpacked["from"], unpacked["to"],
                     unpacked["host"], unpacked["client"],
                     unpacked["service"], unpacked["reply_to"],
                     unpacked["request_version"],
-                    unpacked["reply_version"])
+                    unpacked["reply_versions"])
 
         except Exception as e:
-            logging.exception("Error: ", str(e))
+            logging.exception(e)
 
     def unpack_request(self, request):
         """Decrypt and verify the request.
@@ -404,7 +408,8 @@ class Santiago(object):
         pass
 
     def handle_reply(self, from_, to, host, client,
-                     service, locations, reply_to):
+                     service, locations, reply_to,
+                     request_version, reply_versions):
         """Process a reply from a Santiago service.
 
         The last call in the chain that makes up the Santiago system, we now
@@ -442,6 +447,15 @@ class Santiago(object):
         self.learn_service(host, service, locations)
 
         self.requests[host].remove(service)
+        # clean buffers
+        if not self.requests[host]:
+            del self.requests[host]
+
+        logging.debug("santiago.Santiago.handle_reply: Success!")
+        logging.debug("santiago.Santiago.handle_reply: consuming {0}".format(
+                self.consuming))
+        logging.debug("santiago.Santiago.handle_reply: requests {0}".format(
+                self.requests))
 
     def save_server(self):
         """Save all operational data to files.
