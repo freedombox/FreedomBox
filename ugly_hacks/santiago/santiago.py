@@ -44,9 +44,10 @@ from collections import defaultdict as DefaultDict
 import gnupg
 import logging
 import re
+import shelve
 import sys
 
-from pgpprocessor import Unwrapper
+import pgpprocessor
 import utilities
 
 
@@ -90,8 +91,6 @@ class Santiago(object):
         hosts are unreachable from some points.
 
         """
-        self.hosting = hosting
-        self.consuming = consuming
         self.requests = DefaultDict(set)
         self.me = me
         self.gpg = gnupg.GPG(use_agent = True)
@@ -100,6 +99,10 @@ class Santiago(object):
             self.listeners = self._create_connectors(listeners, "Listener")
         if senders:
             self.senders = self._create_connectors(senders, "Sender")
+
+        self.shelf = shelve.open(str(self.me))
+        self.hosting = hosting if hosting else self.load_data("hosting")
+        self.consuming = consuming if consuming else self.load_data("consuming")
 
     def _create_connectors(self, settings, connector):
         """Iterates through each protocol given, creating connectors for all.
@@ -139,8 +142,8 @@ class Santiago(object):
             __import__(import_name)
 
         return sys.modules[import_name]
-
-    def start(self):
+    
+    def __enter__(self):
         """Start all listeners and senders attached to this Santiago.
 
         When this has finished, the Santiago will be ready to go.
@@ -151,6 +154,15 @@ class Santiago(object):
             connector.start()
 
         logging.debug("Santiago started!")
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Clean up and save all data to shut down the service."""
+
+        santiago.save_data("hosting")
+        santiago.save_data("consuming")
+        logging.debug([key for key in santiago.shelf])
+
+        santiago.shelf.close()
 
     def i_am(self, server):
         """Verify whether this server is the specified server."""
@@ -461,20 +473,84 @@ class Santiago(object):
         logging.debug("santiago.Santiago.handle_reply: requests {0}".format(
                 self.requests))
 
-    def save_server(self):
-        """Save all operational data to files.
+    def load_data(self, key):
+        """Load hosting or consuming data from the shelf.
 
-        Save all files with the ``self.me`` prefix.
+        To do this correctly, we need to convert the list values to sets.
+        However, that can be done only after unwrapping the signed data.
+
+        pre::
+
+            key in ("hosting", "consuming")
+
+        post::
+
+            getattr(self, key) # exists
 
         """
-        for key in ("hosting", "consuming"):
-            name = "%s_%s" % (self.me, key)
+        logging.debug("santiago.Santiago.load_data: loading data.")
+        
+        if not key in ("hosting", "consuming"):
+            logging.debug(
+                "santiago.Santiago.load_data: bad key {0}".format(key))
+            return
 
-            try:
-                with open(name, "w") as output:
-                    output.write(str(getattr(self, key)))
-            except Exception as e:
-                logging.exception("Could not save %s as %s", key, name)
+        try:
+            data = self.shelf[key]
+        except KeyError as e:
+            logging.exception(e)
+            data = dict()
+
+        # FIXME add Unwrapping
+
+        data = Santiago.convert_data(data, set)
+
+        return data
+
+    def save_data(self, key):
+        """Save hosting and consuming data to file.
+
+        To do this safely, we'll need to convert the set subnodes to lists.
+        That way, we'll be able to sign the data correctly.
+
+        pre::
+
+            key in ("hosting", "consuming")
+
+        """
+        logging.debug("santiago.Santiago.save_data: saving data.")
+
+        if not key in ("hosting", "consuming"):
+            logging.debug(
+                "santiago.Santiago.save_data: bad key {0}".format(key))
+            return
+
+        data = getattr(self, key)
+
+        data = Santiago.convert_data(data, list)
+
+        # FIXME add signing
+
+        self.shelf[key] = data
+
+    @classmethod
+    def convert_data(cls, data, acallable):
+        """Convert the data in the sub-dictionary by calling callable on it.
+
+        For example, to convert a hosts dictionary with a list in it to a host
+        dictonary made of sets, use:
+
+        >>> adict = { "alice": { "santiago": list([1, 2]) }}
+        >>> Santiago.convert_data(adict, set)
+        { "alice": { "santiago": set([1, 2]) }}
+
+        """
+        for first in data.iterkeys():
+            for second in data[first].iterkeys():
+                data[first][second] = acallable(data[first][second])
+
+        logging.debug("santiago.Santiago.convert_data: data {0}".format(data))
+        return data
 
 class SantiagoConnector(object):
     """Generic Santiago connector superclass.
@@ -532,8 +608,11 @@ if __name__ == "__main__":
     consuming = { "santiago": { mykey: set( ["https://localhost:8080"] )}}
 
     # load the Santiago
-    santiago_b = Santiago(listeners, senders,
-                          hosting, consuming, mykey)
+    santiago = Santiago(listeners, senders,
+                        hosting, consuming,
+                        me=mykey)
 
-    santiago_b.start()
+    # import pdb; pdb.set_trace()
+    with santiago:
+        pass
     logging.debug("Santiago finished!")
