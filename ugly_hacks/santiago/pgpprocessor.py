@@ -157,6 +157,7 @@ class Unwrapper(object):
 
         self.type = msg_type
         self.message = "".join(Unwrapper.unwrap(self.body, self.type)).lstrip()
+        self.gpg_data.message = self.message
 
         return self.gpg_data
 

@@ -142,7 +142,7 @@ class Santiago(object):
             __import__(import_name)
 
         return sys.modules[import_name]
-    
+
     def __enter__(self):
         """Start all listeners and senders attached to this Santiago.
 
@@ -489,7 +489,7 @@ class Santiago(object):
 
         """
         logging.debug("santiago.Santiago.load_data: loading data.")
-        
+
         if not key in ("hosting", "consuming"):
             logging.debug(
                 "santiago.Santiago.load_data: bad key {0}".format(key))
@@ -501,7 +501,15 @@ class Santiago(object):
             logging.exception(e)
             data = dict()
 
-        # FIXME add Unwrapping
+        for message in pgpprocessor.Unwrapper(data, gpg=self.gpg):
+            try:
+                data = dict(ast.literal_eval(message.message))
+            except ValueError as e:
+                logging.exception(e)
+                continue
+
+        logging.debug("santiago.Santiago.load_data: found {0}: {1}".format(
+                key, data))
 
         data = Santiago.convert_data(data, set)
 
@@ -529,7 +537,7 @@ class Santiago(object):
 
         data = Santiago.convert_data(data, list)
 
-        # FIXME add signing
+        data = str(self.gpg.sign(str(data), keyid=self.me))
 
         self.shelf[key] = data
 
