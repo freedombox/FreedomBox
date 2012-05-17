@@ -500,13 +500,16 @@ class Santiago(object):
         except KeyError as e:
             logging.exception(e)
             data = dict()
+        else:
+            for message in pgpprocessor.Unwrapper(data, gpg=self.gpg):
+                # iterations end when unwrapping complete.
+                pass
 
-        for message in pgpprocessor.Unwrapper(data, gpg=self.gpg):
             try:
-                data = dict(ast.literal_eval(message.message))
-            except ValueError as e:
+                data = dict(ast.literal_eval(str(message)))
+            except (ValueError, SyntaxError) as e:
                 logging.exception(e)
-                continue
+                data = dict()
 
         logging.debug("santiago.Santiago.load_data: found {0}: {1}".format(
                 key, data))
@@ -537,9 +540,16 @@ class Santiago(object):
 
         data = Santiago.convert_data(data, list)
 
-        data = str(self.gpg.sign(str(data), keyid=self.me))
+        logging.debug(
+            "santiago.Santiago.save_data: saving {0}: {1}".format(key, data))
+
+        data = str(self.gpg.encrypt(str(data), recipients=[self.me],
+                                    sign=self.me))
 
         self.shelf[key] = data
+
+        logging.debug(
+            "santiago.Santiago.save_data: saved {0}: {1}".format(key, data))
 
     @classmethod
     def convert_data(cls, data, acallable):
