@@ -26,7 +26,19 @@ We don't:
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
 
-This dead-drop is what came of my trying to learn from bug 4185.
+This dead-drop approach is what came of my trying to learn from bug 4185.
+
+To see the system learn from itself, try running a few queries similar to:
+
+#. https://localhost:8080/where/D95C32042EE54FFDB25EC3489F2733F40928D23A/santiago
+#. https://localhost:8080/provide/D95C32042EE54FFDB25EC3489F2733F40928D23A/santiago/localhost:8081
+#. https://localhost:8080/learn/D95C32042EE54FFDB25EC3489F2733F40928D23A/santiago
+#. https://localhost:8080/where/D95C32042EE54FFDB25EC3489F2733F40928D23A/santiago
+
+#. See what services are currently available.
+#. Start serving at the "localhost:8081" location.
+#. Learn the 8081 location.
+#. See what services are currently available, including the 8081 service.
 
                                   Santiago, he
                           smiles like a Buddah, 'neath

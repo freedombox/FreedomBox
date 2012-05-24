@@ -1,25 +1,22 @@
 .. -*- mode: rst; fill-column: 80; mode: auto-fill; -*-
 
-==========
- Santiago
-==========
-----------------------------
-Less Discoverable Discovery?
-----------------------------
+=========================
+Person-Focused Networking
+=========================
+-----------------------
+The FreedomBuddy System
+-----------------------
 
-This file is distributed under a Creative Commons Attribution-ShareAlike 3.0
-Unported, Version 3 license. This CC-By-SA license is available in both full_
-and summarized_ versions from Creative Commons.  This file is also distributed
-under the `GNU Free Documentation License`_, version 1.3 or later.
+:Author: Nick Daly, 2012
+:License: This file is distributed under a Creative Commons
+    Attribution-ShareAlike 3.0 Unported, Version 3 license. This CC-By-SA
+    license is available in both full_ and summarized_ versions from Creative
+    Commons.  This file is also distributed under the `GNU Free Documentation
+    License`_, version 1.3 or later.
 
 .. _full: http://creativecommons.org/licenses/by-sa/3.0/legalcode
 .. _summarized: http://creativecommons.org/licenses/by-sa/3.0/
 .. _GNU Free Documentation License: http://www.gnu.org/licenses/fdl.html
-
-Disclaimer
-==========
-
-**The following is an incomplete hack.  Beware!**
 
 Santiago's Map
 ==============
