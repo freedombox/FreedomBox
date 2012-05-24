@@ -80,8 +80,11 @@ class Listener(SantiagoListener):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def where(self, host, service):
-        """Show where a host is providing me services."""
+        """Show where a host is providing me services.
 
+        TODO: make the output format a parameter.
+
+        """
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
             logging.debug("protocols.https.query: Request from non-local IP")
             return
@@ -101,13 +104,13 @@ class Listener(SantiagoListener):
     @cherrypy.expose
     def pdb(self):
         """Set a trace."""
-        
+
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
             logging.debug("protocols.https.query: Request from non-local IP")
             return
 
         import pdb; pdb.set_trace()
-    
+
 class Sender(SantiagoSender):
 
     def __init__(self, santiago, proxy_host, proxy_port):
