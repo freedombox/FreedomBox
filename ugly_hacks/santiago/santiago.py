@@ -54,6 +54,7 @@ import ast
 import cfg
 from collections import defaultdict as DefaultDict
 import gnupg
+import inspect
 import logging
 import re
 import shelve
@@ -62,6 +63,16 @@ import sys
 import pgpprocessor
 import utilities
 
+
+def debug_log(message):
+    frame = inspect.stack()
+    trace = inspect.getframeinfo(frame[1][0])
+    location = "{0}.{1}.{2}".format(trace.filename, trace.function,
+                                    trace.lineno)
+    try:
+        logging.debug("{0}: {1}".format(location, message))
+    finally:
+        del frame, trace, location
 
 class Santiago(object):
     """This Santiago is a less extensible Santiago.
@@ -165,14 +176,14 @@ class Santiago(object):
                           list(self.senders.itervalues())):
             connector.start()
 
-        logging.debug("Santiago started!")
+        debug_log("Santiago started!")
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Clean up and save all data to shut down the service."""
 
         santiago.save_data("hosting")
         santiago.save_data("consuming")
-        logging.debug([key for key in santiago.shelf])
+        debug_log([key for key in santiago.shelf])
 
         santiago.shelf.close()
 
@@ -286,18 +297,18 @@ class Santiago(object):
         """
         # no matter what happens, the sender will never hear about it.
         try:
-            logging.debug("santiago.Santiago.incoming_request: request: {0}".format(str(request)))
+            debug_log("request: {0}".format(str(request)))
 
             unpacked = self.unpack_request(request)
 
             if not unpacked:
-                logging.debug("santiago.Santiago.incoming_request: opaque request.")
+                debug_log("opaque request.")
                 return
 
-            logging.debug("santiago.Santiago.incoming_request: unpacked {0}".format(str(unpacked)))
+            debug_log("unpacked {0}".format(str(unpacked)))
 
             if unpacked["locations"]:
-                logging.debug("santiago.Santiago.incoming_request: handling reply")
+                debug_log("handling reply")
 
                 self.handle_reply(
                     unpacked["from"], unpacked["to"],
@@ -307,7 +318,7 @@ class Santiago(object):
                     unpacked["request_version"],
                     unpacked["reply_versions"])
             else:
-                logging.debug("santiago.Santiago.incoming_request: handling request")
+                debug_log("handling request")
 
                 self.handle_request(
                     unpacked["from"], unpacked["to"],
@@ -336,12 +347,8 @@ class Santiago(object):
 
         # skip badly signed messages or ones for other folks.
         if not (str(request) and request.fingerprint):
-            logging.debug(
-                "santiago.Santiago.unpack_request: fail request {0}".format(
-                    str(request)))
-            logging.debug(
-                "santiago.Santiago.unpack_request: fail fingerprint {0}".format(
-                    str(request.fingerprint)))
+            debug_log("fail request {0}".format(str(request)))
+            debug_log("fail fingerprint {0}".format(str(request.fingerprint)))
             return
 
         # copy out only required keys from request, throwing away cruft
@@ -351,24 +358,18 @@ class Santiago(object):
             for key in Santiago.ALL_KEYS:
                 request_body[key] = source[key]
         except KeyError:
-            logging.debug(
-                "santiago.Santiago.unpack_request: missing key {0}".format(
-                    str(source)))
+            debug_log("missing key {0}".format(str(source)))
             return
 
         # required keys are non-null
         if None in [request_body[x] for x in Santiago.REQUIRED_KEYS]:
-            logging.debug(
-                "santiago.Santiago.unpack_request: blank key {0}: {1}".format(
-                    key, str(request_body)))
+            debug_log("blank key {0}: {1}".format(key, str(request_body)))
             return
 
         # move lists to sets
         request_body = self.setify_lists(request_body)
         if not request_body:
-            logging.debug(
-                "santiago.Santiago.unpack_request: not sets {0}".format(
-                    str(request_body)))
+            debug_log("not sets {0}".format(str(request_body)))
             return
 
         # versions must overlap.
@@ -418,9 +419,7 @@ class Santiago(object):
         try:
             self.hosting[client][service]
         except KeyError:
-            logging.debug(
-                "santiago.Santiago.handle_request: no host for you".format(
-                    self.hosting))
+            debug_log("no host for you".format(self.hosting))
             return
 
         # if we don't proxy, learn new reply locations and send the request.
@@ -456,29 +455,24 @@ class Santiago(object):
         locations, if we've requested locations for that service.
 
         """
-        logging.debug("santiago.Santiago.handle_reply: local {0}".format(str(locals())))
+        debug_log("local {0}".format(str(locals())))
 
         # give up if we won't consume the service from the proxy or the client.
         try:
             if service not in self.requests[host]:
-                logging.debug(
-                    "santiago.Santiago.handle_reply: unrequested service {0}: ".format(
+                debug_log("unrequested service {0}: ".format(
                         service, self.requests))
                 return
         except KeyError:
-            logging.debug(
-                "santiago.Santiago.handle_reply: unrequested host {0}: ".format(
-                    host, self.requests))
+            debug_log("unrequested host {0}: ".format(host, self.requests))
             return
 
         # give up or proxy if the message isn't for me.
         if not self.i_am(to):
-            logging.debug(
-                "santiago.Santiago.handle_reply: not to {0}".format(to))
+            debug_log("not to {0}".format(to))
             return
         if not self.i_am(client):
-            logging.debug(
-                "santiago.Santiago.handle_reply: not client {0}".format(client))
+            debug_log("not client {0}".format(client))
             self.proxy()
             return
 
@@ -491,11 +485,9 @@ class Santiago(object):
         if not self.requests[host]:
             del self.requests[host]
 
-        logging.debug("santiago.Santiago.handle_reply: Success!")
-        logging.debug("santiago.Santiago.handle_reply: consuming {0}".format(
-                self.consuming))
-        logging.debug("santiago.Santiago.handle_reply: requests {0}".format(
-                self.requests))
+        debug_log("Success!")
+        debug_log("consuming {0}".format(self.consuming))
+        debug_log("requests {0}".format(self.requests))
 
     def load_data(self, key):
         """Load hosting or consuming data from the shelf.
@@ -512,11 +504,10 @@ class Santiago(object):
             getattr(self, key) # exists
 
         """
-        logging.debug("santiago.Santiago.load_data: loading data.")
+        debug_log("loading data.")
 
         if not key in ("hosting", "consuming"):
-            logging.debug(
-                "santiago.Santiago.load_data: bad key {0}".format(key))
+            debug_log("bad key {0}".format(key))
             return
 
         try:
@@ -535,8 +526,7 @@ class Santiago(object):
                 logging.exception(e)
                 data = dict()
 
-        logging.debug("santiago.Santiago.load_data: found {0}: {1}".format(
-                key, data))
+        debug_log("found {0}: {1}".format(key, data))
 
         data = Santiago.convert_data(data, set)
 
@@ -553,27 +543,24 @@ class Santiago(object):
             key in ("hosting", "consuming")
 
         """
-        logging.debug("santiago.Santiago.save_data: saving data.")
+        debug_log("saving data.")
 
         if not key in ("hosting", "consuming"):
-            logging.debug(
-                "santiago.Santiago.save_data: bad key {0}".format(key))
+            debug_log("bad key {0}".format(key))
             return
 
         data = getattr(self, key)
 
         data = Santiago.convert_data(data, list)
 
-        logging.debug(
-            "santiago.Santiago.save_data: saving {0}: {1}".format(key, data))
+        debug_log("saving {0}: {1}".format(key, data))
 
         data = str(self.gpg.encrypt(str(data), recipients=[self.me],
                                     sign=self.me))
 
         self.shelf[key] = data
 
-        logging.debug(
-            "santiago.Santiago.save_data: saved {0}: {1}".format(key, data))
+        debug_log("saved {0}: {1}".format(key, data))
 
     @classmethod
     def convert_data(cls, data, acallable):
@@ -591,7 +578,7 @@ class Santiago(object):
             for second in data[first].iterkeys():
                 data[first][second] = acallable(data[first][second])
 
-        logging.debug("santiago.Santiago.convert_data: data {0}".format(data))
+        debug_log("data {0}".format(data))
         return data
 
 class SantiagoConnector(object):
@@ -659,6 +646,7 @@ class SantiagoSender(SantiagoConnector):
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
+    logging.getLogger("cherrypy.error").setLevel(logging.CRITICAL)
 
     cert = "santiago.crt"
     mykey = utilities.load_config("production.cfg").get("pgpprocessor", "keyid")
@@ -678,4 +666,4 @@ if __name__ == "__main__":
     # import pdb; pdb.set_trace()
     with santiago:
         pass
-    logging.debug("Santiago finished!")
+    debug_log("Santiago finished!")
