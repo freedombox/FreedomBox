@@ -171,6 +171,11 @@ class Santiago(object):
 
     def learn_service(self, host, service, locations):
         """Learn a service somebody else hosts for me."""
+        if service not in self.consuming:
+            self.consuming[service] = dict()
+
+        if host not in self.consuming[service]:
+            self.consuming[service][host] = set()
 
         if locations:
             self.consuming[service][host] = (
@@ -179,8 +184,15 @@ class Santiago(object):
     def provide_service(self, client, service, locations):
         """Start hosting a service for somebody else."""
 
+        if client not in self.hosting:
+            self.hosting[client] = dict()
+
+        if service not in self.hosting[client]:
+            self.hosting[client][service] = set()
+
         if locations:
-            self.hosting[client][service].union(locations)
+            self.hosting[client][service] = (
+                self.hosting[client][service] | locations)
 
     def get_host_locations(self, client, service):
         """Return where I'm hosting the service for the client.
@@ -200,7 +212,6 @@ class Santiago(object):
             return self.consuming[service][host]
         except KeyError as e:
             logging.exception(e)
-
 
     def query(self, host, service):
         """Request a service from another Santiago.
@@ -464,6 +475,7 @@ class Santiago(object):
 
         self.requests[host].remove(service)
         # clean buffers
+        # TODO clean up after 5 minutes to allow all hosts to reply?
         if not self.requests[host]:
             del self.requests[host]
 
@@ -598,6 +610,29 @@ class SantiagoListener(SantiagoConnector):
     def incoming_request(self, request):
         self.santiago.incoming_request(request)
 
+    def where(self, host, service):
+        """Return where the named host provides me a service.
+
+        If no service is provided, return None.
+
+        TODO: unittest
+
+        """
+        return self.santiago.get_client_locations(host, service)
+
+    def learn(self, host, service):
+        """Request a service from another Santiago client.
+
+        TODO: add request whitelisting.
+
+        """
+        return self.santiago.query(host, service)
+
+    def provide(self, client, service, location):
+        """Provide a service for the client at the location."""
+
+        return self.santiago.provide_service(client, service, set([location]))
+
 class SantiagoSender(SantiagoConnector):
     """Generic Santiago Sender superclass.
 
@@ -621,11 +656,9 @@ if __name__ == "__main__":
                              "ssl_private_key": cert }, }
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
-    hosting = { mykey: { "santiago": set( ["https://localhost:8080",
-                                           "https://somestuff" ] )}}
+    hosting = { mykey: { "santiago": set( ["https://localhost:8080"] )}}
     consuming = { "santiago": { mykey: set( ["https://localhost:8080"] )}}
 
-    # load the Santiago
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
                         me=mykey)

@@ -1,4 +1,19 @@
-"""The HTTPS Santiago listener and sender."""
+"""The HTTPS Santiago listener and sender.
+
+FIXME: use a reasonable RESTful API.
+
+- https://appmecha.wordpress.com/2008/10/27/cherrypy-gae-routing-2/
+- http://tools.cherrypy.org/wiki/RestfulDispatch
+- http://docs.cherrypy.org/dev/refman/_cpdispatch.html
+- http://www.infoq.com/articles/rest-introduction
+- http://www.infoq.com/articles/rest-anti-patterns
+- http://stackoverflow.com/a/920181
+- http://docs.cherrypy.org/dev/progguide/REST.html
+
+It's been about five times too long since I've looked at this sort of
+thing.  Stupid everything-is-GET antipattern.
+
+"""
 
 from santiago import SantiagoListener, SantiagoSender
 
@@ -6,6 +21,14 @@ import cherrypy
 import httplib, urllib, urlparse
 import sys
 import logging
+
+def jsonify_tool_callback(*args, **kwargs):
+    response = cherrypy.response
+    response.headers['Content-Type'] = 'application/json'
+    response.body = encoder.iterencode(response.body)
+
+if cherrypy.__version__ < "3.2":
+    cherrypy.tools.json_out = cherrypy.Tool('before_finalize', jsonify_tool_callback, priority=30)
 
 class Listener(SantiagoListener):
 
@@ -38,18 +61,53 @@ class Listener(SantiagoListener):
             logging.exception(e)
 
     @cherrypy.expose
-    def query(self, host, service):
+    def learn(self, host, service):
         """Request a resource from another Santiago client.
 
         TODO: add request whitelisting.
 
         """
-        if not cherrypy.request.remote.ip.startswith("127.0.0"):
+        # TODO enforce restfulness, POST, and build a request form.
+        # if not cherrypy.request.method == "POST":
+        #     return
+
+        if not cherrypy.request.remote.ip.startswith("127.0.0."):
             logging.debug("protocols.https.query: Request from non-local IP")
             return
 
-        self.santiago.query(host, service)
+        return super(Listener, self).learn(host, service)
 
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def where(self, host, service):
+        """Show where a host is providing me services."""
+
+        if not cherrypy.request.remote.ip.startswith("127.0.0."):
+            logging.debug("protocols.https.query: Request from non-local IP")
+            return
+
+        return list(super(Listener, self).where(host, service))
+
+    @cherrypy.expose
+    def provide(self, client, service, location):
+        """Provide a service for the client at the location."""
+
+        if not cherrypy.request.remote.ip.startswith("127.0.0."):
+            logging.debug("protocols.https.query: Request from non-local IP")
+            return
+
+        return super(Listener, self).provide(client, service, location)
+
+    @cherrypy.expose
+    def pdb(self):
+        """Set a trace."""
+        
+        if not cherrypy.request.remote.ip.startswith("127.0.0."):
+            logging.debug("protocols.https.query: Request from non-local IP")
+            return
+
+        import pdb; pdb.set_trace()
+    
 class Sender(SantiagoSender):
 
     def __init__(self, santiago, proxy_host, proxy_port):
