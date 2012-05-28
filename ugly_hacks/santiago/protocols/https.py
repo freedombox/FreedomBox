@@ -3,17 +3,19 @@
 FIXME: use a reasonable RESTful API.
 
 - https://appmecha.wordpress.com/2008/10/27/cherrypy-gae-routing-2/
+- http://docs.cherrypy.org/dev/progguide/REST.html
+- http://docs.cherrypy.org/dev/concepts/dispatching.html
 - http://tools.cherrypy.org/wiki/RestfulDispatch
 - http://docs.cherrypy.org/dev/refman/_cpdispatch.html
 - http://www.infoq.com/articles/rest-introduction
 - http://www.infoq.com/articles/rest-anti-patterns
 - http://stackoverflow.com/a/920181
-- http://docs.cherrypy.org/dev/progguide/REST.html
 
 It's been about five times too long since I've looked at this sort of
 thing.  Stupid everything-is-GET antipattern.
 
 """
+
 
 from santiago import SantiagoListener, SantiagoSender
 
@@ -22,13 +24,10 @@ import httplib, urllib, urlparse
 import sys
 import logging
 
-def jsonify_tool_callback(*args, **kwargs):
-    response = cherrypy.response
-    response.headers['Content-Type'] = 'application/json'
-    response.body = encoder.iterencode(response.body)
 
-if cherrypy.__version__ < "3.2":
-    cherrypy.tools.json_out = cherrypy.Tool('before_finalize', jsonify_tool_callback, priority=30)
+def setup(santiago):
+    # TODO call this bugger to prep the dispatcher, objects, etc.
+    pass
 
 class Listener(SantiagoListener):
 
@@ -78,7 +77,6 @@ class Listener(SantiagoListener):
         return super(Listener, self).learn(host, service)
 
     @cherrypy.expose
-    @cherrypy.tools.json_out()
     def where(self, host, service):
         """Show where a host is providing me services.
 
