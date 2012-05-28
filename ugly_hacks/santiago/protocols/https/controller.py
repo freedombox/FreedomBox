@@ -1,19 +1,5 @@
 """The HTTPS Santiago listener and sender.
 
-FIXME: use a reasonable RESTful API.
-
-- https://appmecha.wordpress.com/2008/10/27/cherrypy-gae-routing-2/
-- http://docs.cherrypy.org/dev/progguide/REST.html
-- http://docs.cherrypy.org/dev/concepts/dispatching.html
-- http://tools.cherrypy.org/wiki/RestfulDispatch
-- http://docs.cherrypy.org/dev/refman/_cpdispatch.html
-- http://www.infoq.com/articles/rest-introduction
-- http://www.infoq.com/articles/rest-anti-patterns
-- http://stackoverflow.com/a/920181
-
-It's been about five times too long since I've looked at this sort of
-thing.  Stupid everything-is-GET antipattern.
-
 """
 
 
