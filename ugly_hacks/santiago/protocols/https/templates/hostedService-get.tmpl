@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <p>$message</p>
+    <p>You're <a href="/hosting">hosting</a>
+      $service for <a href="/hosting/$client/">$client</a> at:</p>
+    #if $locations
+    <ul>
+      #for location in $locations
+      <li><a href="$location">$location</a></li>
+      #end for
+    </ul>
+    #end if
+  </body>
+</html>

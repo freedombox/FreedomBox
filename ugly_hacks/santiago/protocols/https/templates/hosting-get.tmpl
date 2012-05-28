@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <p>$message</p>
+    <p>You are hosting services for:</p>
+    #if $clients
+    <ul>
+      #for $client in $clients
+      <li><a href="/hosting/$client">$client</a></li>
+      #end for
+    </ul>
+    #end if
+  </body>
+</html>
