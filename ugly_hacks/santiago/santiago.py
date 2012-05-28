@@ -22,6 +22,8 @@ We don't:
 - Use a reasonable data-store.
 - Have a decent control (rate-limiting) mechanism.
 
+:FIXME: Remove sets and just do "key in" operations - it's annoying to remember
+    to convert to and from sets with every operation.  Or just build a wrapper.
 :TODO: add doctests
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
@@ -159,7 +161,7 @@ class Santiago(object):
         FIXME: Assumes the current directory is in sys.path
 
         """
-        import_name = "protocols." + protocol
+        import_name = "protocols.{0}.controller".format(protocol)
 
         if not import_name in sys.modules:
             __import__(import_name)
