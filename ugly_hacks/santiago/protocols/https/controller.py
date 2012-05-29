@@ -47,6 +47,10 @@ class Listener(SantiagoListener):
         """Starts the listener."""
         pass
 
+    def stop(self):
+        """Shuts down the listener."""
+        pass
+
     @cherrypy.expose
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
