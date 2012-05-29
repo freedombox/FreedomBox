@@ -54,8 +54,6 @@ class Root(RestController):
 </html>
 """
 
-
-
 class Consuming(RestController):
     exposed = True
 
@@ -205,30 +203,20 @@ def rest_connect(dispatcher, location, controller, trailing_slash=True):
 
 if __name__ == "__main__":
 
-    root = Root()
-
-    hosting = Hosting(hosting_data)
-    client = Client(hosting_data)
-    service_provide = HostedService(hosting_data)
-    location = Location(hosting_data)
-
-    consuming = Consuming(consuming_data)
-    service_consume = ConsumedService(consuming_data)
-    consumed_host = ConsumedHost(consuming_data)
-
     d = cherrypy.dispatch.RoutesDispatcher()
 
-    rest_connect(d, '/hosting/:client/:service/:location', location)
-    rest_connect(d, '/hosting/:client/:service', service_provide)
-    rest_connect(d, '/hosting/:client', client)
-    rest_connect(d, '/hosting', hosting)
+    routing_pairs = (('/hosting/:client/:service/:location', Location(hosting_data)),
+                     ('/hosting/:client/:service', HostedService(hosting_data)),
+                     ('/hosting/:client', Client(hosting_data)),
+                     ('/hosting', Hosting(hosting_data)),
+                     ('/consuming/:service/:host', ConsumedHost(consuming_data)),
+                     ('/consuming/:service', ConsumedService(consuming_data)),
+                     ('/consuming', Consuming(consuming_data)),
+                     ("/", Root()), )
 
-    rest_connect(d, '/consuming/:service/:host', consumed_host)
-    rest_connect(d, '/consuming/:service', service_consume)
-    rest_connect(d, '/consuming', consuming)
-
-    rest_connect(d, "/", root)
+    for location, handler in routing_pairs:
+        rest_connect(d, location, handler)
 
     cherrypy.config.update({"server.socket_host": "0.0.0.0"})
 
-    cherrypy.quickstart(hosting, "/", { "/": {'request.dispatch': d, }})
+    cherrypy.quickstart(root, "/", { "/": {'request.dispatch': d, }})
