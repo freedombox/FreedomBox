@@ -269,7 +269,7 @@ class Santiago(object):
         try:
             self.outgoing_request(
                 host, self.me, host, self.me,
-                service, None, self.get_client_locations(host, "santiago"))
+                service, None, self.consuming[host]["santiago"])
         except Exception as e:
             logging.exception("Couldn't handle %s.%s", host, service)
 
@@ -297,7 +297,7 @@ class Santiago(object):
             sign=self.me)
 
         # FIXME use urlparse.urlparse instead!
-        for destination in self.get_client_locations(host, "santiago"):
+        for destination in self.consuming[host]["santiago"]:
             protocol = destination.split(":")[0]
             self.senders[protocol].outgoing_request(request, destination)
 
@@ -454,8 +454,8 @@ class Santiago(object):
 
             self.outgoing_request(
                 self.me, client, self.me, client,
-                service, self.get_host_locations(client, service),
-                self.get_host_locations(client, "santiago"))
+                service, self.hosting[client][service],
+                self.hosting[client]["santiago"])
 
     def proxy(self, request):
         """Pass off a request to another Santiago.
@@ -692,8 +692,13 @@ if __name__ == "__main__":
                              "ssl_private_key": cert }, }
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
-    hosting = { mykey: { "santiago": set( ["https://localhost:8080"] )}}
-    consuming = { mykey: { "santiago": set( ["https://localhost:8080"] )}}
+
+    hosting = DefaultDict(None,
+        { mykey: DefaultDict(None,
+            { "santiago": set(["https://localhost:8080"]) }), })
+    consuming = DefaultDict(None,
+        { mykey: DefaultDict(None,
+            { "santiago": set(["https://localhost:8080"]) }), })
 
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
