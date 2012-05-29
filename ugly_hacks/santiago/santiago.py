@@ -109,7 +109,7 @@ class Santiago(object):
             hosting: { "someKey": { "someService": ( "http://a.list",
                                                      "http://of.locations" )}}
 
-            consuming: { "someService": { "someKey": ( "http://a.list",
+            consuming: { "someKey": { "someService": ( "http://a.list",
                                                        "http://of.locations" )}}
 
         Messages are delivered by defining both the source and destination
@@ -200,6 +200,8 @@ class Santiago(object):
     def __exit__(self, exc_type, exc_value, traceback):
         """Clean up and save all data to shut down the service."""
 
+        debug_log("Stopping Santiago.")
+
         for connector in (list(self.listeners.itervalues()) +
                           list(self.senders.itervalues())):
             connector.stop()
@@ -217,15 +219,14 @@ class Santiago(object):
 
     def learn_service(self, host, service, locations):
         """Learn a service somebody else hosts for me."""
-        if service not in self.consuming:
-            self.consuming[service] = dict()
+        if host not in self.consuming:
+            self.consuming[host] = dict()
 
-        if host not in self.consuming[service]:
-            self.consuming[service][host] = set()
+        if service not in self.consuming[host]:
+            self.consuming[host][service] = set()
 
         if locations:
-            self.consuming[service][host] = (
-                self.consuming[service][host] | locations)
+            self.consuming[host][service] |= locations
 
     def provide_service(self, client, service, locations):
         """Start hosting a service for somebody else."""
@@ -255,7 +256,7 @@ class Santiago(object):
         """Return where the host serves the service for me, the client."""
 
         try:
-            return self.consuming[service][host]
+            return self.consuming[host][service]
         except KeyError as e:
             logging.exception(e)
 
@@ -692,7 +693,7 @@ if __name__ == "__main__":
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
     hosting = { mykey: { "santiago": set( ["https://localhost:8080"] )}}
-    consuming = { "santiago": { mykey: set( ["https://localhost:8080"] )}}
+    consuming = { mykey: { "santiago": set( ["https://localhost:8080"] )}}
 
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
