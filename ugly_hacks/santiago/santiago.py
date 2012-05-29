@@ -73,7 +73,7 @@ def debug_log(message):
     location = "{0}.{1}.{2}".format(trace.filename, trace.function,
                                     trace.lineno)
     try:
-        logging.debug("{0}: {1}".format(location, message))
+        logging.debug("{0}:{1}: {2}".format(location, time.time(), message))
     finally:
         del frame, trace, location
 

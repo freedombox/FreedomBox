@@ -3,7 +3,7 @@
 """
 
 
-from santiago import SantiagoListener, SantiagoSender
+import santiago
 
 import cherrypy
 import httplib, urllib, urlparse
@@ -31,12 +31,12 @@ def start():
     """
     cherrypy.engine.start()
 
-class Listener(SantiagoListener):
+class Listener(santiago.SantiagoListener):
 
-    def __init__(self, santiago, socket_port=0,
+    def __init__(self, my_santiago, socket_port=0,
                  ssl_certificate="", ssl_private_key=""):
 
-        super(SantiagoListener, self).__init__(santiago)
+        super(santiago.SantiagoListener, self).__init__(my_santiago)
 
         cherrypy.server.socket_port = socket_port
         cherrypy.server.ssl_certificate = ssl_certificate
@@ -45,17 +45,29 @@ class Listener(SantiagoListener):
 
     def start(self):
         """Starts the listener."""
-        pass
+
+        santiago.debug_log("Starting listener.")
+        
+        cherrypy.engine.start()
+
+        santiago.debug_log("Listener started.")
 
     def stop(self):
         """Shuts down the listener."""
+
+        santiago.debug_log("Stopping listener.")
+        
         cherrypy.engine.stop()
+        cherrypy.engine.exit()
+
+        santiago.debug_log("Listener stopped.")
+        
 
     @cherrypy.expose
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
-        logging.debug("protocols.https.index: Received request {0}".format(str(kwargs)))
+        santiago.debug_log("protocols.https.index: Received request {0}".format(str(kwargs)))
         try:
             self.incoming_request(kwargs["request"])
         except Exception as e:
@@ -73,7 +85,7 @@ class Listener(SantiagoListener):
         #     return
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            logging.debug("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("protocols.https.query: Request from non-local IP")
             return
 
         return super(Listener, self).learn(host, service)
@@ -86,7 +98,7 @@ class Listener(SantiagoListener):
 
         """
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            logging.debug("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("protocols.https.query: Request from non-local IP")
             return
 
         return list(super(Listener, self).where(host, service))
@@ -96,7 +108,7 @@ class Listener(SantiagoListener):
         """Provide a service for the client at the location."""
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            logging.debug("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("protocols.https.query: Request from non-local IP")
             return
 
         return super(Listener, self).provide(client, service, location)
@@ -106,16 +118,16 @@ class Listener(SantiagoListener):
         """Set a trace."""
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            logging.debug("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("protocols.https.query: Request from non-local IP")
             return
 
         import pdb; pdb.set_trace()
 
-class Sender(SantiagoSender):
+class Sender(santiago.SantiagoSender):
 
-    def __init__(self, santiago, proxy_host, proxy_port):
+    def __init__(self, my_santiago, proxy_host, proxy_port):
 
-        super(SantiagoSender, self).__init__(santiago)
+        super(santiago.SantiagoSender, self).__init__(my_santiago)
         self.proxy_host = proxy_host
         self.proxy_port = proxy_port
 
@@ -130,11 +142,11 @@ class Sender(SantiagoSender):
         transport across the protocol.
 
         """
-        logging.debug("protocols.https.Sender.outgoing_request: request {0}".format(str(request)))
+        santiago.debug_log("protocols.https.Sender.outgoing_request: request {0}".format(str(request)))
         to_send = { "request": request }
 
         params = urllib.urlencode(to_send)
-        logging.debug("protocols.https.Sender.outgoing_request: params {0}".format(str(params)))
+        santiago.debug_log("protocols.https.Sender.outgoing_request: params {0}".format(str(params)))
 
         # TODO: Does HTTPSConnection require the cert and key?
         # Is the fact that the server has it sufficient?  I think so.
