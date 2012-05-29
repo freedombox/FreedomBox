@@ -23,6 +23,7 @@ def setup(santiago):
     # TODO call this bugger to prep the dispatcher, objects, etc.
     pass
 
+
 class RestController(object):
 
     def PUT(self, *args, **kwargs):
@@ -37,6 +38,74 @@ class RestController(object):
     def DELETE(self, *args, **kwargs):
         raise NotImplemented("RestController.DELETE")
 
+class Root(RestController):
+
+    def GET(self):
+        return """\
+<html>
+  <body>
+    <h1>Welcome to FreedomBuddy!</h1>
+    <p>You can:</p>
+    <ul>
+      <li><a href="/hosting">Host</a> services for others.</li>
+      <li><a href="/consuming">Consume</a> others' services.</li>
+    </ul>
+  </body>
+</html>
+"""
+
+
+
+class Consuming(RestController):
+    exposed = True
+
+    def __init__(self, data):
+        self.consuming = data
+
+    def GET(self):
+        services = self.consuming.iterkeys()
+
+        return [str(Template(
+                    file="templates/consuming-get.tmpl",
+                    searchList=[{
+                            "services": services }]))]
+
+class ConsumedService(RestController):
+    exposed = True
+
+    def __init__(self, data):
+        self.consuming = data
+
+    def GET(self, service=""):
+        try:
+            hosts = self.consuming[service].iterkeys()
+        except KeyError:
+            hosts = []
+        finally:
+            return [str(Template(
+                        file="templates/consumedService-get.tmpl",
+                        searchList=[{
+                                "service": service,
+                                "hosts": hosts }]))]
+
+class ConsumedHost(RestController):
+    exposed = True
+
+    def __init__(self, data):
+        self.consuming = data
+
+    def GET(self, service="", host=""):
+        try:
+            locations = [x for x in self.consuming[service][host]]
+        except KeyError:
+            locations = []
+        finally:
+            return [str(Template(
+                        file="templates/consumedLocation-get.tmpl",
+                        searchList=[{
+                                "service": service,
+                                "host": host,
+                                "locations": locations }]))]
 
 class Hosting(RestController):
     exposed = True
@@ -45,18 +114,12 @@ class Hosting(RestController):
         self.hosting = data
 
     def GET(self):
-        try:
-            clients = [x for x in self.hosting]
-            message = "success"
-        except KeyError:
-            clients = []
-            message = "Error."
-        finally:
-            return [str(Template(
-                        file="templates/hosting-get.tmpl",
-                        searchList=[{
-                                "clients": clients,
-                                "message": message }]))]
+        clients = self.hosting.keys()
+
+        return [str(Template(
+                    file="templates/hosting-get.tmpl",
+                    searchList=[{
+                            "clients": clients, }]))]
 
 class Client(object):
     exposed = True
@@ -142,16 +205,29 @@ def rest_connect(dispatcher, location, controller, trailing_slash=True):
 
 if __name__ == "__main__":
 
+    root = Root()
+
     hosting = Hosting(hosting_data)
     client = Client(hosting_data)
-    service = HostedService(hosting_data)
+    service_provide = HostedService(hosting_data)
     location = Location(hosting_data)
+
+    consuming = Consuming(consuming_data)
+    service_consume = ConsumedService(consuming_data)
+    consumed_host = ConsumedHost(consuming_data)
+
     d = cherrypy.dispatch.RoutesDispatcher()
 
     rest_connect(d, '/hosting/:client/:service/:location', location)
-    rest_connect(d, '/hosting/:client/:service', service)
+    rest_connect(d, '/hosting/:client/:service', service_provide)
     rest_connect(d, '/hosting/:client', client)
-    rest_connect(d, '/hosting/', hosting)
+    rest_connect(d, '/hosting', hosting)
+
+    rest_connect(d, '/consuming/:service/:host', consumed_host)
+    rest_connect(d, '/consuming/:service', service_consume)
+    rest_connect(d, '/consuming', consuming)
+
+    rest_connect(d, "/", root)
 
     cherrypy.config.update({"server.socket_host": "0.0.0.0"})
 

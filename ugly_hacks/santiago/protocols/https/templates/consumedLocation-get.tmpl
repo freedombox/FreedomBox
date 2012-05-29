@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <p>You are <a href="/consuming">consuming</a> 
+      <a href="/consuming/$service">$service</a> from
+      <a href="/consuming/$service/$host">$host</a> at:</p>
+    #if $locations
+    <ul>
+      #for $location in $locations
+      <li><a href="$location">$location</a></li>
+      #end for
+    </ul>
+    #end if
+  </body>
+</html>

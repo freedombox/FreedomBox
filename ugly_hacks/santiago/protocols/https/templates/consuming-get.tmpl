@@ -1,0 +1,12 @@
+<html>
+  <body>
+    #if $services
+    <p>You are consuming these services:</p>
+    <ul>
+      #for $service in $services
+      <li><a href="/consuming/$service">$service</a></li>
+      #end for
+    </ul>
+    #end if
+  </body>
+</html>
