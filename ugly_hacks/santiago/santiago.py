@@ -177,13 +177,6 @@ class Santiago(object):
         When this has finished, the Santiago will be ready to go.
 
         """
-        debug_log("Setting up protocols.")
-
-        find_protocol = (lambda protocol: sys.modules[
-                self.__class__.CONTROLLER_MODULE.format(protocol)])
-
-        [find_protocol(protocol).setup(None) for protocol in self.protocols]
-
         debug_log("Starting connectors.")
 
         for connector in (list(self.listeners.itervalues()) +
@@ -194,10 +187,6 @@ class Santiago(object):
 
         # for monitor in list(self.monitors.itervalues()):
         #     monitor.start()
-
-        debug_log("Starting protocols.")
-
-        [find_protocol(protocol).start() for protocol in self.protocols]
 
         debug_log("Santiago started!")
 

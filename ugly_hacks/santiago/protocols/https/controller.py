@@ -49,7 +49,7 @@ class Listener(SantiagoListener):
 
     def stop(self):
         """Shuts down the listener."""
-        pass
+        cherrypy.engine.stop()
 
     @cherrypy.expose
     def index(self, **kwargs):
