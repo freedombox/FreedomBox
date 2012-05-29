@@ -12,8 +12,24 @@ import logging
 
 
 def setup(santiago):
+    """Module-level setup function.
+
+    Called after listener and senders are set up, before they're started.
+
     # TODO call this bugger to prep the dispatcher, objects, etc.
+
+    """
     pass
+
+def start():
+    """Module-level start function, called after listener and sender started.
+
+    TODO: integrate multiple servers:
+
+        http://docs.cherrypy.org/dev/refman/process/servers.html
+
+    """
+    cherrypy.engine.start()
 
 class Listener(SantiagoListener):
 
@@ -25,15 +41,11 @@ class Listener(SantiagoListener):
         cherrypy.server.socket_port = socket_port
         cherrypy.server.ssl_certificate = ssl_certificate
         cherrypy.server.ssl_private_key = ssl_private_key
-        cherrypy.Application(self, "/")
+        cherrypy.tree.mount(cherrypy.Application(self, "/"))
 
     def start(self):
         """Starts the listener."""
-
-        # TODO: integrate multiple servers:
-        # http://docs.cherrypy.org/dev/refman/process/servers.html
-        # cherrypy.engine.start()
-        cherrypy.quickstart(self)
+        pass
 
     @cherrypy.expose
     def index(self, **kwargs):

@@ -61,6 +61,7 @@ import logging
 import re
 import shelve
 import sys
+import time
 
 import pgpprocessor
 import utilities
@@ -90,6 +91,7 @@ class Santiago(object):
                          "request_version", "reply_versions"))
     OPTIONAL_KEYS = ALL_KEYS ^ REQUIRED_KEYS
     LIST_KEYS = set(("reply_to", "locations", "reply_versions"))
+    CONTROLLER_MODULE = "protocols.{0}.controller"
 
     def __init__(self, listeners = None, senders = None,
                  hosting = None, consuming = None, me = 0):
@@ -116,6 +118,7 @@ class Santiago(object):
         hosts are unreachable from some points.
 
         """
+        self.live = 1
         self.requests = DefaultDict(set)
         self.me = me
         self.gpg = gnupg.GPG(use_agent = True)
@@ -161,7 +164,7 @@ class Santiago(object):
         FIXME: Assumes the current directory is in sys.path
 
         """
-        import_name = "protocols.{0}.controller".format(protocol)
+        import_name = cls.CONTROLLER_MODULE.format(protocol)
 
         if not import_name in sys.modules:
             __import__(import_name)
@@ -174,14 +177,43 @@ class Santiago(object):
         When this has finished, the Santiago will be ready to go.
 
         """
+        debug_log("Setting up protocols.")
+
+        find_protocol = (lambda protocol: sys.modules[
+                self.__class__.CONTROLLER_MODULE.format(protocol)])
+
+        [find_protocol(protocol).setup(None) for protocol in self.protocols]
+
+        debug_log("Starting connectors.")
+
         for connector in (list(self.listeners.itervalues()) +
                           list(self.senders.itervalues())):
             connector.start()
 
+        # debug_log("Starting monitors.")
+
+        # for monitor in list(self.monitors.itervalues()):
+        #     monitor.start()
+
+        debug_log("Starting protocols.")
+
+        [find_protocol(protocol).start() for protocol in self.protocols]
+
         debug_log("Santiago started!")
+
+        count = 0
+        try:
+            while self.live:
+                time.sleep(5)
+        except KeyboardInterrupt:
+            pass
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Clean up and save all data to shut down the service."""
+
+        for connector in (list(self.listeners.itervalues()) +
+                          list(self.senders.itervalues())):
+            connector.stop()
 
         santiago.save_data("hosting")
         santiago.save_data("consuming")
@@ -590,15 +622,27 @@ class SantiagoConnector(object):
     "controllers" in the MVC paradigm.
 
     """
-    def __init__(self, santiago):
+    def __init__(self, santiago=None, *args, **kwargs):
+        super(SantiagoConnector, self).__init__(*args, **kwargs)
         self.santiago = santiago
 
+    def setup(self):
+        """Initialize the connector.
+
+        """
+        pass
+
     def start(self):
-        """Called when initialization is complete.
+        """Starts the connector, called when initialization is complete.
 
         Cannot block.
 
         """
+        pass
+
+    def stop(self):
+        """Shuts down the connector."""
+
         pass
 
 class SantiagoListener(SantiagoConnector):
