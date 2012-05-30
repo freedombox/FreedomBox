@@ -81,8 +81,7 @@ class Listener(santiago.SantiagoListener):
 
         return super(Listener, self).learn(host, service)
 
-    @cherrypy.expose
-    def where(self, host, service):
+    def where(self, host, service, **kwargs):
         """Show where a host is providing me services.
 
         TODO: make the output format a parameter.
@@ -94,8 +93,7 @@ class Listener(santiago.SantiagoListener):
 
         return list(super(Listener, self).where(host, service))
 
-    @cherrypy.expose
-    def provide(self, client, service, location):
+    def provide(self, client, service, location, **kwargs):
         """Provide a service for the client at the location."""
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
@@ -140,3 +138,101 @@ class Sender(santiago.SantiagoSender):
 
         connection.request("GET", "/?%s" % params)
         connection.close()
+
+class Monitor(santiago.SantiagoMonitor):
+
+    def __init__(self, aSantiago):
+        super(Monitor, self).__init__(aSantiago)
+
+        try:
+            d = cherrypy.tree.apps[""].config["/"]["request.dispatch"]
+        except KeyError:
+            d = cherrypy.dispatch.RoutesDispatcher()
+
+        root = Root(self.santiago)
+        
+        routing_pairs = (
+            ('/hosting/:client/:service', HostedService(self.santiago)),
+            ('/hosting/:client', HostedClient(self.santiago)),
+            ('/hosting', Hosting(self.santiago)),
+            ('/consuming/:host/:service', ConsumedService(self.santiago)),
+            ('/consuming/:host', ConsumedHost(self.santiago)),
+            ('/consuming', Consuming(self.santiago)),
+            ("/freedombuddy", root),
+            )
+
+        for location, handler in routing_pairs:
+            Monitor.rest_connect(d, location, handler)
+
+        cherrypy.tree.mount(root, "/", {"/": {"request.dispatch": d}})
+
+    @classmethod
+    def rest_connect(cls, dispatcher, location, controller, trailing_slash=True):
+        """Simple REST connector for object/location mapping."""
+
+        if trailing_slash:
+            location = location.rstrip("/")
+            location = [location, location + "/"]
+        else:
+            location = [location]
+
+        for place in location:
+            for a_method in ("PUT", "GET", "POST", "DELETE"):
+                dispatcher.connect(controller.__class__.__name__ + a_method,
+                                   place, controller=controller, action=a_method,
+                                   conditions={ "method": [a_method] })
+
+        return dispatcher
+
+class RestMonitor(santiago.RestController):
+
+    def __init__(self, aSantiago):
+        super(RestMonitor, self).__init__()
+        self.santiago = aSantiago
+        self.relative_path = "protocols/https/templates/"
+
+    def respond(self, template, values):
+        return [str(Template(
+                    file=self.relative_path + template,
+                    searchList = [dict(values)]))]
+
+class HostedService(RestMonitor):
+    def GET(self, client, service):
+        return self.respond("hostedService-get.tmpl", {
+                "service": service,
+                "client": client,
+                "locations": self.santiago.hosting[client][service] })
+
+class HostedClient(RestMonitor):
+    def GET(self, client):
+        return self.respond("hostedClient-get.tmpl",
+                            { "client": client,
+                              "services": self.santiago.hosting[client] })
+
+class Hosting(RestMonitor):
+    def GET(self):
+        return self.respond("hosting-get.tmpl",
+                            {"clients": [x for x in self.santiago.consuming]})
+
+class ConsumedService(RestMonitor):
+    def GET(self, host, service):
+        return self.respond("consumedService-get.tmpl",
+                            { "service": service,
+                              "host": host,
+                              "locations":
+                                  self.santiago.consuming[host][service] })
+
+class ConsumedHost(RestMonitor):
+    def GET(self, host):
+        return self.respond("consumedHost-get.tmpl",
+                            { "services": self.santiago.consuming[host],
+                              "host": host })
+
+class Consuming(RestMonitor):
+    def GET(self):
+        return self.respond("consuming-get.tmpl",
+                            { "hosts": [x for x in self.santiago.consuming]})
+
+class Root(RestMonitor):
+    def GET(self):
+        return self.respond("root-get.tmpl", {})
