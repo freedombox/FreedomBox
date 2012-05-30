@@ -94,7 +94,7 @@ class Santiago(object):
     CONTROLLER_MODULE = "protocols.{0}.controller"
 
     def __init__(self, listeners = None, senders = None,
-                 hosting = None, consuming = None, me = 0):
+                 hosting = None, consuming = None, me = 0, monitors = None):
         """Create a Santiago with the specified parameters.
 
         listeners and senders are both protocol-specific dictionaries containing
@@ -124,7 +124,8 @@ class Santiago(object):
         self.gpg = gnupg.GPG(use_agent = True)
         self.protocols = set()
 
-        for k, v in (("listeners", "Listener"), ("senders", "Sender")):
+        for k, v in (("listeners", "Listener"), ("senders", "Sender"),
+                     ("monitors", "Monitor"),):
             setattr(self, k, self._create_connectors(locals()[k], v))
             self.protocols |= set(getattr(self, k).keys())
 
@@ -685,6 +686,34 @@ class SantiagoSender(SantiagoConnector):
         raise Exception(
             "santiago.SantiagoSender.outgoing_request not implemented.")
 
+class RestController(object):
+    """A generic REST-style controller that reacts to the basic REST verbs."""
+
+    def PUT(self, *args, **kwargs):
+        raise NotImplemented("RestController.PUT")
+
+    def GET(self, *args, **kwargs):
+        raise NotImplemented("RestController.GET")
+
+    def POST(self, *args, **kwargs):
+        raise NotImplemented("RestController.POST")
+
+    def DELETE(self, *args, **kwargs):
+        raise NotImplemented("RestController.DELETE")
+
+class SantiagoMonitor(RestController):
+    """A REST controller that can be started and stopped."""
+
+    def __init__(self, aSantiago):
+        super(SantiagoMonitor, self).__init__()
+        self.santiago = aSantiago
+
+    def start(*args, **kwargs):
+        pass
+
+    def stop(*args, **kwargs):
+        pass
+
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
@@ -698,6 +727,7 @@ if __name__ == "__main__":
                              "ssl_private_key": cert }, }
     senders = { "https": { "proxy_host": "localhost",
                            "proxy_port": 8118} }
+    monitors = { "https": {} }
 
     hosting = DefaultDict(None,
         { mykey: DefaultDict(None,
@@ -708,9 +738,10 @@ if __name__ == "__main__":
 
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
-                        me=mykey)
+                        me=mykey, monitors=monitors)
 
     # import pdb; pdb.set_trace()
     with santiago:
         pass
+
     debug_log("Santiago finished!")
