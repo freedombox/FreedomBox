@@ -11,16 +11,6 @@ import sys
 import logging
 
 
-def setup(santiago):
-    """Module-level setup function.
-
-    Called after listener and senders are set up, before they're started.
-
-    # TODO call this bugger to prep the dispatcher, objects, etc.
-
-    """
-    pass
-
 def start():
     """Module-level start function, called after listener and sender started.
 
@@ -30,6 +20,14 @@ def start():
 
     """
     cherrypy.engine.start()
+
+def stop():
+    """Module-level stop function, called after listener and sender stopped.
+
+    """
+    cherrypy.engine.stop()
+    cherrypy.engine.exit()
+
 
 class Listener(santiago.SantiagoListener):
 
@@ -42,32 +40,15 @@ class Listener(santiago.SantiagoListener):
         cherrypy.server.ssl_certificate = ssl_certificate
         cherrypy.server.ssl_private_key = ssl_private_key
         cherrypy.tree.mount(cherrypy.Application(self, "/"))
-
-    def start(self):
-        """Starts the listener."""
-
-        santiago.debug_log("Starting listener.")
         
-        cherrypy.engine.start()
-
-        santiago.debug_log("Listener started.")
-
-    def stop(self):
-        """Shuts down the listener."""
-
-        santiago.debug_log("Stopping listener.")
-        
-        cherrypy.engine.stop()
-        cherrypy.engine.exit()
-
-        santiago.debug_log("Listener stopped.")
-        
-
     @cherrypy.expose
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
-        santiago.debug_log("protocols.https.index: Received request {0}".format(str(kwargs)))
+        santiago.debug_log("Received request {0}".format(str(kwargs)))
+
+        
+        
         try:
             self.incoming_request(kwargs["request"])
         except Exception as e:
