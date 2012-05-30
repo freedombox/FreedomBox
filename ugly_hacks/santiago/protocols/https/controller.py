@@ -85,7 +85,7 @@ class Listener(santiago.SantiagoListener):
         #     return
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("Request from non-local IP")
             return
 
         return super(Listener, self).learn(host, service)
@@ -98,7 +98,7 @@ class Listener(santiago.SantiagoListener):
 
         """
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("Request from non-local IP")
             return
 
         return list(super(Listener, self).where(host, service))
@@ -108,7 +108,7 @@ class Listener(santiago.SantiagoListener):
         """Provide a service for the client at the location."""
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("Request from non-local IP")
             return
 
         return super(Listener, self).provide(client, service, location)
@@ -118,7 +118,7 @@ class Listener(santiago.SantiagoListener):
         """Set a trace."""
 
         if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("protocols.https.query: Request from non-local IP")
+            santiago.debug_log("Request from non-local IP")
             return
 
         import pdb; pdb.set_trace()
@@ -142,11 +142,11 @@ class Sender(santiago.SantiagoSender):
         transport across the protocol.
 
         """
-        santiago.debug_log("protocols.https.Sender.outgoing_request: request {0}".format(str(request)))
+        santiago.debug_log("request {0}".format(str(request)))
         to_send = { "request": request }
 
         params = urllib.urlencode(to_send)
-        santiago.debug_log("protocols.https.Sender.outgoing_request: params {0}".format(str(params)))
+        santiago.debug_log("params {0}".format(str(params)))
 
         # TODO: Does HTTPSConnection require the cert and key?
         # Is the fact that the server has it sufficient?  I think so.
