@@ -5,13 +5,14 @@
 
 import santiago
 
+from Cheetah.Template import Template
 import cherrypy
 import httplib, urllib, urlparse
 import sys
 import logging
 
 
-def start():
+def start(*args, **kwargs):
     """Module-level start function, called after listener and sender started.
 
     TODO: integrate multiple servers:
@@ -21,7 +22,7 @@ def start():
     """
     cherrypy.engine.start()
 
-def stop():
+def stop(*args, **kwargs):
     """Module-level stop function, called after listener and sender stopped.
 
     """
@@ -39,23 +40,32 @@ class Listener(santiago.SantiagoListener):
         cherrypy.server.socket_port = socket_port
         cherrypy.server.ssl_certificate = ssl_certificate
         cherrypy.server.ssl_private_key = ssl_private_key
-        cherrypy.tree.mount(cherrypy.Application(self, "/"))
-        
-    @cherrypy.expose
+
+        d = cherrypy.dispatch.RoutesDispatcher()
+        d.connect("index", "/", self.index)
+        d.connect("learn", "/learn/:host/:service", self.learn)
+        d.connect("where", "/where/:host/:service", self.where)
+        d.connect("provide", "/provide/:host/:service/:location", self.provide)
+
+        cherrypy.tree.mount(cherrypy.Application(self), "", {"/": {"request.dispatch": d}})
+
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
         santiago.debug_log("Received request {0}".format(str(kwargs)))
 
-        
-        
         try:
             self.incoming_request(kwargs["request"])
         except Exception as e:
             logging.exception(e)
 
-    @cherrypy.expose
-    def learn(self, host, service):
+            if not cherrypy.request.remote.ip.startswith("127.0.0."):
+                santiago.debug_log("Request from non-local IP")
+                return
+
+            raise cherrypy.HTTPRedirect("/freedombuddy")
+
+    def learn(self, host, service, **kwargs):
         """Request a resource from another Santiago client.
 
         TODO: add request whitelisting.
@@ -93,16 +103,6 @@ class Listener(santiago.SantiagoListener):
             return
 
         return super(Listener, self).provide(client, service, location)
-
-    @cherrypy.expose
-    def pdb(self):
-        """Set a trace."""
-
-        if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("Request from non-local IP")
-            return
-
-        import pdb; pdb.set_trace()
 
 class Sender(santiago.SantiagoSender):
 
