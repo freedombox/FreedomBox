@@ -1,10 +1,11 @@
 <html>
   <body>
-    <p>You are <a href="/consuming">consuming</a> $service from:</p>
-    #if $hosts
+    <p>You are <a href="/consuming">consuming</a> $service from
+      <a href="/consuming/$host">$host</a> at:</p>
+    #if $locations
     <ul>
-      #for $host in $hosts
-      <li><a href="/consuming/$service/$host">$host</a></li>
+      #for $location in $locations
+      <li><a href="$location">$location</a></li>
       #end for
     </ul>
     #end if

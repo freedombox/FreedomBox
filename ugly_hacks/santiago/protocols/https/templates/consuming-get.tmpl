@@ -1,10 +1,10 @@
 <html>
   <body>
-    #if $services
-    <p>You are consuming these services:</p>
+    #if $hosts
+    <p>You are consuming services from these hosts:</p>
     <ul>
-      #for $service in $services
-      <li><a href="/consuming/$service">$service</a></li>
+      #for $host in $hosts
+      <li><a href="/consuming/$host">$host</a></li>
       #end for
     </ul>
     #end if
