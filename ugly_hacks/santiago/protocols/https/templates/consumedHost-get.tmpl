@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <p>You are <a href="/consuming">consuming</a> services from $host:</p>
+    #if $services
+    <ul>
+      #for $service in $services
+      <li><a href="/consuming/$host/$service">$service</a></li>
+      #end for
+    </ul>
+    #end if
+  </body>
+</html>
