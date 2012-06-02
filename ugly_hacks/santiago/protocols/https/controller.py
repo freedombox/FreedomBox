@@ -15,10 +15,6 @@ import logging
 def start(*args, **kwargs):
     """Module-level start function, called after listener and sender started.
 
-    TODO: integrate multiple servers:
-
-        http://docs.cherrypy.org/dev/refman/process/servers.html
-
     """
     cherrypy.engine.start()
 
@@ -35,6 +31,8 @@ class Listener(santiago.SantiagoListener):
     def __init__(self, my_santiago, socket_port=0,
                  ssl_certificate="", ssl_private_key=""):
 
+        santiago.debug_log("Creating Listener.")
+
         super(santiago.SantiagoListener, self).__init__(my_santiago)
 
         cherrypy.server.socket_port = socket_port
@@ -47,12 +45,18 @@ class Listener(santiago.SantiagoListener):
         d.connect("where", "/where/:host/:service", self.where)
         d.connect("provide", "/provide/:host/:service/:location", self.provide)
 
-        cherrypy.tree.mount(cherrypy.Application(self), "", {"/": {"request.dispatch": d}})
+        cherrypy.tree.mount(cherrypy.Application(self), "",
+                            {"/": {"request.dispatch": d}})
+
+        santiago.debug_log("Listener Created.")
 
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
         santiago.debug_log("Received request {0}".format(str(kwargs)))
+
+        # FIXME Blammo!
+        # make sure there's some verification of the incoming connection here.
 
         try:
             self.incoming_request(kwargs["request"])
@@ -129,19 +133,24 @@ class Sender(santiago.SantiagoSender):
 
         # TODO: Does HTTPSConnection require the cert and key?
         # Is the fact that the server has it sufficient?  I think so.
+        # FIXME Blammo!
         connection = httplib.HTTPSConnection(destination.split("//")[1])
 
         # proxying required and available only in Python 2.7 or later.
         # TODO: fail if Python version < 2.7.
+        # FIXME Blammo!
         if sys.version_info >= (2, 7):
             connection.set_tunnel(self.proxy_host, self.proxy_port)
 
+        # FIXME Blammo!
         connection.request("GET", "/?%s" % params)
         connection.close()
 
 class Monitor(santiago.SantiagoMonitor):
 
     def __init__(self, aSantiago):
+        santiago.debug_log("Creating Monitor.")
+
         super(Monitor, self).__init__(aSantiago)
 
         try:
@@ -150,7 +159,7 @@ class Monitor(santiago.SantiagoMonitor):
             d = cherrypy.dispatch.RoutesDispatcher()
 
         root = Root(self.santiago)
-        
+
         routing_pairs = (
             ('/hosting/:client/:service', HostedService(self.santiago)),
             ('/hosting/:client', HostedClient(self.santiago)),
@@ -158,6 +167,7 @@ class Monitor(santiago.SantiagoMonitor):
             ('/consuming/:host/:service', ConsumedService(self.santiago)),
             ('/consuming/:host', ConsumedHost(self.santiago)),
             ('/consuming', Consuming(self.santiago)),
+            ("/stop", Stop(self.santiago)),
             ("/freedombuddy", root),
             )
 
@@ -165,6 +175,8 @@ class Monitor(santiago.SantiagoMonitor):
             Monitor.rest_connect(d, location, handler)
 
         cherrypy.tree.mount(root, "/", {"/": {"request.dispatch": d}})
+
+        santiago.debug_log("Monitor Created.")
 
     @classmethod
     def rest_connect(cls, dispatcher, location, controller, trailing_slash=True):
@@ -233,6 +245,31 @@ class Consuming(RestMonitor):
         return self.respond("consuming-get.tmpl",
                             { "hosts": [x for x in self.santiago.consuming]})
 
+    def POST(self, host="", put="", delete=""):
+        if put:
+            self.PUT(put)
+        elif delete:
+            self.DELETE(delete)
+        else:
+            self.santiago.consuming[host] = None
+
+        raise cherrypy.HTTPRedirect("/consuming")
+
+    def PUT(self, put):
+        self.santiago.consuming[host] = None
+
+
+    def DELETE(self, delete):
+        if delete in self.santiago.consuming:
+            del self.santiago.consuming[delete]
+
 class Root(RestMonitor):
     def GET(self):
         return self.respond("root-get.tmpl", {})
+
+class Stop(RestMonitor):
+    def POST(self):
+        self.santiago.live = 0
+
+    def GET(self):
+        self.POST() # cause it's late and I'm tired.
