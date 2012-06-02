@@ -174,7 +174,7 @@ class Monitor(santiago.SantiagoMonitor):
         for location, handler in routing_pairs:
             Monitor.rest_connect(d, location, handler)
 
-        cherrypy.tree.mount(root, "/", {"/": {"request.dispatch": d}})
+        cherrypy.tree.mount(root, "", {"/": {"request.dispatch": d}})
 
         santiago.debug_log("Monitor Created.")
 
