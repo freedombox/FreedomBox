@@ -233,10 +233,11 @@ class Santiago(object):
             self.consuming[host] = dict()
 
         if service not in self.consuming[host]:
-            self.consuming[host][service] = set()
+            self.consuming[host][service] = list()
 
-        if locations:
-            self.consuming[host][service] |= locations
+        for location in locations:
+            if location not in self.consuming[host][service]:
+                self.consuming[host][service].append(location)
 
     def provide_service(self, client, service, locations):
         """Start hosting a service for somebody else."""
@@ -245,11 +246,11 @@ class Santiago(object):
             self.hosting[client] = dict()
 
         if service not in self.hosting[client]:
-            self.hosting[client][service] = set()
+            self.hosting[client][service] = list()
 
-        if locations:
-            self.hosting[client][service] = (
-                self.hosting[client][service] | locations)
+        for location in locations:
+            if location not in self.hosting[client][service]:
+                self.hosting[client][service].append(location)
 
     def get_host_locations(self, client, service):
         """Return where I'm hosting the service for the client.
@@ -284,7 +285,7 @@ class Santiago(object):
             logging.exception("Couldn't handle %s.%s", host, service)
 
     def outgoing_request(self, from_, to, host, client,
-                service, locations, reply_to):
+                         service, locations, reply_to):
         """Send a request to another Santiago service.
 
         This tag is used when sending queries or replies to other Santiagi.
@@ -298,6 +299,7 @@ class Santiago(object):
         self.requests[host].add(service)
 
         request = self.gpg.encrypt(
+            # TODO json this.
             str({ "host": host, "client": client,
                   "service": service, "locations": list(locations or ""),
                   "reply_to": list(reply_to),
@@ -377,8 +379,9 @@ class Santiago(object):
         understand.
 
         """
+        # TODO json -> python
         request = self.gpg.decrypt(request)
-
+        
         # skip badly signed messages or ones for other folks.
         if not (str(request) and request.fingerprint):
             debug_log("fail request {0}".format(str(request)))
