@@ -1,5 +1,11 @@
 """The HTTPS Santiago listener and sender.
 
+FIXME: add real authentication.
+FIXME: sanitize or properly escape user input (XSS, attacks on the client).
+FIXME: make sure we never try to execute user input (injection, attacks on the
+       server).
+FIXME: all the Blammos.  They're terrible, unacceptable failures.
+
 """
 
 
@@ -11,7 +17,16 @@ import httplib, urllib, urlparse
 import sys
 import logging
 
+def allow_ips(ips = None):
+    if ips == None:
+        ips = [ "127.0.0.1" ]
 
+    if cherrypy.request.remote.ip not in ips:
+        santiago.debug_log("Request from non-local IP.  Forbidden.")
+        raise cherrypy.HTTPError(403)
+
+cherrypy.tools.ip_filter = cherrypy.Tool('before_handler', allow_ips)
+    
 def start(*args, **kwargs):
     """Module-level start function, called after listener and sender started.
 
@@ -50,6 +65,7 @@ class Listener(santiago.SantiagoListener):
 
         santiago.debug_log("Listener Created.")
 
+    @cherrypy.tools.ip_filter()
     def index(self, **kwargs):
         """Receive an incoming Santiago request from another Santiago client."""
 
@@ -63,12 +79,9 @@ class Listener(santiago.SantiagoListener):
         except Exception as e:
             logging.exception(e)
 
-            if not cherrypy.request.remote.ip.startswith("127.0.0."):
-                santiago.debug_log("Request from non-local IP")
-                return
-
             raise cherrypy.HTTPRedirect("/freedombuddy")
 
+    @cherrypy.tools.ip_filter()
     def learn(self, host, service, **kwargs):
         """Request a resource from another Santiago client.
 
@@ -79,30 +92,20 @@ class Listener(santiago.SantiagoListener):
         # if not cherrypy.request.method == "POST":
         #     return
 
-        if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("Request from non-local IP")
-            return
-
         return super(Listener, self).learn(host, service)
 
+    @cherrypy.tools.ip_filter()
     def where(self, host, service, **kwargs):
         """Show where a host is providing me services.
 
         TODO: make the output format a parameter.
 
         """
-        if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("Request from non-local IP")
-            return
-
         return list(super(Listener, self).where(host, service))
 
+    @cherrypy.tools.ip_filter()
     def provide(self, client, service, location, **kwargs):
         """Provide a service for the client at the location."""
-
-        if not cherrypy.request.remote.ip.startswith("127.0.0."):
-            santiago.debug_log("Request from non-local IP")
-            return
 
         return super(Listener, self).provide(client, service, location)
 
@@ -114,6 +117,7 @@ class Sender(santiago.SantiagoSender):
         self.proxy_host = proxy_host
         self.proxy_port = proxy_port
 
+    @cherrypy.tools.ip_filter()
     def outgoing_request(self, request, destination):
         """Send an HTTPS request to each Santiago client.
 
@@ -209,6 +213,7 @@ class RestMonitor(santiago.RestController):
                     searchList = [dict(values)]))]
 
 class HostedService(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self, client, service):
         return self.respond("hostedService-get.tmpl", {
                 "service": service,
@@ -216,17 +221,20 @@ class HostedService(RestMonitor):
                 "locations": self.santiago.hosting[client][service] })
 
 class HostedClient(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self, client):
         return self.respond("hostedClient-get.tmpl",
                             { "client": client,
                               "services": self.santiago.hosting[client] })
 
 class Hosting(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self):
         return self.respond("hosting-get.tmpl",
                             {"clients": [x for x in self.santiago.consuming]})
 
 class ConsumedService(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self, host, service):
         return self.respond("consumedService-get.tmpl",
                             { "service": service,
@@ -235,16 +243,19 @@ class ConsumedService(RestMonitor):
                                   self.santiago.consuming[host][service] })
 
 class ConsumedHost(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self, host):
         return self.respond("consumedHost-get.tmpl",
                             { "services": self.santiago.consuming[host],
                               "host": host })
 
 class Consuming(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self):
         return self.respond("consuming-get.tmpl",
                             { "hosts": [x for x in self.santiago.consuming]})
 
+    @cherrypy.tools.ip_filter()
     def POST(self, host="", put="", delete=""):
         if put:
             self.PUT(put)
@@ -255,21 +266,27 @@ class Consuming(RestMonitor):
 
         raise cherrypy.HTTPRedirect("/consuming")
 
+    @cherrypy.tools.ip_filter()
     def PUT(self, put):
         self.santiago.consuming[host] = None
 
 
+    @cherrypy.tools.ip_filter()
     def DELETE(self, delete):
         if delete in self.santiago.consuming:
             del self.santiago.consuming[delete]
 
 class Root(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def GET(self):
         return self.respond("root-get.tmpl", {})
 
 class Stop(RestMonitor):
+    @cherrypy.tools.ip_filter()
     def POST(self):
         self.santiago.live = 0
+        raise cherrypy.HTTPRedirect("/")
 
+    @cherrypy.tools.ip_filter()
     def GET(self):
-        self.POST() # cause it's late and I'm tired.
+        self.POST() # FIXME cause it's late and I'm tired.
