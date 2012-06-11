@@ -124,14 +124,22 @@ class Santiago(object):
         self.gpg = gnupg.GPG(use_agent = True)
         self.protocols = set()
 
-        for k, v in (("listeners", "Listener"), ("senders", "Sender"),
-                     ("monitors", "Monitor"),):
-            setattr(self, k, self._create_connectors(locals()[k], v))
-            self.protocols |= set(getattr(self, k).keys())
+        self.listeners = self.create_connectors(listeners, "Listener")
+        self.senders = self.create_connectors(senders, "Sender")
+        self.monitors = self.create_connectors(monitors, "Monitor")
 
         self.shelf = shelve.open(str(self.me))
         self.hosting = hosting if hosting else self.load_data("hosting")
         self.consuming = consuming if consuming else self.load_data("consuming")
+
+        self.require_gpg = require_gpg
+
+    def create_connectors(self, data, type):
+        connectors = self._create_connectors(data, type)
+        self.protocols |= set(connectors.keys())
+
+        return connectors
+
 
     def _create_connectors(self, settings, connector):
         """Iterates through each protocol given, creating connectors for all.
@@ -184,14 +192,9 @@ class Santiago(object):
                           list(self.senders.itervalues())):
             connector.start()
 
-        # debug_log("Starting monitors.")
-
-        # for monitor in list(self.monitors.itervalues()):
-        #     monitor.start()
-
         for protocol in self.protocols:
             sys.modules[Santiago.CONTROLLER_MODULE.format(protocol)].start()
-            
+
         debug_log("Santiago started!")
 
         count = 0
