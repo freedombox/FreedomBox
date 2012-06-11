@@ -403,12 +403,6 @@ class Santiago(object):
             debug_log("blank key {0}: {1}".format(key, str(request_body)))
             return
 
-        # move lists to sets
-        request_body = self.setify_lists(request_body)
-        if not request_body:
-            debug_log("not sets {0}".format(str(request_body)))
-            return
-
         # versions must overlap.
         if not (Santiago.SUPPORTED_PROTOCOLS & request_body["reply_versions"]):
             return
@@ -421,25 +415,6 @@ class Santiago(object):
         request_body["to"] = self.me
 
         return request_body
-
-    def setify_lists(self, request_body):
-        """Convert list nodes to sets."""
-
-        try:
-            for key in Santiago.LIST_KEYS:
-                if request_body[key] is not None:
-                    request_body[key] = set(request_body[key])
-        except TypeError:
-            return
-
-        try:
-            for key in ("reply_versions",):
-                request_body[key] = set(request_body[key])
-        except TypeError:
-            return
-
-        return request_body
-
 
     def handle_request(self, from_, to, host, client,
                        service, reply_to, request_version, reply_versions):
@@ -558,14 +533,12 @@ class Santiago(object):
                 pass
 
             try:
-                data = dict(ast.literal_eval(str(message)))
+                data = ast.literal_eval(str(message))
             except (ValueError, SyntaxError) as e:
                 logging.exception(e)
                 data = dict()
 
         debug_log("found {0}: {1}".format(key, data))
-
-        data = Santiago.convert_data(data, set)
 
         return data
 
@@ -588,35 +561,12 @@ class Santiago(object):
 
         data = getattr(self, key)
 
-        data = Santiago.convert_data(data, list)
-
-        debug_log("saving {0}: {1}".format(key, data))
-
         data = str(self.gpg.encrypt(str(data), recipients=[self.me],
                                     sign=self.me))
 
         self.shelf[key] = data
 
         debug_log("saved {0}: {1}".format(key, data))
-
-    @classmethod
-    def convert_data(cls, data, acallable):
-        """Convert the data in the sub-dictionary by calling callable on it.
-
-        For example, to convert a hosts dictionary with a list in it to a host
-        dictonary made of sets, use:
-
-        >>> adict = { "alice": { "santiago": list([1, 2]) }}
-        >>> Santiago.convert_data(adict, set)
-        { "alice": { "santiago": set([1, 2]) }}
-
-        """
-        for first in data.iterkeys():
-            for second in data[first].iterkeys():
-                data[first][second] = acallable(data[first][second])
-
-        debug_log("data {0}".format(data))
-        return data
 
 class SantiagoConnector(object):
     """Generic Santiago connector superclass.
@@ -679,7 +629,7 @@ class SantiagoListener(SantiagoConnector):
     def provide(self, client, service, location):
         """Provide a service for the client at the location."""
 
-        return self.santiago.provide_service(client, service, set([location]))
+        return self.santiago.provide_service(client, service, [location])
 
 class SantiagoSender(SantiagoConnector):
     """Generic Santiago Sender superclass.
@@ -735,16 +685,12 @@ if __name__ == "__main__":
                            "proxy_port": 8118} }
     monitors = { "https": {} }
 
-    hosting = DefaultDict(None,
-        { mykey: DefaultDict(None,
-            { "santiago": set(["https://localhost:8080"]) }), })
-    consuming = DefaultDict(None,
-        { mykey: DefaultDict(None,
-            { "santiago": set(["https://localhost:8080"]) }), })
+    hosting = { mykey: { "santiago": ["https://localhost:8080"] }, }
+    consuming = { mykey: { "santiago": ["https://localhost:8080"] }, }
 
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
-                        me=mykey, monitors=monitors)
+                        me=mykey, monitors=monitors, require_gpg = False)
 
     # import pdb; pdb.set_trace()
     with santiago:
