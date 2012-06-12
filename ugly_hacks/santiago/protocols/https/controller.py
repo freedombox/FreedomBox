@@ -58,7 +58,7 @@ class Listener(santiago.SantiagoListener):
         d.connect("index", "/", self.index)
         d.connect("learn", "/learn/:host/:service", self.learn)
         d.connect("where", "/where/:host/:service", self.where)
-        d.connect("provide", "/provide/:host/:service/:location", self.provide)
+        d.connect("provide", "/provide/:client/:service/:location", self.provide)
 
         cherrypy.tree.mount(cherrypy.Application(self), "",
                             {"/": {"request.dispatch": d}})
