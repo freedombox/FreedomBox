@@ -22,8 +22,6 @@ We don't:
 - Use a reasonable data-store.
 - Have a decent control (rate-limiting) mechanism.
 
-:FIXME: Remove sets and just do "key in" operations - it's annoying to remember
-    to convert to and from sets with every operation.  Or just build a wrapper.
 :TODO: add doctests
 :FIXME: allow multiple listeners and senders per protocol (with different
     proxies)
@@ -57,6 +55,7 @@ import cfg
 from collections import defaultdict as DefaultDict
 import gnupg
 import inspect
+import json
 import logging
 import re
 import shelve
@@ -299,8 +298,7 @@ class Santiago(object):
         self.requests[host].add(service)
 
         request = self.gpg.encrypt(
-            # TODO json this.
-            str({ "host": host, "client": client,
+            json.dumps({ "host": host, "client": client,
                   "service": service, "locations": list(locations or ""),
                   "reply_to": list(reply_to),
                   "request_version": 1,
@@ -379,7 +377,6 @@ class Santiago(object):
         understand.
 
         """
-        # TODO json -> python
         request = self.gpg.decrypt(request)
         
         # skip badly signed messages or ones for other folks.
@@ -390,7 +387,7 @@ class Santiago(object):
 
         # copy out only required keys from request, throwing away cruft
         request_body = dict()
-        source = ast.literal_eval(str(request))
+        source = json.loads((str(request)))
         try:
             for key in Santiago.ALL_KEYS:
                 request_body[key] = source[key]
@@ -404,7 +401,8 @@ class Santiago(object):
             return
 
         # versions must overlap.
-        if not (Santiago.SUPPORTED_PROTOCOLS & request_body["reply_versions"]):
+        if not (Santiago.SUPPORTED_PROTOCOLS &
+                set(request_body["reply_versions"])):
             return
         if not (Santiago.SUPPORTED_PROTOCOLS &
               set([request_body["request_version"]])):
