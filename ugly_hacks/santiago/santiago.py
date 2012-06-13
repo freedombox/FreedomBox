@@ -401,6 +401,10 @@ class Santiago(object):
             debug_log("blank key {0}: {1}".format(key, str(request_body)))
             return
 
+        if False in [type(request_body[key]) == list for key in
+                     Santiago.LIST_KEYS if request_body[key] is not None]:
+            return
+        
         # versions must overlap.
         if not (Santiago.SUPPORTED_PROTOCOLS &
                 set(request_body["reply_versions"])):
