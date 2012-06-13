@@ -131,8 +131,6 @@ class Santiago(object):
         self.hosting = hosting if hosting else self.load_data("hosting")
         self.consuming = consuming if consuming else self.load_data("consuming")
 
-        self.require_gpg = require_gpg
-
     def create_connectors(self, data, type):
         connectors = self._create_connectors(data, type)
         self.protocols |= set(connectors.keys())
@@ -385,7 +383,7 @@ class Santiago(object):
             debug_log("fail fingerprint {0}".format(str(request.fingerprint)))
             return
 
-        # copy out only required keys from request, throwing away cruft
+        # copy out only white-listed keys from request, throwing away cruft
         request_body = dict()
         source = json.loads((str(request)))
         try:
@@ -688,7 +686,7 @@ if __name__ == "__main__":
 
     santiago = Santiago(listeners, senders,
                         hosting, consuming,
-                        me=mykey, monitors=monitors, require_gpg = False)
+                        me=mykey, monitors=monitors)
 
     # import pdb; pdb.set_trace()
     with santiago:
