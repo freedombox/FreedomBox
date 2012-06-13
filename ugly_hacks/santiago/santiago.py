@@ -84,10 +84,13 @@ class Santiago(object):
 
     """
     SUPPORTED_PROTOCOLS = set([1])
+    # all keys must be present in the message.
     ALL_KEYS = set(("host", "client", "service", "locations", "reply_to",
                     "request_version", "reply_versions"))
+    # required keys may not be null
     REQUIRED_KEYS = set(("client", "host", "service",
                          "request_version", "reply_versions"))
+    # optional keys may be null.
     OPTIONAL_KEYS = ALL_KEYS ^ REQUIRED_KEYS
     LIST_KEYS = set(("reply_to", "locations", "reply_versions"))
     CONTROLLER_MODULE = "protocols.{0}.controller"
@@ -386,9 +389,9 @@ class Santiago(object):
             debug_log("fail fingerprint {0}".format(str(request.fingerprint)))
             return
 
-        # copy out only white-listed keys from request, throwing away cruft
+        # copy out all white-listed keys from request, throwing away cruft
         request_body = dict()
-        source = json.loads((str(request)))
+        source = json.loads(str(request))
         try:
             for key in Santiago.ALL_KEYS:
                 request_body[key] = source[key]
