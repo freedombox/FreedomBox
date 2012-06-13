@@ -93,7 +93,7 @@ class Santiago(object):
     CONTROLLER_MODULE = "protocols.{0}.controller"
 
     def __init__(self, listeners = None, senders = None,
-                 hosting = None, consuming = None, me = 0, monitors = None):
+                 hosting = None, consuming = None, me = 0, monitors = None, require_gpg = 0):
         """Create a Santiago with the specified parameters.
 
         listeners and senders are both protocol-specific dictionaries containing
@@ -123,9 +123,12 @@ class Santiago(object):
         self.gpg = gnupg.GPG(use_agent = True)
         self.protocols = set()
 
-        self.listeners = self.create_connectors(listeners, "Listener")
-        self.senders = self.create_connectors(senders, "Sender")
-        self.monitors = self.create_connectors(monitors, "Monitor")
+        if listeners is not None:
+            self.listeners = self.create_connectors(listeners, "Listener")
+        if senders is not None:
+            self.senders = self.create_connectors(senders, "Sender")
+        if monitors is not None:
+            self.monitors = self.create_connectors(monitors, "Monitor")
 
         self.shelf = shelve.open(str(self.me))
         self.hosting = hosting if hosting else self.load_data("hosting")
