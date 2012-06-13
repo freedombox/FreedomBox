@@ -43,8 +43,8 @@ import os
 import sys
 import unittest
 
-import ast
 import gnupg
+import json
 import logging
 import santiago
 import utilities
@@ -534,13 +534,9 @@ class UnpackRequest(unittest.TestCase):
         adict = self.validate_request(dict(self.request))
         self.request = self.wrap_message(self.request)
 
-        self.assertEqual(self.santiago.unpack_request(str(self.request)), adict)
+        self.assertEqual(self.santiago.unpack_request(self.request), adict)
 
     def validate_request(self, adict):
-        # convert non-None elements to sets, like unpack does.
-        adict.update(dict([ (k, set(adict[k])) for
-                            k in self.LIST_KEYS
-                            if adict[k] is not None ]))
         adict.update({ "from": self.keyid,
                        "to": self.keyid })
 
@@ -555,7 +551,7 @@ class UnpackRequest(unittest.TestCase):
     def wrap_message(self, message):
         """The standard wrapping method for these tests."""
 
-        return str(self.gpg.encrypt(str(message),
+        return str(self.gpg.encrypt(json.dumps(message),
                                     recipients=[self.keyid],
                                     sign=self.keyid))
 
@@ -578,10 +574,10 @@ class UnpackRequest(unittest.TestCase):
         for key in self.ALL_KEYS:
             broken_dict = dict(self.request)
             del broken_dict[key]
-            encrypted_data = self.wrap_message(str(broken_dict))
+            encrypted_data = self.wrap_message(broken_dict)
 
             self.assertEqual(
-                self.santiago.unpack_request(str(encrypted_data)),
+                self.santiago.unpack_request(encrypted_data),
                 None)
 
     def test_non_null_keys_are_set(self):
@@ -590,10 +586,10 @@ class UnpackRequest(unittest.TestCase):
         for key in self.REQUIRED_KEYS:
             broken_dict = dict(self.request)
             broken_dict[key] = None
-            encrypted_data = self.wrap_message(str(broken_dict))
+            encrypted_data = self.wrap_message(broken_dict)
 
             self.assertEqual(
-                self.santiago.unpack_request(str(encrypted_data)),
+                self.santiago.unpack_request(encrypted_data),
                 None)
 
     def test_null_keys_are_null(self):
@@ -602,7 +598,7 @@ class UnpackRequest(unittest.TestCase):
         for key in self.OPTIONAL_KEYS:
             broken_dict = dict(self.request)
             broken_dict[key] = None
-            encrypted_data = str(self.wrap_message(str(broken_dict)))
+            encrypted_data = self.wrap_message(broken_dict)
 
             broken_dict = self.validate_request(broken_dict)
 
@@ -621,7 +617,7 @@ class UnpackRequest(unittest.TestCase):
     def test_skip_invalid_signatures(self):
         """Messages with invalid signatures are skipped."""
 
-        self.request = self.wrap_message(str(self.request))
+        self.request = self.wrap_message(self.request)
 
         # delete the 7th line for the fun of it.
         mangled = self.request.splitlines(True)
@@ -636,20 +632,9 @@ class UnpackRequest(unittest.TestCase):
         for key in self.LIST_KEYS:
             broken_request = dict(self.request)
             broken_request[key] = 1
-            broken_request = self.wrap_message(str(broken_request))
-
+            broken_request = self.wrap_message(broken_request)
+            
             self.assertEqual(self.santiago.unpack_request(broken_request), None)
-
-    def test_sets_are_sets(self):
-        """Any variables that must be sets, after processing, actually are."""
-
-        self.request = self.wrap_message(str(self.request))
-
-        unpacked = self.santiago.unpack_request(self.request)
-
-        for key in self.LIST_KEYS:
-            for attribute in ("union", "intersection"):
-                self.assertTrue(hasattr(unpacked[key], attribute))
 
     def test_require_protocol_version_overlap(self):
         """Clients that can't accept protocols I can send are ignored."""
@@ -657,19 +642,21 @@ class UnpackRequest(unittest.TestCase):
         santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
             set(["e"]), santiago.Santiago.SUPPORTED_PROTOCOLS
 
-        self.request = self.wrap_message(str(self.request))
+        self.request = self.wrap_message(self.request)
 
         self.assertFalse(self.santiago.unpack_request(self.request))
 
         santiago.Santiago.SUPPORTED_PROTOCOLS, unsupported = \
             unsupported, santiago.Santiago.SUPPORTED_PROTOCOLS
 
+        self.assertTrue(santiago.Santiago.SUPPORTED_PROTOCOLS, set([1]))
+
     def test_require_protocol_version_understanding(self):
         """The service must ignore any protocol versions it can't understand."""
 
         self.request["request_version"] = "e"
 
-        self.request = self.wrap_message(str(self.request))
+        self.request = self.wrap_message(self.request)
 
         self.assertFalse(self.santiago.unpack_request(self.request))
 
@@ -693,8 +680,8 @@ class HandleRequest(unittest.TestCase):
         self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
 
         self.santiago = santiago.Santiago(
-            hosting = {self.keyid: {"santiago": set([1]) }},
-            consuming = {"santiago": {self.keyid: set([1]) }},
+            hosting = {self.keyid: {"santiago": [1] }},
+            consuming = {self.keyid: {"santiago": [1] }},
             me = self.keyid)
 
         self.santiago.requested = False
@@ -706,9 +693,9 @@ class HandleRequest(unittest.TestCase):
         self.host = self.keyid
         self.client = self.keyid
         self.service = "santiago"
-        self.reply_to = set([1])
+        self.reply_to = [1]
         self.request_version = 1
-        self.reply_versions = set([1])
+        self.reply_versions = [1]
 
     def record_success(self):
         """Record that we tried to reply to the request."""
@@ -749,13 +736,13 @@ class HandleRequest(unittest.TestCase):
     def test_learn_services(self):
         """New reply_to locations are learned."""
 
-        self.reply_to.update([2])
+        self.reply_to.append(2)
 
         self.test_call()
 
         self.assertTrue(self.santiago.requested)
-        self.assertEqual(self.santiago.consuming["santiago"][self.keyid],
-                         set([1, 2]))
+        self.assertEqual(self.santiago.consuming[self.keyid]["santiago"],
+                         [1, 2])
 
 # class HandleReply(unittest.TestCase):
 
@@ -839,7 +826,7 @@ class OutgoingRequest(unittest.TestCase):
 
             self.destination = destination
             self.crypt = request
-            self.request = ast.literal_eval(str(self.gpg.decrypt(str(request))))
+            self.request = str(self.gpg.decrypt(str(request)))
 
     def setUp(self):
         """Create an encryptable request."""
@@ -848,7 +835,7 @@ class OutgoingRequest(unittest.TestCase):
 
         self.santiago = santiago.Santiago(
             me = self.keyid,
-            consuming = { "santiago": { self.keyid: ( "https://1", )}})
+            consuming = { self.keyid: { "santiago": ( "https://1", )}})
 
         self.request_sender = OutgoingRequest.TestRequestSender()
         self.santiago.senders = { "https": self.request_sender }
@@ -881,7 +868,7 @@ class OutgoingRequest(unittest.TestCase):
         self.outgoing_call()
 
         self.assertEqual(self.request_sender.request,
-                         self.request)
+                         json.dumps(self.request))
         self.assertEqual(self.request_sender.destination, self.reply_to[0])
 
     def test_queue_service_request(self):
