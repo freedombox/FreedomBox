@@ -220,6 +220,29 @@ class HostedService(RestMonitor):
                 "client": client,
                 "locations": self.santiago.hosting[client][service] })
 
+    @cherrypy.tools.ip_filter()
+    def POST(self, client="", service="", location="", put="", delete=""):
+        if put:
+            self.PUT(put, client,service)
+        elif delete:
+            self.DELETE(delete,client,service)
+        else:
+            location = {location}
+            self.santiago.create_hosting_location(client,service,location)
+
+        raise cherrypy.HTTPRedirect("/hosting/"+client+"/"+service)
+
+    @cherrypy.tools.ip_filter()
+    def PUT(self, put, client, service):
+        location = {location}
+        self.santiago.create_hosting_location(client,service,location)
+
+    #Have to remove instead of delete for locations as $service is a list
+    @cherrypy.tools.ip_filter()
+    def DELETE(self, delete, client, service):
+        if delete in self.santiago.hosting[client][service]:
+            self.santiago.hosting[client][service].remove(delete)
+    
 class HostedClient(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, client):
@@ -227,11 +250,51 @@ class HostedClient(RestMonitor):
                             { "client": client,
                               "services": self.santiago.hosting[client] })
 
+    @cherrypy.tools.ip_filter()
+    def POST(self, client="", service="", put="", delete=""):
+        if put:
+            self.PUT(put, client)
+        elif delete:
+            self.DELETE(delete,client)
+        else:
+            self.santiago.create_hosting_service(client,service)
+
+        raise cherrypy.HTTPRedirect("/hosting/"+client)
+
+    @cherrypy.tools.ip_filter()
+    def PUT(self, put, client):
+        self.santiago.create_hosting_service(client,service)
+
+    @cherrypy.tools.ip_filter()
+    def DELETE(self, delete, client):
+        if delete in self.santiago.hosting[client]:
+            del self.santiago.hosting[client][delete]
+
 class Hosting(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self):
         return self.respond("hosting-get.tmpl",
-                            {"clients": [x for x in self.santiago.consuming]})
+                            {"clients": [x for x in self.santiago.hosting]})
+
+    @cherrypy.tools.ip_filter()
+    def POST(self, client="", put="", delete=""):
+        if put:
+            self.PUT(put)
+        elif delete:
+            self.DELETE(delete)
+        else:
+            self.santiago.create_hosting_client(client)
+
+        raise cherrypy.HTTPRedirect("/hosting")
+
+    @cherrypy.tools.ip_filter()
+    def PUT(self, put):
+        self.santiago.create_hosting_client(client)
+
+    @cherrypy.tools.ip_filter()
+    def DELETE(self, delete):
+        if delete in self.santiago.hosting:
+            del self.santiago.hosting[delete]
 
 class ConsumedService(RestMonitor):
     @cherrypy.tools.ip_filter()
@@ -242,12 +305,55 @@ class ConsumedService(RestMonitor):
                               "locations":
                                   self.santiago.consuming[host][service] })
 
+    @cherrypy.tools.ip_filter()
+    def POST(self, host="", service="", location="", put="", delete=""):
+        if put:
+            self.PUT(put, host, service)
+        elif delete:
+            self.DELETE(delete, host, service)
+        else:
+            location = {location}
+            self.santiago.create_consuming_location(host, service, location)
+
+        raise cherrypy.HTTPRedirect("/consuming/"+host+"/"+service)
+
+    @cherrypy.tools.ip_filter()
+    def PUT(self, put, host, service):
+        location = {location}
+        self.santiago.create_consuming_location(host, service, location)
+
+    #Have to remove instead of delete for locations as $service is a list
+    @cherrypy.tools.ip_filter()
+    def DELETE(self, delete, host, service):
+        if delete in self.santiago.consuming[host][service]:
+            self.santiago.consuming[host][service].remove(delete)
+
 class ConsumedHost(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, host):
         return self.respond("consumedHost-get.tmpl",
                             { "services": self.santiago.consuming[host],
                               "host": host })
+
+    @cherrypy.tools.ip_filter()
+    def POST(self, host="", service="", put="", delete=""):
+        if put:
+            self.PUT(put, host)
+        elif delete:
+            self.DELETE(delete, host)
+        else:
+            self.santiago.create_consuming_service(host, service)
+
+        raise cherrypy.HTTPRedirect("/consuming/"+host)
+
+    @cherrypy.tools.ip_filter()
+    def PUT(self, put, host):
+        self.santiago.create_consuming_service(host, service)
+
+    @cherrypy.tools.ip_filter()
+    def DELETE(self, delete, host):
+        if delete in self.santiago.consuming[host]:
+            del self.santiago.consuming[host][delete]
 
 class Consuming(RestMonitor):
     @cherrypy.tools.ip_filter()
@@ -262,14 +368,13 @@ class Consuming(RestMonitor):
         elif delete:
             self.DELETE(delete)
         else:
-            self.santiago.consuming[host] = None
+            self.santiago.create_consuming_host(host)
 
         raise cherrypy.HTTPRedirect("/consuming")
 
     @cherrypy.tools.ip_filter()
     def PUT(self, put):
-        self.santiago.consuming[host] = None
-
+        self.santiago.create_consuming_host(host)
 
     @cherrypy.tools.ip_filter()
     def DELETE(self, delete):
