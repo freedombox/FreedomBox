@@ -53,6 +53,7 @@ or later.  A copy of GPLv3 is available [from the Free Software Foundation]
 import ast
 import cfg
 from collections import defaultdict as DefaultDict
+import ConfigParser as configparser
 import gnupg
 import inspect
 import json
@@ -716,7 +717,11 @@ if __name__ == "__main__":
     logging.getLogger("cherrypy.error").setLevel(logging.CRITICAL)
 
     cert = "santiago.crt"
-    mykey = utilities.load_config("production.cfg").get("pgpprocessor", "keyid")
+    try:
+        mykey = utilities.load_config("production.cfg").get("pgpprocessor",
+                                                            "keyid")
+    except configparser.NoSectionError:
+        mykey = 0
 
     listeners = { "https": { "socket_port": 8080,
                              "ssl_certificate": cert,
