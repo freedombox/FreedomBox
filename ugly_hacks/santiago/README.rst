@@ -519,9 +519,7 @@ Functional Questions
 Using Santiago
 ==============
 
-The Santiago service is mostly working now.  I still need to add PGP encryption,
-signing, decryption, and verification (and handle all the ``FIXME``\s and
-``TODO``\s in the code).
+The Santiago service is mostly working now.
 
 First, you'll need to create a certificate to serve Santiago over HTTPS::
 
@@ -530,8 +528,8 @@ First, you'll need to create a certificate to serve Santiago over HTTPS::
     # chgrp 1000 santiago.crt
     # chmod g+r santiago.crt
 
-Next, you'll need to open up ``start.sh`` and update the system path to locate the
-"gnupg_" and "cfg" modules.
+Next, you'll need to open up ``start.sh`` and update the system path to locate
+the "gnupg_" and "cfg" modules.
 
 .. _gnupg: https://code.google.com/p/python-gnupg/
 

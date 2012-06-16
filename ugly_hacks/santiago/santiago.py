@@ -173,7 +173,8 @@ class Santiago(object):
     def _get_protocol_module(cls, protocol):
         """Return the requested protocol module.
 
-        FIXME: Assumes the current directory is in sys.path
+        It assumes the Santiago directory is in sys.path, which seems to be a
+        fair assumption.
 
         """
         import_name = cls.CONTROLLER_MODULE.format(protocol)
@@ -626,8 +627,6 @@ class SantiagoListener(SantiagoConnector):
 
     def learn(self, host, service):
         """Request a service from another Santiago client.
-
-        TODO: add request whitelisting.
 
         """
         return self.santiago.query(host, service)
