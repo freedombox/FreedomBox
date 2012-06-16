@@ -231,58 +231,62 @@ class Santiago(object):
 
         return self.me == server
 
-    def learn_service(self, host, service, locations):
-        """Learn a service somebody else hosts for me."""
-        self.create_consuming_location(host, service, locations)
-
-    def provide_service(self, client, service, locations):
-        """Start hosting a service for somebody else."""
-        self.create_hosting_location(client, service, locations)
-
     def create_hosting_client(self, client):
         """Create a hosting client if one doesn't currently exist."""
+
         if client not in self.hosting:
             self.hosting[client] = dict()
 
     def create_hosting_service(self, client, service):
         """Create a hosting service if one doesn't currently exist.
+
         Check that hosting client exists before trying to add service.
+
         """
         self.create_hosting_client(client)
+
         if service not in self.hosting[client]:
             self.hosting[client][service] = list()
 
     def create_hosting_location(self, client, service, locations):
         """Create a hosting service if one doesn't currently exist.
+
         Check that hosting client exists before trying to add service.
         Check that hosting service exists before trying to add location.
+
         """
-        self.create_hosting_client(client)
         self.create_hosting_service(client,service)
+
         for location in locations:
             if location not in self.hosting[client][service]:
                 self.hosting[client][service].append(location)
 
     def create_consuming_host(self, host):
         """Create a consuming host if one doesn't currently exist."""
+
         if host not in self.consuming:
             self.consuming[host] = dict()
 
     def create_consuming_service(self, host, service):
         """Create a consuming service if one doesn't currently exist.
+
         Check that consuming host exists before trying to add service.
+
         """
         self.create_consuming_host(host)
+
         if service not in self.consuming[host]:
             self.consuming[host][service] = list()
 
     def create_consuming_location(self, host, service, locations):
         """Create a consuming location if one doesn't currently exist.
+
         Check that consuming host exists before trying to add service.
         Check that consuming service exists before trying to add location.
+
         """
-        self.create_consuming_host(host)
         self.create_consuming_service(host,service)
+
         for location in locations:
             if location not in self.consuming[host][service]:
                 self.consuming[host][service].append(location)
@@ -476,7 +480,7 @@ class Santiago(object):
         if not self.i_am(host):
             self.proxy(to, host, client, service, reply_to)
         else:
-            self.learn_service(client, "santiago", reply_to)
+            self.create_consuming_location(client, "santiago", reply_to)
 
             self.outgoing_request(
                 self.me, client, self.me, client,
@@ -526,8 +530,8 @@ class Santiago(object):
             self.proxy()
             return
 
-        self.learn_service(host, "santiago", reply_to)
-        self.learn_service(host, service, locations)
+        self.create_consuming_location(host, "santiago", reply_to)
+        self.create_consuming_location(host, service, locations)
 
         self.requests[host].remove(service)
         # clean buffers
@@ -665,7 +669,7 @@ class SantiagoListener(SantiagoConnector):
     def provide(self, client, service, location):
         """Provide a service for the client at the location."""
 
-        return self.santiago.provide_service(client, service, [location])
+        return self.santiago.create_hosting_location(client, service, [location])
 
 class SantiagoSender(SantiagoConnector):
     """Generic Santiago Sender superclass.
