@@ -12,10 +12,10 @@
     #if $locations
     <ul>
       #for $location in $locations
-      <li><a href="$location">$location</a></li>
+      <li><a href="$location">$location</a>
         <form method="post" action="/hosting/$client/$service">
           <input type="hidden" name="delete" value="$location" />
-          <input type="Submit" value="Delete" />
+          <input type="submit" value="Delete" />
         </form>
       </li>
       #end for
@@ -23,7 +23,7 @@
     #end if
   <hr />
   <form method="post" action="/hosting/$client/$service">
-    <label>Location: <input name="location" /></label>
+    <label>Location: <input name="put" /></label>
     <input type="submit" value="Create New Location" />
   </form>
   </body>

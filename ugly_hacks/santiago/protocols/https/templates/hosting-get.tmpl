@@ -8,21 +8,22 @@
   </head>
   <body>
     #if $clients
-    <p>You are <a href="/hosting">hosting</a> services for:</p>
+    <p>You are hosting services for:</p>
     <ul>
       #for $client in $clients
-      <li><a href="/hosting/$client">$client</a></li>
+      <li><a href="/hosting/$client">$client</a>
         <form method="post" action="/hosting">
           <input type="hidden" name="delete" value="$client" />
-          <input type="Submit" value="Delete" />
+          <input type="submit" value="Delete" />
         </form>
+      </li>
       #end for
     </ul>
     #end if
 
     <hr />
     <form method="post" action="/hosting">
-      <label>Client: <input name="client" /></label>
+      <label>Client: <input name="put" /></label>
       <input type="submit" value="Create New Client" />
     </form>
   </body>

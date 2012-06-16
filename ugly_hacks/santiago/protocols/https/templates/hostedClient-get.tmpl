@@ -11,18 +11,19 @@
     #if $services
     <ul>
       #for $service in $services
-      <li><a href="/hosting/$client/$service">$service</a></li>
+      <li><a href="/hosting/$client/$service">$service</a>
         <form method="post" action="/hosting/$client">
           <input type="hidden" name="delete" value="$service" />
-          <input type="Submit" value="Delete" />
+          <input type="submit" value="Delete" />
         </form>
+      </li>
       #end for
     </ul>
     #end if
 
     <hr />
     <form method="post" action="/hosting/$client">
-      <label>Service: <input name="service" /></label>
+      <label>Service: <input name="put" /></label>
       <input type="submit" value="Create New Service" />
     </form>
   </body>

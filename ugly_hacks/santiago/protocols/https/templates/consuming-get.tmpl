@@ -7,14 +7,14 @@
     </style>
   </head>
   <body>
+    <p>You are consuming services from these hosts:</p>
     #if $hosts
-    <p>You are <a href="/consuming">consuming</a> services from these hosts:</p>
     <ul>
       #for $host in $hosts
       <li><a href="/consuming/$host">$host</a>
         <form method="post" action="/consuming">
           <input type="hidden" name="delete" value="$host" />
-          <input type="Submit" value="Delete" />
+          <input type="submit" value="Delete" />
         </form>
       </li>
       #end for
@@ -23,7 +23,7 @@
 
     <hr />
     <form method="post" action="/consuming">
-      <label>Host: <input name="host" /></label>
+      <label>Host: <input name="put" /></label>
       <input type="submit" value="Create New Host" />
     </form>
   </body>
