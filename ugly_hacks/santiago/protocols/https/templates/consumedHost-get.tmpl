@@ -1,12 +1,28 @@
 <html>
+  <head>
+    <style>
+      form {
+        display: inline;
+      }
+    </style>
+  </head>
   <body>
     <p>You are <a href="/consuming">consuming</a> services from $host:</p>
     #if $services
     <ul>
       #for $service in $services
       <li><a href="/consuming/$host/$service">$service</a></li>
+        <form method="post" action="/consuming/$host">
+          <input type="hidden" name="delete" value="$service" />
+          <input type="Submit" value="Delete" />
+        </form>
       #end for
     </ul>
     #end if
+    <hr />
+    <form method="post" action="/consuming/$host">
+      <label>Service: <input name="service" /></label>
+      <input type="submit" value="Create New Service" />
+    </form>
   </body>
 </html>

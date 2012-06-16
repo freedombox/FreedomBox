@@ -233,28 +233,59 @@ class Santiago(object):
 
     def learn_service(self, host, service, locations):
         """Learn a service somebody else hosts for me."""
-        if host not in self.consuming:
-            self.consuming[host] = dict()
-
-        if service not in self.consuming[host]:
-            self.consuming[host][service] = list()
-
-        for location in locations:
-            if location not in self.consuming[host][service]:
-                self.consuming[host][service].append(location)
+        self.create_consuming_location(host, service, locations)
 
     def provide_service(self, client, service, locations):
         """Start hosting a service for somebody else."""
+        self.create_hosting_location(client, service, locations)
 
+    def create_hosting_client(self, client):
+        """Create a hosting client if one doesn't currently exist."""
         if client not in self.hosting:
             self.hosting[client] = dict()
 
+    def create_hosting_service(self, client, service):
+        """Create a hosting service if one doesn't currently exist.
+        Check that hosting client exists before trying to add service.
+        """
+        self.create_hosting_client(client)
         if service not in self.hosting[client]:
             self.hosting[client][service] = list()
 
+    def create_hosting_location(self, client, service, locations):
+        """Create a hosting service if one doesn't currently exist.
+        Check that hosting client exists before trying to add service.
+        Check that hosting service exists before trying to add location.
+        """
+        self.create_hosting_client(client)
+        self.create_hosting_service(client,service)
         for location in locations:
             if location not in self.hosting[client][service]:
                 self.hosting[client][service].append(location)
+
+    def create_consuming_host(self, host):
+        """Create a consuming host if one doesn't currently exist."""
+        if host not in self.consuming:
+            self.consuming[host] = dict()
+
+    def create_consuming_service(self, host, service):
+        """Create a consuming service if one doesn't currently exist.
+        Check that consuming host exists before trying to add service.
+        """
+        self.create_consuming_host(host)
+        if service not in self.consuming[host]:
+            self.consuming[host][service] = list()
+
+    def create_consuming_location(self, host, service, locations):
+        """Create a consuming location if one doesn't currently exist.
+        Check that consuming host exists before trying to add service.
+        Check that consuming service exists before trying to add location.
+        """
+        self.create_consuming_host(host)
+        self.create_consuming_service(host,service)
+        for location in locations:
+            if location not in self.consuming[host][service]:
+                self.consuming[host][service].append(location)
 
     def get_host_locations(self, client, service):
         """Return where I'm hosting the service for the client.

@@ -889,7 +889,52 @@ class OutgoingRequest(unittest.TestCase):
 
         self.assertEqual(request["request"],
                          urlparse.parse_qs(urllib.urlencode(request))["request"][0])
+
+class CreateHosting(unittest.TestCase):
+    """Are we able to create Hosting Client/Service/Location
+
+    """
+    def setUp(self):
+        self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
+
+        self.santiago = santiago.Santiago(
+            me = self.keyid)
+
+    def test_add_hosting_client(self):
+        self.santiago.create_hosting_client(self.keyid)
+        self.assertTrue(self.keyid in self.santiago.hosting)
+
+    def test_add_hosting_service(self):
+        self.santiago.create_hosting_service(self.keyid,self.keyid+"1")
+        self.assertTrue(self.keyid+"1" in self.santiago.hosting[self.keyid])
+
+    def test_add_hosting_location(self):
+        self.santiago.create_hosting_location(self.keyid,self.keyid+"1",{self.keyid+"2"})
+        self.assertTrue(self.keyid+"2" in self.santiago.hosting[self.keyid][self.keyid+"1"])
+
+class CreateConsuming(unittest.TestCase):
+    """Are we able to create Consuming Host/Service/Location
+
+    """
+    def setUp(self):
+        self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
+
+        self.santiago = santiago.Santiago(
+            me = self.keyid)
+
+    def test_add_consuming_host(self):
+        self.santiago.create_consuming_host(self.keyid)
+        self.assertTrue(self.keyid in self.santiago.consuming)
+
+    def test_add_consuming_service(self):
+        self.santiago.create_consuming_service(self.keyid,self.keyid+"1")
+        self.assertTrue(self.keyid+"1" in self.santiago.consuming[self.keyid])
+
+    def test_add_consuming_location(self):
+        self.santiago.create_consuming_location(self.keyid,self.keyid+"1",{self.keyid+"2"})
+        self.assertTrue(self.keyid+"2" in self.santiago.consuming[self.keyid][self.keyid+"1"])
         
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
+#    logging.getLogger().setLevel(logging.DEBUG)
     unittest.main()

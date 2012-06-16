@@ -1,4 +1,11 @@
 <html>
+  <head>
+    <style>
+      form {
+        display: inline;
+      }
+    </style>
+  </head>
   <body>
     <p>You are <a href="/consuming">consuming</a> $service from
       <a href="/consuming/$host">$host</a> at:</p>
@@ -6,8 +13,17 @@
     <ul>
       #for $location in $locations
       <li><a href="$location">$location</a></li>
+        <form method="post" action="/consuming/$host/$service">
+          <input type="hidden" name="delete" value="$location" />
+          <input type="Submit" value="Delete" />
+        </form>
       #end for
     </ul>
     #end if
+    <hr />
+    <form method="post" action="/consuming/$host/$service">
+      <label>Location: <input name="location" /></label>
+      <input type="submit" value="Create New Location" />
+    </form>
   </body>
 </html>
