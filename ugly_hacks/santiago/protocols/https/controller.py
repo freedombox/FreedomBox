@@ -18,6 +18,15 @@ import sys
 import logging
 
 def allow_ips(ips = None):
+    """Refuse connections from non-whitelisted IPs.
+
+    Defaults to the localhost.
+
+    Hook documentation is available in:
+    
+    http://docs.cherrypy.org/dev/progguide/extending/customtools.html
+    
+    """
     if ips == None:
         ips = [ "127.0.0.1" ]
 
