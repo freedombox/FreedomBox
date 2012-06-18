@@ -215,7 +215,7 @@ class RestMonitor(santiago.RestController):
     def __init__(self, aSantiago):
         super(RestMonitor, self).__init__()
         self.santiago = aSantiago
-        self.relative_path = "protocols/https/templates/"
+        self.relative_path = "protocols/https/templates/http/"
 
     def respond(self, template, values):
         return [str(Template(
