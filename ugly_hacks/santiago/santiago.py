@@ -565,6 +565,8 @@ class Santiago(object):
             debug_log("bad key {0}".format(key))
             return
 
+        message = ""
+        
         try:
             data = self.shelf[key]
         except KeyError as e:
