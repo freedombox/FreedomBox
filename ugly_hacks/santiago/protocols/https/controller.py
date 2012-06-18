@@ -1,5 +1,6 @@
 """The HTTPS Santiago listener and sender.
 
+TODO: add JSON output.
 FIXME: add real authentication.
 FIXME: sanitize or properly escape user input (XSS, attacks on the client).
 FIXME: make sure we never try to execute user input (injection, attacks on the
@@ -8,7 +9,6 @@ FIXME: all the Blammos.  They're terrible, unacceptable failures.
 
 """
 
-
 import santiago
 
 from Cheetah.Template import Template
@@ -16,6 +16,7 @@ import cherrypy
 import httplib, urllib, urlparse
 import sys
 import logging
+
 
 def allow_ips(ips = None):
     """Refuse connections from non-whitelisted IPs.
@@ -224,7 +225,7 @@ class RestMonitor(santiago.RestController):
 class HostedService(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, client, service):
-        return self.respond("hostedService-get.tmpl", {
+        return self.respond("hostedService.tmpl", {
                 "service": service,
                 "client": client,
                 "locations": self.santiago.hosting[client][service] })
@@ -251,7 +252,7 @@ class HostedService(RestMonitor):
 class HostedClient(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, client):
-        return self.respond("hostedClient-get.tmpl",
+        return self.respond("hostedClient.tmpl",
                             { "client": client,
                               "services": self.santiago.hosting[client] })
 
@@ -276,7 +277,7 @@ class HostedClient(RestMonitor):
 class Hosting(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self):
-        return self.respond("hosting-get.tmpl",
+        return self.respond("hosting.tmpl",
                             {"clients": [x for x in self.santiago.hosting]})
 
     @cherrypy.tools.ip_filter()
@@ -300,7 +301,7 @@ class Hosting(RestMonitor):
 class ConsumedService(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, host, service):
-        return self.respond("consumedService-get.tmpl",
+        return self.respond("consumedService.tmpl",
                             { "service": service,
                               "host": host,
                               "locations":
@@ -328,7 +329,7 @@ class ConsumedService(RestMonitor):
 class ConsumedHost(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, host):
-        return self.respond("consumedHost-get.tmpl",
+        return self.respond("consumedHost.tmpl",
                             { "services": self.santiago.consuming[host],
                               "host": host })
 
@@ -353,7 +354,7 @@ class ConsumedHost(RestMonitor):
 class Consuming(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self):
-        return self.respond("consuming-get.tmpl",
+        return self.respond("consuming.tmpl",
                             { "hosts": [x for x in self.santiago.consuming]})
 
     @cherrypy.tools.ip_filter()
@@ -377,7 +378,7 @@ class Consuming(RestMonitor):
 class Root(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self):
-        return self.respond("root-get.tmpl", {})
+        return self.respond("root.tmpl", {})
 
 class Stop(RestMonitor):
     @cherrypy.tools.ip_filter()
