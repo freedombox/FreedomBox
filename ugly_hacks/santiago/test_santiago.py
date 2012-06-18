@@ -1,6 +1,5 @@
 #! /usr/bin/python  -*- mode: auto-fill; fill-column: 80 -*-
 
-
 """Making Santiago dance, in 4 parts:
 
 - Validating the initial request (playing B).
@@ -13,29 +12,6 @@
 - Validating the forwarded response.
   - Validating the direct response (playing A).
   - Validating the indirect response (playing C, B, and A).
-
-FIXME: Can't use the current CPy setup.  It never returns, so I can't test
-against it.
-
-If I produce a listener that just echoes the parameters, I can validate the response:
-
-    import httplib, urllib
-
-    params = urllib.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
-    headers = {"Content-type": "application/x-www-form-urlencoded",
-               "Accept": "text/plain"}
-    conn = httplib.HTTPConnection("bugs.python.org")
-    print params, headers, conn
-
-    conn.request("POST", "", params, headers)
-    response = conn.getresponse()
-    print response.status, response.reason
-
-    data = response.read()
-    print data
-
-    conn.close()
-
 
 """
 
@@ -50,410 +26,20 @@ import santiago
 import utilities
 
 
-# class SantiagoTest(unittest.TestCase):
-#     """The base class for tests."""
-#
-#     def setUp(self):
-#         super(TestServing, self).setUp()
-#
-#         port_a = "localhost:9000"
-#         port_b = "localhost:8000"
-#
-#         listeners_a = [santiago.SantiagoListener(port_a)]
-#         senders_a = [santiago.SantiagoSender()]
-#         listeners_b = [santiago.SantiagoListener(port_b)]
-#         senders_b = [santiago.SantiagoSender()]
-#
-#         hosting_a = { "b": { "santiago": [ port_a ]}}
-#         consuming_a = { "santiagao": { "b": [ port_b ]}}
-#
-#         hosting_b = { "a": { "santiago": [ port_b ],
-#                              "wiki": [ "localhost:8001" ]}}
-#         consuming_b = { "santiagao": { "a": [ port_a ]}}
-#
-#         self.santiago_a = Santiago(listeners_a, senders_a, hosting_a, consuming_a)
-#         self.santiago_b = Santiago(listeners_b, senders_b, hosting_b, consuming_b)
-#
-#     def serveOnPort(self, port):
-#         """Start listening for connections on a named port.
-#
-#         Used in testing as a mock listener for responses from a Santiago server.
-#
-#         """
-#         class RequestReceiver(object):
-#             """A very basic listener.
-#
-#             It merely records the calling arguments.
-#
-#             """
-#             @cherrypy.expose
-#             def index(self, *args, **kwargs):
-#                 self.args = args
-#                 self.kwargs = kwargs
-#
-#             self.socket_port = port
-#
-#         self.receiver = RequestReceiver()
-#
-#         cherrypy.quickstart(self.receiver)
-#
-#     if sys.version_info < (2, 7):
-#         """Add a poor man's forward compatibility."""
-#
-#         class ContainsError(AssertionError):
-#             pass
-#
-#         def assertIn(self, a, b):
-#             if not a in b:
-#                 raise self.ContainsError("%s not in %s" % (a, b))
-#
-# class TestClientInitialRequest(SantiagoTest):
-#     """Does the client send a correctly formed request?
-#
-#     In these tests, we're sending requests to a mock listener which merely
-#     records that the requests were well-formed.
-#
-#     """
-#     def setUp(self):
-#         super(SantiagoTest, self).setUp()
-#
-#         self.serveOnPort(8000)
-#
-#     def test_request(self):
-#         """Verify that A queues a properly formatted initial request."""
-#
-#         self.santiago_a.request(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to="localhost:9001")
-#
-#         self.assertEqual(self.santiago_a.outgoing_messages,
-#                          [{ "from": "a", "to": "b",
-#                             "client": "a", "host": "b",
-#                             "service": "wiki", "reply-to": "localhost:9001"}])
-#
-#     def test_request(self):
-#         """Verify that A sends out a properly formatted initial request."""
-#
-#         self.santiago_a.request(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to="localhost:9001")
-#
-#         self.santiago_a.process()
-#
-#         self.assertEqual(self.receiver.kwargs,
-#                          [{ "from": "a", "to": "b",
-#                             "client": "a", "host": "b",
-#                             "service": "wiki", "reply-to": "localhost:9001"}])
-#
-# class TestServerInitialRequest(SantiagoTest):
-#     """Test how the Santiago server replies to initial service requests.
-#
-#     TODO: Add a mock listener to represent A.
-#     TODO: Transform the data structure tests into the mock-response tests.
-#     TODO tests: (normal serving + proxying) * (learning santiagi + not learning)
-#
-#     Proxying
-#     ~~~~~~~~
-#
-#     A host/listener (B) trusts proxied requests according to the minimum trust
-#     in the request.  If the request comes from an untrusted proxy or is for an
-#     untrusted client, B ignores it.
-#
-#     """
-#     def setUp(self):
-#         super(SantiagoTest, self).setUp()
-#
-#         self.serveOnPort(9000)
-#
-#     def test_acknowledgement(self):
-#         """If B receives an authorized request, then it replies with a location.
-#
-#         An "authorized request" in this case is for a service from a client that
-#         B is willing to host that service for.
-#
-#         In this case, B will answer with the wiki's location.
-#
-#         """
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages,
-#                          [{"from": "b",
-#                            "to": "a",
-#                            "client": "a",
-#                            "host": "b",
-#                            "service": "wiki",
-#                            "locations": ["192.168.0.13"],
-#                            "reply-to": "localhost:8000"}])
-#
-#     def test_reject_bad_service(self):
-#         """Does B reject requests for unsupported services?
-#
-#         In this case, B should reply with an empty list of locations.
-#
-#         """
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages,
-#                          [{"from": "b",
-#                            "to": "a",
-#                            "client": "a",
-#                            "host": "b",
-#                            "service": "wiki",
-#                            "locations": [],
-#                            "reply-to": "localhost:8000"}])
-#
-#     def test_reject_bad_key(self):
-#         """If B receives a request from an unauthorized key, it does not reply.
-#
-#         An "unauthorized request" in this case is for a service from a client
-#         that B does not trust.  This is different than clients B hosts no
-#         services for.
-#
-#         In this case, B will never answer the request.
-#
-#         """
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="z", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages, [])
-#
-#     def test_reject_good_source_bad_client(self):
-#         """B is silent when a trusted key proxies anything for an untrusted key.
-#
-#         B doesn't know who the client is and should consider it an
-#         untrusted key connection attempt.
-#
-#         """
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="z", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages, [])
-#
-#     def test_reject_bad_source_good_client(self):
-#         """B is silent when an untrusted key proxies anything for a trusted key.
-#
-#         B doesn't know who the proxy is and should consider it an
-#         untrusted key connection attempt.
-#
-#         """
-#         self.santiago_b.receive(from_="z", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages, [])
-#
-#     def test_reject_bad_source_bad_client(self):
-#         """B is silent when untrusted keys proxy anything for untrusted keys.
-#
-#         B doesn't know who anybody is and considers this an untrusted
-#         connection attempt.
-#
-#         """
-#         self.santiago_b.receive(from_="y", to="b",
-#                                 client="z", host="b",
-#                                 service="wiki", reply_to=None)
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages, [])
-#
-#     def test_learn_santaigo(self):
-#         """Does B learn new Santiago locations from trusted requests?
-#
-#         If A sends B a request with a new Santiago location, B should learn it.
-#
-#         """
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to="localhost:9001")
-#
-#         self.assertEqual(self.santiago_b.consuming["santiago"]["a"],
-#                          ["localhost:9000", "localhost:9001"])
-#
-#     def test_handle_requests_once(self):
-#         """Verify that we reply to each request only once."""
-#
-#         self.santiago_b.receive(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to=None)
-#         self.santiago_b.process()
-#
-#         self.assertEqual(self.santiago_b.outgoing_messages, [])
-#
-# class TestServerInitialResponse(SantiagoTest):
-#     pass
-#
-# class TestClientInitialResponse(SantiagoTest):
-#     pass
-#
-# class TestForwardedRequest(SantiagoTest):
-#     pass
-#
-# class TestForwardedResponse(SantiagoTest):
-#     pass
-#
-# class TestSimpleSantiago(unittest.TestCase):
-#     def setUp(self):
-#
-#         port_a = "localhost:9000"
-#         port_b = "localhost:8000"
-#
-#         listeners_a = {"http": {"port": port_a}}
-#         senders_a = ({ "protocol": "http", "proxy": tor_proxy_port },)
-#
-#         listeners_b = {"http": {"port": port_b}}
-#         senders_b = ({ "protocol": "http", "proxy": tor_proxy_port },)
-#
-#         hosting_a = { "b": { "santiago": set( ["aDifferentHexNumber.onion"])}}
-#         consuming_a = { "santiagao": {"b": set(["iAmAHexadecimalNumber.onion"])}}
-#
-#         hosting_b = { "a": { "santiago": set( ["iAmAHexadecimalNumber.onion"])}}
-#         consuming_b = { "santiagao": { "a": set( ["aDifferentHexNumber.onion"])}}
-#
-#         self.santiago_a = santiago.Santiago(listeners_a, senders_a,
-#                                          hosting_a, consuming_a, "a")
-#         self.santiago_b = santiago.Santiago(listeners_b, senders_b,
-#                                          hosting_b, consuming_b, "b")
-#
-#         cherrypy.Application(self.santiago_a, "/")
-#         cherrypy.Application(self.santiago_b, "/")
-#
-#         cherrypy.engine.start()
-#
-#     def testRequest(self):
-#         self.santiago_a.request(from_="a", to="b",
-#                                 client="a", host="b",
-#                                 service="wiki", reply_to="localhost:9000")
-#
-#
-# class Unwrapping(unittest.TestCase):
-#
-#     def testVerifySigner(self):
-#         pass
-#
-#     def testVerifyClient(self):
-#         pass
-#
-#     def testDecryptClient(self):
-#         pass
-#
-# class IncomingProxyRequest(unittest.TestCase):
-#
-#     """Do we correctly handle valid, incoming, proxied messages?
-#
-#     These tests are for the first wrapped layer of the message, that which is
-#     signed by the sender.  The sender is not necessarily the original requester
-#     who's asking us to do something with the message.
-#
-#     """
-#
-#     def setUp(self):
-#         pass
-#
-#     def testPassingMessage(self):
-#         """Does a valid proxied message pass?"""
-#
-#         pass
-#
-#     def testInvalidSig(self):
-#         """Does an invalid signature raise an error?"""
-#
-#         pass
-#
-#     def testUnknownClient(self):
-#         """Does an unknown client raise an error?"""
-#
-#         pass
-#
-# class IncomingSignedRequest(IncomingProxyRequest):
-#
-#     """Do we correctly handle valid, incoming, messages?
-#
-#     These tests focus on the second layer of the message which is signed by the
-#     host/client and lists a destination.
-#
-#     """
-#     def testProxyOtherHosts(self):
-#         """Messages to others are sent to them directly or proxied."""
-#
-#         pass
-#
-#     def testHandleMyHosting(self):
-#         """Messages to me are not proxied and handled normally."""
-#
-#         pass
-#
-#     def testNoDestination(self):
-#         """Messages without destinations are ignored."""
-#
-#         pass
-#
-# class IncomingRequestBody(IncomingSignedRequest):
-#
-#     """Do we correctly handle the body of a request?
-#
-#     This is the last layer of the message which is encrypted by the original
-#     sender.  This validation also depends on the previous layer's data, making
-#     it a bit more complicated.
-#
-#     """
-#     def testHandleGoodMessage(self):
-#         """Sanity check: no errors are thrown for a valid message."""
-#
-#         pass
-#
-#     def testCantDecryptMessage(self):
-#         """This message isn't for me.  I can't decrypt it."""
-#
-#         pass
-#
-#     def testImNotHost(self):
-#         """Bail out if someone else is the host, yet I am the "to"."""
-#
-#         pass
-#
-#     def testImNotClient(self):
-#         """Bail out if someone else is the client, yet I am the "to"."""
-#
-#         pass
-#
-#     def testHostAndClient(self):
-#         """Bail out if the message includes a host and a client.
-#
-#         A circular response?
-#
-#         """
-#         pass
-#
-#     def testImNotTo(self):
-#         """This message isn't for me.
-#
-#         The "To" has been repeated from the signed message, but I'm not the
-#         recipient in the encrypted message.
-#
-#         """
-#         pass
-#
-#     def testNoDestinations(self):
-#         """No host, client, or to."""
-#
-#         pass
-#
-#     def testSignersDiffer(self):
-#         """The signed message and encrypted message have different signers."""
-#
-#         pass
-#
-#     def testSignerAndClientDiffer(self):
-#         """The encrypted message is signed by someone other than the cilent."""
-#
-#         pass
+class SantiagoTest(unittest.TestCase):
+    """The base class for tests."""
 
-class UnpackRequest(unittest.TestCase):
+    if sys.version_info < (2, 7):
+        """Add a poor man's forward compatibility."""
+  
+        class ContainsError(AssertionError):
+            pass
+
+        def assertIn(self, a, b):
+            if not a in b:
+                raise self.ContainsError("%s not in %s" % (a, b))
+
+class UnpackRequest(SantiagoTest):
 
     """Are requests unpacked as expected?
 
@@ -546,7 +132,7 @@ class UnpackRequest(unittest.TestCase):
         """The test request needs all supported keys."""
 
         for key in self.ALL_KEYS:
-            self.assertTrue(key in self.request)
+            self.assertIn(key, self.request)
 
     def wrap_message(self, message):
         """The standard wrapping method for these tests."""
@@ -576,9 +162,7 @@ class UnpackRequest(unittest.TestCase):
             del broken_dict[key]
             encrypted_data = self.wrap_message(broken_dict)
 
-            self.assertEqual(
-                self.santiago.unpack_request(encrypted_data),
-                None)
+            self.assertEqual(self.santiago.unpack_request(encrypted_data), None)
 
     def test_non_null_keys_are_set(self):
         """If any keys that can't be empty are empty, the message is skipped."""
@@ -588,9 +172,7 @@ class UnpackRequest(unittest.TestCase):
             broken_dict[key] = None
             encrypted_data = self.wrap_message(broken_dict)
 
-            self.assertEqual(
-                self.santiago.unpack_request(encrypted_data),
-                None)
+            self.assertEqual(self.santiago.unpack_request(encrypted_data), None)
 
     def test_null_keys_are_null(self):
         """If any optional keys are null, the message's still processed."""
@@ -602,9 +184,8 @@ class UnpackRequest(unittest.TestCase):
 
             broken_dict = self.validate_request(broken_dict)
 
-            self.assertEqual(
-                self.santiago.unpack_request(encrypted_data),
-                broken_dict)
+            self.assertEqual(self.santiago.unpack_request(encrypted_data),
+                             broken_dict)
 
     def test_skip_undecryptable_messages(self):
         """Mesasges that I can't decrypt (for other folks) are skipped.
@@ -633,7 +214,7 @@ class UnpackRequest(unittest.TestCase):
             broken_request = dict(self.request)
             broken_request[key] = 1
             broken_request = self.wrap_message(broken_request)
-            
+
             self.assertEqual(self.santiago.unpack_request(broken_request), None)
 
     def test_require_protocol_version_overlap(self):
@@ -660,7 +241,7 @@ class UnpackRequest(unittest.TestCase):
 
         self.assertFalse(self.santiago.unpack_request(self.request))
 
-class HandleRequest(unittest.TestCase):
+class HandleRequest(SantiagoTest):
     """Process an incoming request, from a client, for to host services.
 
     - Verify we're willing to host for both the client and proxy.  If we
@@ -744,7 +325,7 @@ class HandleRequest(unittest.TestCase):
         self.assertEqual(self.santiago.consuming[self.keyid]["santiago"],
                          [1, 2])
 
-# class HandleReply(unittest.TestCase):
+# class HandleReply(SantiagoTest):
 
 #     """
 #     def handle_reply(self, from_, to, host, client,
@@ -808,7 +389,7 @@ class HandleRequest(unittest.TestCase):
 #         """
 #         self.fail()
 
-class OutgoingRequest(unittest.TestCase):
+class OutgoingRequest(SantiagoTest):
     """Are outgoing requests properly formed?
 
     Here, we'll use a faux Santiago Sender that merely records and decodes the
@@ -876,65 +457,82 @@ class OutgoingRequest(unittest.TestCase):
 
         self.outgoing_call()
 
-        self.assertTrue(self.service in self.santiago.requests[self.host])
+        self.assertIn(self.service, self.santiago.requests[self.host])
 
     def test_transparent_unwrapping(self):
         """Is the unwrapping process transparent?"""
 
         import urlparse, urllib
-        
+
         self.outgoing_call()
 
         request = {"request": str(self.request_sender.crypt) }
 
         self.assertEqual(request["request"],
-                         urlparse.parse_qs(urllib.urlencode(request))["request"][0])
+                         urlparse.parse_qs(urllib.urlencode(request))
+                         ["request"][0])
 
-class CreateHosting(unittest.TestCase):
-    """Are we able to create Hosting Client/Service/Location
+class CreateHosting(SantiagoTest):
+    """Are clients, services, and locations learned correctly?
+
+    Each should be available in ``self.hosting`` after it's learned.
 
     """
     def setUp(self):
         self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
 
-        self.santiago = santiago.Santiago(
-            me = self.keyid)
+        self.santiago = santiago.Santiago(me = self.keyid)
+
+        self.client = 1
+        self.service = 2
+        self.location = 3
 
     def test_add_hosting_client(self):
-        self.santiago.create_hosting_client(self.keyid)
-        self.assertTrue(self.keyid in self.santiago.hosting)
+        self.santiago.create_hosting_client(self.client)
+        self.assertIn(self.client, self.santiago.hosting)
 
     def test_add_hosting_service(self):
-        self.santiago.create_hosting_service(self.keyid,self.keyid+"1")
-        self.assertTrue(self.keyid+"1" in self.santiago.hosting[self.keyid])
+        self.santiago.create_hosting_service(self.client, self.service)
+        self.assertIn(self.service, self.santiago.hosting[self.client])
 
     def test_add_hosting_location(self):
-        self.santiago.create_hosting_location(self.keyid,self.keyid+"1",{self.keyid+"2"})
-        self.assertTrue(self.keyid+"2" in self.santiago.hosting[self.keyid][self.keyid+"1"])
+        self.santiago.create_hosting_location(self.client, self.service,
+                                              [self.location])
+        self.assertIn(self.location,
+                        self.santiago.hosting[self.client][self.service])
 
-class CreateConsuming(unittest.TestCase):
-    """Are we able to create Consuming Host/Service/Location
+class CreateConsuming(SantiagoTest):
+    """Are hosts, services, and locations learned correctly?
+
+    Each should be available in ``self.consuming`` after it's learned.
 
     """
     def setUp(self):
         self.keyid = utilities.load_config().get("pgpprocessor", "keyid")
 
-        self.santiago = santiago.Santiago(
-            me = self.keyid)
+        self.santiago = santiago.Santiago(me = self.keyid)
+
+        self.host = 1
+        self.service = 2
+        self.location = 3
 
     def test_add_consuming_host(self):
-        self.santiago.create_consuming_host(self.keyid)
-        self.assertTrue(self.keyid in self.santiago.consuming)
+        self.santiago.create_consuming_host(self.host)
+
+        self.assertIn(self.host, self.santiago.consuming)
 
     def test_add_consuming_service(self):
-        self.santiago.create_consuming_service(self.keyid,self.keyid+"1")
-        self.assertTrue(self.keyid+"1" in self.santiago.consuming[self.keyid])
+        self.santiago.create_consuming_service(self.host, self.service)
+
+        self.assertIn(self.service, self.santiago.consuming[self.host])
 
     def test_add_consuming_location(self):
-        self.santiago.create_consuming_location(self.keyid,self.keyid+"1",{self.keyid+"2"})
-        self.assertTrue(self.keyid+"2" in self.santiago.consuming[self.keyid][self.keyid+"1"])
-        
+        self.santiago.create_consuming_location(self.host,self.service,
+                                                [self.location])
+
+        self.assertIn(self.location,
+                       self.santiago.consuming[self.host][self.service])
+
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
-#    logging.getLogger().setLevel(logging.DEBUG)
     unittest.main()
