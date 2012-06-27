@@ -6,3 +6,4 @@ export PYTHONPATH
 
 python test_pgpprocessor.py
 python test_santiago.py
+python protocols/https/test_controller.py
