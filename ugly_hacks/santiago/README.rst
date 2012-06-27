@@ -550,6 +550,11 @@ Tasks
 - |TODO| allow multiple listeners and senders per protocol (with different
   proxies?)
 
+- |TODO| Continuously review use of getattr and setattr to avoid server-side
+  injection: ``egrep -nHr "(g|s)etattr" *``
+
+  It's acceptable.  For now.
+
 .. |TODO| unicode:: U+2610
 .. |DONE| unicode:: U+2611
 
