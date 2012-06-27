@@ -24,9 +24,9 @@ def allow_ips(ips = None):
     Defaults to the localhost.
 
     Hook documentation is available in:
-    
+
     http://docs.cherrypy.org/dev/progguide/extending/customtools.html
-    
+
     """
     if ips == None:
         ips = [ "127.0.0.1" ]
@@ -36,7 +36,7 @@ def allow_ips(ips = None):
         raise cherrypy.HTTPError(403)
 
 cherrypy.tools.ip_filter = cherrypy.Tool('before_handler', allow_ips)
-    
+
 def start(*args, **kwargs):
     """Module-level start function, called after listener and sender started.
 
@@ -212,26 +212,58 @@ class Monitor(santiago.SantiagoMonitor):
 
 class RestMonitor(santiago.RestController):
 
+    # FIXME filter input and escape output properly.
+    # FIXME build tests for this.
+
+    # TODO http://tools.cherrypy.org/wiki/ParameterDemonstration
+    # TODO http://docs.cherrypy.org/dev/concepts/dispatching.html
+    # TODO https://appmecha.wordpress.com/2008/11/08/variable-url-parameters/
+    # TODO https://duckduckgo.com/?q=cherrypy+combine+positional+and+keyword+parameters
+
     def __init__(self, aSantiago):
         super(RestMonitor, self).__init__()
         self.santiago = aSantiago
-        self.relative_path = "protocols/https/templates/http/"
+        self.relative_path = "protocols/https/templates"
 
-    def respond(self, template, values):
+    def _parse_query(self, query_input):
+        """
+
+        Might raise any of: ValueError, TypeError, NameError
+
+        """
+        query = ""
+
+        if query_input:
+            query = dict([item.split("=") for item in query_input.split("&")])
+
+        return query
+
+    def respond(self, template, values, encoding="html"):
+        try:
+            query = self._parse_query(cherrypy.request.query_string)
+        except (ValueError, TypeError, NameError):
+            return
+
+        if query:
+            try:
+                encoding = query["encoding"]
+            except KeyError:
+                pass
+
         return [str(Template(
-                    file=self.relative_path + template,
+                    file="/".join((self.relative_path, encoding, template)),
                     searchList = [dict(values)]))]
 
 class HostedService(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self, client, service):
+    def GET(self, client, service, **kwargs):
         return self.respond("hostedService.tmpl", {
                 "service": service,
                 "client": client,
                 "locations": self.santiago.hosting[client][service] })
 
     @cherrypy.tools.ip_filter()
-    def POST(self, client="", service="", put="", delete=""):
+    def POST(self, client="", service="", put="", delete="", **kwargs):
         if put:
             self.PUT(client, service, put)
         elif delete:
@@ -248,16 +280,16 @@ class HostedService(RestMonitor):
     def DELETE(self, client, service, location):
         if location in self.santiago.hosting[client][service]:
             self.santiago.hosting[client][service].remove(location)
-    
+
 class HostedClient(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self, client):
+    def GET(self, client, **kwargs):
         return self.respond("hostedClient.tmpl",
                             { "client": client,
                               "services": self.santiago.hosting[client] })
 
     @cherrypy.tools.ip_filter()
-    def POST(self, client="", put="", delete=""):
+    def POST(self, client="", put="", delete="", **kwargs):
         if put:
             self.PUT(client, put)
         elif delete:
@@ -276,12 +308,12 @@ class HostedClient(RestMonitor):
 
 class Hosting(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self):
+    def GET(self, **kwargs):
         return self.respond("hosting.tmpl",
                             {"clients": [x for x in self.santiago.hosting]})
 
     @cherrypy.tools.ip_filter()
-    def POST(self, put="", delete=""):
+    def POST(self, put="", delete="", **kwargs):
         if put:
             self.PUT(put)
         elif delete:
@@ -300,7 +332,7 @@ class Hosting(RestMonitor):
 
 class ConsumedService(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self, host, service):
+    def GET(self, host, service, **kwargs):
         return self.respond("consumedService.tmpl",
                             { "service": service,
                               "host": host,
@@ -308,7 +340,7 @@ class ConsumedService(RestMonitor):
                                   self.santiago.consuming[host][service] })
 
     @cherrypy.tools.ip_filter()
-    def POST(self, host="", service="", put="", delete=""):
+    def POST(self, host="", service="", put="", delete="", **kwargs):
         if put:
             self.PUT(host, service, put)
         elif delete:
@@ -328,13 +360,13 @@ class ConsumedService(RestMonitor):
 
 class ConsumedHost(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self, host):
+    def GET(self, host, **kwargs):
         return self.respond("consumedHost.tmpl",
                             { "services": self.santiago.consuming[host],
                               "host": host })
 
     @cherrypy.tools.ip_filter()
-    def POST(self, host="", put="", delete=""):
+    def POST(self, host="", put="", delete="", **kwargs):
         if put:
             self.PUT(host, put)
         elif delete:
@@ -353,12 +385,12 @@ class ConsumedHost(RestMonitor):
 
 class Consuming(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self):
+    def GET(self, **kwargs):
         return self.respond("consuming.tmpl",
                             { "hosts": [x for x in self.santiago.consuming]})
 
     @cherrypy.tools.ip_filter()
-    def POST(self, put="", delete=""):
+    def POST(self, put="", delete="", **kwargs):
         if put:
             self.PUT(put)
         elif delete:
@@ -377,15 +409,15 @@ class Consuming(RestMonitor):
 
 class Root(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def GET(self):
+    def GET(self, **kwargs):
         return self.respond("root.tmpl", {})
 
 class Stop(RestMonitor):
     @cherrypy.tools.ip_filter()
-    def POST(self):
+    def POST(self, **kwargs):
         self.santiago.live = 0
         raise cherrypy.HTTPRedirect("/")
 
     @cherrypy.tools.ip_filter()
-    def GET(self):
+    def GET(self, **kwargs):
         self.POST() # FIXME cause it's late and I'm tired.
