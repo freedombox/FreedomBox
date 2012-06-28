@@ -1,3 +1,4 @@
+#import cgi
 <html>
   <head>
     <style>
@@ -11,6 +12,7 @@
     <p>You are hosting services for:</p>
     <ul>
       #for $client in $clients
+      #set $client = $cgi.escape($client)
       <li><a href="/hosting/$client">$client</a>
         <form method="post" action="/hosting">
           <input type="hidden" name="delete" value="$client" />

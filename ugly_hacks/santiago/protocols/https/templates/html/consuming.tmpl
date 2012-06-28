@@ -1,3 +1,4 @@
+#import cgi
 <html>
   <head>
     <style>
@@ -11,6 +12,7 @@
     #if $hosts
     <ul>
       #for $host in $hosts
+      #set $host = $cgi.escape($host)
       <li><a href="/consuming/$host">$host</a>
         <form method="post" action="/consuming">
           <input type="hidden" name="delete" value="$host" />

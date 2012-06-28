@@ -1,3 +1,6 @@
+#import cgi
+#set $client = $cgi.escape($client)
+#set $service = $cgi.escape($service)
 <html>
   <head>
     <style>
@@ -12,6 +15,7 @@
     #if $locations
     <ul>
       #for $location in $locations
+      #set $location = $cgi.escape($location)
       <li><a href="$location">$location</a>
         <form method="post" action="/hosting/$client/$service">
           <input type="hidden" name="delete" value="$location" />

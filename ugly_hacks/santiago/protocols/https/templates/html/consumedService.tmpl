@@ -1,3 +1,6 @@
+#import cgi
+#set $host = $cgi.escape($host)
+#set $service = $cgi.escape($service)
 <html>
   <head>
     <style>
@@ -12,8 +15,11 @@
     #if $locations
     <ul>
       #for $location in $locations
-      <li><a href="$location">$location</a>
-        <form method="post" action="/consuming/$host/$service">
+      #set $location = $cgi.escape($location)
+      <li>
+        <a href="$location">$location</a>
+        <form method="post" 
+              action="/consuming/$host/$service">
           <input type="hidden" name="delete" value="$location" />
           <input type="submit" value="Delete" />
         </form>
@@ -22,7 +28,8 @@
     </ul>
     #end if
     <hr />
-    <form method="post" action="/consuming/$host/$service">
+    <form method="post" 
+          action="/consuming/$host/$service">
       <label>Location: <input name="put" /></label>
       <input type="submit" value="Create New Location" />
     </form>
