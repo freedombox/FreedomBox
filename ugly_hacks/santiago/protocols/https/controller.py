@@ -6,6 +6,7 @@ FIXME: sanitize or properly escape user input (XSS, attacks on the client).
 FIXME: make sure we never try to execute user input (injection, attacks on the
        server).
 FIXME: all the Blammos.  They're terrible, unacceptable failures.
+FIXME correct direct key access everywhere.
 
 """
 
@@ -213,7 +214,9 @@ class Monitor(santiago.SantiagoMonitor):
 class RestMonitor(santiago.RestController):
 
     # FIXME filter input and escape output properly.
+    # FIXME This input shows evidence of vulnerability: <SCRIPT SRC=http://ha.ckers.org/xss.js></SCRIPT>
     # FIXME build tests for this.
+    # FIXME change page headers based on encoding.
 
     # TODO http://tools.cherrypy.org/wiki/ParameterDemonstration
     # TODO http://docs.cherrypy.org/dev/concepts/dispatching.html
@@ -277,11 +280,14 @@ class HostedService(RestMonitor):
 
     # Have to remove instead of delete for locations as $service is a list
     @cherrypy.tools.ip_filter()
+    # FIXME correct direct key access
     def DELETE(self, client, service, location):
         if location in self.santiago.hosting[client][service]:
             self.santiago.hosting[client][service].remove(location)
 
 class HostedClient(RestMonitor):
+
+    # FIXME correct direct key access
     @cherrypy.tools.ip_filter()
     def GET(self, client, **kwargs):
         return self.respond("hostedClient.tmpl",
@@ -333,6 +339,7 @@ class Hosting(RestMonitor):
 class ConsumedService(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, host, service, **kwargs):
+        # FIXME don't crash with a 500 error, don't directly access the key!!
         return self.respond("consumedService.tmpl",
                             { "service": service,
                               "host": host,
