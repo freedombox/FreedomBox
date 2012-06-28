@@ -218,10 +218,7 @@ class RestMonitor(santiago.RestController):
     # FIXME build tests for this.
     # FIXME change page headers based on encoding.
 
-    # TODO http://tools.cherrypy.org/wiki/ParameterDemonstration
-    # TODO http://docs.cherrypy.org/dev/concepts/dispatching.html
-    # TODO https://appmecha.wordpress.com/2008/11/08/variable-url-parameters/
-    # TODO https://duckduckgo.com/?q=cherrypy+combine+positional+and+keyword+parameters
+    # http://ha.ckers.org/xss.html
 
     def __init__(self, aSantiago):
         super(RestMonitor, self).__init__()
