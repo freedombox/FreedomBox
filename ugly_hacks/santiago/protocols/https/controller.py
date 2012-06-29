@@ -1,10 +1,6 @@
 """The HTTPS Santiago listener and sender.
 
-TODO: add JSON output.
 FIXME: add real authentication.
-FIXME: sanitize or properly escape user input (XSS, attacks on the client).
-FIXME: make sure we never try to execute user input (injection, attacks on the
-       server).
 FIXME: all the Blammos.  They're terrible, unacceptable failures.
 FIXME correct direct key access everywhere.
 

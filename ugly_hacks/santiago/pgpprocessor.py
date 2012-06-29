@@ -3,8 +3,6 @@
 Right now, this includes the Unwrapper, wihch unwraps and verifies each layer of
 an onion-wrapped PGP message.
 
-FIXME: replace this with a real library.  Why doesn't gnupg do this?
-
 """
 from utilities import InvalidSignatureError
 import gnupg
