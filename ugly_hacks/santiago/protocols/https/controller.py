@@ -147,6 +147,7 @@ class Monitor(santiago.SantiagoMonitor):
             ('/consuming/:host/:service', ConsumedService(self.santiago)),
             ('/consuming/:host', ConsumedHost(self.santiago)),
             ('/consuming', Consuming(self.santiago)),
+            ('/learn/:host/:service', Learn(self.santiago)),
             ("/stop", Stop(self.santiago)),
             ("/freedombuddy", root),
             )
@@ -390,3 +391,10 @@ class Stop(RestMonitor):
     @cherrypy.tools.ip_filter()
     def GET(self, **kwargs):
         self.POST() # FIXME cause it's late and I'm tired.
+
+class Learn(RestMonitor, santiago.SantiagoListener):
+    @cherrypy.tools.ip_filter()
+    def POST(self, host, service, **kwargs):
+        super(Learn, self).learn(host, service)
+
+        raise cherrypy.HTTPRedirect("/consuming/%s/%s" % (host, service))

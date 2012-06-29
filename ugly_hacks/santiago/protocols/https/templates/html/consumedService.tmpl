@@ -12,6 +12,9 @@
   <body>
     <p>You are <a href="/consuming">consuming</a> $service from
       <a href="/consuming/$host">$host</a> at:</p>
+    <form method="post" action="/learn/$host/$service">
+      <input type="submit" value="Learn More Locations?" />
+    </form>
     #if $locations
     <ul>
       #for $location in $locations
