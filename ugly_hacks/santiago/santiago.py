@@ -419,7 +419,7 @@ class Santiago(object):
 
         """
         request = self.gpg.decrypt(request)
-        
+
         # skip badly signed messages or ones for other folks.
         if not (str(request) and request.fingerprint):
             debug_log("fail request {0}".format(str(request)))
@@ -444,7 +444,7 @@ class Santiago(object):
         if False in [type(request_body[key]) == list for key in
                      Santiago.LIST_KEYS if request_body[key] is not None]:
             return
-        
+
         # versions must overlap.
         if not (Santiago.SUPPORTED_PROTOCOLS &
                 set(request_body["reply_versions"])):
@@ -566,7 +566,7 @@ class Santiago(object):
             return
 
         message = ""
-        
+
         try:
             data = self.shelf[key]
         except KeyError as e:
