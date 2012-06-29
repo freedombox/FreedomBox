@@ -63,9 +63,6 @@ class Listener(santiago.SantiagoListener):
 
         d = cherrypy.dispatch.RoutesDispatcher()
         d.connect("index", "/", self.index)
-        d.connect("learn", "/learn/:host/:service", self.learn)
-        d.connect("where", "/where/:host/:service", self.where)
-        d.connect("provide", "/provide/:client/:service/:location", self.provide)
 
         cherrypy.tree.mount(cherrypy.Application(self), "",
                             {"/": {"request.dispatch": d}})
@@ -87,34 +84,6 @@ class Listener(santiago.SantiagoListener):
             logging.exception(e)
 
             raise cherrypy.HTTPRedirect("/freedombuddy")
-
-    @cherrypy.tools.ip_filter()
-    def learn(self, host, service, **kwargs):
-        """Request a resource from another Santiago client.
-
-        TODO: add request whitelisting.
-
-        """
-        # TODO enforce restfulness, POST, and build a request form.
-        # if not cherrypy.request.method == "POST":
-        #     return
-
-        return super(Listener, self).learn(host, service)
-
-    @cherrypy.tools.ip_filter()
-    def where(self, host, service, **kwargs):
-        """Show where a host is providing me services.
-
-        TODO: make the output format a parameter.
-
-        """
-        return list(super(Listener, self).where(host, service))
-
-    @cherrypy.tools.ip_filter()
-    def provide(self, client, service, location, **kwargs):
-        """Provide a service for the client at the location."""
-
-        return super(Listener, self).provide(client, service, location)
 
 class Sender(santiago.SantiagoSender):
 
