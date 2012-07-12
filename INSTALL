@@ -2,10 +2,10 @@
 
 ## Installing Plinth
 
-Install the python-cheetah package and pandoc:
+Install the python-cheetah package, pandoc, python-augeas, and
+bjsonrpc:
 
-apt-get install python-cheetah pandoc
-
+apt-get install python-cheetah pandoc python-augeas python-bjsonrpc
 
 Install the python-simplejson
 
@@ -13,9 +13,16 @@ apt-get install python-simplejson
 
  
 Unzip and untar the source into a directory.  Change to the directory
-containing the program.  Do `make` and then run `./plinth.py` and
-point your web browser at `localhost:8000`.  The default username is
-"admin" and the default password is "secret".
+containing the program. Run: 
+
+    $ make 
+    $ ./plinth.py
+    
+and point your web browser at `localhost:8000`. The default username is "admin"
+and the default password is "secret". To actually edit the configuration of
+your local/dev machine, also run:
+
+    $ sudo ./exmachina/exmachina.py -v &
 
 ## Dependencies
 
@@ -26,6 +33,10 @@ point your web browser at `localhost:8000`.  The default username is
 * python - tested with version 2.6.6
 
 * *GNU Make* is used to build the templates and such.
+
+* bjsonrpc - used for configuration management layer
+
+* python-augeas and augeas - used for configuration management
 
 The documentation has some dependencies too.
 
