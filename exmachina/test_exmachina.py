@@ -20,13 +20,11 @@ at the same time:
 """
 
 import sys
-import optparse
-import logging
 import socket
 
 import bjsonrpc
 import bjsonrpc.connection
-import augeas
+from bjsonrpc.exceptions import ServerError
 
 from exmachina import ExMachinaClient
 
@@ -34,7 +32,7 @@ from exmachina import ExMachinaClient
 # Command line handling
 def main():
 
-    socket_path="/tmp/exmachina.sock"
+    socket_path = "/tmp/exmachina.sock"
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sock.connect(socket_path)
 
@@ -62,9 +60,22 @@ def main():
     client = ExMachinaClient(secret_key=secret_key)
     print client.augeas.match("/files/etc/*")
     #print client.initd.restart("bluetooth")
-    print client.initd.status("greentooth")
+    try:
+        print client.initd.status("greentooth")
+        print "ERROR: should have failed above!"
+    except ServerError:
+        print "(got expected error, good!)"
     print "(expect Error on the above line)"
     print client.initd.status("bluetooth")
+    print client.apt.install("pkg_which_does_not_exist")
+    print client.apt.remove("pkg_which_does_not_exist")
+    #print client.apt.update() # can be slow...
+    #print client.misc.set_timezone("UTC") # don't clobber system...
+    try:
+        print client.misc.set_timezone("whoopie") # should be an error
+        print "ERROR: should have failed above!"
+    except ServerError:
+        print "(got expected error, good!)"
     client.close()
 
 if __name__ == '__main__':

@@ -30,11 +30,12 @@ client in the same way. The init_test.sh script demonstrates this mechanism.
 
 import os
 import sys
-import optparse
+import grp
+import shutil
+import argparse
 import logging
 import socket
 import subprocess
-import stat
 import time
 import base64
 
@@ -43,8 +44,8 @@ import bjsonrpc.handlers
 import bjsonrpc.server
 import augeas
 
-
 log = logging.getLogger(__name__)
+
 
 def execute_service(servicename, action, timeout=10):
     """This function mostly ripped from StackOverflow:
@@ -54,7 +55,7 @@ def execute_service(servicename, action, timeout=10):
     script = "/etc/init.d/" + os.path.split(servicename)[1]
 
     if not os.path.exists(script):
-        return "ERROR: so such service"
+        raise ValueError("so such service: %s" % servicename)
 
     command_list = [script, action]
     log.info("executing: %s" % command_list)
@@ -64,17 +65,50 @@ def execute_service(servicename, action, timeout=10):
                             stderr=subprocess.PIPE)
     poll_seconds = .250
     deadline = time.time() + timeout
-    while time.time() < deadline and proc.poll() == None:
+    while time.time() < deadline and proc.poll() is None:
         time.sleep(poll_seconds)
 
-    if proc.poll() == None:
+    if proc.poll() is None:
         if float(sys.version[:3]) >= 2.6:
             proc.terminate()
-        raise Exception("execution timed out (>%d seconds): %s" % 
+        raise Exception("execution timed out (>%d seconds): %s" %
+                        (timeout, command_list))
+
+    stdout, stderr = proc.communicate()
+    # TODO: should raise exception here if proc.returncode != 0?
+    return stdout, stderr, proc.returncode
+
+def execute_apt(packagename, action, timeout=120, aptargs=['-q', '-y']):
+    # ensure package name isn't tricky trick
+    if action != "update" \
+            and (packagename != packagename.strip().split()[0] \
+                 or packagename.startswith('-')):
+        raise ValueError("Not a good apt package name: %s" % packagename)
+
+    if action == "update":
+        command_list = ['apt-get', action]
+    else:
+        command_list = ['apt-get', action, packagename]
+    command_list.extend(aptargs)
+    log.info("executing: %s" % command_list)
+    proc = subprocess.Popen(command_list,
+                            bufsize=0,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+    poll_seconds = .250
+    deadline = time.time() + timeout
+    while time.time() < deadline and proc.poll() is None:
+        time.sleep(poll_seconds)
+
+    if proc.poll() is None:
+        if float(sys.version[:3]) >= 2.6:
+            proc.terminate()
+        raise Exception("execution timed out (>%d seconds): %s" %
                         (timeout, command_list))
 
     stdout, stderr = proc.communicate()
     return stdout, stderr, proc.returncode
+
 
 class ExMachinaHandler(bjsonrpc.handlers.BaseHandler):
 
@@ -145,6 +179,24 @@ class ExMachinaHandler(bjsonrpc.handlers.BaseHandler):
             log.info("augeas: remove %s" % path)
             return self.augeas.remove(path.encode('utf-8'))
 
+    # ------------- Misc. non-Augeas Helpers -----------------
+    def set_timezone(self, tzname):
+        if not self.secret_key:
+            log.info("reset timezone to %s" % tzname)
+            tzname = tzname.strip()
+            tzpath = os.path.join("/usr/share/zoneinfo", tzname)
+            try:
+                os.stat(tzpath)
+            except OSError:
+                # file not found
+                raise ValueError("timezone not valid: %s" % tzname)
+            shutil.copy(
+                os.path.join("/usr/share/zoneinfo", tzname),
+                "/etc/localtime")
+            with open("/etc/timezone", "w") as tzfile:
+                tzfile.write(tzname + "\n")
+            return "timezone changed to %s" % tzname
+
     # ------------- init.d Service Control -----------------
     def initd_status(self, servicename):
         if not self.secret_key:
@@ -161,10 +213,25 @@ class ExMachinaHandler(bjsonrpc.handlers.BaseHandler):
     def initd_restart(self, servicename):
         if not self.secret_key:
             return execute_service(servicename, "restart")
-   
+
+    # ------------- apt-get Package Control -----------------
+    def apt_install(self, packagename):
+        if not self.secret_key:
+            return execute_apt(packagename, "install")
+
+    def apt_update(self):
+        if not self.secret_key:
+            return execute_apt("", "update")
+
+    def apt_remove(self, packagename):
+        if not self.secret_key:
+            return execute_apt(packagename, "remove")
+
+
 class EmptyClass():
     # Used by ExMachinaClient below
     pass
+
 
 class ExMachinaClient():
     """Simple client wrapper library to expose augeas and init.d methods.
@@ -193,6 +260,8 @@ class ExMachinaClient():
 
         self.augeas = EmptyClass()
         self.initd = EmptyClass()
+        self.apt = EmptyClass()
+        self.misc = EmptyClass()
 
         self.augeas.save = self.conn.call.augeas_save
         self.augeas.set = self.conn.call.augeas_set
@@ -206,11 +275,16 @@ class ExMachinaClient():
         self.initd.start = self.conn.call.initd_start
         self.initd.stop = self.conn.call.initd_stop
         self.initd.restart = self.conn.call.initd_restart
+        self.apt.install = self.conn.call.apt_install
+        self.apt.update = self.conn.call.apt_update
+        self.apt.remove = self.conn.call.apt_remove
+        self.misc.set_timezone = self.conn.call.set_timezone
 
     def close(self):
         self.sock.close()
 
-def run_server(socket_path, secret_key=None):
+
+def run_server(socket_path, secret_key=None, socket_group=None):
 
     if not 0 == os.geteuid():
         log.warn("Expected to be running as root!")
@@ -221,15 +295,20 @@ def run_server(socket_path, secret_key=None):
     sock.bind(socket_path)
     sock.listen(1)
 
-    # TODO: www-data group permissions only?
-    os.chmod(socket_path, 0666)
+    if socket_group is not None:
+        socket_uid = os.stat(socket_path).st_uid
+        socket_gid = grp.getgrnam(socket_group).gr_gid
+        os.chmod(socket_path, 0660)
+        os.chown(socket_path, socket_uid, socket_gid)
+    else:
+        os.chmod(socket_path, 0666)
     if secret_key:
         ExMachinaHandler.secret_key = secret_key
 
     serv = bjsonrpc.server.Server(sock, handler_factory=ExMachinaHandler)
     serv.serve()
 
-def daemonize (stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+def daemonize(stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
     """
     From: http://www.noah.org/wiki/Daemonize_Python
 
@@ -241,30 +320,30 @@ def daemonize (stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
     output may not appear in the order that you expect. """
 
     # Do first fork.
-    try: 
-        pid = os.fork() 
+    try:
+        pid = os.fork()
         if pid > 0:
             sys.exit(0)   # Exit first parent.
-    except OSError, e: 
-        sys.stderr.write ("fork #1 failed: (%d) %s\n" % (e.errno, e.strerror) )
+    except OSError, e:
+        sys.stderr.write("fork #1 failed: (%d) %s\n" % (e.errno, e.strerror))
         sys.exit(1)
 
     # Decouple from parent environment.
-    os.chdir("/") 
-    os.umask(0) 
-    os.setsid() 
+    os.chdir("/")
+    os.umask(0)
+    os.setsid()
 
     # Do second fork.
-    try: 
-        pid = os.fork() 
+    try:
+        pid = os.fork()
         if pid > 0:
             sys.exit(0)   # Exit second parent.
-    except OSError, e: 
-        sys.stderr.write ("fork #2 failed: (%d) %s\n" % (e.errno, e.strerror) )
+    except OSError, e:
+        sys.stderr.write("fork #2 failed: (%d) %s\n" % (e.errno, e.strerror))
         sys.exit(1)
 
     # Now I am a daemon!
-    
+
     # Redirect standard file descriptors.
     si = open(stdin, 'r')
     so = open(stdout, 'a+')
@@ -279,41 +358,44 @@ def daemonize (stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
 def main():
 
     global log
-    parser = optparse.OptionParser(usage=
+    parser = argparse.ArgumentParser(usage=
         "usage: %prog [options]\n"
         "%prog --help for more info."
     )
-    parser.add_option("-v", "--verbose", 
+    parser.add_argument("-v", "--verbose",
         default=False,
-        help="Show more debugging statements", 
+        help="Show more debugging statements",
         action="store_true")
-    parser.add_option("-q", "--quiet", 
+    parser.add_argument("-q", "--quiet",
         default=False,
-        help="Show fewer informational statements", 
+        help="Show fewer informational statements",
         action="store_true")
-    parser.add_option("-k", "--key", 
+    parser.add_argument("-k", "--key",
         default=False,
         help="Wait for Secret Access Key on stdin before starting",
         action="store_true")
-    parser.add_option("--random-key", 
+    parser.add_argument("--random-key",
         default=False,
         help="Just dump a random base64 key and exit",
         action="store_true")
-    parser.add_option("-s", "--socket-path", 
+    parser.add_argument("-s", "--socket-path",
         default="/tmp/exmachina.sock",
         help="UNIX Domain socket file path to listen on",
         metavar="FILE")
-    parser.add_option("--pidfile", 
+    parser.add_argument("--pidfile",
         default=None,
         help="Daemonize and write pid to this file",
         metavar="FILE")
+    parser.add_argument("-g", "--group",
+        default=None,
+        help="chgrp socket file to this group and set 0660 permissions")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if len(args) != 0:
-        parser.error("Incorrect number of arguments")
+    #if len(args) != 0:
+        #parser.error("Incorrect number of arguments")
 
-    if options.random_key:
+    if args.random_key:
         sys.stdout.write(base64.urlsafe_b64encode(os.urandom(128)))
         sys.exit(0)
 
@@ -323,31 +405,33 @@ def main():
     hdlr.setFormatter(formatter)
     log.addHandler(hdlr)
 
-    if options.verbose:
+    if args.verbose:
         log.setLevel(logging.DEBUG)
-    elif options.quiet:
+    elif args.quiet:
         log.setLevel(logging.ERROR)
     else:
         log.setLevel(logging.INFO)
 
     secret_key = None
-    if options.key:
+    if args.key:
         log.debug("Waiting for secret key on stdin...")
         secret_key = sys.stdin.readline().strip()
         log.debug("Got it!")
 
-    if options.pidfile:
-        with open(options.pidfile, 'w') as pfile:
+    if args.pidfile:
+        with open(args.pidfile, 'w') as pfile:
             # ensure file is available/writable
             pass
-        os.unlink(options.pidfile)
+        os.unlink(args.pidfile)
         daemonize()
         pid = os.getpid()
-        with open(options.pidfile, 'w') as pfile:
+        with open(args.pidfile, 'w') as pfile:
             pfile.write("%s" % pid)
         log.info("Daemonized, pid is %s" % pid)
 
-    run_server(secret_key=secret_key, socket_path=options.socket_path)
+    run_server(secret_key=secret_key,
+               socket_path=args.socket_path,
+               socket_group=args.group)
 
 if __name__ == '__main__':
     main()
