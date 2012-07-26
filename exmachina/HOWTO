@@ -1,0 +1,59 @@
+
+HOWTO: Use exmachina in Plinth to Change Configuration and Restart Services
+-----------------------------------------------------------------------------
+
+exmachina is the name of a small and simple privilege separation layer that
+lets Plinth (running as a web application with user/group www-data) edit
+FreedomBox system configuration (which requires root privileges). The Augeas
+library is used to provide a uniform interface to *most* configuration files in
+/etc/, and a wrapper around init.d scripts allows services to be restarted
+(which is often the way to have configuration changes go live).
+
+The exmachina daemon and client library is initialized when Plinth starts, and
+is accessible in Plinth code through the "cfg" global variable:
+
+    import cfg
+    cfg.exmachina.initd.restart("networking")
+
+Existing on-disk configuration settings can be read back through the "get"
+action, and files/settings can be found with the "match" method. For example,
+the following would print out a list of all the files in /etc/ with
+augeas-editing support, and then print the system's hostname according to
+/etc/hostname (a minimal one-line configuration file):
+
+    for fname in c.call.augeas_match("/files/etc/*"):
+        print fname
+    cfg.exmachina.augeas.get("/files/etc/hostname/*")
+
+The mutating Augeas actions ("set", "insert", "remove", etc) operate on an
+in-memory cache of the configuration files; to commit all changes (for all
+modified files) to disk, use the "save" action. The following would set the
+local hostname to fluffy.example.net, and then commit that change to disk.
+
+    cfg.exmachina.augeas.set("/files/etc/hostname/*", "fluffy.example.net")
+    cfg.exmachina.augeas.save()
+
+After the above, the /etc/hostname file will be updated, but running network
+services will not have picked up on the change. To have changes that have been
+written to disk actually take effect, the "initd" module allows access to
+restarting system services. In the case of hostnames, in debian there exists a
+helper script called "/etc/init.d/hostname.sh", so the following would be used
+to update all network daemons to a new hostname:
+
+    cfg.exmachina.initd.restart("hostname.sh")
+
+Augeas makes some effort to prevent partial writes or configuration file
+corruption, and in some cases provides basic type checking. However, it does
+not do any logical error detection or correction. For example, two separate
+services could be configured to try and listen on the same port, or an invalid
+hostname could be specified (eg, "&.^$#"). Application code in Plinth is
+responsible for ensuring the logical correctness of configuration changes.
+
+If there is a serious problem executing an exmachina method call (eg, tried to
+restart a non-existent service), a bjsonrpc.exceptions.ServerError exception
+will be raised, with the actual exception message (but not the traceback)
+passed through.
+
+Reading:
+- Augeas API notes: http://augeas.net/docs/api.html
+- exmachina repository: https://github.com/bnewbold/exmachina
