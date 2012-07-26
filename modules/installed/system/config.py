@@ -1,4 +1,4 @@
-import os, shutil, subprocess
+import os, subprocess
 from socket import gethostname
 import cherrypy
 import simplejson as json
@@ -132,8 +132,8 @@ class general(FormPlugin, PagePlugin):
                 message += msg
         if time_zone != sys_store['time_zone']:
             src = os.path.join("/usr/share/zoneinfo", time_zone)
-            cfg.log.info("Copying %s to /etc/localtime" % src)
-            shutil.copy(src, "/etc/localtime")
+            cfg.log.info("Setting timezone to %s" % time_zone)
+            cfg.exmachina.misc.set_timezone(time_zone)
             sys_store['time_zone'] = time_zone
         return message or "Settings updated."
 
