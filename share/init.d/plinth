@@ -38,7 +38,7 @@ start_plinth (){
         SHAREDKEY=`$EXMACHINA_DAEMON --random-key`
         touch $PID_FILE
         chown $PLINTH_USER:$PLINTH_GROUP $PID_FILE
-        echo $SHAREDKEY | $EXMACHINA_DAEMON --pidfile=$EXMACHINA_PID_FILE || rm $PID_FILE
+        echo $SHAREDKEY | $EXMACHINA_DAEMON --pidfile=$EXMACHINA_PID_FILE --group=$PLINTH_GROUP || rm $PID_FILE
         sleep 0.5
         echo $SHAREDKEY | sudo -u $PLINTH_USER -g $PLINTH_GROUP $DAEMON --pidfile=$PID_FILE
     fi
