@@ -5,13 +5,13 @@ This file tests the "client side" of the exmachina layer.
 
 To use with secret keys, do the following in seperate terminals:
 
-    $ echo "<key>" | ./exmachina.py -vk
-    $ echo "<key>" | ./test.py -k
+    $ echo "<key>" | sudo ./exmachina.py -vk
+    $ echo "<key>" | ./test_exmachina.py -k
 
 To use without, do the following in seperate terminals:
 
-    $ echo "<key>" | ./exmachina.py -vk
-    $ echo "<key>" | ./test.py -k
+    $ sudo ./exmachina.py -v
+    $ ./test_exmachina.py
 
 Use the init_test.sh script to test shared key passing and privilage seperation
 at the same time:
