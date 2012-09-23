@@ -54,7 +54,7 @@ class Root(plugin_mount.PagePlugin):
          raise cherrypy.InternalRedirect('/router')
       else:
          raise cherrypy.InternalRedirect('/help/about')
-        
+
 def load_modules():
    """Import all the symlinked .py files in the modules directory and
    all the .py files in directories linked in the modules directory
@@ -121,7 +121,7 @@ def setup():
    server.subscribe()
 
    # Configure default server
-   cherrypy.config.update({'server.socket_host': '127.0.0.1',
+   cherrypy.config.update({'server.socket_host': cfg.host,
                            'server.socket_port': cfg.port,
                            'server.thread_pool':10,
                            'tools.staticdir.root': cfg.file_root,
@@ -130,7 +130,7 @@ def setup():
                            'tools.sessions.storage_type':"file",
                            'tools.sessions.timeout':90,
                            'tools.sessions.storage_path':"%s/data/cherrypy_sessions" % cfg.file_root,
-                           
+
                            })
 
    config = {'/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
@@ -142,7 +142,7 @@ def setup():
              }
    cherrypy.tree.mount(cfg.html_root, '/', config=config)
    cherrypy.engine.signal_handler.subscribe()
-    
+
 
 def main():
    setup()
