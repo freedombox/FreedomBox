@@ -12,7 +12,7 @@ users_dir = os.path.join(data_dir, "users")
 product_name = "Plinth"
 box_name = "FreedomBox"
 
-host = 127.0.0.1
+host = "127.0.0.1"
 port = 8000
 
 ## Do not edit below this line ##
