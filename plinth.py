@@ -148,7 +148,7 @@ def setup():
 
 def main():
    setup()
-   print "localhost %d" % cfg.port
+   print "%s %d" % (cfg.host, cfg.port)
 
    cherrypy.engine.start()
    cherrypy.engine.block()
