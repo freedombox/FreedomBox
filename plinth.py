@@ -79,6 +79,8 @@ def parse_arguments():
    args=parser.parse_args()
    if args.pidfile:
       cfg.pidfile = args.pidfile
+   else:
+      cfg.pidfile = "plinth.pid"
    if args.listen_exmachina_key:
       # this is where we optionally try to read in a shared secret key to
       # authenticate connections to exmachina
