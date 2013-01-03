@@ -83,5 +83,5 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 	rm -f predepend
