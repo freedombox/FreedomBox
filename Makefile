@@ -17,7 +17,7 @@ build:
 	mkdir -p $(BUILD_DIR)
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson"
+	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc"
 	touch predepend
 
 $(BUILD_DIR)/exmachina: build
