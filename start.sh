@@ -7,5 +7,5 @@ export PYTHONPATH
 
 sudo killall exmachina.py
 sudo build/exmachina/exmachina.py -v &
-sudo python plinth.py
+python plinth.py
 sudo killall exmachina.py
