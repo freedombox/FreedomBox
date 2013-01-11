@@ -10,6 +10,7 @@ import cfg
 from forms import Form
 from model import User
 from util import *
+import platform
 
 class Config(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -49,7 +50,10 @@ def set_hostname(hostname):
         # don't persist/cache change unless it was saved successfuly
         sys_store = filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
-        cfg.exmachina.initd.restart("hostname.sh") # is hostname.sh debian-only?
+        if platform.linux_distribution()[0]=="Ubuntu" :
+            cfg.exmachina.service.start("hostname")
+        else:
+            cfg.exmachina.initd.restart("hostname.sh") # is hostname.sh debian-only?
     except OSError, e:
         raise cherrypy.HTTPError(500, "Hostname restart failed: %s" % e)
 

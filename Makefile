@@ -21,7 +21,7 @@ predepend:
 	touch predepend
 
 $(BUILD_DIR)/exmachina: build
-	git clone git://github.com/bnewbold/exmachina $(BUILD_DIR)/exmachina
+	git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
 
 $(BUILD_DIR)/bjsonrpc: build
 	git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
