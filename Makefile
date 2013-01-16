@@ -1,7 +1,6 @@
 #SHELL := /bin/bash
 MAKE=make
 BUILD_DIR = build
-VENDOR_DIR = vendor
 
 #TODO: add install target
 
@@ -11,14 +10,11 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILD_DIR)/exmachina $(VENDOR_DIR)/withsqlite #$(BUILD_DIR)/bjsonrpc
+default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILD_DIR)/exmachina #$(BUILD_DIR)/bjsonrpc
 all: default
 
 build:
 	mkdir -p $(BUILD_DIR)
-
-vendor:
-	mkdir -p $(VENDOR_DIR)
 
 predepend:
 	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah"
@@ -26,9 +22,6 @@ predepend:
 
 $(BUILD_DIR)/exmachina: build
 	git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
-
-$(VENDOR_DIR)/withsqlite: vendor
-	git clone git://github.com/jvasile/withsqlite.git $(VENDOR_DIR)/withsqlite
 
 $(BUILD_DIR)/bjsonrpc: build
 	git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
