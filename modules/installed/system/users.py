@@ -47,23 +47,25 @@ class add(FormPlugin, PagePlugin):
         return form.render()
 
     def process_form(self, username=None, name=None, email=None, md5_password=None, **kwargs):
-        msg = ''
+        msg = Message()
 
-        if not username: msg = add_message(msg, _("Must specify a username!"))
-        if not md5_password: msg = add_message(msg, _("Must specify a password!"))
+        if not username: msg.add = _("Must specify a username!")
+        if not md5_password: msg.add = _("Must specify a password!")
         
-        if username in cfg.users:
-            msg = add_message(msg, _("User already exists!"))
+        if username in cfg.users.keys():
+            msg.add = _("User already exists!")
         else:
             try:
-                cfg.users[username]= User(dict={'username':username, 'name':name, 'email':email, 'password':md5_password})
+                di = {'username':username, 'name':name, 'email':email, 'passphrase':md5_password}
+                new_user = User(dict=di)
+                cfg.users.set(username,new_user)
             except:
-                msg = add_message(msg, _("Error storing user!"))
+                msg.add = _("Error storing user!")
 
         if not msg:
-            msg = add_message(msg, "%s saved." % username)
-
-        main = self.make_form(username, name, email, message=msg)
+            msg.add = _("%s saved." % username)
+        cfg.log(msg.text)
+        #main = self.make_form(username, name, email, msg=msg.text)
         return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
 class edit(FormPlugin, PagePlugin):
@@ -114,7 +116,7 @@ class edit(FormPlugin, PagePlugin):
                         msg.add(_("User %s does not exist." % username))
             else:
                 msg.add = _("Must specify at least one valid, existing user.")
-            main = self.make_form(msg=msg.text)
+            #main = self.make_form(msg=msg.text)
             return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
         sidebar_right = ''
