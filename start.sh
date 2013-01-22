@@ -1,7 +1,6 @@
 #! /bin/sh
 
 PYTHONPATH=build/exmachina:$PYTHONPATH
-PYTHONPATH=build/bjsonrpc:$PYTHONPATH
 
 export PYTHONPATH
 

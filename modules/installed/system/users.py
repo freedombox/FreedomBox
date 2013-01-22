@@ -5,22 +5,23 @@ from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
 from util import *
+from pprint import pprint
 
 class users(PagePlugin):
     order = 20 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys.users")
+        self.register_page("sys.users.add")
+        self.register_page("sys.users.edit")
 
     @cherrypy.expose
     @require()
     def index(self):
-        parts = self.forms('/sys/config')
-        parts['title']=_("Manage Users and Groups")
-        return self.fill_template(**parts)
+        return self.fill_template(title="Manage Users and Groups", sidebar_right="""<strong><a href="/sys/users/add">Add User</a></strong><br/><strong><a href="/sys/users/edit">Edit Users</a></strong>""")
 
 class add(FormPlugin, PagePlugin):
-    url = ["/sys/users"]
+    url = ["/sys/users/add"]
     order = 30
 
     sidebar_left = ''
@@ -46,27 +47,29 @@ class add(FormPlugin, PagePlugin):
         return form.render()
 
     def process_form(self, username=None, name=None, email=None, md5_password=None, **kwargs):
-        msg = ''
+        msg = Message()
 
-        if not username: msg = add_message(msg, _("Must specify a username!"))
-        if not md5_password: msg = add_message(msg, _("Must specify a password!"))
+        if not username: msg.add = _("Must specify a username!")
+        if not md5_password: msg.add = _("Must specify a password!")
         
-        if username in cfg.users:
-            msg = add_message(msg, _("User already exists!"))
+        if username in cfg.users.keys():
+            msg.add = _("User already exists!")
         else:
             try:
-                cfg.users[username]= User(dict={'username':username, 'name':name, 'email':email, 'password':md5_password})
+                di = {'username':username, 'name':name, 'email':email, 'passphrase':md5_password}
+                new_user = User(dict=di)
+                cfg.users.set(username,new_user)
             except:
-                msg = add_message(msg, _("Error storing user!"))
+                msg.add = _("Error storing user!")
 
         if not msg:
-            msg = add_message(msg, "%s saved." % username)
-
-        main = self.make_form(username, name, email, message=msg)
-        return self.fill_template(title="", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+            msg.add = _("%s saved." % username)
+        cfg.log(msg.text)
+        #main = self.make_form(username, name, email, msg=msg.text)
+        return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
 class edit(FormPlugin, PagePlugin):
-    url = ["/sys/users"]
+    url = ["/sys/users/edit"]
     order = 35
     
     sidebar_left = ''
@@ -77,7 +80,7 @@ class edit(FormPlugin, PagePlugin):
     system.</p><p>Deleting users is permanent!</p>""" % (cfg.product_name, cfg.box_name))
 
     def main(self, msg=''):
-        users = cfg.users.keys()
+        users = cfg.users
         add_form = Form(title=_("Edit or Delete User"), action="/sys/users/edit", message=msg)
         add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
         for uname in sorted(users.keys()):
@@ -113,8 +116,8 @@ class edit(FormPlugin, PagePlugin):
                         msg.add(_("User %s does not exist." % username))
             else:
                 msg.add = _("Must specify at least one valid, existing user.")
-            main = self.make_form(msg=msg.text)
-            return self.fill_template(title="", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+            #main = self.make_form(msg=msg.text)
+            return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
         sidebar_right = ''
         u = cfg.users[kwargs['username']]
@@ -125,4 +128,4 @@ class edit(FormPlugin, PagePlugin):
             
         main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
         sidebar_right = ''
-        return self.fill_template(title="", main=main, sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
+        return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
