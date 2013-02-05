@@ -17,16 +17,16 @@ build:
 	mkdir -p $(BUILD_DIR)
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah"
+	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
 	touch predepend
 
 $(BUILD_DIR)/exmachina: build
-	test -d $(BUILD_DIR)/exmachina || git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
-	cd $(BUILD_DIR)/exmachina; git pull
+	test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
+	cd $@; git pull
 
 $(BUILD_DIR)/bjsonrpc: build
-	test -d $(BUILD_DIR)/bjsonrpc || git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
-	cd $(BUILD_DIR)/bjsonrpc; git pull
+	test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
+	cd $@; git pull
 
 $(BUILD_DIR)/withsqlite: build
 	test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
