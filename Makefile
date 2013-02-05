@@ -1,6 +1,6 @@
 #SHELL := /bin/bash
 MAKE=make
-BUILD_DIR = build
+BUILD_DIR = vendor
 
 #TODO: add install target
 
@@ -21,10 +21,13 @@ predepend:
 	touch predepend
 
 $(BUILD_DIR)/exmachina: build
-	git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
+	test -d $(BUILD_DIR)/exmachina || git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
+	cd $(BUILD_DIR)/exmachina; git pull
 
 $(BUILD_DIR)/bjsonrpc: build
-	git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
+	test -d $(BUILD_DIR)/bjsonrpc || git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
+	cd $(BUILD_DIR)/bjsonrpc; git pull
+
 
 dbs: data/users.sqlite3
 
