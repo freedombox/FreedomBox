@@ -1,6 +1,6 @@
 #! /bin/sh
 
-PYTHONPATH=build/exmachina:$PYTHONPATH
+PYTHONPATH=vendor/exmachina:$PYTHONPATH
 
 export PYTHONPATH
 
