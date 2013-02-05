@@ -28,6 +28,10 @@ $(BUILD_DIR)/bjsonrpc: build
 	test -d $(BUILD_DIR)/bjsonrpc || git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
 	cd $(BUILD_DIR)/bjsonrpc; git pull
 
+$(BUILD_DIR)/withsqlite: build
+	test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
+	cd $@; git pull
+
 
 dbs: data/users.sqlite3
 
