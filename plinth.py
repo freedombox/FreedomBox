@@ -17,7 +17,8 @@ from util import *
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
-from exmachina import ExMachinaClient
+import exmachina
+from exmachina.exmachina import ExMachinaClient
 import socket
 
 __version__ = "0.2.14"
