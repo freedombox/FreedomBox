@@ -138,7 +138,7 @@ def apache():
 @task
 def deps():
    "Basic plinth dependencies"
-   sudo('apt-get install --no-install-recommends -y python make python-cheetah pandoc python-simplejson python-pyme')
+   sudo('apt-get install --no-install-recommends -y python make python-cheetah pandoc python-simplejson python-pyme python-augeas python-bjsonrpc')
 
 @task
 def update():

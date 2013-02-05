@@ -17,6 +17,9 @@ from util import *
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
+from exmachina import ExMachinaClient
+import socket
+
 __version__ = "0.2.14"
 __author__ = "James Vasile"
 __copyright__ = "Copyright 2011, James Vasile"
@@ -51,7 +54,7 @@ class Root(plugin_mount.PagePlugin):
          raise cherrypy.InternalRedirect('/router')
       else:
          raise cherrypy.InternalRedirect('/help/about')
-        
+
 def load_modules():
    """Import all the symlinked .py files in the modules directory and
    all the .py files in directories linked in the modules directory
@@ -71,9 +74,20 @@ def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
    parser.add_argument('--pidfile', default="",
                        help='specify a file in which the server may write its pid')
+   parser.add_argument('--listen-exmachina-key', default=False, action='store_true',
+                       help='listen for JSON-RPC shared secret key on stdin at startup')
    args=parser.parse_args()
    if args.pidfile:
       cfg.pidfile = args.pidfile
+   else:
+      if not cfg.pidfile:
+            cfg.pidfile = "plinth.pid"
+   if args.listen_exmachina_key:
+      # this is where we optionally try to read in a shared secret key to
+      # authenticate connections to exmachina
+      cfg.exmachina_secret_key = sys.stdin.readline().strip()
+   else:
+      cfg.exmachina_secret_key = None
 
 def setup():
    parse_arguments()
@@ -84,6 +98,13 @@ def setup():
          PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
    except AttributeError:
       pass
+
+   try:
+      cfg.exmachina = ExMachinaClient(
+         secret_key=cfg.exmachina_secret_key or None)
+   except socket.error:
+      cfg.exmachina = None
+      print "couldn't connect to exmachina daemon, but continuing anyways..."
 
    os.chdir(cfg.file_root)
    cherrypy.config.update({'error_page.404': error_page_404})
@@ -103,7 +124,7 @@ def setup():
    server.subscribe()
 
    # Configure default server
-   cherrypy.config.update({'server.socket_host': '127.0.0.1',
+   cherrypy.config.update({'server.socket_host': cfg.host,
                            'server.socket_port': cfg.port,
                            'server.thread_pool':10,
                            'tools.staticdir.root': cfg.file_root,
@@ -112,7 +133,7 @@ def setup():
                            'tools.sessions.storage_type':"file",
                            'tools.sessions.timeout':90,
                            'tools.sessions.storage_path':"%s/data/cherrypy_sessions" % cfg.file_root,
-                           
+
                            })
 
    config = {'/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
@@ -124,11 +145,11 @@ def setup():
              }
    cherrypy.tree.mount(cfg.html_root, '/', config=config)
    cherrypy.engine.signal_handler.subscribe()
-    
+
 
 def main():
    setup()
-   print "localhost %d" % cfg.port
+   print "%s %d" % (cfg.host, cfg.port)
 
    cherrypy.engine.start()
    cherrypy.engine.block()

@@ -1,4 +1,4 @@
-import os, shutil, subprocess
+import os, subprocess
 from socket import gethostname
 import cherrypy
 import simplejson as json
@@ -10,6 +10,7 @@ import cfg
 from forms import Form
 from model import User
 from util import *
+import platform
 
 class Config(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -41,19 +42,20 @@ def valid_hostname(name):
 
 def set_hostname(hostname):
     "Sets machine hostname to hostname"
-    cfg.log.info("Writing '%s' to /etc/hostname" % hostname)
-    unslurp("/etc/hostname", hostname+"\n")
+    cfg.log.info("Writing '%s' to /etc/hostname with exmachina" % hostname)
+
     try:
-        retcode = subprocess.call("/etc/init.d/hostname.sh start", shell=True)
-        if retcode < 0:
-            cfg.log.error("Hostname restart terminated by signal: return code is %s" % retcode)
+        cfg.exmachina.augeas.set("/files/etc/hostname/*", hostname)
+        cfg.exmachina.augeas.save()
+        # don't persist/cache change unless it was saved successfuly
+        sys_store = filedict_con(cfg.store_file, 'sys')
+        sys_store['hostname'] = hostname
+        if platform.linux_distribution()[0]=="Ubuntu" :
+            cfg.exmachina.service.start("hostname")
         else:
-            cfg.log.debug("Hostname restart returned %s" % retcode)
+            cfg.exmachina.initd.restart("hostname.sh") # is hostname.sh debian-only?
     except OSError, e:
         raise cherrypy.HTTPError(500, "Hostname restart failed: %s" % e)
-
-    sys_store = filedict_con(cfg.store_file, 'sys')
-    sys_store['hostname'] = hostname
 
 class general(FormPlugin, PagePlugin):
     url = ["/sys/config"]
@@ -72,8 +74,11 @@ class general(FormPlugin, PagePlugin):
 
     def main(self, message='', **kwargs):
         sys_store = filedict_con(cfg.store_file, 'sys')
+        hostname = cfg.exmachina.augeas.get("/files/etc/hostname/*")
+        # this layer of persisting configuration in sys_store could/should be
+        # removed -BLN
         defaults = {'time_zone': "slurp('/etc/timezone').rstrip()",
-                    'hostname': "gethostname()",
+                    'hostname': "hostname",
                     }
         for k,c in defaults.items():
             if not k in kwargs:
@@ -81,6 +86,8 @@ class general(FormPlugin, PagePlugin):
                     kwargs[k] = sys_store[k]
                 except KeyError:
                     exec("if not '%(k)s' in kwargs: sys_store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
+        # over-ride the sys_store cached value
+        kwargs['hostname'] = hostname
 
         ## Get the list of supported timezones and the index in that list of the current one
         module_file = __file__
@@ -120,7 +127,8 @@ class general(FormPlugin, PagePlugin):
                 old_val = sys_store['hostname']
                 try:
                     set_hostname(hostname)
-                except:
+                except Exception, e:
+                    cfg.log.error(e)
                     cfg.log.info("Trying to restore old hostname value.")
                     set_hostname(old_val)
                     raise
@@ -128,8 +136,8 @@ class general(FormPlugin, PagePlugin):
                 message += msg
         if time_zone != sys_store['time_zone']:
             src = os.path.join("/usr/share/zoneinfo", time_zone)
-            cfg.log.info("Copying %s to /etc/localtime" % src)
-            shutil.copy(src, "/etc/localtime")
+            cfg.log.info("Setting timezone to %s" % time_zone)
+            cfg.exmachina.misc.set_timezone(time_zone)
             sys_store['time_zone'] = time_zone
         return message or "Settings updated."
 

@@ -12,10 +12,42 @@ class UserStore(UserStoreModule, sqlite_db):
         self.db_file = cfg.user_db
         sqlite_db.__init__(self, self.db_file, autocommit=True)
         self.__enter__()
+
     def close(self):
-        self.__exit__()
-    def expert(self):
-        return False
+        self.__exit__(None,None,None)
+
+    def expert(self, username=None):
+        groups = self.attr(username,"groups")
+        if not groups:
+            return False
+        return 'expert' in groups        
+
+    def attr(self, username=None, field=None):
+        return self.get(username)[field]
+
+    def get(self,username=None):
+        return User(sqlite_db.get(self,username))
+
+    def exists(self, username=None):
+        try:
+            user = self.get(username)
+            if not user:
+                return False
+            elif user["username"]=='':
+                return False
+            return True
+        except TypeError:
+            return False
+
+    def remove(self,username=None):
+        self.__delitem__(username)
+        self.commit()
+
+    def get_all(self):
+        return self.items()
+
+    def set(self,username=None,user=None):
+        sqlite_db.__setitem__(self,username, user)
 
 class UserStoreOld():
 #class UserStore(UserStoreModule):

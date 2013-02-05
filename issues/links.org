@@ -1,0 +1,42 @@
+# -*- mode: org; mode: auto-fill; fill-column: 80 -*-
+
+#+TITLE: Make Links Portable
+#+OPTIONS:   d:t
+#+LINK_UP:  ./
+#+LINK_HOME: ../
+
+* Issue
+
+  Currently, all the links in Plinth point to 127.0.0.1/(something), and that
+  sucks for serving Plinth on a local network, like most use cases imply.
+
+* Fixes [0/1]
+
+** TODO Links work when accessed from remote clients.
+
+   Investigate the following:
+
+   : grep -nHr basehref ../*
+
+   : grep -nHr 127.0 ../*
+
+   #+begin_ascii
+     fabfile.py:40:   if env.host == "localhost" or env.host=="127.0.0.1":
+     fabfile.py:46:   if env.host == "localhost" or env.host=="127.0.0.1":
+     fabfile.py:102:   hidden_service_config = "HiddenServiceDir %s\nHiddenServicePort 80 127.0.0.1:%d" %  (tor_dir, santiago_port)
+     modules/installed/santiago/santiago.py:48:        hidden_service_config = "HiddenServiceDir %s\nHiddenServicePort 80 127.0.0.1:%d" %  (self.tor_dir, santiago_port)
+     plinth.py:119:   server.socket_host = '127.0.0.1'
+   #+end_ascii
+
+   Also, why is base_href blank in [[file:~/programs/freedombox/plinth/cfg.sample.py][cfg.sample.py]]?
+
+* Discussion
+
+* Metadata
+  :PROPERTIES:
+  :Status:   Incomplete
+  :Priority: 0
+  :Owner:    Nick Daly
+  :Description:
+  :Tags:
+  :END:
