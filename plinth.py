@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os, sys, argparse
-#import logging
 from gettext import gettext as _
 import cfg
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
