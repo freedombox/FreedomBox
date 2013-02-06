@@ -1,8 +1,7 @@
 #SHELL := /bin/bash
 MAKE=make
 BUILDDIR = vendor
-
-#TODO: add install target
+DESTDIR = debian
 
 CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
@@ -22,16 +21,32 @@ predepend:
 
 $(BUILDDIR)/exmachina: build
 	test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
-	cd $@; git pull
+	#cd $@; git pull
 
 $(BUILDDIR)/bjsonrpc: build
 	test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
-	cd $@; git pull
+	#cd $@; git pull
 
 $(BUILDDIR)/withsqlite: build
 	test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
-	cd $@; git pull
+	#cd $@; git pull
 
+install: default
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin 
+	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
+	cp -r *.py modules templates vendor static $(DESTDIR)/usr/lib/python2.7/plinth
+	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/cfg.py
+	mv $(DESTDIR)/usr/lib/python2.7/plinth/cfg.sample.py $(DESTDIR)/etc/plinth/cfg.py
+	ln -s ../../../../etc/plinth/cfg.py $(DESTDIR)/usr/lib/python2.7/plinth/cfg.py
+	cp -r themes $(DESTDIR)/usr/share/plinth
+	cp share/init.d/plinth $(DESTDIR)/etc/init.d
+	rm -f $(DESTDIR)/usr/bin/plinth
+	ln -s ../lib/python2.7/plinth/plinth.py $(DESTDIR)/usr/bin/plinth
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
+	cd $(DESTDIR)/usr/lib/python2.7/plinth; find -name '*.pyc' -exec rm {} \;
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
+	mkdir -p $(DESTDIR)/var/lib/plinth
+	cp -r data/* $(DESTDIR)/var/lib/plinth
 
 dbs: data/users.sqlite3
 
@@ -90,5 +105,5 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDIR) $(DESTDIR)
 	rm -f predepend
