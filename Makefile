@@ -10,7 +10,7 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
+default: predepend cfg dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
 all: default
 
 build:
