@@ -1,6 +1,6 @@
 #SHELL := /bin/bash
 MAKE=make
-BUILD_DIR = vendor
+BUILDDIR = vendor
 
 #TODO: add install target
 
@@ -10,25 +10,25 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILD_DIR)/exmachina #$(BUILD_DIR)/bjsonrpc
+default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
 all: default
 
 build:
-	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILDDIR)
 
 predepend:
 	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
 	touch predepend
 
-$(BUILD_DIR)/exmachina: build
+$(BUILDDIR)/exmachina: build
 	test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
 	cd $@; git pull
 
-$(BUILD_DIR)/bjsonrpc: build
+$(BUILDDIR)/bjsonrpc: build
 	test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
 	cd $@; git pull
 
-$(BUILD_DIR)/withsqlite: build
+$(BUILDDIR)/withsqlite: build
 	test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
 	cd $@; git pull
 
@@ -90,5 +90,5 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILDDIR)
 	rm -f predepend
