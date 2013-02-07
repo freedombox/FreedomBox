@@ -18,7 +18,7 @@ parser = SafeConfigParser(
         'pidfile':"",
         'port':"",
         })
-parser.read('plinth.config')
+parser.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'plinth.config'))
 
 product_name = parser.get('Name', 'product_name')
 box_name = parser.get('Name', 'box_name')

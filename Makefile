@@ -46,7 +46,7 @@ install: default
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	rm -f $(DESTDIR)/usr/bin/plinth
 	ln -s ../lib/python2.7/plinth/plinth.py $(DESTDIR)/usr/bin/plinth
-	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions
+	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	cp -r data/* $(DESTDIR)/var/lib/plinth
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
