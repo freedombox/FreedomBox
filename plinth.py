@@ -59,9 +59,11 @@ def error_page(status, dynamic_msg, stock_msg):
    return page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
 def error_page_404(status, message, traceback, version):
-   return error_page(status, message, """<p>If you believe this missing page should exist, please file a
-   bug with either the Plinth project or the people responsible for
-   the module you are trying to access.</p>
+   return error_page(status, message, """<p>If you believe this
+   missing page should exist, please file a bug with either the Plinth
+   project (<a href="https://github.com/jvasile/plinth/issues">it has
+   an issue tracker</a>) or the people responsible for the module you
+   are trying to access.</p>
 
    <p>Sorry for the mistake.</p>
    """)
