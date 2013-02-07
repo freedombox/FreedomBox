@@ -1,7 +1,6 @@
 #SHELL := /bin/bash
 MAKE=make
 BUILDDIR = vendor
-DESTDIR = debian
 
 CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
