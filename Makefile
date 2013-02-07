@@ -1,6 +1,4 @@
-#SHELL := /bin/bash
 MAKE=make
-BUILDDIR = vendor
 
 CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
@@ -8,11 +6,8 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend config dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
+default: predepend config dirs template css docs dbs
 all: default
-
-build:
-	@mkdir -p $(BUILDDIR)
 
 predepend:
 	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
@@ -56,6 +51,7 @@ data/users.sqlite3: data/users.sqlite3.distrib
 
 dirs:
 	@mkdir -p data/cherrypy_sessions
+	@mkdir -p vendor
 
 config: Makefile
 	@test -f plinth.config || cp plinth.sample.config plinth.config
