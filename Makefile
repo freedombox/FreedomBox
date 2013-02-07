@@ -32,12 +32,13 @@ $(BUILDDIR)/withsqlite: build
 	#cd $@; git pull
 
 install: default
-	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin 
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
+	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin $(DESTDIR)/usr/share/doc/plinth
+	cp -L doc/* $(DESTDIR)/usr/share/doc/plinth/
 	cp -r *.py modules templates vendor static $(DESTDIR)/usr/lib/python2.7/plinth
-	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/cfg.py
-	mv $(DESTDIR)/usr/lib/python2.7/plinth/cfg.sample.py $(DESTDIR)/etc/plinth/cfg.py
-	ln -s ../../../../etc/plinth/cfg.py $(DESTDIR)/usr/lib/python2.7/plinth/cfg.py
+	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
+	ln -s ../../../../etc/plinth/plinth.config $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
 	cp -r themes $(DESTDIR)/usr/share/plinth
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	rm -f $(DESTDIR)/usr/bin/plinth
@@ -45,11 +46,13 @@ install: default
 	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
 	cd $(DESTDIR)/usr/lib/python2.7/plinth; find -name '*.pyc' -exec rm {} \;
 	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
-	mkdir -p $(DESTDIR)/var/lib/plinth
+	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions
 	cp -r data/* $(DESTDIR)/var/lib/plinth
+	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
 uninstall:
-	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth $(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth $(DESTDIR)/usr/share/doc/plinth/
+	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth 
 
 dbs: data/users.sqlite3
 
