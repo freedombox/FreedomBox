@@ -6,33 +6,6 @@ import cfg
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
    sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
-
-def write_cherrypy_config_if_needed():
-   """If there is no cherrpy.config, write one."""
-   if not os.path.exists(os.path.join(cfg.file_root, "cherrypy.config")):
-      with open(os.path.join(cfg.file_root, "cherrypy.config"), 'w') as OUTF:
-         OUTF.write("""
-[global]
-server.socket_host = '0.0.0.0'
-server.socket_port = 8000
-server.thread_pool = 10
-tools.staticdir.root = "%(file_root)s"
-tools.sessions.on = True
-tools.auth.on = True
-tools.sessions.storage_type = "file"
-tools.sessions.timeout = 90
-tools.sessions.storage_path = "%(data_dir)s/cherrypy_sessions"
-
-[/static]
-tools.staticdir.on = True
-tools.staticdir.dir = "static"
-
-[/favicon.ico]
-tools.staticfile.on = True
-tools.staticfile.filename = "%(file_root)s/static/theme/favicon.ico"
-""" % {'data_dir':cfg.data_dir, 'file_root':cfg.file_root})
-
-write_cherrypy_config_if_needed()
 import cherrypy
 from cherrypy import _cpserver
 from cherrypy.process.plugins import Daemonizer
@@ -165,7 +138,7 @@ def setup():
                            'tools.auth.on':True,
                            'tools.sessions.storage_type':"file",
                            'tools.sessions.timeout':90,
-                           'tools.sessions.storage_path':"%s/data/cherrypy_sessions" % cfg.file_root,
+                           'tools.sessions.storage_path':"%s/cherrypy_sessions" % cfg.data_dir,
 
                            })
 
