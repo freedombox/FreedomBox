@@ -34,8 +34,10 @@ $(BUILDDIR)/withsqlite: build
 install: default
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
 	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
-	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin $(DESTDIR)/usr/share/doc/plinth
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin $(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
 	cp -L doc/* $(DESTDIR)/usr/share/doc/plinth/
+	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1 
+	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
 	cp -r *.py modules templates vendor static $(DESTDIR)/usr/lib/python2.7/plinth
 	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
 	ln -s ../../../../etc/plinth/plinth.config $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
@@ -52,7 +54,7 @@ install: default
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth $(DESTDIR)/usr/share/doc/plinth/
-	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth 
+	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth $(DESTDIR)/usr/share/man/man1/plinth.1.gz
 
 dbs: data/users.sqlite3
 
