@@ -50,8 +50,11 @@ install: default
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
 uninstall:
-	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth $(DESTDIR)/usr/share/doc/plinth/
-	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth $(DESTDIR)/usr/share/man/man1/plinth.1.gz
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ \
+		$(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth $(DESTDIR)/usr/share/doc/plinth/ \
+		$(DESTDIR)/var/log/plinth
+	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth \
+		$(DESTDIR)/usr/share/man/man1/plinth.1.gz $(DESTDIR)/var/run/plinth.pid
 
 dbs: data/users.sqlite3
 
