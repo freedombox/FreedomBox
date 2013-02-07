@@ -13,23 +13,23 @@ default: predepend config dirs template css docs dbs $(BUILDDIR)/exmachina #$(BU
 all: default
 
 build:
-	mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDDIR)
 
 predepend:
 	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
 	touch predepend
 
 $(BUILDDIR)/exmachina: build
-	test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
-	#cd $@; git pull
+	@test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
+	#@cd $@; git pull
 
 $(BUILDDIR)/bjsonrpc: build
-	test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
-	#cd $@; git pull
+	@test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
+	#@cd $@; git pull
 
 $(BUILDDIR)/withsqlite: build
-	test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
-	#cd $@; git pull
+	@test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
+	#@cd $@; git pull
 
 install: default
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
