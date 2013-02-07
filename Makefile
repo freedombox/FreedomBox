@@ -21,15 +21,12 @@ predepend:
 
 $(BUILDDIR)/exmachina: build
 	@test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
-	#@cd $@; git pull
 
 $(BUILDDIR)/bjsonrpc: build
 	@test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
-	#@cd $@; git pull
 
 $(BUILDDIR)/withsqlite: build
 	@test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
-	#@cd $@; git pull
 
 install: default
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
@@ -38,16 +35,15 @@ install: default
 	cp -L doc/* $(DESTDIR)/usr/share/doc/plinth/
 	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1 
 	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
-	cp -r *.py modules templates vendor static $(DESTDIR)/usr/lib/python2.7/plinth
+	rsync -rl *.py modules templates vendor static --exclude static/doc --exclude .git/* $(DESTDIR)/usr/lib/python2.7/plinth
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
+	cp doc/*.html $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
 	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
 	ln -s ../../../../etc/plinth/plinth.config $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
 	cp -r themes $(DESTDIR)/usr/share/plinth
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	rm -f $(DESTDIR)/usr/bin/plinth
 	ln -s ../lib/python2.7/plinth/plinth.py $(DESTDIR)/usr/bin/plinth
-	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
-	cd $(DESTDIR)/usr/lib/python2.7/plinth; find -name '*.pyc' -exec rm {} \;
-	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth/vendor/*/.git
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions
 	cp -r data/* $(DESTDIR)/var/lib/plinth
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
