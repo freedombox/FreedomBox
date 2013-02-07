@@ -16,16 +16,9 @@ build:
 
 predepend:
 	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
+	git submodule init
+	git submodule update
 	touch predepend
-
-$(BUILDDIR)/exmachina: build
-	@test -d $@ || git clone git://github.com/tomgalloway/exmachina $@
-
-$(BUILDDIR)/bjsonrpc: build
-	@test -d $@ || git clone git://github.com/deavid/bjsonrpc.git $@
-
-$(BUILDDIR)/withsqlite: build
-	@test -d $@ || git clone git://github.com/jvasile/withsqlite.git $@
 
 install: default
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
