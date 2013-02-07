@@ -15,7 +15,8 @@ parser = SafeConfigParser(
         'access_log_file':"",
         'users_dir':"",
         'host':"127.0.0.1",
-        'port':""
+        'pidfile':"",
+        'port':"",
         })
 parser.read('plinth.config')
 
@@ -29,6 +30,7 @@ user_db = parser.get('Path', 'user_db')
 status_log_file = parser.get('Path', 'status_log_file')
 access_log_file = parser.get('Path', 'access_log_file')
 users_dir = parser.get('Path', 'users_dir')
+pidfile = parser.get('Path', 'pidfile')
 host = parser.get('Network', 'host')
 port = int(parser.get('Network', 'port'))
 
