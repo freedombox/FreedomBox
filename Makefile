@@ -9,7 +9,7 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend cfg dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
+default: predepend config dirs template css docs dbs $(BUILDDIR)/exmachina #$(BUILDDIR)/bjsonrpc
 all: default
 
 build:
@@ -62,8 +62,8 @@ data/users.sqlite3: data/users.sqlite3.distrib
 dirs:
 	@mkdir -p data/cherrypy_sessions
 
-cfg: Makefile
-	test -f cfg.py || cp cfg.sample.py cfg.py
+config: Makefile
+	@test -f plinth.config || cp plinth.sample.config plinth.config
 
 cherrypy.config: Makefile
 	@echo [global]\\n\
