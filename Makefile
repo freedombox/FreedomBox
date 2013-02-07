@@ -48,6 +48,9 @@ install: default
 	mkdir -p $(DESTDIR)/var/lib/plinth
 	cp -r data/* $(DESTDIR)/var/lib/plinth
 
+uninstall:
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth $(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth
+
 dbs: data/users.sqlite3
 
 data/users.sqlite3: data/users.sqlite3.distrib
