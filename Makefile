@@ -36,7 +36,7 @@ install: default
 	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1 
 	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
 	rsync -rl *.py modules templates vendor themes static \
-		--exclude static/doc --exclude .git/* --exclude *.pyc \
+		--exclude static/doc --exclude ".git/*" --exclude "*.pyc" \
 		$(DESTDIR)/usr/lib/python2.7/plinth
 	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
 	cp doc/*.html $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
