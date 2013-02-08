@@ -1,3 +1,23 @@
+"""
+The Form class is a helper class that takes parameters and method
+calls and can return html for a form with appropriate hooks for css
+styling.  It should allow you to display a form but have the
+formatting and styling added by the class.  You can worry less about
+how it looks while still getting consistent, decent-looking forms.
+
+Take a look at the FirstBoot class for an example of forms in action.
+
+Copyright 2011-2013 James Vasile
+
+This software is released to you (yes, you) under the terms of the GNU
+Affero General Public License, version 3 or later, available at
+<http://www.gnu.org/licenses/agpl.html>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+"""
 class Form():
     def __init__(self, action=None, cls='form', title=None, onsubmit=None, name=None, message='', method="get"):
         """Note that there appears to be a bug in cherrypy whereby

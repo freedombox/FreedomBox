@@ -165,6 +165,10 @@ class UserStoreModule:
     user_store.py: get, get_all, set, exists, remove, attr, expert.
     See source code for doc strings.
 
+    This is designed as a plugin so mutiple types of user store can be
+    supported.  But the project is moving towards LDAP for
+    compatibility with third party software.  A future version of
+    Plinth is likely to require LDAP.
     """
-    __metaclass__ = PluginMountSingular
+    __metaclass__ = PluginMountSingular # singular because we can only use one user store at a time
 
