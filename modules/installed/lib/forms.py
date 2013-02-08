@@ -23,7 +23,10 @@ class Form():
         """Note that there appears to be a bug in cherrypy whereby
         forms submitted via post don't have their fields included in
         kwargs for the default index method.  So we use get by
-        default, though it's not as neat."""
+        default, though it's not as neat.  
+
+        TODO: file bug on this w/ CherryPy project
+        """
 
         action = self.get_form_attrib_text('action', action)
         onsubmit = self.get_form_attrib_text('onsubmit', onsubmit)
@@ -85,13 +88,13 @@ class Form():
                 <span>%s</span>
                 <input type="%s" class="inputtext" name="%s" id="%s" value="%s" size="%s"/>
              </label>""" % (label, type, name, id, value, size)
-    def text_box(self, label='', name=None, id=None):
+    def text_box(self, label='', name=None, id=None, value=""):
         name, id = self.name_or_id(name, id)
         self.text += """
              <label>
                  <span>%s</span>
-                 <textarea class="textbox" name="%s" id="%s"></textarea>
-             </label>""" % (label, name, id)
+                 <textarea class="textbox" name="%s" id="%s">%s</textarea>
+             </label>""" % (label, name, id, value)
     def submit(self, label='', name=None, id=None):
         name, id = self.name_or_id(name, id)
         self.text += """

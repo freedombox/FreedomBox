@@ -16,6 +16,8 @@ from util import *
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
+import withsqlite
+from withsqlite.withsqlite import sqlite_db
 import exmachina
 from exmachina.exmachina import ExMachinaClient
 import socket
@@ -52,6 +54,9 @@ def error_page_500(status, message, traceback, version):
 class Root(plugin_mount.PagePlugin):
    @cherrypy.expose
    def index(self):
+      with sqlite_db(cfg.store_file, table="firstboot") as db:
+         if not 'state' in db:
+            raise cherrypy.InternalRedirect('/firstboot')
       if cherrypy.session.get(cfg.session_key, None):
          raise cherrypy.InternalRedirect('/router')
       else:
