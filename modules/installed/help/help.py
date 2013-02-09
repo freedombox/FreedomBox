@@ -83,7 +83,6 @@ class View(PagePlugin):
         if page not in ['design', 'plinth', 'hacking', 'faq']:
             raise cherrypy.HTTPError(404, "The path '/help/view/%s' was not found." % page)
             return self.fill_template(template="err", main="<p>Sorry, as much as I would like to show you that page, I don't seem to have a page named %s!</p>" % page)
-        IF = open(os.path.join("doc", "%s.part.html" % page), 'r')
-        main = IF.read()
-        IF.close()
-        return self.fill_template(template="two_col", title=_("%s Documentation" % cfg.product_name), main=main)
+        with open(os.path.join("doc", "%s.part.html" % page), 'r') as IF:
+            main = IF.read()
+        return self.fill_template(title=_("%s Documentation" % cfg.product_name), main=main)
