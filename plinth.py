@@ -12,14 +12,13 @@ from cherrypy.process.plugins import Daemonizer
 Daemonizer(cherrypy.engine).subscribe()
 
 import plugin_mount
-from util import *
+import util as u
+
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
-import withsqlite
-from withsqlite.withsqlite import sqlite_db
-import exmachina
-from exmachina.exmachina import ExMachinaClient
+from vendor.withsqlite.withsqlite import sqlite_db
+from vendor.exmachina.exmachina import ExMachinaClient
 import socket
 
 __version__ = "0.2.14"
@@ -31,7 +30,7 @@ __email__ = "james@jamesvasile.com"
 __status__ = "Development"
 
 def error_page(status, dynamic_msg, stock_msg):
-   return page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
+   return u.page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
 def error_page_404(status, message, traceback, version):
    return error_page(status, message, """<p>If you believe this

@@ -51,7 +51,6 @@ data/users.sqlite3: data/users.sqlite3.distrib
 
 dirs:
 	@mkdir -p data/cherrypy_sessions
-	@mkdir -p vendor
 
 config: Makefile
 	@test -f plinth.config || cp plinth.sample.config plinth.config
