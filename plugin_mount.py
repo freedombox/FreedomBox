@@ -67,6 +67,7 @@ class PagePlugin:
     def __init__(self, *args, **kwargs):
         """If cfg.html_root is none, then this is the html_root."""
         if not cfg.html_root:
+            cfg.log('Setting html root to %s' % self.__class__.__name__)
             cfg.html_root = self
             
     def register_page(self, url):
