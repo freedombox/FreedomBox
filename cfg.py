@@ -38,3 +38,5 @@ html_root = None
 main_menu = Menu()
 base_href = ""
 
+if store_file.endswith(".sqlite3"):
+    store_file = os.path.splitext(store_file)[0]
