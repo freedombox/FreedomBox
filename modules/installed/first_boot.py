@@ -33,7 +33,10 @@ class FirstBoot(PagePlugin):
         user. It's a good place to put error messages.
         """
 
-        
+        with sqlite_db(cfg.store_file, table="firstboot") as db:
+            db['state']=0
+            db.commit()
+
         main = "<p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll need to ask you a just few questions to get started.</p>"
         form = Form(title="Welcome to Your FreedomBox!", 
                         action="/firstboot", 
@@ -45,6 +48,9 @@ class FirstBoot(PagePlugin):
         form.text_input('Name your FreedomBox', id="box_name", value=box_name)
         form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for itself, but if one already exists (from a prior FreedomBox, for example), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
         form.text_box("If you want, paste your box's key here.", id="box_key", value=box_key)
+
+        ### State 1 ###
+
         form.submit("Box it up!")
 
         main += form.render()
