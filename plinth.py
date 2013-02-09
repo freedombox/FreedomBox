@@ -53,9 +53,13 @@ def error_page_500(status, message, traceback, version):
 class Root(plugin_mount.PagePlugin):
    @cherrypy.expose
    def index(self):
+      ## TODO: firstboot hijacking root should probably be in the firstboot module with a hook in plinth.py
       with sqlite_db(cfg.store_file, table="firstboot") as db:
          if not 'state' in db:
             raise cherrypy.InternalRedirect('/firstboot')
+         elif db['state'] < 5:
+            cfg.log("First Boot state = %d" % db['state'])
+            raise cherrypy.InternalRedirect('/firstboot/state%d' % db['state'])
       if cherrypy.session.get(cfg.session_key, None):
          raise cherrypy.InternalRedirect('/router')
       else:
