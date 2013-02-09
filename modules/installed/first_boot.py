@@ -9,7 +9,6 @@ from vendor.withsqlite.withsqlite import sqlite_db
 import cfg
 
 class FirstBoot(PagePlugin):
-    order = 0 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("firstboot") # this is the url this page will hang off of (/firstboot)
@@ -19,7 +18,6 @@ class FirstBoot(PagePlugin):
         return self.state0(*args, **kwargs)
 
     @cherrypy.expose
-    @require()
     def state0(self, message=None, box_name=None, box_key=""):
         """
         All the parameters are form inputs.  They get passed in when
