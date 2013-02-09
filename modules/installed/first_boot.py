@@ -4,7 +4,8 @@ from gettext import gettext as _
 from plugin_mount import PagePlugin, PluginMount, FormPlugin
 from modules.auth import require
 from forms import Form
-from util import *
+import util as u
+from vendor.withsqlite.withsqlite import sqlite_db
 import cfg
 
 class FirstBoot(PagePlugin):
