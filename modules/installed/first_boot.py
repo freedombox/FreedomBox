@@ -13,11 +13,6 @@ class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("firstboot") # this is the url this page will hang off of (/firstboot)
-        #self.menu = cfg.main_menu.add_item("First Boot", "icon-eye-open", "/privacy", 12)
-        #self.menu.add_item("General Config", "icon-asterisk", "/privacy/config", 10)
-        #self.menu.add_item("Ad Blocking", "icon-ban-circle", "/privacy/adblock", 20)
-        #self.menu.add_item("TOR", "icon-eye-close", "/privacy/TOR", 30)
-        #self.menu.add_item("HTTPS Everywhere", "icon-lock", "/privacy/https_everywhere", 30)
 
     @cherrypy.expose
     def index(self, *args, **kwargs):
@@ -39,7 +34,7 @@ class FirstBoot(PagePlugin):
         """
 
         
-
+        main = "<p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll need to ask you a just few questions to get started.</p>"
         form = Form(title="Welcome to Your FreedomBox!", 
                         action="/firstboot", 
                         name="whats_my_name",
@@ -48,14 +43,13 @@ class FirstBoot(PagePlugin):
             box_name = cfg.box_name
         form.html("<p>For convenience, your FreedomBox needs a name.  It should be something short that doesn't contain spaces or punctuation.  'Willard' would be a good name.  'Freestyle McFreedomBox!!!' would not.</p>")
         form.text_input('Name your FreedomBox', id="box_name", value=box_name)
-        form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for you, but if you already have one (from a prior FreedomBox, maybe), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
+        form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for itself, but if one already exists (from a prior FreedomBox, for example), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
         form.text_box("If you want, paste your box's key here.", id="box_key", value=box_key)
         form.submit("Box it up!")
 
-        main=form.render()
-        return main
-        return self.fill_template(title=_("Privacy Control Panel"), main=main,
-sidebar_right=_("""<strong>Statement of Principles</strong><p>When we say your
+        main += form.render()
+        return self.fill_template(template="base", title=_("First Boot!"), main=main,
+        sidebar_right=_("""<strong>Statement of Principles</strong><p>When we say your
 privacy is important, it's not just an empty pleasantry.  We really
 mean it.  Your privacy control panel should give you fine-grained
 control over exactly who can access your %s and the
@@ -65,4 +59,4 @@ information on it.</p>
 knowledge and direction.  And if companies or government wants this
 information, they have to ask <strong>you</strong> for it.  This gives you a
 change to refuse and also tells you who wants your data.</p>
-""") % cfg.product_name)
+""" % cfg.product_name))
