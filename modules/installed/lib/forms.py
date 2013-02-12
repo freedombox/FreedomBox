@@ -88,6 +88,8 @@ class Form():
                 <span>%s</span>
                 <input type="%s" class="inputtext" name="%s" id="%s" value="%s" size="%s"/>
              </label>""" % (label, type, name, id, value, size)
+    def hidden(self, name=None, id=None, value=''):
+        self.text_input(type="hidden", name=name, id=id, value=value)
     def text_box(self, label='', name=None, id=None, value=""):
         name, id = self.name_or_id(name, id)
         self.text += """
