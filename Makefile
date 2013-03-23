@@ -1,6 +1,6 @@
 #SHELL := /bin/bash
 MAKE=make
-BUILD_DIR = build
+BUILD_DIR = vendor
 
 #TODO: add install target
 
@@ -17,7 +17,7 @@ build:
 	mkdir -p $(BUILD_DIR)
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah"
+	su -c "apt-get -y install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah"
 	touch predepend
 
 $(BUILD_DIR)/exmachina: build
