@@ -11,6 +11,7 @@
 import cherrypy
 import urllib, hashlib
 import cfg
+import random
 
 cfg.session_key = '_cp_username'
 
@@ -18,29 +19,28 @@ def check_credentials(username, passphrase):
     """Verifies credentials for username and passphrase.
     Returns None on success or a string describing the error on failure"""
 
+    start = time.clock()
+
+    if not username or not passphrase:
+        error = "No username or password."
+        cfg.log(error)
+        return error
+
     u = cfg.users[username]
-    if u is None:
-        cfg.log("Unknown user: %s" % username)
-        return u"Username %s is unknown to me." % username
-    if u['passphrase'] != hashlib.md5(passphrase).hexdigest():
-        return u"Incorrect passphrase."
 
+    elif u is None:
+        # hash the password whether the user exists, to foil timing
+        # side-channel attacks
+        hashlib.md5(passphrase).hexdigest()
+        error = "Bad user-name or password."
+    elif u['passphrase'] != hashlib.md5(passphrase).hexdigest():
+        error = "Bad user-name or password."
+    else:
+        error = None
 
-def check_auth(*args, **kwargs):
-    """A tool that looks in config for 'auth.require'. If found and it
-    is not None, a login is required and the entry is evaluated as a
-    list of conditions that the user must fulfill"""
-    conditions = cherrypy.request.config.get('auth.require', None)
-    if conditions is not None:
-        username = cherrypy.session.get(cfg.session_key)
-        if username:
-            cherrypy.request.login = username
-            for condition in conditions:
-                # A condition is just a callable that returns true or false
-                if not condition():
-                    raise cherrypy.HTTPRedirect("/auth/login")
-        else:
-            raise cherrypy.HTTPRedirect("/auth/login")
+    if error:
+        cfg.log(error)
+    return error
 
 def check_auth(*args, **kwargs):
     """A tool that looks in config for 'auth.require'. If found and it
@@ -60,8 +60,8 @@ def check_auth(*args, **kwargs):
                     raise cherrypy.HTTPRedirect("/auth/login?from_page=%s" % get_params)
         else:
             # Send old page as from_page parameter
-            raise cherrypy.HTTPRedirect("/auth/login?from_page=%s" % get_params) 
-    
+            raise cherrypy.HTTPRedirect("/auth/login?from_page=%s" % get_params)
+
 cherrypy.tools.auth = cherrypy.Tool('before_handler', check_auth)
 
 def require(*conditions):
