@@ -57,15 +57,15 @@ class Message():
     def add(self, text):
         self.text += "<br />%s" % text
 
-def page_template(template='base', **kwargs):
+def page_template(template='login_nav', **kwargs):
     for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title', 'basehref']:
         if not k in kwargs:
             kwargs[k] = ''
 
     if kwargs['basehref'] == '':
        kwargs['basehref'] = cfg.base_href
-    if template=='base' and kwargs['sidebar_right']=='':
-        template='two_col'
+    #if template=='base' and kwargs['sidebar_right']=='':
+    #    template='two_col'
     if isinstance(template, basestring):
         exec ("from templates.%s import %s as template" % (template, template))
     try:
@@ -79,7 +79,8 @@ def page_template(template='base', **kwargs):
     kwargs['current_url'] = cherrypy.url()
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
 
-    if not kwargs['nav']: kwargs['nav'] = """	<script type="text/javascript"> 
+    if not kwargs['nav'] and submenu:
+       kwargs['nav'] = """	<script type="text/javascript"> 
           <!--
               side_menu(sub_menu_items); 
 	  // --> 

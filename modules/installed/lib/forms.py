@@ -1,9 +1,32 @@
+"""
+The Form class is a helper class that takes parameters and method
+calls and can return html for a form with appropriate hooks for css
+styling.  It should allow you to display a form but have the
+formatting and styling added by the class.  You can worry less about
+how it looks while still getting consistent, decent-looking forms.
+
+Take a look at the FirstBoot class for an example of forms in action.
+
+Copyright 2011-2013 James Vasile
+
+This software is released to you (yes, you) under the terms of the GNU
+Affero General Public License, version 3 or later, available at
+<http://www.gnu.org/licenses/agpl.html>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+"""
 class Form():
     def __init__(self, action=None, cls='form', title=None, onsubmit=None, name=None, message='', method="get"):
         """Note that there appears to be a bug in cherrypy whereby
         forms submitted via post don't have their fields included in
         kwargs for the default index method.  So we use get by
-        default, though it's not as neat."""
+        default, though it's not as neat.  
+
+        TODO: file bug on this w/ CherryPy project
+        """
 
         action = self.get_form_attrib_text('action', action)
         onsubmit = self.get_form_attrib_text('onsubmit', onsubmit)
@@ -65,13 +88,15 @@ class Form():
                 <span>%s</span>
                 <input type="%s" class="inputtext" name="%s" id="%s" value="%s" size="%s"/>
              </label>""" % (label, type, name, id, value, size)
-    def text_box(self, label='', name=None, id=None):
+    def hidden(self, name=None, id=None, value=''):
+        self.text_input(type="hidden", name=name, id=id, value=value)
+    def text_box(self, label='', name=None, id=None, value=""):
         name, id = self.name_or_id(name, id)
         self.text += """
              <label>
                  <span>%s</span>
-                 <textarea class="textbox" name="%s" id="%s"></textarea>
-             </label>""" % (label, name, id)
+                 <textarea class="textbox" name="%s" id="%s">%s</textarea>
+             </label>""" % (label, name, id, value)
     def submit(self, label='', name=None, id=None):
         name, id = self.name_or_id(name, id)
         self.text += """

@@ -118,17 +118,8 @@
             <span class="icon-bar"></span>
           </a>
           <a href="$basehref/" class="logo-top"><img src="$basehref/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="$basehref/">FreedomBox Dashboard</a>
-          <div class="nav-collapse">
-		<script type="text/javascript"> 
-		<!--
-		   main_menu(main_menu_items); 
-		// --> 
-		</script>
-            #if $username
-            <p class="navbar-text pull-right"><i class="icon-user icon-white nav-icon"></i>Logged in as <a href="$username">$username</a>. <a href="$basehref/auth/logout" title="Log out">Log out</a>.</p>
-            #else
-            <p class="navbar-text pull-right">Not logged in. <i class="icon-user icon-white nav-icon"></i><a href="$basehref/auth/login" title="Log in">Log in</a>.</p>
-            #end if
+	  #block add_nav_and_login
+	  #end block add_nav_and_login
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -136,18 +127,26 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
+        #if $nav or $sidebar_right or $sidebar_left
         <div class="span3">
+        #if $nav
           <div class="well sidebar-nav">
-		#block nav_block
-		$nav
-		#end block nav_block
-		#block sidebar_left_block
-		$sidebar_left
-		#end block sidebar_left_block
           </div><!--/.well -->
-        </div><!--/span-->
+	#end if
+        #if $sidebar_left
+          <div class="well sidebar-nav">
+		left $sidebar_left
+          </div><!--/.well -->
+	#end if
+        #if $sidebar_right
+          <div class="well sidebar-nav">
+		$sidebar_right
+          </div><!--/.well -->
+	#end if
+        </div>
+	#end if
         <div class="span9">
-          <div class="hero-unit">
+          <div class="hero-unit" class="pull-left">
   		<h2>
 		#block title_block
 		$title
@@ -157,15 +156,6 @@
 		$main
 		#end block main_block
           </div>
-
-          <div class="row-fluid">
-            <div class="span8 alert alert-info">
-              	#block sidebar_right_block
-		$sidebar_right
-		#end block sidebar_right_block
-            </div><!--/span-->
-          </div><!--/row-->
-
         </div><!--/span-->
       </div><!--/row-->
 

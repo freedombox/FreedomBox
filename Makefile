@@ -1,8 +1,4 @@
-#SHELL := /bin/bash
 MAKE=make
-BUILD_DIR = vendor
-
-#TODO: add install target
 
 CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
@@ -10,21 +6,43 @@ COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 ## Catch-all tagets
-default: predepend cfg cherrypy.config dirs template css docs dbs $(BUILD_DIR)/exmachina #$(BUILD_DIR)/bjsonrpc
+default: predepend config dirs template css docs dbs
 all: default
 
-build:
-	mkdir -p $(BUILD_DIR)
-
 predepend:
-	su -c "apt-get -y install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah"
+	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
+	git submodule init
+	git submodule update
 	touch predepend
 
-$(BUILD_DIR)/exmachina: build
-	git clone git://github.com/tomgalloway/exmachina $(BUILD_DIR)/exmachina
+install: default
+	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
+	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/bin \
+		$(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
+	rsync -L doc/* $(DESTDIR)/usr/share/doc/plinth/
+	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1 
+	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
+	rsync -rl *.py modules templates vendor themes static \
+		--exclude static/doc --exclude ".git/*" --exclude "*.pyc" \
+		$(DESTDIR)/usr/lib/python2.7/plinth
+	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
+	cp doc/*.html $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
+	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
+	ln -s ../../../../etc/plinth/plinth.config $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
+	cp share/init.d/plinth $(DESTDIR)/etc/init.d
+	rm -f $(DESTDIR)/usr/bin/plinth
+	ln -s ../lib/python2.7/plinth/plinth.py $(DESTDIR)/usr/bin/plinth
+	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
+	cp -r data/* $(DESTDIR)/var/lib/plinth
+	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
-$(BUILD_DIR)/bjsonrpc: build
-	git clone git://github.com/deavid/bjsonrpc.git $(BUILD_DIR)/bjsonrpc
+uninstall:
+	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ \
+		$(DESTDIR)/etc/plinth $(DESTDIR)/var/lib/plinth $(DESTDIR)/usr/share/doc/plinth/ \
+		$(DESTDIR)/var/log/plinth
+	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth \
+		$(DESTDIR)/usr/share/man/man1/plinth.1.gz $(DESTDIR)/var/run/plinth.pid
 
 dbs: data/users.sqlite3
 
@@ -34,29 +52,8 @@ data/users.sqlite3: data/users.sqlite3.distrib
 dirs:
 	@mkdir -p data/cherrypy_sessions
 
-cfg: Makefile
-	test -f cfg.py || cp cfg.sample.py cfg.py
-
-cherrypy.config: Makefile
-	@echo [global]\\n\
-server.socket_host = \'0.0.0.0\'\\n\
-server.socket_port = 8000\\n\
-server.thread_pool = 10\\n\
-tools.staticdir.root = \"$(PWD)\"\\n\
-tools.sessions.on = True\\n\
-tools.auth.on = True\\n\
-tools.sessions.storage_type = \"file\"\\n\
-tools.sessions.timeout = 90\\n\
-tools.sessions.storage_path = \"$(PWD)/data/cherrypy_sessions\"\\n\
-\\n\
-[/static]\\n\
-tools.staticdir.on = True\\n\
-tools.staticdir.dir = \"static\"\\n\
-\\n\
-[/favicon.ico]\\n\
-tools.staticfile.on = True\\n\
-tools.staticfile.filename = \"$(PWD)/static/theme/favicon.ico\"\\n\
-> cherrypy.config
+config: Makefile
+	@test -f plinth.config || cp plinth.sample.config plinth.config
 
 %.tiny.css: %.css
 	@cat $< | python -c 'import re,sys;print re.sub("\s*([{};,:])\s*", "\\1", re.sub("/\*.*?\*/", "", re.sub("\s+", " ", sys.stdin.read())))' > $@
@@ -83,5 +80,5 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILDDIR) $(DESTDIR)
 	rm -f predepend
