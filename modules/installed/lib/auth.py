@@ -28,7 +28,7 @@ def check_credentials(username, passphrase):
 
     u = cfg.users[username]
 
-    elif u is None:
+    if u is None:
         # hash the password whether the user exists, to foil timing
         # side-channel attacks
         hashlib.md5(passphrase).hexdigest()
