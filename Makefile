@@ -5,6 +5,11 @@ CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
 COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
+# hosting variables
+SLEEP_TIME=300
+EXCLUDE=--exclude=*.tar.gz --exclude=*~ $(EXCLUDE-FILES)
+ALL_BUT_GZ=$(subst $(wildcard *.tar.gz),,$(wildcard *))
+
 ## Catch-all tagets
 default: predepend config dirs template css docs dbs
 all: default
@@ -82,3 +87,13 @@ clean:
 	@$(MAKE) -s -C templates clean
 	rm -rf $(BUILDDIR) $(DESTDIR)
 	rm -f predepend
+
+hosting:
+	bash start.sh &
+	while [ 1 ]; do make current-checkout.tar.gz current-repository.tar.gz; sleep $(SLEEP_TIME); done
+
+current-checkout.tar.gz: $(ALL_BUT_GZ)
+	tar cz $(EXCLUDE) * > current-checkout.tar.gz
+
+current-repository.tar.gz: $(ALL_BUT_GZ)
+	tar cz $(EXCLUDE) * .git > current-repository.tar.gz
