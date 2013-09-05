@@ -1,13 +1,14 @@
 #!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          plinth
-# Required-Start:    $syslog
-# Required-Stop:     $syslog
+# Required-Start:    $network $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: plinth web frontend
 # Description:
-#
+#   Control the exmachina privileged execution daemon and the plinth
+#   web frontend.
 ### END INIT INFO
 
 # This file is /etc/init.d/plinth
@@ -28,12 +29,12 @@ set -e
 
 start_plinth (){
     if [ -f $PID_FILE ]; then
-      echo Already running with a pid of `cat $PID_FILE`.
+        echo Already running with a pid of `cat $PID_FILE`.
     else
         if [ -f $EXMACHINA_PID_FILE ]; then
-        echo exmachina was already running with a pid of `cat $EXMACHINA_PID_FILE`.
-        kill -15 `cat $EXMACHINA_PID_FILE`
-        rm -rf $EXMACHINA_PID_FILE
+            echo exmachina was already running with a pid of `cat $EXMACHINA_PID_FILE`.
+            kill -15 `cat $EXMACHINA_PID_FILE`
+            rm -rf $EXMACHINA_PID_FILE
         fi
         SHAREDKEY=`$EXMACHINA_DAEMON --random-key`
         touch $PID_FILE
@@ -48,14 +49,14 @@ stop_plinth () {
     if [ -f $PID_FILE ]; then
 	kill -15 `cat $PID_FILE` || true
 	rm -rf $PID_FILE
-    echo "killed plinth"
+	echo "killed plinth"
     else
 	echo "No pid file at $PID_FILE suggests plinth is not running."
     fi
     if [ -f $EXMACHINA_PID_FILE ]; then
 	kill -15 `cat $EXMACHINA_PID_FILE` || true
 	rm -rf $EXMACHINA_PID_FILE
-    echo "killed exmachina"
+	echo "killed exmachina"
     else
 	echo "No pid file at $EXMACHINA_PID_FILE suggests exmachina is not running."
     fi
@@ -71,16 +72,15 @@ case "$1" in
         echo "Stoping Plinth."
         stop_plinth
         ;;
-    restart)
+    restart|force-reload)
         $0 stop
         $0 start
         ;;
-	status)
-		status_of_proc -p $PID_FILE "$DAEMON" plinth && exit 0 || exit $?
-		;;
-	*)
-		echo "Usage: $NAME {start|stop|restart|status}" >&2
-		exit 1
-		;;
-        
+    status)
+	status_of_proc -p $PID_FILE "$DAEMON" plinth && exit 0 || exit $?
+	;;
+    *)
+	echo "Usage: $NAME {start|stop|restart|force-reload|status}" >&2
+	exit 1
+	;;
 esac
