@@ -26,7 +26,7 @@ class Apps(PagePlugin):
     @cherrypy.expose
     @require()
     def photos(self):
-        return self.fill_template(title="Open ID", main='', sidebar_right="""
+        return self.fill_template(title="Photo Gallery", main='', sidebar_right="""
 <strong>Photo Gallery</strong><p>Your photos might well be the most valuable
 digital property you have, so why trust it to companies that have no
 investment in the sentimental value of your family snaps?  Keep those
