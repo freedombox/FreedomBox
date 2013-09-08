@@ -28,12 +28,12 @@ set -e
 
 start_plinth (){
     if [ -f $PID_FILE ]; then
-      echo Already running with a pid of `cat $PID_FILE`.
+        echo Already running with a pid of `cat $PID_FILE`.
     else
         if [ -f $EXMACHINA_PID_FILE ]; then
-        echo exmachina was already running with a pid of `cat $EXMACHINA_PID_FILE`.
-        kill -15 `cat $EXMACHINA_PID_FILE`
-        rm -rf $EXMACHINA_PID_FILE
+            echo exmachina was already running with a pid of `cat $EXMACHINA_PID_FILE`.
+            kill -15 `cat $EXMACHINA_PID_FILE`
+            rm -rf $EXMACHINA_PID_FILE
         fi
         SHAREDKEY=`$EXMACHINA_DAEMON --random-key`
         touch $PID_FILE
@@ -46,23 +46,23 @@ start_plinth (){
 
 stop_plinth () {
     if [ -f $PID_FILE ]; then
-	kill -15 `cat $PID_FILE` || true
-	rm -rf $PID_FILE
-    echo "killed plinth"
+        kill -15 `cat $PID_FILE` || true
+        rm -rf $PID_FILE
+        echo "killed plinth"
     else
-	echo "No pid file at $PID_FILE suggests plinth is not running."
+        echo "No pid file at $PID_FILE suggests plinth is not running."
     fi
     if [ -f $EXMACHINA_PID_FILE ]; then
-	kill -15 `cat $EXMACHINA_PID_FILE` || true
-	rm -rf $EXMACHINA_PID_FILE
-    echo "killed exmachina"
+        kill -15 `cat $EXMACHINA_PID_FILE` || true
+        rm -rf $EXMACHINA_PID_FILE
+        echo "killed exmachina"
     else
-	echo "No pid file at $EXMACHINA_PID_FILE suggests exmachina is not running."
+        echo "No pid file at $EXMACHINA_PID_FILE suggests exmachina is not running."
     fi
 }
 
 test -x $DAEMON || exit 0
-case "$1" in 
+case "$1" in
     start)
         echo "Starting Plinth."
         start_plinth
@@ -75,12 +75,12 @@ case "$1" in
         $0 stop
         $0 start
         ;;
-	status)
-		status_of_proc -p $PID_FILE "$DAEMON" plinth && exit 0 || exit $?
-		;;
-	*)
-		echo "Usage: $NAME {start|stop|restart|status}" >&2
-		exit 1
-		;;
-        
+    status)
+        status_of_proc -p $PID_FILE "$DAEMON" plinth && exit 0 || exit $?
+        ;;
+    *)
+        echo "Usage: $NAME {start|stop|restart|status}" >&2
+        exit 1
+        ;;
+
 esac
