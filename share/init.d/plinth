@@ -1,13 +1,14 @@
 #!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          plinth
-# Required-Start:    $syslog
-# Required-Stop:     $syslog
+# Required-Start:    $network $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: plinth web frontend
 # Description:
-#
+#   Control the exmachina privileged execution daemon and the plinth
+#   web frontend.
 ### END INIT INFO
 
 # This file is /etc/init.d/plinth
@@ -71,7 +72,7 @@ case "$1" in
         echo "Stoping Plinth."
         stop_plinth
         ;;
-    restart)
+    restart|force-reload)
         $0 stop
         $0 start
         ;;
@@ -79,7 +80,7 @@ case "$1" in
         status_of_proc -p $PID_FILE "$DAEMON" plinth && exit 0 || exit $?
         ;;
     *)
-        echo "Usage: $NAME {start|stop|restart|status}" >&2
+        echo "Usage: $NAME {start|stop|restart|force-reload|status}" >&2
         exit 1
         ;;
 
