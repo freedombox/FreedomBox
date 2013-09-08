@@ -9,6 +9,8 @@ PWD=`pwd`
 SLEEP_TIME=300
 EXCLUDE=--exclude=*.tar.gz --exclude=*~ $(EXCLUDE-FILES)
 ALL_BUT_GZ=$(subst $(wildcard *.tar.gz),,$(wildcard *))
+DATADIR=/usr/share/plinth
+PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all tagets
 default: predepend config dirs template css docs dbs
@@ -23,21 +25,12 @@ predepend:
 install: default
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
 	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
-	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/bin \
+	mkdir -p $(DESTDIR)$(PYDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)/usr/bin \
 		$(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
-	rsync -L doc/* $(DESTDIR)/usr/share/doc/plinth/
-	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1
-	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
-	rsync -rl *.py modules templates vendor themes static \
-		--exclude static/doc --exclude ".git/*" --exclude "*.pyc" \
-		$(DESTDIR)/usr/lib/python2.7/plinth
-	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
-	cp doc/*.html $(DESTDIR)/usr/lib/python2.7/plinth/static/doc
-	rm -f $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
-	ln -s ../../../../etc/plinth/plinth.config $(DESTDIR)/usr/lib/python2.7/plinth/plinth.config
+	cp -a static themes $(DESTDIR)$(DATADIR)/
+	cp -a *.py modules templates $(DESTDIR)$(PYDIR)/
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
-	rm -f $(DESTDIR)/usr/bin/plinth
-	ln -s ../lib/python2.7/plinth/plinth.py $(DESTDIR)/usr/bin/plinth
+	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	cp -r data/* $(DESTDIR)/var/lib/plinth
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
