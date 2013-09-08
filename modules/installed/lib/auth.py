@@ -28,13 +28,11 @@ def check_credentials(username, passphrase):
         return error
 
     u = cfg.users[username]
+    # hash the password whether the user exists, to foil timing
+    # side-channel attacks
+    pass_hash = hashlib.md5(passphrase).hexdigest()
 
-    if u is None:
-        # hash the password whether the user exists, to foil timing
-        # side-channel attacks
-        hashlib.md5(passphrase).hexdigest()
-        error = "Bad user-name or password."
-    elif u['passphrase'] != hashlib.md5(passphrase).hexdigest():
+    if u is None or u['passphrase'] != pass_hash:
         error = "Bad user-name or password."
     else:
         error = None
