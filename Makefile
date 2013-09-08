@@ -15,7 +15,7 @@ default: predepend config dirs template css docs dbs
 all: default
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools python-bjsonrpc python-augeas python-simplejson pandoc python-cheetah python-cherrypy3"
+	sudo sh -c "apt-get install augeas-tools libpython2.7 pandoc psmisc python2.7 python-augeas python-bjsonrpc python-cheetah python-cherrypy3 python-simplejson sudo"
 	git submodule init
 	git submodule update
 	touch predepend
@@ -26,7 +26,7 @@ install: default
 	mkdir -p $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/bin \
 		$(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
 	rsync -L doc/* $(DESTDIR)/usr/share/doc/plinth/
-	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1 
+	gzip $(DESTDIR)/usr/share/doc/plinth/plinth.1
 	mv $(DESTDIR)/usr/share/doc/plinth/plinth.1.gz $(DESTDIR)/usr/share/man/man1
 	rsync -rl *.py modules templates vendor themes static \
 		--exclude static/doc --exclude ".git/*" --exclude "*.pyc" \
