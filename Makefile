@@ -13,7 +13,7 @@ DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all tagets
-default: predepend config dirs template css docs dbs
+default: config dirs template css docs dbs
 all: default
 
 predepend:

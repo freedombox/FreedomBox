@@ -17,8 +17,8 @@ import util as u
 from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
-from vendor.withsqlite.withsqlite import sqlite_db
-from vendor.exmachina.exmachina import ExMachinaClient
+from withsqlite.withsqlite import sqlite_db
+from exmachina.exmachina import ExMachinaClient
 import socket
 
 __version__ = "0.2.14"
