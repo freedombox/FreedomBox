@@ -12,6 +12,7 @@ import cherrypy
 import urllib, hashlib
 import cfg
 import random
+import time
 
 cfg.session_key = '_cp_username'
 
