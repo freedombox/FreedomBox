@@ -1,6 +1,9 @@
 import os
 import cherrypy
-import simplejson as json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 from gettext import gettext as _
 from filedict import FileDict
 from auth import require
