@@ -16,7 +16,12 @@ class UserStore(UserStoreModule, sqlite_db):
     def close(self):
         self.__exit__(None,None,None)
 
+    def currentuser(self):
+        return cherrypy.session.get(cfg.session_key)
+
     def expert(self, username=None):
+        if username is None:
+            username = self.currentuser()
         groups = self.attr(username,"groups")
         if not groups:
             return False
