@@ -7,6 +7,7 @@ from forms import Form
 import util as u
 from withsqlite.withsqlite import sqlite_db
 import cfg
+from model import User
 
 class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -29,7 +30,7 @@ class FirstBoot(PagePlugin):
         return "fake key"
 
     @cherrypy.expose
-    def state0(self, message="", box_name="", box_key="", submitted=False):
+    def state0(self, message="", box_name="", box_key="", username="", md5_password="", submitted=False, **kwargs):
         """
         In this state, we do time config over HTTP, name the box and
         server key selection.
@@ -68,9 +69,22 @@ class FirstBoot(PagePlugin):
             elif submitted and not box_key:
                 box_key = self.generate_box_key()
                 db['box_key'] = box_key
+            if username and md5_password:
+                di = {
+                    'username':username,
+                    'name':'First user - please change',
+                    'expert':'on',
+                    "groups": ["expert"],
+                    'passphrase':md5_password,
+                    }
+                new_user = User(di)
+                cfg.users.set(username,new_user)
+                validuser = True
+            else:
+                validuser = False
 
 
-        if box_name and box_key and self.valid_box_name_p(box_name) and self.valid_box_key_p(box_key):
+        if box_name and box_key and self.valid_box_name_p(box_name) and self.valid_box_key_p(box_key) and validuser:
             ## Update state to 1 and head there
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
                 db['state']=1
@@ -79,12 +93,18 @@ class FirstBoot(PagePlugin):
         main = "<p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll need to ask you a just few questions to get started.</p>"
         form = Form(title="Welcome to Your FreedomBox!", 
                         action="/firstboot", 
+                        onsubmit="return md5ify('whats_my_name', 'password')", 
                         name="whats_my_name",
                         message=message)
+        form.text = '<script type="text/javascript" src="/static/js/md5.js"></script>\n'+form.text
         if not box_name:
             box_name = cfg.box_name
         form.html("<p>For convenience, your FreedomBox needs a name.  It should be something short that doesn't contain spaces or punctuation.  'Willard' would be a good name.  'Freestyle McFreedomBox!!!' would not.</p>")
         form.text_input('Name your FreedomBox', id="box_name", value=box_name)
+        form.html("<p><strong>Initial user and password.</strong> Access to this web interface is protected by knowing a username and password.  Provide one here to register the initial privileged user.  The password can be changed and other users added later.</p>")
+        form.text_input('Username:', id="username", value=username)
+        form.text_input('Password:', id="password", type='password')
+        form.text_input(name="md5_password", type="hidden")
         form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for itself, but if one already exists (from a prior FreedomBox, for example), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
         form.text_box("If you want, paste your box's key here.", id="box_key", value=box_key)
         form.hidden(name="submitted", value="True")
