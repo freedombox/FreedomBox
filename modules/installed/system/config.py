@@ -62,10 +62,6 @@ class general(FormPlugin, PagePlugin):
     order = 30
 
     def help(self, *args, **kwargs):
-
-        ## only expert users are going to get deep enough to see any timestamps
-        if not cfg.users.expert():
-            return ''
         return _(#"""<strong>Time Zone</strong> 
         """<p>Set your timezone to get accurate
         timestamps.  %(product)s will use this information to set your
@@ -73,6 +69,9 @@ class general(FormPlugin, PagePlugin):
         """ % {'product':cfg.product_name, 'box':cfg.box_name})
 
     def main(self, message='', **kwargs):
+        if not cfg.users.expert():
+            return '<p>' + _('Only members of the expert group are allowed to see and modify the system setup.') + '</p>'
+
         sys_store = filedict_con(cfg.store_file, 'sys')
         hostname = cfg.exmachina.augeas.get("/files/etc/hostname/*")
         # this layer of persisting configuration in sys_store could/should be
