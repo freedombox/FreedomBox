@@ -40,6 +40,9 @@ def valid_hostname(name):
 
     return message
 
+def get_hostname():
+    return gethostname()
+
 def set_hostname(hostname):
     "Sets machine hostname to hostname"
     cfg.log.info("Writing '%s' to /etc/hostname with exmachina" % hostname)
@@ -53,7 +56,7 @@ def set_hostname(hostname):
         if platform.linux_distribution()[0]=="Ubuntu" :
             cfg.exmachina.service.start("hostname")
         else:
-            cfg.exmachina.initd.restart("hostname.sh") # is hostname.sh debian-only?
+            cfg.exmachina.initd.start("hostname.sh") # is hostname.sh debian-only?
     except OSError, e:
         raise cherrypy.HTTPError(500, "Hostname restart failed: %s" % e)
 
