@@ -109,6 +109,15 @@ TODO: explain all this cert stuff to the user.</p>
 <p>TODO: add instrux for installing certificate.</p>
 <p>After you have installed
 """
+        # TODO complete first_boot handling
+        # Make sure the user  is not stuck on a dead end for now.
+        with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
+            db['state']=5
+            main = main + """
+<p>Welcome screen not done.  Press <a href="/router">continue</a> to
+see the rest of the web interface.</p>"
+"""
+        
         if False:
             ## Update state to 2 and head there
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
