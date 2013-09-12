@@ -114,7 +114,7 @@ def setup():
       pass
 
    try:
-      from exmachina import ExMachinaClient
+      from exmachina.exmachina import ExMachinaClient
    except ImportError:
       cfg.exmachina = None
    else:
