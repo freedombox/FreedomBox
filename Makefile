@@ -30,7 +30,7 @@ install: default
 	cp -a static themes $(DESTDIR)$(DATADIR)/
 	cp -a *.py modules templates $(DESTDIR)$(PYDIR)/
 	mkdir -p $(DESTDIR)$(PYDIR)/exmachina
-	cp -a exmachina/exmachina.py $(DESTDIR)$(PYDIR)/exmachina/.
+	cp -a exmachina/exmachina.py exmachina/__init__.py $(DESTDIR)$(PYDIR)/exmachina/.
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
