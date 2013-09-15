@@ -10,7 +10,7 @@ class UserStore(UserStoreModule, sqlite_db):
     def __init__(self):
         self.data_dir = cfg.users_dir
         self.db_file = cfg.user_db
-        sqlite_db.__init__(self, self.db_file, autocommit=True)
+        sqlite_db.__init__(self, self.db_file, autocommit=True, check_same_thread=False)
         self.__enter__()
 
     def close(self):
