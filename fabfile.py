@@ -7,7 +7,10 @@
 # plinth box
 
 import os,sys, subprocess
-import simplejson as json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import fabric.api
 from fabric.api import local, env, cd, put, get, task
 

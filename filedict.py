@@ -5,7 +5,10 @@ Author: Erez Shinan
 Date  : 31-May-2009
 """
 
-import simplejson as json ## jlv replaced pickle with json
+try:
+    import simplejson as json ## jlv replaced pickle with json
+except ImportError:
+    import json
  
 import UserDict
 ##import cPickle as pickle
