@@ -1,5 +1,8 @@
 import os
-import simplejson as json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import cherrypy
 import cfg
 from model import User
@@ -10,13 +13,27 @@ class UserStore(UserStoreModule, sqlite_db):
     def __init__(self):
         self.data_dir = cfg.users_dir
         self.db_file = cfg.user_db
-        sqlite_db.__init__(self, self.db_file, autocommit=True)
+        sqlite_db.__init__(self, self.db_file, autocommit=True, check_same_thread=False)
         self.__enter__()
 
     def close(self):
         self.__exit__(None,None,None)
 
+    def current(self, name=False):
+        """Return current user, if there is one, else None.
+        If name = True, return the username instead of the user."""
+        try:
+            username = cherrypy.session.get(cfg.session_key)
+            if name:
+                return username
+            else:
+                return self.get(username)
+        except AttributeError:
+            return None
+        
     def expert(self, username=None):
+        if not username:
+            username = self.current(name=True)
         groups = self.attr(username,"groups")
         if not groups:
             return False

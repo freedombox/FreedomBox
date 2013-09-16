@@ -7,7 +7,10 @@ haven't figured that one all the way through yet.
 
 import os, sys
 import cherrypy
-import simplejson as json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 from gettext import gettext as _
 from plugin_mount import PagePlugin
 from modules.auth import require

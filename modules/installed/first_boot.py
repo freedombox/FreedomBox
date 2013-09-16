@@ -7,6 +7,7 @@ from forms import Form
 import util as u
 from withsqlite.withsqlite import sqlite_db
 import cfg
+import config
 from model import User
 
 class FirstBoot(PagePlugin):
@@ -19,18 +20,13 @@ class FirstBoot(PagePlugin):
         return self.state0(*args, **kwargs)
 
     ## TODO: flesh out these tests values
-    def valid_box_name_p(self, name):
-        name = name.strip()
-        if re.search("\W", name):
-            return False
-        return True
     def valid_box_key_p(self, key):
         return True
     def generate_box_key(self):
         return "fake key"
 
     @cherrypy.expose
-    def state0(self, message="", box_name="", box_key="", username="", md5_password="", submitted=False, **kwargs):
+    def state0(self, message="", hostname="", box_key="", submitted=False, username="", md5_password="", **kwargs):
         """
         In this state, we do time config over HTTP, name the box and
         server key selection.
@@ -50,15 +46,13 @@ class FirstBoot(PagePlugin):
         ## Must resist the sick temptation to write an LDAP interface to the sqlite file
         with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as db:
             db['about'] = "This table is for information about this FreedomBox"
-            if box_name:
-                if self.valid_box_name_p(box_name): 
-                    db['box_name'] = box_name
+            if hostname:
+                if '' == config.valid_hostname(hostname):
+                    config.set_hostname(hostname)
                 else:
-                    message += _("Invalid box name.")
-            elif 'box_name' in db and db['box_name']:
-                box_name = db['box_name']
-                #TODO: set /etc/hostname to box name via ex machina
-
+                    message += _("Invalid box name: %s") % config.valid_hostname(hostname)
+            else:
+                hostname = config.get_hostname()
             if box_key: 
                 if self.valid_box_key_p(box_key):
                     db['box_key'] = box_key
@@ -83,8 +77,7 @@ class FirstBoot(PagePlugin):
             else:
                 validuser = False
 
-
-        if box_name and box_key and self.valid_box_name_p(box_name) and self.valid_box_key_p(box_key) and validuser:
+        if hostname and box_key and '' == config.valid_hostname(hostname) and self.valid_box_key_p(box_key) and validuser:
             ## Update state to 1 and head there
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
                 db['state']=1
@@ -97,10 +90,8 @@ class FirstBoot(PagePlugin):
                         name="whats_my_name",
                         message=message)
         form.text = '<script type="text/javascript" src="/static/js/md5.js"></script>\n'+form.text
-        if not box_name:
-            box_name = cfg.box_name
         form.html("<p>For convenience, your FreedomBox needs a name.  It should be something short that doesn't contain spaces or punctuation.  'Willard' would be a good name.  'Freestyle McFreedomBox!!!' would not.</p>")
-        form.text_input('Name your FreedomBox', id="box_name", value=box_name)
+        form.text_input('Name your FreedomBox', id="hostname", value=hostname)
         form.html("<p><strong>Initial user and password.</strong> Access to this web interface is protected by knowing a username and password.  Provide one here to register the initial privileged user.  The password can be changed and other users added later.</p>")
         form.text_input('Username:', id="username", value=username)
         form.text_input('Password:', id="password", type='password')
@@ -129,6 +120,15 @@ TODO: explain all this cert stuff to the user.</p>
 <p>TODO: add instrux for installing certificate.</p>
 <p>After you have installed
 """
+        # TODO complete first_boot handling
+        # Make sure the user  is not stuck on a dead end for now.
+        with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
+            db['state']=5
+            main = main + """
+<p>Welcome screen not completely implemented yet.  Press <a href="/router">continue</a> to
+see the rest of the web interface.</p>"
+"""
+        
         if False:
             ## Update state to 2 and head there
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:

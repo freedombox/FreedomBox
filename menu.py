@@ -1,5 +1,8 @@
-import simplejson as json
 from urlparse import urlparse
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import cherrypy
 import cfg
 

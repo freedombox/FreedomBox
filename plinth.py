@@ -114,9 +114,10 @@ def setup():
       pass
 
    try:
-      from exmachina import ExMachinaClient
+      from vendor.exmachina.exmachina import ExMachinaClient
    except ImportError:
       cfg.exmachina = None
+      print "unable to import exmachina client library, but continuing anyways..."
    else:
       try:
          cfg.exmachina = ExMachinaClient(
