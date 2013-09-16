@@ -1,0 +1,105 @@
+                                 _     _             
+   _____  ___ __ ___   __ _  ___| |__ (_)_ __   __ _ 
+  / _ \ \/ / '_ ` _ \ / _` |/ __| '_ \| | '_ \ / _` |
+ |  __/>  <| | | | | | (_| | (__| | | | | | | | (_| |
+  \___/_/\_\_| |_| |_|\__,_|\___|_| |_|_|_| |_|\__,_|
+                                                     
+
+
+### DISCLAIMER
+
+               -----  ACHTUNG!  WARNING!  DANGER!  ----
+
+This code is hackish and not "production quality. It represents a potential
+approach to a specific problem (privilege separation for system configuration).
+It has not been extensively reviewed or tested and does not represent a known
+best practice.
+
+### What is this?
+
+exmachina is a small system configuration system which runs as separate but 
+coupled client/server UNIX processes for the purpose of privilege separation:
+the "server" process runs with root privileges and a python program using the
+"client" library runs as any unprivileged user. The commands and parameters
+that the client can send to the server are limited, though in this particular
+case can of course be used to deny service (reboot or shutdown the machine) or
+probably escalate privileges one way or another (install arbitrary packages,
+reconfigure networks, enable callback scripts, edit system configuration
+files).
+
+The server and client processes should be one-to-one: only one client should
+ever connect to the server. The init_test.sh script shows how this could be
+achieved in a SysV-style /etc/init.d script.
+
+The intended use case is writing a user-friendly web control panel for a Debian
+server or router: the web designer creating the user interface should not be
+overly concerned with writing secure code, and the web application itself
+(possibly including lots of third party framework code, javascript libraries,
+etc) should not run with strong system permissions, but core components of the
+system (such as hostname, wireless access point configuration, network
+settings, package installation, locale, timezone, etc) need to be modified.
+
+See the comments in exmachina.py for more information.
+
+### Alternatives
+
+The most simple alternative to exmachina that has been recommended to me is to
+create simple setuid/setgid programs or scripts to execute privileged system
+changes, and to only allow execute permissions to those programs for the
+user/group of the less-trusted user interface program. This seems to be the
+current best practice. For the more complicated case of generalized system
+configuration, the setuid/setgid program becomes complicated, or you need to
+write and install many of them, but this is no worse that the situation with
+exmachina.
+
+Another approach is the Assuan protocol used by GPG, which has been generalized
+as libassuan:
+
+    "Assuan permits the servers, which do the actual work, e.g. encryption and
+    decryption of data using a secret key, to be developed independently of the
+    user interfaces, e.g. mail clients and other encryption front ends."
+    
+    http://www.gnupg.org/related_software/libassuan/index.en.html
+
+### Status
+
+Basic server and client functionality implemented. Crude, and far more simple
+than it may appear or the length of code would imply.
+
+This was code was written in a weekend "sprint" for the FreedomBox project and
+their Plinth web user interface in 2012. 
+
+I may or may not maintain this code. I have hesitation even publishing it
+because i'm almost certain there are implementation bugs and that the entire
+concept is problematic.
+
+Features:
+* shared secret key process/privilege separation
+* call augeas API: match, set, setm, get, save, move, insert, remove
+* call init.d service scripts: status, start, stop, restart
+
+In late 2012 Nick Daly (of the FreedomBox project) wrote up a brief audit of
+this code and concept on his blog (https://www.betweennowhere.net/). Link is
+frequantly broken.
+
+### Dependencies (server)
+
+* augeas configuration editing library
+* python-augeas wrapper for augeas
+* bjsonrpc python library
+
+On debian (wheezy) try:
+
+  $ sudo apt-get install augeas-tools python-bjsonrpc python-augeas
+
+### Dependencies (client)
+
+* bjsonrpc
+
+On debian (wheezy) try:
+
+  $ sudo apt-get install bjsonrpc
+
+### License
+
+exmachina.py is GPLv3 or later
