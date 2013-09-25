@@ -4,7 +4,6 @@ CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
 COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
-BUILDDIR=vendor
 
 # hosting variables
 SLEEP_TIME=300
@@ -81,7 +80,6 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf $(BUILDDIR) $(DESTDIR)
 	rm -f predepend
 
 hosting:
