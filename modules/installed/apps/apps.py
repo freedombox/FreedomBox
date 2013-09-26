@@ -50,7 +50,6 @@ some other websites business model.</p>
             for k in kwargs.keys():
                 if 'on' == kwargs[k]:
                     shortk = k.split("owncloud_").pop()
-                    cfg.log.info('found: %s, short %s ' % (k, shortk))
                     checkedinfo[shortk] = True
 
             for key in checkedinfo.keys():

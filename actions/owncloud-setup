@@ -39,10 +39,10 @@ done
 
 if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
     if $owncloud_enable ; then
-	apt-get install -y owncloud
-	a2enconf owncloud
+	apt-get install -y owncloud 2>&1 | logger -t owncloud-setup
+	a2enconf owncloud 2>&1 | logger -t owncloud-setup
     else
-	a2disconf owncloud
+	a2disconf owncloud 2>&1 | logger -t owncloud-setup
     fi
-    service apache2 restart
+    service apache2 restart 2>&1 | logger -t owncloud-setup
 fi
