@@ -18,7 +18,6 @@ from logger import Logger
 #from modules.auth import AuthController, require, member_of, name_is
 
 from withsqlite.withsqlite import sqlite_db
-from exmachina.exmachina import ExMachinaClient
 import socket
 
 __version__ = "0.2.14"
@@ -84,8 +83,6 @@ def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
    parser.add_argument('--pidfile', default="",
                        help='specify a file in which the server may write its pid')
-   parser.add_argument('--listen-exmachina-key', default=False, action='store_true',
-                       help='listen for JSON-RPC shared secret key on stdin at startup')
    args=parser.parse_args()
    if args.pidfile:
       cfg.pidfile = args.pidfile
@@ -96,13 +93,6 @@ def parse_arguments():
       except AttributeError:
             cfg.pidfile = "plinth.pid"
 
-   if args.listen_exmachina_key:
-      # this is where we optionally try to read in a shared secret key to
-      # authenticate connections to exmachina
-      cfg.exmachina_secret_key = sys.stdin.readline().strip()
-   else:
-      cfg.exmachina_secret_key = None
-
 def setup():
    parse_arguments()
 
@@ -112,19 +102,6 @@ def setup():
          PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
    except AttributeError:
       pass
-
-   try:
-      from vendor.exmachina.exmachina import ExMachinaClient
-   except ImportError:
-      cfg.exmachina = None
-      print "unable to import exmachina client library, but continuing anyways..."
-   else:
-      try:
-         cfg.exmachina = ExMachinaClient(
-            secret_key=cfg.exmachina_secret_key or None)
-      except socket.error:
-         cfg.exmachina = None
-         print "couldn't connect to exmachina daemon, but continuing anyways..."
 
    os.chdir(cfg.python_root)
    cherrypy.config.update({'error_page.404': error_page_404})

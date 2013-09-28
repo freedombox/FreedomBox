@@ -1,0 +1,48 @@
+#!/bin/sh
+
+if [ -e /etc/apache2/conf-enabled/owncloud.conf ] ; then
+    owncloud_enable=true
+else
+    owncloud_enable=false
+fi
+owncloud_enable_cur=$owncloud_enable
+export owncloud_enable
+
+
+while [ "$1" ] ; do 
+    arg="$1"
+    shift
+    case "$arg" in
+	enable|noenable) # Not using disable for consistency with other options
+	    if [ 'enable' = "$arg" ] ; then
+		owncloud_enable=true
+	    else
+		owncloud_enable=false
+	    fi
+	    export owncloud_enable
+	    ;;
+	status)
+	    printstatus() {
+		if $2 ; then
+		    echo $1
+		else
+		    echo no$1
+		fi
+	    }
+	    printstatus enable $owncloud_enable_cur
+	    exit 0
+	    ;;
+	*)
+	    ;;
+    esac
+done
+
+if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
+    if $owncloud_enable ; then
+	DEBIAN_FRONTEND=noninteractive apt-get install -y owncloud 2>&1 | logger -t owncloud-setup
+	a2enconf owncloud 2>&1 | logger -t owncloud-setup
+    else
+	a2disconf owncloud 2>&1 | logger -t owncloud-setup
+    fi
+    service apache2 restart 2>&1 | logger -t owncloud-setup
+fi

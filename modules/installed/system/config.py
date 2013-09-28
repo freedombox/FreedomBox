@@ -9,6 +9,7 @@ from gettext import gettext as _
 from filedict import FileDict
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
+from privilegedactions import privilegedaction_run
 import cfg
 from forms import Form
 from model import User
@@ -48,20 +49,14 @@ def get_hostname():
 
 def set_hostname(hostname):
     "Sets machine hostname to hostname"
-    cfg.log.info("Writing '%s' to /etc/hostname with exmachina" % hostname)
-
+    cfg.log.info("Changing hostname to '%s'" % hostname)
     try:
-        cfg.exmachina.augeas.set("/files/etc/hostname/*", hostname)
-        cfg.exmachina.augeas.save()
+        privilegedaction_run("hostname-change", [hostname])
         # don't persist/cache change unless it was saved successfuly
         sys_store = filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
-        if platform.linux_distribution()[0]=="Ubuntu" :
-            cfg.exmachina.service.start("hostname")
-        else:
-            cfg.exmachina.initd.start("hostname.sh") # is hostname.sh debian-only?
     except OSError, e:
-        raise cherrypy.HTTPError(500, "Hostname restart failed: %s" % e)
+        raise cherrypy.HTTPError(500, "Updating hostname failed: %s" % e)
 
 class general(FormPlugin, PagePlugin):
     url = ["/sys/config"]
@@ -79,7 +74,7 @@ class general(FormPlugin, PagePlugin):
             return '<p>' + _('Only members of the expert group are allowed to see and modify the system setup.') + '</p>'
 
         sys_store = filedict_con(cfg.store_file, 'sys')
-        hostname = cfg.exmachina.augeas.get("/files/etc/hostname/*")
+        hostname = get_hostname()
         # this layer of persisting configuration in sys_store could/should be
         # removed -BLN
         defaults = {'time_zone': "slurp('/etc/timezone').rstrip()",
@@ -139,10 +134,10 @@ class general(FormPlugin, PagePlugin):
                     raise
             else:
                 message += msg
+        time_zone = time_zone.strip()
         if time_zone != sys_store['time_zone']:
-            src = os.path.join("/usr/share/zoneinfo", time_zone)
             cfg.log.info("Setting timezone to %s" % time_zone)
-            cfg.exmachina.misc.set_timezone(time_zone)
+            privilegedaction_run("timezone-change", [time_zone])
             sys_store['time_zone'] = time_zone
         return message or "Settings updated."
 
