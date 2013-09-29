@@ -80,6 +80,7 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
+	rm -f plinth.config
 	rm -f predepend
 
 hosting:

@@ -77,7 +77,7 @@ some other websites business model.</p>
         form.submit(_("Update setup"))
         main += form.render()
         sidebar_right="""
-<strong>Owncloud</strong><p>gives you universal access to your files through a web interface or WebDAV. It also provides a platform to easily view & sync your contacts, calendars and bookmarks across all your devices and enables basic editing right on the web. Installation has minimal server requirements, doesn’t need special permissions and is quick. ownCloud is extendable via a simple but powerful API for applications and plugins.
+<strong>Owncloud</strong><p>gives you universal access to your files through a web interface or WebDAV. It also provides a platform to easily view & sync your contacts, calendars and bookmarks across all your devices and enables basic editing right on the web. Installation has minimal server requirements, doesn't need special permissions and is quick. ownCloud is extendable via a simple but powerful API for applications and plugins.
 </p>
 """
         return self.fill_template(title="Owncloud", main=main, sidebar_right=sidebar_right)
