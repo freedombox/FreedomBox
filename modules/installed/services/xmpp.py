@@ -4,6 +4,7 @@ from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
+from privilegedactions import privilegedaction_run
 from util import Message
 
 class xmpp(PagePlugin):
@@ -44,10 +45,10 @@ class register(FormPlugin, PagePlugin):
         if not username: msg.add = _("Must specify a username!")
         if not password: msg.add = _("Must specify a password!")
 
-        # register account using script
-
-        if not msg:
+        if username and password:
+            privilegedaction_run("xmpp-register", [username, password])
             msg.add = _("Registered account for %s." % username)
+
         cfg.log(msg.text)
         main = self.main(username, msg=msg.text)
         return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
