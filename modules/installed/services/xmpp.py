@@ -46,8 +46,14 @@ class register(FormPlugin, PagePlugin):
         if not password: msg.add = _("Must specify a password!")
 
         if username and password:
-            privilegedaction_run("xmpp-register", [username, password])
-            msg.add = _("Registered account for %s." % username)
+            output, error = privilegedaction_run("xmpp-register", [username, password])
+            if error:
+                raise Exception("something is wrong: " + error)
+
+            if "successfully registered" in output:
+                msg.add = _("Registered account for %s." % username)
+            else:
+                msg.add = _("Failed to register account for %s: %o" % (username, output))
 
         cfg.log(msg.text)
         main = self.main(username, msg=msg.text)
