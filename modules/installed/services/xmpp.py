@@ -16,8 +16,43 @@ class xmpp(PagePlugin):
 
     @cherrypy.expose
     @require()
-    def index(self):
+    def index(self, submitted=False, **kwargs):
+        checkedinfo = {
+            'inband_enable'    : False,
+            }
+
+        if submitted:
+            opts = []
+            for k in kwargs.keys():
+                if 'on' == kwargs[k]:
+                    shortk = k.split("xmpp_").pop()
+                    checkedinfo[shortk] = True
+
+            for key in checkedinfo.keys():
+                if checkedinfo[key]:
+                    opts.append(key)
+                else:
+                    opts.append('no'+key)
+            privilegedaction_run("xmpp-setup", opts)
+
+        output, error = privilegedaction_run("xmpp-setup", ['status'])
+        if error:
+            raise Exception("something is wrong: " + error)
+        for option in output.split():
+            checkedinfo[option] = True
+
         main = "<p>XMPP Server Configuration</p>"
+        form = Form(title="Configuration",
+                    action="/services/xmpp",
+                    name="configure_xmpp",
+                    message='')
+        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
+                        id="xmpp_inband_enable", checked=checkedinfo['inband_enable'])
+        form.hidden(name="submitted", value="True")
+        form.html(_("<p>When enabled, anyone who can reach this server will be allowed to register an account through an XMPP client.</p>"))
+        form.submit(_("Update setup"))
+        main += form.render()
+
         sidebar_right = """
 <strong><a href="/services/xmpp/register">Register XMPP Account</a></strong>
 """
