@@ -29,6 +29,19 @@ __maintainer__ = "James Vasile"
 __email__ = "james@jamesvasile.com"
 __status__ = "Development"
 
+
+import urlparse
+
+def make_secure(header="Secure"):
+    secure = cherrypy.request.headers.get(header, False)
+    if not secure:
+        url = urlparse.urlparse(cherrypy.url())
+        secure_url = urlparse.urlunsplit(('https', url[1], url[2],
+                                          url[3], url[4]))
+        raise cherrypy.HTTPRedirect(secure_url)
+
+cherrypy.tools.secure = cherrypy.Tool('before_handler', make_secure)
+
 def error_page(status, dynamic_msg, stock_msg):
    return u.page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
