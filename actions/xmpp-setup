@@ -22,10 +22,10 @@ while [ "$1" ] ; do
             ;;
         status)
             printstatus() {
-                if $2 ; then
-                    echo $1
+                if "$2" ; then
+                    echo "$1"
                 else
-                    echo no$1
+                    echo no"$1"
                 fi
             }
             printstatus inband_enable $xmpp_inband_enable_cur
