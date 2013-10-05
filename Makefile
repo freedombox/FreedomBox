@@ -14,7 +14,7 @@ DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all tagets
-default: config dirs template css docs dbs
+default: config dirs template css docs dbs apache-config
 all: default
 
 predepend:
@@ -93,3 +93,16 @@ current-checkout.tar.gz: $(ALL_BUT_GZ)
 
 current-repository.tar.gz: $(ALL_BUT_GZ)
 	tar cz $(EXCLUDE) * .git > current-repository.tar.gz
+
+apache-config: apache-ssl
+	cp support/apache/sites-available/plinth.conf /etc/apache/sites-available/plinth.conf
+	cp support/apache/plinth-ports.conf /etc/apache/plinth-ports.conf
+# include plinth's ports if necessary.
+ifeq ($(shell grep 'plinth-ports.conf' /etc/apache2/ports.conf), "")
+	echo "Include plinth-ports.conf" >> /etc/apache2/ports.conf
+endif
+	a2ensite plinth
+
+apache-ssl:
+	make-ssl-cert generate-default-snakeoil
+	a2enmod ssl
