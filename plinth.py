@@ -29,18 +29,7 @@ __maintainer__ = "James Vasile"
 __email__ = "james@jamesvasile.com"
 __status__ = "Development"
 
-
 import urlparse
-
-def make_secure(header="Secure"):
-    secure = cherrypy.request.headers.get(header, False)
-    if not secure:
-        url = urlparse.urlparse(cherrypy.url())
-        secure_url = urlparse.urlunsplit(('https', url[1], url[2],
-                                          url[3], url[4]))
-        raise cherrypy.HTTPRedirect(secure_url)
-
-cherrypy.tools.secure = cherrypy.Tool('before_handler', make_secure)
 
 def error_page(status, dynamic_msg, stock_msg):
    return u.page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
@@ -99,6 +88,9 @@ def parse_arguments():
                        help='specify a file in which the server may write its pid')
    parser.add_argument('--listen-exmachina-key', default=False, action='store_true',
                        help='listen for JSON-RPC shared secret key on stdin at startup')
+   parser.add_argument('--directory', default="/",
+                       help='specify a subdirectory to host the server.')
+
    args=parser.parse_args()
    if args.pidfile:
       cfg.pidfile = args.pidfile
@@ -116,8 +108,13 @@ def parse_arguments():
    else:
       cfg.exmachina_secret_key = None
 
+   if not args.directory.startswith("/"):
+      args.directory = "/" + args.directory
+
+   return args
+
 def setup():
-   parse_arguments()
+   args = parse_arguments()
 
    try:
       if cfg.pidfile:
@@ -176,9 +173,8 @@ def setup():
       '/favicon.ico':{'tools.staticfile.on': True,
                       'tools.staticfile.filename':
                          "%s/static/theme/favicon.ico" % cfg.file_root}}
-   cherrypy.tree.mount(cfg.html_root, '/', config=config)
+   cherrypy.tree.mount(cfg.html_root, args.directory, config=config)
    cherrypy.engine.signal_handler.subscribe()
-
 
 def main():
    setup()
