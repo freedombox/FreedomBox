@@ -94,7 +94,7 @@ current-repository.tar.gz: $(ALL_BUT_GZ)
 	tar cz $(EXCLUDE) * .git > current-repository.tar.gz
 
 apache-install:
-	cp share/apache/plinth.conf $(DESTDIR)/etc/apache/sites-available/plinth.conf
+	install -D -m644 share/apache2/plinth.conf $(DESTDIR)/etc/apache2/sites-available/plinth.conf
 apache-config: apache-install apache-ssl
 	a2ensite plinth
 
