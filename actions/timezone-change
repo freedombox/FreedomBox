@@ -1,0 +1,14 @@
+#!/bin/sh
+
+zonename="$1"
+
+tzpath="/usr/share/zoneinfo/$zonename"
+
+if [ -e "$tzpath" ] ; then
+    cp "$tzpath" /etc/localtime
+    echo "$zonename" > /etc/timezone
+    exit 0
+else
+    echo "timezone not valid" 1>&2
+    exit 1
+fi

@@ -142,6 +142,16 @@ class Form():
                 <span>%s</span>
                 <input type=checkbox name="%s" id="%s" %s/>
              </label></div>\n""" % (label, name, id, checked)
+    def radiobutton(self, label='', name='', id='', value='', checked=''): 
+        name, id = self.name_or_id(name, id)
+        if checked:
+            checked = 'checked="on"'
+        self.text += """
+             <div class="radio">
+             <label>
+                <span>%s</span>
+                <input type="radio" name="%s" id="%s" value="%s" %s/>
+             </label></div>\n""" % (label, name, id, value, checked)
     def get_checkbox(self, name='', id=''):
         return '<input type=checkbox name="%s" id="%s" />\n' % self.name_or_id(name, id)
     def render(self):

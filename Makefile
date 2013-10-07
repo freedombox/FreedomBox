@@ -4,7 +4,6 @@ CSS=$(wildcard *.css)
 CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
 COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
-BUILDDIR=vendor
 
 # hosting variables
 SLEEP_TIME=300
@@ -29,9 +28,9 @@ install: default
 	mkdir -p $(DESTDIR)$(PYDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)/usr/bin \
 		$(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
 	cp -a static themes $(DESTDIR)$(DATADIR)/
+	cp -a actions $(DESTDIR)$(DATADIR)/
+	cp -a sudoers.d $(DESTDIR)/etc/sudoers.d
 	cp -a *.py modules templates $(DESTDIR)$(PYDIR)/
-	mkdir -p $(DESTDIR)$(PYDIR)/exmachina
-	cp -a vendor/exmachina/exmachina.py $(DESTDIR)$(PYDIR)/exmachina/.
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
@@ -81,7 +80,7 @@ clean:
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
 	@$(MAKE) -s -C templates clean
-	rm -rf $(BUILDDIR) $(DESTDIR)
+	rm -f plinth.config
 	rm -f predepend
 
 hosting:
