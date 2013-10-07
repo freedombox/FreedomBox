@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          plinth
 # Required-Start:    $network $remote_fs $syslog
@@ -11,47 +11,32 @@
 ### END INIT INFO
 
 # This file is /etc/init.d/plinth
-DAEMON=/usr/local/bin/plinth.py
+
+DESC="embedded web frontend"
+NAME=plinth
+
+DAEMON=/usr/bin/plinth
 PID_FILE=/var/run/plinth.pid
 
-PLINTH_USER=www-data
-PLINTH_GROUP=www-data
+PLINTH_USER=plinth
+PLINTH_GROUP=plinth
 
 test -x $DAEMON || exit 0
-
-set -e
 
 . /lib/lsb/init-functions
 
-start_plinth (){
-    if [ -f $PID_FILE ]; then
-        echo Already running with a pid of `cat $PID_FILE`.
-    else
-        touch $PID_FILE
-        chown $PLINTH_USER:$PLINTH_GROUP $PID_FILE
-        sudo -u $PLINTH_USER -g $PLINTH_GROUP $DAEMON --pidfile=$PID_FILE
-    fi
-}
-
-stop_plinth () {
-    if [ -f $PID_FILE ]; then
-        kill -15 `cat $PID_FILE` || true
-        rm -rf $PID_FILE
-        echo "killed plinth"
-    else
-        echo "No pid file at $PID_FILE suggests plinth is not running."
-    fi
-}
-
-test -x $DAEMON || exit 0
 case "$1" in
     start)
-        echo "Starting Plinth."
-        start_plinth
+        log_daemon_msg "Starting $DESC" "$NAME"
+        start_daemon -p $PID_FILE $DAEMON --pidfile=$PID_FILE
+        log_end_msg $?
         ;;
     stop)
-        echo "Stoping Plinth."
-        stop_plinth
+        log_daemon_msg "Stopping $DESC" "$NAME"
+        killproc -p $PID_FILE $DAEMON
+        RETVAL=$?
+        [ $RETVAL -eq 0 ] && [ -e "$PID_FILE" ] && rm -f $PID_FILE
+        log_end_msg $RETVAL
         ;;
     restart|force-reload)
         $0 stop
@@ -64,5 +49,4 @@ case "$1" in
         echo "Usage: $NAME {start|stop|restart|force-reload|status}" >&2
         exit 1
         ;;
-
 esac
