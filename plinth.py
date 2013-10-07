@@ -58,14 +58,14 @@ class Root(plugin_mount.PagePlugin):
       ## TODO: firstboot hijacking root should probably be in the firstboot module with a hook in plinth.py
       with sqlite_db(cfg.store_file, table="firstboot") as db:
          if not 'state' in db:
-            raise cherrypy.InternalRedirect('/firstboot')
+            raise cherrypy.InternalRedirect('firstboot')
          elif db['state'] < 5:
             cfg.log("First Boot state = %d" % db['state'])
-            raise cherrypy.InternalRedirect('/firstboot/state%d' % db['state'])
+            raise cherrypy.InternalRedirect('firstboot/state%d' % db['state'])
       if cherrypy.session.get(cfg.session_key, None):
-         raise cherrypy.InternalRedirect('/router')
+         raise cherrypy.InternalRedirect('router')
       else:
-         raise cherrypy.InternalRedirect('/help/about')
+         raise cherrypy.InternalRedirect('help/about')
 
 def load_modules():
    """Import all the symlinked .py files in the modules directory and
