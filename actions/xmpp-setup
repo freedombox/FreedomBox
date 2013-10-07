@@ -1,0 +1,46 @@
+#!/bin/sh
+
+if grep --quiet "^{access, register, \[{allow, all}\]}." /etc/ejabberd/ejabberd.cfg; then
+    xmpp_inband_enable=true
+else
+    xmpp_inband_enable=false
+fi
+xmpp_inband_enable_cur=$xmpp_inband_enable
+export xmpp_inband_enable
+
+while [ "$1" ] ; do
+    arg="$1"
+    shift
+    case "$arg" in
+        inband_enable|noinband_enable) # Not using disable for consistency with other options
+            if [ 'inband_enable' = "$arg" ] ; then
+                xmpp_inband_enable=true
+            else
+                xmpp_inband_enable=false
+            fi
+            export xmpp_inband_enable
+            ;;
+        status)
+            printstatus() {
+                if "$2" ; then
+                    echo "$1"
+                else
+                    echo no"$1"
+                fi
+            }
+            printstatus inband_enable $xmpp_inband_enable_cur
+            exit 0
+            ;;
+        *)
+            ;;
+    esac
+done
+
+if [ "$xmpp_inband_enable" != "$xmpp_inband_enable_cur" ] ; then
+    if $xmpp_inband_enable ; then
+        sed -i s/"^{access, register, \[{deny, all}\]}."/"{access, register, \[{allow, all}\]}."/ /etc/ejabberd/ejabberd.cfg 
+    else
+        sed -i s/"^{access, register, \[{allow, all}\]}."/"{access, register, \[{deny, all}\]}."/ /etc/ejabberd/ejabberd.cfg
+    fi
+    ejabberdctl restart
+fi
