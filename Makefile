@@ -13,7 +13,7 @@ DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all tagets
-default: config dirs template css docs dbs apache-config
+default: config dirs template css docs dbs
 all: default
 
 predepend:
@@ -22,7 +22,7 @@ predepend:
 	git submodule update
 	touch predepend
 
-install: default
+install: default apache-install
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
 	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
 	mkdir -p $(DESTDIR)$(PYDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)/usr/bin \
@@ -93,8 +93,9 @@ current-checkout.tar.gz: $(ALL_BUT_GZ)
 current-repository.tar.gz: $(ALL_BUT_GZ)
 	tar cz $(EXCLUDE) * .git > current-repository.tar.gz
 
-apache-config: apache-ssl
-	cp share/apache/plinth.conf /etc/apache/sites-available/plinth.conf
+apache-install:
+	cp share/apache/plinth.conf $(DESTDIR)/etc/apache/sites-available/plinth.conf
+apache-config: apache-install apache-ssl
 	a2ensite plinth
 
 apache-ssl:
