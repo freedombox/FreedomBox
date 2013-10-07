@@ -95,12 +95,7 @@ current-repository.tar.gz: $(ALL_BUT_GZ)
 	tar cz $(EXCLUDE) * .git > current-repository.tar.gz
 
 apache-config: apache-ssl
-	cp support/apache/sites-available/plinth.conf /etc/apache/sites-available/plinth.conf
-	cp support/apache/plinth-ports.conf /etc/apache/plinth-ports.conf
-# include plinth's ports if necessary.
-ifeq ($(shell grep 'plinth-ports.conf' /etc/apache2/ports.conf), "")
-	echo "Include plinth-ports.conf" >> /etc/apache2/ports.conf
-endif
+	cp share/apache/plinth.conf /etc/apache/sites-available/plinth.conf
 	a2ensite plinth
 
 apache-ssl:
