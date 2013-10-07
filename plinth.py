@@ -97,6 +97,7 @@ def parse_arguments():
             cfg.pidfile = "plinth.pid"
       except AttributeError:
             cfg.pidfile = "plinth.pid"
+   return args
 
 def setup():
    args = parse_arguments()
