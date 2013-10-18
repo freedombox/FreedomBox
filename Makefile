@@ -104,4 +104,5 @@ apache-ssl:
 	a2enmod ssl
 	a2enmod rewrite
 	a2enmod proxy
+	a2enmod proxy_http
 	service apache2 restart
