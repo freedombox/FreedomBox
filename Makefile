@@ -22,7 +22,7 @@ predepend:
 	git submodule update
 	touch predepend
 
-install: default apache-install
+install: default apache-install freedombox-setup-install
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
 	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
 	mkdir -p $(DESTDIR)$(PYDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)/usr/bin \
@@ -36,6 +36,9 @@ install: default apache-install
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	cp -r data/* $(DESTDIR)/var/lib/plinth
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
+
+freedombox-setup-install:
+	install -m755 -D setup.d/86_plinth $(DESTDIR)/usr/lib/freedombox/setup.d/86_plinth
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/lib/python2.7/plinth $(DESTDIR)/usr/share/plinth/ \
