@@ -97,7 +97,12 @@ apache-install:
 	install -D -m644 share/apache2/plinth.conf $(DESTDIR)/etc/apache2/sites-available/plinth.conf
 apache-config: apache-install apache-ssl
 	a2ensite plinth
+	service apache2 reload
 
 apache-ssl:
 	make-ssl-cert generate-default-snakeoil
 	a2enmod ssl
+	a2enmod rewrite
+	a2enmod proxy
+	a2enmod proxy_http
+	service apache2 restart
