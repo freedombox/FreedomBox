@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Enable Plinth.
+
+echo "Configuring Plinth..."
+
+make-ssl-cert generate-default-snakeoil
+a2enmod ssl
+a2enmod rewrite
+a2enmod proxy
+a2enmod proxy_http
+a2dissite default
+a2ensite plinth.conf
+
+echo "Done configuring Plinth.."
