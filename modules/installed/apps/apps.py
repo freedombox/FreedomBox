@@ -3,7 +3,7 @@ from gettext import gettext as _
 from modules.auth import require
 from plugin_mount import PagePlugin
 from forms import Form
-from privilegedactions import privilegedaction_run
+from actions.privilegedactions import privilegedaction_run
 import cfg
 
 class Apps(PagePlugin):
@@ -18,7 +18,7 @@ class Apps(PagePlugin):
     def index(self):
         main = """
         <p>User Applications are web apps hosted on your %s.</p>
-        
+
         <p>Eventually this box could be your photo sharing site, your
         instant messaging site, your social networking site, your news
         site.  Remember web portals?  We can be one of those too.
@@ -35,7 +35,7 @@ class Apps(PagePlugin):
 digital property you have, so why trust it to companies that have no
 investment in the sentimental value of your family snaps?  Keep those
 photos local, backed up, easily accessed and free from the whims of
-some other websites business model.</p>
+some other website's business model.</p>
 """)
 
     @cherrypy.expose
@@ -67,8 +67,8 @@ some other websites business model.</p>
 
         main="""
 """
-        form = Form(title="Configuration", 
-                        action="/apps/owncloud", 
+        form = Form(title="Configuration",
+                        action="/apps/owncloud",
                         name="configure_owncloud",
                         message='')
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=checkedinfo['enable'])

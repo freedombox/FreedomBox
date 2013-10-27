@@ -9,8 +9,9 @@ from gettext import gettext as _
 from filedict import FileDict
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
-from privilegedactions import privilegedaction_run
+from actions.privilegedactions import privilegedaction_run
 import cfg
+import re
 from forms import Form
 from model import User
 from util import *
