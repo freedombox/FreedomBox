@@ -40,7 +40,7 @@ def valid_hostname(name):
     if not is_alphanumeric(name):
         message += "<br />Hostname must be alphanumeric"
 
-    if not name[0] in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ":
+    if not bool(re.match("A-z", name[0])):
         message += "<br />Hostname must start with a letter"
 
     return message
@@ -53,18 +53,19 @@ def set_hostname(hostname):
     cfg.log.info("Changing hostname to '%s'" % hostname)
     try:
         privilegedaction_run("hostname-change", [hostname])
+    except OSError, e:
+        raise cherrypy.HTTPError(500, "Updating hostname failed: %s" % e)
+    else:
         # don't persist/cache change unless it was saved successfuly
         sys_store = filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
-    except OSError, e:
-        raise cherrypy.HTTPError(500, "Updating hostname failed: %s" % e)
 
 class general(FormPlugin, PagePlugin):
     url = ["/sys/config"]
     order = 30
 
     def help(self, *args, **kwargs):
-        return _(#"""<strong>Time Zone</strong> 
+        return _(#"""<strong>Time Zone</strong>
         """<p>Set your timezone to get accurate
         timestamps.  %(product)s will use this information to set your
         %(box)s's systemwide timezone.</p>
@@ -108,8 +109,8 @@ class general(FormPlugin, PagePlugin):
             raise cherrypy.HTTPError(500, "Unknown Time Zone: %s" % kwargs['time_zone'])
 
         ## And now, the form.
-        form = Form(title=_("General Config"), 
-                        action="/sys/config/general/index", 
+        form = Form(title=_("General Config"),
+                        action="/sys/config/general/index",
                         name="config_general_form",
                         message=message )
         form.html(self.help())
@@ -141,4 +142,3 @@ class general(FormPlugin, PagePlugin):
             privilegedaction_run("timezone-change", [time_zone])
             sys_store['time_zone'] = time_zone
         return message or "Settings updated."
-
