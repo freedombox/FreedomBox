@@ -83,24 +83,41 @@ def load_modules():
 
 def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
-   parser.add_argument('--pidfile', default="",
+   parser.add_argument('--pidfile',
                        help='specify a file in which the server may write its pid')
-   parser.add_argument('--directory', default="/",
-                       help='specify a subdirectory to host the server.')
+   # FIXME make this work with basehref for static files.
+   parser.add_argument('--server_dir',
+                       help='specify where to host the server.')
 
    args=parser.parse_args()
-   if args.pidfile:
-      cfg.pidfile = args.pidfile
-   else:
+   set_config(args, "pidfile", "plinth.pid")
+   set_config(args, "server_dir", "/")
+
+   return cfg
+
+def set_config(args, element, default):
+   """Sets *cfg* elements based on *args* values, or uses a reasonable default.
+
+   - If values are passed in from *args*, use those.
+   - If values are read from the config file, use those.
+   - If no values have been given, use default.
+
+   """
+   try:
+      # cfg.(element) = args.(element)
+      setattr(cfg, element, getattr(args, element))
+   except AttributeError:
+      # if it fails, we didn't receive that argument.
       try:
-         if not cfg.pidfile:
-            cfg.pidfile = "plinth.pid"
+         # if not cfg.(element): cfg.(element) = default
+         if not getattr(cfg, element):
+            setattr(cfg, element, default)
       except AttributeError:
-            cfg.pidfile = "plinth.pid"
-   return args
+         # it wasn't in the config file, but set the default anyway.
+         setattr(cfg, element, default)
 
 def setup():
-   args = parse_arguments()
+   cfg = parse_arguments()
 
    try:
       if cfg.pidfile:
@@ -146,12 +163,11 @@ def setup():
       '/favicon.ico':{'tools.staticfile.on': True,
                       'tools.staticfile.filename':
                          "%s/static/theme/favicon.ico" % cfg.file_root}}
-   cherrypy.tree.mount(cfg.html_root, args.directory, config=config)
+   cherrypy.tree.mount(cfg.html_root, cfg.server_dir, config=config)
    cherrypy.engine.signal_handler.subscribe()
 
 def main():
    setup()
-   print "%s %d" % (cfg.host, cfg.port)
 
    cherrypy.engine.start()
    cherrypy.engine.block()
