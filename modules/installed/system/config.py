@@ -11,7 +11,6 @@ from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 from actions.privilegedactions import privilegedaction_run
 import cfg
-import re
 from forms import Form
 from model import User
 from util import *
@@ -64,7 +63,7 @@ class general(FormPlugin, PagePlugin):
     order = 30
 
     def help(self, *args, **kwargs):
-        return _(#"""<strong>Time Zone</strong> 
+        return _(#"""<strong>Time Zone</strong>
         """<p>Set your timezone to get accurate
         timestamps.  %(product)s will use this information to set your
         %(box)s's systemwide timezone.</p>
@@ -108,8 +107,8 @@ class general(FormPlugin, PagePlugin):
             raise cherrypy.HTTPError(500, "Unknown Time Zone: %s" % kwargs['time_zone'])
 
         ## And now, the form.
-        form = Form(title=_("General Config"), 
-                        action="/sys/config/general/index", 
+        form = Form(title=_("General Config"),
+                        action="/sys/config/general/index",
                         name="config_general_form",
                         message=message )
         form.html(self.help())
