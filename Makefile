@@ -24,7 +24,7 @@ predepend:
 
 install: default apache-install freedombox-setup-install
 	mkdir -p $(DESTDIR)/etc/init.d $(DESTDIR)/etc/plinth
-	cp plinth.sample.fhs.config $(DESTDIR)/etc/plinth/plinth.config
+	cp plinth.sample.config $(DESTDIR)/etc/plinth/plinth.config
 	mkdir -p $(DESTDIR)$(PYDIR) $(DESTDIR)$(DATADIR) $(DESTDIR)/usr/bin \
 		$(DESTDIR)/usr/share/doc/plinth $(DESTDIR)/usr/share/man/man1
 	cp -a static themes $(DESTDIR)$(DATADIR)/
