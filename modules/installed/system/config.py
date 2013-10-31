@@ -9,7 +9,7 @@ from gettext import gettext as _
 from filedict import FileDict
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
-from actions.privilegedactions import privilegedaction_run
+from privilegedactions import privilegedaction_run
 import cfg
 from forms import Form
 from model import User

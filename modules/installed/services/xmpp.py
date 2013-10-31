@@ -4,7 +4,7 @@ from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
-from actions.privilegedactions import privilegedaction_run
+from privilegedactions import privilegedaction_run
 from util import Message
 
 class xmpp(PagePlugin):
@@ -46,7 +46,7 @@ class xmpp(PagePlugin):
                     action="/services/xmpp",
                     name="configure_xmpp",
                     message='')
-        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable",
+        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
                         id="xmpp_inband_enable", checked=checkedinfo['inband_enable'])
         form.hidden(name="submitted", value="True")
         form.html(_("<p>When enabled, anyone who can reach this server will be allowed to register an account through an XMPP client.</p>"))
