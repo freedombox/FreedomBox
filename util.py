@@ -40,11 +40,11 @@ def slurp(filespec):
 def unslurp(filespec, msg):
     with open(filespec, 'w') as x:
         x.write(msg)
-    
+
 def find_in_seq(func, seq):
   "Return first item in seq for which func(item) returns True."
   for i in seq:
-    if func(i): 
+    if func(i):
       return i
 
 def find_keys(dic, val):
@@ -63,7 +63,7 @@ def page_template(template='login_nav', **kwargs):
             kwargs[k] = ''
 
     if kwargs['basehref'] == '':
-       kwargs['basehref'] = cfg.base_href
+       kwargs['basehref'] = cfg.server_dir
     #if template=='base' and kwargs['sidebar_right']=='':
     #    template='two_col'
     if isinstance(template, basestring):
@@ -80,10 +80,10 @@ def page_template(template='login_nav', **kwargs):
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
 
     if not kwargs['nav'] and submenu:
-       kwargs['nav'] = """	<script type="text/javascript"> 
+       kwargs['nav'] = """	<script type="text/javascript">
           <!--
-              side_menu(sub_menu_items); 
-	  // --> 
+              side_menu(sub_menu_items);
+	  // -->
 	</script>"""
 
     return str(template(searchList=[kwargs]))
