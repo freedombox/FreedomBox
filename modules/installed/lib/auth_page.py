@@ -36,7 +36,7 @@ class AuthController(PagePlugin):
         else:
             cherrypy.session[cfg.session_key] = cherrypy.request.login = username
             self.on_login(username)
-            raise cherrypy.HTTPRedirect(from_page or "/")
+            raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))
     
     @cherrypy.expose
     def logout(self, from_page="/"):
@@ -46,4 +46,4 @@ class AuthController(PagePlugin):
         if username:
             cherrypy.request.login = None
             self.on_logout(username)
-        raise cherrypy.HTTPRedirect(from_page or "/")
+        raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))
