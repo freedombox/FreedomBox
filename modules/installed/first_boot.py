@@ -81,11 +81,11 @@ class FirstBoot(PagePlugin):
             ## Update state to 1 and head there
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
                 db['state']=1
-            raise cherrypy.InternalRedirect('firstboot/state1')
+            raise cherrypy.InternalRedirect('state1')
 
         main = "<p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll need to ask you a just few questions to get started.</p>"
         form = Form(title="Welcome to Your FreedomBox!",
-                        action="firstboot",
+                        action="", # stay at firstboot
                         name="whats_my_name",
                         message=message)
         form.text = '<script type="text/javascript" src="/static/js/md5.js"></script>\n'+form.text
@@ -133,7 +133,7 @@ see the rest of the web interface.</p>"
             with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
                 db['state']=1
                             #TODO: switch to HTTPS
-            raise cherrypy.InternalRedirect('firstboot/state1')
+            raise cherrypy.InternalRedirect('state1')
 
         return self.fill_template(template="base", title=_("Installing the Certificate"), main=main,
         sidebar_right=_("""<strong>Getting Help</strong><p>We've done our best to make your FreedomBox easy to use.  If you have questions during setup, there are a few places to turn for help. TODO: add links to such help.</p>"""))
