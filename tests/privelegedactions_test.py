@@ -2,7 +2,7 @@
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
 import sys
-from actions.privilegedactions import privilegedaction_run
+from privilegedactions import privilegedaction_run
 import unittest
 
 class TestPrivileged(unittest.TestCase):
@@ -80,14 +80,16 @@ class TestPrivileged(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     output = privilegedaction_run(action, option)
 
-                    print(output)
-
-                    # if it doesn't error, we'd better not evaluate the data.
+                    # if it somewhow doesn't error, we'd better not evaluate the
+                    # data.
                     self.assertFalse("2" in output[0])
 
-    def test_breakout_options(self):
-        """3D. Options can't be used to run other actions."""
+    def test_breakout_option_string(self):
+        """3D. Options can't be used to run other actions.
 
+        Verify that shell control characters aren't interpreted.
+
+        """
         action = "echo"
         # counting is safer than actual badness.
         options = "good; echo $((1+1))"
@@ -96,6 +98,22 @@ class TestPrivileged(unittest.TestCase):
 
         self.assertFalse("2" in output)
 
+    def test_breakout_option_list(self):
+        """3D. Options can't be used to run other actions.
+
+        Verify that only a string of options is accepted and that we can't just
+        tack additional shell control characters onto the list.
+
+        """
+        action = "echo"
+        # counting is safer than actual badness.
+        options = ["good", ";", "echo $((1+1))"]
+
+        with self.assertRaises(ValueError):
+            output, error = privilegedaction_run(action, options)
+
+            # if it somehow doesn't error, we'd better not evaluate the data.
+            self.assertFalse("2" in output)
+
 if __name__ == "__main__":
     unittest.main()
-
