@@ -108,7 +108,7 @@ class general(FormPlugin, PagePlugin):
 
         ## And now, the form.
         form = Form(title=_("General Config"),
-                        action="/sys/config/general/index",
+                        action=cfg.server_dir + "/sys/config/general/index",
                         name="config_general_form",
                         message=message )
         form.html(self.help())

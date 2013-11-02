@@ -68,7 +68,7 @@ some other websites business model.</p>
         main="""
 """
         form = Form(title="Configuration", 
-                        action="/apps/owncloud", 
+                        action=cfg.server_dir + "/apps/owncloud", 
                         name="configure_owncloud",
                         message='')
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=checkedinfo['enable'])

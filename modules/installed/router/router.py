@@ -138,7 +138,7 @@ class wan(FormPlugin, PagePlugin):
                     exec("if not '%(k)s' in kwargs: store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
 
         form = Form(title="WAN Connection", 
-                        action="/router/setup/wan/index", 
+                        action=cfg.server_dir + "/router/setup/wan/index", 
                         name="wan_connection_form",
                         message=message)
         form.dropdown('Connection Type', vals=["DHCP", "Static IP"], id="connect_type", onchange="hideshow_static()")

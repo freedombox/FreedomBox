@@ -57,7 +57,7 @@ class wan(FormPlugin, PagePlugin):
                     exec("if not '%(k)s' in kwargs: store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
 
         form = Form(title=_("Accessing the %s" % cfg.box_name), 
-                        action="/sys/config/wan", 
+                        action=cfg.server_dir + "/sys/config/wan", 
                         name="admin_wan_form",
                         message=message )
         form.html(self.help())
