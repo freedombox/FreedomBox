@@ -7,7 +7,8 @@
 # on 1 February 2011.
 
 import cherrypy
-import urllib, hashlib
+import urllib
+from passlib.hash import bcrypt
 import cfg
 import random
 import time
@@ -31,7 +32,7 @@ def check_credentials(username, passphrase):
         u = None
     # hash the password whether the user exists, to foil timing
     # side-channel attacks
-    pass_hash = hashlib.md5(passphrase).hexdigest()
+    pass_hash = bcrypt.encrypt(passphrase, salt=u['salt'])
 
     if u is None or u['passphrase'] != pass_hash:
         error = "Bad user-name or password."
