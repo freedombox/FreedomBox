@@ -2,7 +2,7 @@
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
 import sys
-from actions.privilegedactions import privilegedaction_run
+from privilegedactions import privilegedaction_run
 import unittest
 
 class TestPrivileged(unittest.TestCase):

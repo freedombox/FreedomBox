@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
-import user_store
+import modules.user_store
 from logger import Logger
 import cfg
 import unittest
