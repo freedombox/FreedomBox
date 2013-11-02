@@ -23,7 +23,7 @@ class router(PagePlugin):
         reflect that we've moved down into the submenu hierarchy.
         Otherwise, it's hard to know which menu portion to make active
         or expand or contract."""
-        raise cherrypy.HTTPRedirect('/router/setup')
+        raise cherrypy.HTTPRedirect(cfg.server_dir + '/router/setup')
 
     @cherrypy.expose
     @require()

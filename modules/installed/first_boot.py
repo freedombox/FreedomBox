@@ -124,7 +124,7 @@ TODO: explain all this cert stuff to the user.</p>
         with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
             db['state']=5
             main = main + """
-<p>Welcome screen not completely implemented yet.  Press <a href="router">continue</a> to
+<p>Welcome screen not completely implemented yet.  Press <a href="../router">continue</a> to
 see the rest of the web interface.</p>"
 """
 

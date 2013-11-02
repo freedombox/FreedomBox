@@ -59,10 +59,10 @@ def check_auth(*args, **kwargs):
                 # A condition is just a callable that returns true or false
                 if not condition():
                     # Send old page as from_page parameter
-                    raise cherrypy.HTTPRedirect("/auth/login?from_page=%s" % get_params)
+                    raise cherrypy.HTTPRedirect(cfg.server_dir + "/auth/login?from_page=%s" % get_params)
         else:
             # Send old page as from_page parameter
-            raise cherrypy.HTTPRedirect("/auth/login?from_page=%s" % get_params)
+            raise cherrypy.HTTPRedirect(cfg.server_dir + "/auth/login?from_page=%s" % get_params)
 
 cherrypy.tools.auth = cherrypy.Tool('before_handler', check_auth)
 

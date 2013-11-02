@@ -17,7 +17,7 @@ class AuthController(PagePlugin):
         """Called on logout"""
     
     def get_loginform(self, username, msg='', from_page="/"):
-        form = Form(title="Login", action="/auth/login", message=msg)
+        form = Form(title="Login", action=cfg.server_dir + "/auth/login", message=msg)
         form.text_input(name="from_page", value=from_page, type="hidden")
         form.text_input("Username", name="username", value=username)
         form.text_input("Passphrase", name="passphrase", type="password")
