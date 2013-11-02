@@ -6,8 +6,6 @@
 # http://tools.cherrypy.org/wiki/AuthenticationAndAccessRestrictions
 # on 1 February 2011.
 
-# TODO: DeprecationWarning: the md5 module is deprecated; use hashlib instead import md5
-
 import cherrypy
 import urllib, hashlib
 import cfg
