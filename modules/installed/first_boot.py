@@ -88,7 +88,6 @@ class FirstBoot(PagePlugin):
                         action="firstboot",
                         name="whats_my_name",
                         message=message)
-        form.text = '<script type="text/javascript" src="/static/js/md5.js"></script>\n'+form.text
         form.html("<p>For convenience, your FreedomBox needs a name.  It should be something short that doesn't contain spaces or punctuation.  'Willard' would be a good name.  'Freestyle McFreedomBox!!!' would not.</p>")
         form.text_input('Name your FreedomBox', id="hostname", value=hostname)
         form.html("<p><strong>Initial user and password.</strong> Access to this web interface is protected by knowing a username and password.  Provide one here to register the initial privileged user.  The password can be changed and other users added later.</p>")

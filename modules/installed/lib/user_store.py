@@ -58,7 +58,6 @@ class UserStore(UserStoreModule, sqlite_db):
 
     def remove(self,username=None):
         self.__delitem__(username)
-        self.commit()
 
     def get_all(self):
         return self.items()
