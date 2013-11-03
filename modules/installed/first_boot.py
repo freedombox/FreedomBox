@@ -9,7 +9,7 @@ from withsqlite.withsqlite import sqlite_db
 import cfg
 import config
 from model import User
-import md5
+from passlib.hash import bcrypt
 
 class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -65,16 +65,14 @@ class FirstBoot(PagePlugin):
                 box_key = self.generate_box_key()
                 db['box_key'] = box_key
             if username and password:
-                # FIXME: MD5 as a password hash?  REALLY?!  NOOO!!!
-                passphrase = md5.new()
-                passphrase.update(password)
-
+                pass_hash = bcrypt.encrypt(password)
                 di = {
                     'username':username,
                     'name': 'First user - please change',
                     'expert': 'on',
                     "groups": ["expert"],
-                    'passphrase': passphrase.digest(),
+                    'passphrase':pass_hash,
+                    'salt':pass_hash[7:29], # for bcrypt
                     }
                 new_user = User(di)
                 cfg.users.set(username,new_user)
