@@ -6,6 +6,7 @@ import cfg
 from forms import Form
 from util import *
 from model import User
+from passlib.hash import bcrypt
 
 class users(PagePlugin):
     order = 20 # order of running init in PagePlugins
@@ -34,28 +35,33 @@ class add(FormPlugin, PagePlugin):
     def main(self, username='', name='', email='', message=None, *args, **kwargs):
         form = Form(title="Add User", 
                         action="/sys/users/add/index", 
-                        onsubmit="return md5ify('add_user_form', 'password')", 
                         name="add_user_form",
                         message=message)
         form.text_input(_("Username"), name="username", value=username)
         form.text_input(_("Full name"), name="name", value=name)
         form.text_input(_("Email"), name="email", value=email)
         form.text_input(_("Password"), name="password", type="password")
-        form.text_input(name="md5_password", type="hidden")
         form.submit(label=_("Create User"), name="create")
         return form.render()
 
-    def process_form(self, username=None, name=None, email=None, md5_password=None, **kwargs):
+    def process_form(self, username=None, name=None, email=None, password=None, **kwargs):
         msg = Message()
 
         if not username: msg.add = _("Must specify a username!")
-        if not md5_password: msg.add = _("Must specify a password!")
+        if not password: msg.add = _("Must specify a password!")
         
         if username in cfg.users.get_all():
             msg.add = _("User already exists!")
         else:
             try:
-                di = {'username':username, 'name':name, 'email':email, 'passphrase':md5_password}
+                pass_hash = bcrypt.encrypt(password)
+                di = {
+                    'username':username,
+                    'name':name,
+                    'email':email,
+                    'passphrase':pass_hash,
+                    'salt': pass_hash[7:29], # for bcrypt
+                    }
                 new_user = User(di)
                 cfg.users.set(username,new_user)
             except:
