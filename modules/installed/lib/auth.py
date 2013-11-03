@@ -15,6 +15,35 @@ import time
 
 cfg.session_key = '_cp_username'
 
+def add_user(username, passphrase, name='', email='', expert=False):
+    error = None
+    if not username: error = "Must specify a username!"
+    if not password: error = "Must specify a password!"
+
+    if error is None:
+        # hash the password whether the user exists, to foil timing
+        # side-channel attacks
+        pass_hash = bcrypt.encrypt(password)
+
+        if username in cfg.users.get_all():
+            error = "User already exists!"
+        else:
+            di = {
+                'username':username,
+                'name':name,
+                'email':email,
+                'expert':'on' if expert else 'off',
+                'groups':['expert'] if expert else [],
+                'passphrase':pass_hash,
+                'salt':pass_hash[7:29], # for bcrypt
+            }
+            new_user = User(di)
+            cfg.users.set(username,newuser)
+
+    if error:
+        cfg.log(error)
+    return error
+
 def check_credentials(username, passphrase):
     """Verifies credentials for username and passphrase.
     Returns None on success or a string describing the error on failure"""
