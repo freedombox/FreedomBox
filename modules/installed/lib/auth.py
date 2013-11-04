@@ -12,7 +12,6 @@ from passlib.hash import bcrypt
 from passlib.exc import PasswordSizeError
 import cfg
 import random
-import time
 from model import User
 
 cfg.session_key = '_cp_username'
@@ -55,8 +54,6 @@ def add_user(username, passphrase, name='', email='', expert=False):
 def check_credentials(username, passphrase):
     """Verifies credentials for username and passphrase.
     Returns None on success or a string describing the error on failure"""
-
-    start = time.clock()
 
     if not username or not passphrase:
         error = "No username or password."
