@@ -33,7 +33,7 @@ def add_user(username, passphrase, name='', email='', expert=False):
             error = "Password is too long."
 
     if error is None:
-        if username in cfg.users.get_all():
+        if username in map(lambda x: x[0], cfg.users.get_all()):
             error = "User already exists!"
         else:
             di = {
