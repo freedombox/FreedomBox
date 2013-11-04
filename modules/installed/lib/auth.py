@@ -24,28 +24,26 @@ def add_user(username, passphrase, name='', email='', expert=False):
     if not passphrase: error = "Must specify a passphrase!"
 
     if error is None:
-        # hash the password whether the user exists, to foil timing
-        # side-channel attacks
-        try:
-            pass_hash = bcrypt.encrypt(passphrase)
-        except PasswordSizeError:
-            error = "Password is too long."
-
-    if error is None:
         if username in map(lambda x: x[0], cfg.users.get_all()):
             error = "User already exists!"
         else:
-            di = {
-                'username':username,
-                'name':name,
-                'email':email,
-                'expert':'on' if expert else 'off',
-                'groups':['expert'] if expert else [],
-                'passphrase':pass_hash,
-                'salt':pass_hash[7:29], # for bcrypt
-            }
-            new_user = User(di)
-            cfg.users.set(username,new_user)
+            try:
+                pass_hash = bcrypt.encrypt(passphrase)
+            except PasswordSizeError:
+                error = "Password is too long."
+
+    if error is None:
+        di = {
+            'username':username,
+            'name':name,
+            'email':email,
+            'expert':'on' if expert else 'off',
+            'groups':['expert'] if expert else [],
+            'passphrase':pass_hash,
+            'salt':pass_hash[7:29], # for bcrypt
+        }
+        new_user = User(di)
+        cfg.users.set(username,new_user)
 
     if error:
         cfg.log(error)
