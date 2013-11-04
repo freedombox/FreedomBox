@@ -2,7 +2,6 @@
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
 import user_store, auth
-from passlib.hash import bcrypt
 from logger import Logger
 import cfg
 import unittest
