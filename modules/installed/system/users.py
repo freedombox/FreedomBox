@@ -1,12 +1,11 @@
 import os, cherrypy
 from gettext import gettext as _
-from auth import require
+from auth import require, add_user
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
 from util import *
 from model import User
-from passlib.hash import bcrypt
 
 class users(PagePlugin):
     order = 20 # order of running init in PagePlugins
@@ -47,28 +46,12 @@ class add(FormPlugin, PagePlugin):
     def process_form(self, username=None, name=None, email=None, password=None, **kwargs):
         msg = Message()
 
-        if not username: msg.add = _("Must specify a username!")
-        if not password: msg.add = _("Must specify a password!")
-        
-        if username in cfg.users.get_all():
-            msg.add = _("User already exists!")
+        error = add_user(username, password, name, email, False)
+        if error:
+            msg.text = error
         else:
-            try:
-                pass_hash = bcrypt.encrypt(password)
-                di = {
-                    'username':username,
-                    'name':name,
-                    'email':email,
-                    'passphrase':pass_hash,
-                    'salt': pass_hash[7:29], # for bcrypt
-                    }
-                new_user = User(di)
-                cfg.users.set(username,new_user)
-            except:
-                msg.add = _("Error storing user!")
-
-        if not msg:
             msg.add = _("%s saved." % username)
+
         cfg.log(msg.text)
         main = self.main(username, name, email, msg=msg.text)
         return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)

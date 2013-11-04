@@ -2,14 +2,13 @@ from urlparse import urlparse
 import os, cherrypy, re
 from gettext import gettext as _
 from plugin_mount import PagePlugin, PluginMount, FormPlugin
-from modules.auth import require
+from modules.auth import require, add_user
 from forms import Form
 import util as u
 from withsqlite.withsqlite import sqlite_db
 import cfg
 import config
 from model import User
-from passlib.hash import bcrypt
 
 class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -65,18 +64,12 @@ class FirstBoot(PagePlugin):
                 box_key = self.generate_box_key()
                 db['box_key'] = box_key
             if username and password:
-                pass_hash = bcrypt.encrypt(password)
-                di = {
-                    'username':username,
-                    'name':'First user - please change',
-                    'expert':'on',
-                    "groups": ["expert"],
-                    'passphrase':pass_hash,
-                    'salt':pass_hash[7:29], # for bcrypt
-                    }
-                new_user = User(di)
-                cfg.users.set(username,new_user)
-                validuser = True
+                error = add_user(username, password, 'First user - please change', '', True)
+                if error:
+                    message += _("User account creation failed: %s") % error
+                    validuser = False
+                else:
+                    validuser = True
             else:
                 validuser = False
 
