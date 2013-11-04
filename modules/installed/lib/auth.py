@@ -9,22 +9,30 @@
 import cherrypy
 import urllib
 from passlib.hash import bcrypt
+from passlib.exc import PasswordSizeError
 import cfg
 import random
 import time
+from model import User
 
 cfg.session_key = '_cp_username'
 
 def add_user(username, passphrase, name='', email='', expert=False):
+    """Add a new user with specified username and passphrase.
+    """
     error = None
     if not username: error = "Must specify a username!"
-    if not password: error = "Must specify a password!"
+    if not passphrase: error = "Must specify a passphrase!"
 
     if error is None:
         # hash the password whether the user exists, to foil timing
         # side-channel attacks
-        pass_hash = bcrypt.encrypt(password)
+        try:
+            pass_hash = bcrypt.encrypt(passphrase)
+        except PasswordSizeError:
+            error = "Password is too long."
 
+    if error is None:
         if username in cfg.users.get_all():
             error = "User already exists!"
         else:
@@ -38,7 +46,7 @@ def add_user(username, passphrase, name='', email='', expert=False):
                 'salt':pass_hash[7:29], # for bcrypt
             }
             new_user = User(di)
-            cfg.users.set(username,newuser)
+            cfg.users.set(username,new_user)
 
     if error:
         cfg.log(error)
@@ -55,13 +63,19 @@ def check_credentials(username, passphrase):
         cfg.log(error)
         return error
 
-    if username in cfg.users:
-        u = cfg.users[username]
-    else:
-        u = None
     # hash the password whether the user exists, to foil timing
     # side-channel attacks
-    pass_hash = bcrypt.encrypt(passphrase, salt=u['salt'])
+    try:
+        if username in cfg.users:
+            u = cfg.users[username]
+            pass_hash = bcrypt.encrypt(passphrase, salt=u['salt'])
+        else:
+            u = None
+            pass_hash = bcrypt.encrypt(passphrase)
+    except PasswordSizeError:
+        error = "Password is too long."
+        cfg.log(error)
+        return error
 
     if u is None or u['passphrase'] != pass_hash:
         error = "Bad user-name or password."
