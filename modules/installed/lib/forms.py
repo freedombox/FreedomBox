@@ -19,14 +19,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 """
 class Form():
-    def __init__(self, action=None, cls='form', title=None, onsubmit=None, name=None, message='', method="get"):
-        """Note that there appears to be a bug in cherrypy whereby
-        forms submitted via post don't have their fields included in
-        kwargs for the default index method.  So we use get by
-        default, though it's not as neat.  
-
-        TODO: file bug on this w/ CherryPy project
-        """
+    def __init__(self, action=None, cls='form', title=None, onsubmit=None, name=None, message='', method="post"):
 
         action = self.get_form_attrib_text('action', action)
         onsubmit = self.get_form_attrib_text('onsubmit', onsubmit)
