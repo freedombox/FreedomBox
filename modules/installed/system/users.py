@@ -37,7 +37,6 @@ class add(FormPlugin, PagePlugin):
                         onsubmit="return md5ify('add_user_form', 'password')", 
                         name="add_user_form",
                         message=message)
-        form.text = '<script type="text/javascript" src="/static/js/md5.js"></script>\n'+form.text
         form.text_input(_("Username"), name="username", value=username)
         form.text_input(_("Full name"), name="name", value=name)
         form.text_input(_("Email"), name="email", value=email)
