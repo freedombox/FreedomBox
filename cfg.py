@@ -2,39 +2,35 @@ from menu import Menu
 import os
 
 from ConfigParser import SafeConfigParser
+
+def get_item(parser, section, name):
+    try:
+        return parser.get(section, name)
+    except (SafeConfigParser.NoSectionError, SafeConfigParser.NoOptionError):
+        print ("The config file {} does not contain the {}.{} option.".format(
+                parser[0], section, name))
+        raise
+
 parser = SafeConfigParser(
     defaults={
         'root':os.path.dirname(os.path.realpath(__file__)),
-        'product_name':"",
-        'box_name':"",
-        'file_root':"",
-        'python_root':"",
-        'data_dir':"",
-        'store_file':"",
-        'user_db':"",
-        'status_log_file':"",
-        'access_log_file':"",
-        'users_dir':"",
-        'host':"127.0.0.1",
-        'pidfile':"",
-        'port':"",
         })
 parser.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'plinth.config'))
 
-product_name = parser.get('Name', 'product_name')
-box_name = parser.get('Name', 'box_name')
-root = parser.get('Path', 'root')
-file_root = parser.get('Path', 'file_root')
-python_root = parser.get('Path', 'python_root')
-data_dir = parser.get('Path', 'data_dir')
-store_file = parser.get('Path', 'store_file')
-user_db = parser.get('Path', 'user_db')
-status_log_file = parser.get('Path', 'status_log_file')
-access_log_file = parser.get('Path', 'access_log_file')
-users_dir = parser.get('Path', 'users_dir')
-pidfile = parser.get('Path', 'pidfile')
-host = parser.get('Network', 'host')
-port = int(parser.get('Network', 'port'))
+product_name = get_item(parser, 'Name', 'product_name')
+box_name = get_item(parser, 'Name', 'box_name')
+root = get_item(parser, 'Path', 'root')
+file_root = get_item(parser, 'Path', 'file_root')
+python_root = get_item(parser, 'Path', 'python_root')
+data_dir = get_item(parser, 'Path', 'data_dir')
+store_file = get_item(parser, 'Path', 'store_file')
+user_db = get_item(parser, 'Path', 'user_db')
+status_log_file = get_item(parser, 'Path', 'status_log_file')
+access_log_file = get_item(parser, 'Path', 'access_log_file')
+users_dir = get_item(parser, 'Path', 'users_dir')
+pidfile = get_item(parser, 'Path', 'pidfile')
+host = get_item(parser, 'Network', 'host')
+port = int(get_item(parser, 'Network', 'port'))
 
 html_root = None
 main_menu = Menu()
