@@ -1,12 +1,13 @@
 from menu import Menu
 import os
 
+import ConfigParser
 from ConfigParser import SafeConfigParser
 
 def get_item(parser, section, name):
     try:
         return parser.get(section, name)
-    except (SafeConfigParser.NoSectionError, SafeConfigParser.NoOptionError):
+    except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
         print ("The config file {} does not contain the {}.{} option.".format(
                 parser[0], section, name))
         raise
