@@ -47,7 +47,7 @@ class experts(FormPlugin, PagePlugin):
             expert = cfg.users.expert()
             cfg.log("Expert mode is %s" % expert)
         form = Form(title=_("Expert Mode"), 
-                        action="/sys/config/experts", 
+                        action=cfg.server_dir + "/sys/config/experts", 
                         name="expert_mode_form",
                         message=message )
         form.html(self.help())

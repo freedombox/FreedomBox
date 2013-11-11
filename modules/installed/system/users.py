@@ -33,7 +33,7 @@ class add(FormPlugin, PagePlugin):
 
     def main(self, username='', name='', email='', message=None, *args, **kwargs):
         form = Form(title="Add User", 
-                        action="/sys/users/add/index", 
+                        action=cfg.server_dir + "/sys/users/add/index", 
                         onsubmit="return md5ify('add_user_form', 'password')", 
                         name="add_user_form",
                         message=message)
@@ -80,7 +80,7 @@ class edit(FormPlugin, PagePlugin):
 
     def main(self, msg=''):
         users = cfg.users.get_all()
-        add_form = Form(title=_("Edit or Delete User"), action="/sys/users/edit", message=msg)
+        add_form = Form(title=_("Edit or Delete User"), action=cfg.server_dir + "/sys/users/edit", message=msg)
         add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
         for uname in users:
             user = User(uname[1])

@@ -17,7 +17,7 @@ class AuthController(PagePlugin):
         """Called on logout"""
     
     def get_loginform(self, username, msg='', from_page="/"):
-        form = Form(title="Login", action="/auth/login", message=msg)
+        form = Form(title="Login", action=cfg.server_dir + "/auth/login", message=msg)
         form.text_input(name="from_page", value=from_page, type="hidden")
         form.text_input("Username", name="username", value=username)
         form.text_input("Passphrase", name="passphrase", type="password")
@@ -36,7 +36,7 @@ class AuthController(PagePlugin):
         else:
             cherrypy.session[cfg.session_key] = cherrypy.request.login = username
             self.on_login(username)
-            raise cherrypy.HTTPRedirect(from_page or "/")
+            raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))
     
     @cherrypy.expose
     def logout(self, from_page="/"):
@@ -46,4 +46,4 @@ class AuthController(PagePlugin):
         if username:
             cherrypy.request.login = None
             self.on_logout(username)
-        raise cherrypy.HTTPRedirect(from_page or "/")
+        raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))

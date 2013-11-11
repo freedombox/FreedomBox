@@ -43,7 +43,7 @@ class xmpp(PagePlugin):
 
         main = "<p>XMPP Server Configuration</p>"
         form = Form(title="Configuration",
-                    action="/services/xmpp",
+                    action=cfg.server_dir + "/services/xmpp",
                     name="configure_xmpp",
                     message='')
         form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
@@ -66,7 +66,7 @@ class register(FormPlugin, PagePlugin):
 
     def main(self, username='', message=None, *args, **kwargs):
         form = Form(title="Register XMPP Account",
-                    action="/services/xmpp/register/index",
+                    action=cfg.server_dir + "/services/xmpp/register/index",
                     name="register_xmpp_form",
                     message=message)
         form.text_input(_("Username"), name="username", value=username)
