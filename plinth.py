@@ -88,10 +88,13 @@ def parse_arguments():
    # FIXME make this work with basehref for static files.
    parser.add_argument('--server_dir',
                        help='specify where to host the server.')
+   parser.add_argument("--debug", action="store_true",
+                       help="Debug flag.  Don't use.")
 
    args=parser.parse_args()
    set_config(args, "pidfile", "plinth.pid")
    set_config(args, "server_dir", "/")
+   set_config(args, "debug", False)
 
    return cfg
 
