@@ -9,6 +9,7 @@ from withsqlite.withsqlite import sqlite_db
 import cfg
 import config
 from model import User
+import md5
 
 class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -26,7 +27,7 @@ class FirstBoot(PagePlugin):
         return "fake key"
 
     @cherrypy.expose
-    def state0(self, message="", hostname="", box_key="", submitted=False, username="", md5_password="", **kwargs):
+    def state0(self, message="", hostname="", box_key="", submitted=False, username="", password="", **kwargs):
         """
         In this state, we do time config over HTTP, name the box and
         server key selection.
@@ -59,17 +60,21 @@ class FirstBoot(PagePlugin):
                 else:
                     message += _("Invalid key!")
             elif 'box_key' in db and db['box_key']:
-                box_key = _("We already have a key for this box on file.") #TODO: Think this through and handle more gracefully
+                box_key = _("We already have a key for this box on file.") # TODO: Think this through and handle more gracefully.  Seriously.
             elif submitted and not box_key:
                 box_key = self.generate_box_key()
                 db['box_key'] = box_key
-            if username and md5_password:
+            if username and password:
+                # FIXME: MD5 as a password hash?  REALLY?!  NOOO!!!
+                passphrase = md5.new()
+                passphrase.update(password)
+
                 di = {
                     'username':username,
-                    'name':'First user - please change',
-                    'expert':'on',
+                    'name': 'First user - please change',
+                    'expert': 'on',
                     "groups": ["expert"],
-                    'passphrase':md5_password,
+                    'passphrase': passphrase.digest(),
                     }
                 new_user = User(di)
                 cfg.users.set(username,new_user)
@@ -93,15 +98,17 @@ class FirstBoot(PagePlugin):
         form.html("<p><strong>Initial user and password.</strong> Access to this web interface is protected by knowing a username and password.  Provide one here to register the initial privileged user.  The password can be changed and other users added later.</p>")
         form.text_input('Username:', id="username", value=username)
         form.text_input('Password:', id="password", type='password')
-        form.text_input(name="md5_password", type="hidden")
         form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for itself, but if one already exists (from a prior FreedomBox, for example), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
         form.text_box("If you want, paste your box's key here.", id="box_key", value=box_key)
         form.hidden(name="submitted", value="True")
         form.submit("Box it up!")
 
         main += form.render()
-        return self.fill_template(template="base", title=_("First Boot!"), main=main,
-        sidebar_right=_("""<strong>Getting Help</strong><p>We've done our best to make your FreedomBox easy to use.  If you have questions during setup, there are a few places to turn for help. TODO: add links to such help.</p>"""))
+        return self.fill_template(
+            template="base",
+            title=_("First Boot!"),
+            main=main,
+            sidebar_right=sidebar_right)
 
     @cherrypy.expose
     def state1(self, message=None):
@@ -113,26 +120,31 @@ class FirstBoot(PagePlugin):
 
         TODO: HTTPS failure in State 2 should returns to state 1.
         """
-        main = """<p>Here's a certificate.
-TODO: explain all this cert stuff to the user.</p>
-<p>TODO: add instrux for installing certificate.</p>
-<p>After you have installed
+        main = """
+<p>Welcome screen not completely implemented yet.  Press <a
+href="../router">continue</a> to see the rest of the web interface.</p>
+
+<ul>
+    <li>TODO: explain all this cert stuff to the user.</li>
+    <li>TODO: add instrux for installing certificate.</li>
+    <li>TODO: add steps for after you have installed certificate.</li>
+<ul>
 """
         # TODO complete first_boot handling
-        # Make sure the user  is not stuck on a dead end for now.
+        # Make sure the user is not stuck on a dead end for now.
         with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
             db['state']=5
-            main = main + """
-<p>Welcome screen not completely implemented yet.  Press <a href="../router">continue</a> to
-see the rest of the web interface.</p>"
-"""
 
-        if False:
-            ## Update state to 2 and head there
-            with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
-                db['state']=1
-                            #TODO: switch to HTTPS
-            raise cherrypy.InternalRedirect('state1')
+        # TODO: Update state to 2 and head there
+        # with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
+        #     db['state']=1
+        #     # TODO: switch to HTTPS
+        # raise cherrypy.InternalRedirect('state1')
 
-        return self.fill_template(template="base", title=_("Installing the Certificate"), main=main,
-        sidebar_right=_("""<strong>Getting Help</strong><p>We've done our best to make your FreedomBox easy to use.  If you have questions during setup, there are a few places to turn for help. TODO: add links to such help.</p>"""))
+        return self.fill_template(
+            template="base",
+            title=_("Installing the Certificate"),
+            main=main,
+            sidebar_right=sidebar_right)
+
+sidebar_right=_("""<strong>Getting Help</strong><p>We've done our best to make your FreedomBox easy to use.  If you have questions during setup, there are a few places to turn for help. TODO: add links to such help.</p>""")
