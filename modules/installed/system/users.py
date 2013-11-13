@@ -112,7 +112,7 @@ class edit(FormPlugin, PagePlugin):
         u = cfg.users[kwargs['username']]
         if not u:
             main = _("<p>Could not find a user with username of %s!</p>" % kwargs['username'])
-            return self.fill_template(template="err", title=_("Unnown User"), main=main,
+            return self.fill_template(template="err", title=_("Unknown User"), main=main,
                              sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
 
         main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
