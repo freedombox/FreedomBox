@@ -42,6 +42,8 @@ class FirstBoot(PagePlugin):
         user. It's a good place to put error messages.
         """
 
+        # FIXME: reject connection attempt if db["state"] >= 5.
+
         ## Until LDAP is in place, we'll put the box name and key in the cfg.store_file
         ## Must resist the sick temptation to write an LDAP interface to the sqlite file
         with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as db:
