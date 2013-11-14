@@ -57,6 +57,9 @@ class Root(plugin_mount.PagePlugin):
       ## TODO: firstboot hijacking root should probably be in the firstboot module with a hook in plinth.py
       with sqlite_db(cfg.store_file, table="firstboot") as db:
          if not 'state' in db:
+            # if we created a new user db, make sure it can't be read by everyone
+            userdb_fname = '{}.sqlite3'.format(cfg.user_db)
+            os.chmod(userdb_fname, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
             raise cherrypy.InternalRedirect('firstboot')
          elif db['state'] < 5:
             cfg.log("First Boot state = %d" % db['state'])
@@ -136,18 +139,7 @@ def setup():
    load_modules()
    cfg.html_root = Root()
 
-   # check if we are creating a new user db
-   userdb_fname = '{}.sqlite3'.format(cfg.user_db)
-   try:
-      with open(userdb_fname):
-         userdb_exists = True
-   except IOError:
-      userdb_exists = False
    cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
-   # if we created a new user db, make sure it can't be read by everyone
-   if not userdb_exists:
-      os.chmod(userdb_fname, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
-
    cfg.page_plugins = plugin_mount.PagePlugin.get_plugins()
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
    cfg.forms = plugin_mount.FormPlugin.get_plugins()
