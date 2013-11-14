@@ -42,7 +42,7 @@ class Menu():
         If BASEHREF is true and url start with a slash, prepend the cfg.base_href to it"""
 
         if basehref and url.startswith("/"):
-            url = cfg.base_href + url
+            url = cfg.server_dir + cfg.base_href + url
 
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
