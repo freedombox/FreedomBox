@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, argparse
+import os, stat, sys, argparse
 from gettext import gettext as _
 import cfg
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
@@ -135,7 +135,19 @@ def setup():
    cfg.log = Logger()
    load_modules()
    cfg.html_root = Root()
+
+   # check if we are creating a new user db
+   userdb_fname = '{}.sqlite3'.format(cfg.user_db)
+   try:
+      with open(userdb_fname):
+         userdb_exists = True
+   except IOError:
+      userdb_exists = False
    cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
+   # if we created a new user db, make sure it can't be read by everyone
+   if not userdb_exists:
+      os.chmod(userdb_fname, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
    cfg.page_plugins = plugin_mount.PagePlugin.get_plugins()
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
    cfg.forms = plugin_mount.FormPlugin.get_plugins()
