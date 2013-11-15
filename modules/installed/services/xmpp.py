@@ -53,9 +53,7 @@ class xmpp(PagePlugin):
         form.submit(_("Update setup"))
         main += form.render()
 
-        sidebar_right = """
-<strong><a href="/services/xmpp/register">Register XMPP Account</a></strong>
-"""
+        sidebar_right = '<strong><a href="'+cfg.server_dir+'/services/xmpp/register">Register XMPP Account</a></strong>'
         return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_right=sidebar_right)
 
 class register(FormPlugin, PagePlugin):
@@ -88,7 +86,7 @@ class register(FormPlugin, PagePlugin):
             if "successfully registered" in output:
                 msg.add = _("Registered account for %s." % username)
             else:
-                msg.add = _("Failed to register account for %s: %o" % (username, output))
+                msg.add = _("Failed to register account for %s: %s" % (username, output))
 
         cfg.log(msg.text)
         main = self.main(username, msg=msg.text)
