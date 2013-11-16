@@ -50,21 +50,24 @@ class configure(FormPlugin, PagePlugin):
         form.submit(_("Update setup"))
         return form.render()
 
-    def process_form(self, owncloud_enable=None, **kwargs):
-        msg = Message()
+    def process_form(self, **kwargs):
+        checkedinfo = {
+            'enable'   : False,
+        }
 
-        if owncloud_enable == u'on':
-            output, error = privilegedaction_run("owncloud-setup", "enable")
-            if error:
-                raise Exception("something is wrong: " + error)
-            msg.add = _("Enabled Owncloud.")
-        else:
-            output, error = privilegedaction_run("owncloud-setup", "noenable")
-            if error:
-                raise Exception("something is wrong: " + error)
-            msg.add = _("Disabled Owncloud.")
+        opts = []
+        for k in kwargs.keys():
+            if 'on' == kwargs[k]:
+                shortk = k.split("owncloud_").pop()
+                checkedinfo[shortk] = True
 
-        cfg.log(msg.text)
-        main = self.main(owncloud_enable, msg=msg.text)
+            for key in checkedinfo.keys():
+                if checkedinfo[key]:
+                    opts.append(key)
+                else:
+                    opts.append('no'+key)
+            privilegedaction_run("owncloud-setup", " ".join(opts))
+
+        main = self.main(checkedinfo['enable'])
         return self.fill_template(title="Owncloud Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 

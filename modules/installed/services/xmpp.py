@@ -29,41 +29,44 @@ class configure(FormPlugin, PagePlugin):
     sidebar_left = ''
     sidebar_right = _("<strong>Configure XMPP Server</strong>")
 
-    def main(self, inband_enable=False, message=None, *args, **kwargs):
+    def main(self, xmpp_inband_enable=False, message=None, *args, **kwargs):
         output, error = privilegedaction_run("xmpp-setup", 'status')
         if error:
             raise Exception("something is wrong: " + error)
         if "inband_enable" in output.split():
-            inband_enable = True
+            xmpp_inband_enable = True
 
         form = Form(title="Configure XMPP Server",
                     action=cfg.server_dir + "/services/xmpp/configure/index",
                     name="configure_xmpp_form",
                     message=message)
-        form.checkbox(_("Allow In-Band Registration"), name="inband_enable", 
-                        id="inband_enable", checked=inband_enable)
+        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
+                        id="xmpp_inband_enable", checked=xmpp_inband_enable)
         # hidden field is needed because checkbox doesn't post if not checked
         form.hidden(name="submitted", value="True")
         form.html(_("<p>When enabled, anyone who can reach this server will be allowed to register an account through an XMPP client.</p>"))
         form.submit(_("Update setup"))
         return form.render()
 
-    def process_form(self, inband_enable=None, **kwargs):
-        msg = Message()
+    def process_form(self, **kwargs):
+        checkedinfo = {
+            'inband_enable' : False,
+        }
 
-        if inband_enable == u'on':
-            output, error = privilegedaction_run("xmpp-setup", "inband_enable")
-            if error:
-                raise Exception("something is wrong: " + error)
-            msg.add = _("Enabled in-band registration.")
-        else:
-            output, error = privilegedaction_run("xmpp-setup", "noinband_enable")
-            if error:
-                raise Exception("something is wrong: " + error)
-            msg.add = _("Disabled in-band registration.")
+        opts = []
+        for k in kwargs.keys():
+            if 'on' == kwargs[k]:
+                shortk = k.split("xmpp_").pop()
+                checkedinfo[shortk] = True
 
-        cfg.log(msg.text)
-        main = self.main(inband_enable, msg=msg.text)
+            for key in checkedinfo.keys():
+                if checkedinfo[key]:
+                    opts.append(key)
+                else:
+                    opts.append('no'+key)
+            privilegedaction_run("xmpp-setup", " ".join(opts))
+
+        main = self.main(checkedinfo['inband_enable'])
         return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
 class register(FormPlugin, PagePlugin):
