@@ -11,50 +11,60 @@ class xmpp(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("services.xmpp")
+        self.register_page("services.xmpp.configure")
         self.register_page("services.xmpp.register")
         cfg.html_root.services.menu.add_item("XMPP", "icon-comment", "/services/xmpp", 40)
 
     @cherrypy.expose
     @require()
-    def index(self, submitted=False, **kwargs):
-        checkedinfo = {
-            'inband_enable'    : False,
-            }
+    def index(self, **kwargs):
+        main = "<p>XMPP Server Accounts and Configuration</p>"
+        sidebar_right = '<strong><a href="'+cfg.server_dir+'/services/xmpp/configure">Configure XMPP Server</a></strong><br />'
+        sidebar_right = sidebar_right + '<strong><a href="'+cfg.server_dir+'/services/xmpp/register">Register XMPP Account</a></strong>'
+        return self.fill_template(title="XMPP Server", main=main, sidebar_right=sidebar_right)
 
-        if submitted:
-            opts = []
-            for k in kwargs.keys():
-                if 'on' == kwargs[k]:
-                    shortk = k.split("xmpp_").pop()
-                    checkedinfo[shortk] = True
+class configure(FormPlugin, PagePlugin):
+    url = ["/services/xmpp/configure"]
 
-            for key in checkedinfo.keys():
-                if checkedinfo[key]:
-                    opts.append(key)
-                else:
-                    opts.append('no'+key)
-            privilegedaction_run("xmpp-setup", opts)
+    sidebar_left = ''
+    sidebar_right = _("<strong>Configure XMPP Server</strong>")
 
-        output, error = privilegedaction_run("xmpp-setup", ['status'])
+    def main(self, inband_enable=False, message=None, *args, **kwargs):
+        output, error = privilegedaction_run("xmpp-setup", 'status')
         if error:
             raise Exception("something is wrong: " + error)
-        for option in output.split():
-            checkedinfo[option] = True
+        if "inband_enable" in output.split():
+            inband_enable = True
 
-        main = "<p>XMPP Server Configuration</p>"
-        form = Form(title="Configuration",
-                    action=cfg.server_dir + "/services/xmpp",
-                    name="configure_xmpp",
-                    message='')
-        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
-                        id="xmpp_inband_enable", checked=checkedinfo['inband_enable'])
+        form = Form(title="Configure XMPP Server",
+                    action=cfg.server_dir + "/services/xmpp/configure/index",
+                    name="configure_xmpp_form",
+                    message=message)
+        form.checkbox(_("Allow In-Band Registration"), name="inband_enable", 
+                        id="inband_enable", checked=inband_enable)
+        # hidden field is needed because checkbox doesn't post if not checked
         form.hidden(name="submitted", value="True")
         form.html(_("<p>When enabled, anyone who can reach this server will be allowed to register an account through an XMPP client.</p>"))
         form.submit(_("Update setup"))
-        main += form.render()
+        return form.render()
 
-        sidebar_right = '<strong><a href="'+cfg.server_dir+'/services/xmpp/register">Register XMPP Account</a></strong>'
-        return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_right=sidebar_right)
+    def process_form(self, inband_enable=None, **kwargs):
+        msg = Message()
+
+        if inband_enable == u'on':
+            output, error = privilegedaction_run("xmpp-setup", "inband_enable")
+            if error:
+                raise Exception("something is wrong: " + error)
+            msg.add = _("Enabled in-band registration.")
+        else:
+            output, error = privilegedaction_run("xmpp-setup", "noinband_enable")
+            if error:
+                raise Exception("something is wrong: " + error)
+            msg.add = _("Disabled in-band registration.")
+
+        cfg.log(msg.text)
+        main = self.main(inband_enable, msg=msg.text)
+        return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
 class register(FormPlugin, PagePlugin):
     url = ["/services/xmpp/register"]
