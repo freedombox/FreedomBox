@@ -109,11 +109,10 @@ class TestPrivileged(unittest.TestCase):
         # counting is safer than actual badness.
         options = ["good", ";", "echo $((1+1))"]
 
-        with self.assertRaises(ValueError):
-            output, error = privilegedaction_run(action, options)
+        output, error = privilegedaction_run(action, options)
 
-            # if it somehow doesn't error, we'd better not evaluate the data.
-            self.assertFalse("2" in output)
+        # we'd better not evaluate the data.
+        self.assertFalse("2" in output)
 
 if __name__ == "__main__":
     unittest.main()

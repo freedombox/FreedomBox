@@ -50,6 +50,10 @@ Privileged actions run commands with this contract (version 1.0):
       ValueError.  They don't because sanitizing this case is significantly
       easier than detecting if it occurs.
 
+      The options list is coerced into a space-separated string before being
+      shell-escaped.  Option lists including shell escape characters may need to
+      be unescaped on the receiving end.
+
    E. Actions must exist in the actions directory.
 
 4. (promise) Options are appended to the action.
@@ -86,12 +90,6 @@ def privilegedaction_run(action, options = None):
     # contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
         raise ValueError("Action can't contain:" + os.sep)
-    if not isinstance(options, str):
-        raise ValueError("Options must be a string and cannot be a list.")
-
-    # contract: 3C, 3D: don't allow users to insert escape characters.
-    action = pipes.quote(action)
-    options = pipes.quote(options)
 
     cmd = DIRECTORY + os.sep + action
 
@@ -100,11 +98,11 @@ def privilegedaction_run(action, options = None):
     if not os.access(cmd, os.F_OK):
         raise ValueError("Action must exist in action directory.")
 
-    cmd = ["sudo", "-n", cmd]
+    if hasattr(options, "__iter__"):
+        options = " ".join(options)
 
-    # contract 4.
-    if options:
-        cmd.extend(shlex.split(options))
+    # contract: 3C, 3D: don't allow users to insert escape characters
+    cmd = ["sudo", "-n", cmd, pipes.quote(options)]
 
     # contract 3C: don't interpret shell escape sequences.
     # contract 5 (and 6-ish).
@@ -113,4 +111,5 @@ def privilegedaction_run(action, options = None):
                          stdout = subprocess.PIPE,
                          stderr= subprocess.PIPE,
                          shell=False).communicate()
+
     return output, error
