@@ -36,7 +36,7 @@ def error_page(status, dynamic_msg, stock_msg):
 def error_page_404(status, message, traceback, version):
    return error_page(status, message, """<p>If you believe this
    missing page should exist, please file a bug with either the Plinth
-   project (<a href="https://github.com/jvasile/plinth/issues">it has
+   project (<a href="https://github.com/NickDaly/Plinth/issues">it has
    an issue tracker</a>) or the people responsible for the module you
    are trying to access.</p>
 
