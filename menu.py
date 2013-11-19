@@ -39,10 +39,10 @@ class Menu():
         """This method creates a menu item with the parameters, adds
         that menu item to this menu, and returns the item.
 
-        If BASEHREF is true and url start with a slash, prepend the cfg.base_href to it"""
+        If BASEHREF is true and url start with a slash, prepend the cfg.server_dir to it"""
 
         if basehref and url.startswith("/"):
-            url = cfg.base_href + url
+            url = cfg.server_dir + url
 
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
