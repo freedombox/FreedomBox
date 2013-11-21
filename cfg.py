@@ -28,7 +28,6 @@ store_file = get_item(parser, 'Path', 'store_file')
 user_db = get_item(parser, 'Path', 'user_db')
 status_log_file = get_item(parser, 'Path', 'status_log_file')
 access_log_file = get_item(parser, 'Path', 'access_log_file')
-users_dir = get_item(parser, 'Path', 'users_dir')
 pidfile = get_item(parser, 'Path', 'pidfile')
 host = get_item(parser, 'Network', 'host')
 port = int(get_item(parser, 'Network', 'port'))
@@ -38,3 +37,5 @@ main_menu = Menu()
 
 if store_file.endswith(".sqlite3"):
     store_file = os.path.splitext(store_file)[0]
+if user_db.endswith(".sqlite3"):
+    user_db = os.path.splitext(user_db)[0]
