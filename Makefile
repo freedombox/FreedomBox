@@ -12,8 +12,8 @@ ALL_BUT_GZ=$(subst $(wildcard *.tar.gz),,$(wildcard *))
 DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
-## Catch-all tagets
-default: config dirs template css docs dbs
+## Catch-all targets
+default: config dirs template css docs
 all: default
 
 predepend:
@@ -34,7 +34,7 @@ install: default apache-install freedombox-setup-install
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
-	cp -r data/* $(DESTDIR)/var/lib/plinth
+	mkdir -p $(DESTDIR)/var/lib/plinth/data
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
 freedombox-setup-install:
@@ -46,11 +46,6 @@ uninstall:
 		$(DESTDIR)/var/log/plinth
 	rm -f $(DESTDIR)/usr/bin/plinth $(DESTDIR)/etc/init.d/plinth \
 		$(DESTDIR)/usr/share/man/man1/plinth.1.gz $(DESTDIR)/var/run/plinth.pid
-
-dbs: data/users.sqlite3
-
-data/users.sqlite3: data/users.sqlite3.distrib
-	cp data/users.sqlite3.distrib data/users.sqlite3
 
 dirs:
 	@mkdir -p data/cherrypy_sessions
