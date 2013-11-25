@@ -1,32 +1,16 @@
 #! /usr/bin/env python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
+from actions import superuser_run, run
+import shlex
+import subprocess
 import sys
-from privilegedactions import privilegedaction_run
 import unittest
 
 class TestPrivileged(unittest.TestCase):
-    """Verify that privileged actions perform as expected:
+    """Verify that privileged actions perform as expected.
 
-    1. Privileged actions run as root.
-
-    2. Only whitelisted privileged actions can run.
-
-       A. Actions can't be used to run other actions:
-
-          $ action="echo 'hi'; rm -rf /"
-          $ $action
-
-       B. Options can't be used to run other actions:
-
-          $ options="hi'; rm -rf /;'"
-          $ "echo " + "'$options'"
-
-       C. Scripts in a directory above the actions directory can't be run.
-
-       D. Scripts in a directory beneath the actions directory can't be run.
-
-    3. The actions directory can't be changed at run time.
+    See actions.py for a full description of the expectations.
 
     """
     def test_run_as_root(self):
@@ -35,7 +19,7 @@ class TestPrivileged(unittest.TestCase):
         """
         self.assertEqual(
             "0", # user 0 is root
-            privilegedaction_run("id", "-ur")[0].strip())
+            superuser_run("id", "-ur")[0].strip())
 
     def test_breakout_actions_dir(self):
         """2. The actions directory can't be changed at run time.
@@ -55,13 +39,13 @@ class TestPrivileged(unittest.TestCase):
 
         for arg in ("../echo", "/bin/echo"):
             with self.assertRaises(ValueError):
-                privilegedaction_run(arg, options)
+                run(arg, options)
 
     def test_breakout_down(self):
         """3B. Users can't call actions beneath the actions directory."""
         action="directory/echo"
 
-        self.assertRaises(ValueError, privilegedaction_run, action)
+        self.assertRaises(ValueError, superuser_run, action)
 
     def test_breakout_actions(self):
         """3C. Actions can't be used to run other actions.
@@ -78,14 +62,14 @@ class TestPrivileged(unittest.TestCase):
         for action in actions:
             for option in options:
                 with self.assertRaises(ValueError):
-                    output = privilegedaction_run(action, option)
+                    output = run(action, option)
 
                     # if it somewhow doesn't error, we'd better not evaluate the
                     # data.
                     self.assertFalse("2" in output[0])
 
     def test_breakout_option_string(self):
-        """3D. Options can't be used to run other actions.
+        """3D. Option strings can't be used to run other actions.
 
         Verify that shell control characters aren't interpreted.
 
@@ -94,12 +78,12 @@ class TestPrivileged(unittest.TestCase):
         # counting is safer than actual badness.
         options = "good; echo $((1+1))"
 
-        output, error = privilegedaction_run(action, options)
+        output, error = run(action, options)
 
         self.assertFalse("2" in output)
 
     def test_breakout_option_list(self):
-        """3D. Options can't be used to run other actions.
+        """3D. Option lists can't be used to run other actions.
 
         Verify that only a string of options is accepted and that we can't just
         tack additional shell control characters onto the list.
@@ -109,10 +93,18 @@ class TestPrivileged(unittest.TestCase):
         # counting is safer than actual badness.
         options = ["good", ";", "echo $((1+1))"]
 
-        output, error = privilegedaction_run(action, options)
+        output, error = run(action, options)
 
         # we'd better not evaluate the data.
         self.assertFalse("2" in output)
+
+    def test_multiple_options(self):
+        """4. Multiple options can be provided as a list.
+
+        """
+        self.assertEqual(
+            subprocess.check_output(shlex.split("id -ur")).strip(),
+            run("id", ["-u" ,"-r"])[0].strip())
 
 if __name__ == "__main__":
     unittest.main()
