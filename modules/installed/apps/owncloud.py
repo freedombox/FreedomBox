@@ -3,7 +3,7 @@ from gettext import gettext as _
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 from forms import Form
-from privilegedactions import privilegedaction_run
+import actions
 import cfg
 from util import Message
 
@@ -33,7 +33,7 @@ class configure(FormPlugin, PagePlugin):
     sidebar_right = _("<strong>Configure Owncloud</strong>")
 
     def main(self, owncloud_enable=False, message=None, *args, **kwargs):
-        output, error = privilegedaction_run("owncloud-setup", 'status')
+        output, error = actions.run("owncloud-setup", 'status')
         if error:
             raise Exception("something is wrong: " + error)
         if "enable" in output.split():
@@ -46,7 +46,7 @@ class configure(FormPlugin, PagePlugin):
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=owncloud_enable)
         # hidden field is needed because checkbox doesn't post if not checked
         form.hidden(name="submitted", value="True")
-        form.html(_("<p>When enabled, the owncloud installation will be available from /owncloud/ on the web server.</p>"))
+        form.html(_("""<p>When enabled, the owncloud installation will be available from <a href="/owncloud">owncloud</a> on the web server.</p>"""))
         form.submit(_("Update setup"))
         return form.render()
 
@@ -66,7 +66,7 @@ class configure(FormPlugin, PagePlugin):
                     opts.append(key)
                 else:
                     opts.append('no'+key)
-            privilegedaction_run("owncloud-setup", " ".join(opts))
+        actions.superuser_run("owncloud-setup", opts, async=True)
 
         main = self.main(checkedinfo['enable'])
         return self.fill_template(title="Owncloud Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)

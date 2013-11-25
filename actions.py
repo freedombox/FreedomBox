@@ -79,15 +79,31 @@ import pipes, shlex, subprocess
 contract.checkmod(__name__)
 
 def run(action, options = None, async = False):
+    """Safely run a specific action as the current user.
 
+    See actions._run for more information.
+
+    """
     return _run(action, options, async, False)
 
 def superuser_run(action, options = None, async = False):
+    """Safely run a specific action as root.
 
+    See actions._run for more information.
+
+    """
     return _run(action, options, async, True)
 
 def _run(action, options = None, async = False, run_as_root = False):
-    """Safely run a specific action as root.
+    """Safely run a specific action as a normal user or root.
+
+    actions are pulled from the actions directory.
+
+    options are added to the action command.
+
+    async: run asynchronously or wait for the command to complete.
+
+    run_as_root: execute the command through sudo.
 
     pre:
         os.sep not in action
@@ -96,6 +112,7 @@ def _run(action, options = None, async = False, run_as_root = False):
 
     """
     DIRECTORY = "actions"
+
     if options == None:
         options = []
 
