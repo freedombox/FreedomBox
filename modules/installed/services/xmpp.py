@@ -4,7 +4,7 @@ from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
-from privilegedactions import privilegedaction_run
+from actions import superuser_run
 from util import Message
 
 class xmpp(PagePlugin):
@@ -33,9 +33,9 @@ class xmpp(PagePlugin):
                     opts.append(key)
                 else:
                     opts.append('no'+key)
-            privilegedaction_run("xmpp-setup", opts)
+            superuser_run("xmpp-setup", opts)
 
-        output, error = privilegedaction_run("xmpp-setup", ['status'])
+        output, error = superuser_run("xmpp-setup", ['status'])
         if error:
             raise Exception("something is wrong: " + error)
         for option in output.split():
@@ -46,7 +46,7 @@ class xmpp(PagePlugin):
                     action=cfg.server_dir + "/services/xmpp",
                     name="configure_xmpp",
                     message='')
-        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable", 
+        form.checkbox(_("Allow In-Band Registration"), name="xmpp_inband_enable",
                         id="xmpp_inband_enable", checked=checkedinfo['inband_enable'])
         form.hidden(name="submitted", value="True")
         form.html(_("<p>When enabled, anyone who can reach this server will be allowed to register an account through an XMPP client.</p>"))
@@ -81,7 +81,7 @@ class register(FormPlugin, PagePlugin):
         if not password: msg.add = _("Must specify a password!")
 
         if username and password:
-            output, error = privilegedaction_run("xmpp-register", [username, password])
+            output, error = superuser_run("xmpp-register", [username, password])
             if error:
                 raise Exception("something is wrong: " + error)
 

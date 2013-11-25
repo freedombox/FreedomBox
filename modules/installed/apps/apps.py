@@ -3,7 +3,7 @@ from gettext import gettext as _
 from modules.auth import require
 from plugin_mount import PagePlugin
 from forms import Form
-from privilegedactions import privilegedaction_run
+from actions import superuser_run
 import cfg
 
 class Apps(PagePlugin):
@@ -18,7 +18,7 @@ class Apps(PagePlugin):
     def index(self):
         main = """
         <p>User Applications are web apps hosted on your %s.</p>
-        
+
         <p>Eventually this box could be your photo sharing site, your
         instant messaging site, your social networking site, your news
         site.  Remember web portals?  We can be one of those too.
@@ -57,9 +57,9 @@ some other websites business model.</p>
                     opts.append(key)
                 else:
                     opts.append('no'+key)
-            privilegedaction_run("owncloud-setup", opts)
+            superuser_run("owncloud-setup", opts)
 
-        output, error = privilegedaction_run("owncloud-setup", ['status'])
+        output, error = superuser_run("owncloud-setup", ['status'])
         if error:
             raise Exception("something is wrong: " + error)
         for option in output.split():
@@ -67,8 +67,8 @@ some other websites business model.</p>
 
         main="""
 """
-        form = Form(title="Configuration", 
-                        action=cfg.server_dir + "/apps/owncloud", 
+        form = Form(title="Configuration",
+                        action=cfg.server_dir + "/apps/owncloud",
                         name="configure_owncloud",
                         message='')
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=checkedinfo['enable'])

@@ -9,7 +9,7 @@ from gettext import gettext as _
 from filedict import FileDict
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
-from privilegedactions import privilegedaction_run
+from actions import superuser_run
 import cfg
 from forms import Form
 from model import User
@@ -55,7 +55,7 @@ def set_hostname(hostname):
 
     cfg.log.info("Changing hostname to '%s'" % hostname)
     try:
-        privilegedaction_run("hostname-change", hostname)
+        superuser_run("hostname-change", hostname)
         # don't persist/cache change unless it was saved successfuly
         sys_store = filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
@@ -141,7 +141,7 @@ class general(FormPlugin, PagePlugin):
         time_zone = time_zone.strip()
         if time_zone != sys_store['time_zone']:
             cfg.log.info("Setting timezone to %s" % time_zone)
-            privilegedaction_run("timezone-change", [time_zone])
+            superuser_run("timezone-change", [time_zone])
             sys_store['time_zone'] = time_zone
         return message or "Settings updated."
 
