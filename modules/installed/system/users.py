@@ -18,7 +18,8 @@ class users(PagePlugin):
     @cherrypy.expose
     @require()
     def index(self):
-        return self.fill_template(title="Manage Users and Groups", sidebar_right="""<strong><a href="/sys/users/add">Add User</a></strong><br/><strong><a href="/sys/users/edit">Edit Users</a></strong>""")
+        sidebar_right = '<strong><a href="'+cfg.server_dir+'/sys/users/add">Add User</a></strong><br/><strong><a href="'+cfg.server_dir+'/sys/users/edit">Edit Users</a></strong>'
+        return self.fill_template(title="Manage Users and Groups", sidebar_right=sidebar_right)
 
 class add(FormPlugin, PagePlugin):
     url = ["/sys/users/add"]
@@ -75,7 +76,7 @@ class edit(FormPlugin, PagePlugin):
             user = User(uname[1])
             add_form.html('<span class="indent">&nbsp;&nbsp;%s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' %
                           add_form.get_checkbox(name=user['username']) +
-                          '<a href="/sys/users/edit?username=%s">%s (%s)</a><br /></span>' %
+                          '<a href="'+cfg.server_dir+'/sys/users/edit?username=%s">%s (%s)</a><br /></span>' %
                           (user['username'], user['name'], user['username']))
         add_form.submit(label=_("Delete User"), name="delete")
         return add_form.render()
