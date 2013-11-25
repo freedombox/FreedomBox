@@ -1,17 +1,17 @@
 #! /usr/bin/env python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
-"""Run specified privileged actions as root.
+"""Run specified actions.
 
-Privileged actions run commands with this contract (version 1.0):
+Actions run commands with this contract (version 1.1):
 
-1. (promise) Privileged actions run as root.
+1. (promise) Super-user actions run as root.  Normal actions do not.
 
 2. (promise) The actions directory can't be changed at run time.
 
    This guarantees that we can only select from the correct set of actions.
 
-3. (restriction) Only whitelisted privileged actions can run.
+3. (restriction) Only whitelisted actions can run.
 
    A. Scripts in a directory above the actions directory can't be run.
 
@@ -58,6 +58,8 @@ Privileged actions run commands with this contract (version 1.0):
 
 4. (promise) Options are appended to the action.
 
+   Options can be provided as a list or strings.
+
 5. (promise) Output and error strings are returned from the command.
 
 6. (limitation) Providing the process with input is not possible.
@@ -66,26 +68,36 @@ Privileged actions run commands with this contract (version 1.0):
    interaction with the spawned process must be carried out through some other
    method (maybe the process opens a socket, or something).
 
+7. Option
+
 """
 
 import contract
 import os
-import pipes
-import shlex
-import subprocess
+import pipes, shlex, subprocess
 
 contract.checkmod(__name__)
 
-def privilegedaction_run(action, options = None):
+def run(action, options = None, async = False):
+
+    return _run(action, options, async, False)
+
+def superuser_run(action, options = None, async = False):
+
+    return _run(action, options, async, True)
+
+def _run(action, options = None, async = False, run_as_root = False):
     """Safely run a specific action as root.
 
     pre:
-        os.sep not in actions
+        os.sep not in action
     inv:
         True # Actions directory hasn't changed.  It's hardcoded :)
 
     """
     DIRECTORY = "actions"
+    if options == None:
+        options = []
 
     # contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
@@ -98,18 +110,27 @@ def privilegedaction_run(action, options = None):
     if not os.access(cmd, os.F_OK):
         raise ValueError("Action must exist in action directory.")
 
-    if hasattr(options, "__iter__"):
-        options = " ".join(options)
+    cmd = [cmd]
 
-    # contract: 3C, 3D: don't allow users to insert escape characters
-    cmd = ["sudo", "-n", cmd, pipes.quote(options)]
+    # contract: 3C, 3D: don't allow users to insert escape characters in options
+    if options:
+        if not hasattr(options, "__iter__"):
+            options = [options]
+
+        cmd += [pipes.quote(option) for option in options]
+
+    # contract 1: commands can run via sudo.
+    if run_as_root:
+        cmd = ["sudo", "-n"] + cmd
 
     # contract 3C: don't interpret shell escape sequences.
     # contract 5 (and 6-ish).
-    output, error = \
-        subprocess.Popen(cmd,
-                         stdout = subprocess.PIPE,
-                         stderr= subprocess.PIPE,
-                         shell=False).communicate()
+    proc = subprocess.Popen(
+        cmd,
+        stdout = subprocess.PIPE,
+        stderr= subprocess.PIPE,
+        shell=False)
 
-    return output, error
+    if not async:
+        output, error = proc.communicate()
+        return output, error
