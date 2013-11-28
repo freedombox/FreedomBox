@@ -100,6 +100,7 @@ apache-config: apache-install apache-ssl
 apache-ssl:
 	make-ssl-cert generate-default-snakeoil
 	a2enmod ssl
+	a2enmod headers
 	a2enmod rewrite
 	a2enmod proxy
 	a2enmod proxy_http
