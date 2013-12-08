@@ -60,7 +60,10 @@ class Root(plugin_mount.PagePlugin):
             # if we created a new user db, make sure it can't be read by everyone
             userdb_fname = '{}.sqlite3'.format(cfg.user_db)
             os.chmod(userdb_fname, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
-            raise cherrypy.InternalRedirect('firstboot')
+            # cherrypy.InternalRedirect throws a 301, causing the
+            # browser to cache the redirect, preventing the user from
+            # navigating to /plinth until the browser is restarted.
+            raise cherrypy.HTTPRedirect('firstboot', 307)
          elif db['state'] < 5:
             cfg.log("First Boot state = %d" % db['state'])
             raise cherrypy.InternalRedirect('firstboot/state%d' % db['state'])
