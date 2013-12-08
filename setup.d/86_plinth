@@ -1,15 +1,16 @@
 #!/bin/sh
 #
-# Enable Plinth.
+# Enable Apache modules required for Plinth.
 
-echo "Configuring Plinth..."
+echo "Configuring Apache for Plinth..."
 
 make-ssl-cert generate-default-snakeoil
-a2enmod ssl
-a2enmod rewrite
+a2enmod headers
 a2enmod proxy
 a2enmod proxy_http
+a2enmod rewrite
+a2enmod ssl
 a2dissite default
 a2ensite plinth.conf
 
-echo "Done configuring Plinth.."
+echo "Done configuring Apache for Plinth."
