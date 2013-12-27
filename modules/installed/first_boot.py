@@ -10,6 +10,27 @@ import cfg
 import config
 from model import User
 
+"""First Boot: Initial Plinth Configuration.
+
+See docs/design/first-connection.mdwn for details.
+
+The Plinth first-connection process has several stages:
+
+0. The user connects to Plinth for the first time and is redirected from
+   the home page to the Hello page.
+
+1. The user sets the Box's name, the administrator's name and
+   password, and the box's PGP key (optional).
+
+2. The box generates and the user receives any PGP keys.
+
+3. The box detects the network's configuration and restarts networking.
+
+4. The user interacts with the box normally.
+
+"""
+
+
 class FirstBoot(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
