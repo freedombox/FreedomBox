@@ -1,3 +1,5 @@
+# -*- mode: org; mode: org-indent; mode: visual-line; -*-
+
 For each of the files listed, the copyright specified for the file is
 listed.  "-" means "no license specified in the file," licenses are
 specified and linked otherwise.
@@ -24,9 +26,8 @@ specified and linked otherwise.
 - test.sh :: -
 - TODO :: -
 - util.py :: different parts under different licenses:
-  - [[file:util.py::def%20mkdir(newdir):][def mkdir(newdir):]] ::
-    [[http://code.activestate.com/recipes/82465/][mkdir]] (PSF
-    license), should be replaced with =os.makedirs()=
+  - [[file:util.py::def%20mkdir(newdir):][def mkdir(newdir):]] :: [[http://code.activestate.com/recipes/82465/][mkdir]] (PSF license), should be replaced with =os.makedirs()=
+  - other parts :: -
 - actions/echo :: -
 - actions/hostname-change :: -
 - actions/id :: -
@@ -44,28 +45,28 @@ specified and linked otherwise.
 - doc/scripts.mdwn :: -
 - doc/security.mdwn :: -
 - doc/themes.mdwn :: -
-- modules/installed/first_boot.py ::
-- modules/installed/apps/apps.py ::
-- modules/installed/apps/owncloud.py ::
-- modules/installed/help/help.py ::
-- modules/installed/lib/auth_page.py ::
-- modules/installed/lib/auth.py ::
-- modules/installed/lib/forms.py ::
-- modules/installed/lib/user_store.py ::
-- modules/installed/privacy/privacy.py ::
-- modules/installed/router/info.py ::
-- modules/installed/router/router.py ::
-- modules/installed/santiago/santiago.py ::
-- modules/installed/services/services.py ::
-- modules/installed/services/xmpp.py ::
-- modules/installed/sharing/file_explorer.py ::
-- modules/installed/sharing/sharing.py ::
-- modules/installed/system/config.py ::
-- modules/installed/system/expert_mode.py ::
-- modules/installed/system/system.py ::
-- modules/installed/system/time_zones ::
-- modules/installed/system/users.py ::
-- modules/installed/system/wan.py ::
+- modules/installed/first_boot.py :: -
+- modules/installed/apps/apps.py :: -
+- modules/installed/apps/owncloud.py :: -
+- modules/installed/help/help.py :: -
+- modules/installed/lib/auth_page.py :: -
+- modules/installed/lib/auth.py :: Derived from [[http://tools.cherrypy.org/wiki/AuthenticationAndAccessRestrictions][Arnar Birisson's CherryPy wiki code]].
+- modules/installed/lib/forms.py :: [[file:modules/installed/lib/forms.py::Copyright%202011-2013%20James%20Vasile][Copyright James Vasile]]
+- modules/installed/lib/user_store.py :: -
+- modules/installed/privacy/privacy.py :: -
+- modules/installed/router/info.py :: -
+- modules/installed/router/router.py :: -
+- modules/installed/santiago/santiago.py :: -
+- modules/installed/services/services.py :: -
+- modules/installed/services/xmpp.py :: -
+- modules/installed/sharing/file_explorer.py :: -
+- modules/installed/sharing/sharing.py :: -
+- modules/installed/system/config.py :: -
+- modules/installed/system/expert_mode.py :: -
+- modules/installed/system/system.py :: -
+- modules/installed/system/time_zones :: -
+- modules/installed/system/users.py :: -
+- modules/installed/system/wan.py :: -
 - setup/86_plinth :: -
 - share/apache2/plinth.conf :: -
 - share/init.d/plinth :: -
@@ -84,48 +85,47 @@ specified and linked otherwise.
 - themes/default/FreedomBox-Logo.7z :: [[http://thread.gmane.org/gmane.linux.debian.freedombox.user/4124/focus=4439][GPL3+/CC-BY-SA]]
 - themes/default/readme.md :: [[file:themes/default/readme.md::This%20theme%20is%20free%20software%20offered%20to%20you%20under%20the%20terms%20of%20the%20GNU%20Affero%20General%20Public%20License,%20Version%203%20or%20later:][GNU Affero General Public License Version 3]]
 - themes/default/screenshot.png :: -
-- themes/default/css/bootstrap.css ::
-- themes/default/css/bootstrap-responsive.css ::
-- themes/default/img/apple-touch-icon-114px-precomposed.png ::
-- themes/default/img/apple-touch-icon-57px-precomposed.png ::
-- themes/default/img/apple-touch-icon-72px-precomposed.png ::
-- themes/default/img/apple-touch-icon.xcf ::
-- themes/default/img/favicon-32px.ico ::
-- themes/default/img/favicon.ico ::
-- themes/default/img/freedombox-logo-200px.png ::
-- themes/default/img/freedombox-logo-250px.png ::
-- themes/default/img/freedombox-logo-32px.png ::
-- themes/default/img/FreedomBox-logo-grayscale-negative.png ::
-- themes/default/img/FreedomBox-logo-grayscale-negative.svg ::
-- themes/default/img/FreedomBox-logo-grayscale.png ::
-- themes/default/img/FreedomBox-logo-grayscale.svg ::
-- themes/default/img/FreedomBox-logo-lineart-negative.png ::
-- themes/default/img/FreedomBox-logo-lineart-negative.svg ::
-- themes/default/img/FreedomBox-logo-lineart.png ::
-- themes/default/img/FreedomBox-logo-lineart.svg ::
-- themes/default/img/FreedomBox-logo-standard.png ::
-- themes/default/img/FreedomBox-logo-standard.svg ::
-- themes/default/img/freedombox-logotype.png ::
-- themes/default/img/glyphicons-halflings.png ::
-- themes/default/img/glyphicons-halflings-white.png ::
-- themes/default/js/functions.js ::
-- themes/default/js/menu.js ::
-- themes/default/js/plinth.js ::
-- themes/default/js/plugins.js ::
-- themes/default/js/libs/bootstrap ::
-- themes/default/js/libs/jquery.min.js ::
-- themes/default/js/libs/modernizr.min.js ::
-- themes/default/js/libs/bootstrap/alert.js ::
-- themes/default/js/libs/bootstrap/bootstrap.js ::
-- themes/default/js/libs/bootstrap/bootstrap.min.js ::
-- themes/default/js/libs/bootstrap/button.js ::
-- themes/default/js/libs/bootstrap/carousel.js ::
-- themes/default/js/libs/bootstrap/collapse.js ::
-- themes/default/js/libs/bootstrap/dropdown.js ::
-- themes/default/js/libs/bootstrap/modal.js ::
-- themes/default/js/libs/bootstrap/popover.js ::
-- themes/default/js/libs/bootstrap/scrollspy.js ::
-- themes/default/js/libs/bootstrap/tab.js ::
-- themes/default/js/libs/bootstrap/tooltip.js ::
-- themes/default/js/libs/bootstrap/transition.js ::
-- themes/default/js/libs/bootstrap/typeahead.js ::
+- themes/default/css/bootstrap.css :: [[file:themes/default/css/bootstrap.css::*%20Licensed%20under%20the%20Apache%20License%20v2.0][Apache License v2.0]]
+- themes/default/css/bootstrap-responsive.css :: [[file:themes/default/css/bootstrap-responsive.css::*%20Licensed%20under%20the%20Apache%20License%20v2.0][Apache License v2.0]]
+- themes/default/img/apple-touch-icon-114px-precomposed.png :: -
+- themes/default/img/apple-touch-icon-57px-precomposed.png :: -
+- themes/default/img/apple-touch-icon-72px-precomposed.png :: -
+- themes/default/img/apple-touch-icon.xcf :: -
+- themes/default/img/favicon-32px.ico :: -
+- themes/default/img/favicon.ico :: -
+- themes/default/img/freedombox-logo-200px.png :: -
+- themes/default/img/freedombox-logo-250px.png :: -
+- themes/default/img/freedombox-logo-32px.png :: -
+- themes/default/img/FreedomBox-logo-grayscale-negative.png :: -
+- themes/default/img/FreedomBox-logo-grayscale-negative.svg :: -
+- themes/default/img/FreedomBox-logo-grayscale.png :: -
+- themes/default/img/FreedomBox-logo-grayscale.svg :: -
+- themes/default/img/FreedomBox-logo-lineart-negative.png :: -
+- themes/default/img/FreedomBox-logo-lineart-negative.svg :: -
+- themes/default/img/FreedomBox-logo-lineart.png :: -
+- themes/default/img/FreedomBox-logo-lineart.svg :: -
+- themes/default/img/FreedomBox-logo-standard.png :: -
+- themes/default/img/FreedomBox-logo-standard.svg :: -
+- themes/default/img/freedombox-logotype.png :: -
+- themes/default/img/glyphicons-halflings.png :: -
+- themes/default/img/glyphicons-halflings-white.png :: -
+- themes/default/js/functions.js :: -
+- themes/default/js/menu.js :: -
+- themes/default/js/plinth.js :: -
+- themes/default/js/plugins.js :: [[file:themes/default/js/plugins.js::/%20paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/][CC0]]
+- themes/default/js/libs/jquery.min.js :: Symlink to external target: [[file:themes/default/js/libs/jquery.min.js::*%20Dual%20licensed%20under%20the%20MIT%20or%20GPL%20Version%202%20licenses.][MIT/GPL2]]
+- themes/default/js/libs/modernizr.min.js :: Symlink to external target: MIT
+- themes/default/js/libs/bootstrap/alert.js :: [[file:themes/default/js/libs/bootstrap/alert.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/bootstrap.js :: [[file:themes/default/js/libs/bootstrap/bootstrap.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/bootstrap.min.js :: -
+- themes/default/js/libs/bootstrap/button.js :: [[file:themes/default/js/libs/bootstrap/button.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/carousel.js :: [[file:themes/default/js/libs/bootstrap/carousel.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/collapse.js :: [[file:themes/default/js/libs/bootstrap/collapse.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/dropdown.js :: [[file:themes/default/js/libs/bootstrap/dropdown.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/modal.js :: [[file:themes/default/js/libs/bootstrap/modal.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/popover.js :: [[file:themes/default/js/libs/bootstrap/popover.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/scrollspy.js :: [[file:themes/default/js/libs/bootstrap/scrollspy.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/tab.js :: [[file:themes/default/js/libs/bootstrap/tab.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/tooltip.js :: [[file:themes/default/js/libs/bootstrap/tooltip.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/transition.js :: [[file:themes/default/js/libs/bootstrap/transition.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
+- themes/default/js/libs/bootstrap/typeahead.js :: [[file:themes/default/js/libs/bootstrap/typeahead.js::*%20Licensed%20under%20the%20Apache%20License,%20Version%202.0%20(the%20"License")%3B][Apache License v2.0]]
