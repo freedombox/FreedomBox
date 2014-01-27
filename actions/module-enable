@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Usage: module-enable python_root module
+# This will change when we switch to using aptitude.
+
+# TODO: Replace this with "aptitude install plinth-<module>"
+case "$2" in
+    owncloud)
+	if [ ! -e "$1"/modules/owncloud.py ] ; then
+	    ln -s "$1"/modules/installed/apps/owncloud.py "$1"/modules/owncloud.py
+	fi
+     ;;
+esac

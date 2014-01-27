@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Usage: module-disable python_root module
+# This will change when we switch to using aptitude.
+
+# TODO: Replace this with "aptitude purge plinth-<module>"
+case "$2" in
+    owncloud)
+	if [ -e "$1"/modules/owncloud.py ] ; then
+	    rm -f "$1"/modules/owncloud.py
+	fi
+     ;;
+esac
