@@ -8,6 +8,7 @@ case "$2" in
     owncloud)
 	if [ ! -e "$1"/modules/owncloud.py ] ; then
 	    ln -s "$1"/modules/installed/apps/owncloud.py "$1"/modules/owncloud.py
+	    echo "enabled owncloud"
 	fi
      ;;
 esac
