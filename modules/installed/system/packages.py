@@ -18,16 +18,34 @@ class Packages(PagePlugin, FormPlugin):
     @cherrypy.expose
     @require()
     def index(self, *args, **kwargs):
-        output, error = '', ''
-        if 'submitted' in kwargs:
-            if 'owncloud_enable' in kwargs:
-                output, error = actions.superuser_run("module-enable", [cfg.python_root, "owncloud"])
-                # TODO: need to get plinth to load the module we just enabled
-            else:
-                output, error = actions.superuser_run("module-disable", [cfg.python_root, "owncloud"])
-                # TODO: need a smoother way for plinth to unload the module
+        output, error = actions.run("module-list-available")
+        if error:
+            raise Exception("something is wrong: " + error)
+        modules_available = output.split()
+        
+        output, error = actions.run("module-list-enabled", cfg.python_root)
+        if error:
+            raise Exception("something is wrong: " + error)
+        modules_enabled = output.split()
 
-        main=_("""
+        if 'submitted' in kwargs:
+            del kwargs['submitted']
+            modules_selected = map(lambda x: x.split("_")[0], kwargs.keys())
+            for module in modules_available:
+                if module in modules_enabled:
+                    if module not in modules_selected:
+                        output, error = actions.superuser_run(\
+                                "module-disable", [cfg.python_root, module])
+                        # TODO: need a smoother way for plinth
+                        # to unload the module
+                else:
+                    if module in modules_selected:
+                        output, error = actions.superuser_run(\
+                                "module-enable", [cfg.python_root, module])
+                        # TODO: need to get plinth to load
+                        # the module we just enabled
+
+        main = _("""
 <p>aptitude purge modules</p>
 <p>aptitude install modules</p>
 <p>The modules should depend on the appropriate Debian packages.</p>""")
