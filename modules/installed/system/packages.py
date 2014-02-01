@@ -18,12 +18,13 @@ class Packages(PagePlugin, FormPlugin):
     @cherrypy.expose
     @require()
     def index(self, *args, **kwargs):
-        output, error = actions.run("module-list-available")
+        output, error = actions.run("module-manager", ["list-available"])
         if error:
             raise Exception("something is wrong: " + error)
         modules_available = output.split()
         
-        output, error = actions.run("module-list-enabled", cfg.python_root)
+        output, error = actions.run("module-manager", \
+                                    ["list-enabled", cfg.python_root])
         if error:
             raise Exception("something is wrong: " + error)
         modules_enabled = output.split()
@@ -35,13 +36,15 @@ class Packages(PagePlugin, FormPlugin):
                 if module in modules_enabled:
                     if module not in modules_selected:
                         output, error = actions.superuser_run(\
-                                "module-disable", [cfg.python_root, module])
+                                "module-manager",\
+                                ["disable", cfg.python_root, module])
                         # TODO: need a smoother way for plinth
                         # to unload the module
                 else:
                     if module in modules_selected:
                         output, error = actions.superuser_run(\
-                                "module-enable", [cfg.python_root, module])
+                                "module-manager",\
+                                ["enable", cfg.python_root, module])
                         # TODO: need to get plinth to load
                         # the module we just enabled
 
@@ -57,12 +60,13 @@ class Packages(PagePlugin, FormPlugin):
         return self.fill_template(title=_("Add/Remove Plugins"), main=main, sidebar_right=sidebar_right)
 
     def form(self, message=None, *args, **kwargs):
-        output, error = actions.run("module-list-available")
+        output, error = actions.run("module-manager", ["list-available"])
         if error:
             raise Exception("something is wrong: " + error)
         modules_available = output.split()
         
-        output, error = actions.run("module-list-enabled", cfg.python_root)
+        output, error = actions.run("module-manager",\
+                                    ["list-enabled", cfg.python_root])
         if error:
             raise Exception("something is wrong: " + error)
         modules_enabled = output.split()

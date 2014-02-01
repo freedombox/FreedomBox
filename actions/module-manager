@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Usage:
+#   module-manager list-available
+#   module-manager list-enabled <python_root>
+#   module-manager enable <python_root> <module_name>
+#   module-manager disable <python_root> <module_name>
+
+# associate array with mapping between module names and install paths 
+# (relative to <python_root>/modules/)
+declare -A modules=( ["owncloud"]="installed/apps/owncloud.py" )
+
+case "$1" in
+"list-available")
+    # TODO: Replace this with something like "aptitude search -F %p plinth-"
+    echo "${!modules[@]}"
+    ;;
+
+"list-enabled")
+    # TODO: Replace this with something like 'aptitude search -F %p | grep "plinth-"'
+    for module in "${!modules[@]}"
+    do 
+        if [ -e "$2"/modules/"$module".py ] ; then
+	    echo "$module"
+        fi
+    done
+    ;;
+
+"enable")
+    # TODO: Replace this with "aptitude install plinth-<module>"
+    for module in "${!modules[@]}"
+    do
+        if [ "$3" == "$module" ] ; then
+	    if [ ! -e "$2"/modules/"$3".py ] ; then
+	        ln -s "$2"/modules/"${modules["$3"]}" "$2"/modules/"$3".py
+	        RETVAL=$?
+	        [ $RETVAL -eq 0 ] && echo "enabled" "$3"
+	        [ $RETVAL -ne 0 ] && echo "failed to enable" "$3"
+	    fi
+        fi
+    done
+    ;;
+
+"disable")
+    # TODO: Replace this with "aptitude purge plinth-<module>"
+    for module in "${!modules[@]}"
+    do
+        if [ "$3" == "$module" ] ; then
+	    if [ -e "$2"/modules/"$3".py ] ; then
+	        rm -f "$2"/modules/"$3".py
+	        RETVAL=$?
+	        [ $RETVAL -eq 0 ] && echo "disabled" "$3"
+	        [ $RETVAL -ne 0 ] && echo "failed to disable" "$3"
+	    fi
+        fi
+    done
+    ;;
+esac
+
