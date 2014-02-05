@@ -16,15 +16,10 @@ The Plinth first-connection process has several stages:
 
 ## Stage 0: Connection
 
-The printed manual instructs the user how to set up their local
-network and uses diagrams to teach users to differentiate between a
-router and modem.  If the user only has a modem and their FreedomBox
-doesn't have multiple ethernet ports, then I don't know what they'll
-do.
-
-The user securely connects to the FreedomBox, and Plinth realizes that
-it hasn't been configured.  The user is automatically
-(non-interactively) redirected from the home page to the Hello page.
+The user connects their client device, via Ethernet cable, directly to
+the FreedomBox, and Plinth realizes that it hasn't been configured.
+The user is automatically (non-interactively) redirected from the home
+page to the Hello page.
 
 ## Stage 1: Hello
 
@@ -65,6 +60,16 @@ The user downloads all PGP keys provided by the box.
 - [ ] Users need client-side tools to manage downloaded PGP keys.
 
 ## Stage 3: Networking Configuration
+
+The printed manual instructs the user how to set up their local
+network and uses diagrams to teach users to differentiate between a
+router and modem.  If the user only has a modem and their FreedomBox
+doesn't have multiple ethernet ports, then I don't know what they'll
+do.  If we don't detect a router, the FreedomBox needs a minimum of
+two network interfaces so the client device can connect to the
+Internet.
+
+----
 
 The FreedomBox detects the current network configuration and adjusts
 itself accordingly, configuring itself per the chart, below:
