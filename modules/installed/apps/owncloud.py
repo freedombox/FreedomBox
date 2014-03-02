@@ -7,40 +7,36 @@ import actions
 import cfg
 from util import Message
 
-class Owncloud(PagePlugin):
+class Owncloud(PagePlugin, FormPlugin):
     order = 90
 
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("apps.owncloud")
-        self.register_page("apps.owncloud.configure")
         cfg.html_root.apps.menu.add_item("Owncloud", "icon-picture", "/apps/owncloud", 35)
 
     @cherrypy.expose
     @require()
     def index(self, **kwargs):
-        main="""
-<p>ownCloud gives you universal access to your files through a web interface or WebDAV. It also provides a platform to easily view & sync your contacts, calendars and bookmarks across all your devices and enables basic editing right on the web. Installation has minimal server requirements, doesn't need special permissions and is quick. ownCloud is extendable via a simple but powerful API for applications and plugins.
-</p>
-"""
-        sidebar_right = '<strong><a href="'+cfg.server_dir+'/apps/owncloud/configure">Configure Owncloud</a></strong>'
-        return self.fill_template(title="Owncloud", main=main, sidebar_right=sidebar_right)
-
-class configure(FormPlugin, PagePlugin):
-    url = ["/apps/owncloud/configure"]
-
-    sidebar_left = ''
-    sidebar_right = _("<strong>Configure Owncloud</strong>")
-
-    def main(self, owncloud_enable=False, message=None, *args, **kwargs):
         output, error = actions.run("owncloud-setup", 'status')
         if error:
             raise Exception("something is wrong: " + error)
-        if "enable" in output.split():
-            owncloud_enable = True
+        owncloud_enable = "enable" in output.split()
 
+        if 'submitted' in kwargs:
+            owncloud_enable = self.process_form(kwargs)
+        
+        main = self.form(owncloud_enable)
+        sidebar_right="""
+<strong>ownCloud</strong></br>
+<p>ownCloud gives you universal access to your files through a web interface or WebDAV. It also provides a platform to easily view & sync your contacts, calendars and bookmarks across all your devices and enables basic editing right on the web. Installation has minimal server requirements, doesn't need special permissions and is quick. ownCloud is extendable via a simple but powerful API for applications and plugins.
+</p>
+"""
+        return self.fill_template(title="Owncloud", main=main, sidebar_right=sidebar_right)
+
+    def form(self, owncloud_enable, message=None):
         form = Form(title="Configuration",
-                        action=cfg.server_dir + "/apps/owncloud/configure/index",
+                        action=cfg.server_dir + "/apps/owncloud/index",
                         name="configure_owncloud",
                         message=message)
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=owncloud_enable)
@@ -50,7 +46,7 @@ class configure(FormPlugin, PagePlugin):
         form.submit(_("Update setup"))
         return form.render()
 
-    def process_form(self, **kwargs):
+    def process_form(self, kwargs):
         checkedinfo = {
             'enable'   : False,
         }
@@ -68,6 +64,4 @@ class configure(FormPlugin, PagePlugin):
                     opts.append('no'+key)
         actions.superuser_run("owncloud-setup", opts, async=True)
 
-        main = self.main(checkedinfo['enable'])
-        return self.fill_template(title="Owncloud Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
-
+        return checkedinfo['enable']

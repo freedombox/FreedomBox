@@ -23,7 +23,6 @@ class Sys(PagePlugin):
         self.register_page("sys")
         self.menu = cfg.main_menu.add_item(_("System"), "icon-cog", "/sys", 100)
 	self.menu.add_item(_("Configure"), "icon-cog", "/sys/config", 10)
-	self.menu.add_item(_("Package Manager"), "icon-gift", "/sys/packages", 20)
 	self.menu.add_item(_("Users and Groups"), "icon-user", "/sys/users", 15)
 
     @cherrypy.expose
@@ -35,18 +34,3 @@ class Sys(PagePlugin):
         general level.  This is where you add/remove users, install
         applications, reboot, etc.</p>
         """ % {'product':cfg.product_name}))
-
-    @cherrypy.expose
-    @require()
-    def packages(self):
-        side=_("""
-<strong>Help</strong>
-<p>On this page, you can add or remove %s plugins to your %s.</p>
-<p>Plugins are just Debian packages, so Debian's usual package management features should make this job fairly easy.</p>
-""" % (cfg.product_name, cfg.box_name))
-        return self.fill_template(title=_("Add/Remove Plugins"), main=_("""
-        <p>aptitude purge modules</p>
-        <p>aptitude install modules</p>
-        <p>The modules should depend on the appropriate Debian packages.</p>"""),
-                         sidebar_right=side)
-        
