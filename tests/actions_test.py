@@ -2,6 +2,7 @@
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
 from actions import superuser_run, run
+import os
 import shlex
 import subprocess
 import sys
@@ -12,7 +13,19 @@ class TestPrivileged(unittest.TestCase):
 
     See actions.py for a full description of the expectations.
 
+    Symlink to ``echo`` and ``id`` during testing.
+
     """
+    @classmethod
+    def setUpClass(cls):
+        os.symlink("/bin/echo", "actions/echo")
+        os.symlink("/usr/bin/id", "actions/id")
+
+    @classmethod
+    def tearDownClass(cls):
+        os.remove("actions/echo")
+        os.remove("actions/id")
+
     def test_run_as_root(self):
         """1. Privileged actions run as root.
 
