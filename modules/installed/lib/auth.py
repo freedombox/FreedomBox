@@ -51,31 +51,37 @@ def add_user(username, passphrase, name='', email='', expert=False):
 
 def check_credentials(username, passphrase):
     """Verifies credentials for username and passphrase.
-    Returns None on success or a string describing the error on failure"""
 
+    Returns None on success or a string describing the error on failure.
+
+    Handles passwords up to 4096 bytes:
+
+    >>> len("A" * 4096)
+    4096
+    >>> len(u"u|2603" * 682)
+    4092
+
+    """
     if not username or not passphrase:
         error = "No username or password."
         cfg.log(error)
         return error
 
-    # hash the password whether the user exists, to foil timing
-    # side-channel attacks
-    try:
-        if username in cfg.users:
-            u = cfg.users[username]
-            pass_hash = bcrypt.encrypt(passphrase, salt=u['salt'])
-        else:
-            u = None
-            pass_hash = bcrypt.encrypt(passphrase)
-    except PasswordSizeError:
-        error = "Password is too long."
-        cfg.log(error)
-        return error
+    bad_authentication = "Bad user-name or password."
+    hashed_password = None
 
-    if u is None or u['passphrase'] != pass_hash:
-        error = "Bad user-name or password."
-    else:
-        error = None
+    if username in cfg.users:
+        if "passphrase" in cfg.users[username]:
+            hashed_password = cfg.users[username]['passphrase']
+
+    try:
+        # time-dependent comparison when non-ASCII characters are used.
+        if not bcrypt.verify(passphrase, hashed_password):
+            error = bad_authentication
+        else:
+            error = None
+    except PasswordSizeError:
+        error = bad_authentication
 
     if error:
         cfg.log(error)
