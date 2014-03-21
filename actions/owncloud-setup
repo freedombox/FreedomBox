@@ -39,7 +39,7 @@ done
 
 if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
     if $owncloud_enable ; then
-	DEBIAN_FRONTEND=noninteractive apt-get install -y owncloud 2>&1 | logger -t owncloud-setup
+	DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y owncloud 2>&1 | logger -t owncloud-setup
 	a2enconf owncloud 2>&1 | logger -t owncloud-setup
     else
 	a2disconf owncloud 2>&1 | logger -t owncloud-setup
