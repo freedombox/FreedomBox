@@ -33,6 +33,7 @@ import util
 
 class PageKite(PagePlugin):
     """PageKite menu entry and introduction page"""
+    order = 60
 
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
@@ -93,6 +94,8 @@ PageKite</a> </p>'''.format(server_dir=cfg.server_dir))
 
 class configure(FormPlugin, PagePlugin):  # pylint: disable-msg=C0103
     """Main configuration form"""
+    order = 65
+
     url = ["/router/setup/pagekite/configure"]
 
     js = """
