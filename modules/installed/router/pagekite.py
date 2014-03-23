@@ -79,7 +79,8 @@ pagekite.net server is supported and you will need an account
 there. In future, it might be possible to use your buddy's FreedomBox
 for this.</p>
 
-<p><a href="{server_dir}/router/setup/pagekite/configure">Configure
+<p><a class='btn btn-primary btn-lg'
+      href="{server_dir}/router/setup/pagekite/configure">Configure
 PageKite</a></p>
 """.format(server_dir=cfg.server_dir))
 
