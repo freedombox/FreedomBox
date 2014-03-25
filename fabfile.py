@@ -135,6 +135,15 @@ def apache():
          backslash_path(os.path.join(remote_dir(), "static")),
          conf_path))
    link(conf_path, "/etc/apache2/sites-enabled/plinth.conf")
+
+   sslconf_path = os.path.join(remote_dir(), "share/apache2/plinth-ssl.conf")
+   sudo("mkdir -p " + os.path.split(sslconf_path)[0])
+   sudo("touch "+ sslconf_path)
+   sudo(r"sed -i 's/\(\s*\)DocumentRoot.*/\1DocumentRoot %s/g' %s" % (
+         backslash_path(os.path.join(remote_dir(), "static")),
+         sslconf_path))
+   link(sslconf_path, "/etc/apache2/sites-enabled/plinth-ssl.conf")
+
    sudo('rm -f /etc/apache2/sites-enabled/000-default')
    sudo('service apache2 restart')
 

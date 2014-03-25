@@ -93,8 +93,10 @@ current-repository.tar.gz: $(ALL_BUT_GZ)
 
 apache-install:
 	install -D -m644 share/apache2/plinth.conf $(DESTDIR)/etc/apache2/sites-available/plinth.conf
+	install -D -m644 share/apache2/plinth-ssl.conf $(DESTDIR)/etc/apache2/sites-available/plinth-ssl.conf
 apache-config: apache-install apache-modules
 	a2ensite plinth
+	a2ensite plinth-ssl
 	service apache2 reload
 
 apache-modules:
