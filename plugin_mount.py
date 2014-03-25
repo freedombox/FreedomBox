@@ -140,7 +140,7 @@ class FormPlugin():
         """If the user has tried to fill in the form, process it, otherwise, just display a default form."""
         if kwargs:
             kwargs['message'] = self.process_form(**kwargs)
-        parts = get_parts(self)
+        parts = get_parts(self, **kwargs)
         return self.fill_template(**parts)
                                   
     def process_form(self, **kwargs):

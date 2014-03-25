@@ -88,19 +88,19 @@ class wan(FormPlugin, PagePlugin):
     url = ["/router/setup"]
     order = 10
 
-    js = """<script type="text/javascript">
-    <!--
-     function hideshow_static() {
-         var d = document.getElementById('connect_type');
-         connect_type = d.value;
-         if (connect_type != 'Static IP') {
-             hide("static_ip_form");
-         } else {
-             show("static_ip_form");
+    js = """
+<script type="text/javascript">
+    (function($) {
+         function hideshow_static() {
+             var show_or_hide = ($('#connect_type').val() == 'Static IP')
+             $('#static_ip_form').toggle(show_or_hide);
          }
-     }
-    // --> 
-  </script>"""
+         $(document).ready(function() {
+             $('#connect_type').change(hideshow_static);
+             hideshow_static();
+         });
+     })(jQuery);
+</script>"""
 
     def sidebar_right(self, *args, **kwargs):
         side=''
@@ -141,7 +141,7 @@ class wan(FormPlugin, PagePlugin):
                         action=cfg.server_dir + "/router/setup/wan/index", 
                         name="wan_connection_form",
                         message=message)
-        form.dropdown('Connection Type', vals=["DHCP", "Static IP"], id="connect_type", onchange="hideshow_static()")
+        form.dropdown('Connection Type', vals=["DHCP", "Static IP"], id="connect_type")
         form.html('<div id="static_ip_form">')
         form.dotted_quad("WAN IP Address", name="wan_ip", quad=[wan_ip0, wan_ip1, wan_ip2, wan_ip3])
         form.dotted_quad("Subnet Mask", name="subnet", quad=[subnet0, subnet1, subnet2, subnet3])
@@ -150,11 +150,6 @@ class wan(FormPlugin, PagePlugin):
         form.dotted_quad("Static DNS 2", name="dns2", quad=[dns20, dns21, dns22, dns23])
         form.dotted_quad("Static DNS 3", name="dns3", quad=[dns30, dns31, dns32, dns33])
         form.html('</div>')
-        form.html("""  <script type="text/javascript">
-    <!--
-      hideshow_static();
-    // --> 
-  </script>""")
         form.submit("Set Wan")
         return form.render()
 

@@ -8,8 +8,8 @@ def get_item(parser, section, name):
     try:
         return parser.get(section, name)
     except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
-        print ("The config file {} does not contain the {}.{} option.".format(
-                parser[0], section, name))
+        print ("Configuration does not contain the {}.{} option.".format(
+               section, name))
         raise
 
 parser = SafeConfigParser(
