@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Action to set up new hostname for ejabberd and jwchat.
+
+hostname="$1"
+old_hostname=`debconf-show ejabberd | awk '/hostname/ { print $3 }'`
+
+# Based on http://www.process-one.net/docs/ejabberd/guide_en.html#htoc77
+
+# Setup some variables
+OLDNODE=ejabberd@"$old_hostname"
+NEWNODE=ejabberd@"$hostname"
+OLDFILE=/tmp/old.backup
+NEWFILE=/tmp/new.backup
+
+echo "ejabberd ejabberd/hostname string $hostname" | debconf-set-selections
+echo "jwchat jwchat/ApacheServerName string $hostname" | debconf-set-selections
+DEBIAN_FRONTEND=noninteractive dpkg-reconfigure jwchat
+
+# Debconf can't handle our manual changes to ejabberd's config yet.
+sed -i "s/$old_hostname/$hostname/g" /etc/ejabberd/ejabberd.cfg
+
+# Make sure there aren't files in the Mnesia spool dir
+mkdir -p /var/lib/ejabberd/oldfiles
+mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/
+
+# Start ejabberd
+service ejabberd restart
+
+# It can take a while to start up...
+for i in {1..12}
+do
+    if ejabberdctl status ; then
+        break
+    else
+        sleep 10
+    fi
+done
+
+# Convert the backup to new node name
+ejabberdctl mnesia_change_nodename $OLDNODE $NEWNODE $OLDFILE $NEWFILE
+
+# Install the backup file as a fallback
+ejabberdctl install_fallback $NEWFILE
+
+# Stop ejabberd
+ejabberdctl stop
+
+# Start ejabberd
+service ejabberd restart

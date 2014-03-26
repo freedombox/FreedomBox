@@ -55,7 +55,9 @@ def set_hostname(hostname):
 
     cfg.log.info("Changing hostname to '%s'" % hostname)
     try:
+        superuser_run("xmpp-pre-hostname-change")
         superuser_run("hostname-change", hostname)
+        superuser_run("xmpp-hostname-change", hostname, async=True)
         # don't persist/cache change unless it was saved successfuly
         sys_store = filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
