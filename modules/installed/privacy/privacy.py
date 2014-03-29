@@ -12,7 +12,6 @@ class Privacy(PagePlugin):
         self.menu = cfg.main_menu.add_item("Privacy", "icon-eye-open", "/privacy", 12)
         self.menu.add_item("General Config", "icon-asterisk", "/privacy/config", 10)
         self.menu.add_item("Ad Blocking", "icon-ban-circle", "/privacy/adblock", 20)
-        self.menu.add_item("TOR", "icon-eye-close", "/privacy/TOR", 30)
         self.menu.add_item("HTTPS Everywhere", "icon-lock", "/privacy/https_everywhere", 30)
 
     @cherrypy.expose
@@ -38,5 +37,5 @@ information on it.</p>
 <p>Your personal information should not leave this box without your
 knowledge and direction.  And if companies or government wants this
 information, they have to ask <strong>you</strong> for it.  This gives you a
-change to refuse and also tells you who wants your data.</p>
+chance to refuse and also tells you who wants your data.</p>
 """) % cfg.product_name)
