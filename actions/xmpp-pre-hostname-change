@@ -21,4 +21,6 @@
 
 OLDFILE=/tmp/old.backup
 ejabberdctl backup $OLDFILE
-ejabberdctl stop
+
+# Add old hostname to /etc/hosts so we can still access the running node.
+echo "127.0.0.1 `hostname`" >>/etc/hosts

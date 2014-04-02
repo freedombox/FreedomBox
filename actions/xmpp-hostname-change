@@ -37,6 +37,18 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure jwchat
 # Debconf can't handle our manual changes to ejabberd's config yet.
 sed -i "s/$old_hostname/$hostname/g" /etc/ejabberd/ejabberd.cfg
 
+# Install the backup file as a fallback
+ejabberdctl --node $OLDNODE install_fallback $NEWFILE
+
+# Convert the backup to new node name
+ejabberdctl --node $OLDNODE mnesia_change_nodename $OLDNODE $NEWNODE $OLDFILE $NEWFILE
+
+# Stop ejabberd
+ejabberdctl --node $OLDNODE stop
+
+# Wait for old node to completely shutdown
+sleep 10
+
 # Make sure there aren't files in the Mnesia spool dir
 mkdir -p /var/lib/ejabberd/oldfiles
 mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/
@@ -44,24 +56,5 @@ mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/
 # Start ejabberd
 service ejabberd restart
 
-# It can take a while to start up...
-for i in {1..12}
-do
-    if ejabberdctl status ; then
-        break
-    else
-        sleep 10
-    fi
-done
-
-# Convert the backup to new node name
-ejabberdctl mnesia_change_nodename $OLDNODE $NEWNODE $OLDFILE $NEWFILE
-
-# Install the backup file as a fallback
-ejabberdctl install_fallback $NEWFILE
-
-# Stop ejabberd
-ejabberdctl stop
-
-# Start ejabberd
-service ejabberd restart
+# Remove old hostname from /etc/hosts
+sed -i "/$old_hostname/d" /etc/hosts
