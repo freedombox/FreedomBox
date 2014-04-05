@@ -1,42 +1,71 @@
-import os, subprocess
-from socket import gethostname
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Plinth module for configuring timezone, hostname etc.
+"""
+
 import cherrypy
+from gettext import gettext as _
 try:
     import simplejson as json
 except ImportError:
     import json
-from gettext import gettext as _
-from filedict import FileDict
-from modules.auth import require
-from plugin_mount import PagePlugin, FormPlugin
-from actions import superuser_run
+import os
+import socket
+
+import actions
 import cfg
 from forms import Form
-from model import User
-from util import *
-import platform
+from modules.auth import require
+from plugin_mount import PagePlugin, FormPlugin
+import util
+
 
 class Config(PagePlugin):
+    """System configuration page"""
     def __init__(self, *args, **kwargs):
+        del args  # Unused
+        del kwargs  # Unused
+
         self.register_page("sys.config")
 
     @cherrypy.expose
     @require()
     def index(self):
+        """Serve configuration page"""
         parts = self.forms('/sys/config')
-        parts['title']=_("Configure this %s" % cfg.box_name)
-        return self.fill_template(**parts)
+        parts['title'] = _("Configure this {box_name}") \
+            .format(box_name=cfg.box_name)
+
+        return self.fill_template(**parts)  # pylint: disable-msg=W0142
+
 
 def valid_hostname(name):
-    """Return '' if name is a valid hostname by our standards (not
-    just by RFC 952 and RFC 1123.  We're more conservative than the
-    standard.  If hostname isn't valid, return message explaining why."""
-
+    """
+    Return '' if name is a valid hostname by our standards (not just
+    by RFC 952 and RFC 1123.  We're more conservative than the
+    standard.  If hostname isn't valid, return message explaining why.
+    """
     message = ''
     if len(name) > 63:
         message += "<br />Hostname too long (max is 63 characters)"
 
-    if not is_alphanumeric(name):
+    if not util.is_alphanumeric(name):
         message += "<br />Hostname must be alphanumeric"
 
     if not name[0] in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ":
@@ -44,104 +73,106 @@ def valid_hostname(name):
 
     return message
 
+
 def get_hostname():
-    return gethostname()
+    """Return the current hostname of the system"""
+    return socket.gethostname()
+
+
+def get_time_zone():
+    """Return currently set system's timezone"""
+    return util.slurp('/etc/timezone').rstrip()
+
 
 def set_hostname(hostname):
-    "Sets machine hostname to hostname"
-
-    # Hostname should be ASCII. If it's unicode but passed our valid_hostname check, convert to ASCII.
+    """Sets machine hostname to hostname"""
+    # Hostname should be ASCII. If it's unicode but passed our
+    # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
 
     cfg.log.info("Changing hostname to '%s'" % hostname)
     try:
-        superuser_run("hostname-change", hostname)
-        # don't persist/cache change unless it was saved successfuly
-        sys_store = filedict_con(cfg.store_file, 'sys')
-        sys_store['hostname'] = hostname
-    except OSError, e:
-        raise cherrypy.HTTPError(500, "Updating hostname failed: %s" % e)
+        actions.superuser_run("hostname-change", hostname)
+    except OSError as exception:
+        raise cherrypy.HTTPError(500,
+                                 'Updating hostname failed: %s' % exception)
+
 
 class general(FormPlugin, PagePlugin):
+    """Form to update hostname and time zone"""
     url = ["/sys/config"]
     order = 30
 
-    def help(self, *args, **kwargs):
-        return _(#"""<strong>Time Zone</strong>
-        """<p>Set your timezone to get accurate
-        timestamps.  %(product)s will use this information to set your
-        %(box)s's systemwide timezone.</p>
-        """ % {'product':cfg.product_name, 'box':cfg.box_name})
+    @staticmethod
+    def help(*args, **kwargs):
+        """Build and return the help content area"""
+        del args  # Unused
+        del kwargs  # Unused
 
-    def main(self, message='', **kwargs):
+        return _('''
+<p>Set your timezone to get accurate timestamps.  {product} will use
+this information to set your {box}'s systemwide timezone.</p>''').format(
+            product=cfg.product_name, box=cfg.box_name)
+
+    def main(self, message='', time_zone=None, **kwargs):
+        """Build and return the main content area which is the form"""
+        del kwargs  # Unused
+
         if not cfg.users.expert():
-            return '<p>' + _('Only members of the expert group are allowed to see and modify the system setup.') + '</p>'
+            return _('''
+<p>Only members of the expert group are allowed to see and modify the system
+setup.</p>''')
 
-        sys_store = filedict_con(cfg.store_file, 'sys')
-        hostname = get_hostname()
-        # this layer of persisting configuration in sys_store could/should be
-        # removed -BLN
-        defaults = {'time_zone': "slurp('/etc/timezone').rstrip()",
-                    'hostname': "hostname",
-                    }
-        for k,c in defaults.items():
-            if not k in kwargs:
-                try:
-                    kwargs[k] = sys_store[k]
-                except KeyError:
-                    exec("if not '%(k)s' in kwargs: sys_store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
-        # over-ride the sys_store cached value
-        kwargs['hostname'] = hostname
+        if not time_zone:
+            time_zone = get_time_zone()
 
-        ## Get the list of supported timezones and the index in that list of the current one
+        # Get the list of supported timezones and the index in that
+        # list of the current one
         module_file = __file__
         if module_file.endswith(".pyc"):
             module_file = module_file[:-1]
-        time_zones = json.loads(slurp(os.path.join(os.path.dirname(os.path.realpath(module_file)), "time_zones")))
-        for i in range(len(time_zones)):
-            if kwargs['time_zone'] == time_zones[i]:
-                time_zone_id = i
-                break
-
-        ## A little sanity checking.  Make sure the current timezone is in the list.
+        module_dir = os.path.dirname(os.path.realpath(module_file))
+        time_zones_file = os.path.join(module_dir, 'time_zones')
+        time_zones = json.loads(util.slurp(time_zones_file))
         try:
-            cfg.log('kwargs tz: %s, from_table: %s' % (kwargs['time_zone'], time_zones[time_zone_id]))
-        except NameError:
-            cfg.log.critical("Unknown Time Zone: %s" % kwargs['time_zone'])
-            raise cherrypy.HTTPError(500, "Unknown Time Zone: %s" % kwargs['time_zone'])
+            time_zone_id = time_zones.index(time_zone)
+        except ValueError:
+            cfg.log.critical("Unknown Time Zone: %s" % time_zone)
+            raise cherrypy.HTTPError(500, "Unknown Time Zone: %s" % time_zone)
 
-        ## And now, the form.
+        # And now, the form.
         form = Form(title=_("General Config"),
-                        action=cfg.server_dir + "/sys/config/general/index",
-                        name="config_general_form",
-                        message=message )
+                    action=cfg.server_dir + "/sys/config/general/index",
+                    name="config_general_form",
+                    message=message)
         form.html(self.help())
-        form.dropdown(_("Time Zone"), name="time_zone", vals=time_zones, select=time_zone_id)
-        form.html("<p>Your hostname is the local name by which other machines on your LAN can reach you.</p>")
-        form.text_input('Hostname', name='hostname', value=kwargs['hostname'])
+        form.dropdown(_("Time Zone"), name="time_zone", vals=time_zones,
+                      select=time_zone_id)
+        form.html('''
+<p>Your hostname is the local name by which other machines on your LAN
+can reach you.</p>''')
+        form.text_input('Hostname', name='hostname', value=get_hostname())
         form.submit(_("Submit"))
+
         return form.render()
 
-    def process_form(self, time_zone='', hostname='', *args, **kwargs):
-        sys_store = filedict_con(cfg.store_file, 'sys')
+    @staticmethod
+    def process_form(time_zone='', hostname='', *args, **kwargs):
+        """Handle form submission"""
+        del args  # Unused
+        del kwargs  # Unused
+
         message = ''
-        if hostname != sys_store['hostname']:
+        if hostname != get_hostname():
             msg = valid_hostname(hostname)
             if msg == '':
-                old_val = sys_store['hostname']
-                try:
-                    set_hostname(hostname)
-                except Exception, e:
-                    cfg.log.error(e)
-                    cfg.log.info("Trying to restore old hostname value.")
-                    set_hostname(old_val)
-                    raise
+                set_hostname(hostname)
             else:
                 message += msg
-        time_zone = time_zone.strip()
-        if time_zone != sys_store['time_zone']:
-            cfg.log.info("Setting timezone to %s" % time_zone)
-            superuser_run("timezone-change", [time_zone])
-            sys_store['time_zone'] = time_zone
-        return message or "Settings updated."
 
+        time_zone = time_zone.strip()
+        if time_zone != get_time_zone():
+            cfg.log.info("Setting timezone to %s" % time_zone)
+            actions.superuser_run("timezone-change", [time_zone])
+
+        return message or "Settings updated."
