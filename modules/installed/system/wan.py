@@ -5,7 +5,6 @@ try:
 except ImportError:
     import json
 from gettext import gettext as _
-from filedict import FileDict
 from modules.auth import require
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
@@ -45,32 +44,35 @@ class wan(FormPlugin, PagePlugin):
     def main(self, message='', **kwargs):
         store = filedict_con(cfg.store_file, 'sys')
 
-        defaults = {'wan_admin': "''",
-                    'wan_ssh': "''",
-                    'lan_ssh': "''",
+        defaults = {'wan_admin': '',
+                    'wan_ssh': '',
+                    'lan_ssh': '',
                     }
-        for k,c in defaults.items():
-            if not k in kwargs:
+        for key, value in defaults.items():
+            if not key in kwargs:
                 try:
-                    kwargs[k] = store[k]
+                    kwargs[key] = store[key]
                 except KeyError:
-                    exec("if not '%(k)s' in kwargs: store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
+                    store[key] = kwargs[key] = value
 
-        form = Form(title=_("Accessing the %s" % cfg.box_name), 
-                        action=cfg.server_dir + "/sys/config/wan", 
-                        name="admin_wan_form",
-                        message=message )
+        form = Form(title=_("Accessing the %s" % cfg.box_name),
+                    action=cfg.server_dir + "/sys/config/wan/",
+                    name="admin_wan_form",
+                    message=message)
         form.html(self.help())
         if cfg.users.expert():
             form.checkbox(_("Allow access to Plinth from WAN"), name="wan_admin", checked=kwargs['wan_admin'])
             form.checkbox(_("Allow SSH access from LAN"), name="lan_ssh", checked=kwargs['lan_ssh'])
             form.checkbox(_("Allow SSH access from WAN"), name="wan_ssh", checked=kwargs['wan_ssh'])
+
+        # Hidden field is needed because checkbox doesn't post if not checked
+        form.hidden(name="submitted", value="True")
+
         form.submit(_("Submit"))
         return form.render()
 
     def process_form(self, wan_admin='', wan_ssh='', lan_ssh='', *args, **kwargs):
         store = filedict_con(cfg.store_file, 'sys')
         for field in ['wan_admin', 'wan_ssh', 'lan_ssh']:
-            exec("store['%s'] = %s" % (field, field))
+            store[field] = locals()[field]
         return "Settings updated."
-
