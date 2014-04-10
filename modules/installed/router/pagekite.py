@@ -41,7 +41,7 @@ class PageKite(PagePlugin):
         self.register_page("router.setup.pagekite")
         self.register_page("router.setup.pagekite.configure")
         cfg.html_root.router.setup.menu.add_item(
-            "Public Visibility (PageKite)", "icon-flag",
+            _("Public Visibility (PageKite)"), "icon-flag",
             "/router/setup/pagekite", 50)
 
     @cherrypy.expose
@@ -51,15 +51,15 @@ class PageKite(PagePlugin):
         del kwargs  # Unused
 
         main = _("""
-<p>PageKite is a system for exposing FreedomBox services when you
+<p>PageKite is a system for exposing {box_name} services when you
 don't have a direct connection to the Internet. You only need this
-service if your FreedomBox services are unreachable from the rest of
+service if your {box_name} services are unreachable from the rest of
 the Internet. This includes the following situations: </p>
 
 <ul>
-  <li>FreedomBox is behind a restricted firewall.</li>
+  <li>{box_name} is behind a restricted firewall.</li>
 
-  <li>FreedomBox is connected to a (wireless) router which you don't
+  <li>{box_name} is connected to a (wireless) router which you don't
       control.</li>
 
   <li>Your ISP does not provide you an external IP address and instead
@@ -76,20 +76,20 @@ using a combination of tunnels and reverse proxies. Currently,
 exposing web server and SSH server are supported. An intermediary
 server with direct Internet access is required. Currently, only
 pagekite.net server is supported and you will need an account
-there. In future, it might be possible to use your buddy's FreedomBox
+there. In future, it might be possible to use your buddy's {box_name}
 for this.</p>
 
 <p><a class='btn btn-primary btn-lg'
       href="{server_dir}/router/setup/pagekite/configure">Configure
 PageKite</a></p>
-""".format(server_dir=cfg.server_dir))
+""").format(box_name=cfg.box_name, server_dir=cfg.server_dir)
 
         sidebar_right = _('''
 <strong>PageKite</strong>
 <p><a href="{server_dir}/router/setup/pagekite/configure">Configure
-PageKite</a> </p>'''.format(server_dir=cfg.server_dir))
+PageKite</a> </p>''').format(server_dir=cfg.server_dir)
 
-        return self.fill_template(title="Public Visibility (PageKite)",
+        return self.fill_template(title=_("Public Visibility (PageKite)"),
                                   main=main, sidebar_right=sidebar_right)
 
 
@@ -157,9 +157,9 @@ $('#pagekite-enable').change(function() {
         if not status:
             return _('''
 <p>PageKite is not installed, please install it. PageKite comes
-pre-installed with FreedomBox. On any Debian based system (such as
-FreedomBox) you may install it using the command 'aptitude install
-pagekite'</p>''')
+pre-installed with {box_name}. On any Debian based system (such as
+{box_name}) you may install it using the command 'aptitude install
+pagekite'</p>''').format(box_name=cfg.box_name)
 
         try:
             message = kwargs['message'].text
