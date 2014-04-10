@@ -128,14 +128,13 @@ class wan(FormPlugin, PagePlugin):
             return ''
 
         store = filedict_con(cfg.store_file, 'router')
-        defaults = {'connect_type': "'DHCP'",
-                    }
-        for k,c in defaults.items():
-            if not k in kwargs:
+        defaults = {'connect_type': 'DHCP'}
+        for key, value in defaults.items():
+            if not key in kwargs:
                 try:
-                    kwargs[k] = store[k]
+                    kwargs[key] = store[key]
                 except KeyError:
-                    exec("if not '%(k)s' in kwargs: store['%(k)s'] = kwargs['%(k)s'] = %(c)s" % {'k':k, 'c':c})
+                    store[key] = kwargs[key] = value
 
         form = Form(title="WAN Connection", 
                         action=cfg.server_dir + "/router/setup/wan/index", 
