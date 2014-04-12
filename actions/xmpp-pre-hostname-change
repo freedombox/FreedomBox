@@ -19,8 +19,10 @@
 
 # Action to backup ejabberd database before changing hostname.
 
-OLDFILE=/tmp/old.backup
-ejabberdctl backup $OLDFILE
+BACKUP=/tmp/ejabberd.dump
+ejabberdctl dump $BACKUP
+ejabberdctl stop
 
-# Add old hostname to /etc/hosts so we can still access the running node.
-echo "127.0.0.1 `hostname`" >>/etc/hosts
+# Make sure there aren't files in the Mnesia spool dir
+mkdir -p /var/lib/ejabberd/oldfiles
+mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/

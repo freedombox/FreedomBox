@@ -27,8 +27,7 @@ old_hostname=`debconf-show ejabberd | awk '/hostname/ { print $3 }'`
 # Setup some variables
 OLDNODE=ejabberd@"$old_hostname"
 NEWNODE=ejabberd@"$hostname"
-OLDFILE=/tmp/old.backup
-NEWFILE=/tmp/new.backup
+BACKUP=/tmp/ejabberd.dump
 
 echo "ejabberd ejabberd/hostname string $hostname" | debconf-set-selections
 echo "jwchat jwchat/ApacheServerName string $hostname" | debconf-set-selections
@@ -36,25 +35,12 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure jwchat
 
 # Debconf can't handle our manual changes to ejabberd's config yet.
 sed -i "s/$old_hostname/$hostname/g" /etc/ejabberd/ejabberd.cfg
+sed -i "s/$old_hostname/$hostname/g" $BACKUP
 
-# Install the backup file as a fallback
-ejabberdctl --node $OLDNODE install_fallback $NEWFILE
-
-# Convert the backup to new node name
-ejabberdctl --node $OLDNODE mnesia_change_nodename $OLDNODE $NEWNODE $OLDFILE $NEWFILE
-
-# Stop ejabberd
-ejabberdctl --node $OLDNODE stop
-
-# Wait for old node to completely shutdown
-sleep 10
-
-# Make sure there aren't files in the Mnesia spool dir
-mkdir -p /var/lib/ejabberd/oldfiles
-mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/
-
-# Start ejabberd
 service ejabberd restart
 
-# Remove old hostname from /etc/hosts
-sed -i "/$old_hostname/d" /etc/hosts
+# Load backup database
+sleep 10
+ejabberdctl load $BACKUP
+ejabberdctl stop
+service ejabberd restart
