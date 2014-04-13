@@ -72,11 +72,9 @@ Actions run commands with this contract (version 1.1):
 
 """
 
-import contract
 import os
 import pipes, shlex, subprocess
 
-contract.checkmod(__name__)
 
 def run(action, options = None, async = False):
     """Safely run a specific action as the current user.
@@ -104,12 +102,6 @@ def _run(action, options = None, async = False, run_as_root = False):
     async: run asynchronously or wait for the command to complete.
 
     run_as_root: execute the command through sudo.
-
-    pre:
-        os.sep not in action
-    inv:
-        True # Actions directory hasn't changed.  It's hardcoded :)
-
     """
     DIRECTORY = "actions"
 
