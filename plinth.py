@@ -12,6 +12,7 @@ from cherrypy.process.plugins import Daemonizer
 Daemonizer(cherrypy.engine).subscribe()
 
 import plugin_mount
+import service
 import util as u
 
 from logger import Logger
@@ -177,6 +178,9 @@ def setup():
    cherrypy.engine.signal_handler.subscribe()
 
 def main():
+   # Initialize basic services
+   service.init()
+
    setup()
 
    cherrypy.engine.start()
