@@ -32,6 +32,7 @@ install: default apache-install freedombox-setup-install
 	cp -a sudoers.d $(DESTDIR)/etc/sudoers.d
 	cp -a *.py modules templates $(DESTDIR)$(PYDIR)/
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
+	cp -a lib/* $(DESTDIR)/usr/lib
 	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	mkdir -p $(DESTDIR)/var/lib/plinth/data
