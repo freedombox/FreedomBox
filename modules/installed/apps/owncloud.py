@@ -42,7 +42,8 @@ class Owncloud(PagePlugin, FormPlugin):
         form.checkbox(_("Enable Owncloud"), name="owncloud_enable", id="owncloud_enable", checked=owncloud_enable)
         # hidden field is needed because checkbox doesn't post if not checked
         form.hidden(name="submitted", value="True")
-        form.html(_("""<p>When enabled, the owncloud installation will be available from <a href="/owncloud">owncloud</a> on the web server.</p>"""))
+        form.html(_("""<p>When enabled, the owncloud installation will be available from <a href="/owncloud">owncloud</a> on the web server.   Visit this URL to set up the initial administration account for owncloud.</p>"""))
+        form.html(_("""<p><strong>Note: Setting up owncloud for the first time might take 5 minutes or more, depending on download bandwidth from the Debian APT sources.</p>"""))
         form.submit(_("Update setup"))
         return form.render()
 
