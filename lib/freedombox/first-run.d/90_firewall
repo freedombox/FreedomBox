@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Setup firewall rules for all the enabled services
+
+# Ideally all non essential services are enabled from Plinth
+# which automatically takes care of enabling appropirate firewall
+# ports. This file is used then for essential services and services
+# that are not yet configurable from Plinth.
+
+# HTTP (JWChat, ownCloud)
+firewall-cmd --permanent --add-service=http
+
+# HTTPS (Plinth, JWChat, ownCloud)
+firewall-cmd --permanent --add-service=https
+
+# Tor
+firewall-cmd --permanent --add-port=9050/tcp
+
+# NTP
+firewall-cmd --permanent --add-service=ntp
+
+# DNS
+firewall-cmd --permanent --add-service=dns
+
+# mDNS
+firewall-cmd --permanent --add-service=mdns
+
+# DHCP
+firewall-cmd --permanent --add-service=dhcp
+
+# Bootp Server and Client (not enabled)
+#firewall-cmd --permanent --add-port=67/tcp
+#firewall-cmd --permanent --add-port=67/udp
+#firewall-cmd --permanent --add-port=68/tcp
+#firewall-cmd --permanent --add-port=68/udp
+
+# LDAP (not enabled)
+#firewall-cmd --permanent --add-service=ldap
+#firewall-cmd --permanent --add-service=ldaps
+
+# OpenVPN (not enabled)
+#firewall-cmd --permanent --add-service=openvpn
+
+# Privoxy
+firewall-cmd --permanent --add-port=8118/tcp
+
+# Obfsproxy
+firewall-cmd --permanent --add-port=40202/tcp
