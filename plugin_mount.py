@@ -42,16 +42,29 @@ def get_parts(obj, parts=None, *args, **kwargs):
     for v in fields:
         if not v in parts:
             parts[v] = ''
-        exec("""
-try:
-    if str(type(obj.%(v)s))=="<type 'instancemethod'>":
-        parts[v] += obj.%(v)s(*args, **kwargs)
-    else:
-        parts[v] += obj.%(v)s
-except AttributeError:
-    pass""" % {'v':v})
+
+        try:
+            method = getattr(obj, v)
+            if callable(method):
+                parts[v] = method(*args, **kwargs)
+            else:
+                parts[v] = method
+        except AttributeError:
+            pass
 
     return parts
+
+
+def _setattr_deep(obj, path, value):
+    """If path is 'x.y.z' or ['x', 'y', 'z'] then perform obj.x.y.z = value"""
+    if isinstance(path, basestring):
+        path = path.split('.')
+
+    for part in path[:-1]:
+        obj = getattr(obj, part)
+
+    setattr(obj, path[-1], value)
+
 
 class PagePlugin:
     """
@@ -72,7 +85,8 @@ class PagePlugin:
             
     def register_page(self, url):
         cfg.log.info("Registering page: %s" % url)
-        exec "cfg.html_root.%s = self" % (url)
+        _setattr_deep(cfg.html_root, url, self)
+
     def fill_template(self, *args, **kwargs):
         return u.page_template(*args, **kwargs)
 
@@ -128,9 +142,10 @@ class FormPlugin():
 
     def __init__(self, *args, **kwargs):
         for u in self.url:
-            exec "cfg.html_root.%s = self" % "%s.%s" % ('.'.join(u.split("/")[1:]), self.__class__.__name__)
-            cfg.log("Registered page: %s.%s" % ('.'.join(u.split("/")[1:]), self.__class__.__name__))
-            
+            path = u.split("/")[1:] + [self.__class__.__name__]
+            _setattr_deep(cfg.html_root, path, self)
+            cfg.log("Registered page: %s" % '.'.join(path))
+
     def main(self, *args, **kwargs):
         return "<p>Override this method and replace it with a form.</p>"
 

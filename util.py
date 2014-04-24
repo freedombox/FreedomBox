@@ -1,8 +1,11 @@
 import os, sys
 import cherrypy
 import cfg
+import importlib
 import sqlite3
+
 from filedict import FileDict
+
 
 def mkdir(newdir):
    """works the way a good mkdir should :)
@@ -67,7 +70,8 @@ def page_template(template='login_nav', **kwargs):
     #if template=='base' and kwargs['sidebar_right']=='':
     #    template='two_col'
     if isinstance(template, basestring):
-        exec ("from templates.%s import %s as template" % (template, template))
+        template_module = importlib.import_module('templates.' + template)
+        template = getattr(template_module, template)
     try:
         submenu = cfg.main_menu.active_item().encode("sub_menu", render_subs=True)
     except AttributeError:
