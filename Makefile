@@ -17,7 +17,7 @@ default: config dirs template css docs
 all: default
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools libpython2.7 pandoc psmisc python2.7 python-augeas python-passlib python-bcrypt python-bjsonrpc python-cheetah python-cherrypy3 python-simplejson sudo"
+	sudo sh -c "apt-get install augeas-tools libpython2.7 pandoc psmisc python2.7 python-augeas python-bcrypt python-bjsonrpc python-cheetah python-cherrypy3 python-django python-passlib python-simplejson sudo"
 	git submodule init
 	git submodule update
 	touch predepend
@@ -32,6 +32,7 @@ install: default apache-install freedombox-setup-install
 	cp -a sudoers.d $(DESTDIR)/etc/sudoers.d
 	cp -a *.py modules templates $(DESTDIR)$(PYDIR)/
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
+	cp -a lib/* $(DESTDIR)/usr/lib
 	install plinth $(DESTDIR)/usr/bin/
 	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	mkdir -p $(DESTDIR)/var/lib/plinth/data

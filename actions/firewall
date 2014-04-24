@@ -1,0 +1,96 @@
+#!/usr/bin/python
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Plinth firewall inteface
+"""
+
+import argparse
+import os
+import re
+import subprocess
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get installed status
+    subparsers.add_parser('get-installed',
+                          help='Get whether firewalld is installed')
+
+    # Get status
+    subparsers.add_parser('get-status', help='Get whether firewalld is running')
+
+    # Get service status
+    subparsers.add_parser('get-enabled-services', help='Get list of enabled services')
+
+    # Add a service
+    add_service = subparsers.add_parser('add-service', help='Add a service')
+    add_service.add_argument('service', help='Name of the service to add')
+
+    # Remove a service status
+    remove_service = subparsers.add_parser('remove-service', help='Remove a service')
+    remove_service.add_argument('service', help='Name of the service to remove')
+
+    return parser.parse_args()
+
+
+def subcommand_get_installed(_):
+    """Print whether firewalld is installed"""
+    with open('/dev/null', 'w') as file_handle:
+        status = subprocess.call(['which', 'firewalld'], stdout=file_handle)
+
+    print 'installed' if not status else 'not installed'
+
+
+def subcommand_get_status(_):
+    """Print status of the firewalld service"""
+    subprocess.call(['firewall-cmd', '--state'])
+
+
+def subcommand_get_enabled_services(_):
+    """Print the status of variours services"""
+    subprocess.call(['firewall-cmd', '--list-services'])
+
+
+def subcommand_add_service(arguments):
+    """Permit a service in the firewall"""
+    subprocess.call(['firewall-cmd', '--add-service', arguments.service])
+    subprocess.call(['firewall-cmd', '--permanent', '--add-service', arguments.service])
+
+
+def subcommand_remove_service(arguments):
+    """Block a service in the firewall"""
+    subprocess.call(['firewall-cmd', '--remove-service', arguments.service])
+    subprocess.call(['firewall-cmd', '--permanent', '--remove-service', arguments.service])
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == "__main__":
+    main()

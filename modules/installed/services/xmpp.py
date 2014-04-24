@@ -5,6 +5,7 @@ from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
 import actions
+import service
 from util import Message
 
 class xmpp(PagePlugin):
@@ -14,6 +15,24 @@ class xmpp(PagePlugin):
         self.register_page("services.xmpp.configure")
         self.register_page("services.xmpp.register")
         cfg.html_root.services.menu.add_item("XMPP", "icon-comment", "/services/xmpp", 40)
+
+        self.client_service = service.Service(
+            'xmpp-client', _('Chat Server - client connections'), enabled=True)
+        self.server_service = service.Service(
+            'xmpp-server', _('Chat Server - server connections'), enabled=True)
+        self.bosh_service = service.Service(
+            'xmpp-bosh', _('Chat Server - web interface'), enabled=True)
+
+        # XXX: This is not correct. This essentially triggers firewall
+        # to enable XMPP ports. This happen on every start of
+        # Plinth. XMPP should be an option to be enabled on Plinth. If
+        # and when the user enables the following notifications must
+        # sent. If XMPP has be on by default in FreedomBox, then
+        # initial setup process that sets up XMPP also must open the
+        # firewall ports by default.
+        self.client_service.notify_enabled(self, enabled=True)
+        self.server_service.notify_enabled(self, enabled=True)
+        self.bosh_service.notify_enabled(self, enabled=True)
 
     @cherrypy.expose
     @require()
