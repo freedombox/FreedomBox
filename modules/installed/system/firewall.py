@@ -77,7 +77,9 @@ or in case of system with systemd 'systemctl start firewalld'</p>
 
             return self.fill_template(title=_("Firewall"), main=main + status)
 
-        enabled_services = self.get_enabled_services()
+        internal_enabled_sevices = self.get_enabled_services(zone='internal')
+        external_enabled_sevices = self.get_enabled_services(zone='external')
+
         services_info = '<ul>'
         for service in service_module.SERVICES.values():
             if service.is_enabled():
@@ -89,8 +91,15 @@ or in case of system with systemd 'systemctl start firewalld'</p>
 
             port_info = []
             for port in service.ports:
-                if port in enabled_services:
+                if port in internal_enabled_sevices and \
+                        port in external_enabled_sevices:
                     text = _('Permitted')
+                    css_class = 'firewall-permitted'
+                elif port in internal_enabled_sevices:
+                    text = _('Permitted (internal only)')
+                    css_class = 'firewall-permitted'
+                elif port in external_enabled_sevices:
+                    text = _('Permitted (external only)')
                     css_class = 'firewall-permitted'
                 else:
                     text = _('Blocked')
@@ -133,18 +142,18 @@ a service is automatically disabled in the firewall.</em></p>'''
         output = self._run(['get-status'])
         return output.split()[0] == 'running'
 
-    def get_enabled_services(self):
+    def get_enabled_services(self, zone):
         """Return the status of various services currently enabled"""
-        output = self._run(['get-enabled-services'])
+        output = self._run(['get-enabled-services', '--zone', zone])
         return output.split()
 
-    def add_service(self, port):
+    def add_service(self, port, zone):
         """Enable a service in firewall"""
-        self._run(['add-service', port])
+        self._run(['add-service', port, '--zone', zone])
 
-    def remove_service(self, port):
+    def remove_service(self, port, zone):
         """Remove a service in firewall"""
-        self._run(['remove-service', port])
+        self._run(['remove-service', port, '--zone', zone])
 
     def on_service_enabled(self, sender, service_id, enabled, **kwargs):
         """
@@ -154,22 +163,38 @@ a service is automatically disabled in the firewall.</em></p>'''
         del sender  # Unused
         del kwargs  # Unused
 
-        enabled_services = self.get_enabled_services()
+        internal_enabled_services = self.get_enabled_services(zone='internal')
+        external_enabled_services = self.get_enabled_services(zone='external')
 
         cfg.log.info('Service enabled - %s, %s' % (service_id, enabled))
-        for port in service_module.SERVICES[service_id].ports:
+        service = service_module.SERVICES[service_id]
+        for port in service.ports:
             if enabled:
-                if port not in enabled_services:
-                    self.add_service(port)
+                if port not in internal_enabled_services:
+                    self.add_service(port, zone='internal')
+
+                if service.is_external and \
+                        port not in external_enabled_services:
+                    self.add_service(port, zone='external')
             else:
-                if port in enabled_services:
+                if port in internal_enabled_services:
                     enabled_services_on_port = [
                         service_.is_enabled()
                         for service_ in service_module.SERVICES.values()
                         if port in service_.ports and
                         service_id != service_.service_id]
                     if not any(enabled_services_on_port):
-                        self.remove_service(port)
+                        self.remove_service(port, zone='internal')
+
+                if port in external_enabled_services:
+                    enabled_services_on_port = [
+                        service_.is_enabled()
+                        for service_ in service_module.SERVICES.values()
+                        if port in service_.ports and
+                        service_id != service_.service_id and
+                        service_.is_external]
+                    if not any(enabled_services_on_port):
+                        self.remove_service(port, zone='external')
 
     @staticmethod
     def _run(arguments, superuser=True):

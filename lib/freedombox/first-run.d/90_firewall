@@ -1,48 +1,56 @@
 #!/bin/sh
 
-# Setup firewall rules for all the enabled services
 
-# Ideally all non essential services are enabled from Plinth
-# which automatically takes care of enabling appropirate firewall
-# ports. This file is used then for essential services and services
-# that are not yet configurable from Plinth.
+# Setup firewall rules for all the services enabled by default.
+# Ideally all non-essential services are enabled from Plinth which
+# automatically takes care of enabling appropirate firewall ports. The
+# following is then for essential services and services that are not
+# yet configurable from Plinth.
 
 # HTTP (JWChat, ownCloud)
-firewall-cmd --permanent --add-service=http
+firewall-cmd --zone=external --permanent --add-service=http
+firewall-cmd --zone=internal --permanent --add-service=http
 
 # HTTPS (Plinth, JWChat, ownCloud)
-firewall-cmd --permanent --add-service=https
+firewall-cmd --zone=external --permanent --add-service=https
+firewall-cmd --zone=internal --permanent --add-service=https
 
 # Tor
-firewall-cmd --permanent --add-port=9050/tcp
+firewall-cmd --zone=internal --permanent --add-service=tor-socks
 
 # NTP
-firewall-cmd --permanent --add-service=ntp
+firewall-cmd --zone=internal --permanent --add-service=ntp
 
 # DNS
-firewall-cmd --permanent --add-service=dns
+firewall-cmd --zone=internal --permanent --add-service=dns
 
 # mDNS
-firewall-cmd --permanent --add-service=mdns
+firewall-cmd --zone=internal --permanent --add-service=mdns
 
 # DHCP
-firewall-cmd --permanent --add-service=dhcp
+firewall-cmd --zone=internal --permanent --add-service=dhcp
 
 # Bootp Server and Client (not enabled)
-#firewall-cmd --permanent --add-port=67/tcp
-#firewall-cmd --permanent --add-port=67/udp
-#firewall-cmd --permanent --add-port=68/tcp
-#firewall-cmd --permanent --add-port=68/udp
+#firewall-cmd --zone=internal --permanent --add-port=67/tcp
+#firewall-cmd --zone=internal --permanent --add-port=67/udp
+#firewall-cmd --zone=internal --permanent --add-port=68/tcp
+#firewall-cmd --zone=internal --permanent --add-port=68/udp
 
 # LDAP (not enabled)
-#firewall-cmd --permanent --add-service=ldap
-#firewall-cmd --permanent --add-service=ldaps
+#firewall-cmd --zone=internal --permanent --add-service=ldap
+#firewall-cmd --zone=internal --permanent --add-service=ldaps
 
 # OpenVPN (not enabled)
-#firewall-cmd --permanent --add-service=openvpn
+#firewall-cmd --zone=external --permanent --add-service=openvpn
+#firewall-cmd --zone=internal --permanent --add-service=openvpn
 
 # Privoxy
-firewall-cmd --permanent --add-port=8118/tcp
+firewall-cmd --zone=internal --permanent --add-service=privoxy
 
-# Obfsproxy
-firewall-cmd --permanent --add-port=40202/tcp
+# XMPP
+firewall-cmd --zone=external --permanent --add-service=xmpp-server
+firewall-cmd --zone=internal --permanent --add-service=xmpp-server
+firewall-cmd --zone=external --permanent --add-service=xmpp-client
+firewall-cmd --zone=internal --permanent --add-service=xmpp-client
+firewall-cmd --zone=external --permanent --add-service=xmpp-bosh
+firewall-cmd --zone=internal --permanent --add-service=xmpp-bosh

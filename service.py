@@ -35,13 +35,15 @@ class Service(object):
     for operation.
     """
 
-    def __init__(self, service_id, name, ports=None, enabled=True):
+    def __init__(self, service_id, name, ports=None, is_external=False,
+                 enabled=True):
         if not ports:
             ports = [service_id]
 
         self.service_id = service_id
         self.name = name
         self.ports = ports
+        self.is_external = is_external
         self._enabled = enabled
 
         # Maintain a complete list of services
@@ -65,9 +67,10 @@ class Service(object):
 
 def init():
     """Register some misc. services that don't fit elsewhere"""
-    Service('http', _('Web Server'), ['http'], True)
-    Service('https', _('Web Server over Secure Socket Layer'),
-            ['https'], True)
-    Service('ssh', _('Secure Shell (SSH) Server'), ['ssh'], True)
-    Service('plinth', _('FreedomBox Web Interface (Plinth)'),
-            ['https'], True)
+    Service('http', _('Web Server'), ['http'], is_external=True, enabled=True)
+    Service('https', _('Web Server over Secure Socket Layer'), ['https'],
+            is_external=True, enabled=True)
+    Service('ssh', _('Secure Shell (SSH) Server'), ['ssh'], is_external=True,
+            enabled=True)
+    Service('plinth', _('FreedomBox Web Interface (Plinth)'), ['https'],
+            is_external=True, enabled=True)

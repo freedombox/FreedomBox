@@ -17,7 +17,7 @@ class Owncloud(PagePlugin, FormPlugin):
         cfg.html_root.apps.menu.add_item("Owncloud", "icon-picture", "/apps/owncloud", 35)
 
         self.service = service.Service('owncloud', _('ownCloud'),
-                                       ['http', 'https'],
+                                       ['http', 'https'], is_external=True,
                                        enabled=self.is_enabled)
 
     def is_enabled(self):
