@@ -3,7 +3,6 @@ from gettext import gettext as _
 from modules.auth import require
 from plugin_mount import PagePlugin
 from forms import Form
-from actions import superuser_run
 import cfg
 
 class Apps(PagePlugin):
