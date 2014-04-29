@@ -171,8 +171,7 @@ a service is automatically disabled in the firewall.</em></p>'''
         service = service_module.SERVICES[service_id]
         for port in service.ports:
             if enabled:
-                if (not service.is_external and
-                    port not in internal_enabled_services):
+                if port not in internal_enabled_services:
                     self.add_service(port, zone='internal')
 
                 if (service.is_external and
