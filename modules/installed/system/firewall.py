@@ -134,26 +134,27 @@ a service is automatically disabled in the firewall.</em></p>'''
 
     def get_installed_status(self):
         """Return whether firewall is installed"""
-        output = self._run(['get-installed'])
+        output = self._run(['get-installed'], superuser=True)
         return output.split()[0] == 'installed'
 
     def get_enabled_status(self):
         """Return whether firewall is installed"""
-        output = self._run(['get-status'])
+        output = self._run(['get-status'], superuser=True)
         return output.split()[0] == 'running'
 
     def get_enabled_services(self, zone):
         """Return the status of various services currently enabled"""
-        output = self._run(['get-enabled-services', '--zone', zone])
+        output = self._run(['get-enabled-services', '--zone', zone],
+                           superuser=True)
         return output.split()
 
     def add_service(self, port, zone):
         """Enable a service in firewall"""
-        self._run(['add-service', port, '--zone', zone])
+        self._run(['add-service', port, '--zone', zone], superuser=True)
 
     def remove_service(self, port, zone):
         """Remove a service in firewall"""
-        self._run(['remove-service', port, '--zone', zone])
+        self._run(['remove-service', port, '--zone', zone], superuser=True)
 
     def on_service_enabled(self, sender, service_id, enabled, **kwargs):
         """
@@ -170,12 +171,16 @@ a service is automatically disabled in the firewall.</em></p>'''
         service = service_module.SERVICES[service_id]
         for port in service.ports:
             if enabled:
-                if port not in internal_enabled_services:
+                if (not service.is_external and
+                    port not in internal_enabled_services):
                     self.add_service(port, zone='internal')
 
-                if service.is_external and \
-                        port not in external_enabled_services:
+                if (service.is_external and
+                        port not in external_enabled_services):
                     self.add_service(port, zone='external')
+                else:
+                    # service already configured.
+                    pass
             else:
                 if port in internal_enabled_services:
                     enabled_services_on_port = [
@@ -197,7 +202,7 @@ a service is automatically disabled in the firewall.</em></p>'''
                         self.remove_service(port, zone='external')
 
     @staticmethod
-    def _run(arguments, superuser=True):
+    def _run(arguments, superuser=False):
         """Run an given command and raise exception if there was an error"""
         command = 'firewall'
 
