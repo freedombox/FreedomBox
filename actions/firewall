@@ -22,8 +22,6 @@ Configuration helper for Plinth firewall inteface
 """
 
 import argparse
-import os
-import re
 import subprocess
 
 
@@ -37,18 +35,31 @@ def parse_arguments():
                           help='Get whether firewalld is installed')
 
     # Get status
-    subparsers.add_parser('get-status', help='Get whether firewalld is running')
+    subparsers.add_parser('get-status',
+                          help='Get whether firewalld is running')
 
     # Get service status
-    subparsers.add_parser('get-enabled-services', help='Get list of enabled services')
+    get_enabled_services = subparsers.add_parser(
+        'get-enabled-services', help='Get list of enabled services')
+    get_enabled_services.add_argument(
+        '--zone', help='Zone from which the list is to be retrieved',
+        required=True)
 
     # Add a service
     add_service = subparsers.add_parser('add-service', help='Add a service')
     add_service.add_argument('service', help='Name of the service to add')
+    add_service.add_argument('--zone',
+                             help='Zone to which service is to be added',
+                             required=True)
 
     # Remove a service status
-    remove_service = subparsers.add_parser('remove-service', help='Remove a service')
-    remove_service.add_argument('service', help='Name of the service to remove')
+    remove_service = subparsers.add_parser('remove-service',
+                                           help='Remove a service')
+    remove_service.add_argument('service',
+                                help='Name of the service to remove')
+    remove_service.add_argument(
+        '--zone', help='Zone from which service is to be removed',
+        required=True)
 
     return parser.parse_args()
 
@@ -66,21 +77,26 @@ def subcommand_get_status(_):
     subprocess.call(['firewall-cmd', '--state'])
 
 
-def subcommand_get_enabled_services(_):
+def subcommand_get_enabled_services(arguments):
     """Print the status of variours services"""
-    subprocess.call(['firewall-cmd', '--list-services'])
+    subprocess.call(['firewall-cmd', '--zone', arguments.zone,
+                     '--list-services'])
 
 
 def subcommand_add_service(arguments):
     """Permit a service in the firewall"""
-    subprocess.call(['firewall-cmd', '--add-service', arguments.service])
-    subprocess.call(['firewall-cmd', '--permanent', '--add-service', arguments.service])
+    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--add-service',
+                     arguments.service])
+    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--permanent',
+                     '--add-service', arguments.service])
 
 
 def subcommand_remove_service(arguments):
     """Block a service in the firewall"""
-    subprocess.call(['firewall-cmd', '--remove-service', arguments.service])
-    subprocess.call(['firewall-cmd', '--permanent', '--remove-service', arguments.service])
+    subprocess.call(['firewall-cmd', '--zone', arguments.zone,
+                     '--remove-service', arguments.service])
+    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--permanent',
+                     '--remove-service', arguments.service])
 
 
 def main():
