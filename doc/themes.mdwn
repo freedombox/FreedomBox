@@ -1,8 +1,9 @@
 # Themes and Templates
 
 The visual look and feel of the front end is described in theme files
-while <a href="http://cheetahtemplate.org">Cheetah templates</a>
-handle layout.
+while <a
+href="https://docs.djangoproject.com/en/1.7/topics/templates/">Django
+templates</a> handle layout.
 
 ## Themes
 
@@ -17,43 +18,35 @@ runtime, but it is theoretically possible.
 
 ## Templates
 
-Plinth uses the Cheetah templating system.  Templates are stored in
+Plinth uses the Django templating system.  Templates are stored in
 `/templates`.  Template requirements are not specified.
 
-TODO: formalize the template spec so template writers know what they need to implement and where they can deviate.
+TODO: formalize the template spec so template writers know what they
+need to implement and where they can deviate.
 
 In this section, I'll attempt to document some of the assumptions the
 program has about templates.  The goal is that if you write a tempate
 that implements the spec, it should work just fine.
 
 ### The Template Stack
+
 The template is a hierarchical stack, where some templates extend on
 others.  At the base of this stack is `base.tmpl`.  It should specify
-variables as blocks (rather than using the $ notation).  This allows
+sections as blocks (rather than using the variables).  This allows
 other templates to easily override the base template.
-
-Next up is the `page.tmpl`.  It extends `base.tmpl` and simply
-replaces all the blocks with interpolable variables.  Most of the
-time, `page.tmpl` is what you will actually use to create pages.
 
 `err.tmpl` builds on top of `page.tmpl` by adding some decoration to
 the title field.
 
 ### Layout
 
-Plinth expects a `main` block.  This is where the
-meat of the content goes.  It is the center pain in the default
-layout.  There is a `title` block that the program will fill with text
-describing the current page.  `sidebar_left` contains the submenu
-navigation menu, and `sidebar_right` is where we put all short text
-that helps the admin fill out forms.  They don't have to be sidebars,
-and they don't have to go on the left and right.
+Plinth expects a `main` block.  This is where the meat of the content
+goes.  It is the center pain in the default layout.  There is a
+`title` block that the program will fill with text describing the
+current page.  `sidebar_left` contains the submenu navigation menu,
+and `sidebar_right` is where we put all short text that helps the
+admin fill out forms.  They don't have to be sidebars, and they don't
+have to go on the left and right.
 
 It is possible to override the `footer`, but I haven't yet found a
 reason to do so.
-
-## Cheetah
-
-This section is for Cheetah hints that are especially useful in this context.  
-
-TODO: add Cheetah hints
