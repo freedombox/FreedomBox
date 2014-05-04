@@ -89,6 +89,26 @@ def load_modules():
       else:
          cfg.log("skipping %s" % name)
 
+
+def get_template_directories():
+    """Return the list of template directories"""
+    directory = os.path.dirname(os.path.abspath(__file__))
+    core_directory = os.path.join(directory, 'templates')
+
+    directories = set((core_directory,))
+    for name in os.listdir('modules'):
+        if not name.endswith(".py") or name.startswith('.'):
+            continue
+
+        real_name = os.path.realpath(os.path.join('modules', name))
+        directory = os.path.dirname(real_name)
+        directories.add(os.path.join(directory, 'templates'))
+
+    cfg.log.info('Template directories - %s' % directories)
+
+    return directories
+
+
 def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
    parser.add_argument('--pidfile',
@@ -185,9 +205,8 @@ def main():
     setup()
 
     # Configure Django
-    directory = os.path.dirname(os.path.abspath(__file__))
-    templates_directory = os.path.join(directory, 'templates')
-    django.conf.settings.configure(TEMPLATE_DIRS=(templates_directory,))
+    template_directories = get_template_directories()
+    django.conf.settings.configure(TEMPLATE_DIRS=template_directories)
 
     cherrypy.engine.start()
     cherrypy.engine.block()
