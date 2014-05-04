@@ -13,7 +13,7 @@ DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all targets
-default: config dirs template css docs
+default: config dirs css docs
 all: default
 
 predepend:
@@ -58,10 +58,6 @@ config: Makefile
 	@cat $< | python -c 'import re,sys;print re.sub("\s*([{};,:])\s*", "\\1", re.sub("/\*.*?\*/", "", re.sub("\s+", " ", sys.stdin.read())))' > $@
 css: $(COMPRESSED_CSS)
 
-template:
-	@$(MAKE) -s -C templates
-templates: template
-
 docs:
 	@$(MAKE) -s -C doc
 doc: docs
@@ -78,7 +74,6 @@ clean:
 	@find . -name "*.pyc" -exec rm {} \;
 	@find . -name "*.bak" -exec rm {} \;
 	@$(MAKE) -s -C doc clean
-	@$(MAKE) -s -C templates clean
 	rm -f plinth.config
 	rm -f predepend
 
