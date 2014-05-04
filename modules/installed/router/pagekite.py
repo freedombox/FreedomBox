@@ -44,53 +44,21 @@ class PageKite(PagePlugin):
             _("Public Visibility (PageKite)"), "icon-flag",
             "/router/setup/pagekite", 50)
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def index(self, **kwargs):
+    def index(**kwargs):
         """Serve introcution page"""
         del kwargs  # Unused
 
-        main = _("""
-<p>PageKite is a system for exposing {box_name} services when you
-don't have a direct connection to the Internet. You only need this
-service if your {box_name} services are unreachable from the rest of
-the Internet. This includes the following situations: </p>
+        menu = {'title': _('PageKite'),
+                'items': [{'url': '/router/setup/pagekite/configure',
+                           'text': _('Configure PageKite')}]}
+        sidebar_right = util.render_template(template='menu_block', menu=menu)
 
-<ul>
-  <li>{box_name} is behind a restricted firewall.</li>
-
-  <li>{box_name} is connected to a (wireless) router which you don't
-      control.</li>
-
-  <li>Your ISP does not provide you an external IP address and instead
-      provides Internet connection through NAT.</li>
-
-  <li>Your ISP does not provide you a static IP address and your IP
-      address changes evertime you connect to Internet.</li>
-
-  <li>Your ISP limits incoming connections.</li>
-</ul>
-
-<p>PageKite works around NAT, firewalls and IP-address limitations by
-using a combination of tunnels and reverse proxies. Currently,
-exposing web server and SSH server are supported. An intermediary
-server with direct Internet access is required. Currently, only
-pagekite.net server is supported and you will need an account
-there. In future, it might be possible to use your buddy's {box_name}
-for this.</p>
-
-<p><a class='btn btn-primary btn-lg'
-      href="{server_dir}/router/setup/pagekite/configure">Configure
-PageKite</a></p>
-""").format(box_name=cfg.box_name, server_dir=cfg.server_dir)
-
-        sidebar_right = _('''
-<strong>PageKite</strong>
-<p><a href="{server_dir}/router/setup/pagekite/configure">Configure
-PageKite</a> </p>''').format(server_dir=cfg.server_dir)
-
-        return util.render_template(title=_("Public Visibility (PageKite)"),
-                                    main=main, sidebar_right=sidebar_right)
+        return util.render_template(template='pagekite_introduction',
+                                    title=_("Public Visibility (PageKite)"),
+                                    sidebar_right=sidebar_right)
 
 
 class configure(FormPlugin, PagePlugin):  # pylint: disable-msg=C0103

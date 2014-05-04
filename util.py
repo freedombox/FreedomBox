@@ -81,6 +81,7 @@ def render_template(template='login_nav', **kwargs):
     kwargs['sub_menu_js'] = submenu
     kwargs['current_url'] = cherrypy.url()
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
+    kwargs['cfg'] = cfg
 
     if not kwargs['nav'] and submenu:
        kwargs['nav'] = """	<script type="text/javascript">
