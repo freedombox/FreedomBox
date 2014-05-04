@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block add_nav_and_login %}
+  <div class="nav-collapse">
+    <script type="text/javascript">
+      main_menu(main_menu_items);
+    </script>
+    {% if username %}
+      <p class="navbar-text pull-right"><i class="icon-user icon-white nav-icon"></i>Logged in as <a href="{{ username }}">{{ username }}</a>. <a href="{{ basehref }}/auth/logout" title="Log out">Log out</a>.</p>
+    {% else %}
+      <p class="navbar-text pull-right">Not logged in. <i class="icon-user icon-white nav-icon"></i><a href="{{ basehref }}/auth/login" title="Log in">Log in</a>.</p>
+    {% endif %}
+{% endblock %}

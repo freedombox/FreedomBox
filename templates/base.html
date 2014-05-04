@@ -1,10 +1,3 @@
-#def default($text, $default)
-#if $text
-   $text
-#else
-   $default
-#end if
-#end def
 <!doctype html>
 <!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
 <!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
@@ -31,22 +24,22 @@
 	<meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
 	<meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
 
-	<meta name="title" content="$default($title, 'FreedomBox Dashboard')" />
+	<meta name="title" content="{% if title %} {{ title }} {% else %} FreedomBox Dashboard {% endif %}" />
 	<meta name="description" content="Plinth administrative interface for the FreedomBox" />
-	<title>$default($title, "FreedomBox Dashboard")</title>
+	<title>{% if title %} {{ title }} {% else %} FreedomBox Dashboard {% endif %}</title>
 
 	<!-- This is the traditional favicon. Size: 16x16 or 32x32, transparency is OK -->
-	<link rel="shortcut icon" href="$basehref/static/theme/img/favicon.ico" />
+	<link rel="shortcut icon" href="{{ basehref }}/static/theme/img/favicon.ico" />
 
 	<!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
 	- To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
 	- Transparency is not recommended (iOS will put a black BG behind the icon) -->
-	<link rel="apple-touch-icon" sizes="57x57" href="$basehref/static/theme/img/apple-touch-icon-57px-precomposed.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="$basehref/static/theme/img/apple-touch-icon-72px-precomposed.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="$basehref/static/theme/img/apple-touch-icon-114px-precomposed.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="{{ basehref }}/static/theme/img/apple-touch-icon-57px-precomposed.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ basehref }}/static/theme/img/apple-touch-icon-72px-precomposed.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ basehref }}/static/theme/img/apple-touch-icon-114px-precomposed.png" />
 
 	<!-- Bootstrap base CSS -->
-	<link rel="stylesheet" href="$basehref/static/theme/css/bootstrap.css" />
+	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap.css" />
 	<style type="text/css">
 	/* custom styles, load before bootstrap responsive styles */
 	body {
@@ -58,7 +51,7 @@
 	}
 	</style>
 	<!-- Bootstrap responsive CSS -->
-	<link rel="stylesheet" href="$basehref/static/theme/css/bootstrap-responsive.css" />
+	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap-responsive.css" />
 	<style type="text/css">
 	/* custom styles, load after all bootstrap styles */
 	.super-hero {
@@ -91,16 +84,16 @@
 	}
 	</style>
 	<!-- CSS from previous Plinth template, not sure what to keep yet -->
-	$css
+	{{ css|safe }}
 	<!-- End Plinth CSS -->
 	<!-- JS from previous Plinth template, not sure what to keep yet -->
-	<script type="text/javascript" src="$basehref/static/theme/js/menu.js"></script>
-	<script type="text/javascript" src="$basehref/static/theme/js/plinth.js"></script>
-	$main_menu_js
-	$sub_menu_js
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/menu.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plinth.js"></script>
+	{{ main_menu_js|safe }}
+	{{ sub_menu_js|safe }}
 	<script type="text/javascript">
 	  <!--
-	    $onload
+	    {{ onload|safe }}
 	  // -->
 	</script>
 </head>
@@ -114,9 +107,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a href="$basehref/" class="logo-top"><img src="$basehref/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="$basehref/">FreedomBox Dashboard</a>
-	  #block add_nav_and_login
-	  #end block add_nav_and_login
+          <a href="{{ basehref }}/" class="logo-top"><img src="{{ basehref }}/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="{{ basehref }}/">FreedomBox Dashboard</a>
+	  {% block add_nav_and_login %}
+	  {% endblock %}
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -124,35 +117,35 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        #if $nav or $sidebar_right or $sidebar_left
+        {% if nav or sidebar_right or sidebar_left %}
         <div class="span3">
-        #if $nav
+        {% if nav %}
           <div class="well sidebar-nav">
-		$nav
+	    {{ nav|safe }}
           </div><!--/.well -->
-	#end if
-        #if $sidebar_left
+	{% endif %}
+        {% if sidebar_left %}
           <div class="well sidebar-nav">
-		left $sidebar_left
+		{{ sidebar_left|safe }}
           </div><!--/.well -->
-	#end if
-        #if $sidebar_right
+	{% endif %}
+        {% if sidebar_right %}
           <div class="well sidebar-nav">
-		$sidebar_right
+		{{ sidebar_right|safe }}
           </div><!--/.well -->
-	#end if
+	{% endif %}
         </div>
-	#end if
+	{% endif %}
         <div class="span9">
           <div class="hero-unit" class="pull-left">
   		<h2>
-		#block title_block
-		$title
-		#end block title_block
+		{% block title_block %}
+		{{ title }}
+		{% endblock %}
 		</h2>
-		#block main_block
-		$main
-		#end block main_block
+		{% block main_block %}
+                {{ main|safe }}
+		{% endblock %}
           </div>
         </div><!--/span-->
       </div><!--/row-->
@@ -160,44 +153,44 @@
       <hr>
 
       <footer>
-        <p>#block footer_block
+        <p>{% block footer_block %}
 		<p>
 		Plinth is &copy; Copyright 2012 <a href="http://hackervisions.org" target="_blank">James Vasile</a>.  It is
 		free software offered to you under the terms of
 		the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
 		License</a>, Version 3 or later.  This Plinth theme was built by <a href="http://seandiggity.com" target="_blank">Sean &quot;Diggity&quot; O&apos;Brien</a>.
 		</p>
-		<p>Current page: $current_url</p>
+		<p>Current page: {{ current_url }}</p>
 		<p>
 
 		</p>
-		#end block footer_block</p>
+		{% endblock %}</p>
       </footer>
 
     </div><!--/.fluid-container-->
 
 <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
 	<!-- Local link to system Modernizr (includes HTML5 Shiv) -->
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/modernizr.min.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/modernizr.min.js"></script>
 	<!-- Local link to system jQuery -->
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/jquery.min.js"></script>
 	<!-- Bootstrap JS, most files commented out until we know what we need -->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/bootstrap.js"></script>-->
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/bootstrap.min.js"></script>
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/button.js"></script>
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/dropdown.js"></script>
-	<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/collapse.js"></script>
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/transition.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/alert.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/modal.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/scrollspy.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/tab.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/tooltip.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/popover.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/carousel.js"></script>-->
-	<!--<script type="text/javascript" src="$basehref/static/theme/js/libs/bootstrap/typeahead.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/bootstrap.js"></script>-->
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/button.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/dropdown.js"></script>
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/collapse.js"></script>
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/transition.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/alert.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/modal.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/scrollspy.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/tab.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/tooltip.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/popover.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/carousel.js"></script>-->
+	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/typeahead.js"></script>-->
 	<!-- JS plugins -->
-	<script type="text/javascript" src="$basehref/static/theme/js/plugins.js"></script>
-	$js
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plugins.js"></script>
+	{{ js|safe }}
 </body>
 </html>

@@ -3,6 +3,7 @@
 import os, stat, sys, argparse
 from gettext import gettext as _
 import cfg
+import django.conf
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
    sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
@@ -178,13 +179,18 @@ def setup():
    cherrypy.engine.signal_handler.subscribe()
 
 def main():
-   # Initialize basic services
-   service.init()
+    # Initialize basic services
+    service.init()
 
-   setup()
+    setup()
 
-   cherrypy.engine.start()
-   cherrypy.engine.block()
+    # Configure Django
+    directory = os.path.dirname(os.path.abspath(__file__))
+    templates_directory = os.path.join(directory, 'templates')
+    django.conf.settings.configure(TEMPLATE_DIRS=(templates_directory,))
+
+    cherrypy.engine.start()
+    cherrypy.engine.block()
 
 if __name__ == '__main__':
     main()
