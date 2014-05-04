@@ -52,7 +52,7 @@ class Config(PagePlugin):
         parts['title'] = _("Configure this {box_name}") \
             .format(box_name=cfg.box_name)
 
-        return self.fill_template(**parts)  # pylint: disable-msg=W0142
+        return util.render_template(**parts)  # pylint: disable-msg=W0142
 
 
 def valid_hostname(name):

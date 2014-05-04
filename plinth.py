@@ -33,7 +33,7 @@ __status__ = "Development"
 import urlparse
 
 def error_page(status, dynamic_msg, stock_msg):
-   return u.page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
+   return u.render_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
 def error_page_404(status, message, traceback, version):
    return error_page(status, message, """<p>If you believe this

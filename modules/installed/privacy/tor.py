@@ -25,6 +25,8 @@ from plugin_mount import PagePlugin
 from modules.auth import require
 import actions
 import cfg
+import util
+
 
 class tor(PagePlugin):
     order = 30 # order of running init in PagePlugins
@@ -58,4 +60,4 @@ class tor(PagePlugin):
             main += "<td>" + str(ports[key]) + "</td></tr>"
         main += "</table>"
 
-        return self.fill_template(title=_("Tor Control Panel"), main=main)
+        return util.render_template(title=_("Tor Control Panel"), main=main)

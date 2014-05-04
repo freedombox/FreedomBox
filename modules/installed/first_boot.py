@@ -4,11 +4,11 @@ from gettext import gettext as _
 from plugin_mount import PagePlugin, PluginMount, FormPlugin
 from modules.auth import require, add_user
 from forms import Form
-import util as u
 from withsqlite.withsqlite import sqlite_db
 import cfg
 import config
 from model import User
+import util
 
 """First Boot: Initial Plinth Configuration.
 
@@ -118,7 +118,7 @@ class FirstBoot(PagePlugin):
         form.submit("Box it up!")
 
         main += form.render()
-        return self.fill_template(
+        return util.render_template(
             template="base",
             title=_("First Boot!"),
             main=main,
@@ -155,7 +155,7 @@ href="../router">continue</a> to see the rest of the web interface.</p>
         #     # TODO: switch to HTTPS
         # raise cherrypy.InternalRedirect('state1')
 
-        return self.fill_template(
+        return util.render_template(
             template="base",
             title=_("Installing the Certificate"),
             main=main,

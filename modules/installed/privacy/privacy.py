@@ -3,6 +3,8 @@ from gettext import gettext as _
 from plugin_mount import PagePlugin
 from modules.auth import require
 import cfg
+import util
+
 
 class Privacy(PagePlugin):
     order = 20 # order of running init in PagePlugins
@@ -27,7 +29,8 @@ class Privacy(PagePlugin):
         placeholder and a promise: privacy is important enough that it
         is a founding consideration, not an afterthought.</p>
         """
-        return self.fill_template(title=_("Privacy Control Panel"), main=main,
+        return util.render_template(title=_("Privacy Control Panel"),
+                                    main=main,
 sidebar_right=_("""<strong>Statement of Principles</strong><p>When we say your
 privacy is important, it's not just an empty pleasantry.  We really
 mean it.  Your privacy control panel should give you fine-grained

@@ -6,7 +6,8 @@ import cfg
 from forms import Form
 import actions
 import service
-from util import Message
+import util
+
 
 class xmpp(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -32,7 +33,7 @@ class xmpp(PagePlugin):
         main = "<p>XMPP Server Accounts and Configuration</p>"
         sidebar_right = '<strong><a href="'+cfg.server_dir+'/services/xmpp/configure">Configure XMPP Server</a></strong><br />'
         sidebar_right = sidebar_right + '<strong><a href="'+cfg.server_dir+'/services/xmpp/register">Register XMPP Account</a></strong>'
-        return self.fill_template(title="XMPP Server", main=main, sidebar_right=sidebar_right)
+        return util.render_template(title="XMPP Server", main=main, sidebar_right=sidebar_right)
 
 class configure(FormPlugin, PagePlugin):
     url = ["/services/xmpp/configure"]
@@ -78,7 +79,7 @@ class configure(FormPlugin, PagePlugin):
         actions.run("xmpp-setup", opts)
 
         main = self.main(checkedinfo['inband_enable'])
-        return self.fill_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+        return util.render_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
 
 class register(FormPlugin, PagePlugin):
     url = ["/services/xmpp/register"]
@@ -97,7 +98,7 @@ class register(FormPlugin, PagePlugin):
         return form.render()
 
     def process_form(self, username=None, password=None, **kwargs):
-        msg = Message()
+        msg = util.Message()
 
         if not username: msg.add = _("Must specify a username!")
         if not password: msg.add = _("Must specify a password!")
@@ -115,7 +116,7 @@ class register(FormPlugin, PagePlugin):
 
         cfg.log(msg.text)
         main = self.main(username, msg=msg.text)
-        return self.fill_template(
+        return util.render_template(
             title="XMPP Server Configuration",
             main=main,
             sidebar_left=self.sidebar_left,

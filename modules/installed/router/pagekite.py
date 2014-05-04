@@ -89,8 +89,8 @@ PageKite</a></p>
 <p><a href="{server_dir}/router/setup/pagekite/configure">Configure
 PageKite</a> </p>''').format(server_dir=cfg.server_dir)
 
-        return self.fill_template(title=_("Public Visibility (PageKite)"),
-                                  main=main, sidebar_right=sidebar_right)
+        return util.render_template(title=_("Public Visibility (PageKite)"),
+                                    main=main, sidebar_right=sidebar_right)
 
 
 class configure(FormPlugin, PagePlugin):  # pylint: disable-msg=C0103

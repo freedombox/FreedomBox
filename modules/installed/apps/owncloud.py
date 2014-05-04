@@ -6,7 +6,8 @@ from forms import Form
 import actions
 import cfg
 import service
-from util import Message
+import util
+
 
 class Owncloud(PagePlugin, FormPlugin):
     order = 90
@@ -42,7 +43,8 @@ class Owncloud(PagePlugin, FormPlugin):
 <p>ownCloud gives you universal access to your files through a web interface or WebDAV. It also provides a platform to easily view & sync your contacts, calendars and bookmarks across all your devices and enables basic editing right on the web. Installation has minimal server requirements, doesn't need special permissions and is quick. ownCloud is extendable via a simple but powerful API for applications and plugins.
 </p>
 """
-        return self.fill_template(title="Owncloud", main=main, sidebar_right=sidebar_right)
+        return util.render_template(title="Owncloud", main=main,
+                                    sidebar_right=sidebar_right)
 
     def form(self, owncloud_enable, message=None):
         form = Form(title="Configuration",

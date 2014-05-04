@@ -2,6 +2,8 @@ import cherrypy
 from modules.auth import require
 from plugin_mount import PagePlugin
 import cfg
+import util
+
 
 class FileExplorer(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -32,4 +34,5 @@ href="http://blogfreakz.com/jquery/web-based-filemanager/">FileManager</a>.
 It appears to be mostly javascript with some bindings to make it
 python-friendly.</p>
 """
-        return self.fill_template(title="File Explorer", main=main, sidebar_right='')
+        return util.render_template(title="File Explorer", main=main,
+                                    sidebar_right='')

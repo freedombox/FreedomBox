@@ -1,11 +1,9 @@
-from urlparse import urlparse
-import os, cherrypy
-from gettext import gettext as _
-from plugin_mount import PagePlugin, PluginMount, FormPlugin
+import cherrypy
+from plugin_mount import PagePlugin, FormPlugin
 from modules.auth import require
 from forms import Form
-from util import *
 import cfg
+import util
 
 class router(PagePlugin):
     order = 9 # order of running init in PagePlugins
@@ -28,18 +26,20 @@ class router(PagePlugin):
     @cherrypy.expose
     @require()
     def wireless(self):
-        return self.fill_template(title="Wireless", main="<p>wireless setup: essid, etc.</p>")
+        return util.render_template(title="Wireless",
+                                    main="<p>wireless setup: essid, etc.</p>")
 
     @cherrypy.expose
     @require()
     def firewall(self):
-        return self.fill_template(title="Firewall", main="<p>Iptables twiddling.</p>")
+        return util.render_template(title="Firewall",
+                                    main="<p>Iptables twiddling.</p>")
 
     @cherrypy.expose
     @require()
     def hotspot(self):
-        return self.fill_template(title="Hotspot and Mesh", main="<p>connection sharing setup.</p>")
-
+        return util.render_template(title="Hotspot and Mesh",
+                                    main="<p>connection sharing setup.</p>")
 
 
 class setup(PagePlugin):
@@ -70,18 +70,18 @@ can rival those of high-end routers costing hundreds of dollars.</p>
             Configure" menu.</p>""" % {'product':cfg.box_name}
         else:
             parts['main'] += "<p>router name, domain name, router IP, dhcp</p>"
-        return self.fill_template(**parts)
+        return util.render_template(**parts)
 
     @cherrypy.expose
     @require()
     def ddns(self):
-        return self.fill_template(title="Dynamic DNS", main="<p>Masquerade setup</p>")
+        return util.render_template(title="Dynamic DNS", main="<p>Masquerade setup</p>")
 
     @cherrypy.expose
     @require()
     def mac_address(self):
-        return self.fill_template(title="MAC Address Cloning", 
-                                  main="<p>Your router can pretend to have a different MAC address on any interface.</p>")
+        return util.render_template(title="MAC Address Cloning",
+                                    main="<p>Your router can pretend to have a different MAC address on any interface.</p>")
 
 
 class wan(FormPlugin, PagePlugin):
@@ -127,7 +127,7 @@ class wan(FormPlugin, PagePlugin):
         if not cfg.users.expert():
             return ''
 
-        store = filedict_con(cfg.store_file, 'router')
+        store = util.filedict_con(cfg.store_file, 'router')
         defaults = {'connect_type': 'DHCP'}
         for key, value in defaults.items():
             if not key in kwargs:
@@ -136,10 +136,10 @@ class wan(FormPlugin, PagePlugin):
                 except KeyError:
                     store[key] = kwargs[key] = value
 
-        form = Form(title="WAN Connection", 
-                        action=cfg.server_dir + "/router/setup/wan/index", 
-                        name="wan_connection_form",
-                        message=message)
+        form = Form(title="WAN Connection",
+                    action=cfg.server_dir + "/router/setup/wan/index",
+                    name="wan_connection_form",
+                    message=message)
         form.dropdown('Connection Type', vals=["DHCP", "Static IP"], id="connect_type")
         form.html('<div id="static_ip_form">')
         form.dotted_quad("WAN IP Address", name="wan_ip", quad=[wan_ip0, wan_ip1, wan_ip2, wan_ip3])
@@ -151,4 +151,3 @@ class wan(FormPlugin, PagePlugin):
         form.html('</div>')
         form.submit("Set Wan")
         return form.render()
-

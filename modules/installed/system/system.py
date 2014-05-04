@@ -1,17 +1,8 @@
-import os
 import cherrypy
-try:
-    import simplejson as json
-except ImportError:
-    import json
 from gettext import gettext as _
-from filedict import FileDict
-from auth import require
-from plugin_mount import PagePlugin, FormPlugin
+from plugin_mount import PagePlugin
 import cfg
-from forms import Form
-from model import User
-from util import *
+import util
 
 sys_dir = "modules/installed/sys"
 
@@ -27,7 +18,7 @@ class Sys(PagePlugin):
 
     @cherrypy.expose
     def index(self):
-        return self.fill_template(title=_("System Configuration"), main=_("""
+        return util.render_template(title=_("System Configuration"), main=_("""
         <p>In this section, you can control the %(product)s's
         underlying system, as opposed to its various applications and
         services.  These options affect the %(product)s at its most

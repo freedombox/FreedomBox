@@ -62,7 +62,7 @@ class Message():
         self.text += "<br />%s" % text
 
 
-def page_template(template='login_nav', **kwargs):
+def render_template(template='login_nav', **kwargs):
     for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav',
                 'css', 'title', 'basehref']:
         if not key in kwargs:

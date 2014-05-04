@@ -1,11 +1,12 @@
-import os, cherrypy
+import cherrypy
 from gettext import gettext as _
 from auth import require, add_user
 from plugin_mount import PagePlugin, FormPlugin
 import cfg
 from forms import Form
-from util import *
 from model import User
+import util
+
 
 class users(PagePlugin):
     order = 20 # order of running init in PagePlugins
@@ -19,7 +20,9 @@ class users(PagePlugin):
     @require()
     def index(self):
         sidebar_right = '<strong><a href="'+cfg.server_dir+'/sys/users/add">Add User</a></strong><br/><strong><a href="'+cfg.server_dir+'/sys/users/edit">Edit Users</a></strong>'
-        return self.fill_template(title="Manage Users and Groups", sidebar_right=sidebar_right)
+        return util.render_template(title="Manage Users and Groups",
+                                    sidebar_right=sidebar_right)
+
 
 class add(FormPlugin, PagePlugin):
     url = ["/sys/users/add"]
@@ -34,9 +37,9 @@ class add(FormPlugin, PagePlugin):
 
     def main(self, username='', name='', email='', message=None, *args, **kwargs):
         form = Form(title="Add User",
-                        action=cfg.server_dir + "/sys/users/add/index",
-                        name="add_user_form",
-                        message=message)
+                    action=cfg.server_dir + "/sys/users/add/index",
+                    name="add_user_form",
+                    message=message)
         form.text_input(_("Username"), name="username", value=username)
         form.text_input(_("Full name"), name="name", value=name)
         form.text_input(_("Email"), name="email", value=email)
@@ -45,7 +48,7 @@ class add(FormPlugin, PagePlugin):
         return form.render()
 
     def process_form(self, username=None, name=None, email=None, password=None, **kwargs):
-        msg = Message()
+        msg = util.Message()
 
         error = add_user(username, password, name, email, False)
         if error:
@@ -55,7 +58,10 @@ class add(FormPlugin, PagePlugin):
 
         cfg.log(msg.text)
         main = self.main(username, name, email, msg=msg.text)
-        return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+        return util.render_template(title="Manage Users and Groups", main=main,
+                                    sidebar_left=self.sidebar_left,
+                                    sidebar_right=self.sidebar_right)
+
 
 class edit(FormPlugin, PagePlugin):
     url = ["/sys/users/edit"]
@@ -68,7 +74,7 @@ class edit(FormPlugin, PagePlugin):
     "Delete User" to remove users from %s and the %s
     system.</p><p>Deleting users is permanent!</p>""" % (cfg.product_name, cfg.box_name))
 
-    def main(self, msg=''):
+    def main(self, msg='', **kwargs):
         users = cfg.users.get_all()
         add_form = Form(title=_("Edit or Delete User"), action=cfg.server_dir + "/sys/users/edit", message=msg)
         add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
@@ -83,8 +89,8 @@ class edit(FormPlugin, PagePlugin):
 
     def process_form(self, **kwargs):
         if 'delete' in kwargs:
-            msg = Message()
-            usernames = find_keys(kwargs, 'on')
+            msg = util.Message()
+            usernames = util.find_keys(kwargs, 'on')
             cfg.log.info("%s asked to delete %s" % (cherrypy.session.get(cfg.session_key), usernames))
             if usernames:
                 for username in usernames:
@@ -107,15 +113,22 @@ class edit(FormPlugin, PagePlugin):
             else:
                 msg.add = _("Must specify at least one valid, existing user.")
             main = self.main(msg=msg.text)
-            return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+            return util.render_template(title="Manage Users and Groups",
+                                        main=main,
+                                        sidebar_left=self.sidebar_left,
+                                        sidebar_right=self.sidebar_right)
 
         sidebar_right = ''
         u = cfg.users[kwargs['username']]
         if not u:
             main = _("<p>Could not find a user with username of %s!</p>" % kwargs['username'])
-            return self.fill_template(template="err", title=_("Unknown User"), main=main,
-                             sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
+            return util.render_template(template="err",
+                                        title=_("Unknown User"), main=main,
+                                        sidebar_left=self.sidebar_left,
+                                        sidebar_right=sidebar_right)
 
         main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
         sidebar_right = ''
-        return self.fill_template(title="Manage Users and Groups", main=main, sidebar_left=self.sidebar_left, sidebar_right=sidebar_right)
+        return util.render_template(title="Manage Users and Groups", main=main,
+                                    sidebar_left=self.sidebar_left,
+                                    sidebar_right=sidebar_right)

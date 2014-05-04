@@ -25,6 +25,8 @@ from auth import require
 from plugin_mount import PagePlugin
 import actions
 import cfg
+import util
+
 
 class diagnostics(PagePlugin):
     order = 30
@@ -42,7 +44,7 @@ class diagnostics(PagePlugin):
         properly. It may take a minute to complete.</p>
         """)
         main += '<p><a class="btn btn-primary btn-large" href="'+cfg.server_dir+'/sys/diagnostics/test">Run diagnostic test &raquo;</a></p>'
-        return self.fill_template(title=_("System Diagnostics"), main=main)
+        return util.render_template(title=_("System Diagnostics"), main=main)
 
 class test(PagePlugin):
     order = 31
@@ -66,4 +68,4 @@ class test(PagePlugin):
             for line in output.split('\n'):
                 main += line + "</br>"
 
-        return self.fill_template(title=_("Diagnostic Test"), main=main)
+        return util.render_template(title=_("Diagnostic Test"), main=main)

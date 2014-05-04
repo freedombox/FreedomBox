@@ -4,6 +4,8 @@ from modules.auth import require
 from plugin_mount import PagePlugin
 from forms import Form
 import cfg
+import util
+
 
 class Apps(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -24,12 +26,14 @@ class Apps(PagePlugin):
         Many of the services you use on the web could soon be on site
         and under your control!</p>
         """ % (cfg.product_name)
-        return self.fill_template(title="User Applications", main=main, sidebar_right='')
+        return util.render_template(title="User Applications", main=main,
+                                    sidebar_right='')
 
     @cherrypy.expose
     @require()
     def photos(self):
-        return self.fill_template(title="Photo Gallery", main='', sidebar_right="""
+        return util.render_template(title="Photo Gallery", main='',
+                                    sidebar_right="""
 <strong>Photo Gallery</strong><p>Your photos might well be the most valuable
 digital property you have, so why trust it to companies that have no
 investment in the sentimental value of your family snaps?  Keep those

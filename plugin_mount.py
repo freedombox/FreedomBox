@@ -1,8 +1,8 @@
 import cherrypy
 from modules.auth import require
 import cfg
-from util import *
-import util as u
+import util
+
 
 class PluginMount(type):
     """See http://martyalchin.com/2008/jan/10/simple-plugin-framework/ for documentation"""
@@ -87,9 +87,6 @@ class PagePlugin:
         cfg.log.info("Registering page: %s" % url)
         _setattr_deep(cfg.html_root, url, self)
 
-    def fill_template(self, *args, **kwargs):
-        return u.page_template(*args, **kwargs)
-
     def forms(self, url, *args, **kwargs):
         for form in cfg.forms:
             if url in form.url:
@@ -98,7 +95,7 @@ class PagePlugin:
                 parts = get_parts(form, None, *args, **kwargs)
 
         return parts
-        return {'sidebar_left':left, 'sidebar_right':right, 'main':main}
+
 
 class FormPlugin():
     """
@@ -138,11 +135,10 @@ class FormPlugin():
 
     order = 50
     url = []
-    js = ''
 
     def __init__(self, *args, **kwargs):
-        for u in self.url:
-            path = u.split("/")[1:] + [self.__class__.__name__]
+        for unit in self.url:
+            path = unit.split("/")[1:] + [self.__class__.__name__]
             _setattr_deep(cfg.html_root, path, self)
             cfg.log("Registered page: %s" % '.'.join(path))
 
@@ -156,20 +152,12 @@ class FormPlugin():
         if kwargs:
             kwargs['message'] = self.process_form(**kwargs)
         parts = get_parts(self, **kwargs)
-        return self.fill_template(**parts)
-                                  
+        return util.render_template(**parts)
+
     def process_form(self, **kwargs):
         """Process the form.  Return any message as a result of processing."""
         pass
 
-    def fill_template(self, *args, **kwargs):
-        if not 'js' in kwargs:
-            try:
-                kwargs['js'] = self.js
-            except AttributeError:
-                pass
-        cfg.log("%%%%%%%%%%% %s" % kwargs)
-        return u.page_template(*args, **kwargs)
 
 class UserStoreModule:
     """

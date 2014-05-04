@@ -3,6 +3,9 @@ import cherrypy
 from gettext import gettext as _
 from plugin_mount import PagePlugin
 import cfg
+import util
+
+
 class Help(PagePlugin):
     order = 20 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
@@ -43,11 +46,12 @@ class Help(PagePlugin):
         the question frequency is currently zero for all
         questions.</p>
         """ % {'box':cfg.box_name}
-        return self.fill_template(title="Documentation and FAQ", main=main)
+        return util.render_template(title="Documentation and FAQ", main=main)
 
     @cherrypy.expose
     def about(self):
-        return self.fill_template(title=_("About the %s" % cfg.box_name), main="""
+        return util.render_template(title=_("About the %s" % cfg.box_name),
+                                    main="""
         <img src="/static/theme/img/freedombox-logo-250px.png" class="main-graphic" />
         <p>We live in a world where our use of the network is
         mediated by those who often do not have our best
@@ -82,7 +86,8 @@ class View(PagePlugin):
     def default(self, page=''):
         if page not in ['design', 'plinth', 'hacking', 'faq']:
             raise cherrypy.HTTPError(404, "The path '/help/view/%s' was not found." % page)
-            return self.fill_template(template="err", main="<p>Sorry, as much as I would like to show you that page, I don't seem to have a page named %s!</p>" % page)
+
         with open(os.path.join("doc", "%s.part.html" % page), 'r') as IF:
             main = IF.read()
-        return self.fill_template(title=_("%s Documentation" % cfg.product_name), main=main)
+        return util.render_template(title=_("%s Documentation" %
+                                            cfg.product_name), main=main)

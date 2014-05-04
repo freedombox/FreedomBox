@@ -5,7 +5,7 @@ from plugin_mount import PagePlugin, FormPlugin
 from forms import Form
 import actions
 import cfg
-from util import Message
+import util
 
 class Packages(PagePlugin, FormPlugin):
     order = 20
@@ -52,12 +52,12 @@ class Packages(PagePlugin, FormPlugin):
 <p>aptitude purge modules</p>
 <p>aptitude install modules</p>
 <p>The modules should depend on the appropriate Debian packages.</p>""")
-        main += self.form(self, Message(output), args, kwargs)
+        main += self.form(self, util.Message(output), args, kwargs)
         sidebar_right = _("""
 <strong>Help</strong>
 <p>On this page, you can add or remove %s plugins to your %s.</p>
 <p>Plugins are just Debian packages, so Debian's usual package management features should make this job fairly easy.</p>""" % (cfg.product_name, cfg.box_name))
-        return self.fill_template(title=_("Add/Remove Plugins"), main=main, sidebar_right=sidebar_right)
+        return util.render_template(title=_("Add/Remove Plugins"), main=main, sidebar_right=sidebar_right)
 
     def form(self, message=None, *args, **kwargs):
         output, error = actions.run("module-manager", ["list-available"])

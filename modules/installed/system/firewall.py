@@ -27,6 +27,7 @@ import cfg
 from modules.auth import require
 from plugin_mount import PagePlugin
 import service as service_module
+import util
 
 
 class Firewall(PagePlugin):
@@ -65,7 +66,8 @@ pre-installed with {box_name}. On any Debian based system (such as
 {box_name}) you may install it using the command 'aptitude install
 firewalld'</p>''').format(box_name=cfg.box_name)
 
-            return self.fill_template(title=_("Firewall"), main=main + status)
+            return util.render_template(title=_("Firewall"),
+                                        main=main + status)
 
         if not self.get_enabled_status():
             status = _('''
@@ -75,7 +77,8 @@ enabled by default on {box_name}. On any Debian based system (such as
 or in case of system with systemd 'systemctl start firewalld'</p>
 ''').format(box_name=cfg.box_name)
 
-            return self.fill_template(title=_("Firewall"), main=main + status)
+            return util.render_template(title=_("Firewall"),
+                                        main=main + status)
 
         internal_enabled_sevices = self.get_enabled_services(zone='internal')
         external_enabled_sevices = self.get_enabled_services(zone='external')
@@ -129,8 +132,8 @@ or in case of system with systemd 'systemctl start firewalld'</p>
 service it is automatically permitted in the firewall and you disable
 a service is automatically disabled in the firewall.</em></p>'''
 
-        return self.fill_template(title=_("Firewall"), main=main +
-                                  services_info + footnote)
+        return util.render_template(title=_("Firewall"), main=main +
+                                    services_info + footnote)
 
     def get_installed_status(self):
         """Return whether firewall is installed"""

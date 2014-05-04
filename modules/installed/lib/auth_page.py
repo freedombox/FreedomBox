@@ -1,9 +1,14 @@
+"""
+Controller to provide login and logout actions
+"""
+
 import cherrypy
 import cfg
 from plugin_mount import PagePlugin
 from modules.forms import Form
 from auth import *
-# Controller to provide login and logout actions
+import util
+
 
 class AuthController(PagePlugin):
     def __init__(self, *args, **kwargs):
@@ -23,7 +28,7 @@ class AuthController(PagePlugin):
         form.text_input("Passphrase", name="passphrase", type="password")
         form.submit(label="Login")
 
-        return self.fill_template(main=form.render(), sidebar_right=" ")
+        return util.render_template(main=form.render(), sidebar_right=" ")
     
     @cherrypy.expose
     def login(self, username=None, passphrase=None, from_page=cfg.server_dir+"/", **kwargs):
