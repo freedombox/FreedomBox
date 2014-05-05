@@ -36,11 +36,12 @@ class add(FormPlugin, PagePlugin):
     url = ["/sys/users/add"]
     order = 30
 
-    sidebar_right = _("""<strong>Add User</strong><p>Adding a user via this
-        administrative interface <strong>might</strong> create a system user.
-        For example, if you provide a user with ssh access, she will
-        need a system account.  If you don't know what that means,
-        don't worry about it.</p>""")
+    @staticmethod
+    def sidebar_right(**kwargs):
+        """Return rendered string for sidebar on the right"""
+        del kwargs  # Unused
+
+        return util.render_template(template='users_add_sidebar')
 
     def main(self, username='', name='', email='', message=None, *args, **kwargs):
         form = Form(title="Add User",
@@ -61,27 +62,27 @@ class add(FormPlugin, PagePlugin):
         if error:
             msg.text = error
         else:
-            msg.add = _("%s saved." % username)
+            msg.add(_("User %s added" % username))
 
-        cfg.log(msg.text)
-        main = self.main(username, name, email, msg=msg.text)
-        return util.render_template(title="Manage Users and Groups", main=main,
-                                    sidebar_right=self.sidebar_right)
+        return msg.text
 
 
 class edit(FormPlugin, PagePlugin):
     url = ["/sys/users/edit"]
     order = 35
 
-    sidebar_right = _("""<strong>Edit Users</strong><p>Click on a user's name to
-    go to a screen for editing that user's account.</p><strong>Delete
-    Users</strong><p>Check the box next to a users' names and then click
-    "Delete User" to remove users from %s and the %s
-    system.</p><p>Deleting users is permanent!</p>""" % (cfg.product_name, cfg.box_name))
+    @staticmethod
+    def sidebar_right(**kwargs):
+        """Return rendered string for sidebar on the right"""
+        del kwargs  # Unused
 
-    def main(self, msg='', **kwargs):
+        return util.render_template(template='users_edit_sidebar')
+
+    def main(self, message=None, **kwargs):
         users = cfg.users.get_all()
-        add_form = Form(title=_("Edit or Delete User"), action=cfg.server_dir + "/sys/users/edit", message=msg)
+        add_form = Form(title=_("Edit or Delete User"),
+                        action=cfg.server_dir + "/sys/users/edit",
+                        message=message)
         add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
         for uname in users:
             user = User(uname[1])
@@ -117,20 +118,15 @@ class edit(FormPlugin, PagePlugin):
                         msg.add(_("User %s does not exist." % username))
             else:
                 msg.add = _("Must specify at least one valid, existing user.")
-            main = self.main(msg=msg.text)
-            return util.render_template(title="Manage Users and Groups",
-                                        main=main,
-                                        sidebar_right=self.sidebar_right)
 
-        sidebar_right = ''
-        u = cfg.users[kwargs['username']]
-        if not u:
-            main = _("<p>Could not find a user with username of %s!</p>" % kwargs['username'])
-            return util.render_template(template="err",
-                                        title=_("Unknown User"), main=main,
-                                        sidebar_right=sidebar_right)
+            return msg.txt
 
-        main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
-        sidebar_right = ''
-        return util.render_template(title="Manage Users and Groups", main=main,
-                                    sidebar_right=sidebar_right)
+        if 'username' not in kwargs:
+            return _('Invalid paramerters')
+
+        if kwargs['username'] not in cfg.users:
+            return _("<p>Could not find a user with username of %s!</p>") % \
+                kwargs['username']
+
+        user = cfg.users[kwargs['username']]
+        return _("<strong>Edit User '%s'</strong>") % user['username']
