@@ -34,5 +34,4 @@ href="http://blogfreakz.com/jquery/web-based-filemanager/">FileManager</a>.
 It appears to be mostly javascript with some bindings to make it
 python-friendly.</p>
 """
-        return util.render_template(title="File Explorer", main=main,
-                                    sidebar_right='')
+        return util.render_template(title="File Explorer", main=main)

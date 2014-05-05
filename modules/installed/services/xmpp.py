@@ -9,6 +9,12 @@ import service
 import util
 
 
+SIDE_MENU = {'title': _('XMPP'),
+             'items': [{'url': '/services/xmpp/configure',
+                        'text': 'Configure XMPP Server'},
+                       {'url': '/services/xmpp/register',
+                        'text': 'Register XMPP Account'}]}
+
 class xmpp(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
@@ -27,19 +33,27 @@ class xmpp(PagePlugin):
             'xmpp-bosh', _('Chat Server - web interface'), is_external=True,
             enabled=True)
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def index(self, **kwargs):
+    def index(**kwargs):
+        del kwargs  # Unused
         main = "<p>XMPP Server Accounts and Configuration</p>"
-        sidebar_right = '<strong><a href="'+cfg.server_dir+'/services/xmpp/configure">Configure XMPP Server</a></strong><br />'
-        sidebar_right = sidebar_right + '<strong><a href="'+cfg.server_dir+'/services/xmpp/register">Register XMPP Account</a></strong>'
-        return util.render_template(title="XMPP Server", main=main, sidebar_right=sidebar_right)
+
+        sidebar_right = util.render_template(template='menu_block',
+                                             menu=SIDE_MENU)
+        return util.render_template(title="XMPP Server", main=main,
+                                    sidebar_right=sidebar_right)
 
 class configure(FormPlugin, PagePlugin):
     url = ["/services/xmpp/configure"]
 
-    sidebar_left = ''
-    sidebar_right = _("<strong>Configure XMPP Server</strong>")
+    @staticmethod
+    def sidebar_right(**kwargs):
+        """Return rendered string for sidebar on the right"""
+        del kwargs  # Unused
+
+        return util.render_template(template='menu_block', menu=SIDE_MENU)
 
     def main(self, xmpp_inband_enable=False, message=None, *args, **kwargs):
         output, error = actions.superuser_run("xmpp-setup", 'status')
@@ -78,14 +92,18 @@ class configure(FormPlugin, PagePlugin):
                     opts.append('no'+key)
         actions.run("xmpp-setup", opts)
 
-        main = self.main(checkedinfo['inband_enable'])
-        return util.render_template(title="XMPP Server Configuration", main=main, sidebar_left=self.sidebar_left, sidebar_right=self.sidebar_right)
+        return ''
+
 
 class register(FormPlugin, PagePlugin):
     url = ["/services/xmpp/register"]
 
-    sidebar_left = ''
-    sidebar_right = _("<strong>Register XMPP Account</strong>")
+    @staticmethod
+    def sidebar_right(**kwargs):
+        """Return rendered string for sidebar on the right"""
+        del kwargs  # Unused
+
+        return util.render_template(template='menu_block', menu=SIDE_MENU)
 
     def main(self, username='', message=None, *args, **kwargs):
         form = Form(title="Register XMPP Account",
@@ -100,8 +118,11 @@ class register(FormPlugin, PagePlugin):
     def process_form(self, username=None, password=None, **kwargs):
         msg = util.Message()
 
-        if not username: msg.add = _("Must specify a username!")
-        if not password: msg.add = _("Must specify a password!")
+        if not username:
+            msg.add(_("Must specify a username!"))
+
+        if not password:
+            msg.add(_("Must specify a password!"))
 
         if username and password:
             output, error = actions.superuser_run(
@@ -110,14 +131,10 @@ class register(FormPlugin, PagePlugin):
                 raise Exception("something is wrong: " + error)
 
             if "successfully registered" in output:
-                msg.add = _("Registered account for %s." % username)
+                msg.add(_("Registered account for %s." % username))
             else:
-                msg.add = _("Failed to register account for %s: %s" % (username, output))
+                msg.add(_("Failed to register account for %s: %s" % (username, output)))
 
         cfg.log(msg.text)
-        main = self.main(username, msg=msg.text)
-        return util.render_template(
-            title="XMPP Server Configuration",
-            main=main,
-            sidebar_left=self.sidebar_left,
-            sidebar_right=self.sidebar_right)
+
+        return msg.text

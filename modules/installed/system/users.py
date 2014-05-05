@@ -16,10 +16,18 @@ class users(PagePlugin):
         self.register_page("sys.users.add")
         self.register_page("sys.users.edit")
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def index(self):
-        sidebar_right = '<strong><a href="'+cfg.server_dir+'/sys/users/add">Add User</a></strong><br/><strong><a href="'+cfg.server_dir+'/sys/users/edit">Edit Users</a></strong>'
+    def index():
+        """Return a rendered users page"""
+        menu = {'title': _('Users and Groups'),
+                'items': [{'url': '/sys/users/add',
+                           'text': _('Add User')},
+                          {'url': '/sys/users/edit',
+                           'text': _('Edit Users')}]}
+        sidebar_right = util.render_template(template='menu_block',
+                                             menu=menu)
         return util.render_template(title="Manage Users and Groups",
                                     sidebar_right=sidebar_right)
 
@@ -28,7 +36,6 @@ class add(FormPlugin, PagePlugin):
     url = ["/sys/users/add"]
     order = 30
 
-    sidebar_left = ''
     sidebar_right = _("""<strong>Add User</strong><p>Adding a user via this
         administrative interface <strong>might</strong> create a system user.
         For example, if you provide a user with ssh access, she will
@@ -59,7 +66,6 @@ class add(FormPlugin, PagePlugin):
         cfg.log(msg.text)
         main = self.main(username, name, email, msg=msg.text)
         return util.render_template(title="Manage Users and Groups", main=main,
-                                    sidebar_left=self.sidebar_left,
                                     sidebar_right=self.sidebar_right)
 
 
@@ -67,7 +73,6 @@ class edit(FormPlugin, PagePlugin):
     url = ["/sys/users/edit"]
     order = 35
 
-    sidebar_left = ''
     sidebar_right = _("""<strong>Edit Users</strong><p>Click on a user's name to
     go to a screen for editing that user's account.</p><strong>Delete
     Users</strong><p>Check the box next to a users' names and then click
@@ -115,7 +120,6 @@ class edit(FormPlugin, PagePlugin):
             main = self.main(msg=msg.text)
             return util.render_template(title="Manage Users and Groups",
                                         main=main,
-                                        sidebar_left=self.sidebar_left,
                                         sidebar_right=self.sidebar_right)
 
         sidebar_right = ''
@@ -124,11 +128,9 @@ class edit(FormPlugin, PagePlugin):
             main = _("<p>Could not find a user with username of %s!</p>" % kwargs['username'])
             return util.render_template(template="err",
                                         title=_("Unknown User"), main=main,
-                                        sidebar_left=self.sidebar_left,
                                         sidebar_right=sidebar_right)
 
         main = _("""<strong>Edit User '%s'</strong>""" % u['username'])
         sidebar_right = ''
         return util.render_template(title="Manage Users and Groups", main=main,
-                                    sidebar_left=self.sidebar_left,
                                     sidebar_right=sidebar_right)

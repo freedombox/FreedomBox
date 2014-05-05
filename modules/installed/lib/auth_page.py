@@ -28,7 +28,7 @@ class AuthController(PagePlugin):
         form.text_input("Passphrase", name="passphrase", type="password")
         form.submit(label="Login")
 
-        return util.render_template(main=form.render(), sidebar_right=" ")
+        return util.render_template(main=form.render())
     
     @cherrypy.expose
     def login(self, username=None, passphrase=None, from_page=cfg.server_dir+"/", **kwargs):

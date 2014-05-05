@@ -26,8 +26,7 @@ class Apps(PagePlugin):
         Many of the services you use on the web could soon be on site
         and under your control!</p>
         """ % (cfg.product_name)
-        return util.render_template(title="User Applications", main=main,
-                                    sidebar_right='')
+        return util.render_template(title="User Applications", main=main)
 
     @cherrypy.expose
     @require()
