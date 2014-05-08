@@ -1,0 +1,64 @@
+{% extends "login_nav.html" %}
+
+{% block main_block %}
+
+<p>Firewall is a network security system that controls the incoming
+and outgoing network traffic on your {{ cfg.box_name }}. Keeping a
+firewall enabled and properly configured reduces risk of security
+threat from the Internet.</p>
+
+<p>The following the current status:</p>
+
+{% if firewall_status = 'not_installed' %}
+<p>Firewall is not installed. Please install it. Firewall comes
+pre-installed with {{ cfg.box_name }}. On any Debian based system
+(such as {{ cfg.box_name }}) you may install it using the command 'aptitude
+install firewalld'</p>
+
+{% elif firewall_status = 'not_running' %}
+
+<p>Firewall daemon is not running. Please run it. Firewall comes
+enabled by default on {{ cfg.box_name }}. On any Debian based system
+(such as {{ cfg.box_name }}) you may run it using the command 'service
+firewalld start' or in case of a system with systemd 'systemctl start
+firewalld'</p>
+
+{% else %}
+
+<ul>
+
+  {% for service in services %}
+  <li>{{ service.name }}:
+    {% if service.is_enabled %}
+    <span class='firewall-permitted'>Enabled</span>
+    {% else %}
+    <span class='firewall-blocked'>Disabled</span>
+    {% endif %}
+
+    <ul>
+      {% for port in service.ports %}
+      <li> {{ port }}:
+        {% if port in internal_enabled_services and port in external_enabled_services %}
+          <span class='firewall-permitted'>Permitted</span>
+        {% elif port in internal_enabled_services %}
+          <span class='firewall-permitted'>Permitted (internal only)</span>
+        {% elif port in external_enabled_services %}
+          <span class='firewall-permitted'>Permitted (external only)</span>
+        {% else %}
+          <span class='firewall-blocked'>Blocked</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+
+</ul>
+
+<p><em>The operation of the firewall is automatic. When you enable a
+service it is automatically permitted in the firewall and you disable
+a service is automatically disabled in the firewall.</em></p>
+
+{% endif %}
+
+{% endblock %}
