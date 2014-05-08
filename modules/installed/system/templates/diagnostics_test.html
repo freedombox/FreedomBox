@@ -1,0 +1,15 @@
+{% extends 'login_nav.html' %}
+
+{% block main_block %}
+
+{% if diagnostics_error %}
+  <p>The diagnostic test encountered an error:<p>
+  <pre>{{ diagnostics_error }}</pre>
+{% endif %}
+
+{% if diagnostics_output %}
+  <p>Output of diagnostic test:</p>
+  <pre>{{ diagnostics_output }}</pre>
+{% endif %}
+
+{% endblock %}
