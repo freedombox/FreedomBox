@@ -18,10 +18,5 @@ class Sys(PagePlugin):
 
     @cherrypy.expose
     def index(self):
-        return util.render_template(title=_("System Configuration"), main=_("""
-        <p>In this section, you can control the %(product)s's
-        underlying system, as opposed to its various applications and
-        services.  These options affect the %(product)s at its most
-        general level.  This is where you add/remove users, install
-        applications, reboot, etc.</p>
-        """ % {'product':cfg.product_name}))
+        return util.render_template(template='system',
+                                    title=_("System Configuration"))
