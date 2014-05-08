@@ -129,11 +129,13 @@
 		{{ sidebar_left|safe }}
           </div><!--/.well -->
 	{% endif %}
-        {% if sidebar_right %}
-          <div class="well sidebar-nav">
-		{{ sidebar_right|safe }}
-          </div><!--/.well -->
-	{% endif %}
+        {% block sidebar_right_block %}
+          {% if sidebar_right %}
+            <div class="well sidebar-nav">
+              {{ sidebar_right|safe }}
+            </div><!--/.well -->
+          {% endif %}
+        {% endblock %}
         </div>
 	{% endif %}
         <div class="span9">
