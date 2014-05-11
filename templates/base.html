@@ -193,6 +193,8 @@
 	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/typeahead.js"></script>-->
 	<!-- JS plugins -->
 	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plugins.js"></script>
-	{{ js|safe }}
+        {% block js_block %}
+          {{ js|safe }}
+        {% endblock %}
 </body>
 </html>
