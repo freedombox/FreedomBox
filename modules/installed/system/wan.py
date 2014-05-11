@@ -1,78 +1,85 @@
-import os
 import cherrypy
-try:
-    import simplejson as json
-except ImportError:
-    import json
+from django import forms
 from gettext import gettext as _
 from modules.auth import require
-from plugin_mount import PagePlugin, FormPlugin
+from plugin_mount import PagePlugin
 import cfg
-from forms import Form
-from model import User
-from util import *
+import util
 
-class wan(FormPlugin, PagePlugin):
-    url = ["/sys/config"]
-    order = 20
 
-    def help(self, *args, **kwargs):
-        if not cfg.users.expert():
-            return ''
-        return _(#"""<h4>Admin from WAN</h4>
-        """<p>If you check this box, this front
-        end will be reachable from the WAN.  If your %(box)s
-        connects you to the internet, that means you'll be able to log
-        in to the front end from the internet.  This might be
-        convenient, but it is also <strong>dangerous</strong>, since it can
-        enable attackers to gain access to your %(box)s from the
-        outside world.  All they'll need is your username and
-        passphrase, which they might guess or they might simply try
-        every posible combination of letters and numbers until they
-        get in.  If you enable the WAN administration option, you
-        <strong>must</strong> use long and complex passphrases.</p>
+class WanForm(forms.Form):  # pylint: disable-msg=W0232
+    """Form to configure wan settings"""
 
-        <p>For security reasons, neither WAN Administration nor WAN
-        SSH is available to the `admin` user account.</p>
+    wan_admin = forms.BooleanField(
+        label=_('Allow access to Plinth from WAN'),
+        required=False,
+        help_text=_('If you check this box, this front end will be reachable \
+from the WAN.  If your {{ box_name }} connects you to the internet, that \
+means you\'ll be able to log in to the front end from the internet.  This \
+might be convenient, but it is also <strong>dangerous</strong>, since it can \
+enable attackers to gain access to your {{ box_name }} from the outside \
+world. All they\'ll need is your username and passphrase, which they might \
+guess or they might simply try every posible combination of letters and \
+numbers until they get in.  If you enable the WAN administration option, you \
+<strong>must</strong> use long and complex passphrases.').format(
+            box_name=cfg.box_name))
 
-        <p>TODO: in expert mode, tell user they can ssh in to enable
-        admin from WAN, do their business, then disable it.  It would
-        be good to enable the option and autodisable it when the ssh
-        connection dies.</p>
-        """ % {'product':cfg.product_name, 'box':cfg.box_name})
+    lan_ssh = forms.BooleanField(
+        label=_('Allow SSH access from LAN'),
+        required=False)
 
-    def main(self, message='', **kwargs):
-        store = filedict_con(cfg.store_file, 'sys')
+    wan_ssh = forms.BooleanField(
+        label=_('Allow SSH access from WAN'),
+        required=False)
 
-        defaults = {'wan_admin': '',
-                    'wan_ssh': '',
-                    'lan_ssh': '',
-                    }
-        for key, value in defaults.items():
-            if not key in kwargs:
-                try:
-                    kwargs[key] = store[key]
-                except KeyError:
-                    store[key] = kwargs[key] = value
+    # XXX: Only present due to issue with submitting empty form
+    dummy = forms.CharField(label='Dummy', initial='dummy',
+                            widget=forms.HiddenInput())
 
-        form = Form(title=_("Accessing the %s" % cfg.box_name),
-                    action=cfg.server_dir + "/sys/config/wan/",
-                    name="admin_wan_form",
-                    message=message)
-        form.html(self.help())
-        if cfg.users.expert():
-            form.checkbox(_("Allow access to Plinth from WAN"), name="wan_admin", checked=kwargs['wan_admin'])
-            form.checkbox(_("Allow SSH access from LAN"), name="lan_ssh", checked=kwargs['lan_ssh'])
-            form.checkbox(_("Allow SSH access from WAN"), name="wan_ssh", checked=kwargs['wan_ssh'])
 
-        # Hidden field is needed because checkbox doesn't post if not checked
-        form.hidden(name="submitted", value="True")
+class Wan(PagePlugin):
+    order = 60
 
-        form.submit(_("Submit"))
-        return form.render()
+    def __init__(self, *args, **kwargs):
+        PagePlugin.__init__(self, *args, **kwargs)
+        self.register_page('sys.config.wan')
 
-    def process_form(self, wan_admin='', wan_ssh='', lan_ssh='', *args, **kwargs):
-        store = filedict_con(cfg.store_file, 'sys')
+        cfg.html_root.sys.config.menu.add_item(_('WAN'), 'icon-cog',
+                                               '/sys/config/wan', 20)
+
+    @cherrypy.expose
+    @require()
+    def index(self, **kwargs):
+        """Serve the configuration form"""
+        status = self.get_status()
+
+        form = None
+        messages = []
+
+        if kwargs and cfg.users.expert():
+            form = WanForm(kwargs, prefix='wan')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(form.cleaned_data, messages)
+                status = self.get_status()
+                form = WanForm(initial=status, prefix='wan')
+        else:
+            form = WanForm(initial=status, prefix='wan')
+
+        title = _('Accessing the {box_name}').format(box_name=cfg.box_name)
+        return util.render_template(template='wan', title=title, form=form,
+                                    messages=messages)
+
+    @staticmethod
+    def get_status():
+        """Return the current status"""
+        return util.filedict_con(cfg.store_file, 'sys')
+
+    @staticmethod
+    def _apply_changes(new_status, messages):
+        """Apply the changes after form submission"""
+        store = util.filedict_con(cfg.store_file, 'sys')
         for field in ['wan_admin', 'wan_ssh', 'lan_ssh']:
-            store[field] = locals()[field]
-        return "Settings updated."
+            store[field] = new_status[field]
+
+        messages.append(('success', _('Setting updated')))

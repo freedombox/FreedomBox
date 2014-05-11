@@ -1,0 +1,36 @@
+{% extends "login_nav.html" %}
+{% load bootstrap %}
+
+{% block main_block %}
+
+{% if  cfg.users.expert %}
+
+  {% for severity, message in messages %}
+    <div class='alert alert-{{ severity }}'>{{ message }}</div>
+  {% endfor %}
+
+  <p>For security reasons, neither WAN Administration nor WAN SSH is
+    available to the `admin` user account.</p>
+
+  <p>TODO: in expert mode, tell user they can ssh in to enable admin
+    from WAN, do their business, then disable it.  It would be good to
+    enable the option and autodisable it when the ssh connection
+    dies.</p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn-primary" value="Submit"/>
+
+  </form>
+
+{% else %}
+
+  <p>This page is available only in expert mode.</p>
+
+{% endif %}
+
+
+{% endblock %}
