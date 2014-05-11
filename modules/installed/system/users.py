@@ -1,20 +1,20 @@
 import cherrypy
+from django import forms
+from django.core import validators
 from gettext import gettext as _
-from auth import require, add_user
-from plugin_mount import PagePlugin, FormPlugin
+import auth
+from auth import require
+from plugin_mount import PagePlugin
 import cfg
-from forms import Form
 from model import User
 import util
 
 
-class users(PagePlugin):
+class Users(PagePlugin):
     order = 20 # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys.users")
-        self.register_page("sys.users.add")
-        self.register_page("sys.users.edit")
 
     @staticmethod
     @cherrypy.expose
@@ -32,101 +32,141 @@ class users(PagePlugin):
                                     sidebar_right=sidebar_right)
 
 
-class add(FormPlugin, PagePlugin):
-    url = ["/sys/users/add"]
+class UserAddForm(forms.Form):  # pylint: disable-msg=W0232
+    """Form to add a new user"""
+
+    username = forms.CharField(
+        label=_('Username'),
+        help_text=_('Must be lower case alphanumeric and start with \
+and alphabet'),
+        validators=[
+            validators.RegexValidator(r'^[a-z][a-z0-9]*$',
+                                      _('Invalid username'))])
+
+    password = forms.CharField(label=_('Password'),
+                               widget=forms.PasswordInput())
+    full_name = forms.CharField(label=_('Full name'), required=False)
+    email = forms.EmailField(label=_('Email'), required=False)
+
+
+class UserAdd(PagePlugin):
+    """Add user page"""
     order = 30
 
-    @staticmethod
-    def sidebar_right(**kwargs):
-        """Return rendered string for sidebar on the right"""
-        del kwargs  # Unused
+    def __init__(self, *args, **kwargs):
+        PagePlugin.__init__(self, *args, **kwargs)
 
-        return util.render_template(template='users_add_sidebar')
+        self.register_page('sys.users.add')
 
-    def main(self, username='', name='', email='', message=None, *args, **kwargs):
-        form = Form(title="Add User",
-                    action=cfg.server_dir + "/sys/users/add/index",
-                    name="add_user_form",
-                    message=message)
-        form.text_input(_("Username"), name="username", value=username)
-        form.text_input(_("Full name"), name="name", value=name)
-        form.text_input(_("Email"), name="email", value=email)
-        form.text_input(_("Password"), name="password", type="password")
-        form.submit(label=_("Create User"), name="create")
-        return form.render()
+    @cherrypy.expose
+    @require()
+    def index(self, **kwargs):
+        """Serve the form"""
+        form = None
+        messages = []
 
-    def process_form(self, username=None, name=None, email=None, password=None, **kwargs):
-        msg = util.Message()
-
-        error = add_user(username, password, name, email, False)
-        if error:
-            msg.text = error
+        if kwargs:
+            form = UserAddForm(kwargs, prefix='user')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._add_user(form.cleaned_data, messages)
+                form = UserAddForm(prefix='user')
         else:
-            msg.add(_("User %s added" % username))
+            form = UserAddForm(prefix='user')
 
-        return msg.text
-
-
-class edit(FormPlugin, PagePlugin):
-    url = ["/sys/users/edit"]
-    order = 35
+        return util.render_template(template='users_add', title=_('Add User'),
+                                    form=form, messages=messages)
 
     @staticmethod
-    def sidebar_right(**kwargs):
-        """Return rendered string for sidebar on the right"""
-        del kwargs  # Unused
+    def _add_user(data, messages):
+        """Add a user"""
+        if cfg.users.exists(data['username']):
+            messages.append(
+                ('error', _('User "{username}" already exists').format(
+                 username=data['username'])))
+            return
 
-        return util.render_template(template='users_edit_sidebar')
+        auth.add_user(data['username'], data['password'], data['full_name'],
+                      data['email'], False)
+        messages.append(
+            ('success', _('User "{username}" added').format(
+             username=data['username'])))
 
-    def main(self, message=None, **kwargs):
+
+class UserEditForm(forms.Form):  # pylint: disable-msg=W0232
+    """Form to edit/delete a user"""
+    def __init__(self, *args, **kwargs):
+        # pylint: disable-msg=E1002
+        super(forms.Form, self).__init__(*args, **kwargs)
+
         users = cfg.users.get_all()
-        add_form = Form(title=_("Edit or Delete User"),
-                        action=cfg.server_dir + "/sys/users/edit",
-                        message=message)
-        add_form.html('<span class="indent"><strong>Delete</strong><br /></span>')
         for uname in users:
             user = User(uname[1])
-            add_form.html('<span class="indent">&nbsp;&nbsp;%s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' %
-                          add_form.get_checkbox(name=user['username']) +
-                          '<a href="'+cfg.server_dir+'/sys/users/edit?username=%s">%s (%s)</a><br /></span>' %
-                          (user['username'], user['name'], user['username']))
-        add_form.submit(label=_("Delete User"), name="delete")
-        return add_form.render()
 
-    def process_form(self, **kwargs):
-        if 'delete' in kwargs:
-            msg = util.Message()
-            usernames = util.find_keys(kwargs, 'on')
-            cfg.log.info("%s asked to delete %s" % (cherrypy.session.get(cfg.session_key), usernames))
-            if usernames:
-                for username in usernames:
-                    if cfg.users.exists(username):
-                        try:
-                            cfg.users.remove(username)
-                            msg.add(_("Deleted user %s." % username))
-                        except IOError, e:
-                            if cfg.users.exists(username):
-                                m = _("Error on deletion, user %s not fully deleted: %s" % (username, e))
-                                cfg.log.error(m)
-                                msg.add(m)
-                            else:
-                                m = _('Deletion failed on %s: %s' % (username, e))
-                                cfg.log.error(m)
-                                msg.add(m)
-                    else:
-                        cfg.log.warning(_("Can't delete %s.  User does not exist." % username))
-                        msg.add(_("User %s does not exist." % username))
-            else:
-                msg.add = _("Must specify at least one valid, existing user.")
+            label = '%s (%s)' % (user['name'], user['username'])
+            field = forms.BooleanField(label=label, required=False)
+            # pylint: disable-msg=E1101
+            self.fields['delete_user_' + user['username']] = field
 
-            return msg.txt
 
-        if 'username' not in kwargs:
-            return _('Invalid paramerters')
+class UserEdit(PagePlugin):
+    """User edit page"""
+    order = 35
 
-        if kwargs['username'] not in cfg.users:
-            return _("<p>Could not find a user with username of %s!</p>") % \
-                kwargs['username']
+    def __init__(self, *args, **kwargs):
+        PagePlugin.__init__(self, *args, **kwargs)
 
-        user = cfg.users[kwargs['username']]
-        return _("<strong>Edit User '%s'</strong>") % user['username']
+        self.register_page('sys.users.edit')
+
+    @cherrypy.expose
+    @require()
+    def index(self, **kwargs):
+        """Serve the form"""
+        form = None
+        messages = []
+
+        if kwargs:
+            form = UserEditForm(kwargs, prefix='user')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(form.cleaned_data, messages)
+                form = UserEditForm(prefix='user')
+        else:
+            form = UserEditForm(prefix='user')
+
+        return util.render_template(template='users_edit',
+                                    title=_('Edit or Delete User'),
+                                    form=form, messages=messages)
+
+    @staticmethod
+    def _apply_changes(data, messages):
+        """Apply form changes"""
+        for field, value in data.items():
+            if not value:
+                continue
+
+            if not field.startswith('delete_user_'):
+                continue
+
+            username = field.split('delete_user_')[1]
+
+            cfg.log.info('%s asked to delete %s' %
+                         (cherrypy.session.get(cfg.session_key), username))
+
+            if username == cfg.users.current(name=True):
+                messages.append(
+                    ('error',
+                     _('Can not delete current account - "%s"') % username))
+                continue
+
+            if not cfg.users.exists(username):
+                messages.append(('error',
+                                 _('User "%s" does not exist') % username))
+                continue
+
+            try:
+                cfg.users.remove(username)
+                messages.append(('success', _('User "%s" deleted') % username))
+            except IOError as exception:
+                messages.append(('error', _('Error deleting "%s" - %s') %
+                                 (username, exception)))
