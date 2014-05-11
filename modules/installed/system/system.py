@@ -13,7 +13,6 @@ class Sys(PagePlugin):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("sys")
         self.menu = cfg.main_menu.add_item(_("System"), "icon-cog", "/sys", 100)
-	self.menu.add_item(_("Configure"), "icon-cog", "/sys/config", 10)
 	self.menu.add_item(_("Users and Groups"), "icon-user", "/sys/users", 15)
 
     @cherrypy.expose

@@ -44,6 +44,9 @@ class Config(PagePlugin):
 
         self.register_page("sys.config")
 
+        self.menu = cfg.html_root.sys.menu.add_item(_('Configure'), 'icon-cog',
+                                                    '/sys/config', 10)
+
     @cherrypy.expose
     @require()
     def index(self):

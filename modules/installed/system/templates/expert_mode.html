@@ -1,0 +1,34 @@
+{% extends "login_nav.html" %}
+{% load bootstrap %}
+
+{% block main_block %}
+
+  {% for severity, message in messages %}
+    <div class='alert alert-{{ severity }}'>{{ message }}</div>
+  {% endfor %}
+
+  <p>The {{ cfg.box_name }} can be administered in two modes, 'basic'
+  and 'expert'.  Basic mode hides a lot of features and configuration
+  options that most users will never need to think about.  Expert mode
+  allows you to get into the details.</p>
+
+  <p>Most users can operate the {{ cfg.box_name }} by configuring the
+  limited number of options visible in Basic mode.  For the sake of
+  simplicity and ease of use, we hid most of {{ cfg.product_name }}'s
+  less frequently used options.  But if you want more sophisticated
+  features, you can enable Expert mode, and {{ cfg.product_name }}
+  will present more advanced menu options.</p>
+
+  <p>You should be aware that it might be possible to render your
+  {{ cfg.box_name }} inaccessible via Expert mode options.</p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn-primary" value="Submit"/>
+
+  </form>
+
+{% endblock %}
