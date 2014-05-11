@@ -37,6 +37,11 @@ from plugin_mount import PagePlugin
 import util
 
 
+def get_hostname():
+    """Return the hostname"""
+    return socket.gethostname()
+
+
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
     def clean(self, value):
@@ -122,7 +127,7 @@ class Configuration(PagePlugin):
     @staticmethod
     def get_status():
         """Return the current status"""
-        return {'hostname': socket.gethostname(),
+        return {'hostname': get_hostname(),
                 'time_zone': util.slurp('/etc/timezone').rstrip()}
 
     @staticmethod
