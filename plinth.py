@@ -206,7 +206,8 @@ def main():
 
     # Configure Django
     template_directories = get_template_directories()
-    django.conf.settings.configure(TEMPLATE_DIRS=template_directories)
+    django.conf.settings.configure(TEMPLATE_DIRS=template_directories,
+                                   INSTALLED_APPS=['bootstrapform'])
 
     cherrypy.engine.start()
     cherrypy.engine.block()

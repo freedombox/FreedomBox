@@ -17,7 +17,7 @@ default: config dirs css docs
 all: default
 
 predepend:
-	sudo sh -c "apt-get install augeas-tools libpython2.7 pandoc psmisc python2.7 python-augeas python-bcrypt python-bjsonrpc python-cherrypy3 python-django python-passlib python-simplejson sudo"
+	sudo sh -c "apt-get install augeas-tools libpython2.7 pandoc psmisc python2.7 python-augeas python-bcrypt python-bjsonrpc python-cherrypy3 python-django python-passlib python-simplejson python-bootstrapform sudo"
 	git submodule init
 	git submodule update
 	touch predepend
