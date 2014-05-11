@@ -167,7 +167,6 @@ def setup():
    cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
    cfg.page_plugins = plugin_mount.PagePlugin.get_plugins()
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
-   cfg.forms = plugin_mount.FormPlugin.get_plugins()
 
    # Add an extra server
    server = _cpserver.Server()
