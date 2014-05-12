@@ -34,27 +34,6 @@ class PluginMountSingular(PluginMount):
             cls.plugins.append(cls)
             
 
-def get_parts(obj, parts=None, *args, **kwargs):
-    if parts == None:
-        parts={}
-
-    fields = ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title']
-    for v in fields:
-        if not v in parts:
-            parts[v] = ''
-
-        try:
-            method = getattr(obj, v)
-            if callable(method):
-                parts[v] = method(*args, **kwargs)
-            else:
-                parts[v] = method
-        except AttributeError:
-            pass
-
-    return parts
-
-
 def _setattr_deep(obj, path, value):
     """If path is 'x.y.z' or ['x', 'y', 'z'] then perform obj.x.y.z = value"""
     if isinstance(path, basestring):
@@ -86,15 +65,6 @@ class PagePlugin:
     def register_page(self, url):
         cfg.log.info("Registering page: %s" % url)
         _setattr_deep(cfg.html_root, url, self)
-
-    def forms(self, url, *args, **kwargs):
-        for form in cfg.forms:
-            if url in form.url:
-                cfg.log('Pulling together form for url %s (which matches %s)' % (url, form.url))
-
-                parts = get_parts(form, None, *args, **kwargs)
-
-        return parts
 
 
 class UserStoreModule:
