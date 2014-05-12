@@ -1,8 +1,5 @@
 MAKE=make
 
-CSS=$(wildcard *.css)
-CSS=$(subst .tiny,,$(shell find themes -type f -name '*.css'))
-COMPRESSED_CSS := $(patsubst %.css,%.tiny.css,$(CSS))
 PWD=`pwd`
 
 # hosting variables
@@ -13,7 +10,7 @@ DATADIR=/usr/share/plinth
 PYDIR=$(DATADIR)/python/plinth
 
 ## Catch-all targets
-default: config dirs css docs
+default: config dirs docs
 all: default
 
 predepend:
@@ -54,10 +51,6 @@ dirs:
 config: Makefile
 	@test -f plinth.config || cp plinth.sample.config plinth.config
 
-%.tiny.css: %.css
-	@cat $< | python -c 'import re,sys;print re.sub("\s*([{};,:])\s*", "\\1", re.sub("/\*.*?\*/", "", re.sub("\s+", " ", sys.stdin.read())))' > $@
-css: $(COMPRESSED_CSS)
-
 docs:
 	@$(MAKE) -s -C doc
 doc: docs
@@ -67,7 +60,6 @@ html:
 
 clean:
 	@rm -f cherrypy.config data/cherrypy_sessions/*
-	@find themes -name "*.tiny.css" -exec rm {} \;
 	@find . -name "*~" -exec rm {} \;
 	@find . -name ".#*" -exec rm {} \;
 	@find . -name "#*" -exec rm {} \;
