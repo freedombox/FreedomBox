@@ -63,31 +63,36 @@
 
 {% block sidebar_right_block %}
 
-  <h3>Introduction</h3>
+  <div class="well sidebar-nav">
 
-  <p>Your {{ cfg.box_name }} is a replacement for your wireless
-    router.  By default, it should do everything your usual router
-    does.  With the addition of some extra modules, its abilities can
-    rival those of high-end routers costing hundreds of dollars.</p>
+    <h3>Introduction</h3>
 
-  {% if cfg.users.expert %}
+    <p>Your {{ cfg.box_name }} is a replacement for your wireless
+      router.  By default, it should do everything your usual router
+      does.  With the addition of some extra modules, its abilities
+      can rival those of high-end routers costing hundreds of
+      dollars.</p>
 
-    <h3>WAN Connection Type</h3>
+    {% if cfg.users.expert %}
 
-    <h3>DHCP</h3>
+      <h3>WAN Connection Type</h3>
 
-    <p>DHCP allows your router to automatically connect with the
-      upstream network.  If you are unsure what option to choose,
-      stick with DHCP.  It is usually correct.</p>
+      <h3>DHCP</h3>
 
-    <h3>Static IP</h3>
+      <p>DHCP allows your router to automatically connect with the
+        upstream network.  If you are unsure what option to choose,
+        stick with DHCP.  It is usually correct.</p>
 
-    <p>If you want to setup your connection manually, you can enter
-      static IP information.  This option is for those who know what
-      they're doing.  As such, it is only available in expert
-      mode.</p>
+      <h3>Static IP</h3>
 
-  {% endif %}
+      <p>If you want to setup your connection manually, you can enter
+        static IP information.  This option is for those who know what
+        they're doing.  As such, it is only available in expert
+        mode.</p>
+
+    {% endif %}
+
+  </div>
 
 {% endblock %}
 
