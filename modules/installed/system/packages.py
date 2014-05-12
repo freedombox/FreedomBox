@@ -40,7 +40,8 @@ class PackagesForm(forms.Form):
 
         for module in modules_available:
             label = _('Enable {module}').format(module=module)
-            self.fields[module + '_enabled'] = forms.BooleanField(label=label)
+            self.fields[module + '_enabled'] = forms.BooleanField(
+                label=label, required=False)
 
 
 class Packages(PagePlugin):
