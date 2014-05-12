@@ -47,10 +47,7 @@
 	{{ css|safe }}
 	<!-- End Plinth CSS -->
 	<!-- JS from previous Plinth template, not sure what to keep yet -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/menu.js"></script>
 	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plinth.js"></script>
-	{{ main_menu_js|safe }}
-	{{ sub_menu_js|safe }}
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
@@ -72,13 +69,13 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        {% if nav or sidebar_right or sidebar_left %}
+        {% if submenu or sidebar_right or sidebar_left %}
         <div class="span3">
-        {% if nav %}
+        {% if submenu %}
           <div class="well sidebar-nav">
-	    {{ nav|safe }}
+            {% include "menu.html" with menu=submenu %}
           </div><!--/.well -->
-	{% endif %}
+        {% endif %}
         {% if sidebar_left %}
           <div class="well sidebar-nav">
 		{{ sidebar_left|safe }}

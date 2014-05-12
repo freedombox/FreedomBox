@@ -71,24 +71,12 @@ def render_template(template='login_nav', **kwargs):
     if kwargs['basehref'] == '':
         kwargs['basehref'] = cfg.server_dir
 
-    try:
-        submenu = cfg.main_menu.active_item().encode("sub_menu", render_subs=True)
-    except AttributeError:
-        submenu = ""
-
     kwargs['template'] = template
-    kwargs['main_menu_js'] = cfg.main_menu.encode("main_menu")
-    kwargs['sub_menu_js'] = submenu
+    kwargs['main_menu'] = cfg.main_menu
+    kwargs['submenu'] = cfg.main_menu.active_item()
     kwargs['current_url'] = cherrypy.url()
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
     kwargs['cfg'] = cfg
-
-    if not kwargs['nav'] and submenu:
-       kwargs['nav'] = """	<script type="text/javascript">
-          <!--
-              side_menu(sub_menu_items);
-	  // -->
-	</script>"""
 
     return render_to_string(template + '.html', kwargs)
 
