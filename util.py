@@ -63,8 +63,8 @@ class Message():
 
 
 def render_template(template='login_nav', **kwargs):
-    for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav',
-                'css', 'title', 'basehref']:
+    for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'nav', 'css',
+                'title', 'basehref']:
         if not key in kwargs:
             kwargs[key] = ''
 
