@@ -24,9 +24,7 @@
 
   <h2>Welcome to Your FreedomBox!</h2>
 
-  {% for severity, message in messages %}
-    <div class='alert alert-{{ severity }}'>{{ message }}</div>
-  {% endfor %}
+  {% include 'messages.html' %}
 
   <p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll
     need to ask you a just few questions to get started.</p>

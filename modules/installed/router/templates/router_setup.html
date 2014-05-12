@@ -24,9 +24,7 @@
 
   <h3>WAN Connection</h3>
 
-  {% for severity, message in messages %}
-    <div class='alert alert-{{ severity }}'>{{ message }}</div>
-  {% endfor %}
+  {% include 'messages.html' %}
 
   <form class="form" method="post">
     {% csrf_token %}

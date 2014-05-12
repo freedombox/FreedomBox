@@ -22,9 +22,7 @@
 
 {% block main_block %}
 
-  {% for severity, message in messages %}
-    <div class='alert alert-{{ severity }}'>{{ message }}</div>
-  {% endfor %}
+  {% include 'messages.html' %}
 
   <p>The {{ cfg.box_name }} can be administered in two modes, 'basic'
   and 'expert'.  Basic mode hides a lot of features and configuration

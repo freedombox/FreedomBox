@@ -24,9 +24,7 @@
 
 {% if  cfg.users.expert %}
 
-  {% for severity, message in messages %}
-    <div class='alert alert-{{ severity }}'>{{ message }}</div>
-  {% endfor %}
+  {% include 'messages.html' %}
 
   <p>For security reasons, neither WAN Administration nor WAN SSH is
     available to the `admin` user account.</p>

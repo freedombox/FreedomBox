@@ -1,4 +1,3 @@
-{% extends "login_nav.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,35 +17,9 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
-
-{% block main_block %}
-
-  {% include 'messages.html' %}
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn-primary" value="Add User"/>
-
-  </form>
-
-{% endblock %}
-
-{% block sidebar_right_block %}
-
-  <div class="well sidebar-nav">
-
-    <h3>Add User</h3>
-
-    <p>Adding a user via this administrative
-      interface <strong>might</strong> create a system user. For
-      example, if you provide a user with ssh access, she will need a
-      system account.  If you don't know what that means, don't worry
-      about it.</p>
-
+{% for severity, message in messages %}
+  <div class='alert alert-{{ severity }} alert-dismissable'>
+    <a class="close" data-dismiss="alert">&times;</a>
+    {{ message }}
   </div>
-
-{% endblock %}
+{% endfor %}

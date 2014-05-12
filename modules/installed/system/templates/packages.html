@@ -22,9 +22,7 @@
 
 {% block main_block %}
 
-  {% for severity, message in messages %}
-    <div class='alert alert-{{ severity }}'>{{ message }}</div>
-  {% endfor %}
+  {% include 'messages.html' %}
 
   <p>aptitude purge modules</p>
 
