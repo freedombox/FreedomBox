@@ -23,8 +23,7 @@ import cherrypy
 from django import forms
 from django.core import validators
 from gettext import gettext as _
-import json
-import os
+import re
 import socket
 
 import actions
@@ -76,14 +75,18 @@ and must not be greater than 63 characters in length.'),
     @staticmethod
     def get_time_zones():
         """Return list of available time zones"""
-        # XXX: Get rid of a custom file and read the values from /usr
-        module_file = __file__
-        if module_file.endswith(".pyc"):
-            module_file = module_file[:-1]
+        time_zones = []
+        for line in open('/usr/share/zoneinfo/zone.tab'):
+            if re.match(r'^(#|\s*$)', line):
+                continue
 
-        module_dir = os.path.dirname(os.path.realpath(module_file))
-        time_zones_file = os.path.join(module_dir, 'time_zones')
-        return json.loads(util.slurp(time_zones_file))
+            try:
+                time_zones.append(line.split()[2])
+            except IndexError:
+                pass
+
+        time_zones.sort()
+        return time_zones
 
 
 class Configuration(PagePlugin):
