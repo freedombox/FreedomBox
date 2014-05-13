@@ -23,10 +23,7 @@ import cherrypy
 from django import forms
 from django.core import validators
 from gettext import gettext as _
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import json
 import os
 import socket
 
