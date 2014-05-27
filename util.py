@@ -1,9 +1,10 @@
-import os, sys
+import os
+import sys
 import cherrypy
 import cfg
-import importlib
 import sqlite3
 
+from django.template.loader import render_to_string
 from filedict import FileDict
 
 
@@ -60,18 +61,16 @@ class Message():
     def add(self, text):
         self.text += "<br />%s" % text
 
-def page_template(template='login_nav', **kwargs):
-    for k in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav', 'css', 'title', 'basehref']:
-        if not k in kwargs:
-            kwargs[k] = ''
+
+def render_template(template='login_nav', **kwargs):
+    for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'onload', 'nav',
+                'css', 'title', 'basehref']:
+        if not key in kwargs:
+            kwargs[key] = ''
 
     if kwargs['basehref'] == '':
-       kwargs['basehref'] = cfg.server_dir
-    #if template=='base' and kwargs['sidebar_right']=='':
-    #    template='two_col'
-    if isinstance(template, basestring):
-        template_module = importlib.import_module('templates.' + template)
-        template = getattr(template_module, template)
+        kwargs['basehref'] = cfg.server_dir
+
     try:
         submenu = cfg.main_menu.active_item().encode("sub_menu", render_subs=True)
     except AttributeError:
@@ -82,6 +81,7 @@ def page_template(template='login_nav', **kwargs):
     kwargs['sub_menu_js'] = submenu
     kwargs['current_url'] = cherrypy.url()
     kwargs['username'] = cherrypy.session.get(cfg.session_key)
+    kwargs['cfg'] = cfg
 
     if not kwargs['nav'] and submenu:
        kwargs['nav'] = """	<script type="text/javascript">
@@ -90,7 +90,8 @@ def page_template(template='login_nav', **kwargs):
 	  // -->
 	</script>"""
 
-    return str(template(searchList=[kwargs]))
+    return render_to_string(template + '.html', kwargs)
+
 
 def filedict_con(filespec=None, table='dict'):
     """TODO: better error handling in filedict_con"""

@@ -19,12 +19,14 @@
 Plinth module for running diagnostics
 """
 
-import os, cherrypy
+import cherrypy
 from gettext import gettext as _
 from auth import require
 from plugin_mount import PagePlugin
 import actions
 import cfg
+import util
+
 
 class diagnostics(PagePlugin):
     order = 30
@@ -36,13 +38,8 @@ class diagnostics(PagePlugin):
     @cherrypy.expose
     @require()
     def index(self):
-        main = _("""
-        <p>The system diagnostic test will run a number of checks on your
-        system to confirm that network services are running and configured
-        properly. It may take a minute to complete.</p>
-        """)
-        main += '<p><a class="btn btn-primary btn-large" href="'+cfg.server_dir+'/sys/diagnostics/test">Run diagnostic test &raquo;</a></p>'
-        return self.fill_template(title=_("System Diagnostics"), main=main)
+        return util.render_template(template='diagnostics',
+                                    title=_('System Diagnostics'))
 
 class test(PagePlugin):
     order = 31
@@ -53,17 +50,8 @@ class test(PagePlugin):
     @cherrypy.expose
     @require()
     def index(self):
-        main = ''
         output, error = actions.superuser_run("diagnostic-test")
-
-        if error:
-            main += _("The diagnostic test encountered an error:</br>")
-            for line in error.split('\n'):
-                main += line + "</br>"
-
-        if output:
-            main += _("Output of diagnostic test:</br>")
-            for line in output.split('\n'):
-                main += line + "</br>"
-
-        return self.fill_template(title=_("Diagnostic Test"), main=main)
+        return util.render_template(template='diagnostics_test',
+                                    title=_('Diagnostic Test'),
+                                    diagnostics_output=output,
+                                    diagnostics_error=error)

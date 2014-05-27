@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block main_block %}
+
+  <h2>Welcome to Your FreedomBox!</h2>
+
+  {% include 'messages.html' %}
+
+  <p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll
+    need to ask you a just few questions to get started.</p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {% include 'bootstrapform/field.html' with field=form.hostname %}
+
+    <p><strong>Initial user and password.</strong> Access to this web
+      interface is protected by knowing a username and password.
+      Provide one here to register the initial privileged user.  The
+      password can be changed and other users added later.</p>
+
+    {% include 'bootstrapform/field.html' with field=form.username %}
+    {% include 'bootstrapform/field.html' with field=form.password %}
+
+    {% include 'bootstrapform/field.html' with field=form.box_key %}
+
+    <input type="submit" class="btn-primary" value="Box it up!"/>
+
+  </form>
+
+{% endblock %}
+
+{% block sidebar_right_block %}
+
+  {% include "firstboot_sidebar.html" %}
+
+{% endblock %}

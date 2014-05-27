@@ -1,0 +1,47 @@
+{% extends "login_nav.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% block main_block %}
+
+<p>Tor is an anonymous communication system. You can learn more about
+it from the <a href="https://www.torproject.org/">Tor Project</a>
+website. For best protection when web surfing, the Tor Project
+recommends that you use
+the <a href="https://www.torproject.org/download/download-easy.html.en">Tor
+Browser Bundle</a>.</p>
+
+<p>A Tor SOCKS port is available on your FreedomBox on TCP port
+9050.</p>
+
+<p>Your FreedomBox is configured as a Tor bridge with obfsproxy, so it
+can help circumvent censorship. If your FreedomBox is behind a router
+or firewall, you should make sure the following ports are open, and
+port-forwarded, if necessary:</p>
+
+<table class="table table-bordered table-condensed span2">
+  {% for name, port in tor_ports.items %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>{{ port }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

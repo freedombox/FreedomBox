@@ -1,6 +1,8 @@
 import cherrypy
 from plugin_mount import PagePlugin
 from modules.auth import require
+import util
+
 
 class Info(PagePlugin):
     title = 'Info'
@@ -13,6 +15,7 @@ class Info(PagePlugin):
     @cherrypy.expose
     @require()
     def index(self):
-        return self.fill_template(title="Router Information", main="""
-<p>Eventually we will display a bunch of info, graphs and logs about the routing functions here.</p>
+        return util.render_template(title="Router Information", main="""
+<p>Eventually we will display a bunch of info, graphs and logs about
+the routing functions here.</p>
 """)

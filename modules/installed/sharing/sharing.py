@@ -3,6 +3,8 @@ from gettext import gettext as _
 from modules.auth import require
 from plugin_mount import PagePlugin
 import cfg
+import util
+
 
 class Sharing(PagePlugin):
     order = 9 # order of running init in PagePlugins
@@ -24,13 +26,9 @@ class Sharing(PagePlugin):
     @cherrypy.expose
     @require()
     def files(self):
-        return self.fill_template(title="File Server", main='', sidebar_right=_("""
-<strong>Freedom NAS</strong><p> The %s can make your spare hard drives accessible to your
-local network, thus acting as a NAS server.  We currently support
-sharing files via NFS and SMB. 
+        return util.render_template(template='sharing',
+                                    title=_('File Server'))
 
-TODO: this is not true.  We currently support no sharing.</p>
-""" % cfg.box_name))
 
 #TODO: move PrinterSharing to another file, as it should be an optional module (most people don't care about printer sharing)
 class PrinterSharing(PagePlugin):
@@ -42,12 +40,5 @@ class PrinterSharing(PagePlugin):
     @cherrypy.expose
     @require()
     def index(self):
-        main = """
-<p>TODO: Setup and install SAMBA</p>
-<p>TODO: Setup and install CUPS</p>
-"""
-        return self.fill_template(title="Printer Sharing", main=main, sidebar_right="""
-<strong>Share Your Printer</strong><p> The %s can share your printer via Samba and CUPS.</p>
-""" % cfg.box_name)
-
- 
+        return util.render_template(template='sharing_printer',
+                                    title=_('Printer Sharing'))

@@ -2,6 +2,8 @@ import cherrypy
 from modules.auth import require
 from plugin_mount import PagePlugin
 import cfg
+import util
+
 
 class Services(PagePlugin):
     order = 9 # order of running init in PagePlugins
@@ -18,9 +20,4 @@ class Services(PagePlugin):
     @cherrypy.expose
     @require()
     def openid(self):
-        return self.fill_template(title="Open ID", main='', sidebar_right="""
-<strong>One Login for Every Site</strong><p>Your %s is also an OpenID
-machine.  It can generate credentials that allow you to log in to many
-websites without the need to remember or enter a separate username and
-password at each one.</p>
-""" % cfg.box_name)
+        return util.render_template(template='openid', title="Open ID")

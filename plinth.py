@@ -3,6 +3,7 @@
 import os, stat, sys, argparse
 from gettext import gettext as _
 import cfg
+import django.conf
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
    sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
@@ -32,7 +33,7 @@ __status__ = "Development"
 import urlparse
 
 def error_page(status, dynamic_msg, stock_msg):
-   return u.page_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
+   return u.render_template(template="err", title=status, main="<p>%s</p>%s" % (dynamic_msg, stock_msg))
 
 def error_page_404(status, message, traceback, version):
    return error_page(status, message, """<p>If you believe this
@@ -87,6 +88,26 @@ def load_modules():
             cfg.log.error(_("Couldn't import modules/%s: %s") % (name, e))
       else:
          cfg.log("skipping %s" % name)
+
+
+def get_template_directories():
+    """Return the list of template directories"""
+    directory = os.path.dirname(os.path.abspath(__file__))
+    core_directory = os.path.join(directory, 'templates')
+
+    directories = set((core_directory,))
+    for name in os.listdir('modules'):
+        if not name.endswith(".py") or name.startswith('.'):
+            continue
+
+        real_name = os.path.realpath(os.path.join('modules', name))
+        directory = os.path.dirname(real_name)
+        directories.add(os.path.join(directory, 'templates'))
+
+    cfg.log.info('Template directories - %s' % directories)
+
+    return directories
+
 
 def parse_arguments():
    parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
@@ -146,7 +167,6 @@ def setup():
    cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
    cfg.page_plugins = plugin_mount.PagePlugin.get_plugins()
    cfg.log("Loaded %d page plugins" % len(cfg.page_plugins))
-   cfg.forms = plugin_mount.FormPlugin.get_plugins()
 
    # Add an extra server
    server = _cpserver.Server()
@@ -178,13 +198,18 @@ def setup():
    cherrypy.engine.signal_handler.subscribe()
 
 def main():
-   # Initialize basic services
-   service.init()
+    # Initialize basic services
+    service.init()
 
-   setup()
+    setup()
 
-   cherrypy.engine.start()
-   cherrypy.engine.block()
+    # Configure Django
+    template_directories = get_template_directories()
+    django.conf.settings.configure(TEMPLATE_DIRS=template_directories,
+                                   INSTALLED_APPS=['bootstrapform'])
+
+    cherrypy.engine.start()
+    cherrypy.engine.block()
 
 if __name__ == '__main__':
     main()

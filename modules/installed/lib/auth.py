@@ -67,12 +67,14 @@ def check_credentials(username, passphrase):
         cfg.log(error)
         return error
 
-    bad_authentication = "Bad user-name or password."
+    bad_authentication = "Bad username or password."
     hashed_password = None
 
-    if username in cfg.users:
-        if "passphrase" in cfg.users[username]:
-            hashed_password = cfg.users[username]['passphrase']
+    if username not in cfg.users or 'passphrase' not in cfg.users[username]:
+        cfg.log(bad_authentication)
+        return bad_authentication
+
+    hashed_password = cfg.users[username]['passphrase']
 
     try:
         # time-dependent comparison when non-ASCII characters are used.

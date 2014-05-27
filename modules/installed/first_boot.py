@@ -1,16 +1,5 @@
-from urlparse import urlparse
-import os, cherrypy, re
-from gettext import gettext as _
-from plugin_mount import PagePlugin, PluginMount, FormPlugin
-from modules.auth import require, add_user
-from forms import Form
-import util as u
-from withsqlite.withsqlite import sqlite_db
-import cfg
-import config
-from model import User
-
-"""First Boot: Initial Plinth Configuration.
+"""
+First Boot: Initial Plinth Configuration.
 
 See docs/design/first-connection.mdwn for details.
 
@@ -27,27 +16,76 @@ The Plinth first-connection process has several stages:
 3. The box detects the network's configuration and restarts networking.
 
 4. The user interacts with the box normally.
-
 """
+
+import cherrypy
+from django import forms
+from django.core import validators
+from gettext import gettext as _
+from plugin_mount import PagePlugin
+from modules.auth import add_user
+from withsqlite.withsqlite import sqlite_db
+import cfg
+import config
+import util
+
+
+## TODO: flesh out these tests values
+def valid_box_key(value):
+    """Check whether box key is valid"""
+    del value  # Unused
+
+    return True
+
+
+class State0Form(forms.Form):  # pylint: disable-msg=W0232
+    """First boot state 0 form"""
+
+    hostname = forms.CharField(
+        label=_('Name your FreedomBox'),
+        help_text=_('For convenience, your FreedomBox needs a name.  It \
+should be something short that does not contain spaces or punctuation. \
+"Willard" would be a good name while "Freestyle McFreedomBox!!!" would \
+not. It must be alphanumeric, start with an alphabet and must not be greater \
+than 63 characters in length.'),
+        validators=[
+            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
+                                      _('Invalid hostname'))])
+
+    username = forms.CharField(label=_('Username'))
+    password = forms.CharField(label=_('Password'),
+                               widget=forms.PasswordInput())
+
+    box_key = forms.CharField(
+        label=_('Box\'s key (optional)'), required=False,
+        widget=forms.Textarea(), validators=[valid_box_key],
+        help_text=_('Cryptographic keys are used so that Box\'s identity can \
+proved when talking to you.  This key can be auto-generated, but if one \
+already exists (from a prior FreedomBox, for example), you can paste it \
+below.  This key should not be the same as your key because you are not your \
+FreedomBox!'))
 
 
 class FirstBoot(PagePlugin):
+    """First boot wizard"""
+
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page("firstboot") # this is the url this page will hang off of (/firstboot)
+
+        # this is the url this page will hang off of (/firstboot)
+        self.register_page('firstboot')
+        self.register_page('firstboot/state0')
+        self.register_page('firstboot/state1')
 
     @cherrypy.expose
     def index(self, *args, **kwargs):
         return self.state0(*args, **kwargs)
 
-    ## TODO: flesh out these tests values
-    def valid_box_key_p(self, key):
-        return True
     def generate_box_key(self):
         return "fake key"
 
     @cherrypy.expose
-    def state0(self, message="", hostname="", box_key="", submitted=False, username="", password="", **kwargs):
+    def state0(self, **kwargs):
         """
         In this state, we do time config over HTTP, name the box and
         server key selection.
@@ -64,68 +102,70 @@ class FirstBoot(PagePlugin):
         """
 
         # FIXME: reject connection attempt if db["state"] >= 5.
+        ## Until LDAP is in place, we'll put the box key in the cfg.store_file
+        status = self.get_state0()
 
-        ## Until LDAP is in place, we'll put the box name and key in the cfg.store_file
-        ## Must resist the sick temptation to write an LDAP interface to the sqlite file
-        with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as db:
-            db['about'] = "This table is for information about this FreedomBox"
-            if hostname:
-                if '' == config.valid_hostname(hostname):
-                    config.set_hostname(hostname)
-                else:
-                    message += _("Invalid box name: %s") % config.valid_hostname(hostname)
+        form = None
+        messages = []
+
+        if kwargs:
+            form = State0Form(kwargs, prefix='firstboot')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                success = self._apply_state0(status, form.cleaned_data,
+                                             messages)
+
+                if success:
+                    # Everything is good, permanently mark and move to page 2
+                    with sqlite_db(cfg.store_file, table="firstboot",
+                                   autocommit=True) as database:
+                        database['state'] = 1
+
+                        raise cherrypy.InternalRedirect('state1')
+        else:
+            form = State0Form(initial=status, prefix='firstboot')
+
+        return util.render_template(template='firstboot_state0',
+                                    title=_('First Boot!'), form=form,
+                                    messages=messages)
+
+    @staticmethod
+    def get_state0():
+        """Return the state for form state 0"""
+        with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as \
+                database:
+            return {'hostname': config.get_hostname(),
+                    'box_key': database.get('box_key', None)}
+
+    def _apply_state0(self, old_state, new_state, messages):
+        """Apply changes in state 0 form"""
+        success = True
+        with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as \
+                database:
+            database['about'] = 'Information about this FreedomBox'
+
+            if new_state['box_key']:
+                database['box_key'] = new_state['box_key']
+            elif not old_state['box_key']:
+                database['box_key'] = self.generate_box_key()
+
+            if old_state['hostname'] != new_state['hostname']:
+                config.set_hostname(new_state['hostname'])
+
+            error = add_user(new_state['username'], new_state['password'],
+                             'First user, please change', '', True)
+            if error:
+                messages.append(
+                    ('error', _('User account creation failed: %s') % error))
+                success = False
             else:
-                hostname = config.get_hostname()
-            if box_key:
-                if self.valid_box_key_p(box_key):
-                    db['box_key'] = box_key
-                else:
-                    message += _("Invalid key!")
-            elif 'box_key' in db and db['box_key']:
-                box_key = _("We already have a key for this box on file.") # TODO: Think this through and handle more gracefully.  Seriously.
-            elif submitted and not box_key:
-                box_key = self.generate_box_key()
-                db['box_key'] = box_key
-            if username and password:
-                error = add_user(username, password, 'First user - please change', '', True)
-                if error:
-                    message += _("User account creation failed: %s") % error
-                    validuser = False
-                else:
-                    validuser = True
-            else:
-                validuser = False
+                messages.append(('success', _('User account created')))
 
-        if hostname and box_key and '' == config.valid_hostname(hostname) and self.valid_box_key_p(box_key) and validuser:
-            ## Update state to 1 and head there
-            with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
-                db['state']=1
-            raise cherrypy.InternalRedirect('state1')
+        return success
 
-        main = "<p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll need to ask you a just few questions to get started.</p>"
-        form = Form(title="Welcome to Your FreedomBox!",
-                        action="", # stay at firstboot
-                        name="whats_my_name",
-                        message=message)
-        form.html("<p>For convenience, your FreedomBox needs a name.  It should be something short that doesn't contain spaces or punctuation.  'Willard' would be a good name.  'Freestyle McFreedomBox!!!' would not.</p>")
-        form.text_input('Name your FreedomBox', id="hostname", value=hostname)
-        form.html("<p><strong>Initial user and password.</strong> Access to this web interface is protected by knowing a username and password.  Provide one here to register the initial privileged user.  The password can be changed and other users added later.</p>")
-        form.text_input('Username:', id="username", value=username)
-        form.text_input('Password:', id="password", type='password')
-        form.html("<p>%(box_name)s uses cryptographic keys so it can prove its identity when talking to you.  %(box_name)s can make a key for itself, but if one already exists (from a prior FreedomBox, for example), you can paste it below.  This key should not be the same as your key because you are not your FreedomBox!</p>" % {'box_name':cfg.box_name})
-        form.text_box("If you want, paste your box's key here.", id="box_key", value=box_key)
-        form.hidden(name="submitted", value="True")
-        form.submit("Box it up!")
-
-        main += form.render()
-        return self.fill_template(
-            template="base",
-            title=_("First Boot!"),
-            main=main,
-            sidebar_right=sidebar_right)
-
+    @staticmethod
     @cherrypy.expose
-    def state1(self, message=None):
+    def state1():
         """
         State 1 is when we have a box name and key.  In this state,
         our task is to provide a certificate and maybe to guide the
@@ -134,31 +174,11 @@ class FirstBoot(PagePlugin):
 
         TODO: HTTPS failure in State 2 should returns to state 1.
         """
-        main = """
-<p>Welcome screen not completely implemented yet.  Press <a
-href="../router">continue</a> to see the rest of the web interface.</p>
-
-<ul>
-    <li>TODO: explain all this cert stuff to the user.</li>
-    <li>TODO: add instrux for installing certificate.</li>
-    <li>TODO: add steps for after you have installed certificate.</li>
-<ul>
-"""
         # TODO complete first_boot handling
         # Make sure the user is not stuck on a dead end for now.
-        with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
-            db['state']=5
+        with sqlite_db(cfg.store_file, table='firstboot', autocommit=True) as \
+                database:
+            database['state'] = 5
 
-        # TODO: Update state to 2 and head there
-        # with sqlite_db(cfg.store_file, table="firstboot", autocommit=True) as db:
-        #     db['state']=1
-        #     # TODO: switch to HTTPS
-        # raise cherrypy.InternalRedirect('state1')
-
-        return self.fill_template(
-            template="base",
-            title=_("Installing the Certificate"),
-            main=main,
-            sidebar_right=sidebar_right)
-
-sidebar_right=_("""<strong>Getting Help</strong><p>We've done our best to make your FreedomBox easy to use.  If you have questions during setup, there are a few places to turn for help. TODO: add links to such help.</p>""")
+        return util.render_template(template='firstboot_state1',
+                                    title=_('Installing the Certificate'))
