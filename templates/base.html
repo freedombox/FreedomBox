@@ -39,65 +39,15 @@
 	<link rel="apple-touch-icon" sizes="114x114" href="{{ basehref }}/static/theme/img/apple-touch-icon-114px-precomposed.png" />
 
 	<!-- Bootstrap base CSS -->
-	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap.css" />
-	<style type="text/css">
-	/* custom styles, load before bootstrap responsive styles */
-	body {
-        padding-top:60px;
-        padding-bottom:40px;
-      	}
-	.sidebar-nav {
-	padding: 9px 0;
-	}
-	</style>
+	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap.min.css" />
 	<!-- Bootstrap responsive CSS -->
-	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap-responsive.css" />
-	<style type="text/css">
-	/* custom styles, load after all bootstrap styles */
-	.super-hero {
-	margin-top:25px;
-	}
-	.logo-top {
-	float:left;
-	padding-right:5px;
-	}
-	.brand {
-	padding-top:8px;
-	}
-	.white {
-	color:#fff;
-	}
-	.error-large {
-	font-size:1.2em;
-	padding:10px;
-	}
-	.main-graphic {
-	float:right;
-	padding:25px;
-	}
-	.nav-icon {
-	margin-right:8px;
-	}
-	.sidenav-icon {
-	margin-right:8px;
-	padding-right:5px;
-	}
-	</style>
+	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap-responsive.min.css" />
+	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/plinth.css" />
 	<!-- CSS from previous Plinth template, not sure what to keep yet -->
 	{{ css|safe }}
 	<!-- End Plinth CSS -->
-	<!-- JS from previous Plinth template, not sure what to keep yet -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/menu.js"></script>
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plinth.js"></script>
-	{{ main_menu_js|safe }}
-	{{ sub_menu_js|safe }}
-	<script type="text/javascript">
-	  <!--
-	    {{ onload|safe }}
-	  // -->
-	</script>
 </head>
-<body onload="javascript:onload_handler();">
+<body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -117,13 +67,13 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        {% if nav or sidebar_right or sidebar_left %}
+        {% if submenu or sidebar_right or sidebar_left %}
         <div class="span3">
-        {% if nav %}
+        {% if submenu %}
           <div class="well sidebar-nav">
-	    {{ nav|safe }}
+            {% include "menu.html" with menu=submenu %}
           </div><!--/.well -->
-	{% endif %}
+        {% endif %}
         {% if sidebar_left %}
           <div class="well sidebar-nav">
 		{{ sidebar_left|safe }}
@@ -176,23 +126,9 @@
 	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/modernizr.min.js"></script>
 	<!-- Local link to system jQuery -->
 	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/jquery.min.js"></script>
-	<!-- Bootstrap JS, most files commented out until we know what we need -->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/bootstrap.js"></script>-->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/button.js"></script>
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/dropdown.js"></script>
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/collapse.js"></script>
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/transition.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/alert.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/modal.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/scrollspy.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/tab.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/tooltip.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/popover.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/carousel.js"></script>-->
-	<!--<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap/typeahead.js"></script>-->
-	<!-- JS plugins -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/plugins.js"></script>
+	<!-- Local link to system Bootstrap JS -->
+	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap.min.js"></script>
+
         {% block js_block %}
           {{ js|safe }}
         {% endblock %}
