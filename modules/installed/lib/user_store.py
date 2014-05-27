@@ -1,8 +1,3 @@
-import os
-try:
-    import simplejson as json
-except ImportError:
-    import json
 import cherrypy
 import cfg
 from model import User
