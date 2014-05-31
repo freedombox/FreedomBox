@@ -1,0 +1,51 @@
+{% extends "login_nav.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block main_block %}
+
+  {% include 'messages.html' %}
+
+  <p>The {{ cfg.box_name }} can be administered in two modes, 'basic'
+  and 'expert'.  Basic mode hides a lot of features and configuration
+  options that most users will never need to think about.  Expert mode
+  allows you to get into the details.</p>
+
+  <p>Most users can operate the {{ cfg.box_name }} by configuring the
+  limited number of options visible in Basic mode.  For the sake of
+  simplicity and ease of use, we hid most of {{ cfg.product_name }}'s
+  less frequently used options.  But if you want more sophisticated
+  features, you can enable Expert mode, and {{ cfg.product_name }}
+  will present more advanced menu options.</p>
+
+  <p>You should be aware that it might be possible to render your
+  {{ cfg.box_name }} inaccessible via Expert mode options.</p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn-primary" value="Submit"/>
+
+  </form>
+
+{% endblock %}

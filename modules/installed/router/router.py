@@ -1,154 +1,150 @@
-from urlparse import urlparse
-import os, cherrypy
+import cherrypy
+from django import forms
 from gettext import gettext as _
-from plugin_mount import PagePlugin, PluginMount, FormPlugin
+from plugin_mount import PagePlugin
 from modules.auth import require
-from forms import Form
-from util import *
 import cfg
+import util
 
-class router(PagePlugin):
-    order = 9 # order of running init in PagePlugins
+
+class Router(PagePlugin):
+    """Router page"""
+    order = 9  # order of running init in PagePlugins
+
     def __init__(self, *args, **kwargs):
-        self.register_page("router")
-        self.menu = cfg.main_menu.add_item("Router", "icon-retweet", "/router", 10)
-	self.menu.add_item("Wireless", "icon-signal", "/router/wireless", 12)
-	self.menu.add_item("Firewall", "icon-fire", "/router/firewall", 18)
-	self.menu.add_item("Hotspot and Mesh", "icon-map-marker", "/router/hotspot")
-	self.menu.add_item("Info", "icon-list-alt", "/router/info", 100)
+        PagePlugin.__init__(self, args, kwargs)
 
+        self.register_page('router')
+
+        self.menu = cfg.main_menu.add_item('Router', 'icon-retweet', '/router',
+                                           10)
+        self.menu.add_item('Wireless', 'icon-signal', '/router/wireless', 12)
+        self.menu.add_item('Firewall', 'icon-fire', '/router/firewall', 18)
+        self.menu.add_item('Hotspot and Mesh', 'icon-map-marker',
+                           '/router/hotspot')
+        self.menu.add_item('Info', 'icon-list-alt', '/router/info', 100)
+
+    @staticmethod
     @cherrypy.expose
-    def index(self):
+    def index():
         """This isn't an internal redirect, because we need the url to
         reflect that we've moved down into the submenu hierarchy.
         Otherwise, it's hard to know which menu portion to make active
         or expand or contract."""
         raise cherrypy.HTTPRedirect(cfg.server_dir + '/router/setup')
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def wireless(self):
-        return self.fill_template(title="Wireless", main="<p>wireless setup: essid, etc.</p>")
+    def wireless():
+        """Serve the wireless page"""
+        return util.render_template(title="Wireless",
+                                    main="<p>wireless setup: essid, etc.</p>")
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def firewall(self):
-        return self.fill_template(title="Firewall", main="<p>Iptables twiddling.</p>")
+    def firewall():
+        """Serve the firewall page"""
+        return util.render_template(title="Firewall",
+                                    main="<p>Iptables twiddling.</p>")
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def hotspot(self):
-        return self.fill_template(title="Hotspot and Mesh", main="<p>connection sharing setup.</p>")
+    def hotspot():
+        """Serve the hotspot page"""
+        return util.render_template(title="Hotspot and Mesh",
+                                    main="<p>connection sharing setup.</p>")
 
 
+class WANForm(forms.Form):  # pylint: disable-msg=W0232
+    """WAN setup form"""
+    connection_type = forms.ChoiceField(
+        label=_('Connection Type'),
+        choices=[('dhcp', _('DHCP')), ('static_ip', _('Static IP'))])
 
-class setup(PagePlugin):
+    wan_ip = forms.IPAddressField(label=_('WAN IP Address'), required=False)
+
+    subnet_mask = forms.IPAddressField(label=_('Subnet Mask'), required=False)
+
+    dns_1 = forms.IPAddressField(label=_('Static DNS 1'), required=False)
+
+    dns_2 = forms.IPAddressField(label=_('Static DNS 2'), required=False)
+
+    dns_3 = forms.IPAddressField(label=_('Static DNS 3'), required=False)
+
+
+class Setup(PagePlugin):
+    """Router setup page"""
     def __init__(self, *args, **kwargs):
-        self.register_page("router.setup")
-        self.menu = cfg.html_root.router.menu.add_item("General Setup", "icon-cog", "/router/setup", 10)
-        self.menu.add_item("Dynamic DNS", "icon-flag", "/router/setup/ddns", 20)
-        self.menu.add_item("MAC Address Clone", "icon-barcode", "/router/setup/mac_address", 30)
+        PagePlugin.__init__(self, args, kwargs)
+
+        self.register_page('router.setup')
+
+        self.menu = cfg.html_root.router.menu.add_item(
+            'General Setup', 'icon-cog', '/router/setup', 10)
+        self.menu.add_item('Dynamic DNS', 'icon-flag', '/router/setup/ddns',
+                           20)
+        self.menu.add_item('MAC Address Clone', 'icon-barcode',
+                           '/router/setup/mac_address', 30)
 
     @cherrypy.expose
     @require()
-    def index(self):
-        parts = self.forms('/router/setup')
-        parts['title'] = "General Router Setup"
-        parts['sidebar_right']="""<strong>Introduction</strong><p>Your %s is a replacement for your
-wireless router.  By default, it should do everything your usual
-router does.  With the addition of some extra modules, its abilities
-can rival those of high-end routers costing hundreds of dollars.</p>
-""" % cfg.box_name + parts['sidebar_right']
-        if not cfg.users.expert():
-            parts['main'] += """<p>In basic mode, you don't need to do any
-            router setup before you can go online.  Just plug your
-            %(product)s in to your cable or DSL modem and the router
-            will try to get you on the internet using DHCP.</p>
+    def index(self, **kwargs):
+        """Return the setup page"""
+        status = self.get_status()
 
-            <p>If that fails, you might need to resort to the expert
-            options.  Enable expert mode in the "%(product)s System /
-            Configure" menu.</p>""" % {'product':cfg.box_name}
+        form = None
+        messages = []
+
+        if kwargs:
+            form = WANForm(kwargs, prefix='router')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(status, form.cleaned_data, messages)
+                status = self.get_status()
+                form = WANForm(initial=status, prefix='router')
         else:
-            parts['main'] += "<p>router name, domain name, router IP, dhcp</p>"
-        return self.fill_template(**parts)
+            form = WANForm(initial=status, prefix='router')
 
+        return util.render_template(template='router_setup',
+                                    title=_('General Router Setup'),
+                                    form=form, messages=messages)
+
+    @staticmethod
     @cherrypy.expose
     @require()
-    def ddns(self):
-        return self.fill_template(title="Dynamic DNS", main="<p>Masquerade setup</p>")
+    def ddns():
+        """Return the DDNS page"""
+        return util.render_template(title="Dynamic DNS",
+                                    main="<p>Masquerade setup</p>")
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def mac_address(self):
-        return self.fill_template(title="MAC Address Cloning", 
-                                  main="<p>Your router can pretend to have a different MAC address on any interface.</p>")
+    def mac_address():
+        """Return the MAC address page"""
+        return util.render_template(
+            title="MAC Address Cloning",
+            main="<p>Your router can pretend to have a different MAC address \
+on any interface.</p>")
 
+    @staticmethod
+    def get_status():
+        """Return the current status"""
+        store = util.filedict_con(cfg.store_file, 'router')
+        return {'connection_type': store.get('connection_type', 'dhcp')}
 
-class wan(FormPlugin, PagePlugin):
-    url = ["/router/setup"]
-    order = 10
+    @staticmethod
+    def _apply_changes(old_status, new_status, messages):
+        """Apply the changes"""
+        print 'Apply changes - %s, %s', old_status, new_status
+        if old_status['connection_type'] == new_status['connection_type']:
+            return
 
-    js = """
-<script type="text/javascript">
-    (function($) {
-         function hideshow_static() {
-             var show_or_hide = ($('#connect_type').val() == 'Static IP')
-             $('#static_ip_form').toggle(show_or_hide);
-         }
-         $(document).ready(function() {
-             $('#connect_type').change(hideshow_static);
-             hideshow_static();
-         });
-     })(jQuery);
-</script>"""
+        store = util.filedict_con(cfg.store_file, 'router')
+        store['connection_type'] = new_status['connection_type']
 
-    def sidebar_right(self, *args, **kwargs):
-        side=''
-        if cfg.users.expert():
-            side += """<strong>WAN Connection Type</strong>
-        <h3>DHCP</h3><p>DHCP allows your router to automatically
-        connect with the upstream network.  If you are unsure what
-        option to choose, stick with DHCP.  It is usually
-        correct.
-
-        <h3>Static IP</h3><p>If you want to setup your connection
-        manually, you can enter static IP information.  This option is
-        for those who know what they're doing.  As such, it is only
-        available in expert mode.</p>"""
-        return side
-
-    def main(self, wan_ip0=0, wan_ip1=0, wan_ip2=0, wan_ip3=0, 
-             subnet0=0, subnet1=0, subnet2=0, subnet3=0, 
-             gateway0=0, gateway1=0, gateway2=0, gateway3=0, 
-             dns10=0, dns11=0, dns12=0, dns13=0, 
-             dns20=0, dns21=0, dns22=0, dns23=0, 
-             dns30=0, dns31=0, dns32=0, dns33=0, 
-             message=None, **kwargs):
-        if not cfg.users.expert():
-            return ''
-
-        store = filedict_con(cfg.store_file, 'router')
-        defaults = {'connect_type': 'DHCP'}
-        for key, value in defaults.items():
-            if not key in kwargs:
-                try:
-                    kwargs[key] = store[key]
-                except KeyError:
-                    store[key] = kwargs[key] = value
-
-        form = Form(title="WAN Connection", 
-                        action=cfg.server_dir + "/router/setup/wan/index", 
-                        name="wan_connection_form",
-                        message=message)
-        form.dropdown('Connection Type', vals=["DHCP", "Static IP"], id="connect_type")
-        form.html('<div id="static_ip_form">')
-        form.dotted_quad("WAN IP Address", name="wan_ip", quad=[wan_ip0, wan_ip1, wan_ip2, wan_ip3])
-        form.dotted_quad("Subnet Mask", name="subnet", quad=[subnet0, subnet1, subnet2, subnet3])
-        form.dotted_quad("Gateway", name="gateway", quad=[gateway0, gateway1, gateway2, gateway3])
-        form.dotted_quad("Static DNS 1", name="dns1", quad=[dns10, dns11, dns12, dns13])
-        form.dotted_quad("Static DNS 2", name="dns2", quad=[dns20, dns21, dns22, dns23])
-        form.dotted_quad("Static DNS 3", name="dns3", quad=[dns30, dns31, dns32, dns33])
-        form.html('</div>')
-        form.submit("Set Wan")
-        return form.render()
-
+        messages.append(('success', _('Connection type set')))
+        messages.append(('info', _('IP address settings unimplemented')))

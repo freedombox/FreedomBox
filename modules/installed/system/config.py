@@ -20,68 +20,136 @@ Plinth module for configuring timezone, hostname etc.
 """
 
 import cherrypy
+from django import forms
+from django.core import validators
 from gettext import gettext as _
-try:
-    import simplejson as json
-except ImportError:
-    import json
-import os
+import re
 import socket
 
 import actions
 import cfg
-from forms import Form
 from modules.auth import require
-from plugin_mount import PagePlugin, FormPlugin
+from plugin_mount import PagePlugin
 import util
 
 
-class Config(PagePlugin):
+def get_hostname():
+    """Return the hostname"""
+    return socket.gethostname()
+
+
+class TrimmedCharField(forms.CharField):
+    """Trim the contents of a CharField"""
+    def clean(self, value):
+        """Clean and validate the field value"""
+        if value:
+            value = value.strip()
+
+        return super(TrimmedCharField, self).clean(value)
+
+
+class ConfigurationForm(forms.Form):
+    """Main system configuration form"""
+    time_zone = forms.ChoiceField(
+        label=_('Time Zone'),
+        help_text=_('Set your timezone to get accurate timestamps. \
+This information will be used to set your systemwide timezone'))
+
+    # We're more conservative than RFC 952 and RFC 1123
+    hostname = TrimmedCharField(
+        label=_('Hostname'),
+        help_text=_('Your hostname is the local name by which other machines \
+on your LAN can reach you. It must be alphanumeric, start with an alphabet \
+and must not be greater than 63 characters in length.'),
+        validators=[
+            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
+                                      _('Invalid hostname'))])
+
+    def __init__(self, *args, **kwargs):
+        # pylint: disable-msg=E1101, W0233
+        forms.Form.__init__(self, *args, **kwargs)
+
+        self.fields['time_zone'].choices = [(zone, zone)
+                                            for zone in self.get_time_zones()]
+
+    @staticmethod
+    def get_time_zones():
+        """Return list of available time zones"""
+        time_zones = []
+        for line in open('/usr/share/zoneinfo/zone.tab'):
+            if re.match(r'^(#|\s*$)', line):
+                continue
+
+            try:
+                time_zones.append(line.split()[2])
+            except IndexError:
+                pass
+
+        time_zones.sort()
+        return time_zones
+
+
+class Configuration(PagePlugin):
     """System configuration page"""
     def __init__(self, *args, **kwargs):
         del args  # Unused
         del kwargs  # Unused
 
-        self.register_page("sys.config")
+        self.register_page('sys.config')
+
+        self.menu = cfg.html_root.sys.menu.add_item(_('Configure'), 'icon-cog',
+                                                    '/sys/config', 10)
 
     @cherrypy.expose
     @require()
-    def index(self):
-        """Serve configuration page"""
-        parts = self.forms('/sys/config')
-        parts['title'] = _("Configure this {box_name}") \
-            .format(box_name=cfg.box_name)
+    def index(self, **kwargs):
+        """Serve the configuration form"""
+        status = self.get_status()
 
-        return self.fill_template(**parts)  # pylint: disable-msg=W0142
+        form = None
+        messages = []
 
+        if kwargs and cfg.users.expert():
+            form = ConfigurationForm(kwargs, prefix='configuration')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(status, form.cleaned_data, messages)
+                status = self.get_status()
+                form = ConfigurationForm(initial=status,
+                                         prefix='configuration')
+        else:
+            form = ConfigurationForm(initial=status, prefix='configuration')
 
-def valid_hostname(name):
-    """
-    Return '' if name is a valid hostname by our standards (not just
-    by RFC 952 and RFC 1123.  We're more conservative than the
-    standard.  If hostname isn't valid, return message explaining why.
-    """
-    message = ''
-    if len(name) > 63:
-        message += "<br />Hostname too long (max is 63 characters)"
+        return util.render_template(template='config',
+                                    title=_('General Configuration'),
+                                    form=form, messages=messages)
 
-    if not util.is_alphanumeric(name):
-        message += "<br />Hostname must be alphanumeric"
+    @staticmethod
+    def get_status():
+        """Return the current status"""
+        return {'hostname': get_hostname(),
+                'time_zone': util.slurp('/etc/timezone').rstrip()}
 
-    if not name[0] in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ":
-        message += "<br />Hostname must start with a letter"
+    @staticmethod
+    def _apply_changes(old_status, new_status, messages):
+        """Apply the form changes"""
+        if old_status['hostname'] != new_status['hostname']:
+            set_hostname(new_status['hostname'])
+            messages.append(('success', _('Hostname set')))
+        else:
+            messages.append(('info', _('Hostname is unchanged')))
 
-    return message
-
-
-def get_hostname():
-    """Return the current hostname of the system"""
-    return socket.gethostname()
-
-
-def get_time_zone():
-    """Return currently set system's timezone"""
-    return util.slurp('/etc/timezone').rstrip()
+        if old_status['time_zone'] != new_status['time_zone']:
+            output, error = actions.superuser_run('timezone-change',
+                                                  [new_status['time_zone']])
+            del output  # Unused
+            if error:
+                messages.append(('error',
+                                 _('Error setting time zone - %s') % error))
+            else:
+                messages.append(('success', _('Time zone set')))
+        else:
+            messages.append(('info', _('Time zone is unchanged')))
 
 
 def set_hostname(hostname):
@@ -101,82 +169,3 @@ def set_hostname(hostname):
     except OSError as exception:
         raise cherrypy.HTTPError(500,
                                  'Updating hostname failed: %s' % exception)
-
-class general(FormPlugin, PagePlugin):
-    """Form to update hostname and time zone"""
-    url = ["/sys/config"]
-    order = 30
-
-    @staticmethod
-    def help(*args, **kwargs):
-        """Build and return the help content area"""
-        del args  # Unused
-        del kwargs  # Unused
-
-        return _('''
-<p>Set your timezone to get accurate timestamps.  {product} will use
-this information to set your {box}'s systemwide timezone.</p>''').format(
-            product=cfg.product_name, box=cfg.box_name)
-
-    def main(self, message='', time_zone=None, **kwargs):
-        """Build and return the main content area which is the form"""
-        del kwargs  # Unused
-
-        if not cfg.users.expert():
-            return _('''
-<p>Only members of the expert group are allowed to see and modify the system
-setup.</p>''')
-
-        if not time_zone:
-            time_zone = get_time_zone()
-
-        # Get the list of supported timezones and the index in that
-        # list of the current one
-        module_file = __file__
-        if module_file.endswith(".pyc"):
-            module_file = module_file[:-1]
-        module_dir = os.path.dirname(os.path.realpath(module_file))
-        time_zones_file = os.path.join(module_dir, 'time_zones')
-        time_zones = json.loads(util.slurp(time_zones_file))
-        try:
-            time_zone_id = time_zones.index(time_zone)
-        except ValueError:
-            cfg.log.critical("Unknown Time Zone: %s" % time_zone)
-            raise cherrypy.HTTPError(500, "Unknown Time Zone: %s" % time_zone)
-
-        # And now, the form.
-        form = Form(title=_("General Config"),
-                    action=cfg.server_dir + "/sys/config/general/index",
-                    name="config_general_form",
-                    message=message)
-        form.html(self.help())
-        form.dropdown(_("Time Zone"), name="time_zone", vals=time_zones,
-                      select=time_zone_id)
-        form.html('''
-<p>Your hostname is the local name by which other machines on your LAN
-can reach you.</p>''')
-        form.text_input('Hostname', name='hostname', value=get_hostname())
-        form.submit(_("Submit"))
-
-        return form.render()
-
-    @staticmethod
-    def process_form(time_zone='', hostname='', *args, **kwargs):
-        """Handle form submission"""
-        del args  # Unused
-        del kwargs  # Unused
-
-        message = ''
-        if hostname != get_hostname():
-            msg = valid_hostname(hostname)
-            if msg == '':
-                set_hostname(hostname)
-            else:
-                message += msg
-
-        time_zone = time_zone.strip()
-        if time_zone != get_time_zone():
-            cfg.log.info("Setting timezone to %s" % time_zone)
-            actions.superuser_run("timezone-change", [time_zone])
-
-        return message or "Settings updated."

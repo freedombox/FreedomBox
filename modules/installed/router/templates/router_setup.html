@@ -1,0 +1,117 @@
+{% extends "login_nav.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% block main_block %}
+
+{% if cfg.users.expert %}
+
+  <h3>WAN Connection</h3>
+
+  {% include 'messages.html' %}
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {% include 'bootstrapform/field.html' with field=form.connection_type %}
+
+    <div id="static_ip_form"
+         style='display:
+         {% if form.connection_type.value = 'static_ip' %} block
+         {% else %} none {% endif %};'>
+      {% include 'bootstrapform/field.html' with field=form.wan_ip %}
+      {% include 'bootstrapform/field.html' with field=form.subnet_mask %}
+      {% include 'bootstrapform/field.html' with field=form.dns_1 %}
+      {% include 'bootstrapform/field.html' with field=form.dns_2 %}
+      {% include 'bootstrapform/field.html' with field=form.dns_3 %}
+    </div>
+
+    <input type="submit" class="btn-primary" value="Set WAN"/>
+
+  </form>
+
+{% else %}
+
+  <p>In basic mode, you don't need to do any router setup before you
+    can go online.  Just plug your {{ cfg.product_name }} in to your
+    cable or DSL modem and the router will try to get you on the
+    internet using DHCP.</p>
+
+  <p>If that fails, you might need to resort to the expert options.
+    Enable expert mode in the "{{ cfg.product_name }} / System /
+    Configure" menu.</p>
+
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right_block %}
+
+  <div class="well sidebar-nav">
+
+    <h3>Introduction</h3>
+
+    <p>Your {{ cfg.box_name }} is a replacement for your wireless
+      router.  By default, it should do everything your usual router
+      does.  With the addition of some extra modules, its abilities
+      can rival those of high-end routers costing hundreds of
+      dollars.</p>
+
+    {% if cfg.users.expert %}
+
+      <h3>WAN Connection Type</h3>
+
+      <h3>DHCP</h3>
+
+      <p>DHCP allows your router to automatically connect with the
+        upstream network.  If you are unsure what option to choose,
+        stick with DHCP.  It is usually correct.</p>
+
+      <h3>Static IP</h3>
+
+      <p>If you want to setup your connection manually, you can enter
+        static IP information.  This option is for those who know what
+        they're doing.  As such, it is only available in expert
+        mode.</p>
+
+    {% endif %}
+
+  </div>
+
+{% endblock %}
+
+{% block js_block %}
+  {{ js|safe }}
+
+  <script type="text/javascript">
+    (function($) {
+         function hideshow_static() {
+             var value = $('#id_router-connection_type').val();
+             var show_or_hide = (value == 'static_ip');
+             $('#static_ip_form').toggle(show_or_hide);
+         }
+
+         $(document).ready(function() {
+             $('#id_router-connection_type').change(hideshow_static);
+             hideshow_static();
+         });
+     })(jQuery);
+  </script>
+
+{% endblock %}

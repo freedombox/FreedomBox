@@ -7,10 +7,7 @@
 # plinth box
 
 import os,sys, subprocess
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import json
 import fabric.api
 from fabric.api import local, env, cd, put, get, task
 
@@ -150,7 +147,7 @@ def apache():
 @task
 def deps():
    "Basic plinth dependencies"
-   sudo('apt-get install --no-install-recommends -y python make python-cheetah pandoc python-simplejson python-pyme python-augeas python-bjsonrpc')
+   sudo('apt-get install --no-install-recommends -y python make pandoc python-pyme python-django python-bootstrapform libjs-twitter-bootstrap')
 
 @task
 def update():

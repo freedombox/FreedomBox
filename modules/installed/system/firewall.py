@@ -27,6 +27,7 @@ import cfg
 from modules.auth import require
 from plugin_mount import PagePlugin
 import service as service_module
+import util
 
 
 class Firewall(PagePlugin):
@@ -48,89 +49,24 @@ class Firewall(PagePlugin):
         """Serve introcution page"""
         del kwargs  # Unused
 
-        # XXX: Use templates here instead of generating HTML
-        main = _('''
-<p>Firewall is a network security system that controls the incoming
-and outgoing network traffic on your {box_name}. Keeping a firewall
-enabled and properly configured reduces risk of security threat from
-the Internet.</p>
-
-<p>The following the current status:</p>
-''').format(box_name=cfg.box_name)
-
         if not self.get_installed_status():
-            status = _('''
-<p>Firewall is not installed. Please install it. Firewall comes
-pre-installed with {box_name}. On any Debian based system (such as
-{box_name}) you may install it using the command 'aptitude install
-firewalld'</p>''').format(box_name=cfg.box_name)
-
-            return self.fill_template(title=_("Firewall"), main=main + status)
+            return util.render_template(template='firewall',
+                                        title=_("Firewall"),
+                                        firewall_status='not_installed')
 
         if not self.get_enabled_status():
-            status = _('''
-<p>Firewall daemon is not running. Please run it. Firewall comes
-enabled by default on {box_name}. On any Debian based system (such as
-{box_name}) you may run it using the command 'service firewalld start'
-or in case of system with systemd 'systemctl start firewalld'</p>
-''').format(box_name=cfg.box_name)
+            return util.render_template(template='firewall',
+                                        title=_("Firewall"),
+                                        firewall_status='not_running')
 
-            return self.fill_template(title=_("Firewall"), main=main + status)
+        internal_enabled_services = self.get_enabled_services(zone='internal')
+        external_enabled_services = self.get_enabled_services(zone='external')
 
-        internal_enabled_sevices = self.get_enabled_services(zone='internal')
-        external_enabled_sevices = self.get_enabled_services(zone='external')
-
-        services_info = '<ul>'
-        for service in service_module.SERVICES.values():
-            if service.is_enabled():
-                service_text = _('Enabled')
-                service_class = 'firewall-permitted'
-            else:
-                service_text = _('Disabled')
-                service_class = 'firewall-blocked'
-
-            port_info = []
-            for port in service.ports:
-                if port in internal_enabled_sevices and \
-                        port in external_enabled_sevices:
-                    text = _('Permitted')
-                    css_class = 'firewall-permitted'
-                elif port in internal_enabled_sevices:
-                    text = _('Permitted (internal only)')
-                    css_class = 'firewall-permitted'
-                elif port in external_enabled_sevices:
-                    text = _('Permitted (external only)')
-                    css_class = 'firewall-permitted'
-                else:
-                    text = _('Blocked')
-                    css_class = 'firewall-blocked'
-
-                info = _('''
-<li>{port}: <span class={css_class}>{text}</span></li>
-''').format(port=port, css_class=css_class, text=text)
-                port_info.append(info)
-
-            port_info = '<ul>{port_info}</ul>'.format(
-                port_info=''.join(port_info))
-
-            services_info += _('''
-<li>
-{name}: <span class={service_class}>{service_text}</span>
-    {port_info}
-</li>
-''').format(
-                name=service.name, service_class=service_class,
-                service_text=service_text, port_info=port_info)
-
-        services_info += '</ul>'
-
-        footnote = '''
-<p><em>The operation of the firewall is automatic. When you enable a
-service it is automatically permitted in the firewall and you disable
-a service is automatically disabled in the firewall.</em></p>'''
-
-        return self.fill_template(title=_("Firewall"), main=main +
-                                  services_info + footnote)
+        return util.render_template(
+            template='firewall', title=_('Firewall'),
+            services=service_module.SERVICES.values(),
+            internal_enabled_services=internal_enabled_services,
+            external_enabled_services=external_enabled_services)
 
     def get_installed_status(self):
         """Return whether firewall is installed"""

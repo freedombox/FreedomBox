@@ -1,43 +1,73 @@
+"""
+Controller to provide login and logout actions
+"""
+
 import cherrypy
 import cfg
+from django import forms
+from gettext import gettext as _
 from plugin_mount import PagePlugin
-from modules.forms import Form
-from auth import *
-# Controller to provide login and logout actions
+import auth
+import util
+
+
+class LoginForm(forms.Form):  # pylint: disable-msg=W0232
+    """Login form"""
+    from_page = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    username = forms.CharField(label=_('Username'))
+    password = forms.CharField(label=_('Passphrase'),
+                               widget=forms.PasswordInput())
+
+    def clean(self):
+        """Check for valid credentials"""
+        # pylint: disable-msg=E1101
+        if 'username' in self._errors or 'password' in self._errors:
+            return self.cleaned_data
+
+        error_msg = auth.check_credentials(self.cleaned_data['username'],
+                                           self.cleaned_data['password'])
+        if error_msg:
+            raise forms.ValidationError(error_msg, code='invalid_credentials')
+
+        return self.cleaned_data
+
 
 class AuthController(PagePlugin):
+    """Login and logout pages"""
+
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page("auth")
+
+        self.register_page('auth')
 
     def on_login(self, username):
         """Called on successful login"""
-    
+
     def on_logout(self, username):
         """Called on logout"""
-    
-    def get_loginform(self, username, msg='', from_page=cfg.server_dir+"/"):
-        form = Form(title="Login", action=cfg.server_dir + "/auth/login", message=msg)
-        form.text_input(name="from_page", value=from_page, type="hidden")
-        form.text_input("Username", name="username", value=username)
-        form.text_input("Passphrase", name="passphrase", type="password")
-        form.submit(label="Login")
 
-        return self.fill_template(main=form.render(), sidebar_right=" ")
-    
     @cherrypy.expose
-    def login(self, username=None, passphrase=None, from_page=cfg.server_dir+"/", **kwargs):
-        if username is None or passphrase is None:
-            return self.get_loginform("", from_page=from_page)
-        
-        error_msg = check_credentials(username, passphrase)
-        if error_msg:
-            return self.get_loginform(username, error_msg, from_page)
+    def login(self, from_page=cfg.server_dir+"/", **kwargs):
+        """Serve the login page"""
+        form = None
+
+        if kwargs:
+            form = LoginForm(kwargs, prefix='auth')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                cherrypy.session[cfg.session_key] = username
+                cherrypy.request.login = username
+                self.on_login(username)
+                raise cherrypy.HTTPRedirect(from_page or
+                                            (cfg.server_dir + "/"))
         else:
-            cherrypy.session[cfg.session_key] = cherrypy.request.login = username
-            self.on_login(username)
-            raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))
-    
+            form = LoginForm(prefix='auth')
+
+        return util.render_template(template='form', title=_('Login'),
+                                    form=form, submit_text=_('Login'))
+
     @cherrypy.expose
     def logout(self, from_page=cfg.server_dir+"/"):
         sess = cherrypy.session
@@ -46,4 +76,5 @@ class AuthController(PagePlugin):
         if username:
             cherrypy.request.login = None
             self.on_logout(username)
+
         raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))

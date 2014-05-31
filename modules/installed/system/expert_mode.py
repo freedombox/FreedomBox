@@ -1,73 +1,79 @@
-import os
 import cherrypy
-try:
-    import simplejson as json
-except ImportError:
-    import json
+from django import forms
 from gettext import gettext as _
-from filedict import FileDict
 from modules.auth import require
-from plugin_mount import PagePlugin, FormPlugin
+from plugin_mount import PagePlugin
 import cfg
-from forms import Form
-from model import User
-from util import *
+import util
 
-class experts(FormPlugin, PagePlugin):
-    url = ["/sys/config"]
-    order = 10
 
-    def help(self, *args, **kwargs):
-        side = _(#"""<strong>Expert Mode</strong>
-        """ 
-        <p>The %(box)s can be administered in two modes, 'basic'
-        and 'expert'.  Basic mode hides a lot of features and
-        configuration options that most users will never need to think
-        about.  Expert mode allows you to get into the details.</p>
+class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
+    """Form to configure expert mode"""
 
-        <p>Most users can operate the %(box)s by configuring the
-        limited number of options visible in Basic mode.  For the sake
-        of simplicity and ease of use, we hid most of %(product)s's
-        less frequently used options.  But if you want more
-        sophisticated features, you can enable Expert mode, and
-        %(product)s will present more advanced menu options.</p>
+    expert_mode = forms.BooleanField(
+        label=_('Expert Mode'), required=False)
 
-        <p>You should be aware that it might be possible to render
-        your %(box)s inaccessible via Expert mode options.</p>
-        """ % {'box':cfg.box_name, 'product':cfg.product_name})
+    # XXX: Only present due to issue with submitting empty form
+    dummy = forms.CharField(label='Dummy', initial='dummy',
+                            widget=forms.HiddenInput())
 
-        return side
 
-    def main(self, expert=None, message='', **kwargs):
-        """Note that kwargs contains '':"submit" if this is coming
-        from a submitted form.  If kwargs is empty, it's a fresh form
-        with no user input, which means it should just reflect the
-        state of the stored data."""
-        if not kwargs and expert == None:
-            expert = cfg.users.expert()
-            cfg.log("Expert mode is %s" % expert)
-        form = Form(title=_("Expert Mode"), 
-                        action=cfg.server_dir + "/sys/config/experts", 
-                        name="expert_mode_form",
-                        message=message )
-        form.html(self.help())
-        form.checkbox(_("Expert Mode"), name="expert", checked=expert)
-        form.submit(_("Submit"))
-        return form.render()
+class Experts(PagePlugin):
+    """Expert forms page"""
+    order = 60
 
-    def process_form(self, expert='', *args, **kwargs):
-        user = cfg.users.get()
+    def __init__(self, *args, **kwargs):
+        PagePlugin.__init__(self, *args, **kwargs)
+        self.register_page('sys.config.expert')
 
-        message = 'settings unchanged'
+        cfg.html_root.sys.config.menu.add_item(_('Expert mode'), 'icon-cog',
+                                               '/sys/config/expert', 10)
 
-        if expert:
+    @cherrypy.expose
+    @require()
+    def index(self, **kwargs):
+        """Serve the configuration form"""
+        status = self.get_status()
+
+        cfg.log.info('Args - %s' % kwargs)
+
+        form = None
+        messages = []
+
+        if kwargs:
+            form = ExpertsForm(kwargs, prefix='experts')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(form.cleaned_data, messages)
+                status = self.get_status()
+                form = ExpertsForm(initial=status, prefix='experts')
+        else:
+            form = ExpertsForm(initial=status, prefix='experts')
+
+        return util.render_template(template='expert_mode',
+                                    title=_('Expert Mode'), form=form,
+                                    messages=messages)
+
+    @staticmethod
+    def get_status():
+        """Return the current status"""
+        return {'expert_mode': cfg.users.expert()}
+
+    @staticmethod
+    def _apply_changes(new_status, messages):
+        """Apply expert mode configuration"""
+        message = ('info', _('Settings unchanged'))
+
+        user = cfg.users.current()
+
+        if new_status['expert_mode']:
             if not 'expert' in user['groups']:
                 user['groups'].append('expert')
-                message = "enabled"
+                message = ('success', _('Expert mode enabled'))
         else:
             if 'expert' in user['groups']:
                 user['groups'].remove('expert')
-                message = "disabled"
+                message = ('success', _('Expert mode disabled'))
 
-        cfg.users.set(user)
-        return "Expert mode %s." % message
+        cfg.users.set(user['username'], user)
+        messages.append(message)

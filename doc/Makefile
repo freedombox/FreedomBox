@@ -41,7 +41,7 @@ $(SOURCES):
 	@rm -f $@
 	@ln -s ../$(patsubst %.mdwn,%,$@) $@
 
-../TODO : $(TODO_SOURCES) ../*.py ../modules/*.py ../Makefile Makefile ../templates/Makefile
+../TODO : $(TODO_SOURCES) ../*.py ../modules/*.py ../Makefile Makefile
 	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
 	     --exclude=README.mdwn --exclude=INSTALL.mdwn \
 	     --exclude=TODO.mdwn --exclude=COPYING.mdwn \

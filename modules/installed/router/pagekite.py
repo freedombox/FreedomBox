@@ -20,14 +20,14 @@ Plinth module for configuring PageKite service
 """
 
 import cherrypy
+from django import forms
+from django.core import validators
 from gettext import gettext as _
 
 import actions
 import cfg
-from forms import Form
 from modules.auth import require
-from plugin_mount import PagePlugin, FormPlugin
-import re
+from plugin_mount import PagePlugin
 import util
 
 
@@ -39,83 +39,103 @@ class PageKite(PagePlugin):
         PagePlugin.__init__(self, *args, **kwargs)
 
         self.register_page("router.setup.pagekite")
-        self.register_page("router.setup.pagekite.configure")
         cfg.html_root.router.setup.menu.add_item(
             _("Public Visibility (PageKite)"), "icon-flag",
             "/router/setup/pagekite", 50)
 
+    @staticmethod
     @cherrypy.expose
     @require()
-    def index(self, **kwargs):
-        """Serve introcution page"""
+    def index(**kwargs):
+        """Serve introdution page"""
         del kwargs  # Unused
 
-        main = _("""
-<p>PageKite is a system for exposing {box_name} services when you
-don't have a direct connection to the Internet. You only need this
-service if your {box_name} services are unreachable from the rest of
-the Internet. This includes the following situations: </p>
+        menu = {'title': _('PageKite'),
+                'items': [{'url': '/router/setup/pagekite/configure',
+                           'text': _('Configure PageKite')}]}
+        sidebar_right = util.render_template(template='menu_block', menu=menu)
 
-<ul>
-  <li>{box_name} is behind a restricted firewall.</li>
-
-  <li>{box_name} is connected to a (wireless) router which you don't
-      control.</li>
-
-  <li>Your ISP does not provide you an external IP address and instead
-      provides Internet connection through NAT.</li>
-
-  <li>Your ISP does not provide you a static IP address and your IP
-      address changes evertime you connect to Internet.</li>
-
-  <li>Your ISP limits incoming connections.</li>
-</ul>
-
-<p>PageKite works around NAT, firewalls and IP-address limitations by
-using a combination of tunnels and reverse proxies. Currently,
-exposing web server and SSH server are supported. An intermediary
-server with direct Internet access is required. Currently, only
-pagekite.net server is supported and you will need an account
-there. In future, it might be possible to use your buddy's {box_name}
-for this.</p>
-
-<p><a class='btn btn-primary btn-lg'
-      href="{server_dir}/router/setup/pagekite/configure">Configure
-PageKite</a></p>
-""").format(box_name=cfg.box_name, server_dir=cfg.server_dir)
-
-        sidebar_right = _('''
-<strong>PageKite</strong>
-<p><a href="{server_dir}/router/setup/pagekite/configure">Configure
-PageKite</a> </p>''').format(server_dir=cfg.server_dir)
-
-        return self.fill_template(title=_("Public Visibility (PageKite)"),
-                                  main=main, sidebar_right=sidebar_right)
+        return util.render_template(template='pagekite_introduction',
+                                    title=_("Public Visibility (PageKite)"),
+                                    sidebar_right=sidebar_right)
 
 
-class configure(FormPlugin, PagePlugin):  # pylint: disable-msg=C0103
+class TrimmedCharField(forms.CharField):
+    """Trim the contents of a CharField"""
+    def clean(self, value):
+        """Clean and validate the field value"""
+        if value:
+            value = value.strip()
+
+        return super(TrimmedCharField, self).clean(value)
+
+
+class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
+    """Form to configure PageKite"""
+    enabled = forms.BooleanField(label=_('Enable PageKite'),
+                                 required=False)
+
+    server = forms.CharField(
+        label=_('Server'), required=False,
+        help_text=_('Currently only pagekite.net server is supported'),
+        widget=forms.TextInput(attrs={'placeholder': 'pagekite.net',
+                                      'disabled': 'disabled'}))
+
+    kite_name = TrimmedCharField(
+        label=_('Kite name'),
+        help_text=_('Example: mybox1-myacc.pagekite.me'),
+        validators=[
+            validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
+                                      _('Invalid kite name'))])
+
+    kite_secret = TrimmedCharField(
+        label=_('Kite secret'),
+        help_text=_('A secret associated with the kite or the default secret \
+for your account if no secret is set on the kite'))
+
+    http_enabled = forms.BooleanField(
+        label=_('Web Server (HTTP)'), required=False,
+        help_text=_('Site will be available at \
+<a href="http://mybox1-myacc.pagekite.me">http://mybox1-myacc.pagekite.me \
+</a>'))
+
+    ssh_enabled = forms.BooleanField(
+        label=_('Secure Shell (SSH)'), required=False,
+        help_text=_('See SSH client setup <a href="\
+https://pagekite.net/wiki/Howto/SshOverPageKite/">instructions</a>'))
+
+
+class Configure(PagePlugin):  # pylint: disable-msg=C0103
     """Main configuration form"""
     order = 65
 
-    url = ["/router/setup/pagekite/configure"]
+    def __init__(self, *args, **kwargs):
+        PagePlugin.__init__(self, *args, **kwargs)
 
-    js = """
-<script type="text/javascript">
-(function($) {
+        self.register_page("router.setup.pagekite.configure")
 
-$('#pagekite-server').attr("disabled", "disabled");
+    @cherrypy.expose
+    @require()
+    def index(self, **kwargs):
+        """Serve the configuration form"""
+        status = self.get_status()
 
-$('#pagekite-enable').change(function() {
-    if ($('#pagekite-enable').prop('checked')) {
-        $('#pagekite-post-enable-form').show('slow');
-    } else {
-        $('#pagekite-post-enable-form').hide('slow');
-    }
-});
+        form = None
+        messages = []
 
-})(jQuery);
-</script>
-"""
+        if kwargs:
+            form = ConfigureForm(kwargs, prefix='pagekite')
+            # pylint: disable-msg=E1101
+            if form.is_valid():
+                self._apply_changes(status, form.cleaned_data, messages)
+                status = self.get_status()
+                form = ConfigureForm(initial=status, prefix='pagekite')
+        else:
+            form = ConfigureForm(initial=status, prefix='pagekite')
+
+        return util.render_template(template='pagekite_configure',
+                                    title=_('Configure PageKite'), form=form,
+                                    messages=messages)
 
     def get_status(self):
         """
@@ -144,99 +164,11 @@ $('#pagekite-enable').change(function() {
         status['service'] = {}
         for service in ('http', 'ssh'):
             output = self._run(['get-service-status', service])
-            status['service'][service] = (output.split()[0] == 'enabled')
+            status[service + '_enabled'] = (output.split()[0] == 'enabled')
 
         return status
 
-    def main(self, *args, **kwargs):
-        """Build and return the main content area which is the form"""
-        del args  # unused
-
-        status = self.get_status()
-
-        if not status:
-            return _('''
-<p>PageKite is not installed, please install it. PageKite comes
-pre-installed with {box_name}. On any Debian based system (such as
-{box_name}) you may install it using the command 'aptitude install
-pagekite'</p>''').format(box_name=cfg.box_name)
-
-        try:
-            message = kwargs['message'].text
-        except KeyError:
-            message = None
-        form = Form(
-            title="Configure PageKite",
-            action=cfg.server_dir + "/router/setup/pagekite/configure/",
-            name="configure_pagekite_form", message=message)
-
-        form.checkbox(_("Enable PageKite"), name="pagekite_enable",
-                      id="pagekite-enable", checked=status['enabled'])
-
-        show_form = "block" if status['enabled'] else "none"
-        form.html('''
-<div id='pagekite-post-enable-form'
-     style='display: {show_form}'>'''.format(show_form=show_form))
-
-        form.html(_("<h3>PageKite Account</h3>"))
-        form.text_input(_("Server"), name="pagekite_server",
-                        id="pagekite-server", value="pagekite.net")
-        form.text_input(_("Kite name"), name="pagekite_kite_name",
-                        id="pagekite-kite-name", value=status['kite_name'])
-        form.text_input(_("Kite secret"), name="pagekite_kite_secret",
-                        id="pagekite-kite-secret", value=status['kite_secret'])
-
-        form.html(_("<h3>Services</h3>"))
-        form.checkbox(_("Web Server (HTTP)"), name="pagekite_http_enable",
-                      id="pagekite-http-enable",
-                      checked=status['service']['http'])
-        form.checkbox(_("Secure Shell (SSH)"), name="pagekite_ssh_enable",
-                      id="pagekite-ssh-enable",
-                      checked=status['service']['ssh'])
-
-        form.html("</div>")  # pagekite-post-enable-form
-
-        form.submit(_("Update setup"))
-        return form.render()
-
-    def process_form(self, **kwargs):
-        """Handle form submission"""
-        status = self.get_status()
-
-        message, new_status = self.validate_form(**kwargs)
-        if not message.text:
-            self.apply_changes(status, new_status, message)
-
-        return message
-
-    @staticmethod
-    def validate_form(**kwargs):
-        """Check whether all the input form values are correct"""
-        new_status = {}
-        message = util.Message()
-
-        domain_name_re = r'^[\w-]{1,63}(\.[\w-]{1,63})*$'
-        pagekite_kite_name = kwargs.get('pagekite_kite_name', '').strip()
-        if not re.match(domain_name_re, pagekite_kite_name):
-            message.add(_('Invalid kite name'))
-        else:
-            new_status['kite_name'] = pagekite_kite_name
-
-        pagekite_kite_secret = kwargs.get('pagekite_kite_secret', '').strip()
-        if not pagekite_kite_secret:
-            message.add(_('Invalid kite secret'))
-        else:
-            new_status['kite_secret'] = pagekite_kite_secret
-
-        new_status['enabled'] = (kwargs.get('pagekite_enable') == 'on')
-        new_status['service'] = {
-            'http': (kwargs.get('pagekite_http_enable') == 'on'),
-            'ssh': (kwargs.get('pagekite_ssh_enable') == 'on')
-            }
-
-        return message, new_status
-
-    def apply_changes(self, old_status, new_status, message):
+    def _apply_changes(self, old_status, new_status, messages):
         """Apply the changes to PageKite configuration"""
         cfg.log.info('New status is - %s' % new_status)
 
@@ -246,27 +178,29 @@ pagekite'</p>''').format(box_name=cfg.box_name)
         if old_status['enabled'] != new_status['enabled']:
             if new_status['enabled']:
                 self._run(['set-status', 'enable'])
-                message.add(_('PageKite enabled'))
+                messages.append(('success', _('PageKite enabled')))
             else:
                 self._run(['set-status', 'disable'])
-                message.add(_('PageKite disabled'))
+                messages.append(('success', _('PageKite disabled')))
 
         if old_status['kite_name'] != new_status['kite_name'] or \
                 old_status['kite_secret'] != new_status['kite_secret']:
             self._run(['set-kite', '--kite-name', new_status['kite_name'],
                        '--kite-secret', new_status['kite_secret']])
-            message.add(_('Kite details set'))
+            messages.append(('success', _('Kite details set')))
 
-        for service, old_value in old_status['service'].items():
-            if old_value != new_status['service'][service]:
-                if new_status['service'][service]:
+        for service in ['http', 'ssh']:
+            if old_status[service + '_enabled'] != \
+                    new_status[service + '_enabled']:
+                if new_status[service + '_enabled']:
                     self._run(['set-service-status', service, 'enable'])
-                    message.add(_('Service enabled: {service}')
-                                .format(service=service))
+                    messages.append(('success', _('Service enabled: {service}')
+                                     .format(service=service)))
                 else:
                     self._run(['set-service-status', service, 'disable'])
-                    message.add(_('Service disabled: {service}')
-                                .format(service=service))
+                    messages.append(('success',
+                                     _('Service disabled: {service}')
+                                     .format(service=service)))
 
         if old_status != new_status:
             self._run(['start'])

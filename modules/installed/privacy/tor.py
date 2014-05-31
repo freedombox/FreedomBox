@@ -25,6 +25,8 @@ from plugin_mount import PagePlugin
 from modules.auth import require
 import actions
 import cfg
+import util
+
 
 class tor(PagePlugin):
     order = 30 # order of running init in PagePlugins
@@ -38,24 +40,14 @@ class tor(PagePlugin):
     def index(self):
         output, error = actions.superuser_run("tor-get-ports")
         port_info = output.split("\n")
-        ports = {}
+        tor_ports = {}
         for line in port_info:
             try:
                 (key, val) = line.split()
-                ports[key] = val
+                tor_ports[key] = val
             except ValueError:
                 continue
 
-        main = _("""
-        <p>Tor is an anonymous communication system. You can learn more about it from the <a href="https://www.torproject.org/">Tor Project</a> website. For best protection when web surfing, the Tor Project recommends that you use the <a href="https://www.torproject.org/download/download-easy.html.en">Tor Browser Bundle</a>.</p>
-        <p>A Tor SOCKS port is available on your FreedomBox on TCP port 9050.</p>
-        <p>Your FreedomBox is configured as a Tor bridge with obfsproxy, so it can help circumvent censorship. If your FreedomBox is behind a router or firewall, you should make sure the following ports are open, and port-forwarded, if necessary:</p>
-        """)
-
-        main += '<table class="table table-bordered table-condensed span2">'
-        for key in ports:
-            main += "<tr><td>" + str(key) + "</td>"
-            main += "<td>" + str(ports[key]) + "</td></tr>"
-        main += "</table>"
-
-        return self.fill_template(title=_("Tor Control Panel"), main=main)
+        return util.render_template(template='tor',
+                                    title=_('Tor Control Panel'),
+                                    tor_ports=tor_ports)

@@ -1,0 +1,24 @@
+{{ extends "base.html" }}
+
+{% block css %}
+<!-- CSS from previous template, not sure what to keep yet -->
+<!--<link rel="stylesheet" href="{{ basehref }}/static/theme/style-plinth-2col.css" />-->
+{% endblock %}
+
+{% block add_sidebar_left %}
+        <div class="span3">
+          <div class="well sidebar-nav">
+		{% block nav_block %}
+                {{ nav }}
+		{% endblock %}
+		{% block sidebar_left_block %}
+		{{ sidebar_left }}
+		{% endblock %}
+          </div><!--/.well -->
+          <div class="well sidebar-nav">
+		{% block sidebar_right_block %}
+		{{ sidebar_right }}
+		{% endblock %}
+          </div><!--/.well -->
+        </div><!--/span-->
+{% endblock %}

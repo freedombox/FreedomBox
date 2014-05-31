@@ -1,0 +1,94 @@
+{% extends "login_nav.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% block main_block %}
+
+<p>Firewall is a network security system that controls the incoming
+and outgoing network traffic on your {{ cfg.box_name }}. Keeping a
+firewall enabled and properly configured reduces risk of security
+threat from the Internet.</p>
+
+<p>The following the current status:</p>
+
+{% if firewall_status = 'not_installed' %}
+<p>Firewall is not installed. Please install it. Firewall comes
+pre-installed with {{ cfg.box_name }}. On any Debian based system
+(such as {{ cfg.box_name }}) you may install it using the command 'aptitude
+install firewalld'</p>
+
+{% elif firewall_status = 'not_running' %}
+
+<p>Firewall daemon is not running. Please run it. Firewall comes
+enabled by default on {{ cfg.box_name }}. On any Debian based system
+(such as {{ cfg.box_name }}) you may run it using the command 'service
+firewalld start' or in case of a system with systemd 'systemctl start
+firewalld'</p>
+
+{% else %}
+
+<table class='table table-autowidth'>
+  <thead>
+    <th>Service/Port</th>
+    <th>Status</th>
+  </thead>
+
+  <tbody>
+    {% for service in services %}
+      <tr>
+        <td><strong>{{ service.name }}</strong></td>
+        <td>
+          {% if service.is_enabled %}
+            <span class='label label-success'>Enabled</span>
+          {% else %}
+            <span class='label label-important'>Disabled</span>
+          {% endif %}
+        </td>
+      </tr>
+
+      {% for port in service.ports %}
+        <tr>
+          <td class='cell-indented'><em>{{ port }}</em></td>
+          <td>
+            {% if port in internal_enabled_services and port in external_enabled_services %}
+              <span class='label label-success'>Permitted</span>
+            {% elif port in internal_enabled_services %}
+              <span class='label label-warning'>Permitted (internal only)</span>
+            {% elif port in external_enabled_services %}
+              <span class='label label-warning'>Permitted (external only)</span>
+            {% else %}
+              <span class='label label-important'>Blocked</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+
+    {% endfor %}
+
+  </tbody>
+
+</table>
+
+<p><em>The operation of the firewall is automatic. When you enable a
+service it is automatically permitted in the firewall and you disable
+a service is automatically disabled in the firewall.</em></p>
+
+{% endif %}
+
+{% endblock %}
