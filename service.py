@@ -16,7 +16,7 @@
 #
 
 """
-Framework for working with servers and theirs services
+Framework for working with servers and their services.
 """
 
 from gettext import gettext as _
@@ -50,14 +50,16 @@ class Service(object):
         SERVICES[service_id] = self
 
     def is_enabled(self):
-        """Return whether the service is enabled"""
+        """Return whether the service is enabled."""
+
         if callable(self._enabled):
             return self._enabled()
 
         return self._enabled
 
     def notify_enabled(self, sender, enabled):
-        """Notify observers about change in state of service"""
+        """Notify observers about change in state of service."""
+
         if not callable(self._enabled):
             self._enabled = enabled
 
@@ -66,7 +68,8 @@ class Service(object):
 
 
 def init():
-    """Register some misc. services that don't fit elsewhere"""
+    """Register some misc. services that don't fit elsewhere."""
+
     Service('http', _('Web Server'), ['http'], is_external=True, enabled=True)
     Service('https', _('Web Server over Secure Socket Layer'), ['https'],
             is_external=True, enabled=True)
