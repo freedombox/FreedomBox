@@ -1,1 +1,1 @@
-installed/first_boot.py
+installed/first_boot/first_boot.py
