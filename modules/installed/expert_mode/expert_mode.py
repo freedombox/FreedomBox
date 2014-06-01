@@ -24,10 +24,10 @@ class Experts(PagePlugin):
 
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page('sys.config.expert')
+        self.register_page('sys.expert')
 
-        cfg.html_root.sys.config.menu.add_item(_('Expert mode'), 'icon-cog',
-                                               '/sys/config/expert', 10)
+        cfg.html_root.sys.menu.add_item(_('Expert Mode'), 'icon-cog',
+                                        '/sys/expert', 10)
 
     @cherrypy.expose
     @require()

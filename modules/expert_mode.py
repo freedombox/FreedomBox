@@ -1,1 +1,1 @@
-installed/system/expert_mode.py
+installed/expert_mode/expert_mode.py
