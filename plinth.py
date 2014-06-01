@@ -70,7 +70,7 @@ class Root(plugin_mount.PagePlugin):
             cfg.log("First Boot state = %d" % db['state'])
             raise cherrypy.InternalRedirect('firstboot/state%d' % db['state'])
       if cherrypy.session.get(cfg.session_key, None):
-         raise cherrypy.InternalRedirect('router')
+         raise cherrypy.InternalRedirect('apps')
       else:
          raise cherrypy.InternalRedirect('help/about')
 
