@@ -1,1 +1,1 @@
-installed/system/diagnostics.py
+installed/diagnostics/diagnostics.py
