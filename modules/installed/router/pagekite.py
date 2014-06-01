@@ -38,10 +38,10 @@ class PageKite(PagePlugin):
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
 
-        self.register_page("router.setup.pagekite")
-        cfg.html_root.router.setup.menu.add_item(
+        self.register_page("router.pagekite")
+        cfg.html_root.router.menu.add_item(
             _("Public Visibility (PageKite)"), "icon-flag",
-            "/router/setup/pagekite", 50)
+            "/router/pagekite", 50)
 
     @staticmethod
     @cherrypy.expose
@@ -51,7 +51,7 @@ class PageKite(PagePlugin):
         del kwargs  # Unused
 
         menu = {'title': _('PageKite'),
-                'items': [{'url': '/router/setup/pagekite/configure',
+                'items': [{'url': '/router/pagekite/configure',
                            'text': _('Configure PageKite')}]}
         sidebar_right = util.render_template(template='menu_block', menu=menu)
 
@@ -112,7 +112,7 @@ class Configure(PagePlugin):  # pylint: disable-msg=C0103
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
 
-        self.register_page("router.setup.pagekite.configure")
+        self.register_page("router.pagekite.configure")
 
     @cherrypy.expose
     @require()
