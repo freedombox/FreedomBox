@@ -1,1 +1,1 @@
-installed/privacy/tor.py
+installed/tor/tor.py

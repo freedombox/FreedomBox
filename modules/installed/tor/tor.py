@@ -29,11 +29,12 @@ import util
 
 
 class tor(PagePlugin):
-    order = 30 # order of running init in PagePlugins
+    order = 60  # order of running init in PagePlugins
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page("privacy.tor")
-        cfg.html_root.privacy.menu.add_item("Tor", "icon-eye-close", "/privacy/tor", 30)
+        self.register_page("apps.tor")
+        cfg.html_root.apps.menu.add_item("Tor", "icon-eye-close", "/apps/tor",
+                                         30)
 
     @cherrypy.expose
     @require()
