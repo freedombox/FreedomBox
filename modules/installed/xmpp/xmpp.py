@@ -10,19 +10,21 @@ import util
 
 
 SIDE_MENU = {'title': _('XMPP'),
-             'items': [{'url': '/services/xmpp/configure',
+             'items': [{'url': '/apps/xmpp/configure',
                         'text': 'Configure XMPP Server'},
-                       {'url': '/services/xmpp/register',
+                       {'url': '/apps/xmpp/register',
                         'text': 'Register XMPP Account'}]}
 
 
 class XMPP(PagePlugin):
     """XMPP Page"""
+    order = 60
+
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page('services.xmpp')
-        cfg.html_root.services.menu.add_item('XMPP', 'icon-comment',
-                                             '/services/xmpp', 40)
+        self.register_page('apps.xmpp')
+        cfg.html_root.apps.menu.add_item('XMPP', 'icon-comment',
+                                             '/apps/xmpp', 40)
 
         self.client_service = service.Service(
             'xmpp-client', _('Chat Server - client connections'),
@@ -62,10 +64,11 @@ allowed to register an account through an XMPP client'))
 
 class Configure(PagePlugin):
     """Configuration page"""
+    order = 65
 
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page("services.xmpp.configure")
+        self.register_page("apps.xmpp.configure")
 
     @cherrypy.expose
     @require()
@@ -143,10 +146,11 @@ class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
 
 class Register(PagePlugin):
     """User registration page"""
+    order = 65
 
     def __init__(self, *args, **kwargs):
         PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page('services.xmpp.register')
+        self.register_page('apps.xmpp.register')
 
     @cherrypy.expose
     @require()
