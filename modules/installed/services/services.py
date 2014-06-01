@@ -11,13 +11,7 @@ class Services(PagePlugin):
         PagePlugin.__init__(self, *args, **kwargs)
         self.register_page("services")
         self.menu = cfg.main_menu.add_item("Services", "icon-list", "/services", 90)
-        self.menu.add_item("Open ID", "icon-user", "/services/openid", 35)
 
     @cherrypy.expose
     def index(self):
-        return self.openid()
-
-    @cherrypy.expose
-    @require()
-    def openid(self):
-        return util.render_template(template='openid', title="Open ID")
+        raise cherrypy.HTTPRedirect(cfg.server_dir + '/services/xmpp')
