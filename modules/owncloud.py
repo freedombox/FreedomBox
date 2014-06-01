@@ -1,1 +1,1 @@
-installed/apps/owncloud.py
+installed/owncloud/owncloud.py
