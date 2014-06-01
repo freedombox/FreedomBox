@@ -1,1 +1,0 @@
-installed/system/wan.py
