@@ -1,1 +1,1 @@
-installed/router/pagekite.py
+installed/pagekite/pagekite.py
