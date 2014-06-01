@@ -100,8 +100,12 @@ class FirstBoot(PagePlugin):
         message is an optional string that we can display to the
         user. It's a good place to put error messages.
         """
+        try:
+            if FirstBoot._read_state() >= 5:
+                raise cherrypy.HTTPRedirect(cfg.server_dir, 302)
+        except KeyError:
+            pass
 
-        # FIXME: reject connection attempt if db["state"] >= 5.
         ## Until LDAP is in place, we'll put the box key in the cfg.store_file
         status = self.get_state0()
 
@@ -117,11 +121,8 @@ class FirstBoot(PagePlugin):
 
                 if success:
                     # Everything is good, permanently mark and move to page 2
-                    with sqlite_db(cfg.store_file, table="firstboot",
-                                   autocommit=True) as database:
-                        database['state'] = 1
-
-                        raise cherrypy.InternalRedirect('state1')
+                    FirstBoot._write_state(1)
+                    raise cherrypy.HTTPRedirect('state1', 302)
         else:
             form = State0Form(initial=status, prefix='firstboot')
 
@@ -176,9 +177,21 @@ class FirstBoot(PagePlugin):
         """
         # TODO complete first_boot handling
         # Make sure the user is not stuck on a dead end for now.
-        with sqlite_db(cfg.store_file, table='firstboot', autocommit=True) as \
-                database:
-            database['state'] = 5
+        FirstBoot._write_state(5)
 
         return util.render_template(template='firstboot_state1',
                                     title=_('Installing the Certificate'))
+
+    @staticmethod
+    def _read_state():
+        """Read the current state from database"""
+        with sqlite_db(cfg.store_file, table='firstboot',
+                       autocommit=True) as database:
+            return database['state']
+
+    @staticmethod
+    def _write_state(state):
+        """Write state to database"""
+        with sqlite_db(cfg.store_file, table='firstboot',
+                       autocommit=True) as database:
+            database['state'] = state
