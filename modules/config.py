@@ -1,1 +1,1 @@
-installed/system/config.py
+installed/config/config.py
