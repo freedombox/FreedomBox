@@ -55,12 +55,6 @@ def find_keys(dic, val):
     """return the key of dictionary dic given the value"""
     return [k for k, v in dic.iteritems() if v == val]
 
-class Message():
-    def __init__(self, msg=''):
-        self.text = msg
-    def add(self, text):
-        self.text += "<br />%s" % text
-
 
 def render_template(template='login_nav', **kwargs):
     for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'nav', 'css',
