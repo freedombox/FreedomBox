@@ -46,10 +46,8 @@ class PageKite(PagePlugin):
     @staticmethod
     @cherrypy.expose
     @require()
-    def index(**kwargs):
+    def index():
         """Serve introdution page"""
-        del kwargs  # Unused
-
         menu = {'title': _('PageKite'),
                 'items': [{'url': '/apps/pagekite/configure',
                            'text': _('Configure PageKite')}]}

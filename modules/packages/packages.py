@@ -58,10 +58,8 @@ class Packages(PagePlugin):
 
     @cherrypy.expose
     @require()
-    def index(self, *args, **kwargs):
+    def index(self, **kwargs):
         """Serve the form"""
-        del args  # Unused
-
         status = self.get_status()
 
         form = None

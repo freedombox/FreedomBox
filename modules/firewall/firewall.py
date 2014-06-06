@@ -45,10 +45,8 @@ class Firewall(PagePlugin):
 
     @cherrypy.expose
     @require()
-    def index(self, **kwargs):
+    def index(self):
         """Serve introcution page"""
-        del kwargs  # Unused
-
         if not self.get_installed_status():
             return util.render_template(template='firewall',
                                         title=_("Firewall"),

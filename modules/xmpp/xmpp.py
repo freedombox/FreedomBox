@@ -40,9 +40,8 @@ class XMPP(PagePlugin):
     @staticmethod
     @cherrypy.expose
     @require()
-    def index(**kwargs):
+    def index():
         """Serve XMPP page"""
-        del kwargs  # Unused
         main = "<p>XMPP Server Accounts and Configuration</p>"
 
         sidebar_right = util.render_template(template='menu_block',
@@ -108,13 +107,6 @@ class Configure(PagePlugin):
         return {'inband_enabled': 'inband_enable' in output.split()}
 
     @staticmethod
-    def sidebar_right(**kwargs):
-        """Return rendered string for sidebar on the right"""
-        del kwargs  # Unused
-
-        return util.render_template(template='menu_block', menu=SIDE_MENU)
-
-    @staticmethod
     def _apply_changes(old_status, new_status, messages):
         """Apply the form changes"""
         cfg.log.info('Status - %s, %s' % (old_status, new_status))
@@ -133,7 +125,7 @@ class Configure(PagePlugin):
         cfg.log.info('Option - %s' % option)
 
         _output, error = actions.superuser_run('xmpp-setup', [option])
-        del _output
+        del _output  # Unused
         if error:
             raise Exception('Error running command - %s' % error)
 
