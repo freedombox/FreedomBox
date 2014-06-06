@@ -6,7 +6,8 @@ cherrypy.log.error_file = cfg.status_log_file
 cherrypy.log.access_file = cfg.access_log_file
 cherrypy.log.screen = False
 
-class Logger():
+
+class Logger(object):
     """By convention, log levels are DEBUG, INFO, WARNING, ERROR and CRITICAL."""
     def log(self, msg, level="DEBUG"):
         try:

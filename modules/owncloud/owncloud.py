@@ -22,8 +22,9 @@ class OwnCloud(PagePlugin):
     """ownCloud configuration page"""
     order = 90
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(OwnCloud, self).__init__()
+
         self.register_page('apps.owncloud')
 
         cfg.html_root.apps.menu.add_item('Owncloud', 'icon-picture',

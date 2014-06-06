@@ -28,10 +28,11 @@ import cfg
 import util
 
 
-class diagnostics(PagePlugin):
+class Diagnostics(PagePlugin):
     order = 30
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Diagnostics, self).__init__()
+
         self.register_page("sys.diagnostics")
         cfg.html_root.sys.menu.add_item("Diagnostics", "icon-screenshot", "/sys/diagnostics", 30)
 
@@ -41,10 +42,11 @@ class diagnostics(PagePlugin):
         return util.render_template(template='diagnostics',
                                     title=_('System Diagnostics'))
 
-class test(PagePlugin):
+class Test(PagePlugin):
     order = 31
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Test, self).__init__()
+
         self.register_page("sys.diagnostics.test")
 
     @cherrypy.expose

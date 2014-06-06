@@ -20,11 +20,12 @@ class XMPP(PagePlugin):
     """XMPP Page"""
     order = 60
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(XMPP, self).__init__()
+
         self.register_page('apps.xmpp')
         cfg.html_root.apps.menu.add_item('XMPP', 'icon-comment',
-                                             '/apps/xmpp', 40)
+                                         '/apps/xmpp', 40)
 
         self.client_service = service.Service(
             'xmpp-client', _('Chat Server - client connections'),
@@ -66,9 +67,10 @@ class Configure(PagePlugin):
     """Configuration page"""
     order = 65
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page("apps.xmpp.configure")
+    def __init__(self):
+        super(Configure, self).__init__()
+
+        self.register_page('apps.xmpp.configure')
 
     @cherrypy.expose
     @require()
@@ -148,8 +150,9 @@ class Register(PagePlugin):
     """User registration page"""
     order = 65
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Register, self).__init__()
+
         self.register_page('apps.xmpp.register')
 
     @cherrypy.expose

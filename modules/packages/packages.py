@@ -48,8 +48,9 @@ class Packages(PagePlugin):
     """Package page"""
     order = 20
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Packages, self).__init__()
+
         self.register_page('sys.packages')
 
         cfg.html_root.sys.menu.add_item('Package Manager', 'icon-gift',

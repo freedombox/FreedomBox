@@ -1,17 +1,17 @@
 #! /usr/bin/env python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
-import user_store, auth
+import auth
 from logger import Logger
 import cfg
 import unittest
 import cherrypy
 import plugin_mount
 import os
-from model import User
 cfg.log = Logger()
 
 cherrypy.log.access_file = None
+
 
 class Auth(unittest.TestCase):
     """Test check_credentials function of auth to confirm it works as expected"""

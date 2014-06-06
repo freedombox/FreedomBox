@@ -91,9 +91,8 @@ and must not be greater than 63 characters in length.'),
 
 class Configuration(PagePlugin):
     """System configuration page"""
-    def __init__(self, *args, **kwargs):
-        del args  # Unused
-        del kwargs  # Unused
+    def __init__(self):
+        super(Configuration, self).__init__()
 
         self.register_page('sys.config')
 

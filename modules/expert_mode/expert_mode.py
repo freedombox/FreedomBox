@@ -22,8 +22,9 @@ class Experts(PagePlugin):
     """Expert forms page"""
     order = 60
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Experts, self).__init__()
+
         self.register_page('sys.expert')
 
         cfg.html_root.sys.menu.add_item(_('Expert Mode'), 'icon-cog',

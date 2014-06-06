@@ -3,7 +3,7 @@ import cherrypy
 import cfg
 
 
-class Menu():
+class Menu(object):
     """One menu item."""
     def __init__(self, label="", icon="", url="#", order=50):
         """label is the text that is displayed on the menu.

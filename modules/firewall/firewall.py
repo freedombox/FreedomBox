@@ -34,8 +34,8 @@ class Firewall(PagePlugin):
     """Firewall menu entry and introduction page"""
     order = 40
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Firewall, self).__init__()
 
         self.register_page('sys.firewall')
         cfg.html_root.sys.menu.add_item(_('Firewall'), 'icon-flag',

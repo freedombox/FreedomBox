@@ -8,15 +8,17 @@ import util
 
 class Help(PagePlugin):
     order = 20 # order of running init in PagePlugins
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+
+    def __init__(self):
+        super(Help, self).__init__()
+
         self.register_page("help")
         self.menu = cfg.main_menu.add_item(_("Documentation"), "icon-book", "/help", 101)
         self.menu.add_item(_("Where to Get Help"), "icon-search", "/help/index", 5)
         self.menu.add_item(_("Developer's Manual"), "icon-info-sign", "/help/view/plinth", 10)
         self.menu.add_item(_("FAQ"), "icon-question-sign", "/help/view/faq", 20)
         self.menu.add_item(_("%s Wiki" % cfg.box_name), "icon-pencil", "http://wiki.debian.org/FreedomBox", 30)
-	self.menu.add_item(_("About"), "icon-star", "/help/about", 100)
+        self.menu.add_item(_("About"), "icon-star", "/help/about", 100)
 
     @cherrypy.expose
     def index(self):
@@ -31,8 +33,9 @@ class Help(PagePlugin):
 
 
 class View(PagePlugin):
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(View, self).__init__()
+
         self.register_page("help.view")
 
     @cherrypy.expose

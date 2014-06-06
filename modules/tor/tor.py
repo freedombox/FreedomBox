@@ -28,10 +28,12 @@ import cfg
 import util
 
 
-class tor(PagePlugin):
+class Tor(PagePlugin):
     order = 60  # order of running init in PagePlugins
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+
+    def __init__(self):
+        super(Tor, self).__init__()
+
         self.register_page("apps.tor")
         cfg.html_root.apps.menu.add_item("Tor", "icon-eye-close", "/apps/tor",
                                          30)

@@ -4,8 +4,11 @@ from model import User
 from plugin_mount import UserStoreModule
 from withsqlite.withsqlite import sqlite_db
 
+
 class UserStore(UserStoreModule, sqlite_db):
     def __init__(self):
+        super(UserStore, self).__init__()
+
         self.db_file = cfg.user_db
         sqlite_db.__init__(self, self.db_file, autocommit=True, check_same_thread=False)
         self.__enter__()

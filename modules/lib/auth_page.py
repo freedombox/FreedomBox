@@ -36,8 +36,8 @@ class LoginForm(forms.Form):  # pylint: disable-msg=W0232
 class AuthController(PagePlugin):
     """Login and logout pages"""
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(AuthController, self).__init__()
 
         self.register_page('auth')
 

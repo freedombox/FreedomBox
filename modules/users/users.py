@@ -11,8 +11,10 @@ import util
 
 class Users(PagePlugin):
     order = 20 # order of running init in PagePlugins
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+
+    def __init__(self):
+        super(Users, self).__init__()
+
         self.register_page("sys.users")
 
     @staticmethod
@@ -52,8 +54,8 @@ class UserAdd(PagePlugin):
     """Add user page"""
     order = 30
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(UserAdd, self).__init__()
 
         self.register_page('sys.users.add')
 
@@ -112,8 +114,8 @@ class UserEdit(PagePlugin):
     """User edit page"""
     order = 35
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(UserEdit, self).__init__()
 
         self.register_page('sys.users.edit')
 

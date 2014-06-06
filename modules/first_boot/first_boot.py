@@ -69,8 +69,8 @@ FreedomBox!'))
 class FirstBoot(PagePlugin):
     """First boot wizard"""
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(FirstBoot, self).__init__()
 
         # this is the url this page will hang off of (/firstboot)
         self.register_page('firstboot')

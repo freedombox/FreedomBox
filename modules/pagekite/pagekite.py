@@ -35,8 +35,8 @@ class PageKite(PagePlugin):
     """PageKite menu entry and introduction page"""
     order = 60
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(PageKite, self).__init__()
 
         self.register_page("apps.pagekite")
         cfg.html_root.apps.menu.add_item(
@@ -109,8 +109,8 @@ class Configure(PagePlugin):  # pylint: disable-msg=C0103
     """Main configuration form"""
     order = 65
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Configure, self).__init__()
 
         self.register_page("apps.pagekite.configure")
 

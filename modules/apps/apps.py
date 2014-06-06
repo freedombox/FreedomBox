@@ -6,8 +6,9 @@ import util
 
 
 class Apps(PagePlugin):
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    def __init__(self):
+        super(Apps, self).__init__()
+
         self.register_page("apps")
         self.menu = cfg.main_menu.add_item("Apps", "icon-download-alt", "/apps", 80)
         self.menu.add_item("Chat", "icon-comment", "/../jwchat", 30)

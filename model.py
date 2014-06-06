@@ -3,6 +3,8 @@ class User(dict):
     is a bcrypt hash of the password), salt, groups, and an email address.
     They can be blank or None, but the keys must exist. """
     def __init__(self, dict=None):
+        super(User, self).__init__()
+
         for key in ['username', 'name', 'passphrase', 'salt', 'email']:
             self[key] = ''
         for key in ['groups']:
