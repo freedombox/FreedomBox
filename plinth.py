@@ -80,16 +80,15 @@ class Root(plugin_mount.PagePlugin):
 def load_modules():
     """
     Read names of enabled modules in modules/enabled directory and
-    import them from modules/installed directory.
+    import them from modules directory.
     """
     for name in os.listdir('modules/enabled'):
-        cfg.log.info('Importing modules/installed/%s' % name)
+        cfg.log.info('Importing modules/%s' % name)
         try:
-            importlib.import_module(
-                'modules.installed.{module}'.format(module=name))
+            importlib.import_module('modules.{module}'.format(module=name))
         except ImportError as exception:
             cfg.log.error(
-                'Could not import modules/installed/{module}: {exception}'
+                'Could not import modules/{module}: {exception}'
                 .format(module=name, exception=exception))
 
 
@@ -100,8 +99,7 @@ def get_template_directories():
 
     directories = set((core_directory,))
     for name in os.listdir('modules/enabled'):
-        directories.add(os.path.join('modules', 'installed', name,
-                                     'templates'))
+        directories.add(os.path.join('modules', name, 'templates'))
 
     cfg.log.info('Template directories - %s' % directories)
 
