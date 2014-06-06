@@ -1,7 +1,4 @@
-import cherrypy
-from modules.auth import require
 import cfg
-import util
 
 
 class PluginMount(type):

@@ -24,7 +24,7 @@ from gettext import gettext as _
 
 import actions
 import cfg
-from modules.auth import require
+from ..lib.auth import require
 from plugin_mount import PagePlugin
 import service as service_module
 import util

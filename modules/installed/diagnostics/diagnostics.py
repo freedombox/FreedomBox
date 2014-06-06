@@ -21,7 +21,7 @@ Plinth module for running diagnostics
 
 import cherrypy
 from gettext import gettext as _
-from auth import require
+from ..lib.auth import require
 from plugin_mount import PagePlugin
 import actions
 import cfg

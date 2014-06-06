@@ -1,6 +1,5 @@
 import cherrypy
 from gettext import gettext as _
-from modules.auth import require
 from plugin_mount import PagePlugin
 import cfg
 import util

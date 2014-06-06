@@ -2,8 +2,7 @@ import cherrypy
 from django import forms
 from django.core import validators
 from gettext import gettext as _
-import auth
-from auth import require
+from ..lib.auth import require, add_user
 from plugin_mount import PagePlugin
 import cfg
 from model import User
@@ -86,8 +85,8 @@ class UserAdd(PagePlugin):
                  username=data['username'])))
             return
 
-        auth.add_user(data['username'], data['password'], data['full_name'],
-                      data['email'], False)
+        add_user(data['username'], data['password'], data['full_name'],
+                 data['email'], False)
         messages.append(
             ('success', _('User "{username}" added').format(
              username=data['username'])))

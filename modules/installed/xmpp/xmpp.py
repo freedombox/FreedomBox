@@ -1,7 +1,7 @@
 import cherrypy
 from django import forms
 from gettext import gettext as _
-from modules.auth import require
+from ..lib.auth import require
 from plugin_mount import PagePlugin
 import cfg
 import actions

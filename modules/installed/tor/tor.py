@@ -22,7 +22,7 @@ Plinth module for configuring Tor
 import cherrypy
 from gettext import gettext as _
 from plugin_mount import PagePlugin
-from modules.auth import require
+from ..lib.auth import require
 import actions
 import cfg
 import util

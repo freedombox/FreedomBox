@@ -1,1 +1,0 @@
-installed/diagnostics/diagnostics.py

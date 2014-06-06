@@ -23,10 +23,10 @@ from django import forms
 from django.core import validators
 from gettext import gettext as _
 from plugin_mount import PagePlugin
-from modules.auth import add_user
+from ..lib.auth import add_user
+from ..config import config
 from withsqlite.withsqlite import sqlite_db
 import cfg
-import config
 import util
 
 
