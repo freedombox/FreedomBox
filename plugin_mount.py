@@ -35,41 +35,6 @@ class PluginMountSingular(PluginMount):
             cls.plugins.append(cls)
 
 
-def _setattr_deep(obj, path, value):
-    """If path is 'x.y.z' or ['x', 'y', 'z'] then perform obj.x.y.z = value"""
-    if isinstance(path, basestring):
-        path = path.split('.')
-
-    for part in path[:-1]:
-        obj = getattr(obj, part)
-
-    setattr(obj, path[-1], value)
-
-
-class PagePlugin(object):
-    """
-    Mount point for page plugins.  Page plugins provide display pages
-    in the interface (one menu item, for example).
-
-    order - How early should this plugin be loaded?  Lower order is earlier.
-    """
-
-    order = 50
-
-    __metaclass__ = PluginMount
-
-    def __init__(self):
-        """If cfg.html_root is none, then this is the html_root."""
-        if not cfg.html_root:
-            cfg.log('Setting html root to %s' % self.__class__.__name__)
-            cfg.html_root = self
-
-    def register_page(self, url):
-        """Add a page to the page tree structure"""
-        cfg.log.info("Registering page: %s" % url)
-        _setattr_deep(cfg.html_root, url, self)
-
-
 class UserStoreModule(object):
     """
     Mount Point for plugins that will manage the user backend storage,
