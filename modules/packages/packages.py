@@ -1,11 +1,10 @@
-import cherrypy
 from django import forms
+from django.template.response import TemplateResponse
 from gettext import gettext as _
-from ..lib.auth import require
-from plugin_mount import PagePlugin
+
 import actions
 import cfg
-import util
+from ..lib.auth import login_required
 
 
 def get_modules_available():
@@ -28,10 +27,6 @@ def get_modules_enabled():
 
 class PackagesForm(forms.Form):
     """Packages form"""
-    # XXX: Only present due to issue with submitting empty form
-    dummy = forms.CharField(label='Dummy', initial='dummy',
-                            widget=forms.HiddenInput())
-
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1002, E1101
         super(forms.Form, self).__init__(*args, **kwargs)
@@ -44,89 +39,83 @@ class PackagesForm(forms.Form):
                 label=label, required=False)
 
 
-class Packages(PagePlugin):
-    """Package page"""
-    order = 20
+def init():
+    """Initialize the Packages module"""
+    menu = cfg.main_menu.find('/sys')
+    menu.add_item('Package Manager', 'icon-gift', '/sys/packages', 20)
 
-    def __init__(self):
-        super(Packages, self).__init__()
 
-        self.register_page('sys.packages')
+@login_required
+def index(request):
+    """Serve the form"""
+    status = get_status()
 
-        cfg.html_root.sys.menu.add_item('Package Manager', 'icon-gift',
-                                        '/sys/packages', 20)
+    form = None
+    messages = []
 
-    @cherrypy.expose
-    @require()
-    def index(self, **kwargs):
-        """Serve the form"""
-        status = self.get_status()
-
-        form = None
-        messages = []
-
-        if kwargs:
-            form = PackagesForm(kwargs, prefix='packages')
-            # pylint: disable-msg=E1101
-            if form.is_valid():
-                self._apply_changes(status, form.cleaned_data, messages)
-                status = self.get_status()
-                form = PackagesForm(initial=status, prefix='packages')
-        else:
+    if request.method == 'POST':
+        form = PackagesForm(request.POST, prefix='packages')
+        # pylint: disable-msg=E1101
+        if form.is_valid():
+            _apply_changes(status, form.cleaned_data, messages)
+            status = get_status()
             form = PackagesForm(initial=status, prefix='packages')
+    else:
+        form = PackagesForm(initial=status, prefix='packages')
 
-        return util.render_template(template='packages',
-                                    title=_('Add/Remove Plugins'),
-                                    form=form, messages=messages)
+    return TemplateResponse(request, 'packages.html',
+                            {'title': _('Add/Remove Plugins'),
+                             'form': form,
+                             'messages_': messages})
 
-    @staticmethod
-    def get_status():
-        """Return the current status"""
-        modules_available = get_modules_available()
-        modules_enabled = get_modules_enabled()
 
-        return {module + '_enabled': module in modules_enabled
-                for module in modules_available}
+def get_status():
+    """Return the current status"""
+    modules_available = get_modules_available()
+    modules_enabled = get_modules_enabled()
 
-    @staticmethod
-    def _apply_changes(old_status, new_status, messages):
-        """Apply form changes"""
-        for field, enabled in new_status.items():
-            if not field.endswith('_enabled'):
-                continue
+    return {module + '_enabled': module in modules_enabled
+            for module in modules_available}
 
-            if old_status[field] == new_status[field]:
-                continue
 
-            module = field.split('_enabled')[0]
-            if enabled:
-                output, error = actions.superuser_run(
-                    'module-manager', ['enable', cfg.python_root, module])
-                del output  # Unused
+def _apply_changes(old_status, new_status, messages):
+    """Apply form changes"""
+    for field, enabled in new_status.items():
+        if not field.endswith('_enabled'):
+            continue
 
-                # TODO: need to get plinth to load the module we just
-                # enabled
-                if error:
-                    messages.append(
-                        ('error', _('Error enabling module - {module}').format(
-                         module=module)))
-                else:
-                    messages.append(
-                        ('success', _('Module enabled - {module}').format(
+        if old_status[field] == new_status[field]:
+            continue
+
+        module = field.split('_enabled')[0]
+        if enabled:
+            output, error = actions.superuser_run(
+                'module-manager', ['enable', cfg.python_root, module])
+            del output  # Unused
+
+            # TODO: need to get plinth to load the module we just
+            # enabled
+            if error:
+                messages.append(
+                    ('error', _('Error enabling module - {module}').format(
+                     module=module)))
+            else:
+                messages.append(
+                    ('success', _('Module enabled - {module}').format(
+                     module=module)))
+        else:
+            output, error = actions.superuser_run(
+                'module-manager', ['disable', cfg.python_root, module])
+            del output  # Unused
+
+            # TODO: need a smoother way for plinth to unload the
+            # module
+            if error:
+                messages.append(
+                    ('error',
+                     _('Error disabling module - {module}').format(
                          module=module)))
             else:
-                output, error = actions.superuser_run(
-                    'module-manager', ['disable', cfg.python_root, module])
-                del output  # Unused
-
-                # TODO: need a smoother way for plinth to unload the
-                # module
-                if error:
-                    messages.append(
-                        ('error',
-                         _('Error disabling module - {module}').format(
-                             module=module)))
-                else:
-                    messages.append(
-                        ('success', _('Module disabled - {module}').format(
-                         module=module)))
+                messages.append(
+                    ('success', _('Module disabled - {module}').format(
+                     module=module)))

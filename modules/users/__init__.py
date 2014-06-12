@@ -20,6 +20,8 @@ Plinth module to manage users
 """
 
 from . import users
+from .users import init
 
+__all__ = ['users', 'init']
 
-__all__ = ['users']
+DEPENDS = ['system']

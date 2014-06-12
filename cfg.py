@@ -32,7 +32,6 @@ pidfile = get_item(parser, 'Path', 'pidfile')
 host = get_item(parser, 'Network', 'host')
 port = int(get_item(parser, 'Network', 'port'))
 
-html_root = None
 main_menu = Menu()
 
 if store_file.endswith(".sqlite3"):

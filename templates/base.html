@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
 <!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
@@ -29,20 +30,20 @@
 	<title>{% if title %} {{ title }} {% else %} FreedomBox {% endif %}</title>
 
 	<!-- This is the traditional favicon. Size: 16x16 or 32x32, transparency is OK -->
-	<link rel="shortcut icon" href="{{ basehref }}/static/theme/img/favicon.ico" />
+	<link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
 
 	<!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
 	- To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
 	- Transparency is not recommended (iOS will put a black BG behind the icon) -->
-	<link rel="apple-touch-icon" sizes="57x57" href="{{ basehref }}/static/theme/img/apple-touch-icon-57px-precomposed.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="{{ basehref }}/static/theme/img/apple-touch-icon-72px-precomposed.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="{{ basehref }}/static/theme/img/apple-touch-icon-114px-precomposed.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}"/>
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
 
 	<!-- Bootstrap base CSS -->
-	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="{% static 'theme/css/bootstrap.min.css' %}"/>
 	<!-- Bootstrap responsive CSS -->
-	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/bootstrap-responsive.min.css" />
-	<link rel="stylesheet" href="{{ basehref }}/static/theme/css/plinth.css" />
+	<link rel="stylesheet" href="{% static 'theme/css/bootstrap-responsive.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
 	<!-- CSS from previous Plinth template, not sure what to keep yet -->
 	{{ css|safe }}
 	<!-- End Plinth CSS -->
@@ -57,7 +58,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a href="{{ basehref }}/" class="logo-top"><img src="{{ basehref }}/static/theme/img/freedombox-logo-32px.png" alt="FreedomBox" /></a><a class="brand" href="{{ basehref }}/">FreedomBox</a>
+          <a href="{{ basehref }}/" class="logo-top">
+            <img src="{% static 'theme/img/freedombox-logo-32px.png' %}" alt="FreedomBox" />
+          </a>
+          <a class="brand" href="{{ basehref }}/">FreedomBox</a>
 	  {% block add_nav_and_login %}
 	  {% endblock %}
           </div><!--/.nav-collapse -->
@@ -112,10 +116,6 @@
 		the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
 		License</a>, Version 3 or later.  This Plinth theme was built by <a href="http://seandiggity.com" target="_blank">Sean &quot;Diggity&quot; O&apos;Brien</a>.
 		</p>
-		<p>Current page: {{ current_url }}</p>
-		<p>
-
-		</p>
 		{% endblock %}</p>
       </footer>
 
@@ -123,11 +123,11 @@
 
 <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
 	<!-- Local link to system Modernizr (includes HTML5 Shiv) -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/modernizr.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/libs/modernizr.min.js' %}"></script>
 	<!-- Local link to system jQuery -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
 	<!-- Local link to system Bootstrap JS -->
-	<script type="text/javascript" src="{{ basehref }}/static/theme/js/libs/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/libs/bootstrap.min.js' %}"></script>
 
         {% block js_block %}
           {{ js|safe }}

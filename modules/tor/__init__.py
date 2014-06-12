@@ -20,6 +20,8 @@ Plinth module to configure Tor
 """
 
 from . import tor
+from .tor import init
 
+__all__ = ['tor', 'init']
 
-__all__ = ['tor']
+DEPENDS = ['apps']

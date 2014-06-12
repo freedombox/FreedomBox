@@ -19,38 +19,35 @@
 Plinth module for configuring Tor
 """
 
-import cherrypy
+from django.template.response import TemplateResponse
 from gettext import gettext as _
-from plugin_mount import PagePlugin
-from ..lib.auth import require
+
 import actions
 import cfg
-import util
+from ..lib.auth import login_required
 
 
-class Tor(PagePlugin):
-    order = 60  # order of running init in PagePlugins
+def init():
+    """Initialize the Tor module"""
+    menu = cfg.main_menu.find('/apps')
+    menu.add_item("Tor", "icon-eye-close", "/apps/tor", 30)
 
-    def __init__(self):
-        super(Tor, self).__init__()
 
-        self.register_page("apps.tor")
-        cfg.html_root.apps.menu.add_item("Tor", "icon-eye-close", "/apps/tor",
-                                         30)
+@login_required
+def index(request):
+    """Service the index page"""
+    output, error = actions.superuser_run("tor-get-ports")
+    del error  # Unused
 
-    @cherrypy.expose
-    @require()
-    def index(self):
-        output, error = actions.superuser_run("tor-get-ports")
-        port_info = output.split("\n")
-        tor_ports = {}
-        for line in port_info:
-            try:
-                (key, val) = line.split()
-                tor_ports[key] = val
-            except ValueError:
-                continue
+    port_info = output.split("\n")
+    tor_ports = {}
+    for line in port_info:
+        try:
+            (key, val) = line.split()
+            tor_ports[key] = val
+        except ValueError:
+            continue
 
-        return util.render_template(template='tor',
-                                    title=_('Tor Control Panel'),
-                                    tor_ports=tor_ports)
+    return TemplateResponse(request, 'tor.html',
+                            {'title': _('Tor Control Panel'),
+                             'tor_ports': tor_ports})

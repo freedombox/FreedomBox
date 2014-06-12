@@ -1,5 +1,4 @@
 from urlparse import urlparse
-import cherrypy
 import cfg
 
 
@@ -59,16 +58,17 @@ class Menu(object):
         self.sort_items()
         return item
 
-    def active_p(self):
-        """Returns True if this menu item is active, otherwise False.
+    def is_active(self, request_path):
+        """
+        Returns True if this menu item is active, otherwise False.
 
         We can tell if a menu is active if the menu item points
-        anywhere above url we are visiting in the url tree."""
-        return urlparse(cherrypy.url()).path.startswith(self.url)
+        anywhere above url we are visiting in the url tree.
+        """
+        return request_path.startswith(self.url)
 
-    def active_item(self):
+    def active_item(self, request):
         """Return item list (e.g. submenu) of active menu item."""
-        path = urlparse(cherrypy.url()).path
         for item in self.items:
-            if path.startswith(item.url):
+            if request.path.startswith(item.url):
                 return item

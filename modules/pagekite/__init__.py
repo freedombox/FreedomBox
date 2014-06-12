@@ -20,6 +20,8 @@ Plinth module to configure PageKite
 """
 
 from . import pagekite
+from .pagekite import init
 
+__all__ = ['pagekite', 'init']
 
-__all__ = ['pagekite']
+DEPENDS = ['apps']

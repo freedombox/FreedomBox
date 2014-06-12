@@ -20,6 +20,8 @@ Plinth module to manage packages
 """
 
 from . import packages
+from .packages import init
 
+__all__ = ['packages', 'init']
 
-__all__ = ['packages']
+DEPENDS = ['system']

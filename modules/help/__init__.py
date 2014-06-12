@@ -20,6 +20,6 @@ Plinth module for help pages
 """
 
 from . import help  # pylint: disable-msg=W0622
+from .help import init
 
-
-__all__ = ['help']
+__all__ = ['help', 'init']

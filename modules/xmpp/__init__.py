@@ -20,6 +20,8 @@ Plinth module to configure XMPP server
 """
 
 from . import xmpp
+from .xmpp import init
 
+__all__ = ['xmpp', 'init']
 
-__all__ = ['xmpp']
+DEPENDS = ['apps']

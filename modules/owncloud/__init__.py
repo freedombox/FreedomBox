@@ -20,6 +20,8 @@ Plinth module to configure ownCloud
 """
 
 from . import owncloud
+from .owncloud import init
 
+__all__ = ['owncloud', 'init']
 
-__all__ = ['owncloud']
+DEPENDS = ['apps']

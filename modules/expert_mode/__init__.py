@@ -20,6 +20,8 @@ Plinth module for expert mode configuration
 """
 
 from . import expert_mode
+from .expert_mode import init
 
+__all__ = ['expert_mode', 'init']
 
-__all__ = ['expert_mode']
+DEPENDS = ['system']

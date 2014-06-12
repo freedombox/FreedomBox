@@ -1,19 +1,14 @@
-import cherrypy
+from django.template.response import TemplateResponse
 from gettext import gettext as _
-from plugin_mount import PagePlugin
+
 import cfg
-import util
 
 
-class Apps(PagePlugin):
-    def __init__(self):
-        super(Apps, self).__init__()
+def init():
+    """Initailize the apps module"""
+    cfg.main_menu.add_item("Apps", "icon-download-alt", "/apps", 80)
 
-        self.register_page("apps")
-        self.menu = cfg.main_menu.add_item("Apps", "icon-download-alt", "/apps", 80)
-        self.menu.add_item("Chat", "icon-comment", "/../jwchat", 30)
 
-    @cherrypy.expose
-    def index(self):
-        return util.render_template(template='apps',
-                                    title=_('User Applications'))
+def index(request):
+    """Serve the apps index page"""
+    return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
