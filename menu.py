@@ -29,6 +29,17 @@ class Menu(object):
         self.order = order
         self.items = []
 
+    def find(self, url, basehref=True):
+        """Return a menu item with given URL"""
+        if basehref and url.startswith('/'):
+            url = cfg.server_dir + url
+
+        for item in self.items:
+            if item.url == url:
+                return item
+
+        raise KeyError('Menu item not found')
+
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
