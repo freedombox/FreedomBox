@@ -16,13 +16,14 @@
 #
 
 """
-Plinth library modules
+URLs for the Diagnostics module
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'modules.diagnostics.diagnostics',
+    url(r'^sys/diagnostics/$', 'index'),
+    url(r'^sys/diagnostics/test/$', 'test'),
+    )

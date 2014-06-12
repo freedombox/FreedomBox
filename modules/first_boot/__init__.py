@@ -21,5 +21,4 @@ Plinth module for first boot wizard
 
 from . import first_boot
 
-
 __all__ = ['first_boot']

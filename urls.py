@@ -16,13 +16,13 @@
 #
 
 """
-Plinth library modules
+Django URLconf file containing all urls
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'views',
+    url(r'^$', 'index')
+    )

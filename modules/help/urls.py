@@ -16,13 +16,19 @@
 #
 
 """
-Plinth library modules
+URLs for the Help module
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'modules.help.help',
+    url(r'^help/$', 'index'),
+    url(r'^help/index/$', 'index'),
+    url(r'^help/about/$', 'about'),
+    url(r'^help/view/(?P<page>design)/$', 'default'),
+    url(r'^help/view/(?P<page>plinth)/$', 'default'),
+    url(r'^help/view/(?P<page>hacking)/$', 'default'),
+    url(r'^help/view/(?P<page>faq)/$', 'default'),
+    )

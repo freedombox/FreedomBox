@@ -16,13 +16,14 @@
 #
 
 """
-Plinth library modules
+URLs for the PageKite module
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'modules.pagekite.pagekite',
+    url(r'^apps/pagekite/$', 'index'),
+    url(r'^apps/pagekite/configure/$', 'configure'),
+    )

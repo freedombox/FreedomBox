@@ -16,13 +16,13 @@
 #
 
 """
-Plinth library modules
+URLs for the Apps module
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'modules.apps.apps',
+    url(r'^apps/$', 'index')
+    )

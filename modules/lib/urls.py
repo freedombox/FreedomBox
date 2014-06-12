@@ -16,13 +16,14 @@
 #
 
 """
-Plinth library modules
+URLs for the Lib module
 """
 
-from . import auth
-from . import auth_page
-from . import user_store
+from django.conf.urls import patterns, url
 
-__all__ = ['auth',
-           'auth_page',
-           'user_store']
+
+urlpatterns = patterns(  # pylint: disable-msg=C0103
+    'modules.lib.auth_page',
+    url(r'^auth/login/$', 'login'),
+    url(r'^auth/logout/$', 'logout')
+    )
