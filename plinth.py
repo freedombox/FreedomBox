@@ -4,8 +4,10 @@ import os, stat, sys, argparse
 from gettext import gettext as _
 import cfg
 import django.conf
+import importlib
 if not os.path.join(cfg.file_root, "vendor") in sys.path:
    sys.path.append(os.path.join(cfg.file_root, "vendor"))
+import re
 
 import cherrypy
 from cherrypy import _cpserver
@@ -70,24 +72,24 @@ class Root(plugin_mount.PagePlugin):
             cfg.log("First Boot state = %d" % db['state'])
             raise cherrypy.InternalRedirect('firstboot/state%d' % db['state'])
       if cherrypy.session.get(cfg.session_key, None):
-         raise cherrypy.InternalRedirect('router')
+         raise cherrypy.InternalRedirect('apps')
       else:
          raise cherrypy.InternalRedirect('help/about')
 
+
 def load_modules():
-   """Import all the symlinked .py files in the modules directory and
-   all the .py files in directories linked in the modules directory
-   (but don't dive deeper than that).  Also, ignore the installed
-   directory."""
-   for name in os.listdir("modules"):
-      if name.endswith(".py") and not name.startswith('.'):
-         cfg.log.info("importing modules/%s" % name)
-         try:
-            __import__("modules.%s"  % (name[:-3]))
-         except ImportError, e:
-            cfg.log.error(_("Couldn't import modules/%s: %s") % (name, e))
-      else:
-         cfg.log("skipping %s" % name)
+    """
+    Read names of enabled modules in modules/enabled directory and
+    import them from modules directory.
+    """
+    for name in os.listdir('modules/enabled'):
+        cfg.log.info('Importing modules/%s' % name)
+        try:
+            importlib.import_module('modules.{module}'.format(module=name))
+        except ImportError as exception:
+            cfg.log.error(
+                'Could not import modules/{module}: {exception}'
+                .format(module=name, exception=exception))
 
 
 def get_template_directories():
@@ -96,13 +98,8 @@ def get_template_directories():
     core_directory = os.path.join(directory, 'templates')
 
     directories = set((core_directory,))
-    for name in os.listdir('modules'):
-        if not name.endswith(".py") or name.startswith('.'):
-            continue
-
-        real_name = os.path.realpath(os.path.join('modules', name))
-        directory = os.path.dirname(real_name)
-        directories.add(os.path.join(directory, 'templates'))
+    for name in os.listdir('modules/enabled'):
+        directories.add(os.path.join('modules', name, 'templates'))
 
     cfg.log.info('Template directories - %s' % directories)
 

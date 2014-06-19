@@ -1,1 +1,0 @@
-installed/services/xmpp.py
