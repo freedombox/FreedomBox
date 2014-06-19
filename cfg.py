@@ -31,6 +31,8 @@ access_log_file = get_item(parser, 'Path', 'access_log_file')
 pidfile = get_item(parser, 'Path', 'pidfile')
 host = get_item(parser, 'Network', 'host')
 port = int(get_item(parser, 'Network', 'port'))
+debug = False
+no_daemon = False
 
 main_menu = Menu()
 
