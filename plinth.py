@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import os, sys, argparse
+import argparse
+import os
+import sys
 import cfg
 import django.conf
 import django.core.wsgi
-if not os.path.join(cfg.file_root, "vendor") in sys.path:
-   sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
 import cherrypy
 from cherrypy import _cpserver
@@ -54,6 +54,14 @@ def parse_arguments():
 def setup_logging():
     """Setup logging framework"""
     cfg.log = Logger()
+    logger.init()
+
+
+def setup_paths():
+    """Setup current directory and python import paths"""
+    os.chdir(cfg.python_root)
+    if not os.path.join(cfg.file_root, 'vendor') in sys.path:
+        sys.path.append(os.path.join(cfg.file_root, 'vendor'))
 
 
 def setup_server():
@@ -140,11 +148,10 @@ def main():
     parse_arguments()
 
     setup_logging()
-    logger.init()
 
     service.init()
 
-    os.chdir(cfg.python_root)
+    setup_paths()
 
     configure_django()
 
