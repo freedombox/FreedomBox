@@ -19,6 +19,7 @@ The Plinth first-connection process has several stages:
 """
 
 from django import forms
+from django.contrib import messages
 from django.core import validators
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -101,13 +102,12 @@ def state0(request):
     status = get_state0()
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = State0Form(request.POST, prefix='firstboot')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            success = _apply_state0(status, form.cleaned_data, messages)
+            success = _apply_state0(request, status, form.cleaned_data)
 
             if success:
                 # Everything is good, permanently mark and move to page 2
@@ -119,8 +119,7 @@ def state0(request):
 
     return TemplateResponse(request, 'firstboot_state0.html',
                             {'title': _('First Boot!'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
 def get_state0():
@@ -131,7 +130,7 @@ def get_state0():
                 'box_key': database.get('box_key', None)}
 
 
-def _apply_state0(old_state, new_state, messages):
+def _apply_state0(request, old_state, new_state):
     """Apply changes in state 0 form"""
     success = True
     with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as \
@@ -149,11 +148,11 @@ def _apply_state0(old_state, new_state, messages):
         error = add_user(new_state['username'], new_state['password'],
                          'First user, please change', '', True)
         if error:
-            messages.append(
-                ('error', _('User account creation failed: %s') % error))
+            messages.error(
+                request, _('User account creation failed: %s') % error)
             success = False
         else:
-            messages.append(('success', _('User account created')))
+            messages.success(request, _('User account created'))
 
     return success
 

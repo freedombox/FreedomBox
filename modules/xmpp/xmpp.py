@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -62,13 +63,12 @@ def configure(request):
     status = get_status()
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = ConfigureForm(request.POST, prefix='xmpp')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(status, form.cleaned_data, messages)
+            _apply_changes(request, status, form.cleaned_data)
             status = get_status()
             form = ConfigureForm(initial=status, prefix='xmpp')
     else:
@@ -80,7 +80,6 @@ def configure(request):
     return TemplateResponse(request, 'xmpp_configure.html',
                             {'title': _('Configure XMPP Server'),
                              'form': form,
-                             'messages_': messages,
                              'sidebar_right': sidebar_right})
 
 
@@ -93,19 +92,19 @@ def get_status():
     return {'inband_enabled': 'inband_enable' in output.split()}
 
 
-def _apply_changes(old_status, new_status, messages):
+def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     cfg.log.info('Status - %s, %s' % (old_status, new_status))
 
     if old_status['inband_enabled'] == new_status['inband_enabled']:
-        messages.append(('info', _('Setting unchanged')))
+        messages.info(request, _('Setting unchanged'))
         return
 
     if new_status['inband_enabled']:
-        messages.append(('success', _('Inband registration enabled')))
+        messages.success(request, _('Inband registration enabled'))
         option = 'inband_enable'
     else:
-        messages.append(('success', _('Inband registration disabled')))
+        messages.success(request, _('Inband registration disabled'))
         option = 'noinband_enable'
 
     cfg.log.info('Option - %s' % option)
@@ -128,13 +127,12 @@ class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
 def register(request):
     """Serve the registration form"""
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = RegisterForm(request.POST, prefix='xmpp')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _register_user(form.cleaned_data, messages)
+            _register_user(request, form.cleaned_data)
             form = RegisterForm(prefix='xmpp')
     else:
         form = RegisterForm(prefix='xmpp')
@@ -145,11 +143,10 @@ def register(request):
     return TemplateResponse(request, 'xmpp_register.html',
                             {'title': _('Register XMPP Account'),
                              'form': form,
-                             'messages_': messages,
                              'sidebar_right': sidebar_right})
 
 
-def _register_user(data, messages):
+def _register_user(request, data):
     """Register a new XMPP user"""
     output, error = actions.superuser_run(
         'xmpp-register', [data['username'], data['password']])
@@ -157,10 +154,9 @@ def _register_user(data, messages):
         raise Exception('Error registering user - %s' % error)
 
     if 'successfully registered' in output:
-        messages.append(('success',
-                         _('Registered account for %s' %
-                           data['username'])))
+        messages.success(request, _('Registered account for %s') %
+                         data['username'])
     else:
-        messages.append(('error',
-                         _('Failed to register account for %s: %s') %
-                         (data['username'], output)))
+        messages.error(request,
+                       _('Failed to register account for %s: %s') %
+                       (data['username'], output))

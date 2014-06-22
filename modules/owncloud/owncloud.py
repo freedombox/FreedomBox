@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -34,13 +35,12 @@ def index(request):
     status = get_status()
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = OwnCloudForm(request.POST, prefix='owncloud')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(status, form.cleaned_data, messages)
+            _apply_changes(request, status, form.cleaned_data)
             status = get_status()
             form = OwnCloudForm(initial=status, prefix='owncloud')
     else:
@@ -48,8 +48,7 @@ def index(request):
 
     return TemplateResponse(request, 'owncloud.html',
                             {'title': _('ownCloud'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
 def get_status():
@@ -61,17 +60,17 @@ def get_status():
     return {'enabled': 'enable' in output.split()}
 
 
-def _apply_changes(old_status, new_status, messages):
+def _apply_changes(request, old_status, new_status):
     """Apply the changes"""
     if old_status['enabled'] == new_status['enabled']:
-        messages.append(('info', _('Setting unchanged')))
+        messages.info(request, _('Setting unchanged'))
         return
 
     if new_status['enabled']:
-        messages.append(('success', _('ownCloud enabled')))
+        messages.success(request, _('ownCloud enabled'))
         option = 'enable'
     else:
-        messages.append(('success', _('ownCloud disabled')))
+        messages.success(request, _('ownCloud disabled'))
         option = 'noenable'
 
     actions.superuser_run('owncloud-setup', [option], async=True)

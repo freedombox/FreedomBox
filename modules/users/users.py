@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.core import validators
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -54,36 +55,32 @@ and alphabet'),
 def add(request):
     """Serve the form"""
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = UserAddForm(request.POST, prefix='user')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _add_user(form.cleaned_data, messages)
+            _add_user(request, form.cleaned_data)
             form = UserAddForm(prefix='user')
     else:
         form = UserAddForm(prefix='user')
 
     return TemplateResponse(request, 'users_add.html',
                             {'title': _('Add User'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
-def _add_user(data, messages):
+def _add_user(request, data):
     """Add a user"""
     if cfg.users.exists(data['username']):
-        messages.append(
-            ('error', _('User "{username}" already exists').format(
-             username=data['username'])))
+        messages.error(request, _('User "{username}" already exists').format(
+            username=data['username']))
         return
 
     add_user(data['username'], data['password'], data['full_name'],
              data['email'], False)
-    messages.append(
-        ('success', _('User "{username}" added').format(
-         username=data['username'])))
+    messages.success(request, _('User "{username}" added').format(
+        username=data['username']))
 
 
 class UserEditForm(forms.Form):  # pylint: disable-msg=W0232
@@ -106,24 +103,22 @@ class UserEditForm(forms.Form):  # pylint: disable-msg=W0232
 def edit(request):
     """Serve the edit form"""
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = UserEditForm(request.POST, prefix='user')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_edit_changes(request, form.cleaned_data, messages)
+            _apply_edit_changes(request, form.cleaned_data)
             form = UserEditForm(prefix='user')
     else:
         form = UserEditForm(prefix='user')
 
     return TemplateResponse(request, 'users_edit.html',
                             {'title': _('Edit or Delete User'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
-def _apply_edit_changes(request, data, messages):
+def _apply_edit_changes(request, data):
     """Apply form changes"""
     for field, value in data.items():
         if not value:
@@ -139,19 +134,17 @@ def _apply_edit_changes(request, data, messages):
                      (requesting_user, username))
 
         if username == cfg.users.current(request=request, name=True):
-            messages.append(
-                ('error',
-                 _('Can not delete current account - "%s"') % username))
+            messages.error(
+                request, _('Can not delete current account - "%s"') % username)
             continue
 
         if not cfg.users.exists(username):
-            messages.append(('error',
-                             _('User "%s" does not exist') % username))
+            messages.error(request, _('User "%s" does not exist') % username)
             continue
 
         try:
             cfg.users.remove(username)
-            messages.append(('success', _('User "%s" deleted') % username))
+            messages.success(request, _('User "%s" deleted') % username)
         except IOError as exception:
-            messages.append(('error', _('Error deleting "%s" - %s') %
-                             (username, exception)))
+            messages.error(request, _('Error deleting "%s" - %s') %
+                           (username, exception))
