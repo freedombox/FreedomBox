@@ -24,34 +24,16 @@ def mkdir(newdir):
       #print "mkdir %s" % repr(newdir)
       if tail:
          os.mkdir(newdir)
-def is_string(obj):
-    isinstance(obj, basestring)
-def is_ascii(s):
-    return all(ord(c) < 128 for c in s)
-def is_alphanumeric(string):
-    for c in string:
-        o = ord(c)
-        if not o in range(48, 58) + range(41, 91) + [95] + range(97, 123):
-            return False
-    return True
+
 
 def slurp(filespec):
     with open(filespec) as x: f = x.read()
     return f
 
+
 def unslurp(filespec, msg):
     with open(filespec, 'w') as x:
         x.write(msg)
-
-def find_in_seq(func, seq):
-  "Return first item in seq for which func(item) returns True."
-  for i in seq:
-    if func(i):
-      return i
-
-def find_keys(dic, val):
-    """return the key of dictionary dic given the value"""
-    return [k for k, v in dic.iteritems() if v == val]
 
 
 def filedict_con(filespec=None, table='dict'):
