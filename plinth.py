@@ -3,7 +3,6 @@
 import argparse
 import os
 import sys
-import cfg
 import django.conf
 import django.core.wsgi
 
@@ -11,6 +10,7 @@ import cherrypy
 from cherrypy import _cpserver
 from cherrypy.process.plugins import Daemonizer
 
+import cfg
 import module_loader
 import plugin_mount
 import service
@@ -147,6 +147,8 @@ def configure_django():
 def main():
     """Intialize and start the application"""
     parse_arguments()
+
+    cfg.read()
 
     setup_logging()
 

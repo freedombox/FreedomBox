@@ -6,8 +6,6 @@ from passlib.exc import PasswordSizeError
 import cfg
 from model import User
 
-cfg.session_key = '_username'
-
 
 def add_user(username, passphrase, name='', email='', expert=False):
     """Add a new user with specified username and passphrase.
