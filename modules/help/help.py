@@ -36,5 +36,5 @@ def default(request, page=''):
         main = input_file.read()
 
     title = _('%s Documentation') % cfg.product_name
-    return TemplateResponse(request, 'login_nav.html',
+    return TemplateResponse(request, 'base.html',
                             {'title': title, 'main': main})

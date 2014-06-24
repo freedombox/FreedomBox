@@ -29,7 +29,7 @@ def index(request):
     sidebar_right = render_to_string('menu_block.html', {'menu': menu},
                                      RequestContext(request))
 
-    return TemplateResponse(request, 'login_nav.html',
+    return TemplateResponse(request, 'base.html',
                             {'title': _('Manage Users and Groups'),
                              'sidebar_right': sidebar_right})
 

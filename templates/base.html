@@ -53,16 +53,50 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <a class="btn btn-navbar" data-toggle="collapse"
+             data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
           <a href="{{ basehref }}/" class="logo-top">
-            <img src="{% static 'theme/img/freedombox-logo-32px.png' %}" alt="FreedomBox" />
+            <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
+                 alt="FreedomBox" />
           </a>
           <a class="brand" href="{{ basehref }}/">FreedomBox</a>
 	  {% block add_nav_and_login %}
+            <div class="nav-collapse">
+              <ul class="nav">
+                {% for item in main_menu.items %}
+                  {% if item.url in active_menu_urls %}
+                    <li class="active">
+                      <a href="{{ item.url }}" class="active">
+                  {% else %}
+                    <li>
+                      <a href="{{ item.url }}">
+                  {% endif %}
+                      <span class="{{ item.icon }} icon-white nav-icon"></span>
+                      {{ item.label }}
+                      </a>
+                    </li>
+                {% endfor %}
+              </ul>
+
+              {% if username %}
+                <p class="navbar-text pull-right">
+                  <i class="icon-user icon-white nav-icon"></i>
+                  Logged in as <a href="{{ username }}">{{ username }}</a>.
+                  <a href="{{ basehref }}/auth/logout" title="Log out">
+                    Log out</a>.
+                </p>
+              {% else %}
+                <p class="navbar-text pull-right">
+                  Not logged in.
+                  <i class="icon-user icon-white nav-icon"></i>
+                  <a href="{{ basehref }}/auth/login" title="Log in">
+                    Log in</a>.
+                </p>
+              {% endif %}
 	  {% endblock %}
           </div><!--/.nav-collapse -->
         </div>

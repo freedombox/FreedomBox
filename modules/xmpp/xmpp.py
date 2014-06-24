@@ -43,7 +43,7 @@ def index(request):
     sidebar_right = render_to_string('menu_block.html', {'menu': SIDE_MENU},
                                      RequestContext(request))
 
-    return TemplateResponse(request, 'login_nav.html',
+    return TemplateResponse(request, 'base.html',
                             {'title': _('XMPP Server'),
                              'main': main,
                              'sidebar_right': sidebar_right})
