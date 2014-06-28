@@ -160,9 +160,6 @@ def set_hostname(hostname):
         actions.superuser_run("xmpp-pre-hostname-change")
         actions.superuser_run("hostname-change", hostname)
         actions.superuser_run("xmpp-hostname-change", hostname, async=True)
-        # don't persist/cache change unless it was saved successfuly
-        sys_store = util.filedict_con(cfg.store_file, 'sys')
-        sys_store['hostname'] = hostname
     except OSError:
         return False
 
