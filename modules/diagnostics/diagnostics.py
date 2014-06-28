@@ -19,12 +19,12 @@
 Plinth module for running diagnostics
 """
 
-from gettext import gettext as _
+from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
+from gettext import gettext as _
 
 import actions
 import cfg
-from ..lib.auth import login_required
 
 
 def init():

@@ -21,6 +21,7 @@ Plinth module for configuring PageKite service
 
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -29,7 +30,6 @@ from gettext import gettext as _
 
 import actions
 import cfg
-from ..lib.auth import login_required
 
 
 def init():

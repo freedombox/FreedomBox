@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core import validators
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -7,8 +9,7 @@ from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 import cfg
-from ..lib.auth import add_user, login_required
-from model import User
+from ..lib.auth import add_user
 
 
 def init():
@@ -72,7 +73,7 @@ def add(request):
 
 def _add_user(request, data):
     """Add a user"""
-    if cfg.users.exists(data['username']):
+    if User.objects.filter(username=data['username']).exists():
         messages.error(request, _('User "{username}" already exists').format(
             username=data['username']))
         return
@@ -89,14 +90,11 @@ class UserEditForm(forms.Form):  # pylint: disable-msg=W0232
         # pylint: disable-msg=E1002
         super(forms.Form, self).__init__(*args, **kwargs)
 
-        users = cfg.users.get_all()
-        for uname in users:
-            user = User(uname[1])
-
-            label = '%s (%s)' % (user['name'], user['username'])
+        for user in User.objects.all():
+            label = '%s (%s)' % (user.first_name, user.username)
             field = forms.BooleanField(label=label, required=False)
             # pylint: disable-msg=E1101
-            self.fields['delete_user_' + user['username']] = field
+            self.fields['delete_user_' + user.username] = field
 
 
 @login_required
@@ -129,21 +127,21 @@ def _apply_edit_changes(request, data):
 
         username = field.split('delete_user_')[1]
 
-        requesting_user = request.session.get(cfg.session_key, None)
+        requesting_user = request.user.username
         cfg.log.info('%s asked to delete %s' %
                      (requesting_user, username))
 
-        if username == cfg.users.current(request=request, name=True):
+        if username == requesting_user:
             messages.error(
                 request, _('Can not delete current account - "%s"') % username)
             continue
 
-        if not cfg.users.exists(username):
+        if not User.objects.filter(username=username).exists():
             messages.error(request, _('User "%s" does not exist') % username)
             continue
 
         try:
-            cfg.users.remove(username)
+            User.objects.filter(username=username).delete()
             messages.success(request, _('User "%s" deleted') % username)
         except IOError as exception:
             messages.error(request, _('Error deleting "%s" - %s') %

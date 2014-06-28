@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
 import argparse
-import os
-import sys
 import django.conf
+import django.core.management
 import django.core.wsgi
+import os
+import stat
+import sys
 
 import cherrypy
 from cherrypy import _cpserver
@@ -12,7 +14,6 @@ from cherrypy.process.plugins import Daemonizer
 
 import cfg
 import module_loader
-import plugin_mount
 import service
 
 import logger
@@ -112,7 +113,6 @@ def context_processor(request):
         'submenu': cfg.main_menu.active_item(request),
         'request_path': request.path,
         'basehref': cfg.server_dir,
-        'username': request.session.get(cfg.session_key, None),
         'active_menu_urls': active_menu_urls
         }
 
@@ -129,19 +129,36 @@ def configure_django():
         'django.contrib.messages.context_processors.messages',
         'plinth.context_processor']
 
+    data_file = os.path.join(cfg.data_dir, 'plinth.sqlite3')
+
     template_directories = module_loader.get_template_directories()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
     django.conf.settings.configure(
-        DEBUG=cfg.debug,
         ALLOWED_HOSTS=['127.0.0.1', 'localhost'],
-        TEMPLATE_DIRS=template_directories,
+        CACHES={'default':
+                {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
+        DATABASES={'default':
+                   {'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': data_file}},
+        DEBUG=cfg.debug,
         INSTALLED_APPS=['bootstrapform',
+                        'django.contrib.auth',
+                        'django.contrib.contenttypes',
                         'django.contrib.messages'],
+        LOGIN_URL=cfg.server_dir + '/accounts/login/',
+        LOGIN_REDIRECT_URL=cfg.server_dir + '/',
+        LOGOUT_URL=cfg.server_dir + '/accounts/logout/',
         ROOT_URLCONF='urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL=cfg.server_dir + '/static/',
-        TEMPLATE_CONTEXT_PROCESSORS=context_processors)
+        TEMPLATE_CONTEXT_PROCESSORS=context_processors,
+        TEMPLATE_DIRS=template_directories)
+
+    if not os.path.isfile(data_file):
+        cfg.log.info('Creating and initializing data file')
+        django.core.management.call_command('syncdb', interactive=False)
+        os.chmod(data_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
 def main():
@@ -159,8 +176,6 @@ def main():
     configure_django()
 
     module_loader.load_modules()
-
-    cfg.users = plugin_mount.UserStoreModule.get_plugins()[0]
 
     setup_server()
 
