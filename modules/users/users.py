@@ -7,9 +7,13 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import logging
 
 import cfg
 from ..lib.auth import add_user
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def init():
@@ -128,8 +132,7 @@ def _apply_edit_changes(request, data):
         username = field.split('delete_user_')[1]
 
         requesting_user = request.user.username
-        cfg.log.info('%s asked to delete %s' %
-                     (requesting_user, username))
+        LOGGER.info('%s asked to delete %s', requesting_user, username)
 
         if username == requesting_user:
             messages.error(
