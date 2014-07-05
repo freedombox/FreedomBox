@@ -20,9 +20,13 @@ Main Plinth views
 """
 
 from django.http.response import HttpResponseRedirect
+import logging
 
 import cfg
 from withsqlite.withsqlite import sqlite_db
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def index(request):
@@ -36,7 +40,7 @@ def index(request):
             return HttpResponseRedirect(cfg.server_dir + '/firstboot')
 
         if database['state'] < 5:
-            cfg.log('First boot state = %d' % database['state'])
+            LOGGER.info('First boot state - %d', database['state'])
             return HttpResponseRedirect(
                 cfg.server_dir + '/firstboot/state%d' % database['state'])
 
