@@ -21,10 +21,12 @@ Discover, load and manage Plinth modules
 
 import django
 import importlib
+import logging
 import os
 
-import cfg
 import urls
+
+LOGGER = logging.getLogger(__name__)
 
 
 def load_modules():
@@ -37,15 +39,14 @@ def load_modules():
     for name in os.listdir('modules/enabled'):
         full_name = 'modules.{module}'.format(module=name)
 
-        cfg.log.info('Importing {full_name}'.format(full_name=full_name))
+        LOGGER.info('Importing %s', full_name)
         try:
             module = importlib.import_module(full_name)
             modules[name] = module
             module_names.append(name)
-        except ImportError as exception:
-            cfg.log.error(
-                'Could not import modules/{module}: {exception}'
-                .format(module=name, exception=exception))
+        except Exception as exception:
+            LOGGER.exception('Could not import modules/%s: %s',
+                             name, exception)
 
         _include_module_urls(full_name)
 
@@ -60,10 +61,10 @@ def load_modules():
             _insert_modules(module_name, module, remaining_modules,
                             ordered_modules)
         except KeyError:
-            cfg.log.error('Unsatified dependency for module - %s' %
-                          (module_name,))
+            LOGGER.error('Unsatified dependency for module - %s',
+                         module_name)
 
-    cfg.log.debug('Module load order - %s' % ordered_modules)
+    LOGGER.debug('Module load order - %s', ordered_modules)
 
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
@@ -87,8 +88,8 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
         try:
             module = remaining_modules.pop(dependency)
         except KeyError:
-            cfg.log.error('Not found or circular dependency - %s, %s' %
-                          (module_name, dependency))
+            LOGGER.error('Not found or circular dependency - %s, %s',
+                         module_name, dependency)
             raise
 
         _insert_modules(dependency, module, remaining_modules, ordered_modules)
@@ -104,7 +105,7 @@ def _include_module_urls(module_name):
             '', django.conf.urls.url(
                 r'', django.conf.urls.include(url_module)))
     except ImportError:
-        cfg.log.debug('No URLs for {module}'.format(module=module_name))
+        LOGGER.debug('No URLs for %s', module_name)
 
 
 def _initialize_module(module):
@@ -112,15 +113,14 @@ def _initialize_module(module):
     try:
         init = module.init
     except AttributeError:
-        cfg.log.debug('No init() for module - {module}'
-                      .format(module=module.__name__))
+        LOGGER.debug('No init() for module - %s', module.__name__)
         return
 
     try:
         init()
     except Exception as exception:
-        cfg.log.error('Exception while running init for {module}: {exception}'
-                      .format(module=module, exception=exception))
+        LOGGER.exception('Exception while running init for %s: %s',
+                         module, exception)
 
 
 def get_template_directories():
@@ -131,7 +131,5 @@ def get_template_directories():
     directories = set((core_directory,))
     for name in os.listdir('modules/enabled'):
         directories.add(os.path.join('modules', name, 'templates'))
-
-    cfg.log.info('Template directories - %s' % directories)
 
     return directories
