@@ -5,11 +5,14 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import logging
 
 import actions
 import cfg
 import service
 
+
+LOGGER = logging.getLogger(__name__)
 
 SIDE_MENU = {'title': _('XMPP'),
              'items': [{'url': '/apps/xmpp/configure',
@@ -94,7 +97,7 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
-    cfg.log.info('Status - %s, %s' % (old_status, new_status))
+    LOGGER.info('Status - %s, %s', old_status, new_status)
 
     if old_status['inband_enabled'] == new_status['inband_enabled']:
         messages.info(request, _('Setting unchanged'))
@@ -107,7 +110,7 @@ def _apply_changes(request, old_status, new_status):
         messages.success(request, _('Inband registration disabled'))
         option = 'noinband_enable'
 
-    cfg.log.info('Option - %s' % option)
+    LOGGER.info('Option - %s', option)
 
     _output, error = actions.superuser_run('xmpp-setup', [option])
     del _output  # Unused
