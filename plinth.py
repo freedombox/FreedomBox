@@ -4,6 +4,7 @@ import argparse
 import django.conf
 import django.core.management
 import django.core.wsgi
+import logging
 import os
 import stat
 import sys
@@ -26,6 +27,8 @@ __license__ = "GPLv3 or later"
 __maintainer__ = "James Vasile"
 __email__ = "james@jamesvasile.com"
 __status__ = "Development"
+
+LOGGER = logging.getLogger(__name__)
 
 
 def parse_arguments():
@@ -67,6 +70,8 @@ def setup_paths():
 
 def setup_server():
     """Setup CherryPy server"""
+    LOGGER.info('Setting up CherryPy server')
+
     # Set the PID file path
     try:
         if cfg.pidfile:
@@ -155,8 +160,11 @@ def configure_django():
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         TEMPLATE_DIRS=template_directories)
 
+    LOGGER.info('Configured Django')
+    LOGGER.info('Template directories - %s', template_directories)
+
     if not os.path.isfile(data_file):
-        cfg.log.info('Creating and initializing data file')
+        LOGGER.info('Creating and initializing data file')
         django.core.management.call_command('syncdb', interactive=False)
         os.chmod(data_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
