@@ -17,9 +17,6 @@ import cfg
 import module_loader
 import service
 
-import logger
-from logger import Logger
-
 __version__ = "0.2.14"
 __author__ = "James Vasile"
 __copyright__ = "Copyright 2011-2013, James Vasile"
@@ -57,8 +54,13 @@ def parse_arguments():
 
 def setup_logging():
     """Setup logging framework"""
-    cfg.log = Logger()
-    logger.init()
+    # Don't propagate cherrypy log messages to root logger
+    logging.getLogger('cherrypy').propagate = False
+
+    cherrypy.log.error_file = cfg.status_log_file
+    cherrypy.log.access_file = cfg.access_log_file
+    if not cfg.no_daemon:
+        cherrypy.log.screen = False
 
 
 def setup_paths():
@@ -134,6 +136,32 @@ def configure_django():
         'django.contrib.messages.context_processors.messages',
         'plinth.context_processor']
 
+    logging_configuration = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'default': {
+                'format':
+                '[%(asctime)s] %(name)-14s %(levelname)-8s %(message)s',
+                }
+            },
+        'handlers': {
+            'file': {
+                'class': 'logging.FileHandler',
+                'filename': cfg.status_log_file,
+                'formatter': 'default'
+                },
+            'console': {
+                'class': 'logging.StreamHandler',
+                'formatter': 'default'
+                }
+            },
+        'root': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG' if cfg.debug else 'INFO'
+            }
+        }
+
     data_file = os.path.join(cfg.data_dir, 'plinth.sqlite3')
 
     template_directories = module_loader.get_template_directories()
@@ -150,6 +178,7 @@ def configure_django():
                         'django.contrib.auth',
                         'django.contrib.contenttypes',
                         'django.contrib.messages'],
+        LOGGING=logging_configuration,
         LOGIN_URL=cfg.server_dir + '/accounts/login/',
         LOGIN_REDIRECT_URL=cfg.server_dir + '/',
         LOGOUT_URL=cfg.server_dir + '/accounts/logout/',
