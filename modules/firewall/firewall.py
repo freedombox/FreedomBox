@@ -22,10 +22,14 @@ Plinth module to configure a firewall
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import logging
 
 import actions
 import cfg
 import service as service_module
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def init():
@@ -99,7 +103,7 @@ def on_service_enabled(sender, service_id, enabled, **kwargs):
     internal_enabled_services = get_enabled_services(zone='internal')
     external_enabled_services = get_enabled_services(zone='external')
 
-    cfg.log.info('Service enabled - %s, %s' % (service_id, enabled))
+    LOGGER.info('Service enabled - %s, %s', service_id, enabled)
     service = service_module.SERVICES[service_id]
     for port in service.ports:
         if enabled:
@@ -137,8 +141,7 @@ def _run(arguments, superuser=False):
     """Run an given command and raise exception if there was an error"""
     command = 'firewall'
 
-    cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
-                                                   superuser))
+    LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
 
     if superuser:
         output, error = actions.superuser_run(command, arguments)
