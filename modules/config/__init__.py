@@ -20,6 +20,8 @@ Plinth module for basic system configuration
 """
 
 from . import config
+from .config import init
 
+__all__ = ['config', 'init']
 
-__all__ = ['config']
+DEPENDS = ['system']

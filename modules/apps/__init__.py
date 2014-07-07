@@ -16,10 +16,10 @@
 #
 
 """
-Plinth module for apps section page
+Plinth module for Apps section page
 """
 
 from . import apps
+from .apps import init
 
-
-__all__ = ['apps']
+__all__ = ['apps', 'init']

@@ -23,7 +23,6 @@ from . import auth
 from . import auth_page
 from . import user_store
 
-
 __all__ = ['auth',
            'auth_page',
            'user_store']

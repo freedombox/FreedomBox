@@ -20,6 +20,7 @@ Plinth module for system section page
 """
 
 from . import system
+from system import init
 
 
-__all__ = ['system']
+__all__ = ['system', 'init']

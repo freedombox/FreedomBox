@@ -2,19 +2,17 @@
 Controller to provide login and logout actions
 """
 
-import cherrypy
 import cfg
 from django import forms
+from django.http.response import HttpResponseRedirect
+from django.template.response import TemplateResponse
 from gettext import gettext as _
-from plugin_mount import PagePlugin
-import auth
-import util
+
+from . import auth
 
 
 class LoginForm(forms.Form):  # pylint: disable-msg=W0232
     """Login form"""
-    from_page = forms.CharField(widget=forms.HiddenInput(), required=False)
-
     username = forms.CharField(label=_('Username'))
     password = forms.CharField(label=_('Passphrase'),
                                widget=forms.PasswordInput())
@@ -33,48 +31,37 @@ class LoginForm(forms.Form):  # pylint: disable-msg=W0232
         return self.cleaned_data
 
 
-class AuthController(PagePlugin):
-    """Login and logout pages"""
+def login(request):
+    """Serve the login page"""
+    form = None
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    if request.method == 'POST':
+        form = LoginForm(request.POST, prefix='auth')
+        # pylint: disable-msg=E1101
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            request.session[cfg.session_key] = username
+            return HttpResponseRedirect(_get_from_page(request))
+    else:
+        form = LoginForm(prefix='auth')
 
-        self.register_page('auth')
+    return TemplateResponse(request, 'form.html',
+                            {'title': _('Login'),
+                             'form': form,
+                             'submit_text': _('Login')})
 
-    def on_login(self, username):
-        """Called on successful login"""
 
-    def on_logout(self, username):
-        """Called on logout"""
+def logout(request):
+    """Logout and redirect to origin page"""
+    try:
+        del request.session[cfg.session_key]
+        request.session.flush()
+    except KeyError:
+        pass
 
-    @cherrypy.expose
-    def login(self, from_page=cfg.server_dir+"/", **kwargs):
-        """Serve the login page"""
-        form = None
+    return HttpResponseRedirect(_get_from_page(request))
 
-        if kwargs:
-            form = LoginForm(kwargs, prefix='auth')
-            # pylint: disable-msg=E1101
-            if form.is_valid():
-                username = form.cleaned_data['username']
-                cherrypy.session[cfg.session_key] = username
-                cherrypy.request.login = username
-                self.on_login(username)
-                raise cherrypy.HTTPRedirect(from_page or
-                                            (cfg.server_dir + "/"))
-        else:
-            form = LoginForm(prefix='auth')
 
-        return util.render_template(template='form', title=_('Login'),
-                                    form=form, submit_text=_('Login'))
-
-    @cherrypy.expose
-    def logout(self, from_page=cfg.server_dir+"/"):
-        sess = cherrypy.session
-        username = sess.get(cfg.session_key, None)
-        sess[cfg.session_key] = None
-        if username:
-            cherrypy.request.login = None
-            self.on_logout(username)
-
-        raise cherrypy.HTTPRedirect(from_page or (cfg.server_dir + "/"))
+def _get_from_page(request):
+    """Return the 'from page' of a request"""
+    return request.GET.get('from_page', cfg.server_dir + '/')

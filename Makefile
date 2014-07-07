@@ -31,7 +31,7 @@ install: default apache-install freedombox-setup-install
 	cp share/init.d/plinth $(DESTDIR)/etc/init.d
 	cp -a lib/* $(DESTDIR)/usr/lib
 	install plinth $(DESTDIR)/usr/bin/
-	mkdir -p $(DESTDIR)/var/lib/plinth/cherrypy_sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
+	mkdir -p $(DESTDIR)/var/lib/plinth/sessions $(DESTDIR)/var/log/plinth $(DESTDIR)/var/run
 	mkdir -p $(DESTDIR)/var/lib/plinth/data
 	rm -f $(DESTDIR)/var/lib/plinth/users/sqlite3.distrib
 
@@ -46,7 +46,7 @@ uninstall:
 		$(DESTDIR)/usr/share/man/man1/plinth.1.gz $(DESTDIR)/var/run/plinth.pid
 
 dirs:
-	@mkdir -p data/cherrypy_sessions
+	@mkdir -p data/sessions
 
 config: Makefile
 	@test -f plinth.config || cp plinth.sample.config plinth.config
@@ -59,7 +59,7 @@ html:
 	@$(MAKE) -s -C doc html
 
 clean:
-	@rm -f cherrypy.config data/cherrypy_sessions/*
+	@rm -f cherrypy.config data/sessions/*
 	@find . -name "*~" -exec rm {} \;
 	@find . -name ".#*" -exec rm {} \;
 	@find . -name "#*" -exec rm {} \;

@@ -10,12 +10,15 @@ import json
 import UserDict
  
 import sqlite3
+
  
-class DefaultArg:
+class DefaultArg(object):
     pass
  
-class Solutions:
+
+class Solutions(object):
     Sqlite3 = 0
+
  
 class FileDict(UserDict.DictMixin):
     "A dictionary that stores its data persistantly in a file"
@@ -134,7 +137,7 @@ class FileDict(UserDict.DictMixin):
     def batch(self):
         return self._Batch(self)
  
-    class _Batch:
+    class _Batch(object):
         def __init__(self, d):
             self.__d = d
  

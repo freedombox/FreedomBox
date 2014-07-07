@@ -16,10 +16,12 @@
 #
 
 """
-Plinth module to system diagnostics
+Plinth module for system diagnostics
 """
 
 from . import diagnostics
+from .diagnostics import init
 
+__all__ = ['diagnostics', 'init']
 
-__all__ = ['diagnostics']
+DEPENDS = ['system']

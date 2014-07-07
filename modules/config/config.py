@@ -19,17 +19,16 @@
 Plinth module for configuring timezone, hostname etc.
 """
 
-import cherrypy
 from django import forms
 from django.core import validators
+from django.template.response import TemplateResponse
 from gettext import gettext as _
 import re
 import socket
 
 import actions
 import cfg
-from ..lib.auth import require
-from plugin_mount import PagePlugin
+from ..lib.auth import login_required
 import util
 
 
@@ -89,67 +88,66 @@ and must not be greater than 63 characters in length.'),
         return time_zones
 
 
-class Configuration(PagePlugin):
-    """System configuration page"""
-    def __init__(self, *args, **kwargs):
-        del args  # Unused
-        del kwargs  # Unused
+def init():
+    """Initialize the module"""
+    menu = cfg.main_menu.find('/sys')
+    menu.add_item(_('Configure'), 'icon-cog', '/sys/config', 10)
 
-        self.register_page('sys.config')
 
-        self.menu = cfg.html_root.sys.menu.add_item(_('Configure'), 'icon-cog',
-                                                    '/sys/config', 10)
+@login_required
+def index(request):
+    """Serve the configuration form"""
+    status = get_status()
 
-    @cherrypy.expose
-    @require()
-    def index(self, **kwargs):
-        """Serve the configuration form"""
-        status = self.get_status()
+    form = None
+    messages = []
 
-        form = None
-        messages = []
+    is_expert = cfg.users.expert(request=request)
+    if request.method == 'POST' and is_expert:
+        form = ConfigurationForm(request.POST, prefix='configuration')
+        # pylint: disable-msg=E1101
+        if form.is_valid():
+            _apply_changes(status, form.cleaned_data, messages)
+            status = get_status()
+            form = ConfigurationForm(initial=status,
+                                     prefix='configuration')
+    else:
+        form = ConfigurationForm(initial=status, prefix='configuration')
 
-        if kwargs and cfg.users.expert():
-            form = ConfigurationForm(kwargs, prefix='configuration')
-            # pylint: disable-msg=E1101
-            if form.is_valid():
-                self._apply_changes(status, form.cleaned_data, messages)
-                status = self.get_status()
-                form = ConfigurationForm(initial=status,
-                                         prefix='configuration')
+    return TemplateResponse(request, 'config.html',
+                            {'title': _('General Configuration'),
+                             'form': form,
+                             'messages_': messages,
+                             'is_expert': is_expert})
+
+
+def get_status():
+    """Return the current status"""
+    return {'hostname': get_hostname(),
+            'time_zone': util.slurp('/etc/timezone').rstrip()}
+
+
+def _apply_changes(old_status, new_status, messages):
+    """Apply the form changes"""
+    if old_status['hostname'] != new_status['hostname']:
+        if not set_hostname(new_status['hostname']):
+            messages.append(('error', _('Setting hostname failed')))
         else:
-            form = ConfigurationForm(initial=status, prefix='configuration')
-
-        return util.render_template(template='config',
-                                    title=_('General Configuration'),
-                                    form=form, messages=messages)
-
-    @staticmethod
-    def get_status():
-        """Return the current status"""
-        return {'hostname': get_hostname(),
-                'time_zone': util.slurp('/etc/timezone').rstrip()}
-
-    @staticmethod
-    def _apply_changes(old_status, new_status, messages):
-        """Apply the form changes"""
-        if old_status['hostname'] != new_status['hostname']:
-            set_hostname(new_status['hostname'])
             messages.append(('success', _('Hostname set')))
-        else:
-            messages.append(('info', _('Hostname is unchanged')))
+    else:
+        messages.append(('info', _('Hostname is unchanged')))
 
-        if old_status['time_zone'] != new_status['time_zone']:
-            output, error = actions.superuser_run('timezone-change',
-                                                  [new_status['time_zone']])
-            del output  # Unused
-            if error:
-                messages.append(('error',
-                                 _('Error setting time zone - %s') % error))
-            else:
-                messages.append(('success', _('Time zone set')))
+    if old_status['time_zone'] != new_status['time_zone']:
+        output, error = actions.superuser_run('timezone-change',
+                                              [new_status['time_zone']])
+        del output  # Unused
+        if error:
+            messages.append(('error',
+                             _('Error setting time zone - %s') % error))
         else:
-            messages.append(('info', _('Time zone is unchanged')))
+            messages.append(('success', _('Time zone set')))
+    else:
+        messages.append(('info', _('Time zone is unchanged')))
 
 
 def set_hostname(hostname):
@@ -166,6 +164,7 @@ def set_hostname(hostname):
         # don't persist/cache change unless it was saved successfuly
         sys_store = util.filedict_con(cfg.store_file, 'sys')
         sys_store['hostname'] = hostname
-    except OSError as exception:
-        raise cherrypy.HTTPError(500,
-                                 'Updating hostname failed: %s' % exception)
+    except OSError:
+        return False
+
+    return True

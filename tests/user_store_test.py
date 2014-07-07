@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
-import user_store
 from logger import Logger
 import cfg
 import unittest
@@ -12,6 +11,7 @@ from model import User
 cfg.log = Logger()
 
 cherrypy.log.access_file = None
+
 
 class UserStore(unittest.TestCase):
     """Test each function of user_store to confirm they work as expected"""

@@ -20,6 +20,8 @@ Plinth module to configure a firewall
 """
 
 from . import firewall
+from .firewall import init
 
+__all__ = ['firewall', 'init']
 
-__all__ = ['firewall']
+DEPENDS = ['system']

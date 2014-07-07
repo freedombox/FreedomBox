@@ -19,138 +19,134 @@
 Plinth module to configure a firewall
 """
 
-import cherrypy
+from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 import actions
 import cfg
-from ..lib.auth import require
-from plugin_mount import PagePlugin
+from ..lib.auth import login_required
 import service as service_module
-import util
 
 
-class Firewall(PagePlugin):
-    """Firewall menu entry and introduction page"""
-    order = 40
+def init():
+    """Initailze firewall module"""
+    menu = cfg.main_menu.find('/sys')
+    menu.add_item(_('Firewall'), 'icon-flag', '/sys/firewall', 50)
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    service_module.ENABLED.connect(on_service_enabled)
 
-        self.register_page('sys.firewall')
-        cfg.html_root.sys.menu.add_item(_('Firewall'), 'icon-flag',
-                                        '/sys/firewall', 50)
 
-        service_module.ENABLED.connect(self.on_service_enabled)
+@login_required
+def index(request):
+    """Serve introcution page"""
+    if not get_installed_status():
+        return TemplateResponse(request, 'firewall.html',
+                                {'title': _('Firewall'),
+                                 'firewall_status': 'not_installed'})
 
-    @cherrypy.expose
-    @require()
-    def index(self, **kwargs):
-        """Serve introcution page"""
-        del kwargs  # Unused
+    if not get_enabled_status():
+        return TemplateResponse(request, 'firewall.html',
+                                {'title': _('Firewall'),
+                                 'firewall_status': 'not_running'})
 
-        if not self.get_installed_status():
-            return util.render_template(template='firewall',
-                                        title=_("Firewall"),
-                                        firewall_status='not_installed')
+    internal_enabled_services = get_enabled_services(zone='internal')
+    external_enabled_services = get_enabled_services(zone='external')
 
-        if not self.get_enabled_status():
-            return util.render_template(template='firewall',
-                                        title=_("Firewall"),
-                                        firewall_status='not_running')
+    return TemplateResponse(
+        request, 'firewall.html',
+        {'title': _('Firewall'),
+         'services': service_module.SERVICES.values(),
+         'internal_enabled_services': internal_enabled_services,
+         'external_enabled_services': external_enabled_services})
 
-        internal_enabled_services = self.get_enabled_services(zone='internal')
-        external_enabled_services = self.get_enabled_services(zone='external')
 
-        return util.render_template(
-            template='firewall', title=_('Firewall'),
-            services=service_module.SERVICES.values(),
-            internal_enabled_services=internal_enabled_services,
-            external_enabled_services=external_enabled_services)
+def get_installed_status():
+    """Return whether firewall is installed"""
+    output = _run(['get-installed'], superuser=True)
+    return output.split()[0] == 'installed'
 
-    def get_installed_status(self):
-        """Return whether firewall is installed"""
-        output = self._run(['get-installed'], superuser=True)
-        return output.split()[0] == 'installed'
 
-    def get_enabled_status(self):
-        """Return whether firewall is installed"""
-        output = self._run(['get-status'], superuser=True)
-        return output.split()[0] == 'running'
+def get_enabled_status():
+    """Return whether firewall is installed"""
+    output = _run(['get-status'], superuser=True)
+    return output.split()[0] == 'running'
 
-    def get_enabled_services(self, zone):
-        """Return the status of various services currently enabled"""
-        output = self._run(['get-enabled-services', '--zone', zone],
-                           superuser=True)
-        return output.split()
 
-    def add_service(self, port, zone):
-        """Enable a service in firewall"""
-        self._run(['add-service', port, '--zone', zone], superuser=True)
+def get_enabled_services(zone):
+    """Return the status of various services currently enabled"""
+    output = _run(['get-enabled-services', '--zone', zone], superuser=True)
+    return output.split()
 
-    def remove_service(self, port, zone):
-        """Remove a service in firewall"""
-        self._run(['remove-service', port, '--zone', zone], superuser=True)
 
-    def on_service_enabled(self, sender, service_id, enabled, **kwargs):
-        """
-        Enable/disable firewall ports when a service is
-        enabled/disabled.
-        """
-        del sender  # Unused
-        del kwargs  # Unused
+def add_service(port, zone):
+    """Enable a service in firewall"""
+    _run(['add-service', port, '--zone', zone], superuser=True)
 
-        internal_enabled_services = self.get_enabled_services(zone='internal')
-        external_enabled_services = self.get_enabled_services(zone='external')
 
-        cfg.log.info('Service enabled - %s, %s' % (service_id, enabled))
-        service = service_module.SERVICES[service_id]
-        for port in service.ports:
-            if enabled:
-                if port not in internal_enabled_services:
-                    self.add_service(port, zone='internal')
+def remove_service(port, zone):
+    """Remove a service in firewall"""
+    _run(['remove-service', port, '--zone', zone], superuser=True)
 
-                if (service.is_external and
-                        port not in external_enabled_services):
-                    self.add_service(port, zone='external')
-                else:
-                    # service already configured.
-                    pass
+
+def on_service_enabled(sender, service_id, enabled, **kwargs):
+    """
+    Enable/disable firewall ports when a service is
+    enabled/disabled.
+    """
+    del sender  # Unused
+    del kwargs  # Unused
+
+    internal_enabled_services = get_enabled_services(zone='internal')
+    external_enabled_services = get_enabled_services(zone='external')
+
+    cfg.log.info('Service enabled - %s, %s' % (service_id, enabled))
+    service = service_module.SERVICES[service_id]
+    for port in service.ports:
+        if enabled:
+            if port not in internal_enabled_services:
+                add_service(port, zone='internal')
+
+            if (service.is_external and
+                    port not in external_enabled_services):
+                add_service(port, zone='external')
             else:
-                if port in internal_enabled_services:
-                    enabled_services_on_port = [
-                        service_.is_enabled()
-                        for service_ in service_module.SERVICES.values()
-                        if port in service_.ports and
-                        service_id != service_.service_id]
-                    if not any(enabled_services_on_port):
-                        self.remove_service(port, zone='internal')
-
-                if port in external_enabled_services:
-                    enabled_services_on_port = [
-                        service_.is_enabled()
-                        for service_ in service_module.SERVICES.values()
-                        if port in service_.ports and
-                        service_id != service_.service_id and
-                        service_.is_external]
-                    if not any(enabled_services_on_port):
-                        self.remove_service(port, zone='external')
-
-    @staticmethod
-    def _run(arguments, superuser=False):
-        """Run an given command and raise exception if there was an error"""
-        command = 'firewall'
-
-        cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
-                                                       superuser))
-
-        if superuser:
-            output, error = actions.superuser_run(command, arguments)
+                # service already configured.
+                pass
         else:
-            output, error = actions.run(command, arguments)
+            if port in internal_enabled_services:
+                enabled_services_on_port = [
+                    service_.is_enabled()
+                    for service_ in service_module.SERVICES.values()
+                    if port in service_.ports and
+                    service_id != service_.service_id]
+                if not any(enabled_services_on_port):
+                    remove_service(port, zone='internal')
 
-        if error:
-            raise Exception('Error setting/getting firewalld confguration - %s'
-                            % error)
+            if port in external_enabled_services:
+                enabled_services_on_port = [
+                    service_.is_enabled()
+                    for service_ in service_module.SERVICES.values()
+                    if port in service_.ports and
+                    service_id != service_.service_id and
+                    service_.is_external]
+                if not any(enabled_services_on_port):
+                    remove_service(port, zone='external')
 
-        return output
+
+def _run(arguments, superuser=False):
+    """Run an given command and raise exception if there was an error"""
+    command = 'firewall'
+
+    cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
+                                                   superuser))
+
+    if superuser:
+        output, error = actions.superuser_run(command, arguments)
+    else:
+        output, error = actions.run(command, arguments)
+
+    if error:
+        raise Exception('Error setting/getting firewalld confguration - %s'
+                        % error)
+
+    return output

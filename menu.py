@@ -1,9 +1,8 @@
 from urlparse import urlparse
-import cherrypy
 import cfg
 
 
-class Menu():
+class Menu(object):
     """One menu item."""
     def __init__(self, label="", icon="", url="#", order=50):
         """label is the text that is displayed on the menu.
@@ -29,6 +28,17 @@ class Menu():
         self.order = order
         self.items = []
 
+    def find(self, url, basehref=True):
+        """Return a menu item with given URL"""
+        if basehref and url.startswith('/'):
+            url = cfg.server_dir + url
+
+        for item in self.items:
+            if item.url == url:
+                return item
+
+        raise KeyError('Menu item not found')
+
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
@@ -48,16 +58,17 @@ class Menu():
         self.sort_items()
         return item
 
-    def active_p(self):
-        """Returns True if this menu item is active, otherwise False.
+    def is_active(self, request_path):
+        """
+        Returns True if this menu item is active, otherwise False.
 
         We can tell if a menu is active if the menu item points
-        anywhere above url we are visiting in the url tree."""
-        return urlparse(cherrypy.url()).path.startswith(self.url)
+        anywhere above url we are visiting in the url tree.
+        """
+        return request_path.startswith(self.url)
 
-    def active_item(self):
+    def active_item(self, request):
         """Return item list (e.g. submenu) of active menu item."""
-        path = urlparse(cherrypy.url()).path
         for item in self.items:
-            if path.startswith(item.url):
+            if request.path.startswith(item.url):
                 return item

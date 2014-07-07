@@ -1,10 +1,8 @@
 import os
 import sys
-import cherrypy
 import cfg
 import sqlite3
 
-from django.template.loader import render_to_string
 from filedict import FileDict
 
 
@@ -54,31 +52,6 @@ def find_in_seq(func, seq):
 def find_keys(dic, val):
     """return the key of dictionary dic given the value"""
     return [k for k, v in dic.iteritems() if v == val]
-
-class Message():
-    def __init__(self, msg=''):
-        self.text = msg
-    def add(self, text):
-        self.text += "<br />%s" % text
-
-
-def render_template(template='login_nav', **kwargs):
-    for key in ['sidebar_left', 'sidebar_right', 'main', 'js', 'nav', 'css',
-                'title', 'basehref']:
-        if not key in kwargs:
-            kwargs[key] = ''
-
-    if kwargs['basehref'] == '':
-        kwargs['basehref'] = cfg.server_dir
-
-    kwargs['template'] = template
-    kwargs['main_menu'] = cfg.main_menu
-    kwargs['submenu'] = cfg.main_menu.active_item()
-    kwargs['current_url'] = cherrypy.url()
-    kwargs['username'] = cherrypy.session.get(cfg.session_key)
-    kwargs['cfg'] = cfg
-
-    return render_to_string(template + '.html', kwargs)
 
 
 def filedict_con(filespec=None, table='dict'):

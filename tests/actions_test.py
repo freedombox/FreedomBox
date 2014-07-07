@@ -5,7 +5,6 @@ from actions import superuser_run, run
 import os
 import shlex
 import subprocess
-import sys
 import unittest
 
 class TestPrivileged(unittest.TestCase):

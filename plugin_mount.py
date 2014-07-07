@@ -18,10 +18,14 @@ class PluginMount(type):
     def get_plugins(cls, *args, **kwargs):
         return cls.init_plugins(*args, **kwargs)
 
-class MultiplePluginViolation:
+
+class MultiplePluginViolation(Exception):
+    """Multiple plugins found for a type where only one is expected"""
     pass
 
+
 class PluginMountSingular(PluginMount):
+    """Plugin mounter that allows only one plugin of this meta type"""
     def __init__(cls, name, bases, attrs):
         if not hasattr(cls, 'plugins'):
             cls.plugins = []
@@ -29,42 +33,9 @@ class PluginMountSingular(PluginMount):
             if len(cls.plugins) > 0:
                 raise MultiplePluginViolation
             cls.plugins.append(cls)
-            
-
-def _setattr_deep(obj, path, value):
-    """If path is 'x.y.z' or ['x', 'y', 'z'] then perform obj.x.y.z = value"""
-    if isinstance(path, basestring):
-        path = path.split('.')
-
-    for part in path[:-1]:
-        obj = getattr(obj, part)
-
-    setattr(obj, path[-1], value)
 
 
-class PagePlugin:
-    """
-    Mount point for page plugins.  Page plugins provide display pages
-    in the interface (one menu item, for example).
-
-    order - How early should this plugin be loaded?  Lower order is earlier.
-    """
-
-    order = 50
-
-    __metaclass__ = PluginMount
-    def __init__(self, *args, **kwargs):
-        """If cfg.html_root is none, then this is the html_root."""
-        if not cfg.html_root:
-            cfg.log('Setting html root to %s' % self.__class__.__name__)
-            cfg.html_root = self
-            
-    def register_page(self, url):
-        cfg.log.info("Registering page: %s" % url)
-        _setattr_deep(cfg.html_root, url, self)
-
-
-class UserStoreModule:
+class UserStoreModule(object):
     """
     Mount Point for plugins that will manage the user backend storage,
     where we keep a hash for each user.
@@ -79,5 +50,5 @@ class UserStoreModule:
     compatibility with third party software.  A future version of
     Plinth is likely to require LDAP.
     """
-    __metaclass__ = PluginMountSingular # singular because we can only use one user store at a time
-
+    # Singular because we can only use one user store at a time
+    __metaclass__ = PluginMountSingular

@@ -19,45 +19,38 @@
 Plinth module for configuring PageKite service
 """
 
-import cherrypy
 from django import forms
 from django.core import validators
+from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 import actions
 import cfg
-from ..lib.auth import require
-from plugin_mount import PagePlugin
-import util
+from ..lib.auth import login_required
 
 
-class PageKite(PagePlugin):
-    """PageKite menu entry and introduction page"""
-    order = 60
+def init():
+    """Intialize the PageKite module"""
+    menu = cfg.main_menu.find('/apps')
+    menu.add_item(_('Public Visibility (PageKite)'), 'icon-flag',
+                  '/apps/pagekite', 50)
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
 
-        self.register_page("apps.pagekite")
-        cfg.html_root.apps.menu.add_item(
-            _("Public Visibility (PageKite)"), "icon-flag",
-            "/apps/pagekite", 50)
+@login_required
+def index(request):
+    """Serve introdution page"""
+    menu = {'title': _('PageKite'),
+            'items': [{'url': '/apps/pagekite/configure',
+                       'text': _('Configure PageKite')}]}
 
-    @staticmethod
-    @cherrypy.expose
-    @require()
-    def index(**kwargs):
-        """Serve introdution page"""
-        del kwargs  # Unused
+    sidebar_right = render_to_string('menu_block.html', {'menu': menu},
+                                     RequestContext(request))
 
-        menu = {'title': _('PageKite'),
-                'items': [{'url': '/apps/pagekite/configure',
-                           'text': _('Configure PageKite')}]}
-        sidebar_right = util.render_template(template='menu_block', menu=menu)
-
-        return util.render_template(template='pagekite_introduction',
-                                    title=_("Public Visibility (PageKite)"),
-                                    sidebar_right=sidebar_right)
+    return TemplateResponse(request, 'pagekite_introduction.html',
+                            {'title': _('Public Visibility (PageKite)'),
+                             'sidebar_right': sidebar_right})
 
 
 class TrimmedCharField(forms.CharField):
@@ -105,121 +98,114 @@ for your account if no secret is set on the kite'))
 https://pagekite.net/wiki/Howto/SshOverPageKite/">instructions</a>'))
 
 
-class Configure(PagePlugin):  # pylint: disable-msg=C0103
-    """Main configuration form"""
-    order = 65
+@login_required
+def configure(request):
+    """Serve the configuration form"""
+    status = get_status()
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
+    form = None
+    messages = []
 
-        self.register_page("apps.pagekite.configure")
-
-    @cherrypy.expose
-    @require()
-    def index(self, **kwargs):
-        """Serve the configuration form"""
-        status = self.get_status()
-
-        form = None
-        messages = []
-
-        if kwargs:
-            form = ConfigureForm(kwargs, prefix='pagekite')
-            # pylint: disable-msg=E1101
-            if form.is_valid():
-                self._apply_changes(status, form.cleaned_data, messages)
-                status = self.get_status()
-                form = ConfigureForm(initial=status, prefix='pagekite')
-        else:
+    if request.method == 'POST':
+        form = ConfigureForm(request.POST, prefix='pagekite')
+        # pylint: disable-msg=E1101
+        if form.is_valid():
+            _apply_changes(status, form.cleaned_data, messages)
+            status = get_status()
             form = ConfigureForm(initial=status, prefix='pagekite')
+    else:
+        form = ConfigureForm(initial=status, prefix='pagekite')
 
-        return util.render_template(template='pagekite_configure',
-                                    title=_('Configure PageKite'), form=form,
-                                    messages=messages)
+    return TemplateResponse(request, 'pagekite_configure.html',
+                            {'title': _('Configure PageKite'),
+                             'form': form,
+                             'messages_': messages})
 
-    def get_status(self):
-        """
-        Return the current status of PageKite configuration by
-        executing various actions.
-        """
-        status = {}
 
-        # Check if PageKite is installed
-        output = self._run(['get-installed'])
-        cfg.log('Output - %s' % output)
-        if output.split()[0] != 'installed':
-            return None
+def get_status():
+    """
+    Return the current status of PageKite configuration by
+    executing various actions.
+    """
+    status = {}
 
-        # PageKite service enabled/disabled
-        output = self._run(['get-status'])
-        status['enabled'] = (output.split()[0] == 'enabled')
+    # Check if PageKite is installed
+    output = _run(['get-installed'])
+    cfg.log('Output - %s' % output)
+    if output.split()[0] != 'installed':
+        return None
 
-        # PageKite kite details
-        output = self._run(['get-kite'])
-        kite_details = output.split()
-        status['kite_name'] = kite_details[0]
-        status['kite_secret'] = kite_details[1]
+    # PageKite service enabled/disabled
+    output = _run(['get-status'])
+    status['enabled'] = (output.split()[0] == 'enabled')
 
-        # Service status
-        status['service'] = {}
-        for service in ('http', 'ssh'):
-            output = self._run(['get-service-status', service])
-            status[service + '_enabled'] = (output.split()[0] == 'enabled')
+    # PageKite kite details
+    output = _run(['get-kite'])
+    kite_details = output.split()
+    status['kite_name'] = kite_details[0]
+    status['kite_secret'] = kite_details[1]
 
-        return status
+    # Service status
+    status['service'] = {}
+    for service in ('http', 'ssh'):
+        output = _run(['get-service-status', service])
+        status[service + '_enabled'] = (output.split()[0] == 'enabled')
 
-    def _apply_changes(self, old_status, new_status, messages):
-        """Apply the changes to PageKite configuration"""
-        cfg.log.info('New status is - %s' % new_status)
+    return status
 
-        if old_status != new_status:
-            self._run(['stop'])
 
-        if old_status['enabled'] != new_status['enabled']:
-            if new_status['enabled']:
-                self._run(['set-status', 'enable'])
-                messages.append(('success', _('PageKite enabled')))
-            else:
-                self._run(['set-status', 'disable'])
-                messages.append(('success', _('PageKite disabled')))
+def _apply_changes(old_status, new_status, messages):
+    """Apply the changes to PageKite configuration"""
+    cfg.log.info('New status is - %s' % new_status)
 
-        if old_status['kite_name'] != new_status['kite_name'] or \
-                old_status['kite_secret'] != new_status['kite_secret']:
-            self._run(['set-kite', '--kite-name', new_status['kite_name'],
-                       '--kite-secret', new_status['kite_secret']])
-            messages.append(('success', _('Kite details set')))
+    if old_status != new_status:
+        _run(['stop'])
 
-        for service in ['http', 'ssh']:
-            if old_status[service + '_enabled'] != \
-                    new_status[service + '_enabled']:
-                if new_status[service + '_enabled']:
-                    self._run(['set-service-status', service, 'enable'])
-                    messages.append(('success', _('Service enabled: {service}')
-                                     .format(service=service)))
-                else:
-                    self._run(['set-service-status', service, 'disable'])
-                    messages.append(('success',
-                                     _('Service disabled: {service}')
-                                     .format(service=service)))
-
-        if old_status != new_status:
-            self._run(['start'])
-
-    @staticmethod
-    def _run(arguments, superuser=True):
-        """Run an given command and raise exception if there was an error"""
-        command = 'pagekite-configure'
-
-        cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
-                                                       superuser))
-
-        if superuser:
-            output, error = actions.superuser_run(command, arguments)
+    if old_status['enabled'] != new_status['enabled']:
+        if new_status['enabled']:
+            _run(['set-status', 'enable'])
+            messages.append(('success', _('PageKite enabled')))
         else:
-            output, error = actions.run(command, arguments)
+            _run(['set-status', 'disable'])
+            messages.append(('success', _('PageKite disabled')))
 
-        if error:
-            raise Exception('Error setting/getting PageKite confguration - %s'
-                            % error)
+    if old_status['kite_name'] != new_status['kite_name'] or \
+            old_status['kite_secret'] != new_status['kite_secret']:
+        _run(['set-kite', '--kite-name', new_status['kite_name'],
+              '--kite-secret', new_status['kite_secret']])
+        messages.append(('success', _('Kite details set')))
 
-        return output
+    for service in ['http', 'ssh']:
+        if old_status[service + '_enabled'] != \
+                new_status[service + '_enabled']:
+            if new_status[service + '_enabled']:
+                _run(['set-service-status', service, 'enable'])
+                messages.append(('success', _('Service enabled: {service}')
+                                 .format(service=service)))
+            else:
+                _run(['set-service-status', service, 'disable'])
+                messages.append(('success',
+                                 _('Service disabled: {service}')
+                                 .format(service=service)))
+
+    if old_status != new_status:
+        _run(['start'])
+
+
+def _run(arguments, superuser=True):
+    """Run an given command and raise exception if there was an error"""
+    command = 'pagekite-configure'
+
+    cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
+                                                   superuser))
+
+    if superuser:
+        output, error = actions.superuser_run(command, arguments)
+    else:
+        output, error = actions.run(command, arguments)
+
+    if error:
+        raise Exception('Error setting/getting PageKite confguration - %s'
+                        % error)
+
+    return output

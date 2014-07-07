@@ -1,85 +1,81 @@
-import cherrypy
 from django import forms
+from django.template.response import TemplateResponse
 from gettext import gettext as _
-from ..lib.auth import require
-from plugin_mount import PagePlugin
+
 import actions
 import cfg
+from ..lib.auth import login_required
 import service
-import util
+
+
+SERVICE = None
 
 
 class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
     """ownCloud configuration form"""
     enabled = forms.BooleanField(label=_('Enable ownCloud'), required=False)
 
-    # XXX: Only present due to issue with submitting empty form
-    dummy = forms.CharField(label='Dummy', initial='dummy',
-                            widget=forms.HiddenInput())
+
+def init():
+    """Initialize the ownCloud module"""
+    menu = cfg.main_menu.find('/apps')
+    menu.add_item('Owncloud', 'icon-picture', '/apps/owncloud', 35)
+
+    status = get_status()
+
+    global SERVICE  # pylint: disable-msg=W0603
+    SERVICE = service.Service('owncloud', _('ownCloud'), ['http', 'https'],
+                              is_external=True, enabled=status['enabled'])
 
 
-class OwnCloud(PagePlugin):
-    """ownCloud configuration page"""
-    order = 90
+@login_required
+def index(request):
+    """Serve the ownCloud configuration page"""
+    status = get_status()
 
-    def __init__(self, *args, **kwargs):
-        PagePlugin.__init__(self, *args, **kwargs)
-        self.register_page('apps.owncloud')
+    form = None
+    messages = []
 
-        cfg.html_root.apps.menu.add_item('Owncloud', 'icon-picture',
-                                         '/apps/owncloud', 35)
-
-        status = self.get_status()
-        self.service = service.Service('owncloud', _('ownCloud'),
-                                       ['http', 'https'], is_external=True,
-                                       enabled=status['enabled'])
-
-    @cherrypy.expose
-    @require()
-    def index(self, **kwargs):
-        """Serve the ownCloud configuration page"""
-        status = self.get_status()
-
-        form = None
-        messages = []
-
-        if kwargs:
-            form = OwnCloudForm(kwargs, prefix='owncloud')
-            # pylint: disable-msg=E1101
-            if form.is_valid():
-                self._apply_changes(status, form.cleaned_data, messages)
-                status = self.get_status()
-                form = OwnCloudForm(initial=status, prefix='owncloud')
-        else:
+    if request.method == 'POST':
+        form = OwnCloudForm(request.POST, prefix='owncloud')
+        # pylint: disable-msg=E1101
+        if form.is_valid():
+            _apply_changes(status, form.cleaned_data, messages)
+            status = get_status()
             form = OwnCloudForm(initial=status, prefix='owncloud')
+    else:
+        form = OwnCloudForm(initial=status, prefix='owncloud')
 
-        return util.render_template(template='owncloud', title=_('ownCloud'),
-                                    form=form, messages=messages)
+    return TemplateResponse(request, 'owncloud.html',
+                            {'title': _('ownCloud'),
+                             'form': form,
+                             'messages_': messages})
 
-    @staticmethod
-    def get_status():
-        """Return the current status"""
-        output, error = actions.run('owncloud-setup', 'status')
-        if error:
-            raise Exception('Error getting ownCloud status: %s' % error)
 
-        return {'enabled': 'enable' in output.split()}
+def get_status():
+    """Return the current status"""
+    output, error = actions.run('owncloud-setup', 'status')
+    if error:
+        raise Exception('Error getting ownCloud status: %s' % error)
 
-    def _apply_changes(self, old_status, new_status, messages):
-        """Apply the changes"""
-        if old_status['enabled'] == new_status['enabled']:
-            messages.append(('info', _('Setting unchanged')))
-            return
+    return {'enabled': 'enable' in output.split()}
 
-        if new_status['enabled']:
-            messages.append(('success', _('ownCloud enabled')))
-            option = 'enable'
-        else:
-            messages.append(('success', _('ownCloud disabled')))
-            option = 'noenable'
 
-        actions.superuser_run('owncloud-setup', [option], async=True)
+def _apply_changes(old_status, new_status, messages):
+    """Apply the changes"""
+    if old_status['enabled'] == new_status['enabled']:
+        messages.append(('info', _('Setting unchanged')))
+        return
 
-        # Send a signal to other modules that the service is
-        # enabled/disabled
-        self.service.notify_enabled(self, new_status['enabled'])
+    if new_status['enabled']:
+        messages.append(('success', _('ownCloud enabled')))
+        option = 'enable'
+    else:
+        messages.append(('success', _('ownCloud disabled')))
+        option = 'noenable'
+
+    actions.superuser_run('owncloud-setup', [option], async=True)
+
+    # Send a signal to other modules that the service is
+    # enabled/disabled
+    SERVICE.notify_enabled(None, new_status['enabled'])

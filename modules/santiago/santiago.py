@@ -23,14 +23,15 @@ santiago_port = 52854
 #    return True
 
 class Santiago(PagePlugin):
-   order = 90 # order of running init in PagePlugins
-   def __init__(self, *args, **kwargs):
+    order = 90 # order of running init in PagePlugins
+    def __init__(self):
+        super(Santiago, self).__init__()
 
         self.register_page("santiago")
         self.santiago_address = self.get_santiago_address() #TODO: multiple santiago ports
         #set a listener on the santiago address
 
-   def get_santiago_address(self):
+    def get_santiago_address(self):
         if 'santiago' in cfg.users['admin'] and 'address' in cfg.users['admin']['santiago']:
             return cfg.users['admin']['santiago']['address']
         else:
@@ -54,11 +55,11 @@ class Santiago(PagePlugin):
         print "Need to add these two lines to /etc/torrc:\n%s" % hidden_service_config
         return ""
 
-   def check_for_hidden_service(self):
+    def check_for_hidden_service(self):
         pass
 
-   @cherrypy.expose
-   def index(self, *args, **kw):
+    @cherrypy.expose
+    def index(self, *args, **kw):
 
         """
         A request is a dict with some required keys:
@@ -111,12 +112,13 @@ class Santiago(PagePlugin):
 
 ## Plinth page to config santiago
 class santiago(PagePlugin):
-   def __init__(self, *args, **kwargs):
-      PagePlugin.__init__(self, *args, **kwargs)
-      self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "icon-leaf", "/privacy/santiago", 10)
-      self.register_page("privacy.santiago")
+    def __init__(self):
+        super(Santiago, self).__init__(self)
 
-   @cherrypy.expose
-   @require()
-   def index(self):
-      return "Santiago's config goes here."
+        self.menu = cfg.html_root.privacy.menu.add_item("Santiago", "icon-leaf", "/privacy/santiago", 10)
+        self.register_page("privacy.santiago")
+
+    @cherrypy.expose
+    @require()
+    def index(self):
+        return "Santiago's config goes here."
