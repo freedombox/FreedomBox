@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
-import os, sys, argparse
-import cfg
+import argparse
+import os
+import sys
 import django.conf
 import django.core.wsgi
-if not os.path.join(cfg.file_root, "vendor") in sys.path:
-   sys.path.append(os.path.join(cfg.file_root, "vendor"))
 
 import cherrypy
 from cherrypy import _cpserver
 from cherrypy.process.plugins import Daemonizer
-Daemonizer(cherrypy.engine).subscribe()
 
+import cfg
 import module_loader
 import plugin_mount
 import service
 
+import logger
 from logger import Logger
 
 __version__ = "0.2.14"
@@ -28,64 +28,52 @@ __status__ = "Development"
 
 
 def parse_arguments():
-   parser = argparse.ArgumentParser(description='Plinth web interface for the FreedomBox.')
-   parser.add_argument('--pidfile',
-                       help='specify a file in which the server may write its pid')
-   # FIXME make this work with basehref for static files.
-   parser.add_argument('--server_dir',
-                       help='specify where to host the server.')
-   parser.add_argument("--debug", action="store_true",
-                       help="Debug flag.  Don't use.")
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description='Plinth web interface for FreedomBox')
+    parser.add_argument(
+        '--pidfile', default='plinth.pid',
+        help='specify a file in which the server may write its pid')
+    parser.add_argument(
+        '--server_dir', default='/',
+        help='web server path under which to serve')
+    parser.add_argument(
+        '--debug', action='store_true', default=False,
+        help='enable debugging and run server *insecurely*')
+    parser.add_argument(
+        '--no-daemon', action='store_true', default=False,
+        help='do not start as a daemon')
 
-   args=parser.parse_args()
-   set_config(args, "pidfile", "plinth.pid")
-   set_config(args, "server_dir", "/")
-   set_config(args, "debug", False)
-
-   return cfg
-
-def set_config(args, element, default):
-   """Sets *cfg* elements based on *args* values, or uses a reasonable default.
-
-   - If values are passed in from *args*, use those.
-   - If values are read from the config file, use those.
-   - If no values have been given, use default.
-
-   """
-   try:
-      # cfg.(element) = args.(element)
-      setattr(cfg, element, getattr(args, element))
-   except AttributeError:
-      # if it fails, we didn't receive that argument.
-      try:
-         # if not cfg.(element): cfg.(element) = default
-         if not getattr(cfg, element):
-            setattr(cfg, element, default)
-      except AttributeError:
-         # it wasn't in the config file, but set the default anyway.
-         setattr(cfg, element, default)
+    args = parser.parse_args()
+    cfg.pidfile = args.pidfile
+    cfg.server_dir = args.server_dir
+    cfg.debug = args.debug
+    cfg.no_daemon = args.no_daemon
 
 
 def setup_logging():
     """Setup logging framework"""
     cfg.log = Logger()
+    logger.init()
 
 
-def setup_configuration():
-   cfg = parse_arguments()
-
-   try:
-      if cfg.pidfile:
-         from cherrypy.process.plugins import PIDFile
-         PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
-   except AttributeError:
-      pass
-
-   os.chdir(cfg.python_root)
+def setup_paths():
+    """Setup current directory and python import paths"""
+    os.chdir(cfg.python_root)
+    if not os.path.join(cfg.file_root, 'vendor') in sys.path:
+        sys.path.append(os.path.join(cfg.file_root, 'vendor'))
 
 
 def setup_server():
     """Setup CherryPy server"""
+    # Set the PID file path
+    try:
+        if cfg.pidfile:
+            from cherrypy.process.plugins import PIDFile
+            PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
+    except AttributeError:
+        pass
+
     # Add an extra server
     server = _cpserver.Server()
     server.socket_host = '127.0.0.1'
@@ -106,6 +94,9 @@ def setup_server():
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, cfg.server_dir + '/static', config)
+
+    if not cfg.no_daemon:
+        Daemonizer(cherrypy.engine).subscribe()
 
     cherrypy.engine.signal_handler.subscribe()
 
@@ -141,10 +132,11 @@ def configure_django():
     template_directories = module_loader.get_template_directories()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
     django.conf.settings.configure(
-        DEBUG=False,
+        DEBUG=cfg.debug,
         ALLOWED_HOSTS=['127.0.0.1', 'localhost'],
         TEMPLATE_DIRS=template_directories,
-        INSTALLED_APPS=['bootstrapform'],
+        INSTALLED_APPS=['bootstrapform',
+                        'django.contrib.messages'],
         ROOT_URLCONF='urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
@@ -154,11 +146,15 @@ def configure_django():
 
 def main():
     """Intialize and start the application"""
+    parse_arguments()
+
+    cfg.read()
+
     setup_logging()
 
     service.init()
 
-    setup_configuration()
+    setup_paths()
 
     configure_django()
 

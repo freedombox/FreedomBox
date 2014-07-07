@@ -20,6 +20,7 @@ Plinth module for configuring PageKite service
 """
 
 from django import forms
+from django.contrib import messages
 from django.core import validators
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -104,13 +105,12 @@ def configure(request):
     status = get_status()
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = ConfigureForm(request.POST, prefix='pagekite')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(status, form.cleaned_data, messages)
+            _apply_changes(request, status, form.cleaned_data)
             status = get_status()
             form = ConfigureForm(initial=status, prefix='pagekite')
     else:
@@ -118,8 +118,7 @@ def configure(request):
 
     return TemplateResponse(request, 'pagekite_configure.html',
                             {'title': _('Configure PageKite'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
 def get_status():
@@ -154,7 +153,7 @@ def get_status():
     return status
 
 
-def _apply_changes(old_status, new_status, messages):
+def _apply_changes(request, old_status, new_status):
     """Apply the changes to PageKite configuration"""
     cfg.log.info('New status is - %s' % new_status)
 
@@ -164,29 +163,28 @@ def _apply_changes(old_status, new_status, messages):
     if old_status['enabled'] != new_status['enabled']:
         if new_status['enabled']:
             _run(['set-status', 'enable'])
-            messages.append(('success', _('PageKite enabled')))
+            messages.success(request, _('PageKite enabled'))
         else:
             _run(['set-status', 'disable'])
-            messages.append(('success', _('PageKite disabled')))
+            messages.success(request, _('PageKite disabled'))
 
     if old_status['kite_name'] != new_status['kite_name'] or \
             old_status['kite_secret'] != new_status['kite_secret']:
         _run(['set-kite', '--kite-name', new_status['kite_name'],
               '--kite-secret', new_status['kite_secret']])
-        messages.append(('success', _('Kite details set')))
+        messages.success(request, _('Kite details set'))
 
     for service in ['http', 'ssh']:
         if old_status[service + '_enabled'] != \
                 new_status[service + '_enabled']:
             if new_status[service + '_enabled']:
                 _run(['set-service-status', service, 'enable'])
-                messages.append(('success', _('Service enabled: {service}')
-                                 .format(service=service)))
+                messages.success(request, _('Service enabled: {service}')
+                                 .format(service=service))
             else:
                 _run(['set-service-status', service, 'disable'])
-                messages.append(('success',
-                                 _('Service disabled: {service}')
-                                 .format(service=service)))
+                messages.success(request, _('Service disabled: {service}')
+                                 .format(service=service))
 
     if old_status != new_status:
         _run(['start'])

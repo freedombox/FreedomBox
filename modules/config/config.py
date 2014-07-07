@@ -20,6 +20,7 @@ Plinth module for configuring timezone, hostname etc.
 """
 
 from django import forms
+from django.contrib import messages
 from django.core import validators
 from django.template.response import TemplateResponse
 from gettext import gettext as _
@@ -100,14 +101,13 @@ def index(request):
     status = get_status()
 
     form = None
-    messages = []
 
     is_expert = cfg.users.expert(request=request)
     if request.method == 'POST' and is_expert:
         form = ConfigurationForm(request.POST, prefix='configuration')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(status, form.cleaned_data, messages)
+            _apply_changes(request, status, form.cleaned_data)
             status = get_status()
             form = ConfigurationForm(initial=status,
                                      prefix='configuration')
@@ -117,7 +117,6 @@ def index(request):
     return TemplateResponse(request, 'config.html',
                             {'title': _('General Configuration'),
                              'form': form,
-                             'messages_': messages,
                              'is_expert': is_expert})
 
 
@@ -127,27 +126,27 @@ def get_status():
             'time_zone': util.slurp('/etc/timezone').rstrip()}
 
 
-def _apply_changes(old_status, new_status, messages):
+def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     if old_status['hostname'] != new_status['hostname']:
         if not set_hostname(new_status['hostname']):
-            messages.append(('error', _('Setting hostname failed')))
+            messages.error(request, _('Setting hostname failed'))
         else:
-            messages.append(('success', _('Hostname set')))
+            messages.success(request, _('Hostname set'))
     else:
-        messages.append(('info', _('Hostname is unchanged')))
+        messages.info(request, _('Hostname is unchanged'))
 
     if old_status['time_zone'] != new_status['time_zone']:
         output, error = actions.superuser_run('timezone-change',
                                               [new_status['time_zone']])
         del output  # Unused
         if error:
-            messages.append(('error',
-                             _('Error setting time zone - %s') % error))
+            messages.error(request,
+                           _('Error setting time zone - %s') % error)
         else:
-            messages.append(('success', _('Time zone set')))
+            messages.success(request, _('Time zone set'))
     else:
-        messages.append(('info', _('Time zone is unchanged')))
+        messages.info(request, _('Time zone is unchanged'))
 
 
 def set_hostname(hostname):

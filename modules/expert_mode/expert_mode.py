@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -24,13 +25,12 @@ def index(request):
     status = get_status(request)
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = ExpertsForm(request.POST, prefix='experts')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(request, form.cleaned_data, messages)
+            _apply_changes(request, form.cleaned_data)
             status = get_status(request)
             form = ExpertsForm(initial=status, prefix='experts')
     else:
@@ -38,8 +38,7 @@ def index(request):
 
     return TemplateResponse(request, 'expert_mode.html',
                             {'title': _('Expert Mode'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
 def get_status(request):
@@ -47,20 +46,20 @@ def get_status(request):
     return {'expert_mode': cfg.users.expert(request=request)}
 
 
-def _apply_changes(request, new_status, messages):
+def _apply_changes(request, new_status):
     """Apply expert mode configuration"""
-    message = ('info', _('Settings unchanged'))
+    message = (messages.info, _('Settings unchanged'))
 
     user = cfg.users.current(request=request)
 
     if new_status['expert_mode']:
         if not 'expert' in user['groups']:
             user['groups'].append('expert')
-            message = ('success', _('Expert mode enabled'))
+            message = (messages.success, _('Expert mode enabled'))
     else:
         if 'expert' in user['groups']:
             user['groups'].remove('expert')
-            message = ('success', _('Expert mode disabled'))
+            message = (messages.success, _('Expert mode disabled'))
 
     cfg.users.set(user['username'], user)
-    messages.append(message)
+    message[0](request, message[1])

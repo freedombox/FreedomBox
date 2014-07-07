@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -51,13 +52,12 @@ def index(request):
     status = get_status()
 
     form = None
-    messages = []
 
     if request.method == 'POST':
         form = PackagesForm(request.POST, prefix='packages')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _apply_changes(status, form.cleaned_data, messages)
+            _apply_changes(request, status, form.cleaned_data)
             status = get_status()
             form = PackagesForm(initial=status, prefix='packages')
     else:
@@ -65,8 +65,7 @@ def index(request):
 
     return TemplateResponse(request, 'packages.html',
                             {'title': _('Add/Remove Plugins'),
-                             'form': form,
-                             'messages_': messages})
+                             'form': form})
 
 
 def get_status():
@@ -78,7 +77,7 @@ def get_status():
             for module in modules_available}
 
 
-def _apply_changes(old_status, new_status, messages):
+def _apply_changes(request, old_status, new_status):
     """Apply form changes"""
     for field, enabled in new_status.items():
         if not field.endswith('_enabled'):
@@ -96,13 +95,13 @@ def _apply_changes(old_status, new_status, messages):
             # TODO: need to get plinth to load the module we just
             # enabled
             if error:
-                messages.append(
-                    ('error', _('Error enabling module - {module}').format(
-                     module=module)))
+                messages.error(
+                    request, _('Error enabling module - {module}').format(
+                        module=module))
             else:
-                messages.append(
-                    ('success', _('Module enabled - {module}').format(
-                     module=module)))
+                messages.success(
+                    request, _('Module enabled - {module}').format(
+                        module=module))
         else:
             output, error = actions.superuser_run(
                 'module-manager', ['disable', cfg.python_root, module])
@@ -111,11 +110,10 @@ def _apply_changes(old_status, new_status, messages):
             # TODO: need a smoother way for plinth to unload the
             # module
             if error:
-                messages.append(
-                    ('error',
-                     _('Error disabling module - {module}').format(
-                         module=module)))
+                messages.error(
+                    request, _('Error disabling module - {module}').format(
+                        module=module))
             else:
-                messages.append(
-                    ('success', _('Module disabled - {module}').format(
-                     module=module)))
+                messages.success(
+                    request, _('Module disabled - {module}').format(
+                        module=module))

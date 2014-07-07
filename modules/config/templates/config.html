@@ -1,4 +1,4 @@
-{% extends "login_nav.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -23,8 +23,6 @@
 {% block main_block %}
 
 {% if is_expert %}
-
-  {% include 'messages.html' %}
 
   <form class="form" method="post">
     {% csrf_token %}

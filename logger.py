@@ -2,9 +2,13 @@ import cherrypy
 import inspect
 import cfg
 
-cherrypy.log.error_file = cfg.status_log_file
-cherrypy.log.access_file = cfg.access_log_file
-cherrypy.log.screen = False
+
+def init():
+    """Initialize logging"""
+    cherrypy.log.error_file = cfg.status_log_file
+    cherrypy.log.access_file = cfg.access_log_file
+    if not cfg.no_daemon:
+        cherrypy.log.screen = False
 
 
 class Logger(object):
