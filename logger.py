@@ -14,11 +14,7 @@ def init():
 class Logger(object):
     """By convention, log levels are DEBUG, INFO, WARNING, ERROR and CRITICAL."""
     def log(self, msg, level="DEBUG"):
-        try:
-            username = cherrypy.session.get(cfg.session_key)
-        except AttributeError:
-            username = ''
-        cherrypy.log.error("%s %s %s" % (username, level, msg), inspect.stack()[2][3], 20)
+        cherrypy.log.error("%s %s" % (level, msg), inspect.stack()[2][3], 20)
     def __call__(self, *args):
         self.log(*args)
 

@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 import cfg
-from ..lib.auth import login_required
+from ..lib.auth import get_group
 
 
 class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
@@ -43,23 +44,21 @@ def index(request):
 
 def get_status(request):
     """Return the current status"""
-    return {'expert_mode': cfg.users.expert(request=request)}
+    return {'expert_mode': request.user.groups.filter(name='Expert').exists()}
 
 
 def _apply_changes(request, new_status):
     """Apply expert mode configuration"""
     message = (messages.info, _('Settings unchanged'))
 
-    user = cfg.users.current(request=request)
-
+    expert_group = get_group('Expert')
     if new_status['expert_mode']:
-        if not 'expert' in user['groups']:
-            user['groups'].append('expert')
+        if not expert_group in request.user.groups.all():
+            request.user.groups.add(expert_group)
             message = (messages.success, _('Expert mode enabled'))
     else:
-        if 'expert' in user['groups']:
-            user['groups'].remove('expert')
+        if expert_group in request.user.groups.all():
+            request.user.groups.remove(expert_group)
             message = (messages.success, _('Expert mode disabled'))
 
-    cfg.users.set(user['username'], user)
     message[0](request, message[1])

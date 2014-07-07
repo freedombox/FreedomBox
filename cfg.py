@@ -19,7 +19,7 @@ host = None
 port = None
 debug = False
 no_daemon = False
-session_key = '_username'
+server_dir = ''
 
 main_menu = Menu()
 

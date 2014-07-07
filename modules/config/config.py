@@ -21,6 +21,7 @@ Plinth module for configuring timezone, hostname etc.
 
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.template.response import TemplateResponse
 from gettext import gettext as _
@@ -29,7 +30,6 @@ import socket
 
 import actions
 import cfg
-from ..lib.auth import login_required
 import util
 
 
@@ -102,7 +102,7 @@ def index(request):
 
     form = None
 
-    is_expert = cfg.users.expert(request=request)
+    is_expert = request.user.groups.filter(name='Expert').exists()
     if request.method == 'POST' and is_expert:
         form = ConfigurationForm(request.POST, prefix='configuration')
         # pylint: disable-msg=E1101
@@ -160,9 +160,6 @@ def set_hostname(hostname):
         actions.superuser_run("xmpp-pre-hostname-change")
         actions.superuser_run("hostname-change", hostname)
         actions.superuser_run("xmpp-hostname-change", hostname, async=True)
-        # don't persist/cache change unless it was saved successfuly
-        sys_store = util.filedict_con(cfg.store_file, 'sys')
-        sys_store['hostname'] = hostname
     except OSError:
         return False
 

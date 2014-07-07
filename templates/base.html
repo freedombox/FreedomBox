@@ -82,18 +82,18 @@
                 {% endfor %}
               </ul>
 
-              {% if username %}
+              {% if user.is_authenticated %}
                 <p class="navbar-text pull-right">
                   <i class="icon-user icon-white nav-icon"></i>
-                  Logged in as <a href="{{ username }}">{{ username }}</a>.
-                  <a href="{{ basehref }}/auth/logout" title="Log out">
+                  Logged in as <a href="{{ user.username }}">{{ user.username }}</a>.
+                  <a href="{{ basehref }}/accounts/logout" title="Log out">
                     Log out</a>.
                 </p>
               {% else %}
                 <p class="navbar-text pull-right">
                   Not logged in.
                   <i class="icon-user icon-white nav-icon"></i>
-                  <a href="{{ basehref }}/auth/login" title="Log in">
+                  <a href="{{ basehref }}/accounts/login" title="Log in">
                     Log in</a>.
                 </p>
               {% endif %}

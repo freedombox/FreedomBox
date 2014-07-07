@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -7,7 +8,6 @@ from gettext import gettext as _
 
 import actions
 import cfg
-from ..lib.auth import login_required
 import service
 
 

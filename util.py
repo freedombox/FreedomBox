@@ -1,9 +1,4 @@
 import os
-import sys
-import cfg
-import sqlite3
-
-from filedict import FileDict
 
 
 def mkdir(newdir):
@@ -34,12 +29,3 @@ def slurp(filespec):
 def unslurp(filespec, msg):
     with open(filespec, 'w') as x:
         x.write(msg)
-
-
-def filedict_con(filespec=None, table='dict'):
-    """TODO: better error handling in filedict_con"""
-    try:
-        return FileDict(connection=sqlite3.connect(filespec), table=table)
-    except IOError as (errno, strerror):
-        cfg.log.critical("I/O error({0}): {1}".format(errno, strerror))
-        sys.exit(-1)

@@ -20,8 +20,6 @@ Main Plinth views
 """
 
 from django.http.response import HttpResponseRedirect
-import os
-import stat
 
 import cfg
 from withsqlite.withsqlite import sqlite_db
@@ -32,10 +30,6 @@ def index(request):
     # TODO: Move firstboot handling to firstboot module somehow
     with sqlite_db(cfg.store_file, table='firstboot') as database:
         if not 'state' in database:
-            # If we created a new user db, make sure it can't be read by
-            # everyone
-            userdb_fname = '{}.sqlite3'.format(cfg.user_db)
-            os.chmod(userdb_fname, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
             # Permanent redirect causes the browser to cache the redirect,
             # preventing the user from navigating to /plinth until the
             # browser is restarted.
@@ -46,7 +40,7 @@ def index(request):
             return HttpResponseRedirect(
                 cfg.server_dir + '/firstboot/state%d' % database['state'])
 
-    if request.session.get(cfg.session_key, None):
+    if request.user.is_authenticated():
         return HttpResponseRedirect(cfg.server_dir + '/apps')
 
     return HttpResponseRedirect(cfg.server_dir + '/help/about')
