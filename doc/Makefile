@@ -8,7 +8,8 @@ PDFLATEX=pdflatex
 # complete manual:
 SOURCES=README.mdwn INSTALL.mdwn themes.mdwn hacking.mdwn TODO.mdwn modules.mdwn scripts.mdwn security.mdwn faq.mdwn COPYING.mdwn colophon.mdwn
 OTHER=
-TODO_SOURCES=$(patsubst TODO.mdwn,,$(SOURCES))
+PYTHON_SOURCES:=$(shell find .. -name \*.py)
+TODO_SOURCES=$(patsubst TODO.mdwn,,$(SOURCES)) $(PYTHON_SOURCES)
 MAN_SOURCES=$(patsubst COPYING.mdwn,copyright_notice00,$(SOURCES))
 
 NEWLINE_SOURCES=$(patsubst %,% oneline.txt,$(SOURCES))
@@ -41,7 +42,7 @@ $(SOURCES):
 	@rm -f $@
 	@ln -s ../$(patsubst %.mdwn,%,$@) $@
 
-../TODO : $(TODO_SOURCES) ../*.py ../modules/*.py ../Makefile Makefile
+../TODO : $(TODO_SOURCES) ../Makefile Makefile
 	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
 	     --exclude=README.mdwn --exclude=INSTALL.mdwn \
 	     --exclude=TODO.mdwn --exclude=COPYING.mdwn \
