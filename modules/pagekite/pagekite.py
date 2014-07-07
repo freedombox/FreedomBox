@@ -27,9 +27,13 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import logging
 
 import actions
 import cfg
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def init():
@@ -130,7 +134,6 @@ def get_status():
 
     # Check if PageKite is installed
     output = _run(['get-installed'])
-    cfg.log('Output - %s' % output)
     if output.split()[0] != 'installed':
         return None
 
@@ -155,7 +158,7 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply the changes to PageKite configuration"""
-    cfg.log.info('New status is - %s' % new_status)
+    LOGGER.info('New status is - %s', new_status)
 
     if old_status != new_status:
         _run(['stop'])
@@ -194,8 +197,7 @@ def _run(arguments, superuser=True):
     """Run an given command and raise exception if there was an error"""
     command = 'pagekite-configure'
 
-    cfg.log.info('Running command - %s, %s, %s' % (command, arguments,
-                                                   superuser))
+    LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
 
     if superuser:
         output, error = actions.superuser_run(command, arguments)

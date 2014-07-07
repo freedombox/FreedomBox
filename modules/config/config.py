@@ -25,12 +25,16 @@ from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import logging
 import re
 import socket
 
 import actions
 import cfg
 import util
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def get_hostname():
@@ -155,11 +159,11 @@ def set_hostname(hostname):
     # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
 
-    cfg.log.info("Changing hostname to '%s'" % hostname)
+    LOGGER.info('Changing hostname to - %s', hostname)
     try:
-        actions.superuser_run("xmpp-pre-hostname-change")
-        actions.superuser_run("hostname-change", hostname)
-        actions.superuser_run("xmpp-hostname-change", hostname, async=True)
+        actions.superuser_run('xmpp-pre-hostname-change')
+        actions.superuser_run('hostname-change', hostname)
+        actions.superuser_run('xmpp-hostname-change', hostname, async=True)
     except OSError:
         return False
 
