@@ -19,7 +19,7 @@
 Main Plinth views
 """
 
-from django.http.response import HttpResponseRedirect
+from util import PlinthRedirect
 import logging
 
 import cfg
@@ -37,14 +37,13 @@ def index(request):
             # Permanent redirect causes the browser to cache the redirect,
             # preventing the user from navigating to /plinth until the
             # browser is restarted.
-            return HttpResponseRedirect(cfg.server_dir + '/firstboot')
+            return PlinthRedirect('/firstboot')
 
         if database['state'] < 5:
             LOGGER.info('First boot state - %d', database['state'])
-            return HttpResponseRedirect(
-                cfg.server_dir + '/firstboot/state%d' % database['state'])
+            return PlinthRedirect('/firstboot/state%d' % database['state'])
 
     if request.user.is_authenticated():
-        return HttpResponseRedirect(cfg.server_dir + '/apps')
+        return PlinthRedirect('/apps')
 
-    return HttpResponseRedirect(cfg.server_dir + '/help/about')
+    return PlinthRedirect('/help/about')

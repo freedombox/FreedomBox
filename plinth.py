@@ -101,7 +101,7 @@ def setup_server():
         '/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
-    cherrypy.tree.mount(None, cfg.server_dir + '/static', config)
+    cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
 
     if not cfg.no_daemon:
         Daemonizer(cherrypy.engine).subscribe()
@@ -185,7 +185,7 @@ def configure_django():
         ROOT_URLCONF='urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
-        STATIC_URL=cfg.server_dir + '/static/',
+        STATIC_URL=os.path.join(cfg.server_dir, 'static/'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         TEMPLATE_DIRS=template_directories)
 

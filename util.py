@@ -1,24 +1,48 @@
 import os
+from django.http.response import HttpResponseRedirect
+import cfg
+
+
+class PlinthRedirect(HttpResponseRedirect):
+    """
+    We do not fully use django and thus cannot use its named URLs to construct
+    links/redirects, so we have to take care of cfg.server_dir manually.
+    This temporary helper class makes sure that plinth-internal redirects
+    have the correct server_dir prefix.
+    """
+    def __init__(self, redirect_to, *args, **kwargs):
+        if not redirect_to.startswith(cfg.server_dir):
+            redirect_to = urljoin([cfg.server_dir, redirect_to])
+        return super(PlinthRedirect, self).__init__(redirect_to,
+                                                    *args, **kwargs)
+
+
+def urljoin(parts):
+    """
+    urllibs' urljoin joins ("foo", "/bar") to "/bar".
+    Instead, just concatenate the parts with "/" to i.e. /foo/bar
+    """
+    return '/' + '/'.join(s.strip('/') for s in parts)
 
 
 def mkdir(newdir):
-   """works the way a good mkdir should :)
+    """works the way a good mkdir should :)
         - already exists, silently complete
         - regular file in the way, raise an exception
         - parent directory(ies) does not exist, make them as well
-   """
-   if os.path.isdir(newdir):
-      pass
-   elif os.path.isfile(newdir):
-      raise OSError("a file with the same name as the desired " \
+    """
+    if os.path.isdir(newdir):
+        pass
+    elif os.path.isfile(newdir):
+        raise OSError("a file with the same name as the desired " \
                       "dir, '%s', already exists." % newdir)
-   else:
-      head, tail = os.path.split(newdir)
-      if head and not os.path.isdir(head):
-         mkdir(head)
-      #print "mkdir %s" % repr(newdir)
-      if tail:
-         os.mkdir(newdir)
+    else:
+        head, tail = os.path.split(newdir)
+        if head and not os.path.isdir(head):
+            mkdir(head)
+        #print "mkdir %s" % repr(newdir)
+        if tail:
+            os.mkdir(newdir)
 
 
 def slurp(filespec):
