@@ -1,4 +1,5 @@
 from urlparse import urlparse
+import util
 import cfg
 
 
@@ -31,7 +32,7 @@ class Menu(object):
     def find(self, url, basehref=True):
         """Return a menu item with given URL"""
         if basehref and url.startswith('/'):
-            url = cfg.server_dir + url
+            url = util.rel_urljoin([cfg.server_dir, url])
 
         for item in self.items:
             if item.url == url:
@@ -51,7 +52,8 @@ class Menu(object):
         cfg.server_dir to it"""
 
         if basehref and url.startswith("/"):
-            url = cfg.server_dir + url
+            url = util.rel_urljoin([cfg.server_dir, url])
+            #url = cfg.server_dir + url
 
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)

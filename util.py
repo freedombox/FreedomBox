@@ -12,17 +12,20 @@ class PlinthRedirect(HttpResponseRedirect):
     """
     def __init__(self, redirect_to, *args, **kwargs):
         if not redirect_to.startswith(cfg.server_dir):
-            redirect_to = urljoin([cfg.server_dir, redirect_to])
+            redirect_to = rel_urljoin([cfg.server_dir, redirect_to])
         return super(PlinthRedirect, self).__init__(redirect_to,
                                                     *args, **kwargs)
 
 
-def urljoin(parts):
+def rel_urljoin(parts, prepend_slash=True):
     """
     urllibs' urljoin joins ("foo", "/bar") to "/bar".
-    Instead, just concatenate the parts with "/" to i.e. /foo/bar
+    Instead concatenate the parts with "/" to i.e. /foo/bar
     """
-    return '/' + '/'.join(s.strip('/') for s in parts)
+    url =  '/'.join(s.strip('/') for s in parts)
+    if prepend_slash and not url.startswith('/'):
+        url = '/' + url
+    return url
 
 
 def mkdir(newdir):
