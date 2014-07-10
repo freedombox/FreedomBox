@@ -183,6 +183,13 @@ def configure_django():
         LOGIN_URL=cfg.server_dir + '/accounts/login/',
         LOGIN_REDIRECT_URL=cfg.server_dir + '/',
         LOGOUT_URL=cfg.server_dir + '/accounts/logout/',
+        MIDDLEWARE_CLASSES = (
+            'django.middleware.common.CommonMiddleware',
+            'django.contrib.sessions.middleware.SessionMiddleware',
+            'django.contrib.auth.middleware.AuthenticationMiddleware',
+            'django.contrib.messages.middleware.MessageMiddleware',
+            'modules.first_boot.middleware.FirstBootMiddleware',
+        ),
         ROOT_URLCONF='urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
