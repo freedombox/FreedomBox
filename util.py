@@ -1,17 +1,6 @@
 import os
 
 
-def rel_urljoin(parts, prepend_slash=True):
-    """
-    urllibs' urljoin joins ("foo", "/bar") to "/bar".
-    Instead concatenate the parts with "/" to i.e. /foo/bar
-    """
-    url = '/'.join(s.strip('/') for s in parts)
-    if prepend_slash and not url.startswith('/'):
-        url = '/' + url
-    return url
-
-
 def mkdir(newdir):
     """works the way a good mkdir should :)
         - already exists, silently complete

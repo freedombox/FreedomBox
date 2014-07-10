@@ -20,6 +20,7 @@ URLs for the Lib module
 """
 
 from django.conf.urls import patterns, url
+from django.core.urlresolvers import reverse_lazy
 
 import cfg
 
@@ -28,5 +29,5 @@ urlpatterns = patterns(  # pylint: disable-msg=C0103
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',
         {'template_name': 'login.html'}, name='login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-        {'next_page': cfg.server_dir}, name='logout')
+        {'next_page': reverse_lazy('index')}, name='logout')
     )

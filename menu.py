@@ -28,12 +28,14 @@ class Menu(object):
         self.icon = icon
         self.url = url
         self.order = order
+        # TODO: With an ordered dictionary for self.items we could access the
+        # items by their URL directly instead of searching for them each time,
+        # which we do currently with the 'get' method
         self.items = []
 
     def get(self, urlname, url_args=None, url_kwargs=None):
         """Return a menu item with given URL name"""
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        url = util.rel_urljoin([cfg.server_dir, url])
         for item in self.items:
             if item.url == url:
                 return item
@@ -48,14 +50,12 @@ class Menu(object):
         """ Add a named URL to the menu (via add_item)
         url_args and url_kwargs will be passed on to url reverse """
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        return self.add_item(label, icon, url, order, add_url_prefix=True)
+        return self.add_item(label, icon, url, order)
 
-    def add_item(self, label, icon, url, order=50, add_url_prefix=False):
+    def add_item(self, label, icon, url, order=50):
         """This method creates a menu item with the parameters, adds
         that menu item to this menu, and returns the item.
         """
-        if add_url_prefix:
-            url = util.rel_urljoin([cfg.server_dir, url])
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
         self.sort_items()

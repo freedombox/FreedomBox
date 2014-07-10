@@ -126,6 +126,12 @@ def context_processor(request):
 
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
+
+    # In module_loader.py we reverse URLs for the menu without having a proper
+    # request. In this case, get_script_prefix (used by reverse) returns the 
+    # wrong prefix. Set it here manually to have the correct prefix right away.
+    django.core.urlresolvers.set_script_prefix(cfg.server_dir)
+
     context_processors = [
         'django.contrib.auth.context_processors.auth',
         'django.core.context_processors.debug',
@@ -179,9 +185,9 @@ def configure_django():
                         'django.contrib.contenttypes',
                         'django.contrib.messages'],
         LOGGING=logging_configuration,
-        LOGIN_URL=cfg.server_dir + '/accounts/login/',
-        LOGIN_REDIRECT_URL=cfg.server_dir + '/',
-        LOGOUT_URL=cfg.server_dir + '/accounts/logout/',
+        LOGIN_URL='lib:login',
+        LOGIN_REDIRECT_URL='apps:index',
+        LOGOUT_URL='lib:logout',
         MIDDLEWARE_CLASSES = (
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
