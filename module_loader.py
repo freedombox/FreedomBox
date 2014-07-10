@@ -25,6 +25,7 @@ import logging
 import os
 
 import urls
+import cfg
 
 LOGGER = logging.getLogger(__name__)
 
@@ -47,6 +48,8 @@ def load_modules():
         except Exception as exception:
             LOGGER.exception('Could not import modules/%s: %s',
                              name, exception)
+            if cfg.debug:
+                raise
 
         _include_module_urls(full_name, name)
 
