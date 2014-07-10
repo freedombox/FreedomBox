@@ -140,16 +140,11 @@ def on_service_enabled(sender, service_id, enabled, **kwargs):
 def _run(arguments, superuser=False):
     """Run an given command and raise exception if there was an error"""
     command = 'firewall'
-
     LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
 
     if superuser:
-        output, error = actions.superuser_run(command, arguments)
+        output = actions.superuser_run(command, arguments)
     else:
-        output, error = actions.run(command, arguments)
-
-    if error:
-        raise Exception('Error setting/getting firewalld confguration - %s'
-                        % error)
+        output = actions.run(command, arguments)
 
     return output

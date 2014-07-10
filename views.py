@@ -48,4 +48,4 @@ def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('apps:index'))
 
-    return HttpResponseRedirect(reverse('apps:about'))
+    return HttpResponseRedirect(reverse('help:about'))

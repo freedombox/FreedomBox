@@ -90,7 +90,7 @@ class TestPrivileged(unittest.TestCase):
         # counting is safer than actual badness.
         options = "good; echo $((1+1))"
 
-        output, error = run(action, options)
+        output = run(action, options)
 
         self.assertFalse("2" in output)
 
@@ -105,7 +105,7 @@ class TestPrivileged(unittest.TestCase):
         # counting is safer than actual badness.
         options = ["good", ";", "echo $((1+1))"]
 
-        output, error = run(action, options)
+        output = run(action, options)
 
         # we'd better not evaluate the data.
         self.assertFalse("2" in output)

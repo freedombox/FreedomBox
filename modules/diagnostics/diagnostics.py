@@ -25,6 +25,7 @@ from gettext import gettext as _
 
 import actions
 import cfg
+from errors import ActionError
 
 
 def init():
@@ -43,7 +44,12 @@ def index(request):
 @login_required
 def test(request):
     """Run diagnostics and the output page"""
-    output, error = actions.superuser_run("diagnostic-test")
+    output = ""
+    error = ""
+    try:
+        output = actions.superuser_run("diagnostic-test")
+    except ActionError as err:
+        error = err.message
     return TemplateResponse(request, 'diagnostics_test.html',
                             {'title': _('Diagnostic Test'),
                              'diagnostics_output': output,

@@ -32,6 +32,7 @@ import socket
 import actions
 import cfg
 import util
+from errors import ActionError
 
 
 LOGGER = logging.getLogger(__name__)
@@ -133,20 +134,22 @@ def get_status():
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     if old_status['hostname'] != new_status['hostname']:
-        if not set_hostname(new_status['hostname']):
-            messages.error(request, _('Setting hostname failed'))
+        try:
+            set_hostname(new_status['hostname'])
+        except (ActionError, ValueError) as err:
+            messages.error(request, _('Error setting hostname: %s') %
+                           err.message)
         else:
             messages.success(request, _('Hostname set'))
     else:
         messages.info(request, _('Hostname is unchanged'))
 
     if old_status['time_zone'] != new_status['time_zone']:
-        output, error = actions.superuser_run('timezone-change',
-                                              [new_status['time_zone']])
-        del output  # Unused
-        if error:
-            messages.error(request,
-                           _('Error setting time zone - %s') % error)
+        try:
+            actions.superuser_run('timezone-change', [new_status['time_zone']])
+        except (ActionError, ValueError) as err:
+            messages.error(request, _('Error setting time zone: %s') %
+                           err.message)
         else:
             messages.success(request, _('Time zone set'))
     else:
@@ -164,7 +167,5 @@ def set_hostname(hostname):
         actions.superuser_run('xmpp-pre-hostname-change')
         actions.superuser_run('hostname-change', hostname)
         actions.superuser_run('xmpp-hostname-change', hostname, async=True)
-    except OSError:
-        return False
-
-    return True
+    except OSError as err:
+        raise ActionError(err.message)

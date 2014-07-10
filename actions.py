@@ -77,6 +77,7 @@ import pipes
 import subprocess
 
 import cfg
+from errors import ActionError
 
 
 def run(action, options=None, async=False):
@@ -106,6 +107,7 @@ def _run(action, options=None, async=False, run_as_root=False):
 
     # contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
+        # TODO: perhaps we should raise an ActionError instead of ValueError
         raise ValueError("Action can't contain:" + os.sep)
 
     cmd = cfg.actions_dir + os.sep + action
@@ -139,4 +141,6 @@ def _run(action, options=None, async=False, run_as_root=False):
 
     if not async:
         output, error = proc.communicate()
-        return output, error
+        if proc.returncode != 0:
+            raise ActionError('Running action %s failed: %s' % (action, error))
+        return output

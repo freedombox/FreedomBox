@@ -53,10 +53,7 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    output, error = actions.run('owncloud-setup', 'status')
-    if error:
-        raise Exception('Error getting ownCloud status: %s' % error)
-
+    output = actions.run('owncloud-setup', 'status')
     return {'enabled': 'enable' in output.split()}
 
 

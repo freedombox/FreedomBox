@@ -36,8 +36,7 @@ def init():
 @login_required
 def index(request):
     """Service the index page"""
-    output, error = actions.superuser_run("tor-get-ports")
-    del error  # Unused
+    output = actions.superuser_run("tor-get-ports")
 
     port_info = output.split("\n")
     tor_ports = {}

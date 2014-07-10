@@ -88,10 +88,7 @@ def configure(request):
 
 def get_status():
     """Return the current status"""
-    output, error = actions.run('xmpp-setup', 'status')
-    if error:
-        raise Exception('Error getting status: %s' % error)
-
+    output = actions.run('xmpp-setup', 'status')
     return {'inband_enabled': 'inband_enable' in output.split()}
 
 
@@ -111,11 +108,7 @@ def _apply_changes(request, old_status, new_status):
         option = 'noinband_enable'
 
     LOGGER.info('Option - %s', option)
-
-    _output, error = actions.superuser_run('xmpp-setup', [option])
-    del _output  # Unused
-    if error:
-        raise Exception('Error running command - %s' % error)
+    actions.superuser_run('xmpp-setup', [option])
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
@@ -151,10 +144,8 @@ def register(request):
 
 def _register_user(request, data):
     """Register a new XMPP user"""
-    output, error = actions.superuser_run(
+    output = actions.superuser_run(
         'xmpp-register', [data['username'], data['password']])
-    if error:
-        raise Exception('Error registering user - %s' % error)
 
     if 'successfully registered' in output:
         messages.success(request, _('Registered account for %s') %
