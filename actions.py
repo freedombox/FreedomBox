@@ -47,11 +47,11 @@ Actions run commands with this contract (version 1.1):
       $ $action # oops, the file system is gone!
 
       Arguments that fail this validation won't, but probably should, raise a
-      ValueError.  They don't because sanitizing this case is significantly
+      ValueError. They don't because sanitizing this case is significantly
       easier than detecting if it occurs.
 
       The options list is coerced into a space-separated string before being
-      shell-escaped.  Option lists including shell escape characters may need to
+      shell-escaped. Option lists including shell escape characters may need to
       be unescaped on the receiving end.
 
    E. Actions must exist in the actions directory.
@@ -73,46 +73,44 @@ Actions run commands with this contract (version 1.1):
 """
 
 import os
-import pipes, shlex, subprocess
+import pipes
+import subprocess
+
+import cfg
 
 
-def run(action, options = None, async = False):
+def run(action, options=None, async=False):
     """Safely run a specific action as the current user.
-
     See actions._run for more information.
-
     """
     return _run(action, options, async, False)
 
-def superuser_run(action, options = None, async = False):
+
+def superuser_run(action, options=None, async=False):
     """Safely run a specific action as root.
-
     See actions._run for more information.
-
     """
     return _run(action, options, async, True)
 
-def _run(action, options = None, async = False, run_as_root = False):
+
+def _run(action, options=None, async=False, run_as_root=False):
     """Safely run a specific action as a normal user or root.
-
     actions are pulled from the actions directory.
-
-    options are added to the action command.
-
-    async: run asynchronously or wait for the command to complete.
-
-    run_as_root: execute the command through sudo.
+    - options are added to the action command.
+    - async: run asynchronously or wait for the command to complete.
+    - run_as_root: execute the command through sudo.
     """
-    DIRECTORY = "actions"
 
-    if options == None:
+    if options is None:
         options = []
 
     # contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
         raise ValueError("Action can't contain:" + os.sep)
 
-    cmd = DIRECTORY + os.sep + action
+    cmd = cfg.actions_dir + os.sep + action
+    if not os.path.realpath(cmd).startswith(cfg.actions_dir):
+        raise ValueError("Action has to be in directory %s" % cfg.actions_dir)
 
     # contract 3C: interpret shell escape sequences as literal file names.
     # contract 3E: fail if the action doesn't exist or exists elsewhere.
@@ -125,7 +123,6 @@ def _run(action, options = None, async = False, run_as_root = False):
     if options:
         if not hasattr(options, "__iter__"):
             options = [options]
-
         cmd += [pipes.quote(option) for option in options]
 
     # contract 1: commands can run via sudo.
@@ -136,8 +133,8 @@ def _run(action, options = None, async = False, run_as_root = False):
     # contract 5 (and 6-ish).
     proc = subprocess.Popen(
         cmd,
-        stdout = subprocess.PIPE,
-        stderr= subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         shell=False)
 
     if not async:

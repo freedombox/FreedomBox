@@ -41,6 +41,7 @@ def read():
                     ('Path', 'data_dir'),
                     ('Path', 'store_file'),
                     ('Path', 'user_db'),
+                    ('Path', 'actions_dir'),
                     ('Path', 'status_log_file'),
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),
