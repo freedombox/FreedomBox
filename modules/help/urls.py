@@ -20,14 +20,15 @@ URLs for the Help module
 """
 
 from django.conf.urls import patterns, url
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic import RedirectView
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.help.help',
-    url(r'^help/$', RedirectView.as_view(url=reverse_lazy('help:index'))),
-    url(r'^help/index/$', 'index', name='index'),
+    # having two urls for one page is a hack to help the current url/menu
+    # system highlight the correct menu item. Every submenu-item with the same
+    # url prefix as the main-menu is highlighted automatically.
+    url(r'^help/$', 'index', name='index'),
+    url(r'^help/index/$', 'index', name='index_explicit'),
     url(r'^help/about/$', 'about', name='about'),
     url(r'^help/page/([\w]+)/$', 'helppage', name='helppage'),
 )

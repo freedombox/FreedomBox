@@ -30,8 +30,8 @@ from errors import ActionError
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item("Diagnostics", "icon-screenshot", "/sys/diagnostics", 30)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname("Diagnostics", "icon-screenshot", "diagnostics:index", 30)
 
 
 @login_required

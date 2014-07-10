@@ -29,8 +29,8 @@ import cfg
 
 def init():
     """Initialize the Tor module"""
-    menu = cfg.main_menu.find('/apps')
-    menu.add_item("Tor", "icon-eye-close", "/apps/tor", 30)
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname("Tor", "icon-eye-close", "tor:index", 30)
 
 
 @login_required

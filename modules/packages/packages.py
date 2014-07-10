@@ -37,8 +37,8 @@ class PackagesForm(forms.Form):
 
 def init():
     """Initialize the Packages module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item('Package Manager', 'icon-gift', '/sys/packages', 20)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname('Package Manager', 'icon-gift', 'packages:index', 20)
 
 
 @login_required

@@ -6,7 +6,7 @@ import cfg
 
 def init():
     """Initailize the apps module"""
-    cfg.main_menu.add_item("Apps", "icon-download-alt", "/apps", 80)
+    cfg.main_menu.add_urlname("Apps", "icon-download-alt", "apps:index", 80)
 
 
 def index(request):

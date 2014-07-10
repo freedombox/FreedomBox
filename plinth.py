@@ -120,7 +120,6 @@ def context_processor(request):
         'main_menu': cfg.main_menu,
         'submenu': cfg.main_menu.active_item(request),
         'request_path': request.path,
-        'basehref': cfg.server_dir,
         'active_menu_urls': active_menu_urls
         }
 

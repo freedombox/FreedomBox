@@ -1,3 +1,5 @@
+from django.core.urlresolvers import reverse
+
 import util
 import cfg
 
@@ -28,32 +30,32 @@ class Menu(object):
         self.order = order
         self.items = []
 
-    def find(self, url, basehref=True):
-        """Return a menu item with given URL"""
-        if basehref and url.startswith('/'):
-            url = util.rel_urljoin([cfg.server_dir, url])
-
+    def get(self, urlname, url_args=None, url_kwargs=None):
+        """Return a menu item with given URL name"""
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        url = util.rel_urljoin([cfg.server_dir, url])
         for item in self.items:
             if item.url == url:
                 return item
-
         raise KeyError('Menu item not found')
 
     def sort_items(self):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
 
-    def add_item(self, label, icon, url, order=50, basehref=True):
+    def add_urlname(self, label, icon, urlname, order=50, url_args=None,
+                    url_kwargs=None):
+        """ Add a named URL to the menu (via add_item)
+        url_args and url_kwargs will be passed on to url reverse """
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        return self.add_item(label, icon, url, order, add_url_prefix=True)
+
+    def add_item(self, label, icon, url, order=50, add_url_prefix=False):
         """This method creates a menu item with the parameters, adds
         that menu item to this menu, and returns the item.
-
-        If BASEHREF is true and url start with a slash, prepend the
-        cfg.server_dir to it"""
-
-        if basehref and url.startswith("/"):
+        """
+        if add_url_prefix:
             url = util.rel_urljoin([cfg.server_dir, url])
-            #url = cfg.server_dir + url
-
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
         self.sort_items()

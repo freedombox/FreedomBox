@@ -38,9 +38,9 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Intialize the PageKite module"""
-    menu = cfg.main_menu.find('/apps')
-    menu.add_item(_('Public Visibility (PageKite)'), 'icon-flag',
-                  '/apps/pagekite', 50)
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(_('Public Visibility (PageKite)'), 'icon-flag',
+                     'pagekite:index', 50)
 
 
 @login_required

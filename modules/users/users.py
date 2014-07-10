@@ -18,8 +18,8 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Intialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item(_('Users and Groups'), 'icon-user', '/sys/users', 15)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Users and Groups'), 'icon-user', 'users:index', 15)
 
 
 @login_required

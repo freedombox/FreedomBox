@@ -6,7 +6,7 @@ import cfg
 
 def init():
     """Initialize the system module"""
-    cfg.main_menu.add_item(_('System'), 'icon-cog', '/sys', 100)
+    cfg.main_menu.add_urlname(_('System'), 'icon-cog', 'system:index', 100)
 
 
 def index(request):

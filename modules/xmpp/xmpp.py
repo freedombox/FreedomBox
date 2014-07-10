@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -14,18 +15,26 @@ import service
 
 LOGGER = logging.getLogger(__name__)
 
-SIDE_MENU = {'title': _('XMPP'),
-             'items': [{'url': '/apps/xmpp/configure',
-                        'text': 'Configure XMPP Server'},
-                       {'url': '/apps/xmpp/register',
-                        'text': 'Register XMPP Account'}]}
+SIDE_MENU = {
+    'title': _('XMPP'),
+    'items': [
+        {
+            'url': reverse_lazy('xmpp:configure'),
+            'text': 'Configure XMPP Server'
+        },
+        {
+            'url': reverse_lazy('xmpp:register'),
+            'text': 'Register XMPP Account'
+        }
+    ]
+}
 
 
 def init():
     """Initialize the XMPP module"""
-    menu = cfg.main_menu.find('/apps')
+    menu = cfg.main_menu.get('apps:index')
     menu.add_item('Chat', 'icon-comment', '/../jwchat', 20)
-    menu.add_item('XMPP', 'icon-comment', '/apps/xmpp', 40)
+    menu.add_urlname('XMPP', 'icon-comment', 'xmpp:index', 40)
 
     service.Service(
         'xmpp-client', _('Chat Server - client connections'),
