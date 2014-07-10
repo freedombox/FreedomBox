@@ -1,8 +1,5 @@
 from django.core.urlresolvers import reverse
 
-import util
-import cfg
-
 
 class Menu(object):
     """One menu item."""
@@ -60,15 +57,6 @@ class Menu(object):
         self.items.append(item)
         self.sort_items()
         return item
-
-    def is_active(self, request_path):
-        """
-        Returns True if this menu item is active, otherwise False.
-
-        We can tell if a menu is active if the menu item points
-        anywhere above url we are visiting in the url tree.
-        """
-        return request_path.startswith(self.url)
 
     def active_item(self, request):
         """Return the first active item (e.g. submenu) that is found"""

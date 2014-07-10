@@ -15,18 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-URLs for the Lib module
-"""
-
-from django.conf.urls import patterns, url
-from django.core.urlresolvers import reverse_lazy
+import re
+import cfg
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    '',
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
-        {'template_name': 'login.html'}, name='login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-        {'next_page': reverse_lazy('index')}, name='logout')
-    )
+def plinth_processor(request):
+    """Add additional context values to RequestContext for use in templates"""
+    slash_indizes = [m.start() for m in re.finditer('/', request.path)]
+    active_menu_urls = [request.path[:index+1] for index in slash_indizes]
+    return {
+        'cfg': cfg,
+        'submenu': cfg.main_menu.active_item(request),
+        'active_menu_urls': active_menu_urls
+    }

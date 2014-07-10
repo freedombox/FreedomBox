@@ -110,25 +110,11 @@ def setup_server():
     cherrypy.engine.signal_handler.subscribe()
 
 
-def context_processor(request):
-    """Add additional context values to RequestContext for use in templates"""
-    path_parts = request.path.split('/')
-    active_menu_urls = ['/'.join(path_parts[:length])
-                        for length in xrange(1, len(path_parts))]
-    return {
-        'cfg': cfg,
-        'main_menu': cfg.main_menu,
-        'submenu': cfg.main_menu.active_item(request),
-        'request_path': request.path,
-        'active_menu_urls': active_menu_urls
-        }
-
-
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
 
     # In module_loader.py we reverse URLs for the menu without having a proper
-    # request. In this case, get_script_prefix (used by reverse) returns the 
+    # request. In this case, get_script_prefix (used by reverse) returns the
     # wrong prefix. Set it here manually to have the correct prefix right away.
     django.core.urlresolvers.set_script_prefix(cfg.server_dir)
 
@@ -140,7 +126,7 @@ def configure_django():
         'django.core.context_processors.static',
         'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
-        'plinth.context_processor']
+        'context_processors.plinth_processor']
 
     logging_configuration = {
         'version': 1,
@@ -188,7 +174,7 @@ def configure_django():
         LOGIN_URL='lib:login',
         LOGIN_REDIRECT_URL='apps:index',
         LOGOUT_URL='lib:logout',
-        MIDDLEWARE_CLASSES = (
+        MIDDLEWARE_CLASSES=(
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.contrib.auth.middleware.AuthenticationMiddleware',
