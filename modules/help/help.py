@@ -8,9 +8,9 @@ import cfg
 
 def init():
     """Initialize the Help module"""
-    menu = cfg.main_menu.add_item(_('Documentation'), 'icon-book', '/help',
-                                  101)
-    menu.add_item(_("Where to Get Help"), "icon-search", "/help/index/", 5)
+    menu = cfg.main_menu.add_item(_('Documentation'), 'icon-book',
+                                  '/help/index', 101)
+    menu.add_item(_("Where to Get Help"), "icon-search", "/help/index", 5)
     menu.add_item(_('Developer\'s Manual'), 'icon-info-sign',
                   '/help/page/plinth', 10)
     menu.add_item(_('FAQ'), 'icon-question-sign', '/help/page/faq', 20)

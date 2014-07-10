@@ -19,12 +19,12 @@
 Main Plinth views
 """
 
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponseRedirect
 import logging
 
-import cfg
 from withsqlite.withsqlite import sqlite_db
-from django.http.response import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+import cfg
 
 
 LOGGER = logging.getLogger(__name__)
