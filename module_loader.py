@@ -109,6 +109,8 @@ def _include_module_urls(module_name, namespace):
                 r'', django.conf.urls.include(url_module, namespace)))
     except ImportError:
         LOGGER.debug('No URLs for %s', module_name)
+        if cfg.debug:
+            raise
 
 
 def _initialize_module(module):
@@ -124,6 +126,8 @@ def _initialize_module(module):
     except Exception as exception:
         LOGGER.exception('Exception while running init for %s: %s',
                          module, exception)
+        if cfg.debug:
+            raise
 
 
 def get_template_directories():
