@@ -21,6 +21,7 @@ The Plinth first-connection process has several stages:
 from django import forms
 from django.contrib import messages
 from django.core import validators
+from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from gettext import gettext as _
@@ -94,7 +95,7 @@ def state0(request):
     """
     try:
         if _read_state() >= 5:
-            return HttpResponseRedirect(cfg.server_dir)
+            return HttpResponseRedirect(reverse('index'))
     except KeyError:
         pass
 
@@ -112,8 +113,7 @@ def state0(request):
             if success:
                 # Everything is good, permanently mark and move to page 2
                 _write_state(1)
-                return HttpResponseRedirect(
-                    cfg.server_dir + '/firstboot/state1')
+                return HttpResponseRedirect(reverse('first_boot:state1'))
     else:
         form = State0Form(initial=status, prefix='firstboot')
 

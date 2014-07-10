@@ -19,11 +19,12 @@
 Main Plinth views
 """
 
-from util import PlinthRedirect
 import logging
 
 import cfg
 from withsqlite.withsqlite import sqlite_db
+from django.http.response import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 LOGGER = logging.getLogger(__name__)
@@ -37,13 +38,14 @@ def index(request):
             # Permanent redirect causes the browser to cache the redirect,
             # preventing the user from navigating to /plinth until the
             # browser is restarted.
-            return PlinthRedirect('/firstboot')
+            return HttpResponseRedirect(reverse('first_boot:index'))
 
         if database['state'] < 5:
             LOGGER.info('First boot state - %d', database['state'])
-            return PlinthRedirect('/firstboot/state%d' % database['state'])
+            return HttpResponseRedirect(reverse('first_boot:state%d' %
+                                                database['state']))
 
     if request.user.is_authenticated():
-        return PlinthRedirect('/apps')
+        return HttpResponseRedirect(reverse('apps:index'))
 
-    return PlinthRedirect('/help/about')
+    return HttpResponseRedirect(reverse('apps:about'))

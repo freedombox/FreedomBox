@@ -24,7 +24,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.first_boot.first_boot',
-    url(r'^firstboot/$', 'index'),
-    url(r'^firstboot/state0/$', 'state0'),
-    url(r'^firstboot/state1/$', 'state1')
+    url(r'^firstboot/$', 'index', name='index'),
+    url(r'^firstboot/state0/$', 'state0', name='state0'),
+    url(r'^firstboot/state1/$', 'state1', name='state1')
     )

@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.firewall.firewall',
-    url(r'^sys/firewall/$', 'index')
+    url(r'^sys/firewall/$', 'index', name='index')
     )

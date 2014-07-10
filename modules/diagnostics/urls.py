@@ -24,6 +24,6 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.diagnostics.diagnostics',
-    url(r'^sys/diagnostics/$', 'index'),
-    url(r'^sys/diagnostics/test/$', 'test'),
+    url(r'^sys/diagnostics/$', 'index', name='index'),
+    url(r'^sys/diagnostics/test/$', 'test', name='test'),
     )

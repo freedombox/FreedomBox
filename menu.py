@@ -1,4 +1,3 @@
-from urlparse import urlparse
 import util
 import cfg
 
@@ -70,7 +69,7 @@ class Menu(object):
         return request_path.startswith(self.url)
 
     def active_item(self, request):
-        """Return item list (e.g. submenu) of active menu item."""
+        """Return the first active item that is found"""
         for item in self.items:
             if request.path.startswith(item.url):
                 return item

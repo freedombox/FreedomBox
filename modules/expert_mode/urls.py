@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.expert_mode.expert_mode',
-    url(r'^sys/expert/$', 'index'),
+    url(r'^sys/expert/$', 'index', name='index'),
     )

@@ -24,7 +24,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.xmpp.xmpp',
-    url(r'^apps/xmpp/$', 'index'),
-    url(r'^apps/xmpp/configure/$', 'configure'),
-    url(r'^apps/xmpp/register/$', 'register')
+    url(r'^apps/xmpp/$', 'index', name='index'),
+    url(r'^apps/xmpp/configure/$', 'configure', name='configure'),
+    url(r'^apps/xmpp/register/$', 'register', name='register')
     )

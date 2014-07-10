@@ -20,15 +20,14 @@ URLs for the Help module
 """
 
 from django.conf.urls import patterns, url
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic import RedirectView
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.help.help',
-    url(r'^help/$', 'index'),
-    url(r'^help/index/$', 'index'),
-    url(r'^help/about/$', 'about'),
-    url(r'^help/view/(?P<page>design)/$', 'default'),
-    url(r'^help/view/(?P<page>plinth)/$', 'default'),
-    url(r'^help/view/(?P<page>hacking)/$', 'default'),
-    url(r'^help/view/(?P<page>faq)/$', 'default'),
-    )
+    url(r'^help/$', RedirectView.as_view(url=reverse_lazy('help:index'))),
+    url(r'^help/index/$', 'index', name='index'),
+    url(r'^help/about/$', 'about', name='about'),
+    url(r'^help/page/([\w]+)/$', 'helppage', name='helppage'),
+)

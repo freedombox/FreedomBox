@@ -35,6 +35,7 @@ def parse_arguments():
     parser.add_argument(
         '--pidfile', default='plinth.pid',
         help='specify a file in which the server may write its pid')
+    # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument(
         '--server_dir', default='/',
         help='web server path under which to serve')

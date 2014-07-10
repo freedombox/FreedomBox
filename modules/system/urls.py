@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.system.system',
-    url(r'^sys/$', 'index'),
+    url(r'^sys/$', 'index', name='index'),
     )

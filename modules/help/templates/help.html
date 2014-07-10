@@ -23,7 +23,7 @@
 <p>There are a variety of places to go for help with
 {{ cfg.product_name }} and the box it runs on.</p>
 
-<p>This front end has a <a href="{{ basehref }}/help/view/plinth">
+<p>This front end has a <a href="{% url 'help:helppage' 'plinth' %}">
 developer's manual</a>.  It isn't complete, but it is the first place
 to look.  Feel free to offer suggestions, edits, and screenshots for
 completing it!</p>
@@ -39,7 +39,7 @@ about the {{ cfg.box_name }} and almost surely know nothing of this
 front end, but they are an incredible resource for general Debian
 issues.</p>
 
-<p>There is no <a href="{{ basehref }}/help/view/faq">FAQ</a> because
+<p>There is no <a href="{% url 'help:helppage' 'faq' %}">FAQ</a> because
 the question frequency is currently zero for all questions.</p>
 
 {% endblock %}

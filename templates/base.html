@@ -59,11 +59,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a href="{{ basehref }}" class="logo-top">
+          <a href="{% url 'index' %}" class="logo-top">
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                  alt="FreedomBox" />
           </a>
-          <a class="brand" href="{{ basehref }}">FreedomBox</a>
+          <a class="brand" href="{% url 'index' %}">FreedomBox</a>
 	  {% block add_nav_and_login %}
             <div class="nav-collapse">
               <ul class="nav">
@@ -85,15 +85,15 @@
               {% if user.is_authenticated %}
                 <p class="navbar-text pull-right">
                   <i class="icon-user icon-white nav-icon"></i>
-                  Logged in as <a href="{{ user.username }}">{{ user.username }}</a>.
-                  <a href="{{ basehref }}/accounts/logout" title="Log out">
+                  Logged in as <a href="#">{{ user.username }}</a>.
+                  <a href="{% url 'lib:logout' %}" title="Log out">
                     Log out</a>.
                 </p>
               {% else %}
                 <p class="navbar-text pull-right">
                   Not logged in.
                   <i class="icon-user icon-white nav-icon"></i>
-                  <a href="{{ basehref }}/accounts/login" title="Log in">
+                  <a href="{% url 'lib:login' %}" title="Log in">
                     Log in</a>.
                 </p>
               {% endif %}

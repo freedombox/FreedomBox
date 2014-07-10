@@ -24,6 +24,6 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.pagekite.pagekite',
-    url(r'^apps/pagekite/$', 'index'),
-    url(r'^apps/pagekite/configure/$', 'configure'),
+    url(r'^apps/pagekite/$', 'index', name='index'),
+    url(r'^apps/pagekite/configure/$', 'configure', name='configure'),
     )
