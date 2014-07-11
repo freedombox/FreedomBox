@@ -10,6 +10,7 @@ root = None
 file_root = None
 python_root = None
 data_dir = None
+actions_dir = None
 store_file = None
 user_db = None
 status_log_file = None
