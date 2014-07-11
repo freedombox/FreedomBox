@@ -20,11 +20,11 @@ SIDE_MENU = {
     'items': [
         {
             'url': reverse_lazy('xmpp:configure'),
-            'text': 'Configure XMPP Server'
+            'text': _('Configure XMPP Server'),
         },
         {
             'url': reverse_lazy('xmpp:register'),
-            'text': 'Register XMPP Account'
+            'text': _('Register XMPP Account'),
         }
     ]
 }

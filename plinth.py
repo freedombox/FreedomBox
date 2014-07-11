@@ -113,7 +113,7 @@ def setup_server():
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
 
-    # In module_loader.py we reverse URLs for the menu without having a proper
+    # In module_loader.py we reverse URLs for the menu before having a proper
     # request. In this case, get_script_prefix (used by reverse) returns the
     # wrong prefix. Set it here manually to have the correct prefix right away.
     django.core.urlresolvers.set_script_prefix(cfg.server_dir)
