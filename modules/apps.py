@@ -1,1 +1,0 @@
-installed/apps/apps.py

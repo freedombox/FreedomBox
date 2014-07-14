@@ -17,8 +17,8 @@
 #
 {% endcomment %}
 
-{% for severity, message in messages %}
-  <div class='alert alert-{{ severity }} alert-dismissable'>
+{% for message in messages %}
+  <div class='alert alert-{{ message.tags }} alert-dismissable'>
     <a class="close" data-dismiss="alert">&times;</a>
     {{ message }}
   </div>
