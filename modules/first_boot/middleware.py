@@ -12,18 +12,18 @@ LOGGER = logging.getLogger(__name__)
 class FirstBootMiddleware:
     """ Forward to firstboot page if firstboot isn't finished yet """
     def process_request(self, request):
-        with sqlite_db(cfg.store_file, table='firstboot') as database:
-            first_boot_url = reverse('first_boot:index')
-            if not 'state' in database:
-                if hasattr(request, 'url') and request.url != first_boot_url:
+        # TODO: there should be a better way to tell if we're at the
+        # firstboot module
+        if "firstboot" not in request.path:
+            with sqlite_db(cfg.store_file, table='firstboot') as database:
+                first_boot_url = reverse('first_boot:index')
+                if 'state' not in database:
                     # Permanent redirect causes the browser to cache the
                     # redirect, preventing the user from navigating to /plinth
                     # until the browser is restarted.
                     return HttpResponseRedirect(first_boot_url)
-                else:
-                    return
 
-            if database['state'] < 5:
-                LOGGER.info('First boot state - %d', database['state'])
-                return HttpResponseRedirect(reverse('first_boot:state%d' %
-                                                    database['state']))
+                elif database['state'] < 5:
+                    LOGGER.info('First boot state - %d', database['state'])
+                    return HttpResponseRedirect(reverse('first_boot:state%d' %
+                                                        database['state']))
