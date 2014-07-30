@@ -29,6 +29,8 @@ import cfg
 
 LOGGER = logging.getLogger(__name__)
 
+loaded_modules = []
+
 
 def load_modules():
     """
@@ -71,6 +73,7 @@ def load_modules():
 
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
+        loaded_modules.append(module_name)
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):

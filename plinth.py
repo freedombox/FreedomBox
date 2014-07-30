@@ -104,6 +104,19 @@ def setup_server():
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
 
+    # TODO: our modules are mimicking django apps. It'd be better to convert
+    # our modules to django apps instead of reinventing the wheel.
+    # (we'll still have to serve the static files with cherrypy though)
+    for module in module_loader.loaded_modules:
+        staticdir = os.path.join(cfg.file_root, 'modules', module, 'static')
+        if os.path.isdir(staticdir):
+            config = {
+                '/': {'tools.staticdir.root': staticdir,
+                      'tools.staticdir.on': True,
+                      'tools.staticdir.dir': '.'}}
+            urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module)
+            cherrypy.tree.mount(None, urlprefix, config)
+
     if not cfg.no_daemon:
         Daemonizer(cherrypy.engine).subscribe()
 
