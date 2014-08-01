@@ -20,7 +20,7 @@ class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
 def init():
     """Initialize the ownCloud module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('Owncloud', 'icon-picture', 'owncloud:index', 35)
+    menu.add_urlname('Owncloud', 'glyphicon-picture', 'owncloud:index', 35)
 
     status = get_status()
 

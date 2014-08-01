@@ -36,7 +36,7 @@ LOGGER = logging.getLogger(__name__)
 def init():
     """Initailze firewall module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Firewall'), 'icon-flag', 'firewall:index', 50)
+    menu.add_urlname(_('Firewall'), 'glyphicon-flag', 'firewall:index', 50)
 
     service_enabled.connect(on_service_enabled)
 

@@ -33,8 +33,8 @@ SIDE_MENU = {
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_item('Chat', 'icon-comment', '/../jwchat', 20)
-    menu.add_urlname('XMPP', 'icon-comment', 'xmpp:index', 40)
+    menu.add_item('Chat', 'glyphicon-comment', '/../jwchat', 20)
+    menu.add_urlname('XMPP', 'glyphicon-comment', 'xmpp:index', 40)
 
     service.Service(
         'xmpp-client', _('Chat Server - client connections'),
