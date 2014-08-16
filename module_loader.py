@@ -130,6 +130,6 @@ def get_template_directories():
 
     directories = set((core_directory,))
     for name in os.listdir('modules/enabled'):
-        directories.add(os.path.join('modules', name, 'templates'))
+        directories.add(os.path.join(directory, 'modules', name, 'templates'))
 
     return directories
