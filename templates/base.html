@@ -47,6 +47,8 @@
 	<!-- CSS from previous Plinth template, not sure what to keep yet -->
 	{{ css|safe }}
 	<!-- End Plinth CSS -->
+  {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
+  {% block page_head %}<!-- placeholder for page-specific head files -->{% endblock %}
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
@@ -169,5 +171,7 @@
         {% block js_block %}
           {{ js|safe }}
         {% endblock %}
+        {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
+        {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 </body>
 </html>
