@@ -19,8 +19,8 @@ class Menu(object):
         orders, but feel free to disregard that.  If you need more
         granularity, don't bother renumbering things.  Feel free to
         use fractional orders.
-        """
 
+        """
         self.label = label
         self.icon = icon
         self.url = url
@@ -31,11 +31,12 @@ class Menu(object):
         self.items = []
 
     def get(self, urlname, url_args=None, url_kwargs=None):
-        """Return a menu item with given URL name"""
+        """Return a menu item with given URL name."""
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
         for item in self.items:
             if item.url == url:
                 return item
+
         raise KeyError('Menu item not found')
 
     def sort_items(self):
@@ -44,14 +45,18 @@ class Menu(object):
 
     def add_urlname(self, label, icon, urlname, order=50, url_args=None,
                     url_kwargs=None):
-        """ Add a named URL to the menu (via add_item)
-        url_args and url_kwargs will be passed on to url reverse """
+        """Add a named URL to the menu (via add_item).
+
+        url_args and url_kwargs will be passed on to Django reverse().
+
+        """
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
         return self.add_item(label, icon, url, order)
 
     def add_item(self, label, icon, url, order=50):
-        """This method creates a menu item with the parameters, adds
-        that menu item to this menu, and returns the item.
+        """Create a new menu item with given parameters, add it to this menu and
+        return it.
+
         """
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
@@ -59,7 +64,7 @@ class Menu(object):
         return item
 
     def active_item(self, request):
-        """Return the first active item (e.g. submenu) that is found"""
+        """Return the first active item (e.g. submenu) that is found."""
         for item in self.items:
             if request.path.startswith(item.url):
                 return item

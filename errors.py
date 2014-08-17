@@ -15,13 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-""" Plinth project specific errors """
+"""
+Project specific errors
+"""
 
 
 class PlinthError(Exception):
+    """Base class for all Plinth specific errors."""
     pass
 
 
 class ActionError(PlinthError):
-    """ Use this error for exceptions when executing an action """
+    """Use this error for exceptions when executing an action."""
     pass

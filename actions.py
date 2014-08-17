@@ -32,7 +32,8 @@ Actions run commands with this contract (version 1.1):
 
    C. Only one action can be called at a time.
 
-      This prevents us from appending multiple (unexpected) actions to the call.
+      This prevents us from appending multiple (unexpected) actions to the
+      call.
 
       $ action="echo '$options'; echo 'oops'"
       $ options="hi"
@@ -47,12 +48,12 @@ Actions run commands with this contract (version 1.1):
       $ $action # oops, the file system is gone!
 
       Arguments that fail this validation won't, but probably should, raise a
-      ValueError. They don't because sanitizing this case is significantly
+      ValueError.  They don't because sanitizing this case is significantly
       easier than detecting if it occurs.
 
       The options list is coerced into a space-separated string before being
-      shell-escaped. Option lists including shell escape characters may need to
-      be unescaped on the receiving end.
+      shell-escaped.  Option lists including shell escape characters may need
+      to be unescaped on the receiving end.
 
    E. Actions must exist in the actions directory.
 
@@ -86,26 +87,31 @@ LOGGER = logging.getLogger(__name__)
 
 def run(action, options=None, async=False):
     """Safely run a specific action as the current user.
+
     See actions._run for more information.
+
     """
     return _run(action, options, async, False)
 
 
 def superuser_run(action, options=None, async=False):
     """Safely run a specific action as root.
+
     See actions._run for more information.
+
     """
     return _run(action, options, async, True)
 
 
 def _run(action, options=None, async=False, run_as_root=False):
     """Safely run a specific action as a normal user or root.
-    actions are pulled from the actions directory.
+
+    Actions are pulled from the actions directory.
     - options are added to the action command.
     - async: run asynchronously or wait for the command to complete.
     - run_as_root: execute the command through sudo.
-    """
 
+    """
     if options is None:
         options = []
 
@@ -124,7 +130,8 @@ def _run(action, options=None, async=False, run_as_root=False):
 
     cmd = [cmd]
 
-    # contract: 3C, 3D: don't allow users to insert escape characters in options
+    # contract: 3C, 3D: don't allow users to insert escape characters in
+    # options
     if options:
         if not hasattr(options, "__iter__"):
             options = [options]

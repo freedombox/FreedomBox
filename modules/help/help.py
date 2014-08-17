@@ -10,8 +10,8 @@ def init():
     """Initialize the Help module"""
     menu = cfg.main_menu.add_urlname(_('Documentation'), 'icon-book',
                                      'help:index', 101)
-    menu.add_urlname(_("Where to Get Help"), "icon-search",
-                     "help:index_explicit", 5)
+    menu.add_urlname(_('Where to Get Help'), 'icon-search',
+                     'help:index_explicit', 5)
     menu.add_urlname(_('Developer\'s Manual'), 'icon-info-sign',
                      'help:helppage', 10, url_args=('plinth',))
     menu.add_urlname(_('FAQ'), 'icon-question-sign', 'help:helppage', 20,
