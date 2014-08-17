@@ -113,7 +113,7 @@ def _run(action, options=None, async=False, run_as_root=False):
     if os.sep in action:
         raise ValueError("Action can't contain:" + os.sep)
 
-    cmd = cfg.actions_dir + os.sep + action
+    cmd = os.path.join(cfg.actions_dir, action)
     if not os.path.realpath(cmd).startswith(cfg.actions_dir):
         raise ValueError("Action has to be in directory %s" % cfg.actions_dir)
 
