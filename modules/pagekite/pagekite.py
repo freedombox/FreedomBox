@@ -23,6 +23,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import validators
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -47,7 +48,7 @@ def init():
 def index(request):
     """Serve introdution page"""
     menu = {'title': _('PageKite'),
-            'items': [{'url': '/apps/pagekite/configure',
+            'items': [{'url': reverse_lazy('pagekite:configure'),
                        'text': _('Configure PageKite')}]}
 
     sidebar_right = render_to_string('menu_block.html', {'menu': menu},
