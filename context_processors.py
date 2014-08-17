@@ -15,14 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Django context processors to provide common data to templates.
+"""
+
 import re
 import cfg
 
 
-def plinth_processor(request):
-    """Add additional context values to RequestContext for use in templates"""
-    slash_indizes = [m.start() for m in re.finditer('/', request.path)]
-    active_menu_urls = [request.path[:index+1] for index in slash_indizes]
+def common(request):
+    """Add additional context values to RequestContext for use in templates."""
+    slash_indices = [match.start() for match in re.finditer('/', request.path)]
+    active_menu_urls = [request.path[:index + 1] for index in slash_indices]
     return {
         'cfg': cfg,
         'submenu': cfg.main_menu.active_item(request),

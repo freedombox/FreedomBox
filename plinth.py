@@ -126,7 +126,7 @@ def configure_django():
         'django.core.context_processors.static',
         'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
-        'context_processors.plinth_processor']
+        'context_processors.common']
 
     logging_configuration = {
         'version': 1,
