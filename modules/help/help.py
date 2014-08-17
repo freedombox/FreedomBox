@@ -36,10 +36,11 @@ def about(request):
 def helppage(request, page):
     """Serve a help page from the 'doc' directory"""
     try:
-        input_file = open(os.path.join('doc', '%s.part.html' % page), 'r')
+        with open(os.path.join('doc', '%s.part.html' % page), 'r') \
+                as input_file:
+            main = input_file.read()
     except IOError:
         raise Http404
-    main = input_file.read()
 
     title = _('%s Documentation') % cfg.product_name
     return TemplateResponse(request, 'base.html',
