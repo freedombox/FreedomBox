@@ -6,7 +6,6 @@ from gettext import gettext as _
 
 import actions
 import cfg
-from errors import ActionError
 
 
 def get_modules_available():
@@ -86,7 +85,7 @@ def _apply_changes(request, old_status, new_status):
             try:
                 actions.superuser_run(
                     'module-manager', ['enable', cfg.python_root, module])
-            except ActionError:
+            except Exception:
                 # TODO: need to get plinth to load the module we just
                 # enabled
                 messages.error(
@@ -100,7 +99,7 @@ def _apply_changes(request, old_status, new_status):
             try:
                 actions.superuser_run(
                     'module-manager', ['disable', cfg.python_root, module])
-            except ActionError:
+            except Exception:
                 # TODO: need a smoother way for plinth to unload the
                 # module
                 messages.error(

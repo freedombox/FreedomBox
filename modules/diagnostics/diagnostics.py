@@ -44,12 +44,15 @@ def index(request):
 @login_required
 def test(request):
     """Run diagnostics and the output page"""
-    output = ""
-    error = ""
+    output = ''
+    error = ''
     try:
         output = actions.superuser_run("diagnostic-test")
-    except ActionError as err:
-        error = err.message
+    except ActionError as exception:
+        output, error = exception.args[1:]
+    except Exception as exception:
+        error = str(exception)
+
     return TemplateResponse(request, 'diagnostics_test.html',
                             {'title': _('Diagnostic Test'),
                              'diagnostics_output': output,

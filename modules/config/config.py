@@ -32,7 +32,6 @@ import socket
 import actions
 import cfg
 import util
-from errors import ActionError
 
 
 LOGGER = logging.getLogger(__name__)
@@ -136,9 +135,9 @@ def _apply_changes(request, old_status, new_status):
     if old_status['hostname'] != new_status['hostname']:
         try:
             set_hostname(new_status['hostname'])
-        except (ActionError, ValueError) as err:
+        except Exception as exception:
             messages.error(request, _('Error setting hostname: %s') %
-                           err.message)
+                           str(exception))
         else:
             messages.success(request, _('Hostname set'))
     else:
@@ -147,9 +146,9 @@ def _apply_changes(request, old_status, new_status):
     if old_status['time_zone'] != new_status['time_zone']:
         try:
             actions.superuser_run('timezone-change', [new_status['time_zone']])
-        except (ActionError, ValueError) as err:
+        except Exception as exception:
             messages.error(request, _('Error setting time zone: %s') %
-                           err.message)
+                           str(exception))
         else:
             messages.success(request, _('Time zone set'))
     else:
@@ -163,9 +162,6 @@ def set_hostname(hostname):
     hostname = str(hostname)
 
     LOGGER.info('Changing hostname to - %s', hostname)
-    try:
-        actions.superuser_run('xmpp-pre-hostname-change')
-        actions.superuser_run('hostname-change', hostname)
-        actions.superuser_run('xmpp-hostname-change', hostname, async=True)
-    except OSError as err:
-        raise ActionError(err.message)
+    actions.superuser_run('xmpp-pre-hostname-change')
+    actions.superuser_run('hostname-change', hostname)
+    actions.superuser_run('xmpp-hostname-change', hostname, async=True)

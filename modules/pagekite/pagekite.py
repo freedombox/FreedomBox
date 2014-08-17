@@ -197,10 +197,8 @@ def _apply_changes(request, old_status, new_status):
 def _run(arguments, superuser=True):
     """Run an given command and raise exception if there was an error"""
     command = 'pagekite-configure'
-    LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
 
     if superuser:
-        output = actions.superuser_run(command, arguments)
+        return actions.superuser_run(command, arguments)
     else:
-        output = actions.run(command, arguments)
-    return output
+        return actions.run(command, arguments)

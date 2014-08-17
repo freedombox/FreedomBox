@@ -72,12 +72,16 @@ Actions run commands with this contract (version 1.1):
 
 """
 
+import logging
 import os
 import pipes
 import subprocess
 
 import cfg
 from errors import ActionError
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def run(action, options=None, async=False):
@@ -107,7 +111,6 @@ def _run(action, options=None, async=False, run_as_root=False):
 
     # contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
-        # TODO: perhaps we should raise an ActionError instead of ValueError
         raise ValueError("Action can't contain:" + os.sep)
 
     cmd = cfg.actions_dir + os.sep + action
@@ -131,6 +134,8 @@ def _run(action, options=None, async=False, run_as_root=False):
     if run_as_root:
         cmd = ["sudo", "-n"] + cmd
 
+    LOGGER.info('Executing command - %s', cmd)
+
     # contract 3C: don't interpret shell escape sequences.
     # contract 5 (and 6-ish).
     proc = subprocess.Popen(
@@ -142,5 +147,8 @@ def _run(action, options=None, async=False, run_as_root=False):
     if not async:
         output, error = proc.communicate()
         if proc.returncode != 0:
-            raise ActionError('Running action %s failed: %s' % (action, error))
+            LOGGER.error('Error executing command - %s, %s, %s', cmd, output,
+                         error)
+            raise ActionError(action, output, error)
+
         return output
