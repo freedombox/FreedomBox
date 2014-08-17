@@ -12,6 +12,7 @@ python_root = None
 data_dir = None
 store_file = None
 user_db = None
+actions_dir = None
 status_log_file = None
 access_log_file = None
 pidfile = None
