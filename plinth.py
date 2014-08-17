@@ -175,10 +175,12 @@ def configure_django():
         LOGIN_REDIRECT_URL='apps:index',
         LOGOUT_URL='lib:logout',
         MIDDLEWARE_CLASSES=(
-            'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
+            'django.middleware.common.CommonMiddleware',
+            'django.middleware.csrf.CsrfViewMiddleware',
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
+            'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'modules.first_boot.middleware.FirstBootMiddleware',
         ),
         ROOT_URLCONF='urls',
