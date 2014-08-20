@@ -34,8 +34,8 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Initailze firewall module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item(_('Firewall'), 'icon-flag', '/sys/firewall', 50)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Firewall'), 'icon-flag', 'firewall:index', 50)
 
     service_module.ENABLED.connect(on_service_enabled)
 
@@ -141,15 +141,7 @@ def _run(arguments, superuser=False):
     """Run an given command and raise exception if there was an error"""
     command = 'firewall'
 
-    LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
-
     if superuser:
-        output, error = actions.superuser_run(command, arguments)
+        return actions.superuser_run(command, arguments)
     else:
-        output, error = actions.run(command, arguments)
-
-    if error:
-        raise Exception('Error setting/getting firewalld confguration - %s'
-                        % error)
-
-    return output
+        return actions.run(command, arguments)

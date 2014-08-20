@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import validators
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -18,17 +19,17 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Intialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item(_('Users and Groups'), 'icon-user', '/sys/users', 15)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Users and Groups'), 'icon-user', 'users:index', 15)
 
 
 @login_required
 def index(request):
     """Return a rendered users page"""
     menu = {'title': _('Users and Groups'),
-            'items': [{'url': '/sys/users/add',
+            'items': [{'url': reverse_lazy('users:add'),
                        'text': _('Add User')},
-                      {'url': '/sys/users/edit',
+                      {'url': reverse_lazy('users:edit'),
                        'text': _('Edit Users')}]}
 
     sidebar_right = render_to_string('menu_block.html', {'menu': menu},

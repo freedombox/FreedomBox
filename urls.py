@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'views',
-    url(r'^$', 'index')
+    url(r'^$', 'index', name='index')
     )

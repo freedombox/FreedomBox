@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.packages.packages',
-    url(r'^sys/packages/$', 'index'),
+    url(r'^sys/packages/$', 'index', name='index'),
     )

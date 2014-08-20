@@ -23,6 +23,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import validators
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -38,16 +39,16 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Intialize the PageKite module"""
-    menu = cfg.main_menu.find('/apps')
-    menu.add_item(_('Public Visibility (PageKite)'), 'icon-flag',
-                  '/apps/pagekite', 50)
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(_('Public Visibility (PageKite)'), 'icon-flag',
+                     'pagekite:index', 50)
 
 
 @login_required
 def index(request):
     """Serve introdution page"""
     menu = {'title': _('PageKite'),
-            'items': [{'url': '/apps/pagekite/configure',
+            'items': [{'url': reverse_lazy('pagekite:configure'),
                        'text': _('Configure PageKite')}]}
 
     sidebar_right = render_to_string('menu_block.html', {'menu': menu},
@@ -197,15 +198,7 @@ def _run(arguments, superuser=True):
     """Run an given command and raise exception if there was an error"""
     command = 'pagekite-configure'
 
-    LOGGER.info('Running command - %s, %s, %s', command, arguments, superuser)
-
     if superuser:
-        output, error = actions.superuser_run(command, arguments)
+        return actions.superuser_run(command, arguments)
     else:
-        output, error = actions.run(command, arguments)
-
-    if error:
-        raise Exception('Error setting/getting PageKite confguration - %s'
-                        % error)
-
-    return output
+        return actions.run(command, arguments)

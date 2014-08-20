@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.owncloud.owncloud',
-    url(r'^apps/owncloud/$', 'index'),
+    url(r'^apps/owncloud/$', 'index', name='index'),
     )

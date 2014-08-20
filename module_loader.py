@@ -25,8 +25,11 @@ import logging
 import os
 
 import urls
+import cfg
 
 LOGGER = logging.getLogger(__name__)
+
+LOADED_MODULES = []
 
 
 def load_modules():
@@ -47,8 +50,10 @@ def load_modules():
         except Exception as exception:
             LOGGER.exception('Could not import modules/%s: %s',
                              name, exception)
+            if cfg.debug:
+                raise
 
-        _include_module_urls(full_name)
+        _include_module_urls(full_name, name)
 
     ordered_modules = []
     remaining_modules = dict(modules)
@@ -68,6 +73,7 @@ def load_modules():
 
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
+        LOADED_MODULES.append(module_name)
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):
@@ -97,15 +103,17 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
     ordered_modules.append(module_name)
 
 
-def _include_module_urls(module_name):
+def _include_module_urls(module_name, namespace):
     """Include the module's URLs in global project URLs list"""
     url_module = module_name + '.urls'
     try:
         urls.urlpatterns += django.conf.urls.patterns(
             '', django.conf.urls.url(
-                r'', django.conf.urls.include(url_module)))
+                r'', django.conf.urls.include(url_module, namespace)))
     except ImportError:
         LOGGER.debug('No URLs for %s', module_name)
+        if cfg.debug:
+            raise
 
 
 def _initialize_module(module):
@@ -121,6 +129,8 @@ def _initialize_module(module):
     except Exception as exception:
         LOGGER.exception('Exception while running init for %s: %s',
                          module, exception)
+        if cfg.debug:
+            raise
 
 
 def get_template_directories():

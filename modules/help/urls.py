@@ -24,11 +24,11 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.help.help',
-    url(r'^help/$', 'index'),
-    url(r'^help/index/$', 'index'),
-    url(r'^help/about/$', 'about'),
-    url(r'^help/view/(?P<page>design)/$', 'default'),
-    url(r'^help/view/(?P<page>plinth)/$', 'default'),
-    url(r'^help/view/(?P<page>hacking)/$', 'default'),
-    url(r'^help/view/(?P<page>faq)/$', 'default'),
-    )
+    # having two urls for one page is a hack to help the current url/menu
+    # system highlight the correct menu item. Every submenu-item with the same
+    # url prefix as the main-menu is highlighted automatically.
+    url(r'^help/$', 'index', name='index'),
+    url(r'^help/index/$', 'index', name='index_explicit'),
+    url(r'^help/about/$', 'about', name='about'),
+    url(r'^help/page/(plinth|hacking|faq)/$', 'helppage', name='helppage'),
+)

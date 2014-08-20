@@ -24,5 +24,5 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.tor.tor',
-    url(r'^apps/tor/$', 'index')
+    url(r'^apps/tor/$', 'index', name='index')
     )

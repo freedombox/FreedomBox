@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -14,18 +15,26 @@ import service
 
 LOGGER = logging.getLogger(__name__)
 
-SIDE_MENU = {'title': _('XMPP'),
-             'items': [{'url': '/apps/xmpp/configure',
-                        'text': 'Configure XMPP Server'},
-                       {'url': '/apps/xmpp/register',
-                        'text': 'Register XMPP Account'}]}
+SIDE_MENU = {
+    'title': _('XMPP'),
+    'items': [
+        {
+            'url': reverse_lazy('xmpp:configure'),
+            'text': _('Configure XMPP Server'),
+        },
+        {
+            'url': reverse_lazy('xmpp:register'),
+            'text': _('Register XMPP Account'),
+        }
+    ]
+}
 
 
 def init():
     """Initialize the XMPP module"""
-    menu = cfg.main_menu.find('/apps')
+    menu = cfg.main_menu.get('apps:index')
     menu.add_item('Chat', 'icon-comment', '/../jwchat', 20)
-    menu.add_item('XMPP', 'icon-comment', '/apps/xmpp', 40)
+    menu.add_urlname('XMPP', 'icon-comment', 'xmpp:index', 40)
 
     service.Service(
         'xmpp-client', _('Chat Server - client connections'),
@@ -88,10 +97,7 @@ def configure(request):
 
 def get_status():
     """Return the current status"""
-    output, error = actions.run('xmpp-setup', 'status')
-    if error:
-        raise Exception('Error getting status: %s' % error)
-
+    output = actions.run('xmpp-setup', 'status')
     return {'inband_enabled': 'inband_enable' in output.split()}
 
 
@@ -111,11 +117,7 @@ def _apply_changes(request, old_status, new_status):
         option = 'noinband_enable'
 
     LOGGER.info('Option - %s', option)
-
-    _output, error = actions.superuser_run('xmpp-setup', [option])
-    del _output  # Unused
-    if error:
-        raise Exception('Error running command - %s' % error)
+    actions.superuser_run('xmpp-setup', [option])
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
@@ -151,10 +153,8 @@ def register(request):
 
 def _register_user(request, data):
     """Register a new XMPP user"""
-    output, error = actions.superuser_run(
+    output = actions.superuser_run(
         'xmpp-register', [data['username'], data['password']])
-    if error:
-        raise Exception('Error registering user - %s' % error)
 
     if 'successfully registered' in output:
         messages.success(request, _('Registered account for %s') %

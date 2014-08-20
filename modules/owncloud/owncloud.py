@@ -19,8 +19,8 @@ class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
 
 def init():
     """Initialize the ownCloud module"""
-    menu = cfg.main_menu.find('/apps')
-    menu.add_item('Owncloud', 'icon-picture', '/apps/owncloud', 35)
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname('Owncloud', 'icon-picture', 'owncloud:index', 35)
 
     status = get_status()
 
@@ -53,10 +53,7 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    output, error = actions.run('owncloud-setup', 'status')
-    if error:
-        raise Exception('Error getting ownCloud status: %s' % error)
-
+    output = actions.run('owncloud-setup', 'status')
     return {'enabled': 'enable' in output.split()}
 
 

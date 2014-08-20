@@ -1,5 +1,4 @@
-from urlparse import urlparse
-import cfg
+from django.core.urlresolvers import reverse
 
 
 class Menu(object):
@@ -20,19 +19,20 @@ class Menu(object):
         orders, but feel free to disregard that.  If you need more
         granularity, don't bother renumbering things.  Feel free to
         use fractional orders.
-        """
 
+        """
         self.label = label
         self.icon = icon
         self.url = url
         self.order = order
+        # TODO: With an ordered dictionary for self.items we could access the
+        # items by their URL directly instead of searching for them each time,
+        # which we do currently with the 'get' method
         self.items = []
 
-    def find(self, url, basehref=True):
-        """Return a menu item with given URL"""
-        if basehref and url.startswith('/'):
-            url = cfg.server_dir + url
-
+    def get(self, urlname, url_args=None, url_kwargs=None):
+        """Return a menu item with given URL name."""
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
         for item in self.items:
             if item.url == url:
                 return item
@@ -43,32 +43,28 @@ class Menu(object):
         """Sort the items in self.items by order."""
         self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
 
-    def add_item(self, label, icon, url, order=50, basehref=True):
-        """This method creates a menu item with the parameters, adds
-        that menu item to this menu, and returns the item.
+    def add_urlname(self, label, icon, urlname, order=50, url_args=None,
+                    url_kwargs=None):
+        """Add a named URL to the menu (via add_item).
 
-        If BASEHREF is true and url start with a slash, prepend the
-        cfg.server_dir to it"""
+        url_args and url_kwargs will be passed on to Django reverse().
 
-        if basehref and url.startswith("/"):
-            url = cfg.server_dir + url
+        """
+        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        return self.add_item(label, icon, url, order)
 
+    def add_item(self, label, icon, url, order=50):
+        """Create a new menu item with given parameters, add it to this menu and
+        return it.
+
+        """
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
         self.sort_items()
         return item
 
-    def is_active(self, request_path):
-        """
-        Returns True if this menu item is active, otherwise False.
-
-        We can tell if a menu is active if the menu item points
-        anywhere above url we are visiting in the url tree.
-        """
-        return request_path.startswith(self.url)
-
     def active_item(self, request):
-        """Return item list (e.g. submenu) of active menu item."""
+        """Return the first active item (e.g. submenu) that is found."""
         for item in self.items:
             if request.path.startswith(item.url):
                 return item

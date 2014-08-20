@@ -16,15 +16,19 @@
 #
 
 """
-URLs for the XMPP module
+Django context processors to provide common data to templates.
 """
 
-from django.conf.urls import patterns, url
+import re
+import cfg
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'modules.xmpp.xmpp',
-    url(r'^apps/xmpp/$', 'index', name='index'),
-    url(r'^apps/xmpp/configure/$', 'configure', name='configure'),
-    url(r'^apps/xmpp/register/$', 'register', name='register')
-    )
+def common(request):
+    """Add additional context values to RequestContext for use in templates."""
+    slash_indices = [match.start() for match in re.finditer('/', request.path)]
+    active_menu_urls = [request.path[:index + 1] for index in slash_indices]
+    return {
+        'cfg': cfg,
+        'submenu': cfg.main_menu.active_item(request),
+        'active_menu_urls': active_menu_urls
+    }

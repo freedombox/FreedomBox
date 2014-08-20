@@ -10,19 +10,13 @@ import cfg
 
 def get_modules_available():
     """Return list of all modules"""
-    output, error = actions.run('module-manager', ['list-available'])
-    if error:
-        raise Exception('Error getting modules: %s' % error)
-
+    output = actions.run('module-manager', ['list-available'])
     return output.split()
 
 
 def get_modules_enabled():
     """Return list of all modules"""
-    output, error = actions.run('module-manager', ['list-enabled'])
-    if error:
-        raise Exception('Error getting enabled modules - %s' % error)
-
+    output = actions.run('module-manager', ['list-enabled'])
     return output.split()
 
 
@@ -42,8 +36,8 @@ class PackagesForm(forms.Form):
 
 def init():
     """Initialize the Packages module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item('Package Manager', 'icon-gift', '/sys/packages', 20)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname('Package Manager', 'icon-gift', 'packages:index', 20)
 
 
 @login_required
@@ -88,13 +82,12 @@ def _apply_changes(request, old_status, new_status):
 
         module = field.split('_enabled')[0]
         if enabled:
-            output, error = actions.superuser_run(
-                'module-manager', ['enable', cfg.python_root, module])
-            del output  # Unused
-
-            # TODO: need to get plinth to load the module we just
-            # enabled
-            if error:
+            try:
+                actions.superuser_run(
+                    'module-manager', ['enable', cfg.python_root, module])
+            except Exception:
+                # TODO: need to get plinth to load the module we just
+                # enabled
                 messages.error(
                     request, _('Error enabling module - {module}').format(
                         module=module))
@@ -103,13 +96,12 @@ def _apply_changes(request, old_status, new_status):
                     request, _('Module enabled - {module}').format(
                         module=module))
         else:
-            output, error = actions.superuser_run(
-                'module-manager', ['disable', cfg.python_root, module])
-            del output  # Unused
-
-            # TODO: need a smoother way for plinth to unload the
-            # module
-            if error:
+            try:
+                actions.superuser_run(
+                    'module-manager', ['disable', cfg.python_root, module])
+            except Exception:
+                # TODO: need a smoother way for plinth to unload the
+                # module
                 messages.error(
                     request, _('Error disabling module - {module}').format(
                         module=module))

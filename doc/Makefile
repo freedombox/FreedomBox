@@ -82,7 +82,7 @@ latex: $(LATEX)
 
 
 # This gets us the html sections complete with TOC, but without the
-# HTML and head section boilerplate.  /help/view uses the parts.
+# HTML and head section boilerplate.  /help/page uses the parts.
 %.part.html: %.html
 	csplit -s -f $@ $< '%.*<body>%'
 	sed '1d' $@00 > $@01

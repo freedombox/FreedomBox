@@ -12,6 +12,7 @@ python_root = None
 data_dir = None
 store_file = None
 user_db = None
+actions_dir = None
 status_log_file = None
 access_log_file = None
 pidfile = None
@@ -19,7 +20,7 @@ host = None
 port = None
 debug = False
 no_daemon = False
-server_dir = ''
+server_dir = '/'
 
 main_menu = Menu()
 
@@ -41,6 +42,7 @@ def read():
                     ('Path', 'data_dir'),
                     ('Path', 'store_file'),
                     ('Path', 'user_db'),
+                    ('Path', 'actions_dir'),
                     ('Path', 'status_log_file'),
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),

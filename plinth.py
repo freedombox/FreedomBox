@@ -35,6 +35,7 @@ def parse_arguments():
     parser.add_argument(
         '--pidfile', default='plinth.pid',
         help='specify a file in which the server may write its pid')
+    # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument(
         '--server_dir', default='/',
         help='web server path under which to serve')
@@ -101,7 +102,22 @@ def setup_server():
         '/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
-    cherrypy.tree.mount(None, cfg.server_dir + '/static', config)
+    cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
+
+    # TODO: our modules are mimicking django apps. It'd be better to convert
+    # our modules to Django apps instead of reinventing the wheel.
+    # (we'll still have to serve the static files with cherrypy though)
+    for module in module_loader.LOADED_MODULES:
+        static_dir = os.path.join(cfg.file_root, 'modules', module, 'static')
+        if not os.path.isdir(static_dir):
+            continue
+
+        config = {
+            '/': {'tools.staticdir.root': static_dir,
+                  'tools.staticdir.on': True,
+                  'tools.staticdir.dir': '.'}}
+        urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module)
+        cherrypy.tree.mount(None, urlprefix, config)
 
     if not cfg.no_daemon:
         Daemonizer(cherrypy.engine).subscribe()
@@ -109,23 +125,14 @@ def setup_server():
     cherrypy.engine.signal_handler.subscribe()
 
 
-def context_processor(request):
-    """Add additional context values to RequestContext for use in templates"""
-    path_parts = request.path.split('/')
-    active_menu_urls = ['/'.join(path_parts[:length])
-                        for length in xrange(1, len(path_parts))]
-    return {
-        'cfg': cfg,
-        'main_menu': cfg.main_menu,
-        'submenu': cfg.main_menu.active_item(request),
-        'request_path': request.path,
-        'basehref': cfg.server_dir,
-        'active_menu_urls': active_menu_urls
-        }
-
-
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
+
+    # In module_loader.py we reverse URLs for the menu before having a proper
+    # request. In this case, get_script_prefix (used by reverse) returns the
+    # wrong prefix. Set it here manually to have the correct prefix right away.
+    django.core.urlresolvers.set_script_prefix(cfg.server_dir)
+
     context_processors = [
         'django.contrib.auth.context_processors.auth',
         'django.core.context_processors.debug',
@@ -134,7 +141,7 @@ def configure_django():
         'django.core.context_processors.static',
         'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
-        'plinth.context_processor']
+        'context_processors.common']
 
     logging_configuration = {
         'version': 1,
@@ -179,9 +186,18 @@ def configure_django():
                         'django.contrib.contenttypes',
                         'django.contrib.messages'],
         LOGGING=logging_configuration,
-        LOGIN_URL=cfg.server_dir + '/accounts/login/',
-        LOGIN_REDIRECT_URL=cfg.server_dir + '/',
-        LOGOUT_URL=cfg.server_dir + '/accounts/logout/',
+        LOGIN_URL='lib:login',
+        LOGIN_REDIRECT_URL='apps:index',
+        LOGOUT_URL='lib:logout',
+        MIDDLEWARE_CLASSES=(
+            'django.contrib.sessions.middleware.SessionMiddleware',
+            'django.middleware.common.CommonMiddleware',
+            'django.middleware.csrf.CsrfViewMiddleware',
+            'django.contrib.auth.middleware.AuthenticationMiddleware',
+            'django.contrib.messages.middleware.MessageMiddleware',
+            'django.middleware.clickjacking.XFrameOptionsMiddleware',
+            'modules.first_boot.middleware.FirstBootMiddleware',
+        ),
         ROOT_URLCONF='urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,

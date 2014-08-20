@@ -95,8 +95,8 @@ and must not be greater than 63 characters in length.'),
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item(_('Configure'), 'icon-cog', '/sys/config', 10)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Configure'), 'icon-cog', 'config:index', 10)
 
 
 @login_required
@@ -133,20 +133,22 @@ def get_status():
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     if old_status['hostname'] != new_status['hostname']:
-        if not set_hostname(new_status['hostname']):
-            messages.error(request, _('Setting hostname failed'))
+        try:
+            set_hostname(new_status['hostname'])
+        except Exception as exception:
+            messages.error(request, _('Error setting hostname: %s') %
+                           str(exception))
         else:
             messages.success(request, _('Hostname set'))
     else:
         messages.info(request, _('Hostname is unchanged'))
 
     if old_status['time_zone'] != new_status['time_zone']:
-        output, error = actions.superuser_run('timezone-change',
-                                              [new_status['time_zone']])
-        del output  # Unused
-        if error:
-            messages.error(request,
-                           _('Error setting time zone - %s') % error)
+        try:
+            actions.superuser_run('timezone-change', [new_status['time_zone']])
+        except Exception as exception:
+            messages.error(request, _('Error setting time zone: %s') %
+                           str(exception))
         else:
             messages.success(request, _('Time zone set'))
     else:
@@ -160,11 +162,6 @@ def set_hostname(hostname):
     hostname = str(hostname)
 
     LOGGER.info('Changing hostname to - %s', hostname)
-    try:
-        actions.superuser_run('xmpp-pre-hostname-change')
-        actions.superuser_run('hostname-change', hostname)
-        actions.superuser_run('xmpp-hostname-change', hostname, async=True)
-    except OSError:
-        return False
-
-    return True
+    actions.superuser_run('xmpp-pre-hostname-change')
+    actions.superuser_run('hostname-change', hostname)
+    actions.superuser_run('xmpp-hostname-change', hostname, async=True)

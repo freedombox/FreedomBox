@@ -16,15 +16,15 @@
 #
 
 """
-URLs for the XMPP module
+Project specific errors
 """
 
-from django.conf.urls import patterns, url
+
+class PlinthError(Exception):
+    """Base class for all Plinth specific errors."""
+    pass
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'modules.xmpp.xmpp',
-    url(r'^apps/xmpp/$', 'index', name='index'),
-    url(r'^apps/xmpp/configure/$', 'configure', name='configure'),
-    url(r'^apps/xmpp/register/$', 'register', name='register')
-    )
+class ActionError(PlinthError):
+    """Use this error for exceptions when executing an action."""
+    pass

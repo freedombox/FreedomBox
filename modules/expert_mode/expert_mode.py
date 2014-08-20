@@ -16,8 +16,8 @@ class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item(_('Expert Mode'), 'icon-cog', '/sys/expert', 10)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Expert Mode'), 'icon-cog', 'expert_mode:index', 10)
 
 
 @login_required

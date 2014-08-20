@@ -24,7 +24,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'modules.users.users',
-    url(r'^sys/users/$', 'index'),
-    url(r'^sys/users/add/$', 'add'),
-    url(r'^sys/users/edit/$', 'edit')
+    url(r'^sys/users/$', 'index', name='index'),
+    url(r'^sys/users/add/$', 'add', name='add'),
+    url(r'^sys/users/edit/$', 'edit', name='edit')
     )

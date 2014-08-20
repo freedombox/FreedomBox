@@ -25,12 +25,13 @@ from gettext import gettext as _
 
 import actions
 import cfg
+from errors import ActionError
 
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.find('/sys')
-    menu.add_item("Diagnostics", "icon-screenshot", "/sys/diagnostics", 30)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname("Diagnostics", "icon-screenshot", "diagnostics:index", 30)
 
 
 @login_required
@@ -43,7 +44,15 @@ def index(request):
 @login_required
 def test(request):
     """Run diagnostics and the output page"""
-    output, error = actions.superuser_run("diagnostic-test")
+    output = ''
+    error = ''
+    try:
+        output = actions.superuser_run("diagnostic-test")
+    except ActionError as exception:
+        output, error = exception.args[1:]
+    except Exception as exception:
+        error = str(exception)
+
     return TemplateResponse(request, 'diagnostics_test.html',
                             {'title': _('Diagnostic Test'),
                              'diagnostics_output': output,
