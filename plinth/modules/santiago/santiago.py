@@ -43,7 +43,7 @@ class Santiago(PagePlugin):
         
         self.santiago_dir = os.path.join(cfg.file_root, "data", "santiago", "tor")
         self.tor_dir = os.path.join(self.santiago_dir, "general")
-        u.mkdir(self.santiago_dir)
+        os.mkdirs(self.santiago_dir)
         os.system( 'chmod a+w %s' % self.santiago_dir)
         hidden_service_config = "HiddenServiceDir %s\nHiddenServicePort 80 127.0.0.1:%d" %  (self.tor_dir, santiago_port)
         if hidden_service_config in rc:
