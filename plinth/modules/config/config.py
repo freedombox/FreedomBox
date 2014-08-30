@@ -31,7 +31,6 @@ import socket
 
 from plinth import actions
 from plinth import cfg
-from plinth import util
 
 
 LOGGER = logging.getLogger(__name__)
@@ -127,7 +126,7 @@ def index(request):
 def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
-            'time_zone': util.slurp('/etc/timezone').rstrip()}
+            'time_zone': open('/etc/timezone').read().rstrip()}
 
 
 def _apply_changes(request, old_status, new_status):
