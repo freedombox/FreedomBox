@@ -1,16 +1,18 @@
-#! /usr/bin/env python
+#!/usr/bin/python
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
-from actions import superuser_run, run
 import os
 import shlex
 import subprocess
 import unittest
 
-import cfg
+from plinth.actions import superuser_run, run
+from plinth import cfg
+
 
 ROOT_DIR = os.path.split(os.path.abspath(os.path.split(__file__)[0]))[0]
 cfg.actions_dir = os.path.join(ROOT_DIR, 'actions')
+
 
 class TestPrivileged(unittest.TestCase):
     """Verify that privileged actions perform as expected.
@@ -109,6 +111,7 @@ class TestPrivileged(unittest.TestCase):
         self.assertEqual(
             subprocess.check_output(shlex.split("id -ur")).strip(),
             run("id", ["-u" ,"-r"])[0].strip())
+
 
 if __name__ == "__main__":
     unittest.main()
