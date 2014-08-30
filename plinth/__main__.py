@@ -64,13 +64,6 @@ def setup_logging():
         cherrypy.log.screen = False
 
 
-def setup_paths():
-    """Setup current directory and python import paths"""
-    os.chdir(cfg.python_root)
-    if not os.path.join(cfg.file_root, 'vendor') in sys.path:
-        sys.path.append(os.path.join(cfg.file_root, 'vendor'))
-
-
 def setup_server():
     """Setup CherryPy server"""
     LOGGER.info('Setting up CherryPy server')
@@ -223,8 +216,6 @@ def main():
     setup_logging()
 
     service.init()
-
-    setup_paths()
 
     configure_django()
 
