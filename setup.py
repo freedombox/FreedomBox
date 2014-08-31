@@ -26,6 +26,7 @@ import glob
 import os
 from setuptools import find_packages, setup
 import shutil
+import subprocess
 
 from plinth import __version__
 
@@ -41,11 +42,12 @@ DIRECTORIES_TO_COPY = [
     ('/usr/share/doc/plinth/', 'doc'),
 ]
 
-
 class CustomInstallData(install_data):
-    """Override install command to allow directory creation"""
+    """Override install command to allow directory creation and copy"""
     def run(self):
         """Execute install command"""
+        subprocess.check_call(['make', '-C', 'doc'])
+
         install_data.run(self)  # Old style base class
 
         # Create empty directories
