@@ -92,7 +92,7 @@ def setup_server():
     cherrypy.tree.graft(application, cfg.server_dir)
 
     config = {
-        '/': {'tools.staticdir.root': '%s/static' % cfg.file_root,
+        '/': {'tools.staticdir.root': os.path.join(cfg.file_root, 'static'),
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
