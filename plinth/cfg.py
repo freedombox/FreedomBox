@@ -24,16 +24,25 @@ server_dir = '/'
 
 main_menu = Menu()
 
+DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
+DEFAULT_ROOT = '/'
+
 
 def read():
     """Read configuration"""
-    directory = os.path.dirname(os.path.realpath(__file__))
-    directory = os.path.join(directory, '..')
+    if os.path.isfile(DEFAULT_CONFIG_FILE):
+        config_file = DEFAULT_CONFIG_FILE
+        directory = DEFAULT_ROOT
+    else:
+        directory = os.path.dirname(os.path.realpath(__file__))
+        directory = os.path.join(directory, '..')
+        config_file = os.path.join(directory, 'plinth.config')
+
     parser = SafeConfigParser(
         defaults={
             'root': directory,
         })
-    parser.read(os.path.join(directory, 'plinth.config'))
+    parser.read(config_file)
 
     config_items = {('Name', 'product_name'),
                     ('Name', 'box_name'),
