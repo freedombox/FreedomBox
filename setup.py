@@ -68,6 +68,7 @@ setup(
     url='http://freedomboxfoundation.org',
     packages=find_packages(),
     scripts=['bin/plinth'],
+    test_suite='plinth.tests.TEST_SUITE',
     license='COPYING',
     classifiers=[
         'Development Status :: 3 - Alpha',
