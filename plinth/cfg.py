@@ -13,6 +13,7 @@ data_dir = None
 store_file = None
 user_db = None
 actions_dir = None
+doc_dir = None
 status_log_file = None
 access_log_file = None
 pidfile = None
@@ -44,6 +45,7 @@ def read():
                     ('Path', 'store_file'),
                     ('Path', 'user_db'),
                     ('Path', 'actions_dir'),
+                    ('Path', 'doc_dir'),
                     ('Path', 'status_log_file'),
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),

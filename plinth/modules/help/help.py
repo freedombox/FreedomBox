@@ -36,7 +36,7 @@ def about(request):
 def helppage(request, page):
     """Serve a help page from the 'doc' directory"""
     try:
-        with open(os.path.join('doc', '%s.part.html' % page), 'r') \
+        with open(os.path.join(cfg.doc_dir, '%s.part.html' % page), 'r') \
                 as input_file:
             main = input_file.read()
     except IOError:
