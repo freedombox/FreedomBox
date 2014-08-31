@@ -42,7 +42,7 @@ $(SOURCES):
 	@rm -f $@
 	@ln -s ../$(patsubst %.mdwn,%,$@) $@
 
-../TODO : $(TODO_SOURCES) ../Makefile Makefile
+../TODO : $(TODO_SOURCES) Makefile
 	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
 	     --exclude=README.mdwn --exclude=INSTALL.mdwn \
 	     --exclude=TODO.mdwn --exclude=COPYING.mdwn \
