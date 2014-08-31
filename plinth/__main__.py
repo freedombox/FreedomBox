@@ -194,7 +194,7 @@ def configure_django():
         ROOT_URLCONF='plinth.urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
-        STATIC_URL=cfg.server_dir + '/static/',
+        STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         TEMPLATE_DIRS=template_directories)
 

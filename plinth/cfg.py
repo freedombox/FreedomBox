@@ -39,7 +39,7 @@ def read():
 
     parser = SafeConfigParser(
         defaults={
-            'root': directory,
+            'root': os.path.realpath(directory),
         })
     parser.read(config_file)
 
