@@ -73,6 +73,7 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply form changes"""
+    root = os.path.join(os.path.dirname(__file__), '..', '..')
     for field, enabled in new_status.items():
         if not field.endswith('_enabled'):
             continue
@@ -83,8 +84,8 @@ def _apply_changes(request, old_status, new_status):
         module = field.split('_enabled')[0]
         if enabled:
             try:
-                actions.superuser_run(
-                    'module-manager', ['enable', cfg.python_root, module])
+                actions.superuser_run('module-manager',
+                                      ['enable', root, module])
             except Exception:
                 # TODO: need to get plinth to load the module we just
                 # enabled
@@ -97,8 +98,8 @@ def _apply_changes(request, old_status, new_status):
                         module=module))
         else:
             try:
-                actions.superuser_run(
-                    'module-manager', ['disable', cfg.python_root, module])
+                actions.superuser_run('module-manager',
+                                      ['disable', root, module])
             except Exception:
                 # TODO: need a smoother way for plinth to unload the
                 # module
