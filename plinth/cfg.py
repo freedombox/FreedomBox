@@ -10,7 +10,6 @@ root = None
 file_root = None
 data_dir = None
 store_file = None
-user_db = None
 actions_dir = None
 doc_dir = None
 status_log_file = None
@@ -50,7 +49,6 @@ def read():
                     ('Path', 'file_root'),
                     ('Path', 'data_dir'),
                     ('Path', 'store_file'),
-                    ('Path', 'user_db'),
                     ('Path', 'actions_dir'),
                     ('Path', 'doc_dir'),
                     ('Path', 'status_log_file'),
@@ -74,7 +72,3 @@ def read():
     global store_file  # pylint: disable-msg=W0603
     if store_file.endswith(".sqlite3"):
         store_file = os.path.splitext(store_file)[0]
-
-    global user_db  # pylint: disable-msg=W0603
-    if user_db.endswith(".sqlite3"):
-        user_db = os.path.splitext(user_db)[0]
