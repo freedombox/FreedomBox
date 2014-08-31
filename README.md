@@ -1,16 +1,10 @@
-% PLINTH(1) Version 0.1 | Plinth User Manual
-%
-% February 2011
+% Plinth User Manual
 
 # Introduction
 
 ## Name
 
 plinth - a web front end for administering every aspect of a Freedom Box.
-
-## Synopsis
-
-plinth.py
 
 ## Description
 
@@ -45,10 +39,14 @@ servers.  Basic users should never even know those options exist.
 
 ## Getting Started
 
-See the INSTALL file for additional details.  Run:
+See the INSTALL file for additional details and dependencies. To install run:
 
-    $ make
+    $ sudo python setup.py install
 
-Once make finishes, run Plinth on the local system with:
+Run Plinth on the local system with:
 
-    $ bash start.sh
+    $ sudo plinth
+
+## Contributing
+
+See the HACKING file for contributing to Plinth.

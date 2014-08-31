@@ -40,7 +40,11 @@ oneline.txt: Makefile
 
 $(SOURCES):
 	@rm -f $@
-	@ln -s ../$(patsubst %.mdwn,%,$@) $@
+	if [ -f ../$(patsubst %.mdwn,%.md,$@) ]; then \
+		ln -s ../$(patsubst %.mdwn,%.md,$@) $@; \
+	else \
+		ln -s ../$(patsubst %.mdwn,%,$@) $@; \
+	fi
 
 ../TODO : $(TODO_SOURCES) Makefile
 	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
