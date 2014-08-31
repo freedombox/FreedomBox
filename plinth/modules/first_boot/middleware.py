@@ -24,7 +24,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 import logging
 
-import cfg
+from plinth import cfg
 from withsqlite.withsqlite import sqlite_db
 
 

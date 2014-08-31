@@ -189,7 +189,7 @@ def configure_django():
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
-            'modules.first_boot.middleware.FirstBootMiddleware',
+            'plinth.modules.first_boot.middleware.FirstBootMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SESSION_ENGINE='django.contrib.sessions.backends.file',
