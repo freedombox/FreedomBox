@@ -18,7 +18,7 @@
 2. Plinth also support running without installing (as much as possible).
    Simply run it as:
 
-    $ sudo python -m plinth
+    $ sudo python -m plinth --no-daemon --debug
 
     In this mode, Plinth runs in working directory without need for
     installation.  It uses a different config file (plinth.conf in working
@@ -26,6 +26,17 @@
     creates all that data and runtime files in data/var/*. To make Plinth
     pickup the config file in working directory, simply delete
     /etc/plinth/plinth.config.
+
+    *Note:* This mode is supported only in a limited manner.  The following are
+    the unknown issues with it:
+
+    1. It does not work without the --debug and --no-daemon flags.
+
+    2. Help pages are also not built. Run 'make -C doc' manaully.
+
+    3. Actions do not work when running as normal user without 'sudo' prefix.
+       You need to add 'actions' directory to be allowed for 'sudo' commands.
+       See data/etc/sudoers.d/plinth for a hint.
 
 ## Running Tests
 
