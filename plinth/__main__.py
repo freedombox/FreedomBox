@@ -16,7 +16,6 @@ from plinth import cfg
 from plinth import module_loader
 from plinth import service
 
-__version__ = "0.2.14"
 __author__ = "James Vasile"
 __copyright__ = "Copyright 2011-2013, James Vasile"
 __license__ = "GPLv3 or later"
