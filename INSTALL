@@ -1,47 +1,24 @@
-# Quick Start
+# Installing Plinth
 
-## Installing Plinth
+1. Install the dependencies:
 
-Install the dependencies:
+    On a Debian based system, run:
 
-apt-get install pandoc psmisc python2.7 python-bcrypt python-cherrypy3 python-django python-passlib python-bootstrapform libjs-twitter-bootstrap sudo
+    $ sudo apt-get install libjs-jquery libjs-modernizer \
+    libjs-twitter-bootstrap make pandoc python2.7 python-cherrypy3 \
+    python-django python-bootstrapform python-withsqlite
 
-Unzip and untar the source into a directory.  Change to the directory
-containing the program. Run:
+2. Install Plinth:
 
-    $ make
+    Unzip the source into a directory.  Change to the directory containing the
+    program and run:
 
-To start Plinth, run:
+    $ sudo python setup.py install
 
-    $ ./start.sh
+3. Run Plinth:
 
-and point your web browser at `localhost:8000`. The default username is "admin"
-and the default password is "secret".
+    $ sudo plinth
 
-## Dependencies
+4. Access Plinth UI:
 
-* cherrypy - python web engine v3+
-
-* python - tested with version 2.6.6
-
-* *GNU Make* is used to build the templates and such.
-
-* *libjs-twitter-bootstrap* - A responsive, mobile first front-end framework
-
-* *python-bootstrapform* - Render django forms for Twitter Bootstrap
-
-The documentation has some dependencies too.
-
-* *Markdown* is used to format and style docs.
-
-* *Pandoc* converts the markdown to different formats.
-
-* *PDFLatex* generates pdf versions of the documentation.
-
-* *GNU Make* processes /doc/Makefile.
-
-## Building the Documentation
-
-Documentation has been collected into a pdf that can be built using
-`make doc`.  It also gets built into smaller files and other formats,
-including one suitable for install as a man page.
+    Plinth UI should be accessible at http://localhost:8000
