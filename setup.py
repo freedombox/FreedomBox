@@ -42,6 +42,7 @@ DIRECTORIES_TO_COPY = [
     ('/usr/share/doc/plinth/', 'doc'),
 ]
 
+
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
     def run(self):

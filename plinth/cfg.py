@@ -1,4 +1,4 @@
-from menu import Menu
+from plinth.menu import Menu
 import os
 
 import ConfigParser
@@ -23,25 +23,27 @@ server_dir = '/'
 
 main_menu = Menu()
 
+CONFIG_FILE = None
 DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
 DEFAULT_ROOT = '/'
 
 
 def read():
     """Read configuration"""
+    global CONFIG_FILE  # pylint: disable-msg=W0603
     if os.path.isfile(DEFAULT_CONFIG_FILE):
-        config_file = DEFAULT_CONFIG_FILE
+        CONFIG_FILE = DEFAULT_CONFIG_FILE
         directory = DEFAULT_ROOT
     else:
         directory = os.path.dirname(os.path.realpath(__file__))
         directory = os.path.join(directory, '..')
-        config_file = os.path.join(directory, 'plinth.config')
+        CONFIG_FILE = os.path.join(directory, 'plinth.config')
 
     parser = SafeConfigParser(
         defaults={
             'root': os.path.realpath(directory),
         })
-    parser.read(config_file)
+    parser.read(CONFIG_FILE)
 
     config_items = {('Name', 'product_name'),
                     ('Name', 'box_name'),

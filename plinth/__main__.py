@@ -7,7 +7,6 @@ import django.core.wsgi
 import logging
 import os
 import stat
-import sys
 
 import cherrypy
 from cherrypy import _cpserver
@@ -218,6 +217,8 @@ def main():
     service.init()
 
     configure_django()
+
+    LOGGER.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
 
     module_loader.load_modules()
 
