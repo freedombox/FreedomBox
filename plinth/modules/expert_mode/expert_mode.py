@@ -5,7 +5,7 @@ from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 from plinth import cfg
-from plinth.modules.lib.auth import get_group
+from plinth.modules.lib.auth import get_or_create_group
 
 
 class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
@@ -51,7 +51,7 @@ def _apply_changes(request, new_status):
     """Apply expert mode configuration"""
     message = (messages.info, _('Settings unchanged'))
 
-    expert_group = get_group('Expert')
+    expert_group = get_or_create_group('Expert')
     if new_status['expert_mode']:
         if not expert_group in request.user.groups.all():
             request.user.groups.add(expert_group)

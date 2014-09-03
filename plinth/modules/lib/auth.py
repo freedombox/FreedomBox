@@ -15,10 +15,10 @@ def add_user(username, passphrase, name='', email='', expert=False):
     user.save()
 
     if expert:
-        user.groups.add(get_group('Expert'))
+        user.groups.add(get_or_create_group('Expert'))
 
 
-def get_group(name):
+def get_or_create_group(name):
     """Return an existing or newly created group with given name"""
     try:
         group = Group.objects.get(name__exact=name)
