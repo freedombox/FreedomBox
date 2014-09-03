@@ -136,7 +136,7 @@ def _apply_changes(request, old_status, new_status):
             set_hostname(new_status['hostname'])
         except Exception as exception:
             messages.error(request, _('Error setting hostname: %s') %
-                           str(exception))
+                           exception)
         else:
             messages.success(request, _('Hostname set'))
     else:
@@ -147,7 +147,7 @@ def _apply_changes(request, old_status, new_status):
             actions.superuser_run('timezone-change', [new_status['time_zone']])
         except Exception as exception:
             messages.error(request, _('Error setting time zone: %s') %
-                           str(exception))
+                           exception)
         else:
             messages.success(request, _('Time zone set'))
     else:
