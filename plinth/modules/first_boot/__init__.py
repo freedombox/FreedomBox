@@ -19,6 +19,6 @@
 Plinth module for first boot wizard
 """
 
-from . import first_boot
+from . import first_boot, middleware
 
 __all__ = ['first_boot']
