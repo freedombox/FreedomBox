@@ -34,14 +34,16 @@ case "$1" in
                 touch "$2"/modules/enabled/"$3"
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ] ; then
-		    echo "enabled" "$3"
-		else
+                    echo "enabled" "$3"
+                else
                     echo "failed to enable" "$3"
-		fi
-		exit $RETVAL
+                fi
+                exit $RETVAL
             fi
         fi
     done
+    echo "failed to enable invalid module" "$3"
+    exit 1
     ;;
 
 "disable")
@@ -53,13 +55,15 @@ case "$1" in
                 rm -f "$2"/modules/enabled/"$3"
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ] ; then
-		    echo "disabled" "$3"
-		else
+                    echo "disabled" "$3"
+                else
                     echo "failed to disable" "$3"
-		fi
-		exit $RETVAL
+                fi
+                exit $RETVAL
             fi
         fi
     done
+    echo "failed to disable invalid module" "$3"
+    exit 1
     ;;
 esac
