@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import os
 
 from plinth import actions
 from plinth import cfg
@@ -16,7 +17,9 @@ def get_modules_available():
 
 def get_modules_enabled():
     """Return list of all modules"""
-    output = actions.run('module-manager', ['list-enabled'])
+    root = os.path.join(os.path.dirname(__file__), '..', '..')
+    output = actions.run('module-manager',
+                         ['list-enabled', root])
     return output.split()
 
 
