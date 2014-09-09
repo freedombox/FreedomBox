@@ -99,7 +99,8 @@ def setup_server():
     # our modules to Django apps instead of reinventing the wheel.
     # (we'll still have to serve the static files with cherrypy though)
     for module in module_loader.LOADED_MODULES:
-        static_dir = os.path.join(cfg.file_root, 'modules', module, 'static')
+        static_dir = os.path.join(cfg.file_root, 'plinth', 'modules', module,
+                                  'static')
         if not os.path.isdir(static_dir):
             continue
 
