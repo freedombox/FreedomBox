@@ -70,7 +70,3 @@ def read():
 
     global port  # pylint: disable-msg=W0603
     port = int(port)
-
-    global store_file  # pylint: disable-msg=W0603
-    if store_file.endswith(".sqlite3"):
-        store_file = os.path.splitext(store_file)[0]

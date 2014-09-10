@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 import argparse
 import django.conf
@@ -160,8 +160,6 @@ def configure_django():
             }
         }
 
-    data_file = os.path.join(cfg.data_dir, 'plinth.sqlite3')
-
     template_directories = module_loader.get_template_directories()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
     django.conf.settings.configure(
@@ -170,12 +168,13 @@ def configure_django():
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
         DATABASES={'default':
                    {'ENGINE': 'django.db.backends.sqlite3',
-                    'NAME': data_file}},
+                    'NAME': cfg.store_file}},
         DEBUG=cfg.debug,
         INSTALLED_APPS=['bootstrapform',
                         'django.contrib.auth',
                         'django.contrib.contenttypes',
-                        'django.contrib.messages'],
+                        'django.contrib.messages',
+                        'plinth'],
         LOGGING=logging_configuration,
         LOGIN_URL='lib:login',
         LOGIN_REDIRECT_URL='apps:index',
@@ -199,10 +198,9 @@ def configure_django():
     LOGGER.info('Configured Django')
     LOGGER.info('Template directories - %s', template_directories)
 
-    if not os.path.isfile(data_file):
-        LOGGER.info('Creating and initializing data file')
-        django.core.management.call_command('syncdb', interactive=False)
-        os.chmod(data_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+    LOGGER.info('Creating or adding new tables to data file')
+    django.core.management.call_command('syncdb', interactive=False)
+    os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
 def main():

@@ -24,8 +24,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 import logging
 
-from plinth import cfg
-from withsqlite.withsqlite import sqlite_db
+from plinth import kvstore
 
 
 LOGGER = logging.getLogger(__name__)
@@ -42,14 +41,13 @@ class FirstBootMiddleware(object):
         if request.path.startswith(reverse('first_boot:index')):
             return
 
-        with sqlite_db(cfg.store_file, table='firstboot') as database:
-            if 'state' not in database:
-                # Permanent redirect causes the browser to cache the redirect,
-                # preventing the user from navigating to /plinth until the
-                # browser is restarted.
-                return HttpResponseRedirect(reverse('first_boot:index'))
+        state = kvstore.get_default('firstboot_state', 0)
+        if not state:
+            # Permanent redirect causes the browser to cache the redirect,
+            # preventing the user from navigating to /plinth until the
+            # browser is restarted.
+            return HttpResponseRedirect(reverse('first_boot:index'))
 
-            if database['state'] < 5:
-                LOGGER.info('First boot state - %d', database['state'])
-                return HttpResponseRedirect(reverse('first_boot:state%d' %
-                                                    database['state']))
+        if state < 5:
+            LOGGER.info('First boot state - %d', state)
+            return HttpResponseRedirect(reverse('first_boot:state%d' % state))

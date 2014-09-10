@@ -26,10 +26,9 @@ from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
-from plinth import cfg
 from plinth.modules.config import config
 from plinth.modules.lib.auth import add_user
-from withsqlite.withsqlite import sqlite_db
+from plinth import kvstore
 
 
 ## TODO: flesh out these tests values
@@ -94,7 +93,7 @@ def state0(request):
     user. It's a good place to put error messages.
     """
     try:
-        if _read_state() >= 5:
+        if kvstore.get_default('firstboot_state', 0) >= 5:
             return HttpResponseRedirect(reverse('index'))
     except KeyError:
         pass
@@ -112,7 +111,7 @@ def state0(request):
 
             if success:
                 # Everything is good, permanently mark and move to page 2
-                _write_state(1)
+                kvstore.set('firstboot_state', 1)
                 return HttpResponseRedirect(reverse('first_boot:state1'))
     else:
         form = State0Form(initial=status, prefix='firstboot')
@@ -124,35 +123,29 @@ def state0(request):
 
 def get_state0():
     """Return the state for form state 0"""
-    with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as \
-            database:
-        return {'hostname': config.get_hostname(),
-                'box_key': database.get('box_key', None)}
+    return {'hostname': config.get_hostname(),
+            'box_key': kvstore.get_default('box_key', None)}
 
 
 def _apply_state0(request, old_state, new_state):
     """Apply changes in state 0 form"""
     success = True
-    with sqlite_db(cfg.store_file, table="thisbox", autocommit=True) as \
-            database:
-        database['about'] = 'Information about this FreedomBox'
 
-        if new_state['box_key']:
-            database['box_key'] = new_state['box_key']
-        elif not old_state['box_key']:
-            database['box_key'] = generate_box_key()
+    if new_state['box_key']:
+        kvstore.set('box_key', new_state['box_key'])
+    elif not old_state['box_key']:
+        kvstore.set('box_key', generate_box_key())
 
-        if old_state['hostname'] != new_state['hostname']:
-            config.set_hostname(new_state['hostname'])
+    if old_state['hostname'] != new_state['hostname']:
+        config.set_hostname(new_state['hostname'])
 
-        error = add_user(new_state['username'], new_state['password'],
-                         'First user, please change', '', True)
-        if error:
-            messages.error(
-                request, _('User account creation failed: %s') % error)
-            success = False
-        else:
-            messages.success(request, _('User account created'))
+    error = add_user(new_state['username'], new_state['password'],
+                     'First user, please change', '', True)
+    if error:
+        messages.error(request, _('User account creation failed: %s') % error)
+        success = False
+    else:
+        messages.success(request, _('User account created'))
 
     return success
 
@@ -168,21 +161,7 @@ def state1(request):
     """
     # TODO complete first_boot handling
     # Make sure the user is not stuck on a dead end for now.
-    _write_state(5)
+    kvstore.set('firstboot_state', 5)
 
     return TemplateResponse(request, 'firstboot_state1.html',
                             {'title': _('Installing the Certificate')})
-
-
-def _read_state():
-    """Read the current state from database"""
-    with sqlite_db(cfg.store_file, table='firstboot',
-                   autocommit=True) as database:
-        return database['state']
-
-
-def _write_state(state):
-    """Write state to database"""
-    with sqlite_db(cfg.store_file, table='firstboot',
-                   autocommit=True) as database:
-        database['state'] = state
