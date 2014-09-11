@@ -19,6 +19,4 @@
 Plinth package init file
 """
 
-from plinth import context_processors
-
 __version__ = '0.3.2'
