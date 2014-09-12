@@ -1,0 +1,23 @@
+<html>
+<head></head>
+<body>
+{% load static %}
+
+{% block app_head %}
+  <link rel="stylesheet" href="{% static 'vault/vault.css' %}"/>
+{% endblock %}
+
+{% block navbar %}
+<a href="{% url 'vault:apps' %}">Apps</a>
+<a href="{% url 'vault:services' %}">Services</a>
+<a href="{% url 'index' %}">Advanced Mode</a>
+{% endblock %}
+<br><br>
+
+{% block statusline %}statusline{% endblock %}
+<br><br>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>
