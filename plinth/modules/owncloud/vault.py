@@ -3,6 +3,7 @@ from plinth.modules import vault
 
 from .owncloud import get_status
 
+
 vault.register_app('owncloud', url='/owncloud')
 
 

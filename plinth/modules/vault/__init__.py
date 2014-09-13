@@ -22,10 +22,11 @@ Vault - a simple admin interface for the freedombox
 from plinth import cfg
 from .registry import register_app, register_service, register_statusline
 
+
 def init():
-    cfg.main_menu.add_urlname("Simple Mode", "glyphicon-th-large", 
+    cfg.main_menu.add_urlname("Simple Mode", "glyphicon-th-large",
                               "vault:apps", 110)
 
-__all__ = [init, register_app, register_service, register_statusline]
+__all__ = ['init', 'register_app', 'register_service', 'register_statusline']
 
 DEPENDS = []

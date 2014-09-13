@@ -27,4 +27,8 @@ urlpatterns = patterns(
     'plinth.modules.vault.views',
     url(r'^vault/apps$', Apps.as_view(), name='apps'),
     url(r'^vault/services$', Services.as_view(), name='services'),
+    url(r'^vault/enable/(.+)/$', 'enable_service',
+        name='enable_service'),
+    url(r'^vault/disable/(.+)/$', 'disable_service',
+        name='disable_service'),
     )

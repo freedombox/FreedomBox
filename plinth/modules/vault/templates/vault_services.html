@@ -26,7 +26,10 @@
 {% block content %}
 <h3>Services</h3>
 {% for name,service in services.items %}
-  {{ name }}: {{ service.is_enabled }}
+  {{ name }}: {{ service.is_enabled }}<br>
+  <a href="{% url 'vault:enable_service' name %}">enable</a>
+  <a href="{% url 'vault:disable_service' name %}">disable</a>
+  <br><br>
 {% endfor %}
 
 {% endblock %}
