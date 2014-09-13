@@ -11,5 +11,5 @@ def disable():
     return actions.superuser_run('firewall', ['set-status', 'disable'])
 
 
-vault.register_service('firewall', is_enabled=get_enabled_status,
+vault.register_service(name='firewall', is_enabled=get_enabled_status,
                        enable=enable, disable=disable)

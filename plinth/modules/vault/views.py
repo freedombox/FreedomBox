@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.views.generic import TemplateView
 
-from .registry import apps, services
+from .registry import apps, services, statusline_items
 
 
 class Apps(TemplateView):
@@ -12,6 +12,7 @@ class Apps(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Apps, self).get_context_data(**kwargs)
         context['apps'] = apps
+        context['statusline_items'] = statusline_items
         return context
 
 
@@ -21,6 +22,7 @@ class Services(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Services, self).get_context_data(**kwargs)
         context['services'] = services
+        context['statusline_items'] = statusline_items
         return context
 
 

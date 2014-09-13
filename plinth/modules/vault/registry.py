@@ -10,24 +10,40 @@ services = OrderedDict()
 statusline_items = OrderedDict()
 
 
-def register_app(name, **kwargs):
-    apps[name] = dict(**kwargs)
+def _check_params(given_params, required_params):
+    """Check whether all required paramters are given. Raises a PlinthError
+    otherwise.
+
+    - given_params: given parameter dict (**kwargs)
+    - required_params: iterable with parameter-names
+    """
+    for param in required_params:
+        if param not in given_params:
+            raise errors.PlinthError('Missing parameter: %s' % param)
 
 
-def register_service(name, **kwargs):
+def register_app(template='vault_app_default.inc', **kwargs):
+    _check_params(kwargs, ['name'])
+    if 'template' not in kwargs:
+        kwargs['template'] = template
+    apps[kwargs['name']] = dict(**kwargs)
+
+
+def register_service(template='vault_service_default.inc', **kwargs):
     """ Convention about what a service looks like:
     - name: name of the app, exactly as in the module folder
     - functions: is_enabled, enable, disable
+    - template (optional): template to use for rendering the service-item
     """
-    for param in ['is_enabled', 'enable', 'disable']:
-        if param not in kwargs:
-            raise errors.PlinthError('Missing parameter for module %s: %s' %
-                                     (name, param))
-    services[name] = dict(**kwargs)
+    _check_params(kwargs, ['name', 'is_enabled', 'enable', 'disable'])
+    if 'template' not in kwargs:
+        kwargs['template'] = template
+    services[kwargs['name']] = dict(**kwargs)
 
 
-def register_statusline(name, **kwargs):
-    statusline_items[name] = dict(**kwargs)
+def register_statusline(**kwargs):
+    _check_params(kwargs, ['name', 'template'])
+    statusline_items[kwargs['name']] = dict(**kwargs)
 
 
 @receiver(post_module_loading)

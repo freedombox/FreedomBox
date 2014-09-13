@@ -16,7 +16,11 @@
 
 {% include 'messages.html' %}
 
-{% block statusline %}statusline{% endblock %}
+{% block statusline %}
+  {% for name,item in statusline_items.items %}
+    {% include item.template with item=item %}
+  {% endfor %}
+{% endblock %}
 <br><br>
 
 {% block content %}{% endblock %}

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# prints total size and available size of given folder
+df -k $1 | tail -1 | awk '{print $2; print $3; print $4}' 

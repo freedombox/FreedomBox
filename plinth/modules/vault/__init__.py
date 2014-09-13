@@ -19,13 +19,21 @@
 Vault - a simple admin interface for the freedombox
 """
 
-from plinth import cfg
+from plinth import actions, cfg
 from .registry import register_app, register_service, register_statusline
+
+
+def get_fbx_df():
+    """Get free disk space of /home/fbx via `df` action"""
+    (total, used, available) = actions.run('df', ['/home/fbx/']).split()
+    return {'total': total, 'used': used, 'available': available}
 
 
 def init():
     cfg.main_menu.add_urlname("Simple Mode", "glyphicon-th-large",
                               "vault:apps", 110)
+    register_statusline(name='df', template='vault_statusline_df.inc',
+                        get_data=get_fbx_df)
 
 __all__ = ['init', 'register_app', 'register_service', 'register_statusline']
 
