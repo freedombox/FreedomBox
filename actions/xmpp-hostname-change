@@ -24,15 +24,16 @@ old_hostname=`debconf-show ejabberd | awk '/hostname/ { print $3 }'`
 
 # Based on http://www.process-one.net/docs/ejabberd/guide_en.html#htoc77
 
-# Setup some variables
 BACKUP=/tmp/ejabberd.dump
 
+# Note: dpkg-reconfigure will fail if there have been manual changes made to the
+# configuration file for a package. Since this is the case for ejabberd,
+# manually update the hostname in the configuration file.
 echo "ejabberd ejabberd/hostname string $hostname" | debconf-set-selections
 echo "jwchat jwchat/ApacheServerName string $hostname" | debconf-set-selections
 DEBIAN_FRONTEND=noninteractive dpkg-reconfigure jwchat
 
-# Debconf can't handle our manual changes to ejabberd's config yet.
-sed -i "s/$old_hostname/$hostname/g" /etc/ejabberd/ejabberd.cfg
+sed -i "s/$old_hostname/$hostname/g" /etc/ejabberd/ejabberd.yml
 sed -i "s/$old_hostname/$hostname/g" $BACKUP
 
 service ejabberd restart
