@@ -12,4 +12,5 @@ def disable():
 
 
 vault.register_service(name='firewall', is_enabled=get_enabled_status,
-                       enable=enable, disable=disable)
+                       enable=enable, disable=disable,
+                       description='Firewall for your Freedombox')

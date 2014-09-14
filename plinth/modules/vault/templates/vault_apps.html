@@ -1,6 +1,5 @@
 {% extends "vault_base.html" %} 
 {% load static %}
-{% load bootstrap %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,19 +19,13 @@
 #
 {% endcomment %}
 
-{% block page_head %}
-{% endblock %}
 
 {% block content %}
-<h3>Apps</h3>
-{% for name,app in apps.items %}
-  {% include app.template with app=app %}
-{% endfor %}
-
-{% endblock %}
-
-{% block sidebar_right_block %}
-
-  {# include "firstboot_sidebar.html" #}
-
+<div class="container-fluid">
+  <div class="row vault-grid">
+    {% for name,app in apps.items %}
+      {% include app.template with app=app %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

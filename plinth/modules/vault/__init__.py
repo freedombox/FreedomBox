@@ -26,7 +26,10 @@ from .registry import register_app, register_service, register_statusline
 def get_fbx_df():
     """Get free disk space of /home/fbx via `df` action"""
     (total, used, available) = actions.run('df', ['/home/fbx/']).split()
-    return {'total': total, 'used': used, 'available': available}
+    available_percent = int(available)*100/int(total)
+    return {'total': total, 'used': used, 'available': available,
+            'available_gb': float(available)/(1024*1024),
+            'used_percent': 100-available_percent}
 
 
 def init():

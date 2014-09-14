@@ -1,6 +1,5 @@
 {% extends "vault_base.html" %} 
 {% load static %}
-{% load bootstrap %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,13 +19,12 @@
 #
 {% endcomment %}
 
-{% block page_head %}
-{% endblock %}
-
 {% block content %}
-<h3>Services</h3>
-{% for name,service in services.items %}
-  {% include service.template with service=service %}
-{% endfor %}
+<div class="container-fluid">
+  <div class="row vault-grid">
+    {% for name,service in services.items %}
+      {% include service.template with service=service %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
-

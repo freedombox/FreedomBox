@@ -1,29 +1,89 @@
-<html>
-<head></head>
-<body>
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Vault, a simple admin interface for Plinth">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
 
-{% block app_head %}
-  <link rel="stylesheet" href="{% static 'vault/vault.css' %}"/>
-{% endblock %}
+    <title>Plinth</title>
 
-{% block navbar %}
-<a href="{% url 'vault:apps' %}">Apps</a>
-<a href="{% url 'vault:services' %}">Services</a>
-<a href="{% url 'index' %}">Advanced Mode</a>
-{% endblock %}
-<br><br>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'theme/bootstrap-3.2.0/css/bootstrap.min.css' %}"/>
 
-{% include 'messages.html' %}
+    <!-- Custom styles for this template -->
+    {% block app_head %}
+      <link rel="stylesheet" href="{% static 'vault/vault.css' %}"/>
+    {% endblock %}
+    {% block page_head %}
+    {% endblock %}
 
-{% block statusline %}
-  {% for name,item in statusline_items.items %}
-    {% include item.template with item=item %}
-  {% endfor %}
-{% endblock %}
-<br><br>
+    <!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
+    - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+    - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
+  </head>
 
-{% block content %}{% endblock %}
+  <body>
 
-</body>
+    {% block navbar %}
+    <div class='sidebar'>
+      <div class='sidebar-content'>
+        {% url 'vault:apps' as app_url %}
+        <a href="{{ app_url }}" role="button"
+           class="btn btn-default btn-lg {% if request.path == app_url %}active{% endif %}">
+          <span class="glyphicon glyphicon-star"></span><br>Apps
+        </a>
+        {% url 'vault:services' as service_url %}
+        <a href="{{ service_url }}" role="button"
+           class="btn btn-default btn-lg {% if request.path == service_url %}active{% endif %}">
+          <span class="glyphicon glyphicon-globe"></span><br>Services
+        </a>
+        <a href="{% url 'index' %}" class="btn btn-default btn-lg" role="button">
+          <span class="glyphicon glyphicon-wrench"></span><br>Advanced<br>Mode
+        </a>
+      </div>
+    </div>
+    {% endblock %}
+ 
+    {% block statusline %}
+      <div class='statusline'>
+        {% for name,item in statusline_items.items %}
+          {% include item.template with item=item %}
+        {% endfor %}
+      </div>
+    {% endblock %}
+
+    <!-- Begin page content -->
+    <div class='content'>
+      {% include 'messages.html' %}
+      {% block content %}
+      <div class="container">
+        <div class="page-header">
+          <h1>Sticky footer</h1>
+        </div>
+        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS.</p>
+        <p>Use <a href="../sticky-footer-navbar">the sticky footer with a fixed navbar</a> if need be, too.</p>
+      </div>
+      {% endblock %}
+    </div>
+
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'theme/js/ie10-viewport-bug-workaround.js' %}"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <script src="{% static 'theme/js/libs/modernizr.min.js' %}"></script>
+    <script src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
+    <script src="{% static 'theme/bootstrap-3.2.0/js/bootstrap.min.js' %}"></script>
+
+    {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
+    {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
+  </body>
 </html>
