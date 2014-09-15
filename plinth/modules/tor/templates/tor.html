@@ -44,4 +44,11 @@ port-forwarded, if necessary:</p>
   {% endfor %}
 </table>
 
+<br style='clear:both'>
+{% if is_running %}
+  <div class='circle active'></div> Tor is running
+{% else %}
+  <div class='circle inactive'></div> Tor is not running
+{% endif %}
+
 {% endblock %}
