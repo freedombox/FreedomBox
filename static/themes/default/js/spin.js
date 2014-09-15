@@ -22,9 +22,10 @@
   };
 
   window.showSpinner = function(text) {
-    if (text !== undefined) {
-      $('#spin-modal h3.title').text(text);
+    if (typeof text !== "string") {
+      text = "Please wait ...";
     }
+    $('#spin-modal h3.title').text(text);
     var target = document.getElementById('spin-modal-center');
     var spinner = new Spinner(opts).spin(target);
     $('#spin-modal').modal()

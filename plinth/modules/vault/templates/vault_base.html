@@ -83,7 +83,13 @@
     <script src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
     <script src="{% static 'theme/bootstrap-3.2.0/js/bootstrap.min.js' %}"></script>
 
-    {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
+    {% block app_js %}
+      <script type="text/javascript" src="{% static 'theme/js/libs/spin.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'theme/js/spin.js' %}"></script>
+      <script type="text/javascript" src="{% static 'vault/vault.js' %}"></script>
+      {% include 'spin.inc' %}
+    {% endblock %}
+
     {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
   </body>
 </html>
