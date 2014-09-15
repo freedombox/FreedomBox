@@ -47,6 +47,8 @@ def index(request):
         except ValueError:
             continue
 
+    is_running = actions.superuser_run("tor", ["is-running"]).strip() == "yes"
     return TemplateResponse(request, 'tor.html',
                             {'title': _('Tor Control Panel'),
-                             'tor_ports': tor_ports})
+                             'tor_ports': tor_ports,
+                             'is_running': is_running})
