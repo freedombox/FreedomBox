@@ -29,6 +29,9 @@ class Services(TemplateView):
 def enable_service(request, module):
     try:
         services[module]['enable']()
+        msg = """Enabled %s. It can take a couple of minutes until all
+              changes take place.""" % module
+        messages.success(request, msg)
     except KeyError:
         messages.error(request, "Could not enable service %s" % module)
     return HttpResponseRedirect(reverse('vault:services'))
