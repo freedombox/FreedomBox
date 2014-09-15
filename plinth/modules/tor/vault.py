@@ -15,5 +15,5 @@ def is_running():
 
 
 vault.register_service(name='tor', is_enabled=is_running,
-                       enable=enable, disable=disable,
+                       enable=enable, disable=disable, synchronous=True,
                        description='Tor anonymization service')
