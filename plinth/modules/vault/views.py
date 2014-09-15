@@ -27,6 +27,7 @@ class Services(TemplateView):
 
 
 def enable_service(request, module):
+    next = request.GET.get('next', reverse('vault:services'))
     try:
         services[module]['enable']()
         msg = """Enabled %s. It can take a couple of minutes until all
@@ -34,9 +35,10 @@ def enable_service(request, module):
         messages.success(request, msg)
     except KeyError:
         messages.error(request, "Could not enable service %s" % module)
-    return HttpResponseRedirect(reverse('vault:services'))
+    return HttpResponseRedirect(next)
 
 
 def disable_service(request, module):
+    next = request.GET.get('next', reverse('vault:services'))
     services[module]['disable']()
-    return HttpResponseRedirect(reverse('vault:services'))
+    return HttpResponseRedirect(next)
