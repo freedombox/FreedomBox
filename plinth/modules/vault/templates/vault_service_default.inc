@@ -1,28 +1,52 @@
-{% if service.is_enabled %}
+{# use a variable to 'cache' the result of service.is_enabled #}
+{% with is_enabled=service.is_enabled %}
+
+{% if is_enabled %}
   <div class="panel panel-success">
-    <div class="panel-heading">
-        {{ service.name }} [running]
-        <a href="{% url 'vault:disable_service' service.name %}" role="button"
-           title="Stop {{ service.name }}"
-           class="btn btn-xs btn-default pull-right">
-          <span class="glyphicon glyphicon-off"></span>
-        </a>
-    </div>
 {% else %}
   <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title" title="{{ service.name }} is not running">
-        {{ service.name }} [stopped]
-        <a href="{% url 'vault:enable_service' service.name %}" role="button"
-           title="Start {{ service.name }}"
-           class="btn btn-xs btn-default pull-right">
-          <span class="glyphicon glyphicon-play"></span>
-        </a>
-      </h3>
-    </div>
 {% endif %}
+
+    <div class="panel-heading">
+      <span class='appname'>
+        {% if service.url and is_enabled %}
+          <a href="{{ service.url }}">{{ service.name }}</a>
+        {% else %}
+          {{ service.name }}
+        {% endif %}
+      </span>
+
+      <div class="btn-group pull-right">
+        <button type="button" data-toggle="dropdown" class="btn btn-xs
+                btn-default dropdown-toggle">
+          {% if is_enabled %}
+            enabled
+          {% else %}
+            disabled
+          {% endif %}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li {% if is_enabled %} class="active" {% endif %}>
+            <a href="{% url 'vault:enable_service' service.name %}"
+               class="show-spinner">
+              enable
+            </a>
+          </li>
+          <li {% if not is_enabled %} class="active" {% endif %}>
+            <a href="{% url 'vault:disable_service' service.name %}"
+               class="show-spinner">
+              disable
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
     <div class="panel-body">
       {{ service.description }}
     </div>
-  </div>
 
+  </div>
+{% endwith %}

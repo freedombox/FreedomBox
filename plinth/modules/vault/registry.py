@@ -38,10 +38,12 @@ def register_service(template='vault_service_default.inc', synchronous=False,
     - template: template to use for rendering the service-item
     - synchronous: whether the enable/disable procedure is synchronous.
       Otherwise we'll inform the user that the changes can take some time.
+    - url: link to the app on the freedombox
     """
     _check_params(kwargs, ['name', 'is_enabled', 'enable', 'disable'])
     if 'template' not in kwargs:
         kwargs['template'] = template
+    if 'synchronous' not in kwargs:
         kwargs['synchronous'] = synchronous
     services[kwargs['name']] = dict(**kwargs)
 
