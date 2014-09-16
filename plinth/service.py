@@ -23,7 +23,8 @@ from gettext import gettext as _
 
 import django.dispatch
 
-ENABLED = django.dispatch.Signal(providing_args=['service_id', 'enabled'])
+from plinth.signals import service_enabled
+
 
 SERVICES = {}
 
@@ -63,7 +64,7 @@ class Service(object):
         if not callable(self._enabled):
             self._enabled = enabled
 
-        ENABLED.send_robust(sender=sender, service_id=self.service_id,
+        service_enabled.send_robust(sender=sender, service_id=self.service_id,
                             enabled=enabled)
 
 

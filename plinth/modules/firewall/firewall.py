@@ -26,6 +26,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth.signals import service_enabled
 import plinth.service as service_module
 
 
@@ -37,7 +38,7 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Firewall'), 'icon-flag', 'firewall:index', 50)
 
-    service_module.ENABLED.connect(on_service_enabled)
+    service_enabled.connect(on_service_enabled)
 
 
 @login_required

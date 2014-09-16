@@ -26,6 +26,7 @@ import os
 
 from plinth import cfg
 from plinth import urls
+from plinth.signals import pre_module_loading, post_module_loading
 
 LOGGER = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ def load_modules():
     Read names of enabled modules in modules/enabled directory and
     import them from modules directory.
     """
+    pre_module_loading.send_robust(sender="module_loader")
     module_names = []
     modules = {}
     directory = os.path.dirname(os.path.abspath(__file__))
@@ -75,6 +77,8 @@ def load_modules():
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
         LOADED_MODULES.append(module_name)
+    post_module_loading.send_robust(sender="module_loader")
+
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):
