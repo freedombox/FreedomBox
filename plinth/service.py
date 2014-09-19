@@ -22,6 +22,7 @@ Framework for working with servers and their services.
 from gettext import gettext as _
 
 import django.dispatch
+import collections
 
 from plinth.signals import service_enabled
 
@@ -53,7 +54,7 @@ class Service(object):
     def is_enabled(self):
         """Return whether the service is enabled."""
 
-        if callable(self._enabled):
+        if isinstance(self._enabled, collections.Callable):
             return self._enabled()
 
         return self._enabled
@@ -61,7 +62,7 @@ class Service(object):
     def notify_enabled(self, sender, enabled):
         """Notify observers about change in state of service."""
 
-        if not callable(self._enabled):
+        if not isinstance(self._enabled, collections.Callable):
             self._enabled = enabled
 
         service_enabled.send_robust(sender=sender, service_id=self.service_id,
