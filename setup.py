@@ -91,8 +91,7 @@ setup(
     install_requires=[
         'cherrypy >= 3.0',
         'django >= 1.6.0',
-        'django-bootstrap-form',
-        'withsqlite',
+        'django-bootstrap-form'
     ],
     package_data={'plinth': ['modules/enabled/*',
                              'templates/*',
