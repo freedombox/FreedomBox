@@ -78,8 +78,8 @@ import os
 import pipes
 import subprocess
 
-import cfg
-from errors import ActionError
+from plinth import cfg
+from plinth.errors import ActionError
 
 
 LOGGER = logging.getLogger(__name__)
