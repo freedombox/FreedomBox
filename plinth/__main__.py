@@ -195,6 +195,7 @@ def configure_django():
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         TEMPLATE_DIRS=template_directories)
+    django.setup()
 
     LOGGER.info('Configured Django')
     LOGGER.info('Template directories - %s', template_directories)
