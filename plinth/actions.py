@@ -133,8 +133,9 @@ def _run(action, options=None, async=False, run_as_root=False):
     # contract: 3C, 3D: don't allow users to insert escape characters in
     # options
     if options:
-        if not hasattr(options, "__iter__"):
+        if not isinstance(options, (list, tuple)):
             options = [options]
+
         cmd += [pipes.quote(option) for option in options]
 
     # contract 1: commands can run via sudo.
@@ -153,6 +154,7 @@ def _run(action, options=None, async=False, run_as_root=False):
 
     if not async:
         output, error = proc.communicate()
+        output, error = output.decode(), error.decode()
         if proc.returncode != 0:
             LOGGER.error('Error executing command - %s, %s, %s', cmd, output,
                          error)
