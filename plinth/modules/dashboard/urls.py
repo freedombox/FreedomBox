@@ -20,12 +20,12 @@ URLs for the dashboard module
 """
 
 from django.conf.urls import patterns, url
-from .views import Apps
+from .views import Index
 
 
 urlpatterns = patterns(
     'plinth.modules.dashboard.views',
-    url(r'^dashboard/apps$', Apps.as_view(), name='apps'),
+    url(r'^dashboard/$', Index.as_view(), name='index'),
     url(r'^dashboard/enable/(.+)/$', 'enable_app',
         name='enable_app'),
     url(r'^dashboard/disable/(.+)/$', 'disable_app',

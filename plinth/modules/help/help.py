@@ -9,7 +9,7 @@ from plinth import cfg
 def init():
     """Initialize the Help module"""
     menu = cfg.main_menu.add_urlname(_('Documentation'), 'glyphicon-book',
-                                     'help:index', 101)
+                                     'help:index', 110)
     menu.add_urlname(_("Where to Get Help"), "glyphicon-search",
                      "help:index_explicit", 5)
     menu.add_urlname(_('Developer\'s Manual'), 'glyphicon-info-sign',

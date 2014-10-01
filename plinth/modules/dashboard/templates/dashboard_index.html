@@ -1,4 +1,4 @@
-{% extends "dashboard_base.html" %} 
+{% extends "base.html" %}
 {% load static %}
 {% comment %}
 #
@@ -19,14 +19,31 @@
 #
 {% endcomment %}
 
+{% block app_head %}
+  <link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}"/>
+{% endblock %}
+
 {% block content %}
 
-<div class="container-fluid">
+  {% include 'messages.html' %}
+
   <div class="row dashboard-grid">
     {% for name,app in apps.items %}
       {% include app.template with app=app %}
     {% endfor %}
   </div>
-</div>
 
+  {% block statusline %}
+    <div class='statusline'>
+      {% for name,item in statusline_items.items %}
+        {% include item.template with item=item %}
+      {% endfor %}
+    </div>
+  {% endblock %}
+
+{% endblock %}
+
+{% block page_js %}
+  {% include 'spin.inc' %}
+  <script type="text/javascript" src="{% static 'dashboard/dashboard.js' %}"></script>
 {% endblock %}

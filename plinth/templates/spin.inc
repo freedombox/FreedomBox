@@ -1,3 +1,7 @@
+{% load static %}
+<script type="text/javascript" src="{% static 'theme/js/libs/spin.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'theme/js/spin.js' %}"></script>
+
 <div id="spin-modal" class="modal fade" tabindex="-1" role="dialog"
      data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
