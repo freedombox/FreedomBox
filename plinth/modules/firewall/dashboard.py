@@ -1,5 +1,5 @@
 from plinth import actions
-from plinth.modules import vault
+from plinth.modules import dashboard
 from .firewall import get_enabled_status
 
 
@@ -11,6 +11,6 @@ def disable():
     return actions.superuser_run('firewall', ['set-status', 'disable'])
 
 
-vault.register_service(name='firewall', is_enabled=get_enabled_status,
+dashboard.register_app(name='firewall', is_enabled=get_enabled_status,
                        enable=enable, disable=disable,
                        description='Firewall for your Freedombox')

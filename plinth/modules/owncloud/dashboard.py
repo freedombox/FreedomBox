@@ -1,10 +1,10 @@
 from plinth import actions
-from plinth.modules import vault
+from plinth.modules import dashboard
 
 from .owncloud import get_status
 
 
-#vault.register_app(name='owncloud', url='/owncloud',
+#dashboard.register_app(name='owncloud', url='/owncloud',
 #                   description='Cloud services running on your Freedombox')
 
 
@@ -20,6 +20,6 @@ def is_enabled():
     return get_status()['enabled']
 
 
-vault.register_service(name='owncloud', enable=enable, disable=disable,
+dashboard.register_app(name='owncloud', enable=enable, disable=disable,
                        is_enabled=is_enabled, url='/owncloud',
                        description='Cloud services running on your Freedombox')

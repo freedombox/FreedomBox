@@ -1,5 +1,5 @@
-{# use a variable to 'cache' the result of service.is_enabled #}
-{% with is_enabled=service.is_enabled %}
+{# use a variable to 'cache' the result of app.is_enabled #}
+{% with is_enabled=app.is_enabled %}
 
 {% if is_enabled %}
   <div class="panel panel-success">
@@ -9,10 +9,10 @@
 
     <div class="panel-heading">
       <span class='appname'>
-        {% if service.url and is_enabled %}
-          <a href="{{ service.url }}">{{ service.name }}</a>
+        {% if app.url and is_enabled %}
+          <a href="{{ app.url }}">{{ app.name }}</a>
         {% else %}
-          {{ service.name }}
+          {{ app.name }}
         {% endif %}
       </span>
 
@@ -28,13 +28,13 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           <li {% if is_enabled %} class="active" {% endif %}>
-            <a href="{% url 'vault:enable_service' service.name %}"
+            <a href="{% url 'dashboard:enable_app' app.name %}"
                class="show-spinner">
               enable
             </a>
           </li>
           <li {% if not is_enabled %} class="active" {% endif %}>
-            <a href="{% url 'vault:disable_service' service.name %}"
+            <a href="{% url 'dashboard:disable_app' app.name %}"
                class="show-spinner">
               disable
             </a>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="panel-body">
-      {{ service.description }}
+      {{ app.description }}
     </div>
 
   </div>

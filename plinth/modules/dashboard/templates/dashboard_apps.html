@@ -1,3 +1,6 @@
+{% extends "dashboard_base.html" %} 
+{% load static %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,21 +17,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the Vault module
-"""
+{% block content %}
 
-from django.conf.urls import patterns, url
-from .views import Apps, Services
+<div class="container-fluid">
+  <div class="row dashboard-grid">
+    {% for name,app in apps.items %}
+      {% include app.template with app=app %}
+    {% endfor %}
+  </div>
+</div>
 
-
-urlpatterns = patterns(
-    'plinth.modules.vault.views',
-    url(r'^vault/apps$', Apps.as_view(), name='apps'),
-    url(r'^vault/services$', Services.as_view(), name='services'),
-    url(r'^vault/enable/(.+)/$', 'enable_service',
-        name='enable_service'),
-    url(r'^vault/disable/(.+)/$', 'disable_service',
-        name='disable_service'),
-    )
+{% endblock %}

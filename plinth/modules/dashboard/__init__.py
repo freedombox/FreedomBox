@@ -16,11 +16,11 @@
 #
 
 """
-Vault - a simple admin interface for the freedombox
+dashboard - a simple admin interface for the freedombox
 """
 
 from plinth import actions, cfg
-from .registry import register_app, register_service, register_statusline
+from .registry import register_app, register_statusline
 
 
 def get_fbx_df():
@@ -33,11 +33,11 @@ def get_fbx_df():
 
 
 def init():
-    cfg.main_menu.add_urlname("Simple Mode", "glyphicon-th-large",
-                              "vault:apps", 110)
-    register_statusline(name='df', template='vault_statusline_df.inc',
+    cfg.main_menu.add_urlname("Dashboard", "glyphicon-th-large",
+                              "dashboard:apps", 110)
+    register_statusline(name='df', template='dashboard_statusline_df.inc',
                         get_data=get_fbx_df)
 
-__all__ = ['init', 'register_app', 'register_service', 'register_statusline']
+__all__ = ['init', 'register_app', 'register_statusline']
 
 DEPENDS = []

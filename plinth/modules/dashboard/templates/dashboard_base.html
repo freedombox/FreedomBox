@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Vault, a simple admin interface for Plinth">
+    <meta name="description" content="dashboard, a simple admin interface for Plinth">
     <meta name="author" content="">
     <link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
 
@@ -16,7 +16,7 @@
 
     <!-- Custom styles for this template -->
     {% block app_head %}
-      <link rel="stylesheet" href="{% static 'vault/vault.css' %}"/>
+      <link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}"/>
     {% endblock %}
     {% block page_head %}
     {% endblock %}
@@ -34,15 +34,10 @@
     {% block navbar %}
     <div class='sidebar'>
       <div class='sidebar-content'>
-        {% url 'vault:apps' as app_url %}
+        {% url 'dashboard:apps' as app_url %}
         <a href="{{ app_url }}" role="button"
            class="btn btn-default btn-lg {% if request.path == app_url %}active{% endif %}">
           <span class="glyphicon glyphicon-star"></span><br>Apps
-        </a>
-        {% url 'vault:services' as service_url %}
-        <a href="{{ service_url }}" role="button"
-           class="btn btn-default btn-lg {% if request.path == service_url %}active{% endif %}">
-          <span class="glyphicon glyphicon-globe"></span><br>Services
         </a>
         <a href="{% url 'index' %}" class="btn btn-default btn-lg" role="button">
           <span class="glyphicon glyphicon-wrench"></span><br>Advanced<br>Mode
@@ -86,7 +81,7 @@
     {% block app_js %}
       <script type="text/javascript" src="{% static 'theme/js/libs/spin.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'theme/js/spin.js' %}"></script>
-      <script type="text/javascript" src="{% static 'vault/vault.js' %}"></script>
+      <script type="text/javascript" src="{% static 'dashboard/dashboard.js' %}"></script>
       {% include 'spin.inc' %}
     {% endblock %}
 
