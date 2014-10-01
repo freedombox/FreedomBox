@@ -22,4 +22,5 @@ def is_enabled():
 
 dashboard.register_app(name='owncloud', enable=enable, disable=disable,
                        is_enabled=is_enabled, url='/owncloud',
+                       template='dashboard_owncloud.inc',
                        description='Cloud services running on your Freedombox')

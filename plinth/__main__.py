@@ -182,6 +182,7 @@ def configure_django():
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
         DEBUG=cfg.debug,
+        TEMPLATE_DEBUG=cfg.debug,
         INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
         LOGIN_URL='lib:login',
