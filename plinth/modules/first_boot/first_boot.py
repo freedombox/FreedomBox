@@ -1,5 +1,4 @@
-"""
-First Boot: Initial Plinth Configuration.
+"""First Boot: Initial Plinth Configuration.
 
 See docs/design/first-connection.mdwn for details.
 
@@ -8,14 +7,10 @@ The Plinth first-connection process has several stages:
 0. The user connects to Plinth for the first time and is redirected from
    the home page to the Hello page.
 
-1. The user sets the Box's name, the administrator's name and
-   password, and the box's PGP key (optional).
+1. The user sets the Box's name, the administrator user name and password.
 
-2. The box generates and the user receives any PGP keys.
+2. The user interacts with the box normally.
 
-3. The box detects the network's configuration and restarts networking.
-
-4. The user interacts with the box normally.
 """
 
 from django import forms
@@ -29,14 +24,6 @@ from gettext import gettext as _
 from plinth.modules.config import config
 from plinth.modules.lib.auth import add_user
 from plinth import kvstore
-
-
-## TODO: flesh out these tests values
-def valid_box_key(value):
-    """Check whether box key is valid"""
-    del value  # Unused
-
-    return True
 
 
 class State0Form(forms.Form):  # pylint: disable-msg=W0232
@@ -57,40 +44,21 @@ than 63 characters in length.'),
     password = forms.CharField(label=_('Password'),
                                widget=forms.PasswordInput())
 
-    box_key = forms.CharField(
-        label=_('Box\'s key (optional)'), required=False,
-        widget=forms.Textarea(), validators=[valid_box_key],
-        help_text=_('Cryptographic keys are used so that Box\'s identity can \
-proved when talking to you.  This key can be auto-generated, but if one \
-already exists (from a prior FreedomBox, for example), you can paste it \
-below.  This key should not be the same as your key because you are not your \
-FreedomBox!'))
-
 
 def index(request):
     """Serve the index first boot page"""
     return state0(request)
 
 
-def generate_box_key():
-    """Generate a box key"""
-    return "fake key"
-
-
 def state0(request):
-    """
-    In this state, we do time config over HTTP, name the box and
-    server key selection.
+    """In this state, configure hostname and administrator username and
+    password.
 
-    All the parameters are form inputs.  They get passed in when
-    the form is submitted.  This method checks the inputs and if
-    they validate, uses them to take action.  If they do not
-    validate, it displays the form to give the user a chance to
-    input correct values.  It might display an error message (in
-    the message parameter).
+    All the parameters are form inputs.  They get passed in when the form is
+    submitted.  This method checks the inputs and if they validate, uses them
+    to take action.  If they do not validate, it displays the form to give the
+    user a chance to input correct values.  It might display an error message.
 
-    message is an optional string that we can display to the
-    user. It's a good place to put error messages.
     """
     try:
         if kvstore.get_default('firstboot_state', 0) >= 5:
@@ -98,7 +66,7 @@ def state0(request):
     except KeyError:
         pass
 
-    ## Until LDAP is in place, we'll put the box key in the cfg.store_file
+    # Until LDAP is in place, we'll put the box key in the cfg.store_file
     status = get_state0()
 
     form = None
@@ -123,18 +91,12 @@ def state0(request):
 
 def get_state0():
     """Return the state for form state 0"""
-    return {'hostname': config.get_hostname(),
-            'box_key': kvstore.get_default('box_key', None)}
+    return {'hostname': config.get_hostname()}
 
 
 def _apply_state0(request, old_state, new_state):
     """Apply changes in state 0 form"""
     success = True
-
-    if new_state['box_key']:
-        kvstore.set('box_key', new_state['box_key'])
-    elif not old_state['box_key']:
-        kvstore.set('box_key', generate_box_key())
 
     if old_state['hostname'] != new_state['hostname']:
         config.set_hostname(new_state['hostname'])
@@ -151,17 +113,13 @@ def _apply_state0(request, old_state, new_state):
 
 
 def state1(request):
-    """
-    State 1 is when we have a box name and key.  In this state,
-    our task is to provide a certificate and maybe to guide the
-    user through installing it.  We automatically move to State 2,
-    which is an HTTPS connection.
+    """State 1 is when we have a hostname and administrator account. Redirect
+    the user to login page after this.
 
-    TODO: HTTPS failure in State 2 should returns to state 1.
     """
     # TODO complete first_boot handling
     # Make sure the user is not stuck on a dead end for now.
     kvstore.set('firstboot_state', 5)
 
     return TemplateResponse(request, 'firstboot_state1.html',
-                            {'title': _('Installing the Certificate')})
+                            {'title': _('Setup Complete')})
