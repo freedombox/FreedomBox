@@ -16,7 +16,7 @@
 #
 
 """
-dashboard - a simple admin interface for the freedombox
+Dashboard - gives a quick overview of the apps/services of a freedombox
 """
 
 from plinth import actions, cfg
