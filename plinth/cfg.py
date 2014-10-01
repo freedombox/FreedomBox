@@ -1,8 +1,7 @@
-from plinth.menu import Menu
+import configparser
 import os
 
-import ConfigParser
-from ConfigParser import SafeConfigParser
+from plinth.menu import Menu
 
 product_name = None
 box_name = None
@@ -39,7 +38,7 @@ def read():
         directory = os.path.join(directory, '..')
         CONFIG_FILE = os.path.join(directory, 'plinth.config')
 
-    parser = SafeConfigParser(
+    parser = configparser.SafeConfigParser(
         defaults={
             'root': os.path.realpath(directory),
         })
@@ -63,9 +62,9 @@ def read():
         try:
             value = parser.get(section, name)
             globals()[name] = value
-        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError):
-            print ('Configuration does not contain the {}.{} option.'
-                   .format(section, name))
+        except (configparser.NoSectionError, configparser.NoOptionError):
+            print('Configuration does not contain the {}.{} option.'
+                  .format(section, name))
             raise
 
     global port  # pylint: disable-msg=W0603

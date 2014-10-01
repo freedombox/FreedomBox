@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- mode: python -*-
 #
 # This file is part of Plinth.
@@ -69,7 +69,7 @@ def subcommand_get_installed(_):
     with open('/dev/null', 'w') as file_handle:
         status = subprocess.call(['which', 'firewalld'], stdout=file_handle)
 
-    print 'installed' if not status else 'not installed'
+    print('installed' if not status else 'not installed')
 
 
 def subcommand_get_status(_):

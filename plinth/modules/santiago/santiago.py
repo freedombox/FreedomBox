@@ -52,7 +52,7 @@ class Santiago(PagePlugin):
             admin['santiago']['address'] = "b5wycujkfh2jxfdo.onion"
             cfg.users['admin'] = admin
             return cfg.users['admin']['santiago']['address']
-        print "Need to add these two lines to /etc/torrc:\n%s" % hidden_service_config
+        print("Need to add these two lines to /etc/torrc:\n%s" % hidden_service_config)
         return ""
 
     def check_for_hidden_service(self):
