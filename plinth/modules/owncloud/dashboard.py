@@ -33,6 +33,8 @@ def is_enabled():
     return get_status()['enabled']
 
 
+# We do not know the hostname of this freedombox when registering the app,
+# so we build the final URL in the custom template
 dashboard.register_app(name='owncloud', enable=enable, disable=disable,
                        is_enabled=is_enabled, url='/owncloud',
                        template='dashboard_owncloud.inc',

@@ -1,5 +1,3 @@
-{% extends "dashboard_app_default.inc" %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,12 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
+"""
+Custom django template filters
+"""
 
-{% load plinth_extras %}
-{% block appname %}
-  {# construct the final link to owncloud on this freedombox #}
-  <a href='{{ request.get_host|strip_port }}{{ app.url }}'>
-    {{ app.name|capfirst }}
-  </a>
-{% endblock %}
+from django import template
+register = template.Library()
+
+@register.filter
+def strip_port(path):
+    """Remove the port of a given path: 'freedombox:80' --> 'freedombox' """
+    return path.split(':')[0]
