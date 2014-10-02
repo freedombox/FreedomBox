@@ -33,8 +33,9 @@ def get_fbx_df():
 
 
 def init():
-    cfg.main_menu.add_urlname("Dashboard", "glyphicon-th-large",
-                              "dashboard:index", 105)
+    # separate dashboard menu item
+    #cfg.main_menu.add_urlname("Dashboard", "glyphicon-th-large",
+    #                          "dashboard:index", 105)
     register_statusline(name='df', template='dashboard_statusline_df.inc',
                         get_data=get_fbx_df)
 

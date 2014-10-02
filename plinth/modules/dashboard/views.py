@@ -34,7 +34,7 @@ class Index(TemplateView):
 
 
 def enable_app(request, module):
-    next = request.GET.get('next', reverse('dashboard:index'))
+    next = request.GET.get('next', reverse('index'))
     apps[module]['enable']()
     if not apps[module]['synchronous']:
         msg = """Enabling %s. It can take a couple of minutes until all
@@ -44,7 +44,7 @@ def enable_app(request, module):
 
 
 def disable_app(request, module):
-    next = request.GET.get('next', reverse('dashboard:index'))
+    next = request.GET.get('next', reverse('index'))
     apps[module]['disable']()
     if not apps[module]['synchronous']:
         msg = """Disabling %s. It can take a couple of minutes until all

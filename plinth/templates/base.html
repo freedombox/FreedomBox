@@ -61,7 +61,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="{% url 'index' %}" class="navbar-brand">
+        <a href="{% url 'index' %}" class="navbar-brand
+            {% url 'index' as indexurl %}
+            {% if request.path == indexurl %} active{% endif %}
+          ">
           <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                alt="FreedomBox" />
           FreedomBox

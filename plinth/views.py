@@ -21,11 +21,12 @@ Main Plinth views
 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from plinth.modules.dashboard import views as dashboard_views
 
 
 def index(request):
     """Serve the main index page"""
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('apps:index'))
+        return dashboard_views.Index.as_view()(request)
 
     return HttpResponseRedirect(reverse('help:about'))
