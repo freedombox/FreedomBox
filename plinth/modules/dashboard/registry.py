@@ -80,8 +80,8 @@ def import_dashboard_files(sender, **kwargs):
     Right now that's just a way to keep the dashboard module separated.
     We might remove this and just use the <module>.init() function.
     """
-    for modulename in sorted(module_loader.LOADED_MODULES):
-        path = "plinth.modules.%s.dashboard" % modulename
+    for modulepath in sorted(module_loader.loaded_modules):
+        path = "%s.dashboard" % modulepath
         try:
             importlib.import_module(path)
         except ImportError:
