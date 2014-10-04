@@ -84,6 +84,7 @@ setup(
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Unix Shell',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
         'Topic :: System :: Systems Administration',
