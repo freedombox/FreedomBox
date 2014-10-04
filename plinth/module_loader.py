@@ -41,8 +41,8 @@ def load_modules():
     pre_module_loading.send_robust(sender="module_loader")
     module_names = []
     modules = {}
-    directory = os.path.dirname(os.path.abspath(__file__))
-    for name in os.listdir(os.path.join(directory, 'modules', 'enabled')):
+    module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
+    for name in os.listdir(module_directory):
         full_name = 'plinth.modules.{module}'.format(module=name)
 
         LOGGER.info('Importing %s', full_name)
@@ -144,7 +144,8 @@ def get_template_directories():
     core_directory = os.path.join(directory, 'templates')
 
     directories = set((core_directory,))
-    for name in os.listdir(os.path.join(directory, 'modules', 'enabled')):
+    module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
+    for name in os.listdir(module_directory):
         directories.add(os.path.join(directory, 'modules', name, 'templates'))
 
     return directories

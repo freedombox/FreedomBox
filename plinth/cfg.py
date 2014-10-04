@@ -7,6 +7,7 @@ product_name = None
 box_name = None
 root = None
 file_root = None
+config_dir = None
 data_dir = None
 store_file = None
 actions_dir = None
@@ -48,6 +49,7 @@ def read():
                     ('Name', 'box_name'),
                     ('Path', 'root'),
                     ('Path', 'file_root'),
+                    ('Path', 'config_dir'),
                     ('Path', 'data_dir'),
                     ('Path', 'store_file'),
                     ('Path', 'actions_dir'),
