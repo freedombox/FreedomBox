@@ -32,6 +32,7 @@ from plinth.signals import pre_module_loading, post_module_loading
 LOGGER = logging.getLogger(__name__)
 
 loaded_modules = []
+_modules_to_load = None
 
 
 def load_modules():
@@ -41,17 +42,7 @@ def load_modules():
     """
     pre_module_loading.send_robust(sender="module_loader")
     modules = {}
-    module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
-    for file_name in os.listdir(module_directory):
-        full_file_name = os.path.join(module_directory, file_name)
-        with open(full_file_name, 'r') as file:
-            for line in file:
-                line = re.sub('#.*', '', line)
-                line = line.strip()
-                if line:
-                    modules[line] = None
-
-    for module_name in modules:
+    for module_name in get_modules_to_load():
         LOGGER.info('Importing %s', module_name)
         try:
             modules[module_name] = importlib.import_module(module_name)
@@ -143,14 +134,22 @@ def _initialize_module(module):
             raise
 
 
-def get_template_directories():
-    """Return the list of template directories"""
-    directory = os.path.dirname(os.path.abspath(__file__))
-    core_directory = os.path.join(directory, 'templates')
+def get_modules_to_load():
+    """Get the list of modules to be loaded"""
+    global _modules_to_load
+    if _modules_to_load is not None:
+        return _modules_to_load
 
-    directories = set((core_directory,))
+    modules = []
     module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
-    for name in os.listdir(module_directory):
-        directories.add(os.path.join(directory, 'modules', name, 'templates'))
+    for file_name in os.listdir(module_directory):
+        full_file_name = os.path.join(module_directory, file_name)
+        with open(full_file_name, 'r') as file:
+            for line in file:
+                line = re.sub('#.*', '', line)
+                line = line.strip()
+                if line:
+                    modules.append(line)
 
-    return directories
+    _modules_to_load = modules
+    return modules
