@@ -4,6 +4,7 @@ import argparse
 import django.conf
 import django.core.management
 import django.core.wsgi
+import importlib
 import logging
 import os
 import stat
@@ -98,9 +99,10 @@ def setup_server():
     # TODO: our modules are mimicking django apps. It'd be better to convert
     # our modules to Django apps instead of reinventing the wheel.
     # (we'll still have to serve the static files with cherrypy though)
-    for module in module_loader.LOADED_MODULES:
-        static_dir = os.path.join(cfg.file_root, 'plinth', 'modules', module,
-                                  'static')
+    for module_name in module_loader.loaded_modules:
+        module = importlib.import_module(module_name)
+        module_path = os.path.dirname(module.__file__)
+        static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):
             continue
 

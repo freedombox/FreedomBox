@@ -24,4 +24,4 @@ from .expert_mode import init
 
 __all__ = ['expert_mode', 'init']
 
-DEPENDS = ['system']
+depends = ['plinth.modules.system']

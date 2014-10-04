@@ -24,4 +24,4 @@ from .owncloud import init
 
 __all__ = ['owncloud', 'init']
 
-DEPENDS = ['apps']
+depends = ['plinth.modules.apps']

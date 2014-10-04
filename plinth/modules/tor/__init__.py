@@ -24,4 +24,4 @@ from .tor import init
 
 __all__ = ['tor', 'init']
 
-DEPENDS = ['apps']
+depends = ['plinth.modules.apps']

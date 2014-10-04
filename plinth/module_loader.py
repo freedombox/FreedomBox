@@ -23,6 +23,7 @@ import django
 import importlib
 import logging
 import os
+import re
 
 from plinth import cfg
 from plinth import urls
@@ -30,7 +31,7 @@ from plinth.signals import pre_module_loading, post_module_loading
 
 LOGGER = logging.getLogger(__name__)
 
-LOADED_MODULES = []
+loaded_modules = []
 
 
 def load_modules():
@@ -39,27 +40,30 @@ def load_modules():
     import them from modules directory.
     """
     pre_module_loading.send_robust(sender="module_loader")
-    module_names = []
     modules = {}
     module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
-    for name in os.listdir(module_directory):
-        full_name = 'plinth.modules.{module}'.format(module=name)
+    for file_name in os.listdir(module_directory):
+        full_file_name = os.path.join(module_directory, file_name)
+        with open(full_file_name, 'r') as file:
+            for line in file:
+                line = re.sub('#.*', '', line)
+                line = line.strip()
+                if line:
+                    modules[line] = None
 
-        LOGGER.info('Importing %s', full_name)
+    for module_name in modules:
+        LOGGER.info('Importing %s', module_name)
         try:
-            module = importlib.import_module(full_name)
-            modules[name] = module
-            module_names.append(name)
+            modules[module_name] = importlib.import_module(module_name)
         except Exception as exception:
-            LOGGER.exception('Could not import modules/%s: %s',
-                             name, exception)
+            LOGGER.exception('Could not import %s: %s', module_name, exception)
             if cfg.debug:
                 raise
 
-        _include_module_urls(full_name, name)
+        _include_module_urls(module_name)
 
     ordered_modules = []
-    remaining_modules = dict(modules)
+    remaining_modules = dict(modules)  # Make a copy
     for module_name in modules:
         if module_name not in remaining_modules:
             continue
@@ -76,9 +80,9 @@ def load_modules():
 
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
-        LOADED_MODULES.append(module_name)
-    post_module_loading.send_robust(sender="module_loader")
+        loaded_modules.append(module_name)
 
+    post_module_loading.send_robust(sender="module_loader")
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):
@@ -88,7 +92,7 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
 
     dependencies = []
     try:
-        dependencies = module.DEPENDS
+        dependencies = module.depends
     except AttributeError:
         pass
 
@@ -108,8 +112,9 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
     ordered_modules.append(module_name)
 
 
-def _include_module_urls(module_name, namespace):
+def _include_module_urls(module_name):
     """Include the module's URLs in global project URLs list"""
+    namespace = module_name.split('.')[-1]
     url_module = module_name + '.urls'
     try:
         urls.urlpatterns += django.conf.urls.patterns(

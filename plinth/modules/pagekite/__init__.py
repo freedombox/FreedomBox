@@ -24,4 +24,4 @@ from .pagekite import init
 
 __all__ = ['pagekite', 'init']
 
-DEPENDS = ['apps']
+depends = ['plinth.modules.apps']
