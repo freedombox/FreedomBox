@@ -24,7 +24,7 @@ from distutils import log
 from distutils.command.install_data import install_data
 import glob
 import os
-from setuptools import find_packages, setup
+import setuptools
 import shutil
 import subprocess
 
@@ -39,7 +39,7 @@ DIRECTORIES_TO_CREATE = [
 
 DIRECTORIES_TO_COPY = [
     ('/usr/share/plinth/static', 'static'),
-    ('/usr/share/doc/plinth/', 'doc'),
+    ('/usr/share/doc/plinth', 'doc'),
 ]
 
 
@@ -64,12 +64,15 @@ class CustomInstallData(install_data):
                 shutil.copytree(source, target)
 
 
-setup(
+find_packages = setuptools.PEP420PackageFinder.find
+setuptools.setup(
     name='Plinth',
     version=__version__,
     description='A web front end for administering FreedomBox',
+    author='Plinth Authors',
+    author_email='freedombox-discuss@lists.alioth.debian.org',
     url='http://freedomboxfoundation.org',
-    packages=find_packages(),
+    packages=find_packages(include=['plinth.*'], exclude=['*.templates']),
     scripts=['bin/plinth'],
     test_suite='plinth.tests.TEST_SUITE',
     license='COPYING',
@@ -89,13 +92,14 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
         'Topic :: System :: Systems Administration',
     ],
+    setup_requires=['setuptools-git'],
     install_requires=[
         'cherrypy >= 3.0',
         'django >= 1.7.0',
         'django-bootstrap-form'
     ],
-    package_data={'plinth': ['modules/enabled/*',
-                             'templates/*',
+    include_package_data=True,
+    package_data={'plinth': ['templates/*',
                              'modules/*/templates/*']},
     data_files=[('/etc/init.d', ['data/etc/init.d/plinth']),
                 ('/usr/lib/freedombox/setup.d/',
@@ -109,6 +113,9 @@ setup(
                 ('/usr/share/plinth/actions',
                  glob.glob(os.path.join('actions', '*'))),
                 ('/usr/share/man/man1', ['doc/plinth.1']),
-                ('/etc/plinth', ['data/etc/plinth/plinth.config'])],
+                ('/etc/plinth', ['data/etc/plinth/plinth.config']),
+                ('/etc/plinth/modules-enabled',
+                 glob.glob(os.path.join('data/etc/plinth/modules-enabled',
+                                        '*')))],
     cmdclass={'install_data': CustomInstallData},
 )
