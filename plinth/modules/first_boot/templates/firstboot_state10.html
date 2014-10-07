@@ -22,7 +22,11 @@
 
 {% block main_block %}
 
+{% if user.is_authenticated %}
+  <p>Have fun with your freedombox!</p>
+{% else %}
   <p>Proceed to <a href="{% url 'lib:login' %}">login</a>.</p>
+{% endif %}
 
 {% endblock %}
 
