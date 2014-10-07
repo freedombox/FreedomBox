@@ -35,19 +35,14 @@ class FirstBootMiddleware(object):
 
     @staticmethod
     def process_request(request):
-        """Handle a request as Django middleware request handler."""
-        # Prevent redirecting to first boot wizard in a loop by
-        # checking if we are already in first boot wizard.
-        if request.path.startswith(reverse('first_boot:index')):
-            return
-
         state = kvstore.get_default('firstboot_state', 0)
-        if not state:
-            # Permanent redirect causes the browser to cache the redirect,
-            # preventing the user from navigating to /plinth until the
-            # browser is restarted.
-            return HttpResponseRedirect(reverse('first_boot:index'))
+        firstboot_index_url = reverse('first_boot:index')
+        user_requests_firstboot = request.path.startswith(firstboot_index_url)
 
-        if state < 5:
-            LOGGER.info('First boot state - %d', state)
+        # Setup is complete: Forbid accessing firstboot
+        if state >= 10 and user_requests_firstboot:
+            return HttpResponseRedirect(reverse('index'))
+
+        # Setup is not complete: Forbid accessing anything but firstboot
+        if state < 10 and not user_requests_firstboot:
             return HttpResponseRedirect(reverse('first_boot:state%d' % state))
