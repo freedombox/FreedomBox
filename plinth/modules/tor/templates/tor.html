@@ -20,17 +20,28 @@
 
 {% block main_block %}
 
-<p>Tor is an anonymous communication system. You can learn more about
-it from the <a href="https://www.torproject.org/">Tor Project</a>
-website. For best protection when web surfing, the Tor Project
-recommends that you use
-the <a href="https://www.torproject.org/download/download-easy.html.en">Tor
-Browser Bundle</a>.</p>
+<h3>Status</h3>
 
-<p>A Tor SOCKS port is available on your FreedomBox on TCP port
-9050.</p>
+<br style='clear:both'>
+{% if is_running %}
+  <div class='circle active'></div> Tor is running
+{% else %}
+  <div class='circle inactive'></div> Tor is not running
+{% endif %}
+<br style='clear:both'>
 
-<p>Your FreedomBox is configured as a Tor bridge with obfsproxy, so it
+<p><h3>Hidden Service</h3>
+A hidden service will allow your FreedomBox to provide selected
+services (such as OwnCloud or Chat) without revealing its location.
+Here is the current configuration:
+<ul>
+  <li>Hostname: {{ tor_hs_hostname }}</li>
+  <li>Ports: {{ tor_hs_ports }}</li>
+</ul>
+</p>
+
+<p><h3>Bridge</h3>
+Your FreedomBox is configured as a Tor bridge with obfsproxy, so it
 can help circumvent censorship. If your FreedomBox is behind a router
 or firewall, you should make sure the following ports are open, and
 port-forwarded, if necessary:</p>
@@ -43,5 +54,27 @@ port-forwarded, if necessary:</p>
     </tr>
   {% endfor %}
 </table>
+<br style='clear:both'>
+
+<p><h3>SOCKS</h3>
+A Tor SOCKS port is available on your FreedomBox on TCP port
+9050.</p>
+
+{% endblock %}
+
+{% block sidebar_right_block %}
+
+  <div class="well sidebar-nav">
+
+    <h3>Tor</h3>
+
+    <p>Tor is an anonymous communication system. You can learn more about
+      it from the <a href="https://www.torproject.org/">Tor Project</a>
+      website. For best protection when web surfing, the Tor Project
+      recommends that you use
+      the <a href="https://www.torproject.org/download/download-easy.html.en">Tor
+	Browser Bundle</a>.</p>
+
+  </div>
 
 {% endblock %}

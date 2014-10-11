@@ -24,4 +24,4 @@ from .users import init
 
 __all__ = ['users', 'init']
 
-DEPENDS = ['system']
+depends = ['plinth.modules.system']

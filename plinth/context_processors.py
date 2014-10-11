@@ -20,7 +20,8 @@ Django context processors to provide common data to templates.
 """
 
 import re
-import cfg
+
+from plinth import cfg
 
 
 def common(request):

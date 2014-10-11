@@ -60,7 +60,7 @@ def index(request):
     return TemplateResponse(
         request, 'firewall.html',
         {'title': _('Firewall'),
-         'services': service_module.SERVICES.values(),
+         'services': list(service_module.SERVICES.values()),
          'internal_enabled_services': internal_enabled_services,
          'external_enabled_services': external_enabled_services})
 

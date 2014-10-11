@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 
 import os

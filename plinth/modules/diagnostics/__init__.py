@@ -24,4 +24,4 @@ from .diagnostics import init
 
 __all__ = ['diagnostics', 'init']
 
-DEPENDS = ['system']
+depends = ['plinth.modules.system']

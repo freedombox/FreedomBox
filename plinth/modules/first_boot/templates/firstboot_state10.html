@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,12 +16,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-Plinth module to configure santiago port
-"""
+{% load bootstrap %}
 
-from . import santiago
+{% block main_block %}
 
+{% if user.is_authenticated %}
+  <p>Have fun with your freedombox!</p>
+{% else %}
+  <p>Proceed to <a href="{% url 'lib:login' %}">login</a>.</p>
+{% endif %}
 
-__all__ = ['santiago']
+{% endblock %}
+
+{% block sidebar_right_block %}
+
+  {% include "firstboot_sidebar.html" %}
+
+{% endblock %}

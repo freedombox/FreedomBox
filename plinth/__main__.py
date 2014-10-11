@@ -4,6 +4,7 @@ import argparse
 import django.conf
 import django.core.management
 import django.core.wsgi
+import importlib
 import logging
 import os
 import stat
@@ -95,12 +96,11 @@ def setup_server():
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
 
-    # TODO: our modules are mimicking django apps. It'd be better to convert
-    # our modules to Django apps instead of reinventing the wheel.
-    # (we'll still have to serve the static files with cherrypy though)
-    for module in module_loader.LOADED_MODULES:
-        static_dir = os.path.join(cfg.file_root, 'plinth', 'modules', module,
-                                  'static')
+    for module_import_path in module_loader.loaded_modules:
+        module = importlib.import_module(module_import_path)
+        module_name = module_import_path.split('.')[-1]
+        module_path = os.path.dirname(module.__file__)
+        static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):
             continue
 
@@ -108,7 +108,7 @@ def setup_server():
             '/': {'tools.staticdir.root': static_dir,
                   'tools.staticdir.on': True,
                   'tools.staticdir.dir': '.'}}
-        urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module)
+        urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
         cherrypy.tree.mount(None, urlprefix, config)
 
     if not cfg.no_daemon:
@@ -161,7 +161,12 @@ def configure_django():
             }
         }
 
-    template_directories = module_loader.get_template_directories()
+    applications = ['bootstrapform',
+                    'django.contrib.auth',
+                    'django.contrib.contenttypes',
+                    'django.contrib.messages',
+                    'plinth']
+    applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
     django.conf.settings.configure(
         ALLOWED_HOSTS=['127.0.0.1', 'localhost'],
@@ -171,11 +176,7 @@ def configure_django():
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
         DEBUG=cfg.debug,
-        INSTALLED_APPS=['bootstrapform',
-                        'django.contrib.auth',
-                        'django.contrib.contenttypes',
-                        'django.contrib.messages',
-                        'plinth'],
+        INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
         LOGIN_URL='lib:login',
         LOGIN_REDIRECT_URL='apps:index',
@@ -193,11 +194,10 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        TEMPLATE_CONTEXT_PROCESSORS=context_processors,
-        TEMPLATE_DIRS=template_directories)
+        TEMPLATE_CONTEXT_PROCESSORS=context_processors)
+    django.setup()
 
-    LOGGER.info('Configured Django')
-    LOGGER.info('Template directories - %s', template_directories)
+    LOGGER.info('Configured Django with applications - %s', applications)
 
     LOGGER.info('Creating or adding new tables to data file')
     django.core.management.call_command('syncdb', interactive=False)

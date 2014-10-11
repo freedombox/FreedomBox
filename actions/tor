@@ -1,0 +1,124 @@
+#!/usr/bin/python
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for the Tor service
+"""
+
+import argparse
+import subprocess
+
+SERVICE_CONFIG = '/etc/default/tor'
+TOR_CONFIG = '/etc/tor/torrc'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether Tor is running
+    subparsers.add_parser('is-running', help='Get whether Tor is running')
+
+    # Start Tor and enable service
+    subparsers.add_parser('start', help='Start Tor service')
+
+    # Stop Tor and disable service
+    subparsers.add_parser('stop', help='Stop Tor service')
+
+    # Get currently configured Tor hidden service
+    subparsers.add_parser('get-hs', help='Get hidden service')
+
+    return parser.parse_args()
+
+
+def subcommand_is_running(_):
+    """Get whether Tor is running"""
+    try:
+        output = subprocess.check_output(['service', 'tor', 'status'])
+    except subprocess.CalledProcessError:
+        # if tor is not running we get a status code != 0 and a
+        # CalledProcessError
+        print "no"
+    else:
+        running = False
+        for line in output.split('\n'):
+            if "Active" in line and "running" in line:
+                running = True
+                break
+        print "yes" if running else "no"
+
+
+def subcommand_start(_):
+    """Start Tor and enable it as service"""
+    set_tor_service(enable=True)
+    subprocess.call(['service', 'tor', 'start'])
+
+
+def subcommand_stop(_):
+    """Start Tor and enable it as service"""
+    set_tor_service(enable=False)
+    subprocess.call(['service', 'tor', 'stop'])
+
+
+def subcommand_get_hs(_):
+    """Get currently configured Tor hidden service"""
+    hs_dir = ""
+    hs_ports = []
+
+    with open(TOR_CONFIG, 'r') as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.startswith('HiddenServiceDir'):
+                hs_dir = line.split()[1]
+            elif line.startswith('HiddenServicePort'):
+                hs_ports.append(line.split()[1])
+
+    if hs_dir != "":
+        with open(hs_dir + 'hostname', 'r') as file:
+            hs_hostname = file.read().strip()
+
+        print hs_hostname + ' ' + ','.join(hs_ports)
+
+
+def set_tor_service(enable):
+    """Enable/disable tor service; enable: boolean"""
+    newline = "RUN_DAEMON=\"yes\"\n" if enable else "RUN_DAEMON=\"no\"\n"
+
+    with open(SERVICE_CONFIG, 'r') as file:
+        lines = file.readlines()
+        for i, line in enumerate(lines):
+            if line.startswith('RUN_DAEMON'):
+                lines[i] = newline
+                break
+    with open(SERVICE_CONFIG, 'w') as file:
+        file.writelines(lines)
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == "__main__":
+    main()

@@ -24,4 +24,4 @@ from .xmpp import init
 
 __all__ = ['xmpp', 'init']
 
-DEPENDS = ['apps']
+depends = ['plinth.modules.apps']

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- mode: python -*-
 #
 # This file is part of Plinth.
@@ -96,7 +96,7 @@ def subcommand_get_installed(_):
     with open('/dev/null', 'w') as file_handle:
         status = subprocess.call(['which', 'pagekite'], stdout=file_handle)
 
-    print 'installed' if not status else 'not installed'
+    print('installed' if not status else 'not installed')
 
 
 def subcommand_start(_):
@@ -116,7 +116,7 @@ def subcommand_stop(_):
 def subcommand_get_status(_):
     """Print status of the pagekite service"""
     is_enabled = is_pagekite_enabled()
-    print 'enabled' if is_enabled else 'disabled'
+    print('enabled' if is_enabled else 'disabled')
 
 
 def is_pagekite_enabled():
@@ -139,19 +139,19 @@ def subcommand_set_status(arguments):
     enable = arguments.enable == 'enable'
     is_enabled = is_pagekite_enabled()
     if enable and is_enabled:
-        print 'already enabled'
+        print('already enabled')
         return
 
     if not enable and not is_enabled:
-        print 'already disabled'
+        print('already disabled')
         return
 
     if enable:
         pagekite_enable()
-        print 'enabled'
+        print('enabled')
     else:
         pagekite_disable()
-        print 'disabled'
+        print('disabled')
 
 
 def pagekite_enable():
@@ -192,8 +192,8 @@ def subcommand_get_kite(_):
                 kite_secret = match.group(1)
                 continue
 
-    print kite_name
-    print kite_secret
+    print(kite_name)
+    print(kite_secret)
 
 
 def subcommand_set_kite(arguments):
@@ -205,7 +205,7 @@ def subcommand_set_kite(arguments):
     file_path_new = os.path.join(CONFIG_DIR, '10_account.rc.new')
     with open(file_path, 'r') as read_file_object, \
             os.fdopen(os.open(file_path_new, os.O_WRONLY | os.O_CREAT,
-                              0400), 'w') as write_file_object:
+                              0o400), 'w') as write_file_object:
         for line in read_file_object:
             if re.match(r'[ \t]*kitename[ \t]*=.*', line):
                 write_file_object.write(
@@ -225,7 +225,7 @@ def subcommand_set_kite(arguments):
 def subcommand_get_service_status(arguments):
     """Print status of the pagekite service"""
     is_enabled = is_service_enabled(arguments.service)
-    print 'enabled' if is_enabled else 'disabled'
+    print('enabled' if is_enabled else 'disabled')
 
 
 def is_service_enabled(service):
@@ -253,19 +253,19 @@ def subcommand_set_service_status(arguments):
     enable = arguments.enable == 'enable'
     is_enabled = is_service_enabled(arguments.service)
     if enable and is_enabled:
-        print 'already enabled'
+        print('already enabled')
         return
 
     if not enable and not is_enabled:
-        print 'already disabled'
+        print('already disabled')
         return
 
     if enable:
         service_enable(arguments.service)
-        print 'enabled'
+        print('enabled')
     else:
         service_disable(arguments.service)
-        print 'disabled'
+        print('disabled')
 
 
 def service_enable(service_name):

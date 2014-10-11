@@ -23,6 +23,7 @@ import django
 import importlib
 import logging
 import os
+import re
 
 from plinth import cfg
 from plinth import urls
@@ -30,7 +31,8 @@ from plinth.signals import pre_module_loading, post_module_loading
 
 LOGGER = logging.getLogger(__name__)
 
-LOADED_MODULES = []
+loaded_modules = []
+_modules_to_load = None
 
 
 def load_modules():
@@ -39,27 +41,20 @@ def load_modules():
     import them from modules directory.
     """
     pre_module_loading.send_robust(sender="module_loader")
-    module_names = []
     modules = {}
-    directory = os.path.dirname(os.path.abspath(__file__))
-    for name in os.listdir(os.path.join(directory, 'modules', 'enabled')):
-        full_name = 'plinth.modules.{module}'.format(module=name)
-
-        LOGGER.info('Importing %s', full_name)
+    for module_name in get_modules_to_load():
+        LOGGER.info('Importing %s', module_name)
         try:
-            module = importlib.import_module(full_name)
-            modules[name] = module
-            module_names.append(name)
+            modules[module_name] = importlib.import_module(module_name)
         except Exception as exception:
-            LOGGER.exception('Could not import modules/%s: %s',
-                             name, exception)
+            LOGGER.exception('Could not import %s: %s', module_name, exception)
             if cfg.debug:
                 raise
 
-        _include_module_urls(full_name, name)
+        _include_module_urls(module_name)
 
     ordered_modules = []
-    remaining_modules = dict(modules)
+    remaining_modules = dict(modules)  # Make a copy
     for module_name in modules:
         if module_name not in remaining_modules:
             continue
@@ -76,9 +71,9 @@ def load_modules():
 
     for module_name in ordered_modules:
         _initialize_module(modules[module_name])
-        LOADED_MODULES.append(module_name)
-    post_module_loading.send_robust(sender="module_loader")
+        loaded_modules.append(module_name)
 
+    post_module_loading.send_robust(sender="module_loader")
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):
@@ -88,7 +83,7 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
 
     dependencies = []
     try:
-        dependencies = module.DEPENDS
+        dependencies = module.depends
     except AttributeError:
         pass
 
@@ -108,8 +103,9 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
     ordered_modules.append(module_name)
 
 
-def _include_module_urls(module_name, namespace):
+def _include_module_urls(module_name):
     """Include the module's URLs in global project URLs list"""
+    namespace = module_name.split('.')[-1]
     url_module = module_name + '.urls'
     try:
         urls.urlpatterns += django.conf.urls.patterns(
@@ -138,13 +134,25 @@ def _initialize_module(module):
             raise
 
 
-def get_template_directories():
-    """Return the list of template directories"""
-    directory = os.path.dirname(os.path.abspath(__file__))
-    core_directory = os.path.join(directory, 'templates')
+def get_modules_to_load():
+    """Get the list of modules to be loaded"""
+    global _modules_to_load
+    if _modules_to_load is not None:
+        return _modules_to_load
 
-    directories = set((core_directory,))
-    for name in os.listdir(os.path.join(directory, 'modules', 'enabled')):
-        directories.add(os.path.join(directory, 'modules', name, 'templates'))
+    modules = []
+    module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
+    # omit hidden files
+    file_names = [f for f in os.listdir(module_directory) if not
+                  f.startswith(".")]
+    for file_name in file_names:
+        full_file_name = os.path.join(module_directory, file_name)
+        with open(full_file_name, 'r') as file:
+            for line in file:
+                line = re.sub('#.*', '', line)
+                line = line.strip()
+                if line:
+                    modules.append(line)
 
-    return directories
+    _modules_to_load = modules
+    return modules
