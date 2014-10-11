@@ -47,8 +47,19 @@ def index(request):
         except ValueError:
             continue
 
+    output = actions.superuser_run("tor", ["get-hs"])
+    if output == "":
+        tor_hs_hostname = "Not Configured"
+        tor_hs_ports = ""
+    else:
+        hs_info = output.split()
+        tor_hs_hostname = hs_info[0]
+        tor_hs_ports = hs_info[1]
+
     is_running = actions.superuser_run("tor", ["is-running"]).strip() == "yes"
     return TemplateResponse(request, 'tor.html',
                             {'title': _('Tor Control Panel'),
+                             'tor_hs_hostname': tor_hs_hostname,
+                             'tor_hs_ports': tor_hs_ports,
                              'tor_ports': tor_ports,
                              'is_running': is_running})
