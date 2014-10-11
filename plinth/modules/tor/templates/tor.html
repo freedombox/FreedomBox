@@ -20,10 +20,18 @@
 
 {% block main_block %}
 
-<p>A Tor SOCKS port is available on your FreedomBox on TCP port
-9050.</p>
+<h3>Status</h3>
 
-<p>Your FreedomBox is configured as a Tor bridge with obfsproxy, so it
+<br style='clear:both'>
+{% if is_running %}
+  <div class='circle active'></div> Tor is running
+{% else %}
+  <div class='circle inactive'></div> Tor is not running
+{% endif %}
+<br style='clear:both'>
+
+<p><h3>Bridge</h3>
+Your FreedomBox is configured as a Tor bridge with obfsproxy, so it
 can help circumvent censorship. If your FreedomBox is behind a router
 or firewall, you should make sure the following ports are open, and
 port-forwarded, if necessary:</p>
@@ -36,13 +44,11 @@ port-forwarded, if necessary:</p>
     </tr>
   {% endfor %}
 </table>
-
 <br style='clear:both'>
-{% if is_running %}
-  <div class='circle active'></div> Tor is running
-{% else %}
-  <div class='circle inactive'></div> Tor is not running
-{% endif %}
+
+<p><h3>SOCKS</h3>
+A Tor SOCKS port is available on your FreedomBox on TCP port
+9050.</p>
 
 {% endblock %}
 
