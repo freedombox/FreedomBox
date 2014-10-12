@@ -41,7 +41,7 @@ servers.  Basic users should never even know those options exist.
 
 See the INSTALL file for additional details and dependencies. To install run:
 
-    $ sudo python setup.py install
+    $ sudo python3 setup.py install
 
 Run Plinth on the local system with:
 
