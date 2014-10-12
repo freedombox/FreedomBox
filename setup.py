@@ -61,7 +61,7 @@ class CustomInstallData(install_data):
         for target, source in DIRECTORIES_TO_COPY:
             if not os.path.exists(target):
                 log.info("recursive copy '%s' to '%s'", source, target)
-                shutil.copytree(source, target)
+                shutil.copytree(source, target, symlinks=True)
 
 
 find_packages = setuptools.PEP420PackageFinder.find
