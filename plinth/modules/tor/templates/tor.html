@@ -18,6 +18,8 @@
 #
 {% endcomment %}
 
+{% load bootstrap %}
+
 {% block main_block %}
 
 <h3>Status</h3>
@@ -38,6 +40,15 @@ Here is the current configuration:
   <li>Hostname: {{ tor_hs_hostname }}</li>
   <li>Ports: {{ tor_hs_ports }}</li>
 </ul>
+
+<form class="form" method="post">
+  {% csrf_token %}
+
+  {{ form|bootstrap }}
+
+  <input type="submit" class="btn-primary" value="Update setup"/>
+</form>
+
 </p>
 
 <p><h3>Bridge</h3>

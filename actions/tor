@@ -94,16 +94,16 @@ def subcommand_enable_hs(_):
     if get_hidden_service() != "":
         return
 
-    with open(TOR_CONFIG, 'r') as file:
-        lines = file.readlines()
+    with open(TOR_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
 
     lines.append("# Hidden Service configured by Plinth\n")
     lines.append("HiddenServiceDir /var/lib/tor/hidden_service/\n")
     lines.append("HiddenServicePort 80 127.0.0.1:80\n")
     lines.append("HiddenServicePort 443 127.0.0.1:443\n")
 
-    with open(TOR_CONFIG, 'w') as file:
-        file.writelines(lines)
+    with open(TOR_CONFIG, 'w') as conffile:
+        conffile.writelines(lines)
 
     subprocess.call(['service', 'tor', 'restart'])
 
@@ -114,26 +114,28 @@ def subcommand_disable_hs(_):
     if not get_hidden_service():
         return
 
-    with open(TOR_CONFIG, 'r') as file:
-        lines = file.readlines()
+    with open(TOR_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
 
         filtered_lines = []
         removing = False
         for line in lines:
             if removing:
                 if not line.startswith("HiddenService"):
-                    # end of Plinth hidden service block -- stop removing lines
+                    # end of Plinth hidden service block
+                    # stop removing lines
                     removing = False
                     filtered_lines.append(line)
             else:
                 if line.startswith("# Hidden Service configured by Plinth"):
-                    # start of Plinth hidden service block -- remove following HiddenService lines
+                    # start of Plinth hidden service block
+                    # remove following HiddenService lines
                     removing = True
                 else:
                     filtered_lines.append(line)
 
-    with open(TOR_CONFIG, 'w') as file:
-        file.writelines(filtered_lines)
+    with open(TOR_CONFIG, 'w') as conffile:
+        conffile.writelines(filtered_lines)
 
     subprocess.call(['service', 'tor', 'restart'])
 
@@ -157,8 +159,8 @@ def get_hidden_service():
     hs_dir = ""
     hs_ports = []
 
-    with open(TOR_CONFIG, 'r') as file:
-        lines = file.readlines()
+    with open(TOR_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
         for line in lines:
             if line.startswith('HiddenServiceDir'):
                 hs_dir = line.split()[1]
@@ -168,8 +170,8 @@ def get_hidden_service():
     if hs_dir == "":
         return ""
 
-    with open(hs_dir + 'hostname', 'r') as file:
-        hs_hostname = file.read().strip()
+    with open(hs_dir + 'hostname', 'r') as conffile:
+        hs_hostname = conffile.read().strip()
 
     return hs_hostname + ' ' + ','.join(hs_ports)
 
