@@ -49,6 +49,8 @@ def index(request):
 
     form = None
 
+    is_expert = request.user.groups.filter(name='Expert').exists()
+
     if request.method == 'POST':
         form = TorForm(request.POST, prefix='tor')
         # pylint: disable=E1101
@@ -66,7 +68,8 @@ def index(request):
                              'tor_hs_enabled': status['hs_enabled'],
                              'tor_hs_hostname': status['hs_hostname'],
                              'tor_hs_ports': status['hs_ports'],
-                             'form': form})
+                             'form': form,
+                             'is_expert': is_expert})
 
 
 def get_status():

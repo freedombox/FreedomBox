@@ -32,6 +32,8 @@
 {% endif %}
 <br style='clear:both'>
 
+{% if is_expert %}
+
 <p><h3>Hidden Service</h3>
 A hidden service will allow your FreedomBox to provide selected
 services (such as OwnCloud or Chat) without revealing its location.
@@ -70,6 +72,12 @@ port-forwarded, if necessary:</p>
 <p><h3>SOCKS</h3>
 A Tor SOCKS port is available on your FreedomBox on TCP port
 9050.</p>
+
+{% else %}
+
+<p>Additional information and options are available for expert users.</p>
+
+{% endif %}
 
 {% endblock %}
 
