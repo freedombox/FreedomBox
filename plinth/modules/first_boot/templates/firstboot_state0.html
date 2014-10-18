@@ -18,28 +18,24 @@
 #
 {% endcomment %}
 
+{% load static %}
 {% load bootstrap %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'first_boot/state0.css' %}"/>
+{% endblock %}
 
 {% block main_block %}
 
   <h2>Welcome to Your FreedomBox!</h2>
 
-  <p>Welcome.  It looks like this FreedomBox isn't set up yet.  We'll
-    need to ask you a just few questions to get started.</p>
+  <p>It looks like this FreedomBox isn't set up yet.  We
+    need to ask you a few questions to get started.</p>
+  <br>
 
   <form class="form" method="post">
     {% csrf_token %}
-
-    {% include 'bootstrapform/field.html' with field=form.hostname %}
-
-    <p><strong>Initial user and password.</strong> Access to this web
-      interface is protected by knowing a username and password.
-      Provide one here to register the initial privileged user.  The
-      password can be changed and other users added later.</p>
-
-    {% include 'bootstrapform/field.html' with field=form.username %}
-    {% include 'bootstrapform/field.html' with field=form.password %}
-
+    {{ form|bootstrap }}
     <input type="submit" class="btn-primary" value="Box it up!"/>
 
   </form>
@@ -47,7 +43,11 @@
 {% endblock %}
 
 {% block sidebar_right_block %}
-
   {% include "firstboot_sidebar.html" %}
+{% endblock %}
 
+{% block page_js %}
+  <script>
+    $('#id_hostname').focus();
+  </script>
 {% endblock %}

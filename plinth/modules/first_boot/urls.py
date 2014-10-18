@@ -20,11 +20,13 @@ URLs for the First Boot module
 """
 
 from django.conf.urls import patterns, url
+from .views import State0View
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.first_boot.first_boot',
-    url(r'^firstboot/$', 'index', name='index'),
-    url(r'^firstboot/state0/$', 'state0', name='state0'),
-    url(r'^firstboot/state1/$', 'state1', name='state1')
+    'plinth.modules.first_boot.views',
+    # Take care of the firstboot middleware when changing URLs
+    url(r'^firstboot/$', State0View.as_view(), name='index'),
+    url(r'^firstboot/state0/$', State0View.as_view(), name='state0'),
+    url(r'^firstboot/state10/$', 'state10', name='state10'),
     )

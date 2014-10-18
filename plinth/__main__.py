@@ -96,8 +96,9 @@ def setup_server():
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
 
-    for module_name in module_loader.loaded_modules:
-        module = importlib.import_module(module_name)
+    for module_import_path in module_loader.loaded_modules:
+        module = importlib.import_module(module_import_path)
+        module_name = module_import_path.split('.')[-1]
         module_path = os.path.dirname(module.__file__)
         static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):
@@ -107,7 +108,7 @@ def setup_server():
             '/': {'tools.staticdir.root': static_dir,
                   'tools.staticdir.on': True,
                   'tools.staticdir.dir': '.'}}
-        urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module)
+        urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
         cherrypy.tree.mount(None, urlprefix, config)
 
     if not cfg.no_daemon:
