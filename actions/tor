@@ -101,6 +101,7 @@ def subcommand_enable_hs(_):
     lines.append("HiddenServiceDir /var/lib/tor/hidden_service/\n")
     lines.append("HiddenServicePort 80 127.0.0.1:80\n")
     lines.append("HiddenServicePort 443 127.0.0.1:443\n")
+    lines.append("# end of Plinth Hidden Service config\n")
 
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
@@ -121,7 +122,11 @@ def subcommand_disable_hs(_):
         removing = False
         for line in lines:
             if removing:
-                if not line.startswith("HiddenService"):
+                if line.startswith("# end of Plinth Hidden Service config"):
+                    # last line of Plinth hidden service block
+                    # stop removing after this line
+                    removing = False
+                elif not line.startswith("HiddenService"):
                     # end of Plinth hidden service block
                     # stop removing lines
                     removing = False
