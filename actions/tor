@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- mode: python -*-
 #
 # This file is part of Plinth.
@@ -22,6 +22,7 @@ Configuration helper for the Tor service
 """
 
 import argparse
+import os
 import subprocess
 
 SERVICE_CONFIG = '/etc/default/tor'
@@ -59,16 +60,17 @@ def subcommand_is_running(_):
     try:
         output = subprocess.check_output(['service', 'tor', 'status'])
     except subprocess.CalledProcessError:
-        # if tor is not running we get a status code != 0 and a
+        # If Tor is not running we get a status code != 0 and a
         # CalledProcessError
-        print "no"
+        print('no')
     else:
         running = False
-        for line in output.split('\n'):
-            if "Active" in line and "running" in line:
+        for line in output.decode().split('\n'):
+            if 'Active' in line and 'running' in line:
                 running = True
                 break
-        print "yes" if running else "no"
+
+        print('yes' if running else 'no')
 
 
 def subcommand_start(_):
@@ -78,30 +80,29 @@ def subcommand_start(_):
 
 
 def subcommand_stop(_):
-    """Start Tor and enable it as service"""
+    """Stop Tor and disable it as service"""
     set_tor_service(enable=False)
     subprocess.call(['service', 'tor', 'stop'])
 
 
 def subcommand_get_hs(_):
     """Print currently configured Tor hidden service information"""
-    print get_hidden_service()
+    print(get_hidden_service())
 
 
 def subcommand_enable_hs(_):
     """Enable Tor hidden service"""
-
-    if get_hidden_service() != "":
+    if get_hidden_service():
         return
 
     with open(TOR_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
 
-    lines.append("# Hidden Service configured by Plinth\n")
-    lines.append("HiddenServiceDir /var/lib/tor/hidden_service/\n")
-    lines.append("HiddenServicePort 80 127.0.0.1:80\n")
-    lines.append("HiddenServicePort 443 127.0.0.1:443\n")
-    lines.append("# end of Plinth Hidden Service config\n")
+    lines.append('# Hidden Service configured by Plinth\n')
+    lines.append('HiddenServiceDir /var/lib/tor/hidden_service/\n')
+    lines.append('HiddenServicePort 80 127.0.0.1:80\n')
+    lines.append('HiddenServicePort 443 127.0.0.1:443\n')
+    lines.append('# end of Plinth Hidden Service config\n')
 
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
@@ -111,7 +112,6 @@ def subcommand_enable_hs(_):
 
 def subcommand_disable_hs(_):
     """Disable Tor hidden service"""
-
     if not get_hidden_service():
         return
 
@@ -122,17 +122,17 @@ def subcommand_disable_hs(_):
         removing = False
         for line in lines:
             if removing:
-                if line.startswith("# end of Plinth Hidden Service config"):
+                if line.startswith('# end of Plinth Hidden Service config'):
                     # last line of Plinth hidden service block
                     # stop removing after this line
                     removing = False
-                elif not line.startswith("HiddenService"):
+                elif not line.startswith('HiddenService'):
                     # end of Plinth hidden service block
                     # stop removing lines
                     removing = False
                     filtered_lines.append(line)
             else:
-                if line.startswith("# Hidden Service configured by Plinth"):
+                if line.startswith('# Hidden Service configured by Plinth'):
                     # start of Plinth hidden service block
                     # remove following HiddenService lines
                     removing = True
@@ -146,37 +146,37 @@ def subcommand_disable_hs(_):
 
 
 def set_tor_service(enable):
-    """Enable/disable tor service; enable: boolean"""
-    newline = "RUN_DAEMON=\"yes\"\n" if enable else "RUN_DAEMON=\"no\"\n"
+    """Enable/disable Tor service; enable: boolean"""
+    newline = 'RUN_DAEMON="yes"\n' if enable else 'RUN_DAEMON="no"\n'
 
     with open(SERVICE_CONFIG, 'r') as file:
         lines = file.readlines()
-        for i, line in enumerate(lines):
+        for index, line in enumerate(lines):
             if line.startswith('RUN_DAEMON'):
-                lines[i] = newline
+                lines[index] = newline
                 break
+
     with open(SERVICE_CONFIG, 'w') as file:
         file.writelines(lines)
 
 
 def get_hidden_service():
-    """Returns a string with configured Tor hidden service information"""
-    hs_dir = ""
+    """Return a string with configured Tor hidden service information"""
+    hs_dir = None
     hs_ports = []
 
-    with open(TOR_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-        for line in lines:
+    with open(TOR_CONFIG, 'r') as conf_file:
+        for line in conf_file:
             if line.startswith('HiddenServiceDir'):
                 hs_dir = line.split()[1]
             elif line.startswith('HiddenServicePort'):
                 hs_ports.append(line.split()[1])
 
-    if hs_dir == "":
-        return ""
+    if not hs_dir:
+        return ''
 
-    with open(hs_dir + 'hostname', 'r') as conffile:
-        hs_hostname = conffile.read().strip()
+    with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
+        hs_hostname = conf_file.read().strip()
 
     return hs_hostname + ' ' + ','.join(hs_ports)
 
@@ -190,5 +190,5 @@ def main():
     subcommand_method(arguments)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
