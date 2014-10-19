@@ -39,7 +39,7 @@ class TorForm(forms.Form):  # pylint: disable=W0232
 def init():
     """Initialize the Tor module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname("Tor", "icon-eye-close", "tor:index", 30)
+    menu.add_urlname('Tor', 'icon-eye-close', 'tor:index', 30)
 
 
 @login_required
@@ -71,10 +71,10 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    is_running = actions.superuser_run("tor", ["is-running"]).strip() == "yes"
+    is_running = actions.superuser_run('tor', ['is-running']).strip() == 'yes'
 
-    output = actions.superuser_run("tor-get-ports")
-    port_info = output.split("\n")
+    output = actions.superuser_run('tor-get-ports')
+    port_info = output.split('\n')
     ports = {}
     for line in port_info:
         try:
@@ -83,12 +83,12 @@ def get_status():
         except ValueError:
             continue
 
-    output = actions.superuser_run("tor", ["get-hs"])
+    output = actions.superuser_run('tor', ['get-hs'])
     output = output.strip()
-    if output == "":
+    if output == '':
         hs_enabled = False
-        hs_hostname = "Not Configured"
-        hs_ports = ""
+        hs_hostname = 'Not Configured'
+        hs_ports = ''
     else:
         hs_enabled = True
         hs_info = output.split()
