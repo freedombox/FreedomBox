@@ -90,11 +90,14 @@ def setup_server():
     application = django.core.wsgi.get_wsgi_application()
     cherrypy.tree.graft(application, cfg.server_dir)
 
+    static_dir = os.path.join(cfg.file_root, 'static')
     config = {
-        '/': {'tools.staticdir.root': os.path.join(cfg.file_root, 'static'),
+        '/': {'tools.staticdir.root': static_dir,
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
+    LOGGER.debug('Serving static directory %s on %s', static_dir,
+                 django.conf.settings.STATIC_URL)
 
     for module_import_path in module_loader.loaded_modules:
         module = importlib.import_module(module_import_path)
@@ -110,6 +113,8 @@ def setup_server():
                   'tools.staticdir.dir': '.'}}
         urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
         cherrypy.tree.mount(None, urlprefix, config)
+        LOGGER.debug('Serving static directory %s on %s', static_dir,
+                     urlprefix)
 
     if not cfg.no_daemon:
         Daemonizer(cherrypy.engine).subscribe()
