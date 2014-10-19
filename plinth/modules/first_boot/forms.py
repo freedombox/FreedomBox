@@ -25,29 +25,29 @@ than 63 characters in length.'),
 
     class Meta:
         model = auth.models.User
-        fields = ("hostname", "username", "password")
+        fields = ('hostname', 'username', 'password')
         widgets = {
             'password': forms.PasswordInput,
         }
         help_texts = {
-            'username': 'Choose a username and password to access this web\
-                    interface. The password can be changed and other users can\
-                    be added later.',
+            'username': _('Choose a username and password to access this web\
+ interface. The password can be changed and other users can be added later.'),
         }
 
     def save(self, commit=True):
         """Set hostname, create and login the user"""
         config.set_hostname(self.cleaned_data['hostname'])
         user = super(State0Form, self).save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data['password'])
         user.is_expert = True
         if commit:
             user.save()
             self.login_user()
+
         return user
 
     def login_user(self):
-        """Try to login the user with the credentials he provided"""
+        """Try to login the user with the credentials provided"""
         try:
             user = auth.authenticate(username=self.request.POST['username'],
                                      password=self.request.POST['password'])
@@ -55,5 +55,5 @@ than 63 characters in length.'),
         except Exception:
             pass
         else:
-            msg = _('User account created, you are now logged in')
-            messages.success(self.request, msg)
+            message = _('User account created, you are now logged in')
+            messages.success(self.request, message)

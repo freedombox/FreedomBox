@@ -142,9 +142,12 @@ def get_modules_to_load():
 
     modules = []
     module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
-    # omit hidden files
-    file_names = [f for f in os.listdir(module_directory) if not
-                  f.startswith(".")]
+
+    # Omit hidden files
+    file_names = [file
+                  for file in os.listdir(module_directory)
+                  if not file.startswith('.')]
+
     for file_name in file_names:
         full_file_name = os.path.join(module_directory, file_name)
         with open(full_file_name, 'r') as file:

@@ -23,7 +23,7 @@
 {% block main_block %}
 
 {% if user.is_authenticated %}
-  <p>Have fun with your freedombox!</p>
+  <p>Have fun with your {{ cfg.box_name }}!</p>
 {% else %}
   <p>Proceed to <a href="{% url 'lib:login' %}">login</a>.</p>
 {% endif %}

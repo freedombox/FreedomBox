@@ -35,6 +35,7 @@ class FirstBootMiddleware(object):
 
     @staticmethod
     def process_request(request):
+        """Handle a request as Django middleware request handler."""
         state = kvstore.get_default('firstboot_state', 0)
         firstboot_index_url = reverse('first_boot:index')
         user_requests_firstboot = request.path.startswith(firstboot_index_url)
