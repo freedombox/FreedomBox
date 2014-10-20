@@ -19,7 +19,7 @@
 Dashboard - gives a quick overview of the apps/services of a freedombox
 """
 
-from plinth import actions, cfg
+from plinth import actions
 from .registry import register_app, register_statusline
 
 
@@ -33,11 +33,9 @@ def get_fbx_df():
 
 
 def init():
-    # separate dashboard menu item
-    #cfg.main_menu.add_urlname("Dashboard", "glyphicon-th-large",
-    #                          "dashboard:index", 105)
     register_statusline(name='df', template='dashboard_statusline_df.inc',
                         get_data=get_fbx_df)
+
 
 __all__ = ['init', 'register_app', 'register_statusline']
 

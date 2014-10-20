@@ -34,3 +34,18 @@ def is_running():
 dashboard.register_app(name='tor', is_enabled=is_running,
                        enable=enable, disable=disable, synchronous=True,
                        description='Tor anonymization service')
+
+
+def get_hs_name():
+    """Get tor hidden service name"""
+    output = actions.superuser_run("tor", ["get-hs"]).split()
+    if output:
+        data = {'hs_name': output[0]}
+    else:
+        data = {'hs_name': ''}
+    return data
+
+
+dashboard.register_statusline(name="kitename",
+                              template="dashboard_tor.inc",
+                              get_data=get_hs_name)
