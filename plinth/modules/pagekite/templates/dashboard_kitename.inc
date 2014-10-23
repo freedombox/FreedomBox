@@ -17,9 +17,9 @@
 #
 {% endcomment %}
 
-{% with item.get_data as tor %}
-  {% if tor.hs_name %}
-    Tor: {{ tor.hs_name }}
+{% with item.get_data as kite %}
+  {% if kite.name %}
+  Domain: <a href='http://{{ kite.name }}'>{{ kite.name }}</a>
   {% endif %}
 {% endwith %}
 

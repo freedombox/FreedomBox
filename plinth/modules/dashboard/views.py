@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from collections import OrderedDict
+
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
@@ -28,8 +30,11 @@ class Index(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
-        context['apps'] = apps
-        context['statusline_items'] = statusline_items
+        context['apps'] = OrderedDict(sorted(apps.items(),
+                                             key=lambda x: x[0].lower()))
+        _items = OrderedDict(sorted(statusline_items.items(),
+                                    key=lambda x: x[1]['order']))
+        context['statusline_items'] = _items
         return context
 
 

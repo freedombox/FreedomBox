@@ -17,14 +17,13 @@
 
 import importlib
 import inspect
-from collections import OrderedDict
 from django.dispatch import receiver
 
 from plinth import module_loader, errors
 from plinth.signals import post_module_loading
 
-apps = OrderedDict()
-statusline_items = OrderedDict()
+apps = {}
+statusline_items = {}
 
 
 def register_app(name, is_enabled, enable, disable, synchronous=False,
@@ -44,7 +43,7 @@ def register_app(name, is_enabled, enable, disable, synchronous=False,
       conflicts inside this function
     """
     if name in apps:
-        msg = 'A module named %s is already registered!' % name
+        msg = 'Module \'%s\' is already registered' % name
         raise errors.PlinthError(msg)
 
     _locals = locals()
@@ -58,8 +57,11 @@ def register_app(name, is_enabled, enable, disable, synchronous=False,
     apps[name] = _build_args_dict(arguments, additional_params, _locals)
 
 
-def register_statusline(name, template, **kwargs):
+def register_statusline(name, template, order=50, **kwargs):
     _arguments = inspect.getargspec(register_statusline).args
+    if name in statusline_items:
+        msg = 'Statusline-item \'%s\' is already registered' % name
+        raise errors.PlinthError(msg)
     statusline_items[name] = _build_args_dict(_arguments, kwargs, locals())
 
 

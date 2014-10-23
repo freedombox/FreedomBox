@@ -4,7 +4,7 @@
 
 .statusline {
   text-align: left;
-  position: absolute;
+  position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -14,6 +14,10 @@
   border-top: 1px solid #d1d1d1;
 }
 
+.separator {
+  font-weight: bold;
+  font-size: larger;
+}
  
 /* fluid grid */
 .row {
@@ -30,9 +34,12 @@
  text-align: center;
 }
 
+.dashboard-grid .panel {
+  margin-bottom: 30px;
+}
 /* give the panel-body of services a min height */
 .dashboard-grid .panel-body {
-  min-height: 70px;
+  min-height: 90px;
 }
 /* service name */
 .dashboard-grid .panel-heading .appname {
@@ -42,4 +49,14 @@
 }
 .dashboard-grid .panel-heading {
   padding-left: 0px;
+  color: #4D4D4D;
+}
+
+.panel.enabled {
+  border-color: rgb(182, 182, 182);
+}
+.panel.enabled .panel-heading {
+  background-color: #EEEEEE;
+  color: #333;
+  border-color: rgb(182, 182, 182);
 }

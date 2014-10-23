@@ -20,32 +20,31 @@ from plinth.modules import dashboard
 
 
 def enable():
-    return actions.superuser_run('tor', ['start'])
+    pass
 
 
 def disable():
-    return actions.superuser_run('tor', ['stop'])
+    pass
 
 
-def is_running():
-    return actions.superuser_run("tor", ["is-running"]).strip() == "yes"
+def is_enabled():
+    return True
 
 
-dashboard.register_app(name='tor', is_enabled=is_running,
-                       enable=enable, disable=disable, synchronous=True,
-                       description='Tor anonymization service')
+# We do not know the hostname of this freedombox when registering the app,
+# so we build the final URL in the custom template
+description = 'Allows accessing your FreedomBox from the internet'
+dashboard.register_app(name='PageKite', enable=enable, disable=disable,
+                       is_enabled=is_enabled, description=description,
+                       synchronous=True)
 
 
-def get_hs_name():
-    """Get tor hidden service name"""
-    output = actions.superuser_run("tor", ["get-hs"]).split()
-    if output:
-        data = {'hs_name': output[0]}
-    else:
-        data = {'hs_name': ''}
-    return data
+def get_kite_name():
+    output = actions.superuser_run('pagekite-configure', ['get-kite'])
+    return {'name': output.split()[0]}
 
 
-dashboard.register_statusline(name="tor",
-                              template="dashboard_tor.inc",
-                              get_data=get_hs_name, order=80)
+dashboard.register_statusline(name="kitename",
+                              template="dashboard_kitename.inc",
+                              get_data=get_kite_name,
+                              order=10)

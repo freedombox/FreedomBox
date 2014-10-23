@@ -34,7 +34,7 @@ def get_fbx_df():
 
 def init():
     register_statusline(name='df', template='dashboard_statusline_df.inc',
-                        get_data=get_fbx_df)
+                        get_data=get_fbx_df, order=5)
 
 
 __all__ = ['init', 'register_app', 'register_statusline']
