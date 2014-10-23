@@ -57,8 +57,13 @@ def register_app(name, is_enabled, enable, disable, synchronous=False,
     apps[name] = _build_args_dict(arguments, additional_params, _locals)
 
 
-def register_statusline(name, template, order=50, **kwargs):
+def register_statusline(name, template, order=50, display_item=True, **kwargs):
     _arguments = inspect.getargspec(register_statusline).args
+    """ Register and show a statusline item.
+
+    display_item: boolean or function that returns boolean; determines whether
+                  this item will be displayed
+    """
     if name in statusline_items:
         msg = 'Statusline-item \'%s\' is already registered' % name
         raise errors.PlinthError(msg)

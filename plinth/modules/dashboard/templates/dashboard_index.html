@@ -36,8 +36,10 @@
   {% block statusline %}
     <div class='statusline'>
       {% for name,item in statusline_items.items %}
-        {% include item.template with item=item %}
-        {% if not forloop.last %} <span class='separator'>|</span> {% endif %}
+        {% if item.display_item %}
+          {% include item.template with item=item %}
+          {% if not forloop.last %} <span class='separator'>|</span> {% endif %}
+        {% endif %}
       {% endfor %}
     </div>
   {% endblock %}

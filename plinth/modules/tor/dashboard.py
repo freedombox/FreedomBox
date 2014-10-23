@@ -46,6 +46,6 @@ def get_hs_name():
     return data
 
 
-dashboard.register_statusline(name="tor",
-                              template="dashboard_tor.inc",
+dashboard.register_statusline(name="tor", template="dashboard_tor.inc",
+                              display_item=is_running,
                               get_data=get_hs_name, order=80)

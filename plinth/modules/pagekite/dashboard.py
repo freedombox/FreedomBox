@@ -46,5 +46,4 @@ def get_kite_name():
 
 dashboard.register_statusline(name="kitename",
                               template="dashboard_kitename.inc",
-                              get_data=get_kite_name,
-                              order=10)
+                              get_data=get_kite_name, order=10)
