@@ -20,11 +20,8 @@
 {# use a variable to 'cache' the result of app.is_enabled #}
 {% with is_enabled=app.is_enabled %}
 
-{% if is_enabled %}
-  <div class="panel panel-success">
-{% else %}
-  <div class="panel panel-danger">
-{% endif %}
+
+<div class="panel panel-default {% if is_enabled %} enabled {% endif %}">
 
     <div class="panel-heading">
       {% block app-header %}
@@ -40,7 +37,12 @@
 
         <div class="btn-group pull-right">
           <button type="button" data-toggle="dropdown" class="btn btn-xs
-                  btn-default dropdown-toggle">
+                {% if is_enabled %}
+                  btn-primary
+                {% else %}
+                  btn-default
+                {% endif %}
+                  dropdown-toggle">
             {% if is_enabled %}
               enabled
             {% else %}
