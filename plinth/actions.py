@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
-
 """Run specified actions.
 
 Actions run commands with this contract (version 1.1):
