@@ -22,6 +22,7 @@ Plinth setup file
 
 from distutils import log
 from distutils.command.install_data import install_data
+from distutils.util import change_root
 import glob
 import os
 import setuptools
@@ -53,12 +54,18 @@ class CustomInstallData(install_data):
 
         # Create empty directories
         for directory in DIRECTORIES_TO_CREATE:
+            if self.root:
+                directory = change_root(self.root, directory)
+
             if not os.path.exists(directory):
                 log.info("creating directory '%s'", directory)
                 os.makedirs(directory)
 
         # Recursively copy directories
         for target, source in DIRECTORIES_TO_COPY:
+            if self.root:
+                target = change_root(self.root, target)
+
             if not os.path.exists(target):
                 log.info("recursive copy '%s' to '%s'", source, target)
                 shutil.copytree(source, target, symlinks=True)
