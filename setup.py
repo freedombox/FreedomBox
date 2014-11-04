@@ -21,6 +21,7 @@ Plinth setup file
 """
 
 from distutils import log
+from distutils.command.clean import clean
 from distutils.command.install_data import install_data
 from distutils.util import change_root
 import glob
@@ -42,6 +43,15 @@ DIRECTORIES_TO_COPY = [
     ('/usr/share/plinth/static', 'static'),
     ('/usr/share/doc/plinth', 'doc'),
 ]
+
+
+class CustomClean(clean):
+    """Override clean command to clean documentation directory"""
+    def run(self):
+        """Execute clean command"""
+        subprocess.check_call(['make', '-C', 'doc', 'clean'])
+
+        clean.run(self)
 
 
 class CustomInstallData(install_data):
@@ -125,5 +135,6 @@ setuptools.setup(
                 ('/etc/plinth/modules-enabled',
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
                                         '*')))],
-    cmdclass={'install_data': CustomInstallData},
+    cmdclass={'clean': CustomClean,
+              'install_data': CustomInstallData},
 )
