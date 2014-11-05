@@ -20,9 +20,9 @@
 {# statusline-item to show df of /home/fbx #}
 {% with item.get_data as df %}
   Disk:
-  <meter min="0" max="100" low="50" high="70" value="{{ df.used_percent }}"
-         title="Used disk space">
-    {{ df.available_gb|floatformat:1 }} GB free
-  </meter>
-{{ df.available_gb|floatformat:1 }} GB free
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ df.used_percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ df.used_percent }}%;" title="{{ df.used_percent|floatformat }} % of your disk are used, you have {{ df.available_gb|floatformat }} GB left" >
+        {{ df.used_percent|floatformat }}%
+      </div>
+    </div>
 {% endwith %}
