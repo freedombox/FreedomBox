@@ -20,15 +20,18 @@ from plinth.modules import dashboard
 
 
 def enable():
-    pass
+    actions.superuser_run('pagekite-configure', ['set-status', 'enable'])
+    actions.superuser_run('pagekite-configure', ['start'])
 
 
 def disable():
-    pass
+    actions.superuser_run('pagekite-configure', ['set-status', 'disable'])
+    actions.superuser_run('pagekite-configure', ['stop'])
 
 
 def is_enabled():
-    return True
+    output = actions.superuser_run('pagekite-configure', ['get-status'])
+    return output.strip() == 'enabled'
 
 
 # We do not know the hostname of this freedombox when registering the app,

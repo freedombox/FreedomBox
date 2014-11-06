@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- mode: python -*-
 #
 # This file is part of Plinth.
@@ -18,29 +18,38 @@
 #
 
 """
-Configuration helper for Plint PageKite inteface
+Configuration helper for Plint PageKite interface
 
-TODO: Use augeas for manipulating /etc/pagekite.d/* files
+Unfortunately there is no python3 package for augeas yet
 """
 
 # Disable warning about invalid module name # pylint: disable-msg=C0103
 
 import argparse
+import augeas
 import os
-import re
 import subprocess
 
-CONFIG_DIR = '/etc/pagekite.d'
+aug = augeas.Augeas()
 
-SERVICE_FILE_MAP = {
-    'http': {
-        'file': '80_httpd.rc',
-        'match': 'http:',
-        'line': 'service_on = http:@kitename : localhost:80 : @kitesecret'},
-    'ssh': {
-        'file': '80_sshd.rc',
-        'match': 'raw/22:',
-        'line': 'service_on = raw/22:@kitename : localhost:22 : @kitesecret'}}
+CONF_PATH = '/files/etc/pagekite.d'
+PATHS = {
+    'kitename': os.path.join(CONF_PATH, '10_account.rc', 'kitename'),
+    'kitesecret': os.path.join(CONF_PATH, '10_account.rc', 'kitesecret'),
+    'abort_not_configured': os.path.join(CONF_PATH, '10_account.rc',
+                                         'abort_not_configured'),
+    'defaults': os.path.join(CONF_PATH, '20_frontends.rc', 'defaults'),
+    'frontend': os.path.join(CONF_PATH, '20_frontends.rc', 'frontend'),
+    'http': os.path.join(CONF_PATH, '80_httpd.rc', 'service_on'),
+    'ssh': os.path.join(CONF_PATH, '80_sshd.rc', 'service_on'),
+}
+# service entries are tuples with [source, destination, secret]
+# this information will be used when enabling a service
+SERVICES = {
+    'http': ['http:@kitename', 'localhost:80', '@kitesecret'],
+    'scp': ['scp:@kitename', 'localhost:80', '@kitesecret'],
+    'ssh': ['raw/22:@kitename', 'localhost:22', '@kitesecret'],
+}
 
 
 def parse_arguments():
@@ -65,6 +74,24 @@ def parse_arguments():
     set_status = subparsers.add_parser('set-status',
                                        help='Enable/disable PageKite')
     set_status.add_argument('enable', choices=['enable', 'disable'])
+
+    # Get whether default pagekite.net frontend is enabled
+    subparsers.add_parser('get-pagekitenet-frontend-status',
+                          help='Get whether pagekite.net frontend is enabled')
+
+    # Enable/Disable using default pagekite.net frontend
+    subparsers.add_parser('enable-pagekitenet-frontend',
+                          help='Enable using default pagekite.net frontend')
+    subparsers.add_parser('disable-pagekitenet-frontend',
+                          help='Disable default pagekite.net frontend')
+
+    # Get frontend
+    subparsers.add_parser('get-frontend', help='Get pagekite frontend')
+
+    # Set frontend
+    set_frontend = subparsers.add_parser('set-frontend',
+                                         help='Set pagekite frontend')
+    set_frontend.add_argument('url', help='frontend url')
 
     # Get kite details
     subparsers.add_parser('get-kite',
@@ -95,8 +122,7 @@ def subcommand_get_installed(_):
     """Print whether PageKite is installed"""
     with open('/dev/null', 'w') as file_handle:
         status = subprocess.call(['which', 'pagekite'], stdout=file_handle)
-
-    print('installed' if not status else 'not installed')
+    print 'installed' if not status else 'not installed'
 
 
 def subcommand_start(_):
@@ -116,22 +142,11 @@ def subcommand_stop(_):
 def subcommand_get_status(_):
     """Print status of the pagekite service"""
     is_enabled = is_pagekite_enabled()
-    print('enabled' if is_enabled else 'disabled')
+    print 'enabled' if is_enabled else 'disabled'
 
 
 def is_pagekite_enabled():
-    """Return if pagekite is enabled"""
-    service_file_path = os.path.join(CONFIG_DIR, '10_account.rc')
-    try:
-        with open(service_file_path, 'r') as file_object:
-            for line in file_object:
-                regex = r'^[ \t]*abort_not_configured'
-                if re.match(regex, line):
-                    return False
-    except Exception:
-        return True
-
-    return True
+    return not bool(aug.match(PATHS['abort_not_configured']))
 
 
 def subcommand_set_status(arguments):
@@ -139,155 +154,169 @@ def subcommand_set_status(arguments):
     enable = arguments.enable == 'enable'
     is_enabled = is_pagekite_enabled()
     if enable and is_enabled:
-        print('already enabled')
+        print 'already enabled'
         return
 
     if not enable and not is_enabled:
-        print('already disabled')
+        print 'already disabled'
         return
 
     if enable:
         pagekite_enable()
-        print('enabled')
+        print 'enabled'
     else:
         pagekite_disable()
-        print('disabled')
+        print 'disabled'
+
+
+def subcommand_get_frontend(_):
+    """Get pagekite frontend url"""
+    url = aug.get(PATHS['frontend'])
+    print url if url else ""
+
+
+def subcommand_set_frontend(arguments):
+    """Set pagekite frontend url and disable default pagekite.net frontend"""
+    aug.remove(PATHS['defaults'])
+    aug.set(PATHS['frontend'], arguments.url)
+    aug.save()
+
+
+def subcommand_get_pagekitenet_frontend_status(_):
+    match = aug.match(PATHS['defaults'])
+    print "enabled" if match else "disabled"
+
+
+def subcommand_enable_pagekitenet_frontend(_):
+    """Enable using default pageket.net frontend
+
+    This disables any other frontends.
+    """
+    aug.set(PATHS['defaults'], '')
+    aug.remove(PATHS['frontend'])
+    aug.save()
+    print "enabled"
+
+
+def subcommand_disable_pagekitenet_frontend(_):
+    aug.remove(PATHS['defaults'])
+    aug.save()
+    print "disabled"
 
 
 def pagekite_enable():
     """Enable the pagekite daemon"""
-    file_path = os.path.join(CONFIG_DIR, '10_account.rc')
-    file_path_new = os.path.join(CONFIG_DIR, '10_account.rc.new')
-    with open(file_path, 'r') as read_file_object, \
-            open(file_path_new, 'w') as write_file_object:
-        for line in read_file_object:
-            if not re.match('^[ \t]*abort_not_configured', line):
-                write_file_object.write(line)
-
-    os.rename(file_path_new, file_path)
+    aug.remove(PATHS['abort_not_configured'])
+    aug.save()
 
 
 def pagekite_disable():
     """Disable the pagekite daemon"""
-    file_path = os.path.join(CONFIG_DIR, '10_account.rc')
-    with open(file_path, 'a') as file_object:
-        file_object.write('abort_not_configured\n')
-
-
-def subcommand_get_kite(_):
-    """Print details of the currently configure kite"""
-    kite_name = ''
-    kite_secret = ''
-
-    file_path = os.path.join(CONFIG_DIR, '10_account.rc')
-    with open(file_path, 'r') as file_object:
-        for line in file_object:
-            match = re.match(r'[ \t]*kitename[ \t]*=[ \t]*(.*)', line)
-            if match:
-                kite_name = match.group(1)
-                continue
-
-            match = re.match(r'[ \t]*kitesecret[ \t]*=[ \t]*(.*)', line)
-            if match:
-                kite_secret = match.group(1)
-                continue
-
-    print(kite_name)
-    print(kite_secret)
-
-
-def subcommand_set_kite(arguments):
-    """Set details of the kite"""
-    kite_name = arguments.kite_name
-    kite_secret = arguments.kite_secret
-
-    file_path = os.path.join(CONFIG_DIR, '10_account.rc')
-    file_path_new = os.path.join(CONFIG_DIR, '10_account.rc.new')
-    with open(file_path, 'r') as read_file_object, \
-            os.fdopen(os.open(file_path_new, os.O_WRONLY | os.O_CREAT,
-                              0o400), 'w') as write_file_object:
-        for line in read_file_object:
-            if re.match(r'[ \t]*kitename[ \t]*=.*', line):
-                write_file_object.write(
-                    'kitename = {kite_name}\n'.format(kite_name=kite_name))
-                continue
-
-            if re.match(r'[ \t]*kitesecret[ \t]*=.*', line):
-                write_file_object.write('kitesecret = {kite_secret}\n'
-                                        .format(kite_secret=kite_secret))
-                continue
-
-            write_file_object.write(line)
-
-    os.rename(file_path_new, file_path)
+    aug.set(PATHS['abort_not_configured'], '')
+    aug.save()
 
 
 def subcommand_get_service_status(arguments):
     """Print status of the pagekite service"""
-    is_enabled = is_service_enabled(arguments.service)
-    print('enabled' if is_enabled else 'disabled')
+    is_enabled = bool(get_enabled_service_paths(arguments.service))
+    print 'enabled' if is_enabled else 'disabled'
 
 
-def is_service_enabled(service):
-    """Return if a service is enabled"""
-    service = SERVICE_FILE_MAP[service]
-    service_file_path = os.path.join(CONFIG_DIR, service['file'])
-    if not os.path.isfile(service_file_path):
-        return False
+def subcommand_get_kite(_):
+    """Print details of the currently configured kite"""
+    kitename = aug.get(PATHS['kitename'])
+    kitesecret = aug.get(PATHS['kitesecret'])
+    print kitename if kitename else ''
+    print kitesecret if kitesecret else ''
 
-    try:
-        with open(service_file_path, 'r') as file_object:
-            for line in file_object:
-                regex = '[ \t]*service_on[ \t]*=[ \t]*{match}'
-                regex = regex.format(match=service['match'])
-                if re.match(regex, line):
-                    return True
-    except Exception:
-        return False
 
-    return False
+def subcommand_set_kite(arguments):
+    """Set details of the kite"""
+    aug.set(PATHS['kitename'], arguments.kite_name)
+    aug.set(PATHS['kitesecret'], arguments.kite_secret)
+    aug.save()
 
 
 def subcommand_set_service_status(arguments):
     """Enable/disable a pagekite service"""
     enable = arguments.enable == 'enable'
-    is_enabled = is_service_enabled(arguments.service)
+    is_enabled = bool(get_enabled_service_paths(arguments.service))
     if enable and is_enabled:
-        print('already enabled')
+        print 'already enabled'
         return
 
     if not enable and not is_enabled:
-        print('already disabled')
+        print 'already disabled'
         return
 
     if enable:
         service_enable(arguments.service)
-        print('enabled')
+        print 'enabled'
     else:
         service_disable(arguments.service)
-        print('disabled')
+        print 'disabled'
 
 
-def service_enable(service_name):
+def service_enable(service):
     """Enable a service"""
-    service = SERVICE_FILE_MAP[service_name]
-    service_file_path = os.path.join(CONFIG_DIR, service['file'])
-    with open(service_file_path, 'w') as file_object:
-        file_object.write('''
-# Expose the local {service_name} daemon
-# File auto-generated by Plinth
-
-{line}
-'''.format(service_name=service_name, line=service['line']))
+    position = len(aug.match(PATHS[service])) + 1
+    root = os.path.join(PATHS[service], str(position))
+    set_service(root, *SERVICES[service])
 
 
-def service_disable(service_name):
+def set_service(root, source, destination, secret=None):
+    """Set service_on with the given augeas root (path)"""
+    aug.set(os.path.join(root, 'source'), source)
+    aug.set(os.path.join(root, 'destination'), destination)
+    if secret is not None:
+        aug.set(os.path.join(root, 'secret'), secret)
+    aug.save()
+
+
+def get_enabled_service_paths(service):
+    """Search all service_on lines of the given protocol"""
+    paths = []
+    for i, match in enumerate(aug.match(PATHS[service]), start=1):
+        service_path = os.path.join(match, str(i))
+        source = aug.get(os.path.join(service_path, 'source'))
+        if service == "ssh" and "raw/22" in source:
+            paths.append(service_path)
+        elif service == "http" and service in source:
+            paths.append(service_path)
+    return paths
+
+
+def service_disable(service):
     """Disable a service"""
-    service = SERVICE_FILE_MAP[service_name]
-    service_file_path = os.path.join(CONFIG_DIR, service['file'])
-    service_file_path_new = os.path.join(CONFIG_DIR,
-                                         service['file'] + '.plinthbak')
-    os.rename(service_file_path, service_file_path_new)
+    # TODO: saving config files after changing/deleting config entries with
+    # augeas fails with an IOError.
+    # Saving the file after removing this path does not work:
+    #   /files/etc/pagekite.d/80_httpd.rc/service_on/1
+    # Saving the file after removing this path works:
+    #   /files/etc/pagekite.d/80_httpd.rc/service_on
+    #
+    # This could be an augeas bug, see
+    # http://permalink.gmane.org/gmane.comp.sysutils.augeas.devel/5419
+    # Once this problem is solved, all you should need in this function is:
+    #
+    #     paths = get_enabled_service_paths(service)
+    #     [aug.remove(path) for path in paths]
+    #     aug.save()
+
+    if service == "ssh":
+        path = '/etc/pagekite.d/80_sshd.rc'
+        activated_pattern = 'raw/22'
+    elif service == "http":
+        path = '/etc/pagekite.d/80_httpd.rc'
+        activated_pattern = 'http'
+    with open(path, 'r') as file:
+        lines = file.readlines()
+        for i, line in enumerate(lines):
+            if line.startswith('service_on') and activated_pattern in line:
+                lines[i] = "#%s" % line
+                break
+    with open(path, 'w') as file:
+        file.writelines(lines)
 
 
 def main():
@@ -297,6 +326,7 @@ def main():
     subcommand = arguments.subcommand.replace('-', '_')
     subcommand_method = globals()['subcommand_' + subcommand]
     subcommand_method(arguments)
+
 
 if __name__ == "__main__":
     main()
