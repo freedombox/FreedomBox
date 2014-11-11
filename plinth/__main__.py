@@ -179,6 +179,7 @@ def configure_django():
                     'django.contrib.auth',
                     'django.contrib.contenttypes',
                     'django.contrib.messages',
+                    'stronghold',
                     'plinth']
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
@@ -207,6 +208,7 @@ def configure_django():
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
+            'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
@@ -214,6 +216,7 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
+        STRONGHOLD_PUBLIC_NAMED_URLS=('lib:login',),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         USE_X_FORWARDED_HOST=bool(cfg.use_x_forwarded_host))
     django.setup()
