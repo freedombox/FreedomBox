@@ -23,9 +23,13 @@
 {% block main_block %}
 
   <form class="form" method="post">
-    {% csrf_token %}
 
-    {{ form|bootstrap }}
+    <div class="row">
+      {% csrf_token %}
+      <div class="col-sm-4">
+        {{ form|bootstrap }}
+      </div>
+    </div>
 
     <input type="submit" class="btn-primary" value="Login" />
     <input type="hidden" name="next" value="{{ next }}" />
