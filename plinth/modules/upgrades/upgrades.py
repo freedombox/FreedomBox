@@ -21,7 +21,6 @@ Plinth module for upgrades
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
@@ -45,7 +44,6 @@ def init():
                      'upgrades:index', 21)
 
 
-@login_required
 @package.required(['unattended-upgrades'])
 def index(request):
     """Serve the index page."""
@@ -54,7 +52,6 @@ def index(request):
                              'subsubmenu': subsubmenu})
 
 
-@login_required
 @require_POST
 @package.required(['unattended-upgrades'])
 def run(request):
@@ -84,7 +81,6 @@ run once per day. It will attempt to perform any package upgrades that are \
 available.'))
 
 
-@login_required
 @package.required(['unattended-upgrades'])
 def configure(request):
     """Serve the configuration form."""

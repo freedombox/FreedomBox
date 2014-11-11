@@ -21,7 +21,6 @@ Plinth module for configuring Tor
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -43,7 +42,6 @@ def init():
     menu.add_urlname('Tor', 'glyphicon-eye-close', 'tor:index', 30)
 
 
-@login_required
 @package.required(['tor'])
 def index(request):
     """Service the index page"""

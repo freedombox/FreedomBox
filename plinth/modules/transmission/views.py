@@ -20,7 +20,6 @@ Plinth module for configuring Transmission Server
 """
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import json
@@ -42,7 +41,6 @@ def on_install():
     actions.superuser_run('transmission', ['enable'])
 
 
-@login_required
 @package.required(['transmission-daemon'], on_install=on_install)
 def index(request):
     """Serve configuration page."""

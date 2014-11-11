@@ -19,6 +19,7 @@ import os
 from gettext import gettext as _
 from django.http import Http404
 from django.template.response import TemplateResponse
+from stronghold.decorators import public
 
 from plinth import cfg, __version__
 
@@ -38,12 +39,14 @@ def init():
     menu.add_urlname(_('About'), 'glyphicon-star', 'help:about', 100)
 
 
+@public
 def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'help_index.html',
                             {'title': _('Documentation and FAQ')})
 
 
+@public
 def about(request):
     """Serve the about page"""
     context = {
@@ -53,6 +56,7 @@ def about(request):
     return TemplateResponse(request, 'help_about.html', context)
 
 
+@public
 def helppage(request, page):
     """Serve a help page from the 'doc' directory"""
     try:

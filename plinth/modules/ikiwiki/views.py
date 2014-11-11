@@ -20,7 +20,6 @@ Plinth module for configuring ikiwiki
 """
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -45,7 +44,6 @@ def on_install():
     actions.superuser_run('ikiwiki', ['setup'])
 
 
-@login_required
 @package.required(['ikiwiki',
                    'gcc',
                    'libc6-dev',
@@ -98,7 +96,6 @@ def _apply_changes(request, old_status, new_status):
         messages.info(request, _('Setting unchanged'))
 
 
-@login_required
 def manage(request):
     """Manage existing wikis and blogs."""
     sites = actions.run('ikiwiki', ['get-sites']).split('\n')
@@ -110,7 +107,6 @@ def manage(request):
                              'sites': sites})
 
 
-@login_required
 def create(request):
     """Form to create a wiki or blog."""
     form = None
@@ -161,7 +157,6 @@ def _create_blog(request, name, admin_name, admin_password):
         messages.error(request, _('Could not create blog: %s') % err)
 
 
-@login_required
 def delete(request, name):
     """Handle deleting wikis/blogs, showing a confirmation dialog first.
 

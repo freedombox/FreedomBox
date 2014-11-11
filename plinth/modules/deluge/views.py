@@ -20,7 +20,6 @@ Plinth module to configure a Deluge web client.
 """
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -30,7 +29,6 @@ from plinth import package
 from plinth.modules import deluge
 
 
-@login_required
 @package.required(['deluged', 'deluge-web'])
 def index(request):
     """Serve configuration page."""

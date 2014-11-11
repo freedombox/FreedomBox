@@ -16,7 +16,6 @@
 #
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -45,7 +44,6 @@ def init():
     menu.add_urlname(_('Networks'), 'glyphicon-signal', 'networks:index', 18)
 
 
-@login_required
 @package.required(['network-manager'])
 def index(request):
     """Show connection list."""
@@ -57,7 +55,6 @@ def index(request):
                              'connections': connections})
 
 
-@login_required
 def edit(request, uuid):
     """Serve connection editing form."""
     try:
@@ -148,7 +145,6 @@ def edit(request, uuid):
                                  'form': form})
 
 
-@login_required
 def activate(request, uuid):
     """Activate the connection."""
     try:
@@ -166,7 +162,6 @@ def activate(request, uuid):
     return redirect(reverse_lazy('networks:index'))
 
 
-@login_required
 def deactivate(request, uuid):
     """Deactivate the connection."""
     try:
@@ -180,7 +175,6 @@ def deactivate(request, uuid):
     return redirect(reverse_lazy('networks:index'))
 
 
-@login_required
 def scan(request):
     """Show a list of nearby visible Wi-Fi access points."""
     access_points = network.wifi_scan()
@@ -190,7 +184,6 @@ def scan(request):
                              'access_points': access_points})
 
 
-@login_required
 def add(request):
     """Serve the connection type selection form."""
     form = None
@@ -211,7 +204,6 @@ def add(request):
                                  'form': form})
 
 
-@login_required
 def add_ethernet(request):
     """Serve ethernet connection create form."""
     form = None
@@ -237,7 +229,6 @@ def add_ethernet(request):
                              'form': form})
 
 
-@login_required
 def add_wifi(request, ssid=None):
     """Serve wifi connection create form."""
     form = None
@@ -280,7 +271,6 @@ def add_wifi(request, ssid=None):
                              'form': form})
 
 
-@login_required
 def delete(request, uuid):
     """Handle deleting connections, showing a confirmation dialog first.
 

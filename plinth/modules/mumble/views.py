@@ -20,7 +20,6 @@ Plinth module for configuring Mumble Server
 """
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -38,7 +37,6 @@ def on_install():
     mumble.service.notify_enabled(None, True)
 
 
-@login_required
 @package.required(['mumble-server'], on_install=on_install)
 def index(request):
     """Serve configuration page."""

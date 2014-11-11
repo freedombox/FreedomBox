@@ -20,7 +20,6 @@ Plinth module for configuring Roundcube.
 """
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -42,7 +41,6 @@ def on_install():
     actions.superuser_run('roundcube', ['setup'])
 
 
-@login_required
 @package.required(['sqlite3', 'roundcube', 'roundcube-sqlite3'],
                   before_install=before_install, on_install=on_install)
 def index(request):

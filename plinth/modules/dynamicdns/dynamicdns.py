@@ -17,7 +17,6 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
@@ -47,7 +46,6 @@ def init():
                      'dynamicdns:index', 40)
 
 
-@login_required
 @package.required(['ez-ipupdate'])
 def index(request):
     """Serve dynamic DNS  page"""
@@ -205,7 +203,6 @@ class ConfigureForm(forms.Form):
                 LOGGER.info('no password given')
 
 
-@login_required
 @package.required(['ez-ipupdate'])
 def configure(request):
     """Serve the configuration form"""
@@ -227,7 +224,6 @@ def configure(request):
                              'subsubmenu': subsubmenu})
 
 
-@login_required
 @package.required(['ez-ipupdate'])
 def statuspage(request):
     """Serve the status page """

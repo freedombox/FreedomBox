@@ -17,7 +17,6 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import os
@@ -60,7 +59,6 @@ def init():
     menu.add_urlname('Package Manager', 'glyphicon-gift', 'packages:index', 20)
 
 
-@login_required
 def index(request):
     """Serve the form"""
     status = get_status()

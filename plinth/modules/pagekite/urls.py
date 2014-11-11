@@ -20,7 +20,6 @@ URLs for the PageKite module
 """
 
 from django.conf.urls import patterns, url
-from django.contrib.auth.decorators import login_required
 
 from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
     DeleteServiceView, index
@@ -28,15 +27,13 @@ from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'plinth.modules.pagekite.views',
-    url(r'^apps/pagekite/$', login_required(index), name='index'),
-    url(r'^apps/pagekite/configure/$',
-        login_required(ConfigurationView.as_view()), name='configure'),
-    url(r'^apps/pagekite/services/standard$',
-        login_required(StandardServiceView.as_view()),
+    url(r'^apps/pagekite/$', index, name='index'),
+    url(r'^apps/pagekite/configure/$', ConfigurationView.as_view(),
+        name='configure'),
+    url(r'^apps/pagekite/services/standard$', StandardServiceView.as_view(),
         name='standard-services'),
-    url(r'^apps/pagekite/services/custom$',
-        login_required(CustomServiceView.as_view()), name='custom-services'),
-    url(r'^apps/pagekite/services/custom/delete$',
-        login_required(DeleteServiceView.as_view()),
+    url(r'^apps/pagekite/services/custom$', CustomServiceView.as_view(),
+        name='custom-services'),
+    url(r'^apps/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
         name='delete-custom-service'),
     )

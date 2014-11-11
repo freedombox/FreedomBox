@@ -19,7 +19,6 @@
 Plinth module to configure a firewall
 """
 
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -42,7 +41,6 @@ def init():
     service_enabled.connect(on_service_enabled)
 
 
-@login_required
 @package.required(['firewalld'])
 def index(request):
     """Serve introcution page"""

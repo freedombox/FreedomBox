@@ -17,7 +17,6 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from gettext import gettext as _
@@ -75,7 +74,6 @@ def on_install():
     actions.superuser_run('xmpp', ['setup'])
 
 
-@login_required
 @package.required(['jwchat', 'ejabberd'],
                   before_install=before_install,
                   on_install=on_install)
@@ -98,7 +96,6 @@ the XMPP service'))
 allowed to register an account through an XMPP client'))
 
 
-@login_required
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -196,7 +193,6 @@ class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
                                         for vhost in vhosts)
 
 
-@login_required
 def register(request):
     """Serve the registration form."""
     form = None
