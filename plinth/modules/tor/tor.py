@@ -95,7 +95,7 @@ def get_status():
         hs_ports = ''
     elif output == 'error':
         hs_enabled = False
-        hs_hostname = 'Configuration Error'
+        hs_hostname = 'Not available (Run Tor at least once)'
         hs_ports = ''
     else:
         hs_enabled = True
