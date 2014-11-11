@@ -25,7 +25,6 @@
 {% if is_installed %}
 
 <h3>Status</h3>
-
 <br style='clear:both'>
 {% if is_running %}
   <div class='running-status active'></div> Tor is running
@@ -34,8 +33,8 @@
 {% endif %}
 <br style='clear:both'>
 
-<p><h3>Hidden Service</h3>
-A hidden service will allow your {{ cfg.box_name }} to provide selected
+<h3>Hidden Service</h3>
+<p>A hidden service will allow your {{ cfg.box_name }} to provide selected
 services (such as OwnCloud or Chat) without revealing its location.
 Here is the current configuration:
 <ul>
@@ -51,15 +50,14 @@ Here is the current configuration:
   <input type="submit" class="btn-primary" value="Update setup"/>
 </form>
 
-</p>
 
-<p><h3>Bridge</h3>
-Your {{ cfg.box_name }} is configured as a Tor bridge with obfsproxy, so it
+<h3>Bridge</h3>
+<p>Your {{ cfg.box_name }} is configured as a Tor bridge with obfsproxy, so it
 can help circumvent censorship. If your {{ cfg.box_name }} is behind a router
 or firewall, you should make sure the following ports are open, and
 port-forwarded, if necessary:</p>
 
-<table class="table table-bordered table-condensed span2">
+<table class="table table-bordered table-condensed" style="width:300px">
   {% for name, port in tor_ports.items %}
     <tr>
       <td>{{ name }}</td>
@@ -69,8 +67,8 @@ port-forwarded, if necessary:</p>
 </table>
 <br style='clear:both'>
 
-<p><h3>SOCKS</h3>
-A Tor SOCKS port is available on your {{ cfg.box_name }} on TCP port
+<h3>SOCKS</h3>
+<p>A Tor SOCKS port is available on your {{ cfg.box_name }} on TCP port
 9050.</p>
 
 {% else %}
