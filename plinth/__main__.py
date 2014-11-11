@@ -1,4 +1,20 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 import argparse
 import django.conf
@@ -16,13 +32,6 @@ from cherrypy.process.plugins import Daemonizer
 from plinth import cfg
 from plinth import module_loader
 from plinth import service
-
-__author__ = "James Vasile"
-__copyright__ = "Copyright 2011-2013, James Vasile"
-__license__ = "GPLv3 or later"
-__maintainer__ = "James Vasile"
-__email__ = "james@jamesvasile.com"
-__status__ = "Development"
 
 LOGGER = logging.getLogger(__name__)
 

@@ -21,7 +21,9 @@ Plinth setup file
 """
 
 from distutils import log
+from distutils.command.clean import clean
 from distutils.command.install_data import install_data
+from distutils.util import change_root
 import glob
 import os
 import setuptools
@@ -43,6 +45,15 @@ DIRECTORIES_TO_COPY = [
 ]
 
 
+class CustomClean(clean):
+    """Override clean command to clean documentation directory"""
+    def run(self):
+        """Execute clean command"""
+        subprocess.check_call(['make', '-C', 'doc', 'clean'])
+
+        clean.run(self)
+
+
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
     def run(self):
@@ -53,12 +64,18 @@ class CustomInstallData(install_data):
 
         # Create empty directories
         for directory in DIRECTORIES_TO_CREATE:
+            if self.root:
+                directory = change_root(self.root, directory)
+
             if not os.path.exists(directory):
                 log.info("creating directory '%s'", directory)
                 os.makedirs(directory)
 
         # Recursively copy directories
         for target, source in DIRECTORIES_TO_COPY:
+            if self.root:
+                target = change_root(self.root, target)
+
             if not os.path.exists(target):
                 log.info("recursive copy '%s' to '%s'", source, target)
                 shutil.copytree(source, target, symlinks=True)
@@ -84,7 +101,6 @@ setuptools.setup(
         'Intended Audience :: End Users/Desktop',
         'License :: DFSG approved',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
@@ -118,5 +134,6 @@ setuptools.setup(
                 ('/etc/plinth/modules-enabled',
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
                                         '*')))],
-    cmdclass={'install_data': CustomInstallData},
+    cmdclass={'clean': CustomClean,
+              'install_data': CustomInstallData},
 )
