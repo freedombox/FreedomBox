@@ -31,7 +31,7 @@ from plinth.errors import ActionError
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname("Diagnostics", "icon-screenshot", "diagnostics:index", 30)
+    menu.add_urlname("Diagnostics", "glyphicon-screenshot", "diagnostics:index", 30)
 
 
 @login_required

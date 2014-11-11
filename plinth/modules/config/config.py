@@ -95,7 +95,7 @@ and must not be greater than 63 characters in length.'),
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Configure'), 'icon-cog', 'config:index', 10)
+    menu.add_urlname(_('Configure'), 'glyphicon-cog', 'config:index', 10)
 
 
 @login_required
