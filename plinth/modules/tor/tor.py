@@ -61,6 +61,7 @@ def index(request):
 
     return TemplateResponse(request, 'tor.html',
                             {'title': _('Tor Control Panel'),
+                             'is_installed': status['is_installed'],
                              'is_running': status['is_running'],
                              'tor_ports': status['ports'],
                              'tor_hs_enabled': status['hs_enabled'],
@@ -71,6 +72,9 @@ def index(request):
 
 def get_status():
     """Return the current status"""
+    is_installed = actions.superuser_run(
+        'tor',
+        ['get-installed']).strip() == 'installed'
     is_running = actions.superuser_run('tor', ['is-running']).strip() == 'yes'
 
     output = actions.superuser_run('tor-get-ports')
@@ -99,7 +103,8 @@ def get_status():
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
 
-    return {'is_running': is_running,
+    return {'is_installed': is_installed,
+            'is_running': is_running,
             'ports': ports,
             'hs_enabled': hs_enabled,
             'hs_hostname': hs_hostname,
