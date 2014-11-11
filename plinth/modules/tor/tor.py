@@ -89,6 +89,10 @@ def get_status():
         hs_enabled = False
         hs_hostname = 'Not Configured'
         hs_ports = ''
+    elif output == 'error':
+        hs_enabled = False
+        hs_hostname = 'Configuration Error'
+        hs_ports = ''
     else:
         hs_enabled = True
         hs_info = output.split()

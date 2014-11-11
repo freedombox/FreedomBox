@@ -198,8 +198,11 @@ def get_hidden_service():
     if not hs_dir:
         return ''
 
-    with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
-        hs_hostname = conf_file.read().strip()
+    try:
+        with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
+            hs_hostname = conf_file.read().strip()
+    except Exception:
+        return 'error'
 
     return hs_hostname + ' ' + ','.join(hs_ports)
 
