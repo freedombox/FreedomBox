@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
@@ -23,7 +22,6 @@ def init():
     menu.add_urlname(_('Users and Groups'), 'icon-user', 'users:index', 15)
 
 
-@login_required
 def index(request):
     """Return a rendered users page"""
     menu = {'title': _('Users and Groups'),
@@ -57,7 +55,6 @@ and alphabet'),
     email = forms.EmailField(label=_('Email'), required=False)
 
 
-@login_required
 def add(request):
     """Serve the form"""
     form = None
@@ -102,7 +99,6 @@ class UserEditForm(forms.Form):  # pylint: disable-msg=W0232
             self.fields['delete_user_' + user.username] = field
 
 
-@login_required
 def edit(request):
     """Serve the edit form"""
     form = None

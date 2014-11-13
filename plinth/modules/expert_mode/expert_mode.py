@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -20,7 +19,6 @@ def init():
     menu.add_urlname(_('Expert Mode'), 'icon-cog', 'expert_mode:index', 10)
 
 
-@login_required
 def index(request):
     """Serve the configuration form"""
     status = get_status(request)
@@ -53,7 +51,7 @@ def _apply_changes(request, new_status):
 
     expert_group = get_or_create_group('Expert')
     if new_status['expert_mode']:
-        if not expert_group in request.user.groups.all():
+        if expert_group not in request.user.groups.all():
             request.user.groups.add(expert_group)
             message = (messages.success, _('Expert mode enabled'))
     else:
