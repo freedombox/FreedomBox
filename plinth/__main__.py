@@ -182,8 +182,13 @@ def configure_django():
                     'plinth']
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
+
+    secure_proxy_ssl_header = None
+    if cfg.secure_proxy_ssl_header:
+        secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
+
     django.conf.settings.configure(
-        ALLOWED_HOSTS=['127.0.0.1', 'localhost'],
+        ALLOWED_HOSTS=['*'],
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
         DATABASES={'default':
@@ -205,10 +210,12 @@ def configure_django():
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
+        SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        TEMPLATE_CONTEXT_PROCESSORS=context_processors)
+        TEMPLATE_CONTEXT_PROCESSORS=context_processors,
+        USE_X_FORWARDED_HOST=bool(cfg.use_x_forwarded_host))
     django.setup()
 
     LOGGER.info('Configured Django with applications - %s', applications)

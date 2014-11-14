@@ -34,6 +34,8 @@ access_log_file = None
 pidfile = None
 host = None
 port = None
+use_x_forwarded_host = False
+secure_proxy_ssl_header = None
 debug = False
 no_daemon = False
 server_dir = '/'
@@ -75,7 +77,9 @@ def read():
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),
                     ('Network', 'host'),
-                    ('Network', 'port')}
+                    ('Network', 'port'),
+                    ('Network', 'secure_proxy_ssl_header'),
+                    ('Network', 'use_x_forwarded_host')}
 
     for section, name in config_items:
         try:
