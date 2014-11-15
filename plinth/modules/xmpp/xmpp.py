@@ -54,23 +54,15 @@ def index(request):
         'xmpp',
         ['get-installed']).strip() == 'installed'
 
-    main = "<p>XMPP Server Accounts and Configuration</p>"
-    if not is_installed:
-        main += """
-<p>ejabberd is not installed, please install it. ejabberd comes pre-installed
-with FreedomBox. On any Debian-based system (such as FreedomBox) you may install
-it using the command 'aptitude install ejabberd'</p>
-"""
-
     if is_installed:
         sidebar_right = render_to_string('menu_block.html', {'menu': SIDE_MENU},
                                          RequestContext(request))
     else:
         sidebar_right = None
 
-    return TemplateResponse(request, 'base.html',
+    return TemplateResponse(request, 'xmpp.html',
                             {'title': _('XMPP Server'),
-                             'main': main,
+                             'is_installed': is_installed,
                              'sidebar_right': sidebar_right})
 
 
