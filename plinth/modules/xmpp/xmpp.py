@@ -110,14 +110,21 @@ def _apply_changes(request, old_status, new_status):
         return
 
     if new_status['inband_enabled']:
-        messages.success(request, _('Inband registration enabled'))
         option = 'inband_enable'
     else:
-        messages.success(request, _('Inband registration disabled'))
         option = 'noinband_enable'
 
     LOGGER.info('Option - %s', option)
-    actions.superuser_run('xmpp-setup', [option])
+    output = actions.superuser_run('xmpp-setup', [option])
+
+    if 'Failed' in output:
+        messages.error(request,
+                       _('Error when configuring XMPP server: %s') %
+                       output)
+    elif option == 'inband_enable':
+        messages.success(request, _('Inband registration enabled'))
+    else:
+        messages.success(request, _('Inband registration disabled'))
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
