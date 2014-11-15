@@ -58,5 +58,5 @@ if [ "$xmpp_inband_enable" != "$xmpp_inband_enable_cur" ] ; then
     else
         sed -i s/"ip_access: all"/"ip_access: trusted_network"/ /etc/ejabberd/ejabberd.yml
     fi
-    ejabberdctl restart
+    ejabberdctl restart || echo "Failed to restart ejabberd with new configuration."
 fi
