@@ -34,12 +34,38 @@ def parse_arguments():
     subparsers.add_parser('get-installed',
                           help='Get whether ejabberd is installed')
 
+    # Register a new user account
+    register = subparsers.add_parser('register',
+                                     help='Register a new user account')
+    register.add_argument('--username',
+                          help='Username for the new user account')
+    register.add_argument('--password',
+                          help='Password for the new user account')
+
     return parser.parse_args()
 
 
 def subcommand_get_installed(_):
     """Get whether ejabberd is installed"""
     print('installed' if get_installed() else 'not installed')
+
+
+def subcommand_register(arguments):
+    """Register a new user account"""
+    if not get_installed():
+        print('Failed to register XMPP account: ejabberd is not installed.')
+        return
+
+    username = arguments.username
+    password = arguments.password
+    hostname = subprocess.check_output(['hostname'])
+
+    try:
+        output = subprocess.check_output(['ejabberdctl', 'register',
+                                          username, hostname, password])
+        print(output.decode())
+    except subprocess.CalledProcessError as e:
+        print('Failed to register XMPP account:', e.output.decode())
 
 
 def get_installed():
