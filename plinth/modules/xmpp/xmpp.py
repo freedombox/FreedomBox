@@ -166,7 +166,10 @@ def register(request):
 def _register_user(request, data):
     """Register a new XMPP user"""
     output = actions.superuser_run(
-        'xmpp-register', [data['username'], data['password']])
+        'xmpp',
+        ['register',
+         '--username', data['username'],
+         '--password', data['password']])
 
     if 'successfully registered' in output:
         messages.success(request, _('Registered account for %s') %
