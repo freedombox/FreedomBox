@@ -8,7 +8,7 @@
     $ sudo python3 setup.py develop
 
     This will install the python package in a special development mode.  Run it
-    normally.  Any updates to the code (and core pakcage data files) do not
+    normally.  Any updates to the code (and core package data files) do not
     require re-installation after every modification.
 
     CherryPy web server also monitors changes to the source files and reloads
@@ -28,7 +28,7 @@
     *Note:* This mode is supported only in a limited manner.  The following are
     the unknown issues with it:
 
-    1. Help pages are also not built. Run 'make -C doc' manaully.
+    1. Help pages are also not built. Run 'make -C doc' manually.
 
     2. Actions do not work when running as normal user without 'sudo' prefix.
        You need to add 'actions' directory to be allowed for 'sudo' commands.
@@ -39,6 +39,24 @@
 1. Run tests:
 
     $ python3 setup.py test
+
+## Running the Test Coverage Analysis
+
+1. Run the coverage tool:
+
+    $ python3 setup.py test_coverage
+
+    Invoking this command generates a binary-format '.coverage' data file in
+    the top-level project directory which is recreated with each run, and
+    writes a set of HTML and other supporting files which comprise the
+    browsable coverage report to the 'plinth/tests/coverage/report' directory.
+    Index.html presents the coverage summary, broken down by module.  Data
+    columns can be sorted by clicking on the column header or by using mnemonic
+    hot-keys specified in the keyboard widget in the upper-right corner of the
+    page.  Clicking on the name of a particular source file opens a page that
+    displays the contents of that file, with color-coding in the left margin to
+    indicate which statements or branches were executed via the tests (green)
+    and which statements or branches were not executed (red).
 
 ## Testing Inside a Virtual Machine
 
@@ -95,6 +113,8 @@ infrastructure in place for it from the start.  Use it like this:
 * *Bootstrap Form* - Render Django forms for Twitter Bootstrap
 
 * *CherryPy3* - WSGI web server since Django does not have proper web server
+
+* *Coverage* - Test coverage measurement and reporting tool
 
 * *Django* - Web application framework for Plinth
 

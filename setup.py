@@ -29,6 +29,7 @@ import shutil
 import subprocess
 
 from plinth import __version__
+from plinth.tests.coverage import test_coverage
 
 
 DIRECTORIES_TO_CREATE = [
@@ -97,7 +98,8 @@ setuptools.setup(
     install_requires=[
         'cherrypy >= 3.0',
         'django >= 1.7.0',
-        'django-bootstrap-form'
+        'django-bootstrap-form',
+        'coverage >= 3.7'
     ],
     include_package_data=True,
     package_data={'plinth': ['templates/*',
@@ -118,5 +120,8 @@ setuptools.setup(
                 ('/etc/plinth/modules-enabled',
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
                                         '*')))],
-    cmdclass={'install_data': CustomInstallData},
+    cmdclass={
+        'install_data': CustomInstallData,
+        'test_coverage': test_coverage.TestCoverageCommand
+    },
 )
