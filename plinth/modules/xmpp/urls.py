@@ -20,11 +20,15 @@ URLs for the XMPP module
 """
 
 from django.conf.urls import patterns, url
+from django.views.generic import RedirectView
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'plinth.modules.xmpp.xmpp',
-    url(r'^apps/xmpp/$', 'index', name='index'),
+    # create an index page (that only forwards) to have correct highlighting
+    # of submenu items
+    url(r'^apps/xmpp/$', RedirectView.as_view(pattern_name='xmpp:configure'),
+        name='index'),
     url(r'^apps/xmpp/configure/$', 'configure', name='configure'),
     url(r'^apps/xmpp/register/$', 'register', name='register')
 )

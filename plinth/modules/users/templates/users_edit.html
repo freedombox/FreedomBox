@@ -20,36 +20,21 @@
 
 {% load bootstrap %}
 
-{% block main_block %}
+{% block content %}
+
+  <h3>Delete Users</h3>
+
+  Currently you can not edit but only delete users from {{ cfg.product_name }}
+  and the {{ cfg.box_name }} system.
+  <p>Deleting users is permanent!</p>
 
   <form class="form" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn-primary" value="Delete User"/>
+    <input type="submit" class="btn btn-primary" value="Delete User"/>
 
   </form>
-
-{% endblock %}
-
-{% block sidebar_right_block %}
-
-  <div class="well sidebar-nav">
-
-    <h3>Edit Users</h3>
-
-    <p>Click on a user's name to go to a screen for editing that
-      user's account.</p>
-
-    <h3>Delete Users</h3>
-
-    <p>Check the box next to a users' names and then click "Delete
-      User" to remove users from {{ cfg.product_name }} and the
-      {{ cfg.box_name }} system.</p>
-
-    <p>Deleting users is permanent!</p>
-
-  </div>
 
 {% endblock %}

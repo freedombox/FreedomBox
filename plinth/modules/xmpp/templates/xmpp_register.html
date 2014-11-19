@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "xmpp_base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,14 +20,14 @@
 
 {% load bootstrap %}
 
-{% block main_block %}
+{% block content %}
 
   <form class="form" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn-primary" value="Register XMPP Account"/>
+    <input type="submit" class="btn btn-primary btn-md" value="Register XMPP Account"/>
 
   </form>
 

@@ -102,39 +102,40 @@
 
   <div class="container-fluid">
     <div class="row">
-      {% if submenu or sidebar_right or sidebar_left %}
         <div class="col-md-3">
-        {% if submenu %}
-          <div class="well sidebar-nav">
-            {% include "menu.html" with menu=submenu %}
-          </div><!--/.well -->
-        {% endif %}
-        {% if sidebar_left %}
-          <div class="well sidebar-nav">
-            {{ sidebar_left|safe }}
-          </div><!--/.well -->
-        {% endif %}
-        {% block sidebar_right_block %}
-          {% if sidebar_right %}
-            <div class="well sidebar-nav">
-              {{ sidebar_right|safe }}
-            </div><!--/.well -->
-          {% endif %}
-        {% endblock %}
+          {% block submenu %}
+            {% if submenu %}
+              <div class="well sidebar">
+                {% include "submenu.html" with menu=submenu %}
+              </div><!--/.well -->
+            {% endif %}
+          {% endblock %}
+
+          {% block sidebar %}
+            {# this sidebar should contain help texts but no menus #}
+          {% endblock %}
         </div>
-      {% endif %}
       <div class="col-md-9">
         <div class="well">
-          <h2>
-            {% block title_block %}
-              {{ title }}
-            {% endblock %}
-          </h2>
+
+          {% block subsubmenu %}
+            {% if subsubmenu %}
+              <ul class="nav nav-tabs">
+                {% for urlitem in subsubmenu.items %}
+                  <li {% if urlitem.url == request.path %} class="active"{% endif %}
+                      role="presentation">
+                    <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <br />
+            {% endif %}
+          {% endblock %}
 
           {% include 'messages.html' %}
 
-          {% block main_block %}
-            {{ main|safe }}
+          {% block content %}
+            {# main content goes here #}
           {% endblock %}
         </div>
       </div><!--/col-->
@@ -142,16 +143,16 @@
 
     <hr>
 
-    <footer>
-      {% block footer_block %}
+    {% block footer %}
+      <footer>
         <p>
         Plinth is &copy; Copyright 2012 <a href="http://hackervisions.org" target="_blank">James Vasile</a>.  It is
         free software offered to you under the terms of
         the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
         License</a>, Version 3 or later.  This Plinth theme was built by <a href="http://seandiggity.com" target="_blank">Sean &quot;Diggity&quot; O&apos;Brien</a>.
         </p>
-      {% endblock %}
-    </footer>
+      </footer>
+    {% endblock %}
 
   </div><!--/.fluid-container-->
 
@@ -163,9 +164,6 @@
   <!-- Local link to system Bootstrap JS -->
   <script type="text/javascript" src="{% static 'theme/bootstrap/js/bootstrap.min.js' %}"></script>
 
-  {% block js_block %}
-    {{ js|safe }}
-  {% endblock %}
   {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
   {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 </body>

@@ -11,7 +11,7 @@ from plinth.modules.lib.auth import get_or_create_group
 class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
     """Form to configure expert mode"""
     expert_mode = forms.BooleanField(
-        label=_('Expert Mode'), required=False)
+        label=_('Enable Expert Mode'), required=False)
 
 
 def init():

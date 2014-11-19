@@ -18,18 +18,13 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
-
-{% block main_block %}
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn-primary"
-           value="{{ submit_text|default:"Submit" }}"/>
-
-  </form>
-
+{% block sidebar %}
+  <div class="well sidebar">
+    <h3>XMPP</h3>
+    XMPP is an open and standardized communication protocol.
+    Here you can run and configure your own server, called ejabberd.
+    To actually communicate it you can use the <a href='/jwchat'>web client</a>
+    or any other
+    <a href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP client</a>.
+  </div>
 {% endblock %}

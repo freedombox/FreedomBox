@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="{% static 'first_boot/state0.css' %}"/>
 {% endblock %}
 
-{% block main_block %}
+{% block content %}
 
   <h2>Welcome to Your FreedomBox!</h2>
 
@@ -36,13 +36,13 @@
   <form class="form" method="post">
     {% csrf_token %}
     {{ form|bootstrap }}
-    <input type="submit" class="btn-primary" value="Box it up!"/>
+    <input type="submit" class="btn btn-primary" value="Box it up!"/>
 
   </form>
 
 {% endblock %}
 
-{% block sidebar_right_block %}
+{% block sidebar %}
   {% include "firstboot_sidebar.html" %}
 {% endblock %}
 
