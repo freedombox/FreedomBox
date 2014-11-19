@@ -61,20 +61,23 @@ class TestCoverageCommand(setuptools.Command):
         if self.test_module is None:
             test_suite = tests.TEST_SUITE
         else:
-            test = unittest.defaultTestLoader.loadTestsFromNames([self.test_module])
+            test = unittest.defaultTestLoader.\
+                loadTestsFromNames([self.test_module])
             test_suite = unittest.TestSuite(test)
 
         # run the coverage analysis
         runner = unittest.TextTestRunner()
-        cov = coverage.coverage(auto_data=True, branch=True, source=SOURCE_DIRS,
-                                omit=FILES_TO_OMIT)
+        cov = coverage.coverage(auto_data=True, branch=True,
+                                source=SOURCE_DIRS, omit=FILES_TO_OMIT)
         cov.erase()     # erase existing coverage data file
         cov.start()
         runner.run(test_suite)
         cov.stop()
 
-        # generate an HTML report
+        # generate an HTML report and print overall coverage
         html_report_title = ("FreedomBox:Plinth -- Test Coverage as of " +
                              time.strftime("%x %X %Z"))
-        cov.html_report(directory=COVERAGE_REPORT_DIR, omit=FILES_TO_OMIT,
-                        title=html_report_title)
+        _coverage = cov.html_report(directory=COVERAGE_REPORT_DIR,
+                                    omit=FILES_TO_OMIT,
+                                    title=html_report_title)
+        print('''\nOverall test coverage: {0:.2f} %\n'''.format(_coverage))
