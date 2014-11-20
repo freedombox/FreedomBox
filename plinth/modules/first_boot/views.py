@@ -16,6 +16,13 @@ class State0View(CreateView):
     form_class = State0Form
     success_url = reverse_lazy('first_boot:state10')
 
+    def get_context_data(self, **kwargs):
+        """Set 'sidebar_right' to display the sidebar_right in the templates.
+        Otherwise we wouldn't be able to include firstboot_sidebar.html"""
+        context = super(State0View, self).get_context_data(**kwargs)
+        context['sidebar_right'] = "a"
+        return context
+
     def get_initial(self):
         initial = super(State0View, self).get_initial()
         initial['hostname'] = config.get_hostname()
@@ -38,5 +45,6 @@ def state10(request):
         kvstore.set('firstboot_state', 10)
 
     return render_to_response('firstboot_state10.html',
-                              {'title': _('Setup Complete')},
+                              {'title': _('Setup Complete'),
+                               'sidebar_right': 'a'},
                               context_instance=RequestContext(request))
