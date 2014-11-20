@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -17,25 +18,7 @@
 #
 {% endcomment %}
 
-<ul class="nav nav-list">
-  <li class="nav-header">Menu</li>
-  {% for item in menu.items %}
+{% block content %}
+  {{ content|safe }}
+{% endblock %}
 
-    {% if item.url in active_menu_urls %}
-      <li class="active">
-        <a href="{{ item.url }}" class="active">
-          <span class="{{ item.icon }} icon-white sidenav-icon"></span>
-    {% else %}
-      <li>
-        <a href="{{ item.url }}">
-          <span class="{{ item.icon }} sidenav-icon"></span>
-    {% endif %}
-          {{ item.label }}
-        </a>
-        {% if item.items %}
-          {% include "menu.html" with menu=item %}
-        {% endif %}
-      </li>
-
-  {% endfor %}
-</ul>

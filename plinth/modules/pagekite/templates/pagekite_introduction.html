@@ -18,7 +18,8 @@
 #
 {% endcomment %}
 
-{% block main_block %}
+{% block content %}
+
 <p>PageKite is a system for exposing {{ cfg.box_name }} services when
 you don't have a direct connection to the Internet. You only need this
 service if your {{ cfg.box_name }} services are unreachable from the
@@ -48,9 +49,10 @@ there. In future, it might be possible to use your buddy's
 {{ cfg.box_name }} for this.</p>
 
 <p>
-  <a class='btn btn-primary btn-lg'
-      href="{% url 'pagekite:configure' %}">Configure
-     PageKite</a>
+  <a class='btn btn-primary btn-md' href="{% url 'pagekite:configure' %}">
+    Configure PageKite
+  </a>
 </p>
+
 
 {% endblock %}

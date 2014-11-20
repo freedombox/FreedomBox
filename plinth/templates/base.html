@@ -24,8 +24,6 @@
 	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate" />
 	<meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
 	<meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
-
-	<meta name="title" content="{% if title %} {{ title }} {% else %} FreedomBox {% endif %}" />
 	<meta name="description" content="Plinth administrative interface for the FreedomBox" />
 	<title>{% if title %} {{ title }} {% else %} FreedomBox {% endif %}</title>
 
@@ -40,138 +38,133 @@
 	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
 
 	<!-- Bootstrap base CSS -->
-	<link rel="stylesheet" href="{% static 'theme/css/bootstrap.min.css' %}"/>
-	<!-- Bootstrap responsive CSS -->
-	<link rel="stylesheet" href="{% static 'theme/css/bootstrap-responsive.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'theme/bootstrap/css/bootstrap.min.css' %}"/>
 	<link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
-	<!-- CSS from previous Plinth template, not sure what to keep yet -->
-	{{ css|safe }}
-	<!-- End Plinth CSS -->
+
   {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
   {% block page_head %}<!-- placeholder for page-specific head files -->{% endblock %}
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse"
-             data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a href="{% url 'index' %}" class="logo-top">
-            <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
-                 alt="FreedomBox" />
-          </a>
-          <a class="brand" href="{% url 'index' %}">FreedomBox</a>
-	  {% block add_nav_and_login %}
-            <div class="nav-collapse">
-              <ul class="nav">
-                {% for item in cfg.main_menu.items %}
-                  {% if item.url in active_menu_urls %}
-                    <li class="active">
-                      <a href="{{ item.url }}" class="active">
-                  {% else %}
-                    <li>
-                      <a href="{{ item.url }}">
-                  {% endif %}
-                      <span class="{{ item.icon }} icon-white nav-icon"></span>
-                      {{ item.label }}
-                      </a>
-                    </li>
-                {% endfor %}
-              </ul>
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+          data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{% url 'index' %}" class="navbar-brand">
+          <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
+               alt="FreedomBox" />
+          FreedomBox
+        </a>
+      </div>
+      <div class="collapse navbar-collapse">
+      {% block add_nav_and_login %}
+        <ul class="nav navbar-nav">
+          {% for item in cfg.main_menu.items %}
+            {% if item.url in active_menu_urls %}
+              <li class="active">
+                <a href="{{ item.url }}" class="active">
+            {% else %}
+              <li>
+                <a href="{{ item.url }}">
+            {% endif %}
 
-              {% if user.is_authenticated %}
-                <p class="navbar-text pull-right">
-                  <i class="icon-user icon-white nav-icon"></i>
-                  Logged in as <a href="#">{{ user.username }}</a>.
-                  <a href="{% url 'lib:logout' %}" title="Log out">
-                    Log out</a>.
-                </p>
-              {% else %}
-                <p class="navbar-text pull-right">
-                  Not logged in.
-                  <i class="icon-user icon-white nav-icon"></i>
-                  <a href="{% url 'lib:login' %}" title="Log in">
-                    Log in</a>.
-                </p>
-              {% endif %}
-	  {% endblock %}
-          </div><!--/.nav-collapse -->
-        </div>
+                <span class="{{ item.icon }} glyphicon glyphicon-white nav-icon"></span>
+                {{ item.label }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+          <p class="navbar-text pull-right">
+            <i class="glyphicon glyphicon-user glyphicon-white nav-icon"></i>
+            Logged in as <a href="#">{{ user.username }}</a>.
+            <a href="{% url 'lib:logout' %}" title="Log out">
+              Log out</a>.
+          </p>
+        {% else %}
+          <p class="navbar-text pull-right">
+            Not logged in.
+            <i class="glyphicon glyphicon-user glyphicon-white nav-icon"></i>
+            <a href="{% url 'lib:login' %}" title="Log in">
+              Log in</a>.
+          </p>
+        {% endif %}
+        {% endblock %}
       </div>
     </div>
+  </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        {% if submenu or sidebar_right or sidebar_left %}
-        <div class="span3">
-        {% if submenu %}
-          <div class="well sidebar-nav">
-            {% include "menu.html" with menu=submenu %}
-          </div><!--/.well -->
-        {% endif %}
-        {% if sidebar_left %}
-          <div class="well sidebar-nav">
-		{{ sidebar_left|safe }}
-          </div><!--/.well -->
-	{% endif %}
-        {% block sidebar_right_block %}
-          {% if sidebar_right %}
-            <div class="well sidebar-nav">
-              {{ sidebar_right|safe }}
-            </div><!--/.well -->
-          {% endif %}
-        {% endblock %}
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+          {% block submenu %}
+            {% if submenu %}
+              <div class="well sidebar">
+                {% include "submenu.html" with menu=submenu %}
+              </div><!--/.well -->
+            {% endif %}
+          {% endblock %}
+
+          {% block sidebar %}
+            {# this sidebar should contain help texts but no menus #}
+          {% endblock %}
         </div>
-	{% endif %}
-        <div class="span9">
-          <div class="hero-unit" class="pull-left">
-  		<h2>
-		{% block title_block %}
-		{{ title }}
-		{% endblock %}
-		</h2>
+      <div class="col-md-9">
+        <div class="well">
 
-		{% include 'messages.html' %}
+          {% block subsubmenu %}
+            {% if subsubmenu %}
+              <ul class="nav nav-tabs">
+                {% for urlitem in subsubmenu.items %}
+                  <li {% if urlitem.url == request.path %} class="active"{% endif %}
+                      role="presentation">
+                    <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <br />
+            {% endif %}
+          {% endblock %}
 
-		{% block main_block %}
-                {{ main|safe }}
-		{% endblock %}
-          </div>
-        </div><!--/span-->
-      </div><!--/row-->
+          {% include 'messages.html' %}
 
-      <hr>
+          {% block content %}
+            {# main content goes here #}
+          {% endblock %}
+        </div>
+      </div><!--/col-->
+    </div><!--/row-->
 
+    <hr>
+
+    {% block footer %}
       <footer>
-        <p>{% block footer_block %}
-		<p>
-		Plinth is &copy; Copyright 2012 <a href="http://hackervisions.org" target="_blank">James Vasile</a>.  It is
-		free software offered to you under the terms of
-		the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
-		License</a>, Version 3 or later.  This Plinth theme was built by <a href="http://seandiggity.com" target="_blank">Sean &quot;Diggity&quot; O&apos;Brien</a>.
-		</p>
-		{% endblock %}</p>
+        <p>
+        Plinth is &copy; Copyright 2012 <a href="http://hackervisions.org" target="_blank">James Vasile</a>.  It is
+        free software offered to you under the terms of
+        the <a href="http://www.gnu.org/licenses/agpl.html" target="_blank">GNU Affero General Public
+        License</a>, Version 3 or later.  This Plinth theme was built by <a href="http://seandiggity.com" target="_blank">Sean &quot;Diggity&quot; O&apos;Brien</a>.
+        </p>
       </footer>
+    {% endblock %}
 
-    </div><!--/.fluid-container-->
+  </div><!--/.fluid-container-->
 
-<!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
-	<!-- Local link to system Modernizr (includes HTML5 Shiv) -->
-	<script type="text/javascript" src="{% static 'theme/js/libs/modernizr.min.js' %}"></script>
-	<!-- Local link to system jQuery -->
-	<script type="text/javascript" src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
-	<!-- Local link to system Bootstrap JS -->
-	<script type="text/javascript" src="{% static 'theme/js/libs/bootstrap.min.js' %}"></script>
+  <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
+  <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
+  <script type="text/javascript" src="{% static 'theme/js/libs/modernizr.min.js' %}"></script>
+  <!-- Local link to system jQuery -->
+  <script type="text/javascript" src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
+  <!-- Local link to system Bootstrap JS -->
+  <script type="text/javascript" src="{% static 'theme/bootstrap/js/bootstrap.min.js' %}"></script>
 
-        {% block js_block %}
-          {{ js|safe }}
-        {% endblock %}
-        {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
-        {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
+  {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
+  {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 </body>
 </html>
