@@ -40,7 +40,7 @@ LOGGER = logging.getLogger(__name__)
 def init():
     """Intialize the PageKite module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Public Visibility (PageKite)'), 'glyphicon-flag',
+    menu.add_urlname(_('Public Visibility (PageKite)'), 'glyphicon-globe',
                      'pagekite:index', 50)
 
 
