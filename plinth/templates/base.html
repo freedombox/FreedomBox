@@ -73,7 +73,7 @@
                 <a href="{{ item.url }}">
             {% endif %}
 
-                <span class="{{ item.icon }} glyphicon glyphicon-white nav-icon"></span>
+                <span class="{{ item.icon }} glyphicon nav-icon"></span>
                 {{ item.label }}
               </a>
             </li>
@@ -82,7 +82,7 @@
 
         {% if user.is_authenticated %}
           <p class="navbar-text pull-right">
-            <i class="glyphicon glyphicon-user glyphicon-white nav-icon"></i>
+            <i class="glyphicon glyphicon-user nav-icon"></i>
             Logged in as <a href="#">{{ user.username }}</a>.
             <a href="{% url 'lib:logout' %}" title="Log out">
               Log out</a>.
@@ -90,7 +90,7 @@
         {% else %}
           <p class="navbar-text pull-right">
             Not logged in.
-            <i class="glyphicon glyphicon-user glyphicon-white nav-icon"></i>
+            <i class="glyphicon glyphicon-user nav-icon"></i>
             <a href="{% url 'lib:login' %}" title="Log in">
               Log in</a>.
           </p>

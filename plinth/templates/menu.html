@@ -18,18 +18,16 @@
 {% endcomment %}
 
 <ul class="nav nav-pills nav-stacked">
-  <li class="nav-header">Menu</li>
   {% for item in menu.items %}
 
     {% if item.url in active_menu_urls %}
       <li class="active">
         <a href="{{ item.url }}" class="active">
-          <span class="{{ item.icon }} glyphicon glyphicon-white sidenav-icon"></span>
     {% else %}
       <li>
         <a href="{{ item.url }}">
-          <span class="{{ item.icon }} glyphicon sidenav-icon"></span>
     {% endif %}
+          <span class="{{ item.icon }} glyphicon sidenav-icon"></span>
           {{ item.label }}
         </a>
         {% if item.items %}
