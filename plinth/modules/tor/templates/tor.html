@@ -56,14 +56,17 @@ can help circumvent censorship. If your {{ cfg.box_name }} is behind a router
 or firewall, you should make sure the following ports are open, and
 port-forwarded, if necessary:</p>
 
-<table class="table table-bordered table-condensed" style="width:300px">
-  {% for name, port in tor_ports.items %}
-    <tr>
-      <td>{{ name }}</td>
-      <td>{{ port }}</td>
-    </tr>
-  {% endfor %}
-</table>
+<div class="col-sm-3">
+  <table class="table table-bordered table-condensed">
+    {% for name, port in tor_ports.items %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ port }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
 <br style='clear:both'>
 
 <h3>SOCKS</h3>

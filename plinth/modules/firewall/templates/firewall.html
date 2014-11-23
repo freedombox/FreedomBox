@@ -43,47 +43,51 @@ firewalld'</p>
 
 {% else %}
 
-<table class='table table-autowidth'>
-  <thead>
-    <th>Service/Port</th>
-    <th>Status</th>
-  </thead>
+<div class="row">
+  <div class="col-sm-8">
+    <table class='table table-autowidth table-striped'>
+      <thead>
+        <th>Service/Port</th>
+        <th>Status</th>
+      </thead>
 
-  <tbody>
-    {% for service in services %}
-      <tr>
-        <td><strong>{{ service.name }}</strong></td>
-        <td>
-          {% if service.is_enabled %}
-            <span class='label label-success'>Enabled</span>
-          {% else %}
-            <span class='label label-important'>Disabled</span>
-          {% endif %}
-        </td>
-      </tr>
+      <tbody>
+        {% for service in services %}
+          <tr>
+            <td><strong>{{ service.name }}</strong></td>
+            <td>
+              {% if service.is_enabled %}
+                <span class='label label-success'>Enabled</span>
+              {% else %}
+                <span class='label label-important'>Disabled</span>
+              {% endif %}
+            </td>
+          </tr>
 
-      {% for port in service.ports %}
-        <tr>
-          <td class='cell-indented'><em>{{ port }}</em></td>
-          <td>
-            {% if port in internal_enabled_services and port in external_enabled_services %}
-              <span class='label label-success'>Permitted</span>
-            {% elif port in internal_enabled_services %}
-              <span class='label label-warning'>Permitted (internal only)</span>
-            {% elif port in external_enabled_services %}
-              <span class='label label-warning'>Permitted (external only)</span>
-            {% else %}
-              <span class='label label-important'>Blocked</span>
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
+          {% for port in service.ports %}
+            <tr>
+              <td class='cell-indented'><em>{{ port }}</em></td>
+              <td>
+                {% if port in internal_enabled_services and port in external_enabled_services %}
+                  <span class='label label-success'>Permitted</span>
+                {% elif port in internal_enabled_services %}
+                  <span class='label label-warning'>Permitted (internal only)</span>
+                {% elif port in external_enabled_services %}
+                  <span class='label label-warning'>Permitted (external only)</span>
+                {% else %}
+                  <span class='label label-important'>Blocked</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
 
-    {% endfor %}
+        {% endfor %}
 
-  </tbody>
+      </tbody>
 
-</table>
+    </table>
+  </div>
+</div>
 
 <p><em>The operation of the firewall is automatic. When you enable a
 service it is automatically permitted in the firewall and you disable
