@@ -97,8 +97,7 @@ setuptools.setup(
     install_requires=[
         'cherrypy >= 3.0',
         'django >= 1.7.0',
-        'django-bootstrap-form',
-        'libjs-bootstrap >= 3.2.0',
+        'django-bootstrap-form'
     ],
     include_package_data=True,
     package_data={'plinth': ['templates/*',
