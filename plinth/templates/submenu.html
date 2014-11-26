@@ -17,11 +17,21 @@
 #
 {% endcomment %}
 
-<ul class='nav nav-list'>
-  <li class='nav-header'>{{ menu.title }}</li>
+<ul class="nav nav-pills nav-stacked">
   {% for item in menu.items %}
-  <li>
-    <a href="{{ item.url }}">{{ item.text }}</a>
-  </li>
+
+    {% if item.url in active_menu_urls %}
+      <li class="active">
+        <a href="{{ item.url }}" class="active">
+          <span class="{{ item.icon }} glyphicon"></span>
+    {% else %}
+      <li>
+        <a href="{{ item.url }}">
+          <span class="{{ item.icon }} glyphicon"></span>
+    {% endif %}
+          {{ item.label }}
+        </a>
+      </li>
+
   {% endfor %}
 </ul>

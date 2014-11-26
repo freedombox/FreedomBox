@@ -24,8 +24,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -36,27 +34,26 @@ from plinth import cfg
 
 LOGGER = logging.getLogger(__name__)
 
+subsubmenu = {'title': _('PageKite'),
+              'items': [{'url': reverse_lazy('pagekite:index'),
+                        'text': _('About PageKite')},
+                        {'url': reverse_lazy('pagekite:configure'),
+                        'text': _('Configure PageKite')}]}
+
 
 def init():
     """Intialize the PageKite module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Public Visibility (PageKite)'), 'glyphicon-globe',
-                     'pagekite:index', 50)
+    menu.add_urlname(_('Public Visibility (PageKite)'),
+                     'glyphicon-flag', 'pagekite:index', 50)
 
 
 @login_required
 def index(request):
-    """Serve introdution page"""
-    menu = {'title': _('PageKite'),
-            'items': [{'url': reverse_lazy('pagekite:configure'),
-                       'text': _('Configure PageKite')}]}
-
-    sidebar_right = render_to_string('menu_block.html', {'menu': menu},
-                                     RequestContext(request))
-
+    """Serve introduction page"""
     return TemplateResponse(request, 'pagekite_introduction.html',
                             {'title': _('Public Visibility (PageKite)'),
-                             'sidebar_right': sidebar_right})
+                             'subsubmenu': subsubmenu})
 
 
 class TrimmedCharField(forms.CharField):
@@ -123,7 +120,8 @@ def configure(request):
 
     return TemplateResponse(request, 'pagekite_configure.html',
                             {'title': _('Configure PageKite'),
-                             'form': form})
+                             'form': form,
+                             'subsubmenu': subsubmenu})
 
 
 def get_status():

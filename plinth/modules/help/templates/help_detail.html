@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,17 +18,7 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
-
 {% block content %}
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary btn-md" value="Update setup"/>
-
-  </form>
-
+  {{ content|safe }}
 {% endblock %}
+

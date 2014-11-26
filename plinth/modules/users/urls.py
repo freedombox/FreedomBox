@@ -20,11 +20,15 @@ URLs for the Users module
 """
 
 from django.conf.urls import patterns, url
+from django.views.generic import RedirectView
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
     'plinth.modules.users.users',
-    url(r'^sys/users/$', 'index', name='index'),
+    # create an index page (that only forwards) to have correct highlighting
+    # of submenu items
+    url(r'^sys/users/$', RedirectView.as_view(pattern_name='users:add'),
+        name='index'),
     url(r'^sys/users/add/$', 'add', name='add'),
-    url(r'^sys/users/edit/$', 'edit', name='edit')
+    url(r'^sys/users/edit/$', 'edit', name='edit'),
 )
