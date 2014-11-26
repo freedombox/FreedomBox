@@ -28,13 +28,14 @@ from plinth.modules.lib.auth import get_or_create_group
 class ExpertsForm(forms.Form):  # pylint: disable-msg=W0232
     """Form to configure expert mode"""
     expert_mode = forms.BooleanField(
-        label=_('Expert Mode'), required=False)
+        label=_('Enable Expert Mode'), required=False)
 
 
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Expert Mode'), 'glyphicon-wrench', 'expert_mode:index', 10)
+    menu.add_urlname(_('Expert Mode'), 'glyphicon-wrench',
+                     'expert_mode:index', 10)
 
 
 @login_required
@@ -70,7 +71,7 @@ def _apply_changes(request, new_status):
 
     expert_group = get_or_create_group('Expert')
     if new_status['expert_mode']:
-        if not expert_group in request.user.groups.all():
+        if expert_group not in request.user.groups.all():
             request.user.groups.add(expert_group)
             message = (messages.success, _('Expert mode enabled'))
     else:

@@ -25,43 +25,48 @@
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <!-- the "no-js" class is for Modernizr -->
 <head>
-	<meta charset="utf-8" />
+  <meta charset="utf-8" />
 
-	<!-- Always force latest IE rendering engine and Chrome Frame -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!-- Always force latest IE rendering engine and Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<!--  Mobile Viewport Fix http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
-	device-width : Occupy full width of the screen in its current orientation
-	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
-	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
-	-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--  Mobile Viewport Fix http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
+  device-width : Occupy full width of the screen in its current orientation
+  initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+  maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- R2D2, you know better than to trust a strange computer! -->
-	<meta name="robots" content="noindex, nofollow, noarchive" />
-	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate" />
-	<meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
-	<meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
-	<meta name="description" content="Plinth administrative interface for the FreedomBox" />
-	<title>{% if title %} {{ title }} {% else %} FreedomBox {% endif %}</title>
+  <!-- R2D2, you know better than to trust a strange computer! -->
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate" />
+  <meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
+  <meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
+  <meta name="description" content="Plinth administrative interface for the FreedomBox" />
+  {% block title %}
+    <title>
+      {% if title %} {{ title }} {% else %} FreedomBox {% endif %}
+    </title>
+  {% endblock %}
 
-	<!-- This is the traditional favicon. Size: 16x16 or 32x32, transparency is OK -->
-	<link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
+  <!-- This is the traditional favicon. Size: 16x16 or 32x32, transparency is OK -->
+  <link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
 
-	<!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
-	- To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
-	- Transparency is not recommended (iOS will put a black BG behind the icon) -->
-	<link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}"/>
-	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
-	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
+  <!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
+  - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+  - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'theme/img/apple-touch-icon-57px-precomposed.png' %}"/>
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
 
-	<!-- Bootstrap base CSS -->
-	<link rel="stylesheet" href="{% static 'theme/bootstrap/css/bootstrap.min.css' %}"/>
-	<link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
+  <!-- Bootstrap base CSS -->
+  <link rel="stylesheet" href="{% static 'theme/bootstrap/css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
 
   {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
   {% block page_head %}<!-- placeholder for page-specific head files -->{% endblock %}
 </head>
+
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
   <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
@@ -121,39 +126,41 @@
 
   <div class="container-fluid">
     <div class="row">
-      {% if submenu or sidebar_right or sidebar_left %}
-        <div class="col-md-3">
-        {% if submenu %}
-          <div class="well sidebar-nav">
-            {% include "menu.html" with menu=submenu %}
-          </div><!--/.well -->
-        {% endif %}
-        {% if sidebar_left %}
-          <div class="well sidebar-nav">
-            {{ sidebar_left|safe }}
-          </div><!--/.well -->
-        {% endif %}
-        {% block sidebar_right_block %}
-          {% if sidebar_right %}
-            <div class="well sidebar-nav">
-              {{ sidebar_right|safe }}
+      <div class="col-md-3">
+        {% block submenu %}
+          {% if submenu %}
+            <div class="well sidebar">
+              {% include "submenu.html" with menu=submenu %}
             </div><!--/.well -->
           {% endif %}
         {% endblock %}
-        </div>
-      {% endif %}
+
+        {% block sidebar %}
+          {# this sidebar should contain help texts but no menus #}
+        {% endblock %}
+      </div>
+
       <div class="col-md-9">
         <div class="well">
-          <h2>
-            {% block title_block %}
-              {{ title }}
-            {% endblock %}
-          </h2>
+
+          {% block subsubmenu %}
+            {% if subsubmenu %}
+              <ul class="nav nav-tabs">
+                {% for urlitem in subsubmenu.items %}
+                  <li {% if urlitem.url == request.path %} class="active"{% endif %}
+                      role="presentation">
+                    <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <br />
+            {% endif %}
+          {% endblock %}
 
           {% include 'messages.html' %}
 
-          {% block main_block %}
-            {{ main|safe }}
+          {% block content %}
+            {# main content goes here #}
           {% endblock %}
         </div>
       </div><!--/col-->

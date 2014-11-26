@@ -20,7 +20,7 @@
 
 {% load bootstrap %}
 
-{% block main_block %}
+{% block content %}
 
 {% if is_installed %}
 
@@ -42,12 +42,12 @@ Here is the current configuration:</p>
   <li>Ports: {{ tor_hs_ports }}</li>
 </ul>
 
-<form class="form" method="post">
+<form class="form form-inline" method="post">
   {% csrf_token %}
 
   {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
+  <input type="submit" class="btn btn-primary btn-sm" value="Update setup"/>
 </form>
 
 <h3>Bridge</h3>
@@ -56,15 +56,17 @@ can help circumvent censorship. If your {{ cfg.box_name }} is behind a router
 or firewall, you should make sure the following ports are open, and
 port-forwarded, if necessary:</p>
 
-<div class="col-sm-3">
-  <table class="table table-bordered table-condensed">
-    {% for name, port in tor_ports.items %}
-      <tr>
-        <td>{{ name }}</td>
-        <td>{{ port }}</td>
-      </tr>
-    {% endfor %}
-  </table>
+<div class="row">
+  <div class="col-sm-3">
+    <table class="table table-bordered table-condensed">
+      {% for name, port in tor_ports.items %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ port }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 
 <br style='clear:both'>
@@ -84,9 +86,9 @@ port-forwarded, if necessary:</p>
 
 {% endblock %}
 
-{% block sidebar_right_block %}
+{% block sidebar %}
 
-  <div class="well sidebar-nav">
+  <div class="well sidebar">
 
     <h3>Tor</h3>
 
