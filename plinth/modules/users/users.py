@@ -134,7 +134,7 @@ def edit(request):
         form = UserEditForm(prefix='user')
 
     return TemplateResponse(request, 'users_edit.html',
-                            {'title': _('Edit or Delete User'),
+                            {'title': _('Delete Users'),
                              'form': form})
 
 
