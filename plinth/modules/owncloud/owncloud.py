@@ -17,7 +17,6 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -46,7 +45,6 @@ def init():
                               is_external=True, enabled=status['enabled'])
 
 
-@login_required
 def index(request):
     """Serve the ownCloud configuration page"""
     status = get_status()

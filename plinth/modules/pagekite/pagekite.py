@@ -21,7 +21,6 @@ Plinth module for configuring PageKite service
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
@@ -44,7 +43,6 @@ def init():
                      'pagekite:index', 50)
 
 
-@login_required
 def index(request):
     """Serve introdution page"""
     menu = {'title': _('PageKite'),
@@ -104,7 +102,6 @@ for your account if no secret is set on the kite'))
 https://pagekite.net/wiki/Howto/SshOverPageKite/">instructions</a>'))
 
 
-@login_required
 def configure(request):
     """Serve the configuration form"""
     status = get_status()

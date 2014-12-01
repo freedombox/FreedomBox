@@ -17,7 +17,6 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -64,7 +63,6 @@ def init():
         enabled=True)
 
 
-@login_required
 def index(request):
     """Serve XMPP page"""
     is_installed = actions.superuser_run(
@@ -91,7 +89,6 @@ class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
 allowed to register an account through an XMPP client'))
 
 
-@login_required
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -157,7 +154,6 @@ class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
         label=_('Password'), widget=forms.PasswordInput())
 
 
-@login_required
 def register(request):
     """Serve the registration form"""
     form = None
