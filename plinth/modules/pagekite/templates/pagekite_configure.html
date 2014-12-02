@@ -20,7 +20,7 @@
 
 {% load bootstrap %}
 
-{% block main_block %}
+{% block content %}
 
 {% if pagekite_status = 'not_installed' %}
 
@@ -56,8 +56,7 @@
 
 {% endblock %}
 
-{% block js_block %}
-  {{ js|safe }}
+{% block page_js %}
 
   <script type="text/javascript">
     (function($) {

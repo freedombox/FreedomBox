@@ -1,4 +1,3 @@
-{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,18 +17,21 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
+<ul class="nav nav-pills nav-stacked">
+  {% for item in menu.items %}
 
-{% block main_block %}
+    {% if item.url in active_menu_urls %}
+      <li class="active">
+        <a href="{{ item.url }}" class="active">
+          <span class="{{ item.icon }} glyphicon"></span>
+    {% else %}
+      <li>
+        <a href="{{ item.url }}">
+          <span class="{{ item.icon }} glyphicon"></span>
+    {% endif %}
+          {{ item.label }}
+        </a>
+      </li>
 
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{{ submit_text|default:"Submit" }}"/>
-
-  </form>
-
-{% endblock %}
+  {% endfor %}
+</ul>

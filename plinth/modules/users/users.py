@@ -21,8 +21,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -34,27 +32,18 @@ from plinth.modules.lib.auth import add_user
 LOGGER = logging.getLogger(__name__)
 
 
+subsubmenu = {'title': _('Users and Groups'),
+              'items': [{'url': reverse_lazy('users:add'),
+                        'text': _('Add User')},
+                        {'url': reverse_lazy('users:edit'),
+                        'text': _('Edit Users')}]}
+
+
 def init():
     """Intialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index', 15)
-
-
-@login_required
-def index(request):
-    """Return a rendered users page"""
-    menu = {'title': _('Users and Groups'),
-            'items': [{'url': reverse_lazy('users:add'),
-                       'text': _('Add User')},
-                      {'url': reverse_lazy('users:edit'),
-                       'text': _('Edit Users')}]}
-
-    sidebar_right = render_to_string('menu_block.html', {'menu': menu},
-                                     RequestContext(request))
-
-    return TemplateResponse(request, 'base.html',
-                            {'title': _('Manage Users and Groups'),
-                             'sidebar_right': sidebar_right})
+    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
+                     15)
 
 
 class UserAddForm(forms.Form):  # pylint: disable-msg=W0232
@@ -90,7 +79,8 @@ def add(request):
 
     return TemplateResponse(request, 'users_add.html',
                             {'title': _('Add User'),
-                             'form': form})
+                             'form': form,
+                             'subsubmenu': subsubmenu})
 
 
 def _add_user(request, data):
@@ -135,7 +125,8 @@ def edit(request):
 
     return TemplateResponse(request, 'users_edit.html',
                             {'title': _('Edit or Delete User'),
-                             'form': form})
+                             'form': form,
+                             'subsubmenu': subsubmenu})
 
 
 def _apply_edit_changes(request, data):

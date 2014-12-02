@@ -20,16 +20,24 @@
 
 {% load bootstrap %}
 
-{% block main_block %}
+{% block content %}
 
   <form class="form" method="post">
     {% csrf_token %}
 
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="Register XMPP Account"/>
+    <div class='row'>
+      <div class='col-sm-4'>
+        {{ form|bootstrap }}
+        <input type="submit" class="btn btn-primary" value="Register XMPP Account"/>
+      </div>
+    </div>
 
   </form>
 
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('#id_xmpp-username').focus();
+  </script>
 {% endblock %}

@@ -40,13 +40,12 @@ the title field.
 
 ### Layout
 
-Plinth expects a `main` block.  This is where the meat of the content
-goes.  It is the center pain in the default layout.  There is a
-`title` block that the program will fill with text describing the
-current page.  `sidebar_left` contains the submenu navigation menu,
-and `sidebar_right` is where we put all short text that helps the
-admin fill out forms.  They don't have to be sidebars, and they don't
-have to go on the left and right.
+Plinth expects a `content` block.  This is where the meat of the
+content goes.  It is the center pane in the default layout.  There
+is a `title` block that the program will fill with text describing
+the current page.  There are two bars on the left side: `submenu`
+for the menu and `sidebar` where short help texts go.
+The lowest layer in the navigation is `subsubmenu`, displayed on top
+of the content pane.
 
-It is possible to override the `footer`, but I haven't yet found a
-reason to do so.
+All these items are inside of blocks and can be overwritten.

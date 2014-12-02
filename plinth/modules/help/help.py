@@ -40,14 +40,14 @@ def init():
 
 def index(request):
     """Serve the index page"""
-    return TemplateResponse(request, 'help.html',
+    return TemplateResponse(request, 'help_index.html',
                             {'title': _('Documentation and FAQ')})
 
 
 def about(request):
     """Serve the about page"""
     title = _('About the {box_name}').format(box_name=cfg.box_name)
-    return TemplateResponse(request, 'about.html', {'title': title})
+    return TemplateResponse(request, 'help_about.html', {'title': title})
 
 
 def helppage(request, page):
@@ -55,10 +55,10 @@ def helppage(request, page):
     try:
         with open(os.path.join(cfg.doc_dir, '%s.part.html' % page), 'r') \
                 as input_file:
-            main = input_file.read()
+            content = input_file.read()
     except IOError:
         raise Http404
 
     title = _('%s Documentation') % cfg.product_name
-    return TemplateResponse(request, 'base.html',
-                            {'title': title, 'main': main})
+    return TemplateResponse(request, 'help_detail.html',
+                            {'title': title, 'content': content})

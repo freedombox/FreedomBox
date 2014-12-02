@@ -19,8 +19,6 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
@@ -32,9 +30,13 @@ from plinth import service
 
 LOGGER = logging.getLogger(__name__)
 
-SIDE_MENU = {
+subsubmenu = {
     'title': _('XMPP'),
     'items': [
+        {
+            'url': reverse_lazy('xmpp:index'),
+            'text': _('About'),
+        },
         {
             'url': reverse_lazy('xmpp:configure'),
             'text': _('Configure XMPP Server'),
@@ -50,7 +52,6 @@ SIDE_MENU = {
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_item('Chat', 'glyphicon-comment', '/../jwchat', 20)
     menu.add_urlname('XMPP', 'glyphicon-comment', 'xmpp:index', 40)
 
     service.Service(
@@ -72,15 +73,14 @@ def index(request):
         ['get-installed']).strip() == 'installed'
 
     if is_installed:
-        sidebar_right = render_to_string('menu_block.html', {'menu': SIDE_MENU},
-                                         RequestContext(request))
+        index_subsubmenu = subsubmenu
     else:
-        sidebar_right = None
+        index_subsubmenu = None
 
     return TemplateResponse(request, 'xmpp.html',
                             {'title': _('XMPP Server'),
                              'is_installed': is_installed,
-                             'sidebar_right': sidebar_right})
+                             'subsubmenu': index_subsubmenu})
 
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
@@ -108,13 +108,10 @@ def configure(request):
     else:
         form = ConfigureForm(initial=status, prefix='xmpp')
 
-    sidebar_right = render_to_string('menu_block.html', {'menu': SIDE_MENU},
-                                     RequestContext(request))
-
     return TemplateResponse(request, 'xmpp_configure.html',
                             {'title': _('Configure XMPP Server'),
                              'form': form,
-                             'sidebar_right': sidebar_right})
+                             'subsubmenu': subsubmenu})
 
 
 def get_status():
@@ -171,13 +168,10 @@ def register(request):
     else:
         form = RegisterForm(prefix='xmpp')
 
-    sidebar_right = render_to_string('menu_block.html', {'menu': SIDE_MENU},
-                                     RequestContext(request))
-
     return TemplateResponse(request, 'xmpp_register.html',
                             {'title': _('Register XMPP Account'),
                              'form': form,
-                             'sidebar_right': sidebar_right})
+                             'subsubmenu': subsubmenu})
 
 
 def _register_user(request, data):
