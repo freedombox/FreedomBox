@@ -23,6 +23,13 @@ Configuration helper for the ejabberd service
 
 import argparse
 import subprocess
+import re
+import time
+import os
+
+JWCHAT_CONFIG = '/etc/jwchat/config.js'
+EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
+EJABBERD_BACKUP = '/tmp/ejabberd.dump'
 
 
 def parse_arguments():
@@ -33,6 +40,15 @@ def parse_arguments():
     # Get whether ejabberd is installed
     subparsers.add_parser('get-installed',
                           help='Get whether ejabberd is installed')
+
+    # Update ejabberd and jwchat with new hostname
+    hostname_change = subparsers.add_parser(
+        'change-hostname',
+        help='Update ejabberd and jwchat with new hostname')
+    hostname_change.add_argument('--old-hostname',
+                                 help='Previous hostname')
+    hostname_change.add_argument('--new-hostname',
+                                 help='New hostname')
 
     # Register a new user account
     register = subparsers.add_parser('register',
@@ -48,6 +64,42 @@ def parse_arguments():
 def subcommand_get_installed(_):
     """Get whether ejabberd is installed"""
     print('installed' if get_installed() else 'not installed')
+
+
+def subcommand_change_hostname(arguments):
+    """Update ejabberd and jwchat with new hostname"""
+    if not get_installed():
+        print('Failed to update XMPP hostname: ejabberd is not installed.')
+
+    old_hostname = arguments.old_hostname
+    new_hostname = arguments.new_hostname
+
+    with open(JWCHAT_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+    with open(JWCHAT_CONFIG, 'w') as conffile:
+        for line in lines:
+            conffile.write(re.sub('var SITENAME = "' + old_hostname + '";',
+                                  'var SITENAME = "' + new_hostname + '";',
+                                  line))
+
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            conffile.write(re.sub(old_hostname, new_hostname, line))
+
+    with open(EJABBERD_BACKUP, 'r') as dumpfile:
+        lines = dumpfile.readlines()
+    with open(EJABBERD_BACKUP, 'w') as dumpfile:
+        for line in lines:
+            dumpfile.write(re.sub(old_hostname, new_hostname, line))
+
+    subprocess.call(['service', 'ejabberd', 'restart'])
+
+    # load backup database
+    time.sleep(10)
+    subprocess.call(['ejabberdctl', 'load', EJABBERD_BACKUP])
+    os.remove(EJABBERD_BACKUP)
 
 
 def subcommand_register(arguments):

@@ -154,6 +154,8 @@ def _apply_changes(request, old_status, new_status):
 
 def set_hostname(hostname):
     """Sets machine hostname to hostname"""
+    old_hostname = get_hostname()
+
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
@@ -161,4 +163,6 @@ def set_hostname(hostname):
     LOGGER.info('Changing hostname to - %s', hostname)
     actions.superuser_run('xmpp-pre-hostname-change')
     actions.superuser_run('hostname-change', hostname)
-    actions.superuser_run('xmpp-hostname-change', hostname, async=True)
+    actions.superuser_run('xmpp', 'change-hostname',
+                          '--old-hostname', old_hostname,
+                          '--new-hostname', hostname, async=True)
