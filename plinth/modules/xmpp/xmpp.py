@@ -28,6 +28,7 @@ import logging
 from plinth import actions
 from plinth import cfg
 from plinth import service
+from plinth.signals import pre_hostname_change, post_hostname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -62,6 +63,9 @@ def init():
     service.Service(
         'xmpp-bosh', _('Chat Server - web interface'), is_external=True,
         enabled=True)
+
+    pre_hostname_change.connect(on_pre_hostname_change)
+    post_hostname_change.connect(on_post_hostname_change)
 
 
 @login_required
@@ -195,3 +199,27 @@ def _register_user(request, data):
         messages.error(request,
                        _('Failed to register account for %s: %s') %
                        (data['username'], output))
+
+
+def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
+    """
+    Backup ejabberd database before hostname is changed.
+    """
+    del sender  # Unused
+    del old_hostname  # Unused
+    del new_hostname  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp-pre-hostname-change')
+
+
+def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
+    """
+    Update ejabberd and jwchat config after hostname is changed.
+    """
+    del sender  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp', 'change-hostname',
+                          '--old-hostname', old_hostname,
+                          '--new-hostname', hostname, async=True)

@@ -31,6 +31,7 @@ import socket
 
 from plinth import actions
 from plinth import cfg
+from plinth.signals import pre_hostname_change, post_hostname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -162,9 +163,13 @@ def set_hostname(hostname):
     # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
 
+    pre_hostname_change.send_robust(sender='config',
+                                    old_hostname=old_hostname,
+                                    new_hostname=hostname)
+
     LOGGER.info('Changing hostname to - %s', hostname)
-    actions.superuser_run('xmpp-pre-hostname-change')
     actions.superuser_run('hostname-change', hostname)
-    actions.superuser_run('xmpp', 'change-hostname',
-                          '--old-hostname', old_hostname,
-                          '--new-hostname', hostname, async=True)
+
+    post_hostname_change.send_robust(sender='config',
+                                     old_hostname=old_hostname,
+                                     new_hostname=hostname)
