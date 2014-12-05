@@ -203,6 +203,8 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     del sender  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('xmpp', 'change-hostname',
-                          '--old-hostname', old_hostname,
-                          '--new-hostname', hostname, async=True)
+    actions.superuser_run('xmpp',
+                          ['change-hostname',
+                           '--old-hostname', old_hostname,
+                           '--new-hostname', new_hostname],
+                          async=True)
