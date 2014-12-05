@@ -69,6 +69,7 @@ def subcommand_get_installed(_):
 def subcommand_change_hostname(arguments):
     """Update ejabberd and jwchat with new hostname"""
     if not get_installed():
+        print('Failed to update XMPP hostname: ejabberd is not installed.')
         return
 
     old_hostname = arguments.old_hostname
@@ -83,6 +84,9 @@ def subcommand_change_hostname(arguments):
                 conffile.write(re.sub('var SITENAME = "' + old_hostname + '";',
                                       'var SITENAME = "' + new_hostname + '";',
                                       line))
+    else:
+        print('Skipping configuring jwchat hostname: %s not found'
+              % JWCHAT_CONFIG)
 
     # update ejabberd hosts
     with open(EJABBERD_CONFIG, 'r') as conffile:
@@ -92,7 +96,7 @@ def subcommand_change_hostname(arguments):
         for line in lines:
             if in_hosts_section:
                 if line.startswith('  - "'):
-                    conffile.write(re.sub(old_hostname, new_hostname, line))
+                    conffile.write(line.replace(old_hostname, new_hostname))
                 else:
                     in_hosts_section = False
                     conffile.write(line)
@@ -106,8 +110,36 @@ def subcommand_change_hostname(arguments):
         with open(EJABBERD_BACKUP, 'r') as dumpfile:
             lines = dumpfile.readlines()
         with open(EJABBERD_BACKUP, 'w') as dumpfile:
+            in_pubsub_node = False
             for line in lines:
-                dumpfile.write(re.sub(old_hostname, new_hostname, line))
+                if in_pubsub_node:
+                    if line.startswith(' '):
+                        dumpfile.write(re.sub(
+                            '>>,<<pubsub.' + old_hostname + '">>,',
+                            '>>,<<pubsub.' + new_hostname + '">>,',
+                            line))
+                        continue
+                    else:
+                        in_pubsub_node = False  # check other cases below
+
+                if line.startswith('{passwd,'):
+                    dumpfile.write(re.sub(
+                        '">>,<<"' + old_hostname + '">>},<<"',
+                        '">>,<<"' + new_hostname + '">>},<<"',
+                        line))
+                elif line.startswith('{pubsub_state,'):
+                    dumpfile.write(re.sub(
+                        '>>,<<"pubsub.' + old_hostname + '">>,<<',
+                        '>>,<<"pubsub.' + new_hostname + '">>,<<',
+                        line))
+                elif line.startswith('{pubsub_node,'):
+                    dumpfile.write(re.sub(
+                        ',{<<"pubsub.' + old_hostname + '">>,<<',
+                        ',{<<"pubsub.' + new_hostname + '">>,<<',
+                        line))
+                    in_pubsub_node = True
+                else:
+                    dumpfile.write(line)
 
     subprocess.call(['service', 'ejabberd', 'restart'])
 
@@ -116,6 +148,9 @@ def subcommand_change_hostname(arguments):
         time.sleep(10)
         subprocess.call(['ejabberdctl', 'load', EJABBERD_BACKUP])
         os.remove(EJABBERD_BACKUP)
+    else:
+        print('Could not load ejabberd backup database: %s not found'
+              % EJABBERD_BACKUP)
 
 
 def subcommand_register(arguments):
