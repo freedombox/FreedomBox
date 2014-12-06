@@ -34,9 +34,9 @@ LOGGER = logging.getLogger(__name__)
 
 subsubmenu = {'title': _('Users and Groups'),
               'items': [{'url': reverse_lazy('users:add'),
-                        'text': _('Add User')},
+                         'text': _('Add User')},
                         {'url': reverse_lazy('users:edit'),
-                        'text': _('Edit Users')}]}
+                         'text': _('Delete Users')}]}
 
 
 def init():
@@ -124,7 +124,7 @@ def edit(request):
         form = UserEditForm(prefix='user')
 
     return TemplateResponse(request, 'users_edit.html',
-                            {'title': _('Edit or Delete User'),
+                            {'title': _('Delete Users'),
                              'form': form,
                              'subsubmenu': subsubmenu})
 
