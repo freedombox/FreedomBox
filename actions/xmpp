@@ -23,7 +23,6 @@ Configuration helper for the ejabberd service
 
 import argparse
 import subprocess
-import re
 import time
 import os
 
@@ -81,9 +80,9 @@ def subcommand_change_hostname(arguments):
             lines = conffile.readlines()
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
-                conffile.write(re.sub('var SITENAME = "' + old_hostname + '";',
-                                      'var SITENAME = "' + new_hostname + '";',
-                                      line))
+                conffile.write(line.replace(
+                    'var SITENAME = "' + old_hostname + '";',
+                    'var SITENAME = "' + new_hostname + '";'))
     else:
         print('Skipping configuring jwchat hostname: %s not found'
               % JWCHAT_CONFIG)
@@ -110,33 +109,54 @@ def subcommand_change_hostname(arguments):
         with open(EJABBERD_BACKUP, 'r') as dumpfile:
             lines = dumpfile.readlines()
         with open(EJABBERD_BACKUP, 'w') as dumpfile:
+            in_roster = False
             in_pubsub_node = False
             for line in lines:
+                if in_roster:
+                    if line.startswith(' '):
+                        dumpfile.write(line.replace(
+                            '>>,<<"' + old_hostname + '">>',
+                            '>>,<<"' + new_hostname + '">>'))
+                        continue
+                    else:
+                        in_roster = False  # check other cases below
+
                 if in_pubsub_node:
                     if line.startswith(' '):
-                        dumpfile.write(re.sub(
-                            '>>,<<pubsub.' + old_hostname + '">>,',
-                            '>>,<<pubsub.' + new_hostname + '">>,',
-                            line))
+                        dumpfile.write(line.replace(
+                            '>>,<<"pubsub.' + old_hostname + '">>,<<',
+                            '>>,<<"pubsub.' + new_hostname + '">>,<<'))
                         continue
                     else:
                         in_pubsub_node = False  # check other cases below
 
                 if line.startswith('{passwd,'):
-                    dumpfile.write(re.sub(
+                    dumpfile.write(line.replace(
                         '">>,<<"' + old_hostname + '">>},<<"',
-                        '">>,<<"' + new_hostname + '">>},<<"',
-                        line))
+                        '">>,<<"' + new_hostname + '">>},<<"'))
+                elif line.startswith('{private_storage,'):
+                    dumpfile.write(line.replace(
+                        '>>,<<"' + old_hostname + '">>,<<',
+                        '>>,<<"' + new_hostname + '">>,<<'))
+                elif line.startswith('{last_activity,'):
+                    dumpfile.write(line.replace(
+                        '>>,<<"' + old_hostname + '">>},',
+                        '>>,<<"' + new_hostname + '">>},'))
+                elif line.startswith('{roster,'):
+                    dumpfile.write(line.replace(
+                        '>>,<<"' + old_hostname + '">>,',
+                        '>>,<<"' + new_hostname + '">>,'))
+                    in_roster = True
                 elif line.startswith('{pubsub_state,'):
-                    dumpfile.write(re.sub(
+                    dumpfile.write(line.replace(
                         '>>,<<"pubsub.' + old_hostname + '">>,<<',
-                        '>>,<<"pubsub.' + new_hostname + '">>,<<',
-                        line))
+                        '>>,<<"pubsub.' + new_hostname + '">>,<<'))
                 elif line.startswith('{pubsub_node,'):
-                    dumpfile.write(re.sub(
+                    dumpfile.write(line.replace(
                         ',{<<"pubsub.' + old_hostname + '">>,<<',
-                        ',{<<"pubsub.' + new_hostname + '">>,<<',
-                        line))
+                        ',{<<"pubsub.' + new_hostname + '">>,<<').replace(
+                            '>>,<<"/home/' + old_hostname + '">>},',
+                            '>>,<<"/home/' + new_hostname + '"..},'))
                     in_pubsub_node = True
                 else:
                     dumpfile.write(line)
