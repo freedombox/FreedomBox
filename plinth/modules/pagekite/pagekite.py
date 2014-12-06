@@ -120,6 +120,7 @@ def configure(request):
 
     return TemplateResponse(request, 'pagekite_configure.html',
                             {'title': _('Configure PageKite'),
+                             'status': status,
                              'form': form,
                              'subsubmenu': subsubmenu})
 
