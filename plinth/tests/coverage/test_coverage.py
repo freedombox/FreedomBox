@@ -7,7 +7,6 @@ Derived from 'Adding Test Code Coverage Analysis to a Python Project’s Setup C
 <http://jeetworks.org/adding-test-code-coverage-analysis-to-a-python-projects-setup-command/>
 """
 
-import coverage
 import glob
 import setuptools
 import shutil
@@ -67,6 +66,7 @@ class TestCoverageCommand(setuptools.Command):
 
         # run the coverage analysis
         runner = unittest.TextTestRunner()
+        import coverage
         cov = coverage.coverage(auto_data=True, branch=True,
                                 source=SOURCE_DIRS, omit=FILES_TO_OMIT)
         cov.erase()     # erase existing coverage data file
