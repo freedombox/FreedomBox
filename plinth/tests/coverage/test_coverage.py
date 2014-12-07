@@ -68,8 +68,14 @@ class TestCoverageCommand(setuptools.Command):
         """
         Main command implementation.
         """
+        if self.distribution.install_requires:
+            self.distribution.fetch_build_eggs(
+                self.distribution.install_requires)
 
         # erase any existing HTML report files
+        if self.distribution.tests_require:
+            self.distribution.fetch_build_eggs(self.distribution.tests_require)
+
         try:
             shutil.rmtree(COVERAGE_REPORT_DIR, True)
         except:
