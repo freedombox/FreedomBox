@@ -15,22 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-URLs for the Users module
-"""
-
-from django.conf.urls import patterns, url
-from . import views
+from django import forms
+from django.contrib.auth.models import User
 
 
-urlpatterns = patterns(
-    'plinth.modules.users.views',
-    url(r'^sys/users/$', views.UserList.as_view(), name='index'),
-    url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
-    url(r'^sys/users/edit/(?P<slug>[\w.@+-]+)$', views.UserUpdate.as_view(),
-        name='edit'),
-    url(r'^sys/users/delete/(?P<slug>[\w.@+-]+)$', views.UserDelete.as_view(),
-        name='delete'),
-    url(r'^sys/users/change_password/(?P<slug>[\w.@+-]+)$',
-        views.UserChangePassword.as_view(), name='change_password'),
-)
+class UserForm(forms.ModelForm):
+    """Form to change one user"""
+    class Meta:
+        model = User
+        fields = ('username', 'groups')
+        widgets = {
+            'username': forms.widgets.TextInput(attrs={'style': 'width: 50%'}),
+            'groups': forms.widgets.CheckboxSelectMultiple(),
+        }

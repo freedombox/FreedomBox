@@ -22,17 +22,39 @@
 
 {% block content %}
 
-  <h3>Delete Users</h3>
+  <div class="row">
+    <div class="col-sm-8">
+      <form class="form" method="post">
+        {% csrf_token %}
 
-  <p>Deleting users is permanent!</p>
+        {{ form|bootstrap }}
 
-  <form class="form" method="post">
-    {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Create User"/>
 
-    {{ form|bootstrap }}
+      </form>
+    </div>
+  </div>
 
-    <input type="submit" class="btn btn-primary" value="Delete User"/>
+{% endblock %}
 
-  </form>
+{% block sidebar %}
 
+  <div class="well sidebar">
+
+    <h3>Create User</h3>
+
+    <p>Adding a user via this administrative
+      interface <strong>might</strong> create a system user. For
+      example, if you provide a user with ssh access, she will need a
+      system account.  If you don't know what that means, don't worry
+      about it.</p>
+
+  </div>
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('#id_username').focus();
+  </script>
 {% endblock %}

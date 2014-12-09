@@ -22,29 +22,19 @@
 
 {% block content %}
 
+  <h3>Delete User {{ object.username }}</h3>
+  <p>
+    Deleting is permanent. Are you sure?
+  </p>
+
   <form class="form" method="post">
     {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary" value="Add User"/>
-
+    <input type="submit" class="btn btn-md btn-primary"
+           value="Delete {{ object.username }}"/>
+    <a href="{% url 'users:index' %}" role="button"
+       class="btn btn-md btn-primary">
+      Cancel
+    </a>
   </form>
-
-{% endblock %}
-
-{% block sidebar %}
-
-  <div class="well sidebar">
-
-    <h3>Add User</h3>
-
-    <p>Adding a user via this administrative
-      interface <strong>might</strong> create a system user. For
-      example, if you provide a user with ssh access, she will need a
-      system account.  If you don't know what that means, don't worry
-      about it.</p>
-
-  </div>
 
 {% endblock %}

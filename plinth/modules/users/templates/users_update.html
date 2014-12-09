@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block page_head %}
+  <style type="text/css">
+    .multiple-checkbox li {
+      list-style-type: none;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <h3>Edit {{ object.username }}</h3>
+
+  <p style='font-size:larger'>
+    Use the
+    <a href='{% url 'users:change_password' object.username %}'>
+      Change password form
+    </a> to change the password of {{ object.username }}.
+  </p>
+  <hr>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary" value="Save Changes"/>
+
+  </form>
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('#id_username').focus();
+  </script>
+{% endblock %}

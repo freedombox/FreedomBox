@@ -1,3 +1,4 @@
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,23 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the Users module
-"""
-
-from django.conf.urls import patterns, url
-from . import views
-
-
-urlpatterns = patterns(
-    'plinth.modules.users.views',
-    url(r'^sys/users/$', views.UserList.as_view(), name='index'),
-    url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
-    url(r'^sys/users/edit/(?P<slug>[\w.@+-]+)$', views.UserUpdate.as_view(),
-        name='edit'),
-    url(r'^sys/users/delete/(?P<slug>[\w.@+-]+)$', views.UserDelete.as_view(),
-        name='delete'),
-    url(r'^sys/users/change_password/(?P<slug>[\w.@+-]+)$',
-        views.UserChangePassword.as_view(), name='change_password'),
-)
+<ul class="nav nav-tabs">
+  {% for urlitem in subsubmenu.items %}
+    <li {% if urlitem.active %} class="active"{% endif %}
+        role="presentation">
+      <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+    </li>
+  {% endfor %}
+</ul>
