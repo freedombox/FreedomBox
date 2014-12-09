@@ -39,15 +39,12 @@ def mark_active_menuitem(menu, path):
 
     for urlitem in menu['items']:
         urlitem['active'] = False
+        if not path.startswith(str(urlitem['url'])):
+            continue
         # TODO: use a more suitable function instead of os.path.commonprefix
         match = os.path.commonprefix([urlitem['url'], path])
-        # In case of 'xx/create' and 'xx/change' we'd have 'xx/c' as prefix.
-        # That's a wrong match, skip it.
-        match_clean = match.rpartition('/')[0]
-        if (len(match_clean) + 1) < len(match):
-            continue
 
-        if len(match_clean) > len(best_match):
+        if len(match) > len(best_match):
             best_match = match
             best_match_item = urlitem
 
