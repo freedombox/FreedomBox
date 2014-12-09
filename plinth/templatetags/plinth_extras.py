@@ -41,7 +41,6 @@ def mark_active_menuitem(menu, path):
         urlitem['active'] = False
         if not path.startswith(str(urlitem['url'])):
             continue
-        # TODO: use a more suitable function instead of os.path.commonprefix
         match = os.path.commonprefix([urlitem['url'], path])
 
         if len(match) > len(best_match):
