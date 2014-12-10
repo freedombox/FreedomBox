@@ -1,3 +1,4 @@
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,14 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-Plinth module for expert mode configuration
-"""
-
-from . import expert_mode
-from .expert_mode import init
-
-__all__ = ['expert_mode', 'init']
-
-depends = ['plinth.modules.system']
+<ul class="nav nav-tabs">
+  {% for urlitem in subsubmenu.items %}
+    <li {% if urlitem.active %} class="active"{% endif %}
+        role="presentation">
+      <a href="{{ urlitem.url }}">{{ urlitem.text }}</a>
+    </li>
+  {% endfor %}
+</ul>

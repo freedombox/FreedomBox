@@ -22,29 +22,31 @@
 
 {% block content %}
 
-  <form class="form" method="post">
-    {% csrf_token %}
+  <h3>Users</h3>
+  <p>
+    You can edit or delete users here.
+  </p>
 
-    {{ form|bootstrap }}
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="list-group">
+        {% for user in object_list %}
+          <div class="list-group-item">
+            <a href="{% url 'users:edit' user.username %}"
+               style="display:inline-block; width:75%;"
+               title="Edit user {{ user.username }}">
+              {{ user.username }}
+            </a>
 
-    <input type="submit" class="btn btn-primary" value="Add User"/>
-
-  </form>
-
-{% endblock %}
-
-{% block sidebar %}
-
-  <div class="well sidebar">
-
-    <h3>Add User</h3>
-
-    <p>Adding a user via this administrative
-      interface <strong>might</strong> create a system user. For
-      example, if you provide a user with ssh access, she will need a
-      system account.  If you don't know what that means, don't worry
-      about it.</p>
-
+            <a href="{% url 'users:delete' user.username %}"
+               class="btn btn-default btn-xs pull-right"
+               role="button" title="Delete user {{ user.username }}">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 
 {% endblock %}

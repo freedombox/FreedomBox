@@ -15,18 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-URLs for the Lib module
-"""
-
-from django.conf.urls import patterns, url
-from django.core.urlresolvers import reverse_lazy
+from django import forms
+from django.contrib.auth.models import User
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    '',
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
-        {'template_name': 'login.html'}, name='login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-        {'next_page': reverse_lazy('index')}, name='logout')
-    )
+class UserForm(forms.ModelForm):
+    """Form to change one user"""
+    class Meta:
+        model = User
+        fields = ('username', 'groups')
+        widgets = {
+            'username': forms.widgets.TextInput(attrs={'style': 'width: 50%'}),
+            'groups': forms.widgets.CheckboxSelectMultiple(),
+        }

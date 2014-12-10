@@ -20,15 +20,23 @@ URLs for the Users module
 """
 
 from django.conf.urls import patterns, url
-from django.views.generic import RedirectView
+from django.core.urlresolvers import reverse_lazy
+from . import views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.users.users',
-    # create an index page (that only forwards) to have correct highlighting
-    # of submenu items
-    url(r'^sys/users/$', RedirectView.as_view(pattern_name='users:add'),
-        name='index'),
-    url(r'^sys/users/add/$', 'add', name='add'),
-    url(r'^sys/users/edit/$', 'edit', name='edit'),
+urlpatterns = patterns(
+    '',
+    url(r'^sys/users/$', views.UserList.as_view(), name='index'),
+    url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
+    url(r'^sys/users/edit/(?P<slug>[\w.@+-]+)$', views.UserUpdate.as_view(),
+        name='edit'),
+    url(r'^sys/users/delete/(?P<slug>[\w.@+-]+)$', views.UserDelete.as_view(),
+        name='delete'),
+    url(r'^sys/users/change_password/(?P<slug>[\w.@+-]+)$',
+        views.UserChangePassword.as_view(), name='change_password'),
+    # add djangos login/logout urls
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+        {'template_name': 'login.html'}, name='login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+        {'next_page': reverse_lazy('index')}, name='logout'),
 )

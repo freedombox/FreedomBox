@@ -30,13 +30,6 @@ to get newer, better shinier functions.  The modules will
 automatically integrate into the existing menu system so you can
 control all of the box's parts from one central location.
 
-The interface will eventually have a 'basic' and an 'expert' mode.  In
-basic mode, much of Plinth's configuration and capability are hidden.
-Sane defaults are chosen whenever possible.  In expert mode, you can
-get down into the details and configure things the average user never
-thinks about.  For example, experts can turn off ntp or switch ntp
-servers.  Basic users should never even know those options exist.
-
 ## Getting Started
 
 See the INSTALL file for additional details and dependencies. To install run:

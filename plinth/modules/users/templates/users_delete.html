@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,15 +16,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the Expert Mode module
-"""
+{% load bootstrap %}
 
-from django.conf.urls import patterns, url
+{% block content %}
 
+  <h3>Delete User {{ object.username }}</h3>
+  <p>
+    Deleting is permanent. Are you sure?
+  </p>
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.expert_mode.expert_mode',
-    url(r'^sys/expert/$', 'index', name='index'),
-    )
+  <form class="form" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-md btn-primary"
+           value="Delete {{ object.username }}"/>
+    <a href="{% url 'users:index' %}" role="button"
+       class="btn btn-md btn-primary">
+      Cancel
+    </a>
+  </form>
+
+{% endblock %}

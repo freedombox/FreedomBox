@@ -20,32 +20,39 @@
 
 {% load bootstrap %}
 
+{% block page_head %}
+  <style type="text/css">
+    .multiple-checkbox li {
+      list-style-type: none;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 
-  <h2>{{ title }}</h2>
+  <h3>Edit {{ object.username }}</h3>
 
-  <p>The {{ cfg.box_name }} can be administered in two modes, 'basic'
-  and 'expert'.  Basic mode hides a lot of features and configuration
-  options that most users will never need to think about.  Expert mode
-  allows you to get into the details.</p>
-
-  <p>Most users can operate the {{ cfg.box_name }} by configuring the
-  limited number of options visible in Basic mode.  For the sake of
-  simplicity and ease of use, we hid most of {{ cfg.product_name }}'s
-  less frequently used options.  But if you want more sophisticated
-  features, you can enable Expert mode, and {{ cfg.product_name }}
-  will present more advanced menu options.</p>
-
-  <p>You should be aware that it might be possible to render your
-  {{ cfg.box_name }} inaccessible via Expert mode options.</p>
+  <p style='font-size:larger'>
+    Use the
+    <a href='{% url 'users:change_password' object.username %}'>
+      Change password form
+    </a> to change the password of {{ object.username }}.
+  </p>
+  <hr>
 
   <form class="form" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary" value="Submit"/>
+    <input type="submit" class="btn btn-primary" value="Save Changes"/>
 
   </form>
 
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('#id_username').focus();
+  </script>
 {% endblock %}

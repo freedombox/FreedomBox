@@ -56,7 +56,6 @@ than 63 characters in length.'),
         config.set_hostname(self.cleaned_data['hostname'])
         user = super(State0Form, self).save(commit=False)
         user.set_password(self.cleaned_data['password'])
-        user.is_expert = True
         if commit:
             user.save()
             self.login_user()
