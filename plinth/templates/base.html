@@ -110,14 +110,14 @@
           <p class="navbar-text pull-right">
             <i class="glyphicon glyphicon-user nav-icon"></i>
             Logged in as <a href="#">{{ user.username }}</a>.
-            <a href="{% url 'lib:logout' %}" title="Log out">
+            <a href="{% url 'users:logout' %}" title="Log out">
               Log out</a>.
           </p>
         {% else %}
           <p class="navbar-text pull-right">
             Not logged in.
             <i class="glyphicon glyphicon-user nav-icon"></i>
-            <a href="{% url 'lib:login' %}" title="Log in">
+            <a href="{% url 'users:login' %}" title="Log in">
               Log in</a>.
           </p>
         {% endif %}

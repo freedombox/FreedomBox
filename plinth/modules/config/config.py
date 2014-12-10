@@ -105,8 +105,7 @@ def index(request):
 
     form = None
 
-    is_expert = request.user.groups.filter(name='Expert').exists()
-    if request.method == 'POST' and is_expert:
+    if request.method == 'POST':
         form = ConfigurationForm(request.POST, prefix='configuration')
         # pylint: disable-msg=E1101
         if form.is_valid():
@@ -119,8 +118,7 @@ def index(request):
 
     return TemplateResponse(request, 'config.html',
                             {'title': _('General Configuration'),
-                             'form': form,
-                             'is_expert': is_expert})
+                             'form': form})
 
 
 def get_status():
