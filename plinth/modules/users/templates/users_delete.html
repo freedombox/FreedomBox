@@ -28,12 +28,12 @@
 
   <form class="form" method="post">
     {% csrf_token %}
+
     <input type="submit" class="btn btn-md btn-primary"
            value="Delete {{ object.username }}"/>
+
     <a href="{% url 'users:index' %}" role="button"
-       class="btn btn-md btn-primary">
-      Cancel
-    </a>
+       class="btn btn-md btn-primary">Cancel</a>
   </form>
 
 {% endblock %}

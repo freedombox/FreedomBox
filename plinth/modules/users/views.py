@@ -38,18 +38,18 @@ subsubmenu = {'title': _('Users and Groups'),
                          'text': _('Create User')}]}
 
 
-class PlinthContextMixin():
-    """Add 'subsubmenu' and 'title' to the context of class-based views"""
-
+class ContextMixin(object):
+    """View to add 'subsubmenu' and 'title' to the context."""
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
-        context = super(PlinthContextMixin, self).get_context_data(**kwargs)
+        context = super(ContextMixin, self).get_context_data(**kwargs)
         context['subsubmenu'] = subsubmenu
         context['title'] = getattr(self, 'title', '')
         return context
 
 
-class UserCreate(PlinthContextMixin, SuccessMessageMixin, CreateView):
+class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
+    """View to create a new user."""
     form_class = UserCreationForm
     template_name = 'users_create.html'
     model = User
@@ -58,13 +58,15 @@ class UserCreate(PlinthContextMixin, SuccessMessageMixin, CreateView):
     title = _('Create User')
 
 
-class UserList(PlinthContextMixin, ListView):
+class UserList(ContextMixin, ListView):
+    """View to list users."""
     model = User
     template_name = 'users_list.html'
     title = _('Users')
 
 
-class UserUpdate(PlinthContextMixin, SuccessMessageMixin, UpdateView):
+class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
+    """View to update a user's details."""
     template_name = 'users_update.html'
     fields = ('username', 'groups', 'is_active')
     model = User
@@ -81,18 +83,19 @@ class UserUpdate(PlinthContextMixin, SuccessMessageMixin, UpdateView):
                                               widgets=self.widgets)
 
     def get_success_url(self):
+        """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
 
 
-class UserDelete(PlinthContextMixin, DeleteView):
-    """Handle deleting users, showing a confirmation dialog first
+class UserDelete(ContextMixin, DeleteView):
+    """Handle deleting users, showing a confirmation dialog first.
 
-    On GET, display a confirmation page
-    on POST, delete the user
+    On GET, display a confirmation page.
+    On POST, delete the user.
     """
     template_name = 'users_delete.html'
     model = User
-    slug_field = "username"
+    slug_field = 'username'
     success_url = reverse_lazy('users:index')
     title = _('Delete User')
 
@@ -108,10 +111,11 @@ class UserDelete(PlinthContextMixin, DeleteView):
         return output
 
 
-class UserChangePassword(PlinthContextMixin, SuccessMessageMixin, FormView):
+class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
+    """View to change user password."""
     template_name = 'users_change_password.html'
     form_class = AdminPasswordChangeForm
-    slug_field = "username"
+    slug_field = 'username'
     model = User
     title = _('Create User')
     success_message = _('Password changed successfully.')
@@ -128,4 +132,5 @@ class UserChangePassword(PlinthContextMixin, SuccessMessageMixin, FormView):
     def form_valid(self, form):
         if form.user == self.request.user:
             update_session_auth_hash(self.request, form.user)
+
         return super(UserChangePassword, self).form_valid(form)

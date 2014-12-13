@@ -32,22 +32,25 @@
 
   <h3>Edit User <em>{{ object.username }}</em></h3>
 
-  <p style='font-size:larger'>
+  <p>
     Use the
     <a href='{% url 'users:change_password' object.username %}'>
       change password form
     </a> to change the password.
   </p>
-  <hr>
 
-  <form class="form" method="post">
-    {% csrf_token %}
+  <div class="row">
+    <div class="col-sm-8">
+      <form class="form" method="post">
+        {% csrf_token %}
 
-    {{ form|bootstrap }}
+        {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary" value="Save Changes"/>
+        <input type="submit" class="btn btn-primary" value="Save Changes"/>
 
-  </form>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
 

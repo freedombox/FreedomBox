@@ -20,15 +20,16 @@ Plinth module to manage users
 """
 
 from gettext import gettext as _
+
 from plinth import cfg
-
-
-def init():
-    """Intialize the user module"""
-    menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
-                     15)
 
 __all__ = ['init']
 
 depends = ['plinth.modules.system']
+
+
+def init():
+    """Intialize the user module."""
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
+                     15)
