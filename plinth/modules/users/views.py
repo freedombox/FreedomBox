@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm
@@ -25,7 +26,6 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
 from django.views.generic import ListView
 from gettext import gettext as _
-from .forms import UserForm
 
 
 # TODO: we do not use the title anymore, and 'items' is also a python keyword.
@@ -69,13 +69,19 @@ class UserList(PlinthContextMixin, ListView):
 
 class UserUpdate(PlinthContextMixin, SuccessMessageMixin, UpdateView):
     template_name = 'users_update.html'
-    form_class = UserForm
+    fields = ('username', 'groups', 'is_active')
     model = User
-    slug_field = "username"
-    fields = ['username', 'password']
-    exclude = ('last_login', 'email', 'first_name', 'last_name')
+    slug_field = 'username'
     success_message = _('User %(username)s updated.')
     title = _('Edit User')
+    widgets = {
+        'groups': forms.widgets.CheckboxSelectMultiple(),
+    }
+
+    def get_form_class(self):
+        """Return a form class generated from user model."""
+        return forms.models.modelform_factory(self.model, fields=self.fields,
+                                              widgets=self.widgets)
 
     def get_success_url(self):
         return reverse('users:edit', kwargs={'slug': self.object.username})
