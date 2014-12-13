@@ -20,25 +20,42 @@
 
 {% load bootstrap %}
 
-{% block content %}
+{% block page_head %}
+  <style type="text/css">
+    .user-edit-label {
+      display: inline-block;
+      width: 75%;
+    }
+    .list-group-item .btn {
+      margin: -5px 0;
+    }
+  </style>
+{% endblock %}
 
+{% block content %}
 
   <div class="row">
     <div class="col-sm-4">
       <div class="list-group">
         {% for user in object_list %}
-          <div class="list-group-item">
-            <a href="{% url 'users:edit' user.username %}"
-               style="display:inline-block; width:75%;"
+          <div class="list-group-item clearfix">
+            <a href="{% url 'users:delete' user.username %}"
+               class="btn btn-default btn-sm pull-right"
+               role="button" title="Delete user {{ user.username }}">
+              <span class="glyphicon glyphicon-trash"
+                    aria-hidden="true"></span>
+            </a>
+
+            <a class='user-edit-label'
+               href="{% url 'users:edit' user.username %}"
                title="Edit user {{ user.username }}">
               {{ user.username }}
             </a>
 
-            <a href="{% url 'users:delete' user.username %}"
-               class="btn btn-default btn-xs pull-right"
-               role="button" title="Delete user {{ user.username }}">
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </a>
+            {% if not user.is_active %}
+              <span class="glyphicon glyphicon-ban-circle"
+                    aria-hidden="true"></span>
+            {% endif %}
           </div>
         {% endfor %}
       </div>
