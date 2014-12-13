@@ -22,10 +22,9 @@
 
 {% block content %}
 
-  <h3>Delete User {{ object.username }}</h3>
-  <p>
-    Deleting is permanent. Are you sure?
-  </p>
+  <h3>Delete User <em>{{ object.username }}</em></h3>
+
+  <p>Delete user permanently?</p>
 
   <form class="form" method="post">
     {% csrf_token %}

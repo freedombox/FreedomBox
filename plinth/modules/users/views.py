@@ -56,7 +56,7 @@ class UserCreate(PlinthContextMixin, SuccessMessageMixin, CreateView):
     form_class = UserCreationForm
     template_name = 'users_create.html'
     model = User
-    success_message = "%(username)s was created successfully"
+    success_message = _('User %(username)s created.')
     success_url = reverse_lazy('users:create')
     title = _('Create User')
 
@@ -64,7 +64,7 @@ class UserCreate(PlinthContextMixin, SuccessMessageMixin, CreateView):
 class UserList(PlinthContextMixin, ListView):
     model = User
     template_name = 'users_list.html'
-    title = _('Edit or Delete User')
+    title = _('Users')
 
 
 class UserUpdate(PlinthContextMixin, SuccessMessageMixin, UpdateView):
@@ -72,9 +72,9 @@ class UserUpdate(PlinthContextMixin, SuccessMessageMixin, UpdateView):
     form_class = UserForm
     model = User
     slug_field = "username"
-    success_message = "User %(username)s was changed successfully"
     fields = ['username', 'password']
     exclude = ('last_login', 'email', 'first_name', 'last_name')
+    success_message = _('User %(username)s updated.')
     title = _('Edit User')
 
     def get_success_url(self):
@@ -99,7 +99,7 @@ class UserDelete(PlinthContextMixin, DeleteView):
         The SuccessMessageMixin doesn't work with the DeleteView on Django1.7,
         so set the success message manually here.
         """
-        message = _("User %s was deleted" % self.kwargs['slug'])
+        message = _('User %s deleted.') % self.kwargs['slug']
         output = super(UserDelete, self).delete(*args, **kwargs)
         messages.success(self.request, message)
         return output
@@ -111,7 +111,7 @@ class UserChangePassword(PlinthContextMixin, SuccessMessageMixin, FormView):
     slug_field = "username"
     model = User
     title = _('Create User')
-    success_message = _("The password was changed successfully")
+    success_message = _('Password changed successfully.')
 
     def get_form_kwargs(self):
         """Make the user object available to the form"""
