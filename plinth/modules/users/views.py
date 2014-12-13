@@ -48,9 +48,6 @@ class PlinthContextMixin():
         context['title'] = getattr(self, 'title', '')
         return context
 
-    class Meta:
-        abstract = True
-
 
 class UserCreate(PlinthContextMixin, SuccessMessageMixin, CreateView):
     form_class = UserCreationForm
