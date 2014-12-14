@@ -12,11 +12,17 @@ installation is as simple as `aptitude install freedombox-foo`.  As an
 intermediate step, we'll start scripting module installation.  But
 until then, we can install them manually.
 
-A module can be represented inside of Plinth via a django app.
-To enable a module, put a file containing its python path into
-`data/etc/plinth/modules-enabled/`.  Django is configured to use all
-modules of the `modules-enabled` folder as apps.  With the python path
-you can also include modules/apps outside of plinth.
+A Plinth module is a Django application with some additional Plinth
+specific extensions.  To enable a module, create a file containing its
+Python module path into `data/etc/plinth/modules-enabled/`.  During
+installation, this file will be copied to
+`/etc/plinth/modules-enabled/`.  The file in `/etc` will be read during
+normal execution of Plinth.  The file in `data/etc/` in the source code
+directory will be used when running Plinth under the run-without-install
+mode.  Plinth will read the module path from the file in one of these
+paths during start-up and configure Django to use it as a Django
+application.  With this approach, you can install your Plinth module
+anywhere on the system and use it in Plinth (just like in Django).
 
 TODO: automatically prune dead links to clear out old module installs.
 This is something the install scripts should do.
