@@ -198,9 +198,9 @@ def configure_django():
         DEBUG=cfg.debug,
         INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
-        LOGIN_URL='lib:login',
+        LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='apps:index',
-        LOGOUT_URL='lib:logout',
+        LOGOUT_URL='users:logout',
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.common.CommonMiddleware',

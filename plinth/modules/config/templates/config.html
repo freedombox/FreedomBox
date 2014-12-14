@@ -22,7 +22,6 @@
 
 {% block content %}
 
-{% if is_expert %}
 
   <form class="form" method="post">
     {% csrf_token %}
@@ -33,11 +32,5 @@
 
   </form>
 
-{% else %}
-
-  <p>Only members of the expert group are allowed to see and modify
-    the system setup.</p>
-
-{% endif %}
 
 {% endblock %}

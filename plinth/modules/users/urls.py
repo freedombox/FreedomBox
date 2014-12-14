@@ -21,6 +21,7 @@ URLs for the Users module
 
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 
 from . import views
 
@@ -38,4 +39,9 @@ urlpatterns = patterns(
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
         login_required(views.UserChangePassword.as_view()),
         name='change_password'),
+    # add djangos login/logout urls
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+        {'template_name': 'login.html'}, name='login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+        {'next_page': reverse_lazy('index')}, name='logout'),
 )
