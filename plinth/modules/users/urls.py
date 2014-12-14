@@ -20,18 +20,22 @@ URLs for the Users module
 """
 
 from django.conf.urls import patterns, url
+from django.contrib.auth.decorators import login_required
 
 from . import views
 
 
 urlpatterns = patterns(
     '',
-    url(r'^sys/users/$', views.UserList.as_view(), name='index'),
-    url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
-    url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$', views.UserUpdate.as_view(),
-        name='edit'),
-    url(r'^sys/users/(?P<slug>[\w.@+-]+)/delete/$', views.UserDelete.as_view(),
-        name='delete'),
+    url(r'^sys/users/$', login_required(views.UserList.as_view()),
+        name='index'),
+    url(r'^sys/users/create/$', login_required(views.UserCreate.as_view()),
+        name='create'),
+    url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$',
+        login_required(views.UserUpdate.as_view()), name='edit'),
+    url(r'^sys/users/(?P<slug>[\w.@+-]+)/delete/$',
+        login_required(views.UserDelete.as_view()), name='delete'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
-        views.UserChangePassword.as_view(), name='change_password'),
+        login_required(views.UserChangePassword.as_view()),
+        name='change_password'),
 )
