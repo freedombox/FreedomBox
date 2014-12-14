@@ -25,9 +25,11 @@ def mark_active_menuitem(menu, path):
     """Mark the best-matching menu item with 'active'
 
     Input: a menu dict in the form of:
-    {'title': 'x',
-     'items': [{'url': 'a/b', 'text': 'myUrl'}, {'url': ...}]
+    {'title': 'foo menu',
+     'items': [{'url': '/path/to/choice1/', 'text': 'choice 1'}, {'url': ...}]
     }
+
+    URL paths are expected to end with a slash for matches to work properly.
 
     Output: The same dictionary; the best-matching URL dict gets the value
     'active': True. All other URL dicts get the value 'active': False.
@@ -41,8 +43,8 @@ def mark_active_menuitem(menu, path):
         urlitem['active'] = False
         if not path.startswith(str(urlitem['url'])):
             continue
-        match = os.path.commonprefix([urlitem['url'], path])
 
+        match = os.path.commonprefix([urlitem['url'], path])
         if len(match) > len(best_match):
             best_match = match
             best_match_item = urlitem
@@ -54,7 +56,7 @@ def mark_active_menuitem(menu, path):
 
 
 @register.inclusion_tag('subsubmenu.html', takes_context=True)
-def show_subsubmenu(context, menudata):
+def show_subsubmenu(context, menu):
     """Mark the active menu item and display the subsubmenu"""
-    menudata = mark_active_menuitem(menudata, context['request'].path)
-    return {'subsubmenu': menudata}
+    menu = mark_active_menuitem(menu, context['request'].path)
+    return {'subsubmenu': menu}

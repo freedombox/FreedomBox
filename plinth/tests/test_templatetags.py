@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
 # This file is part of Plinth.
 #
@@ -22,48 +20,38 @@ import unittest
 from plinth.templatetags.plinth_extras import mark_active_menuitem
 
 
-class TestPrivileged(unittest.TestCase):
+class TestShowSubSubMenu(unittest.TestCase):
     """Verify that the highlighting of the subsubmenu is working correctly"""
-
-    def is_active_url(self, menu, url):
+    def assert_active_url(self, menu, url):
         """Verify that only the given url is set as 'active' in the menu"""
-        for urlitem in menu['items']:
-            if urlitem['url'] == url and not urlitem['active']:
-                return False
-            if urlitem['url'] != url and urlitem['active']:
-                return False
-        return True
+        for item in menu['items']:
+            if item['url'] == url:
+                self.assertTrue(item['active'])
+            else:
+                self.assertFalse(item['active'])
 
-    def verify_active_menuitems(self, menu):
+    def _verify_active_menuitems(self, menu):
         """Verify that one and only one menuitem is marked as active"""
-        return sum([x['active'] for x in menu['items']])==1
+        return sum([item['active'] for item in menu['items']]) == 1
 
     def test_highlighting(self):
         """Test detection of active subsubmenu items using request.path"""
         menu = {
-            "text": "blubb",
-            "items": [{'url': '/abc/123/abc/', 'text': 'abc'},
+            'text': 'blubb',
+            'items': [{'url': '/abc/123/abc/', 'text': 'abc'},
                       {'url': '/abc/123/', 'text': 'overview'},
                       {'url': '/abc/123/crunch/', 'text': 'crunch'},
                       {'url': '/abc/123/create/', 'text': 'create'}]
         }
 
-        menu = mark_active_menuitem(menu, '/abc/123/crunch/new/')
-        assert(self.is_active_url(menu, '/abc/123/crunch/'))
-        assert(self.verify_active_menuitems(menu))
+        tests = [['/abc/123/crunch/new/', '/abc/123/crunch/'],
+                 ['/abc/123/create/', '/abc/123/create/'],
+                 ['/abc/123/nolink/', '/abc/123/'],
+                 ['/abc/123/abx/', '/abc/123/'],
+                 ['/abc/123/ab/', '/abc/123/'],
+                 ['/abc/123/', '/abc/123/']]
 
-        menu = mark_active_menuitem(menu, '/abc/123/create/')
-        assert(self.is_active_url(menu, '/abc/123/create/'))
-        assert(self.verify_active_menuitems(menu))
-
-        menu = mark_active_menuitem(menu, '/abc/123/nolink/')
-        assert(self.is_active_url(menu, '/abc/123/'))
-        assert(self.verify_active_menuitems(menu))
-
-        menu = mark_active_menuitem(menu, '/abc/123/abx/')
-        assert(self.is_active_url(menu, '/abc/123/'))
-        assert(self.verify_active_menuitems(menu))
-
-        menu = mark_active_menuitem(menu, '/abc/123/')
-        assert(self.is_active_url(menu, '/abc/123/'))
-        assert(self.verify_active_menuitems(menu))
+        for check_path, expected_active_path in tests:
+            menu = mark_active_menuitem(menu, check_path)
+            self.assert_active_url(menu, expected_active_path)
+            self.assertTrue(self._verify_active_menuitems(menu))
