@@ -30,23 +30,12 @@ from plinth import service
 
 LOGGER = logging.getLogger(__name__)
 
-subsubmenu = {
-    'title': _('XMPP'),
-    'items': [
-        {
-            'url': reverse_lazy('xmpp:index'),
-            'text': _('About'),
-        },
-        {
-            'url': reverse_lazy('xmpp:configure'),
-            'text': _('Configure XMPP Server'),
-        },
-        {
-            'url': reverse_lazy('xmpp:register'),
-            'text': _('Register XMPP Account'),
-        }
-    ]
-}
+subsubmenu = [{'url': reverse_lazy('xmpp:index'),
+               'text': _('About')},
+              {'url': reverse_lazy('xmpp:configure'),
+               'text': _('Configure XMPP Server')},
+              {'url': reverse_lazy('xmpp:register'),
+               'text': _('Register XMPP Account')}]
 
 
 def init():

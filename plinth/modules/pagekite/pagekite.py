@@ -34,11 +34,10 @@ from plinth import cfg
 
 LOGGER = logging.getLogger(__name__)
 
-subsubmenu = {'title': _('PageKite'),
-              'items': [{'url': reverse_lazy('pagekite:index'),
-                        'text': _('About PageKite')},
-                        {'url': reverse_lazy('pagekite:configure'),
-                        'text': _('Configure PageKite')}]}
+subsubmenu = [{'url': reverse_lazy('pagekite:index'),
+               'text': _('About PageKite')},
+              {'url': reverse_lazy('pagekite:configure'),
+               'text': _('Configure PageKite')}]
 
 
 def init():
@@ -194,7 +193,7 @@ def _apply_changes(request, old_status, new_status):
 
 
 def _run(arguments, superuser=True):
-    """Run an given command and raise exception if there was an error"""
+    """Run a given command and raise exception if there was an error"""
     command = 'pagekite-configure'
 
     if superuser:

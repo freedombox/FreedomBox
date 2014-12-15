@@ -28,18 +28,14 @@ from django.views.generic import ListView
 from gettext import gettext as _
 
 
-# TODO: we do not use the title anymore, and 'items' is also a python keyword.
-# For all subsubmenus: let's remove title and just use the items list directly.
-# Make sure to update the tests too.
-subsubmenu = {'title': _('Users and Groups'),
-              'items': [{'url': reverse_lazy('users:index'),
-                         'text': _('Users')},
-                        {'url': reverse_lazy('users:create'),
-                         'text': _('Create User')}]}
+subsubmenu = [{'url': reverse_lazy('users:index'),
+               'text': _('Users')},
+              {'url': reverse_lazy('users:create'),
+               'text': _('Create User')}]
 
 
 class ContextMixin(object):
-    """View to add 'subsubmenu' and 'title' to the context."""
+    """Mixin to add 'subsubmenu' and 'title' to the context."""
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)

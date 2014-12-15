@@ -25,9 +25,7 @@ def mark_active_menuitem(menu, path):
     """Mark the best-matching menu item with 'active'
 
     Input: a menu dict in the form of:
-    {'title': 'foo menu',
-     'items': [{'url': '/path/to/choice1/', 'text': 'choice 1'}, {'url': ...}]
-    }
+        [{'url': '/path/to/choice1/', 'text': 'choice 1'}, {'url': ...}]
 
     URL paths are expected to end with a slash for matches to work properly.
 
@@ -39,7 +37,7 @@ def mark_active_menuitem(menu, path):
     best_match = ''
     best_match_item = None
 
-    for urlitem in menu['items']:
+    for urlitem in menu:
         urlitem['active'] = False
         if not path.startswith(str(urlitem['url'])):
             continue

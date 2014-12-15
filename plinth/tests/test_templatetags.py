@@ -24,7 +24,7 @@ class TestShowSubSubMenu(unittest.TestCase):
     """Verify that the highlighting of the subsubmenu is working correctly"""
     def assert_active_url(self, menu, url):
         """Verify that only the given url is set as 'active' in the menu"""
-        for item in menu['items']:
+        for item in menu:
             if item['url'] == url:
                 self.assertTrue(item['active'])
             else:
@@ -32,17 +32,14 @@ class TestShowSubSubMenu(unittest.TestCase):
 
     def _verify_active_menuitems(self, menu):
         """Verify that one and only one menuitem is marked as active"""
-        return sum([item['active'] for item in menu['items']]) == 1
+        return sum([item['active'] for item in menu]) == 1
 
     def test_highlighting(self):
         """Test detection of active subsubmenu items using request.path"""
-        menu = {
-            'text': 'blubb',
-            'items': [{'url': '/abc/123/abc/', 'text': 'abc'},
-                      {'url': '/abc/123/', 'text': 'overview'},
-                      {'url': '/abc/123/crunch/', 'text': 'crunch'},
-                      {'url': '/abc/123/create/', 'text': 'create'}]
-        }
+        menu = [{'url': '/abc/123/abc/', 'text': 'abc'},
+                {'url': '/abc/123/', 'text': 'overview'},
+                {'url': '/abc/123/crunch/', 'text': 'crunch'},
+                {'url': '/abc/123/create/', 'text': 'create'}]
 
         tests = [['/abc/123/crunch/new/', '/abc/123/crunch/'],
                  ['/abc/123/create/', '/abc/123/create/'],
