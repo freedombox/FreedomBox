@@ -21,7 +21,6 @@ Framework for working with servers and their services.
 
 from gettext import gettext as _
 
-import django.dispatch
 import collections
 
 from plinth.signals import service_enabled
@@ -66,7 +65,7 @@ class Service(object):
             self._enabled = enabled
 
         service_enabled.send_robust(sender=sender, service_id=self.service_id,
-                            enabled=enabled)
+                                    enabled=enabled)
 
 
 def init():
