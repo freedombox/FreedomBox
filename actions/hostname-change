@@ -24,5 +24,6 @@ if [ -x /etc/init.d/hostname.sh ] ; then
 else
     service hostname start
 fi
+hostname "$hostname"
 
 service avahi-daemon restart
