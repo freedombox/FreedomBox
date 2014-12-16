@@ -25,6 +25,7 @@ import argparse
 import subprocess
 import time
 import os
+import re
 
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
@@ -80,9 +81,10 @@ def subcommand_change_hostname(arguments):
             lines = conffile.readlines()
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
-                conffile.write(line.replace(
-                    'var SITENAME = "' + old_hostname + '";',
-                    'var SITENAME = "' + new_hostname + '";'))
+                if re.match(r'\s*var\s+SITENAME', line):
+                    conffile.write('var SITENAME = "' + new_hostname + '";')
+                else:
+                    conffile.write(line)
     else:
         print('Skipping configuring jwchat hostname: %s not found'
               % JWCHAT_CONFIG)
@@ -94,13 +96,13 @@ def subcommand_change_hostname(arguments):
         in_hosts_section = False
         for line in lines:
             if in_hosts_section:
-                if line.startswith('  - "'):
+                if re.match(r'\s*-\s+"', line):
                     conffile.write(line.replace(old_hostname, new_hostname))
                 else:
                     in_hosts_section = False
                     conffile.write(line)
             else:
-                if line.startswith('hosts:'):
+                if re.match(r'\s*hosts:', line):
                     in_hosts_section = True
                 conffile.write(line)
 
@@ -113,7 +115,7 @@ def subcommand_change_hostname(arguments):
             in_pubsub_node = False
             for line in lines:
                 if in_roster:
-                    if line.startswith(' '):
+                    if re.match(r'\s+', line):
                         dumpfile.write(line.replace(
                             '>>,<<"' + old_hostname + '">>',
                             '>>,<<"' + new_hostname + '">>'))
@@ -122,7 +124,7 @@ def subcommand_change_hostname(arguments):
                         in_roster = False  # check other cases below
 
                 if in_pubsub_node:
-                    if line.startswith(' '):
+                    if re.match(r'\s+', line):
                         dumpfile.write(line.replace(
                             '>>,<<"pubsub.' + old_hostname + '">>,<<',
                             '>>,<<"pubsub.' + new_hostname + '">>,<<'))
@@ -130,33 +132,33 @@ def subcommand_change_hostname(arguments):
                     else:
                         in_pubsub_node = False  # check other cases below
 
-                if line.startswith('{passwd,'):
+                if re.match(r'\s*{passwd,', line):
                     dumpfile.write(line.replace(
                         '">>,<<"' + old_hostname + '">>},<<"',
                         '">>,<<"' + new_hostname + '">>},<<"'))
-                elif line.startswith('{private_storage,'):
+                elif re.match(r'\s*{private_storage,', line):
                     dumpfile.write(line.replace(
                         '>>,<<"' + old_hostname + '">>,<<',
                         '>>,<<"' + new_hostname + '">>,<<'))
-                elif line.startswith('{last_activity,'):
+                elif re.match(r'\s*{last_activity,', line):
                     dumpfile.write(line.replace(
                         '>>,<<"' + old_hostname + '">>},',
                         '>>,<<"' + new_hostname + '">>},'))
-                elif line.startswith('{roster,'):
+                elif re.match(r'\s*{roster,', line):
                     dumpfile.write(line.replace(
                         '>>,<<"' + old_hostname + '">>,',
                         '>>,<<"' + new_hostname + '">>,'))
                     in_roster = True
-                elif line.startswith('{pubsub_state,'):
+                elif re.match(r'\s*{pubsub_state,', line):
                     dumpfile.write(line.replace(
                         '>>,<<"pubsub.' + old_hostname + '">>,<<',
                         '>>,<<"pubsub.' + new_hostname + '">>,<<'))
-                elif line.startswith('{pubsub_node,'):
+                elif re.match(r'\s*{pubsub_node,', line):
                     dumpfile.write(line.replace(
                         ',{<<"pubsub.' + old_hostname + '">>,<<',
                         ',{<<"pubsub.' + new_hostname + '">>,<<').replace(
                             '>>,<<"/home/' + old_hostname + '">>},',
-                            '>>,<<"/home/' + new_hostname + '"..},'))
+                            '>>,<<"/home/' + new_hostname + '">>},'))
                     in_pubsub_node = True
                 else:
                     dumpfile.write(line)
