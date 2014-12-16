@@ -168,9 +168,13 @@ def subcommand_change_hostname(arguments):
 
     # load backup database
     if os.path.exists(EJABBERD_BACKUP):
-        time.sleep(10)
-        subprocess.call(['ejabberdctl', 'load', EJABBERD_BACKUP])
-        os.remove(EJABBERD_BACKUP)
+        try:
+            subprocess.check_output(['ejabberdctl',
+                                     'load',
+                                     EJABBERD_BACKUP])
+            os.remove(EJABBERD_BACKUP)
+        except subprocess.CalledProcessError as err:
+            print('Failed to load ejabberd backup database: %s', err)
     else:
         print('Could not load ejabberd backup database: %s not found'
               % EJABBERD_BACKUP)
