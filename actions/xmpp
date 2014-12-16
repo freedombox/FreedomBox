@@ -82,7 +82,7 @@ def subcommand_change_hostname(arguments):
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
                 if re.match(r'\s*var\s+SITENAME', line):
-                    conffile.write('var SITENAME = "' + new_hostname + '";')
+                    conffile.write('var SITENAME = "' + new_hostname + '";\n')
                 else:
                     conffile.write(line)
     else:
@@ -97,7 +97,8 @@ def subcommand_change_hostname(arguments):
         for line in lines:
             if in_hosts_section:
                 if re.match(r'\s*-\s+"', line):
-                    conffile.write(line.replace(old_hostname, new_hostname))
+                    conffile.write(line.replace('"' + old_hostname + '"',
+                                                '"' + new_hostname + '"'))
                 else:
                     in_hosts_section = False
                     conffile.write(line)
