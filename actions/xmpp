@@ -41,6 +41,15 @@ def parse_arguments():
     subparsers.add_parser('get-installed',
                           help='Get whether ejabberd is installed')
 
+    # Prepare ejabberd for hostname change
+    pre_hostname_change = subparsers.add_parser(
+        'pre-change-hostname',
+        help='Prepare ejabberd for hostname change')
+    pre_hostname_change.add_argument('--old-hostname',
+                                     help='Previous hostname')
+    pre_hostname_change.add_argument('--new-hostname',
+                                     help='New hostname')
+
     # Update ejabberd and jwchat with new hostname
     hostname_change = subparsers.add_parser(
         'change-hostname',
@@ -64,6 +73,24 @@ def parse_arguments():
 def subcommand_get_installed(_):
     """Get whether ejabberd is installed"""
     print('installed' if get_installed() else 'not installed')
+
+
+def subcommand_pre_change_hostname(arguments):
+    """Prepare ejabberd for hostname change"""
+    if not get_installed():
+        print('Failed to update XMPP hostname: ejabberd is not installed.')
+        return
+
+    old_hostname = arguments.old_hostname
+    new_hostname = arguments.new_hostname
+
+    subprocess.call(['ejabberdctl', 'dump', EJABBERD_BACKUP])
+    subprocess.call(['ejabberdctl', 'stop'])
+
+    # Make sure there aren't files in the Mnesia spool dir
+    os.makedirs('/var/lib/ejabberd/oldfiles', exist_ok=True)
+    subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
+                    shell=True)
 
 
 def subcommand_change_hostname(arguments):

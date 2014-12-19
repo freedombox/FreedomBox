@@ -206,11 +206,12 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     Backup ejabberd database before hostname is changed.
     """
     del sender  # Unused
-    del old_hostname  # Unused
-    del new_hostname  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('xmpp-pre-hostname-change')
+    actions.superuser_run('xmpp',
+                          ['pre-change-hostname',
+                           '--old-hostname', old_hostname,
+                           '--new-hostname', new_hostname])
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
