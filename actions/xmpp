@@ -30,6 +30,7 @@ import re
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
+EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
 
 
 def parse_arguments():
@@ -84,13 +85,14 @@ def subcommand_pre_change_hostname(arguments):
     old_hostname = arguments.old_hostname
     new_hostname = arguments.new_hostname
 
-    subprocess.call(['ejabberdctl', 'dump', EJABBERD_BACKUP])
-    subprocess.call(['ejabberdctl', 'stop'])
-
-    # Make sure there aren't files in the Mnesia spool dir
-    os.makedirs('/var/lib/ejabberd/oldfiles', exist_ok=True)
-    subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
-                    shell=True)
+    subprocess.call(['ejabberdctl', 'backup', EJABBERD_BACKUP])
+    try:
+        subprocess.check_output(['ejabberdctl', 'mnesia-change-nodename',
+                                 old_hostname, new_hostname,
+                                 EJABBERD_BACKUP, EJABBERD_BACKUP_NEW])
+        os.remove(EJABBERD_BACKUP)
+    except subprocess.CalledProcessError as err:
+        print('Failed to change hostname in ejabberd backup database: %s', err)
 
 
 def subcommand_change_hostname(arguments):
@@ -134,77 +136,29 @@ def subcommand_change_hostname(arguments):
                     in_hosts_section = True
                 conffile.write(line)
 
-    # update ejabberd backup database
-    if os.path.exists(EJABBERD_BACKUP):
-        with open(EJABBERD_BACKUP, 'r') as dumpfile:
-            lines = dumpfile.readlines()
-        with open(EJABBERD_BACKUP, 'w') as dumpfile:
-            in_roster = False
-            in_pubsub_node = False
-            for line in lines:
-                if in_roster:
-                    if re.match(r'\s+', line):
-                        dumpfile.write(line.replace(
-                            '>>,<<"' + old_hostname + '">>',
-                            '>>,<<"' + new_hostname + '">>'))
-                        continue
-                    else:
-                        in_roster = False  # check other cases below
+    subprocess.call(['ejabberdctl', 'stop'])
+    subprocess.call(['service', 'ejabberd', 'stop'])
+    subprocess.call(['pkill', '-u', 'ejabberd'])
 
-                if in_pubsub_node:
-                    if re.match(r'\s+', line):
-                        dumpfile.write(line.replace(
-                            '>>,<<"pubsub.' + old_hostname + '">>,<<',
-                            '>>,<<"pubsub.' + new_hostname + '">>,<<'))
-                        continue
-                    else:
-                        in_pubsub_node = False  # check other cases below
+    # Make sure there aren't files in the Mnesia spool dir
+    os.makedirs('/var/lib/ejabberd/oldfiles', exist_ok=True)
+    subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
+                    shell=True)
 
-                if re.match(r'\s*{passwd,', line):
-                    dumpfile.write(line.replace(
-                        '">>,<<"' + old_hostname + '">>},<<"',
-                        '">>,<<"' + new_hostname + '">>},<<"'))
-                elif re.match(r'\s*{private_storage,', line):
-                    dumpfile.write(line.replace(
-                        '>>,<<"' + old_hostname + '">>,<<',
-                        '>>,<<"' + new_hostname + '">>,<<'))
-                elif re.match(r'\s*{last_activity,', line):
-                    dumpfile.write(line.replace(
-                        '>>,<<"' + old_hostname + '">>},',
-                        '>>,<<"' + new_hostname + '">>},'))
-                elif re.match(r'\s*{roster,', line):
-                    dumpfile.write(line.replace(
-                        '>>,<<"' + old_hostname + '">>,',
-                        '>>,<<"' + new_hostname + '">>,'))
-                    in_roster = True
-                elif re.match(r'\s*{pubsub_state,', line):
-                    dumpfile.write(line.replace(
-                        '>>,<<"pubsub.' + old_hostname + '">>,<<',
-                        '>>,<<"pubsub.' + new_hostname + '">>,<<'))
-                elif re.match(r'\s*{pubsub_node,', line):
-                    dumpfile.write(line.replace(
-                        ',{<<"pubsub.' + old_hostname + '">>,<<',
-                        ',{<<"pubsub.' + new_hostname + '">>,<<').replace(
-                            '>>,<<"/home/' + old_hostname + '">>},',
-                            '>>,<<"/home/' + new_hostname + '">>},'))
-                    in_pubsub_node = True
-                else:
-                    dumpfile.write(line)
+    subprocess.call(['service', 'ejabberd', 'start'])
 
-    subprocess.call(['service', 'ejabberd', 'restart'])
-
-    # load backup database
-    if os.path.exists(EJABBERD_BACKUP):
+    # restore backup database
+    if os.path.exists(EJABBERD_BACKUP_NEW):
         try:
             subprocess.check_output(['ejabberdctl',
-                                     'load',
-                                     EJABBERD_BACKUP])
-            os.remove(EJABBERD_BACKUP)
+                                     'restore',
+                                     EJABBERD_BACKUP_NEW])
+            os.remove(EJABBERD_BACKUP_NEW)
         except subprocess.CalledProcessError as err:
-            print('Failed to load ejabberd backup database: %s', err)
+            print('Failed to restore ejabberd backup database: %s', err)
     else:
         print('Could not load ejabberd backup database: %s not found'
-              % EJABBERD_BACKUP)
+              % EJABBERD_BACKUP_NEW)
 
 
 def subcommand_register(arguments):
