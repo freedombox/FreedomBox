@@ -178,11 +178,11 @@ def subcommand_register(arguments):
 
     username = arguments.username
     password = arguments.password
-    hostname = subprocess.check_output(['hostname'])
+    fqdn = socket.getfqdn()
 
     try:
         output = subprocess.check_output(['ejabberdctl', 'register',
-                                          username, hostname, password])
+                                          username, fqdn, password])
         print(output.decode())
     except subprocess.CalledProcessError as e:
         print('Failed to register XMPP account:', e.output.decode())
