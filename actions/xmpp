@@ -23,8 +23,8 @@ Configuration helper for the ejabberd service
 
 import argparse
 import subprocess
-import time
 import os
+import socket
 import re
 
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
@@ -108,9 +108,6 @@ def subcommand_change_hostname(arguments):
         print('Failed to update XMPP hostname: ejabberd is not installed.')
         return
 
-    old_hostname = arguments.old_hostname
-    new_hostname = arguments.new_hostname
-
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
@@ -142,6 +139,7 @@ def subcommand_change_domainname(arguments):
         return
 
     domainname = arguments.domainname
+    fqdn = socket.gethostname() + '.' + domainname
 
     # update jwchat's sitename, if it's installed
     if os.path.exists(JWCHAT_CONFIG):
@@ -150,7 +148,7 @@ def subcommand_change_domainname(arguments):
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
                 if re.match(r'\s*var\s+SITENAME', line):
-                    conffile.write('var SITENAME = "' + domainname + '";\n')
+                    conffile.write('var SITENAME = "' + fqdn + '";\n')
                 else:
                     conffile.write(line)
     else:
@@ -160,14 +158,14 @@ def subcommand_change_domainname(arguments):
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
-    # add new domainname to top of ejabberd hosts list
+    # add updated FQDN to top of ejabberd hosts list
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             conffile.write(line)
             if re.match(r'\s*hosts:', line):
-                conffile.write('  - "' + domainname + '"\n')
+                conffile.write('  - "' + fqdn + '"\n')
 
     subprocess.call(['service', 'ejabberd', 'start'])
 
