@@ -32,7 +32,7 @@ import socket
 from plinth import actions
 from plinth import cfg
 from plinth.signals import pre_hostname_change, post_hostname_change
-from plinth.signals import fqdn_change
+from plinth.signals import domainname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -43,9 +43,10 @@ def get_hostname():
     return socket.gethostname()
 
 
-def get_fqdn():
-    """Return the fully qualified domain name"""
-    return socket.getfqdn()
+def get_domainname():
+    """Return the domainname"""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
 
 
 class TrimmedCharField(forms.CharField):
@@ -75,14 +76,14 @@ and must not be greater than 63 characters in length.'),
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
                                       _('Invalid hostname'))])
 
-    fqdn = TrimmedCharField(
-        label=_('FQDN'),
-        help_text=_('Your FQDN is the global name by which other machines \
-on the Internet can reach you. It must consist of alphanumeric words \
+    domainname = TrimmedCharField(
+        label=_('Domain Name'),
+        help_text=_('Your domain name is the global name by which other \
+machines on the Internet can reach you. It must consist of alphanumeric words \
 separated by dots.'),
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
-                                      _('Invalid FQDN'))])
+                                      _('Invalid domain name'))])
 
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1101, W0233
@@ -140,7 +141,7 @@ def index(request):
 def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
-            'fqdn': get_fqdn(),
+            'domainname': get_domainname(),
             'time_zone': open('/etc/timezone').read().rstrip()}
 
 
@@ -157,16 +158,16 @@ def _apply_changes(request, old_status, new_status):
     else:
         messages.info(request, _('Hostname is unchanged'))
 
-    if old_status['fqdn'] != new_status['fqdn']:
+    if old_status['domainname'] != new_status['domainname']:
         try:
-            set_fqdn(new_status['fqdn'])
+            set_domainname(new_status['domainname'])
         except Exception as exception:
-            messages.error(request, _('Error setting FQDN: %s') %
+            messages.error(request, _('Error setting domain name: %s') %
                            exception)
         else:
-            messages.success(request, _('FQDN set'))
+            messages.success(request, _('Domain name set'))
     else:
-        messages.info(request, _('FQDN is unchanged'))
+        messages.info(request, _('Domain name is unchanged'))
 
     if old_status['time_zone'] != new_status['time_zone']:
         try:
@@ -200,16 +201,16 @@ def set_hostname(hostname):
                                      new_hostname=hostname)
 
 
-def set_fqdn(fqdn):
-    """Sets machine FQDN to fqdn"""
-    old_fqdn = get_fqdn()
+def set_domainname(domainname):
+    """Sets machine domain name to domainname"""
+    old_domainname = get_domainname()
 
-    # FQDN should be ASCII. If it's unicode, convert to ASCII.
-    fqdn = str(fqdn)
+    # Domain name should be ASCII. If it's unicode, convert to ASCII.
+    domainname = str(domainname)
 
-    LOGGER.info('Changing FQDN to - %s', fqdn)
-    actions.superuser_run('fqdn-change', fqdn)
+    LOGGER.info('Changing domain name to - %s', domainname)
+    actions.superuser_run('domainname-change', domainname)
 
-    fqdn_change.send_robust(sender='config',
-                            old_fqdn=old_fqdn,
-                            new_fqdn=fqdn)
+    domainname_change.send_robust(sender='config',
+                                  old_domainname=old_domainname,
+                                  new_domainname=domainname)

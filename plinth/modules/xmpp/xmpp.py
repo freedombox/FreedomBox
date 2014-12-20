@@ -27,6 +27,7 @@ from plinth import actions
 from plinth import cfg
 from plinth import service
 from plinth.signals import pre_hostname_change, post_hostname_change
+from plinth.signals import domainname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -56,6 +57,7 @@ def init():
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
+    domainname_change.connect(on_domainname_change)
 
 
 @login_required
@@ -208,4 +210,18 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
                           ['change-hostname',
                            '--old-hostname', old_hostname,
                            '--new-hostname', new_hostname],
+                          async=True)
+
+
+def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
+    """
+    Update ejabberd and jwchat config after domain name is changed.
+    """
+    del sender  # Unused
+    del old_domainname  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp',
+                          ['change-domainname',
+                           '--domainname', new_domainname],
                           async=True)
