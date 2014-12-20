@@ -32,6 +32,7 @@ import socket
 from plinth import actions
 from plinth import cfg
 from plinth.signals import pre_hostname_change, post_hostname_change
+from plinth.signals import fqdn_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -40,6 +41,11 @@ LOGGER = logging.getLogger(__name__)
 def get_hostname():
     """Return the hostname"""
     return socket.gethostname()
+
+
+def get_fqdn():
+    """Return the fully qualified domain name"""
+    return socket.getfqdn()
 
 
 class TrimmedCharField(forms.CharField):
@@ -68,6 +74,15 @@ and must not be greater than 63 characters in length.'),
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
                                       _('Invalid hostname'))])
+
+    fqdn = TrimmedCharField(
+        label=_('FQDN'),
+        help_text=_('Your FQDN is the global name by which other machines \
+on the Internet can reach you. It must consist of alphanumeric words \
+separated by dots.'),
+        validators=[
+            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
+                                      _('Invalid FQDN'))])
 
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1101, W0233
@@ -125,6 +140,7 @@ def index(request):
 def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
+            'fqdn': get_fqdn(),
             'time_zone': open('/etc/timezone').read().rstrip()}
 
 
@@ -140,6 +156,17 @@ def _apply_changes(request, old_status, new_status):
             messages.success(request, _('Hostname set'))
     else:
         messages.info(request, _('Hostname is unchanged'))
+
+    if old_status['fqdn'] != new_status['fqdn']:
+        try:
+            set_fqdn(new_status['fqdn'])
+        except Exception as exception:
+            messages.error(request, _('Error setting FQDN: %s') %
+                           exception)
+        else:
+            messages.success(request, _('FQDN set'))
+    else:
+        messages.info(request, _('FQDN is unchanged'))
 
     if old_status['time_zone'] != new_status['time_zone']:
         try:
@@ -171,3 +198,18 @@ def set_hostname(hostname):
     post_hostname_change.send_robust(sender='config',
                                      old_hostname=old_hostname,
                                      new_hostname=hostname)
+
+
+def set_fqdn(fqdn):
+    """Sets machine FQDN to fqdn"""
+    old_fqdn = get_fqdn()
+
+    # FQDN should be ASCII. If it's unicode, convert to ASCII.
+    fqdn = str(fqdn)
+
+    LOGGER.info('Changing FQDN to - %s', fqdn)
+    actions.superuser_run('fqdn-change', fqdn)
+
+    fqdn_change.send_robust(sender='config',
+                            old_fqdn=old_fqdn,
+                            new_fqdn=fqdn)
