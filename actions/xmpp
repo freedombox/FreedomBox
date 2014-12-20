@@ -137,7 +137,6 @@ def subcommand_change_hostname(arguments):
                     in_hosts_section = True
                 conffile.write(line)
 
-    subprocess.call(['ejabberdctl', 'stop'])
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
