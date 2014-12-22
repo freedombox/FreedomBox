@@ -38,10 +38,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether ejabberd is installed
-    subparsers.add_parser('get-installed',
-                          help='Get whether ejabberd is installed')
-
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
@@ -77,17 +73,8 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_get_installed(_):
-    """Get whether ejabberd is installed"""
-    print('installed' if get_installed() else 'not installed')
-
-
 def subcommand_pre_change_hostname(arguments):
     """Prepare ejabberd for hostname change"""
-    if not get_installed():
-        print('Failed to update XMPP hostname: ejabberd is not installed.')
-        return
-
     old_hostname = arguments.old_hostname
     new_hostname = arguments.new_hostname
 
@@ -104,10 +91,6 @@ def subcommand_pre_change_hostname(arguments):
 
 def subcommand_change_hostname(arguments):
     """Update ejabberd and jwchat with new hostname"""
-    if not get_installed():
-        print('Failed to update XMPP hostname: ejabberd is not installed.')
-        return
-
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
@@ -134,10 +117,6 @@ def subcommand_change_hostname(arguments):
 
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
-    if not get_installed():
-        print('Failed to update XMPP domainname: ejabberd is not installed.')
-        return
-
     domainname = arguments.domainname
     fqdn = socket.gethostname() + '.' + domainname
 
@@ -172,10 +151,6 @@ def subcommand_change_domainname(arguments):
 
 def subcommand_register(arguments):
     """Register a new user account"""
-    if not get_installed():
-        print('Failed to register XMPP account: ejabberd is not installed.')
-        return
-
     username = arguments.username
     password = arguments.password
     fqdn = socket.getfqdn()
@@ -186,14 +161,6 @@ def subcommand_register(arguments):
         print(output.decode())
     except subprocess.CalledProcessError as e:
         print('Failed to register XMPP account:', e.output.decode())
-
-
-def get_installed():
-    """Check if ejabberd is installed"""
-    with open('/dev/null', 'w') as file_handle:
-        status = subprocess.call(['which', 'ejabberdctl'], stdout=file_handle)
-
-    return not status
 
 
 def main():

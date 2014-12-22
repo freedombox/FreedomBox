@@ -25,6 +25,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 from plinth import service
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
@@ -61,21 +62,12 @@ def init():
 
 
 @login_required
+@package.required('jwchat', 'ejabberd')
 def index(request):
     """Serve XMPP page"""
-    is_installed = actions.superuser_run(
-        'xmpp',
-        ['get-installed']).strip() == 'installed'
-
-    if is_installed:
-        index_subsubmenu = subsubmenu
-    else:
-        index_subsubmenu = None
-
     return TemplateResponse(request, 'xmpp.html',
                             {'title': _('XMPP Server'),
-                             'is_installed': is_installed,
-                             'subsubmenu': index_subsubmenu})
+                             'subsubmenu': subsubmenu})
 
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
