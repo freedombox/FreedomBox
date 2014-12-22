@@ -24,8 +24,6 @@
 
 <h2>Tor</h2>
 
-{% if is_installed %}
-
 <h3>Status</h3>
 
 <p>
@@ -79,15 +77,6 @@ port-forwarded, if necessary:</p>
 
 <p>A Tor SOCKS port is available on your {{ cfg.box_name }} on TCP port
 9050.</p>
-
-{% else %}
-
-  <p>Tor is not installed, please install it. Tor comes pre-installed
-  with {{ cfg.box_name }}. On any Debian-based system (such as
-  {{ cfg.box_name }}) you may install it using the command
-  <code>aptitude install tor</code>.</p>
-
-{% endif %}
 
 {% endblock %}
 

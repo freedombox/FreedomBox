@@ -1,5 +1,3 @@
-{% extends "base.html" %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,19 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
 
-{% load bootstrap %}
+"""
+Plinth framework forms
+"""
 
-{% block content %}
+from django import forms
 
-<p>XMPP is an open and standardized communication protocol.  Here you
-  can run and configure your XMPP server, called ejabberd.  To actually
-  communicate, you can use the <a href='/jwchat'>web client</a> or any
-  other <a href='http://xmpp.org/xmpp-software/clients/'
-  target='_blank'> XMPP client </a>.</p>
 
-<p><a href='/jwchat' target='_blank'class='btn btn-primary'> Launch web
-  client</a></p>
+class PackageInstallForm(forms.Form):
+    """Prompt for installation of a package.
 
-{% endblock %}
+    XXX: Don't store the package list in a hidden input as it can be
+    modified on the client side.  Use session store to store and retrieve
+    the package list.  It has to be form specific so that multiple
+    instances of forms don't clash with each other.
+    """
+    package_names = forms.CharField(widget=forms.HiddenInput)

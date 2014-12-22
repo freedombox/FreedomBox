@@ -58,14 +58,6 @@ done
 
 if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
     if $owncloud_enable ; then
-	# Select postgresql as the backend database for OwnCloud, and
-	# make sure its php support is enabled when owncloud is
-	# installed.
-	DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends \
-	    install -y postgresql php5-pgsql 2>&1 | logger -t owncloud-setup
-	DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends \
-	    install -y owncloud 2>&1 | logger -t owncloud-setup
-
 	# Keep existing configuration if it exist
 	if [ ! -e /etc/owncloud/config.php ] ; then
 	    # Set up postgresql database and user
