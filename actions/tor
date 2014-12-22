@@ -34,10 +34,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether Tor is installed
-    subparsers.add_parser('get-installed',
-                          help='Get whether Tor is installed')
-
     # Get whether Tor is running
     subparsers.add_parser('is-running', help='Get whether Tor is running')
 
@@ -57,11 +53,6 @@ def parse_arguments():
     subparsers.add_parser('disable-hs', help='Disable hidden service')
 
     return parser.parse_args()
-
-
-def subcommand_get_installed(_):
-    """Get whether Tor is installed"""
-    print('installed' if get_installed() else 'not installed')
 
 
 def subcommand_is_running(_):
@@ -101,7 +92,7 @@ def subcommand_get_hs(_):
 
 def subcommand_enable_hs(_):
     """Enable Tor hidden service"""
-    if not get_installed() or get_hidden_service():
+    if get_hidden_service():
         return
 
     with open(TOR_CONFIG, 'r') as conffile:
@@ -121,7 +112,7 @@ def subcommand_enable_hs(_):
 
 def subcommand_disable_hs(_):
     """Disable Tor hidden service"""
-    if not get_installed() or not get_hidden_service():
+    if not get_hidden_service():
         return
 
     with open(TOR_CONFIG, 'r') as conffile:
@@ -154,19 +145,8 @@ def subcommand_disable_hs(_):
     subprocess.call(['service', 'tor', 'restart'])
 
 
-def get_installed():
-    """Get whether Tor is installed"""
-    with open('/dev/null', 'w') as file_handle:
-        status = subprocess.call(['which', 'tor'], stdout=file_handle)
-
-    return not status
-
-
 def set_tor_service(enable):
     """Enable/disable Tor service; enable: boolean"""
-    if not get_installed():
-        return
-
     newline = 'RUN_DAEMON="yes"\n' if enable else 'RUN_DAEMON="no"\n'
 
     with open(SERVICE_CONFIG, 'r') as file:
@@ -182,9 +162,6 @@ def set_tor_service(enable):
 
 def get_hidden_service():
     """Return a string with configured Tor hidden service information"""
-    if not get_installed():
-        return ''
-
     hs_dir = None
     hs_ports = []
 
