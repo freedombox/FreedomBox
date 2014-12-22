@@ -30,10 +30,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get installed status
-    subparsers.add_parser('get-installed',
-                          help='Get whether firewalld is installed')
-
     # Get status
     subparsers.add_parser('get-status',
                           help='Get whether firewalld is running')
@@ -62,14 +58,6 @@ def parse_arguments():
         required=True)
 
     return parser.parse_args()
-
-
-def subcommand_get_installed(_):
-    """Print whether firewalld is installed"""
-    with open('/dev/null', 'w') as file_handle:
-        status = subprocess.call(['which', 'firewalld'], stdout=file_handle)
-
-    print('installed' if not status else 'not installed')
 
 
 def subcommand_get_status(_):
