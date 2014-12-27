@@ -19,13 +19,11 @@
 Main Plinth views
 """
 
-from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from django.views.generic.edit import FormView
+from django.views.generic import TemplateView
 
 from plinth import package as package_module
-from plinth.forms import PackageInstallForm
 
 
 def index(request):
@@ -36,18 +34,16 @@ def index(request):
     return HttpResponseRedirect(reverse('help:about'))
 
 
-class PackageInstallView(FormView):
+class PackageInstallView(TemplateView):
     """View to prompt and install packages."""
     template_name = 'package_install.html'
-    form_class = PackageInstallForm
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
         context = super(PackageInstallView, self).get_context_data(**kwargs)
+
         if 'packages_names' not in context:
             context['package_names'] = self.kwargs.get('package_names', [])
-
-        # Package details must have been resolved before building the form
         context['packages'] = [package_module.packages_resolved[package_name]
                                for package_name in context['package_names']]
         context['is_installing'] = \
@@ -56,24 +52,11 @@ class PackageInstallView(FormView):
 
         return context
 
-    def get_initial(self):
-        """Return the initial data to be filled in the form."""
-        initial = super(PackageInstallView, self).get_initial()
-        try:
-            initial['package_names'] = ','.join(self.kwargs['package_names'])
-        except KeyError:
-            raise ImproperlyConfigured('Argument package_names must be '
-                                       'provided to PackageInstallView')
+    def post(self, *args, **kwargs):
+        """Handle installing packages
 
-        return initial
-
-    def form_valid(self, form):
-        """Handle successful validation of the form.
-
-        Start the package installation and show this view again.
+        Start the package installation, and refresh the page every x seconds to
+        keep displaying PackageInstallView.get() with the installation status.
         """
-        package_names = form.cleaned_data['package_names'].split(',')
-        package_module.start_install(package_names)
-
-        return self.render_to_response(
-            self.get_context_data(package_names=package_names))
+        package_module.start_install(self.kwargs['package_names'])
+        return self.render_to_response(self.get_context_data())
