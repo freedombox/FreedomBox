@@ -18,7 +18,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import UserCreationForm, AdminPasswordChangeForm
+from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -26,6 +26,8 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
 from django.views.generic import ListView
 from gettext import gettext as _
+
+from .forms import CreateUserForm
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
@@ -46,7 +48,7 @@ class ContextMixin(object):
 
 class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
     """View to create a new user."""
-    form_class = UserCreationForm
+    form_class = CreateUserForm
     template_name = 'users_create.html'
     model = User
     success_message = _('User %(username)s created.')
