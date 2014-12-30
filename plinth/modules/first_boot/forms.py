@@ -20,6 +20,7 @@ from django.contrib import auth, messages
 from django.core import validators
 from gettext import gettext as _
 
+from plinth import actions
 from plinth.modules.config import config
 
 
@@ -58,6 +59,9 @@ than 63 characters in length.'),
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
+            actions.superuser_run(
+                'create-user',
+                [user.username, self.cleaned_data['password']])
             self.login_user()
 
         return user
