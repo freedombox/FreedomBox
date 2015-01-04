@@ -34,19 +34,22 @@ subsubmenu = [{'url': reverse_lazy('dynamicDNS:index'),
               {'url': reverse_lazy('dynamicDNS:configure'),
                'text': _('Configure')},
               {'url': reverse_lazy('dynamicDNS:statuspage'),
-               'text': _('Status')}            
+               'text': _('Status')}
               ]
+
 
 def init():
     """Initialize the dynamicDNS module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname('dynamicDNS', 'glyphicon-comment', 'dynamicDNS:index', 40)
 
+
 @login_required
 def index(request):
     """Serve dynamic DNS  page"""
-    
-    is_installed = actions.run('dynamicDNS', ['get-installed']).strip() == 'installed'
+
+    is_installed = actions.run('dynamicDNS', ['get-installed']).strip() \
+                 == 'installed'
 
     if is_installed:
         index_subsubmenu = subsubmenu
@@ -58,6 +61,7 @@ def index(request):
                              'is_installed': is_installed,
                              'subsubmenu': index_subsubmenu})
 
+
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
     def clean(self, value):
@@ -66,9 +70,10 @@ class TrimmedCharField(forms.CharField):
             value = value.strip()
 
         return super(TrimmedCharField, self).clean(value)
-    
+
+
 class ConfigureForm(forms.Form):
-    """Form to configure the dynamic DNS client"""    
+    """Form to configure the dynamic DNS client"""
     enabled = forms.BooleanField(label=_('Enable dynamicDNS'),
                                  required=False)
 
@@ -88,28 +93,34 @@ class ConfigureForm(forms.Form):
 
     dynamicDNS_User = TrimmedCharField(
         label=_('Username'),
-        help_text=_('You should have been requested to select a username when you created the account'))
-    
+        help_text=_('You should have been requested to select a username \
+                     when you created the account'))
+
     dynamicDNS_Secret = TrimmedCharField(
         label=_('Password'), widget=forms.PasswordInput(),
         required=False,
-        help_text=_('You should have been requested to select a password when you created the account. \
-        If you left this field empty your password will be unchanged.'))
-    
+        help_text=_('You should have been requested to select a password \
+                     when you created the account. If you left this field \
+                     empty your password will be unchanged.'))
+
     dynamicDNS_Secret_repeat = TrimmedCharField(
         label=_('repeat Password'), widget=forms.PasswordInput(),
         required=False,
-        help_text=_('insert the password twice to avoid typos. If you left this field empty your password \
-        will be unchanged.'),)
+        help_text=_('insert the password twice to avoid typos. If you left \
+                     this field empty your password will be unchanged.'),)
 
     dynamicDNS_IPURL = TrimmedCharField(
         label=_('IP check URL'),
         required=False,
-        help_text=_('Optional Value. If your FreedomBox is not connected directly to the Internet (i.e. \
-        connected to a NAT router) this URL is used to figure out the real Internet IP. The URL should \
-        simply return the IP where the client comes from. Example: http://myip.datasystems24.de'),
+        help_text=_('Optional Value. If your FreedomBox is not connected \
+                     directly to the Internet (i.e. connected to a NAT \
+                     router) this URL is used to figure out the real Internet \
+                     IP. The URL should simply return the IP where the \
+                     client comes from. Example: \
+                     http://myip.datasystems24.de'),
         validators=[
-            validators.URLValidator(schemes=['http','https','ftp'])])
+            validators.URLValidator(schemes=['http', 'https', 'ftp'])])
+
 
 @login_required
 def configure(request):
@@ -131,29 +142,31 @@ def configure(request):
                              'form': form,
                              'subsubmenu': subsubmenu})
 
+
 @login_required
 def statuspage(request):
     """Serve the status page """
     check_NAT = actions.run('dynamicDNS', ['get-nat'])
     last_update = actions.run('dynamicDNS', ['get-last-success'])
-    
+
     no_NAT = check_NAT.strip() == 'no'
     NAT_unchecked = check_NAT.strip() == 'unknown'
     timer = actions.run('dynamicDNS', ['get-timer'])
-    
+
     if no_NAT:
         LOGGER.info('we are not behind a NAT')
-        
+
     if NAT_unchecked:
         LOGGER.info('we did not checked if we are behind a NAT')
 
     return TemplateResponse(request, 'dynamicDNS_status.html',
                             {'title': _('Status of dynamicDNS Client'),
                              'no_NAT': no_NAT,
-                             'NAT_unchecked' : NAT_unchecked,
-                             'timer' : timer,
-                             'last_update' : last_update,
+                             'NAT_unchecked': NAT_unchecked,
+                             'timer': timer,
+                             'last_update': last_update,
                              'subsubmenu': subsubmenu})
+
 
 def get_status():
     """Return the current status"""
@@ -166,65 +179,75 @@ def get_status():
         status['dynamicDNS_Server'] = details[1]
     else:
         status['dynamicDNS_Server'] = ''
-        
+
     if len(details) > 2:
         status['dynamicDNS_Domain'] = details[2]
     else:
         status['dynamicDNS_Domain'] = ''
-        
+
     if len(details) > 3:
         status['dynamicDNS_User'] = details[3]
     else:
         status['dynamicDNS_User'] = ''
-        
+
     if len(details) > 4:
         status['dynamicDNS_Secret'] = details[4]
     else:
         status['dynamicDNS_Secret'] = ''
-        
+
     if len(details) > 5:
         status['dynamicDNS_IPURL'] = details[5]
     else:
         status['dynamicDNS_Secret'] = ''
-    
+
     return status
+
 
 def _apply_changes(request, old_status, new_status):
     """Apply the changes to Dynamic DNS client"""
     LOGGER.info('New status is - %s', new_status)
     LOGGER.info('Old status was - %s', old_status)
     FAIL = False
-        
-    if new_status['dynamicDNS_Secret_repeat'] != new_status['dynamicDNS_Secret']:
+
+    if new_status['dynamicDNS_Secret_repeat'] != \
+       new_status['dynamicDNS_Secret']:
+
         messages.error(request, _('passwords does not match'))
         FAIL = True
-        
-    if old_status['dynamicDNS_Secret'] == '' and new_status['dynamicDNS_Secret'] == '':
-       messages.error(request, _('please give a password')) 
-       FAIL = True
- 
+
+    if old_status['dynamicDNS_Secret'] == '' and \
+        new_status['dynamicDNS_Secret'] == '':
+        messages.error(request, _('please give a password'))
+        FAIL = True
+
     if False == FAIL:
         if new_status['dynamicDNS_Secret'] == '':
             new_status['dynamicDNS_Secret'] = old_status['dynamicDNS_Secret']
-            
+
         if new_status['dynamicDNS_IPURL'] == '':
             new_status['dynamicDNS_IPURL'] = 'none'
-    
-        if old_status['dynamicDNS_Server'] != new_status['dynamicDNS_Server'] or \
-               old_status['dynamicDNS_Domain'] != new_status['dynamicDNS_Domain'] or \
-               old_status['dynamicDNS_User'] != new_status['dynamicDNS_User'] or \
-               old_status['dynamicDNS_Secret'] != new_status['dynamicDNS_Secret'] or \
-               old_status['dynamicDNS_IPURL'] != new_status['dynamicDNS_IPURL']:
-    
+
+        if old_status['dynamicDNS_Server'] != \
+           new_status['dynamicDNS_Server'] or \
+           old_status['dynamicDNS_Domain'] != \
+           new_status['dynamicDNS_Domain'] or \
+           old_status['dynamicDNS_User'] != \
+           new_status['dynamicDNS_User'] or \
+           old_status['dynamicDNS_Secret'] != \
+           new_status['dynamicDNS_Secret'] or \
+           old_status['dynamicDNS_IPURL'] != \
+           new_status['dynamicDNS_IPURL']:
+
             _run(['configure', '-s', new_status['dynamicDNS_Server'],
-                  '-d', new_status['dynamicDNS_Domain'], 
+                  '-d', new_status['dynamicDNS_Domain'],
                   '-u', new_status['dynamicDNS_User'],
                   '-p', new_status['dynamicDNS_Secret'],
                   '-I', new_status['dynamicDNS_IPURL']])
             _run(['stop'])
             _run(['start'])
-            messages.success(request, _('Dynamic DNS configuration is updated!'))
-    
+            messages.success(request, \
+            _('Dynamic DNS configuration is updated!'))
+
         if old_status['enabled'] != new_status['enabled']:
             if new_status['enabled']:
                 _run(['start'])
@@ -233,7 +256,9 @@ def _apply_changes(request, old_status, new_status):
                 _run(['stop'])
                 messages.success(request, _('Dynamic DNS is disabled now!'))
     else:
-        messages.error(request, _('At least on failure occured, please check your input.')) 
+        messages.error(request, \
+        _('At least on failure occured, please check your input.'))
+
 
 def _run(arguments, superuser=False):
     """Run a given command and raise exception if there was an error"""
