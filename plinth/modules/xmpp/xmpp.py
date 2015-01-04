@@ -25,7 +25,10 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 from plinth import service
+from plinth.signals import pre_hostname_change, post_hostname_change
+from plinth.signals import domainname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -53,23 +56,18 @@ def init():
         'xmpp-bosh', _('Chat Server - web interface'), is_external=True,
         enabled=True)
 
+    pre_hostname_change.connect(on_pre_hostname_change)
+    post_hostname_change.connect(on_post_hostname_change)
+    domainname_change.connect(on_domainname_change)
+
 
 @login_required
+@package.required('jwchat', 'ejabberd')
 def index(request):
     """Serve XMPP page"""
-    is_installed = actions.superuser_run(
-        'xmpp',
-        ['get-installed']).strip() == 'installed'
-
-    if is_installed:
-        index_subsubmenu = subsubmenu
-    else:
-        index_subsubmenu = None
-
     return TemplateResponse(request, 'xmpp.html',
                             {'title': _('XMPP Server'),
-                             'is_installed': is_installed,
-                             'subsubmenu': index_subsubmenu})
+                             'subsubmenu': subsubmenu})
 
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
@@ -178,3 +176,44 @@ def _register_user(request, data):
         messages.error(request,
                        _('Failed to register account for %s: %s') %
                        (data['username'], output))
+
+
+def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
+    """
+    Backup ejabberd database before hostname is changed.
+    """
+    del sender  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp',
+                          ['pre-change-hostname',
+                           '--old-hostname', old_hostname,
+                           '--new-hostname', new_hostname])
+
+
+def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
+    """
+    Update ejabberd and jwchat config after hostname is changed.
+    """
+    del sender  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp',
+                          ['change-hostname',
+                           '--old-hostname', old_hostname,
+                           '--new-hostname', new_hostname],
+                          async=True)
+
+
+def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
+    """
+    Update ejabberd and jwchat config after domain name is changed.
+    """
+    del sender  # Unused
+    del old_domainname  # Unused
+    del kwargs  # Unused
+
+    actions.superuser_run('xmpp',
+                          ['change-domainname',
+                           '--domainname', new_domainname],
+                          async=True)

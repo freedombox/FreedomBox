@@ -23,6 +23,7 @@ from gettext import gettext as _
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 from plinth import service
 
 
@@ -47,6 +48,7 @@ def init():
 
 
 @login_required
+@package.required('postgresql', 'php5-pgsql', 'owncloud')
 def index(request):
     """Serve the ownCloud configuration page"""
     status = get_status()

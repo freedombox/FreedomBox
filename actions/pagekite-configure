@@ -48,10 +48,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get installed status
-    subparsers.add_parser('get-installed',
-                          help='Get whether PakeKite is installed')
-
     # Start PageKite
     subparsers.add_parser('start', help='Start PageKite service')
 
@@ -89,14 +85,6 @@ def parse_arguments():
     set_service.add_argument('enable', choices=['enable', 'disable'])
 
     return parser.parse_args()
-
-
-def subcommand_get_installed(_):
-    """Print whether PageKite is installed"""
-    with open('/dev/null', 'w') as file_handle:
-        status = subprocess.call(['which', 'pagekite'], stdout=file_handle)
-
-    print('installed' if not status else 'not installed')
 
 
 def subcommand_start(_):

@@ -30,6 +30,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 
 
 LOGGER = logging.getLogger(__name__)
@@ -101,6 +102,7 @@ https://pagekite.net/wiki/Howto/SshOverPageKite/">instructions</a>'))
 
 
 @login_required
+@package.required('pagekite')
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -130,11 +132,6 @@ def get_status():
     executing various actions.
     """
     status = {}
-
-    # Check if PageKite is installed
-    output = _run(['get-installed'])
-    if output.split()[0] != 'installed':
-        return None
 
     # PageKite service enabled/disabled
     output = _run(['get-status'])

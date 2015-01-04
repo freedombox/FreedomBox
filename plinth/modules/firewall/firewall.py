@@ -26,6 +26,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 from plinth.signals import service_enabled
 import plinth.service as service_module
 
@@ -42,13 +43,9 @@ def init():
 
 
 @login_required
+@package.required('firewalld')
 def index(request):
     """Serve introcution page"""
-    if not get_installed_status():
-        return TemplateResponse(request, 'firewall.html',
-                                {'title': _('Firewall'),
-                                 'firewall_status': 'not_installed'})
-
     if not get_enabled_status():
         return TemplateResponse(request, 'firewall.html',
                                 {'title': _('Firewall'),
@@ -65,14 +62,8 @@ def index(request):
          'external_enabled_services': external_enabled_services})
 
 
-def get_installed_status():
-    """Return whether firewall is installed"""
-    output = _run(['get-installed'], superuser=True)
-    return output.split()[0] == 'installed'
-
-
 def get_enabled_status():
-    """Return whether firewall is installed"""
+    """Return whether firewall is enabled"""
     output = _run(['get-status'], superuser=True)
     return output.split()[0] == 'running'
 
