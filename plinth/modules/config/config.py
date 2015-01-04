@@ -31,6 +31,8 @@ import socket
 
 from plinth import actions
 from plinth import cfg
+from plinth.signals import pre_hostname_change, post_hostname_change
+from plinth.signals import domainname_change
 
 
 LOGGER = logging.getLogger(__name__)
@@ -39,6 +41,12 @@ LOGGER = logging.getLogger(__name__)
 def get_hostname():
     """Return the hostname"""
     return socket.gethostname()
+
+
+def get_domainname():
+    """Return the domainname"""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
 
 
 class TrimmedCharField(forms.CharField):
@@ -67,6 +75,15 @@ and must not be greater than 63 characters in length.'),
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
                                       _('Invalid hostname'))])
+
+    domainname = TrimmedCharField(
+        label=_('Domain Name'),
+        help_text=_('Your domain name is the global name by which other \
+machines on the Internet can reach you. It must consist of alphanumeric words \
+separated by dots.'),
+        validators=[
+            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
+                                      _('Invalid domain name'))])
 
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1101, W0233
@@ -124,6 +141,7 @@ def index(request):
 def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
+            'domainname': get_domainname(),
             'time_zone': open('/etc/timezone').read().rstrip()}
 
 
@@ -140,6 +158,17 @@ def _apply_changes(request, old_status, new_status):
     else:
         messages.info(request, _('Hostname is unchanged'))
 
+    if old_status['domainname'] != new_status['domainname']:
+        try:
+            set_domainname(new_status['domainname'])
+        except Exception as exception:
+            messages.error(request, _('Error setting domain name: %s') %
+                           exception)
+        else:
+            messages.success(request, _('Domain name set'))
+    else:
+        messages.info(request, _('Domain name is unchanged'))
+
     if old_status['time_zone'] != new_status['time_zone']:
         try:
             actions.superuser_run('timezone-change', [new_status['time_zone']])
@@ -154,11 +183,34 @@ def _apply_changes(request, old_status, new_status):
 
 def set_hostname(hostname):
     """Sets machine hostname to hostname"""
+    old_hostname = get_hostname()
+
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
 
+    pre_hostname_change.send_robust(sender='config',
+                                    old_hostname=old_hostname,
+                                    new_hostname=hostname)
+
     LOGGER.info('Changing hostname to - %s', hostname)
-    actions.superuser_run('xmpp-pre-hostname-change')
     actions.superuser_run('hostname-change', hostname)
-    actions.superuser_run('xmpp-hostname-change', hostname, async=True)
+
+    post_hostname_change.send_robust(sender='config',
+                                     old_hostname=old_hostname,
+                                     new_hostname=hostname)
+
+
+def set_domainname(domainname):
+    """Sets machine domain name to domainname"""
+    old_domainname = get_domainname()
+
+    # Domain name should be ASCII. If it's unicode, convert to ASCII.
+    domainname = str(domainname)
+
+    LOGGER.info('Changing domain name to - %s', domainname)
+    actions.superuser_run('domainname-change', domainname)
+
+    domainname_change.send_robust(sender='config',
+                                  old_domainname=old_domainname,
+                                  new_domainname=domainname)

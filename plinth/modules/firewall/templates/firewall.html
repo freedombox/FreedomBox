@@ -29,13 +29,7 @@ threat from the Internet.</p>
 
 <p>The following is the current status:</p>
 
-{% if firewall_status = 'not_installed' %}
-<p>Firewall is not installed. Please install it. Firewall comes
-pre-installed with {{ cfg.box_name }}. On any Debian based system (such
-as {{ cfg.box_name }}) you may install it using the
-command <code>aptitude install firewalld</code></p>
-
-{% elif firewall_status = 'not_running' %}
+{% if firewall_status = 'not_running' %}
 
 <p>Firewall daemon is not running. Please run it. Firewall comes
 enabled by default on {{ cfg.box_name }}. On any Debian based system

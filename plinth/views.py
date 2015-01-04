@@ -21,11 +21,42 @@ Main Plinth views
 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.views.generic import TemplateView
+
+from plinth import package as package_module
 
 
 def index(request):
-    """Serve the main index page"""
+    """Serve the main index page."""
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('apps:index'))
 
     return HttpResponseRedirect(reverse('help:about'))
+
+
+class PackageInstallView(TemplateView):
+    """View to prompt and install packages."""
+    template_name = 'package_install.html'
+
+    def get_context_data(self, **kwargs):
+        """Return the context data rendering the template."""
+        context = super(PackageInstallView, self).get_context_data(**kwargs)
+
+        if 'packages_names' not in context:
+            context['package_names'] = self.kwargs.get('package_names', [])
+        context['packages'] = [package_module.packages_resolved[package_name]
+                               for package_name in context['package_names']]
+        context['is_installing'] = \
+            package_module.is_installing(context['package_names'])
+        context['transactions'] = package_module.transactions
+
+        return context
+
+    def post(self, *args, **kwargs):
+        """Handle installing packages
+
+        Start the package installation, and refresh the page every x seconds to
+        keep displaying PackageInstallView.get() with the installation status.
+        """
+        package_module.start_install(self.kwargs['package_names'])
+        return self.render_to_response(self.get_context_data())
