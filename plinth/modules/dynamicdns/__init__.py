@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure ez-ipupdate client 
+Plinth module to configure ez-ipupdate client
 """
 
 from . import dynamicdns
