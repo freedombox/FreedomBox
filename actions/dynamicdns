@@ -172,6 +172,7 @@ case $cmd in
     if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
         ${UPDATE_TOOL} -c $FILE
         RESULT=$?
+        [ $RESULT -eq 0 ] && $0 success
         cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
     fi
     #if we don't know our WAN IP do a blind update once a hour
@@ -183,12 +184,11 @@ case $cmd in
         if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
             ${UPDATE_TOOL} -c $FILE
             RESULT=$?
+            [ $RESULT -eq 0 ] && $0 success
             cat /proc/uptime |awk '{print $1}' |cut -d . -f 1> $LASTUPDATE        
         fi
     fi 
-    if [ $RESULT -eq 0 ];then
-        $0 success
-    else
+    if [ $RESULT -ne 0 ];then
         $0 failed
     fi
     ;;
