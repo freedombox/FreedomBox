@@ -23,11 +23,11 @@
 {% block content %}
   <p>
   <h3>NAT type</h3>
-  {% if NAT_unchecked %}
+  {% if nat_unchecked %}
   	NAT type not detected yet, if you do not provide a "IP check URL" we will 
   	not detect a NAT type.
   {% else %}
-	{% if no_NAT %}
+	{% if no_nat %}
 	  Direct connection to the internet.
 	{% else %}
 	  Behind NAT, this means that dynamic DNS service will poll the  

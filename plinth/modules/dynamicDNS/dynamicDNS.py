@@ -146,23 +146,23 @@ def configure(request):
 @login_required
 def statuspage(request):
     """Serve the status page """
-    check_NAT = actions.run('dynamicDNS', ['get-nat'])
+    check_nat = actions.run('dynamicDNS', ['get-nat'])
     last_update = actions.run('dynamicDNS', ['get-last-success'])
 
-    no_NAT = check_NAT.strip() == 'no'
-    NAT_unchecked = check_NAT.strip() == 'unknown'
+    no_nat = check_nat.strip() == 'no'
+    nat_unchecked = check_nat.strip() == 'unknown'
     timer = actions.run('dynamicDNS', ['get-timer'])
 
-    if no_NAT:
+    if no_nat:
         LOGGER.info('we are not behind a NAT')
 
-    if NAT_unchecked:
+    if nat_unchecked:
         LOGGER.info('we did not checked if we are behind a NAT')
 
     return TemplateResponse(request, 'dynamicDNS_status.html',
                             {'title': _('Status of dynamicDNS Client'),
-                             'no_NAT': no_NAT,
-                             'NAT_unchecked': NAT_unchecked,
+                             'no_nat': no_nat,
+                             'nat_unchecked': nat_unchecked,
                              'timer': timer,
                              'last_update': last_update,
                              'subsubmenu': subsubmenu})
@@ -207,20 +207,20 @@ def _apply_changes(request, old_status, new_status):
     """Apply the changes to Dynamic DNS client"""
     LOGGER.info('New status is - %s', new_status)
     LOGGER.info('Old status was - %s', old_status)
-    FAIL = False
+    fail = False
 
     if new_status['dynamicDNS_Secret_repeat'] != \
        new_status['dynamicDNS_Secret']:
 
         messages.error(request, _('passwords does not match'))
-        FAIL = True
+        fail = True
 
     if old_status['dynamicDNS_Secret'] == '' and \
         new_status['dynamicDNS_Secret'] == '':
         messages.error(request, _('please give a password'))
-        FAIL = True
+        fail = True
 
-    if False == FAIL:
+    if False == fail:
         if new_status['dynamicDNS_Secret'] == '':
             new_status['dynamicDNS_Secret'] = old_status['dynamicDNS_Secret']
 
