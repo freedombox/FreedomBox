@@ -41,7 +41,7 @@ subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
 def init():
     """Initialize the dynamicdns module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('dynamicdns', 'glyphicon-comment', 'dynamicdns:index', 40)
+    menu.add_urlname('Dynamic DNS', 'glyphicon-comment', 'dynamicdns:index', 40)
 
 
 @login_required
