@@ -16,12 +16,12 @@
 #
 
 """
-Plinth module to configure XMPP server
+Plinth module to configure ez-ipupdate client 
 """
 
-from . import dynamicDNS 
+from . import dynamicDNS
 from .dynamicDNS import init
 
-__all__ = ['xmpp2', 'init']
+__all__ = ['dynamicDNS', 'init']
 
 depends = ['plinth.modules.apps']
