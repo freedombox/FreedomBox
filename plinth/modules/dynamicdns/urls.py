@@ -16,15 +16,15 @@
 #
 
 """
-URLs for the DynamicDNS module
+URLs for the dynamicdns module
 """
 
 from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
-    'plinth.modules.dynamicDNS.dynamicDNS',
-    url(r'^apps/dynamicDNS/$', 'index', name='index'),
-    url(r'^apps/dynamicDNS/configure/$', 'configure', name='configure'),
-    url(r'^apps/dynamicDNS/statuspage/$', 'statuspage', name='statuspage')
+    'plinth.modules.dynamicdns.dynamicdns',
+    url(r'^apps/dynamicdns/$', 'index', name='index'),
+    url(r'^apps/dynamicdns/configure/$', 'configure', name='configure'),
+    url(r'^apps/dynamicdns/statuspage/$', 'statuspage', name='statuspage')
 )

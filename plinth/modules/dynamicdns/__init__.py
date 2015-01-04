@@ -19,9 +19,9 @@
 Plinth module to configure ez-ipupdate client 
 """
 
-from . import dynamicDNS
-from .dynamicDNS import init
+from . import dynamicdns
+from .dynamicdns import init
 
-__all__ = ['dynamicDNS', 'init']
+__all__ = ['dynamicdns', 'init']
 
 depends = ['plinth.modules.apps']
