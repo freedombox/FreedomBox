@@ -75,10 +75,6 @@ doGetOpt()
                 echo "Invalid option: -$OPTARG" >&2
                 exit 1
             ;;
-            :)
-                echo "Option -$OPTARG requires an argument." >&2
-                exit 1
-            ;;
         esac
     done
 }
@@ -252,10 +248,11 @@ case $cmd in
         echo "-p <password>           Account Password"
         echo "-I <IP check URL>       A URL which returns the IP of the client who is requesting"
         echo ""
-        echo "update                  do a one time update"        
-        echo "clean                      delete configuration"
-        echo "success                  store update success"    
-        echo "failed                  store update failure"        
+        echo "update                  do a one time update"
+        echo "clean                   delete configuration"
+        echo "success                 store update success"
+        echo "failed                  store update failure"
+        echo "get-nat                 return the detected nat type"
     ;;
 esac
 exit 0
