@@ -211,6 +211,18 @@ case $cmd in
             echo "no update recorded since last config change"
         fi
     ;;
+    install)
+        cd /tmp/ && apt-get download ${TOOLNAME}
+        dpkg --unpack ${TOOLNAME}*.deb
+        rm /var/lib/dpkg/info/${TOOLNAME}.postinst
+        dpkg --configure ${TOOLNAME}
+        apt-get install -yf
+        rm ${TOOLNAME}*.deb
+        cd -
+    ;;
+    uninstall)
+        apt-get -y remove --purge ez-ipupdate
+    ;;
     get-installed)
         if [ ! -z ${UPDATE_TOOL} ];then
             echo "installed"
