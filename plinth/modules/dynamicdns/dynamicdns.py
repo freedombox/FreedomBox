@@ -26,6 +26,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth import package
 
 LOGGER = logging.getLogger(__name__)
 
@@ -45,20 +46,14 @@ def init():
 
 
 @login_required
+@package.required('ez-ipupdate')
 def index(request):
     """Serve dynamic DNS  page"""
 
-    is_installed = actions.run('dynamicdns', ['get-installed']).strip() \
-                 == 'installed'
-
-    if is_installed:
-        index_subsubmenu = subsubmenu
-    else:
-        index_subsubmenu = None
+    index_subsubmenu = subsubmenu
 
     return TemplateResponse(request, 'dynamicdns.html',
                             {'title': _('dynamicdns'),
-                             'is_installed': is_installed,
                              'subsubmenu': index_subsubmenu})
 
 
@@ -123,6 +118,7 @@ class ConfigureForm(forms.Form):
 
 
 @login_required
+@package.required('ez-ipupdate')
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -144,6 +140,7 @@ def configure(request):
 
 
 @login_required
+@package.required('ez-ipupdate')
 def statuspage(request):
     """Serve the status page """
     check_nat = actions.run('dynamicdns', ['get-nat'])
