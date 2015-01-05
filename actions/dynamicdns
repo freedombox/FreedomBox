@@ -6,6 +6,8 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 #static values
+WGET=$(which wget)
+WGETOPTIONS="-4 -o /dev/null -t 3 -T 3"
 EMPTYSTRING="none"
 NOIP="0.0.0.0"
 #how often do we poll for IP changes if we are behind a NAT?
@@ -130,7 +132,7 @@ doGetWANIP()
 {
     if [ ! -z $IPURL ];then
         OUTFILE=`mktemp`
-        wget -4 -o /dev/null -O $OUTFILE $IPURL
+        $WGET $WGETOPTIONS -O $OUTFILE $IPURL
         WANIP=`cat $OUTFILE`
         rm $OUTFILE
     else
