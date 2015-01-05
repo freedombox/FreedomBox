@@ -42,8 +42,8 @@ subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
 def init():
     """Initialize the dynamicdns module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('Dynamic DNS', 'glyphicon-comment', \
-    'dynamicdns:index', 40)
+    menu.add_urlname('Dynamic DNS', 'glyphicon-comment',
+                     'dynamicdns:index', 40)
 
 
 @login_required
@@ -214,7 +214,7 @@ def _apply_changes(request, old_status, new_status):
         fail = True
 
     if old_status['dynamicdns_secret'] == '' and \
-        new_status['dynamicdns_secret'] == '':
+       new_status['dynamicdns_secret'] == '':
         messages.error(request, _('please give a password'))
         fail = True
 
@@ -243,8 +243,8 @@ def _apply_changes(request, old_status, new_status):
                   '-I', new_status['dynamicdns_ipurl']])
             _run(['stop'])
             _run(['start'])
-            messages.success(request, \
-            _('Dynamic DNS configuration is updated!'))
+            messages.success(request,
+                             _('Dynamic DNS configuration is updated!'))
 
         if old_status['enabled'] != new_status['enabled']:
             if new_status['enabled']:
@@ -254,8 +254,9 @@ def _apply_changes(request, old_status, new_status):
                 _run(['stop'])
                 messages.success(request, _('Dynamic DNS is disabled now!'))
     else:
-        messages.error(request, \
-        _('At least on failure occured, please check your input.'))
+        messages.error(request,
+                       _('At least on failure occured,\
+                       please check your input.'))
 
 
 def _run(arguments, superuser=False):
