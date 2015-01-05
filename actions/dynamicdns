@@ -212,23 +212,6 @@ case $cmd in
             echo "no update recorded since last config change"
         fi
     ;;
-    install)
-        cd /tmp/ && apt-get download ${TOOLNAME}
-        dpkg --unpack ${TOOLNAME}*.deb
-        rm /var/lib/dpkg/info/${TOOLNAME}.postinst
-        dpkg --configure ${TOOLNAME}
-        apt-get install -yf
-        rm ${TOOLNAME}*.deb
-        cd -
-    ;;
-    uninstall)
-        apt-get -y remove --purge ez-ipupdate
-    ;;
-    get-installed)
-        if [ ! -z ${UPDATE_TOOL} ];then
-            echo "installed"
-        fi
-    ;;
     status)
         doReadCFG
         PROC=`pgrep ${TOOLNAME}`
@@ -252,7 +235,7 @@ case $cmd in
         rm ${CFGDIR}/*
     ;;
     *)
-        echo "usage: get-installed|status|configure <options>|start|stop|update|get-nat|clean|success|failed"
+        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success|failed"
         echo ""
         echo "options are:"
         echo "-s <server>             Gnudip Server address"
