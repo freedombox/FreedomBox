@@ -234,25 +234,24 @@ def _apply_changes(request, old_status, new_status):
            old_status['dynamicdns_secret'] != \
            new_status['dynamicdns_secret'] or \
            old_status['dynamicdns_ipurl'] != \
-           new_status['dynamicdns_ipurl']:
+           new_status['dynamicdns_ipurl'] or \
+           old_status['enabled'] != \
+           new_status['enabled']:
 
             _run(['configure', '-s', new_status['dynamicdns_server'],
                   '-d', new_status['dynamicdns_domain'],
                   '-u', new_status['dynamicdns_user'],
                   '-p', new_status['dynamicdns_secret'],
                   '-I', new_status['dynamicdns_ipurl']])
-            _run(['stop'])
-            _run(['start'])
-            messages.success(request,
-                             _('Dynamic DNS configuration is updated!'))
 
-        if old_status['enabled'] != new_status['enabled']:
+            if old_status['enabled']:
+                _run(['stop'])
+
             if new_status['enabled']:
                 _run(['start'])
-                messages.success(request, _('Dynamic DNS is enabled now!'))
-            else:
-                _run(['stop'])
-                messages.success(request, _('Dynamic DNS is disabled now!'))
+
+            messages.success(request,
+                             _('Dynamic DNS configuration is updated!'))
     else:
         messages.error(request,
                        _('At least on failure occured,\
