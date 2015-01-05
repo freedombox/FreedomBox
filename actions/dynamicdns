@@ -139,7 +139,6 @@ doGetWANIP()
         #no WAN IP found because of missing check URL
         WANIP=${NOIP}
     fi
-    echo $WANIP > $IPFILE
 }
 
 cmd=$1
@@ -174,7 +173,7 @@ case $cmd in
         if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
             ${UPDATE_TOOL} -c $FILE
             RESULT=$?
-            [ $RESULT -eq 0 ] && $0 success
+            [ $RESULT -eq 0 ] && $0 success $WANIP
             cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
         fi
         #if we don't know our WAN IP do a blind update once a hour
@@ -186,7 +185,7 @@ case $cmd in
             if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
                 ${UPDATE_TOOL} -c $FILE
                 RESULT=$?
-                [ $RESULT -eq 0 ] && $0 success
+                [ $RESULT -eq 0 ] && $0 success $WANIP
                 cat /proc/uptime |awk '{print $1}' |cut -d . -f 1> $LASTUPDATE
             fi
         fi
@@ -202,6 +201,7 @@ case $cmd in
     success)
         DATE=`date`
         echo "last update done ($DATE)" > $STATUSFILE
+        echo $1 > $IPFILE
     ;;
     failed)
         DATE=`date`
@@ -237,7 +237,7 @@ case $cmd in
         rm ${CFGDIR}/*
     ;;
     *)
-        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success|failed"
+        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed"
         echo ""
         echo "options are:"
         echo "-s <server>             Gnudip Server address"
@@ -248,7 +248,7 @@ case $cmd in
         echo ""
         echo "update                  do a one time update"
         echo "clean                   delete configuration"
-        echo "success                 store update success"
+        echo "success                 store update success and optional the updated IP"
         echo "failed                  store update failure"
         echo "get-nat                 return the detected nat type"
     ;;
