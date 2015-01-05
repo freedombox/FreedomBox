@@ -164,35 +164,35 @@ case $cmd in
         echo $NAT
     ;;
     update)
-    doReadCFG
-    OLDIP=`cat $IPFILE`
-    doGetWANIP
-    [ -f $CFG_disabled ] && FILE=$CFG_disabled
-    [ -f $CFG ] && FILE=$CFG
-    RESULT=0
-    #if we know our WAN IP, only update if IP changes
-    if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
-        ${UPDATE_TOOL} -c $FILE
-        RESULT=$?
-        [ $RESULT -eq 0 ] && $0 success
-        cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
-    fi
-    #if we don't know our WAN IP do a blind update once a hour
-    if [ "${WANIP}" = ${NOIP} ];then
-        UPTIME=`cat /proc/uptime |cut -d . -f 1`
-        LAST=0
-        [ -f $LASTUPDATE ] && LAST=`cat $LASTUPDATE`
-        DIFF=`expr $UPTIME - $LAST`  
-        if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
+        doReadCFG
+        OLDIP=`cat $IPFILE`
+        doGetWANIP
+        [ -f $CFG_disabled ] && FILE=$CFG_disabled
+        [ -f $CFG ] && FILE=$CFG
+        RESULT=0
+        #if we know our WAN IP, only update if IP changes
+        if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
             ${UPDATE_TOOL} -c $FILE
             RESULT=$?
             [ $RESULT -eq 0 ] && $0 success
-            cat /proc/uptime |awk '{print $1}' |cut -d . -f 1> $LASTUPDATE        
+            cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
         fi
-    fi 
-    if [ $RESULT -ne 0 ];then
-        $0 failed
-    fi
+        #if we don't know our WAN IP do a blind update once a hour
+        if [ "${WANIP}" = ${NOIP} ];then
+            UPTIME=`cat /proc/uptime |cut -d . -f 1`
+            LAST=0
+            [ -f $LASTUPDATE ] && LAST=`cat $LASTUPDATE`
+            DIFF=`expr $UPTIME - $LAST`
+            if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
+                ${UPDATE_TOOL} -c $FILE
+                RESULT=$?
+                [ $RESULT -eq 0 ] && $0 success
+                cat /proc/uptime |awk '{print $1}' |cut -d . -f 1> $LASTUPDATE
+            fi
+        fi
+        if [ $RESULT -ne 0 ];then
+            $0 failed
+        fi
     ;;
     stop)
         rm $CRONJOB 2> /dev/null
