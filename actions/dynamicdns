@@ -90,8 +90,8 @@ doWriteCFG()
     #reset the last updated IP
     echo "0.0.0.0" > $IPFILE
 
-    #reset last update
-    rm $STATUSFILE
+    #reset last update (if there is one)
+    rm $STATUSFILE 2> /dev/null
 
     #find the interface (always the default gateway interface)
     DEFAULT=`ip route |grep default |awk '{print $5}'`
@@ -128,7 +128,7 @@ doWriteCFG()
 
 doGetWANIP()
 {
-    if [ $IPURL ];then
+    if [ ! -z $IPURL ];then
         OUTFILE=`mktemp`
         wget -4 -o /dev/null -O $OUTFILE $IPURL
         WANIP=`cat $OUTFILE`
