@@ -73,9 +73,9 @@ class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
 
     server = forms.CharField(
         label=_('Server'), required=False,
-        help_text=_('Currently only pagekite.net server is supported'),
-        widget=forms.TextInput(attrs={'placeholder': 'pagekite.net',
-                                      'disabled': 'disabled'}))
+        help_text=_('Select your pagekite.net server. Set "pagekite.net" to '
+                    'use the default pagekite.net server'),
+        widget=forms.TextInput())
 
     kite_name = TrimmedCharField(
         label=_('Kite name'),
@@ -143,6 +143,15 @@ def get_status():
     status['kite_name'] = kite_details[0]
     status['kite_secret'] = kite_details[1]
 
+    # PageKite server: 'pagekite.net' if flag 'defaults' is set,
+    # the value of 'frontend' otherwise
+    use_pagekitenet_server = _run(['get-pagekitenet-frontend-status'])
+    if "enabled" in use_pagekitenet_server:
+        value = 'pagekite.net'
+    elif "disabled" in use_pagekitenet_server:
+        value = _run(['get-frontend'])
+    status['server'] = value.replace('\n', '')
+
     # Service status
     status['service'] = {}
     for service in ('http', 'ssh'):
@@ -172,6 +181,14 @@ def _apply_changes(request, old_status, new_status):
         _run(['set-kite', '--kite-name', new_status['kite_name'],
               '--kite-secret', new_status['kite_secret']])
         messages.success(request, _('Kite details set'))
+
+    if old_status['server'] != new_status['server']:
+        server = new_status['server']
+        if server in ('defaults', 'default', 'pagekite.net'):
+            _run(['enable-pagekitenet-frontend'])
+        else:
+            _run(['set-frontend', server])
+        messages.success(request, _('Pagekite server set'))
 
     for service in ['http', 'ssh']:
         if old_status[service + '_enabled'] != \
