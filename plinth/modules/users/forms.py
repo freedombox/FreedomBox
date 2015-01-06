@@ -16,6 +16,7 @@
 #
 
 from django import forms
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from gettext import gettext as _
 
@@ -38,6 +39,26 @@ class CreateUserForm(UserCreationForm):
             actions.superuser_run(
                 'create-user',
                 [user.username, self.cleaned_data['password1']])
+        return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    """When user is enabled/disabled, also enables/disables the POSIX user."""
+
+    class Meta:
+        fields = ('username', 'groups', 'is_active')
+        model = User
+        widgets = {
+            'groups': forms.widgets.CheckboxSelectMultiple(),
+        }
+
+    def save(self, commit=True):
+        user = super(UserUpdateForm, self).save(commit)
+        if commit:
+            if user.is_active:
+                actions.superuser_run('enable-user', [user.username])
+            else:
+                actions.superuser_run('disable-user', [user.username])
         return user
 
 

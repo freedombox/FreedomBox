@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
@@ -26,7 +25,7 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
 from django.views.generic import ListView
 from gettext import gettext as _
 
-from .forms import CreateUserForm, UserChangePasswordForm
+from .forms import CreateUserForm, UserUpdateForm, UserChangePasswordForm
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
@@ -65,19 +64,11 @@ class UserList(ContextMixin, ListView):
 class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     """View to update a user's details."""
     template_name = 'users_update.html'
-    fields = ('username', 'groups', 'is_active')
     model = User
+    form_class = UserUpdateForm
     slug_field = 'username'
     success_message = _('User %(username)s updated.')
     title = _('Edit User')
-    widgets = {
-        'groups': forms.widgets.CheckboxSelectMultiple(),
-    }
-
-    def get_form_class(self):
-        """Return a form class generated from user model."""
-        return forms.models.modelform_factory(self.model, fields=self.fields,
-                                              widgets=self.widgets)
 
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""
