@@ -16,7 +16,7 @@
 #
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from gettext import gettext as _
 
 from plinth import actions
@@ -38,4 +38,16 @@ class CreateUserForm(UserCreationForm):
             actions.superuser_run(
                 'create-user',
                 [user.username, self.cleaned_data['password1']])
+        return user
+
+
+class UserChangePasswordForm(SetPasswordForm):
+    """Custom form that also updates password for POSIX users."""
+
+    def save(self, commit=True):
+        user = super(UserChangePasswordForm, self).save(commit)
+        if commit:
+            actions.superuser_run(
+                'change-user-password',
+                [user.username, self.cleaned_data['new_password1']])
         return user

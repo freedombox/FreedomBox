@@ -18,7 +18,6 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -27,7 +26,7 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
 from django.views.generic import ListView
 from gettext import gettext as _
 
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UserChangePasswordForm
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
@@ -112,7 +111,7 @@ class UserDelete(ContextMixin, DeleteView):
 class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     """View to change user password."""
     template_name = 'users_change_password.html'
-    form_class = SetPasswordForm
+    form_class = UserChangePasswordForm
     title = _('Change Password')
     success_message = _('Password changed successfully.')
 
