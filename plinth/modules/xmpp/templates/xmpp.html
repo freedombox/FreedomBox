@@ -22,8 +22,6 @@
 
 {% block content %}
 
-{% if is_installed %}
-
 <p>XMPP is an open and standardized communication protocol.  Here you
   can run and configure your XMPP server, called ejabberd.  To actually
   communicate, you can use the <a href='/jwchat'>web client</a> or any
@@ -32,17 +30,5 @@
 
 <p><a href='/jwchat' target='_blank'class='btn btn-primary'> Launch web
   client</a></p>
-
-{% else %}
-
-<h2>XMPP Server</h2>
-
-<p>The XMPP server <i>ejabberd</i> is not installed.</p>
-
-<p>ejabberd comes pre-installed with {{ cfg.box_name }}. On any Debian-based
-  system (such as {{ cfg.box_name }}) you may install it using the command
-  <code>aptitude install ejabberd</code>.</p>
-
-{% endif %}
 
 {% endblock %}

@@ -18,7 +18,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -112,10 +112,8 @@ class UserDelete(ContextMixin, DeleteView):
 class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     """View to change user password."""
     template_name = 'users_change_password.html'
-    form_class = AdminPasswordChangeForm
-    slug_field = 'username'
-    model = User
-    title = _('Create User')
+    form_class = SetPasswordForm
+    title = _('Change Password')
     success_message = _('Password changed successfully.')
 
     def get_form_kwargs(self):
@@ -128,7 +126,6 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return reverse('users:edit', kwargs={'slug': self.kwargs['slug']})
 
     def form_valid(self, form):
-        if form.user == self.request.user:
-            update_session_auth_hash(self.request, form.user)
-
+        form.save()
+        update_session_auth_hash(self.request, form.user)
         return super(UserChangePassword, self).form_valid(form)

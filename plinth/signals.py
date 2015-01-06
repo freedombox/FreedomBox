@@ -25,3 +25,6 @@ from django.dispatch import Signal
 service_enabled = Signal(providing_args=['service_id', 'enabled'])
 pre_module_loading = Signal()
 post_module_loading = Signal()
+pre_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
+post_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
+domainname_change = Signal(providing_args=['old_domainname', 'new_domainname'])
