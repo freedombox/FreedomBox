@@ -1,76 +1,111 @@
-(*
-Module: Hostname
-  Parses /etc/pagekite.d/
+module Test_Pagekite =
 
-Author: Michael Pimmer <blubb@fonfon.at>
+let conf1 = "# Use the pagekite.net service defaults.
+defaults
+"
+test Pagekite.lns get conf1 =
+  { "#comment" = "Use the pagekite.net service defaults." }
+  { "defaults" }
 
-About: License
-   This file is licenced under the LGPL v2+, like the rest of Augeas.
-*)
 
-module Pagekite =
-autoload xfm
+let conf2 ="
+frontends = pagekite.freedombox.me
+ports=80,81
+"
+test Pagekite.lns get conf2 =
+  { }
+  { "frontends" = "pagekite.freedombox.me" }
+  { "ports"
+    { "1" = "80" }
+    { "2" = "81" } }
 
-(* View: lns *)
 
-(* Variables *)
-let equals = del /[ \t]*=[ \t]*/ "="
-let neg2 = /[^# \n\t]+/
-let eol = del /\n/ "\n"
-(* Match everything from here to eol, cropping whitespace at both ends *)
-let to_eol  = /[^ \t\n](.*[^ \t\n])?/
+let conf3 = "frontend=pagekite.freedombox.me
+host=192.168.0.3
+"
+test Pagekite.lns get conf3 =
+  { "frontend" = "pagekite.freedombox.me" }
+  { "host" = "192.168.0.3" }
 
-(* A key followed by comma-separated values 
-  k: name of the key
-  key_sep: separator between key and values
-  value_sep: separator between values
-  sto: store for values
-*)
-let key_csv_line (k:string) (key_sep:lens) (value_sep:lens) (sto:lens) = 
-  [ key k . key_sep . [ seq k . sto ] .
-    [ seq k . value_sep . sto ]* . Util.eol ]
 
-(* entries for pagekite.d/10_account.rc *)
-let domain = [ key "domain" . equals . store neg2 . Util.comment_or_eol ]
-let frontend = Build.key_value_line ("frontend" | "frontends") 
-                                       equals (store Rx.neg1)
-let host = Build.key_value_line "host" equals (store Rx.ip)
-let ports = key_csv_line "ports" equals Sep.comma (store Rx.integer)
-let protos = key_csv_line "protos" equals Sep.comma (store Rx.word)
+let conf4 = "isfrontend
+ports=80,443
+protos=http,https
+domain=http,https:*.your.domain:MakeUpAPasswordHere
+"
+test Pagekite.lns get conf4 =
+  { "isfrontend" }
+  { "ports"
+    { "1" = "80" }
+    { "2" = "443" } }
+  { "protos"
+    { "1" = "http" }
+    { "2" = "https" } }
+  { "domain" = "http,https:*.your.domain:MakeUpAPasswordHere" }
 
-(* entries for pagekite.d/20_frontends.rc *)
-let kitesecret = Build.key_value_line "kitesecret" equals (store Rx.space_in)
-let kv_frontend = Build.key_value_line ( "kitename" | "fe_certname" | 
-                                         "ca_certs" | "tls_endpoint" ) 
-                                       equals (store Rx.neg1)
+let conf_account = "kitename = my.freedombox.me
+kitesecret = 0420
+# Delete this line!
+abort_not_configured
+"
+test Pagekite.lns get conf_account =
+  { "kitename" = "my.freedombox.me" }
+  { "kitesecret" = "0420" }
+  { "#comment" = "Delete this line!" }
+  { "abort_not_configured" }
+                                                                                                                                                                                        
 
-(* entries for 80_*.rc *)
-let service_colon = del /[ \t]*:[ \t]*/ " : "
-let store_domain = store /[^: \t\n]+:[^: \t\n]+/
-let service_on = [ key "service_on" . [ seq "service_on" . equals .
-                   [ label "source" . store_domain ] . service_colon .
-                   [label "destination" . store_domain] . service_colon . (
-                     [ label "secret" . store Rx.no_spaces . Util.eol ] | eol
-                   ) ] ]
-let service_cfg = [ key "service_cfg" . equals . store to_eol . eol ]
+let conf_service = "
+service_on = raw/22:@kitename : localhost:22 : @kitesecret
+service_on=http:192.168.0.1:127.0.0.1:80:
+service_on=https:yourhostname,fqdn:127.0.0.1:443:
+"
+test Pagekite.lns get conf_service =
+  {  }
+  { "service_on"
+    { "1"
+      { "protocol" = "raw/22" }
+      { "kitename" = "@kitename" }
+      { "backend_host" = "localhost" }
+      { "backend_port" = "22" }
+      { "secret" = "@kitesecret" }
+    }
+  }
+  { "service_on"
+    { "2"
+      { "protocol" = "http" }
+      { "kitename" = "192.168.0.1" }
+      { "backend_host" = "127.0.0.1" }
+      { "backend_port" = "80" }
+    }
+  }
+  { "service_on"
+    { "3"
+      { "protocol" = "https" }
+      { "kitename" = "yourhostname,fqdn" }
+      { "backend_host" = "127.0.0.1" }
+      { "backend_port" = "443" }
+    }
+  }
 
-let flags = ( "defaults" | "isfrontend" | "abort_not_configured" | "insecure" )
 
-let entries = Build.flag_line flags
-	    | domain
-	    | frontend
-	    | host
-        | ports
-	    | protos
-        | kv_frontend
-        | kitesecret
-        | service_on
-        | service_cfg
+let conf_encryption = "
+frontend=frontend.your.domain:443
+fe_certname=frontend.your/domain
+ca_certs=/etc/pagekite.d/site-cert.pem
+tls_endpoint=frontend.your.domain:/path/to/frontend.pem
+"
+test Pagekite.lns get conf_encryption =
+  {  }
+  { "frontend" = "frontend.your.domain:443" }
+  { "fe_certname" = "frontend.your/domain" }
+  { "ca_certs" = "/etc/pagekite.d/site-cert.pem" }
+  { "tls_endpoint" = "frontend.your.domain:/path/to/frontend.pem" }
 
-let lns = ( entries | Util.empty | Util.comment )*
 
-(* View: filter *)
-let filter = incl "/etc/pagekite.d/*.rc"
-		. Util.stdexcl
-
-let xfm = transform lns filter
+let conf_service_cfg = "insecure
+service_cfg = KITENAME.pagekite.me/80 : insecure : True
+"
+test Pagekite.lns get conf_service_cfg =
+  { "insecure" }
+  { "service_cfg" = "KITENAME.pagekite.me/80 : insecure : True" }
