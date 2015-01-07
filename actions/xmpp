@@ -62,6 +62,30 @@ def parse_arguments():
         help='Update ejabberd and jwchat with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
 
+    # Prepare ejabberd for hostname change
+    pre_hostname_change = subparsers.add_parser(
+        'pre-change-hostname',
+        help='Prepare ejabberd for hostname change')
+    pre_hostname_change.add_argument('--old-hostname',
+                                     help='Previous hostname')
+    pre_hostname_change.add_argument('--new-hostname',
+                                     help='New hostname')
+
+    # Update ejabberd and jwchat with new hostname
+    hostname_change = subparsers.add_parser(
+        'change-hostname',
+        help='Update ejabberd and jwchat with new hostname')
+    hostname_change.add_argument('--old-hostname',
+                                 help='Previous hostname')
+    hostname_change.add_argument('--new-hostname',
+                                 help='New hostname')
+
+    # Update ejabberd and jwchat with new domainname
+    domainname_change = subparsers.add_parser(
+        'change-domainname',
+        help='Update ejabberd and jwchat with new domainname')
+    domainname_change.add_argument('--domainname', help='New domainname')
+
     # Register a new user account
     register = subparsers.add_parser('register',
                                      help='Register a new user account')
@@ -117,6 +141,94 @@ def subcommand_change_hostname(arguments):
 
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
+    domainname = arguments.domainname
+    fqdn = socket.gethostname() + '.' + domainname
+
+    # update jwchat's sitename, if it's installed
+    if os.path.exists(JWCHAT_CONFIG):
+        with open(JWCHAT_CONFIG, 'r') as conffile:
+            lines = conffile.readlines()
+        with open(JWCHAT_CONFIG, 'w') as conffile:
+            for line in lines:
+                if re.match(r'\s*var\s+SITENAME', line):
+                    conffile.write('var SITENAME = "' + fqdn + '";\n')
+                else:
+                    conffile.write(line)
+    else:
+        print('Skipping configuring jwchat sitename: %s not found',
+              JWCHAT_CONFIG)
+
+    subprocess.call(['service', 'ejabberd', 'stop'])
+    subprocess.call(['pkill', '-u', 'ejabberd'])
+
+    # add updated FQDN to top of ejabberd hosts list
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            conffile.write(line)
+            if re.match(r'\s*hosts:', line):
+                conffile.write('  - "' + fqdn + '"\n')
+
+    subprocess.call(['service', 'ejabberd', 'start'])
+
+
+def subcommand_pre_change_hostname(arguments):
+    """Prepare ejabberd for hostname change"""
+    if not get_installed():
+        print('Failed to update XMPP hostname: ejabberd is not installed.')
+        return
+
+    old_hostname = arguments.old_hostname
+    new_hostname = arguments.new_hostname
+
+    subprocess.call(['ejabberdctl', 'backup', EJABBERD_BACKUP])
+    try:
+        subprocess.check_output(['ejabberdctl', 'mnesia-change-nodename',
+                                 'ejabberd@' + old_hostname,
+                                 'ejabberd@' + new_hostname,
+                                 EJABBERD_BACKUP, EJABBERD_BACKUP_NEW])
+        os.remove(EJABBERD_BACKUP)
+    except subprocess.CalledProcessError as err:
+        print('Failed to change hostname in ejabberd backup database: %s', err)
+
+
+def subcommand_change_hostname(arguments):
+    """Update ejabberd and jwchat with new hostname"""
+    if not get_installed():
+        print('Failed to update XMPP hostname: ejabberd is not installed.')
+        return
+
+    subprocess.call(['service', 'ejabberd', 'stop'])
+    subprocess.call(['pkill', '-u', 'ejabberd'])
+
+    # Make sure there aren't files in the Mnesia spool dir
+    os.makedirs('/var/lib/ejabberd/oldfiles', exist_ok=True)
+    subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
+                    shell=True)
+
+    subprocess.call(['service', 'ejabberd', 'start'])
+
+    # restore backup database
+    if os.path.exists(EJABBERD_BACKUP_NEW):
+        try:
+            subprocess.check_output(['ejabberdctl',
+                                     'restore',
+                                     EJABBERD_BACKUP_NEW])
+            os.remove(EJABBERD_BACKUP_NEW)
+        except subprocess.CalledProcessError as err:
+            print('Failed to restore ejabberd backup database: %s', err)
+    else:
+        print('Could not load ejabberd backup database: %s not found'
+              % EJABBERD_BACKUP_NEW)
+
+
+def subcommand_change_domainname(arguments):
+    """Update ejabberd and jwchat with new domainname"""
+    if not get_installed():
+        print('Failed to update XMPP domainname: ejabberd is not installed.')
+        return
+
     domainname = arguments.domainname
     fqdn = socket.gethostname() + '.' + domainname
 
