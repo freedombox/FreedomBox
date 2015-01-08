@@ -26,6 +26,7 @@ from django.views.generic import ListView
 from gettext import gettext as _
 
 from .forms import CreateUserForm, UserUpdateForm, UserChangePasswordForm
+from plinth import actions
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
@@ -69,6 +70,12 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     slug_field = 'username'
     success_message = _('User %(username)s updated.')
     title = _('Edit User')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdate, self).get_context_data(**kwargs)
+        output = actions.run('check-user-exists', [self.object.username])
+        context['is_posix_user'] = 'User exists' in output
+        return context
 
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""

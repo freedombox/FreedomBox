@@ -46,6 +46,11 @@
 
         {{ form|bootstrap }}
 
+	{% if is_posix_user %}
+	<p>This user is also a POSIX user and (if active) can log in to the
+	  system through SSH.</p>
+	{% endif %}
+
         <input type="submit" class="btn btn-primary" value="Save Changes"/>
 
       </form>
