@@ -48,8 +48,8 @@ $(SOURCES):
 
 ../TODO : $(TODO_SOURCES) Makefile
 	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
-	     --exclude=README.mdwn --exclude=INSTALL.mdwn \
-	     --exclude=TODO.mdwn --exclude=COPYING.mdwn \
+	     --exclude=README.mdwn --exclude=INSTALL.mdwn --exclude-dir=build \
+	     --exclude=TODO.mdwn --exclude=COPYING.mdwn --exclude-dir=debian \
 	     "TODO\:.*" ../* 2>/dev/null | \
 	     sed -e "s/TODO\://g" | \
 	     sed -e "s/^..\//* /g" | \
