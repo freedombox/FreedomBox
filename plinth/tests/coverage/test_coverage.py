@@ -3,7 +3,7 @@
 #
 # This file is part of Plinth.
 #
-# Dervied from code sample at:
+# Derived from code sample at:
 # http://jeetworks.org/adding-test-code-coverage-analysis-to-a-python-projects-setup-command/
 #
 # Copyright 2009 Jeet Sukumaran and Mark T. Holder.
@@ -69,7 +69,8 @@ class TestCoverageCommand(setuptools.Command):
                 self.distribution.install_requires)
 
         if self.distribution.tests_require:
-            self.distribution.fetch_build_eggs(self.distribution.tests_require)
+            self.distribution.fetch_build_eggs(
+                self.distribution.tests_require)
 
         # Erase any existing HTML report files
         try:
@@ -88,17 +89,23 @@ class TestCoverageCommand(setuptools.Command):
         # Run the coverage analysis
         runner = unittest.TextTestRunner()
         import coverage
-        cov = coverage.coverage(auto_data=True, branch=True,
+        cov = coverage.coverage(auto_data=True, config_file=True,
                                 source=SOURCE_DIRS, omit=FILES_TO_OMIT)
         cov.erase()     # Erase existing coverage data file
         cov.start()
         runner.run(test_suite)
         cov.stop()
 
-        # Generate an HTML report and print overall coverage
+        # Generate an HTML report
         html_report_title = 'FreedomBox:Plinth -- Test Coverage as of ' + \
                             time.strftime('%x %X %Z')
-        _coverage = cov.html_report(directory=COVERAGE_REPORT_DIR,
-                                    omit=FILES_TO_OMIT,
-                                    title=html_report_title)
-        print('\nOverall test coverage: {0:.2f} %\n'.format(_coverage))
+        cov.html_report(directory=COVERAGE_REPORT_DIR, omit=FILES_TO_OMIT,
+                        title=html_report_title)
+
+        # Print a detailed console report with the overall coverage percentage
+        print()
+        cov.report(omit=FILES_TO_OMIT)
+
+        # Print the location of the HTML report
+        print('\nThe HTML coverage report is located at {}.'.format(
+            COVERAGE_REPORT_DIR))
