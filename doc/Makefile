@@ -94,8 +94,8 @@ latex: $(LATEX)
 	csplit -s -f $@ $@01 '/<\/body>/'
 	mv $@00 $@
 	rm $@01
-%.html: %.mdwn header.html footer.html Makefile
-	$(PANDOC) -s --toc -f markdown -o $@ header.html $< footer.html
+%.html: %.mdwn Makefile
+	$(PANDOC) -s --toc -f markdown -o $@ $<
 
 hacking.html: hacking.mdwn ../TODO Makefile
 	$(PANDOC) -s --toc -o $@ -f markdown hacking.mdwn ../TODO
