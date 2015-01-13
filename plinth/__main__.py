@@ -108,6 +108,15 @@ def setup_server():
     LOGGER.debug('Serving static directory %s on %s', static_dir,
                  django.conf.settings.STATIC_URL)
 
+    js_dir = '/usr/share/javascript'
+    js_url = '/javascript'
+    config = {
+        '/': {'tools.staticdir.root': js_dir,
+              'tools.staticdir.on': True,
+              'tools.staticdir.dir': '.'}}
+    cherrypy.tree.mount(None, js_url, config)
+    LOGGER.debug('Serving javascript directory %s on %s', js_dir, js_url)
+
     for module_import_path in module_loader.loaded_modules:
         module = importlib.import_module(module_import_path)
         module_name = module_import_path.split('.')[-1]
