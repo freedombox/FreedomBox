@@ -20,6 +20,19 @@
 
 {% load bootstrap %}
 
+{% block page_head %}
+  <style type="text/css">
+    div.checkbox .help-block {
+      display: inline-block;
+      margin-left: 10px;
+    }
+    div.custom-services span.service {
+      display: inline-block;
+      padding-top: 6px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 
   <form class="form" method="post">
@@ -27,7 +40,7 @@
 
     {% include 'bootstrapform/field.html' with field=form.enabled %}
 
-    <div id='pagekite-post-enabled-form'
+    <div class='pagekite-post-enabled-form'
          style='display: {{ form.enabled.value|yesno:'block,none' }};'>
       <h3>PageKite Account</h3>
       {{ form.server|bootstrap_horizontal }}
@@ -35,12 +48,21 @@
       {{ form.kite_secret|bootstrap_horizontal }}
 
       <h3>Services</h3>
-      {{ form.http_enabled|bootstrap_horizontal }}
-      {{ form.ssh_enabled|bootstrap_horizontal }}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"
+                  aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          Exposing services makes them accessible and attackable from the evil
+          internet. Be cautious!
+      </div>
+
+      {{ form.http|bootstrap_horizontal }}
+      {{ form.https|bootstrap_horizontal }}
+      {{ form.ssh|bootstrap_horizontal }}
+
+      <input type="submit" class="btn btn-primary" value="Save settings"/>
     </div>
-
-    <input type="submit" class="btn btn-primary" value="Update setup"/>
-
   </form>
 
 {% endblock %}
@@ -52,9 +74,9 @@
 
     $('#id_pagekite-enabled').change(function() {
       if ($('#id_pagekite-enabled').prop('checked')) {
-        $('#pagekite-post-enabled-form').show('slow');
+        $('.pagekite-post-enabled-form').show('slow');
       } else {
-        $('#pagekite-post-enabled-form').hide('slow');
+        $('.pagekite-post-enabled-form').hide('slow');
       }
     });
 
