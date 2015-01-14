@@ -28,11 +28,11 @@ import augeas
 import os
 import subprocess
 
-from pagekite_common import SERVICE_PARAMS, construct_params
+from pagekite_util import SERVICE_PARAMS, construct_params, \
+    deconstruct_params, get_augeas_servicefile_path, CONF_PATH
 
 aug = augeas.Augeas()
 
-CONF_PATH = '/files/etc/pagekite.d'
 PATHS = {
     'service_on': os.path.join(CONF_PATH, '*', 'service_on', '*'),
     'kitename': os.path.join(CONF_PATH, '10_account.rc', 'kitename'),
@@ -226,7 +226,7 @@ def subcommand_add_service(arguments):
     # so do it manually here
     path = convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
-        line = "service_on = %s" % arguments.params
+        line = "service_on = %s" % deconstruct_params(params)
         servicefile.write(line)
 
 
@@ -249,23 +249,6 @@ def get_new_service_path(protocol):
     root = get_augeas_servicefile_path(protocol)
     new_index = len(aug.match(root + '/*')) + 1
     return os.path.join(root, str(new_index))
-
-
-def get_augeas_servicefile_path(protocol):
-    """Get the augeas path where a service for a protocol should be stored"""
-    if protocol == 'http':
-        relpath = '80_httpd.rc'
-    elif protocol == 'https':
-        relpath = '443_https.rc'
-    elif protocol == 'raw/22':
-        relpath = '22_ssh.rc'
-    elif protocol.startswith('raw'):
-        port = protocol.split('/')[1]
-        relpath = '%s.rc' % port
-    else:
-        raise ValueError('Unsupported protocol: %s' % protocol)
-
-    return os.path.join(CONF_PATH, relpath, 'service_on')
 
 
 def subcommand_get_kite(_):

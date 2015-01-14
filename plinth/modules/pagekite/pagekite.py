@@ -19,49 +19,16 @@
 Plinth module for configuring PageKite service
 """
 
-from django import forms
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.core import validators
-from django.core.urlresolvers import reverse_lazy
-from django.template.response import TemplateResponse
-from gettext import gettext as _
-import logging
-
-from plinth import actions
-from plinth import cfg
-from plinth import package
 
 
-LOGGER = logging.getLogger(__name__)
-
-subsubmenu = [{'url': reverse_lazy('pagekite:index'),
-               'text': _('About PageKite')},
-              {'url': reverse_lazy('pagekite:configure'),
-               'text': _('Configure PageKite')}]
 
 
-def init():
-    """Intialize the PageKite module"""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Public Visibility (PageKite)'),
-                     'glyphicon-flag', 'pagekite:index', 50)
 
 
-@login_required
-def index(request):
-    """Serve introduction page"""
-    return TemplateResponse(request, 'pagekite_introduction.html',
-                            {'title': _('Public Visibility (PageKite)'),
-                             'subsubmenu': subsubmenu})
 
 
-class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
-    def clean(self, value):
-        """Clean and validate the field value"""
-        if value:
-            value = value.strip()
+
+
 
         return super(TrimmedCharField, self).clean(value)
 

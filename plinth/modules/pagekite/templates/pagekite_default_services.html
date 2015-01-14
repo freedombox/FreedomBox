@@ -20,39 +20,36 @@
 
 {% load bootstrap %}
 
+{% block page_head %}
+  <style type="text/css">
+    div.checkbox .help-block {
+      display: inline-block;
+      margin: 0px 10px;
+    }
+    div.custom-services span.service {
+      display: inline-block;
+      padding-top: 6px;
+    }
+    input.btn {
+      margin: 10px 15px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 
-  <form class="form" method="post">
+  <h3>Default Services</h3>
+
+  <p>Exposing services makes them accessible and attackable from the evil
+  internet. Be cautious!</p>
+
+  <form class="form predefined" method="post">
+    {{ form.http|bootstrap_horizontal:'col-lg-0' }}
+    {{ form.https|bootstrap_horizontal:'col-lg-0' }}
+    {{ form.ssh|bootstrap_horizontal:'col-lg-0' }}
     {% csrf_token %}
-
-    {% include 'bootstrapform/field.html' with field=form.enabled %}
-
-    <div class='pagekite-post-enabled-form'
-         style='display: {{ form.enabled.value|yesno:'block,none' }};'>
-      <h3>PageKite Account</h3>
-      {{ form.server|bootstrap_horizontal }}
-      {{ form.kite_name|bootstrap_horizontal }}
-      {{ form.kite_secret|bootstrap_horizontal }}
-
-    </div>
     <input type="submit" class="btn btn-primary" value="Save settings"/>
   </form>
 
 {% endblock %}
 
-{% block page_js %}
-
-  <script type="text/javascript">
-    (function($) {
-
-    $('#id_pagekite-enabled').change(function() {
-      if ($('#id_pagekite-enabled').prop('checked')) {
-        $('.pagekite-post-enabled-form').show('slow');
-      } else {
-        $('.pagekite-post-enabled-form').hide('slow');
-      }
-    });
-
-    })(jQuery);
-  </script>
-{% endblock %}

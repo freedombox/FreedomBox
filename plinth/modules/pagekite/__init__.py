@@ -19,9 +19,17 @@
 Plinth module to configure PageKite
 """
 
+from gettext import gettext as _
+from plinth import cfg
 from . import pagekite
-from .pagekite import init
 
 __all__ = ['pagekite', 'init']
 
 depends = ['plinth.modules.apps']
+
+
+def init():
+    """Intialize the PageKite module"""
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(_('Public Visibility (PageKite)'),
+                     'glyphicon-flag', 'pagekite:index', 50)
