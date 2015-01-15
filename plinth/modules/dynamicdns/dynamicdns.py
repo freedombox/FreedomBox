@@ -96,14 +96,12 @@ class ConfigureForm(forms.Form):
         label=_('Password'), widget=forms.PasswordInput(),
         required=False,
         help_text=_('You should have been requested to select a password \
-                     when you created the account. If you left this field \
-                     empty your password will be unchanged.'))
+                     when you created the account.'))
 
     dynamicdns_secret_repeat = TrimmedCharField(
         label=_('repeat Password'), widget=forms.PasswordInput(),
         required=False,
-        help_text=_('insert the password twice to avoid typos. If you left \
-                     this field empty your password will be unchanged.'),)
+        help_text=_('insert the password again to avoid typos.'),)
 
     dynamicdns_ipurl = TrimmedCharField(
         label=_('IP check URL'),
