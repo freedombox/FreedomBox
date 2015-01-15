@@ -26,6 +26,7 @@ STATUSFILE="${CFGDIR}${TOOLNAME}.status"
 LASTUPDATE="${CFGDIR}/last-update"
 HELPERCFG="${CFGDIR}${TOOLNAME}-plinth.cfg"
 CRONJOB="/etc/cron.d/${TOOLNAME}"
+PIDFILE="/var/run/ez-ipupdate.pid"
 
 doReadCFG()
 { 
@@ -104,7 +105,6 @@ doWriteCFG()
     echo "user=${user}:${pass}" >> $FILE
     echo "service-type=gnudip" >> $FILE
     echo "retrys=5" >> $FILE
-    echo "execute=$0 success" >> $FILE
     echo "wildcard" >> $FILE
     
     #check if we are behind a NAT Router
@@ -124,6 +124,7 @@ doWriteCFG()
             echo "interface=$DEFAULT" >> $FILE
             #if this line is added to config file, ez-ipupdate will be launched on startup via init.d
             echo "daemon" >> $FILE
+            echo "execute=$0 success" >> $FILE
         fi
     fi
 }
@@ -166,42 +167,45 @@ case $cmd in
         doReadCFG
         OLDIP=`cat $IPFILE`
         doGetWANIP
+        echo $WANIP > $IPFILE
         [ -f $CFG_disabled ] && FILE=$CFG_disabled
         [ -f $CFG ] && FILE=$CFG
-        RESULT=0
+        cat $FILE |grep -v execute > ${FILE}.tmp
+        mv ${FILE}.tmp ${FILE}
+        echo "execute=$0 success ${WANIP}" >> $FILE
         #if we know our WAN IP, only update if IP changes
-        if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
-            ${UPDATE_TOOL} -c $FILE
-            RESULT=$?
-            [ $RESULT -eq 0 ] && $0 success $WANIP
-            cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
+        if [ "${OLDIP}" != "${WANIP}" -a "${WANIP}" != ${NOIP} ];then
+            start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c $FILE
         fi
         #if we don't know our WAN IP do a blind update once a hour
         if [ "${WANIP}" = ${NOIP} ];then
             UPTIME=`cat /proc/uptime |cut -d . -f 1`
             LAST=0
-            [ -f $LASTUPDATE ] && LAST=`cat $LASTUPDATE`
+            [ -f ${LASTUPDATE} ] && LAST=`cat $LASTUPDATE`
             DIFF=`expr $UPTIME - $LAST`
             if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
-                ${UPDATE_TOOL} -c $FILE
-                RESULT=$?
-                [ $RESULT -eq 0 ] && $0 success $WANIP
-                cat /proc/uptime |awk '{print $1}' |cut -d . -f 1> $LASTUPDATE
+                start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c $FILE
             fi
-        fi
-        if [ $RESULT -ne 0 ];then
-            $0 failed
         fi
     ;;
     stop)
         rm $CRONJOB 2> /dev/null
         /etc/init.d/${TOOLNAME} stop
+        kill $(cat ${PIDFILE}) 2> /dev/null
         mv $CFG $CFG_disabled
     ;;
     success)
         DATE=`date`
         echo "last update done ($DATE)" > $STATUSFILE
-        echo $1 > $IPFILE
+        cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
+        #if called from cronjob, the current IP is given as parameter
+        if [ $# -eq 1 ];then
+          echo $1 > $IPFILE
+        else
+          #if called from ez-ipupdate daemon, no WAN IP is given as parameter
+          doGetWANIP
+          echo $WANIP > $IPFILE
+        fi
     ;;
     failed)
         DATE=`date`
@@ -211,7 +215,7 @@ case $cmd in
         if [ -f $STATUSFILE ];then
             cat $STATUSFILE
         else
-            echo "no update recorded since last config change"
+            echo "no successful update recorded since last config change"
         fi
     ;;
     status)
