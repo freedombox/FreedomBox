@@ -20,36 +20,65 @@
 
 {% load bootstrap %}
 
+{% block page_head %}
+  <style type="text/css">
+    div.checkbox .help-block {
+      display: inline-block;
+      margin: 0px 10px;
+    }
+    div.custom-services span.service {
+      display: inline-block;
+      padding-top: 6px;
+    }
+    input.btn {
+      margin: 10px 15px;
+    }
+  </style>
+{% endblock %}
 
 {% block content %}
 
   <h3>Custom Services</h3>
 
-  <form class="form" method="post">
-    <div class="row custom-services">
-      <div class="col-sm-5 col-sm-offset-2">
-        <div class="list-group">
-          {% for service in form.initial.custom_services.values %}
-            <div class="list-group-item clearfix">
-              <span class="service">
-                {{ service.protocol }}
+  <div class="row custom-services">
+
+    <div class="col-sm-5">
+      <h4>Existing custom services</h4>
+      <div class="list-group">
+        {% for service in custom_services %}
+          <div class="list-group-item clearfix">
+            <span class="service">
+              <span title="Forwards {% include 'pagekite_servicename.inc' with service=service %} to {{ service.backend_host }}:{{ service.backend_port }}">
+                {% include 'pagekite_servicename.inc' with service=service %}
               </span>
-              <form class="form pull-right" method="post">
-                <button type="submit" class="btn btn-default"
-                        title="Delete this service">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true">
-                  </span>
-                </button> 
-              </form>
-            </div>
-          {% endfor %}
-        </div>
+            </span>
+            <form class="form pull-right" method="post"
+                  action="{% url 'pagekite:delete-custom-service' %}">
+              <div style='display:none'>
+                {% csrf_token %}
+                {{ service.form }}
+              </div>
+              <button type="submit" class="btn btn-default"
+                      title="Delete this service">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                </span>
+              </button> 
+            </form>
+          </div>
+        {% endfor %}
       </div>
     </div>
+
+    <div class="col-sm-5 col-sm-offset-1">
+      <form class="form" method="post">
+        {{ form|bootstrap_horizontal:'col-lg-5' }}
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary pull-right" value="Add Service"/>
+      </form>
+    </div>
+
   </div>
 
-  {% csrf_token %}
-  </form>
-
 {% endblock %}
+
 
