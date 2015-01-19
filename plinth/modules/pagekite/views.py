@@ -17,20 +17,23 @@
 
 from gettext import gettext as _
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.views.generic import TemplateView
+from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
 
 from plinth import package
-from .util import get_status
-from .forms import ConfigurationForm, CustomServiceForm
+from .util import get_pagekite_config, get_pagekite_services, get_kite_details
+from .forms import ConfigurationForm, DefaultServiceForm, CustomServiceForm
 
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
               {'url': reverse_lazy('pagekite:configure'),
                'text': _('Configure PageKite')},
-              {'url': reverse_lazy('pagekite:services'),
+              {'url': reverse_lazy('pagekite:default-services'),
+               'text': _('Default Services')},
+              {'url': reverse_lazy('pagekite:custom-services'),
                'text': _('Custom Services')}]
 
 
@@ -52,9 +55,58 @@ class ContextMixin(object):
         return context
 
 
-class ServiceView(ContextMixin, TemplateView):
+class DeleteServiceView(View):
+    def post(self, request):
+        form = CustomServiceForm(request.POST)
+        if form.is_valid():
+            form.delete(request)
+        return HttpResponseRedirect(reverse('pagekite:custom-services'))
+
+
+class CustomServiceView(ContextMixin, TemplateView):
     template_name = 'pagekite_custom_services.html'
-    title = 'PageKite Custom Services'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CustomServiceView, self).get_context_data(*args,
+                                                                  **kwargs)
+        unused, custom_services = get_pagekite_services()
+        for service in custom_services:
+            service['form'] = CustomServiceForm(initial=service)
+        context['custom_services'] = custom_services
+        context.update(get_kite_details())
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = CustomServiceForm(prefix="custom")
+        context['form'] = form
+        return self.render_to_response(context)
+
+    def post(self, request):
+        unused, custom_services = get_pagekite_services()
+        form = CustomServiceForm(request.POST, prefix="custom")
+        if form.is_valid():
+            form.save(request)
+            form = CustomServiceForm(prefix="custom")
+
+        context = self.get_context_data()
+        context['form'] = form
+
+        return self.render_to_response(context)
+
+
+class DefaultServiceView(ContextMixin, FormView):
+    template_name = 'pagekite_default_services.html'
+    title = 'PageKite Default Services'
+    form_class = DefaultServiceForm
+    success_url = reverse_lazy('pagekite:default-services')
+
+    def get_initial(self):
+        return get_pagekite_services()[0]
+
+    def form_valid(self, form):
+        form.save(self.request)
+        return super(DefaultServiceView, self).form_valid(form)
 
 
 class ConfigurationView(ContextMixin, FormView):
@@ -64,36 +116,8 @@ class ConfigurationView(ContextMixin, FormView):
     success_url = reverse_lazy('pagekite:configure')
 
     def get_initial(self):
-        """prepare format as returned by get_status() for the form"""
-        return get_status()
+        return get_pagekite_config()
 
     def form_valid(self, form):
         form.save(self.request)
         return super(ConfigurationView, self).form_valid(form)
-
-
-@login_required
-@package.required('pagekite')
-def configure(request):
-    """Serve the configuration form"""
-    status = get_status()
-
-    form = None
-
-    if request.method == 'POST':
-        form = ConfigurationForm(request.POST, prefix='pagekite')
-        # pylint: disable-msg=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = ConfigurationForm(initial=status, prefix='pagekite')
-    else:
-        form = ConfigurationForm(initial=status, prefix='pagekite')
-
-    return TemplateResponse(request, 'pagekite_configure.html',
-                            {'title': _('Configure PageKite'),
-                             'status': status,
-                             'form': form,
-                             'subsubmenu': subsubmenu})
-
-

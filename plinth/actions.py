@@ -89,7 +89,7 @@ Actions run commands with this contract (version 1.1):
 
 import logging
 import os
-import pipes
+import shlex
 import subprocess
 
 from plinth import cfg
@@ -150,7 +150,7 @@ def _run(action, options=None, async=False, run_as_root=False):
         if not isinstance(options, (list, tuple)):
             options = [options]
 
-        cmd += [pipes.quote(option) for option in options]
+        cmd += [shlex.quote(option) for option in options]
 
     # contract 1: commands can run via sudo.
     if run_as_root:

@@ -20,19 +20,6 @@
 
 {% load bootstrap %}
 
-{% block page_head %}
-  <style type="text/css">
-    div.checkbox .help-block {
-      display: inline-block;
-      margin-left: 10px;
-    }
-    div.custom-services span.service {
-      display: inline-block;
-      padding-top: 6px;
-    }
-  </style>
-{% endblock %}
-
 {% block content %}
 
   <form class="form" method="post">
@@ -46,20 +33,6 @@
       {{ form.server|bootstrap_horizontal }}
       {{ form.kite_name|bootstrap_horizontal }}
       {{ form.kite_secret|bootstrap_horizontal }}
-
-      <h3>Services</h3>
-      <div class="alert alert-warning alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert"
-                  aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          Exposing services makes them accessible and attackable from the evil
-          internet. Be cautious!
-      </div>
-
-      {{ form.http|bootstrap_horizontal }}
-      {{ form.https|bootstrap_horizontal }}
-      {{ form.ssh|bootstrap_horizontal }}
 
       <input type="submit" class="btn btn-primary" value="Save settings"/>
     </div>
