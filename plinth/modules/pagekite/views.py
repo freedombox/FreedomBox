@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
 
@@ -46,7 +47,10 @@ def index(request):
 
 
 class ContextMixin(object):
-    """Mixin to add 'subsubmenu' and 'title' to the context."""
+    """Mixin to add 'subsubmenu' and 'title' to the context.
+
+    Also requires 'pagekite' to be installed.
+    """
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -54,8 +58,12 @@ class ContextMixin(object):
         context['subsubmenu'] = subsubmenu
         return context
 
+    @method_decorator(package.required('pagekite'))
+    def dispatch(self, *args, **kwargs):
+        return super(ContextMixin, self).dispatch(*args, **kwargs)
 
-class DeleteServiceView(View):
+
+class DeleteServiceView(ContextMixin, View):
     def post(self, request):
         form = CustomServiceForm(request.POST)
         if form.is_valid():
