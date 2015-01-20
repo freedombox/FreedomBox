@@ -44,7 +44,7 @@
 
   <div class="row custom-services">
 
-    <div class="col-sm-5">
+    <div class="col-lg-5">
       <h4>Existing custom services</h4>
       {% if not custom_services %}
         <i>You don't have any Custom Services enabled</i>
@@ -79,9 +79,10 @@
       </div>
     </div>
 
-    <div class="col-sm-5 col-sm-offset-1">
+    <div class="col-lg-6 col-lg-offset-1">
       <form class="form" method="post">
-        {{ form|bootstrap_horizontal:'col-lg-5' }}
+        <h4>Create a custom service</h4>
+        {{ form|bootstrap_horizontal:'col-lg-6' }}
         {% csrf_token %}
         <input type="submit" class="btn btn-primary pull-right" value="Add Service"/>
       </form>

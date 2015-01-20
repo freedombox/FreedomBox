@@ -132,11 +132,11 @@ class DefaultServiceForm(forms.Form):
 class CustomServiceForm(forms.Form):
     """Form to add/delete a custom service"""
     choices = [("http", "http"), ("https", "https"), ("raw", "raw")]
-    protocol = forms.ChoiceField(choices=choices, label="Protocol")
+    protocol = forms.ChoiceField(choices=choices, label="protocol")
     frontend_port = forms.IntegerField(min_value=0, max_value=65535,
-                                       label="Frontend Port")
+                                       label="external (frontend) port")
     backend_port = forms.IntegerField(min_value=0, max_value=65535,
-                                      label="Local Port")
+                                      label="internal (freedombox) port")
     subdomains = forms.BooleanField(label="Enable Subdomains", required=False)
 
     def prepare_user_input_for_storage(self, params):
