@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import copy
 import os
 from django import template
 
@@ -58,3 +59,21 @@ def show_subsubmenu(context, menu):
     """Mark the active menu item and display the subsubmenu"""
     menu = mark_active_menuitem(menu, context['request'].path)
     return {'subsubmenu': menu}
+
+
+@register.assignment_tag
+def create_pagekite_service_link(service, kite_name):
+    """Create a link (URL) out of a pagekite service
+
+    Parameters: - service: the params dictionary
+                - kite_name: kite name (from the pagekite configuration)
+    """
+    params = {'protocol': service['protocol']}
+    if 'subdomains' in service and service['subdomains']:
+        params['kite_name'] = "*.%s" % kite_name
+    else:
+        params['kite_name'] = kite_name
+    link = "{protocol}://{kite_name}".format(**params)
+    if 'frontend_port' in service and service['frontend_port']:
+        link = "%s:%s" % (link, service['frontend_port'])
+    return link
