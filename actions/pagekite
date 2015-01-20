@@ -29,7 +29,7 @@ import os
 import subprocess
 
 from pagekite_util import SERVICE_PARAMS, construct_params, \
-    get_augeas_servicefile_path, CONF_PATH
+    deconstruct_params, get_augeas_servicefile_path, CONF_PATH
 
 aug = augeas.Augeas()
 
@@ -226,7 +226,7 @@ def subcommand_add_service(arguments):
     # so do it manually here
     path = convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
-        line = "service_on = %s" % arguments.params
+        line = "service_on = %s" % deconstruct_params(params)
         servicefile.write(line)
 
 
