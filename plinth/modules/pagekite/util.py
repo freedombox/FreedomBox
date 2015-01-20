@@ -110,7 +110,7 @@ def get_pagekite_config():
 
 
 def get_pagekite_services():
-    """Get enabled services. Returns two dictionaries:
+    """Get enabled services. Returns two values:
 
     1. predefined services: {'http': False, 'ssh': True, 'https': True}
     2. custom services: [{'protocol': 'http', 'secret' 'nono', ..}, [..]}

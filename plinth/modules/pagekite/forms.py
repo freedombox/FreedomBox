@@ -114,12 +114,12 @@ class DefaultServiceForm(forms.Form):
                                                    required=False)
 
     def save(self, request):
-        userdata = self.cleaned_data
+        formdata = self.cleaned_data
         for service in PREDEFINED_SERVICES.keys():
-            if self.initial[service] != userdata[service]:
+            if self.initial[service] != formdata[service]:
                 params = PREDEFINED_SERVICES[service]['params']
                 param_line = deconstruct_params(params)
-                if userdata[service]:
+                if formdata[service]:
                     _run(['add-service', '--params', param_line])
                     messages.success(request, _('Service enabled: {service}')
                                      .format(service=service))

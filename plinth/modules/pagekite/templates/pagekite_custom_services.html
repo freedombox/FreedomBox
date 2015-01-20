@@ -20,6 +20,8 @@
 
 {% load bootstrap %}
 
+{% load plinth_extras %}
+
 {% block page_head %}
   <style type="text/css">
     div.checkbox .help-block {
@@ -45,14 +47,19 @@
     <div class="col-sm-5">
       <h4>Existing custom services</h4>
       {% if not custom_services %}
-        <i>No Custom Services are enabled currently</i>
+        <i>You don't have any Custom Services enabled</i>
       {% endif %}
       <div class="list-group">
         {% for service in custom_services %}
+          {% create_pagekite_service_link service kite_name as service_link %}
           <div class="list-group-item clearfix">
             <span class="service">
-              <span title="Forwards {% include 'pagekite_servicename.inc' with service=service %} to {{ service.backend_host }}:{{ service.backend_port }}">
-                {% include 'pagekite_servicename.inc' with service=service %}
+              <span title="Forwards {{ service_link }} to {{ service.backend_host }}:{{ service.backend_port }}">
+                {% if service_link|slice:":4" == "http" %}
+                  <a href="{{ service_link }}">{{ service_link }}</a>
+                {% else %}
+                  {{ service_link }}
+                {% endif %}
               </span>
             </span>
             <form class="form pull-right" method="post"
