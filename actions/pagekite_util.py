@@ -21,29 +21,55 @@
 The variables/functions defined here are used by both the action script
 and the plinth pagekite module.
 
-Currently that's functionality for converting pagekite service_on strings like
+For example the functionality to convert pagekite service_on strings like
     "http:@kitename:localhost:80:@kitestring"
 into parameter dictionaries and the other way round. And functions that we want
 to be covered by tests.
 """
+# ATTENTION: This file has to be both python2 and python3 compatible
 
 import os
+import shlex
 CONF_PATH = '/files/etc/pagekite.d'
 
-# 'protocol' contains both the protocol and the frontend port: 'http/8000'
 SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
                   'secret']
 
 
 def construct_params(string):
     """ Convert a parameter string into a params dictionary"""
+    # The actions.py uses shlex.quote() to escape/quote malicious user input.
+    # That affects '*.@kitename', so the params string gets quoted.
+    # If the string is escaped and contains '*.@kitename', look whether shlex
+    # would still quote/escape the string when we remove '*.@kitename'.
+
+    # TODO: use shlex only once augeas-python supports python3
+    if hasattr(shlex, 'quote'):
+        quotefunction = shlex.quote
+    else:
+        import pipes
+        quotefunction = pipes.quote
+
+    if string.startswith("'") and string.endswith("'"):
+        unquoted_string = string[1:-1]
+        error_msg = "The parameters contain suspicious characters: %s "
+        if '*.@kitename' in string:
+            unquoted_test_string = unquoted_string.replace('*.@kitename', '')
+            if unquoted_test_string == quotefunction(unquoted_test_string):
+                # no other malicious characters found, use the unquoted string
+                string = unquoted_string
+            else:
+                raise RuntimeError(error_msg % string)
+        else:
+            raise RuntimeError(error_msg % string)
+
     try:
         params = dict(zip(SERVICE_PARAMS, string.split(':')))
     except:
-        msg = """params are expected to be a ':'-separated string
-                            containing values for: %s , for example:\n"--params
-                            http/8000:@kitename:localhost:8000:@kitesecret"
-                            """
+        msg = """params are expected to be a ':'-separated string containing
+              values for: %s , for example:\n"--params
+              http/8000:@kitename:localhost:8000:@kitesecret"
+              """
         raise ValueError(msg % ", ".join(SERVICE_PARAMS))
     return params
 

@@ -23,7 +23,7 @@ from actions.pagekite_util import get_augeas_servicefile_path, CONF_PATH, \
 
 
 class TestPagekiteActions(unittest.TestCase):
-    # test-cases to convert parameter-lines into param dicts and back
+    # test-cases to convert parameter-strings into param dicts and back
     _tests = [
         {
             'line': 'https/8080:*.@kitename:localhost:8080:@kitesecret',
@@ -38,7 +38,15 @@ class TestPagekiteActions(unittest.TestCase):
                        'backend_port': '80',
                        'backend_host': 'localhost',
                        'secret': '@kitesecret'}
-        }
+        },
+        {
+            'line': 'raw/22:@kitename:localhost:22:@kitesecret',
+            'params': {'protocol': 'raw/22',
+                       'kitename': '@kitename',
+                       'backend_port': '22',
+                       'backend_host': 'localhost',
+                       'secret': '@kitesecret'}
+        },
     ]
 
     def test_get_augeas_servicefile_path(self):
@@ -57,9 +65,15 @@ class TestPagekiteActions(unittest.TestCase):
             get_augeas_servicefile_path('xmpp')
 
     def test_deconstruct_params(self):
+        """ Test deconstructing parameter dictionaries into strings """
         for test in self._tests:
-            self.assertEquals(test['line'], deconstruct_params(test['params']))
+            self.assertEqual(test['line'], deconstruct_params(test['params']))
 
     def test_construct_params(self):
+        """ Test constructing parameter dictionaries out of string """
         for test in self._tests:
-            self.assertEquals(test['params'], construct_params(test['line']))
+            self.assertEqual(test['params'], construct_params(test['line']))
+
+        line = "'https/80'; touch /etc/fstab':*.@kitename:localhost:80:foo'"
+        with self.assertRaises(RuntimeError):
+            construct_params(line)

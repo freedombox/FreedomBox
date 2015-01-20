@@ -44,6 +44,9 @@
 
     <div class="col-sm-5">
       <h4>Existing custom services</h4>
+      {% if not custom_services %}
+        <i>No Custom Services are enabled currently</i>
+      {% endif %}
       <div class="list-group">
         {% for service in custom_services %}
           <div class="list-group-item clearfix">

@@ -71,7 +71,7 @@ def get_kite_details():
             'kite_secret': kite_details[1]}
 
 
-# TODO: deprecated
+# TODO: deprecated?
 def prepare_params_for_display(params):
     """Add extra information to display a custom service:
 
