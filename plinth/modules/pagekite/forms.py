@@ -23,8 +23,8 @@ from django.contrib import messages
 from django.core import validators
 
 from actions.pagekite_util import deconstruct_params
-from .util import PREDEFINED_SERVICES, _run, get_kite_details, \
-    prepare_params_for_storage, KITE_NAME, KITE_SECRET, BACKEND_HOST
+from .util import PREDEFINED_SERVICES, _run, get_kite_details, KITE_NAME, \
+    KITE_SECRET, BACKEND_HOST
 
 LOGGER = logging.getLogger(__name__)
 
@@ -163,7 +163,7 @@ class CustomServiceForm(forms.Form):
     def save(self, request):
         params = self.prepare_user_input_for_storage(self.cleaned_data)
         _run(['add-service', '--params', params])
-    
+
     def delete(self, request):
         params = self.prepare_user_input_for_storage(self.cleaned_data)
         _run(['remove-service', '--params', params])

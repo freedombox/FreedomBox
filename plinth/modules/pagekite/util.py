@@ -71,7 +71,6 @@ def get_kite_details():
             'kite_secret': kite_details[1]}
 
 
-# TODO: deprecated?
 def prepare_params_for_display(params):
     """Add extra information to display a custom service:
 
@@ -82,24 +81,6 @@ def prepare_params_for_display(params):
     if '/' in protocol:
         params['protocol'], params['frontend_port'] = protocol.split('/')
     params['subdomains'] = params['kitename'].startswith('*.')
-    return params
-
-
-def prepare_params_for_storage(params):
-    """Prepare the params from the custom service form for being stored
-
-    - Merge the 'frontend_port' and 'protocol' entries into 'protocol'
-    - Adapt the kitename if subdomains should be supported
-    """
-    if 'frontend_port' in params:
-        params['protocol'] = "%s/%s" % (params['protocol'],
-                                        params['frontend_port'])
-        del params['frontend_port']
-
-    if 'subdomains' in params:
-        params['kitename'] = "*.%s" % params['kitename']
-        del params['subdomains']
-
     return params
 
 
