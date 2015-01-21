@@ -70,7 +70,7 @@ def run(request):
                             {'title': _('Package Upgrades'),
                              'subsubmenu': subsubmenu,
                              'upgrades_output': output,
-                             'upgrades__error': error})
+                             'upgrades_error': error})
 
 
 class ConfigureForm(forms.Form):
