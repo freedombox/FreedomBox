@@ -22,7 +22,7 @@ from django import forms
 from django.contrib import messages
 from django.core import validators
 
-from actions.pagekite_util import deconstruct_params
+from actions.pagekite_util import convert_service_to_string
 from .util import PREDEFINED_SERVICES, _run, get_kite_details, KITE_NAME, \
     KITE_SECRET, BACKEND_HOST
 
@@ -98,7 +98,7 @@ for your account if no secret is set on the kite'))
 
 
 class DefaultServiceForm(forms.Form):
-    """Constructs a form out of PREDEFINED_SERVICES"""
+    """Creates a form out of PREDEFINED_SERVICES"""
 
     def __init__(self, *args, **kwargs):
         """Add the fields from PREDEFINED_SERVICES"""
@@ -115,18 +115,18 @@ class DefaultServiceForm(forms.Form):
 
     def save(self, request):
         formdata = self.cleaned_data
-        for service in PREDEFINED_SERVICES.keys():
-            if self.initial[service] != formdata[service]:
-                params = PREDEFINED_SERVICES[service]['params']
-                param_line = deconstruct_params(params)
-                if formdata[service]:
-                    _run(['add-service', '--params', param_line])
-                    messages.success(request, _('Service enabled: {service}')
-                                     .format(service=service))
+        for service_name in PREDEFINED_SERVICES.keys():
+            if self.initial[service_name] != formdata[service_name]:
+                service = PREDEFINED_SERVICES[service_name]['params']
+                service_string = convert_service_to_string(service)
+                if formdata[service_name]:
+                    _run(['add-service', '--service', service_string])
+                    messages.success(request, _('Service enabled: {name}')
+                                     .format(name=service_name))
                 else:
-                    _run(['remove-service', '--params', param_line])
-                    messages.success(request, _('Service disabled: {service}')
-                                     .format(service=service))
+                    _run(['remove-service', '--service', service_string])
+                    messages.success(request, _('Service disabled: {name}')
+                                     .format(name=service_name))
 
 
 class CustomServiceForm(forms.Form):
@@ -139,31 +139,35 @@ class CustomServiceForm(forms.Form):
                                       label="internal (freedombox) port")
     subdomains = forms.BooleanField(label="Enable Subdomains", required=False)
 
-    def prepare_user_input_for_storage(self, params):
-        """prepare the user input for being stored via the action"""
+    def convert_form_data_to_service_string(self, formdata):
+        """Prepare the user form input for being passed on to the action
+
+        1. add all information that a 'service' is expected to have
+        2. convert the service to a service_string
+        """
         # set kitename and kitesecret if not already set
-        if 'kitename' not in params:
-            if 'subdomains' in params and params['subdomains']:
-                params['kitename'] = "*.%s" % KITE_NAME
+        if 'kitename' not in formdata:
+            if 'subdomains' in formdata and formdata['subdomains']:
+                formdata['kitename'] = "*.%s" % KITE_NAME
             else:
-                params['kitename'] = KITE_NAME
-        if 'secret' not in params:
-            params['secret'] = KITE_SECRET
+                formdata['kitename'] = KITE_NAME
+        if 'secret' not in formdata:
+            formdata['secret'] = KITE_SECRET
 
-        # condense protocol and frontend_port to one entry (protocol)
-        if 'frontend_port' in params:
-            if str(params['frontend_port']) not in params['protocol']:
-                params['protocol'] = "%s/%s" % (params['protocol'],
-                                                params['frontend_port'])
-        if 'backend_host' not in params:
-            params['backend_host'] = BACKEND_HOST
+        # merge protocol and frontend_port to one entry (protocol)
+        if 'frontend_port' in formdata:
+            if str(formdata['frontend_port']) not in formdata['protocol']:
+                formdata['protocol'] = "%s/%s" % (formdata['protocol'],
+                                                  formdata['frontend_port'])
+        if 'backend_host' not in formdata:
+            formdata['backend_host'] = BACKEND_HOST
 
-        return deconstruct_params(params)
+        return convert_service_to_string(formdata)
 
     def save(self, request):
-        params = self.prepare_user_input_for_storage(self.cleaned_data)
-        _run(['add-service', '--params', params])
+        service = self.convert_form_data_to_service_string(self.cleaned_data)
+        _run(['add-service', '--service', service])
 
     def delete(self, request):
-        params = self.prepare_user_input_for_storage(self.cleaned_data)
-        _run(['remove-service', '--params', params])
+        service = self.convert_form_data_to_service_string(self.cleaned_data)
+        _run(['remove-service', '--service', service])

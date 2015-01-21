@@ -18,7 +18,7 @@
 from gettext import gettext as _
 import logging
 
-from actions.pagekite_util import construct_params
+from actions.pagekite_util import convert_to_service
 from plinth import actions
 
 LOGGER = logging.getLogger(__name__)
@@ -108,13 +108,13 @@ def get_pagekite_services():
     [predefined.update({proto: False}) for proto in PREDEFINED_SERVICES.keys()]
     # now, search for the enabled ones
     for serviceline in _run(['get-services']).split():
-        params = construct_params(serviceline)
+        service = convert_to_service(serviceline)
         for name, predefined_service in PREDEFINED_SERVICES.items():
-            if params == predefined_service['params']:
+            if service == predefined_service['params']:
                 predefined[name] = True
                 break
         else:
-            custom.append(params)
+            custom.append(service)
     return predefined, custom
 
 
