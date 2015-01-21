@@ -36,8 +36,8 @@ SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
                   'secret']
 
 
-def construct_params(string):
-    """ Convert a parameter string into a params dictionary"""
+def convert_to_service(service_string):
+    """ Convert a service string into a service parameter dictionary"""
     # The actions.py uses shlex.quote() to escape/quote malicious user input.
     # That affects '*.@kitename', so the params string gets quoted.
     # If the string is escaped and contains '*.@kitename', look whether shlex
@@ -50,22 +50,22 @@ def construct_params(string):
         import pipes
         quotefunction = pipes.quote
 
-    if string.startswith("'") and string.endswith("'"):
-        unquoted_string = string[1:-1]
+    if service_string.startswith("'") and service_string.endswith("'"):
+        unquoted_string = service_string[1:-1]
         error_msg = "The parameters contain suspicious characters: %s "
-        if '*.@kitename' in string:
+        if '*.@kitename' in service_string:
             unquoted_test_string = unquoted_string.replace('*.@kitename', '')
             if unquoted_test_string == quotefunction(unquoted_test_string):
                 # no other malicious characters found, use the unquoted string
-                string = unquoted_string
+                service_string = unquoted_string
             else:
-                raise RuntimeError(error_msg % string)
+                raise RuntimeError(error_msg % service_string)
         else:
-            raise RuntimeError(error_msg % string)
+            raise RuntimeError(error_msg % service_string)
 
     try:
-        params = dict(zip(SERVICE_PARAMS, string.split(':')))
-    except:
+        params = dict(zip(SERVICE_PARAMS, service_string.split(':')))
+    except Exception:
         msg = """params are expected to be a ':'-separated string containing
               values for: %s , for example:\n"--params
               http/8000:@kitename:localhost:8000:@kitesecret"
@@ -74,14 +74,14 @@ def construct_params(string):
     return params
 
 
-def deconstruct_params(params):
-    """ Convert params into a ":"-separated parameter string """
+def convert_service_to_string(service):
+    """ Convert service dict into a ":"-separated parameter string """
     try:
-        paramstring = ":".join([str(params[param]) for param in
-                               SERVICE_PARAMS])
+        service_string = ":".join([str(service[param]) for param in
+                                  SERVICE_PARAMS])
     except KeyError:
-        raise ValueError("Could not parse params: %s " % params)
-    return paramstring
+        raise ValueError("Could not parse params: %s " % service)
+    return service_string
 
 
 def get_augeas_servicefile_path(protocol):

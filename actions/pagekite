@@ -28,8 +28,8 @@ import augeas
 import os
 import subprocess
 
-from pagekite_util import SERVICE_PARAMS, construct_params, \
-    deconstruct_params, get_augeas_servicefile_path, CONF_PATH
+from pagekite_util import SERVICE_PARAMS, convert_to_service, \
+    convert_service_to_string, get_augeas_servicefile_path, CONF_PATH
 
 aug = augeas.Augeas()
 
@@ -85,10 +85,12 @@ def parse_arguments():
     subparsers.add_parser('get-services', help='Get list of enabled services')
     add_service = subparsers.add_parser('add-service',
                                         help='Add a pagekite service')
-    add_service.add_argument('--params', help='\':\'-separated parameters')
+    add_service.add_argument('--service', help='":"-separated service \
+                             parameters')
     remove_service = subparsers.add_parser('remove-service',
                                            help='Remove a pagekite service')
-    remove_service.add_argument('--params', help='\':\'-separated parameters')
+    remove_service.add_argument('--service', help='":"-separated service \
+                                parameters')
 
     return parser.parse_args()
 
@@ -183,8 +185,8 @@ def subcommand_get_services(arguments):
 
 def subcommand_remove_service(arguments):
     """Searches and removes the service(s) that match all given parameters"""
-    params = construct_params(arguments.params)
-    paths = get_existing_service_paths(params)
+    service = convert_to_service(arguments.service)
+    paths = get_existing_service_paths(service)
     # TODO: theoretically, everything to do here is:
     # [aug.remove(path) for path in paths]
     # but augeas won't let you save the changed files, and won't tell you why
@@ -195,7 +197,7 @@ def subcommand_remove_service(arguments):
             lines = file.readlines()
             for i, line in enumerate(lines):
                 if line.startswith('service_on') and \
-                        all(param in line for param in params.values()):
+                        all(param in line for param in service.values()):
                     lines[i] = ""
                     service_found = True
                     break
@@ -204,29 +206,29 @@ def subcommand_remove_service(arguments):
                 file.writelines(lines)
 
 
-def get_existing_service_paths(params):
-    """Returns paths of existing services that match the given params"""
+def get_existing_service_paths(service):
+    """Return paths of existing services that match the given service params"""
     # construct an augeas query path with patterns like:
     #     */service_on/*[protocol='http']
     path = PATHS['service_on']
-    for key, value in params.items():
+    for key, value in service.items():
         path += "[%s='%s']" % (key, value)
     return aug.match(path)
 
 
 def subcommand_add_service(arguments):
     """Add one service"""
-    params = construct_params(arguments.params)
-    if get_existing_service_paths(params):
+    service = convert_to_service(arguments.service)
+    if get_existing_service_paths(service):
         msg = "Service with the parameters %s already exists"
-        raise RuntimeError(msg % params)
+        raise RuntimeError(msg % service)
 
-    root = get_new_service_path(params['protocol'])
+    root = get_new_service_path(service['protocol'])
     # TODO: after adding a service, augeas fails writing the config;
     # so add the service_on entry manually instead
     path = convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
-        line = "\nservice_on = %s\n" % deconstruct_params(params)
+        line = "\nservice_on = %s\n" % convert_service_to_string(service)
         servicefile.write(line)
 
 
