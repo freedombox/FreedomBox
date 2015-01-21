@@ -20,7 +20,7 @@
 
 {% load bootstrap %}
 
-{% load plinth_extras %}
+{% load pagekite_extras %}
 
 {% block page_head %}
   <style type="text/css">
@@ -51,14 +51,14 @@
       {% endif %}
       <div class="list-group">
         {% for service in custom_services %}
-          {% create_pagekite_service_link service kite_name as service_link %}
+          {% create_pagekite_service_url service kite_name as service_url %}
           <div class="list-group-item clearfix">
             <span class="service">
-              <span title="Forwards {{ service_link }} to {{ service.backend_host }}:{{ service.backend_port }}">
-                {% if service_link|slice:":4" == "http" %}
-                  <a href="{{ service_link }}">{{ service_link }}</a>
+              <span title="Connects {{ service_url }} to {{ service.backend_host }}:{{ service.backend_port }}">
+                {% if service_url|slice:":4" == "http" %}
+                  <a href="{{ service_url }}">{{ service_url }}</a>
                 {% else %}
-                  {{ service_link }}
+                  {{ service_url }}
                 {% endif %}
               </span>
             </span>
