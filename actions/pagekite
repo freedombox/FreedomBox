@@ -204,6 +204,8 @@ def subcommand_remove_service(arguments):
         if service_found:
             with open(filepath, 'w') as file:
                 file.writelines(lines)
+                # abort to only allow deleting one service
+                break
 
 
 def get_existing_service_paths(service):
