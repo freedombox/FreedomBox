@@ -71,19 +71,6 @@ def get_kite_details():
             'kite_secret': kite_details[1]}
 
 
-def prepare_params_for_display(params):
-    """Add extra information to display a custom service:
-
-    - protocol is split into 'protocol' and 'frontend_port'
-    - we try to detect whether 'subdomains' are supported (as boolean)
-    """
-    protocol = params['protocol']
-    if '/' in protocol:
-        params['protocol'], params['frontend_port'] = protocol.split('/')
-    params['subdomains'] = params['kitename'].startswith('*.')
-    return params
-
-
 def get_pagekite_config():
     """
     Return the current PageKite configuration by executing various actions.
@@ -127,8 +114,21 @@ def get_pagekite_services():
                 predefined[name] = True
                 break
         else:
-            custom.append(prepare_params_for_display(params))
+            custom.append(params)
     return predefined, custom
+
+
+def prepare_service_for_display(service):
+    """ Add extra information that is used when displaying a service
+
+    - protocol is split into 'protocol' and 'frontend_port'
+    - detect whether 'subdomains' are supported (as boolean)
+    """
+    protocol = service['protocol']
+    if '/' in protocol:
+        service['protocol'], service['frontend_port'] = protocol.split('/')
+    service['subdomains'] = service['kitename'].startswith('*.')
+    return service
 
 
 def _run(arguments, superuser=True):

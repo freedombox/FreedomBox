@@ -223,10 +223,10 @@ def subcommand_add_service(arguments):
 
     root = get_new_service_path(params['protocol'])
     # TODO: after adding a service, augeas fails writing the config;
-    # so do it manually here
+    # so add the service_on entry manually instead
     path = convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
-        line = "service_on = %s" % deconstruct_params(params)
+        line = "\nservice_on = %s\n" % deconstruct_params(params)
         servicefile.write(line)
 
 
