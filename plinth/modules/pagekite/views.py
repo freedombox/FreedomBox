@@ -25,7 +25,8 @@ from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
 
 from plinth import package
-from .util import get_pagekite_config, get_pagekite_services, get_kite_details
+from .util import get_pagekite_config, get_pagekite_services, \
+    get_kite_details, prepare_service_for_display
 from .forms import ConfigurationForm, DefaultServiceForm, CustomServiceForm
 
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
@@ -80,7 +81,8 @@ class CustomServiceView(ContextMixin, TemplateView):
         unused, custom_services = get_pagekite_services()
         for service in custom_services:
             service['form'] = CustomServiceForm(initial=service)
-        context['custom_services'] = custom_services
+        context['custom_services'] = [prepare_service_for_display(service)
+                                      for service in custom_services]
         context.update(get_kite_details())
         return context
 
@@ -91,7 +93,6 @@ class CustomServiceView(ContextMixin, TemplateView):
         return self.render_to_response(context)
 
     def post(self, request):
-        unused, custom_services = get_pagekite_services()
         form = CustomServiceForm(request.POST, prefix="custom")
         if form.is_valid():
             form.save(request)
