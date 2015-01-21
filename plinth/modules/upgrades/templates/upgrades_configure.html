@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -8,23 +10,25 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the upgrades module
-"""
+{% load bootstrap %}
 
-from django.conf.urls import patterns, url
+{% block content %}
 
+  <form class="form" method="post">
+    {% csrf_token %}
 
-urlpatterns = patterns(
-    'plinth.modules.upgrades.upgrades',
-    url(r'^sys/upgrades/$', 'index', name='index'),
-    url(r'^sys/upgrades/run/$', 'run', name='run'),
-    url(r'^sys/upgrades/configure/$', 'configure', name='configure'),
-    )
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary btn-md" value="Update setup"/>
+
+  </form>
+
+{% endblock %}

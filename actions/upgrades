@@ -30,12 +30,16 @@ AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 
 
 def parse_arguments():
-    """REturn parsed command line arguments as dictionary"""
+    """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     # Run unattended-upgrades
     subparsers.add_parser('run', help='Upgrade packages on the system')
+
+    # Check if automatic upgrades are enabled
+    subparsers.add_parser('check-auto',
+                          help='Check if automatic upgrades are enabled')
 
     # Enable automatic upgrades
     subparsers.add_parser('enable-auto', help='Enable automatic upgrades')
@@ -64,6 +68,11 @@ def subcommand_run(_):
         print('%s', output.decode())
 
 
+def subcommand_check_auto(_):
+    """Check if automatic upgrades are enabled"""
+    print(os.path.isfile(AUTO_CONF_FILE))
+
+
 def subcommand_enable_auto(_):
     """Enable automatic upgrades"""
     try:
@@ -79,7 +88,10 @@ def subcommand_enable_auto(_):
 
 def subcommand_disable_auto(_):
     """Disable automatic upgrades"""
-    os.remove(AUTO_CONF_FILE)
+    try:
+        os.rename(AUTO_CONF_FILE, AUTO_CONF_FILE + '.disabled')
+    except FileNotFoundError:
+        print('Already disabled.')
 
 
 def setup():
