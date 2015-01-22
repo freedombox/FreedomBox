@@ -40,15 +40,18 @@
 
   <h3>Default Services</h3>
 
+  <div class="alert alert-warning" role="alert">
   <p>Exposing services makes them accessible and attackable from the evil
-  internet. Be cautious!</p>
+  internet.<p>
+  <p><b>Exposing SSH with the default password for 'fbx' is a very bad idea.</b></p>
+  </div>
 
   <form class="form predefined" method="post">
     {{ form.http|bootstrap_horizontal:'col-lg-0' }}
     {{ form.https|bootstrap_horizontal:'col-lg-0' }}
     {{ form.ssh|bootstrap_horizontal:'col-lg-0' }}
     {% csrf_token %}
-    <input type="submit" class="btn btn-primary" value="Save settings"/>
+    <input type="submit" class="btn btn-primary" value="Save Services"/>
   </form>
 
 {% endblock %}
