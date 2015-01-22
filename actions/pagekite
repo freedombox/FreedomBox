@@ -28,6 +28,7 @@ import augeas
 import os
 import subprocess
 
+from util import is_running
 from pagekite_util import SERVICE_PARAMS, convert_to_service, \
     convert_service_to_string, get_augeas_servicefile_path, CONF_PATH
 
@@ -49,16 +50,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Start/Stop/Restart PageKite service daemon
-    # it's called daemon to avoid confusing it with pagekite services
-    daemon = subparsers.add_parser('daemon',
-                                   help='start/stop/restart PageKite')
-    daemon.add_argument('action', choices=['start', 'stop', 'restart'])
-
     # Enable/disable the pagekite service
-    subparsers.add_parser('is-enabled', help='Get whether PakeKite is enabled')
-    subparsers.add_parser('enable', help='Enable PageKite service')
-    subparsers.add_parser('disable', help='Disable PageKite service')
+    subparsers.add_parser('is-running', help='Get whether PakeKite is running')
+    subparsers.add_parser('start-and-enable', help='Enable PageKite service')
+    subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
 
     # Frontend
     subparsers.add_parser('get-frontend', help='Get pagekite frontend')
@@ -88,34 +83,29 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_daemon(arguments):
-    """Start/stop/restart the pagekite daemon"""
-    _daemon(arguments.action)
-
-
-def _daemon(action):
+def _service(action):
+    """Start/stop/restart the pagekite service"""
     error = subprocess.call(['service', 'pagekite', action])
     if error:
         raise Exception('Unable to %s PageKite server' % action)
 
 
-def subcommand_is_enabled(_):
+def subcommand_is_running(_):
     """Print whether pagekite is enabled (yes or no)"""
-    is_enabled = is_pagekite_enabled()
-    print 'yes' if is_enabled else 'no'
+    print 'yes' if is_running('pagekite') else 'no'
 
 
-def is_pagekite_enabled():
-    return not bool(aug.match(PATHS['abort_not_configured']))
-
-
-def subcommand_enable(_):
-    pagekite_enable()
+def subcommand_start_and_enable(_):
+    aug.remove(PATHS['abort_not_configured'])
+    aug.save()
+    _service('start')
     print 'enabled'
 
 
-def subcommand_disable(_):
-    pagekite_disable()
+def subcommand_stop_and_disable(_):
+    _service('stop')
+    aug.set(PATHS['abort_not_configured'], '')
+    aug.save()
     print 'disabled'
 
 
@@ -149,18 +139,6 @@ def enable_pagekitenet_frontend():
     print "enabled"
 
 
-def pagekite_enable():
-    """Enable the pagekite daemon"""
-    aug.remove(PATHS['abort_not_configured'])
-    aug.save()
-
-
-def pagekite_disable():
-    """Disable the pagekite daemon"""
-    aug.set(PATHS['abort_not_configured'], '')
-    aug.save()
-
-
 def subcommand_get_services(arguments):
     """ lists all available (enabled) services """
     for match in aug.match(PATHS['service_on']):
@@ -191,7 +169,7 @@ def subcommand_remove_service(arguments):
                 file.writelines(lines)
                 # abort to only allow deleting one service
                 break
-    _daemon('restart')
+    _service('restart')
 
 
 def get_existing_service_paths(service):
@@ -218,7 +196,7 @@ def subcommand_add_service(arguments):
     with open(path, 'a') as servicefile:
         line = "\nservice_on = %s\n" % convert_service_to_string(service)
         servicefile.write(line)
-    _daemon('restart')
+    _service('restart')
 
 
 def convert_augeas_path_to_filepath(augpath, prefix='/files',
