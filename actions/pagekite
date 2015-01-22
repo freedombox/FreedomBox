@@ -49,14 +49,17 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Start/Stop PageKite
-    subparsers.add_parser('start', help='Start PageKite service')
-    subparsers.add_parser('stop', help='Stop PageKite service')
+    # Start/Stop/Restart PageKite service daemon
+    # it's called daemon to avoid confusing it with pagekite services
+    daemon = subparsers.add_parser('daemon',
+                                   help='start/stop/restart PageKite')
+    daemon.add_argument('action', choices=['start', 'stop', 'restart'])
 
-    # Get/set status
+    # Enable/disable the pagekite service
     subparsers.add_parser('is-enabled', help='Get whether PakeKite is enabled')
     subparsers.add_parser('enable', help='Enable PageKite service')
     subparsers.add_parser('disable', help='Disable PageKite service')
+
 
     # get/set using the default pagekite.net frontend
     subparsers.add_parser('get-pagekitenet-frontend-status',
@@ -81,32 +84,28 @@ def parse_arguments():
                           help='Name of the kite (eg: mybox.pagekite.me)')
     set_kite.add_argument('--kite-secret', help='Secret for the kite')
 
-    # Services
+    # Add/remove pagekite services (service_on entries)
     subparsers.add_parser('get-services', help='Get list of enabled services')
     add_service = subparsers.add_parser('add-service',
                                         help='Add a pagekite service')
-    add_service.add_argument('--service', help='":"-separated service \
-                             parameters')
+    add_service.add_argument('--service', help='":"-separated service string')
     remove_service = subparsers.add_parser('remove-service',
                                            help='Remove a pagekite service')
     remove_service.add_argument('--service', help='":"-separated service \
-                                parameters')
+                                string')
 
     return parser.parse_args()
 
 
-def subcommand_start(_):
-    """Start PageKite service"""
-    status = subprocess.call(['service', 'pagekite', 'start'])
-    if status:
-        raise Exception('Unable to start PageKite server')
+def subcommand_daemon(arguments):
+    """Start/stop/restart the pagekite daemon"""
+    _daemon(arguments.action)
 
 
-def subcommand_stop(_):
-    """Stop PageKite service"""
-    status = subprocess.call(['service', 'pagekite', 'stop'])
-    if status:
-        raise Exception('Unable to stop PageKite server')
+def _daemon(action):
+    error = subprocess.call(['service', 'pagekite', action])
+    if error:
+        raise Exception('Unable to %s PageKite server' % action)
 
 
 def subcommand_is_enabled(_):
@@ -206,6 +205,7 @@ def subcommand_remove_service(arguments):
                 file.writelines(lines)
                 # abort to only allow deleting one service
                 break
+    _daemon('restart')
 
 
 def get_existing_service_paths(service):
@@ -232,6 +232,7 @@ def subcommand_add_service(arguments):
     with open(path, 'a') as servicefile:
         line = "\nservice_on = %s\n" % convert_service_to_string(service)
         servicefile.write(line)
+    _daemon('restart')
 
 
 def convert_augeas_path_to_filepath(augpath, prefix='/files',
