@@ -78,7 +78,8 @@ def get_pagekite_config():
     status = {}
 
     # PageKite service enabled/disabled
-    output = _run(['is-enabled'])
+    # This assumes that if pagekite is running it's also enabled as a service
+    output = _run(['is-running'])
     status['enabled'] = (output.split()[0] == 'yes')
 
     # PageKite kite details
