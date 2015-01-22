@@ -16,7 +16,6 @@
 #
 
 from gettext import gettext as _
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -39,7 +38,6 @@ subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('Custom Services')}]
 
 
-@login_required
 def index(request):
     """Serve introduction page"""
     return TemplateResponse(request, 'pagekite_introduction.html',
@@ -59,7 +57,8 @@ class ContextMixin(object):
         context['subsubmenu'] = subsubmenu
         return context
 
-    @method_decorator(package.required('pagekite'))
+    @method_decorator(package.required('pagekite', 'augeas-tools',
+                                       'python-augeas'))
     def dispatch(self, *args, **kwargs):
         return super(ContextMixin, self).dispatch(*args, **kwargs)
 
