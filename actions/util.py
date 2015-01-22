@@ -23,7 +23,8 @@ Python action utility functions
 
 import subprocess
 
-def is_running(servicename):
+
+def service_is_running(servicename):
     """Evaluates whether a service is currently running. Returns boolean"""
     try:
         output = subprocess.check_output(['service', servicename, 'status'])
@@ -32,7 +33,7 @@ def is_running(servicename):
         # thus a CalledProcessError
         return False
     else:
-        running = False # default value
+        running = False  # default value
         for line in output.decode('utf-8').split('\n'):
             if 'Active' in line and 'running' in line:
                 running = True
