@@ -84,14 +84,9 @@ def get_pagekite_config():
     # PageKite kite details
     status.update(get_kite_details())
 
-    # PageKite server: 'pagekite.net' if flag 'defaults' is set,
-    # the value of 'frontend' otherwise
-    use_pagekitenet_server = _run(['get-pagekitenet-frontend-status'])
-    if "enabled" in use_pagekitenet_server:
-        value = 'pagekite.net'
-    elif "disabled" in use_pagekitenet_server:
-        value = _run(['get-frontend'])
-    status['server'] = value.replace('\n', '')
+    # PageKite frontend server
+    server = _run(['get-frontend'])
+    status['server'] = server.replace('\n', '')
 
     return status
 

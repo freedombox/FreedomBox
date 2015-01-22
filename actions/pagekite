@@ -60,15 +60,6 @@ def parse_arguments():
     subparsers.add_parser('enable', help='Enable PageKite service')
     subparsers.add_parser('disable', help='Disable PageKite service')
 
-
-    # get/set using the default pagekite.net frontend
-    subparsers.add_parser('get-pagekitenet-frontend-status',
-                          help='Get whether pagekite.net frontend is enabled')
-    subparsers.add_parser('enable-pagekitenet-frontend',
-                          help='Enable using default pagekite.net frontend')
-    subparsers.add_parser('disable-pagekitenet-frontend',
-                          help='Disable default pagekite.net frontend')
-
     # Frontend
     subparsers.add_parser('get-frontend', help='Get pagekite frontend')
     set_frontend = subparsers.add_parser('set-frontend',
@@ -130,23 +121,24 @@ def subcommand_disable(_):
 
 def subcommand_get_frontend(_):
     """Get pagekite frontend url"""
-    url = aug.get(PATHS['frontend'])
-    print url if url else ""
+    if aug.match(PATHS['defaults']):
+        print "pagekite.net"
+    else:
+        url = aug.get(PATHS['frontend'])
+        print url if url else ""
 
 
 def subcommand_set_frontend(arguments):
-    """Set pagekite frontend url and disable default pagekite.net frontend"""
-    aug.remove(PATHS['defaults'])
-    aug.set(PATHS['frontend'], arguments.url)
-    aug.save()
+    """Set pagekite frontend url, taking care of defaults and pagekite.net"""
+    if arguments.url in ('pagekite.net', 'defaults', 'default'):
+        enable_pagekitenet_frontend()
+    else:
+        aug.remove(PATHS['defaults'])
+        aug.set(PATHS['frontend'], arguments.url)
+        aug.save()
 
 
-def subcommand_get_pagekitenet_frontend_status(_):
-    match = aug.match(PATHS['defaults'])
-    print "enabled" if match else "disabled"
-
-
-def subcommand_enable_pagekitenet_frontend(_):
+def enable_pagekitenet_frontend():
     """Enable using default pageket.net frontend
 
     This disables any other frontends.
@@ -155,12 +147,6 @@ def subcommand_enable_pagekitenet_frontend(_):
     aug.remove(PATHS['frontend'])
     aug.save()
     print "enabled"
-
-
-def subcommand_disable_pagekitenet_frontend(_):
-    aug.remove(PATHS['defaults'])
-    aug.save()
-    print "disabled"
 
 
 def pagekite_enable():

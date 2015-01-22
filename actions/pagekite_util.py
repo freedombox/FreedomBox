@@ -18,13 +18,10 @@
 #
 
 """
+Utilities for configuring PageKite.
+
 The variables/functions defined here are used by both the action script
 and the plinth pagekite module.
-
-For example the functionality to convert pagekite service_on strings like
-    "http:@kitename:localhost:80:@kitestring"
-into parameter dictionaries and the other way round. And functions that we want
-to be covered by tests.
 """
 # ATTENTION: This file has to be both python2 and python3 compatible
 
@@ -37,7 +34,11 @@ SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
 
 
 def convert_to_service(service_string):
-    """ Convert a service string into a service parameter dictionary"""
+    """ Convert a service string into a service parameter dictionary
+    >>> convert_to_service('https/443:@kitename:localhost:443:@kitesecret')
+    {'kitename': '@kitename', 'backend_host': 'localhost', \
+'secret': '@kitesecret', 'protocol': 'https/443', 'backend_port': '443'}
+    """
     # The actions.py uses shlex.quote() to escape/quote malicious user input.
     # That affects '*.@kitename', so the params string gets quoted.
     # If the string is escaped and contains '*.@kitename', look whether shlex
@@ -75,7 +76,13 @@ def convert_to_service(service_string):
 
 
 def convert_service_to_string(service):
-    """ Convert service dict into a ":"-separated parameter string """
+    """ Convert service dict into a ":"-separated parameter string
+
+    >>> convert_service_to_string({'kitename': '@kitename', \
+'backend_host': 'localhost', 'secret': '@kitesecret', \
+'protocol': 'https/443', 'backend_port': '443'})
+    'https/443:@kitename:localhost:443:@kitesecret'
+    """
     try:
         service_string = ":".join([str(service[param]) for param in
                                   SERVICE_PARAMS])
