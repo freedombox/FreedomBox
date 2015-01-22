@@ -86,11 +86,7 @@ for your account if no secret is set on the kite'))
             messages.success(request, _('Kite details set'))
 
         if old['server'] != new['server']:
-            server = new['server']
-            if server in ('defaults', 'default', 'pagekite.net'):
-                _run(['enable-pagekitenet-frontend'])
-            else:
-                _run(['set-frontend', server])
+            _run(['set-frontend', new['server']])
             messages.success(request, _('Pagekite server set'))
 
         if old != new:
