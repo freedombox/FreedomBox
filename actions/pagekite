@@ -28,7 +28,7 @@ import augeas
 import os
 import subprocess
 
-from util import is_running
+import util
 from pagekite_util import SERVICE_PARAMS, convert_to_service, \
     convert_service_to_string, get_augeas_servicefile_path, CONF_PATH
 
@@ -92,7 +92,7 @@ def _service(action):
 
 def subcommand_is_running(_):
     """Print whether pagekite is enabled (yes or no)"""
-    print 'yes' if is_running('pagekite') else 'no'
+    print 'yes' if util.service_is_running('pagekite') else 'no'
 
 
 def subcommand_start_and_enable(_):

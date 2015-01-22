@@ -25,6 +25,8 @@ import argparse
 import os
 import subprocess
 
+import util
+
 SERVICE_CONFIG = '/etc/default/tor'
 TOR_CONFIG = '/etc/tor/torrc'
 
@@ -57,20 +59,7 @@ def parse_arguments():
 
 def subcommand_is_running(_):
     """Get whether Tor is running"""
-    try:
-        output = subprocess.check_output(['service', 'tor', 'status'])
-    except subprocess.CalledProcessError:
-        # If Tor is not running we get a status code != 0 and a
-        # CalledProcessError
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
+    print('yes' if util.service_is_running('tor') else 'no')
 
 
 def subcommand_start(_):
