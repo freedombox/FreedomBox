@@ -42,8 +42,7 @@ class TrimmedCharField(forms.CharField):
 class ConfigurationForm(forms.Form):
     """Configure PageKite credentials and frontend"""
 
-    enabled = forms.BooleanField(label=_('Enable PageKite'),
-                                 required=False)
+    enabled = forms.BooleanField(label=_('Enable PageKite'), required=False)
 
     server = forms.CharField(
         label=_('Server'), required=False,
@@ -69,28 +68,24 @@ for your account if no secret is set on the kite'))
         LOGGER.info('New status is - %s', new)
 
         if old != new:
-            _run(['daemon', 'stop'])
 
-        if old['enabled'] != new['enabled']:
-            if new['enabled']:
-                _run(['enable'])
-                messages.success(request, _('PageKite enabled'))
-            else:
-                _run(['disable'])
-                messages.success(request, _('PageKite disabled'))
+            if old['kite_name'] != new['kite_name'] or \
+                    old['kite_secret'] != new['kite_secret']:
+                _run(['set-kite', '--kite-name', new['kite_name'],
+                      '--kite-secret', new['kite_secret']])
+                messages.success(request, _('Kite details set'))
 
-        if old['kite_name'] != new['kite_name'] or \
-                old['kite_secret'] != new['kite_secret']:
-            _run(['set-kite', '--kite-name', new['kite_name'],
-                  '--kite-secret', new['kite_secret']])
-            messages.success(request, _('Kite details set'))
+            if old['server'] != new['server']:
+                _run(['set-frontend', new['server']])
+                messages.success(request, _('Pagekite server set'))
 
-        if old['server'] != new['server']:
-            _run(['set-frontend', new['server']])
-            messages.success(request, _('Pagekite server set'))
-
-        if old != new:
-            _run(['daemon', 'start'])
+            if old['enabled'] != new['enabled']:
+                if new['enabled']:
+                    _run(['start-and-enable'])
+                    messages.success(request, _('PageKite enabled'))
+                else:
+                    _run(['stop-and-disable'])
+                    messages.success(request, _('PageKite disabled'))
 
 
 class DefaultServiceForm(forms.Form):
