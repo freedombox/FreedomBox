@@ -69,7 +69,7 @@ for your account if no secret is set on the kite'))
         LOGGER.info('New status is - %s', new)
 
         if old != new:
-            _run(['stop'])
+            _run(['daemon', 'stop'])
 
         if old['enabled'] != new['enabled']:
             if new['enabled']:
@@ -94,7 +94,7 @@ for your account if no secret is set on the kite'))
             messages.success(request, _('Pagekite server set'))
 
         if old != new:
-            _run(['start'])
+            _run(['daemon', 'start'])
 
 
 class DefaultServiceForm(forms.Form):
@@ -167,7 +167,9 @@ class CustomServiceForm(forms.Form):
     def save(self, request):
         service = self.convert_form_data_to_service_string(self.cleaned_data)
         _run(['add-service', '--service', service])
+        messages.success(request, _('Added custom service'))
 
     def delete(self, request):
         service = self.convert_form_data_to_service_string(self.cleaned_data)
         _run(['remove-service', '--service', service])
+        messages.success(request, _('Deleted custom service'))
