@@ -19,7 +19,7 @@ import os
 import unittest
 
 from actions.pagekite_util import get_augeas_servicefile_path, CONF_PATH, \
-    construct_params, deconstruct_params
+    convert_to_service, convert_service_to_string
 
 
 class TestPagekiteActions(unittest.TestCase):
@@ -64,16 +64,17 @@ class TestPagekiteActions(unittest.TestCase):
         with self.assertRaises(ValueError):
             get_augeas_servicefile_path('xmpp')
 
-    def test_deconstruct_params(self):
+    def test_convert_service_to_string(self):
         """ Test deconstructing parameter dictionaries into strings """
         for test in self._tests:
-            self.assertEqual(test['line'], deconstruct_params(test['params']))
+            service_string = convert_service_to_string(test['params'])
+            self.assertEqual(test['line'], service_string)
 
-    def test_construct_params(self):
+    def test_convert_to_service(self):
         """ Test constructing parameter dictionaries out of string """
         for test in self._tests:
-            self.assertEqual(test['params'], construct_params(test['line']))
+            self.assertEqual(test['params'], convert_to_service(test['line']))
 
         line = "'https/80'; touch /etc/fstab':*.@kitename:localhost:80:foo'"
         with self.assertRaises(RuntimeError):
-            construct_params(line)
+            convert_to_service(line)
