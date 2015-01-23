@@ -50,7 +50,7 @@ def index(request):
 class ContextMixin(object):
     """Mixin to add 'subsubmenu' and 'title' to the context.
 
-    Also requires 'pagekite' to be installed.
+    Also adds the requirement of all necessary packages to be installed
     """
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
