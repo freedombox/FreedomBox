@@ -18,11 +18,13 @@
 from gettext import gettext as _
 import logging
 
+import copy
 from django import forms
 from django.contrib import messages
 from django.core import validators
 
 from actions.pagekite_util import convert_service_to_string
+from plinth.errors import ActionError
 from .util import PREDEFINED_SERVICES, _run, get_kite_details, KITE_NAME, \
     KITE_SECRET, BACKEND_HOST
 
@@ -52,7 +54,7 @@ class ConfigurationForm(forms.Form):
 
     kite_name = TrimmedCharField(
         label=_('Kite name'),
-        help_text=_('Example: mybox1-myacc.pagekite.me'),
+        help_text=_('Example: mybox.pagekite.me'),
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
                                       _('Invalid kite name'))])
@@ -120,22 +122,23 @@ class DefaultServiceForm(forms.Form):
                                      .format(name=service_name))
 
 
-class CustomServiceForm(forms.Form):
-    """Form to add/delete a custom service"""
+class BaseCustomServiceForm(forms.Form):
+    """Basic form functionality to handle a custom service"""
     choices = [("http", "http"), ("https", "https"), ("raw", "raw")]
     protocol = forms.ChoiceField(choices=choices, label="protocol")
     frontend_port = forms.IntegerField(min_value=0, max_value=65535,
-                                       label="external (frontend) port")
+                                       label="external (frontend) port",
+                                       required=True)
     backend_port = forms.IntegerField(min_value=0, max_value=65535,
                                       label="internal (freedombox) port")
     subdomains = forms.BooleanField(label="Enable Subdomains", required=False)
 
-    def convert_form_data_to_service_string(self, formdata):
-        """Prepare the user form input for being passed on to the action
+    def convert_formdata_to_service(self, formdata):
+        """Add information to make a service out of the form data"""
+        # convert integers to str (to compare values with DEFAULT_SERVICES)
+        for field in ('frontend_port', 'backend_port'):
+            formdata[field] = str(formdata[field])
 
-        1. add all information that a 'service' is expected to have
-        2. convert the service to a service_string
-        """
         # set kitename and kitesecret if not already set
         if 'kitename' not in formdata:
             if 'subdomains' in formdata and formdata['subdomains']:
@@ -145,22 +148,70 @@ class CustomServiceForm(forms.Form):
         if 'secret' not in formdata:
             formdata['secret'] = KITE_SECRET
 
-        # merge protocol and frontend_port to one entry (protocol)
+        # merge protocol and frontend_port back to one entry (protocol)
         if 'frontend_port' in formdata:
-            if str(formdata['frontend_port']) not in formdata['protocol']:
+            if formdata['frontend_port'] not in formdata['protocol']:
                 formdata['protocol'] = "%s/%s" % (formdata['protocol'],
                                                   formdata['frontend_port'])
         if 'backend_host' not in formdata:
             formdata['backend_host'] = BACKEND_HOST
 
-        return convert_service_to_string(formdata)
+        return formdata
 
-    def save(self, request):
-        service = self.convert_form_data_to_service_string(self.cleaned_data)
-        _run(['add-service', '--service', service])
-        messages.success(request, _('Added custom service'))
+
+class DeleteCustomServiceForm(BaseCustomServiceForm):
 
     def delete(self, request):
-        service = self.convert_form_data_to_service_string(self.cleaned_data)
-        _run(['remove-service', '--service', service])
+        service = self.convert_formdata_to_service(self.cleaned_data)
+        service_string = convert_service_to_string(service)
+        _run(['remove-service', '--service', service_string])
         messages.success(request, _('Deleted custom service'))
+
+
+class AddCustomServiceForm(BaseCustomServiceForm):
+    """Adds the save() method and validation to not add predefined services"""
+
+    def matches_predefined_service(self, formdata):
+        """Returns whether the user input matches a predefined service"""
+        service = self.convert_formdata_to_service(formdata)
+        match_found = False
+        for predefined_service_obj in PREDEFINED_SERVICES.values():
+            # manually add the port to compare predefined with custom services
+            # that's due to the (sometimes) implicit port in the configuration
+            predefined_service = copy.copy(predefined_service_obj['params'])
+            if predefined_service['protocol'] == 'http':
+                predefined_service['protocol'] = 'http/80'
+            elif predefined_service['protocol'] == 'https':
+                predefined_service['protocol'] = 'https/443'
+
+            # The formdata service has additional keys, so we can't compare
+            # the dicts directly.
+            # instead look whether predefined_service is a subset of service
+            if all(service[k] == v for k, v in predefined_service.items()):
+                match_found = True
+                break
+        return match_found
+
+    def clean(self):
+        cleaned_data = super(AddCustomServiceForm, self).clean()
+        try:
+            is_predefined = self.matches_predefined_service(cleaned_data)
+        except KeyError:
+            is_predefined = False
+        if is_predefined:
+            msg = _("""This service is available as a default service. Please
+                    use the 'Default Services' page to enable it.""")
+            raise forms.ValidationError(msg)
+        return cleaned_data
+
+    def save(self, request):
+        service = self.convert_formdata_to_service(self.cleaned_data)
+        service_string = convert_service_to_string(service)
+        try:
+            _run(['add-service', '--service', service_string])
+            messages.success(request, _('Added custom service'))
+        except ActionError as exception:
+            if "already exists" in str(exception):
+                messages.error(request, _('This service already exists'))
+            else:
+                raise
