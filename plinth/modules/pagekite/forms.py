@@ -23,10 +23,9 @@ from django import forms
 from django.contrib import messages
 from django.core import validators
 
-from actions.pagekite_util import convert_service_to_string
 from plinth.errors import ActionError
-from .util import PREDEFINED_SERVICES, _run, get_kite_details, KITE_NAME, \
-    KITE_SECRET, BACKEND_HOST
+from .util import _run, convert_service_to_string, get_kite_details, \
+    BACKEND_HOST, KITE_NAME, KITE_SECRET, PREDEFINED_SERVICES
 
 LOGGER = logging.getLogger(__name__)
 

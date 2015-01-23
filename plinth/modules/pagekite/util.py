@@ -17,17 +17,20 @@
 
 from gettext import gettext as _
 import logging
+import shlex
 
-from actions.pagekite_util import convert_to_service
 from plinth import actions
 
 LOGGER = logging.getLogger(__name__)
 
 # defaults for the credentials; @kitename acts as a placeholder and is
 # understood (and replaced with the actual kitename) by pagekite.
+BACKEND_HOST = 'localhost'
 KITE_NAME = '@kitename'
 KITE_SECRET = '@kitesecret'
-BACKEND_HOST = 'localhost'
+
+SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
+                  'secret']
 
 # Predefined services are used to build the PredefinedServiceForm
 #
@@ -66,6 +69,57 @@ PREDEFINED_SERVICES = {
                        "instructions</a>")
     },
 }
+
+
+def convert_to_service(service_string):
+    """ Convert a service string into a service parameter dictionary
+    >>> convert_to_service('https/443:@kitename:localhost:443:@kitesecret')
+    {'kitename': '@kitename', 'backend_host': 'localhost', \
+'secret': '@kitesecret', 'protocol': 'https/443', 'backend_port': '443'}
+    """
+    # The actions.py uses shlex.quote() to escape/quote malicious user input.
+    # That affects '*.@kitename', so the params string gets quoted.
+    # If the string is escaped and contains '*.@kitename', look whether shlex
+    # would still quote/escape the string when we remove '*.@kitename'.
+
+    if service_string.startswith("'") and service_string.endswith("'"):
+        unquoted_string = service_string[1:-1]
+        error_msg = "The parameters contain suspicious characters: %s "
+        if '*.@kitename' in service_string:
+            unquoted_test_string = unquoted_string.replace('*.@kitename', '')
+            if unquoted_test_string == shlex.quote(unquoted_test_string):
+                # no other malicious characters found, use the unquoted string
+                service_string = unquoted_string
+            else:
+                raise RuntimeError(error_msg % service_string)
+        else:
+            raise RuntimeError(error_msg % service_string)
+
+    try:
+        params = dict(zip(SERVICE_PARAMS, service_string.split(':')))
+    except Exception:
+        msg = """params are expected to be a ':'-separated string containing
+              values for: %s , for example:\n"--params
+              http/8000:@kitename:localhost:8000:@kitesecret"
+              """
+        raise ValueError(msg % ", ".join(SERVICE_PARAMS))
+    return params
+
+
+def convert_service_to_string(service):
+    """ Convert service dict into a ":"-separated parameter string
+
+    >>> convert_service_to_string({'kitename': '@kitename', \
+'backend_host': 'localhost', 'secret': '@kitesecret', \
+'protocol': 'https/443', 'backend_port': '443'})
+    'https/443:@kitename:localhost:443:@kitesecret'
+    """
+    try:
+        service_string = ":".join([str(service[param]) for param in
+                                  SERVICE_PARAMS])
+    except KeyError:
+        raise ValueError("Could not parse params: %s " % service)
+    return service_string
 
 
 def get_kite_details():

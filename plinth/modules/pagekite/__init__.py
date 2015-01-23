@@ -21,9 +21,8 @@ Plinth module to configure PageKite
 
 from gettext import gettext as _
 from plinth import cfg
-from . import pagekite
 
-__all__ = ['pagekite', 'init']
+__all__ = ['init']
 
 depends = ['plinth.modules.apps']
 

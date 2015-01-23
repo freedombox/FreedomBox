@@ -30,6 +30,7 @@ from .forms import ConfigurationForm, DefaultServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm
 
 
+required_packages = ('pagekite', 'augeas-tools', 'python-augeas')
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
               {'url': reverse_lazy('pagekite:configure'),
@@ -50,7 +51,7 @@ def index(request):
 class ContextMixin(object):
     """Mixin to add 'subsubmenu' and 'title' to the context.
 
-    Also requires 'pagekite' to be installed.
+    Also adds the requirement of all necessary packages to be installed
     """
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
@@ -59,8 +60,7 @@ class ContextMixin(object):
         context['subsubmenu'] = subsubmenu
         return context
 
-    @method_decorator(package.required('pagekite', 'augeas-tools',
-                                       'python-augeas'))
+    @method_decorator(package.required(required_packages))
     def dispatch(self, *args, **kwargs):
         return super(ContextMixin, self).dispatch(*args, **kwargs)
 
