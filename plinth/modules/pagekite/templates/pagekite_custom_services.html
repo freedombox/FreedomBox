@@ -24,32 +24,43 @@
 
 {% block page_head %}
   <style type="text/css">
-    div.checkbox .help-block {
-      display: inline-block;
-      margin: 0px 10px;
-    }
     div.custom-services span.service {
       display: inline-block;
       padding-top: 6px;
     }
-    input.btn {
-      margin: 10px 15px;
+    form.pull-right button {
+      margin: 10px 5px;
+    }
+    .add-service input.btn {
+      margin: 10px 0px;
     }
   </style>
 {% endblock %}
 
 {% block content %}
 
-  <h3>Custom Services</h3>
   <div class="alert alert-warning" role="alert">
-    Warning: Your PageKite frontend server may not support all the
+    <b>Warning:</b><br>Your PageKite frontend server may not support all the
     protocol/port combinations that you are able to define here. For example,
     HTTPS on ports other than 443 is known to cause problems.
   </div>
 
   <div class="row custom-services">
 
-    <div class="col-lg-5">
+    <div class="col-lg-6">
+      <form class="form add-service" method="post">
+        <h4>Create a custom service</h4>
+        {{ form|bootstrap_horizontal:'col-lg-6' }}
+        {% csrf_token %}
+        <div class="form-group">
+          <div class=" col-lg-offset-6 col-lg-6">
+            <input type="submit" class="btn btn-primary" value="Add Service"/>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-lg-5 col-lg-offset-1">
       <h4>Existing custom services</h4>
       {% if not custom_services %}
         <i>You don't have any Custom Services enabled</i>
@@ -65,13 +76,15 @@
                 {% else %}
                   {{ service_url }}
                 {% endif %}
+                <br>
+                connected to {{ service.backend_host }}:{{ service.backend_port }}
               </span>
             </span>
             <form class="form pull-right" method="post"
                   action="{% url 'pagekite:delete-custom-service' %}">
               <div style='display:none'>
                 {% csrf_token %}
-                {{ service.form }}
+                {{ service.form.as_p }}
               </div>
               <button type="submit" class="btn btn-default"
                       title="Delete this service">
@@ -82,15 +95,6 @@
           </div>
         {% endfor %}
       </div>
-    </div>
-
-    <div class="col-lg-6 col-lg-offset-1">
-      <form class="form" method="post">
-        <h4>Create a custom service</h4>
-        {{ form|bootstrap_horizontal:'col-lg-6' }}
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary pull-right" value="Add Service"/>
-      </form>
     </div>
 
   </div>

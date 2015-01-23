@@ -26,7 +26,9 @@ from django.views.generic.edit import FormView
 from plinth import package
 from .util import get_pagekite_config, get_pagekite_services, \
     get_kite_details, prepare_service_for_display
-from .forms import ConfigurationForm, DefaultServiceForm, CustomServiceForm
+from .forms import ConfigurationForm, DefaultServiceForm, \
+    AddCustomServiceForm, DeleteCustomServiceForm
+
 
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
@@ -65,7 +67,7 @@ class ContextMixin(object):
 
 class DeleteServiceView(ContextMixin, View):
     def post(self, request):
-        form = CustomServiceForm(request.POST)
+        form = DeleteCustomServiceForm(request.POST)
         if form.is_valid():
             form.delete(request)
         return HttpResponseRedirect(reverse('pagekite:custom-services'))
@@ -79,7 +81,7 @@ class CustomServiceView(ContextMixin, TemplateView):
                                                                   **kwargs)
         unused, custom_services = get_pagekite_services()
         for service in custom_services:
-            service['form'] = CustomServiceForm(initial=service)
+            service['form'] = AddCustomServiceForm(initial=service)
         context['custom_services'] = [prepare_service_for_display(service)
                                       for service in custom_services]
         context.update(get_kite_details())
@@ -87,15 +89,15 @@ class CustomServiceView(ContextMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        form = CustomServiceForm(prefix="custom")
+        form = AddCustomServiceForm(prefix="custom")
         context['form'] = form
         return self.render_to_response(context)
 
     def post(self, request):
-        form = CustomServiceForm(request.POST, prefix="custom")
+        form = AddCustomServiceForm(request.POST, prefix="custom")
         if form.is_valid():
             form.save(request)
-            form = CustomServiceForm(prefix="custom")
+            form = AddCustomServiceForm(prefix="custom")
 
         context = self.get_context_data()
         context['form'] = form

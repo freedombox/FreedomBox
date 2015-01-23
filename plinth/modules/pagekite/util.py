@@ -28,7 +28,11 @@ LOGGER = logging.getLogger(__name__)
 KITE_NAME = '@kitename'
 KITE_SECRET = '@kitesecret'
 BACKEND_HOST = 'localhost'
-# predefined services show up in the PredefinedServiceForm as checkbox
+
+# Predefined services are used to build the PredefinedServiceForm
+#
+# ATTENTION: When changing the params, make sure that the AddCustomServiceForm
+# still recognizes when you try to add a service equal to a predefined one
 PREDEFINED_SERVICES = {
     'http': {
         'params': {'protocol': 'http',
