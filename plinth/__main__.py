@@ -222,6 +222,9 @@ def configure_django():
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
         ),
+        MESSAGE_TAGS = {
+            messages_constants.ERROR: 'danger'
+        },
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
         SESSION_ENGINE='django.contrib.sessions.backends.file',

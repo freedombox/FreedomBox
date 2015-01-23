@@ -98,7 +98,8 @@ def subcommand_is_running(_):
 def subcommand_start_and_enable(_):
     aug.remove(PATHS['abort_not_configured'])
     aug.save()
-    _service('start')
+    # 'start' alone sometimes fails, even if the service is not running
+    _service('restart')
     print 'enabled'
 
 
