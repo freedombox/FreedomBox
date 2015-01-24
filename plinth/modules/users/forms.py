@@ -88,6 +88,14 @@ class UserUpdateForm(forms.ModelForm):
                     self.request,
                     _('Setting active status for POSIX system user failed.'))
 
+            try:
+                if self.username != user.get_username():
+                    actions.superuser_run('rename-user',
+                                          [self.username, user.get_username()])
+            except ActionError:
+                messages.error(self.request,
+                               _('Renaming POSIX system user failed.'))
+
         return user
 
 
