@@ -18,6 +18,7 @@
 
 import argparse
 import django.conf
+from django.contrib.messages import constants as message_constants
 import django.core.management
 import django.core.wsgi
 import importlib
@@ -201,6 +202,7 @@ def configure_django():
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='apps:index',
         LOGOUT_URL='users:logout',
+        MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.common.CommonMiddleware',
