@@ -20,7 +20,14 @@
 
 username="$1"
 
+getent passwd "$username"
+if [ $? -ne 0 ]; then
+    echo "Failed: user not found"
+    exit
+fi
+
 usermod --expiredate "" "$username"
 if [ $? -ne 0 ]; then
     echo "Failed"
+    exit 2
 fi

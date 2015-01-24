@@ -21,6 +21,7 @@ from django.core import validators
 from gettext import gettext as _
 
 from plinth import actions
+from plinth.errors import ActionError
 from plinth.modules.config import config
 
 
@@ -62,9 +63,13 @@ than 63 characters in length.'),
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
-            actions.superuser_run(
-                'create-user',
-                [user.username, self.cleaned_data['password']])
+            try:
+                actions.superuser_run(
+                    'create-user',
+                    [user.get_username(), self.cleaned_data['password']])
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating POSIX system user failed.'))
             self.login_user()
 
         return user

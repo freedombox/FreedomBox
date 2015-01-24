@@ -19,12 +19,9 @@
 Plinth module to manage users
 """
 
-from django.db.models.signals import post_delete
-from django.contrib.auth.models import User
 from gettext import gettext as _
 
 from plinth import cfg
-from plinth import actions
 
 __all__ = ['init']
 
@@ -36,14 +33,3 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
                      15)
-
-    post_delete.connect(delete_posix_user)
-
-
-def delete_posix_user(sender, instance=None, **kwargs):
-    try:
-        instance
-    except User.DoesNotExist:
-        pass
-    else:
-        actions.superuser_run('delete-user', [instance.username])

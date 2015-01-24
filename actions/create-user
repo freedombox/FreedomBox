@@ -22,17 +22,17 @@ password="$2"
 adduser --disabled-password --gecos "" "$username"
 if [ $? -ne 0 ]; then
     echo "Failed to create user"
-    exit
+    exit 1
 fi
 
 adduser "$username" sudo
 if [ $? -ne 0 ]; then
     echo "Failed to add user to sudo group"
-    exit
+    exit 2
 fi
 
 echo "$username:$password" | chpasswd
 if [ $? -ne 0 ]; then
     echo "Failed to set user password"
-    exit
+    exit 3
 fi

@@ -25,8 +25,9 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
 from django.views.generic import ListView
 from gettext import gettext as _
 
-from .forms import CreateUserForm, UserUpdateForm, UserChangePasswordForm
+from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm
 from plinth import actions
+from plinth.errors import ActionError
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
@@ -54,6 +55,12 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('users:create')
     title = _('Create User')
 
+    def get_form_kwargs(self):
+        """Make the request object available to the form."""
+        kwargs = super(UserCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 class UserList(ContextMixin, ListView):
     """View to list users."""
@@ -71,7 +78,15 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     success_message = _('User %(username)s updated.')
     title = _('Edit User')
 
+    def get_form_kwargs(self):
+        """Make the requst object available to the form."""
+        kwargs = super(UserUpdate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        kwargs['username'] = self.object.username
+        return kwargs
+
     def get_context_data(self, **kwargs):
+        """Return the data to be used for rendering templates."""
         context = super(UserUpdate, self).get_context_data(**kwargs)
         output = actions.run('check-user-exists', [self.object.username])
         context['is_posix_user'] = 'User exists' in output
@@ -107,9 +122,17 @@ class UserDelete(ContextMixin, DeleteView):
         The SuccessMessageMixin doesn't work with the DeleteView on Django1.7,
         so set the success message manually here.
         """
-        message = _('User %s deleted.') % self.kwargs['slug']
         output = super(UserDelete, self).delete(*args, **kwargs)
+
+        message = _('User %s deleted.') % self.kwargs['slug']
         messages.success(self.request, message)
+
+        try:
+            actions.superuser_run('delete-user', [self.kwargs['slug']])
+        except ActionError:
+            messages.error(self.request,
+                           _('Deleting POSIX system user failed.'))
+
         return output
 
 
@@ -121,8 +144,9 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     success_message = _('Password changed successfully.')
 
     def get_form_kwargs(self):
-        """Make the user object available to the form"""
+        """Make the user object available to the form."""
         kwargs = super(UserChangePassword, self).get_form_kwargs()
+        kwargs['request'] = self.request
         kwargs['user'] = User.objects.get(username=self.kwargs['slug'])
         return kwargs
 
@@ -134,9 +158,17 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return context
 
     def get_success_url(self):
+        """Return the URL to go to on successful sumbission."""
         return reverse('users:edit', kwargs={'slug': self.kwargs['slug']})
 
     def form_valid(self, form):
+        """Save the form if the submission is valid.
+
+        Django user session authentication hashes are based on password to have
+        the ability to logout all sessions on password change.  Update the
+        session authentications to ensure that the current sessions is not
+        logged out.
+        """
         form.save()
         update_session_auth_hash(self.request, form.user)
         return super(UserChangePassword, self).form_valid(form)
