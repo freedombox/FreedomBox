@@ -48,8 +48,11 @@ than 63 characters in length.'),
             'password': forms.PasswordInput,
         }
         help_texts = {
-            'username': _('Choose a username and password to access this web\
- interface. The password can be changed and other users can be added later.'),
+            'username':
+            _('Choose a username and password to access this web interface. '
+              'The password can be changed and other users can be added '
+              'later. A POSIX system user with administrative privileges '
+              '(sudo) is also created.'),
         }
 
     def save(self, commit=True):

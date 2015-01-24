@@ -94,6 +94,13 @@ class UserDelete(ContextMixin, DeleteView):
     success_url = reverse_lazy('users:index')
     title = _('Delete User')
 
+    def get_context_data(self, **kwargs):
+        """Return the data to be used for rendering templates."""
+        context = super(UserDelete, self).get_context_data(**kwargs)
+        output = actions.run('check-user-exists', [self.kwargs['slug']])
+        context['is_posix_user'] = 'User exists' in output
+        return context
+
     def delete(self, *args, **kwargs):
         """Set the success message of deleting the user.
 
@@ -118,6 +125,13 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         kwargs = super(UserChangePassword, self).get_form_kwargs()
         kwargs['user'] = User.objects.get(username=self.kwargs['slug'])
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        """Return the data to be used for rendering templates."""
+        context = super(UserChangePassword, self).get_context_data(**kwargs)
+        output = actions.run('check-user-exists', [self.kwargs['slug']])
+        context['is_posix_user'] = 'User exists' in output
+        return context
 
     def get_success_url(self):
         return reverse('users:edit', kwargs={'slug': self.kwargs['slug']})

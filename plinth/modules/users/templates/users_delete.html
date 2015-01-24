@@ -24,6 +24,12 @@
 
   <h3>Delete User <em>{{ object.username }}</em></h3>
 
+  {% if is_posix_user %}
+  <p>This user is also a POSIX system user.  POSIX system user will also be
+     deleted.
+  </p>
+  {% endif %}
+
   <p>Delete user permanently?</p>
 
   <form class="form" method="post">
