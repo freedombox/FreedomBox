@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-userdel "$username"
+deluser "$username"
 if [ $? -eq 0 ]; then
     echo "Success: user deleted"
 else
