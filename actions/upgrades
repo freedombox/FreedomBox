@@ -23,6 +23,7 @@ Configures or runs unattended-upgrades
 
 import argparse
 import os
+import re
 import subprocess
 
 CONF_FILE = '/etc/apt/apt.conf.d/50unattended-upgrades'
@@ -100,13 +101,13 @@ def setup():
         lines = conffile.readlines()
 
     for line in lines:
-        if '"origin=Debian";' in line:
+        if re.match(r'\s*"o(rigin)?=Debian";', line):
             return  # already configured
 
     with open(CONF_FILE, 'w') as conffile:
         for line in lines:
             conffile.write(line)
-            if 'Unattended-Upgrade::Origins-Pattern {' in line:
+            if re.match(r'\s*Unattended-Upgrade::Origins-Pattern', line):
                 conffile.write('        "origin=Debian";\n')
 
 
