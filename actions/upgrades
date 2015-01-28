@@ -107,7 +107,7 @@ def setup():
     with open(CONF_FILE, 'w') as conffile:
         for line in lines:
             conffile.write(line)
-            if re.match(r'\s*Unattended-Upgrade::Origins-Pattern', line):
+            if re.match(r'\s*Unattended-Upgrade::Origins-Pattern\s+{', line):
                 conffile.write('        "origin=Debian";\n')
 
 
