@@ -71,7 +71,10 @@ def subcommand_run(_):
 
 def subcommand_check_auto(_):
     """Check if automatic upgrades are enabled"""
-    print(os.path.isfile(AUTO_CONF_FILE))
+    arguments = ['apt-config', 'shell', 'UpdateInterval',
+                 'APT::Periodic::Update-Package-Lists']
+    output = subprocess.check_output(arguments).decode()
+    print(bool(output and "1" in output))
 
 
 def subcommand_enable_auto(_):
