@@ -23,13 +23,40 @@
 <h2>{{title}}</h2>
 
 {% if upgrades_error %}
-  <p>There was an error while upgrading:<p>
+  <div class="alert alert-danger" role="alert">
+    There was an error while upgrading:
+  </div>
   <pre>{{ upgrades_error }}</pre>
 {% endif %}
 
 {% if upgrades_output %}
-  <p>Output from unattended-upgrades:</p>
-  <pre>{{ upgrades_output }}</pre>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="alert alert-success" role="alert">
+        The operating system is up to date now. &nbsp;
+          <button type="button" class="btn btn-default show-details" style='display:none'>
+            Show Details
+            <div class="caret"></div>
+          </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details">
+    <h5>Output from unattended-upgrades:</h5>
+    <pre>{{ upgrades_output }}</pre>
+  </div>
+
 {% endif %}
 
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('.show-details').show();
+    $('.details').hide();
+    $('.show-details').click(function() {
+      $('.details').toggle("slow");
+    });
+  </script>
 {% endblock %}
