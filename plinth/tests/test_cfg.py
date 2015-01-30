@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 import configparser
 import os
@@ -45,35 +45,33 @@ class CfgTestCase(unittest.TestCase):
             cls.config_file = cfg.DEFAULT_CONFIG_FILE
             cls.directory = cfg.DEFAULT_ROOT
         else:
-            cls.directory = os.path.realpath(".")
+            cls.directory = os.path.realpath('.')
             cls.config_file = os.path.join(cls.directory,
                                            CONFIG_FILENAME)
             if not(os.path.isfile(cls.config_file)):
                 raise FileNotFoundError('File {} could not be found.',
                                         format(CONFIG_FILENAME))
 
-    #Tests
-
+    # Tests
     def test_read_main_menu(self):
         """Verify that the cfg.main_menu container is initially empty."""
-        # menu should be empty before...
-        self.assertTrue(len(cfg.main_menu.items) == 0)
+        # Menu should be empty before...
+        self.assertEqual(len(cfg.main_menu.items), 0)
         cfg.read()
         # ...and after reading the config file
-        self.assertTrue(len(cfg.main_menu.items) == 0)
+        self.assertEqual(len(cfg.main_menu.items), 0)
 
     def test_read_official_config_file(self):
         """Verify that the plinth.config file can be read correctly."""
+        # Read the plinth.config file directly
+        parser = self.read_config_file(self.config_file)
 
-        # read the plinth.config file directly
-        parser = self.read_config_file(CfgTestCase.config_file)
-
-        # read the plinth.config file via the cfg module
+        # Read the plinth.config file via the cfg module
         cfg.read()
 
-        # compare the two sets of configuration values
+        # Compare the two sets of configuration values.
         # Note that the count of items within each section includes the number
-        # of default items (1, for 'root')
+        # of default items (1, for 'root').
         self.assertEqual(3, len(parser.items('Name')))
         self.assertEqual(parser.get('Name', 'product_name'), cfg.product_name)
         self.assertEqual(parser.get('Name', 'box_name'), cfg.box_name)
@@ -127,7 +125,7 @@ class CfgTestCase(unittest.TestCase):
     def read_config_file(self, file):
         """Read the configuration file independently from cfg.py."""
         parser = configparser.ConfigParser(
-            defaults={'root': CfgTestCase.directory})
+            defaults={'root': self.directory})
         parser.read(file)
         return parser
 
@@ -141,8 +139,8 @@ class CfgTestCase(unittest.TestCase):
 
     def rename_official_config_file(self):
         """Rename the official config file so that it can't be read."""
-        shutil.move(CfgTestCase.config_file,
-                    os.path.join(CfgTestCase.directory, SAVED_CONFIG_FILE))
+        shutil.move(self.config_file,
+                    os.path.join(self.directory, SAVED_CONFIG_FILE))
 
     def replace_official_config_file(self, test_file):
         """Replace plinth.config with the specified test config file."""
@@ -150,14 +148,14 @@ class CfgTestCase(unittest.TestCase):
         test_data_directory = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), 'data')
         shutil.copy2(os.path.join(test_data_directory, test_file),
-                     CfgTestCase.config_file)
+                     self.config_file)
 
     def restore_official_config_file(self):
         """Restore the official plinth.config file."""
-        if os.path.isfile(CfgTestCase.config_file):
-            os.remove(CfgTestCase.config_file)
-        shutil.move(os.path.join(CfgTestCase.directory, SAVED_CONFIG_FILE),
-                    CfgTestCase.config_file)
+        if os.path.isfile(self.config_file):
+            os.remove(self.config_file)
+        shutil.move(os.path.join(self.directory, SAVED_CONFIG_FILE),
+                    self.config_file)
 
 
 if __name__ == '__main__':

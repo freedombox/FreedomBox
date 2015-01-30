@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 from django.http import HttpRequest
 import unittest
@@ -43,6 +43,21 @@ class ContextProcessorsTestCase(unittest.TestCase):
         urls = response['active_menu_urls']
         self.assertIsNotNone(urls)
         self.assertEqual(['/', '/aaa/', '/aaa/bbb/', '/aaa/bbb/ccc/'], urls)
+
+    def test_common_border_conditions(self):
+        """Verify that the 'common' functions works for border conditions."""
+        request = HttpRequest()
+        request.path = ''
+        response = cp.common(request)
+        self.assertEqual([], response['active_menu_urls'])
+
+        request.path = '/'
+        response = cp.common(request)
+        self.assertEqual(['/'], response['active_menu_urls'])
+
+        request.path = '/aaa/bbb'
+        response = cp.common(request)
+        self.assertEqual(['/', '/aaa/'], response['active_menu_urls'])
 
 
 if __name__ == '__main__':

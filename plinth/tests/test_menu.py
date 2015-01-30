@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 from django.http import HttpRequest
 import random
@@ -80,8 +80,9 @@ class MenuTestCase(unittest.TestCase):
 
         # Verify that the order of every item is equal to or greater
         # than the order of the item preceding it
-        for i in range(1, 5):
-            self.assertTrue(menu.items[i].order >= menu.items[i-1].order)
+        for index in range(1, 5):
+            self.assertGreaterEqual(menu.items[index].order,
+                                    menu.items[index - 1].order)
 
     @unittest.skip('requires configuring Django beforehand')
     def test_add_urlname(self):
@@ -108,15 +109,25 @@ class MenuTestCase(unittest.TestCase):
         """Verify that an active menu item can be correctly retrieved."""
         menu = self.build_menu()
 
-        for i in range(1, 8):
+        for index in range(1, 8):
             request = HttpRequest()
-            request.path = URL_TEMPLATE.format(i, i, i)
+            request.path = URL_TEMPLATE.format(index, index, index)
             item = menu.active_item(request)
-            if i <= 5:
-                self.assertEqual('Item' + str(i), item.label)
+            if index <= 5:
+                self.assertEqual('Item' + str(index), item.label)
                 self.assertEqual(request.path, item.url)
             else:
                 self.assertIsNone(item)
+
+    def test_active_item_when_inside_subpath(self):
+        """Verify that the current URL could be a sub-path of menu item."""
+        menu = self.build_menu()
+        expected_url = URL_TEMPLATE.format(1, 1, 1)
+        request = HttpRequest()
+        request.path = expected_url + 'd/e/f/'
+        item = menu.active_item(request)
+        self.assertEqual('Item1', item.label)
+        self.assertEqual(expected_url, item.url)
 
     # Helper methods
 
@@ -124,11 +135,11 @@ class MenuTestCase(unittest.TestCase):
         """Build a menu with the specified number of items."""
         random.seed()
         item_data = []
-        for i in range(1, size+1):
-            item_data.append(['Item' + str(i),
-                              'Icon' + str(i),
-                              URL_TEMPLATE.format(i, i, i),
-                              random.randint(0, 100)])
+        for index in range(1, size + 1):
+            item_data.append(['Item' + str(index),
+                              'Icon' + str(index),
+                              URL_TEMPLATE.format(index, index, index),
+                              random.randint(0, 1000)])
         menu = Menu()
         for data in item_data:
             menu.add_item(data[0], data[1], data[2], data[3])
