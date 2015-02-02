@@ -20,7 +20,7 @@ from gettext import gettext as _
 from django.http import Http404
 from django.template.response import TemplateResponse
 
-from plinth import cfg
+from plinth import cfg, __version__
 
 
 def init():
@@ -46,8 +46,11 @@ def index(request):
 
 def about(request):
     """Serve the about page"""
-    title = _('About the {box_name}').format(box_name=cfg.box_name)
-    return TemplateResponse(request, 'help_about.html', {'title': title})
+    context = {
+        'title': _('About the {box_name}').format(box_name=cfg.box_name),
+        'version': __version__
+    }
+    return TemplateResponse(request, 'help_about.html', context)
 
 
 def helppage(request, page):
