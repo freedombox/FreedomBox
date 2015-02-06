@@ -81,6 +81,7 @@ and must not be greater than 63 characters in length.'),
         help_text=_('Your domain name is the global name by which other \
 machines on the Internet can reach you. It must consist of alphanumeric words \
 separated by dots.'),
+        required=False,
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
                                       _('Invalid domain name'))])
