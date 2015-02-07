@@ -38,8 +38,8 @@ def get_modules_enabled():
     return output.split()
 
 
-class PackagesForm(forms.Form):
-    """Packages form"""
+class CustomizeForm(forms.Form):
+    """Customize form"""
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1002, E1101
         super(forms.Form, self).__init__(*args, **kwargs)
@@ -47,15 +47,15 @@ class PackagesForm(forms.Form):
         modules_available = get_modules_available()
 
         for module in modules_available:
-            label = _('Enable {module}').format(module=module)
+            label = _('Show {module}').format(module=module)
             self.fields[module + '_enabled'] = forms.BooleanField(
                 label=label, required=False)
 
 
 def init():
-    """Initialize the Packages module"""
+    """Initialize the Customize module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname('Package Manager', 'glyphicon-gift', 'packages:index', 20)
+    menu.add_urlname('Customize', 'glyphicon-gift', 'customize:index', 20)
 
 
 @login_required
@@ -66,17 +66,17 @@ def index(request):
     form = None
 
     if request.method == 'POST':
-        form = PackagesForm(request.POST, prefix='packages')
+        form = CustomizeForm(request.POST, prefix='customize')
         # pylint: disable-msg=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
-            form = PackagesForm(initial=status, prefix='packages')
+            form = CustomizeForm(initial=status, prefix='customize')
     else:
-        form = PackagesForm(initial=status, prefix='packages')
+        form = CustomizeForm(initial=status, prefix='customize')
 
-    return TemplateResponse(request, 'packages.html',
-                            {'title': _('Manage Plugins'),
+    return TemplateResponse(request, 'customize.html',
+                            {'title': _('Customize Plinth'),
                              'form': form})
 
 
