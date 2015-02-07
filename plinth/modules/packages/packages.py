@@ -76,7 +76,7 @@ def index(request):
         form = PackagesForm(initial=status, prefix='packages')
 
     return TemplateResponse(request, 'packages.html',
-                            {'title': _('Add/Remove Plugins'),
+                            {'title': _('Manage Plugins'),
                              'form': form})
 
 

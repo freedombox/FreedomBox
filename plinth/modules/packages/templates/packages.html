@@ -24,14 +24,6 @@
 
   <h2>{{ title }}</h2>
 
-  <p><code>aptitude purge modules</code></p>
-
-  <p><code>aptitude install modules</code></p>
-
-  <p>The modules should depend on the appropriate Debian packages.</p>
-
-  <h2>Manage Plugins</h2>
-
   <form class="form" method="post">
     {% csrf_token %}
 
@@ -54,9 +46,6 @@
 
     <p>On this page, you can add or remove {{ cfg.product_name }}
       plugins to your {{ cfg.box_name }}.</p>
-
-    <p>Plugins are just Debian packages, so Debian's usual package
-      management features should make this job fairly easy.</p>
 
   </div>
 
