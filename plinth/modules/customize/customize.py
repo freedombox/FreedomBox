@@ -20,7 +20,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
-import os
 
 from plinth import actions
 from plinth import cfg
@@ -34,14 +33,13 @@ def get_modules_available():
 
 def get_modules_enabled():
     """Return list of all modules"""
-    root = os.path.join(os.path.dirname(__file__), '..', '..')
     output = actions.run('module-manager',
-                         ['list-enabled', root])
+                         ['list-enabled', cfg.config_dir])
     return output.split()
 
 
-class PackagesForm(forms.Form):
-    """Packages form"""
+class CustomizeForm(forms.Form):
+    """Customize form"""
     def __init__(self, *args, **kwargs):
         # pylint: disable-msg=E1002, E1101
         super(forms.Form, self).__init__(*args, **kwargs)
@@ -49,15 +47,15 @@ class PackagesForm(forms.Form):
         modules_available = get_modules_available()
 
         for module in modules_available:
-            label = _('Enable {module}').format(module=module)
+            label = _('Show {module}').format(module=module)
             self.fields[module + '_enabled'] = forms.BooleanField(
                 label=label, required=False)
 
 
 def init():
-    """Initialize the Packages module"""
+    """Initialize the Customize module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname('Package Manager', 'glyphicon-gift', 'packages:index', 20)
+    menu.add_urlname('Customize', 'glyphicon-gift', 'customize:index', 20)
 
 
 @login_required
@@ -68,17 +66,17 @@ def index(request):
     form = None
 
     if request.method == 'POST':
-        form = PackagesForm(request.POST, prefix='packages')
+        form = CustomizeForm(request.POST, prefix='customize')
         # pylint: disable-msg=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
-            form = PackagesForm(initial=status, prefix='packages')
+            form = CustomizeForm(initial=status, prefix='customize')
     else:
-        form = PackagesForm(initial=status, prefix='packages')
+        form = CustomizeForm(initial=status, prefix='customize')
 
-    return TemplateResponse(request, 'packages.html',
-                            {'title': _('Add/Remove Plugins'),
+    return TemplateResponse(request, 'customize.html',
+                            {'title': _('Customize Plinth'),
                              'form': form})
 
 
@@ -93,7 +91,6 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply form changes"""
-    root = os.path.join(os.path.dirname(__file__), '..', '..')
     for field, enabled in new_status.items():
         if not field.endswith('_enabled'):
             continue
@@ -105,7 +102,7 @@ def _apply_changes(request, old_status, new_status):
         if enabled:
             try:
                 actions.superuser_run('module-manager',
-                                      ['enable', root, module])
+                                      ['enable', cfg.config_dir, module])
             except Exception:
                 # TODO: need to get plinth to load the module we just
                 # enabled
@@ -119,7 +116,7 @@ def _apply_changes(request, old_status, new_status):
         else:
             try:
                 actions.superuser_run('module-manager',
-                                      ['disable', root, module])
+                                      ['disable', cfg.config_dir, module])
             except Exception:
                 # TODO: need a smoother way for plinth to unload the
                 # module

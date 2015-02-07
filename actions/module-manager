@@ -18,41 +18,38 @@
 
 # Usage:
 #   module-manager list-available
-#   module-manager list-enabled <python_root>
-#   module-manager enable <python_root> <module_name>
-#   module-manager disable <python_root> <module_name>
+#   module-manager list-enabled <config_dir>
+#   module-manager enable <config_dir> <module_name>
+#   module-manager disable <config_dir> <module_name>
 
 # list of modules that may be enabled/disabled
-modules="owncloud"
+modules="owncloud pagekite tor xmpp"
 
 case "$1" in
 "list-available")
-    # TODO: Replace this with something like "aptitude search -F %p plinth-"
     echo "$modules"
     ;;
 
 "list-enabled")
-    # TODO: Replace this with something like 'aptitude search -F %p | grep "plinth-"'
-    for module in "$modules"
+    for module in $modules
     do
-        if [ -e "$2"/modules/enabled/"$module" ] ; then
-            echo "$module"
+        if [ -e "$2"/modules-enabled/$module ] ; then
+            echo $module
         fi
     done
     ;;
 
 "enable")
-    # TODO: Replace this with "aptitude install plinth-<module>"
-    for module in "$modules"
+    for module in $modules
     do
-        if [ "$3" = "$module" ] ; then
-            if [ ! -e "$2"/modules/enabled/"$3" ] ; then
-                touch "$2"/modules/enabled/"$3"
+        if [ "$3" = $module ] ; then
+            if [ ! -e "$2"/modules-enabled/$module ] ; then
+                echo "plinth.modules.$module" >"$2"/modules-enabled/$module
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ] ; then
-                    echo "enabled" "$3"
+                    echo "enabled" $module
                 else
-                    echo "failed to enable" "$3"
+                    echo "failed to enable" $module
                 fi
                 exit $RETVAL
             fi
@@ -63,17 +60,16 @@ case "$1" in
     ;;
 
 "disable")
-    # TODO: Replace this with "aptitude purge plinth-<module>"
-    for module in "$modules"
+    for module in $modules
     do
-        if [ "$3" = "$module" ] ; then
-            if [ -e "$2"/modules/enabled/"$3" ] ; then
-                rm -f "$2"/modules/enabled/"$3"
+        if [ "$3" = $module ] ; then
+            if [ -e "$2"/modules-enabled/$module ] ; then
+		rm -f "$2"/modules-enabled/$module
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ] ; then
-                    echo "disabled" "$3"
+                    echo "disabled" $module
                 else
-                    echo "failed to disable" "$3"
+                    echo "failed to disable" $module
                 fi
                 exit $RETVAL
             fi

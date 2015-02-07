@@ -16,13 +16,13 @@
 #
 
 """
-URLs for the Packages module
+URLs for the Customize module
 """
 
 from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.packages.packages',
-    url(r'^sys/packages/$', 'index', name='index')
+    'plinth.modules.customize.customize',
+    url(r'^sys/customize/$', 'index', name='index')
 )

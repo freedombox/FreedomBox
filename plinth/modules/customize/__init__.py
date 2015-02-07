@@ -16,12 +16,12 @@
 #
 
 """
-Plinth module to manage packages
+Module to customize Plinth
 """
 
-from . import packages
-from .packages import init
+from . import customize
+from .customize import init
 
-__all__ = ['packages', 'init']
+__all__ = ['customize', 'init']
 
 depends = ['plinth.modules.system']
