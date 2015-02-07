@@ -20,7 +20,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
-import os
 
 from plinth import actions
 from plinth import cfg
@@ -34,9 +33,8 @@ def get_modules_available():
 
 def get_modules_enabled():
     """Return list of all modules"""
-    root = os.path.join(os.path.dirname(__file__), '..', '..')
     output = actions.run('module-manager',
-                         ['list-enabled', root])
+                         ['list-enabled', cfg.config_dir])
     return output.split()
 
 
@@ -93,7 +91,6 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply form changes"""
-    root = os.path.join(os.path.dirname(__file__), '..', '..')
     for field, enabled in new_status.items():
         if not field.endswith('_enabled'):
             continue
@@ -105,7 +102,7 @@ def _apply_changes(request, old_status, new_status):
         if enabled:
             try:
                 actions.superuser_run('module-manager',
-                                      ['enable', root, module])
+                                      ['enable', cfg.config_dir, module])
             except Exception:
                 # TODO: need to get plinth to load the module we just
                 # enabled
@@ -119,7 +116,7 @@ def _apply_changes(request, old_status, new_status):
         else:
             try:
                 actions.superuser_run('module-manager',
-                                      ['disable', root, module])
+                                      ['disable', cfg.config_dir, module])
             except Exception:
                 # TODO: need a smoother way for plinth to unload the
                 # module
