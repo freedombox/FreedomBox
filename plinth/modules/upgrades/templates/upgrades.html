@@ -25,8 +25,11 @@
 <p>This will run unattended-upgrades, which will attempt to upgrade your system
 with the latest Debian packages. It may take a minute to complete.</p>
 
-<p><a class="btn btn-primary btn-lg" href="{% url 'upgrades:run' %}">
-  Upgrade now &raquo;
-</a></p>
+<form class="form" method="post" action="{% url 'upgrades:run' %}">
+  {% csrf_token %}
+
+  <input type="submit" class="btn btn-primary" value="Upgrade now &raquo;"/>
+
+</form>
 
 {% endblock %}

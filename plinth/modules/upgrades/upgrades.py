@@ -24,6 +24,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 from gettext import gettext as _
 
 from plinth import actions
@@ -54,6 +55,7 @@ def index(request):
 
 
 @login_required
+@require_POST
 @package.required('unattended-upgrades')
 def run(request):
     """Run upgrades and show the output page"""
