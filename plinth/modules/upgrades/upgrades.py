@@ -39,16 +39,15 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
 
 
 def init():
-    """Initialize the module"""
+    """Initialize the module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname("Upgrades", "glyphicon-refresh",
-                     "upgrades:index", 21)
+    menu.add_urlname(_('Upgrades'), 'glyphicon-refresh', 'upgrades:index', 21)
 
 
 @login_required
 @package.required('unattended-upgrades')
 def index(request):
-    """Serve the index page"""
+    """Serve the index page."""
     return TemplateResponse(request, 'upgrades.html',
                             {'title': _('Package Upgrades'),
                              'subsubmenu': subsubmenu})
@@ -58,7 +57,7 @@ def index(request):
 @require_POST
 @package.required('unattended-upgrades')
 def run(request):
-    """Run upgrades and show the output page"""
+    """Run upgrades and show the output page."""
     output = ''
     error = ''
     try:
@@ -76,7 +75,7 @@ def run(request):
 
 
 class ConfigureForm(forms.Form):
-    """Configuration form"""
+    """Configuration form to enable/disable automatic upgrades."""
     auto_upgrades_enabled = forms.BooleanField(
         label=_('Enable automatic upgrades'), required=False,
         help_text=_('When enabled, the unattended-upgrades program will be \
@@ -87,7 +86,7 @@ available.'))
 @login_required
 @package.required('unattended-upgrades')
 def configure(request):
-    """Serve the configuration form"""
+    """Serve the configuration form."""
     status = get_status()
 
     form = None
@@ -108,13 +107,13 @@ def configure(request):
 
 
 def get_status():
-    """Return the current status"""
+    """Return the current status."""
     output = actions.run('upgrades', ['check-auto'])
     return {'auto_upgrades_enabled': 'True' in output.split()}
 
 
 def _apply_changes(request, old_status, new_status):
-    """Apply the form changes"""
+    """Apply the form changes."""
     if old_status['auto_upgrades_enabled'] \
        == new_status['auto_upgrades_enabled']:
         messages.info(request, _('Setting unchanged'))
