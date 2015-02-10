@@ -24,6 +24,7 @@ import argparse
 import os
 import re
 import subprocess
+import sys
 
 CONF_FILE = '/etc/apt/apt.conf.d/50unattended-upgrades'
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
@@ -55,24 +56,31 @@ def subcommand_run(_):
     try:
         setup()
     except FileNotFoundError:
-        print('Error: Could not configure unattended-upgrades.')
-        return
+        print('Error: Could not configure unattended-upgrades.',
+              file=sys.stderr)
+        sys.exit(1)
 
     try:
         output = subprocess.check_output(['unattended-upgrades', '-v'])
-    except subprocess.CalledProcessError as error:
-        print('Error: %s', error)
     except FileNotFoundError:
-        print('Error: unattended-upgrades is not available.')
+        print('Error: unattended-upgrades is not available.', file=sys.stderr)
+        sys.exit(2)
+    except Exception as error:
+        print('Error: {0}'.format(error), file=sys.stderr)
+        sys.exit(3)
     else:
-        print('%s', output.decode())
+        print(output.decode())
 
 
 def subcommand_check_auto(_):
     """Check if automatic upgrades are enabled"""
     arguments = ['apt-config', 'shell', 'UpdateInterval',
                  'APT::Periodic::Update-Package-Lists']
-    output = subprocess.check_output(arguments).decode()
+    try:
+        output = subprocess.check_output(arguments).decode()
+    except subprocess.CalledProcessError as error:
+        print('Error: {0}'.format(error), file=sys.stderr)
+        sys.exit(1)
 
     update_interval = 0
     match = re.match(r"UpdateInterval='(.*)'", output)
@@ -87,8 +95,9 @@ def subcommand_enable_auto(_):
     try:
         setup()
     except FileNotFoundError:
-        print('Error: Could not configure unattended-upgrades.')
-        return
+        print('Error: Could not configure unattended-upgrades.',
+              file=sys.stderr)
+        sys.exit(1)
 
     with open(AUTO_CONF_FILE, 'w') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "1";\n')

@@ -124,13 +124,16 @@ def _apply_changes(request, old_status, new_status):
     else:
         option = 'disable-auto'
 
-    output = actions.superuser_run('upgrades', [option])
+    try:
+        actions.superuser_run('upgrades', [option])
+    except ActionError as exception:
+        error = exception.args[2]
+        messages.error(
+            request, _('Error when configuring unattended-upgrades: %s') %
+            error)
+        return
 
-    if 'Error' in output:
-        messages.error(request,
-                       _('Error when configuring unattended-upgrades: %s') %
-                       output)
-    elif option == 'enable-auto':
+    if option == 'enable-auto':
         messages.success(request, _('Automatic upgrades enabled'))
     else:
         messages.success(request, _('Automatic upgrades disabled'))
