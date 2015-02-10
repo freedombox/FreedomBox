@@ -73,7 +73,13 @@ def subcommand_check_auto(_):
     arguments = ['apt-config', 'shell', 'UpdateInterval',
                  'APT::Periodic::Update-Package-Lists']
     output = subprocess.check_output(arguments).decode()
-    print(bool(output and "1" in output))
+
+    update_interval = 0
+    match = re.match(r"UpdateInterval='(.*)'", output)
+    if match:
+        update_interval = int(match.group(1))
+
+    print(bool(update_interval))
 
 
 def subcommand_enable_auto(_):
