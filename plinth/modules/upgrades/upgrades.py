@@ -41,7 +41,8 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Upgrades'), 'glyphicon-refresh', 'upgrades:index', 21)
+    menu.add_urlname(_('Software Upgrades'), 'glyphicon-refresh',
+                     'upgrades:index', 21)
 
 
 @login_required
