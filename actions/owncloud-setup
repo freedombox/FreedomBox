@@ -91,7 +91,7 @@ EOF
 #  'adminpass'     => '$adminpwd',
 
 	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 restart 2>&1 | logger -t owncloud-setup
+	    service apache2 reload 2>&1 | logger -t owncloud-setup
 
 	    # Initialize application and database tables by visiting
 	    # the front page.  This only work if admin user and
@@ -99,10 +99,10 @@ EOF
 	    #wget --quiet http://$(uname -n)/owncloud/index.php
 	else
 	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 restart 2>&1 | logger -t owncloud-setup
+	    service apache2 reload 2>&1 | logger -t owncloud-setup
 	fi
     else
 	a2disconf owncloud 2>&1 | logger -t owncloud-setup
-	service apache2 restart 2>&1 | logger -t owncloud-setup
+	service apache2 reload 2>&1 | logger -t owncloud-setup
     fi
 fi
