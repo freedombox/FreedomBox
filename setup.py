@@ -133,6 +133,8 @@ setuptools.setup(
                  ['data/etc/apache2/sites-available/plinth.conf',
                   'data/etc/apache2/sites-available/plinth-ssl.conf']),
                 ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
+                ('/lib/systemd/system',
+                 ['data/lib/systemd/system/plinth.service']),
                 ('/usr/share/plinth/actions',
                  glob.glob(os.path.join('actions', '*'))),
                 ('/usr/share/man/man1', ['doc/plinth.1']),
