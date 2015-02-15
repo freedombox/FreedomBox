@@ -66,7 +66,9 @@ if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
 	if [ $db_in_config -eq 0 -a $db_in_autoconfig -eq 0 ] ; then
 	    # Set up postgresql database and user
 	    dbpwd=$(pwgen -1 30)
-	    su - postgres -c "psql -c \"CREATE USER owncloud WITH NOCREATEDB NOCREATEUSER ENCRYPTED PASSWORD '$dbpwd'\"" \
+	    su - postgres -c "psql -c \"CREATE USER owncloud WITH NOCREATEDB NOCREATEUSER\"" \
+		2>&1 | logger -t owncloud-setup
+	    su - postgres -c "psql -c \"ALTER USER owncloud ENCRYPTED PASSWORD '$dbpwd'\"" \
 		2>&1 | logger -t owncloud-setup
 	    su - postgres -c "createdb --owner owncloud owncloud" \
 		2>&1 | logger -t owncloud-setup
