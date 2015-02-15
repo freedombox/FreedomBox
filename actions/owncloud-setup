@@ -33,7 +33,7 @@ else
 fi
 
 
-while [ "$1" ] ; do 
+while [ "$1" ] ; do
     arg="$1"
     shift
     case "$arg" in
@@ -43,7 +43,6 @@ while [ "$1" ] ; do
 	    else
 		owncloud_enable=false
 	    fi
-	    export owncloud_enable
 	    ;;
 	status)
 	    printstatus() {
@@ -86,28 +85,12 @@ if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
   'installed'     => false,
 );
 EOF
-# The default admin user and password set up in owncloud
-# FIXME figure out how to pick username and password, perhaps from the
-# plinth user database?
-#adminuser=admin
-#adminpwd=secret
-# Use these in autoconfig.php to set admin username and password:
-#  'adminlogin'    => '$adminuser',
-#  'adminpass'     => '$adminpwd',
-
-	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 reload 2>&1 | logger -t owncloud-setup
-
-	    # Initialize application and database tables by visiting
-	    # the front page.  This only work if admin user and
-	    # password was set above.
-	    #wget --quiet http://$(uname -n)/owncloud/index.php
-	else
-	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 reload 2>&1 | logger -t owncloud-setup
 	fi
+
+	a2enconf owncloud 2>&1 | logger -t owncloud-setup
     else
 	a2disconf owncloud 2>&1 | logger -t owncloud-setup
-	service apache2 reload 2>&1 | logger -t owncloud-setup
     fi
+
+    service apache2 reload 2>&1 | logger -t owncloud-setup
 fi
