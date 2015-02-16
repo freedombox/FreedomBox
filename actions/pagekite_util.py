@@ -19,11 +19,14 @@
 
 """
 Utilities for configuring PageKite.
-
-The variables/functions defined here are used by both the action script
-and the plinth pagekite module.
 """
-# ATTENTION: This file has to be both python2 and python3 compatible
+# TODO:
+# Once python-augeas is available for python3 import the following things
+# from plinth.modules.pagekite.util (instead of having a copy in here):
+#
+# SERVICE_PARAMS, convert_service_to_string, convert_to_service
+#
+# until then, this file is python2 and python3 compatible for the unittests
 
 import os
 import shlex

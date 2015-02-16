@@ -18,12 +18,13 @@
 import os
 import unittest
 
-from actions.pagekite_util import get_augeas_servicefile_path, CONF_PATH, \
-    convert_to_service, convert_service_to_string
+from actions.pagekite_util import get_augeas_servicefile_path, CONF_PATH
+from plinth.modules.pagekite.util import convert_to_service, \
+    convert_service_to_string
 
 
 class TestPagekiteActions(unittest.TestCase):
-    # test-cases to convert parameter-strings into param dicts and back
+    """Test-cases for the pagekite action utils"""
     _tests = [
         {
             'line': 'https/8080:*.@kitename:localhost:8080:@kitesecret',
