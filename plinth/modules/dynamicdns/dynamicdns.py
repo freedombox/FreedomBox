@@ -252,7 +252,7 @@ def _apply_changes(request, old_status, new_status):
                              _('Dynamic DNS configuration is updated!'))
     else:
         messages.error(request,
-                       _('At least on failure occured,\
+                       _('At least one failure occured,\
                        please check your input.'))
 
 
