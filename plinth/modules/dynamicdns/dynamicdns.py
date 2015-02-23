@@ -115,6 +115,15 @@ class ConfigureForm(forms.Form):
         validators=[
             validators.URLValidator(schemes=['http', 'https', 'ftp'])])
 
+    def clean(self):
+        cleaned_data = super(ConfigureForm, self).clean()
+        dynamicdns_secret = cleaned_data.get("dynamicdns_secret")
+        dynamicdns_secret_repeat = cleaned_data.get("dynamicdns_secret_repeat")
+
+        if dynamicdns_secret or dynamicdns_secret_repeat:
+            if dynamicdns_secret != dynamicdns_secret_repeat:
+                raise forms.ValidationError("password missmatch")
+
 
 @login_required
 @package.required('ez-ipupdate')
@@ -203,20 +212,11 @@ def _apply_changes(request, old_status, new_status):
     """Apply the changes to Dynamic DNS client"""
     LOGGER.info('New status is - %s', new_status)
     LOGGER.info('Old status was - %s', old_status)
-    fail = False
-
-    if new_status['dynamicdns_secret_repeat'] != \
-       new_status['dynamicdns_secret']:
-
-        messages.error(request, _('passwords does not match'))
-        fail = True
 
     if old_status['dynamicdns_secret'] == '' and \
        new_status['dynamicdns_secret'] == '':
         messages.error(request, _('please give a password'))
-        fail = True
-
-    if not fail:
+    else:
         if new_status['dynamicdns_secret'] == '':
             new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
 
@@ -244,16 +244,11 @@ def _apply_changes(request, old_status, new_status):
 
             if old_status['enabled']:
                 _run(['stop'])
-
             if new_status['enabled']:
                 _run(['start'])
 
             messages.success(request,
                              _('Dynamic DNS configuration is updated!'))
-    else:
-        messages.error(request,
-                       _('At least one failure occured,\
-                       please check your input.'))
 
 
 def _run(arguments, superuser=False):
