@@ -216,7 +216,7 @@ def _apply_changes(request, old_status, new_status):
         messages.error(request, _('please give a password'))
         fail = True
 
-    if False == fail:
+    if not fail:
         if new_status['dynamicdns_secret'] == '':
             new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
 
