@@ -98,11 +98,6 @@ class ConfigureForm(forms.Form):
         help_text=_('You should have been requested to select a password \
                      when you created the account.'))
 
-    dynamicdns_secret_repeat = TrimmedCharField(
-        label=_('repeat Password'), widget=forms.PasswordInput(),
-        required=False,
-        help_text=_('insert the password again to avoid typos.'),)
-
     dynamicdns_ipurl = TrimmedCharField(
         label=_('IP check URL'),
         required=False,
@@ -118,11 +113,10 @@ class ConfigureForm(forms.Form):
     def clean(self):
         cleaned_data = super(ConfigureForm, self).clean()
         dynamicdns_secret = cleaned_data.get("dynamicdns_secret")
-        dynamicdns_secret_repeat = cleaned_data.get("dynamicdns_secret_repeat")
+        old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
-        if dynamicdns_secret or dynamicdns_secret_repeat:
-            if dynamicdns_secret != dynamicdns_secret_repeat:
-                raise forms.ValidationError("password missmatch")
+        if not dynamicdns_secret and not old_dynamicdns_secret:
+            raise forms.ValidationError("please give a password")
 
 
 @login_required
@@ -133,7 +127,7 @@ def configure(request):
     form = None
 
     if request.method == 'POST':
-        form = ConfigureForm(request.POST, prefix='dynamicdns')
+        form = ConfigureForm(request.POST, initial=status, prefix='dynamicdns')
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
@@ -213,42 +207,38 @@ def _apply_changes(request, old_status, new_status):
     LOGGER.info('New status is - %s', new_status)
     LOGGER.info('Old status was - %s', old_status)
 
-    if old_status['dynamicdns_secret'] == '' and \
-       new_status['dynamicdns_secret'] == '':
-        messages.error(request, _('please give a password'))
-    else:
-        if new_status['dynamicdns_secret'] == '':
-            new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
+    if new_status['dynamicdns_secret'] == '':
+        new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
 
-        if new_status['dynamicdns_ipurl'] == '':
-            new_status['dynamicdns_ipurl'] = 'none'
+    if new_status['dynamicdns_ipurl'] == '':
+        new_status['dynamicdns_ipurl'] = 'none'
 
-        if old_status['dynamicdns_server'] != \
-           new_status['dynamicdns_server'] or \
-           old_status['dynamicdns_domain'] != \
-           new_status['dynamicdns_domain'] or \
-           old_status['dynamicdns_user'] != \
-           new_status['dynamicdns_user'] or \
-           old_status['dynamicdns_secret'] != \
-           new_status['dynamicdns_secret'] or \
-           old_status['dynamicdns_ipurl'] != \
-           new_status['dynamicdns_ipurl'] or \
-           old_status['enabled'] != \
-           new_status['enabled']:
+    if old_status['dynamicdns_server'] != \
+       new_status['dynamicdns_server'] or \
+       old_status['dynamicdns_domain'] != \
+       new_status['dynamicdns_domain'] or \
+       old_status['dynamicdns_user'] != \
+       new_status['dynamicdns_user'] or \
+       old_status['dynamicdns_secret'] != \
+       new_status['dynamicdns_secret'] or \
+       old_status['dynamicdns_ipurl'] != \
+       new_status['dynamicdns_ipurl'] or \
+       old_status['enabled'] != \
+       new_status['enabled']:
 
-            _run(['configure', '-s', new_status['dynamicdns_server'],
-                  '-d', new_status['dynamicdns_domain'],
-                  '-u', new_status['dynamicdns_user'],
-                  '-p', new_status['dynamicdns_secret'],
-                  '-I', new_status['dynamicdns_ipurl']])
+        _run(['configure', '-s', new_status['dynamicdns_server'],
+              '-d', new_status['dynamicdns_domain'],
+              '-u', new_status['dynamicdns_user'],
+              '-p', new_status['dynamicdns_secret'],
+              '-I', new_status['dynamicdns_ipurl']])
 
-            if old_status['enabled']:
-                _run(['stop'])
-            if new_status['enabled']:
-                _run(['start'])
+        if old_status['enabled']:
+            _run(['stop'])
+        if new_status['enabled']:
+            _run(['start'])
 
-            messages.success(request,
-                             _('Dynamic DNS configuration is updated!'))
+        messages.success(request,
+                         _('Dynamic DNS configuration is updated!'))
 
 
 def _run(arguments, superuser=False):
