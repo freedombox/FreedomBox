@@ -40,7 +40,7 @@ doReadCFG()
     [ -f $CFG ] && FILE=$CFG
 
     if [ ! -z $FILE ];then
-            host=`cat $FILE 2> /dev/null |grep host |cut -d = -f 2`
+        host=`cat $FILE 2> /dev/null |grep host |cut -d = -f 2`
         server=`cat $FILE 2> /dev/null |grep server |cut -d = -f 2`
         user=`cat $FILE 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1`
         pass=`cat $FILE 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2`
@@ -169,6 +169,7 @@ case $cmd in
         OLDIP=`cat $IPFILE`
         doGetWANIP
         echo $WANIP > $IPFILE
+        FILE="/tmp/none"
         [ -f $CFG_disabled ] && FILE=$CFG_disabled
         [ -f $CFG ] && FILE=$CFG
         cat $FILE |grep -v execute > ${FILE}.tmp
