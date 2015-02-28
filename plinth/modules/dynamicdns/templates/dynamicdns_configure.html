@@ -30,5 +30,16 @@
     <input type="submit" class="btn btn-primary btn-md" value="Update setup"/>
 
   </form>
+{% endblock %}
 
+{% block page_js %}
+<script type="text/javascript">
+function show_pass()
+{
+if(document.getElementById('id_dynamicdns-showpw').checked){
+	document.getElementById("id_dynamicdns-dynamicdns_secret").type='text';}
+else
+	document.getElementById("id_dynamicdns-dynamicdns_secret").type='password';
+}
+</script>
 {% endblock %}

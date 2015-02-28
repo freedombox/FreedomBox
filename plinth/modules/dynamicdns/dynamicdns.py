@@ -98,6 +98,11 @@ class ConfigureForm(forms.Form):
         help_text=_('You should have been requested to select a password \
                      when you created the account.'))
 
+    showpw = forms.BooleanField(label=_('show password'),
+                                required=False,
+                                widget=forms.CheckboxInput
+                                (attrs={'onclick': 'show_pass();'}))
+
     dynamicdns_ipurl = TrimmedCharField(
         label=_('IP check URL'),
         required=False,
