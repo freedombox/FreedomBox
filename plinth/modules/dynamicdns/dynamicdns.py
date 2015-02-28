@@ -70,15 +70,44 @@ class TrimmedCharField(forms.CharField):
 
 class ConfigureForm(forms.Form):
     """Form to configure the dynamic DNS client"""
-    enabled = forms.BooleanField(label=_('Enable dynamicdns'),
+    enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
                                  required=False)
 
+    dynamicdns_service = forms.ChoiceField(label=_('Service type'),
+       help_text=_('Please choose a update protocol according to your provider.\
+                   We recommend the GnudIP protocol. If your provider does not \
+                   support the GnudIP protocol or your provider is not listed \
+                   you may use the update URL of your provider.'),
+                   choices=(('1', 'GnudIP'), 
+                            ('2', 'noip.com'),
+                            ('3', 'selfhost.bz'),
+                            ('4', 'other Update URL')))
+
     dynamicdns_server = TrimmedCharField(
-        label=_('Server Address'),
+        label=_('GnudIP Server Address'),
         help_text=_('Example: gnudip.provider.org'),
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
                                       _('Invalid server name'))])
+    
+    dynamicdns_update_url = TrimmedCharField(
+         label=_('Update URL'),
+         required=False,
+         help_text=_('The Variables $User, $Pass, $IP, $Domain may be used \
+                within this URL.</br> Example URL: </br> \
+                https://some.tld/up.php?us=$User&pw=$Pass&ip=$IP&dom=$Domain'),
+    validators=[
+        validators.URLValidator(schemes=['http', 'https'])])
+    
+    disable_SSL_cert_check = forms.BooleanField(
+                            label=_('accept all SSL certificates'),
+                            help_text=_('use this option if your provider uses\
+                            self signed certificates'),
+                            required=False)
+    
+    use_http_basic_auth = forms.BooleanField(
+                            label=_('use HTTP basic authentication'),
+                            required=False)
 
     dynamicdns_domain = TrimmedCharField(
         label=_('Domain Name'),
@@ -96,7 +125,8 @@ class ConfigureForm(forms.Form):
         label=_('Password'), widget=forms.PasswordInput(),
         required=False,
         help_text=_('You should have been requested to select a password \
-                     when you created the account.'))
+                     when you created the account. Leave this field empty \
+                     if you want to keep your previous configured password.'))
 
     showpw = forms.BooleanField(label=_('show password'),
                                 required=False,

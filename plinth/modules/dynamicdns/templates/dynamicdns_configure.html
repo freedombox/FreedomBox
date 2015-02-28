@@ -21,25 +21,123 @@
 {% load bootstrap %}
 
 {% block content %}
-  <h3>Configuration</h3>
+
   <form class="form" method="post">
     {% csrf_token %}
 
-    {{ form|bootstrap }}
+    {% include 'bootstrapform/field.html' with field=form.enabled %}
 
-    <input type="submit" class="btn btn-primary btn-md" value="Update setup"/>
+     <div id='dynamicdns-post-enabled-form'
+         style='display: {{ form.enabled.value|yesno:'block,none' }};'>
+      <h3>Dynamic DNS type</h3>
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_service %}
+      <div id='dynamicdns-gnudip'>
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_server %}
+      </div>
+      
+      <div id='dynamicdns-updateurl'>
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_update_url %}
+      {% include 'bootstrapform/field.html' with field=form.disable_SSL_cert_check %}
+      {% include 'bootstrapform/field.html' with field=form.use_http_basic_auth %}
+      </div>
+
+      <h3>Account Information</h3>
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_domain %}
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_user %}
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_secret %}
+      {% include 'bootstrapform/field.html' with field=form.showpw %}
+      
+      <h3>IP check URL</h3>
+      {% include 'bootstrapform/field.html' with field=form.dynamicdns_ipurl %}
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Update setup"/>
 
   </form>
+
 {% endblock %}
 
 {% block page_js %}
-<script type="text/javascript">
-function show_pass()
-{
-if(document.getElementById('id_dynamicdns-showpw').checked){
-	document.getElementById("id_dynamicdns-dynamicdns_secret").type='text';}
-else
-	document.getElementById("id_dynamicdns-dynamicdns_secret").type='password';
-}
-</script>
+
+
+
+  <script type="text/javascript">
+  
+  window.onload = function() {hide()}
+  
+    (function($) {
+
+    $('#id_dynamicdns-enabled').change(function() {
+      if ($('#id_dynamicdns-enabled').prop('checked')) {
+        $('#dynamicdns-post-enabled-form').show('slow');
+      } else {
+        $('#dynamicdns-post-enabled-form').hide('slow');
+      }
+    });
+
+    $('#id_dynamicdns-dynamicdns_service').change(function() {
+    	//$(this).find('option:selected').text() == GnudIP
+        if ($(this).val() == 1){
+        	$('#dynamicdns-updateurl').hide();
+        	$('#dynamicdns-gnudip').show('slow');
+        	$('#id_dynamicdns-dynamicdns_update_url').val("");
+        }
+        if ($(this).val() == 2){
+        	$('#dynamicdns-updateurl').show('slow');
+        	$('#dynamicdns-gnudip').hide();
+        	$('#id_dynamicdns-dynamicdns_server').val("");
+        	$('#id_dynamicdns-dynamicdns_update_url').val("https://noip.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+        }
+        if ($(this).val() == 3){
+        	$('#dynamicdns-updateurl').show('slow');
+        	$('#dynamicdns-gnudip').hide();
+        	$('#id_dynamicdns-dynamicdns_server').val("");
+        	$('#id_dynamicdns-dynamicdns_update_url').val("https://selfhost.bz/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+        }
+        if ($(this).val() == 4){
+        	$('#dynamicdns-updateurl').show('slow');
+        	$('#dynamicdns-gnudip').hide();
+        	$('#id_dynamicdns-dynamicdns_server').val("");
+        	$('#id_dynamicdns-dynamicdns_update_url').val("https://example.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+        }  
+    });
+    })(jQuery);
+    
+	function show_pass()
+	{
+		if(document.getElementById('id_dynamicdns-showpw').checked){
+			document.getElementById("id_dynamicdns-dynamicdns_secret").type='text';}
+		else
+			document.getElementById("id_dynamicdns-dynamicdns_secret").type='password';
+	}
+	
+	function hide()
+	{
+	      if ($('#id_dynamicdns-enabled').prop('checked')) {
+		    	//$(this).find('option:selected').text() == GnudIP
+		        if ($(this).val() == 1){
+		        	$('#dynamicdns-updateurl').hide();
+		        	$('#id_dynamicdns-dynamicdns_update_url').val("");
+		        }
+		        if ($(this).val() == 2){
+		        	$('#dynamicdns-gnudip').hide();
+		        	$('#id_dynamicdns-dynamicdns_server').val("");
+		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://noip.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+		        }
+		        if ($(this).val() == 3){
+		        	$('#dynamicdns-gnudip').hide();
+		        	$('#id_dynamicdns-dynamicdns_server').val("");
+		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://selfhost.bz/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+		        }
+		        if ($(this).val() == 4){
+		        	$('#dynamicdns-gnudip').hide();
+		        	$('#id_dynamicdns-dynamicdns_server').val("");
+		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://example.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
+		        }
+	      } else {
+	        $('#dynamicdns-post-enabled-form').hide('slow');
+	      }	    
+	}
+	
+  </script>
 {% endblock %}
