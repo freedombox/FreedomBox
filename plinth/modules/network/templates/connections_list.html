@@ -24,7 +24,11 @@
   <style type="text/css">
     .connection-edit-label {
       display: inline-block;
-      width: 75%;
+      width: 40%;
+    }
+    .connection-type-label {
+      display: inline-block;
+      width: 20%;
     }
     .list-group-item .btn {
       margin: -5px 0;
@@ -35,7 +39,7 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <div class="list-group">
         {% for conn in connections %}
           <div class="list-group-item clearfix">
@@ -46,11 +50,45 @@
                     aria-hidden="true"></span>
             </a>
 
-            <a class='connection-edit-label'
+            <a class="connection-edit-label"
                title="Edit connection {{ conn.name }}">
               {{ conn.name }}
             </a>
-	    {{ conn.type }}
+
+	    <span class="connection-type-label">{{ conn.type }}</span>
+
+	    {% if conn.is_active %}
+	    <div class="btn-group">
+	      <button type="button"
+		      class="btn btn-success btn-xs dropdown-toggle"
+		      data-toggle="dropdown" aria-expanded="false">
+		Active <span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu" role="menu">
+		<li>
+		  <a href="{% url 'network:deactivate' conn.id %}">
+		    Deactivate
+		  </a>
+		</li>
+	      </ul>
+	    </div>
+	    {% else %}
+	    <div class="btn-group">
+	      <button type="button"
+		      class="btn btn-warning btn-xs dropdown-toggle"
+		      data-toggle="dropdown" aria-expanded="false">
+		Not Active <span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu" role="menu">
+		<li>
+		  <a href="{% url 'network:activate' conn.id %}">
+		    Activate
+		  </a>
+		</li>
+	      </ul>
+	    </div>
+	    {% endif %}
+
           </div>
         {% endfor %}
       </div>

@@ -25,6 +25,10 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'plinth.modules.network.network',
     url(r'^sys/network/$', 'index', name='index'),
+    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/activate/$',
+        'activate', name='activate'),
+    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/deactivate/$',
+        'deactivate', name='deactivate'),
     url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/delete/$',
-        'delete', name='delete')
+        'delete', name='delete'),
 )
