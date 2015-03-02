@@ -27,15 +27,21 @@
 
     {% include 'bootstrapform/field.html' with field=form.enabled %}
 
-     <div id='dynamicdns-post-enabled-form'
-         style='display: {{ form.enabled.value|yesno:'block,none' }};'>
+     <div id='dynamicdns-post-enabled-form'>
+     
       <h3>Dynamic DNS type</h3>
+      <div id='dynamicdns-no-js'>
+       You have disabled Javascript. Dynamic form mode is disabled. Please fill
+        only "GnudIP Server Address" or "Update URL" field.</br><hr>
+      </div>
+      <div id='div-dynamicdns-dropdown' style="display:none">
       {% include 'bootstrapform/field.html' with field=form.dynamicdns_service %}
-      <div id='dynamicdns-gnudip'>
+      </div>
+      <div id='div-dynamicdns-gnudip'>
       {% include 'bootstrapform/field.html' with field=form.dynamicdns_server %}
       </div>
       
-      <div id='dynamicdns-updateurl'>
+      <div id='div-dynamicdns-updateurl'>
       {% include 'bootstrapform/field.html' with field=form.dynamicdns_update_url %}
       {% include 'bootstrapform/field.html' with field=form.disable_SSL_cert_check %}
       {% include 'bootstrapform/field.html' with field=form.use_http_basic_auth %}
@@ -59,85 +65,52 @@
 
 {% block page_js %}
 
-
-
   <script type="text/javascript">
-  
-  window.onload = function() {hide()}
-  
-    (function($) {
+  window.onload = function() {mod_form()}
 
-    $('#id_dynamicdns-enabled').change(function() {
-      if ($('#id_dynamicdns-enabled').prop('checked')) {
-        $('#dynamicdns-post-enabled-form').show('slow');
-      } else {
-        $('#dynamicdns-post-enabled-form').hide('slow');
-      }
-    });
-
-    $('#id_dynamicdns-dynamicdns_service').change(function() {
-    	//$(this).find('option:selected').text() == GnudIP
-        if ($(this).val() == 1){
-        	$('#dynamicdns-updateurl').hide();
-        	$('#dynamicdns-gnudip').show('slow');
-        	$('#id_dynamicdns-dynamicdns_update_url').val("");
-        }
-        if ($(this).val() == 2){
-        	$('#dynamicdns-updateurl').show('slow');
-        	$('#dynamicdns-gnudip').hide();
-        	$('#id_dynamicdns-dynamicdns_server').val("");
-        	$('#id_dynamicdns-dynamicdns_update_url').val("https://noip.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-        }
-        if ($(this).val() == 3){
-        	$('#dynamicdns-updateurl').show('slow');
-        	$('#dynamicdns-gnudip').hide();
-        	$('#id_dynamicdns-dynamicdns_server').val("");
-        	$('#id_dynamicdns-dynamicdns_update_url').val("https://selfhost.bz/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-        }
-        if ($(this).val() == 4){
-        	$('#dynamicdns-updateurl').show('slow');
-        	$('#dynamicdns-gnudip').hide();
-        	$('#id_dynamicdns-dynamicdns_server').val("");
-        	$('#id_dynamicdns-dynamicdns_update_url').val("https://example.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-        }  
-    });
-    })(jQuery);
-    
 	function show_pass()
 	{
 		if(document.getElementById('id_dynamicdns-showpw').checked){
-			document.getElementById("id_dynamicdns-dynamicdns_secret").type='text';}
+			document.getElementById('id_dynamicdns-dynamicdns_secret').type='text';}
 		else
-			document.getElementById("id_dynamicdns-dynamicdns_secret").type='password';
+			document.getElementById('id_dynamicdns-dynamicdns_secret').type='password';
 	}
 	
-	function hide()
+	function mod_form()
 	{
-	      if ($('#id_dynamicdns-enabled').prop('checked')) {
-		    	//$(this).find('option:selected').text() == GnudIP
-		        if ($(this).val() == 1){
-		        	$('#dynamicdns-updateurl').hide();
-		        	$('#id_dynamicdns-dynamicdns_update_url').val("");
-		        }
-		        if ($(this).val() == 2){
-		        	$('#dynamicdns-gnudip').hide();
-		        	$('#id_dynamicdns-dynamicdns_server').val("");
-		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://noip.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-		        }
-		        if ($(this).val() == 3){
-		        	$('#dynamicdns-gnudip').hide();
-		        	$('#id_dynamicdns-dynamicdns_server').val("");
-		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://selfhost.bz/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-		        }
-		        if ($(this).val() == 4){
-		        	$('#dynamicdns-gnudip').hide();
-		        	$('#id_dynamicdns-dynamicdns_server').val("");
-		        	$('#id_dynamicdns-dynamicdns_update_url').val("https://example.com/update.php?user=$user&pass=$pass&domain=$domain&IP=foo$ip");
-		        }
-	      } else {
-	        $('#dynamicdns-post-enabled-form').hide('slow');
-	      }	    
-	}
-	
+		document.getElementById('dynamicdns-no-js').style.display = 'none';
+		document.getElementById('div-dynamicdns-dropdown').style.display = 'block';
+		
+		if ( document.getElementById('id_dynamicdns-enabled').checked ) {
+			document.getElementById('dynamicdns-post-enabled-form').style.display = 'block';
+			var dropdown = document.getElementById('id_dynamicdns-dynamicdns_service');
+			var service_type = dropdown.options[dropdown.selectedIndex].value;
+			if (service_type == 1){
+				document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
+				document.getElementById('div-dynamicdns-gnudip').style.display = 'block';
+				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
+			}
+			if (service_type == 2){
+				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='noip';
+				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+			}
+			if (service_type == 3){
+				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='selfhost';
+				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+			}
+			if (service_type == 4){
+				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
+				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+			}
+		}else{
+			document.getElementById('dynamicdns-post-enabled-form').style.display = 'none';
+		}
+	}	
   </script>
 {% endblock %}

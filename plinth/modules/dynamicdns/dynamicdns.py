@@ -71,17 +71,19 @@ class TrimmedCharField(forms.CharField):
 class ConfigureForm(forms.Form):
     """Form to configure the dynamic DNS client"""
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
-                                 required=False)
+                                 required=False,widget=forms.CheckboxInput
+                                (attrs={'onclick': 'mod_form();'}))
 
     dynamicdns_service = forms.ChoiceField(label=_('Service type'),
        help_text=_('Please choose a update protocol according to your provider.\
                    We recommend the GnudIP protocol. If your provider does not \
                    support the GnudIP protocol or your provider is not listed \
                    you may use the update URL of your provider.'),
-                   choices=(('1', 'GnudIP'), 
+                   choices=(('1', 'GnuDIP'), 
                             ('2', 'noip.com'),
                             ('3', 'selfhost.bz'),
-                            ('4', 'other Update URL')))
+                            ('4', 'other Update URL')),
+                   widget=forms.Select(attrs={"onChange":'mod_form()'}))
 
     dynamicdns_server = TrimmedCharField(
         label=_('GnudIP Server Address'),
@@ -232,7 +234,27 @@ def get_status():
     if len(details) > 5:
         status['dynamicdns_ipurl'] = details[5]
     else:
-        status['dynamicdns_secret'] = ''
+        status['dynamicdns_ipurl'] = ''
+        
+    if len(details) > 6:
+        status['dynamicdns_update_url'] = details[6]
+    else:
+        status['dynamicdns_update_url'] = ''
+        
+    if len(details) > 7:
+        status['disable_SSL_cert_check'] = details[7]
+    else:
+        status['disable_SSL_cert_check'] = ''
+        
+    if len(details) > 8:
+        status['use_http_basic_auth'] = details[8]
+    else:
+        status['use_http_basic_auth'] = ''
+        
+    if status['dynamicdns_server'] is not '':
+        status['dynamicdns_service'] = '1'
+    else:
+        status['dynamicdns_service'] = '4'
 
     return status
 
@@ -258,6 +280,12 @@ def _apply_changes(request, old_status, new_status):
        new_status['dynamicdns_secret'] or \
        old_status['dynamicdns_ipurl'] != \
        new_status['dynamicdns_ipurl'] or \
+       old_status['dynamicdns_update_url'] != \
+       new_status['dynamicdns_update_url'] or \
+       old_status['disable_SSL_cert_check'] != \
+       new_status['disable_SSL_cert_check'] or \
+       old_status['use_http_basic_auth'] != \
+       new_status['use_http_basic_auth'] or \
        old_status['enabled'] != \
        new_status['enabled']:
 
@@ -265,7 +293,10 @@ def _apply_changes(request, old_status, new_status):
               '-d', new_status['dynamicdns_domain'],
               '-u', new_status['dynamicdns_user'],
               '-p', new_status['dynamicdns_secret'],
-              '-I', new_status['dynamicdns_ipurl']])
+              '-I', new_status['dynamicdns_ipurl'],
+              '-U', new_status['dynamicdns_update_url'],
+              '-c', new_status['disable_SSL_cert_check'],
+              '-b', new_status['use_http_basic_auth']])
 
         if old_status['enabled']:
             _run(['stop'])
