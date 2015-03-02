@@ -33,7 +33,7 @@ doGetOpt()
 	basicauth=0
 	ignoreCertError=0
 	
-    while getopts ":s:d:u:p:I:" opt; do
+    while getopts ":s:d:u:p:I:U:c:b:" opt; do
         case $opt in
             s)
                 server=$OPTARG
@@ -141,17 +141,69 @@ doReadCFG()
 
     if [ ! -z $file ];then
         host=`cat $file 2> /dev/null |grep host |cut -d = -f 2`
-        server=`cat $file 2> /dev/null |grep server |cut -d = -f 2`
-        user=`cat $file 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1`
+        server=`cat $file 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\'`
+        user=`cat $file 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1 `
         pass=`cat $file 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2`
     fi
 
     if [ ! -z $HELPERCFG ];then
-        ipurl=`cat $HELPERCFG 2> /dev/null |grep ^URL |awk '{print $2}'`
-        updateurl=`cat $HELPERCFG 2> /dev/null |grep POSTURL |awk '{print $2}'`
-        basicauth=`cat $HELPERCFG 2> /dev/null |grep POSTAUTH |awk '{print $2}'`
-        ignoreCertError=`cat $HELPERCFG 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}'`
+        ipurl=`cat $HELPERCFG 2> /dev/null |grep ^IPURL |awk '{print $2}' |grep -v ^\'\'`
+        updateurl=`cat $HELPERCFG 2> /dev/null |grep POSTURL |awk '{print $2}' |grep -v ^\'\'`
+        basicauth=`cat $HELPERCFG 2> /dev/null |grep POSTAUTH |awk '{print $2}' |grep -v ^\'\'`
+        ignoreCertError=`cat $HELPERCFG 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}' |grep -v ^\'\'`
     fi  
+}
+
+doStatus()
+{
+	PROC=`pgrep ${TOOLNAME}`
+	if [ -f $CRONJOB ];then
+	     echo enabled 
+	elif [ ! -z $PROC ];then 
+	    echo enabled
+	else
+	    echo disabled
+	fi
+		if [ ! -z $server ];then
+		echo $server
+		else
+			echo disabled
+		fi
+	if [ ! -z $host  ];then 
+		echo $host
+		else
+			echo disabled
+		fi
+		if [ ! -z $user ];then
+		echo $user
+		else
+			echo disabled
+		fi
+	if [ ! -z $pass  ];then 
+		echo $pass
+		else
+			echo disabled
+		fi        
+		if [ ! -z $ipurl ];then
+		echo $ipurl
+		else
+			echo disabled
+		fi
+	if [ ! -z $updateurl  ];then 
+		echo $updateurl
+		else
+			echo disabled
+		fi  
+	if [ ! -z $basicauth ];then
+		echo $basicauth
+	else
+			echo disabled
+	fi		
+	if [ ! -z $ignoreCertError ];then
+		echo $ignoreCertError 
+	else
+		echo disabled
+	fi	
 }
 
 doGetWANIP()
@@ -161,6 +213,7 @@ doGetWANIP()
         $WGET $WGETOPTIONS -O $outfile $ipurl
         wanip=`cat $outfile`
         rm $outfile
+        [ -z $wanip ] && wanip=${NOIP}
     else
         #no WAN IP found because of missing check URL
         wanip=${NOIP}
@@ -187,8 +240,14 @@ case $cmd in
     ;;
     start)
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
-            mv $CFG_disabled $CFG
-            /etc/init.d/${TOOLNAME} start
+        	if [ -f $CFG -a ! -z $(cat $file 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
+            	mv $CFG_disabled $CFG
+            	/etc/init.d/${TOOLNAME} start        		
+			fi
+			if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
+				echo "*/${UPDATEMINUTES} * * * * root $0 update" > $CRONJOB
+            	$0 update
+			fi
         else
             echo "*/${UPDATEMINUTES} * * * * root $0 update" > $CRONJOB
             $0 update
@@ -257,28 +316,14 @@ case $cmd in
     ;;
     status)
         doReadCFG
-        PROC=`pgrep ${TOOLNAME}`
-        if [ -f $CRONJOB ];then
-             echo enabled 
-        elif [ ! -z $PROC ];then 
-            echo enabled
-        else
-            echo disabled
-        fi
-        echo $server
-        echo $host
-        echo $user
-        echo $pass
-        echo $ipurl
-        echo $updateurl
-        echo $basicauth
-        echo $ignoreCertError
+		doStatus			
     ;;
     get-timer)
         echo $UPDATEMINUTES
     ;;
     clean)
         rm ${CFGDIR}/*
+        rm $CRONJOB
     ;;
     *)
         echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed"

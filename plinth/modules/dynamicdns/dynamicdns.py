@@ -83,10 +83,11 @@ class ConfigureForm(forms.Form):
                             ('2', 'noip.com'),
                             ('3', 'selfhost.bz'),
                             ('4', 'other Update URL')),
-                   widget=forms.Select(attrs={"onChange":'mod_form()'}))
+                   widget=forms.Select(attrs={'onChange':'dropdown()'}))
 
     dynamicdns_server = TrimmedCharField(
         label=_('GnudIP Server Address'),
+        required=False,
         help_text=_('Example: gnudip.provider.org'),
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
@@ -97,9 +98,7 @@ class ConfigureForm(forms.Form):
          required=False,
          help_text=_('The Variables $User, $Pass, $IP, $Domain may be used \
                 within this URL.</br> Example URL: </br> \
-                https://some.tld/up.php?us=$User&pw=$Pass&ip=$IP&dom=$Domain'),
-    validators=[
-        validators.URLValidator(schemes=['http', 'https'])])
+                https://some.tld/up.php?us=$User&pw=$Pass&ip=$IP&dom=$Domain'))
     
     disable_SSL_cert_check = forms.BooleanField(
                             label=_('accept all SSL certificates'),
@@ -149,11 +148,11 @@ class ConfigureForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(ConfigureForm, self).clean()
-        dynamicdns_secret = cleaned_data.get("dynamicdns_secret")
+        dynamicdns_secret = cleaned_data.get('dynamicdns_secret')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
         if not dynamicdns_secret and not old_dynamicdns_secret:
-            raise forms.ValidationError("please give a password")
+            raise forms.ValidationError('please give a password')
 
 
 @login_required
@@ -211,50 +210,71 @@ def get_status():
     output = actions.run('dynamicdns', 'status')
     details = output.split()
     status['enabled'] = (output.split()[0] == 'enabled')
+    
     if len(details) > 1:
-        status['dynamicdns_server'] = details[1]
+        if details[1] == 'disabled':
+            status['dynamicdns_server'] = ''
+        else:
+            status['dynamicdns_server'] = details[1]
     else:
         status['dynamicdns_server'] = ''
 
     if len(details) > 2:
-        status['dynamicdns_domain'] = details[2]
+        if details[2] == 'disabled':
+            status['dynamicdns_domain'] = ''
+        else:
+            status['dynamicdns_domain'] = details[2]
     else:
         status['dynamicdns_domain'] = ''
 
     if len(details) > 3:
-        status['dynamicdns_user'] = details[3]
+        if details[3] == 'disabled':
+            status['dynamicdns_user'] = ''
+        else:
+            status['dynamicdns_user'] = details[3]
     else:
         status['dynamicdns_user'] = ''
 
     if len(details) > 4:
-        status['dynamicdns_secret'] = details[4]
+        if details[4] == 'disabled':
+            status['dynamicdns_secret'] = ''
+        else:
+            status['dynamicdns_secret'] = details[4]
     else:
         status['dynamicdns_secret'] = ''
 
     if len(details) > 5:
-        status['dynamicdns_ipurl'] = details[5]
+        if details[5] == 'disabled':
+            status['dynamicdns_ipurl'] = ''
+        else:
+            status['dynamicdns_ipurl'] = details[5]
     else:
         status['dynamicdns_ipurl'] = ''
         
     if len(details) > 6:
-        status['dynamicdns_update_url'] = details[6]
+        if details[6] == 'disabled':
+            status['dynamicdns_update_url'] = ''
+        else:
+            status['dynamicdns_update_url'] = details[6]
     else:
         status['dynamicdns_update_url'] = ''
         
     if len(details) > 7:
-        status['disable_SSL_cert_check'] = details[7]
+        status['disable_SSL_cert_check'] = (output.split()[7] == 'enabled')
     else:
-        status['disable_SSL_cert_check'] = ''
+        status['disable_SSL_cert_check'] = False
         
     if len(details) > 8:
-        status['use_http_basic_auth'] = details[8]
+        status['use_http_basic_auth'] = (output.split()[8] == 'enabled')
     else:
-        status['use_http_basic_auth'] = ''
+        status['use_http_basic_auth'] = False
         
-    if status['dynamicdns_server'] is not '':
-        status['dynamicdns_service'] = '1'
+    if not status['dynamicdns_server'] and not status['dynamicdns_update_url']:
+            status['dynamicdns_service'] = '1'
+    elif not status['dynamicdns_server'] and status['dynamicdns_update_url']:
+            status['dynamicdns_service'] = '4'  
     else:
-        status['dynamicdns_service'] = '4'
+        status['dynamicdns_service'] = '1'
 
     return status
 
@@ -289,14 +309,23 @@ def _apply_changes(request, old_status, new_status):
        old_status['enabled'] != \
        new_status['enabled']:
 
+        disable_ssl_check="disabled"
+        use_http_basic_auth="disabled"
+        
+        if new_status['disable_SSL_cert_check']:
+            disable_ssl_check = "enabled"
+            
+        if new_status['use_http_basic_auth']:
+            use_http_basic_auth = "enabled"
+            
         _run(['configure', '-s', new_status['dynamicdns_server'],
               '-d', new_status['dynamicdns_domain'],
               '-u', new_status['dynamicdns_user'],
               '-p', new_status['dynamicdns_secret'],
               '-I', new_status['dynamicdns_ipurl'],
               '-U', new_status['dynamicdns_update_url'],
-              '-c', new_status['disable_SSL_cert_check'],
-              '-b', new_status['use_http_basic_auth']])
+              '-c', disable_ssl_check,
+              '-b', use_http_basic_auth])
 
         if old_status['enabled']:
             _run(['stop'])

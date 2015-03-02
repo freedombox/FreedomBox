@@ -76,6 +76,35 @@
 			document.getElementById('id_dynamicdns-dynamicdns_secret').type='password';
 	}
 	
+	function dropdown()
+	{
+		var dropdown = document.getElementById('id_dynamicdns-dynamicdns_service');
+		var service_type = dropdown.options[dropdown.selectedIndex].value;
+		if (service_type == 1){
+			document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
+			document.getElementById('div-dynamicdns-gnudip').style.display = 'block';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
+		}
+		if (service_type == 2){
+			document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+			document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='noip';
+			document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+		}
+		if (service_type == 3){
+			document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+			document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='selfhost';
+			document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+		}
+		if (service_type == 4){
+			document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
+			document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
+			document.getElementById('id_dynamicdns-dynamicdns_server').value='';
+		}
+	}
+	
 	function mod_form()
 	{
 		document.getElementById('dynamicdns-no-js').style.display = 'none';
@@ -88,25 +117,18 @@
 			if (service_type == 1){
 				document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
 				document.getElementById('div-dynamicdns-gnudip').style.display = 'block';
-				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
 			}
 			if (service_type == 2){
 				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
 				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
-				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='noip';
-				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
 			}
 			if (service_type == 3){
 				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
 				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
-				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='selfhost';
-				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
 			}
 			if (service_type == 4){
 				document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
 				document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
-				document.getElementById('id_dynamicdns-dynamicdns_update_url').value='';
-				document.getElementById('id_dynamicdns-dynamicdns_server').value='';
 			}
 		}else{
 			document.getElementById('dynamicdns-post-enabled-form').style.display = 'none';
