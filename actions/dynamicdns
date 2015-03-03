@@ -240,15 +240,19 @@ case ${cmd} in
     ;;
     start)
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
+			#if we are not behind a NAT device and we use gnudip, start the daemon tool
 			if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
 				mv ${CFG_disabled} ${CFG}
             	/etc/init.d/${TOOLNAME} start        		
 			fi
+			#if we are not behind a NAT device and we use update-URL, add a cronjob 
+			#(daemon tool does not support update-URL feature)
 			if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
 				echo "*/${UPDATEMINUTES} * * * * root $0 update" > ${CRONJOB}
             	$0 update
 			fi
         else
+			#if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
             echo "*/${UPDATEMINUTES} * * * * root $0 update" > $CRONJOB
             $0 update
         fi
