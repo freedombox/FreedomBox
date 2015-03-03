@@ -16,6 +16,8 @@ UPDATEMINUTES=5
 UPDATEMINUTESUNKNOWN=3600
 TOOLNAME=ez-ipupdate
 UPDATE_TOOL=$(which ${TOOLNAME})
+DISABLED_STRING='disabled'
+ENABLED_STRING='enabled'
 
 #Dirs and filenames
 CFGDIR="/etc/${TOOLNAME}/"
@@ -155,51 +157,51 @@ doStatus()
 {
 	PROC=$(pgrep ${TOOLNAME})
 	if [ -f ${CRONJOB} ];then
-	     echo enabled 
+	     echo $ENABLED_STRING 
 	elif [ ! -z ${PROC} ];then
-	    echo enabled
+	    echo $ENABLED_STRING
 	else
-	    echo disabled
+	    echo $DISABLED_STRING
 	fi
 		if [ ! -z ${server} ];then
 			echo ${server}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi
 	if [ ! -z ${host}  ];then
 		echo ${host}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi
 		if [ ! -z ${user} ];then
 			echo ${user}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi
 	if [ ! -z ${pass}  ];then
 		echo ${pass}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi        
 		if [ ! -z ${ipurl} ];then
 		echo ${ipurl}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi
 	if [ ! -z ${updateurl}  ];then
 		echo ${updateurl}
 		else
-			echo disabled
+			echo $DISABLED_STRING
 		fi  
 	if [ ! -z ${basicauth} ];then
 		echo ${basicauth}
 	else
-			echo disabled
+			echo $DISABLED_STRING
 	fi		
 	if [ ! -z ${ignoreCertError} ];then
 		echo ${ignoreCertError}
 	else
-		echo disabled
+		echo $DISABLED_STRING
 	fi	
 }
 
