@@ -199,7 +199,8 @@ doStatus()
 			echo $DISABLED_STRING
 		fi
 	if [ ! -z ${updateurl}  ];then
-		echo ${updateurl}
+		local url=`echo ${updateurl} | sed "s/'//g"`
+		echo ${url}
 		else
 			echo $DISABLED_STRING
 		fi  
