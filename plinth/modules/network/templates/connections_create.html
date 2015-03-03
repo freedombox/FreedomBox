@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,24 +16,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the Network module
-"""
+{% load bootstrap %}
 
-from django.conf.urls import patterns, url
+{% block content %}
 
+  <div class="row">
+    <div class="col-sm-8">
+      <form class="form" method="post">
+        {% csrf_token %}
 
-urlpatterns = patterns(
-    'plinth.modules.network.network',
-    url(r'^sys/network/$', 'index', name='index'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/activate/$',
-        'activate', name='activate'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/deactivate/$',
-        'deactivate', name='deactivate'),
-    url(r'^sys/network/add/$', 'add', name='add'),
-    url(r'^sys/network/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
-    url(r'^sys/network/add/wifi/$', 'add_wifi', name='add_wifi'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/delete/$',
-        'delete', name='delete'),
-)
+        {{ form|bootstrap }}
+
+        <input type="submit" class="btn btn-primary" value="Create Connection"/>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('#id_name').focus();
+  </script>
+{% endblock %}
