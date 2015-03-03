@@ -35,7 +35,7 @@
         only "GnudIP Server Address" or "Update URL" field.</br><hr>
       </div>
       <div id='div-dynamicdns-dropdown' style="display:none">
-      {% include 'bootstrapform/field.html' with field=form.dynamicdns_service %}
+      {% include 'bootstrapform/field.html' with field=form.service_type %}
       </div>
       <div id='div-dynamicdns-gnudip'>
       {% include 'bootstrapform/field.html' with field=form.dynamicdns_server %}
@@ -78,7 +78,7 @@
 	
 	function dropdown()
 	{
-		var dropdown = document.getElementById('id_dynamicdns-dynamicdns_service');
+		var dropdown = document.getElementById('id_dynamicdns-service_type');
 		var service_type = dropdown.options[dropdown.selectedIndex].value;
 		if (service_type == 1){
 			document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
@@ -112,7 +112,7 @@
 		
 		if ( document.getElementById('id_dynamicdns-enabled').checked ) {
 			document.getElementById('dynamicdns-post-enabled-form').style.display = 'block';
-			var dropdown = document.getElementById('id_dynamicdns-dynamicdns_service');
+			var dropdown = document.getElementById('id_dynamicdns-service_type');
 			var service_type = dropdown.options[dropdown.selectedIndex].value;
 			if (service_type == 1){
 				document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
