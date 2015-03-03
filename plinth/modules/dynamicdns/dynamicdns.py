@@ -98,9 +98,10 @@ class ConfigureForm(forms.Form):
 
     dynamicdns_update_url = TrimmedCharField(label=_('Update URL'),
                                              required=False,
-                                             help_text=_('The Variables $User\
-                                                         , $Pass, $IP, $Domain\
-                                                          may be used'))
+                                             help_text=_('The Variables <User>\
+                                                         , <Pass>, <IP>, \
+                                                         <Domain> may be \
+                                                         used'))
 
     disable_SSL_cert_check = forms.BooleanField(label=_('accept all SSL \
                                                         certificates'),
