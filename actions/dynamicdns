@@ -34,41 +34,41 @@ doGetOpt()
 	ignoreCertError=0
 	
     while getopts ":s:d:u:p:I:U:c:b:" opt; do
-        case $opt in
+        case ${opt} in
             s)
-                server=$OPTARG
+                server=${OPTARG}
             ;;
             d)
-                host=$OPTARG
+                host=${OPTARG}
             ;;
             u)
-                user=$OPTARG
+                user=${OPTARG}
             ;;
             p)
-                pass=$OPTARG
+                pass=${OPTARG}
             ;;
             I)
-                if [ "$OPTARG" != "$EMPTYSTRING" ];then
-                    ipurl=$OPTARG
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    ipurl=${OPTARG}
                 else
                     ipurl=""
                 fi
             ;;
             U)
-                if [ "$OPTARG" != "$EMPTYSTRING" ];then
-                    updateurl=$OPTARG
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    updateurl=${OPTARG}
                 else
                     updateurl=""
                 fi
             ;;
             b)
-                basicauth=$OPTARG
+                basicauth=${OPTARG}
             ;;
             c)
-                ignoreCertError=$OPTARG
+                ignoreCertError=${OPTARG}
             ;;            
             \?)
-                echo "Invalid option: -$OPTARG" >&2
+                echo "Invalid option: -${OPTARG}" >&2
                 exit 1
             ;;
         esac
@@ -77,53 +77,53 @@ doGetOpt()
 
 doWriteCFG()
 {
-    mkdir $CFGDIR 2> /dev/null
+    mkdir ${CFGDIR} 2> /dev/null
     #always write to the inactive config - needs to be enabled via "start" command later
-    file=$CFG_disabled
+    local out_file=${CFG_disabled}
 
     #reset the last update time
-    echo 0 > $LASTUPDATE
+    echo 0 > ${LASTUPDATE}
 
     #reset the last updated IP
-    echo "0.0.0.0" > $IPFILE
+    echo "0.0.0.0" > ${IPFILE}
 
     #reset last update (if there is one)
-    rm $STATUSFILE 2> /dev/null
+    rm ${STATUSFILE} 2> /dev/null
 
     #find the interface (always the default gateway interface)
     default_interface=`ip route |grep default |awk '{print $5}'`
 
     #store the given options in ez-ipupdate compatible config file
-    echo "host=$host" > $file
-    echo "server=$server" >> $file
-    echo "user=${user}:${pass}" >> $file
-    echo "service-type=gnudip" >> $file
-    echo "retrys=3" >> $file
-    echo "wildcard" >> $file
+    echo "host=${host}" > ${out_file}
+    echo "server=${server}" >> ${out_file}
+    echo "user=${user}:${pass}" >> ${out_file}
+    echo "service-type=gnudip" >> ${out_file}
+    echo "retrys=3" >> ${out_file}
+    echo "wildcard" >> ${out_file}
     
     #store UPDATE URL params
-    echo "POSTURL $updateurl" > $HELPERCFG
-    echo "POSTAUTH $basicauth" >> $HELPERCFG
-    echo "POSTSSLIGNORE $ignoreCertError" >> $HELPERCFG
+    echo "POSTURL ${updateurl}" > ${HELPERCFG}
+    echo "POSTAUTH ${basicauth}" >> ${HELPERCFG}
+    echo "POSTSSLIGNORE ${ignoreCertError}" >> ${HELPERCFG}
     
     #check if we are behind a NAT Router
-    echo "IPURL $ipurl" >> $HELPERCFG
-    if [ -z $ipurl ];then
-        echo "NAT unknown" >> $HELPERCFG
+    echo "IPURL ${ipurl}" >> ${HELPERCFG}
+    if [ -z ${ipurl} ];then
+        echo "NAT unknown" >> ${HELPERCFG}
     else 
         doGetWANIP
-        ISGLOBAL=`ip addr ls $default_interface | grep $wanip`
-        if [ -z $ISGLOBAL ];then
+        ISGLOBAL=`ip addr ls ${default_interface} | grep ${wanip}`
+        if [ -z ${ISGLOBAL} ];then
             #we are behind NAT
-            echo "NAT yes" >> $HELPERCFG
+            echo "NAT yes" >> ${HELPERCFG}
         else
             #we are directly connected
-            echo "NAT no" >> $HELPERCFG
+            echo "NAT no" >> ${HELPERCFG}
             #if this file is added ez-ipupdate will take ip form this interface
-            echo "interface=$default_interface" >> $file
+            echo "interface=${default_interface}" >> ${out_file}
             #if this line is added to config file, ez-ipupdate will be launched on startup via init.d
-            echo "daemon" >> $file
-            echo "execute=$0 success" >> $file
+            echo "daemon" >> ${out_file}
+            echo "execute=${0} success" >> ${out_file}
         fi
     fi
 }
@@ -135,72 +135,69 @@ doReadCFG()
     user=""
     pass=""
     ipurl=""
-    file=""
-    [ -f $CFG_disabled ] && file=$CFG_disabled
-    [ -f $CFG ] && file=$CFG
 
-    if [ ! -z $file ];then
-        host=`cat $file 2> /dev/null |grep host |cut -d = -f 2`
-        server=`cat $file 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\'`
-        user=`cat $file 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1 `
-        pass=`cat $file 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2`
+    if [ ! -z ${cfgfile} ];then
+        host=`cat ${cfgfile} 2> /dev/null |grep host |cut -d = -f 2`
+        server=`cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\'`
+        user=`cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1 `
+        pass=`cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2`
     fi
 
-    if [ ! -z $HELPERCFG ];then
-        ipurl=`cat $HELPERCFG 2> /dev/null |grep ^IPURL |awk '{print $2}' |grep -v ^\'\'`
-        updateurl=`cat $HELPERCFG 2> /dev/null |grep POSTURL |awk '{print $2}' |grep -v ^\'\'`
-        basicauth=`cat $HELPERCFG 2> /dev/null |grep POSTAUTH |awk '{print $2}' |grep -v ^\'\'`
-        ignoreCertError=`cat $HELPERCFG 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}' |grep -v ^\'\'`
+    if [ ! -z ${HELPERCFG} ];then
+        ipurl=`cat ${HELPERCFG} 2> /dev/null |grep ^IPURL |awk '{print $2}' |grep -v ^\'\'`
+        updateurl=`cat ${HELPERCFG} 2> /dev/null |grep POSTURL |awk '{print $2}' |grep -v ^\'\'`
+        basicauth=`cat ${HELPERCFG} 2> /dev/null |grep POSTAUTH |awk '{print $2}' |grep -v ^\'\'`
+        ignoreCertError=`cat ${HELPERCFG} 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}' |grep -v ^\'\'`
     fi  
 }
 
 doStatus()
 {
 	PROC=`pgrep ${TOOLNAME}`
-	if [ -f $CRONJOB ];then
+	if [ -f ${CRONJOB} ];then
 	     echo enabled 
-	elif [ ! -z $PROC ];then 
+	elif [ ! -z ${PROC} ];then
 	    echo enabled
 	else
 	    echo disabled
 	fi
-		if [ ! -z $server ];then
-		echo $server
+		if [ ! -z ${server} ];then
+			echo ${server}
 		else
 			echo disabled
 		fi
-	if [ ! -z $host  ];then 
-		echo $host
+	if [ ! -z ${host}  ];then
+		echo ${host}
 		else
 			echo disabled
 		fi
-		if [ ! -z $user ];then
-		echo $user
+		if [ ! -z ${user} ];then
+			echo ${user}
 		else
 			echo disabled
 		fi
-	if [ ! -z $pass  ];then 
-		echo $pass
+	if [ ! -z ${pass}  ];then
+		echo ${pass}
 		else
 			echo disabled
 		fi        
-		if [ ! -z $ipurl ];then
-		echo $ipurl
+		if [ ! -z ${ipurl} ];then
+		echo ${ipurl}
 		else
 			echo disabled
 		fi
-	if [ ! -z $updateurl  ];then 
-		echo $updateurl
+	if [ ! -z ${updateurl}  ];then
+		echo ${updateurl}
 		else
 			echo disabled
 		fi  
-	if [ ! -z $basicauth ];then
-		echo $basicauth
+	if [ ! -z ${basicauth} ];then
+		echo ${basicauth}
 	else
 			echo disabled
 	fi		
-	if [ ! -z $ignoreCertError ];then
-		echo $ignoreCertError 
+	if [ ! -z ${ignoreCertError} ];then
+		echo ${ignoreCertError}
 	else
 		echo disabled
 	fi	
@@ -208,12 +205,12 @@ doStatus()
 
 doGetWANIP()
 {
-    if [ ! -z $ipurl ];then
-        outfile=`mktemp`
-        $WGET $WGETOPTIONS -O $outfile $ipurl
-        wanip=`cat $outfile`
-        rm $outfile
-        [ -z $wanip ] && wanip=${NOIP}
+    if [ ! -z ${ipurl} ];then
+        outfile=$(mktemp)
+		${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
+        wanip=$(cat ${outfile})
+		rm ${outfile}
+    [ -z ${wanip} ] && wanip=${NOIP}
     else
         #no WAN IP found because of missing check URL
         wanip=${NOIP}
@@ -222,30 +219,33 @@ doGetWANIP()
 
 doUpdate()
 {
-	if [ ! -z $server ];then 
-		start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c $file	
+	if [ ! -z ${server} ];then
+		start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c ${cfgfile}
 	fi
 	
-	if [ ! -z $updateurl ];then
+	if [ ! -z ${updateurl} ];then
 		echo "todo"	
 	fi
 }
 
-cmd=$1
+cmd=${1}
 shift
-case $cmd in
+cfgfile="/tmp/none"
+[ -f ${CFG_disabled} ] && cfgfile=${CFG_disabled}
+[ -f ${CFG} ] && cfgfile=${CFG}
+case ${cmd} in
     configure)
-        doGetOpt $@
+        doGetOpt ${@}
         doWriteCFG
     ;;
     start)
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
-        	if [ -f $CFG -a ! -z $(cat $file 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
-            	mv $CFG_disabled $CFG
+			if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
+				mv ${CFG_disabled} ${CFG}
             	/etc/init.d/${TOOLNAME} start        		
 			fi
 			if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
-				echo "*/${UPDATEMINUTES} * * * * root $0 update" > $CRONJOB
+				echo "*/${UPDATEMINUTES} * * * * root $0 update" > ${CRONJOB}
             	$0 update
 			fi
         else
@@ -255,20 +255,17 @@ case $cmd in
     ;;
     get-nat)
         NAT=`cat $HELPERCFG 2> /dev/null |grep ^NAT | awk '{print $2}'`
-        [ -z $NAT ] && NAT="unknown"
-        echo $NAT
+        [ -z ${NAT} ] && NAT="unknown"
+        echo ${NAT}
     ;;
     update)
         doReadCFG
-        oldip=`cat $IPFILE`
+        oldip=`cat ${IPFILE}`
         doGetWANIP
-        echo $wanip > $IPFILE
-        cfgfile="/tmp/none"
-        [ -f $CFG_disabled ] && cfgfile=$CFG_disabled
-        [ -f $CFG ] && cfgfile=$CFG
-        cat $file |grep -v execute > ${cfgfile}.tmp
+        echo ${wanip} > ${IPFILE}
+        cat ${cfgfile} |grep -v execute > ${cfgfile}.tmp
         mv ${cfgfile}.tmp ${cfgfile}
-        echo "execute=$0 success ${wanip}" >> $cfgfile
+        echo "execute=${0} success ${wanip}" >> ${cfgfile}
         #if we know our WAN IP, only update if IP changes
         if [ "${oldip}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
             doUpdate
@@ -277,39 +274,39 @@ case $cmd in
         if [ "${wanip}" = ${NOIP} ];then
             uptime=`cat /proc/uptime |cut -d . -f 1`
             LAST=0
-            [ -f ${LASTUPDATE} ] && LAST=`cat $LASTUPDATE`
-            diff=`expr $uptime - $LAST`
-            if [ $diff -gt $UPDATEMINUTESUNKNOWN ];then
+            [ -f ${LASTUPDATE} ] && LAST=`cat ${LASTUPDATE}`
+            diff=`expr ${uptime} - ${LAST}`
+            if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
                 doUpdate
             fi
         fi
     ;;
     stop)
-        rm $CRONJOB 2> /dev/null
+        rm ${CRONJOB} 2> /dev/null
         /etc/init.d/${TOOLNAME} stop
         kill $(cat ${PIDFILE}) 2> /dev/null
-        mv $CFG $CFG_disabled
+        mv ${CFG} ${CFG_disabled}
     ;;
     success)
         date=`date`
-        echo "last update done ($date)" > $STATUSFILE
-        cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
+        echo "last update done (${date})" > ${STATUSFILE}
+        cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > ${LASTUPDATE}
         #if called from cronjob, the current IP is given as parameter
         if [ $# -eq 1 ];then
-          echo $1 > $IPFILE
+			echo ${1} > ${IPFILE}
         else
-          #if called from ez-ipupdate daemon, no WAN IP is given as parameter
-          doGetWANIP
-          echo $wanip > $IPFILE
+			#if called from ez-ipupdate daemon, no WAN IP is given as parameter
+			doGetWANIP
+			echo ${wanip} > ${IPFILE}
         fi
     ;;
     failed)
         date=`date`
-        echo "last update failed ($date)" > $STATUSFILE
+        echo "last update failed (${date})" > ${STATUSFILE}
     ;;    
     get-last-success)
-        if [ -f $STATUSFILE ];then
-            cat $STATUSFILE
+        if [ -f ${STATUSFILE} ];then
+            cat ${STATUSFILE}
         else
             echo "no successful update recorded since last config change"
         fi
@@ -319,11 +316,11 @@ case $cmd in
 		doStatus			
     ;;
     get-timer)
-        echo $UPDATEMINUTES
+		echo ${UPDATEMINUTES}
     ;;
     clean)
         rm ${CFGDIR}/*
-        rm $CRONJOB
+        rm ${CRONJOB}
     ;;
     *)
         echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed"
