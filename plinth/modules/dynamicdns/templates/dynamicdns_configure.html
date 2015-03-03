@@ -66,6 +66,8 @@
 {% block page_js %}
 
   <script type="text/javascript">
+  var SELFHOST = 'https://carol.selfhost.de/update?username=<Username>&password=<Password>&myip=<Ip>'
+  var NOIP = "http://dynupdate.no-ip.com/nic/update?hostname=<domain>&myip=<Ip>"
   window.onload = function() {mod_form()}
 
 	function show_pass()
@@ -80,6 +82,8 @@
 	{
 		var dropdown = document.getElementById('id_dynamicdns-service_type');
 		var service_type = dropdown.options[dropdown.selectedIndex].value;
+		document.getElementById('id_dynamicdns-use_http_basic_auth').checked = false;
+		document.getElementById('id_dynamicdns-disable_SSL_cert_check').checked = false;
 		if (service_type == 1){
 			document.getElementById('div-dynamicdns-updateurl').style.display = 'none';
 			document.getElementById('div-dynamicdns-gnudip').style.display = 'block';
@@ -88,13 +92,14 @@
 		if (service_type == 2){
 			document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
 			document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
-			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='noip';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value = NOIP;
+			document.getElementById('id_dynamicdns-use_http_basic_auth').checked = true;
 			document.getElementById('id_dynamicdns-dynamicdns_server').value='';
 		}
 		if (service_type == 3){
 			document.getElementById('div-dynamicdns-gnudip').style.display = 'none';
 			document.getElementById('div-dynamicdns-updateurl').style.display = 'block';
-			document.getElementById('id_dynamicdns-dynamicdns_update_url').value='selfhost';
+			document.getElementById('id_dynamicdns-dynamicdns_update_url').value = SELFHOST;
 			document.getElementById('id_dynamicdns-dynamicdns_server').value='';
 		}
 		if (service_type == 4){
