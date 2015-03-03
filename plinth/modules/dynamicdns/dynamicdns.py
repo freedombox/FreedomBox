@@ -71,19 +71,22 @@ class TrimmedCharField(forms.CharField):
 class ConfigureForm(forms.Form):
     """Form to configure the dynamic DNS client"""
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
-                                 required=False,widget=forms.CheckboxInput
+                                 required=False, widget=forms.CheckboxInput
                                 (attrs={'onclick': 'mod_form();'}))
 
-    dynamicdns_service = forms.ChoiceField(label=_('Service type'),
-       help_text=_('Please choose a update protocol according to your provider.\
-                   We recommend the GnudIP protocol. If your provider does not \
-                   support the GnudIP protocol or your provider is not listed \
-                   you may use the update URL of your provider.'),
-                   choices=(('1', 'GnuDIP'), 
-                            ('2', 'noip.com'),
-                            ('3', 'selfhost.bz'),
-                            ('4', 'other Update URL')),
-                   widget=forms.Select(attrs={'onChange':'dropdown()'}))
+    service_type = forms.ChoiceField(label=_('Service type'),
+                                     help_text=_('Please choose a update\
+                                     protocol according to your \
+                                     provider. If your provider does not\
+                                     support the GnudIP protocol or your\
+                                     provider is not listed you may use\
+                                     the update URL of your provider.'),
+                                     choices=(('1', 'GnuDIP'),
+                                             ('2', 'noip.com'),
+                                             ('3', 'selfhost.bz'),
+                                             ('4', 'other Update URL')),
+                                     widget=forms.Select(attrs={'onChange':
+                                                                'dropdown()'}))
 
     dynamicdns_server = TrimmedCharField(
         label=_('GnudIP Server Address'),
@@ -92,23 +95,24 @@ class ConfigureForm(forms.Form):
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
                                       _('Invalid server name'))])
-    
-    dynamicdns_update_url = TrimmedCharField(
-         label=_('Update URL'),
-         required=False,
-         help_text=_('The Variables $User, $Pass, $IP, $Domain may be used \
-                within this URL.</br> Example URL: </br> \
-                https://some.tld/up.php?us=$User&pw=$Pass&ip=$IP&dom=$Domain'))
-    
-    disable_SSL_cert_check = forms.BooleanField(
-                            label=_('accept all SSL certificates'),
-                            help_text=_('use this option if your provider uses\
-                            self signed certificates'),
-                            required=False)
-    
-    use_http_basic_auth = forms.BooleanField(
-                            label=_('use HTTP basic authentication'),
-                            required=False)
+
+    dynamicdns_update_url = TrimmedCharField(label=_('Update URL'),
+                                             required=False,
+                                             help_text=_('The Variables $User\
+                                                         , $Pass, $IP, $Domain\
+                                                          may be used'))
+
+    disable_SSL_cert_check = forms.BooleanField(label=_('accept all SSL \
+                                                        certificates'),
+                                                help_text=_('use this option \
+                                                             if your provider \
+                                                             uses self signed\
+                                                             certificates'),
+                                                required=False)
+
+    use_http_basic_auth = forms.BooleanField(label=_('use HTTP basic \
+                                                      authentication'),
+                                             required=False)
 
     dynamicdns_domain = TrimmedCharField(
         label=_('Domain Name'),
@@ -210,7 +214,7 @@ def get_status():
     output = actions.run('dynamicdns', 'status')
     details = output.split()
     status['enabled'] = (output.split()[0] == 'enabled')
-    
+
     if len(details) > 1:
         if details[1] == 'disabled':
             status['dynamicdns_server'] = ''
@@ -250,7 +254,7 @@ def get_status():
             status['dynamicdns_ipurl'] = details[5]
     else:
         status['dynamicdns_ipurl'] = ''
-        
+
     if len(details) > 6:
         if details[6] == 'disabled':
             status['dynamicdns_update_url'] = ''
@@ -258,23 +262,23 @@ def get_status():
             status['dynamicdns_update_url'] = details[6]
     else:
         status['dynamicdns_update_url'] = ''
-        
+
     if len(details) > 7:
         status['disable_SSL_cert_check'] = (output.split()[7] == 'enabled')
     else:
         status['disable_SSL_cert_check'] = False
-        
+
     if len(details) > 8:
         status['use_http_basic_auth'] = (output.split()[8] == 'enabled')
     else:
         status['use_http_basic_auth'] = False
-        
+
     if not status['dynamicdns_server'] and not status['dynamicdns_update_url']:
-            status['dynamicdns_service'] = '1'
+            status['service_type'] = '1'
     elif not status['dynamicdns_server'] and status['dynamicdns_update_url']:
-            status['dynamicdns_service'] = '4'  
+            status['service_type'] = '4'
     else:
-        status['dynamicdns_service'] = '1'
+        status['service_type'] = '1'
 
     return status
 
@@ -309,15 +313,15 @@ def _apply_changes(request, old_status, new_status):
        old_status['enabled'] != \
        new_status['enabled']:
 
-        disable_ssl_check="disabled"
-        use_http_basic_auth="disabled"
-        
+        disable_ssl_check = "disabled"
+        use_http_basic_auth = "disabled"
+
         if new_status['disable_SSL_cert_check']:
             disable_ssl_check = "enabled"
-            
+
         if new_status['use_http_basic_auth']:
             use_http_basic_auth = "enabled"
-            
+
         _run(['configure', '-s', new_status['dynamicdns_server'],
               '-d', new_status['dynamicdns_domain'],
               '-u', new_status['dynamicdns_user'],
