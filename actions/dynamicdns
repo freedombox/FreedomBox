@@ -91,7 +91,7 @@ doWriteCFG()
     rm ${STATUSFILE} 2> /dev/null
 
     #find the interface (always the default gateway interface)
-    default_interface=`ip route |grep default |awk '{print $5}'`
+    default_interface=$(ip route |grep default |awk '{print $5}')
 
     #store the given options in ez-ipupdate compatible config file
     echo "host=${host}" > ${out_file}
@@ -112,7 +112,7 @@ doWriteCFG()
         echo "NAT unknown" >> ${HELPERCFG}
     else 
         doGetWANIP
-        ISGLOBAL=`ip addr ls ${default_interface} | grep ${wanip}`
+        ISGLOBAL=$(ip addr ls ${default_interface} | grep ${wanip})
         if [ -z ${ISGLOBAL} ];then
             #we are behind NAT
             echo "NAT yes" >> ${HELPERCFG}
@@ -137,23 +137,23 @@ doReadCFG()
     ipurl=""
 
     if [ ! -z ${cfgfile} ];then
-        host=`cat ${cfgfile} 2> /dev/null |grep host |cut -d = -f 2`
-        server=`cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\'`
-        user=`cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1 `
-        pass=`cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2`
+        host=$(cat ${cfgfile} 2> /dev/null |grep host |cut -d = -f 2)
+        server=$(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')
+        user=$(cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 1 )
+        pass=$(cat ${cfgfile} 2> /dev/null |grep user |cut -d = -f 2 |cut -d : -f 2)
     fi
 
     if [ ! -z ${HELPERCFG} ];then
-        ipurl=`cat ${HELPERCFG} 2> /dev/null |grep ^IPURL |awk '{print $2}' |grep -v ^\'\'`
-        updateurl=`cat ${HELPERCFG} 2> /dev/null |grep POSTURL |awk '{print $2}' |grep -v ^\'\'`
-        basicauth=`cat ${HELPERCFG} 2> /dev/null |grep POSTAUTH |awk '{print $2}' |grep -v ^\'\'`
-        ignoreCertError=`cat ${HELPERCFG} 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}' |grep -v ^\'\'`
+        ipurl=$(cat ${HELPERCFG} 2> /dev/null |grep ^IPURL |awk '{print $2}' |grep -v ^\'\')
+        updateurl=$(cat ${HELPERCFG} 2> /dev/null |grep POSTURL |awk '{print $2}' |grep -v ^\'\')
+        basicauth=$(cat ${HELPERCFG} 2> /dev/null |grep POSTAUTH |awk '{print $2}' |grep -v ^\'\')
+        ignoreCertError=$(cat ${HELPERCFG} 2> /dev/null |grep POSTSSLIGNORE |awk '{print $2}' |grep -v ^\'\')
     fi  
 }
 
 doStatus()
 {
-	PROC=`pgrep ${TOOLNAME}`
+	PROC=$(pgrep ${TOOLNAME})
 	if [ -f ${CRONJOB} ];then
 	     echo enabled 
 	elif [ ! -z ${PROC} ];then
@@ -254,13 +254,13 @@ case ${cmd} in
         fi
     ;;
     get-nat)
-        NAT=`cat $HELPERCFG 2> /dev/null |grep ^NAT | awk '{print $2}'`
+        NAT=$(cat $HELPERCFG 2> /dev/null |grep ^NAT | awk '{print $2}')
         [ -z ${NAT} ] && NAT="unknown"
         echo ${NAT}
     ;;
     update)
         doReadCFG
-        oldip=`cat ${IPFILE}`
+        oldip=$(cat ${IPFILE})
         doGetWANIP
         echo ${wanip} > ${IPFILE}
         cat ${cfgfile} |grep -v execute > ${cfgfile}.tmp
@@ -272,10 +272,10 @@ case ${cmd} in
         fi
         #if we don't know our WAN IP do a blind update once a hour
         if [ "${wanip}" = ${NOIP} ];then
-            uptime=`cat /proc/uptime |cut -d . -f 1`
+            uptime=$(cat /proc/uptime |cut -d . -f 1)
             LAST=0
-            [ -f ${LASTUPDATE} ] && LAST=`cat ${LASTUPDATE}`
-            diff=`expr ${uptime} - ${LAST}`
+            [ -f ${LASTUPDATE} ] && LAST=$(cat ${LASTUPDATE})
+            diff=$(expr ${uptime} - ${LAST})
             if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
                 doUpdate
             fi
@@ -288,7 +288,7 @@ case ${cmd} in
         mv ${CFG} ${CFG_disabled}
     ;;
     success)
-        date=`date`
+        date=$(date)
         echo "last update done (${date})" > ${STATUSFILE}
         cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > ${LASTUPDATE}
         #if called from cronjob, the current IP is given as parameter
@@ -301,7 +301,7 @@ case ${cmd} in
         fi
     ;;
     failed)
-        date=`date`
+        date=$(date)
         echo "last update failed (${date})" > ${STATUSFILE}
     ;;    
     get-last-success)
