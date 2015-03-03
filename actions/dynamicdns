@@ -153,6 +153,16 @@ doReadCFG()
     fi  
 }
 
+doReplaceVars()
+{
+    local url=`echo ${updateurl} | sed "s/<Ip>/${wanip}/g"`
+    url=`echo ${url} | sed "s/<Domain>/${host}/g"`
+	url=`echo ${url} | sed "s/<User>/${user}/g"`
+    url=`echo ${url} | sed "s/<Pass>/${pass}/g"`
+    url=`echo ${url} | sed "s/'//g"`
+	updateurl=$url
+}
+
 doStatus()
 {
 	PROC=$(pgrep ${TOOLNAME})
@@ -226,7 +236,16 @@ doUpdate()
 	fi
 	
 	if [ ! -z ${updateurl} ];then
-		echo "todo"	
+		doReplaceVars
+
+		if [ "${basicauth}" = "enabled" ];then
+			wgetoptions=" --user $user --password $pass "
+		fi
+        if [ "${ignoreCertError}" = "enabled" ];then
+			wgetoptions=" --no-check-certificate "
+		fi
+
+		$WGET ${wgetoptions} ${updateurl}
 	fi
 }
 
@@ -241,6 +260,7 @@ case ${cmd} in
         doWriteCFG
     ;;
     start)
+		doGetWANIP
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
 			#if we are not behind a NAT device and we use gnudip, start the daemon tool
 			if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
