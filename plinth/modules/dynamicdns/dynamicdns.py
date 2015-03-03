@@ -70,17 +70,21 @@ class TrimmedCharField(forms.CharField):
 
 class ConfigureForm(forms.Form):
     """Form to configure the dynamic DNS client"""
+
+    hlp_updt_url = 'The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, \
+                    &lt;Domain&gt; may be used.'
+
+    hlp_services = 'Please choose a update protocol according to your \
+                    provider. If your provider does not support the GnudIP \
+                    protocol or your provider is not listed you may use \
+                    the update URL of your provider.'
+
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
                                  required=False, widget=forms.CheckboxInput
                                 (attrs={'onclick': 'mod_form();'}))
 
     service_type = forms.ChoiceField(label=_('Service type'),
-                                     help_text=_('Please choose a update\
-                                     protocol according to your \
-                                     provider. If your provider does not\
-                                     support the GnudIP protocol or your\
-                                     provider is not listed you may use\
-                                     the update URL of your provider.'),
+                                     help_text=_(hlp_services),
                                      choices=(('1', 'GnuDIP'),
                                              ('2', 'noip.com'),
                                              ('3', 'selfhost.bz'),
@@ -98,10 +102,7 @@ class ConfigureForm(forms.Form):
 
     dynamicdns_update_url = TrimmedCharField(label=_('Update URL'),
                                              required=False,
-                                             help_text=_('The Variables <User>\
-                                                         , <Pass>, <Ip>, \
-                                                         <Domain> may be \
-                                                         used'))
+                                             help_text=_(hlp_updt_url))
 
     disable_SSL_cert_check = forms.BooleanField(label=_('accept all SSL \
                                                         certificates'),
