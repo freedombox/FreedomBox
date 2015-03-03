@@ -99,7 +99,7 @@ class ConfigureForm(forms.Form):
     dynamicdns_update_url = TrimmedCharField(label=_('Update URL'),
                                              required=False,
                                              help_text=_('The Variables <User>\
-                                                         , <Pass>, <IP>, \
+                                                         , <Pass>, <Ip>, \
                                                          <Domain> may be \
                                                          used'))
 
