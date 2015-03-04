@@ -72,12 +72,37 @@ class ConfigureForm(forms.Form):
     """Form to configure the dynamic DNS client"""
 
     hlp_updt_url = 'The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, \
-                    &lt;Domain&gt; may be used.'
+                    &lt;Domain&gt; may be used within the URL. For details\
+                    see the update URL templates of the example providers.'
 
     hlp_services = 'Please choose a update protocol according to your \
                     provider. If your provider does not support the GnudIP \
                     protocol or your provider is not listed you may use \
                     the update URL of your provider.'
+
+    hlp_disable_ssl = 'use this option if your provider uses self signed \
+                       certificates'
+
+    hlp_secret = 'You should have been requested to select a password \
+                  when you created the account. Leave this field empty \
+                  if you want to keep your previous configured password.'
+
+    hlp_ipurl = 'Optional Value. If your FreedomBox is not connected \
+                 directly to the Internet (i.e. connected to a NAT \
+                 router) this URL is used to figure out the real Internet \
+                 IP. The URL should simply return the IP where the \
+                 client comes from. Example: \
+                 http://myip.datasystems24.de'
+
+    hlp_user = 'You should have been requested to select a username \
+                when you created the account'
+
+    """ToDo: sync this list with the html template file"""
+    provider_choices = (
+                       ('1', 'GnuDIP'),
+                       ('2', 'noip.com'),
+                       ('3', 'selfhost.bz'),
+                       ('4', 'other Update URL'))
 
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
                                  required=False, widget=forms.CheckboxInput
@@ -85,10 +110,7 @@ class ConfigureForm(forms.Form):
 
     service_type = forms.ChoiceField(label=_('Service type'),
                                      help_text=_(hlp_services),
-                                     choices=(('1', 'GnuDIP'),
-                                             ('2', 'noip.com'),
-                                             ('3', 'selfhost.bz'),
-                                             ('4', 'other Update URL')),
+                                     choices=provider_choices,
                                      widget=forms.Select(attrs={'onChange':
                                                                 'dropdown()'}))
 
@@ -106,10 +128,7 @@ class ConfigureForm(forms.Form):
 
     disable_SSL_cert_check = forms.BooleanField(label=_('accept all SSL \
                                                         certificates'),
-                                                help_text=_('use this option \
-                                                             if your provider \
-                                                             uses self signed\
-                                                             certificates'),
+                                                help_text=_(hlp_disable_ssl),
                                                 required=False)
 
     use_http_basic_auth = forms.BooleanField(label=_('use HTTP basic \
@@ -125,15 +144,12 @@ class ConfigureForm(forms.Form):
 
     dynamicdns_user = TrimmedCharField(
         label=_('Username'),
-        help_text=_('You should have been requested to select a username \
-                     when you created the account'))
+        help_text=_(hlp_user))
 
     dynamicdns_secret = TrimmedCharField(
         label=_('Password'), widget=forms.PasswordInput(),
         required=False,
-        help_text=_('You should have been requested to select a password \
-                     when you created the account. Leave this field empty \
-                     if you want to keep your previous configured password.'))
+        help_text=_(hlp_secret))
 
     showpw = forms.BooleanField(label=_('show password'),
                                 required=False,
@@ -143,12 +159,7 @@ class ConfigureForm(forms.Form):
     dynamicdns_ipurl = TrimmedCharField(
         label=_('IP check URL'),
         required=False,
-        help_text=_('Optional Value. If your FreedomBox is not connected \
-                     directly to the Internet (i.e. connected to a NAT \
-                     router) this URL is used to figure out the real Internet \
-                     IP. The URL should simply return the IP where the \
-                     client comes from. Example: \
-                     http://myip.datasystems24.de'),
+        help_text=_(hlp_ipurl),
         validators=[
             validators.URLValidator(schemes=['http', 'https', 'ftp'])])
 
