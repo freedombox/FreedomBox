@@ -34,7 +34,7 @@ doGetOpt()
 {
     basicauth=0
     ignoreCertError=0
-	
+
     while getopts ":s:d:u:p:I:U:c:b:" opt; do
         case ${opt} in
             s)
@@ -157,73 +157,73 @@ doReplaceVars()
 {
     local url=`echo ${updateurl} | sed "s/<Ip>/${wanip}/g"`
     url=`echo ${url} | sed "s/<Domain>/${host}/g"`
-	url=`echo ${url} | sed "s/<User>/${user}/g"`
+    url=`echo ${url} | sed "s/<User>/${user}/g"`
     url=`echo ${url} | sed "s/<Pass>/${pass}/g"`
     url=`echo ${url} | sed "s/'//g"`
-	updateurl=$url
+    updateurl=$url
 }
 
 doStatus()
 {
-	PROC=$(pgrep ${TOOLNAME})
-	if [ -f ${CRONJOB} ];then
-	     echo $ENABLED_STRING 
-	elif [ ! -z ${PROC} ];then
-	    echo $ENABLED_STRING
-	else
-	    echo $DISABLED_STRING
-	fi
-		if [ ! -z ${server} ];then
-			echo ${server}
-		else
-			echo $DISABLED_STRING
-		fi
-	if [ ! -z ${host}  ];then
-		echo ${host}
-		else
-			echo $DISABLED_STRING
-		fi
-		if [ ! -z ${user} ];then
-			echo ${user}
-		else
-			echo $DISABLED_STRING
-		fi
-	if [ ! -z ${pass}  ];then
-		echo ${pass}
-		else
-			echo $DISABLED_STRING
-		fi        
-		if [ ! -z ${ipurl} ];then
-		echo ${ipurl}
-		else
-			echo $DISABLED_STRING
-		fi
-	if [ ! -z ${updateurl}  ];then
-		local url=`echo ${updateurl} | sed "s/'//g"`
-		echo ${url}
-		else
-			echo $DISABLED_STRING
-		fi  
-	if [ ! -z ${basicauth} ];then
-		echo ${basicauth}
-	else
-			echo $DISABLED_STRING
-	fi		
-	if [ ! -z ${ignoreCertError} ];then
-		echo ${ignoreCertError}
-	else
-		echo $DISABLED_STRING
-	fi	
+    PROC=$(pgrep ${TOOLNAME})
+    if [ -f ${CRONJOB} ];then
+         echo $ENABLED_STRING
+    elif [ ! -z ${PROC} ];then
+        echo $ENABLED_STRING
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${server} ];then
+        echo ${server}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${host}  ];then
+        echo ${host}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${user} ];then
+        echo ${user}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${pass}  ];then
+        echo ${pass}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${ipurl} ];then
+       echo ${ipurl}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${updateurl}  ];then
+        local url=`echo ${updateurl} | sed "s/'//g"`
+        echo ${url}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${basicauth} ];then
+        echo ${basicauth}
+    else
+        echo $DISABLED_STRING
+    fi
+    if [ ! -z ${ignoreCertError} ];then
+        echo ${ignoreCertError}
+    else
+        echo $DISABLED_STRING
+    fi
 }
 
 doGetWANIP()
 {
     if [ ! -z ${ipurl} ];then
         outfile=$(mktemp)
-	${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
+        ${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
         wanip=$(cat ${outfile})
-	rm ${outfile}
-    [ -z ${wanip} ] && wanip=${NOIP}
+        rm ${outfile}
+        [ -z ${wanip} ] && wanip=${NOIP}
     else
         #no WAN IP found because of missing check URL
         wanip=${NOIP}
@@ -232,28 +232,28 @@ doGetWANIP()
 
 doUpdate()
 {
-	if [ ! -z ${server} ];then
-		start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c ${cfgfile}
-	fi
-	
-	if [ ! -z ${updateurl} ];then
-		doReplaceVars
+    if [ ! -z ${server} ];then
+        start-stop-daemon -S -x ${UPDATE_TOOL} -m -p ${PIDFILE} -- -c ${cfgfile}
+    fi
 
-		if [ "${basicauth}" = "enabled" ];then
-			local wgetoptions=" --user $user --password $pass "
-		fi
-		if [ "${ignoreCertError}" = "enabled" ];then
-			local wgetoptions=" --no-check-certificate "
-		fi
+    if [ ! -z ${updateurl} ];then
+        doReplaceVars
 
-		$WGET ${wgetoptions} "${updateurl}"
-                #ToDo: check the returning text from WEB Server. User need to give expected string.
-		if [ $? -eq 0 ];then
-                    ${0} success $wanip
-                else
-                    ${0} failed
-                fi
-	fi
+        if [ "${basicauth}" = "enabled" ];then
+            local wgetoptions=" --user $user --password $pass "
+        fi
+        if [ "${ignoreCertError}" = "enabled" ];then
+            local wgetoptions=" --no-check-certificate "
+        fi
+
+        $WGET ${wgetoptions} "${updateurl}"
+        #ToDo: check the returning text from WEB Server. User need to give expected string.
+        if [ $? -eq 0 ];then
+            ${0} success $wanip
+        else
+            ${0} failed
+        fi
+    fi
 }
 
 cmd=${1}
@@ -267,21 +267,21 @@ case ${cmd} in
         doWriteCFG
     ;;
     start)
-		doGetWANIP
+        doGetWANIP
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
-			#if we are not behind a NAT device and we use gnudip, start the daemon tool
-			if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
-				mv ${CFG_disabled} ${CFG}
-		/etc/init.d/${TOOLNAME} start
-			fi
-			#if we are not behind a NAT device and we use update-URL, add a cronjob 
-			#(daemon tool does not support update-URL feature)
-			if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
-				echo "*/${UPDATEMINUTES} * * * * root $0 update" > ${CRONJOB}
-		$0 update
-			fi
+            #if we are not behind a NAT device and we use gnudip, start the daemon tool
+            if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
+                mv ${CFG_disabled} ${CFG}
+                /etc/init.d/${TOOLNAME} start
+            fi
+            #if we are not behind a NAT device and we use update-URL, add a cronjob
+            #(daemon tool does not support update-URL feature)
+            if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
+                echo "*/${UPDATEMINUTES} * * * * root $0 update" > ${CRONJOB}
+                $0 update
+            fi
         else
-			#if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
+            #if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
             echo "*/${UPDATEMINUTES} * * * * root $0 update" > $CRONJOB
             $0 update
         fi
@@ -327,11 +327,11 @@ case ${cmd} in
         cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > ${LASTUPDATE}
         #if called from cronjob, the current IP is given as parameter
         if [ $# -eq 1 ];then
-			echo ${1} > ${IPFILE}
+            echo ${1} > ${IPFILE}
         else
-			#if called from ez-ipupdate daemon, no WAN IP is given as parameter
-			doGetWANIP
-			echo ${wanip} > ${IPFILE}
+            #if called from ez-ipupdate daemon, no WAN IP is given as parameter
+            doGetWANIP
+            echo ${wanip} > ${IPFILE}
         fi
     ;;
     failed)
@@ -347,10 +347,10 @@ case ${cmd} in
     ;;
     status)
         doReadCFG
-		doStatus			
+        doStatus
     ;;
     get-timer)
-		echo ${UPDATEMINUTES}
+        echo ${UPDATEMINUTES}
     ;;
     clean)
         rm ${CFGDIR}/*
