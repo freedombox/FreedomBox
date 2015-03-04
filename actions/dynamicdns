@@ -32,8 +32,8 @@ PIDFILE="/var/run/ez-ipupdate.pid"
 
 doGetOpt()
 {
-	basicauth=0
-	ignoreCertError=0
+    basicauth=0
+    ignoreCertError=0
 	
     while getopts ":s:d:u:p:I:U:c:b:" opt; do
         case ${opt} in
@@ -220,9 +220,9 @@ doGetWANIP()
 {
     if [ ! -z ${ipurl} ];then
         outfile=$(mktemp)
-		${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
+	${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
         wanip=$(cat ${outfile})
-		rm ${outfile}
+	rm ${outfile}
     [ -z ${wanip} ] && wanip=${NOIP}
     else
         #no WAN IP found because of missing check URL
@@ -247,7 +247,12 @@ doUpdate()
 		fi
 
 		$WGET ${wgetoptions} "${updateurl}"
-		[ $? -eq 0 ] && ${0} success
+                #ToDo: check the returning text from WEB Server. User need to give expected string.
+		if [ $? -eq 0 ];then
+                    ${0} success $wanip
+                else
+                    ${0} failed
+                fi
 	fi
 }
 
@@ -267,13 +272,13 @@ case ${cmd} in
 			#if we are not behind a NAT device and we use gnudip, start the daemon tool
 			if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
 				mv ${CFG_disabled} ${CFG}
-            	/etc/init.d/${TOOLNAME} start        		
+		/etc/init.d/${TOOLNAME} start
 			fi
 			#if we are not behind a NAT device and we use update-URL, add a cronjob 
 			#(daemon tool does not support update-URL feature)
 			if [ ! -z $(cat $HELPERCFG |grep ^POSTURL | awk '{print $2}') ];then
 				echo "*/${UPDATEMINUTES} * * * * root $0 update" > ${CRONJOB}
-            	$0 update
+		$0 update
 			fi
         else
 			#if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
@@ -290,6 +295,7 @@ case ${cmd} in
         doReadCFG
         oldip=$(cat ${IPFILE})
         doGetWANIP
+        echo  ${IPFILE}
         echo ${wanip} > ${IPFILE}
         cat ${cfgfile} |grep -v execute > ${cfgfile}.tmp
         mv ${cfgfile}.tmp ${cfgfile}
