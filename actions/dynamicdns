@@ -247,6 +247,7 @@ doUpdate()
 		fi
 
 		$WGET ${wgetoptions} ${updateurl}
+		[ $? -eq 0 ] && ${0} success
 	fi
 }
 
