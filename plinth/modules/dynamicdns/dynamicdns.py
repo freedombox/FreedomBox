@@ -166,7 +166,13 @@ class ConfigureForm(forms.Form):
     def clean(self):
         cleaned_data = super(ConfigureForm, self).clean()
         dynamicdns_secret = cleaned_data.get('dynamicdns_secret')
+        dynamicdns_update_url = cleaned_data.get('dynamicdns_update_url')
+        dynamicdns_server = cleaned_data.get('dynamicdns_server')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
+
+        if not dynamicdns_update_url and not dynamicdns_server:
+            raise forms.ValidationError('please give update URL or \
+                                         a GnuDIP Server')
 
         if not dynamicdns_secret and not old_dynamicdns_secret:
             raise forms.ValidationError('please give a password')
