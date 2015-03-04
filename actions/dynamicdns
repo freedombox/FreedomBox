@@ -240,13 +240,13 @@ doUpdate()
 		doReplaceVars
 
 		if [ "${basicauth}" = "enabled" ];then
-			wgetoptions=" --user $user --password $pass "
+			local wgetoptions=" --user $user --password $pass "
 		fi
-        if [ "${ignoreCertError}" = "enabled" ];then
-			wgetoptions=" --no-check-certificate "
+		if [ "${ignoreCertError}" = "enabled" ];then
+			local wgetoptions=" --no-check-certificate "
 		fi
 
-		$WGET ${wgetoptions} ${updateurl}
+		$WGET ${wgetoptions} "${updateurl}"
 		[ $? -eq 0 ] && ${0} success
 	fi
 }
