@@ -26,7 +26,8 @@
     {% csrf_token %}
     <div id='dynamicdns-no-js'>
       You have disabled Javascript. Dynamic form mode is disabled and 
-      some helper functions may not work <br> (but the main functionality should work)
+      some helper functions may not work <br>
+      (but the main functionality should work)
       <br><hr>
     </div>
 
@@ -63,8 +64,8 @@
       });
 
       $('#id_dynamicdns-showpw').change(function() {
-        //changing type attribute from password to text is prevented by most browsers
-        //make a new form field works for me
+        //changing type attribute from password to text is prevented by
+        //most browsers make a new form field works for me
         if ($('#id_dynamicdns-showpw').prop('checked')) {
               $('#id_dynamicdns-dynamicdns_secret').replaceWith(
                       $('#id_dynamicdns-dynamicdns_secret').clone().attr(
@@ -78,8 +79,10 @@
 
       function configure_dropdown()
       {
-        var SELFHOST = 'https://carol.selfhost.de/update?username=<User>&password=<Pass>&myip=<Ip>'
-        var NOIP = 'http://dynupdate.no-ip.com/nic/update?hostname=<Domain>&myip=<Ip>'
+        var SELFHOST = 'https://carol.selfhost.de/update?username=<User>&' +
+                       'password=<Pass>&myip=<Ip>'
+        var NOIP = 'http://dynupdate.no-ip.com/nic/update?hostname=<' +
+                   'Domain>&myip=<Ip>'
 
         if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
           document.getElementById('id_dynamicdns-dynamicdns_update_url').value = '';
