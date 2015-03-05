@@ -54,7 +54,11 @@ doGetOpt()
     while getopts ":s:d:u:p:I:U:c:b:" opt; do
         case ${opt} in
             s)
-                server=${OPTARG}
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    server=${OPTARG}
+                else
+                    server=""
+                fi
             ;;
             d)
                 host=${OPTARG}

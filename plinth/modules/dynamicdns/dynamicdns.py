@@ -29,6 +29,7 @@ from plinth import cfg
 from plinth import package
 
 LOGGER = logging.getLogger(__name__)
+EMPTYSTRING = 'none'
 
 subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
                'text': _('About')},
@@ -170,12 +171,15 @@ class ConfigureForm(forms.Form):
         dynamicdns_server = cleaned_data.get('dynamicdns_server')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
+        """Todo: this is not working!! will see tomorrow why"""
         if not dynamicdns_update_url and not dynamicdns_server:
             raise forms.ValidationError('please give update URL or \
                                          a GnuDIP Server')
+            LOGGER.info('no server address given')
 
         if not dynamicdns_secret and not old_dynamicdns_secret:
             raise forms.ValidationError('please give a password')
+            LOGGER.info('no password given')
 
 
 @login_required
@@ -311,27 +315,15 @@ def _apply_changes(request, old_status, new_status):
         new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
 
     if new_status['dynamicdns_ipurl'] == '':
-        new_status['dynamicdns_ipurl'] = 'none'
+        new_status['dynamicdns_ipurl'] = EMPTYSTRING
 
-    if old_status['dynamicdns_server'] != \
-       new_status['dynamicdns_server'] or \
-       old_status['dynamicdns_domain'] != \
-       new_status['dynamicdns_domain'] or \
-       old_status['dynamicdns_user'] != \
-       new_status['dynamicdns_user'] or \
-       old_status['dynamicdns_secret'] != \
-       new_status['dynamicdns_secret'] or \
-       old_status['dynamicdns_ipurl'] != \
-       new_status['dynamicdns_ipurl'] or \
-       old_status['dynamicdns_update_url'] != \
-       new_status['dynamicdns_update_url'] or \
-       old_status['disable_SSL_cert_check'] != \
-       new_status['disable_SSL_cert_check'] or \
-       old_status['use_http_basic_auth'] != \
-       new_status['use_http_basic_auth'] or \
-       old_status['enabled'] != \
-       new_status['enabled']:
+    if new_status['dynamicdns_update_url'] == '':
+        new_status['dynamicdns_update_url'] = EMPTYSTRING
 
+    if new_status['dynamicdns_server'] == '':
+        new_status['dynamicdns_server'] = EMPTYSTRING
+
+    if old_status != new_status:
         disable_ssl_check = "disabled"
         use_http_basic_auth = "disabled"
 
@@ -357,6 +349,8 @@ def _apply_changes(request, old_status, new_status):
 
         messages.success(request,
                          _('Dynamic DNS configuration is updated!'))
+    else:
+        LOGGER.info('nothing changed')
 
 
 def _run(arguments, superuser=False):
