@@ -103,17 +103,14 @@ class ConfigureForm(forms.Form):
                        ('1', 'GnuDIP'),
                        ('2', 'noip.com'),
                        ('3', 'selfhost.bz'),
-                       ('4', 'other Update URL'))
+                       ('4', 'other update URL'))
 
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
-                                 required=False, widget=forms.CheckboxInput
-                                (attrs={'onclick': 'mod_form();'}))
+                                 required=False)
 
     service_type = forms.ChoiceField(label=_('Service type'),
                                      help_text=_(hlp_services),
-                                     choices=provider_choices,
-                                     widget=forms.Select(attrs={'onChange':
-                                                                'dropdown()'}))
+                                     choices=provider_choices)
 
     dynamicdns_server = TrimmedCharField(
         label=_('GnudIP Server Address'),
@@ -153,9 +150,7 @@ class ConfigureForm(forms.Form):
         help_text=_(hlp_secret))
 
     showpw = forms.BooleanField(label=_('show password'),
-                                required=False,
-                                widget=forms.CheckboxInput
-                                (attrs={'onclick': 'show_pass();'}))
+                                required=False)
 
     dynamicdns_ipurl = TrimmedCharField(
         label=_('IP check URL'),
