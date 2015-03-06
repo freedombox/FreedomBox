@@ -85,7 +85,6 @@
                    'Domain>&myip=<Ip>'
 
         if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
-          document.getElementById('id_dynamicdns-dynamicdns_update_url').value = '';
           $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
           $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
           $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').hide();
@@ -97,6 +96,9 @@
           $('#id_dynamicdns-dynamicdns_server').closest('.form-group').hide();
           if ($("#id_dynamicdns-service_type option:selected").text() == "noip.com") {
             $('#id_dynamicdns-dynamicdns_update_url').val(NOIP);
+            $('#id_dynamicdns-use_http_basic_auth').prop('checked', true);
+          }else{
+            $('#id_dynamicdns-use_http_basic_auth').prop('checked', false);
           }
           if ($("#id_dynamicdns-service_type option:selected").text() == "selfhost.bz") {
             $('#id_dynamicdns-dynamicdns_update_url').val(SELFHOST);

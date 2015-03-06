@@ -318,6 +318,11 @@ def _apply_changes(request, old_status, new_status):
     if new_status['dynamicdns_server'] == '':
         new_status['dynamicdns_server'] = EMPTYSTRING
 
+    if new_status['service_type'] == 'GnuDIP':
+        new_status['dynamicdns_ipurl'] = EMPTYSTRING
+    else:
+        new_status['dynamicdns_server'] = EMPTYSTRING
+
     if old_status != new_status:
         disable_ssl_check = "disabled"
         use_http_basic_auth = "disabled"
