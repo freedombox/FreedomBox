@@ -173,7 +173,6 @@ class ConfigureForm(forms.Form):
         else:
             dynamicdns_server = ""
 
-        """Todo: this is not working!! will see tomorrow why"""
         if not dynamicdns_update_url and not dynamicdns_server:
             raise forms.ValidationError('please give update URL or \
                                          a GnuDIP Server')
@@ -323,6 +322,11 @@ def _apply_changes(request, old_status, new_status):
         new_status['dynamicdns_update_url'] = EMPTYSTRING
 
     if new_status['dynamicdns_server'] == '':
+        new_status['dynamicdns_server'] = EMPTYSTRING
+
+    if new_status['service_type'] == '1':
+        new_status['dynamicdns_update_url'] = EMPTYSTRING
+    else:
         new_status['dynamicdns_server'] = EMPTYSTRING
 
     if old_status != new_status:
