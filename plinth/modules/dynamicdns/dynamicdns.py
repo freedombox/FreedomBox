@@ -103,7 +103,8 @@ class ConfigureForm(forms.Form):
                        ('1', 'GnuDIP'),
                        ('2', 'noip.com'),
                        ('3', 'selfhost.bz'),
-                       ('4', 'other update URL'))
+                       ('4', 'freedns.afraid.org'),
+                       ('5', 'other update URL'))
 
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
                                  required=False)
@@ -294,7 +295,7 @@ def get_status():
     if not status['dynamicdns_server'] and not status['dynamicdns_update_url']:
             status['service_type'] = '1'
     elif not status['dynamicdns_server'] and status['dynamicdns_update_url']:
-            status['service_type'] = '4'
+            status['service_type'] = '5'
     else:
         status['service_type'] = '1'
 

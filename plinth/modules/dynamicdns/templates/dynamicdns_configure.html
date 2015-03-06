@@ -41,13 +41,20 @@
 
 {% block page_js %}
   <script type="text/javascript">
+
     (function($) {
+      var SELFHOST = 'https://carol.selfhost.de/update?username=<User>&' +
+                     'password=<Pass>&myip=<Ip>'
+      var NOIP     = 'http://dynupdate.no-ip.com/nic/update?hostname=' +
+                     '<Domain>&myip=<Ip>'
+      var FREEDNS  = 'http://freedns.afraid.org/dynamic/update.php?' +
+                     '_YOURAPIKEYHERE_'
       $('#dynamicdns-no-js').hide();
       $('.form-group').hide();
       $('#id_dynamicdns-enabled').closest('.form-group').show();
       if ($('#id_dynamicdns-enabled').prop('checked')) {
         show_all();
-        configure_dropdown();
+
       }
 
       $('#id_dynamicdns-enabled').change(function() {
@@ -79,11 +86,6 @@
 
       function configure_dropdown()
       {
-        var SELFHOST = 'https://carol.selfhost.de/update?username=<User>&' +
-                       'password=<Pass>&myip=<Ip>'
-        var NOIP = 'http://dynupdate.no-ip.com/nic/update?hostname=<' +
-                   'Domain>&myip=<Ip>'
-
         if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
           $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
           $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
@@ -103,6 +105,9 @@
           if ($("#id_dynamicdns-service_type option:selected").text() == "selfhost.bz") {
             $('#id_dynamicdns-dynamicdns_update_url').val(SELFHOST);
           }
+          if ($("#id_dynamicdns-service_type option:selected").text() == "freedns.afraid.org") {
+              $('#id_dynamicdns-dynamicdns_update_url').val(FREEDNS);
+            }
           if ($("#id_dynamicdns-service_type option:selected").text() == "other update URL") {
             $('#id_dynamicdns-dynamicdns_update_url').val('');
           }
