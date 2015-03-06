@@ -319,7 +319,7 @@ def _apply_changes(request, old_status, new_status):
     if new_status['dynamicdns_server'] == '':
         new_status['dynamicdns_server'] = EMPTYSTRING
 
-    if new_status['service_type'] == 'GnuDIP':
+    if new_status['service_type'] == '1':
         new_status['dynamicdns_ipurl'] = EMPTYSTRING
     else:
         new_status['dynamicdns_server'] = EMPTYSTRING
