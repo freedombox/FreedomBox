@@ -168,16 +168,19 @@ class ConfigureForm(forms.Form):
         service_type = cleaned_data.get('service_type')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
+        """clear the fields which are not in use"""
         if service_type == '1':
             dynamicdns_update_url = ""
         else:
             dynamicdns_server = ""
 
+        """check if gnudip server or update URL is filled"""
         if not dynamicdns_update_url and not dynamicdns_server:
             raise forms.ValidationError('please give update URL or \
                                          a GnuDIP Server')
             LOGGER.info('no server address given')
 
+        """check if a password was set before or a password is set now"""
         if not dynamicdns_secret and not old_dynamicdns_secret:
             raise forms.ValidationError('please give a password')
             LOGGER.info('no password given')
