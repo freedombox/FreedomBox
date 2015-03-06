@@ -269,7 +269,7 @@ doGetWANIP()
 # this function is called via cronjob
 doUpdate()
 {
-    dnsentry=$(nslookup ${host}|tail -n2|grep A|sed s/[^0-9.]//g)
+    local dnsentry=$(nslookup ${host}|tail -n2|grep A|sed s/[^0-9.]//g)
     if [ "${dnsentry}" =  "${wanip}" ];then
         return
     fi
@@ -335,7 +335,7 @@ case ${cmd} in
     ;;
     update)
         doReadCFG
-        oldip=$(cat ${IPFILE})
+        local dnsentry=$(nslookup ${host}|tail -n2|grep A|sed s/[^0-9.]//g)
         doGetWANIP
         echo  ${IPFILE}
         echo ${wanip} > ${IPFILE}
@@ -343,7 +343,7 @@ case ${cmd} in
         mv ${cfgfile}.tmp ${cfgfile}
         echo "execute=${0} success ${wanip}" >> ${cfgfile}
         # if we know our WAN IP, only update if IP changes
-        if [ "${oldip}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
+        if [ "${dnsentry}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
             doUpdate
         fi
         # if we don't know our WAN IP do a blind update once a hour
