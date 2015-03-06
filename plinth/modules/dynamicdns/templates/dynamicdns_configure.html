@@ -49,12 +49,18 @@
                      '<Domain>&myip=<Ip>'
       var FREEDNS  = 'http://freedns.afraid.org/dynamic/update.php?' +
                      '_YOURAPIKEYHERE_'
+
+      //hide javascript warning
       $('#dynamicdns-no-js').hide();
+      //hide ALL form fields
       $('.form-group').hide();
+      //show the enable checkbox
       $('#id_dynamicdns-enabled').closest('.form-group').show();
       if ($('#id_dynamicdns-enabled').prop('checked')) {
+      //show all form fields
         show_all();
-
+        //set the selectbox to the last configured value
+        select_service();
       }
 
       $('#id_dynamicdns-enabled').change(function() {
@@ -83,6 +89,31 @@
                               'type', 'password'));
         }
       });
+
+      function select_service()
+      {
+        if ( $("#id_dynamicdns-dynamicdns_server").val().length == 0 ) {
+          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').show();
+          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').show();
+          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').show();
+          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').hide();
+          if($("#id_dynamicdns-dynamicdns_update_url").val() == NOIP){
+            $("#id_dynamicdns-service_type").val(2);
+          }else if($("#id_dynamicdns-dynamicdns_update_url").val() == SELFHOST){
+            $("#id_dynamicdns-service_type").val(3);
+          }else if ($("#id_dynamicdns-dynamicdns_update_url").val() == FREEDNS){
+            $("#id_dynamicdns-service_type").val(4);
+          }else{
+            $("#id_dynamicdns-service_type option:selected").text("other update URL")
+          }
+        }else{
+          $("#id_dynamicdns-service_type").val(1);
+          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
+          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
+          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').hide();
+          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').show();
+        }
+      }
 
       function configure_dropdown()
       {
