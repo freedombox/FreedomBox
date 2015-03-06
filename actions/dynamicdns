@@ -256,7 +256,7 @@ doGetWANIP()
     if [ ! -z ${ipurl} ];then
         outfile=$(mktemp)
         ${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}
-        wanip=$(cat ${outfile})
+        wanip=$(cat ${outfile}|sed s/[^0-9.]//g)
         rm ${outfile}
         [ -z ${wanip} ] && wanip=${NOIP}
     else
