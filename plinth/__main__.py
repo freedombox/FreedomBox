@@ -40,19 +40,20 @@ LOGGER = logging.getLogger(__name__)
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Plinth web interface for FreedomBox')
+        description='Plinth web interface for FreedomBox',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '--pidfile', default='plinth.pid',
+        '--pidfile', default=cfg.pidfile,
         help='specify a file in which the server may write its pid')
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument(
-        '--server_dir', default='/',
+        '--server_dir', default=cfg.server_dir,
         help='web server path under which to serve')
     parser.add_argument(
-        '--debug', action='store_true', default=False,
+        '--debug', action='store_true', default=cfg.debug,
         help='enable debugging and run server *insecurely*')
     parser.add_argument(
-        '--no-daemon', action='store_true', default=False,
+        '--no-daemon', action='store_true', default=cfg.no_daemon,
         help='do not start as a daemon')
 
     args = parser.parse_args()
@@ -239,9 +240,9 @@ def configure_django():
 
 def main():
     """Intialize and start the application"""
-    parse_arguments()
-
     cfg.read()
+
+    parse_arguments()
 
     setup_logging()
 
@@ -250,6 +251,7 @@ def main():
     configure_django()
 
     LOGGER.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
+    LOGGER.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
 

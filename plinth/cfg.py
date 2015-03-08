@@ -78,6 +78,7 @@ def read():
                     ('Path', 'status_log_file'),
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),
+                    ('Path', 'server_dir'),
                     ('Network', 'host'),
                     ('Network', 'port'),
                     ('Network', 'secure_proxy_ssl_header'),
