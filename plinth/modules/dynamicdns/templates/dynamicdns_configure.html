@@ -78,7 +78,26 @@
       });
 
       $('#id_dynamicdns-service_type').change(function() {
-        configure_dropdown();
+        if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
+            set_gnudip_mode()
+          }else{
+            set_update_url_mode();
+            if ($("#id_dynamicdns-service_type option:selected").text() == "noip.com") {
+              $('#id_dynamicdns-dynamicdns_update_url').val(NOIP);
+              $('#id_dynamicdns-use_http_basic_auth').prop('checked', true);
+            }else{
+              $('#id_dynamicdns-use_http_basic_auth').prop('checked', false);
+            }
+            if ($("#id_dynamicdns-service_type option:selected").text() == "selfhost.bz") {
+              $('#id_dynamicdns-dynamicdns_update_url').val(SELFHOST);
+            }
+            if ($("#id_dynamicdns-service_type option:selected").text() == "freedns.afraid.org") {
+                $('#id_dynamicdns-dynamicdns_update_url').val(FREEDNS);
+              }
+            if ($("#id_dynamicdns-service_type option:selected").text() == "other update URL") {
+              $('#id_dynamicdns-dynamicdns_update_url').val('');
+            }
+          }
       });
 
       $('#id_dynamicdns-showpw').change(function() {
@@ -111,30 +130,6 @@
         }else{
           $("#id_dynamicdns-service_type").val(1);
           set_gnudip_mode();
-        }
-      }
-
-      function configure_dropdown()
-      {
-        if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
-          set_gnudip_mode()
-        }else{
-          set_update_url_mode();
-          if ($("#id_dynamicdns-service_type option:selected").text() == "noip.com") {
-            $('#id_dynamicdns-dynamicdns_update_url').val(NOIP);
-            $('#id_dynamicdns-use_http_basic_auth').prop('checked', true);
-          }else{
-            $('#id_dynamicdns-use_http_basic_auth').prop('checked', false);
-          }
-          if ($("#id_dynamicdns-service_type option:selected").text() == "selfhost.bz") {
-            $('#id_dynamicdns-dynamicdns_update_url').val(SELFHOST);
-          }
-          if ($("#id_dynamicdns-service_type option:selected").text() == "freedns.afraid.org") {
-              $('#id_dynamicdns-dynamicdns_update_url').val(FREEDNS);
-            }
-          if ($("#id_dynamicdns-service_type option:selected").text() == "other update URL") {
-            $('#id_dynamicdns-dynamicdns_update_url').val('');
-          }
         }
       }
 
