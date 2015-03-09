@@ -174,16 +174,17 @@ class ConfigureForm(forms.Form):
         else:
             dynamicdns_server = ""
 
-        """check if gnudip server or update URL is filled"""
-        if not dynamicdns_update_url and not dynamicdns_server:
-            raise forms.ValidationError('please give update URL or \
-                                         a GnuDIP Server')
-            LOGGER.info('no server address given')
+        if cleaned_data.get('enabled'):
+            """check if gnudip server or update URL is filled"""
+            if not dynamicdns_update_url and not dynamicdns_server:
+                raise forms.ValidationError('please give update URL or \
+                                             a GnuDIP Server')
+                LOGGER.info('no server address given')
 
-        """check if a password was set before or a password is set now"""
-        if not dynamicdns_secret and not old_dynamicdns_secret:
-            raise forms.ValidationError('please give a password')
-            LOGGER.info('no password given')
+            """check if a password was set before or a password is set now"""
+            if not dynamicdns_secret and not old_dynamicdns_secret:
+                raise forms.ValidationError('please give a password')
+                LOGGER.info('no password given')
 
 
 @login_required
