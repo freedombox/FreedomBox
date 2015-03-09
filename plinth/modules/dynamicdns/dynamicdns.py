@@ -137,12 +137,14 @@ class ConfigureForm(forms.Form):
     dynamicdns_domain = TrimmedCharField(
         label=_('Domain Name'),
         help_text=_('Example: hostname.sds-ip.de'),
+        required=False,
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
                                       _('Invalid domain name'))])
 
     dynamicdns_user = TrimmedCharField(
         label=_('Username'),
+        required=False,
         help_text=_(hlp_user))
 
     dynamicdns_secret = TrimmedCharField(
@@ -164,6 +166,8 @@ class ConfigureForm(forms.Form):
         cleaned_data = super(ConfigureForm, self).clean()
         dynamicdns_secret = cleaned_data.get('dynamicdns_secret')
         dynamicdns_update_url = cleaned_data.get('dynamicdns_update_url')
+        dynamicdns_user = cleaned_data.get('dynamicdns_user')
+        dynamicdns_domain = cleaned_data.get('dynamicdns_domain')
         dynamicdns_server = cleaned_data.get('dynamicdns_server')
         service_type = cleaned_data.get('service_type')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
@@ -181,8 +185,15 @@ class ConfigureForm(forms.Form):
                                              a GnuDIP Server')
                 LOGGER.info('no server address given')
 
+            if dynamicdns_server and not dynamicdns_user:
+                raise forms.ValidationError('please give GnuDIP username')
+
+            if dynamicdns_server and not dynamicdns_domain:
+                raise forms.ValidationError('please give GnuDIP domain')
+
             """check if a password was set before or a password is set now"""
-            if not dynamicdns_secret and not old_dynamicdns_secret:
+            if (dynamicdns_server and not dynamicdns_secret
+               and not old_dynamicdns_secret):
                 raise forms.ValidationError('please give a password')
                 LOGGER.info('no password given')
 
@@ -247,7 +258,7 @@ def get_status():
         if details[1] == 'disabled':
             status['dynamicdns_server'] = ''
         else:
-            status['dynamicdns_server'] = details[1]
+            status['dynamicdns_server'] = details[1].replace("'", "")
     else:
         status['dynamicdns_server'] = ''
 
@@ -256,6 +267,7 @@ def get_status():
             status['dynamicdns_domain'] = ''
         else:
             status['dynamicdns_domain'] = details[2]
+            status['dynamicdns_domain'] = details[2].replace("'", "")
     else:
         status['dynamicdns_domain'] = ''
 
@@ -263,7 +275,7 @@ def get_status():
         if details[3] == 'disabled':
             status['dynamicdns_user'] = ''
         else:
-            status['dynamicdns_user'] = details[3]
+            status['dynamicdns_user'] = details[3].replace("'", "")
     else:
         status['dynamicdns_user'] = ''
 
@@ -271,7 +283,7 @@ def get_status():
         if details[4] == 'disabled':
             status['dynamicdns_secret'] = ''
         else:
-            status['dynamicdns_secret'] = details[4]
+            status['dynamicdns_secret'] = details[4].replace("'", "")
     else:
         status['dynamicdns_secret'] = ''
 
@@ -279,7 +291,7 @@ def get_status():
         if details[5] == 'disabled':
             status['dynamicdns_ipurl'] = ''
         else:
-            status['dynamicdns_ipurl'] = details[5]
+            status['dynamicdns_ipurl'] = details[5].replace("'", "")
     else:
         status['dynamicdns_ipurl'] = ''
 
@@ -287,7 +299,7 @@ def get_status():
         if details[6] == 'disabled':
             status['dynamicdns_update_url'] = ''
         else:
-            status['dynamicdns_update_url'] = details[6]
+            status['dynamicdns_update_url'] = details[6].replace("'", "")
     else:
         status['dynamicdns_update_url'] = ''
 
