@@ -16,7 +16,6 @@
 #
 
 from dbus.exceptions import DBusException
-from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -27,6 +26,8 @@ import NetworkManager
 import uuid
 import urllib
 
+from .forms import CONNECTION_TYPE_NAMES, ConnectionTypeSelectForm, \
+    AddEthernetForm, AddWifiForm
 from plinth import cfg
 
 
@@ -34,11 +35,6 @@ subsubmenu = [{'url': reverse_lazy('network:index'),
                'text': _('Network Connections')},
               {'url': reverse_lazy('network:add'),
                'text': _('Add Connection')}]
-
-CONNECTION_TYPE_NAMES = {
-    '802-3-ethernet': 'Ethernet',
-    '802-11-wireless': 'Wi-Fi',
-}
 
 
 def init():
@@ -140,20 +136,13 @@ def deactivate(request, conn_id):
     return redirect(reverse_lazy('network:index'))
 
 
-class ConnectionAddForm(forms.Form):
-    """Form to select type for new connection."""
-    conn_type = forms.ChoiceField(
-        label=_('Connection Type'),
-        choices=[(k, v) for k, v in CONNECTION_TYPE_NAMES.items()])
-
-
 @login_required
 def add(request):
     """Serve the connection type selection form."""
     form = None
 
     if request.method == 'POST':
-        form = ConnectionAddForm(request.POST)
+        form = ConnectionTypeSelectForm(request.POST)
         if form.is_valid():
             conn_type = form.cleaned_data['conn_type']
             if conn_type == '802-3-ethernet':
@@ -161,16 +150,11 @@ def add(request):
             elif conn_type == '802-11-wireless':
                 return redirect(reverse_lazy('network:add_wifi'))
     else:
-        form = ConnectionAddForm()
-        return TemplateResponse(request, 'connections_add.html',
+        form = ConnectionTypeSelectForm()
+        return TemplateResponse(request, 'connections_type_select.html',
                                 {'title': _('Add Connection'),
                                  'subsubmenu': subsubmenu,
                                  'form': form})
-
-
-class AddEthernetForm(forms.Form):
-    """Form to create a new ethernet connection."""
-    name = forms.CharField(label=_('Connection Name'))
 
 
 @login_required
@@ -188,7 +172,15 @@ def add_ethernet(request):
                     'uuid': str(uuid.uuid4()),
                 },
                 '802-3-ethernet': {},
+                'ipv4': {'method': form.cleaned_data['ipv4_method']},
             }
+
+            if form.cleaned_data['ipv4_method'] == 'manual':
+                conn['ipv4']['addresses'] = [
+                    (form.cleaned_data['ipv4_address'],
+                     24,  # CIDR prefix length
+                     '0.0.0.0')]  # gateway
+
             NetworkManager.Settings.AddConnection(conn)
             return redirect(reverse_lazy('network:index'))
     else:
@@ -198,12 +190,6 @@ def add_ethernet(request):
                             {'title': _('Editing New Ethernet Connection'),
                              'subsubmenu': subsubmenu,
                              'form': form})
-
-
-class AddWifiForm(forms.Form):
-    """Form to create a new wifi connection."""
-    name = forms.CharField(label=_('Connection Name'))
-    ssid = forms.CharField(label=_('SSID'))
 
 
 @login_required
@@ -223,7 +209,15 @@ def add_wifi(request):
                 '802-11-wireless': {
                     'ssid': form.cleaned_data['ssid'],
                 },
+                'ipv4': {'method': form.cleaned_data['ipv4_method']},
             }
+
+            if form.cleaned_data['ipv4_method'] == 'manual':
+                conn['ipv4']['addresses'] = [
+                    (form.cleaned_data['ipv4_address'],
+                     24,  # CIDR prefix length
+                     '0.0.0.0')]  # gateway
+
             NetworkManager.Settings.AddConnection(conn)
             return redirect(reverse_lazy('network:index'))
     else:
