@@ -84,8 +84,10 @@ class ConfigureForm(forms.Form):
     hlp_disable_ssl = 'use this option if your provider uses self signed \
                        certificates'
 
-    hlp_secret = 'You should have been requested to select a password \
-                  when you created the account. Leave this field empty \
+    hlp_http_auth = 'if this option is selected, your username and \
+                     password will be used for HTTP basic authentication'
+
+    hlp_secret = 'Leave this field empty \
                   if you want to keep your previous configured password.'
 
     hlp_ipurl = 'Optional Value. If your FreedomBox is not connected \
@@ -132,6 +134,7 @@ class ConfigureForm(forms.Form):
 
     use_http_basic_auth = forms.BooleanField(label=_('use HTTP basic \
                                                       authentication'),
+                                             help_text=_(hlp_http_auth),
                                              required=False)
 
     dynamicdns_domain = TrimmedCharField(
