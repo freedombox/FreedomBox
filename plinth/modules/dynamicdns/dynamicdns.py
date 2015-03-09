@@ -76,7 +76,7 @@ class ConfigureForm(forms.Form):
                     &lt;Domain&gt; may be used within the URL. For details\
                     see the update URL templates of the example providers.'
 
-    hlp_services = 'Please choose a update protocol according to your \
+    hlp_services = 'Please choose an update protocol according to your \
                     provider. If your provider does not support the GnudIP \
                     protocol or your provider is not listed you may use \
                     the update URL of your provider.'
