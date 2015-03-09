@@ -1,22 +1,36 @@
 #!/bin/bash
-################################################################
-#                                                              #
-# The script is part of Freedombox                             #
-#                                                              #
-# This script is a wrapper around ez-ipupdate and/or wget      #
-# to update a Dynamic DNS account. The script is used as an    #
-# interface between plinth and ez-ipupdate                     #
-# the script will store configuration, return configuration    #
-# to plinth UI and do a dynamic DNS update. The script will    #
-# also determe if we are behind a NAT device, if we can use    #
-# ez-ipupdate tool or if we need to do some wget magic         #
-#                                                              #
-# Todo: IPv6                                                   #
-# Todo: GET WAN IP from Router via UPnP if supported           #
-# Todo: licence string?                                        #
-# author: Daniel Steglich <steglich@datasystems24.de>          #
-#                                                              #
-################################################################
+############################################################################
+#                                                                          #
+# This file is part of Plinth.                                             #
+#                                                                          #
+# This program is free software: you can redistribute it and/or modify     #
+# it under the terms of the GNU Affero General Public License as           #
+# published by the Free Software Foundation, either version 3 of the       #
+# License, or (at your option) any later version.                          #
+#                                                                          #
+# This program is distributed in the hope that it will be useful,          #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of           #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            #
+# GNU Affero General Public License for more details.                      #
+#                                                                          #
+# You should have received a copy of the GNU Affero General Public License #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.    #
+#                                                                          #
+#                                                                          #
+# This script is a wrapper around ez-ipupdate and/or wget                  #
+# to update a Dynamic DNS account. The script is used as an                #
+# interface between plinth and ez-ipupdate                                 #
+# the script will store configuration, return configuration                #
+# to plinth UI and do a dynamic DNS update. The script will                #
+# also determe if we are behind a NAT device, if we can use                #
+# ez-ipupdate tool or if we need to do some wget magic                     #
+#                                                                          #
+# Todo: IPv6                                                               #
+# Todo: GET WAN IP from Router via UPnP if supported                       #
+# Todo: licence string?                                                    #
+# author: Daniel Steglich <steglich@datasystems24.de>                      #
+#                                                                          #
+############################################################################
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
