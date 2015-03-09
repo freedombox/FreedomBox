@@ -29,7 +29,7 @@
 
         {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary" value="Create Connection"/>
+        <input type="submit" class="btn btn-primary" value="Create..."/>
 
       </form>
     </div>
@@ -38,22 +38,7 @@
 {% endblock %}
 
 {% block page_js %}
-
-  <script type="text/javascript">
-    (function($) {
-
-    $('#id_ipv4_address').prop("readOnly", true);
-    $('#id_name').focus();
-
-    $('#id_ipv4_method').change(function() {
-      if ($('#id_ipv4_method').prop('value') == 'manual') {
-        $('#id_ipv4_address').prop("readOnly", false);
-      } else {
-        $('#id_ipv4_address').prop("readOnly", true);
-      }
-    });
-
-    })(jQuery);
+  <script>
+    $('#id_type').focus();
   </script>
-
 {% endblock %}
