@@ -66,7 +66,11 @@
       $('#id_dynamicdns-enabled').change(function() {
         if ($('#id_dynamicdns-enabled').prop('checked')) {
           show_all();
-          configure_dropdown();
+          if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
+              set_gnudip_mode()
+            }else{
+              set_update_url_mode();
+            }
         } else {
           $('.form-group').hide();
           $('#id_dynamicdns-enabled').closest('.form-group').show();
@@ -94,10 +98,7 @@
       function select_service()
       {
         if ( $("#id_dynamicdns-dynamicdns_server").val().length == 0 ) {
-          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').show();
-          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').show();
-          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').show();
-          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').hide();
+          set_update_url_mode()
           if($("#id_dynamicdns-dynamicdns_update_url").val() == NOIP){
             $("#id_dynamicdns-service_type").val(2);
           }else if($("#id_dynamicdns-dynamicdns_update_url").val() == SELFHOST){
@@ -109,25 +110,16 @@
           }
         }else{
           $("#id_dynamicdns-service_type").val(1);
-          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
-          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
-          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').hide();
-          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').show();
+          set_gnudip_mode();
         }
       }
 
       function configure_dropdown()
       {
         if ($("#id_dynamicdns-service_type option:selected").text() == "GnuDIP") {
-          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
-          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
-          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').hide();
-          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').show();
+          set_gnudip_mode()
         }else{
-          $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').show();
-          $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').show();
-          $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').show();
-          $('#id_dynamicdns-dynamicdns_server').closest('.form-group').hide();
+          set_update_url_mode();
           if ($("#id_dynamicdns-service_type option:selected").text() == "noip.com") {
             $('#id_dynamicdns-dynamicdns_update_url').val(NOIP);
             $('#id_dynamicdns-use_http_basic_auth').prop('checked', true);
@@ -144,6 +136,22 @@
             $('#id_dynamicdns-dynamicdns_update_url').val('');
           }
         }
+      }
+
+      function set_gnudip_mode()
+      {
+        $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').hide();
+        $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').hide();
+        $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').hide();
+        $('#id_dynamicdns-dynamicdns_server').closest('.form-group').show();
+      }
+
+      function set_update_url_mode()
+      {
+        $('#id_dynamicdns-dynamicdns_update_url').closest('.form-group').show();
+        $('#id_dynamicdns-disable_SSL_cert_check').closest('.form-group').show();
+        $('#id_dynamicdns-use_http_basic_auth').closest('.form-group').show();
+        $('#id_dynamicdns-dynamicdns_server').closest('.form-group').hide();
       }
 
       function show_all()
