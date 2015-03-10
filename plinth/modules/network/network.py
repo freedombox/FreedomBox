@@ -78,6 +78,65 @@ def index(request):
 
 
 @login_required
+def edit(request, conn_id):
+    """Serve connection editing form."""
+    form = None
+    name = urllib.parse.unquote_plus(conn_id)
+    form_data = {'name': name}
+
+    conn_found = False
+    for conn in NetworkManager.Settings.ListConnections():
+        settings = conn.GetSettings()
+        if settings['connection']['id'] == name:
+            conn_found = True
+            break
+    if not conn_found:
+        return redirect(reverse_lazy('network:index'))
+
+    if request.method == 'POST':
+        if settings['connection']['type'] == '802-11-wireless':
+            form = AddWifiForm(request.POST)
+        else:
+            form = AddEthernetForm(request.POST)
+        if form.is_valid():
+            new_settings = {
+                'connection': {
+                    'id': form.cleaned_data['name'],
+                    'type': settings['connection']['type'],
+                    'uuid': settings['connection']['uuid'],
+                },
+                'ipv4': {'method': form.cleaned_data['ipv4_method']},
+            }
+            if form.cleaned_data['ipv4_method'] == 'manual':
+                new_settings['ipv4']['addresses'] = [
+                    (form.cleaned_data['ipv4_address'],
+                     24,  # CIDR prefix length
+                     '0.0.0.0')]  # gateway
+            if settings['connection']['type'] == '802-3-ethernet':
+                new_settings['802-3-ethernet'] = {}
+            elif settings['connection']['type'] == '802-11-wireless':
+                new_settings['802-11-wireless'] = {
+                    'ssid': form.cleaned_data['ssid'],
+                }
+
+            conn.Update(new_settings)
+            return redirect(reverse_lazy('network:index'))
+    else:
+        form_data['ipv4_method'] = settings['ipv4']['method']
+        if settings['ipv4']['addresses']:
+            form_data['ipv4_address'] = settings['ipv4']['addresses'][0][0]
+        if settings['connection']['type'] == '802-11-wireless':
+            form_data['ssid'] = settings['802-11-wireless']['ssid']
+            form = AddWifiForm(form_data)
+        else:
+            form = AddEthernetForm(form_data)
+        return TemplateResponse(request, 'connections_edit.html',
+                                {'title': _('Edit Connection'),
+                                 'subsubmenu': subsubmenu,
+                                 'form': form})
+
+
+@login_required
 def activate(request, conn_id):
     """Activate the connection."""
     name = urllib.parse.unquote_plus(conn_id)
