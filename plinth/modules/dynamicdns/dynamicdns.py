@@ -81,11 +81,17 @@ class ConfigureForm(forms.Form):
                     protocol or your provider is not listed you may use \
                     the update URL of your provider.'
 
-    hlp_disable_ssl = 'use this option if your provider uses self signed \
-                       certificates'
+    hlp_server = 'Please do not enter a URL here (like "https://example.com/")\
+                  but only the hostname of the GnuDIP server (like \
+                  "example.com").'
 
-    hlp_http_auth = 'if this option is selected, your username and \
-                     password will be used for HTTP basic authentication'
+    hlp_domain = 'The public domain name you want use to reach your box.'
+
+    hlp_disable_ssl = 'Use this option if your provider uses self signed \
+                       certificates.'
+
+    hlp_http_auth = 'If this option is selected, your username and \
+                     password will be used for HTTP basic authentication.'
 
     hlp_secret = 'Leave this field empty \
                   if you want to keep your previous configured password.'
@@ -98,7 +104,7 @@ class ConfigureForm(forms.Form):
                  http://myip.datasystems24.de'
 
     hlp_user = 'You should have been requested to select a username \
-                when you created the account'
+                when you created the account.'
 
     """ToDo: sync this list with the html template file"""
     provider_choices = (
@@ -118,7 +124,7 @@ class ConfigureForm(forms.Form):
     dynamicdns_server = TrimmedCharField(
         label=_('GnudIP Server Address'),
         required=False,
-        help_text=_('Example: gnudip.provider.org'),
+        help_text=_(hlp_server),
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
                                       _('Invalid server name'))])
@@ -139,7 +145,7 @@ class ConfigureForm(forms.Form):
 
     dynamicdns_domain = TrimmedCharField(
         label=_('Domain Name'),
-        help_text=_('Example: hostname.sds-ip.de'),
+        help_text=_(hlp_domain),
         required=False,
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
