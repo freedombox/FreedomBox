@@ -50,8 +50,10 @@
     $('#id_ipv4_method').change(function() {
       if ($('#id_ipv4_method').prop('value') == 'manual') {
         $('#id_ipv4_address').prop("readOnly", false);
+        $('#id_ipv4_address').prop("required", true);
       } else {
         $('#id_ipv4_address').prop("readOnly", true);
+        $('#id_ipv4_address').prop("required", false);
       }
     });
 

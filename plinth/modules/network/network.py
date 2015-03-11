@@ -46,30 +46,7 @@ def init():
 @login_required
 def index(request):
     """Show connection list."""
-    connections = []
-    active = []
-
-    for conn in NetworkManager.NetworkManager.ActiveConnections:
-        try:
-            settings = conn.Connection.GetSettings()['connection']
-        except DBusException:
-            # DBusException can be thrown here if the index is quickly loaded
-            # after a connection is deactivated.
-            continue
-        active.append(settings['id'])
-
-    for conn in NetworkManager.Settings.ListConnections():
-        settings = conn.GetSettings()['connection']
-        # Display a friendly type name if known.
-        conn_type = CONNECTION_TYPE_NAMES.get(settings['type'],
-                                              settings['type'])
-        connections.append({
-            'name': settings['id'],
-            'id': urllib.parse.quote_plus(settings['id']),
-            'type': conn_type,
-            'is_active': settings['id'] in active,
-        })
-    connections.sort(key=lambda x: x['is_active'], reverse=True)
+    connections = get_connection_list()
 
     return TemplateResponse(request, 'connections_list.html',
                             {'title': _('Network Connections'),
@@ -84,14 +61,13 @@ def edit(request, conn_id):
     name = urllib.parse.unquote_plus(conn_id)
     form_data = {'name': name}
 
-    conn_found = False
-    for conn in NetworkManager.Settings.ListConnections():
-        settings = conn.GetSettings()
-        if settings['connection']['id'] == name:
-            conn_found = True
-            break
-    if not conn_found:
+    conn = get_connection(name)
+    if not conn:
+        messages.error(
+            request,
+            _('Cannot edit connection: %s not found.') % name)
         return redirect(reverse_lazy('network:index'))
+    settings = conn.GetSettings()
 
     if request.method == 'POST':
         if settings['connection']['type'] == '802-11-wireless':
@@ -99,37 +75,33 @@ def edit(request, conn_id):
         else:
             form = AddEthernetForm(request.POST)
         if form.is_valid():
-            new_settings = {
-                'connection': {
-                    'id': form.cleaned_data['name'],
-                    'type': settings['connection']['type'],
-                    'uuid': settings['connection']['uuid'],
-                },
-                'ipv4': {'method': form.cleaned_data['ipv4_method']},
-            }
-            if form.cleaned_data['ipv4_method'] == 'manual':
-                new_settings['ipv4']['addresses'] = [
-                    (form.cleaned_data['ipv4_address'],
-                     24,  # CIDR prefix length
-                     '0.0.0.0')]  # gateway
-            if settings['connection']['type'] == '802-3-ethernet':
-                new_settings['802-3-ethernet'] = {}
-            elif settings['connection']['type'] == '802-11-wireless':
-                new_settings['802-11-wireless'] = {
-                    'ssid': form.cleaned_data['ssid'],
-                }
+            name = form.cleaned_data['name']
+            ipv4_method = form.cleaned_data['ipv4_method']
+            ipv4_address = form.cleaned_data['ipv4_address']
 
-            conn.Update(new_settings)
+            if settings['connection']['type'] == '802-3-ethernet':
+                _edit_ethernet_connection(conn, name, ipv4_method, ipv4_address)
+            elif settings['connection']['type'] == '802-11-wireless':
+                ssid = form.cleaned_data['ssid']
+                _edit_wifi_connection(conn, name, ssid, ipv4_method, ipv4_address)
+            else:
+                messages.error(
+                    request,
+                    _('Cannot edit connection %s: '
+                      'Connection type not supported.') % name)
             return redirect(reverse_lazy('network:index'))
     else:
         form_data['ipv4_method'] = settings['ipv4']['method']
+
         if settings['ipv4']['addresses']:
             form_data['ipv4_address'] = settings['ipv4']['addresses'][0][0]
+
         if settings['connection']['type'] == '802-11-wireless':
             form_data['ssid'] = settings['802-11-wireless']['ssid']
             form = AddWifiForm(form_data)
         else:
             form = AddEthernetForm(form_data)
+
         return TemplateResponse(request, 'connections_edit.html',
                                 {'title': _('Edit Connection'),
                                  'subsubmenu': subsubmenu,
@@ -141,44 +113,15 @@ def activate(request, conn_id):
     """Activate the connection."""
     name = urllib.parse.unquote_plus(conn_id)
 
-    # Find the connection
-    connections = NetworkManager.Settings.ListConnections()
-    connections = dict([(x.GetSettings()['connection']['id'], x)
-                        for x in connections])
-    conn = connections[name]
+    try:
+        _activate_connection(name)
+    except ConnectionNotFound as cnf:
+        messages.error(request, cnf)
+        return redirect(reverse_lazy('network:index'))
+    except DeviceNotFound as dnf:
+        messages.error(request, dnf)
+        return redirect(reverse_lazy('network:index'))
 
-    # Find a suitable device
-    ctype = conn.GetSettings()['connection']['type']
-    if ctype == 'vpn':
-        for dev in NetworkManager.NetworkManager.GetDevices():
-            if (dev.State == NetworkManager.NM_DEVICE_STATE_ACTIVATED
-                and dev.Managed):
-                break
-        else:
-            messages.error(
-                request,
-                _('Failed to activate connection: '
-                  'No active, managed device found'))
-            return redirect(reverse_lazy('network:index'))
-    else:
-        dtype = {
-            '802-11-wireless': NetworkManager.NM_DEVICE_TYPE_WIFI,
-            '802-3-ethernet': NetworkManager.NM_DEVICE_TYPE_ETHERNET,
-            'gsm': NetworkManager.NM_DEVICE_TYPE_MODEM,
-        }.get(ctype, ctype)
-
-        for dev in NetworkManager.NetworkManager.GetDevices():
-            if (dev.DeviceType == dtype
-                and dev.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED):
-                break
-        else:
-            messages.error(
-                request,
-                _('Failed to activate connection: '
-                  'No suitable and available %s device found' % ctype))
-            return redirect(reverse_lazy('network:index'))
-
-    NetworkManager.NetworkManager.ActivateConnection(conn, dev, "/")
     messages.success(request, _('Activated connection %s.') % name)
     return redirect(reverse_lazy('network:index'))
 
@@ -187,11 +130,11 @@ def activate(request, conn_id):
 def deactivate(request, conn_id):
     """Deactivate the connection."""
     name = urllib.parse.unquote_plus(conn_id)
-    active = NetworkManager.NetworkManager.ActiveConnections
-    active = dict([(x.Connection.GetSettings()['connection']['id'], x)
-                   for x in active])
-    NetworkManager.NetworkManager.DeactivateConnection(active[name])
-    messages.success(request, _('Deactivated connection %s.') % name)
+    try:
+        _deactivate_connection(name)
+        messages.success(request, _('Deactivated connection %s.') % name)
+    except ConnectionNotFound as cnf:
+        messages.error(request, cnf)
     return redirect(reverse_lazy('network:index'))
 
 
@@ -224,23 +167,11 @@ def add_ethernet(request):
     if request.method == 'POST':
         form = AddEthernetForm(request.POST)
         if form.is_valid():
-            conn = {
-                'connection': {
-                    'id': form.cleaned_data['name'],
-                    'type': '802-3-ethernet',
-                    'uuid': str(uuid.uuid4()),
-                },
-                '802-3-ethernet': {},
-                'ipv4': {'method': form.cleaned_data['ipv4_method']},
-            }
+            name = form.cleaned_data['name']
+            ipv4_method = form.cleaned_data['ipv4_method']
+            ipv4_address = form.cleaned_data['ipv4_address']
 
-            if form.cleaned_data['ipv4_method'] == 'manual':
-                conn['ipv4']['addresses'] = [
-                    (form.cleaned_data['ipv4_address'],
-                     24,  # CIDR prefix length
-                     '0.0.0.0')]  # gateway
-
-            NetworkManager.Settings.AddConnection(conn)
+            _add_ethernet_connection(name, ipv4_method, ipv4_address)
             return redirect(reverse_lazy('network:index'))
     else:
         form = AddEthernetForm()
@@ -259,25 +190,12 @@ def add_wifi(request):
     if request.method == 'POST':
         form = AddWifiForm(request.POST)
         if form.is_valid():
-            conn = {
-                'connection': {
-                    'id': form.cleaned_data['name'],
-                    'type': '802-11-wireless',
-                    'uuid': str(uuid.uuid4()),
-                },
-                '802-11-wireless': {
-                    'ssid': form.cleaned_data['ssid'],
-                },
-                'ipv4': {'method': form.cleaned_data['ipv4_method']},
-            }
+            name = form.cleaned_data['name']
+            ssid = form.cleaned_data['ssid']
+            ipv4_method = form.cleaned_data['ipv4_method']
+            ipv4_address = form.cleaned_data['ipv4_address']
 
-            if form.cleaned_data['ipv4_method'] == 'manual':
-                conn['ipv4']['addresses'] = [
-                    (form.cleaned_data['ipv4_address'],
-                     24,  # CIDR prefix length
-                     '0.0.0.0')]  # gateway
-
-            NetworkManager.Settings.AddConnection(conn)
+            _add_wifi_connection(name, ssid, ipv4_method, ipv4_address)
             return redirect(reverse_lazy('network:index'))
     else:
         form = AddWifiForm()
@@ -297,18 +215,221 @@ def delete(request, conn_id):
     """
     name = urllib.parse.unquote_plus(conn_id)
     if request.method == 'POST':
-        for conn in NetworkManager.Settings.ListConnections():
-            settings = conn.GetSettings()['connection']
-            if settings['id'] == name:
-                conn.Delete()
-                messages.success(request, _('Connection %s deleted.') % name)
-                return redirect(reverse_lazy('network:index'))
-        messages.error(
-            request,
-            _('Failed to delete connection %s: not found.') % name)
+        try:
+            _delete_connection(name)
+        except ConnectionNotFound as cnf:
+            messages.error(request, cnf)
+        else:
+            messages.success(request, _('Connection %s deleted.') % name)
         return redirect(reverse_lazy('network:index'))
 
     return TemplateResponse(request, 'connections_delete.html',
                             {'title': _('Delete Connection'),
                              'subsubmenu': subsubmenu,
                              'name': name})
+
+
+class ConnectionNotFound(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
+
+class DeviceNotFound(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
+
+def get_connection_list():
+    """Get a list of active and available connections."""
+    connections = []
+    active = []
+
+    for conn in NetworkManager.NetworkManager.ActiveConnections:
+        try:
+            settings = conn.Connection.GetSettings()['connection']
+        except DBusException:
+            # DBusException can be thrown here if the index is quickly loaded
+            # after a connection is deactivated.
+            continue
+        active.append(settings['id'])
+
+    for conn in NetworkManager.Settings.ListConnections():
+        settings = conn.GetSettings()['connection']
+        # Display a friendly type name if known.
+        conn_type = CONNECTION_TYPE_NAMES.get(settings['type'],
+                                              settings['type'])
+        connections.append({
+            'name': settings['id'],
+            'id': urllib.parse.quote_plus(settings['id']),
+            'type': conn_type,
+            'is_active': settings['id'] in active,
+        })
+    connections.sort(key=lambda x: x['is_active'], reverse=True)
+    return connections
+
+
+def get_connection(name):
+    """Returns connection with id matching name.
+    Returns None if not found.
+    """
+    connections = NetworkManager.Settings.ListConnections()
+    connections = dict([(x.GetSettings()['connection']['id'], x)
+                        for x in connections])
+    return connections.get(name)
+
+
+def get_active_connection(name):
+    """Returns active connection with id matching name.
+    Returns None if not found.
+    """
+    connections = NetworkManager.NetworkManager.ActiveConnections
+    connections = dict([(x.Connection.GetSettings()['connection']['id'], x)
+                        for x in connections])
+    return connections.get(name)
+
+
+def _edit_ethernet_connection(conn, name, ipv4_method, ipv4_address):
+    settings = conn.GetSettings()
+
+    new_settings = {
+        'connection': {
+            'id': name,
+            'type': settings['connection']['type'],
+            'uuid': settings['connection']['uuid'],
+        },
+        '802-3-ethernet': {},
+        'ipv4': {'method': ipv4_method},
+    }
+    if ipv4_method == 'manual' and ipv4_address:
+        new_settings['ipv4']['addresses'] = [
+            (ipv4_address,
+             24,  # CIDR prefix length
+             '0.0.0.0')]  # gateway
+
+    conn.Update(new_settings)
+
+
+def _edit_wifi_connection(conn, name, ssid, ipv4_method, ipv4_address):
+    settings = conn.GetSettings()
+
+    new_settings = {
+        'connection': {
+            'id': name,
+            'type': settings['connection']['type'],
+            'uuid': settings['connection']['uuid'],
+        },
+        '802-11-wireless': {
+            'ssid': ssid,
+        },
+        'ipv4': {'method': ipv4_method},
+    }
+    if ipv4_method == 'manual' and ipv4_address:
+        new_settings['ipv4']['addresses'] = [
+            (ipv4_address,
+             24,  # CIDR prefix length
+             '0.0.0.0')]  # gateway
+
+    conn.Update(new_settings)
+
+
+def _activate_connection(name):
+    # Find the connection
+    conn = get_connection(name)
+    if not conn:
+        raise ConnectionNotFound(
+            _('Failed to activate connection %s: '
+              'Connection not found.') % name)
+
+    # Find a suitable device
+    ctype = conn.GetSettings()['connection']['type']
+    if ctype == 'vpn':
+        for dev in NetworkManager.NetworkManager.GetDevices():
+            if (dev.State == NetworkManager.NM_DEVICE_STATE_ACTIVATED
+                and dev.Managed):
+                break
+        else:
+            raise DeviceNotFound(
+                _('Failed to activate connection %s: '
+                  'No suitable device is available.') % name)
+    else:
+        dtype = {
+            '802-11-wireless': NetworkManager.NM_DEVICE_TYPE_WIFI,
+            '802-3-ethernet': NetworkManager.NM_DEVICE_TYPE_ETHERNET,
+            'gsm': NetworkManager.NM_DEVICE_TYPE_MODEM,
+        }.get(ctype, ctype)
+
+        for dev in NetworkManager.NetworkManager.GetDevices():
+            if (dev.DeviceType == dtype
+                and dev.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED):
+                break
+        else:
+            raise DeviceNotFound(
+                _('Failed to activate connection %s: '
+                  'No suitable device is available.') % name)
+
+    NetworkManager.NetworkManager.ActivateConnection(conn, dev, "/")
+
+
+def _deactivate_connection(name):
+    active = get_active_connection(name)
+    if active:
+        NetworkManager.NetworkManager.DeactivateConnection(active)
+    else:
+        raise ConnectionNotFound(
+            _('Failed to deactivate connection %s: '
+              'Connection not found.') % name)
+
+
+def _add_ethernet_connection(name, ipv4_method, ipv4_address):
+    conn = {
+        'connection': {
+            'id': name,
+            'type': '802-3-ethernet',
+            'uuid': str(uuid.uuid4()),
+        },
+        '802-3-ethernet': {},
+        'ipv4': {'method': ipv4_method},
+    }
+
+    if ipv4_method == 'manual':
+        conn['ipv4']['addresses'] = [
+            (ipv4_address,
+             24,  # CIDR prefix length
+             '0.0.0.0')]  # gateway
+
+    NetworkManager.Settings.AddConnection(conn)
+
+
+def _add_wifi_connection(name, ssid, ipv4_method, ipv4_address):
+    conn = {
+        'connection': {
+            'id': name,
+            'type': '802-11-wireless',
+            'uuid': str(uuid.uuid4()),
+        },
+        '802-11-wireless': {
+            'ssid': ssid,
+        },
+        'ipv4': {'method': ipv4_method},
+    }
+
+    if ipv4_method == 'manual':
+        conn['ipv4']['addresses'] = [
+            (ipv4_address,
+             24,  # CIDR prefix length
+             '0.0.0.0')]  # gateway
+
+    NetworkManager.Settings.AddConnection(conn)
+
+
+def _delete_connection(name):
+    conn = get_connection(name)
+    if not conn:
+        raise ConnectionNotFound(
+            _('Failed to delete connection %s: '
+              'Connection not found.') % name)
+    conn.Delete()
