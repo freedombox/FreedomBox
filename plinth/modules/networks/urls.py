@@ -23,17 +23,17 @@ from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
-    'plinth.modules.network.network',
-    url(r'^sys/network/$', 'index', name='index'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/edit/$',
+    'plinth.modules.networks.networks',
+    url(r'^sys/networks/$', 'index', name='index'),
+    url(r'^sys/networks/(?P<conn_id>[\w.@+-]+)/edit/$',
         'edit', name='edit'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/activate/$',
+    url(r'^sys/networks/(?P<conn_id>[\w.@+-]+)/activate/$',
         'activate', name='activate'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/deactivate/$',
+    url(r'^sys/networks/(?P<conn_id>[\w.@+-]+)/deactivate/$',
         'deactivate', name='deactivate'),
-    url(r'^sys/network/add/$', 'add', name='add'),
-    url(r'^sys/network/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
-    url(r'^sys/network/add/wifi/$', 'add_wifi', name='add_wifi'),
-    url(r'^sys/network/(?P<conn_id>[\w.@+-]+)/delete/$',
+    url(r'^sys/networks/add/$', 'add', name='add'),
+    url(r'^sys/networks/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
+    url(r'^sys/networks/add/wifi/$', 'add_wifi', name='add_wifi'),
+    url(r'^sys/networks/(?P<conn_id>[\w.@+-]+)/delete/$',
         'delete', name='delete'),
 )

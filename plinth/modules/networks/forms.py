@@ -18,18 +18,14 @@
 from django import forms
 from gettext import gettext as _
 
-
-CONNECTION_TYPE_NAMES = {
-    '802-3-ethernet': 'Ethernet',
-    '802-11-wireless': 'Wi-Fi',
-}
+from plinth import network
 
 
 class ConnectionTypeSelectForm(forms.Form):
     """Form to select type for new connection."""
     conn_type = forms.ChoiceField(
         label=_('Connection Type'),
-        choices=[(k, v) for k, v in CONNECTION_TYPE_NAMES.items()])
+        choices=[(k, v) for k, v in network.CONNECTION_TYPE_NAMES.items()])
 
 
 class AddEthernetForm(forms.Form):
