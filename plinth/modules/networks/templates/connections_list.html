@@ -43,7 +43,7 @@
       <div class="list-group">
         {% for conn in connections %}
           <div class="list-group-item clearfix">
-	    <a href="{% url 'network:delete' conn.id %}"
+	    <a href="{% url 'networks:delete' conn.id %}"
                class="btn btn-default btn-sm pull-right"
                role="button" title="Delete connection {{ conn.name }}">
               <span class="glyphicon glyphicon-trash"
@@ -51,7 +51,7 @@
             </a>
 
             <a class="connection-edit-label"
-	       href="{% url 'network:edit' conn.id %}"
+	       href="{% url 'networks:edit' conn.id %}"
                title="Edit connection {{ conn.name }}">
               {{ conn.name }}
             </a>
@@ -67,7 +67,7 @@
 	      </button>
 	      <ul class="dropdown-menu" role="menu">
 		<li>
-		  <a href="{% url 'network:deactivate' conn.id %}">
+		  <a href="{% url 'networks:deactivate' conn.id %}">
 		    Deactivate
 		  </a>
 		</li>
@@ -82,7 +82,7 @@
 	      </button>
 	      <ul class="dropdown-menu" role="menu">
 		<li>
-		  <a href="{% url 'network:activate' conn.id %}">
+		  <a href="{% url 'networks:activate' conn.id %}">
 		    Activate
 		  </a>
 		</li>

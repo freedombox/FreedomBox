@@ -19,9 +19,9 @@
 Plinth module to interface with network-manager
 """
 
-from . import network
-from .network import init
+from . import networks
+from .networks import init
 
-__all__ = ['network', 'init']
+__all__ = ['networks', 'init']
 
 depends = ['plinth.modules.system']
