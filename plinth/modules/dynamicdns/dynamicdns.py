@@ -30,13 +30,6 @@ from plinth import package
 
 LOGGER = logging.getLogger(__name__)
 EMPTYSTRING = 'none'
-SERVICE = {
-            "GnuDIP": "1",
-            "noip": "2",
-            "selfhost": "3",
-            "freedns": "4",
-            "other": "5",
-}
 
 subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
                'text': _('About')},
@@ -113,11 +106,11 @@ class ConfigureForm(forms.Form):
 
     """ToDo: sync this list with the html template file"""
     provider_choices = (
-                       ('1', 'GnuDIP'),
-                       ('2', 'noip.com'),
-                       ('3', 'selfhost.bz'),
-                       ('4', 'freedns.afraid.org'),
-                       ('5', 'other update URL'))
+                       ('GnuDIP', 'GnuDIP'),
+                       ('noip', 'noip.com'),
+                       ('selfhost', 'selfhost.bz'),
+                       ('freedns', 'freedns.afraid.org'),
+                       ('other', 'other update URL'))
 
     enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
                                  required=False)
@@ -187,7 +180,7 @@ class ConfigureForm(forms.Form):
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
         """clear the fields which are not in use"""
-        if service_type == SERVICE['GnuDIP']:
+        if service_type == 'GnuDIP':
             dynamicdns_update_url = ""
         else:
             dynamicdns_server = ""
@@ -328,11 +321,11 @@ def get_status():
         status['use_http_basic_auth'] = False
 
     if not status['dynamicdns_server'] and not status['dynamicdns_update_url']:
-            status['service_type'] = SERVICE['GnuDIP']
+        status['service_type'] = 'GnuDIP'
     elif not status['dynamicdns_server'] and status['dynamicdns_update_url']:
-            status['service_type'] = SERVICE['other']
+        status['service_type'] = 'other'
     else:
-        status['service_type'] = SERVICE['GnuDIP']
+        status['service_type'] = 'GnuDIP'
 
     return status
 
@@ -354,7 +347,7 @@ def _apply_changes(request, old_status, new_status):
     if new_status['dynamicdns_server'] == '':
         new_status['dynamicdns_server'] = EMPTYSTRING
 
-    if new_status['service_type'] == SERVICE['GnuDIP']:
+    if new_status['service_type'] == 'GnuDIP':
         new_status['dynamicdns_update_url'] = EMPTYSTRING
     else:
         new_status['dynamicdns_server'] = EMPTYSTRING

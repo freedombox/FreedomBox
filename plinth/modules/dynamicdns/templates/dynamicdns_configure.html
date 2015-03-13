@@ -118,16 +118,16 @@
         if ( $("#id_dynamicdns_server").val().length == 0 ) {
           set_update_url_mode()
           if ( update_url == NOIP) {
-            $("#id_service_type").val(2);
+            $("#id_service_type").val("noip");
           } else if ( update_url == SELFHOST) {
-            $("#id_service_type").val(3);
+            $("#id_service_type").val("selfhost");
           } else if ( update_url == FREEDNS) {
-            $("#id_service_type").val(4);
+            $("#id_service_type").val("freedns");
           } else {
-            $("#id_service_type").val(5);
+            $("#id_service_type").val("other");
           }
         } else {
-          $("#id_service_type").val(1);
+          $("#id_service_type").val("GnuDIP");
           set_gnudip_mode();
         }
       }
