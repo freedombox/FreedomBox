@@ -76,18 +76,22 @@ def edit(request, conn_id):
             form = AddEthernetForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            zone = form.cleaned_data['zone']
             ipv4_method = form.cleaned_data['ipv4_method']
             ipv4_address = form.cleaned_data['ipv4_address']
 
             if settings['connection']['type'] == '802-3-ethernet':
-                network.edit_ethernet_connection(conn, name, ipv4_method, ipv4_address)
+                network.edit_ethernet_connection(
+                    conn,
+                    name, zone,
+                    ipv4_method, ipv4_address)
             elif settings['connection']['type'] == '802-11-wireless':
                 ssid = form.cleaned_data['ssid']
                 auth_mode = form.cleaned_data['auth_mode']
                 passphrase = form.cleaned_data['passphrase']
 
                 network.edit_wifi_connection(
-                    conn, name,
+                    conn, name, zone,
                     ssid, auth_mode, passphrase,
                     ipv4_method, ipv4_address)
             else:
@@ -97,6 +101,11 @@ def edit(request, conn_id):
                       'Connection type not supported.') % name)
             return redirect(reverse_lazy('networks:index'))
     else:
+        try:
+            form_data['zone'] = settings['connection']['zone']
+        except KeyError:
+            form_data['zone'] = 'external'
+
         form_data['ipv4_method'] = settings['ipv4']['method']
 
         if settings['ipv4']['addresses']:
@@ -171,6 +180,7 @@ def connect(request, connect_path):
     form = None
     ssid = urllib.parse.unquote_plus(connect_path)
     form_data = {'name': ssid,
+                 'zone': 'external',
                  'ssid': ssid,
                  'auth_mode': 'wpa',
                  'ipv4_method': 'auto'}
@@ -179,6 +189,7 @@ def connect(request, connect_path):
         form = AddWifiForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            zone = form.cleaned_data['zone']
             ssid = form.cleaned_data['ssid']
             auth_mode = form.cleaned_data['auth_mode']
             passphrase = form.cleaned_data['passphrase']
@@ -186,7 +197,7 @@ def connect(request, connect_path):
             ipv4_address = form.cleaned_data['ipv4_address']
 
             network.add_wifi_connection(
-                name,
+                name, zone,
                 ssid, auth_mode, passphrase,
                 ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))
@@ -229,10 +240,13 @@ def add_ethernet(request):
         form = AddEthernetForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            zone = form.cleaned_data['zone']
             ipv4_method = form.cleaned_data['ipv4_method']
             ipv4_address = form.cleaned_data['ipv4_address']
 
-            network.add_ethernet_connection(name, ipv4_method, ipv4_address)
+            network.add_ethernet_connection(
+                name, zone,
+                ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))
     else:
         form = AddEthernetForm()
@@ -252,6 +266,7 @@ def add_wifi(request):
         form = AddWifiForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            zone = form.cleaned_data['zone']
             ssid = form.cleaned_data['ssid']
             auth_mode = form.cleaned_data['auth_mode']
             passphrase = form.cleaned_data['passphrase']
@@ -259,7 +274,7 @@ def add_wifi(request):
             ipv4_address = form.cleaned_data['ipv4_address']
 
             network.add_wifi_connection(
-                name,
+                name, zone,
                 ssid, auth_mode, passphrase,
                 ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))

@@ -95,13 +95,14 @@ def get_active_connection(name):
     return connections.get(name)
 
 
-def edit_ethernet_connection(conn, name, ipv4_method, ipv4_address):
+def edit_ethernet_connection(conn, name, zone, ipv4_method, ipv4_address):
     settings = conn.GetSettings()
 
     new_settings = {
         'connection': {
             'id': name,
             'type': settings['connection']['type'],
+            'zone': zone,
             'uuid': settings['connection']['uuid'],
         },
         '802-3-ethernet': {},
@@ -116,7 +117,7 @@ def edit_ethernet_connection(conn, name, ipv4_method, ipv4_address):
     conn.Update(new_settings)
 
 
-def edit_wifi_connection(conn, name,
+def edit_wifi_connection(conn, name, zone,
                          ssid, auth_mode, passphrase,
                          ipv4_method, ipv4_address):
     settings = conn.GetSettings()
@@ -125,6 +126,7 @@ def edit_wifi_connection(conn, name,
         'connection': {
             'id': name,
             'type': settings['connection']['type'],
+            'zone': zone,
             'uuid': settings['connection']['uuid'],
         },
         '802-11-wireless': {
@@ -197,11 +199,12 @@ def deactivate_connection(name):
               'Connection not found.') % name)
 
 
-def add_ethernet_connection(name, ipv4_method, ipv4_address):
+def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
     conn = {
         'connection': {
             'id': name,
             'type': '802-3-ethernet',
+            'zone': zone,
             'uuid': str(uuid.uuid4()),
         },
         '802-3-ethernet': {},
@@ -217,13 +220,14 @@ def add_ethernet_connection(name, ipv4_method, ipv4_address):
     NetworkManager.Settings.AddConnection(conn)
 
 
-def add_wifi_connection(name,
+def add_wifi_connection(name, zone,
                         ssid, auth_mode, passphrase,
                         ipv4_method, ipv4_address):
     conn = {
         'connection': {
             'id': name,
             'type': '802-11-wireless',
+            'zone': zone,
             'uuid': str(uuid.uuid4()),
         },
         '802-11-wireless': {
