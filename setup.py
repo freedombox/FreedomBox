@@ -122,6 +122,8 @@ setuptools.setup(
     package_data={'plinth': ['templates/*',
                              'modules/*/templates/*']},
     data_files=[('/etc/init.d', ['data/etc/init.d/plinth']),
+                ('/usr/lib/firewalld/services/',
+                 glob.glob('data/usr/lib/firewalld/services/*.xml')),
                 ('/usr/lib/freedombox/setup.d/',
                  ['data/usr/lib/freedombox/setup.d/86_plinth']),
                 ('/usr/lib/freedombox/first-run.d',
