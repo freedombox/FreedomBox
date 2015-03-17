@@ -31,6 +31,8 @@ from plinth import network
 
 subsubmenu = [{'url': reverse_lazy('networks:index'),
                'text': _('Network Connections')},
+              {'url': reverse_lazy('networks:scan'),
+               'text': _('Nearby Wi-Fi Networks')},
               {'url': reverse_lazy('networks:add'),
                'text': _('Add Connection')}]
 
@@ -134,6 +136,16 @@ def deactivate(request, conn_id):
     except network.ConnectionNotFound as cnf:
         messages.error(request, cnf)
     return redirect(reverse_lazy('networks:index'))
+
+
+@login_required
+def scan(request):
+    """Show a list of nearby visible wifi APs."""
+    aps = network.wifi_scan()
+    return TemplateResponse(request, 'wifi_scan.html',
+                            {'title': _('Nearby Wi-Fi Networks'),
+                             'subsubmenu': subsubmenu,
+                             'aps': aps})
 
 
 @login_required

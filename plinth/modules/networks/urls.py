@@ -31,6 +31,7 @@ urlpatterns = patterns(
         'activate', name='activate'),
     url(r'^sys/networks/(?P<conn_id>[\w.@+-]+)/deactivate/$',
         'deactivate', name='deactivate'),
+    url(r'^sys/networks/scan/$', 'scan', name='scan'),
     url(r'^sys/networks/add/$', 'add', name='add'),
     url(r'^sys/networks/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
     url(r'^sys/networks/add/wifi/$', 'add_wifi', name='add_wifi'),

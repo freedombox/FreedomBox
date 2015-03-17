@@ -235,3 +235,14 @@ def delete_connection(name):
             _('Failed to delete connection %s: '
               'Connection not found.') % name)
     conn.Delete()
+
+
+def wifi_scan():
+    aps = []
+    for dev in NetworkManager.NetworkManager.GetDevices():
+        if dev.DeviceType != NetworkManager.NM_DEVICE_TYPE_WIFI:
+            continue
+        for ap in dev.SpecificDevice().GetAccessPoints():
+            aps.append({'ssid': ap.Ssid,
+                        'strength': ord(ap.Strength)})
+    return aps
