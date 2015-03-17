@@ -19,6 +19,7 @@
 Helper functions for working with network manager.
 """
 
+from dbus.exceptions import DBusException
 from gettext import gettext as _
 import NetworkManager
 import uuid
@@ -115,7 +116,9 @@ def edit_ethernet_connection(conn, name, ipv4_method, ipv4_address):
     conn.Update(new_settings)
 
 
-def edit_wifi_connection(conn, name, ssid, ipv4_method, ipv4_address):
+def edit_wifi_connection(conn, name,
+                         ssid, auth_mode, passphrase,
+                         ipv4_method, ipv4_address):
     settings = conn.GetSettings()
 
     new_settings = {
@@ -129,6 +132,14 @@ def edit_wifi_connection(conn, name, ssid, ipv4_method, ipv4_address):
         },
         'ipv4': {'method': ipv4_method},
     }
+
+    if auth_mode == 'wpa' and passphrase:
+        new_settings['connection']['security'] = '802-11-wireless-security'
+        new_settings['802-11-wireless-security'] = {
+            'key-mgmt': 'wpa-psk',
+            'psk': passphrase,
+        }
+
     if ipv4_method == 'manual' and ipv4_address:
         new_settings['ipv4']['addresses'] = [
             (ipv4_address,
@@ -206,7 +217,9 @@ def add_ethernet_connection(name, ipv4_method, ipv4_address):
     NetworkManager.Settings.AddConnection(conn)
 
 
-def add_wifi_connection(name, ssid, ipv4_method, ipv4_address):
+def add_wifi_connection(name,
+                        ssid, auth_mode, passphrase,
+                        ipv4_method, ipv4_address):
     conn = {
         'connection': {
             'id': name,
@@ -218,6 +231,13 @@ def add_wifi_connection(name, ssid, ipv4_method, ipv4_address):
         },
         'ipv4': {'method': ipv4_method},
     }
+
+    if auth_mode == 'wpa' and passphrase:
+        conn['connection']['security'] = '802-11-wireless-security'
+        conn['802-11-wireless-security'] = {
+            'key-mgmt': 'wpa-psk',
+            'psk': passphrase,
+        }
 
     if ipv4_method == 'manual' and ipv4_address:
         conn['ipv4']['addresses'] = [
