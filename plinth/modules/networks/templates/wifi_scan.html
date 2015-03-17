@@ -27,7 +27,10 @@
       <div class="list-group">
         {% for ap in aps %}
         <div class="list-group-item clearfix">
-	  <a display="inline-block" width="40%">{{ ap.ssid }}</a>
+	  <a display="inline-block" width="40%"
+	     href="{% url 'networks:connect' ap.connect_path %}">
+	     {{ ap.ssid }}
+	  </a>
 	  <span class="btn btn-primary btn-xs pull-right">
 	    {{ ap.strength }}%
 	  </span>

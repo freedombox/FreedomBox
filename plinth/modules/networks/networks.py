@@ -123,7 +123,7 @@ def activate(request, conn_id):
         return redirect(reverse_lazy('networks:index'))
 
     messages.success(request, _('Activated connection %s.') % name)
-    return redirect(reverse_lazy('network:index'))
+    return redirect(reverse_lazy('networks:index'))
 
 
 @login_required
@@ -146,6 +146,32 @@ def scan(request):
                             {'title': _('Nearby Wi-Fi Networks'),
                              'subsubmenu': subsubmenu,
                              'aps': aps})
+
+
+@login_required
+def connect(request, connect_path):
+    """Create a new wifi connection to an existing AP."""
+    form = None
+    ssid = urllib.parse.unquote_plus(connect_path)
+    form_data = {'name': ssid, 'ssid': ssid, 'ipv4_method': 'auto'}
+
+    if request.method == 'POST':
+        form = AddWifiForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            ssid = form.cleaned_data['ssid']
+            ipv4_method = form.cleaned_data['ipv4_method']
+            ipv4_address = form.cleaned_data['ipv4_address']
+
+            network.add_wifi_connection(name, ssid, ipv4_method, ipv4_address)
+            return redirect(reverse_lazy('networks:index'))
+    else:
+        form = AddWifiForm(form_data)
+
+        return TemplateResponse(request, 'connections_create.html',
+                                {'title': _('Connect to Wi-Fi Network'),
+                                 'subsubmenu': subsubmenu,
+                                 'form': form})
 
 
 @login_required

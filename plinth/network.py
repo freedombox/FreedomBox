@@ -244,5 +244,6 @@ def wifi_scan():
             continue
         for ap in dev.SpecificDevice().GetAccessPoints():
             aps.append({'ssid': ap.Ssid,
+                        'connect_path': urllib.parse.quote_plus(ap.Ssid),
                         'strength': ord(ap.Strength)})
     return aps
