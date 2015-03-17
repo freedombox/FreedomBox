@@ -44,7 +44,7 @@ def init():
 
 
 @login_required
-@package.required('tor')
+@package.required(['tor'])
 def index(request):
     """Service the index page"""
     status = get_status()

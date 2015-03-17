@@ -43,7 +43,7 @@ def init():
 
 
 @login_required
-@package.required('firewalld')
+@package.required(['firewalld'])
 def index(request):
     """Serve introcution page"""
     if not get_enabled_status():

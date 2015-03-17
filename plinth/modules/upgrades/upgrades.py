@@ -46,7 +46,7 @@ def init():
 
 
 @login_required
-@package.required('unattended-upgrades')
+@package.required(['unattended-upgrades'])
 def index(request):
     """Serve the index page."""
     return TemplateResponse(request, 'upgrades.html',
@@ -56,7 +56,7 @@ def index(request):
 
 @login_required
 @require_POST
-@package.required('unattended-upgrades')
+@package.required(['unattended-upgrades'])
 def run(request):
     """Run upgrades and show the output page."""
     output = ''
@@ -85,7 +85,7 @@ available.'))
 
 
 @login_required
-@package.required('unattended-upgrades')
+@package.required(['unattended-upgrades'])
 def configure(request):
     """Serve the configuration form."""
     status = get_status()

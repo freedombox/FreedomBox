@@ -102,7 +102,7 @@ https://pagekite.net/wiki/Howto/SshOverPageKite/">instructions</a>'))
 
 
 @login_required
-@package.required('pagekite')
+@package.required(['pagekite'])
 def configure(request):
     """Serve the configuration form"""
     status = get_status()

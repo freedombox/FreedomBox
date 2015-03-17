@@ -58,5 +58,6 @@ class PackageInstallView(TemplateView):
         Start the package installation, and refresh the page every x seconds to
         keep displaying PackageInstallView.get() with the installation status.
         """
-        package_module.start_install(self.kwargs['package_names'])
+        package_module.start_install(self.kwargs['package_names'],
+                                     on_install=self.kwargs.get('on_install'))
         return self.render_to_response(self.get_context_data())
