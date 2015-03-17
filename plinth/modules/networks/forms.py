@@ -41,6 +41,10 @@ class AddWifiForm(forms.Form):
     """Form to create a new wifi connection."""
     name = forms.CharField(label=_('Connection Name'))
     ssid = forms.CharField(label=_('SSID'))
+    auth_mode = forms.ChoiceField(
+        label=_('Authentication Mode'),
+        choices=[('wpa', 'WPA'), ('open', 'Open')])
+    passphrase = forms.CharField(label=_('Passphrase'), required=False)
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
