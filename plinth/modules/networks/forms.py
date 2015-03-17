@@ -31,6 +31,9 @@ class ConnectionTypeSelectForm(forms.Form):
 class AddEthernetForm(forms.Form):
     """Form to create a new ethernet connection."""
     name = forms.CharField(label=_('Connection Name'))
+    zone = forms.ChoiceField(
+        label=_('Firewall Zone'),
+        choices=[('external', 'External'), ('internal', 'Internal')])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
@@ -40,6 +43,9 @@ class AddEthernetForm(forms.Form):
 class AddWifiForm(forms.Form):
     """Form to create a new wifi connection."""
     name = forms.CharField(label=_('Connection Name'))
+    zone = forms.ChoiceField(
+        label=_('Firewall Zone'),
+        choices=[('external', 'External'), ('internal', 'Internal')])
     ssid = forms.CharField(label=_('SSID'))
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
