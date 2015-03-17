@@ -33,8 +33,13 @@ from plinth.modules import mumble
 logger = logging.getLogger(__name__)
 
 
+def on_install():
+    """Notify that the service is now enabled."""
+    mumble.service.notify_enabled(None, True)
+
+
 @login_required
-@package.required('mumble-server')
+@package.required(['mumble-server'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()

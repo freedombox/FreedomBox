@@ -35,12 +35,14 @@ packages_resolved = {}
 class Transaction(object):
     """Information about an ongoing transaction."""
 
-    def __init__(self, package_names):
+    def __init__(self, package_names, on_install=None):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
         self.package_names = package_names
+        # XXX: This is hack, remove after implementing proper setup mechanism.
+        self.on_install = on_install
 
         # Progress
         self.allow_cancel = None
@@ -120,10 +122,13 @@ class Transaction(object):
 
         Remove self from global transactions list.
         """
+        if self.status == packagekit.StatusEnum.FINISHED:
+            self.on_install()
+
         del transactions[self.get_id()]
 
 
-def required(*package_names):
+def required(package_names, on_install=None):
     """Decorate a view to check and install required packages."""
 
     def wrapper2(func):
@@ -137,7 +142,8 @@ def required(*package_names):
                 return func(request, *args, **kwargs)
 
             view = plinth.views.PackageInstallView.as_view()
-            return view(request, package_names=package_names, *args, **kwargs)
+            return view(request, package_names=package_names,
+                        on_install=on_install, *args, **kwargs)
 
         return wrapper
 
@@ -155,7 +161,7 @@ def check_installed(package_names):
 
     client = packagekit.Client()
     response = client.resolve(packagekit.FilterEnum.INSTALLED,
-                              package_names + (None, ), None,
+                              tuple(package_names) + (None, ), None,
                               _callback, None)
 
     installed_package_names = []
@@ -173,12 +179,12 @@ def is_installing(package_names):
     return frozenset(package_names) in transactions
 
 
-def start_install(package_names):
+def start_install(package_names, on_install=None):
     """Start a PackageKit transaction to install given list of packages.
 
     This operation is non-blocking at it spawns a new thread.
     """
-    transaction = Transaction(package_names)
+    transaction = Transaction(package_names, on_install=on_install)
     transactions[frozenset(package_names)] = transaction
 
     transaction.start_install()

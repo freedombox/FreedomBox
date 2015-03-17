@@ -62,7 +62,7 @@ def init():
 
 
 @login_required
-@package.required('jwchat', 'ejabberd')
+@package.required(['jwchat', 'ejabberd'])
 def index(request):
     """Serve XMPP page"""
     return TemplateResponse(request, 'xmpp.html',
