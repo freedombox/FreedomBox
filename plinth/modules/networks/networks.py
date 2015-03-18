@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from dbus.exceptions import DBusException
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -100,6 +99,11 @@ def edit(request, conn_id):
                     _('Cannot edit connection %s: '
                       'Connection type not supported.') % name)
             return redirect(reverse_lazy('networks:index'))
+        else:
+            return TemplateResponse(request, 'connections_edit.html',
+                                    {'title': _('Edit Connection'),
+                                     'subsubmenu': subsubmenu,
+                                     'form': form})
     else:
         try:
             form_data['zone'] = settings['connection']['zone']

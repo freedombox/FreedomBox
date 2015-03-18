@@ -16,6 +16,7 @@
 #
 
 from django import forms
+from django.core import validators
 from gettext import gettext as _
 
 from plinth import network
@@ -33,11 +34,16 @@ class AddEthernetForm(forms.Form):
     name = forms.CharField(label=_('Connection Name'))
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
+        help_text=_('The firewall zone will control which services are \
+available over this interfaces. Select Internal only for trusted networks.'),
         choices=[('external', 'External'), ('internal', 'Internal')])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
-    ipv4_address = forms.CharField(label=_('Address'), required=False)
+    ipv4_address = forms.CharField(
+        label=_('Address'),
+        validators=[validators.validate_ipv4_address],
+        required=False)
 
 
 class AddWifiForm(forms.Form):
@@ -45,13 +51,22 @@ class AddWifiForm(forms.Form):
     name = forms.CharField(label=_('Connection Name'))
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
+        help_text=_('The firewall zone will control which services are \
+available over this interfaces. Select Internal only for trusted networks.'),
         choices=[('external', 'External'), ('internal', 'Internal')])
-    ssid = forms.CharField(label=_('SSID'))
+    ssid = forms.CharField(
+        label=_('SSID'),
+        help_text=_('The visible name of the network.'))
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
+        help_text=_('Select WPA if the wireless network is secured and \
+requires clients to have the password to connect.'),
         choices=[('wpa', 'WPA'), ('open', 'Open')])
     passphrase = forms.CharField(label=_('Passphrase'), required=False)
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
-    ipv4_address = forms.CharField(label=_('Address'), required=False)
+    ipv4_address = forms.CharField(
+        label=_('Address'),
+        validators=[validators.validate_ipv4_address],
+        required=False)
