@@ -39,7 +39,9 @@ available over this interfaces. Select Internal only for trusted networks.'),
         choices=[('external', 'External'), ('internal', 'Internal')])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
-        choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
+        choices=[('auto', 'Automatic (DHCP)'),
+                 ('shared', 'Shared'),
+                 ('manual', 'Manual')])
     ipv4_address = forms.CharField(
         label=_('Address'),
         validators=[validators.validate_ipv4_address],
@@ -57,15 +59,28 @@ available over this interfaces. Select Internal only for trusted networks.'),
     ssid = forms.CharField(
         label=_('SSID'),
         help_text=_('The visible name of the network.'))
+    mode = forms.ChoiceField(
+        label=_('Mode'),
+        choices=[('infrastructure', 'Infrastructure'),
+                 ('ap', 'Access Point'),
+                 ('adhoc', 'Ad-hoc')])
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
         help_text=_('Select WPA if the wireless network is secured and \
 requires clients to have the password to connect.'),
         choices=[('wpa', 'WPA'), ('open', 'Open')])
-    passphrase = forms.CharField(label=_('Passphrase'), required=False)
+    passphrase = forms.CharField(
+        label=_('Passphrase'),
+        validators=[validators.MinLengthValidator(8)],
+        required=False)
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
-        choices=[('auto', 'Automatic (DHCP)'), ('manual', 'Manual')])
+        choices=[('auto', 'Automatic (DHCP)'),
+                 ('shared', 'Shared'),
+                 ('manual', 'Manual')],
+        help_text=_('Select Automatic (DHCP) if you are connecting to an \
+existing wireless network. Shared mode is useful when running an Access \
+Point.'))
     ipv4_address = forms.CharField(
         label=_('Address'),
         validators=[validators.validate_ipv4_address],

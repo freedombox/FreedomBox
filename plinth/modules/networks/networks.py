@@ -86,12 +86,13 @@ def edit(request, conn_id):
                     ipv4_method, ipv4_address)
             elif settings['connection']['type'] == '802-11-wireless':
                 ssid = form.cleaned_data['ssid']
+                mode = form.cleaned_data['mode']
                 auth_mode = form.cleaned_data['auth_mode']
                 passphrase = form.cleaned_data['passphrase']
 
                 network.edit_wifi_connection(
                     conn, name, zone,
-                    ssid, auth_mode, passphrase,
+                    ssid, mode, auth_mode, passphrase,
                     ipv4_method, ipv4_address)
             else:
                 messages.error(
@@ -117,6 +118,7 @@ def edit(request, conn_id):
 
         if settings['connection']['type'] == '802-11-wireless':
             form_data['ssid'] = settings['802-11-wireless']['ssid']
+            form_data['mode'] = settings['802-11-wireless']['mode']
             try:
                 if (settings['802-11-wireless']['security'] == '802-11-wireless-security'
                     and settings['802-11-wireless-security']['key-mgmt'] == 'wpa-psk'):
@@ -272,6 +274,7 @@ def add_wifi(request):
             name = form.cleaned_data['name']
             zone = form.cleaned_data['zone']
             ssid = form.cleaned_data['ssid']
+            mode = form.cleaned_data['mode']
             auth_mode = form.cleaned_data['auth_mode']
             passphrase = form.cleaned_data['passphrase']
             ipv4_method = form.cleaned_data['ipv4_method']
@@ -279,7 +282,7 @@ def add_wifi(request):
 
             network.add_wifi_connection(
                 name, zone,
-                ssid, auth_mode, passphrase,
+                ssid, mode, auth_mode, passphrase,
                 ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))
     else:
