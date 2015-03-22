@@ -118,7 +118,7 @@ def edit_ethernet_connection(conn, name, zone, ipv4_method, ipv4_address):
 
 
 def edit_wifi_connection(conn, name, zone,
-                         ssid, auth_mode, passphrase,
+                         ssid, mode, auth_mode, passphrase,
                          ipv4_method, ipv4_address):
     settings = conn.GetSettings()
 
@@ -131,6 +131,7 @@ def edit_wifi_connection(conn, name, zone,
         },
         '802-11-wireless': {
             'ssid': ssid,
+            'mode': mode,
         },
         'ipv4': {'method': ipv4_method},
     }
@@ -221,7 +222,7 @@ def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
 
 
 def add_wifi_connection(name, zone,
-                        ssid, auth_mode, passphrase,
+                        ssid, mode, auth_mode, passphrase,
                         ipv4_method, ipv4_address):
     conn = {
         'connection': {
@@ -232,6 +233,7 @@ def add_wifi_connection(name, zone,
         },
         '802-11-wireless': {
             'ssid': ssid,
+            'mode': mode,
         },
         'ipv4': {'method': ipv4_method},
     }

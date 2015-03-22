@@ -31,7 +31,7 @@ class TestNetwork(unittest.TestCase):
             'auto', '')
         network.add_wifi_connection(
             'plinth_test_wifi', 'external',
-            'plinthtestwifi', 'open', '',
+            'plinthtestwifi', 'adhoc', 'open', '',
             'auto', '')
 
     @classmethod
@@ -72,13 +72,15 @@ class TestNetwork(unittest.TestCase):
         conn = network.get_connection('plinth_test_wifi')
         network.edit_wifi_connection(
             conn, 'plinth_test_wifi', 'external',
-            'plinthtestwifi2', 'wpa', 'secretpassword',
+            'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
             'auto', '')
         conn = network.get_connection('plinth_test_wifi')
 
         self.assertEqual(conn.GetSettings()['connection']['zone'], 'external')
         self.assertEqual(
             conn.GetSettings()['802-11-wireless']['ssid'], 'plinthtestwifi2')
+        self.assertEqual(
+            conn.GetSettings()['802-11-wireless']['mode'], 'infrastructure')
         self.assertEqual(
             conn.GetSettings()['802-11-wireless-security']['key-mgmt'],
             'wpa-psk')
