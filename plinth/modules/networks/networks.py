@@ -188,6 +188,7 @@ def connect(request, connect_path):
     form_data = {'name': ssid,
                  'zone': 'external',
                  'ssid': ssid,
+                 'mode': 'infrastructure',
                  'auth_mode': 'wpa',
                  'ipv4_method': 'auto'}
 
@@ -197,6 +198,7 @@ def connect(request, connect_path):
             name = form.cleaned_data['name']
             zone = form.cleaned_data['zone']
             ssid = form.cleaned_data['ssid']
+            mode = form.cleaned_data['mode']
             auth_mode = form.cleaned_data['auth_mode']
             passphrase = form.cleaned_data['passphrase']
             ipv4_method = form.cleaned_data['ipv4_method']
@@ -204,7 +206,7 @@ def connect(request, connect_path):
 
             network.add_wifi_connection(
                 name, zone,
-                ssid, auth_mode, passphrase,
+                ssid, mode, auth_mode, passphrase,
                 ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))
     else:
