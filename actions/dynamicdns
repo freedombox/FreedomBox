@@ -357,7 +357,7 @@ case ${cmd} in
     ;;
     update)
         doReadCFG
-        local dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
+        dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
         doGetWANIP
         echo  ${IPFILE}
         echo ${wanip} > ${IPFILE}
