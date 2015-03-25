@@ -26,6 +26,7 @@ import subprocess
 import os
 import socket
 import re
+import yaml
 
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
@@ -62,11 +63,16 @@ def parse_arguments():
         help='Update ejabberd and jwchat with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
 
+    # Get the current server name used by jwchat
+    subparsers.add_parser('get-server', help='Get server name')
+
     # Register a new user account
     register = subparsers.add_parser('register',
                                      help='Register a new user account')
     register.add_argument('--username',
                           help='Username for the new user account')
+    register.add_argument('--server',
+                          help='Virtual host for the new user account')
     register.add_argument('--password',
                           help='Password for the new user account')
 
@@ -117,8 +123,10 @@ def subcommand_change_hostname(arguments):
 
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
-    domainname = arguments.domainname
-    fqdn = socket.gethostname() + '.' + domainname
+    server = arguments.domainname.strip("'")
+    if not server:
+        # If new domainname is blank, use hostname instead.
+        server = socket.gethostname()
 
     # update jwchat's sitename, if it's installed
     if os.path.exists(JWCHAT_CONFIG):
@@ -127,37 +135,54 @@ def subcommand_change_domainname(arguments):
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
                 if re.match(r'\s*var\s+SITENAME', line):
-                    conffile.write('var SITENAME = "' + fqdn + '";\n')
+                    conffile.write('var SITENAME = "' + server + '";\n')
                 else:
                     conffile.write(line)
     else:
         print('Skipping configuring jwchat sitename: %s not found',
               JWCHAT_CONFIG)
 
+    # Check if new domainname is already in ejabberd hosts list.
+    conffile = open(EJABBERD_CONFIG, 'r')
+    conf = yaml.load(conffile)
+    if server in conf['hosts']:
+        return
+
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
-    # add updated FQDN to top of ejabberd hosts list
+    # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             conffile.write(line)
             if re.match(r'\s*hosts:', line):
-                conffile.write('  - "' + fqdn + '"\n')
+                conffile.write('  - "' + server + '"\n')
 
     subprocess.call(['service', 'ejabberd', 'start'])
+
+
+def subcommand_get_server(_):
+    """Get the current server name used by jwchat"""
+    if os.path.exists(JWCHAT_CONFIG):
+        with open(JWCHAT_CONFIG, 'r') as conffile:
+            lines = conffile.readlines()
+        for line in lines:
+            if re.match(r'\s*var\s+SITENAME', line):
+                print(line.split('"')[1])
+                return
 
 
 def subcommand_register(arguments):
     """Register a new user account"""
     username = arguments.username
+    server = arguments.server
     password = arguments.password
-    fqdn = socket.getfqdn()
 
     try:
         output = subprocess.check_output(['ejabberdctl', 'register',
-                                          username, fqdn, password])
+                                          username, server, password])
         print(output.decode())
     except subprocess.CalledProcessError as e:
         print('Failed to register XMPP account:', e.output.decode())
