@@ -132,19 +132,19 @@ doWriteCFG()
 
     # store the given options in ez-ipupdate compatible config file
     {
-        "host=${host}"
-        "server=${server}"
-        "user=${user}:${pass}"
-        "service-type=gnudip"
-        "retrys=3"
-        "wildcard"
+        echo "host=${host}"
+        echo "server=${server}"
+        echo "user=${user}:${pass}"
+        echo "service-type=gnudip"
+        echo "retrys=3"
+        echo "wildcard"
     } > ${out_file}
     
     # store UPDATE URL params
     {
-        "POSTURL ${updateurl}"
-        "POSTAUTH ${basicauth}"
-        "POSTSSLIGNORE ${ignoreCertError}"
+        echo "POSTURL ${updateurl}"
+        echo "POSTAUTH ${basicauth}"
+        echo "POSTSSLIGNORE ${ignoreCertError}"
     } > ${HELPERCFG}
     
     # check if we are behind a NAT Router
@@ -275,7 +275,8 @@ doGetWANIP()
 {
     if [ ! -z "${ipurl}" ];then
         outfile=$(mktemp)
-        "${WGET}" "${WGETOPTIONS}" -O "${outfile}" "${ipurl}"
+        local cmd="${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}"
+        $cmd
         wanip=$(sed s/[^0-9.]//g "${outfile}")
         rm "${outfile}"
         [ -z "${wanip}" ] && wanip=${NOIP}
@@ -304,8 +305,8 @@ doUpdate()
         if [ "${ignoreCertError}" = "enabled" ];then
             local wgetoptions=" --no-check-certificate "
         fi
-
-        "${WGET}" "${wgetoptions}" "${updateurl}"
+        local cmd="${WGET} ${wgetoptions} ${updateurl}"
+        $cmd
         # ToDo: check the returning text from WEB Server. User need to give expected string.
         if [ ${?} -eq 0 ];then
             ${0} success ${wanip}
