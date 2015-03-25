@@ -204,11 +204,11 @@ doReadCFG()
 # as plinth will add them
 doReplaceVars()
 {
-    local url="${updateurl//<Ip>/${wanip}}"
-    url="${url//<Domain>/${host}}"
-    url="${url//<User>/${user}}"
-    url="${url//<Pass>/${pass}}"
-    url="${url//\'/""}"
+    local url=$(echo "${updateurl}" | sed "s/<Ip>/${wanip}/g")
+    url=$(echo "${url}" | sed "s/<Domain>/${host}/g")
+    url=$(echo "${url}" | sed "s/<User>/${user}/g")
+    url=$(echo "${url}" | sed "s/<Pass>/${pass}/g")
+    url=$(echo "${url}" | sed "s/'//g")
     updateurl=${url}
     logger "expanded update URL as ${url}"
 }
