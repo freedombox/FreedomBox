@@ -421,7 +421,7 @@ case ${cmd} in
         rm ${CRONJOB}
     ;;
     *)
-        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed"
+        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed|get-last-success"
         echo ""
         echo "options are:"
         echo "-s <server>             Gnudip Server address"
@@ -438,6 +438,7 @@ case ${cmd} in
         echo "success                 store update success and optional the updated IP"
         echo "failed                  store update failure"
         echo "get-nat                 return the detected nat type"
+        echo "get-last-success        return date of last successful update"
     ;;
 esac
 exit 0
