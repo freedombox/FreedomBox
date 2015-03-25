@@ -117,14 +117,17 @@ def edit(request, conn_id):
             form_data['ipv4_address'] = settings['ipv4']['addresses'][0][0]
 
         if settings['connection']['type'] == '802-11-wireless':
-            form_data['ssid'] = settings['802-11-wireless']['ssid']
-            form_data['mode'] = settings['802-11-wireless']['mode']
+            settings_wifi = settings['802-11-wireless']
+            form_data['ssid'] = settings_wifi['ssid']
+            form_data['mode'] = settings_wifi['mode']
             try:
-                if (settings['802-11-wireless']['security'] == '802-11-wireless-security'
-                    and settings['802-11-wireless-security']['key-mgmt'] == 'wpa-psk'):
-                    form_data['auth_mode'] = 'wpa'
-                    secrets = conn.GetSecrets()
-                    form_data['passphrase'] = secrets['802-11-wireless-security']['psk']
+                if settings_wifi['security'] == '802-11-wireless-security':
+                    wifi_sec = settings['802-11-wireless-security']
+                    if wifi_sec['key-mgmt'] == 'wpa-psk':
+                        form_data['auth_mode'] = 'wpa'
+                        secret = conn.GetSecrets()
+                        psk = secret['802-11-wireless-security']['psk']
+                        form_data['passphrase'] = psk
                 else:
                     form_data['auth_mode'] = 'open'
             except KeyError:
