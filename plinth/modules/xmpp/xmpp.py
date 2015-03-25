@@ -136,7 +136,6 @@ def _apply_changes(request, old_status, new_status):
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
     """Configuration form"""
     username = forms.CharField(label=_('Username'))
-
     password = forms.CharField(
         label=_('Password'), widget=forms.PasswordInput())
 
@@ -145,12 +144,13 @@ class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
 def register(request):
     """Serve the registration form"""
     form = None
+    server = actions.run('xmpp', ['get-server']).strip()
 
     if request.method == 'POST':
         form = RegisterForm(request.POST, prefix='xmpp')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _register_user(request, form.cleaned_data)
+            _register_user(request, form.cleaned_data, server)
             form = RegisterForm(prefix='xmpp')
     else:
         form = RegisterForm(prefix='xmpp')
@@ -158,15 +158,17 @@ def register(request):
     return TemplateResponse(request, 'xmpp_register.html',
                             {'title': _('Register XMPP Account'),
                              'form': form,
-                             'subsubmenu': subsubmenu})
+                             'subsubmenu': subsubmenu,
+                             'server': server})
 
 
-def _register_user(request, data):
+def _register_user(request, data, server):
     """Register a new XMPP user"""
     output = actions.superuser_run(
         'xmpp',
         ['register',
          '--username', data['username'],
+         '--server', server,
          '--password', data['password']])
 
     if 'successfully registered' in output:
