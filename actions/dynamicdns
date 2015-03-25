@@ -325,7 +325,7 @@ case ${cmd} in
         doGetWANIP
         if [ "$(cat $HELPERCFG |grep ^NAT | awk '{print $2}')" = "no" ];then
             #if we are not behind a NAT device and we use gnudip, start the daemon tool
-            if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\')];then
+        if [ -f ${CFG} -a ! -z $(cat ${cfgfile} 2> /dev/null |grep server |cut -d = -f 2 |grep -v ^\'\') ];then
                 mv ${CFG_disabled} ${CFG}
                 /etc/init.d/${TOOLNAME} start
             fi
