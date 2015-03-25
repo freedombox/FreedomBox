@@ -351,7 +351,7 @@ case ${cmd} in
         fi
     ;;
     get-nat)
-        NAT=$(grep ^NAT $HELPERCFG 2> /dev/null | awk '{print $2')
+        NAT=$(grep ^NAT $HELPERCFG 2> /dev/null | awk '{print $2}')
         [ -z "${NAT}" ] && NAT="unknown"
         echo ${NAT}
     ;;
