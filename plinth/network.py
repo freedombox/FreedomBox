@@ -35,6 +35,7 @@ CONNECTION_TYPE_NAMES = {
 class ConnectionNotFound(Exception):
     def __init__(self, msg):
         self.msg = msg
+
     def __str__(self):
         return self.msg
 
@@ -42,6 +43,7 @@ class ConnectionNotFound(Exception):
 class DeviceNotFound(Exception):
     def __init__(self, msg):
         self.msg = msg
+
     def __str__(self):
         return self.msg
 
@@ -179,8 +181,8 @@ def activate_connection(name):
         }.get(ctype, ctype)
 
         for dev in NetworkManager.NetworkManager.GetDevices():
-            if (dev.DeviceType == dtype
-                and dev.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED):
+            if (dev.DeviceType == dtype and
+                dev.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED):
                 break
         else:
             raise DeviceNotFound(
