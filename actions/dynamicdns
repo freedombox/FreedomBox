@@ -359,7 +359,6 @@ case ${cmd} in
         doReadCFG
         dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
         doGetWANIP
-        echo  ${IPFILE}
         echo ${wanip} > ${IPFILE}
         grep -v execute ${cfgfile} > ${cfgfile}.tmp
         mv ${cfgfile}.tmp ${cfgfile}
