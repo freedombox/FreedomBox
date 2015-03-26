@@ -300,12 +300,12 @@ doUpdate()
     if [ ! -z "${updateurl}" ];then
         doReplaceVars
         if [ "${basicauth}" = "enabled" ];then
-            local wgetoptions=" --user ${user} --password ${pass} "
+            WGETOPTIONS="${WGETOPTIONS} --user ${user} --password ${pass} "
         fi
         if [ "${ignoreCertError}" = "enabled" ];then
-            local wgetoptions=" --no-check-certificate "
+            WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
         fi
-        local cmd="${WGET} ${wgetoptions} ${updateurl}"
+        local cmd="${WGET} ${WGETOPTIONS} ${updateurl}"
         $cmd
         # ToDo: check the returning text from WEB Server. User need to give expected string.
         if [ ${?} -eq 0 ];then
