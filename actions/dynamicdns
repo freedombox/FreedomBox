@@ -1,0 +1,443 @@
+#!/bin/bash
+############################################################################
+#                                                                          #
+# This file is part of Plinth.                                             #
+#                                                                          #
+# This program is free software: you can redistribute it and/or modify     #
+# it under the terms of the GNU Affero General Public License as           #
+# published by the Free Software Foundation, either version 3 of the       #
+# License, or (at your option) any later version.                          #
+#                                                                          #
+# This program is distributed in the hope that it will be useful,          #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of           #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            #
+# GNU Affero General Public License for more details.                      #
+#                                                                          #
+# You should have received a copy of the GNU Affero General Public License #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.    #
+#                                                                          #
+#                                                                          #
+# This script is a wrapper around ez-ipupdate and/or wget                  #
+# to update a Dynamic DNS account. The script is used as an                #
+# interface between plinth and ez-ipupdate                                 #
+# the script will store configuration, return configuration                #
+# to plinth UI and do a dynamic DNS update. The script will                #
+# also determe if we are behind a NAT device, if we can use                #
+# ez-ipupdate tool or if we need to do some wget magic                     #
+#                                                                          #
+# Todo: IPv6                                                               #
+# Todo: GET WAN IP from Router via UPnP if supported                       #
+# Todo: licence string?                                                    #
+# author: Daniel Steglich <steglich@datasystems24.de>                      #
+#                                                                          #
+############################################################################
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# static values
+WGET=$(which wget)
+WGETOPTIONS="-4 -o /dev/null -t 3 -T 3"
+EMPTYSTRING="none"
+NOIP="0.0.0.0"
+# how often do we poll for IP changes if we are behind a NAT?
+UPDATEMINUTES=5
+# if we do not have a IP check URL, how often should we do a "blind" update
+UPDATEMINUTESUNKNOWN=3600
+TOOLNAME=ez-ipupdate
+UPDATE_TOOL=$(which ${TOOLNAME})
+DISABLED_STRING='disabled'
+ENABLED_STRING='enabled'
+
+# Dirs and filenames
+CFGDIR="/etc/${TOOLNAME}/"
+CFG="${CFGDIR}${TOOLNAME}.conf"
+CFG_disabled="${CFGDIR}${TOOLNAME}.inactive"
+IPFILE="${CFGDIR}${TOOLNAME}.currentIP"
+STATUSFILE="${CFGDIR}${TOOLNAME}.status"
+LASTUPDATE="${CFGDIR}/last-update"
+HELPERCFG="${CFGDIR}${TOOLNAME}-plinth.cfg"
+CRONJOB="/etc/cron.d/${TOOLNAME}"
+PIDFILE="/var/run/ez-ipupdate.pid"
+
+# this function will parse commandline options
+doGetOpt()
+{
+    basicauth=0
+    ignoreCertError=0
+
+    while getopts ":s:d:u:p:I:U:c:b:" opt; do
+        case ${opt} in
+            s)
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    server=${OPTARG}
+                else
+                    server=""
+                fi
+            ;;
+            d)
+                host=${OPTARG}
+            ;;
+            u)
+                user=${OPTARG}
+            ;;
+            p)
+                pass=${OPTARG}
+            ;;
+            I)
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    ipurl=${OPTARG}
+                else
+                    ipurl=""
+                fi
+            ;;
+            U)
+                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
+                    updateurl=${OPTARG}
+                else
+                    updateurl=""
+                fi
+            ;;
+            b)
+                basicauth=${OPTARG}
+            ;;
+            c)
+                ignoreCertError=${OPTARG}
+            ;;            
+            \?)
+                echo "Invalid option: -${OPTARG}" >&2
+                exit 1
+            ;;
+        esac
+    done
+}
+
+# this function will write a persistent config file to disk
+doWriteCFG()
+{
+    mkdir ${CFGDIR} 2> /dev/null
+    # always write to the inactive config - needs to be enabled via "start" command later
+    local out_file=${CFG_disabled}
+
+    # reset the last update time
+    echo 0 > ${LASTUPDATE}
+
+    # reset the last updated IP
+    echo "0.0.0.0" > ${IPFILE}
+
+    # reset last update (if there is one)
+    rm ${STATUSFILE} 2> /dev/null
+
+    # find the interface (always the default gateway interface)
+    default_interface=$(ip route |grep default |awk '{print $5}')
+
+    # store the given options in ez-ipupdate compatible config file
+    {
+        echo "host=${host}"
+        echo "server=${server}"
+        echo "user=${user}:${pass}"
+        echo "service-type=gnudip"
+        echo "retrys=3"
+        echo "wildcard"
+    } > ${out_file}
+    
+    # store UPDATE URL params
+    {
+        echo "POSTURL ${updateurl}"
+        echo "POSTAUTH ${basicauth}"
+        echo "POSTSSLIGNORE ${ignoreCertError}"
+    } > ${HELPERCFG}
+    
+    # check if we are behind a NAT Router
+    echo "IPURL ${ipurl}" >> ${HELPERCFG}
+    if [ -z ${ipurl} ];then
+        echo "NAT unknown" >> ${HELPERCFG}
+    else 
+        doGetWANIP
+        ISGLOBAL=$(ip addr ls "${default_interface}" | grep "${wanip}")
+        if [ -z "${ISGLOBAL}" ];then
+            # we are behind NAT
+            echo "NAT yes" >> ${HELPERCFG}
+        else
+            # we are directly connected
+            echo "NAT no" >> ${HELPERCFG}
+            # if this file is added ez-ipupdate will take ip form this interface
+            {
+                "interface=${default_interface}"
+                # if this line is added to config file, ez-ipupdate will be launched on startup via init.d
+                "daemon"
+                "execute=${0} success"
+            } > ${out_file}
+        fi
+    fi
+}
+
+# this function will read the config file from disk
+# special treatment for empty strings is done here:
+# plinth will give empty strings like: ''
+# but we don't want this single quotes to be used
+doReadCFG()
+{ 
+    host=""
+    server=""
+    user=""
+    pass=""
+    ipurl=""
+
+    if [ ! -z "${cfgfile}" ];then
+        host=$(grep host "${cfgfile}" 2> /dev/null |cut -d = -f 2)
+        server=$(grep server "${cfgfile}" 2> /dev/null |cut -d = -f 2 |grep -v ^\'\')
+        user=$(grep user "${cfgfile}" 2> /dev/null |cut -d = -f 2 |cut -d : -f 1 )
+        pass=$(grep user "${cfgfile}" 2> /dev/null |cut -d = -f 2 |cut -d : -f 2)
+    fi
+
+    if [ ! -z ${HELPERCFG} ];then
+        ipurl=$(grep ^IPURL "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
+        updateurl=$(grep POSTURL "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
+        basicauth=$(grep POSTAUTH "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
+        ignoreCertError=$(grep POSTSSLIGNORE "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
+    fi  
+}
+
+# replace vars from url: i.e.:
+# https://example.com/update.php?domain=<Domain>&User=<User>&Pass=<Pass>
+# also this function will remove the surounding single quotes from the URL string
+# as plinth will add them
+doReplaceVars()
+{
+    local url=$(echo "${updateurl}" | sed "s/<Ip>/${wanip}/g")
+    url=$(echo "${url}" | sed "s/<Domain>/${host}/g")
+    url=$(echo "${url}" | sed "s/<User>/${user}/g")
+    url=$(echo "${url}" | sed "s/<Pass>/${pass}/g")
+    url=$(echo "${url}" | sed "s/'//g")
+    updateurl=${url}
+    logger "expanded update URL as ${url}"
+}
+
+# doReadCFG() needs to be run before this
+# this function will return all configured parameters in a way that
+# plinth will understand (plinth know the order of
+# parameters this function will return)
+doStatus()
+{
+    PROC=$(pgrep ${TOOLNAME})
+    if [ -f "${CRONJOB}" ];then
+        echo "${ENABLED_STRING}"
+    elif [ ! -z "${PROC}" ];then
+        echo "${ENABLED_STRING}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${server}" ];then
+        echo "${server}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${host}"  ];then
+        echo "${host}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${user}" ];then
+        echo "${user}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${pass}"  ];then
+        echo "${pass}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${ipurl}" ];then
+        echo "${ipurl}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${updateurl}"  ];then
+        echo "${updateurl}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${basicauth}" ];then
+        echo "${basicauth}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+    if [ ! -z "${ignoreCertError}" ];then
+        echo "${ignoreCertError}"
+    else
+        echo "${DISABLED_STRING}"
+    fi
+}
+
+# ask a public WEB Server for the WAN IP we are comming from
+# and store this ip within $wanip
+doGetWANIP()
+{
+    if [ ! -z "${ipurl}" ];then
+        outfile=$(mktemp)
+        local cmd="${WGET} ${WGETOPTIONS} -O ${outfile} ${ipurl}"
+        $cmd
+        wanip=$(sed s/[^0-9.]//g "${outfile}")
+        rm "${outfile}"
+        [ -z "${wanip}" ] && wanip=${NOIP}
+    else
+        # no WAN IP found because of missing check URL
+        wanip=${NOIP}
+    fi
+}
+
+# actualy do the update (using wget or ez-ipupdate or even both)
+# this function is called via cronjob
+doUpdate()
+{
+    local dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
+    if [ "${dnsentry}" =  "${wanip}" ];then
+        return
+    fi
+    if [ ! -z "${server}" ];then
+        start-stop-daemon -S -x "${UPDATE_TOOL}" -m -p "${PIDFILE}" -- -c "${cfgfile}"
+    fi
+    if [ ! -z "${updateurl}" ];then
+        doReplaceVars
+        if [ "${basicauth}" = "enabled" ];then
+            WGETOPTIONS="${WGETOPTIONS} --user ${user} --password ${pass} "
+        fi
+        if [ "${ignoreCertError}" = "enabled" ];then
+            WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
+        fi
+        local cmd="${WGET} ${WGETOPTIONS} ${updateurl}"
+        $cmd
+        # ToDo: check the returning text from WEB Server. User need to give expected string.
+        if [ ${?} -eq 0 ];then
+            ${0} success ${wanip}
+        else
+            ${0} failed
+        fi
+    fi
+}
+
+cmd=${1}
+shift
+# decide which config to use
+cfgfile="/tmp/none"
+[ -f ${CFG_disabled} ] && cfgfile=${CFG_disabled}
+[ -f ${CFG} ] && cfgfile=${CFG}
+
+# check what action is requested
+case ${cmd} in
+    configure)
+        doGetOpt "${@}"
+        doWriteCFG
+    ;;
+    start)
+        doGetWANIP
+        if [ "$(grep ^NAT ${HELPERCFG} | awk '{print $2}')" = "no" ];then
+            #if we are not behind a NAT device and we use gnudip, start the daemon tool
+            local gnudipServer=$(grep server ${cfgfile} 2> /dev/null |cut -d = -f 2 |grep -v ^\'\')
+            if [ -f ${CFG} -a ! -z "${gnudipServer}" ];then
+                mv ${CFG_disabled} ${CFG}
+                /etc/init.d/${TOOLNAME} start
+            fi
+            # if we are not behind a NAT device and we use update-URL, add a cronjob
+            # (daemon tool does not support update-URL feature)
+            if [ ! -z "$(grep ^POSTURL $HELPERCFG | awk '{print $2}')" ];then
+                echo "*/${UPDATEMINUTES} * * * * root ${0} update" > ${CRONJOB}
+                $0 update
+            fi
+        else
+            # if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
+            echo "*/${UPDATEMINUTES} * * * * root ${0} update" > $CRONJOB
+            $0 update
+        fi
+    ;;
+    get-nat)
+        NAT=$(grep ^NAT $HELPERCFG 2> /dev/null | awk '{print $2}')
+        [ -z "${NAT}" ] && NAT="unknown"
+        echo ${NAT}
+    ;;
+    update)
+        doReadCFG
+        dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
+        doGetWANIP
+        echo ${wanip} > ${IPFILE}
+        grep -v execute ${cfgfile} > ${cfgfile}.tmp
+        mv ${cfgfile}.tmp ${cfgfile}
+        echo "execute=${0} success ${wanip}" >> ${cfgfile}
+        # if we know our WAN IP, only update if IP changes
+        if [ "${dnsentry}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
+            doUpdate
+        fi
+        # if we don't know our WAN IP do a blind update once a hour
+        if [ "${wanip}" = ${NOIP} ];then
+            uptime=$(cut -d . -f 1 /proc/uptime)
+            LAST=0
+            [ -f ${LASTUPDATE} ] && LAST=$(cat ${LASTUPDATE})
+            diff=$((uptime - LAST))
+            if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
+                doUpdate
+            fi
+        fi
+    ;;
+    stop)
+        rm ${CRONJOB} 2> /dev/null
+        /etc/init.d/${TOOLNAME} stop
+        kill "$(cat ${PIDFILE})" 2> /dev/null
+        mv ${CFG} ${CFG_disabled}
+    ;;
+    success)
+        date=$(date)
+        echo "last update done (${date})" > ${STATUSFILE}
+        awk '{print $1}' /proc/uptime |cut -d . -f 1 > ${LASTUPDATE}
+        # if called from cronjob, the current IP is given as parameter
+        if [ $# -eq 1 ];then
+            echo "${1}" > ${IPFILE}
+        else
+            # if called from ez-ipupdate daemon, no WAN IP is given as parameter
+            doGetWANIP
+            echo ${wanip} > ${IPFILE}
+        fi
+    ;;
+    failed)
+        date=$(date)
+        echo "last update failed (${date})" > ${STATUSFILE}
+    ;;    
+    get-last-success)
+        if [ -f ${STATUSFILE} ];then
+            cat ${STATUSFILE}
+        else
+            echo "no successful update recorded since last config change"
+        fi
+    ;;
+    status)
+        doReadCFG
+        doStatus
+    ;;
+    get-timer)
+        echo ${UPDATEMINUTES}
+    ;;
+    clean)
+        rm ${CFGDIR}/*
+        rm ${CRONJOB}
+    ;;
+    *)
+        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed|get-last-success"
+        echo ""
+        echo "options are:"
+        echo "-s <server>             Gnudip Server address"
+        echo "-d <domain>             Domain to be updated"
+        echo "-u <user>               Account username"
+        echo "-p <password>           Account Password"
+        echo "-I <IP check URL>       A URL which returns the IP of the client who is requesting"
+        echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
+        echo "-c <1|0>                disable SSL check on Update URL"
+        echo "-b <1|0>                use HTTP basic auth on Update URL"
+        echo ""
+        echo "update                  do a one time update"
+        echo "clean                   delete configuration"
+        echo "success                 store update success and optional the updated IP"
+        echo "failed                  store update failure"
+        echo "get-nat                 return the detected nat type"
+        echo "get-last-success        return date of last successful update"
+    ;;
+esac
+exit 0
