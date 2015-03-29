@@ -115,7 +115,8 @@ setuptools.setup(
         'cherrypy >= 3.0',
         'django >= 1.7.0',
         'django-bootstrap-form',
-        'pygobject'
+        'pygobject',
+        'yaml'
     ],
     tests_require=['coverage >= 3.7'],
     include_package_data=True,
