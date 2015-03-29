@@ -134,50 +134,59 @@ def _apply_changes(request, old_status, new_status):
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
-    """Configuration form"""
+    """Configuration form."""
     username = forms.CharField(label=_('Username'))
+    vhost = forms.ChoiceField(
+        label=_('Host'), choices=(),
+        help_text=_('The new user will be able to login as: username@host'))
     password = forms.CharField(
         label=_('Password'), widget=forms.PasswordInput())
+
+    def __init__(self, vhosts, *args, **kwargs):
+        """Set the list of possible values for hosts."""
+        super(RegisterForm, self).__init__(*args, **kwargs)
+
+        self.fields['vhost'].choices = ((vhost, '@' + vhost)
+                                        for vhost in vhosts)
 
 
 @login_required
 def register(request):
-    """Serve the registration form"""
+    """Serve the registration form."""
     form = None
-    server = actions.run('xmpp', ['get-server']).strip()
+    vhosts = actions.run('xmpp', ['get-vhosts']).split()
 
     if request.method == 'POST':
-        form = RegisterForm(request.POST, prefix='xmpp')
+        form = RegisterForm(vhosts, request.POST, prefix='xmpp')
         # pylint: disable-msg=E1101
         if form.is_valid():
-            _register_user(request, form.cleaned_data, server)
-            form = RegisterForm(prefix='xmpp')
+            _register_user(request, form.cleaned_data)
+            form = RegisterForm(vhosts, prefix='xmpp')
     else:
-        form = RegisterForm(prefix='xmpp')
+        form = RegisterForm(vhosts, prefix='xmpp')
 
     return TemplateResponse(request, 'xmpp_register.html',
                             {'title': _('Register XMPP Account'),
                              'form': form,
-                             'subsubmenu': subsubmenu,
-                             'server': server})
+                             'subsubmenu': subsubmenu})
 
 
-def _register_user(request, data, server):
+def _register_user(request, data):
     """Register a new XMPP user"""
     output = actions.superuser_run(
         'xmpp',
         ['register',
          '--username', data['username'],
-         '--server', server,
+         '--vhost', data['vhost'],
          '--password', data['password']])
 
     if 'successfully registered' in output:
-        messages.success(request, _('Registered account for %s') %
-                         data['username'])
+        messages.success(request, _('Registered account %s@%s') %
+                         (data['username'], data['vhost']))
     else:
         messages.error(request,
-                       _('Failed to register account for %s: %s') %
-                       (data['username'], output))
+                       _('Failed to register account %s@%s: %s') %
+                       (data['username'], data['vhost'], output))
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

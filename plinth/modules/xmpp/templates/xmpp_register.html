@@ -27,12 +27,7 @@
 
     <div class='row'>
       <div class='col-sm-4'>
-	<span class="btn btn-default btn-xs pull-right"
-	      title="The server where the new XMPP account will be created.">
-	  @{{ server }}
-	</span>
-	{% include 'bootstrapform/field.html' with field=form.username %}
-	{% include 'bootstrapform/field.html' with field=form.password %}
+        {{ form|bootstrap }}
         <input type="submit" class="btn btn-primary" value="Register XMPP Account"/>
       </div>
     </div>
