@@ -44,8 +44,9 @@ class PackageInstallView(TemplateView):
 
         if 'packages_names' not in context:
             context['package_names'] = self.kwargs.get('package_names', [])
-        context['packages'] = [package_module.packages_resolved[package_name]
-                               for package_name in context['package_names']]
+        context['packages'] = {
+            package_name: package_module.packages_resolved[package_name]
+            for package_name in context['package_names']}
         context['is_installing'] = \
             package_module.is_installing(context['package_names'])
         context['transactions'] = package_module.transactions
