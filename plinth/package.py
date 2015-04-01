@@ -70,6 +70,7 @@ class Transaction(object):
         self.role = None
         self.caller_active = None
         self.download_size_remaining = None
+        self.speed = None
 
         # Completion
         self.is_finished = False
@@ -186,6 +187,8 @@ class Transaction(object):
         elif progress_type == packagekit.ProgressType.DOWNLOAD_SIZE_REMAINING:
             self.download_size_remaining = \
                 progress.props.download_size_remaining
+        elif progress_type == packagekit.ProgressType.SPEED:
+            self.speed = progress.props.speed
         else:
             logger.info('Unhandle packagekit progress callback - %s, %s',
                         progress, progress_type)
