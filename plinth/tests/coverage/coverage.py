@@ -45,7 +45,7 @@ FILES_TO_OMIT = ['plinth/tests/*.py']
 COVERAGE_REPORT_DIR = 'plinth/tests/coverage/report'
 
 
-class TestCoverageCommand(setuptools.Command):
+class CoverageCommand(setuptools.Command):
     """
     Subclass of setuptools Command to perform code test coverage analysis.
     """

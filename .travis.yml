@@ -1,0 +1,29 @@
+# Travis-CI configuration file for Plinth
+
+language: python
+python:
+  - "3.2"
+
+# Debian packages required
+addons:
+  apt_packages:
+  - python3-gi
+
+virtualenv:
+  system_site_packages: true
+
+# Command to install dependencies
+install: "pip install -r requirements.txt"
+
+# Command to run tests
+script: python3 setup.py test
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+  irc:
+    channels:
+      - "irc.oftc.net#freedombox"
+    on_success: always
+    on_failure: always

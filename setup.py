@@ -31,7 +31,7 @@ import shutil
 import subprocess
 
 from plinth import __version__
-from plinth.tests.coverage import test_coverage
+from plinth.tests.coverage import coverage
 
 
 DIRECTORIES_TO_CREATE = [
@@ -115,8 +115,7 @@ setuptools.setup(
         'cherrypy >= 3.0',
         'django >= 1.7.0',
         'django-bootstrap-form',
-        'pygobject',
-        'yaml'
+        'pyyaml',
     ],
     tests_require=['coverage >= 3.7'],
     include_package_data=True,
@@ -143,6 +142,6 @@ setuptools.setup(
     cmdclass={
         'clean': CustomClean,
         'install_data': CustomInstallData,
-        'test_coverage': test_coverage.TestCoverageCommand
+        'test_coverage': coverage.CoverageCommand
     },
 )
