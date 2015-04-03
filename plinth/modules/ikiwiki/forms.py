@@ -28,3 +28,11 @@ class IkiwikiForm(forms.Form):
     enabled = forms.BooleanField(
         label=_('Enable ikiwiki site'),
         required=False)
+
+
+class IkiwikiCreateForm(forms.Form):
+    """Form to create a wiki or blog."""
+    type = forms.ChoiceField(
+        label=_('Type'),
+        choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
+    name = forms.CharField(label=_('Name'))
