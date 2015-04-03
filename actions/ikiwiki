@@ -47,6 +47,9 @@ def parse_arguments():
     # Disable ikiwiki site
     subparsers.add_parser('disable', help='Disable ikiwiki site')
 
+    # Get wikis and blogs
+    subparsers.add_parser('get-sites', help='Get wikis and blogs')
+
     # Create a wiki
     create_wiki = subparsers.add_parser('create-wiki', help='Create a wiki')
     create_wiki.add_argument('--name', help='Name of new wiki')
@@ -71,14 +74,21 @@ def subcommand_enable(_):
     if not os.path.isfile(CONFIG_FILE):
         setup()
 
+    subprocess.check_output(['a2enmod', 'cgi'])
     subprocess.check_output(['a2enconf', 'ikiwiki'])
-    subprocess.check_output(['service', 'apache2', 'reload'])
+    subprocess.check_output(['service', 'apache2', 'restart'])
 
 
 def subcommand_disable(_):
     """Disable ikiwiki site."""
     subprocess.check_output(['a2disconf', 'ikiwiki'])
     subprocess.check_output(['service', 'apache2', 'reload'])
+
+
+def subcommand_get_sites(_):
+    """Get wikis and blogs"""
+    sites = os.listdir(WIKI_PATH)
+    print('\n'.join(sites))
 
 
 def subcommand_create_wiki(arguments):
@@ -163,18 +173,16 @@ def setup():
             '	url => "/ikiwiki/$wikiname_short",\n',
             '	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
             '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
-            '	add_plugins => [qw{goodstuff websetup comments blogspam calendar sidebar trail httpauth}],\n',
+            '	add_plugins => [qw{goodstuff websetup comments calendar sidebar trail httpauth}],\n',
             '	rss => 1,\n',
             '	atom => 1,\n',
             '	syslog => 1,\n',
             '\n',
             '	example => "blog",\n',
             '	comments_pagespec => "posts/* and !*/Discussion",\n',
-            '	blogspam_pagespec => "postcomment(*)",\n',
             '	archive_pagespec => "page(posts/*) and !*/Discussion",\n',
             '	global_sidebars => 0,\n',
             '	discussion => 0,\n',
-            '	locked_pages => "* and !postcomment(*)",\n',
             '	tagbase => "tags",\n',
             ')\n',
         ])
