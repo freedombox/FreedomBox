@@ -1,0 +1,193 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for ikiwiki
+"""
+
+import argparse
+import os
+import subprocess
+
+
+CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki.conf'
+CONFIG_FILE = '/etc/apache2/conf-available/ikiwiki.conf'
+SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
+SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
+WIKI_PATH = '/var/www/ikiwiki'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether ikiwiki site is enabled
+    subparsers.add_parser('get-enabled',
+                          help='Get whether ikiwiki site is enabled')
+
+    # Enable ikiwiki site
+    subparsers.add_parser('enable', help='Enable ikiwiki site')
+
+    # Disable ikiwiki site
+    subparsers.add_parser('disable', help='Disable ikiwiki site')
+
+    # Create a wiki
+    create_wiki = subparsers.add_parser('create-wiki', help='Create a wiki')
+    create_wiki.add_argument('--name', help='Name of new wiki')
+
+    # Create a blog
+    create_blog = subparsers.add_parser('create-blog', help='Create a blog')
+    create_blog.add_argument('--name', help='Name of new blog')
+
+    return parser.parse_args()
+
+
+def subcommand_get_enabled(_):
+    """Get whether ikiwiki site is enabled."""
+    if os.path.isfile(CONFIG_ENABLE):
+        print('yes')
+    else:
+        print('no')
+
+
+def subcommand_enable(_):
+    """Enable ikiwiki site."""
+    if not os.path.isfile(CONFIG_FILE):
+        setup()
+
+    subprocess.check_output(['a2enconf', 'ikiwiki'])
+    subprocess.check_output(['service', 'apache2', 'reload'])
+
+
+def subcommand_disable(_):
+    """Disable ikiwiki site."""
+    subprocess.check_output(['a2disconf', 'ikiwiki'])
+    subprocess.check_output(['service', 'apache2', 'reload'])
+
+
+def subcommand_create_wiki(arguments):
+    """Create a wiki"""
+    subprocess.check_output(['ikiwiki', '-setup', SETUP_WIKI, arguments.name])
+
+
+def subcommand_create_blog(arguments):
+    """Create a blog"""
+    subprocess.check_output(['ikiwiki', '-setup', SETUP_BLOG, arguments.name])
+
+
+def setup():
+    """Initial setup"""
+    if not os.path.exists(WIKI_PATH):
+        os.makedirs(WIKI_PATH)
+
+    with open(CONFIG_FILE, 'w') as conffile:
+        conffile.writelines([
+            'Alias /ikiwiki /var/www/ikiwiki\n',
+            'AddHandler cgi-script .cgi\n',
+            '\n',
+            '<Directory /var/www/ikiwiki>\n',
+            '    Options +ExecCGI\n',
+            '</Directory>\n'
+        ])
+
+    with open(SETUP_WIKI, 'w') as setupfile:
+        setupfile.writelines([
+            '#!/usr/bin/perl\n',
+            '# Ikiwiki setup automator for Plinth.\n',
+            '\n',
+            'require IkiWiki::Setup::Automator;\n',
+            '\n',
+            'our $wikiname=$ARGV[0];\n',
+            'if ($wikiname eq "") {\n',
+            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup wiki_name";\n',
+            '	exit;\n',
+            '}\n',
+            '\n',
+            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);\n',
+            '\n',
+            'IkiWiki::Setup::Automator->import(\n',
+            '	wikiname => $wikiname,\n',
+            '	rcs => "git",\n',
+            '	srcdir => "/var/ikiwiki/$wikiname_short",\n',
+            '	destdir => "/var/www/ikiwiki/$wikiname_short",\n',
+            '	repository => "/var/ikiwiki/$wikiname_short.git",\n',
+            '	dumpsetup => "/var/ikiwiki/$wikiname_short.setup",\n',
+            '	url => "/ikiwiki/$wikiname_short",\n',
+            '	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
+            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
+            '	add_plugins => [qw{goodstuff websetup httpauth}],\n',
+            '	rss => 1,\n',
+            '	atom => 1,\n',
+            '	syslog => 1,\n',
+            ')\n',
+        ])
+
+    with open(SETUP_BLOG, 'w') as setupfile:
+        setupfile.writelines([
+            '#!/usr/bin/perl\n',
+            '# Ikiwiki setup automator for Plinth (blog version).\n',
+            '\n',
+            'require IkiWiki::Setup::Automator;\n',
+            '\n',
+            'our $wikiname=$ARGV[0];\n',
+            'if ($wikiname eq "") {\n',
+            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup blog_name";\n',
+            '	exit;\n',
+            '}\n',
+            '\n',
+            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);\n',
+            '\n',
+            'IkiWiki::Setup::Automator->import(\n',
+            '	wikiname => $wikiname,\n',
+            '	rcs => "git",\n',
+            '	srcdir => "/var/ikiwiki/$wikiname_short",\n',
+            '	destdir => "/var/www/ikiwiki/$wikiname_short",\n',
+            '	repository => "/var/ikiwiki/$wikiname_short.git",\n',
+            '	dumpsetup => "/var/ikiwiki/$wikiname_short.setup",\n',
+            '	url => "/ikiwiki/$wikiname_short",\n',
+            '	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
+            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
+            '	add_plugins => [qw{goodstuff websetup comments blogspam calendar sidebar trail httpauth}],\n',
+            '	rss => 1,\n',
+            '	atom => 1,\n',
+            '	syslog => 1,\n',
+            '\n',
+            '	example => "blog",\n',
+            '	comments_pagespec => "posts/* and !*/Discussion",\n',
+            '	blogspam_pagespec => "postcomment(*)",\n',
+            '	archive_pagespec => "page(posts/*) and !*/Discussion",\n',
+            '	global_sidebars => 0,\n',
+            '	discussion => 0,\n',
+            '	locked_pages => "* and !postcomment(*)",\n',
+            '	tagbase => "tags",\n',
+            ')\n',
+        ])
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
