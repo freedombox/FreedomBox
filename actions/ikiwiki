@@ -22,6 +22,7 @@ Configuration helper for ikiwiki
 
 import argparse
 import os
+import shutil
 import subprocess
 
 
@@ -58,6 +59,10 @@ def parse_arguments():
     create_blog = subparsers.add_parser('create-blog', help='Create a blog')
     create_blog.add_argument('--name', help='Name of new blog')
 
+    # Delete a wiki or blog
+    delete = subparsers.add_parser('delete', help='Delete a wiki or blog.')
+    delete.add_argument('--name', help='Name of wiki or blog to delete.')
+
     return parser.parse_args()
 
 
@@ -73,10 +78,11 @@ def subcommand_enable(_):
     """Enable ikiwiki site."""
     if not os.path.isfile(CONFIG_FILE):
         setup()
-
-    subprocess.check_output(['a2enmod', 'cgi'])
-    subprocess.check_output(['a2enconf', 'ikiwiki'])
-    subprocess.check_output(['service', 'apache2', 'restart'])
+        subprocess.check_output(['a2enconf', 'ikiwiki'])
+        subprocess.check_output(['service', 'apache2', 'restart'])
+    else:
+        subprocess.check_output(['a2enconf', 'ikiwiki'])
+        subprocess.check_output(['service', 'apache2', 'reload'])
 
 
 def subcommand_disable(_):
@@ -86,25 +92,38 @@ def subcommand_disable(_):
 
 
 def subcommand_get_sites(_):
-    """Get wikis and blogs"""
+    """Get wikis and blogs."""
     sites = os.listdir(WIKI_PATH)
     print('\n'.join(sites))
 
 
 def subcommand_create_wiki(arguments):
-    """Create a wiki"""
+    """Create a wiki."""
     subprocess.check_output(['ikiwiki', '-setup', SETUP_WIKI, arguments.name])
 
 
 def subcommand_create_blog(arguments):
-    """Create a blog"""
+    """Create a blog."""
     subprocess.check_output(['ikiwiki', '-setup', SETUP_BLOG, arguments.name])
+
+
+def subcommand_delete(arguments):
+    """Delete a wiki or blog."""
+    wiki_folder = os.path.join(WIKI_PATH, arguments.name)
+    try:
+        shutil.rmtree(wiki_folder)
+        print('Deleted %s' % arguments.name)
+    except FileNotFoundError:
+        print('Error: %s not found.' % arguments.name)
+        exit(1)
 
 
 def setup():
     """Initial setup"""
     if not os.path.exists(WIKI_PATH):
         os.makedirs(WIKI_PATH)
+
+    subprocess.check_output(['a2enmod', 'cgi'])
 
     with open(CONFIG_FILE, 'w') as conffile:
         conffile.writelines([
