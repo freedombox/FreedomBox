@@ -25,15 +25,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from gettext import gettext as _
-import logging
 
 from .forms import IkiwikiForm, IkiwikiCreateForm
 from plinth import actions
 from plinth import package
-from plinth.modules import ikiwiki
 
-
-LOGGER = logging.getLogger(__name__)
 
 subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
                'text': _('Configure')},
@@ -44,7 +40,9 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
 
 
 @login_required
-@package.required(['ikiwiki', 'libcgi-formbuilder-perl', 'libcgi-session-perl'])
+@package.required(['ikiwiki',
+                   'libcgi-formbuilder-perl',
+                   'libcgi-session-perl'])
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -131,11 +129,10 @@ def create(request):
 def _create_wiki(request, name, admin_name, admin_password):
     """Create wiki."""
     try:
-        output = actions.superuser_run(
+        actions.superuser_run(
             'ikiwiki',
             ['create-wiki', '--wiki_name', name,
              '--admin_name', admin_name, '--admin_password', admin_password])
-        #LOGGER.info('create wiki: %s' % output)
         messages.success(request, _('Created wiki %s.') % name)
     except actions.ActionError as err:
         messages.error(request, _('Could not create wiki: %s') % err)
@@ -144,11 +141,10 @@ def _create_wiki(request, name, admin_name, admin_password):
 def _create_blog(request, name, admin_name, admin_password):
     """Create blog."""
     try:
-        output = actions.superuser_run(
+        actions.superuser_run(
             'ikiwiki',
             ['create-blog', '--blog_name', name,
              '--admin_name', admin_name, '--admin_password', admin_password])
-        #LOGGER.info('create blog: %s' % output)
         messages.success(request, _('Created blog %s.') % name)
     except actions.ActionError as err:
         messages.error(request, _('Could not create blog: %s') % err)
