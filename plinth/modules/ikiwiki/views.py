@@ -22,6 +22,7 @@ Plinth module for configuring ikiwiki
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -109,7 +110,8 @@ def create(request):
                 _create_wiki(request, form.cleaned_data['name'])
             elif form.cleaned_data['type'] == 'blog':
                 _create_blog(request, form.cleaned_data['name'])
-            form = IkiwikiCreateForm(prefix='ikiwiki')
+
+            return redirect(reverse_lazy('ikiwiki:manage'))
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
@@ -121,9 +123,38 @@ def create(request):
 
 def _create_wiki(request, name):
     """Create wiki."""
-    actions.superuser_run('ikiwiki', ['create-wiki', '--name', name])
+    try:
+        actions.superuser_run('ikiwiki', ['create-wiki', '--name', name])
+        messages.success(request, _('Created wiki %s.') % name)
+    except actions.ActionError as err:
+        messages.error(request, _('Could not create wiki: %s') % err)
 
 
 def _create_blog(request, name):
     """Create blog."""
-    actions.superuser_run('ikiwiki', ['create-blog', '--name', name])
+    try:
+        actions.superuser_run('ikiwiki', ['create-blog', '--name', name])
+        messages.success(request, _('Created blog %s.') % name)
+    except actions.ActionError as err:
+        messages.error(request, _('Could not create blog: %s') % err)
+
+
+@login_required
+def delete(request, name):
+    """Handle deleting wikis/blogs, showing a confirmation dialog first.
+
+    On GET, display a confirmation page.
+    On POST, delete the wiki/blog.
+    """
+    if request.method == 'POST':
+        try:
+            actions.superuser_run('ikiwiki', ['delete', '--name', name])
+            messages.success(request, _('%s deleted.') % name)
+        except actions.ActionError as err:
+            messages.error(request, _('Could not delete %s: %s') % (name, err))
+        return redirect(reverse_lazy('ikiwiki:manage'))
+
+    return TemplateResponse(request, 'ikiwiki_delete.html',
+                            {'title': _('Delete Wiki/Blog'),
+                             'subsubmenu': subsubmenu,
+                             'name': name})
