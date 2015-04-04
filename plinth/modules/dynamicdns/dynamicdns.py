@@ -48,7 +48,7 @@ def init():
 
 
 @login_required
-@package.required('ez-ipupdate')
+@package.required(['ez-ipupdate'])
 def index(request):
     """Serve dynamic DNS  page"""
 
@@ -206,7 +206,7 @@ class ConfigureForm(forms.Form):
 
 
 @login_required
-@package.required('ez-ipupdate')
+@package.required(['ez-ipupdate'])
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -228,7 +228,7 @@ def configure(request):
 
 
 @login_required
-@package.required('ez-ipupdate')
+@package.required(['ez-ipupdate'])
 def statuspage(request):
     """Serve the status page """
     check_nat = actions.run('dynamicdns', ['get-nat'])
