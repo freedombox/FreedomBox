@@ -30,7 +30,8 @@ CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki.conf'
 CONFIG_FILE = '/etc/apache2/conf-available/ikiwiki.conf'
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
-WIKI_PATH = '/var/www/ikiwiki'
+SITE_PATH = '/var/www/ikiwiki'
+WIKI_PATH = '/var/ikiwiki'
 
 
 def parse_arguments():
@@ -53,11 +54,17 @@ def parse_arguments():
 
     # Create a wiki
     create_wiki = subparsers.add_parser('create-wiki', help='Create a wiki')
-    create_wiki.add_argument('--name', help='Name of new wiki')
+    create_wiki.add_argument('--wiki_name', help='Name of new wiki')
+    create_wiki.add_argument('--admin_name', help='Administrator account name')
+    create_wiki.add_argument('--admin_password',
+                             help='Administrator account password')
 
     # Create a blog
     create_blog = subparsers.add_parser('create-blog', help='Create a blog')
-    create_blog.add_argument('--name', help='Name of new blog')
+    create_blog.add_argument('--blog_name', help='Name of new blog')
+    create_blog.add_argument('--admin_name', help='Administrator account name')
+    create_blog.add_argument('--admin_password',
+                             help='Administrator account password')
 
     # Delete a wiki or blog
     delete = subparsers.add_parser('delete', help='Delete a wiki or blog.')
@@ -78,40 +85,59 @@ def subcommand_enable(_):
     """Enable ikiwiki site."""
     if not os.path.isfile(CONFIG_FILE):
         setup()
-        subprocess.check_output(['a2enconf', 'ikiwiki'])
-        subprocess.check_output(['service', 'apache2', 'restart'])
+        subprocess.check_call(['a2enconf', 'ikiwiki'])
+        subprocess.check_call(['service', 'apache2', 'restart'])
     else:
-        subprocess.check_output(['a2enconf', 'ikiwiki'])
-        subprocess.check_output(['service', 'apache2', 'reload'])
+        subprocess.check_call(['a2enconf', 'ikiwiki'])
+        subprocess.check_call(['service', 'apache2', 'reload'])
 
 
 def subcommand_disable(_):
     """Disable ikiwiki site."""
-    subprocess.check_output(['a2disconf', 'ikiwiki'])
-    subprocess.check_output(['service', 'apache2', 'reload'])
+    subprocess.check_call(['a2disconf', 'ikiwiki'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
 
 
 def subcommand_get_sites(_):
     """Get wikis and blogs."""
-    sites = os.listdir(WIKI_PATH)
+    sites = os.listdir(SITE_PATH)
     print('\n'.join(sites))
 
 
 def subcommand_create_wiki(arguments):
     """Create a wiki."""
-    subprocess.check_output(['ikiwiki', '-setup', SETUP_WIKI, arguments.name])
+    pw_bytes = arguments.admin_password.encode()
+    proc = subprocess.Popen(
+        ['ikiwiki', '-setup', SETUP_WIKI,
+         arguments.wiki_name, arguments.admin_name],
+        stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
+    print(outs)
+    print(errs)
 
 
 def subcommand_create_blog(arguments):
     """Create a blog."""
-    subprocess.check_output(['ikiwiki', '-setup', SETUP_BLOG, arguments.name])
+    pw_bytes = arguments.admin_password.encode()
+    proc = subprocess.Popen(
+        ['ikiwiki', '-setup', SETUP_BLOG,
+         arguments.blog_name, arguments.admin_name],
+        stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    outs, errs = proc.communicate(input=pw_bytes + b'\n' + pw_bytes)
+    print(outs)
+    print(errs)
 
 
 def subcommand_delete(arguments):
     """Delete a wiki or blog."""
+    html_folder = os.path.join(SITE_PATH, arguments.name)
     wiki_folder = os.path.join(WIKI_PATH, arguments.name)
+
     try:
+        shutil.rmtree(html_folder)
         shutil.rmtree(wiki_folder)
+        shutil.rmtree(wiki_folder + '.git')
+        os.remove(wiki_folder + '.setup')
         print('Deleted %s' % arguments.name)
     except FileNotFoundError:
         print('Error: %s not found.' % arguments.name)
@@ -120,10 +146,10 @@ def subcommand_delete(arguments):
 
 def setup():
     """Initial setup"""
-    if not os.path.exists(WIKI_PATH):
-        os.makedirs(WIKI_PATH)
+    if not os.path.exists(SITE_PATH):
+        os.makedirs(SITE_PATH)
 
-    subprocess.check_output(['a2enmod', 'cgi'])
+    subprocess.check_call(['a2enmod', 'cgi'])
 
     with open(CONFIG_FILE, 'w') as conffile:
         conffile.writelines([
@@ -143,15 +169,19 @@ def setup():
             'require IkiWiki::Setup::Automator;\n',
             '\n',
             'our $wikiname=$ARGV[0];\n',
-            'if ($wikiname eq "") {\n',
-            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup wiki_name";\n',
+            'our $admin=$ARGV[1];\n',
+            'if (($wikiname eq "") || ($admin eq "")) {\n',
+            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup ',
+            'wiki_name admin_name";\n',
             '	exit;\n',
             '}\n',
             '\n',
-            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);\n',
+            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname',
+            '($wikiname);\n',
             '\n',
             'IkiWiki::Setup::Automator->import(\n',
             '	wikiname => $wikiname,\n',
+            '	adminuser => [$admin],\n',
             '	rcs => "git",\n',
             '	srcdir => "/var/ikiwiki/$wikiname_short",\n',
             '	destdir => "/var/www/ikiwiki/$wikiname_short",\n',
@@ -159,7 +189,8 @@ def setup():
             '	dumpsetup => "/var/ikiwiki/$wikiname_short.setup",\n',
             '	url => "/ikiwiki/$wikiname_short",\n',
             '	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
-            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
+            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",'
+            '\n',
             '	add_plugins => [qw{goodstuff websetup httpauth}],\n',
             '	rss => 1,\n',
             '	atom => 1,\n',
@@ -175,15 +206,19 @@ def setup():
             'require IkiWiki::Setup::Automator;\n',
             '\n',
             'our $wikiname=$ARGV[0];\n',
-            'if ($wikiname eq "") {\n',
-            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup blog_name";\n',
+            'our $admin=$ARGV[1];\n',
+            'if (($wikiname eq "") || ($admin eq "")) {\n',
+            '	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup ',
+            'blog_name admin_name";\n',
             '	exit;\n',
             '}\n',
             '\n',
-            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);\n',
+            'our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname',
+            '($wikiname);\n',
             '\n',
             'IkiWiki::Setup::Automator->import(\n',
             '	wikiname => $wikiname,\n',
+            '	adminuser => [$admin],\n',
             '	rcs => "git",\n',
             '	srcdir => "/var/ikiwiki/$wikiname_short",\n',
             '	destdir => "/var/www/ikiwiki/$wikiname_short",\n',
@@ -191,8 +226,10 @@ def setup():
             '	dumpsetup => "/var/ikiwiki/$wikiname_short.setup",\n',
             '	url => "/ikiwiki/$wikiname_short",\n',
             '	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
-            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",\n',
-            '	add_plugins => [qw{goodstuff websetup comments calendar sidebar trail httpauth}],\n',
+            '	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",'
+            '\n',
+            '	add_plugins => [qw{goodstuff websetup comments calendar '
+            'sidebar trail httpauth}],\n',
             '	rss => 1,\n',
             '	atom => 1,\n',
             '	syslog => 1,\n',
