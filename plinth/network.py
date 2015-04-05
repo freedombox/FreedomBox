@@ -20,11 +20,13 @@ Helper functions for working with network manager.
 """
 
 from dbus.exceptions import DBusException
-from gettext import gettext as _
+import logging
 import NetworkManager
 import uuid
 import urllib
 
+
+logger = logging.getLogger(__name__)
 
 CONNECTION_TYPE_NAMES = {
     '802-3-ethernet': 'Ethernet',
@@ -33,68 +35,71 @@ CONNECTION_TYPE_NAMES = {
 
 
 class ConnectionNotFound(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-
-    def __str__(self):
-        return self.msg
+    """Network connection with a given name could not be found."""
+    pass
 
 
 class DeviceNotFound(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-
-    def __str__(self):
-        return self.msg
+    """Network device for specified operation could not be found."""
+    pass
 
 
 def get_connection_list():
     """Get a list of active and available connections."""
-    connections = []
-    active = []
-
-    for conn in NetworkManager.NetworkManager.ActiveConnections:
+    active_uuids = []
+    for connection in NetworkManager.NetworkManager.ActiveConnections:
         try:
-            settings = conn.Connection.GetSettings()['connection']
+            settings = connection.Connection.GetSettings()['connection']
         except DBusException:
             # DBusException can be thrown here if the connection list is loaded
             # quickly after a connection is deactivated.
             continue
-        active.append(settings['id'])
 
-    for conn in NetworkManager.Settings.ListConnections():
-        settings = conn.GetSettings()['connection']
+        active_uuids.append(settings['uuid'])
+
+    connections = []
+    for connection in NetworkManager.Settings.ListConnections():
+        settings = connection.GetSettings()['connection']
         # Display a friendly type name if known.
-        conn_type = CONNECTION_TYPE_NAMES.get(settings['type'],
-                                              settings['type'])
+        connection_type = CONNECTION_TYPE_NAMES.get(settings['type'],
+                                                    settings['type'])
         connections.append({
             'name': settings['id'],
-            'id': urllib.parse.quote_plus(settings['id']),
-            'type': conn_type,
-            'is_active': settings['id'] in active,
+            'uuid': settings['uuid'],
+            'type': connection_type,
+            'is_active': settings['uuid'] in active_uuids,
         })
-    connections.sort(key=lambda x: x['is_active'], reverse=True)
+    connections.sort(key=lambda connection: connection['is_active'],
+                     reverse=True)
     return connections
 
 
-def get_connection(name):
-    """Returns connection with id matching name.
-    Returns None if not found.
+def get_connection(uuid):
+    """Return connection with matching uuid.
+
+    Raise ConnectionNotFound if a connection with that uuid is not found.
     """
     connections = NetworkManager.Settings.ListConnections()
-    connections = dict([(x.GetSettings()['connection']['id'], x)
-                        for x in connections])
-    return connections.get(name)
+    connections = {connection.GetSettings()['connection']['uuid']: connection
+                   for connection in connections}
+    try:
+        return connections[uuid]
+    except KeyError:
+        raise ConnectionNotFound(uuid)
 
 
-def get_active_connection(name):
-    """Returns active connection with id matching name.
-    Returns None if not found.
+def get_active_connection(uuid):
+    """Returns active connection with matching uuid.
+
+    Raise ConnectionNotFound if a connection with that uuid is not found.
     """
     connections = NetworkManager.NetworkManager.ActiveConnections
-    connections = dict([(x.Connection.GetSettings()['connection']['id'], x)
-                        for x in connections])
-    return connections.get(name)
+    connections = {connection.Connection.GetSettings()['connection']['uuid']:
+                   connection for connection in connections}
+    try:
+        return connections[uuid]
+    except KeyError:
+        raise ConnectionNotFound(uuid)
 
 
 def edit_ethernet_connection(conn, name, zone, ipv4_method, ipv4_address):
@@ -154,25 +159,20 @@ def edit_wifi_connection(conn, name, zone,
     conn.Update(new_settings)
 
 
-def activate_connection(name):
+def activate_connection(uuid):
+    """Find and activate a network connection."""
     # Find the connection
-    conn = get_connection(name)
-    if not conn:
-        raise ConnectionNotFound(
-            _('Failed to activate connection %s: '
-              'Connection not found.') % name)
+    connection = get_connection(uuid)
 
     # Find a suitable device
-    ctype = conn.GetSettings()['connection']['type']
+    ctype = connection.GetSettings()['connection']['type']
     if ctype == 'vpn':
-        for dev in NetworkManager.NetworkManager.GetDevices():
-            if (dev.State == NetworkManager.NM_DEVICE_STATE_ACTIVATED
-                and dev.Managed):
+        for device in NetworkManager.NetworkManager.GetDevices():
+            if device.State == NetworkManager.NM_DEVICE_STATE_ACTIVATED and \
+               device.Managed:
                 break
         else:
-            raise DeviceNotFound(
-                _('Failed to activate connection %s: '
-                  'No suitable device is available.') % name)
+            raise DeviceNotFound(connection)
     else:
         dtype = {
             '802-11-wireless': NetworkManager.NM_DEVICE_TYPE_WIFI,
@@ -180,26 +180,22 @@ def activate_connection(name):
             'gsm': NetworkManager.NM_DEVICE_TYPE_MODEM,
         }.get(ctype, ctype)
 
-        for dev in NetworkManager.NetworkManager.GetDevices():
-            if (dev.DeviceType == dtype and
-                dev.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED):
+        for device in NetworkManager.NetworkManager.GetDevices():
+            if device.DeviceType == dtype and \
+               device.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED:
                 break
         else:
-            raise DeviceNotFound(
-                _('Failed to activate connection %s: '
-                  'No suitable device is available.') % name)
+            raise DeviceNotFound(connection)
 
-    NetworkManager.NetworkManager.ActivateConnection(conn, dev, "/")
+    NetworkManager.NetworkManager.ActivateConnection(connection, device, "/")
+    return connection
 
 
 def deactivate_connection(name):
-    active = get_active_connection(name)
-    if active:
-        NetworkManager.NetworkManager.DeactivateConnection(active)
-    else:
-        raise ConnectionNotFound(
-            _('Failed to deactivate connection %s: '
-              'Connection not found.') % name)
+    """Find and de-activate a network connection."""
+    active_connection = get_active_connection(name)
+    NetworkManager.NetworkManager.DeactivateConnection(active_connection)
+    return active_connection
 
 
 def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
@@ -257,12 +253,10 @@ def add_wifi_connection(name, zone,
 
 
 def delete_connection(name):
-    conn = get_connection(name)
-    if not conn:
-        raise ConnectionNotFound(
-            _('Failed to delete connection %s: '
-              'Connection not found.') % name)
-    conn.Delete()
+    connection = get_connection(name)
+    name = connection.GetSettings()['connection']['id']
+    connection.Delete()
+    return name
 
 
 def wifi_scan():

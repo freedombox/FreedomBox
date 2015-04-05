@@ -54,19 +54,18 @@ def index(request):
 
 
 @login_required
-def edit(request, conn_id):
+def edit(request, uuid):
     """Serve connection editing form."""
-    form = None
-    name = urllib.parse.unquote_plus(conn_id)
-    form_data = {'name': name}
-
-    conn = network.get_connection(name)
-    if not conn:
-        messages.error(
-            request,
-            _('Cannot edit connection: %s not found.') % name)
+    try:
+        connection = network.get_connection(uuid)
+    except network.ConnectionNotFound:
+        messages.error(request, _('Cannot edit connection: '
+                                  'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
-    settings = conn.GetSettings()
+
+    form = None
+    settings = connection.GetSettings()
+    form_data = {'name': settings['connection']['id']}
 
     if request.method == 'POST':
         if settings['connection']['type'] == '802-11-wireless':
@@ -81,7 +80,7 @@ def edit(request, conn_id):
 
             if settings['connection']['type'] == '802-3-ethernet':
                 network.edit_ethernet_connection(
-                    conn,
+                    connection,
                     name, zone,
                     ipv4_method, ipv4_address)
             elif settings['connection']['type'] == '802-11-wireless':
@@ -91,7 +90,7 @@ def edit(request, conn_id):
                 passphrase = form.cleaned_data['passphrase']
 
                 network.edit_wifi_connection(
-                    conn, name, zone,
+                    connection, name, zone,
                     ssid, mode, auth_mode, passphrase,
                     ipv4_method, ipv4_address)
             else:
@@ -125,7 +124,7 @@ def edit(request, conn_id):
                     wifi_sec = settings['802-11-wireless-security']
                     if wifi_sec['key-mgmt'] == 'wpa-psk':
                         form_data['auth_mode'] = 'wpa'
-                        secret = conn.GetSecrets()
+                        secret = connection.GetSecrets()
                         psk = secret['802-11-wireless-security']['psk']
                         form_data['passphrase'] = psk
                 else:
@@ -144,32 +143,34 @@ def edit(request, conn_id):
 
 
 @login_required
-def activate(request, conn_id):
+def activate(request, uuid):
     """Activate the connection."""
-    name = urllib.parse.unquote_plus(conn_id)
-
     try:
-        network.activate_connection(name)
-    except network.ConnectionNotFound as cnf:
-        messages.error(request, cnf)
-        return redirect(reverse_lazy('networks:index'))
-    except network.DeviceNotFound as dnf:
-        messages.error(request, dnf)
-        return redirect(reverse_lazy('networks:index'))
+        connection = network.activate_connection(uuid)
+        name = connection.GetSettings()['connection']['id']
+        messages.success(request, _('Activated connection %s.') % name)
+    except network.ConnectionNotFound:
+        messages.error(request, _('Failed to activate connection: '
+                                  'Connection not found.'))
+    except network.DeviceNotFound as exception:
+        name = exception.args[0].GetSettings()['connection']['id']
+        messages.error(request, _('Failed to activate connection %s: '
+                                  'No suitable device is available.') % name)
 
-    messages.success(request, _('Activated connection %s.') % name)
     return redirect(reverse_lazy('networks:index'))
 
 
 @login_required
-def deactivate(request, conn_id):
+def deactivate(request, uuid):
     """Deactivate the connection."""
-    name = urllib.parse.unquote_plus(conn_id)
     try:
-        network.deactivate_connection(name)
+        active_connection = network.deactivate_connection(uuid)
+        name = active_connection.Connection.GetSettings()['connection']['id']
         messages.success(request, _('Deactivated connection %s.') % name)
-    except network.ConnectionNotFound as cnf:
-        messages.error(request, cnf)
+    except network.ConnectionNotFound:
+        messages.error(request, _('Failed to de-activate connection: '
+                                  'Connection not found.'))
+
     return redirect(reverse_lazy('networks:index'))
 
 
@@ -300,20 +301,28 @@ def add_wifi(request):
 
 
 @login_required
-def delete(request, conn_id):
+def delete(request, uuid):
     """Handle deleting connections, showing a confirmation dialog first.
 
     On GET, display a confirmation page.
     On POST, delete the connection.
     """
-    name = urllib.parse.unquote_plus(conn_id)
     if request.method == 'POST':
         try:
-            network.delete_connection(name)
-        except network.ConnectionNotFound as cnf:
-            messages.error(request, cnf)
-        else:
+            name = network.delete_connection(uuid)
             messages.success(request, _('Connection %s deleted.') % name)
+        except network.ConnectionNotFound:
+            messages.error(request, _('Failed to delete connection: '
+                                      'Connection not found.'))
+
+        return redirect(reverse_lazy('networks:index'))
+
+    try:
+        connection = network.get_connection(uuid)
+        name = connection.GetSettings()['connection']['id']
+    except network.ConnectionNotFound:
+        messages.error(request, _('Failed to delete connection: '
+                                  'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
     return TemplateResponse(request, 'connections_delete.html',
