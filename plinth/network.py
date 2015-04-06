@@ -23,7 +23,6 @@ from dbus.exceptions import DBusException
 import logging
 import NetworkManager
 import uuid
-import urllib
 
 
 logger = logging.getLogger(__name__)
@@ -102,39 +101,54 @@ def get_active_connection(uuid):
         raise ConnectionNotFound(uuid)
 
 
-def edit_ethernet_connection(conn, name, zone, ipv4_method, ipv4_address):
-    settings = conn.GetSettings()
-
-    new_settings = {
+def _create_ethernet_settings(uuid, name, zone, ipv4_method, ipv4_address):
+    """Create an Ethernet setting structure in network manager format."""
+    settings = {
         'connection': {
             'id': name,
-            'type': settings['connection']['type'],
+            'type': '802-3-ethernet',
             'zone': zone,
-            'uuid': settings['connection']['uuid'],
+            'uuid': uuid,
         },
         '802-3-ethernet': {},
         'ipv4': {'method': ipv4_method},
     }
+
     if ipv4_method == 'manual' and ipv4_address:
-        new_settings['ipv4']['addresses'] = [
+        settings['ipv4']['addresses'] = [
             (ipv4_address,
              24,  # CIDR prefix length
              '0.0.0.0')]  # gateway
 
-    conn.Update(new_settings)
+    return settings
 
 
-def edit_wifi_connection(conn, name, zone,
-                         ssid, mode, auth_mode, passphrase,
-                         ipv4_method, ipv4_address):
-    settings = conn.GetSettings()
+def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
+    """Add an automatic ethernet connection in network manager."""
+    settings = _create_ethernet_settings(
+        str(uuid.uuid4()), name, zone, ipv4_method, ipv4_address)
+    NetworkManager.Settings.AddConnection(settings)
+    return settings
 
-    new_settings = {
+
+def edit_ethernet_connection(connection, name, zone, ipv4_method,
+                             ipv4_address):
+    """Edit an existing ethernet connection in network manager."""
+    settings = connection.GetSettings()
+    new_settings = _create_ethernet_settings(
+        settings['connection']['uuid'], name, zone, ipv4_method, ipv4_address)
+    connection.Update(new_settings)
+
+
+def _create_wifi_settings(uuid, name, zone, ssid, mode, auth_mode, passphrase,
+                          ipv4_method, ipv4_address):
+    """Create a Wi-Fi settings structure in network manager format."""
+    settings = {
         'connection': {
             'id': name,
-            'type': settings['connection']['type'],
+            'type': '802-11-wireless',
             'zone': zone,
-            'uuid': settings['connection']['uuid'],
+            'uuid': uuid,
         },
         '802-11-wireless': {
             'ssid': ssid,
@@ -144,19 +158,41 @@ def edit_wifi_connection(conn, name, zone,
     }
 
     if auth_mode == 'wpa' and passphrase:
-        new_settings['connection']['security'] = '802-11-wireless-security'
-        new_settings['802-11-wireless-security'] = {
+        settings['connection']['security'] = '802-11-wireless-security'
+        settings['802-11-wireless-security'] = {
             'key-mgmt': 'wpa-psk',
             'psk': passphrase,
         }
 
     if ipv4_method == 'manual' and ipv4_address:
-        new_settings['ipv4']['addresses'] = [
+        settings['ipv4']['addresses'] = [
             (ipv4_address,
              24,  # CIDR prefix length
              '0.0.0.0')]  # gateway
 
-    conn.Update(new_settings)
+    return settings
+
+
+def add_wifi_connection(name, zone,
+                        ssid, mode, auth_mode, passphrase,
+                        ipv4_method, ipv4_address):
+    """Add an automatic Wi-Fi connection in network manager."""
+    settings = _create_wifi_settings(
+        str(uuid.uuid4()), name, zone, ssid, mode, auth_mode, passphrase,
+        ipv4_method, ipv4_address)
+    NetworkManager.Settings.AddConnection(settings)
+    return settings
+
+
+def edit_wifi_connection(connection, name, zone,
+                         ssid, mode, auth_mode, passphrase,
+                         ipv4_method, ipv4_address):
+    """Edit an existing wifi connection in network manager."""
+    settings = connection.GetSettings()
+    new_settings = _create_wifi_settings(
+        settings['connection']['uuid'], name, zone, ssid, mode, auth_mode,
+        passphrase, ipv4_method, ipv4_address)
+    connection.Update(new_settings)
 
 
 def activate_connection(uuid):
@@ -198,74 +234,27 @@ def deactivate_connection(name):
     return active_connection
 
 
-def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
-    conn = {
-        'connection': {
-            'id': name,
-            'type': '802-3-ethernet',
-            'zone': zone,
-            'uuid': str(uuid.uuid4()),
-        },
-        '802-3-ethernet': {},
-        'ipv4': {'method': ipv4_method},
-    }
+def delete_connection(uuid):
+    """Delete an exiting connection from network manager.
 
-    if ipv4_method == 'manual' and ipv4_address:
-        conn['ipv4']['addresses'] = [
-            (ipv4_address,
-             24,  # CIDR prefix length
-             '0.0.0.0')]  # gateway
-
-    NetworkManager.Settings.AddConnection(conn)
-
-
-def add_wifi_connection(name, zone,
-                        ssid, mode, auth_mode, passphrase,
-                        ipv4_method, ipv4_address):
-    conn = {
-        'connection': {
-            'id': name,
-            'type': '802-11-wireless',
-            'zone': zone,
-            'uuid': str(uuid.uuid4()),
-        },
-        '802-11-wireless': {
-            'ssid': ssid,
-            'mode': mode,
-        },
-        'ipv4': {'method': ipv4_method},
-    }
-
-    if auth_mode == 'wpa' and passphrase:
-        conn['connection']['security'] = '802-11-wireless-security'
-        conn['802-11-wireless-security'] = {
-            'key-mgmt': 'wpa-psk',
-            'psk': passphrase,
-        }
-
-    if ipv4_method == 'manual' and ipv4_address:
-        conn['ipv4']['addresses'] = [
-            (ipv4_address,
-             24,  # CIDR prefix length
-             '0.0.0.0')]  # gateway
-
-    NetworkManager.Settings.AddConnection(conn)
-
-
-def delete_connection(name):
-    connection = get_connection(name)
+    Raise ConnectionNotFound if connection does not exist.
+    """
+    connection = get_connection(uuid)
     name = connection.GetSettings()['connection']['id']
     connection.Delete()
     return name
 
 
 def wifi_scan():
-    aps = []
-    for dev in NetworkManager.NetworkManager.GetDevices():
-        if dev.DeviceType != NetworkManager.NM_DEVICE_TYPE_WIFI:
+    """Scan for available access points across all Wi-Fi devices."""
+    access_points = []
+    for device in NetworkManager.NetworkManager.GetDevices():
+        if device.DeviceType != NetworkManager.NM_DEVICE_TYPE_WIFI:
             continue
-        for ap in dev.SpecificDevice().GetAccessPoints():
-            aps.append({'ssid': ap.Ssid,
-                        'connect_path': urllib.parse.quote_plus(ap.Ssid),
-                        'strength': ord(ap.Strength)})
-    return aps
+
+        for access_point in device.SpecificDevice().GetAllAccessPoints():
+            access_points.append({
+                'ssid': access_point.Ssid,
+                'strength': access_point.Strength})
+
+    return access_points

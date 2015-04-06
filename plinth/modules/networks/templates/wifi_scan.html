@@ -25,14 +25,18 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="list-group">
-        {% for ap in aps %}
+        {% for access_point in access_points %}
         <div class="list-group-item clearfix">
+          {% if access_point.ssid %}
           <a display="inline-block" width="40%"
-             href="{% url 'networks:connect' ap.connect_path %}">
-             {{ ap.ssid }}
+             href="{% url 'networks:add_wifi' access_point.ssid %}">
+             {{ access_point.ssid }}
           </a>
+          {% else %}
+          --
+          {% endif %}
           <span class="btn btn-primary btn-xs pull-right">
-            {{ ap.strength }}%
+            {{ access_point.strength }}%
           </span>
         </div>
         {% endfor %}

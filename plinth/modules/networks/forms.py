@@ -24,9 +24,10 @@ from plinth import network
 
 class ConnectionTypeSelectForm(forms.Form):
     """Form to select type for new connection."""
-    conn_type = forms.ChoiceField(
+    connection_type = forms.ChoiceField(
         label=_('Connection Type'),
-        choices=[(k, v) for k, v in network.CONNECTION_TYPE_NAMES.items()])
+        choices=[(key, value)
+                 for key, value in network.CONNECTION_TYPE_NAMES.items()])
 
 
 class AddEthernetForm(forms.Form):

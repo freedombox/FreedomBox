@@ -21,11 +21,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from gettext import gettext as _
-import urllib
 
 from .forms import ConnectionTypeSelectForm, AddEthernetForm, AddWifiForm
 from plinth import cfg
 from plinth import network
+from plinth import package
 
 
 subsubmenu = [{'url': reverse_lazy('networks:index'),
@@ -43,6 +43,7 @@ def init():
 
 
 @login_required
+@package.required(['network-manager'])
 def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
@@ -72,6 +73,7 @@ def edit(request, uuid):
             form = AddWifiForm(request.POST)
         else:
             form = AddEthernetForm(request.POST)
+
         if form.is_valid():
             name = form.cleaned_data['name']
             zone = form.cleaned_data['zone']
@@ -93,11 +95,7 @@ def edit(request, uuid):
                     connection, name, zone,
                     ssid, mode, auth_mode, passphrase,
                     ipv4_method, ipv4_address)
-            else:
-                messages.error(
-                    request,
-                    _('Cannot edit connection %s: '
-                      'Connection type not supported.') % name)
+
             return redirect(reverse_lazy('networks:index'))
         else:
             return TemplateResponse(request, 'connections_edit.html',
@@ -176,50 +174,12 @@ def deactivate(request, uuid):
 
 @login_required
 def scan(request):
-    """Show a list of nearby visible wifi APs."""
-    aps = network.wifi_scan()
+    """Show a list of nearby visible Wi-Fi access points."""
+    access_points = network.wifi_scan()
     return TemplateResponse(request, 'wifi_scan.html',
                             {'title': _('Nearby Wi-Fi Networks'),
                              'subsubmenu': subsubmenu,
-                             'aps': aps})
-
-
-@login_required
-def connect(request, connect_path):
-    """Create a new wifi connection to an existing AP."""
-    form = None
-    ssid = urllib.parse.unquote_plus(connect_path)
-    form_data = {'name': ssid,
-                 'zone': 'external',
-                 'ssid': ssid,
-                 'mode': 'infrastructure',
-                 'auth_mode': 'wpa',
-                 'ipv4_method': 'auto'}
-
-    if request.method == 'POST':
-        form = AddWifiForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            zone = form.cleaned_data['zone']
-            ssid = form.cleaned_data['ssid']
-            mode = form.cleaned_data['mode']
-            auth_mode = form.cleaned_data['auth_mode']
-            passphrase = form.cleaned_data['passphrase']
-            ipv4_method = form.cleaned_data['ipv4_method']
-            ipv4_address = form.cleaned_data['ipv4_address']
-
-            network.add_wifi_connection(
-                name, zone,
-                ssid, mode, auth_mode, passphrase,
-                ipv4_method, ipv4_address)
-            return redirect(reverse_lazy('networks:index'))
-    else:
-        form = AddWifiForm(form_data)
-
-        return TemplateResponse(request, 'connections_create.html',
-                                {'title': _('Connect to Wi-Fi Network'),
-                                 'subsubmenu': subsubmenu,
-                                 'form': form})
+                             'access_points': access_points})
 
 
 @login_required
@@ -230,10 +190,10 @@ def add(request):
     if request.method == 'POST':
         form = ConnectionTypeSelectForm(request.POST)
         if form.is_valid():
-            conn_type = form.cleaned_data['conn_type']
-            if conn_type == '802-3-ethernet':
+            connection_type = form.cleaned_data['connection_type']
+            if connection_type == '802-3-ethernet':
                 return redirect(reverse_lazy('networks:add_ethernet'))
-            elif conn_type == '802-11-wireless':
+            elif connection_type == '802-11-wireless':
                 return redirect(reverse_lazy('networks:add_wifi'))
     else:
         form = ConnectionTypeSelectForm()
@@ -264,15 +224,24 @@ def add_ethernet(request):
         form = AddEthernetForm()
 
     return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Editing New Ethernet Connection'),
+                            {'title': _('Adding New Ethernet Connection'),
                              'subsubmenu': subsubmenu,
                              'form': form})
 
 
 @login_required
-def add_wifi(request):
+def add_wifi(request, ssid=None):
     """Serve wifi connection create form."""
     form = None
+    form_data = None
+
+    if ssid:
+        form_data = {'name': ssid,
+                     'zone': 'external',
+                     'ssid': ssid,
+                     'mode': 'infrastructure',
+                     'auth_mode': 'wpa',
+                     'ipv4_method': 'auto'}
 
     if request.method == 'POST':
         form = AddWifiForm(request.POST)
@@ -292,10 +261,13 @@ def add_wifi(request):
                 ipv4_method, ipv4_address)
             return redirect(reverse_lazy('networks:index'))
     else:
-        form = AddWifiForm()
+        if form_data:
+            form = AddWifiForm(form_data)
+        else:
+            form = AddWifiForm()
 
     return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Editing New Wi-Fi Connection'),
+                            {'title': _('Adding New Wi-Fi Connection'),
                              'subsubmenu': subsubmenu,
                              'form': form})
 
