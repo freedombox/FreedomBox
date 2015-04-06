@@ -24,20 +24,25 @@ from plinth import network
 class TestNetwork(unittest.TestCase):
     """Verify that the network module performs as expected."""
 
+    ethernet_uuid = None
+    wifi_uuid = None
+
     @classmethod
-    def setUpClass(cls):
-        network.add_ethernet_connection(
+    def setUp(cls):
+        connection = network.add_ethernet_connection(
             'plinth_test_eth', 'internal',
             'auto', '')
-        network.add_wifi_connection(
+        cls.ethernet_uuid = connection['connection']['uuid']
+        connection = network.add_wifi_connection(
             'plinth_test_wifi', 'external',
             'plinthtestwifi', 'adhoc', 'open', '',
             'auto', '')
+        cls.wifi_uuid = connection['connection']['uuid']
 
     @classmethod
-    def tearDownClass(cls):
-        network.delete_connection('plinth_test_eth')
-        network.delete_connection('plinth_test_wifi')
+    def tearDown(cls):
+        network.delete_connection(cls.ethernet_uuid)
+        network.delete_connection(cls.wifi_uuid)
 
     def test_get_connection_list(self):
         """Check that we can get a list of available connections."""
@@ -48,45 +53,53 @@ class TestNetwork(unittest.TestCase):
 
     def test_get_connection(self):
         """Check that we can get a connection by name."""
-        conn = network.get_connection('plinth_test_eth')
+        connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(
-            conn.GetSettings()['connection']['id'], 'plinth_test_eth')
+            connection.GetSettings()['connection']['id'], 'plinth_test_eth')
 
-        conn = network.get_connection('plinth_test_wifi')
-
+        connection = network.get_connection(self.wifi_uuid)
         self.assertEqual(
-            conn.GetSettings()['connection']['id'], 'plinth_test_wifi')
+            connection.GetSettings()['connection']['id'], 'plinth_test_wifi')
+
+        self.assertRaises(network.ConnectionNotFound, network.get_connection,
+                          'x-invalid-network-id')
 
     def test_edit_ethernet_connection(self):
         """Check that we can update an ethernet connection."""
-        conn = network.get_connection('plinth_test_eth')
+        connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
-            conn, 'plinth_test_eth', 'external', 'manual', '169.254.0.1')
-        conn = network.get_connection('plinth_test_eth')
+            connection, 'plinth_test_eth_new', 'external', 'manual',
+            '169.254.0.1')
 
-        self.assertEqual(conn.GetSettings()['connection']['zone'], 'external')
-        self.assertEqual(conn.GetSettings()['ipv4']['method'], 'manual')
+        connection = network.get_connection(self.ethernet_uuid)
+        settings = connection.GetSettings()
+        self.assertEqual(settings['connection']['id'], 'plinth_test_eth_new')
+        self.assertEqual(settings['connection']['zone'], 'external')
+        self.assertEqual(settings['ipv4']['method'], 'manual')
+        self.assertEqual(settings['ipv4']['addresses'],
+                         [['169.254.0.1', 24, '0.0.0.0']])
 
     def test_edit_wifi_connection(self):
         """Check that we can update a wifi connection."""
-        conn = network.get_connection('plinth_test_wifi')
+        connection = network.get_connection(self.wifi_uuid)
         network.edit_wifi_connection(
-            conn, 'plinth_test_wifi', 'external',
+            connection, 'plinth_test_wifi_new', 'external',
             'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
             'auto', '')
-        conn = network.get_connection('plinth_test_wifi')
 
-        self.assertEqual(conn.GetSettings()['connection']['zone'], 'external')
+        connection = network.get_connection(self.wifi_uuid)
+        settings = connection.GetSettings()
+        self.assertEqual(settings['connection']['id'], 'plinth_test_wifi_new')
+        self.assertEqual(settings['connection']['zone'], 'external')
+        self.assertEqual(settings['802-11-wireless']['ssid'],
+                         'plinthtestwifi2')
+        self.assertEqual(settings['802-11-wireless']['mode'], 'infrastructure')
+        self.assertEqual(settings['802-11-wireless-security']['key-mgmt'],
+                         'wpa-psk')
         self.assertEqual(
-            conn.GetSettings()['802-11-wireless']['ssid'], 'plinthtestwifi2')
-        self.assertEqual(
-            conn.GetSettings()['802-11-wireless']['mode'], 'infrastructure')
-        self.assertEqual(
-            conn.GetSettings()['802-11-wireless-security']['key-mgmt'],
-            'wpa-psk')
-        self.assertEqual(
-            conn.GetSecrets()['802-11-wireless-security']['psk'],
+            connection.GetSecrets()['802-11-wireless-security']['psk'],
             'secretpassword')
+
 
 if __name__ == "__main__":
     unittest.main()
