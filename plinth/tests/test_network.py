@@ -16,9 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
 import unittest
 
-from plinth import network
+
+euid = os.geteuid()
+if euid == 0:
+    from plinth import network
 
 
 class TestNetwork(unittest.TestCase):
@@ -44,6 +48,7 @@ class TestNetwork(unittest.TestCase):
         network.delete_connection(cls.ethernet_uuid)
         network.delete_connection(cls.wifi_uuid)
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection_list(self):
         """Check that we can get a list of available connections."""
         connections = network.get_connection_list()
@@ -51,6 +56,7 @@ class TestNetwork(unittest.TestCase):
         self.assertTrue('plinth_test_eth' in [x['name'] for x in connections])
         self.assertTrue('plinth_test_wifi' in [x['name'] for x in connections])
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection(self):
         """Check that we can get a connection by name."""
         connection = network.get_connection(self.ethernet_uuid)
@@ -64,6 +70,7 @@ class TestNetwork(unittest.TestCase):
         self.assertRaises(network.ConnectionNotFound, network.get_connection,
                           'x-invalid-network-id')
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_edit_ethernet_connection(self):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
@@ -79,6 +86,7 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(settings['ipv4']['addresses'],
                          [['169.254.0.1', 24, '0.0.0.0']])
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_edit_wifi_connection(self):
         """Check that we can update a wifi connection."""
         connection = network.get_connection(self.wifi_uuid)
