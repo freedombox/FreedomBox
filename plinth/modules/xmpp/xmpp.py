@@ -103,7 +103,7 @@ def configure(request):
 
 def get_status():
     """Return the current status"""
-    output = actions.run('xmpp-setup', 'status')
+    output = actions.run('xmpp-setup', ['status'])
     return {'inband_enabled': 'inband_enable' in output.split()}
 
 

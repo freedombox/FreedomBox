@@ -72,7 +72,7 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    output = actions.run('owncloud-setup', 'status')
+    output = actions.run('owncloud-setup', ['status'])
     return {'enabled': 'enable' in output.split()}
 
 

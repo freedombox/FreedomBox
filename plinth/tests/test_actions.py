@@ -18,16 +18,17 @@
 #
 
 import os
-import shlex
-import subprocess
+import shutil
 import unittest
 
 from plinth.actions import superuser_run, run
 from plinth import cfg
 
 
-ROOT_DIR = os.path.split(os.path.abspath(os.path.split(__file__)[0]))[0]
-cfg.actions_dir = os.path.join(ROOT_DIR, 'actions')
+test_dir = os.path.split(__file__)[0]
+root_dir = os.path.abspath(os.path.join(test_dir, os.path.pardir + os.path.sep +
+                                        os.path.pardir))
+cfg.actions_dir = os.path.join(root_dir, 'actions')
 
 
 class TestPrivileged(unittest.TestCase):
@@ -36,30 +37,27 @@ class TestPrivileged(unittest.TestCase):
     See actions.py for a full description of the expectations.
 
     Symlink to ``echo`` and ``id`` during testing.
-
     """
     @classmethod
     def setUpClass(cls):
-        os.symlink("/bin/echo", "actions/echo")
-        os.symlink("/usr/bin/id", "actions/id")
+        shutil.copy('/bin/echo', cfg.actions_dir)
+        shutil.copy('/usr/bin/id', cfg.actions_dir)
 
     @classmethod
     def tearDownClass(cls):
-        os.remove("actions/echo")
-        os.remove("actions/id")
+        os.remove('actions/echo')
+        os.remove('actions/id')
 
     def notest_run_as_root(self):
         """1. Privileged actions run as root. """
-        # TODO: it's not allowed to call a symlink in the actions dir anymore
         self.assertEqual(
-            "0", # user 0 is root
-            superuser_run("id", "-ur")[0].strip())
+            '0', # user 0 is root
+            superuser_run('id', ['-ur'])[0].strip())
 
     def test_breakout_actions_dir(self):
         """2. The actions directory can't be changed at run time.
 
         Can't currently be tested, as the actions directory is hardcoded.
-
         """
         pass
 
@@ -67,17 +65,14 @@ class TestPrivileged(unittest.TestCase):
         """3A. Users can't call actions above the actions directory.
 
         Tests both a relative and a literal path.
-
         """
-        options="hi"
-
-        for arg in ("../echo", "/bin/echo"):
+        for action in ('../echo', '/bin/echo'):
             with self.assertRaises(ValueError):
-                run(arg, options)
+                run(action, ['hi'])
 
     def test_breakout_down(self):
         """3B. Users can't call actions beneath the actions directory."""
-        action="directory/echo"
+        action = 'directory/echo'
 
         self.assertRaises(ValueError, superuser_run, action)
 
@@ -85,48 +80,68 @@ class TestPrivileged(unittest.TestCase):
         """3C. Actions can't be used to run other actions.
 
         If multiple actions are specified, bail out.
-
         """
-        # counting is safer than actual badness.
-        actions = ("echo ''; echo $((1+1))",
-                   "echo '' && echo $((1+1))",
-                   "echo '' || echo $((1+1))")
-        options = ("good", "")
+        # Counting is safer than actual badness.
+        actions = ('echo ""; echo $((1+1))',
+                   'echo "" && echo $((1+1))',
+                   'echo "" || echo $((1+1))')
+        options = ('good', '')
 
         for action in actions:
             for option in options:
                 with self.assertRaises(ValueError):
-                    output = run(action, option)
-                    # if it somewhow doesn't error, we'd better not evaluate
-                    # the data.
-                    self.assertFalse("2" in output[0])
+                    run(action, [option])
 
     def test_breakout_option_string(self):
         """3D. Option strings can't be used to run other actions.
+
         Verify that shell control characters aren't interpreted.
         """
-        action = "echo"
-        # counting is safer than actual badness.
-        options = "good; echo $((1+1))"
-        self.assertRaises(ValueError, run, action, options)
+        options = ('; echo hello',
+                   '&& echo hello',
+                   '|| echo hello',
+                   '& echo hello',
+                   r'\; echo hello',
+                   '| echo hello',
+                   r':;!&\/$%@`"~#*(){}[]|+=')
+        for option in options:
+            output = run('echo', [option])
+            output = output.rstrip('\n')
+            self.assertEqual(option, output)
 
     def test_breakout_option_list(self):
         """3D. Option lists can't be used to run other actions.
-        Verify that only a string of options is accepted and that we can't just
-        tack additional shell control characters onto the list.
-        """
-        action = "echo"
-        # counting is safer than actual badness.
-        options = ["good", ";", "echo $((1+1))"]
-        # we'd better not evaluate the data.
-        self.assertRaises(ValueError, run, action, options)
 
-    def notest_multiple_options(self):
-        """ 4. Multiple options can be provided as a list. """
-        # TODO: it's not allowed to call a symlink in the actions dir anymore
-        self.assertEqual(
-            subprocess.check_output(shlex.split("id -ur")).strip(),
-            run("id", ["-u" ,"-r"])[0].strip())
+        Verify that shell control characters aren't interpreted in option lists.
+        """
+        option_lists = ((';', 'echo', 'hello'),
+                        ('&&', 'echo', 'hello'),
+                        ('||', 'echo', 'hello'),
+                        ('&', 'echo', 'hello'),
+                        (r'\;', 'echo' 'hello'),
+                        ('|', 'echo', 'hello'),
+                        tuple(r':;!&\/$%@`"~#*(){}[]|+='))
+        for options in option_lists:
+            output = run('echo', options)
+            output = output.rstrip('\n')
+            expected_output = ' '.join(options)
+            self.assertEqual(output, expected_output)
+
+    def test_multiple_options_and_output(self):
+        """4. Multiple options can be provided as a list or as a tuple.
+
+        5. Output is returned from the command.
+        """
+        options = '1 2 3 4 5 6 7 8 9'
+
+        output = run('echo', options.split())
+        output = output.rstrip('\n')
+        self.assertEqual(options, output)
+
+        output = run('echo', tuple(options.split()))
+        output = output.rstrip('\n')
+        self.assertEqual(options, output)
+
 
 
 if __name__ == "__main__":

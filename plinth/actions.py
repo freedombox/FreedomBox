@@ -40,14 +40,16 @@ Actions run commands with this contract (version 1.1):
       sub-directories of the actions directory.
 
       (An important side-effect of this is that the system will not try to
-      follow symlinks to other action directories.)
+       follow symlinks to other action directories.)
 
       Arguments that fail this validation will raise a ValueError.
 
    C. Only one action can be called at a time.
 
-      This prevents us from appending multiple (unexpected) actions to the
-      call.
+      This prevents us from appending multiple (unexpected) actions to
+      the call.  Any special shell characters in the action name will
+      simply be treated as the action itself when trying to search for
+      an action.  The action will then not be found.
 
       $ action="echo '$options'; echo 'oops'"
       $ options="hi"
@@ -61,21 +63,23 @@ Actions run commands with this contract (version 1.1):
       $ options="hi'; rm -rf /;'"
       $ $action # oops, the file system is gone!
 
-      Arguments that fail this validation won't, but probably should, raise a
-      ValueError.  They don't because sanitizing this case is significantly
-      easier than detecting if it occurs.
+      Any option that tries to include special shell characters will
+      simply be treated as an option with special characters and will
+      not be interpreted by the shell.
 
-      The options list is coerced into a space-separated string before being
-      shell-escaped.  Option lists including shell escape characters may need
-      to be unescaped on the receiving end.
+      Any call wishing to include special shell characters in options
+      list does not need to escape them.  They are taken care of.  The
+      option string is passed to the action exactly as it is passed in.
 
    E. Actions must exist in the actions directory.
 
-4. (promise) Options are appended to the action.
+4. (promise) Options are passed as arguments to the action.
 
-   Options can be provided as a list or strings.
+   Options can be provided as a list or as a tuple.
 
-5. (promise) Output and error strings are returned from the command.
+5. (promise) Output is returned from the command.  In case of an
+   error, ActionError is raised with action, output and error strings
+   as arguments.
 
 6. (limitation) Providing the process with input is not possible.
 
@@ -89,7 +93,6 @@ Actions run commands with this contract (version 1.1):
 
 import logging
 import os
-import pipes
 import subprocess
 
 from plinth import cfg
@@ -103,7 +106,6 @@ def run(action, options=None, async=False):
     """Safely run a specific action as the current user.
 
     See actions._run for more information.
-
     """
     return _run(action, options, async, False)
 
@@ -112,7 +114,6 @@ def superuser_run(action, options=None, async=False):
     """Safely run a specific action as root.
 
     See actions._run for more information.
-
     """
     return _run(action, options, async, True)
 
@@ -124,42 +125,44 @@ def _run(action, options=None, async=False, run_as_root=False):
     - options are added to the action command.
     - async: run asynchronously or wait for the command to complete.
     - run_as_root: execute the command through sudo.
-
     """
     if options is None:
         options = []
 
-    # contract 3A and 3B: don't call anything outside of the actions directory.
+    # Contract 3A and 3B: don't call anything outside of the actions directory.
     if os.sep in action:
-        raise ValueError("Action can't contain:" + os.sep)
+        raise ValueError('Action cannot contain: ' + os.sep)
 
     cmd = os.path.join(cfg.actions_dir, action)
     if not os.path.realpath(cmd).startswith(cfg.actions_dir):
-        raise ValueError("Action has to be in directory %s" % cfg.actions_dir)
+        raise ValueError('Action has to be in directory %s' % cfg.actions_dir)
 
-    # contract 3C: interpret shell escape sequences as literal file names.
-    # contract 3E: fail if the action doesn't exist or exists elsewhere.
+    # Contract 3C: interpret shell escape sequences as literal file names.
+    # Contract 3E: fail if the action doesn't exist or exists elsewhere.
     if not os.access(cmd, os.F_OK):
-        raise ValueError("Action must exist in action directory.")
+        raise ValueError('Action must exist in action directory.')
 
     cmd = [cmd]
 
-    # contract: 3C, 3D: don't allow users to insert escape characters in
-    # options
+    # Contract: 3C, 3D: don't allow shell special characters in
+    # options be interpreted by the shell.  When using
+    # subprocess.Popen with list invocation and not shell invocation,
+    # escaping is unnecessary as each argument is passed directly to
+    # the command and not parsed by a shell.
     if options:
         if not isinstance(options, (list, tuple)):
-            options = [options]
+            raise ValueError('Options must be list or tuple.')
 
-        cmd += [pipes.quote(option) for option in options]
+        cmd += list(options)  # No escaping necessary
 
-    # contract 1: commands can run via sudo.
+    # Contract 1: commands can run via sudo.
     if run_as_root:
-        cmd = ["sudo", "-n"] + cmd
+        cmd = ['sudo', '-n'] + cmd
 
     LOGGER.info('Executing command - %s', cmd)
 
-    # contract 3C: don't interpret shell escape sequences.
-    # contract 5 (and 6-ish).
+    # Contract 3C: don't interpret shell escape sequences.
+    # Contract 5 (and 6-ish).
     proc = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,

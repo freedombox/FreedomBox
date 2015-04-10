@@ -257,7 +257,7 @@ def get_status():
     """Return the current status"""
     """ToDo: use key/value instead of hard coded value list"""
     status = {}
-    output = actions.run('dynamicdns', 'status')
+    output = actions.run('dynamicdns', ['status'])
     details = output.split()
     status['enabled'] = (output.split()[0] == 'enabled')
 
