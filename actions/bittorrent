@@ -1,0 +1,129 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for BitTorrent web client
+"""
+
+import argparse
+import os
+import subprocess
+
+
+SITE_CONF = '/etc/apache2/conf-available/deluge-web.conf'
+SITE_ENABLED = '/etc/apache2/conf-enabled/deluge-web.conf'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether deluge-web site is enabled
+    subparsers.add_parser('get-enabled',
+                          help='Get whether deluge-web site is enabled')
+
+    # Enable deluge-web site and start deluge-web
+    subparsers.add_parser('enable', help='Enable deluge-web site')
+
+    # Disable deluge-web site and stop deluge-web
+    subparsers.add_parser('disable', help='Disable deluge-web site')
+
+    # Get whether deluge-web is running
+    subparsers.add_parser('is-running',
+                          help='Get whether deluge-web is running')
+
+    # Start deluge-web
+    subparsers.add_parser('start', help='Start deluge-web')
+
+    # Stop deluge-web
+    subparsers.add_parser('stop', help='Stop deluge-web')
+
+    return parser.parse_args()
+
+
+def subcommand_get_enabled(_):
+    """Get whether deluge-web site is enabled."""
+    if os.path.isfile(SITE_ENABLED):
+        print('yes')
+    else:
+        print('no')
+
+
+def subcommand_enable(_):
+    """Enable deluge-web site and start deluge-web."""
+    if not os.path.isfile(SITE_CONF):
+        setup()
+    subprocess.check_call(['a2enconf', 'deluge-web'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
+    subcommand_start(_)
+
+
+def subcommand_disable(_):
+    """Disable deluge-web site and stop deluge-web."""
+    subprocess.check_call(['a2disconf', 'deluge-web'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
+    subcommand_stop(_)
+
+
+def subcommand_is_running(_):
+    """Get whether deluge-web is running."""
+    if subprocess.call(['pgrep', 'deluge-web']) == 0:
+        print('yes')
+    else:
+        print('no')
+
+
+def subcommand_start(_):
+    """Start deluge-web."""
+    subprocess.check_call(['start-stop-daemon', '--start', '--background',
+                           '--name', 'deluge-web',
+                           '--exec', '/usr/bin/deluge-web',
+                           '--chuid', 'debian-deluged',
+                           '--', '--base=bittorrent'])
+
+
+def subcommand_stop(_):
+    """Stop deluge-web."""
+    subprocess.call(['killall', 'deluge-web'])
+
+
+def setup():
+    """Perform initial setup for deluge-web site."""
+    with open(SITE_CONF, 'w') as conffile:
+        conffile.writelines([
+            '<Location /bittorrent>\n',
+            '    ProxyPass http://localhost:8112\n',
+            '</Location>\n',
+        ])
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
