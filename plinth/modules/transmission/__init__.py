@@ -42,5 +42,5 @@ def init():
 
     global service
     service = service_module.Service(
-        'transmission-rpcplinth', _('Transmission BitTorrent'),
+        'transmission', _('Transmission BitTorrent'), ['http', 'https'],
         is_external=True, enabled=enabled)

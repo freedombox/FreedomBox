@@ -79,10 +79,14 @@ def subcommand_enable(_):
     """Start Transmission service."""
     set_service_enable(enable=True)
     subprocess.call(['service', 'transmission-daemon', 'start'])
+    subprocess.call(['a2enconf', 'transmission-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
 
 
 def subcommand_disable(_):
     """Stop Transmission service."""
+    subprocess.call(['a2disconf', 'transmission-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
     subprocess.call(['service', 'transmission-daemon', 'stop'])
     set_service_enable(enable=False)
 

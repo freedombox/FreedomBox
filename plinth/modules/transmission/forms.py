@@ -20,16 +20,7 @@ Plinth module for configuring Transmission.
 """
 
 from django import forms
-from django.core.validators import RegexValidator
 from gettext import gettext as _
-import re
-
-
-ipv4_wildcard_re = r'(25[0-5]|2[0-4]\d|[0-1]?\d?\d)' \
-    r'(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d|\*)){3}'
-
-multiple_ips_re = re.compile(r'^({ipv4})(\s*,\s*{ipv4})*$'.format(ipv4=ipv4_wildcard_re))
-ip_validator = RegexValidator(multiple_ips_re)
 
 
 class TransmissionForm(forms.Form):  # pylint: disable=W0232
@@ -53,10 +44,3 @@ default directory, ensure that the new directory exists and is writable by \
         help_text=_('Password to login to the web interface.  Current \
 password is shown in a hashed format.  To set a new password, enter the \
 password in plain text.'))
-
-    rpc_whitelist = forms.CharField(
-        label=_('IP addresses to allow'),
-        validators=[ip_validator],
-        help_text=_('A comma separated list of IP addresses that will be \
-allowed to connect to the web interface.  IP addresses may use wild cards, \
-such as 192.168.*.* .'))

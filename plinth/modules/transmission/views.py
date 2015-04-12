@@ -37,8 +37,13 @@ logger = logging.getLogger(__name__)
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 
+def on_install():
+    """Enable transmission as soon as it is installed."""
+    actions.superuser_run('transmission', ['enable'])
+
+
 @login_required
-@package.required(['transmission-daemon'])
+@package.required(['transmission-daemon'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -92,13 +97,11 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['download_dir'] != new_status['download_dir'] or \
        old_status['rpc_username'] != new_status['rpc_username'] or \
-       old_status['rpc_password'] != new_status['rpc_password'] or \
-       old_status['rpc_whitelist'] != new_status['rpc_whitelist']:
+       old_status['rpc_password'] != new_status['rpc_password']:
         new_configuration = {
             'download-dir': new_status['download_dir'],
             'rpc-username': new_status['rpc_username'],
             'rpc-password': new_status['rpc_password'],
-            'rpc-whitelist': new_status['rpc_whitelist']
         }
 
         actions.superuser_run('transmission', ['merge-configuration',
