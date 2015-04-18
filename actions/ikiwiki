@@ -100,8 +100,11 @@ def subcommand_disable(_):
 
 def subcommand_get_sites(_):
     """Get wikis and blogs."""
-    sites = os.listdir(SITE_PATH)
-    print('\n'.join(sites))
+    try:
+        sites = os.listdir(SITE_PATH)
+        print('\n'.join(sites))
+    except FileNotFoundError:
+        pass
 
 
 def subcommand_create_wiki(arguments):
