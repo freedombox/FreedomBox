@@ -26,7 +26,7 @@ from gettext import gettext as _
 class IkiwikiForm(forms.Form):
     """ikiwiki configuration form."""
     enabled = forms.BooleanField(
-        label=_('Enable ikiwiki site'),
+        label=_('Enable Ikiwiki'),
         required=False)
 
 
@@ -35,8 +35,11 @@ class IkiwikiCreateForm(forms.Form):
     type = forms.ChoiceField(
         label=_('Type'),
         choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
+
     name = forms.CharField(label=_('Name'))
+
     admin_name = forms.CharField(label=_('Admin Account Name'))
+
     admin_password = forms.CharField(
         label=_('Admin Account Password'),
         widget=forms.PasswordInput())

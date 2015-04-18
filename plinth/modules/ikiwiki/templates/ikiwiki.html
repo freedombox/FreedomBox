@@ -22,15 +22,15 @@
 
 {% block content %}
 
-<p>When enabled, the ikiwiki site will be available from <a href="/ikiwiki">
-    /ikiwiki</a> path on the web server.</p>
+  <p>When enabled, the blogs and wikis will be available
+    from <a href="/ikiwiki">/ikiwiki</a>.</p>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    <input type="submit" class="btn btn-primary" value="Update setup"/>
+  </form>
 
 {% endblock %}

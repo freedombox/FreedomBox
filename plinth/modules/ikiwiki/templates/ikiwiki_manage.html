@@ -36,25 +36,33 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <div class="list-group">
-        {% for site in sites %}
-          <div class="list-group-item clearfix">
-	    <a href="{% url 'ikiwiki:delete' site %}"
-               class="btn btn-default btn-sm pull-right"
-               role="button" title="Delete site {{ site }}">
-              <span class="glyphicon glyphicon-trash"
-                    aria-hidden="true"></span>
-            </a>
+      {% if not sites %}
+        <p>No wikis or blogs available.</p>
+        <p>
+          <a class="btn btn-primary btn-md"
+             href="{% url 'ikiwiki:create' %}">Create a Wiki or Blog</a>
+        </p>
+      {% else %}
+        <div class="list-group">
+          {% for site in sites %}
+            <div class="list-group-item clearfix">
+  	    <a href="{% url 'ikiwiki:delete' site %}"
+                 class="btn btn-default btn-sm pull-right"
+                 role="button" title="Delete site {{ site }}">
+                <span class="glyphicon glyphicon-trash"
+                      aria-hidden="true"></span>
+              </a>
 
-            <a class="wiki-label"
-	       href="/ikiwiki/{{ site }}"
-               title="Go to site {{ site }}">
-              {{ site }}
-            </a>
+              <a class="wiki-label"
+  	       href="/ikiwiki/{{ site }}"
+                 title="Go to site {{ site }}">
+                {{ site }}
+              </a>
 
-          </div>
-        {% endfor %}
-      </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 

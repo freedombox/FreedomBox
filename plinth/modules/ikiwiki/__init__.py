@@ -30,4 +30,5 @@ depends = ['plinth.modules.apps']
 def init():
     """Initialize the ikiwiki module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Wiki & Blog'), 'glyphicon-edit', 'ikiwiki:index', 38)
+    menu.add_urlname(_('Wiki & Blog (Ikiwiki)'), 'glyphicon-edit',
+                     'ikiwiki:index', 38)
