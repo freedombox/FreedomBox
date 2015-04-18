@@ -39,10 +39,16 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
                'text': _('Create')}]
 
 
+def on_install():
+    """Enable Ikiwiki on install."""
+    actions.superuser_run('ikiwiki', ['setup'])
+
+
 @login_required
 @package.required(['ikiwiki',
                    'libcgi-formbuilder-perl',
-                   'libcgi-session-perl'])
+                   'libcgi-session-perl'],
+                  on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -163,6 +169,7 @@ def delete(request, name):
             messages.success(request, _('%s deleted.') % name)
         except actions.ActionError as err:
             messages.error(request, _('Could not delete %s: %s') % (name, err))
+
         return redirect(reverse_lazy('ikiwiki:manage'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html',
