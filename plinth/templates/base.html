@@ -131,9 +131,9 @@
       <div class="col-md-3">
         {% block submenu %}
           {% if submenu %}
-            <div class="well sidebar">
+            <div class="sidebar">
               {% include "submenu.html" with menu=submenu %}
-            </div><!--/.well -->
+            </div><!--/.sidebar -->
           {% endif %}
         {% endblock %}
 
@@ -143,20 +143,17 @@
       </div>
 
       <div class="col-md-9">
-        <div class="well">
+        {% block subsubmenu %}
+          {% if subsubmenu %}
+            {% show_subsubmenu subsubmenu %}
+          {% endif %}
+        {% endblock %}
 
-          {% block subsubmenu %}
-            {% if subsubmenu %}
-              {% show_subsubmenu subsubmenu %}
-            {% endif %}
-          {% endblock %}
+        {% include 'messages.html' %}
 
-          {% include 'messages.html' %}
-
-          {% block content %}
-            {# main content goes here #}
-          {% endblock %}
-        </div>
+        {% block content %}
+          {# main content goes here #}
+        {% endblock %}
       </div><!--/col-->
     </div><!--/row-->
 
