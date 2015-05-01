@@ -28,10 +28,7 @@ from plinth import package as package_module
 
 def index(request):
     """Serve the main index page."""
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('apps:index'))
-
-    return HttpResponseRedirect(reverse('help:about'))
+    return HttpResponseRedirect(reverse('apps:index'))
 
 
 class PackageInstallView(TemplateView):
