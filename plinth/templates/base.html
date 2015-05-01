@@ -89,39 +89,42 @@
       </div>
       <div class="collapse navbar-collapse">
       {% block add_nav_and_login %}
-        <ul class="nav navbar-nav">
-          {% for item in cfg.main_menu.items %}
-            {% if item.url in active_menu_urls %}
-              <li class="active">
-                <a href="{{ item.url }}" class="active">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="{% url 'help:index' %}">
+              <span class="glyphicon-question-sign glyphicon nav-icon"></span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'system:index' %}">
+              <span class="glyphicon-cog glyphicon nav-icon"></span>
+            </a>
+          </li>
+          <li class="dropdown">
+            {% if user.is_authenticated %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                 role="button" aria-expanded="false">
+                <i class="glyphicon glyphicon-user nav-icon"></i>
+                {{ user.username }}
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'users:edit' user.username %}"
+                       title="Edit">Edit</a></li>
+                <li><a href="{% url 'users:change_password' user.username %}"
+                       title="Change password">Change password</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url 'users:logout' %}" title="Log out">
+                    Log out</a></li>
+              </ul>
             {% else %}
-              <li>
-                <a href="{{ item.url }}">
+              <a href="{% url 'users:login' %}" title="Log in">
+                <i class="glyphicon glyphicon-user nav-icon"></i>
+                Log in</a>
             {% endif %}
-
-                <span class="{{ item.icon }} glyphicon nav-icon"></span>
-                {{ item.label }}
-              </a>
-            </li>
-          {% endfor %}
+          </li>
         </ul>
 
-        {% if user.is_authenticated %}
-          <p class="navbar-text pull-right">
-            <i class="glyphicon glyphicon-user nav-icon"></i>
-            Logged in as <a href="#">{{ user.username }}</a>.
-            <a href="{% url 'users:logout' %}" title="Log out">
-              Log out</a>.
-          </p>
-        {% else %}
-          <p class="navbar-text pull-right">
-            Not logged in.
-            <i class="glyphicon glyphicon-user nav-icon"></i>
-            <a href="{% url 'users:login' %}" title="Log in">
-              Log in</a>.
-          </p>
-        {% endif %}
-        {% endblock %}
+      {% endblock %}
       </div>
     </div>
   </div>
