@@ -24,7 +24,7 @@ from gettext import gettext as _
 
 
 class TransmissionForm(forms.Form):  # pylint: disable=W0232
-    """Tor configuration form"""
+    """Transmission configuration form"""
     enabled = forms.BooleanField(
         label=_('Enable Transmission daemon'),
         required=False)
