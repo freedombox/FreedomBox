@@ -122,6 +122,13 @@
                 Log in</a>
             {% endif %}
           </li>
+	  {% if user.is_authenticated %}
+          <li id="logout_nojs">
+            <a href="{% url 'users:logout' %}" title="Log out">
+              <i class="glyphicon glyphicon-remove-circle nav-icon"></i>
+              Log out</a>
+          </li>
+          {% endif %}
         </ul>
 
       {% endblock %}
@@ -176,6 +183,12 @@
   <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
   <script type="text/javascript" src="{% static '/javascript/bootstrap/js/bootstrap.min.js' %}"></script>
+  <!-- Hide log out button if user dropdown is available -->
+  <script type="text/javascript">
+    (function($) {
+      $("#logout_nojs").hide();
+    })(jQuery);
+  </script>
 
   {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
   {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
