@@ -102,7 +102,8 @@
           </li>
           <li class="dropdown">
             {% if user.is_authenticated %}
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+              <a href="{% url 'users:edit' user.username %}"
+                 class="dropdown-toggle" data-toggle="dropdown"
                  role="button" aria-expanded="false">
                 <i class="glyphicon glyphicon-user nav-icon"></i>
                 {{ user.username }}
@@ -122,12 +123,12 @@
                 Log in</a>
             {% endif %}
           </li>
-	  {% if user.is_authenticated %}
-          <li id="logout_nojs">
-            <a href="{% url 'users:logout' %}" title="Log out">
-              <i class="glyphicon glyphicon-remove-circle nav-icon"></i>
-              Log out</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li id="logout_nojs">
+              <a href="{% url 'users:logout' %}" title="Log out">
+                <i class="glyphicon glyphicon-remove-circle nav-icon"></i>
+                Log out</a>
+            </li>
           {% endif %}
         </ul>
 
