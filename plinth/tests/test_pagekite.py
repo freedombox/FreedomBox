@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -15,10 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
 import unittest
 
-from actions.pagekite_util import get_augeas_servicefile_path, CONF_PATH
 from plinth.modules.pagekite.util import convert_to_service, \
     convert_service_to_string
 
@@ -49,21 +48,6 @@ class TestPagekiteActions(unittest.TestCase):
                        'secret': '@kitesecret'}
         },
     ]
-
-    def test_get_augeas_servicefile_path(self):
-        """ Test the generation of augeas-paths for pagekite services """
-        tests = (('http', '80_http.rc'),
-                 ('https', '443_https.rc'),
-                 ('http/80', '80_http.rc'),
-                 ('http/8080', '8080_http.rc'),
-                 ('raw/22', '22_raw.rc'))
-        for protocol, filename in tests:
-            expected_path = os.path.join(CONF_PATH, filename, 'service_on')
-            returned_path = get_augeas_servicefile_path(protocol)
-            self.assertEqual(expected_path, returned_path)
-
-        with self.assertRaises(ValueError):
-            get_augeas_servicefile_path('xmpp')
 
     def test_convert_service_to_string(self):
         """ Test deconstructing parameter dictionaries into strings """

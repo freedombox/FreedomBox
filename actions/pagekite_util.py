@@ -95,7 +95,31 @@ def convert_service_to_string(service):
 
 
 def get_augeas_servicefile_path(protocol):
-    """Get the augeas path where a service for a protocol should be stored"""
+    """Get the augeas path where a service for a protocol should be stored
+
+    TODO: Use doctests instead of unittests until we can use python3.
+
+    >>> get_augeas_servicefile_path('http')
+    '/files/etc/pagekite.d/80_http.rc/service_on'
+
+    >>> get_augeas_servicefile_path('https')
+    '/files/etc/pagekite.d/443_https.rc/service_on'
+
+    >>> get_augeas_servicefile_path('http/80')
+    '/files/etc/pagekite.d/80_http.rc/service_on'
+
+    >>> get_augeas_servicefile_path('http/8080')
+    '/files/etc/pagekite.d/8080_http.rc/service_on'
+
+    >>> get_augeas_servicefile_path('raw/22')
+    '/files/etc/pagekite.d/22_raw.rc/service_on'
+
+    >>> get_augeas_servicefile_path('xmpp')
+    Traceback (most recent call last):
+        ...
+    ValueError: Unsupported protocol: xmpp
+
+    """
     if not protocol.startswith(("http", "https", "raw")):
         raise ValueError('Unsupported protocol: %s' % protocol)
 
@@ -112,3 +136,8 @@ def get_augeas_servicefile_path(protocol):
         relpath = '%s_%s.rc' % (port, _protocol)
 
     return os.path.join(CONF_PATH, relpath, 'service_on')
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

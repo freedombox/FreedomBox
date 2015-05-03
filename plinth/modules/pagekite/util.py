@@ -73,9 +73,14 @@ PREDEFINED_SERVICES = {
 
 def convert_to_service(service_string):
     """ Convert a service string into a service parameter dictionary
-    >>> convert_to_service('https/443:@kitename:localhost:443:@kitesecret')
-    {'kitename': '@kitename', 'backend_host': 'localhost', \
-'secret': '@kitesecret', 'protocol': 'https/443', 'backend_port': '443'}
+    >>> input = 'https/443:@kitename:localhost:443:@kitesecret'
+    >>> output = convert_to_service(input)
+    >>> expected_output = {'secret': '@kitesecret',
+    ...     'backend_host': 'localhost', 'kitename': '@kitename',
+    ...     'backend_port': '443', 'protocol': 'https/443'}
+    ...
+    >>> output == expected_output
+    True
     """
     # The actions.py uses shlex.quote() to escape/quote malicious user input.
     # That affects '*.@kitename', so the params string gets quoted.
@@ -193,3 +198,8 @@ def _run(arguments, superuser=True):
         return actions.superuser_run(command, arguments)
     else:
         return actions.run(command, arguments)
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
