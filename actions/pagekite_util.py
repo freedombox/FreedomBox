@@ -29,7 +29,6 @@ Utilities for configuring PageKite.
 # until then, this file is python2 and python3 compatible for the unittests
 
 import os
-import shlex
 CONF_PATH = '/files/etc/pagekite.d'
 
 SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
@@ -42,31 +41,6 @@ def convert_to_service(service_string):
     {'kitename': '@kitename', 'backend_host': 'localhost', \
 'secret': '@kitesecret', 'protocol': 'https/443', 'backend_port': '443'}
     """
-    # The actions.py uses shlex.quote() to escape/quote malicious user input.
-    # That affects '*.@kitename', so the params string gets quoted.
-    # If the string is escaped and contains '*.@kitename', look whether shlex
-    # would still quote/escape the string when we remove '*.@kitename'.
-
-    # TODO: use shlex only once augeas-python supports python3
-    if hasattr(shlex, 'quote'):
-        quotefunction = shlex.quote
-    else:
-        import pipes
-        quotefunction = pipes.quote
-
-    if service_string.startswith("'") and service_string.endswith("'"):
-        unquoted_string = service_string[1:-1]
-        error_msg = "The parameters contain suspicious characters: %s "
-        if '*.@kitename' in service_string:
-            unquoted_test_string = unquoted_string.replace('*.@kitename', '')
-            if unquoted_test_string == quotefunction(unquoted_test_string):
-                # no other malicious characters found, use the unquoted string
-                service_string = unquoted_string
-            else:
-                raise RuntimeError(error_msg % service_string)
-        else:
-            raise RuntimeError(error_msg % service_string)
-
     try:
         params = dict(zip(SERVICE_PARAMS, service_string.split(':')))
     except Exception:

@@ -36,5 +36,6 @@ urlpatterns = patterns(  # pylint: disable-msg=C0103
     url(r'^apps/pagekite/services/custom$',
         login_required(CustomServiceView.as_view()), name='custom-services'),
     url(r'^apps/pagekite/services/custom/delete$',
-        login_required(DeleteServiceView.as_view()), name='delete-custom-service'),
+        login_required(DeleteServiceView.as_view()),
+        name='delete-custom-service'),
     )

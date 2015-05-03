@@ -59,7 +59,3 @@ class TestPagekiteActions(unittest.TestCase):
         """ Test constructing parameter dictionaries out of string """
         for test in self._tests:
             self.assertEqual(test['params'], convert_to_service(test['line']))
-
-        line = "'https/80'; touch /etc/fstab':*.@kitename:localhost:80:foo'"
-        with self.assertRaises(RuntimeError):
-            convert_to_service(line)
