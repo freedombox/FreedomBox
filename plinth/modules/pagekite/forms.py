@@ -70,15 +70,18 @@ for your account if no secret is set on the kite'))
 
         if old != new:
 
+            config_changed = False
             if old['kite_name'] != new['kite_name'] or \
                     old['kite_secret'] != new['kite_secret']:
                 _run(['set-kite', '--kite-name', new['kite_name'],
                       '--kite-secret', new['kite_secret']])
                 messages.success(request, _('Kite details set'))
+                config_changed = True
 
             if old['server'] != new['server']:
                 _run(['set-frontend', new['server']])
                 messages.success(request, _('Pagekite server set'))
+                config_changed = True
 
             if old['enabled'] != new['enabled']:
                 if new['enabled']:
@@ -87,6 +90,11 @@ for your account if no secret is set on the kite'))
                 else:
                     _run(['stop-and-disable'])
                     messages.success(request, _('PageKite disabled'))
+
+            # Restart the service if the config was changed while the service
+            # was running, so the changes take effect.
+            elif config_changed and new['enabled']:
+                _run(['restart'])
 
 
 class DefaultServiceForm(forms.Form):

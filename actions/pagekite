@@ -54,6 +54,7 @@ def parse_arguments():
     subparsers.add_parser('is-running', help='Get whether PakeKite is running')
     subparsers.add_parser('start-and-enable', help='Enable PageKite service')
     subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
+    subparsers.add_parser('restart', help='Restart PageKite service')
 
     # Frontend
     subparsers.add_parser('get-frontend', help='Get pagekite frontend')
@@ -93,6 +94,12 @@ def _service(action):
 def subcommand_is_running(_):
     """Print whether pagekite is enabled (yes or no)"""
     print 'yes' if util.service_is_running('pagekite') else 'no'
+
+
+def subcommand_restart(_):
+    """Restart the pagekite service"""
+    _service('restart')
+    print 'restarted'
 
 
 def subcommand_start_and_enable(_):
