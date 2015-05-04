@@ -35,7 +35,7 @@ subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
               {'url': reverse_lazy('pagekite:configure'),
                'text': _('Configure PageKite')},
-              {'url': reverse_lazy('pagekite:default-services'),
+              {'url': reverse_lazy('pagekite:standard-services'),
                'text': _('Standard Services')},
               {'url': reverse_lazy('pagekite:custom-services'),
                'text': _('Custom Services')}]
@@ -106,10 +106,10 @@ class CustomServiceView(ContextMixin, TemplateView):
 
 
 class StandardServiceView(ContextMixin, FormView):
-    template_name = 'pagekite_default_services.html'
+    template_name = 'pagekite_standard_services.html'
     title = 'PageKite Standard Services'
     form_class = StandardServiceForm
-    success_url = reverse_lazy('pagekite:default-services')
+    success_url = reverse_lazy('pagekite:standard-services')
 
     def get_initial(self):
         return get_pagekite_services()[0]

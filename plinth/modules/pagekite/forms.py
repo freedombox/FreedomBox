@@ -207,7 +207,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
         except KeyError:
             is_predefined = False
         if is_predefined:
-            msg = _("""This service is available as a default service. Please
+            msg = _("""This service is available as a standard service. Please
                     use the 'Standard Services' page to enable it.""")
             raise forms.ValidationError(msg)
         return cleaned_data
