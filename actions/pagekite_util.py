@@ -24,32 +24,18 @@ Utilities for configuring PageKite.
 # Once python-augeas is available for python3 import the following things
 # from plinth.modules.pagekite.util (instead of having a copy in here):
 #
-# SERVICE_PARAMS, convert_service_to_string, convert_to_service
+# SERVICE_PARAMS, convert_service_to_string
 #
 # until then, this file is python2 and python3 compatible for the unittests
 
 import os
+import json
+
 CONF_PATH = '/files/etc/pagekite.d'
 
+# parameters that get stored in configuration service_on entries
 SERVICE_PARAMS = ['protocol', 'kitename', 'backend_host', 'backend_port',
                   'secret']
-
-
-def convert_to_service(service_string):
-    """ Convert a service string into a service parameter dictionary
-    >>> convert_to_service('https/443:@kitename:localhost:443:@kitesecret')
-    {'kitename': '@kitename', 'backend_host': 'localhost', \
-'secret': '@kitesecret', 'protocol': 'https/443', 'backend_port': '443'}
-    """
-    try:
-        params = dict(zip(SERVICE_PARAMS, service_string.split(':')))
-    except Exception:
-        msg = """params are expected to be a ':'-separated string containing
-              values for: %s , for example:\n"--params
-              http/8000:@kitename:localhost:8000:@kitesecret"
-              """
-        raise ValueError(msg % ", ".join(SERVICE_PARAMS))
-    return params
 
 
 def convert_service_to_string(service):
@@ -61,17 +47,27 @@ def convert_service_to_string(service):
     'https/443:@kitename:localhost:443:@kitesecret'
     """
     try:
-        service_string = ":".join([str(service[param]) for param in
-                                  SERVICE_PARAMS])
+        service_string = ":".join([service[param] for param in SERVICE_PARAMS])
     except KeyError:
         raise ValueError("Could not parse params: %s " % service)
     return service_string
 
 
+def load_service(json_service):
+    """ create a service out of json command-line argument
+
+    1) parse json
+    2) only use the parameters that we need (SERVICE_PARAMS)
+    3) convert unicode to strings
+    """
+    service = json.loads(json_service)
+    return dict((str(key), str(service[key])) for key in SERVICE_PARAMS)
+
+
 def get_augeas_servicefile_path(protocol):
     """Get the augeas path where a service for a protocol should be stored
 
-    TODO: Use doctests instead of unittests until we can use python3.
+    TODO: Once we use python3 switch from doctests to unittests
 
     >>> get_augeas_servicefile_path('http')
     '/files/etc/pagekite.d/80_http.rc/service_on'

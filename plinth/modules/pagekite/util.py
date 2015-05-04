@@ -16,6 +16,7 @@
 #
 
 from gettext import gettext as _
+import json
 import logging
 
 from plinth import actions
@@ -70,44 +71,6 @@ PREDEFINED_SERVICES = {
 }
 
 
-def convert_to_service(service_string):
-    """ Convert a service string into a service parameter dictionary
-    >>> input = 'https/443:@kitename:localhost:443:@kitesecret'
-    >>> output = convert_to_service(input)
-    >>> expected_output = {'secret': '@kitesecret',
-    ...     'backend_host': 'localhost', 'kitename': '@kitename',
-    ...     'backend_port': '443', 'protocol': 'https/443'}
-    ...
-    >>> output == expected_output
-    True
-    """
-    try:
-        params = dict(zip(SERVICE_PARAMS, service_string.split(':')))
-    except Exception:
-        msg = """params are expected to be a ':'-separated string containing
-              values for: %s , for example:\n"--params
-              http/8000:@kitename:localhost:8000:@kitesecret"
-              """
-        raise ValueError(msg % ", ".join(SERVICE_PARAMS))
-    return params
-
-
-def convert_service_to_string(service):
-    """ Convert service dict into a ":"-separated parameter string
-
-    >>> convert_service_to_string({'kitename': '@kitename', \
-'backend_host': 'localhost', 'secret': '@kitesecret', \
-'protocol': 'https/443', 'backend_port': '443'})
-    'https/443:@kitename:localhost:443:@kitesecret'
-    """
-    try:
-        service_string = ":".join([str(service[param]) for param in
-                                  SERVICE_PARAMS])
-    except KeyError:
-        raise ValueError("Could not parse params: %s " % service)
-    return service_string
-
-
 def get_kite_details():
     output = _run(['get-kite'])
     kite_details = output.split()
@@ -147,8 +110,11 @@ def get_pagekite_services():
     # set all predefined services to 'disabled' by default
     [predefined.update({proto: False}) for proto in PREDEFINED_SERVICES.keys()]
     # now, search for the enabled ones
-    for serviceline in _run(['get-services']).split():
-        service = convert_to_service(serviceline)
+    for serviceline in _run(['get-services']).split('\n'):
+        if not serviceline:  # skip empty lines
+            continue
+
+        service = json.loads(serviceline)
         for name, predefined_service in PREDEFINED_SERVICES.items():
             if service == predefined_service['params']:
                 predefined[name] = True
@@ -179,8 +145,3 @@ def _run(arguments, superuser=True):
         return actions.superuser_run(command, arguments)
     else:
         return actions.run(command, arguments)
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()

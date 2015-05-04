@@ -15,17 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import copy
 from gettext import gettext as _
+import json
 import logging
 
-import copy
 from django import forms
 from django.contrib import messages
 from django.core import validators
 
 from plinth.errors import ActionError
-from .util import _run, convert_service_to_string, get_kite_details, \
-    BACKEND_HOST, KITE_NAME, KITE_SECRET, PREDEFINED_SERVICES
+from .util import _run, get_kite_details, BACKEND_HOST, KITE_NAME, \
+    KITE_SECRET, PREDEFINED_SERVICES
 
 LOGGER = logging.getLogger(__name__)
 
@@ -71,6 +72,7 @@ for your account if no secret is set on the kite'))
         if old != new:
 
             config_changed = False
+
             if old['kite_name'] != new['kite_name'] or \
                     old['kite_secret'] != new['kite_secret']:
                 _run(['set-kite', '--kite-name', new['kite_name'],
@@ -92,7 +94,7 @@ for your account if no secret is set on the kite'))
                     messages.success(request, _('PageKite disabled'))
 
             # Restart the service if the config was changed while the service
-            # was running, so the changes take effect.
+            # was running, so changes take effect immediately.
             elif config_changed and new['enabled']:
                 _run(['restart'])
 
@@ -118,13 +120,13 @@ class DefaultServiceForm(forms.Form):
         for service_name in PREDEFINED_SERVICES.keys():
             if self.initial[service_name] != formdata[service_name]:
                 service = PREDEFINED_SERVICES[service_name]['params']
-                service_string = convert_service_to_string(service)
+                service = json.dumps(service)
                 if formdata[service_name]:
-                    _run(['add-service', '--service', service_string])
+                    _run(['add-service', '--service', service])
                     messages.success(request, _('Service enabled: {name}')
                                      .format(name=service_name))
                 else:
-                    _run(['remove-service', '--service', service_string])
+                    _run(['remove-service', '--service', service])
                     messages.success(request, _('Service disabled: {name}')
                                      .format(name=service_name))
 
@@ -170,8 +172,7 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
-        service_string = convert_service_to_string(service)
-        _run(['remove-service', '--service', service_string])
+        _run(['remove-service', '--service', json.dumps(service)])
         messages.success(request, _('Deleted custom service'))
 
 
@@ -213,9 +214,8 @@ class AddCustomServiceForm(BaseCustomServiceForm):
 
     def save(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
-        service_string = convert_service_to_string(service)
         try:
-            _run(['add-service', '--service', service_string])
+            _run(['add-service', '--service', json.dumps(service)])
             messages.success(request, _('Added custom service'))
         except ActionError as exception:
             if "already exists" in str(exception):

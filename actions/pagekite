@@ -25,12 +25,13 @@ Unfortunately there is no python3 package for augeas yet
 
 import argparse
 import augeas
+import json
 import os
 import subprocess
 
 import util
-from pagekite_util import SERVICE_PARAMS, convert_to_service, \
-    convert_service_to_string, get_augeas_servicefile_path, CONF_PATH
+from pagekite_util import SERVICE_PARAMS, convert_service_to_string, \
+    get_augeas_servicefile_path, load_service, CONF_PATH
 
 aug = augeas.Augeas()
 
@@ -75,11 +76,10 @@ def parse_arguments():
     subparsers.add_parser('get-services', help='Get list of enabled services')
     add_service = subparsers.add_parser('add-service',
                                         help='Add a pagekite service')
-    add_service.add_argument('--service', help='":"-separated service string')
+    add_service.add_argument('--service', help='json service dictionary')
     remove_service = subparsers.add_parser('remove-service',
                                            help='Remove a pagekite service')
-    remove_service.add_argument('--service', help='":"-separated service \
-                                string')
+    remove_service.add_argument('--service', help='json service dictionary')
 
     return parser.parse_args()
 
@@ -150,17 +150,18 @@ def enable_pagekitenet_frontend():
 def subcommand_get_services(arguments):
     """ lists all available (enabled) services """
     for match in aug.match(PATHS['service_on']):
-        print ":".join([aug.get(os.path.join(match, param)) for param in
-                        SERVICE_PARAMS])
+        service = dict([(param, aug.get(os.path.join(match, param)))
+                        for param in SERVICE_PARAMS])
+        print json.dumps(service)
 
 
 def subcommand_remove_service(arguments):
     """Searches and removes the service(s) that match all given parameters"""
-    service = convert_to_service(arguments.service)
+    service = load_service(arguments.service)
     paths = get_existing_service_paths(service)
     # TODO: theoretically, everything to do here is:
     # [aug.remove(path) for path in paths]
-    # but augeas won't let you save the changed files, and won't tell you why
+    # but augeas won't let you save the changed files and doesn't say why
     for path in paths:
         filepath = convert_augeas_path_to_filepath(path)
         service_found = False
@@ -185,14 +186,14 @@ def get_existing_service_paths(service):
     # construct an augeas query path with patterns like:
     #     */service_on/*[protocol='http']
     path = PATHS['service_on']
-    for key, value in service.items():
-        path += "[%s='%s']" % (key, value)
+    for param, value in service.items():
+        path += "[%s='%s']" % (param, value)
     return aug.match(path)
 
 
 def subcommand_add_service(arguments):
     """Add one service"""
-    service = convert_to_service(arguments.service)
+    service = load_service(arguments.service)
     if get_existing_service_paths(service):
         msg = "Service with the parameters %s already exists"
         raise RuntimeError(msg % service)
