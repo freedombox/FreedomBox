@@ -26,7 +26,7 @@ from django.views.generic.edit import FormView
 from plinth import package
 from .util import get_pagekite_config, get_pagekite_services, \
     get_kite_details, prepare_service_for_display
-from .forms import ConfigurationForm, DefaultServiceForm, \
+from .forms import ConfigurationForm, StandardServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm
 
 
@@ -36,7 +36,7 @@ subsubmenu = [{'url': reverse_lazy('pagekite:index'),
               {'url': reverse_lazy('pagekite:configure'),
                'text': _('Configure PageKite')},
               {'url': reverse_lazy('pagekite:default-services'),
-               'text': _('Default Services')},
+               'text': _('Standard Services')},
               {'url': reverse_lazy('pagekite:custom-services'),
                'text': _('Custom Services')}]
 
@@ -105,10 +105,10 @@ class CustomServiceView(ContextMixin, TemplateView):
         return self.render_to_response(context)
 
 
-class DefaultServiceView(ContextMixin, FormView):
+class StandardServiceView(ContextMixin, FormView):
     template_name = 'pagekite_default_services.html'
-    title = 'PageKite Default Services'
-    form_class = DefaultServiceForm
+    title = 'PageKite Standard Services'
+    form_class = StandardServiceForm
     success_url = reverse_lazy('pagekite:default-services')
 
     def get_initial(self):
@@ -116,7 +116,7 @@ class DefaultServiceView(ContextMixin, FormView):
 
     def form_valid(self, form):
         form.save(self.request)
-        return super(DefaultServiceView, self).form_valid(form)
+        return super(StandardServiceView, self).form_valid(form)
 
 
 class ConfigurationView(ContextMixin, FormView):

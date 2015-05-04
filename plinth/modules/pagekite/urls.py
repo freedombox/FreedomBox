@@ -22,7 +22,7 @@ URLs for the PageKite module
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 
-from .views import DefaultServiceView, CustomServiceView, ConfigurationView, \
+from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
     DeleteServiceView, index
 
 
@@ -32,7 +32,7 @@ urlpatterns = patterns(  # pylint: disable-msg=C0103
     url(r'^apps/pagekite/configure/$',
         login_required(ConfigurationView.as_view()), name='configure'),
     url(r'^apps/pagekite/services/default$',
-        login_required(DefaultServiceView.as_view()), name='default-services'),
+        login_required(StandardServiceView.as_view()), name='default-services'),
     url(r'^apps/pagekite/services/custom$',
         login_required(CustomServiceView.as_view()), name='custom-services'),
     url(r'^apps/pagekite/services/custom/delete$',

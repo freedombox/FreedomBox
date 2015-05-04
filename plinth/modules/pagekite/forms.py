@@ -99,12 +99,12 @@ for your account if no secret is set on the kite'))
                 _run(['restart'])
 
 
-class DefaultServiceForm(forms.Form):
+class StandardServiceForm(forms.Form):
     """Creates a form out of PREDEFINED_SERVICES"""
 
     def __init__(self, *args, **kwargs):
         """Add the fields from PREDEFINED_SERVICES"""
-        super(DefaultServiceForm, self).__init__(*args, **kwargs)
+        super(StandardServiceForm, self).__init__(*args, **kwargs)
         kite = get_kite_details()
         for name, service in PREDEFINED_SERVICES.items():
             if name in ('http', 'https'):
@@ -208,7 +208,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
             is_predefined = False
         if is_predefined:
             msg = _("""This service is available as a default service. Please
-                    use the 'Default Services' page to enable it.""")
+                    use the 'Standard Services' page to enable it.""")
             raise forms.ValidationError(msg)
         return cleaned_data
 
