@@ -184,6 +184,7 @@ setuptools.setup(
         'django-stronghold',
         'psutil',
         'python-augeas',
+        'requests',
         'pyyaml',
     ],
     tests_require=['coverage >= 3.7'],
