@@ -93,7 +93,7 @@ setuptools.setup(
     packages=find_packages(include=['plinth', 'plinth.*'],
                            exclude=['*.templates']),
     scripts=['bin/plinth'],
-    test_suite='plinth.tests.TEST_SUITE',
+    test_suite='plinth.tests.runtests.run_tests',
     license='COPYING',
     classifiers=[
         'Development Status :: 3 - Alpha',
