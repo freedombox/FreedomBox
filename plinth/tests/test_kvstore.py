@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -15,26 +16,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-Django context processors to provide common data to templates.
-"""
+from django.test import TestCase
 
-import re
-
-from plinth import cfg
+from plinth import kvstore
 
 
-def common(request):
-    """
-    Add additional context values to RequestContext for use in templates.
+class KvstoreTestCase(TestCase):
+    """Verify the behavior of the kvstore module."""
 
-    Any resources referenced in the return value are expected to have been
-    initialized or configured externally beforehand.
-    """
-    slash_indices = [match.start() for match in re.finditer('/', request.path)]
-    active_menu_urls = [request.path[:index + 1] for index in slash_indices]
-    return {
-        'cfg': cfg,
-        'submenu': cfg.main_menu.active_item(request),
-        'active_menu_urls': active_menu_urls
-    }
+    def test_get(self):
+        """Verify that a set value can be retrieved."""
+        key = 'name'
+        expected_value = 'Guido'
+        kvstore.set(key, expected_value)
+        actual_value = kvstore.get(key)
+        self.assertEqual(expected_value, actual_value)
+
+    def test_get_default(self):
+        """Verify that either a set value or its default can be retrieved."""
+        expected = 'default'
+        actual = kvstore.get_default('bad_key', expected)
+        self.assertEqual(expected, actual)
