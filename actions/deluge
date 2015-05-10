@@ -26,9 +26,8 @@ import os
 import subprocess
 
 
-SITE_CONF = '/etc/apache2/conf-available/deluge-web.conf'
-SITE_ENABLED = '/etc/apache2/conf-enabled/deluge-web.conf'
-
+APACHE_CONF_PATH = '/etc/apache2/conf-available/deluge-web.conf'
+APACHE_CONF_ENABLED_PATH = '/etc/apache2/conf-enabled/deluge-web.conf'
 APACHE_CONF = '''
 ##
 ## On all sites, provide Deluge on a default path: /deluge
@@ -39,6 +38,27 @@ APACHE_CONF = '''
 <Location /deluge>
         ProxyPass http://localhost:8112
 </Location>
+'''
+
+SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
+SYSTEMD_SERVICE = '''
+#
+# This file is managed and overwritten by Plinth.  If you wish to edit
+# it, disable Deluge in Plinth, remove this file and manage it manually.
+#
+[Unit]
+Description=Deluge Web Interface
+Documentation=man:deluge-web(1)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/deluge-web --base=deluge
+Restart=on-failure
+User=debian-deluged
+Group=debian-deluged
+
+[Install]
+WantedBy=multi-user.target
 '''
 
 
@@ -61,18 +81,13 @@ def parse_arguments():
     subparsers.add_parser('is-running',
                           help='Get whether deluge-web is running')
 
-    # Start deluge-web
-    subparsers.add_parser('start', help='Start deluge-web')
-
-    # Stop deluge-web
-    subparsers.add_parser('stop', help='Stop deluge-web')
-
     return parser.parse_args()
 
 
 def subcommand_get_enabled(_):
     """Get whether deluge-web site is enabled."""
-    if os.path.isfile(SITE_ENABLED):
+    if os.path.isfile(APACHE_CONF_ENABLED_PATH) and \
+       os.path.isfile(SYSTEMD_SERVICE_PATH):
         print('yes')
     else:
         print('no')
@@ -80,11 +95,9 @@ def subcommand_get_enabled(_):
 
 def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
-    if not os.path.isfile(SITE_CONF):
-        setup()
+    setup()
 
-    subcommand_start(_)
-
+    start()
     subprocess.check_call(['a2enconf', 'deluge-web'])
     subprocess.check_call(['service', 'apache2', 'reload'])
 
@@ -93,47 +106,50 @@ def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
     subprocess.check_call(['a2disconf', 'deluge-web'])
     subprocess.check_call(['service', 'apache2', 'reload'])
-
-    subcommand_stop(_)
+    stop()
 
 
 def subcommand_is_running(_):
     """Get whether deluge-web is running."""
     try:
-        subprocess.check_call(['start-stop-daemon', '--status',
-                               '--user', 'debian-deluged',
-                               '--name', 'deluge-web',
-                               '--pidfile', '/var/run/deluge-web.pid'])
-        print('yes')
+        output = subprocess.check_output(['systemctl', 'status', 'deluge-web'])
     except subprocess.CalledProcessError:
         print('no')
+    else:
+        running = False
+        for line in output.decode().split('\n'):
+            if 'Active' in line and 'running' in line:
+                running = True
+                break
+
+        print('yes' if running else 'no')
 
 
-def subcommand_start(_):
+def start():
     """Start deluge-web."""
-    subprocess.check_call(['start-stop-daemon', '--start', '--oknodo',
-                           '--background', '--make-pidfile',
-                           '--name', 'deluge-web',
-                           '--user', 'debian-deluged',
-                           '--startas', '/usr/bin/deluge-web',
-                           '--pidfile', '/var/run/deluge-web.pid',
-                           '--chuid', 'debian-deluged:debian-deluged',
-                           '--', '--base=deluge'])
+    subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
+    subprocess.check_call(['systemctl', 'start', 'deluge-web'])
 
 
-def subcommand_stop(_):
+def stop():
     """Stop deluge-web."""
-    subprocess.check_call(['start-stop-daemon', '--stop', '--retry', '5',
-                           '--oknodo', '--name', 'deluge-web',
-                           '--user', 'debian-deluged',
-                           '--pidfile', '/var/run/deluge-web.pid',
-                           '--remove-pidfile'])
+    try:
+        subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
+    except subprocess.CalledProcessError:
+        pass
 
 
 def setup():
     """Perform initial setup for deluge-web site."""
-    with open(SITE_CONF, 'w') as conffile:
-        conffile.write(APACHE_CONF)
+    if not os.path.isfile(APACHE_CONF_PATH):
+        with open(APACHE_CONF_PATH, 'w') as conffile:
+            conffile.write(APACHE_CONF)
+
+    if not os.path.isfile(SYSTEMD_SERVICE_PATH):
+        with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+            file_handle.write(SYSTEMD_SERVICE)
+
+        subprocess.check_call(['systemctl', 'daemon-reload'])
 
 
 def main():

@@ -44,26 +44,11 @@
 {% if status.enabled %}
 <h3>Status</h3>
 
-<p>If your {{ cfg.box_name }} is restarted, you will need to start deluge-web
-  manually. In the future, this will be handled automatically.</p>
-
 <p>
   {% if status.is_running %}
-
   <span class="running-status active"></span> deluge-web is running
-  <form class="form" method="post" action="{% url 'deluge:stop' %}">
-    {% csrf_token %}
-    <input type="submit" class="btn btn-primary" value="Stop deluge-web"/>
-  </form>
-
   {% else %}
-
   <span class="running-status inactive"></span> deluge-web is not running
-  <form class="form" method="post" action="{% url 'deluge:start' %}">
-    {% csrf_token %}
-    <input type="submit" class="btn btn-primary" value="Start deluge-web"/>
-  </form>
-
   {% endif %}
 </p>
 {% endif %}
