@@ -78,7 +78,7 @@ def get_status():
     enabled = (output.strip() == 'yes')
 
     output = actions.run('deluge', ['is-running'])
-    is_running = ('yes' in output.strip())
+    is_running = (output.strip() == 'yes')
 
     status = {'enabled': enabled,
               'is_running': is_running}

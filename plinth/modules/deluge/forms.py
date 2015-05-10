@@ -26,5 +26,5 @@ from gettext import gettext as _
 class DelugeForm(forms.Form):
     """Deluge configuration form."""
     enabled = forms.BooleanField(
-        label=_('Enable Deluge web client'),
+        label=_('Enable Deluge'),
         required=False)

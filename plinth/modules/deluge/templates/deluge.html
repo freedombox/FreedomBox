@@ -49,19 +49,19 @@
 
 <p>
   {% if status.is_running %}
+
   <span class="running-status active"></span> deluge-web is running
   <form class="form" method="post" action="{% url 'deluge:stop' %}">
     {% csrf_token %}
-    <input type="submit" class="btn btn-primary"
-           value="Stop deluge-web &raquo;"/>
+    <input type="submit" class="btn btn-primary" value="Stop deluge-web"/>
   </form>
 
   {% else %}
+
   <span class="running-status inactive"></span> deluge-web is not running
   <form class="form" method="post" action="{% url 'deluge:start' %}">
     {% csrf_token %}
-    <input type="submit" class="btn btn-primary"
-           value="Start deluge-web &raquo;"/>
+    <input type="submit" class="btn btn-primary" value="Start deluge-web"/>
   </form>
 
   {% endif %}

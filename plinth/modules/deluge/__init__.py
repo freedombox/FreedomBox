@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure a Deluge web client
+Plinth module to configure a Deluge web client.
 """
 
 from gettext import gettext as _
@@ -28,7 +28,7 @@ depends = ['plinth.modules.apps']
 
 
 def init():
-    """Initialize the BitTorrent module."""
+    """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('BitTorrent (Deluge)'), 'glyphicon-magnet',
                      'deluge:index', 60)

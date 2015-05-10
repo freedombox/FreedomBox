@@ -18,7 +18,7 @@
 #
 
 """
-Configuration helper for BitTorrent web client
+Configuration helper for BitTorrent web client.
 """
 
 import argparse
@@ -30,6 +30,12 @@ SITE_CONF = '/etc/apache2/conf-available/deluge-web.conf'
 SITE_ENABLED = '/etc/apache2/conf-enabled/deluge-web.conf'
 
 APACHE_CONF = '''
+##
+## On all sites, provide Deluge on a default path: /deluge
+##
+## This file is managed and overwritten by Plinth.  If you wish to edit
+## it, disable Deluge in Plinth, remove this file and manage it manually.
+##
 <Location /deluge>
         ProxyPass http://localhost:8112
 </Location>
@@ -77,10 +83,10 @@ def subcommand_enable(_):
     if not os.path.isfile(SITE_CONF):
         setup()
 
+    subcommand_start(_)
+
     subprocess.check_call(['a2enconf', 'deluge-web'])
     subprocess.check_call(['service', 'apache2', 'reload'])
-
-    subcommand_start(_)
 
 
 def subcommand_disable(_):
