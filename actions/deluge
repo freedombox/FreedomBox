@@ -93,24 +93,35 @@ def subcommand_disable(_):
 
 def subcommand_is_running(_):
     """Get whether deluge-web is running."""
-    if subprocess.call(['pgrep', 'deluge-web']) == 0:
+    try:
+        subprocess.check_call(['start-stop-daemon', '--status',
+                               '--user', 'debian-deluged',
+                               '--name', 'deluge-web',
+                               '--pidfile', '/var/run/deluge-web.pid'])
         print('yes')
-    else:
+    except subprocess.CalledProcessError:
         print('no')
 
 
 def subcommand_start(_):
     """Start deluge-web."""
-    subprocess.check_call(['start-stop-daemon', '--start', '--background',
+    subprocess.check_call(['start-stop-daemon', '--start', '--oknodo',
+                           '--background', '--make-pidfile',
                            '--name', 'deluge-web',
-                           '--exec', '/usr/bin/deluge-web',
-                           '--chuid', 'debian-deluged',
+                           '--user', 'debian-deluged',
+                           '--startas', '/usr/bin/deluge-web',
+                           '--pidfile', '/var/run/deluge-web.pid',
+                           '--chuid', 'debian-deluged:debian-deluged',
                            '--', '--base=deluge'])
 
 
 def subcommand_stop(_):
     """Stop deluge-web."""
-    subprocess.call(['killall', 'deluge-web'])
+    subprocess.check_call(['start-stop-daemon', '--stop', '--retry', '5',
+                           '--oknodo', '--name', 'deluge-web',
+                           '--user', 'debian-deluged',
+                           '--pidfile', '/var/run/deluge-web.pid',
+                           '--remove-pidfile'])
 
 
 def setup():
