@@ -16,15 +16,19 @@
 #
 
 """
-URLs for the BitTorrent module
+Plinth module to configure a Deluge web client
 """
 
-from django.conf.urls import patterns, url
+from gettext import gettext as _
+
+from plinth import cfg
 
 
-urlpatterns = patterns(
-    'plinth.modules.bittorrent.views',
-    url(r'^apps/bittorrent/$', 'index', name='index'),
-    url(r'^apps/bittorrent/start/$', 'start', name='start'),
-    url(r'^apps/bittorrent/stop/$', 'stop', name='stop'),
-    )
+depends = ['plinth.modules.apps']
+
+
+def init():
+    """Initialize the BitTorrent module."""
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(_('BitTorrent (Deluge)'), 'glyphicon-magnet',
+                     'deluge:index', 60)

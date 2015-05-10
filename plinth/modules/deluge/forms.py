@@ -16,15 +16,15 @@
 #
 
 """
-Forms for configuring BitTorrent web client
+Forms for configuring Deluge web client.
 """
 
 from django import forms
 from gettext import gettext as _
 
 
-class BitTorrentForm(forms.Form):
-    """BitTorrent configuration form."""
+class DelugeForm(forms.Form):
+    """Deluge configuration form."""
     enabled = forms.BooleanField(
-        label=_('Enable BitTorrent web client'),
+        label=_('Enable Deluge web client'),
         required=False)

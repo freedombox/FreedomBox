@@ -29,6 +29,12 @@ import subprocess
 SITE_CONF = '/etc/apache2/conf-available/deluge-web.conf'
 SITE_ENABLED = '/etc/apache2/conf-enabled/deluge-web.conf'
 
+APACHE_CONF = '''
+<Location /deluge>
+        ProxyPass http://localhost:8112
+</Location>
+'''
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -70,6 +76,7 @@ def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
     if not os.path.isfile(SITE_CONF):
         setup()
+
     subprocess.check_call(['a2enconf', 'deluge-web'])
     subprocess.check_call(['service', 'apache2', 'reload'])
 
@@ -98,7 +105,7 @@ def subcommand_start(_):
                            '--name', 'deluge-web',
                            '--exec', '/usr/bin/deluge-web',
                            '--chuid', 'debian-deluged',
-                           '--', '--base=bittorrent'])
+                           '--', '--base=deluge'])
 
 
 def subcommand_stop(_):
@@ -109,11 +116,7 @@ def subcommand_stop(_):
 def setup():
     """Perform initial setup for deluge-web site."""
     with open(SITE_CONF, 'w') as conffile:
-        conffile.writelines([
-            '<Location /bittorrent>\n',
-            '    ProxyPass http://localhost:8112\n',
-            '</Location>\n',
-        ])
+        conffile.write(APACHE_CONF)
 
 
 def main():

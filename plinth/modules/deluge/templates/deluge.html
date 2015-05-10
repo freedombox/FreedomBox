@@ -27,7 +27,7 @@
 <p>Deluge is a BitTorrent client that features a Web UI.</p>
 
 <p>When enabled, the Deluge web client will be available from
-  <a href="/bittorrent">/bittorrent</a> path on the web server. The default
+  <a href="/deluge">/deluge</a> path on the web server. The default
   password is 'deluge', but you should log in and change it immediately after
   enabling this service.</p>
 
@@ -50,7 +50,7 @@
 <p>
   {% if status.is_running %}
   <span class="running-status active"></span> deluge-web is running
-  <form class="form" method="post" action="{% url 'bittorrent:stop' %}">
+  <form class="form" method="post" action="{% url 'deluge:stop' %}">
     {% csrf_token %}
     <input type="submit" class="btn btn-primary"
            value="Stop deluge-web &raquo;"/>
@@ -58,7 +58,7 @@
 
   {% else %}
   <span class="running-status inactive"></span> deluge-web is not running
-  <form class="form" method="post" action="{% url 'bittorrent:start' %}">
+  <form class="form" method="post" action="{% url 'deluge:start' %}">
     {% csrf_token %}
     <input type="submit" class="btn btn-primary"
            value="Start deluge-web &raquo;"/>

@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure a BitTorrent web client (deluge-web)
+Plinth module to configure a Deluge web client.
 """
 
 from django.contrib import messages
@@ -27,7 +27,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from gettext import gettext as _
 
-from .forms import BitTorrentForm
+from .forms import DelugeForm
 from plinth import actions
 from plinth import package
 
@@ -41,16 +41,16 @@ def index(request):
     form = None
 
     if request.method == 'POST':
-        form = BitTorrentForm(request.POST, prefix='bittorrent')
+        form = DelugeForm(request.POST, prefix='deluge')
         # pylint: disable=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
-            form = BitTorrentForm(initial=status, prefix='bittorrent')
+            form = DelugeForm(initial=status, prefix='deluge')
     else:
-        form = BitTorrentForm(initial=status, prefix='bittorrent')
+        form = DelugeForm(initial=status, prefix='deluge')
 
-    return TemplateResponse(request, 'bittorrent.html',
+    return TemplateResponse(request, 'deluge.html',
                             {'title': _('BitTorrent (Deluge)'),
                              'status': status,
                              'form': form})
@@ -60,24 +60,24 @@ def index(request):
 @require_POST
 def start(request):
     """Start deluge-web."""
-    actions.run('bittorrent', ['start'])
-    return redirect(reverse_lazy('bittorrent:index'))
+    actions.run('deluge', ['start'])
+    return redirect(reverse_lazy('deluge:index'))
 
 
 @login_required
 @require_POST
 def stop(request):
     """Stop deluge-web."""
-    actions.run('bittorrent', ['stop'])
-    return redirect(reverse_lazy('bittorrent:index'))
+    actions.run('deluge', ['stop'])
+    return redirect(reverse_lazy('deluge:index'))
 
 
 def get_status():
     """Get the current settings."""
-    output = actions.run('bittorrent', ['get-enabled'])
+    output = actions.run('deluge', ['get-enabled'])
     enabled = (output.strip() == 'yes')
 
-    output = actions.run('bittorrent', ['is-running'])
+    output = actions.run('deluge', ['is-running'])
     is_running = ('yes' in output.strip())
 
     status = {'enabled': enabled,
@@ -92,7 +92,7 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('bittorrent', [sub_command])
+        actions.superuser_run('deluge', [sub_command])
         modified = True
 
     if modified:
