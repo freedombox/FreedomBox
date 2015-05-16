@@ -95,9 +95,13 @@ def get_connection(connection_uuid):
     """
     client = nm.Client.new(None)
     try:
-        return client.get_connection_by_uuid(connection_uuid)
+        connection = client.get_connection_by_uuid(connection_uuid)
+        if not connection:
+            raise ConnectionNotFound(connection_uuid)
     except KeyError:
         raise ConnectionNotFound(connection_uuid)
+
+    return connection
 
 
 def get_active_connection(connection_uuid):
@@ -170,11 +174,15 @@ def _update_ethernet_settings(connection, connection_uuid, name, zone,
 
 
 def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
-    """Add an automatic ethernet connection in network manager."""
+    """Add an automatic ethernet connection in network manager.
+    Returns the UUID for the connection.
+    """
+    connection_uuid = str(uuid.uuid4())
     connection = _update_ethernet_settings(
-        None, str(uuid.uuid4()), name, zone, ipv4_method, ipv4_address)
+        None, connection_uuid, name, zone, ipv4_method, ipv4_address)
     client = nm.Client.new(None)
     client.add_connection_async(connection, True, None, _callback, None)
+    return connection_uuid
 
 
 def edit_ethernet_connection(connection, name, zone, ipv4_method,
@@ -222,12 +230,16 @@ def _update_wifi_settings(connection, connection_uuid, name, zone, ssid, mode,
 
 def add_wifi_connection(name, zone, ssid, mode, auth_mode, passphrase,
                         ipv4_method, ipv4_address):
-    """Add an automatic Wi-Fi connection in network manager."""
+    """Add an automatic Wi-Fi connection in network manager.
+    Return the UUID for the connection.
+    """
+    connection_uuid = str(uuid.uuid4())
     connection = _update_wifi_settings(
-        None, str(uuid.uuid4()), name, zone, ssid, mode, auth_mode, passphrase,
+        None, connection_uuid, name, zone, ssid, mode, auth_mode, passphrase,
         ipv4_method, ipv4_address)
     client = nm.Client.new(None)
     client.add_connection_async(connection, True, None, _callback, None)
+    return connection_uuid
 
 
 def edit_wifi_connection(connection, name, zone,
