@@ -21,10 +21,7 @@ Plinth module to configure a Deluge web client.
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from django.views.decorators.http import require_POST
 from gettext import gettext as _
 
 from .forms import DelugeForm
@@ -54,22 +51,6 @@ def index(request):
                             {'title': _('BitTorrent (Deluge)'),
                              'status': status,
                              'form': form})
-
-
-@login_required
-@require_POST
-def start(request):
-    """Start deluge-web."""
-    actions.run('deluge', ['start'])
-    return redirect(reverse_lazy('deluge:index'))
-
-
-@login_required
-@require_POST
-def stop(request):
-    """Stop deluge-web."""
-    actions.run('deluge', ['stop'])
-    return redirect(reverse_lazy('deluge:index'))
 
 
 def get_status():

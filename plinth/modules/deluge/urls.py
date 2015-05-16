@@ -25,6 +25,4 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'plinth.modules.deluge.views',
     url(r'^apps/deluge/$', 'index', name='index'),
-    url(r'^apps/deluge/start/$', 'start', name='start'),
-    url(r'^apps/deluge/stop/$', 'stop', name='stop'),
     )
