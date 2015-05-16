@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
 #
 # This file is part of Plinth.
 #
@@ -16,19 +18,24 @@
 #
 
 """
-Plinth module to configure PageKite
+Python action utility functions
 """
 
-from gettext import gettext as _
-from plinth import cfg
-
-__all__ = ['init']
-
-depends = ['plinth.modules.apps']
+import subprocess
 
 
-def init():
-    """Intialize the PageKite module"""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Public Visibility (PageKite)'),
-                     'glyphicon-flag', 'pagekite:index', 50)
+def service_is_running(servicename):
+    """Evaluates whether a service is currently running. Returns boolean"""
+    try:
+        output = subprocess.check_output(['service', servicename, 'status'])
+    except subprocess.CalledProcessError:
+        # Usually if a service is not running we get a status code != 0 and
+        # thus a CalledProcessError
+        return False
+    else:
+        running = False  # default value
+        for line in output.decode('utf-8').split('\n'):
+            if 'Active' in line and 'running' in line:
+                running = True
+                break
+        return running
