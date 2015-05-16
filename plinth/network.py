@@ -19,9 +19,11 @@
 Helper functions for working with network manager.
 """
 
-from dbus.exceptions import DBusException
+from gi.repository import GLib as glib
+from gi.repository import NM as nm
 import logging
-import NetworkManager
+import socket
+import struct
 import uuid
 
 
@@ -43,218 +45,270 @@ class DeviceNotFound(Exception):
     pass
 
 
+def ipv4_string_to_int(address):
+    """Return an integer equivalent of a string contain IPv4 address."""
+    return struct.unpack("=I", socket.inet_aton(address))[0]
+
+
+def _callback(source_object, result, user_data):
+    """Called when an operation is completed."""
+    del source_object  # Unused
+    del result  # Unused
+    del user_data  # Unused
+
+
+def _commit_callback(connection, error, data=None):
+    """Called when the connection changes are committed."""
+    del connection
+    del error
+    del data
+
+
 def get_connection_list():
     """Get a list of active and available connections."""
     active_uuids = []
-    for connection in NetworkManager.NetworkManager.ActiveConnections:
-        try:
-            settings = connection.Connection.GetSettings()['connection']
-        except DBusException:
-            # DBusException can be thrown here if the connection list is loaded
-            # quickly after a connection is deactivated.
-            continue
-
-        active_uuids.append(settings['uuid'])
+    client = nm.Client.new(None)
+    for connection in client.get_active_connections():
+        active_uuids.append(connection.get_uuid())
 
     connections = []
-    for connection in NetworkManager.Settings.ListConnections():
-        settings = connection.GetSettings()['connection']
+    for connection in client.get_connections():
         # Display a friendly type name if known.
-        connection_type = CONNECTION_TYPE_NAMES.get(settings['type'],
-                                                    settings['type'])
+        connection_type = connection.get_connection_type()
+        connection_type = CONNECTION_TYPE_NAMES.get(connection_type,
+                                                    connection_type)
         connections.append({
-            'name': settings['id'],
-            'uuid': settings['uuid'],
+            'name': connection.get_id(),
+            'uuid': connection.get_uuid(),
             'type': connection_type,
-            'is_active': settings['uuid'] in active_uuids,
+            'is_active': connection.get_uuid() in active_uuids,
         })
     connections.sort(key=lambda connection: connection['is_active'],
                      reverse=True)
     return connections
 
 
-def get_connection(uuid):
+def get_connection(connection_uuid):
     """Return connection with matching uuid.
 
     Raise ConnectionNotFound if a connection with that uuid is not found.
     """
-    connections = NetworkManager.Settings.ListConnections()
-    connections = {connection.GetSettings()['connection']['uuid']: connection
-                   for connection in connections}
+    client = nm.Client.new(None)
     try:
-        return connections[uuid]
+        return client.get_connection_by_uuid(connection_uuid)
     except KeyError:
-        raise ConnectionNotFound(uuid)
+        raise ConnectionNotFound(connection_uuid)
 
 
-def get_active_connection(uuid):
+def get_active_connection(connection_uuid):
     """Returns active connection with matching uuid.
 
     Raise ConnectionNotFound if a connection with that uuid is not found.
     """
-    connections = NetworkManager.NetworkManager.ActiveConnections
-    connections = {connection.Connection.GetSettings()['connection']['uuid']:
-                   connection for connection in connections}
+    connections = nm.Client.new(None).get_active_connections()
+    connections = {connection.get_uuid(): connection
+                   for connection in connections}
     try:
-        return connections[uuid]
+        return connections[connection_uuid]
     except KeyError:
-        raise ConnectionNotFound(uuid)
+        raise ConnectionNotFound(connection_uuid)
 
 
-def _create_ethernet_settings(uuid, name, zone, ipv4_method, ipv4_address):
-    """Create an Ethernet setting structure in network manager format."""
-    settings = {
-        'connection': {
-            'id': name,
-            'type': '802-3-ethernet',
-            'zone': zone,
-            'uuid': uuid,
-        },
-        '802-3-ethernet': {},
-        'ipv4': {'method': ipv4_method},
-    }
+def _update_common_settings(connection, connection_uuid, name, type_, zone,
+                            ipv4_method, ipv4_address):
+    """Create/edit basic settings for network manager connections."""
+    if not connection:
+        connection = nm.SimpleConnection.new()
 
-    if ipv4_method == 'manual' and ipv4_address:
-        settings['ipv4']['addresses'] = [
-            (ipv4_address,
-             24,  # CIDR prefix length
-             '0.0.0.0')]  # gateway
+    # Connection
+    settings = connection.get_setting_connection()
+    if not settings:
+        settings = nm.SettingConnection.new()
+        connection.add_setting(settings)
 
-    return settings
+    settings.set_property(nm.SETTING_CONNECTION_ID, name)
+    settings.set_property(nm.SETTING_CONNECTION_TYPE, type_)
+    settings.set_property(nm.SETTING_CONNECTION_ZONE, zone)
+    settings.set_property(nm.SETTING_CONNECTION_UUID, connection_uuid)
+
+    # IPv4
+    settings = connection.get_setting_ip4_config()
+    if not settings:
+        settings = nm.SettingIP4Config.new()
+        connection.add_setting(settings)
+
+    settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4_method)
+    if ipv4_method == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and ipv4_address:
+        ipv4_address_int = ipv4_string_to_int(ipv4_address)
+        ipv4_prefix = nm.utils_ip4_get_default_prefix(ipv4_address_int)
+
+        address = nm.IPAddress.new(socket.AF_INET, ipv4_address, ipv4_prefix)
+        settings.add_address(address)
+
+        settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
+    else:
+        settings.clear_addresses()
+
+    return connection
+
+
+def _update_ethernet_settings(connection, connection_uuid, name, zone,
+                              ipv4_method, ipv4_address):
+    """Create/edit ethernet settings for network manager connections."""
+    type_ = '802-3-ethernet'
+
+    connection = _update_common_settings(connection, connection_uuid, name,
+                                         type_, zone, ipv4_method, ipv4_address)
+
+    # Ethernet
+    settings = connection.get_setting_wired()
+    if not settings:
+        settings = nm.SettingWired.new()
+        connection.add_setting(settings)
+
+    return connection
 
 
 def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
     """Add an automatic ethernet connection in network manager."""
-    settings = _create_ethernet_settings(
-        str(uuid.uuid4()), name, zone, ipv4_method, ipv4_address)
-    NetworkManager.Settings.AddConnection(settings)
-    return settings
+    connection = _update_ethernet_settings(
+        None, str(uuid.uuid4()), name, zone, ipv4_method, ipv4_address)
+    client = nm.Client.new(None)
+    client.add_connection_async(connection, True, None, _callback, None)
 
 
 def edit_ethernet_connection(connection, name, zone, ipv4_method,
                              ipv4_address):
     """Edit an existing ethernet connection in network manager."""
-    settings = connection.GetSettings()
-    new_settings = _create_ethernet_settings(
-        settings['connection']['uuid'], name, zone, ipv4_method, ipv4_address)
-    connection.Update(new_settings)
+    _update_ethernet_settings(
+        connection, connection.get_uuid(), name, zone, ipv4_method,
+        ipv4_address)
+    connection.commit_changes(True)
 
 
-def _create_wifi_settings(uuid, name, zone, ssid, mode, auth_mode, passphrase,
-                          ipv4_method, ipv4_address):
-    """Create a Wi-Fi settings structure in network manager format."""
-    settings = {
-        'connection': {
-            'id': name,
-            'type': '802-11-wireless',
-            'zone': zone,
-            'uuid': uuid,
-        },
-        '802-11-wireless': {
-            'ssid': ssid,
-            'mode': mode,
-        },
-        'ipv4': {'method': ipv4_method},
-    }
+def _update_wifi_settings(connection, connection_uuid, name, zone, ssid, mode,
+                          auth_mode, passphrase, ipv4_method, ipv4_address):
+    """Create/edit wifi settings for network manager connections."""
+    type_ = '802-11-wireless'
+    key_mgmt = 'wpa-psk'
 
+    connection = _update_common_settings(connection, connection_uuid, name,
+                                         type_, zone, ipv4_method, ipv4_address)
+
+    # Wireless
+    settings = connection.get_setting_wireless()
+    if not settings:
+        settings = nm.SettingWireless.new()
+        connection.add_setting(settings)
+
+    ssid_gbytes = glib.Bytes.new(ssid.encode())
+    settings.set_property(nm.SETTING_WIRELESS_SSID, ssid_gbytes)
+    settings.set_property(nm.SETTING_WIRELESS_MODE, mode)
+
+    # Wireless Security
     if auth_mode == 'wpa' and passphrase:
-        settings['connection']['security'] = '802-11-wireless-security'
-        settings['802-11-wireless-security'] = {
-            'key-mgmt': 'wpa-psk',
-            'psk': passphrase,
-        }
+        settings = connection.get_setting_wireless_security()
+        if not settings:
+            settings = nm.SettingWirelessSecurity.new()
+            connection.add_setting(settings)
 
-    if ipv4_method == 'manual' and ipv4_address:
-        settings['ipv4']['addresses'] = [
-            (ipv4_address,
-             24,  # CIDR prefix length
-             '0.0.0.0')]  # gateway
+        settings.set_property(nm.SETTING_WIRELESS_SECURITY_KEY_MGMT, key_mgmt)
+        settings.set_property(nm.SETTING_WIRELESS_SECURITY_PSK, passphrase)
+    else:
+        connection.remove_setting(nm.SettingWirelessSecurity)
 
-    return settings
+    return connection
 
 
-def add_wifi_connection(name, zone,
-                        ssid, mode, auth_mode, passphrase,
+def add_wifi_connection(name, zone, ssid, mode, auth_mode, passphrase,
                         ipv4_method, ipv4_address):
     """Add an automatic Wi-Fi connection in network manager."""
-    settings = _create_wifi_settings(
-        str(uuid.uuid4()), name, zone, ssid, mode, auth_mode, passphrase,
+    connection = _update_wifi_settings(
+        None, str(uuid.uuid4()), name, zone, ssid, mode, auth_mode, passphrase,
         ipv4_method, ipv4_address)
-    NetworkManager.Settings.AddConnection(settings)
-    return settings
+    client = nm.Client.new(None)
+    client.add_connection_async(connection, True, None, _callback, None)
 
 
 def edit_wifi_connection(connection, name, zone,
                          ssid, mode, auth_mode, passphrase,
                          ipv4_method, ipv4_address):
     """Edit an existing wifi connection in network manager."""
-    settings = connection.GetSettings()
-    new_settings = _create_wifi_settings(
-        settings['connection']['uuid'], name, zone, ssid, mode, auth_mode,
+    _update_wifi_settings(
+        connection, connection.get_uuid(), name, zone, ssid, mode, auth_mode,
         passphrase, ipv4_method, ipv4_address)
-    connection.Update(new_settings)
+    connection.commit_changes(True)
 
 
-def activate_connection(uuid):
+def activate_connection(connection_uuid):
     """Find and activate a network connection."""
     # Find the connection
-    connection = get_connection(uuid)
+    connection = get_connection(connection_uuid)
 
     # Find a suitable device
-    ctype = connection.GetSettings()['connection']['type']
-    if ctype == 'vpn':
-        for device in NetworkManager.NetworkManager.GetDevices():
-            if device.State == NetworkManager.NM_DEVICE_STATE_ACTIVATED and \
-               device.Managed:
+    client = nm.Client.new(None)
+    connection_type = connection.get_connection_type()
+    if connection_type == 'vpn':
+        for device in client.get_devices():
+            if device.get_state() == nm.DeviceState.ACTIVATED and \
+               device.get_managed():
                 break
         else:
             raise DeviceNotFound(connection)
     else:
-        dtype = {
-            '802-11-wireless': NetworkManager.NM_DEVICE_TYPE_WIFI,
-            '802-3-ethernet': NetworkManager.NM_DEVICE_TYPE_ETHERNET,
-            'gsm': NetworkManager.NM_DEVICE_TYPE_MODEM,
-        }.get(ctype, ctype)
+        device_type = {
+            '802-11-wireless': nm.DeviceType.WIFI,
+            '802-3-ethernet': nm.DeviceType.ETHERNET,
+            'gsm': nm.DeviceType.MODEM,
+        }.get(connection_type, connection_type)
 
-        for device in NetworkManager.NetworkManager.GetDevices():
-            if device.DeviceType == dtype and \
-               device.State == NetworkManager.NM_DEVICE_STATE_DISCONNECTED:
+        for device in client.get_devices():
+            logger.warn('Device - %s', device.get_hw_address())
+            if device.get_device_type() == device_type and \
+               device.get_state() == nm.DeviceState.DISCONNECTED:
                 break
         else:
             raise DeviceNotFound(connection)
 
-    NetworkManager.NetworkManager.ActivateConnection(connection, device, "/")
+    client.activate_connection_async(connection, device, '/', None, _callback,
+                                     None)
     return connection
 
 
-def deactivate_connection(name):
+def deactivate_connection(connection_uuid):
     """Find and de-activate a network connection."""
-    active_connection = get_active_connection(name)
-    NetworkManager.NetworkManager.DeactivateConnection(active_connection)
+    active_connection = get_active_connection(connection_uuid)
+    nm.Client.new(None).deactivate_connection(active_connection)
     return active_connection
 
 
-def delete_connection(uuid):
+def delete_connection(connection_uuid):
     """Delete an exiting connection from network manager.
 
     Raise ConnectionNotFound if connection does not exist.
     """
-    connection = get_connection(uuid)
-    name = connection.GetSettings()['connection']['id']
-    connection.Delete()
+    connection = get_connection(connection_uuid)
+    name = connection.get_id()
+    connection.delete()
     return name
 
 
 def wifi_scan():
     """Scan for available access points across all Wi-Fi devices."""
     access_points = []
-    for device in NetworkManager.NetworkManager.GetDevices():
-        if device.DeviceType != NetworkManager.NM_DEVICE_TYPE_WIFI:
+    for device in nm.Client.new(None).get_devices():
+        if device.get_device_type() != nm.DeviceType.WIFI:
             continue
 
-        for access_point in device.SpecificDevice().GetAllAccessPoints():
+        for access_point in device.get_access_points():
+            # Retrieve the bytes in SSID.  Don't convert to utf-8 or
+            # escape it in any way as it may contain null bytes.  When
+            # this is used in the URL it will be escaped properly and
+            # unescaped when taken as view function's argument.
+            ssid = access_point.get_ssid()
+            ssid_string = ssid.get_data() if ssid else ''
             access_points.append({
-                'ssid': access_point.Ssid,
-                'strength': access_point.Strength})
+                'ssid': ssid_string,
+                'strength': access_point.get_strength()})
 
     return access_points

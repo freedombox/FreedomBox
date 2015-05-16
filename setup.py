@@ -115,7 +115,6 @@ setuptools.setup(
         'cherrypy >= 3.0',
         'django >= 1.7.0',
         'django-bootstrap-form',
-        'python-networkmanager',
         'pyyaml',
     ],
     tests_require=['coverage >= 3.7'],
