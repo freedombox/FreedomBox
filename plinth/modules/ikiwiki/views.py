@@ -46,6 +46,9 @@ def on_install():
 
 @login_required
 @package.required(['ikiwiki',
+                   'gcc',
+                   'libc6-dev',
+                   'libtimedate-perl',
                    'libcgi-formbuilder-perl',
                    'libcgi-session-perl'],
                   on_install=on_install)
