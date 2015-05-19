@@ -116,11 +116,11 @@ def create(request):
     if request.method == 'POST':
         form = IkiwikiCreateForm(request.POST, prefix='ikiwiki')
         if form.is_valid():
-            if form.cleaned_data['type'] == 'wiki':
+            if form.cleaned_data['site_type'] == 'wiki':
                 _create_wiki(request, form.cleaned_data['name'],
                              form.cleaned_data['admin_name'],
                              form.cleaned_data['admin_password'])
-            elif form.cleaned_data['type'] == 'blog':
+            elif form.cleaned_data['site_type'] == 'blog':
                 _create_blog(request, form.cleaned_data['name'],
                              form.cleaned_data['admin_name'],
                              form.cleaned_data['admin_password'])

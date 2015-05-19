@@ -32,7 +32,7 @@ class IkiwikiForm(forms.Form):
 
 class IkiwikiCreateForm(forms.Form):
     """Form to create a wiki or blog."""
-    type = forms.ChoiceField(
+    site_type = forms.ChoiceField(
         label=_('Type'),
         choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
 
