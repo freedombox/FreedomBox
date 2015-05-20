@@ -49,13 +49,14 @@ class PackageException(Exception):
 class Transaction(object):
     """Information about an ongoing transaction."""
 
-    def __init__(self, package_names, on_install=None):
+    def __init__(self, package_names, before_install=None, on_install=None):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
         self.package_names = package_names
         # XXX: This is hack, remove after implementing proper setup mechanism.
+        self.before_install = before_install
         self.on_install = on_install
 
         # Progress
@@ -97,6 +98,15 @@ class Transaction(object):
 
     def _install(self):
         """Run a PackageKit transaction to install given packages."""
+        try:
+            if self.before_install:
+                self.before_install()
+        except Exception as exception:
+            logger.exception('Error during setup before install - %s',
+                             exception)
+            self.finish(exception)
+            return
+
         try:
             self._do_install()
         except PackageException as exception:
@@ -209,7 +219,7 @@ class Transaction(object):
         return self.exception
 
 
-def required(package_names, on_install=None):
+def required(package_names, before_install=None, on_install=None):
     """Decorate a view to check and install required packages."""
 
     def wrapper2(func):
@@ -223,7 +233,8 @@ def required(package_names, on_install=None):
 
             view = plinth.views.PackageInstallView.as_view()
             return view(request, package_names=package_names,
-                        on_install=on_install, *args, **kwargs)
+                        before_install=before_install, on_install=on_install,
+                        *args, **kwargs)
 
         return wrapper
 
@@ -290,12 +301,14 @@ def is_installing(package_names):
     return frozenset(package_names) in transactions
 
 
-def start_install(package_names, on_install=None):
+def start_install(package_names, before_install=None, on_install=None):
     """Start a PackageKit transaction to install given list of packages.
 
     This operation is non-blocking at it spawns a new thread.
     """
-    transaction = Transaction(package_names, on_install=on_install)
+    transaction = Transaction(package_names,
+                              before_install=before_install,
+                              on_install=on_install)
     transactions[frozenset(package_names)] = transaction
 
     transaction.start_install()

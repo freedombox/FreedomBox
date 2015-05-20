@@ -39,6 +39,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    # Preseed debconf values before packages are installed.
+    pre_install = subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed.')
+    pre_install.add_argument(
+        '--domainname',
+        help='The domain name that will be used by the XMPP service.')
+
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
@@ -78,6 +86,21 @@ def parse_arguments():
                           help='Password for the new user account')
 
     return parser.parse_args()
+
+
+def subcommand_pre_install(arguments):
+    """Preseed debconf values before packages are installed."""
+    domainname = arguments.domainname.strip("'")
+    if not domainname:
+        # If new domainname is blank, use hostname instead.
+        domainname = socket.gethostname()
+
+    subprocess.check_output(
+        ['debconf-set-selections'],
+        input=b'ejabberd ejabberd/hostname string ' + domainname.encode())
+    subprocess.check_output(
+        ['debconf-set-selections'],
+        input=b'jwchat jwchat/ApacheServerName string ' + domainname.encode())
 
 
 def subcommand_pre_change_hostname(arguments):

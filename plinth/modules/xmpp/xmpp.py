@@ -61,8 +61,17 @@ def init():
     domainname_change.connect(on_domainname_change)
 
 
+def before_install():
+    """Preseed debconf values before the packages are installed."""
+    fqdn = socket.getfqdn()
+    domainname = '.'.join(fqdn.split('.')[1:])
+    LOGGER.info('XMPP service domainname will be ', domainname)
+    actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
+
+
 @login_required
-@package.required(['jwchat', 'ejabberd'])
+@package.required(['jwchat', 'ejabberd'],
+                  before_install=before_install)
 def index(request):
     """Serve XMPP page"""
     return TemplateResponse(request, 'xmpp.html',
