@@ -47,6 +47,9 @@ def parse_arguments():
         '--domainname',
         help='The domain name that will be used by the XMPP service.')
 
+    # Setup jwchat apache conf
+    subparsers.add_parser('setup', help='Setup jwchat apache conf')
+
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
@@ -101,6 +104,13 @@ def subcommand_pre_install(arguments):
     subprocess.check_output(
         ['debconf-set-selections'],
         input=b'jwchat jwchat/ApacheServerName string ' + domainname.encode())
+
+
+def subcommand_setup(_):
+    """Setup jwchat apache conf"""
+    subprocess.call(['a2dissite', 'jwchat'])
+    subprocess.call(['a2enconf', 'jwchat-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
 
 
 def subcommand_pre_change_hostname(arguments):
