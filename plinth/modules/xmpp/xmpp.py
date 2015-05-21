@@ -70,9 +70,15 @@ def before_install():
     actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
 
 
+def on_install():
+    """Setup jwchat apache conf"""
+    actions.superuser_run('xmpp', ['setup'])
+
+
 @login_required
 @package.required(['jwchat', 'ejabberd'],
-                  before_install=before_install)
+                  before_install=before_install,
+                  on_install=on_install)
 def index(request):
     """Serve XMPP page"""
     return TemplateResponse(request, 'xmpp.html',
