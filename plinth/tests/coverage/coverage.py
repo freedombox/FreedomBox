@@ -26,13 +26,11 @@
 Support for integration of code test coverage analysis with setuptools.
 """
 
+import coverage
 import glob
 import setuptools
 import shutil
 import time
-import unittest
-
-from plinth import tests
 
 
 # Project directories with testable source code
@@ -78,22 +76,14 @@ class CoverageCommand(setuptools.Command):
         except:
             pass
 
-        # Initialize a test suite for one or all modules
-        if self.test_module is None:
-            test_suite = tests.TEST_SUITE
-        else:
-            test = unittest.defaultTestLoader.loadTestsFromNames(
-                [self.test_module])
-            test_suite = unittest.TestSuite(test)
-
         # Run the coverage analysis
-        runner = unittest.TextTestRunner()
-        import coverage
         cov = coverage.coverage(auto_data=True, config_file=True,
                                 source=SOURCE_DIRS, omit=FILES_TO_OMIT)
         cov.erase()     # Erase existing coverage data file
         cov.start()
-        runner.run(test_suite)
+        # Invoke the Django test setup and test runner logic
+        from plinth.tests.runtests import run_tests
+        run_tests(pattern=self.test_module, return_to_caller=True)
         cov.stop()
 
         # Generate an HTML report

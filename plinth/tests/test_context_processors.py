@@ -17,17 +17,19 @@
 #
 
 from django.http import HttpRequest
-import unittest
+from django.test import TestCase
 
+from plinth import cfg
 from plinth import context_processors as cp
 
 
-class ContextProcessorsTestCase(unittest.TestCase):
+class ContextProcessorsTestCase(TestCase):
     """Verify behavior of the context_processors module."""
 
-    @unittest.skip('requires configuring Django beforehand')
     def test_common(self):
-        """Verify that the 'common' function returns the correct values."""
+        """Verify that the common() function returns the correct values."""
+        cfg.read()      # initialize config settings
+
         request = HttpRequest()
         request.path = '/aaa/bbb/ccc/'
         response = cp.common(request)
@@ -45,9 +47,8 @@ class ContextProcessorsTestCase(unittest.TestCase):
         self.assertIsNotNone(urls)
         self.assertEqual(['/', '/aaa/', '/aaa/bbb/', '/aaa/bbb/ccc/'], urls)
 
-    @unittest.skip('requires configuring Django beforehand')
     def test_common_border_conditions(self):
-        """Verify that the 'common' functions works for border conditions."""
+        """Verify that the common() function works for border conditions."""
         request = HttpRequest()
         request.path = ''
         response = cp.common(request)
@@ -60,7 +61,3 @@ class ContextProcessorsTestCase(unittest.TestCase):
         request.path = '/aaa/bbb'
         response = cp.common(request)
         self.assertEqual(['/', '/aaa/'], response['active_menu_urls'])
-
-
-if __name__ == '__main__':
-    unittest.main()
