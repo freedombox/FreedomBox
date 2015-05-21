@@ -91,23 +91,22 @@ def get_connection_list():
 def get_connection(connection_uuid):
     """Return connection with matching uuid.
 
-    Raise ConnectionNotFound if a connection with that uuid is not found.
+    Raise ConnectionNotFound if a connection with that uuid is not
+    found.
     """
     client = nm.Client.new(None)
-    try:
-        connection = client.get_connection_by_uuid(connection_uuid)
-        if not connection:
-            raise ConnectionNotFound(connection_uuid)
-    except KeyError:
+    connection = client.get_connection_by_uuid(connection_uuid)
+    if not connection:
         raise ConnectionNotFound(connection_uuid)
 
     return connection
 
 
 def get_active_connection(connection_uuid):
-    """Returns active connection with matching uuid.
+    """Return active connection with matching UUID.
 
-    Raise ConnectionNotFound if a connection with that uuid is not found.
+    Raise ConnectionNotFound if a connection with that uuid is not
+    found.
     """
     connections = nm.Client.new(None).get_active_connections()
     connections = {connection.get_uuid(): connection
@@ -175,7 +174,8 @@ def _update_ethernet_settings(connection, connection_uuid, name, zone,
 
 def add_ethernet_connection(name, zone, ipv4_method, ipv4_address):
     """Add an automatic ethernet connection in network manager.
-    Returns the UUID for the connection.
+
+    Return the UUID for the connection.
     """
     connection_uuid = str(uuid.uuid4())
     connection = _update_ethernet_settings(
@@ -231,6 +231,7 @@ def _update_wifi_settings(connection, connection_uuid, name, zone, ssid, mode,
 def add_wifi_connection(name, zone, ssid, mode, auth_mode, passphrase,
                         ipv4_method, ipv4_address):
     """Add an automatic Wi-Fi connection in network manager.
+
     Return the UUID for the connection.
     """
     connection_uuid = str(uuid.uuid4())
