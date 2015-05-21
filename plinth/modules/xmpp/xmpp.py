@@ -22,6 +22,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
+import socket
 
 from plinth import actions
 from plinth import cfg
@@ -65,7 +66,7 @@ def before_install():
     """Preseed debconf values before the packages are installed."""
     fqdn = socket.getfqdn()
     domainname = '.'.join(fqdn.split('.')[1:])
-    LOGGER.info('XMPP service domainname will be ', domainname)
+    LOGGER.info('XMPP service domainname will be ' + domainname)
     actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
 
 
