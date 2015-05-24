@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+"""
+Test module for network configuration utilities.
+"""
 
 import os
 import unittest
@@ -116,7 +119,3 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(
             secrets['802-11-wireless-security']['psk'],
             'secretpassword')
-
-
-if __name__ == "__main__":
-    unittest.main()

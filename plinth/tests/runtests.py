@@ -16,7 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""Module for Django pre-test configuration and setup."""
+"""
+Module for Django pre-test configuration and setup.
+"""
 
 import os
 import sys
@@ -28,7 +30,7 @@ from django.test.utils import get_runner
 
 def run_tests(pattern=None, return_to_caller=False):
     """Set up the Django test environment and run the specified tests."""
-    os.environ['DJANGO_SETTINGS_MODULE'] =\
+    os.environ['DJANGO_SETTINGS_MODULE'] = \
         'plinth.tests.data.django_test_settings'
     django.setup()
     TestRunner = get_runner(settings)
@@ -36,6 +38,7 @@ def run_tests(pattern=None, return_to_caller=False):
 
     if pattern is None:
         pattern = 'plinth.tests'
+
     failures = test_runner.run_tests([pattern])
     if failures > 0 or not return_to_caller:
         sys.exit(bool(failures))

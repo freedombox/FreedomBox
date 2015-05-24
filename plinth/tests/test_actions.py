@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-# -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
 # This file is part of Plinth.
 #
@@ -16,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+"""
+Test module for actions utilities that modify configuration.
+"""
 
 import os
 import shutil
@@ -45,8 +47,8 @@ class TestPrivileged(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        os.remove('actions/echo')
-        os.remove('actions/id')
+        os.remove(os.path.join(cfg.actions_dir, 'echo'))
+        os.remove(os.path.join(cfg.actions_dir, 'id'))
 
     def notest_run_as_root(self):
         """1. Privileged actions run as root. """
@@ -141,8 +143,3 @@ class TestPrivileged(unittest.TestCase):
         output = run('echo', tuple(options.split()))
         output = output.rstrip('\n')
         self.assertEqual(options, output)
-
-
-
-if __name__ == "__main__":
-    unittest.main()

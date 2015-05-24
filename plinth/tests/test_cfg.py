@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+"""
+Test module for configuration module.
+"""
 
 import configparser
 import os
@@ -244,7 +247,3 @@ class CfgTestCase(unittest.TestCase):
         if os.path.isfile(TEST_CONFIG_FILE):
             os.remove(TEST_CONFIG_FILE)
         shutil.move(SAVED_CONFIG_FILE, TEST_CONFIG_FILE)
-
-
-if __name__ == '__main__':
-    unittest.main()

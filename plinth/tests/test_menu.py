@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -15,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+"""
+Test module for menus.
+"""
 
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest
@@ -38,9 +41,11 @@ def build_menu(size=5):
                           'Icon' + str(index),
                           URL_TEMPLATE.format(index, index, index),
                           random.randint(0, 1000)])
+
     menu = Menu()
     for data in item_data:
         menu.add_item(data[0], data[1], data[2], data[3])
+
     return menu
 
 
@@ -133,7 +138,9 @@ class MenuTestCase(TestCase):
         actual_item = menu.add_urlname(expected_label, expected_icon,
                                        expected_url, expected_order)
 
+        self.assertEqual(1, len(menu.items))
         self.assertIsNotNone(actual_item)
+        self.assertEqual(actual_item, menu.items[0])
         self.assertEqual(expected_label, actual_item.label)
         self.assertEqual(expected_icon, actual_item.icon)
         self.assertEqual(reversed_url, actual_item.url)
@@ -150,7 +157,9 @@ class MenuTestCase(TestCase):
         actual_item = menu.add_item(expected_label, expected_icon,
                                     expected_url, expected_order)
 
+        self.assertEqual(1, len(menu.items))
         self.assertIsNotNone(actual_item)
+        self.assertEqual(actual_item, menu.items[0])
         self.assertEqual(expected_label, actual_item.label)
         self.assertEqual(expected_icon, actual_item.icon)
         self.assertEqual(expected_url, actual_item.url)

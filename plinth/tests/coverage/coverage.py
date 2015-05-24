@@ -73,7 +73,7 @@ class CoverageCommand(setuptools.Command):
         # Erase any existing HTML report files
         try:
             shutil.rmtree(COVERAGE_REPORT_DIR, True)
-        except:
+        except Exception:
             pass
 
         # Run the coverage analysis

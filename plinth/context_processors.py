@@ -25,8 +25,7 @@ from plinth import cfg
 
 
 def common(request):
-    """
-    Add additional context values to RequestContext for use in templates.
+    """Add additional context values to RequestContext for use in templates.
 
     Any resources referenced in the return value are expected to have been
     initialized or configured externally beforehand.
