@@ -42,6 +42,8 @@ then
 
         firewall-cmd --zone=$ZONE --permanent --add-interface=$INTERFACE
     done
+    nmcli con modify freedomboxWAN connection.zone external
+    nmcli con modify freedomboxLAN connection.zone internal
 fi
 
 # If only one interface is available, assume it to be internal so that
@@ -55,6 +57,7 @@ fi
 if [ $NO_OF_INTERFACES -eq '1' ]
 then
     firewall-cmd --zone=internal --permanent --add-interface="$INTERFACES"
+    nmcli con modify freedomboxWAN connection.zone internal
 fi
 
 
