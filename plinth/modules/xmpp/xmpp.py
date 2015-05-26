@@ -32,7 +32,7 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 subsubmenu = [{'url': reverse_lazy('xmpp:index'),
                'text': _('About')},
@@ -66,7 +66,7 @@ def before_install():
     """Preseed debconf values before the packages are installed."""
     fqdn = socket.getfqdn()
     domainname = '.'.join(fqdn.split('.')[1:])
-    LOGGER.info('XMPP service domainname will be ' + domainname)
+    logger.info('XMPP service domainname - %s', domainname)
     actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
 
 
@@ -125,7 +125,7 @@ def get_status():
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
-    LOGGER.info('Status - %s, %s', old_status, new_status)
+    logger.info('Status - %s, %s', old_status, new_status)
 
     if old_status['inband_enabled'] == new_status['inband_enabled']:
         messages.info(request, _('Setting unchanged'))
@@ -136,7 +136,7 @@ def _apply_changes(request, old_status, new_status):
     else:
         option = 'noinband_enable'
 
-    LOGGER.info('Option - %s', option)
+    logger.info('Option - %s', option)
     output = actions.superuser_run('xmpp-setup', [option])
 
     if 'Failed' in output:
