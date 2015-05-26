@@ -93,7 +93,7 @@ def parse_arguments():
 
 def subcommand_pre_install(arguments):
     """Preseed debconf values before packages are installed."""
-    domainname = arguments.domainname.strip("'")
+    domainname = arguments.domainname
     if not domainname:
         # If new domainname is blank, use hostname instead.
         domainname = socket.gethostname()
@@ -157,7 +157,7 @@ def subcommand_change_hostname(arguments):
 
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
-    domainname = arguments.domainname.strip("'")
+    domainname = arguments.domainname
     if not domainname:
         # If new domainname is blank, use hostname instead.
         domainname = socket.gethostname()

@@ -122,6 +122,7 @@ class TestPrivileged(unittest.TestCase):
                         ('&', 'echo', 'hello'),
                         (r'\;', 'echo' 'hello'),
                         ('|', 'echo', 'hello'),
+                        ('', 'echo', '', 'hello'),  # Empty option argument
                         tuple(r':;!&\/$%@`"~#*(){}[]|+='))
         for options in option_lists:
             output = run('echo', options)
