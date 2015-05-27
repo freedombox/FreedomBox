@@ -90,6 +90,8 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         context = super(UserUpdate, self).get_context_data(**kwargs)
         output = actions.run('check-user-exists', [self.object.username])
         context['is_posix_user'] = 'User exists' in output
+        output = actions.run('check-ldap-user-exists', [self.object.username])
+        context['is_ldap_user'] = 'User exists' in output
         return context
 
     def get_success_url(self):
