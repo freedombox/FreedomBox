@@ -88,6 +88,10 @@ def index(request):
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
     """Configuration form"""
+    ldap_enabled = forms.BooleanField(
+        label=_('Use LDAP for authentication'), required=False,
+        help_text=_('When enabled, only LDAP users will be able to login to \
+the server'))
     inband_enabled = forms.BooleanField(
         label=_('Allow In-Band Registration'), required=False,
         help_text=_('When enabled, anyone who can reach this server will be \
@@ -120,33 +124,49 @@ def configure(request):
 def get_status():
     """Return the current status"""
     output = actions.run('xmpp-setup', ['status'])
-    return {'inband_enabled': 'inband_enable' in output.split()}
+    return {'inband_enabled': 'inband_enable' in output.split(),
+            'ldap_enabled': 'ldap_enable' in output.split()}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     logger.info('Status - %s, %s', old_status, new_status)
 
-    if old_status['inband_enabled'] == new_status['inband_enabled']:
+    if old_status['inband_enabled'] == new_status['inband_enabled'] \
+    and old_status['ldap_enabled'] == new_status['ldap_enabled']:
         messages.info(request, _('Setting unchanged'))
         return
 
-    if new_status['inband_enabled']:
-        option = 'inband_enable'
-    else:
-        option = 'noinband_enable'
+    options = []
 
-    logger.info('Option - %s', option)
-    output = actions.superuser_run('xmpp-setup', [option])
+    if new_status['inband_enabled']:
+        options.append('inband_enable')
+    else:
+        options.append('noinband_enable')
+
+    if new_status['ldap_enabled']:
+        options.append('ldap_enable')
+    else:
+        options.append('noldap_enable')
+
+    logger.info('Option - %s', options)
+    output = actions.superuser_run('xmpp-setup', options)
 
     if 'Failed' in output:
         messages.error(request,
                        _('Error when configuring XMPP server: %s') %
                        output)
-    elif option == 'inband_enable':
+        return
+
+    if 'inband_enable' in options:
         messages.success(request, _('Inband registration enabled'))
     else:
         messages.success(request, _('Inband registration disabled'))
+
+    if 'ldap_enable' in options:
+        messages.success(request, _('LDAP authentication enabled'))
+    else:
+        messages.success(request, _('LDAP authentication disabled'))
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
