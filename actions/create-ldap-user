@@ -19,8 +19,7 @@
 username="$1"
 password="$2"
 
-service slapd stop
-cat <<EOF |slapadd
+cat <<EOF |ldapadd -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin)
 dn: uid=$username,ou=users,dc=thisbox
 objectClass: inetOrgPerson
 uid: $username
@@ -28,4 +27,8 @@ sn: $username
 cn: $username
 userPassword: $password
 EOF
-service slapd start
+
+if [ $? -ne 0 ]; then
+    echo "Failed to create user"
+    exit 1
+fi
