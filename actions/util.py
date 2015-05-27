@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-# -*- mode: python -*-
 #
 # This file is part of Plinth.
 #
@@ -18,7 +16,7 @@
 #
 
 """
-Python action utility functions
+Python action utility functions.
 """
 
 import subprocess
@@ -39,3 +37,29 @@ def service_is_running(servicename):
                 running = True
                 break
         return running
+
+
+def service_is_enabled(service_name):
+    """Check if service is enabled in systemd."""
+    try:
+        subprocess.check_output(['systemctl', 'is-enabled', service_name])
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def service_enable(service_name):
+    """Enable and start a service in systemd and sysvinit using update-rc.d."""
+    subprocess.call(['systemctl', 'enable', service_name])
+    subprocess.call(['systemctl', 'start', service_name])
+
+
+def service_disable(service_name):
+    """Disable and stop service in systemd and sysvinit using update-rc.d."""
+    subprocess.call(['systemctl', 'stop', service_name])
+    subprocess.call(['systemctl', 'disable', service_name])
+
+
+def service_restart(service_name):
+    """Restart service with systemd."""
+    subprocess.call(['systemctl', 'restart', service_name])
