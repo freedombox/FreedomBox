@@ -24,6 +24,14 @@ fi
 xmpp_inband_enable_cur=$xmpp_inband_enable
 export xmpp_inband_enable
 
+if grep --quiet "^auth_method: ldap" /etc/ejabberd/ejabberd.yml; then
+    ldap_enable=true
+else
+    ldap_enable=false
+fi
+ldap_enable_cur=$ldap_enable
+export ldap_enable
+
 while [ "$1" ] ; do
     arg="$1"
     shift
@@ -36,6 +44,14 @@ while [ "$1" ] ; do
             fi
             export xmpp_inband_enable
             ;;
+	ldap_enable|noldap_enable)
+	    if [ 'ldap_enable' = "$arg" ] ; then
+		ldap_enable=true
+	    else
+		ldap_enable=false
+	    fi
+	    export ldap_enable
+	    ;;
         status)
             printstatus() {
                 if "$2" ; then
@@ -45,6 +61,7 @@ while [ "$1" ] ; do
                 fi
             }
             printstatus inband_enable $xmpp_inband_enable_cur
+            printstatus ldap_enable $ldap_enable_cur
             exit 0
             ;;
         *)
@@ -57,6 +74,20 @@ if [ "$xmpp_inband_enable" != "$xmpp_inband_enable_cur" ] ; then
         sed -i s/"ip_access: trusted_network"/"ip_access: all"/ /etc/ejabberd/ejabberd.yml
     else
         sed -i s/"ip_access: all"/"ip_access: trusted_network"/ /etc/ejabberd/ejabberd.yml
+    fi
+    ejabberdctl restart || echo "Failed to restart ejabberd with new configuration."
+fi
+
+if [ "$ldap_enable" != "$ldap_enable_cur" ] ; then
+    if $ldap_enable ; then
+	sed -i 's/^auth_method: internal/## auth_method: internal/' /etc/ejabberd/ejabberd.yml
+	sed -i 's/^## auth_method: ldap/auth_method: ldap/' /etc/ejabberd/ejabberd.yml
+	sed -i 's/^## ldap_servers:/ldap_servers:\
+  - "localhost"/' /etc/ejabberd/ejabberd.yml
+	sed -i 's/^## ldap_base: .*/ldap_base: "ou=users,dc=thisbox"/' /etc/ejabberd/ejabberd.yml
+    else
+	sed -i 's/^## auth_method: internal/auth_method: internal/' /etc/ejabberd/ejabberd.yml
+	sed -i 's/^auth_method: ldap/## auth_method: ldap/' /etc/ejabberd/ejabberd.yml
     fi
     ejabberdctl restart || echo "Failed to restart ejabberd with new configuration."
 fi
