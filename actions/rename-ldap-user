@@ -18,19 +18,19 @@
 
 # Must be run as root.
 
-username="$1"
-password="$2"
+old_username="$1"
+new_username="$2"
 
-cat <<EOF |ldapadd -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin)
-dn: uid=$username,ou=users,dc=thisbox
-objectClass: inetOrgPerson
-uid: $username
-sn: $username
-cn: $username
-userPassword: $password
+cat <<EOF |ldapmodify -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin)
+dn: uid=$old_username,ou=users,dc=thisbox
+changetype: modrdn
+newrdn: uid=$new_username
+deleteoldrdn: 1
 EOF
 
-if [ $? -ne 0 ]; then
-    echo "Failed to create user"
+if [ $? -eq 0 ]; then
+    echo "Success: user renamed"
+else
+    echo "Failed: user rename failed"
     exit 1
 fi

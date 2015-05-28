@@ -16,9 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# Must be run as root.
+
 username="$1"
 
-results=$(ldapsearch -x -D 'cn=admin,dc=thisbox' -w $(sudo cat /var/lib/plinth/ldap-admin) -b 'ou=users,dc=thisbox' -LLL "(uid=$username)" uid)
+results=$(ldapsearch -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin) -b 'ou=users,dc=thisbox' -LLL "(uid=$username)" uid)
 
 if [ -z "$results" ]; then
     echo "User does not exist"
