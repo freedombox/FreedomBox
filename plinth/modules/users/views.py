@@ -135,6 +135,12 @@ class UserDelete(ContextMixin, DeleteView):
             messages.error(self.request,
                            _('Deleting POSIX system user failed.'))
 
+        try:
+            actions.superuser_run('delete-ldap-user', [self.kwargs['slug']])
+        except ActionError:
+            messages.error(self.request,
+                           _('Deleting LDAP user failed.'))
+
         return output
 
 
