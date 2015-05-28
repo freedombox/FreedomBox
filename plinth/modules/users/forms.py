@@ -107,14 +107,19 @@ class UserUpdateForm(forms.ModelForm):
                     self.request,
                     _('Setting active status for POSIX system user failed.'))
 
-            try:
-                if self.username != user.get_username():
+            if self.username != user.get_username():
+                try:
                     actions.superuser_run('rename-user',
                                           [self.username, user.get_username()])
-            except ActionError:
-                messages.error(self.request,
-                               _('Renaming POSIX system user failed.'))
-
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Renaming POSIX system user failed.'))
+                try:
+                    actions.superuser_run('rename-ldap-user',
+                                          [self.username, user.get_username()])
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Renaming LDAP user failed.'))
         return user
 
 
