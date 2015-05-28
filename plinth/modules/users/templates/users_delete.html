@@ -30,6 +30,10 @@
   </p>
   {% endif %}
 
+  {% if is_ldap_user %}
+  <p>This user is also an LDAP user. LDAP user will also be deleted.</p>
+  {% endif %}
+
   <p>Delete user permanently?</p>
 
   <form class="form" method="post">

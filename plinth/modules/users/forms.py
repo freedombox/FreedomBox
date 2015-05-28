@@ -144,4 +144,13 @@ class UserChangePasswordForm(SetPasswordForm):
                     self.request,
                     _('Changing POSIX system user password failed.'))
 
+            try:
+                actions.superuser_run(
+                    'change-ldap-user-password',
+                    [user.get_username(), self.cleaned_data['new_password1']])
+            except ActionError:
+                messages.error(
+                    self.request,
+                    _('Changing LDAP user password failed.'))
+
         return user
