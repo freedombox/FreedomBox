@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+<h2>Email Client (Roundcube)</h2>
+
+<p>Roundcube webmail is a browser-based multilingual IMAP client with
+  an application-like user interface. It provides full functionality
+  you expect from an email client, including MIME support, address
+  book, folder manipulation, message searching and spell checking.</p>
+
+<p>You can access Roundcube from <a href="/roundcube">/roundcube</a>.
+  Provide the username and password of the email account you wish to
+  access followed by the domain name of the IMAP server for your email
+  provider, like <code>imap.example.com</code>.  For IMAP over SSL
+  (recommended), fill the server field
+  like <code>imaps://imap.example.com</code>.</p>
+
+<p>For Gmail, username will be your Gmail address, password will be
+  your Google account password and server will be
+  <code>imaps://imap.gmail.com</code>.  Note that you will also need
+  to enable "Less secure apps" in your Google account settings
+  (<a href="https://www.google.com/settings/security/lesssecureapps"
+  >https://www.google.com/settings/security/lesssecureapps</a>).</p>
+
+
+<h3>Configuration</h3>
+
+<form class="form" method="post">
+  {% csrf_token %}
+
+  {{ form|bootstrap }}
+
+  <input type="submit" class="btn btn-primary" value="Update setup"/>
+</form>
+
+{% endblock %}
