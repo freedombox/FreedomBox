@@ -20,7 +20,7 @@
 
 username="$1"
 
-ldapdelete -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin) "uid=$username,ou=users,dc=thisbox"
+ldapdelete -Y EXTERNAL -H ldapi:/// "uid=$username,ou=users,dc=thisbox"
 
 if [ $? -eq 0 ]; then
     echo "Success: user deleted"
