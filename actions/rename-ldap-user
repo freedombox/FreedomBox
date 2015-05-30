@@ -21,7 +21,7 @@
 old_username="$1"
 new_username="$2"
 
-cat <<EOF |ldapmodify -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin)
+cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
 dn: uid=$old_username,ou=users,dc=thisbox
 changetype: modrdn
 newrdn: uid=$new_username

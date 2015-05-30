@@ -20,7 +20,7 @@
 
 username="$1"
 
-results=$(ldapsearch -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin) -b 'ou=users,dc=thisbox' -LLL "(uid=$username)" uid)
+results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'ou=users,dc=thisbox' -LLL "(uid=$username)" uid)
 
 if [ -z "$results" ]; then
     echo "User does not exist"

@@ -21,7 +21,7 @@
 username="$1"
 password="$2"
 
-cat <<EOF |ldapadd -x -D 'cn=admin,dc=thisbox' -w $(cat /var/lib/plinth/ldap-admin)
+cat <<EOF |ldapadd -Y EXTERNAL -H ldapi:///
 dn: uid=$username,ou=users,dc=thisbox
 objectClass: inetOrgPerson
 uid: $username
