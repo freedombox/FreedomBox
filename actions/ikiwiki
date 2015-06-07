@@ -82,9 +82,10 @@ def subcommand_setup(_):
 
 def subcommand_get_enabled(_):
     """Get whether ikiwiki site is enabled."""
-    if os.path.isfile(CONFIG_ENABLE):
+    try:
+        subprocess.check_output(['a2query', '-c', 'ikiwiki-plinth'])
         print('yes')
-    else:
+    except subprocess.CalledProcessError:
         print('no')
 
 
