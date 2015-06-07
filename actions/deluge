@@ -123,15 +123,16 @@ def subcommand_is_running(_):
 
 
 def start():
-    """Start deluge-web."""
+    """Start and enable deluge-web service."""
     subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
     subprocess.check_call(['systemctl', 'start', 'deluge-web'])
 
 
 def stop():
-    """Stop deluge-web."""
+    """Stop and disable deluge-web service."""
     try:
         subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
+        subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
     except subprocess.CalledProcessError:
         pass
 
