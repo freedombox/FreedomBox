@@ -29,8 +29,13 @@ from plinth import actions
 from plinth import package
 
 
+def on_install():
+    """Setup deluge-web on install."""
+    actions.superuser_run('deluge', ['setup'])
+
+
 @login_required
-@package.required(['deluged', 'deluge-web'])
+@package.required(['deluged', 'deluge-web'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
