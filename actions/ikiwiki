@@ -246,6 +246,7 @@ def setup():
     with open(SETUP_BLOG, 'w') as setupfile:
         setupfile.writelines(ikiwiki_setup_automator_blog)
 
+    subprocess.check_call(['a2enconf', 'ikiwiki'])
     subprocess.check_call(['service', 'apache2', 'restart'])
 
 
