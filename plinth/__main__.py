@@ -86,12 +86,6 @@ def setup_server():
     except AttributeError:
         pass
 
-    # Add an extra server
-    server = _cpserver.Server()
-    server.socket_host = '127.0.0.1'
-    server.socket_port = 52854
-    server.subscribe()
-
     # Configure default server
     cherrypy.config.update(
         {'server.socket_host': cfg.host,
