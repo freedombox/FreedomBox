@@ -96,7 +96,10 @@ def setup_server():
     cherrypy.config.update(
         {'server.socket_host': cfg.host,
          'server.socket_port': cfg.port,
-         'server.thread_pool': 10})
+         'server.thread_pool': 10,
+         # Avoid stating files once per second in production
+         'engine.autoreload.on': cfg.debug,
+        })
 
     application = django.core.wsgi.get_wsgi_application()
     cherrypy.tree.graft(application, cfg.server_dir)
