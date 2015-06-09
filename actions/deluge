@@ -78,9 +78,7 @@ def parse_arguments():
 def subcommand_setup(_):
     """Perform first time setup operations."""
     setup()
-    start()
-    subprocess.check_call(['a2enconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    enable()
 
 
 def subcommand_get_enabled(_):
@@ -94,16 +92,12 @@ def subcommand_get_enabled(_):
 
 def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
-    start()
-    subprocess.check_call(['a2enconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    enable()
 
 
 def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
-    subprocess.check_call(['a2disconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
-    stop()
+    disable()
 
 
 def subcommand_is_running(_):
@@ -122,14 +116,20 @@ def subcommand_is_running(_):
         print('yes' if running else 'no')
 
 
-def start():
+def enable():
     """Start and enable deluge-web service."""
     subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
     subprocess.check_call(['systemctl', 'start', 'deluge-web'])
 
+    subprocess.check_call(['a2enconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
 
-def stop():
+
+def disable():
     """Stop and disable deluge-web service."""
+    subprocess.check_call(['a2disconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
     try:
         subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
         subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
