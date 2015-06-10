@@ -27,6 +27,7 @@ from gettext import gettext as _
 from .forms import DelugeForm
 from plinth import actions
 from plinth import package
+from plinth.modules import deluge
 
 
 def on_install():
@@ -79,6 +80,7 @@ def _apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
         actions.superuser_run('deluge', [sub_command])
+        deluge.service.notify_enabled(None, new_status['enabled'])
         modified = True
 
     if modified:
