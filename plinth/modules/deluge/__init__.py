@@ -21,10 +21,14 @@ Plinth module to configure a Deluge web client.
 
 from gettext import gettext as _
 
+from plinth import actions
 from plinth import cfg
+from plinth import service as service_module
 
 
 depends = ['plinth.modules.apps']
+
+service = None
 
 
 def init():
@@ -32,3 +36,11 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('BitTorrent (Deluge)'), 'glyphicon-magnet',
                      'deluge:index', 60)
+
+    output = actions.run('deluge', ['get-enabled'])
+    enabled = (output.strip() == 'yes')
+
+    global service
+    service = service_module.Service(
+        'deluge', _('Deluge BitTorrent'), ['http', 'https'],
+        is_external=True, enabled=enabled)

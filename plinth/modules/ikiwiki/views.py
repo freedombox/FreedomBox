@@ -29,6 +29,7 @@ from gettext import gettext as _
 from .forms import IkiwikiForm, IkiwikiCreateForm
 from plinth import actions
 from plinth import package
+from plinth.modules import ikiwiki
 
 
 subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
@@ -88,6 +89,7 @@ def _apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
         actions.superuser_run('ikiwiki', [sub_command])
+        ikiwiki.service.notify_enabled(None, new_status['enabled'])
         modified = True
 
     if modified:

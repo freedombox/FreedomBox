@@ -21,10 +21,14 @@ Plinth module to configure ikiwiki
 
 from gettext import gettext as _
 
+from plinth import actions
 from plinth import cfg
+from plinth import service as service_module
 
 
 depends = ['plinth.modules.apps']
+
+service = None
 
 
 def init():
@@ -32,3 +36,11 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Wiki & Blog (Ikiwiki)'), 'glyphicon-edit',
                      'ikiwiki:index', 38)
+
+    output = actions.run('ikiwiki', ['get-enabled'])
+    enabled = (output.strip() == 'yes')
+
+    global service
+    service = service_module.Service(
+        'ikiwiki', _('ikiwiki wikis and blogs'), ['http', 'https'],
+        is_external=True, enabled=enabled)
