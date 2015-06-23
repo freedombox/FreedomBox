@@ -37,9 +37,14 @@ def run_tests(pattern=None, return_to_caller=False):
     test_runner = TestRunner()
 
     if pattern is None:
-        pattern = 'plinth.tests'
+        pattern_list = [
+            'plinth/tests',
+            'plinth/modules'
+        ]
+    else:
+        pattern_list = [pattern]
 
-    failures = test_runner.run_tests([pattern])
+    failures = test_runner.run_tests(pattern_list)
     if failures > 0 or not return_to_caller:
         sys.exit(bool(failures))
 
