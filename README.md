@@ -1,5 +1,7 @@
 % Plinth User Manual
 
+[![Build Status](https://travis-ci.org/freedombox/Plinth.svg?branch=master)](https://travis-ci.org/freedombox/Plinth)
+
 # Introduction
 
 ## Name
