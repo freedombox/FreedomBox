@@ -90,6 +90,8 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         context = super(UserUpdate, self).get_context_data(**kwargs)
         output = actions.run('check-user-exists', [self.object.username])
         context['is_posix_user'] = 'User exists' in output
+        output = actions.run('check-ldap-user-exists', [self.object.username])
+        context['is_ldap_user'] = 'User exists' in output
         return context
 
     def get_success_url(self):
@@ -114,6 +116,8 @@ class UserDelete(ContextMixin, DeleteView):
         context = super(UserDelete, self).get_context_data(**kwargs)
         output = actions.run('check-user-exists', [self.kwargs['slug']])
         context['is_posix_user'] = 'User exists' in output
+        output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
+        context['is_ldap_user'] = 'User exists' in output
         return context
 
     def delete(self, *args, **kwargs):
@@ -132,6 +136,12 @@ class UserDelete(ContextMixin, DeleteView):
         except ActionError:
             messages.error(self.request,
                            _('Deleting POSIX system user failed.'))
+
+        try:
+            actions.superuser_run('delete-ldap-user', [self.kwargs['slug']])
+        except ActionError:
+            messages.error(self.request,
+                           _('Deleting LDAP user failed.'))
 
         return output
 
@@ -155,6 +165,8 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         context = super(UserChangePassword, self).get_context_data(**kwargs)
         output = actions.run('check-user-exists', [self.kwargs['slug']])
         context['is_posix_user'] = 'User exists' in output
+        output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
+        context['is_ldap_user'] = 'User exists' in output
         return context
 
     def get_success_url(self):

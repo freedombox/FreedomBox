@@ -70,6 +70,15 @@ than 63 characters in length.'),
             except ActionError:
                 messages.error(self.request,
                                _('Creating POSIX system user failed.'))
+
+            try:
+                actions.superuser_run(
+                    'create-ldap-user',
+                    [user.get_username(), self.cleaned_data['password']])
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating LDAP user failed.'))
+
             self.login_user()
 
         return user

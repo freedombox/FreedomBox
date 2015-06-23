@@ -88,6 +88,10 @@ def index(request):
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
     """Configuration form"""
+    ldap_enabled = forms.BooleanField(
+        label=_('Use LDAP for authentication'), required=False,
+        help_text=_('When enabled, only LDAP users will be able to login to \
+the XMPP service'))
     inband_enabled = forms.BooleanField(
         label=_('Allow In-Band Registration'), required=False,
         help_text=_('When enabled, anyone who can reach this server will be \
@@ -119,34 +123,62 @@ def configure(request):
 
 def get_status():
     """Return the current status"""
-    output = actions.run('xmpp-setup', ['status'])
-    return {'inband_enabled': 'inband_enable' in output.split()}
+    output = actions.run('xmpp', ['is-ldap-enabled'])
+    ldap_enabled = 'True' in output.split()
+    output = actions.run('xmpp', ['is-inband-enabled'])
+    inband_enabled = 'True' in output.split()
+    return {'ldap_enabled': ldap_enabled,
+            'inband_enabled': inband_enabled}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     logger.info('Status - %s, %s', old_status, new_status)
 
-    if old_status['inband_enabled'] == new_status['inband_enabled']:
+    setting_changed = False
+
+    if not old_status['ldap_enabled'] and new_status['ldap_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['enable-ldap'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('LDAP authentication enabled'))
+
+    elif old_status['ldap_enabled'] and not new_status['ldap_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['disable-ldap'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('LDAP authentication disabled'))
+
+    if not old_status['inband_enabled'] and new_status['inband_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['enable-inband'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('Inband registration enabled'))
+
+    elif old_status['inband_enabled'] and not new_status['inband_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['disable-inband'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('Inband registration disabled'))
+
+    if not setting_changed:
         messages.info(request, _('Setting unchanged'))
-        return
-
-    if new_status['inband_enabled']:
-        option = 'inband_enable'
-    else:
-        option = 'noinband_enable'
-
-    logger.info('Option - %s', option)
-    output = actions.superuser_run('xmpp-setup', [option])
-
-    if 'Failed' in output:
-        messages.error(request,
-                       _('Error when configuring XMPP server: %s') %
-                       output)
-    elif option == 'inband_enable':
-        messages.success(request, _('Inband registration enabled'))
-    else:
-        messages.success(request, _('Inband registration disabled'))
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232

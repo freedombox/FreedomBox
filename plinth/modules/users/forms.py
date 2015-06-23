@@ -26,7 +26,10 @@ from plinth.errors import ActionError
 
 
 class CreateUserForm(UserCreationForm):
-    """Custom user create form with option to also create POSIX user."""
+    """Custom user create form
+
+    Includes options to also create POSIX and LDAP user.
+    """
 
     add_posix_user = forms.BooleanField(
         label=_('Also create a POSIX system user'),
@@ -34,6 +37,12 @@ class CreateUserForm(UserCreationForm):
         help_text=_('This will allow the new user to log in to the system '
                     'through SSH. The new user will also have administrative '
                     'privileges (sudo).'))
+
+    add_ldap_user = forms.BooleanField(
+        label=_('Also create an LDAP user'),
+        required=False,
+        help_text=_('This will allow the new user to log in to various '
+                    'services that support single sign-on through LDAP.'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -43,14 +52,24 @@ class CreateUserForm(UserCreationForm):
     def save(self, commit=True):
         """Save the user model and create POSIX user if required."""
         user = super(CreateUserForm, self).save(commit)
-        if commit and self.cleaned_data['add_posix_user']:
-            try:
-                actions.superuser_run(
-                    'create-user',
-                    [user.get_username(), self.cleaned_data['password1']])
-            except ActionError:
-                messages.error(self.request,
-                               _('Creating POSIX system user failed.'))
+
+        if commit:
+            if self.cleaned_data['add_posix_user']:
+                try:
+                    actions.superuser_run(
+                        'create-user',
+                        [user.get_username(), self.cleaned_data['password1']])
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Creating POSIX system user failed.'))
+            if self.cleaned_data['add_ldap_user']:
+                try:
+                    actions.superuser_run(
+                        'create-ldap-user',
+                        [user.get_username(), self.cleaned_data['password1']])
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Creating LDAP user failed.'))
 
         return user
 
@@ -88,14 +107,19 @@ class UserUpdateForm(forms.ModelForm):
                     self.request,
                     _('Setting active status for POSIX system user failed.'))
 
-            try:
-                if self.username != user.get_username():
+            if self.username != user.get_username():
+                try:
                     actions.superuser_run('rename-user',
                                           [self.username, user.get_username()])
-            except ActionError:
-                messages.error(self.request,
-                               _('Renaming POSIX system user failed.'))
-
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Renaming POSIX system user failed.'))
+                try:
+                    actions.superuser_run('rename-ldap-user',
+                                          [self.username, user.get_username()])
+                except ActionError:
+                    messages.error(self.request,
+                                   _('Renaming LDAP user failed.'))
         return user
 
 
@@ -119,5 +143,14 @@ class UserChangePasswordForm(SetPasswordForm):
                 messages.error(
                     self.request,
                     _('Changing POSIX system user password failed.'))
+
+            try:
+                actions.superuser_run(
+                    'change-ldap-user-password',
+                    [user.get_username(), self.cleaned_data['new_password1']])
+            except ActionError:
+                messages.error(
+                    self.request,
+                    _('Changing LDAP user password failed.'))
 
         return user
