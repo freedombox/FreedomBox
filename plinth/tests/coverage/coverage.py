@@ -37,7 +37,11 @@ import time
 SOURCE_DIRS = ['plinth'] + glob.glob('plinth/modules/*')
 
 # Files to exclude from coverage analysis and reporting
-FILES_TO_OMIT = ['plinth/tests/*.py']
+FILES_TO_OMIT = [
+    'plinth/tests/*.py',
+    'plinth/modules/*/tests/*.py',
+    'plinth/templatetags/tests/*.py'
+]
 
 # Location of coverage HTML report files
 COVERAGE_REPORT_DIR = 'plinth/tests/coverage/report'
