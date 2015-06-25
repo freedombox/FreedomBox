@@ -26,9 +26,9 @@ from plinth.errors import ActionError
 
 
 class CreateUserForm(UserCreationForm):
-    """Custom user create form
+    """Custom user create form.
 
-    Includes options to also create POSIX and LDAP user.
+    Include options to also create POSIX and LDAP user.
     """
 
     add_posix_user = forms.BooleanField(
@@ -62,6 +62,7 @@ class CreateUserForm(UserCreationForm):
                 except ActionError:
                     messages.error(self.request,
                                    _('Creating POSIX system user failed.'))
+
             if self.cleaned_data['add_ldap_user']:
                 try:
                     actions.superuser_run(
@@ -114,12 +115,14 @@ class UserUpdateForm(forms.ModelForm):
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming POSIX system user failed.'))
+
                 try:
                     actions.superuser_run('rename-ldap-user',
                                           [self.username, user.get_username()])
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
+
         return user
 
 

@@ -146,7 +146,6 @@ def _apply_changes(request, old_status, new_status):
                            output)
         else:
             messages.success(request, _('LDAP authentication enabled'))
-
     elif old_status['ldap_enabled'] and not new_status['ldap_enabled']:
         setting_changed = True
         output = actions.superuser_run('xmpp', ['disable-ldap'])
@@ -166,7 +165,6 @@ def _apply_changes(request, old_status, new_status):
                            output)
         else:
             messages.success(request, _('Inband registration enabled'))
-
     elif old_status['inband_enabled'] and not new_status['inband_enabled']:
         setting_changed = True
         output = actions.superuser_run('xmpp', ['disable-inband'])

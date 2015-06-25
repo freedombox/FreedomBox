@@ -148,6 +148,7 @@ def subcommand_enable_ldap(_):
     """Enable LDAP authentication"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
+
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             if 'auth_method: internal' in line:
@@ -161,6 +162,7 @@ def subcommand_enable_ldap(_):
                 conffile.write('ldap_base: "ou=users,dc=thisbox"\n')
             else:
                 conffile.write(line)
+
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
     except subprocess.CalledProcessError as err:
@@ -171,6 +173,7 @@ def subcommand_disable_ldap(_):
     """Disable LDAP authentication"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
+
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             if '## auth_method: internal' in line:
@@ -179,6 +182,7 @@ def subcommand_disable_ldap(_):
                 conffile.write('## auth_method: ldap\n')
             else:
                 conffile.write(line)
+
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
     except subprocess.CalledProcessError as err:
@@ -196,12 +200,14 @@ def subcommand_enable_inband(_):
     """Enable inband registration"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
+
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             if 'ip_access' in line:
                 conffile.write(line.replace('trusted_network', 'all'))
             else:
                 conffile.write(line)
+
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
     except subprocess.CalledProcessError as err:
@@ -212,12 +218,14 @@ def subcommand_disable_inband(_):
     """Disable inband registration"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
+
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             if 'ip_access' in line:
                 conffile.write(line.replace('all', 'trusted_network'))
             else:
                 conffile.write(line)
+
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
     except subprocess.CalledProcessError as err:
