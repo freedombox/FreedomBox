@@ -26,93 +26,12 @@ import shutil
 import subprocess
 
 
-CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki.conf'
-CONFIG_FILE = '/etc/apache2/conf-available/ikiwiki.conf'
+CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki-plinth.conf'
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
 SITE_PATH = '/var/www/ikiwiki'
 WIKI_PATH = '/var/lib/ikiwiki'
 
-apache_cgi_configuration = '''
-Alias /ikiwiki /var/www/ikiwiki
-AddHandler cgi-script .cgi
-
-<Directory /var/www/ikiwiki>
-    Options +ExecCGI
-</Directory>
-'''
-
-ikiwiki_setup_automator = '''
-#!/usr/bin/perl
-# Ikiwiki setup automator for Plinth.
-
-require IkiWiki::Setup::Automator;
-
-our $wikiname=$ARGV[0];
-our $admin=$ARGV[1];
-if (($wikiname eq "") || ($admin eq "")) {
-	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup wiki_name admin_name";
-	exit;
-}
-
-our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);
-
-IkiWiki::Setup::Automator->import(
-	wikiname => $wikiname,
-	adminuser => [$admin],
-	rcs => "git",
-	srcdir => "/var/lib/ikiwiki/$wikiname_short",
-	destdir => "/var/www/ikiwiki/$wikiname_short",
-	repository => "/var/lib/ikiwiki/$wikiname_short.git",
-	dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
-	url => "/ikiwiki/$wikiname_short",
-	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	add_plugins => [qw{goodstuff websetup httpauth}],
-	rss => 1,
-	atom => 1,
-	syslog => 1,
-)
-'''
-
-ikiwiki_setup_automator_blog = '''
-#!/usr/bin/perl
-# Ikiwiki setup automator for Plinth (blog version).
-
-require IkiWiki::Setup::Automator;
-
-our $wikiname=$ARGV[0];
-our $admin=$ARGV[1];
-if (($wikiname eq "") || ($admin eq "")) {
-	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup blog_name admin_name";
-	exit;
-}
-
-our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);
-
-IkiWiki::Setup::Automator->import(
-	wikiname => $wikiname,
-	adminuser => [$admin],
-	rcs => "git",
-	srcdir => "/var/lib/ikiwiki/$wikiname_short",
-	destdir => "/var/www/ikiwiki/$wikiname_short",
-	repository => "/var/lib/ikiwiki/$wikiname_short.git",
-	dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
-	url => "/ikiwiki/$wikiname_short",
-	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	add_plugins => [qw{goodstuff websetup comments calendar sidebar trail httpauth}],
-	rss => 1,
-	atom => 1,
-	syslog => 1,
-	example => "blog",
-	comments_pagespec => "posts/* and !*/Discussion",
-	archive_pagespec => "page(posts/*) and !*/Discussion",
-	global_sidebars => 0,
-	discussion => 0,
-	tagbase => "tags",
-)
-'''
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -163,21 +82,22 @@ def subcommand_setup(_):
 
 def subcommand_get_enabled(_):
     """Get whether ikiwiki site is enabled."""
-    if os.path.isfile(CONFIG_ENABLE):
+    try:
+        subprocess.check_output(['a2query', '-c', 'ikiwiki-plinth'])
         print('yes')
-    else:
+    except subprocess.CalledProcessError:
         print('no')
 
 
 def subcommand_enable(_):
     """Enable ikiwiki site."""
-    subprocess.check_call(['a2enconf', 'ikiwiki'])
+    subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
     subprocess.check_call(['service', 'apache2', 'reload'])
 
 
 def subcommand_disable(_):
     """Disable ikiwiki site."""
-    subprocess.check_call(['a2disconf', 'ikiwiki'])
+    subprocess.check_call(['a2disconf', 'ikiwiki-plinth'])
     subprocess.check_call(['service', 'apache2', 'reload'])
 
 
@@ -236,16 +156,7 @@ def setup():
         os.makedirs(SITE_PATH)
 
     subprocess.check_call(['a2enmod', 'cgi'])
-
-    with open(CONFIG_FILE, 'w') as conffile:
-        conffile.write(apache_cgi_configuration)
-
-    with open(SETUP_WIKI, 'w') as setupfile:
-        setupfile.writelines(ikiwiki_setup_automator)
-
-    with open(SETUP_BLOG, 'w') as setupfile:
-        setupfile.writelines(ikiwiki_setup_automator_blog)
-
+    subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
     subprocess.check_call(['service', 'apache2', 'restart'])
 
 

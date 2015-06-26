@@ -26,19 +26,7 @@ import os
 import subprocess
 
 
-APACHE_CONF_PATH = '/etc/apache2/conf-available/deluge-web.conf'
-APACHE_CONF_ENABLED_PATH = '/etc/apache2/conf-enabled/deluge-web.conf'
-APACHE_CONF = '''
-##
-## On all sites, provide Deluge on a default path: /deluge
-##
-## This file is managed and overwritten by Plinth.  If you wish to edit
-## it, disable Deluge in Plinth, remove this file and manage it manually.
-##
-<Location /deluge>
-        ProxyPass http://localhost:8112
-</Location>
-'''
+APACHE_CONF_ENABLED_PATH = '/etc/apache2/conf-enabled/deluge-plinth.conf'
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
@@ -67,6 +55,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    # Setup deluge-web
+    subparsers.add_parser('setup', help='Perform first time setup operations.')
+
     # Get whether deluge-web site is enabled
     subparsers.add_parser('get-enabled',
                           help='Get whether deluge-web site is enabled')
@@ -84,6 +75,12 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_setup(_):
+    """Perform first time setup operations."""
+    setup()
+    enable()
+
+
 def subcommand_get_enabled(_):
     """Get whether deluge-web site is enabled."""
     if os.path.isfile(APACHE_CONF_ENABLED_PATH) and \
@@ -95,18 +92,12 @@ def subcommand_get_enabled(_):
 
 def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
-    setup()
-
-    start()
-    subprocess.check_call(['a2enconf', 'deluge-web'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    enable()
 
 
 def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
-    subprocess.check_call(['a2disconf', 'deluge-web'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
-    stop()
+    disable()
 
 
 def subcommand_is_running(_):
@@ -125,26 +116,29 @@ def subcommand_is_running(_):
         print('yes' if running else 'no')
 
 
-def start():
-    """Start deluge-web."""
+def enable():
+    """Start and enable deluge-web service."""
     subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
     subprocess.check_call(['systemctl', 'start', 'deluge-web'])
 
+    subprocess.check_call(['a2enconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
 
-def stop():
-    """Stop deluge-web."""
+
+def disable():
+    """Stop and disable deluge-web service."""
+    subprocess.check_call(['a2disconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
     try:
         subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
+        subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
     except subprocess.CalledProcessError:
         pass
 
 
 def setup():
-    """Perform initial setup for deluge-web site."""
-    if not os.path.isfile(APACHE_CONF_PATH):
-        with open(APACHE_CONF_PATH, 'w') as conffile:
-            conffile.write(APACHE_CONF)
-
+    """Perform initial setup for deluge-web."""
     if not os.path.isfile(SYSTEMD_SERVICE_PATH):
         with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
             file_handle.write(SYSTEMD_SERVICE)
