@@ -42,5 +42,5 @@ def init():
 
     global service
     service = service_module.Service(
-        'ikiwiki', _('ikiwiki wikis and blogs'), ['http', 'https'],
+        'ikiwiki', _('Ikiwiki wikis and blogs'), ['http', 'https'],
         is_external=True, enabled=enabled)
