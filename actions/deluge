@@ -55,9 +55,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Setup deluge-web
-    subparsers.add_parser('setup', help='Perform first time setup operations.')
-
     # Get whether deluge-web site is enabled
     subparsers.add_parser('get-enabled',
                           help='Get whether deluge-web site is enabled')
@@ -75,12 +72,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
-    """Perform first time setup operations."""
-    setup()
-    enable()
-
-
 def subcommand_get_enabled(_):
     """Get whether deluge-web site is enabled."""
     if os.path.isfile(APACHE_CONF_ENABLED_PATH) and \
@@ -92,6 +83,7 @@ def subcommand_get_enabled(_):
 
 def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
+    setup()
     enable()
 
 
