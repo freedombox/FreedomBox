@@ -26,8 +26,6 @@ import os
 import subprocess
 
 
-APACHE_CONF_ENABLED_PATH = '/etc/apache2/conf-enabled/deluge-plinth.conf'
-
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
 #
@@ -74,10 +72,12 @@ def parse_arguments():
 
 def subcommand_get_enabled(_):
     """Get whether deluge-web site is enabled."""
-    if os.path.isfile(APACHE_CONF_ENABLED_PATH) and \
-       os.path.isfile(SYSTEMD_SERVICE_PATH):
+    try:
+        subprocess.check_output(['a2query', '-c', 'deluge-plinth'],
+                                stderr=subprocess.STDOUT)
+        subprocess.check_output(['systemctl', 'is-enabled', 'deluge-web'])
         print('yes')
-    else:
+    except subprocess.CalledProcessError:
         print('no')
 
 
@@ -124,9 +124,10 @@ def disable():
 
     try:
         subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
-        subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
     except subprocess.CalledProcessError:
         pass
+
+    subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
 
 
 def setup():
