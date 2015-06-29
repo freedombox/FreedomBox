@@ -157,6 +157,7 @@ def setup():
         os.makedirs(SITE_PATH)
 
     subprocess.check_call(['a2enmod', 'cgi'])
+    subprocess.check_call(['a2enmod', 'authnz_ldap'])
     subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
     subprocess.check_call(['service', 'apache2', 'restart'])
 
