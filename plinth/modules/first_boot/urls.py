@@ -21,6 +21,7 @@ URLs for the First Boot module
 
 from django.conf.urls import patterns, url
 from stronghold.decorators import public
+
 from .views import State0View
 
 

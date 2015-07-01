@@ -226,7 +226,7 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        STRONGHOLD_PUBLIC_NAMED_URLS=('lib:login',),
+        STRONGHOLD_PUBLIC_NAMED_URLS=('users:login', 'users:logout'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         USE_X_FORWARDED_HOST=bool(cfg.use_x_forwarded_host))
     django.setup()

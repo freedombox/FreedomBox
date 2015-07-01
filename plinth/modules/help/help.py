@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Help module for Plinth.
+"""
+
 import os
 from gettext import gettext as _
 from django.http import Http404
