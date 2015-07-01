@@ -115,6 +115,7 @@ setuptools.setup(
         'cherrypy >= 3.0',
         'django >= 1.7.0',
         'django-bootstrap-form',
+        'django-stronghold',
         'pyyaml',
     ],
     tests_require=['coverage >= 3.7'],
