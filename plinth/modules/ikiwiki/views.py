@@ -49,7 +49,8 @@ def on_install():
                    'libc6-dev',
                    'libtimedate-perl',
                    'libcgi-formbuilder-perl',
-                   'libcgi-session-perl'],
+                   'libcgi-session-perl',
+                   'libxml-writer-perl'],
                   on_install=on_install)
 def index(request):
     """Serve configuration page."""

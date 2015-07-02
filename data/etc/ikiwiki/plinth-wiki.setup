@@ -6,25 +6,26 @@ require IkiWiki::Setup::Automator;
 our $wikiname=$ARGV[0];
 our $admin=$ARGV[1];
 if (($wikiname eq "") || ($admin eq "")) {
-	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup wiki_name admin_name";
-	exit;
+    print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-wiki.setup wiki_name admin_name";
+    exit;
 }
 
 our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);
 
 IkiWiki::Setup::Automator->import(
-	wikiname => $wikiname,
-	adminuser => [$admin],
-	rcs => "git",
-	srcdir => "/var/lib/ikiwiki/$wikiname_short",
-	destdir => "/var/www/ikiwiki/$wikiname_short",
-	repository => "/var/lib/ikiwiki/$wikiname_short.git",
-	dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
-	url => "/ikiwiki/$wikiname_short",
-	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	add_plugins => [qw{goodstuff websetup httpauth}],
-	rss => 1,
-	atom => 1,
-	syslog => 1,
+    wikiname => $wikiname,
+    adminuser => [$admin],
+    rcs => "git",
+    srcdir => "/var/lib/ikiwiki/$wikiname_short",
+    destdir => "/var/www/ikiwiki/$wikiname_short",
+    repository => "/var/lib/ikiwiki/$wikiname_short.git",
+    dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
+    url => "/ikiwiki/$wikiname_short",
+    cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
+    cgiauthurl => "/ikiwiki-auth/$wikiname_short/ikiwiki.cgi",
+    cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
+    add_plugins => [qw{goodstuff websetup httpauth}],
+    rss => 1,
+    atom => 1,
+    syslog => 1,
 )
