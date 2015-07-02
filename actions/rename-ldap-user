@@ -34,3 +34,24 @@ else
     echo "Failed: user rename failed"
     exit 1
 fi
+
+# check if user is admin
+results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=admin,ou=groups,dc=thisbox' -LLL "(uniqueMember=uid=$old_username,ou=users,dc=thisbox)" uniqueMember)
+
+if [ -z "$results" ]; then
+    exit 0
+fi
+
+cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=admin,ou=groups,dc=thisbox
+changetype: modify
+add: uniqueMember
+uniqueMember: uid=$new_username,ou=users,dc=thisbox
+EOF
+
+cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=admin,ou=groups,dc=thisbox
+changetype: modify
+delete: uniqueMember
+uniqueMember: uid=$old_username,ou=users,dc=thisbox
+EOF

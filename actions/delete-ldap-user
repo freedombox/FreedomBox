@@ -28,3 +28,19 @@ else
     echo "Failed: user delete failed"
     exit 1
 fi
+
+cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=admin,ou=groups,dc=thisbox
+changetype: modify
+delete: uniqueMember
+uniqueMember: uid=$username,ou=users,dc=thisbox
+EOF
+
+if [ $? -eq 0 ]; then
+    echo "Removed user from admin group"
+elif [ $? -eq 16 ]; then
+    echo "User was not in admin group"
+elif [ $? -eq 65 ]; then
+    echo "Cannot remove last LDAP admin user"
+    exit 2
+fi
