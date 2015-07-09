@@ -24,8 +24,7 @@ from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
 
 from plinth import package
-from .util import get_pagekite_config, get_pagekite_services, \
-    get_kite_details, prepare_service_for_display
+from . import utils
 from .forms import ConfigurationForm, StandardServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm
 
@@ -79,12 +78,12 @@ class CustomServiceView(ContextMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(CustomServiceView, self).get_context_data(*args,
                                                                   **kwargs)
-        unused, custom_services = get_pagekite_services()
+        unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)
-        context['custom_services'] = [prepare_service_for_display(service)
+        context['custom_services'] = [utils.prepare_service_for_display(service)
                                       for service in custom_services]
-        context.update(get_kite_details())
+        context.update(utils.get_kite_details())
         return context
 
     def get(self, request, *args, **kwargs):
@@ -112,7 +111,7 @@ class StandardServiceView(ContextMixin, FormView):
     success_url = reverse_lazy('pagekite:standard-services')
 
     def get_initial(self):
-        return get_pagekite_services()[0]
+        return utils.get_pagekite_services()[0]
 
     def form_valid(self, form):
         form.save(self.request)
@@ -126,7 +125,7 @@ class ConfigurationView(ContextMixin, FormView):
     success_url = reverse_lazy('pagekite:configure')
 
     def get_initial(self):
-        return get_pagekite_config()
+        return utils.get_pagekite_config()
 
     def form_valid(self, form):
         form.save(self.request)
