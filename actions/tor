@@ -25,7 +25,7 @@ import argparse
 import os
 import subprocess
 
-import util
+from plinth import action_utils
 
 SERVICE_CONFIG = '/etc/default/tor'
 TOR_CONFIG = '/etc/tor/torrc'
@@ -59,7 +59,7 @@ def parse_arguments():
 
 def subcommand_is_running(_):
     """Get whether Tor is running"""
-    print('yes' if util.service_is_running('tor') else 'no')
+    print('yes' if action_utils.service_is_running('tor') else 'no')
 
 
 def subcommand_start(_):
