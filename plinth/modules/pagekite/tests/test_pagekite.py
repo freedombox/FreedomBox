@@ -21,6 +21,8 @@ Test modules for Pagekite functions.
 
 import unittest
 
+from plinth.modules.pagekite import utils
+
 
 class TestPagekiteActions(unittest.TestCase):
     """Test-cases for the pagekite action utils"""
@@ -49,10 +51,8 @@ class TestPagekiteActions(unittest.TestCase):
         },
     ]
 
-    @unittest.skip('Use this test once the function is in the pagekite module '
-                   'instead of actions/pagekite_util.py')
     def test_convert_service_to_string(self):
         """ Test deconstructing parameter dictionaries into strings """
         for test in self._tests:
-            service_string = convert_service_to_string(test['params'])
+            service_string = utils.convert_service_to_string(test['params'])
             self.assertEqual(test['line'], service_string)
