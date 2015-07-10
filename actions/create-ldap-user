@@ -30,6 +30,11 @@ cn: $username
 userPassword: $password
 EOF
 
+if [ $? -ne 0 ]; then
+    echo "Failed to create user"
+    exit 1
+fi
+
 uid_num=$(getent passwd | awk -F: '($3>=1000) && ($3<59999) && ($3>maxuid) { maxuid=$3; } END { print maxuid+1; }')
 home_dir=/home/$username
 
@@ -50,8 +55,8 @@ homeDirectory: $home_dir
 EOF
 
 if [ $? -ne 0 ]; then
-    echo "Failed to create user"
-    exit 1
+    echo "Failed to create posix account for user"
+    exit 2
 fi
 
 # check if admin group exists

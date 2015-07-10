@@ -52,8 +52,8 @@ than 63 characters in length.'),
             'username':
             _('Choose a username and password to access this web interface. '
               'The password can be changed and other users can be added '
-              'later. A POSIX system user with administrative privileges '
-              '(sudo) is also created.'),
+              'later. An LDAP user with administrative privileges (sudo) is '
+              'also created.'),
         }
 
     def save(self, commit=True):
@@ -63,13 +63,6 @@ than 63 characters in length.'),
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
-            try:
-                actions.superuser_run(
-                    'create-user',
-                    [user.get_username(), self.cleaned_data['password']])
-            except ActionError:
-                messages.error(self.request,
-                               _('Creating POSIX system user failed.'))
 
             try:
                 actions.superuser_run(

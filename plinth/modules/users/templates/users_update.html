@@ -46,12 +46,6 @@
 
         {{ form|bootstrap }}
 
-        {% if is_posix_user %}
-        <p>This user is also a POSIX system user and, if active, can log in to
-          the system through SSH.
-        </p>
-        {% endif %}
-
         {% if is_ldap_user %}
         <p>This user is also an LDAP user.</p>
         {% endif %}
