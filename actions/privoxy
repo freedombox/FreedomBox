@@ -24,7 +24,7 @@ Configuration helper for Privoxy server.
 import argparse
 import re
 
-import util
+from plinth import action_utils
 
 
 CONFIG_FILE = '/etc/privoxy/config'
@@ -64,28 +64,28 @@ def subcommand_setup(_):
         if not written:
             conffile.write('listen-address [::]:8118')
 
-    util.service_restart('privoxy')
+    action_utils.service_restart('privoxy')
 
 
 def subcommand_get_enabled(_):
     """Get whether service is enabled."""
-    is_enabled = util.service_is_enabled('privoxy')
+    is_enabled = action_utils.service_is_enabled('privoxy')
     print('yes' if is_enabled else 'no')
 
 
 def subcommand_enable(_):
     """Start service."""
-    util.service_enable('privoxy')
+    action_utils.service_enable('privoxy')
 
 
 def subcommand_disable(_):
     """Stop service."""
-    util.service_disable('privoxy')
+    action_utils.service_disable('privoxy')
 
 
 def subcommand_is_running(_):
     """Get whether server is running."""
-    running = util.service_is_running('privoxy')
+    running = action_utils.service_is_running('privoxy')
     print('yes' if running else 'no')
 
 
