@@ -88,8 +88,6 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Return the data to be used for rendering templates."""
         context = super(UserUpdate, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.object.username])
-        context['is_posix_user'] = 'User exists' in output
         output = actions.run('check-ldap-user-exists', [self.object.username])
         context['is_ldap_user'] = 'User exists' in output
         return context
@@ -114,8 +112,6 @@ class UserDelete(ContextMixin, DeleteView):
     def get_context_data(self, **kwargs):
         """Return the data to be used for rendering templates."""
         context = super(UserDelete, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.kwargs['slug']])
-        context['is_posix_user'] = 'User exists' in output
         output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
         context['is_ldap_user'] = 'User exists' in output
         return context
@@ -130,12 +126,6 @@ class UserDelete(ContextMixin, DeleteView):
 
         message = _('User %s deleted.') % self.kwargs['slug']
         messages.success(self.request, message)
-
-        try:
-            actions.superuser_run('delete-user', [self.kwargs['slug']])
-        except ActionError:
-            messages.error(self.request,
-                           _('Deleting POSIX system user failed.'))
 
         try:
             actions.superuser_run('delete-ldap-user', [self.kwargs['slug']])
@@ -163,8 +153,6 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return the data to be used for rendering templates."""
         context = super(UserChangePassword, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.kwargs['slug']])
-        context['is_posix_user'] = 'User exists' in output
         output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
         context['is_ldap_user'] = 'User exists' in output
         return context
