@@ -58,24 +58,3 @@ if [ $? -ne 0 ]; then
     echo "Failed to create posix account for user"
     exit 2
 fi
-
-# check if admin group exists
-results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'ou=groups,dc=thisbox' -LLL "(cn=admin)" cn)
-
-if [ -z "$results" ]; then
-    # create admin group, with new user as a member
-    cat <<EOF |ldapadd -Y EXTERNAL -H ldapi:///
-dn: cn=admin,ou=groups,dc=thisbox
-objectClass: groupOfUniqueNames
-cn: admin
-uniqueMember: uid=$username,ou=users,dc=thisbox
-EOF
-else
-    # add new user to existing admin group
-    cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
-dn: cn=admin,ou=groups,dc=thisbox
-changetype: modify
-add: uniqueMember
-uniqueMember: uid=$username,ou=users,dc=thisbox
-EOF
-fi

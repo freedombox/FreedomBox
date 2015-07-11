@@ -72,6 +72,14 @@ than 63 characters in length.'),
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
 
+            try:
+                actions.superuser_run(
+                    'add-ldap-user-to-group',
+                    [user.get_username(), 'admin'])
+            except ActionError:
+                messages.error(self.request,
+                               _('Failed to add new user to admin group.'))
+
             self.login_user()
 
         return user
