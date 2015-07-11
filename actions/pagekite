@@ -81,13 +81,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def _service(action):
-    """Start/stop/restart the pagekite service"""
-    error = subprocess.call(['service', 'pagekite', action])
-    if error:
-        raise Exception('Unable to %s PageKite server' % action)
-
-
 def subcommand_is_running(_):
     """Print whether pagekite is enabled (yes or no)"""
     print('yes' if action_utils.service_is_running('pagekite') else 'no')
@@ -95,7 +88,7 @@ def subcommand_is_running(_):
 
 def subcommand_restart(_):
     """Restart the pagekite service"""
-    _service('restart')
+    action_utils.service_restart('pagekite')
     print('restarted')
 
 
@@ -103,12 +96,12 @@ def subcommand_start_and_enable(_):
     aug.remove(PATHS['abort_not_configured'])
     aug.save()
     # 'start' alone sometimes fails, even if the service is not running
-    _service('restart')
+    action_utils.service_restart('pagekite')
     print('enabled')
 
 
 def subcommand_stop_and_disable(_):
-    _service('stop')
+    action_utils.service_stop('pagekite')
     aug.set(PATHS['abort_not_configured'], '')
     aug.save()
     print('disabled')
@@ -175,7 +168,7 @@ def subcommand_remove_service(arguments):
                 file.writelines(lines)
                 # abort to only allow deleting one service
                 break
-    _service('restart')
+    action_utils.service_restart('pagekite')
 
 
 def get_existing_service_paths(service):
@@ -202,7 +195,7 @@ def subcommand_add_service(arguments):
     with open(path, 'a') as servicefile:
         line = "\nservice_on = %s\n" % utils.convert_service_to_string(service)
         servicefile.write(line)
-    _service('restart')
+    action_utils.service_restart('pagekite')
 
 
 def convert_augeas_path_to_filepath(augpath, prefix='/files',

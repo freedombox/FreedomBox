@@ -23,11 +23,9 @@ Configuration helper for the Tor service
 
 import argparse
 import os
-import subprocess
 
 from plinth import action_utils
 
-SERVICE_CONFIG = '/etc/default/tor'
 TOR_CONFIG = '/etc/tor/torrc'
 
 
@@ -39,11 +37,11 @@ def parse_arguments():
     # Get whether Tor is running
     subparsers.add_parser('is-running', help='Get whether Tor is running')
 
-    # Start Tor and enable service
-    subparsers.add_parser('start', help='Start Tor service')
+    # Enable and start the service
+    subparsers.add_parser('enable', help='Enable and start Tor service')
 
-    # Stop Tor and disable service
-    subparsers.add_parser('stop', help='Stop Tor service')
+    # Disable and stop the service
+    subparsers.add_parser('disable', help='Disable and stop Tor service')
 
     # Get currently configured Tor hidden service information
     subparsers.add_parser('get-hs', help='Get hidden service')
@@ -62,16 +60,14 @@ def subcommand_is_running(_):
     print('yes' if action_utils.service_is_running('tor') else 'no')
 
 
-def subcommand_start(_):
-    """Start Tor and enable it as service"""
-    set_tor_service(enable=True)
-    subprocess.call(['service', 'tor', 'start'])
+def subcommand_enable(_):
+    """Enable and start the service."""
+    action_utils.service_enable('tor')
 
 
-def subcommand_stop(_):
-    """Stop Tor and disable it as service"""
-    set_tor_service(enable=False)
-    subprocess.call(['service', 'tor', 'stop'])
+def subcommand_disable(_):
+    """Disable and stop the service."""
+    action_utils.service_disable('tor')
 
 
 def subcommand_get_hs(_):
@@ -96,7 +92,7 @@ def subcommand_enable_hs(_):
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
 
-    subprocess.call(['service', 'tor', 'restart'])
+    action_utils.service_restart('tor')
 
 
 def subcommand_disable_hs(_):
@@ -131,22 +127,7 @@ def subcommand_disable_hs(_):
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(filtered_lines)
 
-    subprocess.call(['service', 'tor', 'restart'])
-
-
-def set_tor_service(enable):
-    """Enable/disable Tor service; enable: boolean"""
-    newline = 'RUN_DAEMON="yes"\n' if enable else 'RUN_DAEMON="no"\n'
-
-    with open(SERVICE_CONFIG, 'r') as file:
-        lines = file.readlines()
-        for index, line in enumerate(lines):
-            if line.startswith('RUN_DAEMON'):
-                lines[index] = newline
-                break
-
-    with open(SERVICE_CONFIG, 'w') as file:
-        file.writelines(lines)
+    action_utils.service_restart('tor')
 
 
 def get_hidden_service():

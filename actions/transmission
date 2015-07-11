@@ -25,6 +25,8 @@ import argparse
 import json
 import subprocess
 
+from plinth import action_utils
+
 
 SERVICE_CONFIG = '/etc/default/transmission-daemon'
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
@@ -78,16 +80,16 @@ def subcommand_get_enabled(_):
 def subcommand_enable(_):
     """Start Transmission service."""
     set_service_enable(enable=True)
-    subprocess.call(['service', 'transmission-daemon', 'start'])
+    action_utils.service_start('transmission-daemon')
     subprocess.call(['a2enconf', 'transmission-plinth'])
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_disable(_):
     """Stop Transmission service."""
     subprocess.call(['a2disconf', 'transmission-plinth'])
-    subprocess.call(['service', 'apache2', 'reload'])
-    subprocess.call(['service', 'transmission-daemon', 'stop'])
+    action_utils.service_reload('apache2')
+    action_utils.service_stop('transmission-daemon')
     set_service_enable(enable=False)
 
 
@@ -108,21 +110,7 @@ def set_service_enable(enable):
 
 def subcommand_is_running(_):
     """Get whether Transmission is running."""
-    try:
-        output = subprocess.check_output(['service', 'transmission-daemon',
-                                          'status'])
-    except subprocess.CalledProcessError:
-        # If daemon is not running we get a status code != 0 and a
-        # CalledProcessError
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
+    print('yes' if action_utils.service_is_running('transmission-daemon') else 'no')
 
 
 def subcommand_merge_configuration(arguments):
@@ -138,7 +126,7 @@ def subcommand_merge_configuration(arguments):
     new_configuration = json.dumps(new_configuration, indent=4, sort_keys=True)
 
     open(TRANSMISSION_CONFIG, 'w').write(new_configuration)
-    subprocess.call(['service', 'transmission-daemon', 'reload'])
+    action_utils.service_reload('transmission-daemon')
 
 
 def main():

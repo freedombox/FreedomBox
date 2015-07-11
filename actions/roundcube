@@ -25,6 +25,8 @@ import argparse
 import re
 import subprocess
 
+from plinth import action_utils
+
 
 APACHE_CONF = '/etc/apache2/conf-available/roundcube.conf'
 APACHE_ENABLED_CONF = '/etc/apache2/conf-enabled/roundcube.conf'
@@ -70,7 +72,7 @@ def subcommand_setup(_):
             else:
                 conffile.write(line)
 
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_get_enabled(_):
@@ -85,13 +87,13 @@ def subcommand_get_enabled(_):
 def subcommand_enable(_):
     """Start service."""
     subprocess.call(['a2enconf', 'roundcube'])
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_disable(_):
     """Stop service."""
     subprocess.call(['a2disconf', 'roundcube'])
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def main():

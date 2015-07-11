@@ -25,18 +25,12 @@ import subprocess
 def service_is_running(servicename):
     """Evaluates whether a service is currently running. Returns boolean"""
     try:
-        output = subprocess.check_output(['service', servicename, 'status'])
+        subprocess.check_output(['systemctl', 'status', servicename])
+        return True
     except subprocess.CalledProcessError:
-        # Usually if a service is not running we get a status code != 0 and
+        # If a service is not running we get a status code != 0 and
         # thus a CalledProcessError
         return False
-    else:
-        running = False  # default value
-        for line in output.decode('utf-8').split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-        return running
 
 
 def service_is_enabled(service_name):
@@ -51,15 +45,33 @@ def service_is_enabled(service_name):
 def service_enable(service_name):
     """Enable and start a service in systemd and sysvinit using update-rc.d."""
     subprocess.call(['systemctl', 'enable', service_name])
-    subprocess.call(['systemctl', 'start', service_name])
+    service_start(service_name)
 
 
 def service_disable(service_name):
     """Disable and stop service in systemd and sysvinit using update-rc.d."""
-    subprocess.call(['systemctl', 'stop', service_name])
+    try:
+        service_stop(service_name)
+    except subprocess.CalledProcessError:
+        pass
     subprocess.call(['systemctl', 'disable', service_name])
+
+
+def service_start(service_name):
+    """Start a service."""
+    subprocess.call(['systemctl', 'start', service_name])
+
+
+def service_stop(service_name):
+    """Stop a service."""
+    subprocess.call(['systemctl', 'stop', service_name])
 
 
 def service_restart(service_name):
     """Restart service with systemd."""
     subprocess.call(['systemctl', 'restart', service_name])
+
+
+def service_reload(service_name):
+    """Reload service with systemd."""
+    subprocess.call(['systemctl', 'reload', service_name])

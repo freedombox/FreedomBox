@@ -25,6 +25,8 @@ import os
 import shutil
 import subprocess
 
+from plinth import action_utils
+
 
 CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki-plinth.conf'
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
@@ -93,13 +95,13 @@ def subcommand_get_enabled(_):
 def subcommand_enable(_):
     """Enable ikiwiki site."""
     subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_disable(_):
     """Disable ikiwiki site."""
     subprocess.check_call(['a2disconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_get_sites(_):
@@ -158,7 +160,7 @@ def setup():
 
     subprocess.check_call(['a2enmod', 'cgi'])
     subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'restart'])
+    action_utils.service_restart('apache2')
 
 
 def main():
