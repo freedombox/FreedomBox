@@ -24,6 +24,8 @@ Configuration helper for Mumble server
 import argparse
 import subprocess
 
+from plinth import action_utils
+
 
 SERVICE_CONFIG = '/etc/default/mumble-server'
 
@@ -68,12 +70,12 @@ def subcommand_get_enabled(_):
 def subcommand_enable(_):
     """Start service."""
     set_service_enable(enable=True)
-    subprocess.call(['service', 'mumble-server', 'start'])
+    action_utils.service_start('mumble-server')
 
 
 def subcommand_disable(_):
     """Stop service."""
-    subprocess.call(['service', 'mumble-server', 'stop'])
+    action_utils.service_stop('mumble-server')
     set_service_enable(enable=False)
 
 
@@ -95,21 +97,7 @@ def set_service_enable(enable):
 
 def subcommand_is_running(_):
     """Get whether server is running."""
-    try:
-        output = subprocess.check_output(['service', 'mumble-server',
-                                          'status'])
-    except subprocess.CalledProcessError:
-        # If daemon is not running we get a status code != 0 and a
-        # CalledProcessError
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
+    print('yes' if action_utils.service_is_running('mumble-server') else 'no')
 
 
 def main():

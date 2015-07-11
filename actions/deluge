@@ -25,6 +25,8 @@ import argparse
 import os
 import subprocess
 
+from plinth import action_utils
+
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
@@ -94,40 +96,21 @@ def subcommand_disable(_):
 
 def subcommand_is_running(_):
     """Get whether deluge-web is running."""
-    try:
-        output = subprocess.check_output(['systemctl', 'status', 'deluge-web'])
-    except subprocess.CalledProcessError:
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
+    print('yes' if action_utils.service_is_running('deluge-web') else 'no')
 
 
 def enable():
     """Start and enable deluge-web service."""
-    subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
-    subprocess.check_call(['systemctl', 'start', 'deluge-web'])
-
+    action_utils.service_enable('deluge-web')
     subprocess.check_call(['a2enconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def disable():
     """Stop and disable deluge-web service."""
     subprocess.check_call(['a2disconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
-
-    try:
-        subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
-    except subprocess.CalledProcessError:
-        pass
-
-    subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
+    action_utils.service_reload('apache2')
+    action_utils.service_disable('deluge-web')
 
 
 def setup():

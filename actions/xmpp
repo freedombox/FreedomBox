@@ -28,6 +28,9 @@ import socket
 import re
 import yaml
 
+from plinth import action_utils
+
+
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
@@ -134,7 +137,7 @@ def subcommand_setup(_):
     """Setup jwchat apache conf"""
     subprocess.call(['a2dissite', 'jwchat'])
     subprocess.call(['a2enconf', 'jwchat-plinth'])
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_reload('apache2')
 
 
 def subcommand_is_ldap_enabled(_):
@@ -250,7 +253,7 @@ def subcommand_pre_change_hostname(arguments):
 
 def subcommand_change_hostname(arguments):
     """Update ejabberd and jwchat with new hostname"""
-    subprocess.call(['service', 'ejabberd', 'stop'])
+    action_utils.service_stop('ejabberd')
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
     # Make sure there aren't files in the Mnesia spool dir
@@ -258,7 +261,7 @@ def subcommand_change_hostname(arguments):
     subprocess.call('mv /var/lib/ejabberd/*.* /var/lib/ejabberd/oldfiles/',
                     shell=True)
 
-    subprocess.call(['service', 'ejabberd', 'start'])
+    action_utils.service_start('ejabberd')
 
     # restore backup database
     if os.path.exists(EJABBERD_BACKUP_NEW):
@@ -301,7 +304,7 @@ def subcommand_change_domainname(arguments):
     if domainname in conf['hosts']:
         return
 
-    subprocess.call(['service', 'ejabberd', 'stop'])
+    action_utils.service_stop('ejabberd')
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
     # Add updated domainname to ejabberd hosts list.
@@ -313,7 +316,7 @@ def subcommand_change_domainname(arguments):
             if re.match(r'\s*hosts:', line):
                 conffile.write('  - "' + domainname + '"\n')
 
-    subprocess.call(['service', 'ejabberd', 'start'])
+    action_utils.service_start('ejabberd')
 
 
 def subcommand_get_vhosts(_):
