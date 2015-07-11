@@ -1,0 +1,152 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for BitTorrent web client.
+"""
+
+import argparse
+import os
+import subprocess
+
+
+SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
+SYSTEMD_SERVICE = '''
+#
+# This file is managed and overwritten by Plinth.  If you wish to edit
+# it, disable Deluge in Plinth, remove this file and manage it manually.
+#
+[Unit]
+Description=Deluge Web Interface
+Documentation=man:deluge-web(1)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/deluge-web --base=deluge
+Restart=on-failure
+User=debian-deluged
+Group=debian-deluged
+
+[Install]
+WantedBy=multi-user.target
+'''
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether deluge-web site is enabled
+    subparsers.add_parser('get-enabled',
+                          help='Get whether deluge-web site is enabled')
+
+    # Enable deluge-web site and start deluge-web
+    subparsers.add_parser('enable', help='Enable deluge-web site')
+
+    # Disable deluge-web site and stop deluge-web
+    subparsers.add_parser('disable', help='Disable deluge-web site')
+
+    # Get whether deluge-web is running
+    subparsers.add_parser('is-running',
+                          help='Get whether deluge-web is running')
+
+    return parser.parse_args()
+
+
+def subcommand_get_enabled(_):
+    """Get whether deluge-web site is enabled."""
+    try:
+        subprocess.check_output(['a2query', '-c', 'deluge-plinth'],
+                                stderr=subprocess.STDOUT)
+        subprocess.check_output(['systemctl', 'is-enabled', 'deluge-web'])
+        print('yes')
+    except subprocess.CalledProcessError:
+        print('no')
+
+
+def subcommand_enable(_):
+    """Enable deluge-web site and start deluge-web."""
+    setup()
+    enable()
+
+
+def subcommand_disable(_):
+    """Disable deluge-web site and stop deluge-web."""
+    disable()
+
+
+def subcommand_is_running(_):
+    """Get whether deluge-web is running."""
+    try:
+        output = subprocess.check_output(['systemctl', 'status', 'deluge-web'])
+    except subprocess.CalledProcessError:
+        print('no')
+    else:
+        running = False
+        for line in output.decode().split('\n'):
+            if 'Active' in line and 'running' in line:
+                running = True
+                break
+
+        print('yes' if running else 'no')
+
+
+def enable():
+    """Start and enable deluge-web service."""
+    subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
+    subprocess.check_call(['systemctl', 'start', 'deluge-web'])
+
+    subprocess.check_call(['a2enconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
+
+def disable():
+    """Stop and disable deluge-web service."""
+    subprocess.check_call(['a2disconf', 'deluge-plinth'])
+    subprocess.check_call(['service', 'apache2', 'reload'])
+
+    try:
+        subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
+    except subprocess.CalledProcessError:
+        pass
+
+    subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
+
+
+def setup():
+    """Perform initial setup for deluge-web."""
+    if not os.path.isfile(SYSTEMD_SERVICE_PATH):
+        with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+            file_handle.write(SYSTEMD_SERVICE)
+
+        subprocess.check_call(['systemctl', 'daemon-reload'])
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

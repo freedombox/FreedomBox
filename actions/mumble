@@ -1,0 +1,125 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Mumble server
+"""
+
+import argparse
+import subprocess
+
+
+SERVICE_CONFIG = '/etc/default/mumble-server'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether service is enabled
+    subparsers.add_parser('get-enabled',
+                          help='Get whether Mumble service is enabled')
+
+    # Enable service
+    subparsers.add_parser('enable', help='Enable Mumble service')
+
+    # Disable service
+    subparsers.add_parser('disable', help='Disable Mumble service')
+
+    # Get whether daemon is running
+    subparsers.add_parser('is-running',
+                          help='Get whether Mumble daemon is running')
+
+    return parser.parse_args()
+
+
+def subcommand_get_enabled(_):
+    """Get whether service is enabled."""
+    try:
+        with open(SERVICE_CONFIG, 'r') as file:
+            for line in file:
+                if line.startswith('MURMUR_DAEMON_START'):
+                    value = line.split('=')[1].strip()
+                    print('yes' if int(value) else 'no')
+                    return
+    except FileNotFoundError:
+        pass
+
+    print('no')
+
+
+def subcommand_enable(_):
+    """Start service."""
+    set_service_enable(enable=True)
+    subprocess.call(['service', 'mumble-server', 'start'])
+
+
+def subcommand_disable(_):
+    """Stop service."""
+    subprocess.call(['service', 'mumble-server', 'stop'])
+    set_service_enable(enable=False)
+
+
+def set_service_enable(enable):
+    """Enable/disable daemon; enable: boolean."""
+    newline = 'MURMUR_DAEMON_START=1\n' if enable \
+        else 'MURMUR_DAEMON_START=0\n'
+
+    with open(SERVICE_CONFIG, 'r') as file:
+        lines = file.readlines()
+        for index, line in enumerate(lines):
+            if line.startswith('MURMUR_DAEMON_START'):
+                lines[index] = newline
+                break
+
+    with open(SERVICE_CONFIG, 'w') as file:
+        file.writelines(lines)
+
+
+def subcommand_is_running(_):
+    """Get whether server is running."""
+    try:
+        output = subprocess.check_output(['service', 'mumble-server',
+                                          'status'])
+    except subprocess.CalledProcessError:
+        # If daemon is not running we get a status code != 0 and a
+        # CalledProcessError
+        print('no')
+    else:
+        running = False
+        for line in output.decode().split('\n'):
+            if 'Active' in line and 'running' in line:
+                running = True
+                break
+
+        print('yes' if running else 'no')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

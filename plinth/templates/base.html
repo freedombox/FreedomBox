@@ -62,7 +62,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
 
   <!-- Bootstrap base CSS -->
-  <link rel="stylesheet" href="{% static 'theme/bootstrap/css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" href="{% static '/javascript/bootstrap/css/bootstrap.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
 
   {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
@@ -71,7 +71,7 @@
 
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
-  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+  <div class="navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -89,39 +89,50 @@
       </div>
       <div class="collapse navbar-collapse">
       {% block add_nav_and_login %}
-        <ul class="nav navbar-nav">
-          {% for item in cfg.main_menu.items %}
-            {% if item.url in active_menu_urls %}
-              <li class="active">
-                <a href="{{ item.url }}" class="active">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="{% url 'help:index' %}">
+              <span class="glyphicon-question-sign glyphicon nav-icon"></span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'system:index' %}">
+              <span class="glyphicon-cog glyphicon nav-icon"></span>
+            </a>
+          </li>
+          <li class="dropdown">
+            {% if user.is_authenticated %}
+              <a href="{% url 'users:edit' user.username %}"
+                 class="dropdown-toggle" data-toggle="dropdown"
+                 role="button" aria-expanded="false">
+                <i class="glyphicon glyphicon-user nav-icon"></i>
+                {{ user.username }}
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'users:edit' user.username %}"
+                       title="Edit">Edit</a></li>
+                <li><a href="{% url 'users:change_password' user.username %}"
+                       title="Change password">Change password</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url 'users:logout' %}" title="Log out">
+                    Log out</a></li>
+              </ul>
             {% else %}
-              <li>
-                <a href="{{ item.url }}">
+              <a href="{% url 'users:login' %}" title="Log in">
+                <i class="glyphicon glyphicon-user nav-icon"></i>
+                Log in</a>
             {% endif %}
-
-                <span class="{{ item.icon }} glyphicon nav-icon"></span>
-                {{ item.label }}
-              </a>
+          </li>
+          {% if user.is_authenticated %}
+            <li id="logout-nojs">
+              <a href="{% url 'users:logout' %}" title="Log out">
+                <i class="glyphicon glyphicon-remove-circle nav-icon"></i>
+                Log out</a>
             </li>
-          {% endfor %}
+          {% endif %}
         </ul>
 
-        {% if user.is_authenticated %}
-          <p class="navbar-text pull-right">
-            <i class="glyphicon glyphicon-user nav-icon"></i>
-            Logged in as <a href="#">{{ user.username }}</a>.
-            <a href="{% url 'users:logout' %}" title="Log out">
-              Log out</a>.
-          </p>
-        {% else %}
-          <p class="navbar-text pull-right">
-            Not logged in.
-            <i class="glyphicon glyphicon-user nav-icon"></i>
-            <a href="{% url 'users:login' %}" title="Log in">
-              Log in</a>.
-          </p>
-        {% endif %}
-        {% endblock %}
+      {% endblock %}
       </div>
     </div>
   </div>
@@ -131,9 +142,9 @@
       <div class="col-md-3">
         {% block submenu %}
           {% if submenu %}
-            <div class="well sidebar">
+            <div class="sidebar">
               {% include "submenu.html" with menu=submenu %}
-            </div><!--/.well -->
+            </div><!--/.sidebar -->
           {% endif %}
         {% endblock %}
 
@@ -143,20 +154,17 @@
       </div>
 
       <div class="col-md-9">
-        <div class="well">
+        {% block subsubmenu %}
+          {% if subsubmenu %}
+            {% show_subsubmenu subsubmenu %}
+          {% endif %}
+        {% endblock %}
 
-          {% block subsubmenu %}
-            {% if subsubmenu %}
-              {% show_subsubmenu subsubmenu %}
-            {% endif %}
-          {% endblock %}
+        {% include 'messages.html' %}
 
-          {% include 'messages.html' %}
-
-          {% block content %}
-            {# main content goes here #}
-          {% endblock %}
-        </div>
+        {% block content %}
+          {# main content goes here #}
+        {% endblock %}
       </div><!--/col-->
     </div><!--/row-->
 
@@ -171,11 +179,11 @@
 
   <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
   <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
-  <script type="text/javascript" src="{% static 'theme/js/libs/modernizr.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/javascript/modernizr/modernizr.min.js' %}"></script>
   <!-- Local link to system jQuery -->
-  <script type="text/javascript" src="{% static 'theme/js/libs/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
-  <script type="text/javascript" src="{% static 'theme/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/javascript/bootstrap/js/bootstrap.min.js' %}"></script>
 
   {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
   {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}

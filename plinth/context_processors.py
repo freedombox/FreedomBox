@@ -25,7 +25,11 @@ from plinth import cfg
 
 
 def common(request):
-    """Add additional context values to RequestContext for use in templates."""
+    """Add additional context values to RequestContext for use in templates.
+
+    Any resources referenced in the return value are expected to have been
+    initialized or configured externally beforehand.
+    """
     slash_indices = [match.start() for match in re.finditer('/', request.path)]
     active_menu_urls = [request.path[:index + 1] for index in slash_indices]
     return {

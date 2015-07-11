@@ -19,7 +19,6 @@
 Plinth module for running diagnostics
 """
 
-from django.contrib.auth.decorators import login_required
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
@@ -35,14 +34,12 @@ def init():
                      "diagnostics:index", 30)
 
 
-@login_required
 def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'diagnostics.html',
                             {'title': _('System Diagnostics')})
 
 
-@login_required
 def test(request):
     """Run diagnostics and the output page"""
     output = ''

@@ -19,16 +19,21 @@
 # See also
 # http://doc.owncloud.org/server/6.0/admin_manual/configuration/configuration_automation.html
 
-if [ -e /etc/apache2/conf-enabled/owncloud.conf ] ; then
-    owncloud_enable=true
+grep -q "^\s*['\"]dbtype['\"]" /etc/owncloud/config.php 2> /dev/null
+db_in_config=$(( ! $? ))
+
+grep -q "^\s*['\"]dbtype['\"]" /etc/owncloud/autoconfig.php 2> /dev/null
+db_in_autoconfig=$(( ! $? ))
+
+if [ -e /etc/apache2/conf-enabled/owncloud.conf ] && \
+       [ $db_in_config -ne 0 -o $db_in_autoconfig -ne 0 ] ; then
+    owncloud_enable_cur=true
 else
-    owncloud_enable=false
+    owncloud_enable_cur=false
 fi
-owncloud_enable_cur=$owncloud_enable
-export owncloud_enable
 
 
-while [ "$1" ] ; do 
+while [ "$1" ] ; do
     arg="$1"
     shift
     case "$arg" in
@@ -38,7 +43,6 @@ while [ "$1" ] ; do
 	    else
 		owncloud_enable=false
 	    fi
-	    export owncloud_enable
 	    ;;
 	status)
 	    printstatus() {
@@ -59,10 +63,12 @@ done
 if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
     if $owncloud_enable ; then
 	# Keep existing configuration if it exist
-	if [ ! -e /etc/owncloud/config.php ] ; then
+	if [ $db_in_config -eq 0 -a $db_in_autoconfig -eq 0 ] ; then
 	    # Set up postgresql database and user
 	    dbpwd=$(pwgen -1 30)
-	    su - postgres -c "psql -c \"CREATE USER owncloud WITH NOCREATEDB NOCREATEUSER ENCRYPTED PASSWORD '$dbpwd'\"" \
+	    su - postgres -c "psql -c \"CREATE USER owncloud WITH NOCREATEDB NOCREATEUSER\"" \
+		2>&1 | logger -t owncloud-setup
+	    su - postgres -c "psql -c \"ALTER USER owncloud ENCRYPTED PASSWORD '$dbpwd'\"" \
 		2>&1 | logger -t owncloud-setup
 	    su - postgres -c "createdb --owner owncloud owncloud" \
 		2>&1 | logger -t owncloud-setup
@@ -81,28 +87,12 @@ if [ "$owncloud_enable" != "$owncloud_enable_cur" ] ; then
   'installed'     => false,
 );
 EOF
-# The default admin user and password set up in owncloud
-# FIXME figure out how to pick username and password, perhaps from the
-# plinth user database?
-#adminuser=admin
-#adminpwd=secret
-# Use these in autoconfig.php to set admin username and password:
-#  'adminlogin'    => '$adminuser',
-#  'adminpass'     => '$adminpwd',
-
-	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 restart 2>&1 | logger -t owncloud-setup
-
-	    # Initialize application and database tables by visiting
-	    # the front page.  This only work if admin user and
-	    # password was set above.
-	    #wget --quiet http://$(uname -n)/owncloud/index.php
-	else
-	    a2enconf owncloud 2>&1 | logger -t owncloud-setup
-	    service apache2 restart 2>&1 | logger -t owncloud-setup
 	fi
+
+	a2enconf owncloud 2>&1 | logger -t owncloud-setup
     else
 	a2disconf owncloud 2>&1 | logger -t owncloud-setup
-	service apache2 restart 2>&1 | logger -t owncloud-setup
     fi
+
+    service apache2 reload 2>&1 | logger -t owncloud-setup
 fi

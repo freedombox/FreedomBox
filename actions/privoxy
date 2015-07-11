@@ -1,0 +1,102 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Privoxy server.
+"""
+
+import argparse
+import re
+
+import util
+
+
+CONFIG_FILE = '/etc/privoxy/config'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup',
+                          help='Perform Privoxy configuration setup')
+    subparsers.add_parser('get-enabled',
+                          help='Get whether Privoxy service is enabled')
+    subparsers.add_parser('enable', help='Enable Privoxy service')
+    subparsers.add_parser('disable', help='Disable Privoxy service')
+    subparsers.add_parser('is-running',
+                          help='Get whether Privoxy daemon is running')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup configuration for the first time."""
+    with open(CONFIG_FILE, 'r') as conffile:
+        lines = conffile.readlines()
+
+    with open(CONFIG_FILE, 'w') as conffile:
+        written = False
+        for line in lines:
+            if re.match(r'#?listen-address', line) and not written:
+                conffile.write('listen-address [::]:8118\n')
+                written = True
+            else:
+                conffile.write(line)
+
+        if not written:
+            conffile.write('listen-address [::]:8118')
+
+    util.service_restart('privoxy')
+
+
+def subcommand_get_enabled(_):
+    """Get whether service is enabled."""
+    is_enabled = util.service_is_enabled('privoxy')
+    print('yes' if is_enabled else 'no')
+
+
+def subcommand_enable(_):
+    """Start service."""
+    util.service_enable('privoxy')
+
+
+def subcommand_disable(_):
+    """Stop service."""
+    util.service_disable('privoxy')
+
+
+def subcommand_is_running(_):
+    """Get whether server is running."""
+    running = util.service_is_running('privoxy')
+    print('yes' if running else 'no')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

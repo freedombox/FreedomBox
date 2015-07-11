@@ -20,6 +20,8 @@ from django.contrib import auth, messages
 from django.core import validators
 from gettext import gettext as _
 
+from plinth import actions
+from plinth.errors import ActionError
 from plinth.modules.config import config
 
 
@@ -47,8 +49,11 @@ than 63 characters in length.'),
             'password': forms.PasswordInput,
         }
         help_texts = {
-            'username': _('Choose a username and password to access this web\
- interface. The password can be changed and other users can be added later.'),
+            'username':
+            _('Choose a username and password to access this web interface. '
+              'The password can be changed and other users can be added '
+              'later. A POSIX system user with administrative privileges '
+              '(sudo) is also created.'),
         }
 
     def save(self, commit=True):
@@ -58,6 +63,22 @@ than 63 characters in length.'),
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
+            try:
+                actions.superuser_run(
+                    'create-user',
+                    [user.get_username(), self.cleaned_data['password']])
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating POSIX system user failed.'))
+
+            try:
+                actions.superuser_run(
+                    'create-ldap-user',
+                    [user.get_username(), self.cleaned_data['password']])
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating LDAP user failed.'))
+
             self.login_user()
 
         return user

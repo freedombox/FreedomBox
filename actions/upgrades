@@ -1,0 +1,141 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configures or runs unattended-upgrades
+"""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+
+CONF_FILE = '/etc/apt/apt.conf.d/50unattended-upgrades'
+AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Run unattended-upgrades
+    subparsers.add_parser('run', help='Upgrade packages on the system')
+
+    # Check if automatic upgrades are enabled
+    subparsers.add_parser('check-auto',
+                          help='Check if automatic upgrades are enabled')
+
+    # Enable automatic upgrades
+    subparsers.add_parser('enable-auto', help='Enable automatic upgrades')
+
+    # Disable automatic upgrades
+    subparsers.add_parser('disable-auto', help='Disable automatic upgrades.')
+
+    return parser.parse_args()
+
+
+def subcommand_run(_):
+    """Run unattended-upgrades"""
+    try:
+        setup()
+    except FileNotFoundError:
+        print('Error: Could not configure unattended-upgrades.',
+              file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        output = subprocess.check_output(['unattended-upgrades', '-v'])
+    except FileNotFoundError:
+        print('Error: unattended-upgrades is not available.', file=sys.stderr)
+        sys.exit(2)
+    except Exception as error:
+        print('Error: {0}'.format(error), file=sys.stderr)
+        sys.exit(3)
+    else:
+        print(output.decode())
+
+
+def subcommand_check_auto(_):
+    """Check if automatic upgrades are enabled"""
+    arguments = ['apt-config', 'shell', 'UpdateInterval',
+                 'APT::Periodic::Update-Package-Lists']
+    try:
+        output = subprocess.check_output(arguments).decode()
+    except subprocess.CalledProcessError as error:
+        print('Error: {0}'.format(error), file=sys.stderr)
+        sys.exit(1)
+
+    update_interval = 0
+    match = re.match(r"UpdateInterval='(.*)'", output)
+    if match:
+        update_interval = int(match.group(1))
+
+    print(bool(update_interval))
+
+
+def subcommand_enable_auto(_):
+    """Enable automatic upgrades"""
+    try:
+        setup()
+    except FileNotFoundError:
+        print('Error: Could not configure unattended-upgrades.',
+              file=sys.stderr)
+        sys.exit(1)
+
+    with open(AUTO_CONF_FILE, 'w') as conffile:
+        conffile.write('APT::Periodic::Update-Package-Lists "1";\n')
+        conffile.write('APT::Periodic::Unattended-Upgrade "1";\n')
+
+
+def subcommand_disable_auto(_):
+    """Disable automatic upgrades"""
+    try:
+        os.rename(AUTO_CONF_FILE, AUTO_CONF_FILE + '.disabled')
+    except FileNotFoundError:
+        print('Already disabled.')
+
+
+def setup():
+    """Sets unattended-upgrades config to upgrade any package from Debian."""
+    with open(CONF_FILE, 'r') as conffile:
+        lines = conffile.readlines()
+
+    for line in lines:
+        if re.match(r'\s*"o(rigin)?=Debian";', line):
+            return  # already configured
+
+    with open(CONF_FILE, 'w') as conffile:
+        for line in lines:
+            conffile.write(line)
+            if re.match(r'\s*Unattended-Upgrade::Origins-Pattern\s+{', line):
+                conffile.write('        "origin=Debian";\n')
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

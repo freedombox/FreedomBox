@@ -21,9 +21,19 @@ URLs for the PageKite module
 
 from django.conf.urls import patterns, url
 
+from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
+    DeleteServiceView, index
+
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.pagekite.pagekite',
-    url(r'^apps/pagekite/$', 'index', name='index'),
-    url(r'^apps/pagekite/configure/$', 'configure', name='configure'),
+    'plinth.modules.pagekite.views',
+    url(r'^apps/pagekite/$', index, name='index'),
+    url(r'^apps/pagekite/configure/$', ConfigurationView.as_view(),
+        name='configure'),
+    url(r'^apps/pagekite/services/standard$', StandardServiceView.as_view(),
+        name='standard-services'),
+    url(r'^apps/pagekite/services/custom$', CustomServiceView.as_view(),
+        name='custom-services'),
+    url(r'^apps/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
+        name='delete-custom-service'),
     )

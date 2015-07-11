@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block page_head %}
+  <style type="text/css">
+    .connection-edit-label {
+      display: inline-block;
+      width: 40%;
+    }
+    .connection-type-label {
+      display: inline-block;
+      width: 20%;
+    }
+    .list-group-item .btn {
+      margin: -5px 0;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="list-group">
+        {% for connection in connections %}
+          <div class="list-group-item clearfix">
+            <a href="{% url 'networks:delete' connection.uuid %}"
+               class="btn btn-default btn-sm pull-right"
+               role="button" title="Delete connection {{ connection.name }}">
+              <span class="glyphicon glyphicon-trash"
+                    aria-hidden="true"></span>
+            </a>
+
+            <a class="connection-edit-label"
+               href="{% url 'networks:edit' connection.uuid %}"
+               title="Edit connection {{ connection.name }}">
+              {{ connection.name }}
+            </a>
+
+            <span class="connection-type-label">{{ connection.type }}</span>
+
+            {% if connection.is_active %}
+            <div class="btn-group">
+              <button type="button"
+                      class="btn btn-success btn-xs dropdown-toggle"
+                      data-toggle="dropdown" aria-expanded="false">
+                Active <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="{% url 'networks:deactivate' connection.uuid %}">
+                    Deactivate
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {% else %}
+            <div class="btn-group">
+              <button type="button"
+                      class="btn btn-warning btn-xs dropdown-toggle"
+                      data-toggle="dropdown" aria-expanded="false">
+                Not Active <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="{% url 'networks:activate' connection.uuid %}">
+                    Activate
+                  </a>
+                </li>
+              </ul>
+            </div>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

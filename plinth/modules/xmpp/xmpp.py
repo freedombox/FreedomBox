@@ -17,11 +17,11 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
+import socket
 
 from plinth import actions
 from plinth import cfg
@@ -31,7 +31,7 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 subsubmenu = [{'url': reverse_lazy('xmpp:index'),
                'text': _('About')},
@@ -61,8 +61,22 @@ def init():
     domainname_change.connect(on_domainname_change)
 
 
-@login_required
-@package.required('jwchat', 'ejabberd')
+def before_install():
+    """Preseed debconf values before the packages are installed."""
+    fqdn = socket.getfqdn()
+    domainname = '.'.join(fqdn.split('.')[1:])
+    logger.info('XMPP service domainname - %s', domainname)
+    actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
+
+
+def on_install():
+    """Setup jwchat apache conf"""
+    actions.superuser_run('xmpp', ['setup'])
+
+
+@package.required(['jwchat', 'ejabberd'],
+                  before_install=before_install,
+                  on_install=on_install)
 def index(request):
     """Serve XMPP page"""
     return TemplateResponse(request, 'xmpp.html',
@@ -72,13 +86,16 @@ def index(request):
 
 class ConfigureForm(forms.Form):  # pylint: disable-msg=W0232
     """Configuration form"""
+    ldap_enabled = forms.BooleanField(
+        label=_('Use LDAP for authentication'), required=False,
+        help_text=_('When enabled, only LDAP users will be able to login to \
+the XMPP service'))
     inband_enabled = forms.BooleanField(
         label=_('Allow In-Band Registration'), required=False,
         help_text=_('When enabled, anyone who can reach this server will be \
 allowed to register an account through an XMPP client'))
 
 
-@login_required
 def configure(request):
     """Serve the configuration form"""
     status = get_status()
@@ -103,57 +120,92 @@ def configure(request):
 
 def get_status():
     """Return the current status"""
-    output = actions.run('xmpp-setup', 'status')
-    return {'inband_enabled': 'inband_enable' in output.split()}
+    output = actions.run('xmpp', ['is-ldap-enabled'])
+    ldap_enabled = 'True' in output.split()
+    output = actions.run('xmpp', ['is-inband-enabled'])
+    inband_enabled = 'True' in output.split()
+    return {'ldap_enabled': ldap_enabled,
+            'inband_enabled': inband_enabled}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
-    LOGGER.info('Status - %s, %s', old_status, new_status)
+    logger.info('Status - %s, %s', old_status, new_status)
 
-    if old_status['inband_enabled'] == new_status['inband_enabled']:
+    setting_changed = False
+
+    if not old_status['ldap_enabled'] and new_status['ldap_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['enable-ldap'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('LDAP authentication enabled'))
+    elif old_status['ldap_enabled'] and not new_status['ldap_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['disable-ldap'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('LDAP authentication disabled'))
+
+    if not old_status['inband_enabled'] and new_status['inband_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['enable-inband'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('Inband registration enabled'))
+    elif old_status['inband_enabled'] and not new_status['inband_enabled']:
+        setting_changed = True
+        output = actions.superuser_run('xmpp', ['disable-inband'])
+        if 'Failed' in output:
+            messages.error(request,
+                           _('Error when configuring XMPP server: %s') %
+                           output)
+        else:
+            messages.success(request, _('Inband registration disabled'))
+
+    if not setting_changed:
         messages.info(request, _('Setting unchanged'))
-        return
-
-    if new_status['inband_enabled']:
-        option = 'inband_enable'
-    else:
-        option = 'noinband_enable'
-
-    LOGGER.info('Option - %s', option)
-    output = actions.superuser_run('xmpp-setup', [option])
-
-    if 'Failed' in output:
-        messages.error(request,
-                       _('Error when configuring XMPP server: %s') %
-                       output)
-    elif option == 'inband_enable':
-        messages.success(request, _('Inband registration enabled'))
-    else:
-        messages.success(request, _('Inband registration disabled'))
 
 
 class RegisterForm(forms.Form):  # pylint: disable-msg=W0232
-    """Configuration form"""
+    """Configuration form."""
     username = forms.CharField(label=_('Username'))
-
+    vhost = forms.ChoiceField(
+        label=_('Host'), choices=(),
+        help_text=_('The new user will be able to login as: username@host'))
     password = forms.CharField(
         label=_('Password'), widget=forms.PasswordInput())
 
+    def __init__(self, vhosts, *args, **kwargs):
+        """Set the list of possible values for hosts."""
+        super(RegisterForm, self).__init__(*args, **kwargs)
 
-@login_required
+        self.fields['vhost'].choices = ((vhost, '@' + vhost)
+                                        for vhost in vhosts)
+
+
 def register(request):
-    """Serve the registration form"""
+    """Serve the registration form."""
     form = None
+    vhosts = actions.run('xmpp', ['get-vhosts']).split()
 
     if request.method == 'POST':
-        form = RegisterForm(request.POST, prefix='xmpp')
+        form = RegisterForm(vhosts, request.POST, prefix='xmpp')
         # pylint: disable-msg=E1101
         if form.is_valid():
             _register_user(request, form.cleaned_data)
-            form = RegisterForm(prefix='xmpp')
+            form = RegisterForm(vhosts, prefix='xmpp')
     else:
-        form = RegisterForm(prefix='xmpp')
+        form = RegisterForm(vhosts, prefix='xmpp')
 
     return TemplateResponse(request, 'xmpp_register.html',
                             {'title': _('Register XMPP Account'),
@@ -167,15 +219,16 @@ def _register_user(request, data):
         'xmpp',
         ['register',
          '--username', data['username'],
+         '--vhost', data['vhost'],
          '--password', data['password']])
 
     if 'successfully registered' in output:
-        messages.success(request, _('Registered account for %s') %
-                         data['username'])
+        messages.success(request, _('Registered account %s@%s') %
+                         (data['username'], data['vhost']))
     else:
         messages.error(request,
-                       _('Failed to register account for %s: %s') %
-                       (data['username'], output))
+                       _('Failed to register account %s@%s: %s') %
+                       (data['username'], data['vhost'], output))
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

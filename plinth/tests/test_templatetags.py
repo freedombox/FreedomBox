@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Test module for custom Django template tags.
+"""
+
 import unittest
 
 from plinth.templatetags.plinth_extras import mark_active_menuitem
@@ -30,7 +34,8 @@ class TestShowSubSubMenu(unittest.TestCase):
             else:
                 self.assertFalse(item['active'])
 
-    def _verify_active_menuitems(self, menu):
+    @staticmethod
+    def _verify_active_menuitems(menu):
         """Verify that one and only one menuitem is marked as active"""
         return sum([item['active'] for item in menu]) == 1
 
