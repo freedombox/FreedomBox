@@ -30,7 +30,7 @@ else
 fi
 
 # update groups
-results=$(ldapsearch 2>/dev/null -Y EXTERNAL -H ldapi:/// -b 'ou=groups,dc=thisbox' -LLL "(uniqueMember=uid=$username,ou=users,dc=thisbox)" dn | grep -v '^$')
+results=$(ldapsearch 2>/dev/null -Y EXTERNAL -H ldapi:/// -b 'ou=groups,dc=thisbox' -LLL "(member=uid=$username,ou=users,dc=thisbox)" dn | grep -v '^$')
 
 while read -r line; do
     cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
