@@ -28,7 +28,6 @@ import socket
 
 from .forms import TransmissionForm
 from plinth import actions
-from plinth import action_utils
 from plinth import package
 from plinth.modules import transmission
 
@@ -67,15 +66,12 @@ def index(request):
 
 def get_status():
     """Get the current settings from Transmission server."""
-    output = actions.run('transmission', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
     configuration = open(TRANSMISSION_CONFIG, 'r').read()
     status = json.loads(configuration)
     status = {key.translate(str.maketrans({'-': '_'})): value
               for key, value in status.items()}
-    status['enabled'] = enabled
-    status['is_running'] = action_utils.service_is_running('transmission-daemon')
+    status['enabled'] = transmission.is_enabled()
+    status['is_running'] = transmission.is_running()
     status['hostname'] = socket.gethostname()
 
     return status
