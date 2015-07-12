@@ -29,7 +29,6 @@ from plinth import action_utils
 
 
 APACHE_CONF = '/etc/apache2/conf-available/roundcube.conf'
-APACHE_ENABLED_CONF = '/etc/apache2/conf-enabled/roundcube.conf'
 
 
 def parse_arguments():
@@ -41,8 +40,6 @@ def parse_arguments():
                           help='Perform Roundcube pre-install configuration')
     subparsers.add_parser('setup',
                           help='Perform Roundcube configuration setup')
-    subparsers.add_parser('get-enabled',
-                          help='Get whether Roundcube service is enabled')
     subparsers.add_parser('enable', help='Enable Roundcube')
     subparsers.add_parser('disable', help='Disable Roundcube')
 
@@ -75,25 +72,14 @@ def subcommand_setup(_):
     action_utils.service_reload('apache2')
 
 
-def subcommand_get_enabled(_):
-    """Get whether service is enabled."""
-    try:
-        subprocess.check_output(['a2query', '-c', 'roundcube'])
-        print('yes')
-    except subprocess.CalledProcessError:
-        print('no')
-
-
 def subcommand_enable(_):
-    """Start service."""
-    subprocess.call(['a2enconf', 'roundcube'])
-    action_utils.service_reload('apache2')
+    """Enable web configuration and reload."""
+    action_utils.webserver_enable('roundcube')
 
 
 def subcommand_disable(_):
-    """Stop service."""
-    subprocess.call(['a2disconf', 'roundcube'])
-    action_utils.service_reload('apache2')
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('roundcube')
 
 
 def main():
