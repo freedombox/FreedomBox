@@ -128,7 +128,7 @@ class UserUpdateForm(forms.ModelForm):
                                               [user.get_username(), old_group])
                     except ActionError:
                         messages.error(self.request,
-                                       _('Failed to add user to group.'))
+                                       _('Failed to remove user from group.'))
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
@@ -136,7 +136,7 @@ class UserUpdateForm(forms.ModelForm):
                                               [user.get_username(), new_group])
                     except ActionError:
                         messages.error(self.request,
-                                       _('Failed to remove user from group.'))
+                                       _('Failed to add user to group.'))
 
         return user
 
