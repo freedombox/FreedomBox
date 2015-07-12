@@ -44,3 +44,17 @@ elif [ $? -eq 65 ]; then
 	exit 1
     fi
 fi
+
+if [ "$groupname" == "admin" ]; then
+    # update sudo group if needed
+    results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=sudo,ou=groups,dc=thisbox' -LLL "(memberUid=$username)")
+
+    if [ -n "$results" ]; then
+	cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+changetype: modify
+delete: memberUid
+memberUid: $username
+EOF
+    fi
+fi
