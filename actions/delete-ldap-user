@@ -42,6 +42,7 @@ EOF
 
     if [ $? -eq 65 ]; then
 	# Cannot have empty group, so just delete the group.
-	ldapdelete -Y EXTERNAL -H ldapi:/// "$line"
+	dn=$(echo "$line" | cut -d' ' -f2)
+	ldapdelete -Y EXTERNAL -H ldapi:/// "$dn"
     fi
 done <<< "$results"
