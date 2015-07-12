@@ -23,6 +23,7 @@ from gettext import gettext as _
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules.config import config
+from plinth.modules.users.forms import GROUP_CHOICES
 
 
 class State0Form(forms.ModelForm):
@@ -81,8 +82,11 @@ than 63 characters in length.'),
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
 
-            g = auth.models.Group.objects.create(name='admin')
-            g.user_set.add(user)
+            # create initial Django groups
+            for group_choice in GROUP_CHOICES:
+                auth.models.Group.objects.create(name=group_choice[0])
+            admin_group = auth.models.Group.objects.get(name='admin')
+            admin_group.user_set.add(user)
 
             self.login_user()
 
