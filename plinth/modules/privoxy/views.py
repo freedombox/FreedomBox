@@ -26,7 +26,6 @@ import logging
 
 from .forms import PrivoxyForm
 from plinth import actions
-from plinth import action_utils
 from plinth import package
 from plinth.modules import privoxy
 
@@ -63,11 +62,8 @@ def index(request):
 
 def get_status():
     """Get the current settings from server."""
-    output = actions.run('privoxy', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    status = {'enabled': enabled,
-              'is_running': action_utils.service_is_running('privoxy')}
+    status = {'enabled': privoxy.is_enabled(),
+              'is_running': privoxy.is_running()}
 
     return status
 
