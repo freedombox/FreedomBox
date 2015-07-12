@@ -17,25 +17,37 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.core.exceptions import ObjectDoesNotExist
 from gettext import gettext as _
 
 from plinth import actions
 from plinth.errors import ActionError
 
+GROUP_CHOICES = (
+    ('admin', 'admin'),
+    ('wiki', 'wiki'),
+)
+
 
 class CreateUserForm(UserCreationForm):
     """Custom user create form.
 
-    Include option to also create LDAP user.
+    Include options to add user to groups.
     """
 
-    add_ldap_user = forms.BooleanField(
-        label=_('Also create an LDAP user'),
+    groups = forms.MultipleChoiceField(
+        choices=GROUP_CHOICES,
+        label=_('Groups'),
         required=False,
-        help_text=_('This will allow the new user to log in to various '
-                    'services that support single sign-on through LDAP.'))
+        help_text=_('Select which services should be available to the new '
+                    'user. The user will be able to log in to services that '
+                    'support single sign-on through LDAP, if they are in the '
+                    'appropriate group.<br /><br />'
+                    'Users in the admin group will be able to log in to all '
+                    'services. They can also log in to the system through SSH '
+                    'and have administrative privileges (sudo).'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -47,22 +59,30 @@ class CreateUserForm(UserCreationForm):
         user = super(CreateUserForm, self).save(commit)
 
         if commit:
-            if self.cleaned_data['add_ldap_user']:
-                try:
-                    actions.superuser_run(
-                        'create-ldap-user',
-                        [user.get_username(), self.cleaned_data['password1']])
-                except ActionError:
-                    messages.error(self.request,
-                                   _('Creating LDAP user failed.'))
+            try:
+                actions.superuser_run(
+                    'create-ldap-user',
+                    [user.get_username(), self.cleaned_data['password1']])
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating LDAP user failed.'))
 
+            for group in self.cleaned_data['groups']:
                 try:
                     actions.superuser_run(
                         'add-ldap-user-to-group',
-                        [user.get_username(), 'admin'])
+                        [user.get_username(), group])
                 except ActionError:
-                    messages.error(self.request,
-                                   _('Failed to add new user to admin group.'))
+                    messages.error(
+                        self.request,
+                        _('Failed to add new user to %s group.') % group)
+
+                try:
+                    g = Group.objects.get(name=group)
+                except ObjectDoesNotExist:
+                    g = Group.objects.create(name=group)
+                g.user_set.add(user)
+
         return user
 
 
@@ -95,6 +115,27 @@ class UserUpdateForm(forms.ModelForm):
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
+
+            output = actions.superuser_run('get-ldap-user-groups',
+                                           [user.get_username()])
+            old_groups = output.strip().split('\n')
+            new_groups = user.groups.values_list('name', flat=True)
+            for old_group in old_groups:
+                if old_group not in new_groups:
+                    try:
+                        actions.superuser_run('remove-ldap-user-from-group',
+                                              [user.get_username(), old_group])
+                    except ActionError:
+                        messages.error(self.request,
+                                       _('Failed to add user to group.'))
+            for new_group in new_groups:
+                if new_group not in old_groups:
+                    try:
+                        actions.superuser_run('add-ldap-user-to-group',
+                                              [user.get_username(), new_group])
+                    except ActionError:
+                        messages.error(self.request,
+                                       _('Failed to remove user from group.'))
 
         return user
 

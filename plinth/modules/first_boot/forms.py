@@ -80,6 +80,9 @@ than 63 characters in length.'),
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
 
+            g = Group.objects.create(name='admin')
+            g.user_set.add(user)
+
             self.login_user()
 
         return user
