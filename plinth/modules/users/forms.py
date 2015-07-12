@@ -62,7 +62,8 @@ class CreateUserForm(UserCreationForm):
             try:
                 actions.superuser_run(
                     'create-ldap-user',
-                    [user.get_username(), self.cleaned_data['password1']])
+                    [user.get_username(), self.cleaned_data['password1']],
+                    log_full_command=False)
             except ActionError:
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
@@ -155,7 +156,8 @@ class UserChangePasswordForm(SetPasswordForm):
             try:
                 actions.superuser_run(
                     'change-ldap-user-password',
-                    [user.get_username(), self.cleaned_data['new_password1']])
+                    [user.get_username(), self.cleaned_data['new_password1']],
+                    log_full_command=False)
             except ActionError:
                 messages.error(
                     self.request,
