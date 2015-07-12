@@ -21,6 +21,7 @@ import logging
 import os
 
 from plinth import actions
+from plinth import action_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -91,8 +92,7 @@ def get_pagekite_config():
 
     # PageKite service enabled/disabled
     # This assumes that if pagekite is running it's also enabled as a service
-    output = run(['is-running'])
-    status['enabled'] = (output.split()[0] == 'yes')
+    status['enabled'] = action_utils.service_is_running('pagekite')
 
     # PageKite kite details
     status.update(get_kite_details())

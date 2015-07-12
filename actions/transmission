@@ -47,10 +47,6 @@ def parse_arguments():
     # Disable service
     subparsers.add_parser('disable', help='Disable Transmission service')
 
-    # Get whether daemon is running
-    subparsers.add_parser('is-running',
-                          help='Get whether Transmission daemon is running')
-
     # Merge given JSON configration with existing
     merge_configuration = subparsers.add_parser(
         'merge-configuration',
@@ -106,11 +102,6 @@ def set_service_enable(enable):
 
     with open(SERVICE_CONFIG, 'w') as file_handle:
         file_handle.writelines(lines)
-
-
-def subcommand_is_running(_):
-    """Get whether Transmission is running."""
-    print('yes' if action_utils.service_is_running('transmission-daemon') else 'no')
 
 
 def subcommand_merge_configuration(arguments):

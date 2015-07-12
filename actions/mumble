@@ -45,10 +45,6 @@ def parse_arguments():
     # Disable service
     subparsers.add_parser('disable', help='Disable Mumble service')
 
-    # Get whether daemon is running
-    subparsers.add_parser('is-running',
-                          help='Get whether Mumble daemon is running')
-
     return parser.parse_args()
 
 
@@ -93,11 +89,6 @@ def set_service_enable(enable):
 
     with open(SERVICE_CONFIG, 'w') as file:
         file.writelines(lines)
-
-
-def subcommand_is_running(_):
-    """Get whether server is running."""
-    print('yes' if action_utils.service_is_running('mumble-server') else 'no')
 
 
 def main():

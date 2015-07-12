@@ -26,6 +26,7 @@ import logging
 
 from .forms import MumbleForm
 from plinth import actions
+from plinth import action_utils
 from plinth import package
 from plinth.modules import mumble
 
@@ -65,11 +66,8 @@ def get_status():
     output = actions.run('mumble', ['get-enabled'])
     enabled = (output.strip() == 'yes')
 
-    output = actions.superuser_run('mumble', ['is-running'])
-    is_running = (output.strip() == 'yes')
-
     status = {'enabled': enabled,
-              'is_running': is_running}
+              'is_running': action_utils.service_is_running('mumble')}
 
     return status
 

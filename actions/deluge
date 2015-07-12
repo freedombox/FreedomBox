@@ -65,10 +65,6 @@ def parse_arguments():
     # Disable deluge-web site and stop deluge-web
     subparsers.add_parser('disable', help='Disable deluge-web site')
 
-    # Get whether deluge-web is running
-    subparsers.add_parser('is-running',
-                          help='Get whether deluge-web is running')
-
     return parser.parse_args()
 
 
@@ -92,11 +88,6 @@ def subcommand_enable(_):
 def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
     disable()
-
-
-def subcommand_is_running(_):
-    """Get whether deluge-web is running."""
-    print('yes' if action_utils.service_is_running('deluge-web') else 'no')
 
 
 def enable():

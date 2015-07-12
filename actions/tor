@@ -34,9 +34,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether Tor is running
-    subparsers.add_parser('is-running', help='Get whether Tor is running')
-
     # Enable and start the service
     subparsers.add_parser('enable', help='Enable and start Tor service')
 
@@ -53,11 +50,6 @@ def parse_arguments():
     subparsers.add_parser('disable-hs', help='Disable hidden service')
 
     return parser.parse_args()
-
-
-def subcommand_is_running(_):
-    """Get whether Tor is running"""
-    print('yes' if action_utils.service_is_running('tor') else 'no')
 
 
 def subcommand_enable(_):

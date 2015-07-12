@@ -23,7 +23,10 @@ import subprocess
 
 
 def service_is_running(servicename):
-    """Evaluates whether a service is currently running. Returns boolean"""
+    """Return whether a service is currently running.
+
+    Does not need to run as root.
+    """
     try:
         subprocess.check_output(['systemctl', 'status', servicename])
         return True
