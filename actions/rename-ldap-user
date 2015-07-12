@@ -42,14 +42,14 @@ while read -r line; do
     cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
 $line
 changetype: modify
-add: uniqueMember
-uniqueMember: uid=$new_username,ou=users,dc=thisbox
+add: member
+member: uid=$new_username,ou=users,dc=thisbox
 EOF
 
     cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
 $line
 changetype: modify
-delete: uniqueMember
-uniqueMember: uid=$old_username,ou=users,dc=thisbox
+delete: member
+member: uid=$old_username,ou=users,dc=thisbox
 EOF
 done <<< "$results"

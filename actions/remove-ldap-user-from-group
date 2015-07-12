@@ -24,8 +24,8 @@ groupname="$2"
 cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
 dn: cn=$groupname,ou=groups,dc=thisbox
 changetype: modify
-delete: uniqueMember
-uniqueMember: uid=$username,ou=users,dc=thisbox
+delete: member
+member: uid=$username,ou=users,dc=thisbox
 EOF
 
 if [ $? -eq 0 ]; then

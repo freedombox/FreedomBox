@@ -28,16 +28,16 @@ if [ -z "$results" ]; then
     # create group, with user as initial member
     cat <<EOF |ldapadd -Y EXTERNAL -H ldapi:///
 dn: cn=$groupname,ou=groups,dc=thisbox
-objectClass: groupOfUniqueNames
+objectClass: groupOfNames
 cn: $groupname
-uniqueMember: uid=$username,ou=users,dc=thisbox
+member: uid=$username,ou=users,dc=thisbox
 EOF
 else
     # add user to existing group
     cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
 dn: cn=$groupname,ou=groups,dc=thisbox
 changetype: modify
-add: uniqueMember
-uniqueMember: uid=$username,ou=users,dc=thisbox
+add: member
+member: uid=$username,ou=users,dc=thisbox
 EOF
 fi
