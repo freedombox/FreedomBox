@@ -49,7 +49,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     # Enable/disable the pagekite service
-    subparsers.add_parser('is-running', help='Get whether PakeKite is running')
     subparsers.add_parser('start-and-enable', help='Enable PageKite service')
     subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
     subparsers.add_parser('restart', help='Restart PageKite service')
@@ -79,11 +78,6 @@ def parse_arguments():
     remove_service.add_argument('--service', help='json service dictionary')
 
     return parser.parse_args()
-
-
-def subcommand_is_running(_):
-    """Print whether pagekite is enabled (yes or no)"""
-    print('yes' if action_utils.service_is_running('pagekite') else 'no')
 
 
 def subcommand_restart(_):

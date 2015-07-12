@@ -41,8 +41,6 @@ def parse_arguments():
                           help='Get whether Privoxy service is enabled')
     subparsers.add_parser('enable', help='Enable Privoxy service')
     subparsers.add_parser('disable', help='Disable Privoxy service')
-    subparsers.add_parser('is-running',
-                          help='Get whether Privoxy daemon is running')
 
     return parser.parse_args()
 
@@ -81,12 +79,6 @@ def subcommand_enable(_):
 def subcommand_disable(_):
     """Stop service."""
     action_utils.service_disable('privoxy')
-
-
-def subcommand_is_running(_):
-    """Get whether server is running."""
-    running = action_utils.service_is_running('privoxy')
-    print('yes' if running else 'no')
 
 
 def main():

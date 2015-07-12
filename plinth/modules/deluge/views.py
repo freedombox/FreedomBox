@@ -25,6 +25,7 @@ from gettext import gettext as _
 
 from .forms import DelugeForm
 from plinth import actions
+from plinth import action_utils
 from plinth import package
 from plinth.modules import deluge
 
@@ -57,11 +58,8 @@ def get_status():
     output = actions.run('deluge', ['get-enabled'])
     enabled = (output.strip() == 'yes')
 
-    output = actions.run('deluge', ['is-running'])
-    is_running = (output.strip() == 'yes')
-
     status = {'enabled': enabled,
-              'is_running': is_running}
+              'is_running': action_utils.service_is_running('deluge-web')}
 
     return status
 
