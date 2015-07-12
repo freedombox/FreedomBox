@@ -26,7 +26,6 @@ import logging
 
 from .forms import MumbleForm
 from plinth import actions
-from plinth import action_utils
 from plinth import package
 from plinth.modules import mumble
 
@@ -63,13 +62,8 @@ def index(request):
 
 def get_status():
     """Get the current settings from server."""
-    output = actions.run('mumble', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    status = {'enabled': enabled,
-              'is_running': action_utils.service_is_running('mumble')}
-
-    return status
+    return {'enabled': mumble.is_enabled(),
+            'is_running': mumble.is_running()}
 
 
 def _apply_changes(request, old_status, new_status):
