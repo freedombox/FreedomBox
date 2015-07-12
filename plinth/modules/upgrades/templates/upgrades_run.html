@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% block content %}
+
+<h2>{{title}}</h2>
+
+{% if upgrades_error %}
+  <div class="alert alert-danger" role="alert">
+    There was an error while upgrading.
+  </div>
+  <h5>Output from unattended-upgrades:</h5>
+  <pre>{{ upgrades_error }}</pre>
+{% endif %}
+
+{% if upgrades_output %}
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="alert alert-success" role="alert">
+        The operating system is up to date now. &nbsp;
+          <button type="button" class="btn btn-default show-details" style='display:none'>
+            Show Details
+            <div class="caret"></div>
+          </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="details">
+    <h5>Output from unattended-upgrades:</h5>
+    <pre>{{ upgrades_output }}</pre>
+  </div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('.show-details').show();
+    $('.details').hide();
+    $('.show-details').click(function() {
+      $('.details').toggle("slow");
+    });
+  </script>
+{% endblock %}

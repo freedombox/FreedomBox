@@ -44,9 +44,9 @@
         <tr><th>Package</th><th>Summary</th></tr>
       </thead>
       <tbody>
-        {% for package in packages %}
+        {% for package_name, package in packages.items %}
           <tr>
-            <td>{{ package.get_name }}</td>
+            <td>{{ package_name }}</td>
             <td>{{ package.get_summary }}</td>
           </tr>
         {% endfor %}

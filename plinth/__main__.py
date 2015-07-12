@@ -18,6 +18,7 @@
 
 import argparse
 import django.conf
+from django.contrib.messages import constants as message_constants
 import django.core.management
 import django.core.wsgi
 import importlib
@@ -39,19 +40,20 @@ LOGGER = logging.getLogger(__name__)
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Plinth web interface for FreedomBox')
+        description='Plinth web interface for FreedomBox',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '--pidfile', default='plinth.pid',
+        '--pidfile', default=cfg.pidfile,
         help='specify a file in which the server may write its pid')
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument(
-        '--server_dir', default='/',
+        '--server_dir', default=cfg.server_dir,
         help='web server path under which to serve')
     parser.add_argument(
-        '--debug', action='store_true', default=False,
+        '--debug', action='store_true', default=cfg.debug,
         help='enable debugging and run server *insecurely*')
     parser.add_argument(
-        '--no-daemon', action='store_true', default=False,
+        '--no-daemon', action='store_true', default=cfg.no_daemon,
         help='do not start as a daemon')
 
     args = parser.parse_args()
@@ -84,17 +86,14 @@ def setup_server():
     except AttributeError:
         pass
 
-    # Add an extra server
-    server = _cpserver.Server()
-    server.socket_host = '127.0.0.1'
-    server.socket_port = 52854
-    server.subscribe()
-
     # Configure default server
     cherrypy.config.update(
         {'server.socket_host': cfg.host,
          'server.socket_port': cfg.port,
-         'server.thread_pool': 10})
+         'server.thread_pool': 10,
+         # Avoid stating files once per second in production
+         'engine.autoreload.on': cfg.debug,
+        })
 
     application = django.core.wsgi.get_wsgi_application()
     cherrypy.tree.graft(application, cfg.server_dir)
@@ -107,6 +106,15 @@ def setup_server():
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
     LOGGER.debug('Serving static directory %s on %s', static_dir,
                  django.conf.settings.STATIC_URL)
+
+    js_dir = '/usr/share/javascript'
+    js_url = '/javascript'
+    config = {
+        '/': {'tools.staticdir.root': js_dir,
+              'tools.staticdir.on': True,
+              'tools.staticdir.dir': '.'}}
+    cherrypy.tree.mount(None, js_url, config)
+    LOGGER.debug('Serving javascript directory %s on %s', js_dir, js_url)
 
     for module_import_path in module_loader.loaded_modules:
         module = importlib.import_module(module_import_path)
@@ -180,6 +188,7 @@ def configure_django():
                     'django.contrib.auth',
                     'django.contrib.contenttypes',
                     'django.contrib.messages',
+                    'stronghold',
                     'plinth']
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
@@ -201,6 +210,7 @@ def configure_django():
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='apps:index',
         LOGOUT_URL='users:logout',
+        MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.common.CommonMiddleware',
@@ -208,6 +218,7 @@ def configure_django():
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
+            'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
@@ -215,6 +226,7 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
+        STRONGHOLD_PUBLIC_NAMED_URLS=('users:login', 'users:logout'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
         USE_X_FORWARDED_HOST=bool(cfg.use_x_forwarded_host))
     django.setup()
@@ -228,9 +240,9 @@ def configure_django():
 
 def main():
     """Intialize and start the application"""
-    parse_arguments()
-
     cfg.read()
+
+    parse_arguments()
 
     setup_logging()
 
@@ -239,6 +251,7 @@ def main():
     configure_django()
 
     LOGGER.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
+    LOGGER.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
 

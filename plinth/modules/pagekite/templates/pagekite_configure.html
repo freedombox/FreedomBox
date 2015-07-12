@@ -30,17 +30,12 @@
     <div id='pagekite-post-enabled-form'
          style='display: {{ form.enabled.value|yesno:'block,none' }};'>
       <h3>PageKite Account</h3>
-      {% include 'bootstrapform/field.html' with field=form.server %}
-      {% include 'bootstrapform/field.html' with field=form.kite_name %}
-      {% include 'bootstrapform/field.html' with field=form.kite_secret %}
+      {{ form.server|bootstrap_horizontal }}
+      {{ form.kite_name|bootstrap_horizontal }}
+      {{ form.kite_secret|bootstrap_horizontal }}
 
-      <h3>Services</h3>
-      {% include 'bootstrapform/field.html' with field=form.http_enabled %}
-      {% include 'bootstrapform/field.html' with field=form.ssh_enabled %}
     </div>
-
-    <input type="submit" class="btn btn-primary" value="Update setup"/>
-
+    <input type="submit" class="btn btn-primary" value="Save settings"/>
   </form>
 
 {% endblock %}

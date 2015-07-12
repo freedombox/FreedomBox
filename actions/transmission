@@ -1,0 +1,154 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Transmission daemon.
+"""
+
+import argparse
+import json
+import subprocess
+
+
+SERVICE_CONFIG = '/etc/default/transmission-daemon'
+TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    # Get whether service is enabled
+    subparsers.add_parser('get-enabled',
+                          help='Get whether Transmission service is enabled')
+
+    # Enable service
+    subparsers.add_parser('enable', help='Enable Transmission service')
+
+    # Disable service
+    subparsers.add_parser('disable', help='Disable Transmission service')
+
+    # Get whether daemon is running
+    subparsers.add_parser('is-running',
+                          help='Get whether Transmission daemon is running')
+
+    # Merge given JSON configration with existing
+    merge_configuration = subparsers.add_parser(
+        'merge-configuration',
+        help='Merge given JSON configration with existing')
+    merge_configuration.add_argument(
+        'configuration',
+        help='JSON encoded configuration to merge')
+
+    return parser.parse_args()
+
+
+def subcommand_get_enabled(_):
+    """Get whether Transmission service is enabled."""
+    try:
+        with open(SERVICE_CONFIG, 'r') as file_handle:
+            for line in file_handle:
+                if line.startswith('ENABLE_DAEMON'):
+                    value = line.split('=')[1].strip()
+                    print('yes' if int(value) else 'no')
+                    return
+    except IOError:
+        pass
+
+    print('no')
+
+
+def subcommand_enable(_):
+    """Start Transmission service."""
+    set_service_enable(enable=True)
+    subprocess.call(['service', 'transmission-daemon', 'start'])
+    subprocess.call(['a2enconf', 'transmission-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
+
+
+def subcommand_disable(_):
+    """Stop Transmission service."""
+    subprocess.call(['a2disconf', 'transmission-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
+    subprocess.call(['service', 'transmission-daemon', 'stop'])
+    set_service_enable(enable=False)
+
+
+def set_service_enable(enable):
+    """Enable/disable Transmission daemon; enable: boolean."""
+    newline = 'ENABLE_DAEMON=1\n' if enable else 'ENABLE_DAEMON=0\n'
+
+    with open(SERVICE_CONFIG, 'r') as file_handle:
+        lines = file_handle.readlines()
+        for index, line in enumerate(lines):
+            if line.startswith('ENABLE_DAEMON'):
+                lines[index] = newline
+                break
+
+    with open(SERVICE_CONFIG, 'w') as file_handle:
+        file_handle.writelines(lines)
+
+
+def subcommand_is_running(_):
+    """Get whether Transmission is running."""
+    try:
+        output = subprocess.check_output(['service', 'transmission-daemon',
+                                          'status'])
+    except subprocess.CalledProcessError:
+        # If daemon is not running we get a status code != 0 and a
+        # CalledProcessError
+        print('no')
+    else:
+        running = False
+        for line in output.decode().split('\n'):
+            if 'Active' in line and 'running' in line:
+                running = True
+                break
+
+        print('yes' if running else 'no')
+
+
+def subcommand_merge_configuration(arguments):
+    """Merge given JSON configuration with existing configuration."""
+    configuration = arguments.configuration
+    configuration = json.loads(configuration)
+
+    current_configuration = open(TRANSMISSION_CONFIG, 'r').read()
+    current_configuration = json.loads(current_configuration)
+
+    new_configuration = current_configuration
+    new_configuration.update(configuration)
+    new_configuration = json.dumps(new_configuration, indent=4, sort_keys=True)
+
+    open(TRANSMISSION_CONFIG, 'w').write(new_configuration)
+    subprocess.call(['service', 'transmission-daemon', 'reload'])
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

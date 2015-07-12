@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="list-group">
+        {% for access_point in access_points %}
+        <div class="list-group-item clearfix">
+          {% if access_point.ssid %}
+          <a display="inline-block" width="40%"
+             href="{% url 'networks:add_wifi' access_point.ssid %}">
+             {{ access_point.ssid }}
+          </a>
+          {% else %}
+          --
+          {% endif %}
+          <span class="btn btn-primary btn-xs pull-right">
+            {{ access_point.strength }}%
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

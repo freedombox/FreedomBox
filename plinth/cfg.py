@@ -57,8 +57,10 @@ def read():
         directory = os.path.dirname(os.path.realpath(__file__))
         directory = os.path.join(directory, '..')
         CONFIG_FILE = os.path.join(directory, 'plinth.config')
+        if not os.path.isfile(CONFIG_FILE):
+            raise FileNotFoundError('No plinth.config file could be found.')
 
-    parser = configparser.SafeConfigParser(
+    parser = configparser.ConfigParser(
         defaults={
             'root': os.path.realpath(directory),
         })
@@ -76,6 +78,7 @@ def read():
                     ('Path', 'status_log_file'),
                     ('Path', 'access_log_file'),
                     ('Path', 'pidfile'),
+                    ('Path', 'server_dir'),
                     ('Network', 'host'),
                     ('Network', 'port'),
                     ('Network', 'secure_proxy_ssl_header'),

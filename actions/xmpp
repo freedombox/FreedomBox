@@ -26,6 +26,7 @@ import subprocess
 import os
 import socket
 import re
+import yaml
 
 JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
@@ -38,19 +39,53 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    # Preseed debconf values before packages are installed.
+    pre_install = subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed.')
+    pre_install.add_argument(
+        '--domainname',
+        help='The domain name that will be used by the XMPP service.')
+
+    # Setup jwchat apache conf
+    subparsers.add_parser('setup', help='Setup jwchat apache conf')
+
+    # Get whether LDAP authentication is enabled
+    subparsers.add_parser('is-ldap-enabled',
+                          help='Get whether LDAP authentication is enabled')
+
+    # Enable LDAP authentication
+    subparsers.add_parser('enable-ldap',
+                          help='Enable LDAP authentication')
+
+    # Disable LDAP authentication
+    subparsers.add_parser('disable-ldap',
+                          help='Disable LDAP authentication')
+
+    # Get whether inband registration is enabled
+    subparsers.add_parser('is-inband-enabled',
+                          help='Get whether inband registration is enabled')
+
+    # Enable inband registration
+    subparsers.add_parser('enable-inband',
+                          help='Enable inband registration')
+
+    # Disable inband registration
+    subparsers.add_parser('disable-inband',
+                          help='Disable inband registration')
+
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
-        help='Prepare ejabberd for hostname change')
+        help='Prepare ejabberd for nodename change')
     pre_hostname_change.add_argument('--old-hostname',
                                      help='Previous hostname')
     pre_hostname_change.add_argument('--new-hostname',
                                      help='New hostname')
 
-    # Update ejabberd and jwchat with new hostname
-    hostname_change = subparsers.add_parser(
-        'change-hostname',
-        help='Update ejabberd and jwchat with new hostname')
+    # Update ejabberd nodename
+    hostname_change = subparsers.add_parser('change-hostname',
+                                            help='Update ejabberd nodename')
     hostname_change.add_argument('--old-hostname',
                                  help='Previous hostname')
     hostname_change.add_argument('--new-hostname',
@@ -62,15 +97,139 @@ def parse_arguments():
         help='Update ejabberd and jwchat with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
 
+    # Get the list of all virtual hosts configured in ejabberd
+    subparsers.add_parser(
+        'get-vhosts',
+        help='Get the list of all virtual hosts configured in ejabberd')
+
     # Register a new user account
     register = subparsers.add_parser('register',
                                      help='Register a new user account')
     register.add_argument('--username',
                           help='Username for the new user account')
+    register.add_argument('--vhost',
+                          help='Virtual host to register the new user in')
     register.add_argument('--password',
                           help='Password for the new user account')
 
     return parser.parse_args()
+
+
+def subcommand_pre_install(arguments):
+    """Preseed debconf values before packages are installed."""
+    domainname = arguments.domainname
+    if not domainname:
+        # If new domainname is blank, use hostname instead.
+        domainname = socket.gethostname()
+
+    subprocess.check_output(
+        ['debconf-set-selections'],
+        input=b'ejabberd ejabberd/hostname string ' + domainname.encode())
+    subprocess.check_output(
+        ['debconf-set-selections'],
+        input=b'jwchat jwchat/ApacheServerName string ' + domainname.encode())
+
+
+def subcommand_setup(_):
+    """Setup jwchat apache conf"""
+    subprocess.call(['a2dissite', 'jwchat'])
+    subprocess.call(['a2enconf', 'jwchat-plinth'])
+    subprocess.call(['service', 'apache2', 'reload'])
+
+
+def subcommand_is_ldap_enabled(_):
+    """Get whether LDAP authentication is enabled"""
+    conffile = open(EJABBERD_CONFIG, 'r')
+    conf = yaml.safe_load(conffile)
+    print('ldap' in conf['auth_method'])
+
+
+def subcommand_enable_ldap(_):
+    """Enable LDAP authentication"""
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            if 'auth_method: internal' in line:
+                conffile.write('## ' + line)
+            elif '## auth_method: ldap' in line:
+                conffile.write('auth_method: ldap\n')
+            elif '## ldap_servers:' in line:
+                conffile.write('ldap_servers:\n')
+                conffile.write('  - "localhost"\n')
+            elif '## ldap_base:' in line:
+                conffile.write('ldap_base: "ou=users,dc=thisbox"\n')
+            else:
+                conffile.write(line)
+
+    try:
+        subprocess.check_output(['ejabberdctl', 'restart'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart ejabberd with new configuration: %s', err)
+
+
+def subcommand_disable_ldap(_):
+    """Disable LDAP authentication"""
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            if '## auth_method: internal' in line:
+                conffile.write('auth_method: internal\n')
+            elif 'auth_method: ldap' in line:
+                conffile.write('## auth_method: ldap\n')
+            else:
+                conffile.write(line)
+
+    try:
+        subprocess.check_output(['ejabberdctl', 'restart'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart ejabberd with new configuration: %s', err)
+
+
+def subcommand_is_inband_enabled(_):
+    """Get whether inband registration is enabled"""
+    conffile = open(EJABBERD_CONFIG, 'r')
+    conf = yaml.safe_load(conffile)
+    print('all' in conf['modules']['mod_register']['ip_access'])
+
+
+def subcommand_enable_inband(_):
+    """Enable inband registration"""
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            if 'ip_access' in line:
+                conffile.write(line.replace('trusted_network', 'all'))
+            else:
+                conffile.write(line)
+
+    try:
+        subprocess.check_output(['ejabberdctl', 'restart'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart ejabberd with new configuration: %s', err)
+
+
+def subcommand_disable_inband(_):
+    """Disable inband registration"""
+    with open(EJABBERD_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+    with open(EJABBERD_CONFIG, 'w') as conffile:
+        for line in lines:
+            if 'ip_access' in line:
+                conffile.write(line.replace('all', 'trusted_network'))
+            else:
+                conffile.write(line)
+
+    try:
+        subprocess.check_output(['ejabberdctl', 'restart'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart ejabberd with new configuration: %s', err)
 
 
 def subcommand_pre_change_hostname(arguments):
@@ -118,7 +277,9 @@ def subcommand_change_hostname(arguments):
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
     domainname = arguments.domainname
-    fqdn = socket.gethostname() + '.' + domainname
+    if not domainname:
+        # If new domainname is blank, use hostname instead.
+        domainname = socket.gethostname()
 
     # update jwchat's sitename, if it's installed
     if os.path.exists(JWCHAT_CONFIG):
@@ -127,37 +288,48 @@ def subcommand_change_domainname(arguments):
         with open(JWCHAT_CONFIG, 'w') as conffile:
             for line in lines:
                 if re.match(r'\s*var\s+SITENAME', line):
-                    conffile.write('var SITENAME = "' + fqdn + '";\n')
+                    conffile.write('var SITENAME = "' + domainname + '";\n')
                 else:
                     conffile.write(line)
     else:
         print('Skipping configuring jwchat sitename: %s not found',
               JWCHAT_CONFIG)
 
+    # Check if new domainname is already in ejabberd hosts list.
+    conffile = open(EJABBERD_CONFIG, 'r')
+    conf = yaml.safe_load(conffile)
+    if domainname in conf['hosts']:
+        return
+
     subprocess.call(['service', 'ejabberd', 'stop'])
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
-    # add updated FQDN to top of ejabberd hosts list
+    # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
             conffile.write(line)
             if re.match(r'\s*hosts:', line):
-                conffile.write('  - "' + fqdn + '"\n')
+                conffile.write('  - "' + domainname + '"\n')
 
     subprocess.call(['service', 'ejabberd', 'start'])
 
 
+def subcommand_get_vhosts(_):
+    """Get list of all virtual hosts configured in ejabbered."""
+    subprocess.call(['ejabberdctl', 'registered_vhosts'])
+
+
 def subcommand_register(arguments):
-    """Register a new user account"""
+    """Register a new user account."""
     username = arguments.username
+    vhost = arguments.vhost
     password = arguments.password
-    fqdn = socket.getfqdn()
 
     try:
         output = subprocess.check_output(['ejabberdctl', 'register',
-                                          username, fqdn, password])
+                                          username, vhost, password])
         print(output.decode())
     except subprocess.CalledProcessError as e:
         print('Failed to register XMPP account:', e.output.decode())

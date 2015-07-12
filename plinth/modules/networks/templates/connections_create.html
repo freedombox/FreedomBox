@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-sm-8">
+      <form class="form" method="post">
+        {% csrf_token %}
+
+        {{ form|bootstrap }}
+
+        <input type="submit" class="btn btn-primary" value="Create Connection"/>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block page_js %}
+
+  <script type="text/javascript">
+    (function($) {
+
+    if ($("#id_ipv4_method").prop("value") != "manual") {
+      $("#id_ipv4_address").prop("readOnly", true);
+    }
+    $("#id_name").focus();
+
+    $("#id_ipv4_method").change(function() {
+      if ($("#id_ipv4_method").prop("value") == 'manual') {
+        $("#id_ipv4_address").prop("readOnly", false);
+        $("#id_ipv4_address").prop("required", true);
+      } else {
+        $("#id_ipv4_address").val("");
+        $("#id_ipv4_address").prop("readOnly", true);
+        $("#id_ipv4_address").prop("required", false);
+      }
+    });
+
+    })(jQuery);
+  </script>
+
+{% endblock %}
