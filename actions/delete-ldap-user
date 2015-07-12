@@ -46,3 +46,15 @@ EOF
 	ldapdelete -Y EXTERNAL -H ldapi:/// "$dn"
     fi
 done <<< "$results"
+
+# update sudo group if needed
+results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=sudo,ou=groups,dc=thisbox' -LLL "(memberUid=$username)")
+
+if [ -n "$results" ]; then
+    cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+changetype: modify
+delete: memberUid
+memberUid: $username
+EOF
+fi

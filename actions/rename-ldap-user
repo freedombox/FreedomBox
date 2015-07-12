@@ -53,3 +53,22 @@ delete: member
 member: uid=$old_username,ou=users,dc=thisbox
 EOF
 done <<< "$results"
+
+# update sudo group if needed
+results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=sudo,ou=groups,dc=thisbox' -LLL "(memberUid=$old_username)")
+
+if [ -n "$results" ]; then
+    cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+changetype: modify
+delete: memberUid
+memberUid: $old_username
+EOF
+
+    cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+changetype: modify
+add: memberUid
+memberUid: $new_username
+EOF
+fi

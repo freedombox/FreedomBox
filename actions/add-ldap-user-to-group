@@ -41,3 +41,28 @@ add: member
 member: uid=$username,ou=users,dc=thisbox
 EOF
 fi
+
+# For admin users, also need a posixAccount for sudo.
+if [ "$groupname" == "admin" ]; then
+    # check if sudo group already exists
+    results=$(ldapsearch -Y EXTERNAL -H ldapi:/// -b 'ou=groups,dc=thisbox' -LLL "(cn=sudo)" cn)
+
+    if [ -z "$results" ]; then
+	# create sudo group
+	cat <<EOF |ldapadd -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+objectClass: posixGroup
+cn: sudo
+gidNumber: 27
+memberUid: $username
+EOF
+    else
+	# add user to sudo group
+	cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: cn=sudo,ou=groups,dc=thisbox
+changetype: modify
+add: memberUid
+memberUid: $username
+EOF
+    fi
+fi
