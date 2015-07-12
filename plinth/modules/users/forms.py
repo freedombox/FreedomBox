@@ -109,6 +109,11 @@ class UserUpdateForm(forms.ModelForm):
         user = super(UserUpdateForm, self).save(commit)
 
         if commit:
+            output = actions.superuser_run('get-ldap-user-groups',
+                                           [self.username])
+            old_groups = output.strip().split('\n')
+            old_groups = list(filter(None, old_groups))  # remove blank strings
+
             if self.username != user.get_username():
                 try:
                     actions.superuser_run('rename-ldap-user',
@@ -117,9 +122,6 @@ class UserUpdateForm(forms.ModelForm):
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
 
-            output = actions.superuser_run('get-ldap-user-groups',
-                                           [user.get_username()])
-            old_groups = output.strip().split('\n')
             new_groups = user.groups.values_list('name', flat=True)
             for old_group in old_groups:
                 if old_group not in new_groups:
