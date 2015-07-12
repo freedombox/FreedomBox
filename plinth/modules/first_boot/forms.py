@@ -67,7 +67,8 @@ than 63 characters in length.'),
             try:
                 actions.superuser_run(
                     'create-ldap-user',
-                    [user.get_username(), self.cleaned_data['password']])
+                    [user.get_username(), self.cleaned_data['password']],
+                    log_full_command=False)
             except ActionError:
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
@@ -80,7 +81,7 @@ than 63 characters in length.'),
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
 
-            g = Group.objects.create(name='admin')
+            g = auth.models.Group.objects.create(name='admin')
             g.user_set.add(user)
 
             self.login_user()
