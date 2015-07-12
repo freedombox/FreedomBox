@@ -22,6 +22,7 @@ Plinth module to configure Roundcube.
 from gettext import gettext as _
 
 from plinth import actions
+from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
@@ -34,3 +35,7 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Email Client (Roundcube)'), 'glyphicon-envelope',
                      'roundcube:index', 50)
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    return action_utils.webserver_is_enabled('roundcube')

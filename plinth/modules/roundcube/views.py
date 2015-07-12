@@ -27,6 +27,7 @@ import logging
 from .forms import RoundcubeForm
 from plinth import actions
 from plinth import package
+from plinth.modules import roundcube
 
 logger = logging.getLogger(__name__)
 
@@ -67,10 +68,7 @@ def index(request):
 
 def get_status():
     """Get the current status."""
-    output = actions.run('roundcube', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    return {'enabled': enabled}
+    return {'enabled': roundcube.is_enabled()}
 
 
 def _apply_changes(request, old_status, new_status):
