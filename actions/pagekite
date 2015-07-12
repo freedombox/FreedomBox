@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- mode: python -*-
 #
 # This file is part of Plinth.
@@ -18,9 +18,7 @@
 #
 
 """
-Configuration helper for Plinth PageKite interface
-
-Unfortunately there is no python3 package for augeas yet
+Configuration helper for Plinth PageKite interface.
 """
 
 import argparse
@@ -29,20 +27,19 @@ import json
 import os
 import subprocess
 
-import util
-from pagekite_util import SERVICE_PARAMS, convert_service_to_string, \
-    get_augeas_servicefile_path, load_service, CONF_PATH
+from plinth import action_utils
+from plinth.modules.pagekite import utils
 
 aug = augeas.Augeas()
 
 PATHS = {
-    'service_on': os.path.join(CONF_PATH, '*', 'service_on', '*'),
-    'kitename': os.path.join(CONF_PATH, '10_account.rc', 'kitename'),
-    'kitesecret': os.path.join(CONF_PATH, '10_account.rc', 'kitesecret'),
-    'abort_not_configured': os.path.join(CONF_PATH, '10_account.rc',
+    'service_on': os.path.join(utils.CONF_PATH, '*', 'service_on', '*'),
+    'kitename': os.path.join(utils.CONF_PATH, '10_account.rc', 'kitename'),
+    'kitesecret': os.path.join(utils.CONF_PATH, '10_account.rc', 'kitesecret'),
+    'abort_not_configured': os.path.join(utils.CONF_PATH, '10_account.rc',
                                          'abort_not_configured'),
-    'defaults': os.path.join(CONF_PATH, '20_frontends.rc', 'defaults'),
-    'frontend': os.path.join(CONF_PATH, '20_frontends.rc', 'frontend'),
+    'defaults': os.path.join(utils.CONF_PATH, '20_frontends.rc', 'defaults'),
+    'frontend': os.path.join(utils.CONF_PATH, '20_frontends.rc', 'frontend'),
 }
 
 
@@ -52,7 +49,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     # Enable/disable the pagekite service
-    subparsers.add_parser('is-running', help='Get whether PakeKite is running')
     subparsers.add_parser('start-and-enable', help='Enable PageKite service')
     subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
     subparsers.add_parser('restart', help='Restart PageKite service')
@@ -84,46 +80,34 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def _service(action):
-    """Start/stop/restart the pagekite service"""
-    error = subprocess.call(['service', 'pagekite', action])
-    if error:
-        raise Exception('Unable to %s PageKite server' % action)
-
-
-def subcommand_is_running(_):
-    """Print whether pagekite is enabled (yes or no)"""
-    print 'yes' if util.service_is_running('pagekite') else 'no'
-
-
 def subcommand_restart(_):
     """Restart the pagekite service"""
-    _service('restart')
-    print 'restarted'
+    action_utils.service_restart('pagekite')
+    print('restarted')
 
 
 def subcommand_start_and_enable(_):
     aug.remove(PATHS['abort_not_configured'])
     aug.save()
     # 'start' alone sometimes fails, even if the service is not running
-    _service('restart')
-    print 'enabled'
+    action_utils.service_restart('pagekite')
+    print('enabled')
 
 
 def subcommand_stop_and_disable(_):
-    _service('stop')
+    action_utils.service_stop('pagekite')
     aug.set(PATHS['abort_not_configured'], '')
     aug.save()
-    print 'disabled'
+    print('disabled')
 
 
 def subcommand_get_frontend(_):
     """Get pagekite frontend url"""
     if aug.match(PATHS['defaults']):
-        print "pagekite.net"
+        print("pagekite.net")
     else:
         url = aug.get(PATHS['frontend'])
-        print url if url else ""
+        print(url or '')
 
 
 def subcommand_set_frontend(arguments):
@@ -144,20 +128,20 @@ def enable_pagekitenet_frontend():
     aug.set(PATHS['defaults'], '')
     aug.remove(PATHS['frontend'])
     aug.save()
-    print "enabled"
+    print("enabled")
 
 
 def subcommand_get_services(arguments):
     """ lists all available (enabled) services """
     for match in aug.match(PATHS['service_on']):
         service = dict([(param, aug.get(os.path.join(match, param)))
-                        for param in SERVICE_PARAMS])
-        print json.dumps(service)
+                        for param in utils.SERVICE_PARAMS])
+        print(json.dumps(service))
 
 
 def subcommand_remove_service(arguments):
     """Searches and removes the service(s) that match all given parameters"""
-    service = load_service(arguments.service)
+    service = utils.load_service(arguments.service)
     paths = get_existing_service_paths(service)
     # TODO: theoretically, everything to do here is:
     # [aug.remove(path) for path in paths]
@@ -178,7 +162,7 @@ def subcommand_remove_service(arguments):
                 file.writelines(lines)
                 # abort to only allow deleting one service
                 break
-    _service('restart')
+    action_utils.service_restart('pagekite')
 
 
 def get_existing_service_paths(service):
@@ -193,7 +177,7 @@ def get_existing_service_paths(service):
 
 def subcommand_add_service(arguments):
     """Add one service"""
-    service = load_service(arguments.service)
+    service = utils.load_service(arguments.service)
     if get_existing_service_paths(service):
         msg = "Service with the parameters %s already exists"
         raise RuntimeError(msg % service)
@@ -203,9 +187,9 @@ def subcommand_add_service(arguments):
     # so add the service_on entry manually instead
     path = convert_augeas_path_to_filepath(root)
     with open(path, 'a') as servicefile:
-        line = "\nservice_on = %s\n" % convert_service_to_string(service)
+        line = "\nservice_on = %s\n" % utils.convert_service_to_string(service)
         servicefile.write(line)
-    _service('restart')
+    action_utils.service_restart('pagekite')
 
 
 def convert_augeas_path_to_filepath(augpath, prefix='/files',
@@ -224,7 +208,7 @@ def get_new_service_path(protocol):
     """Get the augeas path of a new service for a protocol
 
     This takes care of existing services using a /service_on/*/ query"""
-    root = get_augeas_servicefile_path(protocol)
+    root = utils.get_augeas_servicefile_path(protocol)
     new_index = len(aug.match(root + '/*')) + 1
     return os.path.join(root, str(new_index))
 
@@ -233,8 +217,8 @@ def subcommand_get_kite(_):
     """Print details of the currently configured kite"""
     kitename = aug.get(PATHS['kitename'])
     kitesecret = aug.get(PATHS['kitesecret'])
-    print kitename if kitename else ''
-    print kitesecret if kitesecret else ''
+    print(kitename or '')
+    print(kitesecret or '')
 
 
 def subcommand_set_kite(arguments):

@@ -25,8 +25,9 @@ import os
 import shutil
 import subprocess
 
+from plinth import action_utils
 
-CONFIG_ENABLE = '/etc/apache2/conf-enabled/ikiwiki-plinth.conf'
+
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
 SITE_PATH = '/var/www/ikiwiki'
@@ -40,10 +41,6 @@ def parse_arguments():
 
     # Setup ikiwiki site
     subparsers.add_parser('setup', help='Perform first time setup operations')
-
-    # Get whether ikiwiki site is enabled
-    subparsers.add_parser('get-enabled',
-                          help='Get whether ikiwiki site is enabled')
 
     # Enable ikiwiki site
     subparsers.add_parser('enable', help='Enable ikiwiki site')
@@ -80,26 +77,14 @@ def subcommand_setup(_):
     setup()
 
 
-def subcommand_get_enabled(_):
-    """Get whether ikiwiki site is enabled."""
-    try:
-        subprocess.check_output(['a2query', '-c', 'ikiwiki-plinth'],
-                                stderr=subprocess.STDOUT)
-        print('yes')
-    except subprocess.CalledProcessError:
-        print('no')
-
-
 def subcommand_enable(_):
     """Enable ikiwiki site."""
-    subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    action_utils.webserver_enable('ikiwiki-plinth')
 
 
 def subcommand_disable(_):
     """Disable ikiwiki site."""
-    subprocess.check_call(['a2disconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
+    action_utils.webserver_disable('ikiwiki-plinth')
 
 
 def subcommand_get_sites(_):
@@ -156,9 +141,9 @@ def setup():
     if not os.path.exists(SITE_PATH):
         os.makedirs(SITE_PATH)
 
-    subprocess.check_call(['a2enmod', 'cgi'])
-    subprocess.check_call(['a2enconf', 'ikiwiki-plinth'])
-    subprocess.check_call(['service', 'apache2', 'restart'])
+    with action_utils.WebserverChange() as webserver_change:
+        webserver_change.enable('cgi', kind='module')
+        webserver_change.enable('ikiwiki-plinth')
 
 
 def main():

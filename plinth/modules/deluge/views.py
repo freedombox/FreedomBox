@@ -54,14 +54,8 @@ def index(request):
 
 def get_status():
     """Get the current settings."""
-    output = actions.run('deluge', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    output = actions.run('deluge', ['is-running'])
-    is_running = (output.strip() == 'yes')
-
-    status = {'enabled': enabled,
-              'is_running': is_running}
+    status = {'enabled': deluge.is_enabled(),
+              'is_running': deluge.is_running()}
 
     return status
 

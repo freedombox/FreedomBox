@@ -62,14 +62,8 @@ def index(request):
 
 def get_status():
     """Get the current settings from server."""
-    output = actions.run('privoxy', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    output = actions.superuser_run('privoxy', ['is-running'])
-    is_running = (output.strip() == 'yes')
-
-    status = {'enabled': enabled,
-              'is_running': is_running}
+    status = {'enabled': privoxy.is_enabled(),
+              'is_running': privoxy.is_running()}
 
     return status
 

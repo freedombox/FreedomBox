@@ -16,7 +16,7 @@
 #
 
 from django import template
-from plinth.modules.pagekite.util import prepare_service_for_display
+from plinth.modules.pagekite import utils
 
 register = template.Library()
 
@@ -31,7 +31,7 @@ def create_pagekite_service_url(service, kite_name):
     """
     # add extra information if it's missing
     if 'subdomains' not in service:
-        service = prepare_service_for_display(service)
+        service = utils.prepare_service_for_display(service)
 
     urlparams = {'protocol': service['protocol']}
     if service['subdomains']:

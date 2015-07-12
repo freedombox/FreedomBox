@@ -25,6 +25,8 @@ import argparse
 import os
 import subprocess
 
+from plinth import action_utils
+
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
 SYSTEMD_SERVICE = '''
@@ -53,81 +55,23 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether deluge-web site is enabled
-    subparsers.add_parser('get-enabled',
-                          help='Get whether deluge-web site is enabled')
-
-    # Enable deluge-web site and start deluge-web
     subparsers.add_parser('enable', help='Enable deluge-web site')
-
-    # Disable deluge-web site and stop deluge-web
     subparsers.add_parser('disable', help='Disable deluge-web site')
 
-    # Get whether deluge-web is running
-    subparsers.add_parser('is-running',
-                          help='Get whether deluge-web is running')
-
     return parser.parse_args()
-
-
-def subcommand_get_enabled(_):
-    """Get whether deluge-web site is enabled."""
-    try:
-        subprocess.check_output(['a2query', '-c', 'deluge-plinth'],
-                                stderr=subprocess.STDOUT)
-        subprocess.check_output(['systemctl', 'is-enabled', 'deluge-web'])
-        print('yes')
-    except subprocess.CalledProcessError:
-        print('no')
 
 
 def subcommand_enable(_):
     """Enable deluge-web site and start deluge-web."""
     setup()
-    enable()
+    action_utils.service_enable('deluge-web')
+    action_utils.webserver_enable('deluge-plinth')
 
 
 def subcommand_disable(_):
     """Disable deluge-web site and stop deluge-web."""
-    disable()
-
-
-def subcommand_is_running(_):
-    """Get whether deluge-web is running."""
-    try:
-        output = subprocess.check_output(['systemctl', 'status', 'deluge-web'])
-    except subprocess.CalledProcessError:
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
-
-
-def enable():
-    """Start and enable deluge-web service."""
-    subprocess.check_call(['systemctl', 'enable', 'deluge-web'])
-    subprocess.check_call(['systemctl', 'start', 'deluge-web'])
-
-    subprocess.check_call(['a2enconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
-
-
-def disable():
-    """Stop and disable deluge-web service."""
-    subprocess.check_call(['a2disconf', 'deluge-plinth'])
-    subprocess.check_call(['service', 'apache2', 'reload'])
-
-    try:
-        subprocess.check_output(['systemctl', 'stop', 'deluge-web'])
-    except subprocess.CalledProcessError:
-        pass
-
-    subprocess.check_output(['systemctl', 'disable', 'deluge-web'])
+    action_utils.webserver_disable('deluge-plinth')
+    action_utils.service_disable('deluge-web')
 
 
 def setup():
