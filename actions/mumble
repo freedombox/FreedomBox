@@ -22,7 +22,6 @@ Configuration helper for Mumble server
 """
 
 import argparse
-import subprocess
 
 from plinth import action_utils
 
@@ -35,60 +34,20 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether service is enabled
-    subparsers.add_parser('get-enabled',
-                          help='Get whether Mumble service is enabled')
-
-    # Enable service
     subparsers.add_parser('enable', help='Enable Mumble service')
-
-    # Disable service
     subparsers.add_parser('disable', help='Disable Mumble service')
 
     return parser.parse_args()
 
 
-def subcommand_get_enabled(_):
-    """Get whether service is enabled."""
-    try:
-        with open(SERVICE_CONFIG, 'r') as file:
-            for line in file:
-                if line.startswith('MURMUR_DAEMON_START'):
-                    value = line.split('=')[1].strip()
-                    print('yes' if int(value) else 'no')
-                    return
-    except FileNotFoundError:
-        pass
-
-    print('no')
-
-
 def subcommand_enable(_):
     """Start service."""
-    set_service_enable(enable=True)
-    action_utils.service_start('mumble-server')
+    action_utils.service_enable('mumble-server')
 
 
 def subcommand_disable(_):
     """Stop service."""
-    action_utils.service_stop('mumble-server')
-    set_service_enable(enable=False)
-
-
-def set_service_enable(enable):
-    """Enable/disable daemon; enable: boolean."""
-    newline = 'MURMUR_DAEMON_START=1\n' if enable \
-        else 'MURMUR_DAEMON_START=0\n'
-
-    with open(SERVICE_CONFIG, 'r') as file:
-        lines = file.readlines()
-        for index, line in enumerate(lines):
-            if line.startswith('MURMUR_DAEMON_START'):
-                lines[index] = newline
-                break
-
-    with open(SERVICE_CONFIG, 'w') as file:
-        file.writelines(lines)
+    action_utils.service_disable('mumble-server')
 
 
 def main():
