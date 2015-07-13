@@ -23,6 +23,7 @@ from gettext import gettext as _
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules.config import config
+from plinth.modules.users.forms import GROUP_CHOICES
 
 
 class State0Form(forms.ModelForm):
@@ -52,8 +53,8 @@ than 63 characters in length.'),
             'username':
             _('Choose a username and password to access this web interface. '
               'The password can be changed and other users can be added '
-              'later. A POSIX system user with administrative privileges '
-              '(sudo) is also created.'),
+              'later. An LDAP user with administrative privileges (sudo) is '
+              'also created.'),
         }
 
     def save(self, commit=True):
@@ -63,21 +64,29 @@ than 63 characters in length.'),
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
-            try:
-                actions.superuser_run(
-                    'create-user',
-                    [user.get_username(), self.cleaned_data['password']])
-            except ActionError:
-                messages.error(self.request,
-                               _('Creating POSIX system user failed.'))
 
             try:
                 actions.superuser_run(
                     'create-ldap-user',
-                    [user.get_username(), self.cleaned_data['password']])
+                    [user.get_username(), self.cleaned_data['password']],
+                    log_full_command=False)
             except ActionError:
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
+
+            try:
+                actions.superuser_run(
+                    'add-ldap-user-to-group',
+                    [user.get_username(), 'admin'])
+            except ActionError:
+                messages.error(self.request,
+                               _('Failed to add new user to admin group.'))
+
+            # create initial Django groups
+            for group_choice in GROUP_CHOICES:
+                auth.models.Group.objects.create(name=group_choice[0])
+            admin_group = auth.models.Group.objects.get(name='admin')
+            admin_group.user_set.add(user)
 
             self.login_user()
 

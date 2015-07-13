@@ -34,3 +34,27 @@ if [ $? -ne 0 ]; then
     echo "Failed to create user"
     exit 1
 fi
+
+uid_num=$(getent passwd | awk -F: '($3>=1000) && ($3<59999) && ($3>maxuid) { maxuid=$3; } END { print maxuid+1; }')
+home_dir=/home/$username
+
+cat <<EOF |ldapmodify -Y EXTERNAL -H ldapi:///
+dn: uid=$username,ou=users,dc=thisbox
+changeType: modify
+add: objectClass
+objectClass: posixAccount
+-
+add: uidNumber
+uidNumber: $uid_num
+-
+add: gidNumber
+gidNumber: $uid_num
+-
+add: homeDirectory
+homeDirectory: $home_dir
+EOF
+
+if [ $? -ne 0 ]; then
+    echo "Failed to create posix account for user"
+    exit 2
+fi

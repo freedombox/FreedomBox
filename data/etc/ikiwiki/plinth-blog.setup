@@ -6,31 +6,32 @@ require IkiWiki::Setup::Automator;
 our $wikiname=$ARGV[0];
 our $admin=$ARGV[1];
 if (($wikiname eq "") || ($admin eq "")) {
-	print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup blog_name admin_name";
-	exit;
+    print "Usage: ikiwiki -setup /etc/ikiwiki/plinth-blog.setup blog_name admin_name";
+    exit;
 }
 
 our $wikiname_short=IkiWiki::Setup::Automator::sanitize_wikiname($wikiname);
 
 IkiWiki::Setup::Automator->import(
-	wikiname => $wikiname,
-	adminuser => [$admin],
-	rcs => "git",
-	srcdir => "/var/lib/ikiwiki/$wikiname_short",
-	destdir => "/var/www/ikiwiki/$wikiname_short",
-	repository => "/var/lib/ikiwiki/$wikiname_short.git",
-	dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
-	url => "/ikiwiki/$wikiname_short",
-	cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
-	add_plugins => [qw{goodstuff websetup comments calendar sidebar trail httpauth}],
-	rss => 1,
-	atom => 1,
-	syslog => 1,
-	example => "blog",
-	comments_pagespec => "posts/* and !*/Discussion",
-	archive_pagespec => "page(posts/*) and !*/Discussion",
-	global_sidebars => 0,
-	discussion => 0,
-	tagbase => "tags",
+    wikiname => $wikiname,
+    adminuser => [$admin],
+    rcs => "git",
+    srcdir => "/var/lib/ikiwiki/$wikiname_short",
+    destdir => "/var/www/ikiwiki/$wikiname_short",
+    repository => "/var/lib/ikiwiki/$wikiname_short.git",
+    dumpsetup => "/var/lib/ikiwiki/$wikiname_short.setup",
+    url => "/ikiwiki/$wikiname_short",
+    cgiurl => "/ikiwiki/$wikiname_short/ikiwiki.cgi",
+    cgiauthurl => "/ikiwiki-auth/$wikiname_short/ikiwiki.cgi",
+    cgi_wrapper => "/var/www/ikiwiki/$wikiname_short/ikiwiki.cgi",
+    add_plugins => [qw{goodstuff websetup comments calendar sidebar trail httpauth}],
+    rss => 1,
+    atom => 1,
+    syslog => 1,
+    example => "blog",
+    comments_pagespec => "posts/* and !*/Discussion",
+    archive_pagespec => "page(posts/*) and !*/Discussion",
+    global_sidebars => 0,
+    discussion => 0,
+    tagbase => "tags",
 )

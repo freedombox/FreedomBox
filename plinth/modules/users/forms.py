@@ -17,32 +17,37 @@
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.core.exceptions import ObjectDoesNotExist
 from gettext import gettext as _
 
 from plinth import actions
 from plinth.errors import ActionError
 
+GROUP_CHOICES = (
+    ('admin', 'admin'),
+    ('wiki', 'wiki'),
+)
+
 
 class CreateUserForm(UserCreationForm):
     """Custom user create form.
 
-    Include options to also create POSIX and LDAP user.
+    Include options to add user to groups.
     """
 
-    add_posix_user = forms.BooleanField(
-        label=_('Also create a POSIX system user'),
+    groups = forms.MultipleChoiceField(
+        choices=GROUP_CHOICES,
+        label=_('Groups'),
         required=False,
-        help_text=_('This will allow the new user to log in to the system '
-                    'through SSH. The new user will also have administrative '
-                    'privileges (sudo).'))
-
-    add_ldap_user = forms.BooleanField(
-        label=_('Also create an LDAP user'),
-        required=False,
-        help_text=_('This will allow the new user to log in to various '
-                    'services that support single sign-on through LDAP.'))
+        help_text=_('Select which services should be available to the new '
+                    'user. The user will be able to log in to services that '
+                    'support single sign-on through LDAP, if they are in the '
+                    'appropriate group.<br /><br />'
+                    'Users in the admin group will be able to log in to all '
+                    'services. They can also log in to the system through SSH '
+                    'and have administrative privileges (sudo).'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -50,33 +55,40 @@ class CreateUserForm(UserCreationForm):
         super(CreateUserForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        """Save the user model and create POSIX user if required."""
+        """Save the user model and create LDAP user if required."""
         user = super(CreateUserForm, self).save(commit)
 
         if commit:
-            if self.cleaned_data['add_posix_user']:
-                try:
-                    actions.superuser_run(
-                        'create-user',
-                        [user.get_username(), self.cleaned_data['password1']])
-                except ActionError:
-                    messages.error(self.request,
-                                   _('Creating POSIX system user failed.'))
+            try:
+                actions.superuser_run(
+                    'create-ldap-user',
+                    [user.get_username(), self.cleaned_data['password1']],
+                    log_full_command=False)
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating LDAP user failed.'))
 
-            if self.cleaned_data['add_ldap_user']:
+            for group in self.cleaned_data['groups']:
                 try:
                     actions.superuser_run(
-                        'create-ldap-user',
-                        [user.get_username(), self.cleaned_data['password1']])
+                        'add-ldap-user-to-group',
+                        [user.get_username(), group])
                 except ActionError:
-                    messages.error(self.request,
-                                   _('Creating LDAP user failed.'))
+                    messages.error(
+                        self.request,
+                        _('Failed to add new user to %s group.') % group)
+
+                try:
+                    g = Group.objects.get(name=group)
+                except ObjectDoesNotExist:
+                    g = Group.objects.create(name=group)
+                g.user_set.add(user)
 
         return user
 
 
 class UserUpdateForm(forms.ModelForm):
-    """When user is enabled/disabled, also enables/disables the POSIX user."""
+    """When user info is changed, also updates LDAP user."""
 
     class Meta:
         """Metadata to control automatic form building."""
@@ -93,29 +105,16 @@ class UserUpdateForm(forms.ModelForm):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        """Enable/disable POSIX user after saving user model."""
+        """Update LDAP user name after saving user model."""
         user = super(UserUpdateForm, self).save(commit)
 
         if commit:
-            try:
-                if user.is_active:
-                    actions.superuser_run('enable-user', [user.get_username()])
-                else:
-                    actions.superuser_run('disable-user',
-                                          [user.get_username()])
-            except ActionError:
-                messages.error(
-                    self.request,
-                    _('Setting active status for POSIX system user failed.'))
+            output = actions.superuser_run('get-ldap-user-groups',
+                                           [self.username])
+            old_groups = output.strip().split('\n')
+            old_groups = list(filter(None, old_groups))  # remove blank strings
 
             if self.username != user.get_username():
-                try:
-                    actions.superuser_run('rename-user',
-                                          [self.username, user.get_username()])
-                except ActionError:
-                    messages.error(self.request,
-                                   _('Renaming POSIX system user failed.'))
-
                 try:
                     actions.superuser_run('rename-ldap-user',
                                           [self.username, user.get_username()])
@@ -123,11 +122,29 @@ class UserUpdateForm(forms.ModelForm):
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
 
+            new_groups = user.groups.values_list('name', flat=True)
+            for old_group in old_groups:
+                if old_group not in new_groups:
+                    try:
+                        actions.superuser_run('remove-ldap-user-from-group',
+                                              [user.get_username(), old_group])
+                    except ActionError:
+                        messages.error(self.request,
+                                       _('Failed to remove user from group.'))
+            for new_group in new_groups:
+                if new_group not in old_groups:
+                    try:
+                        actions.superuser_run('add-ldap-user-to-group',
+                                              [user.get_username(), new_group])
+                    except ActionError:
+                        messages.error(self.request,
+                                       _('Failed to add user to group.'))
+
         return user
 
 
 class UserChangePasswordForm(SetPasswordForm):
-    """Custom form that also updates password for POSIX users."""
+    """Custom form that also updates password for LDAP users."""
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -135,22 +152,14 @@ class UserChangePasswordForm(SetPasswordForm):
         super(UserChangePasswordForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        """Save the user model and change POSIX password as well."""
+        """Save the user model and change LDAP password as well."""
         user = super(UserChangePasswordForm, self).save(commit)
         if commit:
             try:
                 actions.superuser_run(
-                    'change-user-password',
-                    [user.get_username(), self.cleaned_data['new_password1']])
-            except ActionError:
-                messages.error(
-                    self.request,
-                    _('Changing POSIX system user password failed.'))
-
-            try:
-                actions.superuser_run(
                     'change-ldap-user-password',
-                    [user.get_username(), self.cleaned_data['new_password1']])
+                    [user.get_username(), self.cleaned_data['new_password1']],
+                    log_full_command=False)
             except ActionError:
                 messages.error(
                     self.request,

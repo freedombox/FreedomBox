@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This file is part of Plinth.
 #
@@ -20,14 +20,4 @@
 
 username="$1"
 
-getent passwd "$username"
-if [ $? -ne 0 ]; then
-    echo "Failed: user not found"
-    exit
-fi
-
-usermod --expiredate "" "$username"
-if [ $? -ne 0 ]; then
-    echo "Failed"
-    exit 2
-fi
+ldapsearch 2>/dev/null -Y EXTERNAL -H ldapi:/// -b 'ou=groups,dc=thisbox' -LLL "(member=uid=$username,ou=users,dc=thisbox)" cn | awk '/cn:/ { print $2 }'
