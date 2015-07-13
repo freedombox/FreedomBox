@@ -356,30 +356,6 @@ case ${cmd} in
         echo ${NAT}
     ;;
     update)
-<<<<<<< HEAD
-    doReadCFG
-    OLDIP=`cat $IPFILE`
-    doGetWANIP
-    [ -f $CFG_disabled ] && FILE=$CFG_disabled
-    [ -f $CFG ] && FILE=$CFG
-    RESULT=0
-    #if we know our WAN IP, only update if IP changes
-    if [ "$OLDIP" != "$WANIP" -a "${WANIP}" != ${NOIP} ];then
-        ${UPDATE_TOOL} -c $FILE
-        RESULT=$?
-        cat /proc/uptime |awk '{print $1}' |cut -d . -f 1 > $LASTUPDATE
-    fi
-    #if we don't know our WAN IP do a blind update once a hour
-    if [ "${WANIP}" = ${NOIP} ];then
-        UPTIME=`cat /proc/uptime`
-        LAST=0
-        [ -f $LASTUPDATE ] && LAST=`cat $LASTUPDATE`
-        DIFF=`expr $UPTIME - $LAST`  
-        if [ $DIFF -gt $UPDATEMINUTESUNKNOWN ];then
-            ${UPDATE_TOOL} -c $FILE
-            RESULT=$?
-            cat /proc/uptime |awk '{print $1}' > $LASTUPDATE        
-=======
         doReadCFG
         dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
         doGetWANIP
@@ -400,7 +376,6 @@ case ${cmd} in
             if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
                 doUpdate
             fi
->>>>>>> upstream/master
         fi
     ;;
     stop)
