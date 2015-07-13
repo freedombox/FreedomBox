@@ -63,6 +63,14 @@ def _commit_callback(connection, error, data=None):
     del error
     del data
 
+def get_interface_list(type):
+    """Get a list of Linux devices which are available on this system"""
+    interfaces = {}
+    for device in nm.Client.new(None).get_devices():
+        if device.get_device_type() == type:
+            interfaces[device.get_iface()] = device.get_hw_address()
+
+    return interfaces
 
 def get_connection_list():
     """Get a list of active and available connections."""
