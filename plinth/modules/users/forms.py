@@ -41,6 +41,7 @@ class CreateUserForm(UserCreationForm):
         choices=GROUP_CHOICES,
         label=_('Groups'),
         required=False,
+        widget=forms.CheckboxSelectMultiple,
         help_text=_('Select which services should be available to the new '
                     'user. The user will be able to log in to services that '
                     'support single sign-on through LDAP, if they are in the '
