@@ -37,16 +37,16 @@ class AddEthernetForm(forms.Form):
     """Form to create a new ethernet connection."""
     interfaces = network.get_interface_list(nm.DeviceType.ETHERNET)
     list_index = 1
-    interfaces_list = ((list_index,DEFAULT_SELECT_MSG),)
-    for interface,mac in interfaces.items():
+    interfaces_list = ((list_index, DEFAULT_SELECT_MSG), )
+    for interface, mac in interfaces.items():
         list_index += 1
-        newentry = interfaces_list + ((list_index,interface),)
+        newentry = interfaces_list + ((list_index, interface), )
         interfaces_list = newentry
 
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
         label=_('Physical interface'),
-        choices= interfaces_list )
+        choices=interfaces_list)
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
@@ -67,16 +67,16 @@ class AddWifiForm(forms.Form):
     """Form to create a new wifi connection."""
     interfaces = network.get_interface_list(nm.DeviceType.WIFI)
     list_index = 1
-    interfaces_list = ((list_index,DEFAULT_SELECT_MSG),)
-    for interface,mac in interfaces.items():
+    interfaces_list = ((list_index, DEFAULT_SELECT_MSG), )
+    for interface, mac in interfaces.items():
         list_index += 1
-        newentry = interfaces_list + ((list_index,interface),)
+        newentry = interfaces_list + ((list_index, interface), )
         interfaces_list = newentry
 
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
         label=_('Physical interface'),
-        choices= interfaces_list )
+        choices=interfaces_list)
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
