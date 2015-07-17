@@ -38,7 +38,7 @@ class AddEthernetForm(forms.Form):
     interfaces = network.get_interface_list(nm.DeviceType.ETHERNET)
     interfaces_list = (('', DEFAULT_SELECT_MSG), )
     for interface, mac in interfaces.items():
-        displaystring = str(mac + ' (' + interface + ')')
+        displaystring = str(interface + ' (' + mac + ')')
         newentry = interfaces_list + ((interface, displaystring), )
         interfaces_list = newentry
 
