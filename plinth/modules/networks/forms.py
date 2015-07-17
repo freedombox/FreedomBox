@@ -44,7 +44,7 @@ class AddEthernetForm(forms.Form):
 
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
-        label=_('Physical interface'),
+        label=_('Physical Interface'),
         choices=interfaces_list)
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
