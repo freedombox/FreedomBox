@@ -65,11 +65,10 @@ available over this interfaces. Select Internal only for trusted networks.'),
 class AddWifiForm(forms.Form):
     """Form to create a new wifi connection."""
     interfaces = network.get_interface_list(nm.DeviceType.WIFI)
-    list_index = 1
-    interfaces_list = ((list_index, DEFAULT_SELECT_MSG), )
+    interfaces_list = (('', DEFAULT_SELECT_MSG), )
     for interface, mac in interfaces.items():
-        list_index += 1
-        newentry = interfaces_list + ((list_index, interface), )
+        displaystring = str(interface + ' (' + mac + ')')
+        newentry = interfaces_list + ((interface, displaystring), )
         interfaces_list = newentry
 
     name = forms.CharField(label=_('Connection Name'))
