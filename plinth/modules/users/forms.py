@@ -19,7 +19,6 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
-from django.core.exceptions import ObjectDoesNotExist
 from gettext import gettext as _
 
 from plinth import actions
@@ -79,11 +78,8 @@ class CreateUserForm(UserCreationForm):
                         self.request,
                         _('Failed to add new user to %s group.') % group)
 
-                try:
-                    g = Group.objects.get(name=group)
-                except ObjectDoesNotExist:
-                    g = Group.objects.create(name=group)
-                g.user_set.add(user)
+                group_object, _ = Group.objects.get_or_create(name=group)
+                group_object.user_set.add(user)
 
         return user
 
@@ -101,19 +97,21 @@ class UserUpdateForm(forms.ModelForm):
 
     def __init__(self, request, username, *args, **kwargs):
         """Initialize the form with extra request argument."""
+        for group, _ in GROUP_CHOICES:
+            Group.objects.get_or_create(name=group)
+
         self.request = request
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        """Update LDAP user name after saving user model."""
+        """Update LDAP user name and groups after saving user model."""
         user = super(UserUpdateForm, self).save(commit)
 
         if commit:
-            output = actions.superuser_run('get-ldap-user-groups',
-                                           [self.username])
+            output = actions.superuser_run('get-ldap-user-groups', [self.username])
             old_groups = output.strip().split('\n')
-            old_groups = list(filter(None, old_groups))  # remove blank strings
+            old_groups = [group for group in old_groups if group]
 
             if self.username != user.get_username():
                 try:
@@ -132,6 +130,7 @@ class UserUpdateForm(forms.ModelForm):
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to remove user from group.'))
+
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:

@@ -82,9 +82,10 @@ than 63 characters in length.'),
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
 
-            # create initial Django groups
+            # Create initial Django groups
             for group_choice in GROUP_CHOICES:
-                auth.models.Group.objects.create(name=group_choice[0])
+                auth.models.Group.objects.get_or_create(name=group_choice[0])
+
             admin_group = auth.models.Group.objects.get(name='admin')
             admin_group.user_set.add(user)
 
