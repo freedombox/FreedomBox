@@ -90,8 +90,16 @@ separated by dots.'),
         # pylint: disable-msg=E1101, W0233
         forms.Form.__init__(self, *args, **kwargs)
 
-        self.fields['time_zone'].choices = [(zone, zone)
-                                            for zone in self.get_time_zones()]
+        timezone_choices = [(zone, zone)
+                            for zone in self.get_time_zones()]
+
+        if len(open("/etc/timezone").read().strip()) == 0:
+            timezone_choices.insert(0, ('No timezone Set', 'No timezone set'))
+            self.fields['time_zone'].initial = \
+                                               ('No timezone set',
+                                                'No timezone set')
+
+        self.fields['time_zone'].choices = timezone_choices
 
     @staticmethod
     def get_time_zones():
@@ -132,7 +140,7 @@ def index(request):
             form = ConfigurationForm(initial=status,
                                      prefix='configuration')
     else:
-        form = ConfigurationForm(initial=status, prefix='configuration')
+        form =  ConfigurationForm(initial=status, prefix='configuration')
 
     return TemplateResponse(request, 'config.html',
                             {'title': _('General Configuration'),
@@ -170,7 +178,8 @@ def _apply_changes(request, old_status, new_status):
     else:
         messages.info(request, _('Domain name is unchanged'))
 
-    if old_status['time_zone'] != new_status['time_zone']:
+    if old_status['time_zone'] != new_status['time_zone'] and \
+       new_status['time_zone'].lower() != 'no timezone set':
         try:
             actions.superuser_run('timezone-change', [new_status['time_zone']])
         except Exception as exception:
