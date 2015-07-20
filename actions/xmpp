@@ -53,6 +53,9 @@ def parse_arguments():
     # Setup jwchat apache conf
     subparsers.add_parser('setup', help='Setup jwchat apache conf')
 
+    subparsers.add_parser('enable', help='Enable XMPP service')
+    subparsers.add_parser('disable', help='Disable XMPP service')
+
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
@@ -121,6 +124,18 @@ def subcommand_setup(_):
     with action_utils.WebserverChange() as webserver_change:
         webserver_change.disable('jwchat', kind='site')
         webserver_change.enable('jwchat-plinth')
+
+
+def subcommand_enable(_):
+    """Enable XMPP service"""
+    action_utils.service_enable('ejabberd')
+    action_utils.webserver_enable('jwchat-plinth')
+
+
+def subcommand_disable(_):
+    """Disable XMPP service"""
+    action_utils.webserver_disable('jwchat-plinth')
+    action_utils.service_disable('ejabberd')
 
 
 def subcommand_pre_change_hostname(arguments):
