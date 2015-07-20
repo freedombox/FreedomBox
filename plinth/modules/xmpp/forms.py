@@ -8,21 +8,23 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
 """
-URLs for the XMPP module
+Forms for configuring XMPP service.
 """
 
-from django.conf.urls import patterns, url
+from django import forms
+from gettext import gettext as _
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.xmpp.views',
-    url(r'^apps/xmpp/$', 'index', name='index'),
-)
+class XmppForm(forms.Form):  # pylint: disable=W0232
+    """XMPP configuration form."""
+    enabled = forms.BooleanField(
+        label=_('Enable XMPP'),
+        required=False)
