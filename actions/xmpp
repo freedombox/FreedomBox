@@ -53,18 +53,6 @@ def parse_arguments():
     # Setup jwchat apache conf
     subparsers.add_parser('setup', help='Setup jwchat apache conf')
 
-    # Get whether LDAP authentication is enabled
-    subparsers.add_parser('is-ldap-enabled',
-                          help='Get whether LDAP authentication is enabled')
-
-    # Enable LDAP authentication
-    subparsers.add_parser('enable-ldap',
-                          help='Enable LDAP authentication')
-
-    # Disable LDAP authentication
-    subparsers.add_parser('disable-ldap',
-                          help='Disable LDAP authentication')
-
     # Get whether inband registration is enabled
     subparsers.add_parser('is-inband-enabled',
                           help='Get whether inband registration is enabled')
@@ -134,21 +122,7 @@ def subcommand_pre_install(arguments):
 
 
 def subcommand_setup(_):
-    """Setup jwchat apache conf"""
-    with action_utils.WebserverChange() as webserver_change:
-        webserver_change.disable('jwchat', kind='site')
-        webserver_change.enable('jwchat-plinth')
-
-
-def subcommand_is_ldap_enabled(_):
-    """Get whether LDAP authentication is enabled"""
-    conffile = open(EJABBERD_CONFIG, 'r')
-    conf = yaml.safe_load(conffile)
-    print('ldap' in conf['auth_method'])
-
-
-def subcommand_enable_ldap(_):
-    """Enable LDAP authentication"""
+    """Enabled LDAP authentication and setup jwchat apache conf"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
 
@@ -171,25 +145,9 @@ def subcommand_enable_ldap(_):
     except subprocess.CalledProcessError as err:
         print('Failed to restart ejabberd with new configuration: %s', err)
 
-
-def subcommand_disable_ldap(_):
-    """Disable LDAP authentication"""
-    with open(EJABBERD_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-
-    with open(EJABBERD_CONFIG, 'w') as conffile:
-        for line in lines:
-            if '## auth_method: internal' in line:
-                conffile.write('auth_method: internal\n')
-            elif 'auth_method: ldap' in line:
-                conffile.write('## auth_method: ldap\n')
-            else:
-                conffile.write(line)
-
-    try:
-        subprocess.check_output(['ejabberdctl', 'restart'])
-    except subprocess.CalledProcessError as err:
-        print('Failed to restart ejabberd with new configuration: %s', err)
+    with action_utils.WebserverChange() as webserver_change:
+        webserver_change.disable('jwchat', kind='site')
+        webserver_change.enable('jwchat-plinth')
 
 
 def subcommand_is_inband_enabled(_):
