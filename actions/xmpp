@@ -24,6 +24,7 @@ Configuration helper for the ejabberd service
 import argparse
 import subprocess
 import os
+import shutil
 import socket
 import re
 import yaml
@@ -140,6 +141,10 @@ def subcommand_disable(_):
 
 def subcommand_pre_change_hostname(arguments):
     """Prepare ejabberd for hostname change"""
+    if not shutil.which('ejabberdctl'):
+        print('ejabberdctl not found. Is ejabberd installed?')
+        return
+
     old_hostname = arguments.old_hostname
     new_hostname = arguments.new_hostname
 
@@ -156,6 +161,10 @@ def subcommand_pre_change_hostname(arguments):
 
 def subcommand_change_hostname(arguments):
     """Update ejabberd and jwchat with new hostname"""
+    if not shutil.which('ejabberdctl'):
+        print('ejabberdctl not found. Is ejabberd installed?')
+        return
+
     action_utils.service_stop('ejabberd')
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
@@ -182,6 +191,10 @@ def subcommand_change_hostname(arguments):
 
 def subcommand_change_domainname(arguments):
     """Update ejabberd and jwchat with new domainname"""
+    if not shutil.which('ejabberdctl'):
+        print('ejabberdctl not found. Is ejabberd installed?')
+        return
+
     domainname = arguments.domainname
     if not domainname:
         # If new domainname is blank, use hostname instead.
