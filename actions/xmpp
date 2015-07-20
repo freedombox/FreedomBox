@@ -53,18 +53,6 @@ def parse_arguments():
     # Setup jwchat apache conf
     subparsers.add_parser('setup', help='Setup jwchat apache conf')
 
-    # Get whether inband registration is enabled
-    subparsers.add_parser('is-inband-enabled',
-                          help='Get whether inband registration is enabled')
-
-    # Enable inband registration
-    subparsers.add_parser('enable-inband',
-                          help='Enable inband registration')
-
-    # Disable inband registration
-    subparsers.add_parser('disable-inband',
-                          help='Disable inband registration')
-
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
@@ -87,21 +75,6 @@ def parse_arguments():
         'change-domainname',
         help='Update ejabberd and jwchat with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
-
-    # Get the list of all virtual hosts configured in ejabberd
-    subparsers.add_parser(
-        'get-vhosts',
-        help='Get the list of all virtual hosts configured in ejabberd')
-
-    # Register a new user account
-    register = subparsers.add_parser('register',
-                                     help='Register a new user account')
-    register.add_argument('--username',
-                          help='Username for the new user account')
-    register.add_argument('--vhost',
-                          help='Virtual host to register the new user in')
-    register.add_argument('--password',
-                          help='Password for the new user account')
 
     return parser.parse_args()
 
@@ -148,49 +121,6 @@ def subcommand_setup(_):
     with action_utils.WebserverChange() as webserver_change:
         webserver_change.disable('jwchat', kind='site')
         webserver_change.enable('jwchat-plinth')
-
-
-def subcommand_is_inband_enabled(_):
-    """Get whether inband registration is enabled"""
-    conffile = open(EJABBERD_CONFIG, 'r')
-    conf = yaml.safe_load(conffile)
-    print('all' in conf['modules']['mod_register']['ip_access'])
-
-
-def subcommand_enable_inband(_):
-    """Enable inband registration"""
-    with open(EJABBERD_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-
-    with open(EJABBERD_CONFIG, 'w') as conffile:
-        for line in lines:
-            if 'ip_access' in line:
-                conffile.write(line.replace('trusted_network', 'all'))
-            else:
-                conffile.write(line)
-
-    try:
-        subprocess.check_output(['ejabberdctl', 'restart'])
-    except subprocess.CalledProcessError as err:
-        print('Failed to restart ejabberd with new configuration: %s', err)
-
-
-def subcommand_disable_inband(_):
-    """Disable inband registration"""
-    with open(EJABBERD_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-
-    with open(EJABBERD_CONFIG, 'w') as conffile:
-        for line in lines:
-            if 'ip_access' in line:
-                conffile.write(line.replace('all', 'trusted_network'))
-            else:
-                conffile.write(line)
-
-    try:
-        subprocess.check_output(['ejabberdctl', 'restart'])
-    except subprocess.CalledProcessError as err:
-        print('Failed to restart ejabberd with new configuration: %s', err)
 
 
 def subcommand_pre_change_hostname(arguments):
@@ -275,25 +205,6 @@ def subcommand_change_domainname(arguments):
                 conffile.write('  - "' + domainname + '"\n')
 
     action_utils.service_start('ejabberd')
-
-
-def subcommand_get_vhosts(_):
-    """Get list of all virtual hosts configured in ejabbered."""
-    subprocess.call(['ejabberdctl', 'registered_vhosts'])
-
-
-def subcommand_register(arguments):
-    """Register a new user account."""
-    username = arguments.username
-    vhost = arguments.vhost
-    password = arguments.password
-
-    try:
-        output = subprocess.check_output(['ejabberdctl', 'register',
-                                          username, vhost, password])
-        print(output.decode())
-    except subprocess.CalledProcessError as e:
-        print('Failed to register XMPP account:', e.output.decode())
 
 
 def main():
