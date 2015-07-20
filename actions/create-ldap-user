@@ -19,7 +19,14 @@
 # Must be run as root.
 
 username="$1"
-password=$(slappasswd -s "$2")
+
+IFS= read -r password
+if [ -z "$password" ]; then
+    echo "Error: Could not read password from stdin."
+    exit 3
+fi
+
+password=$(slappasswd -s "$password")
 
 cat <<EOF |ldapadd -Y EXTERNAL -H ldapi:///
 dn: uid=$username,ou=users,dc=thisbox
