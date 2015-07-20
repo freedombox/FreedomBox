@@ -69,7 +69,7 @@ than 63 characters in length.'),
                 actions.superuser_run(
                     'create-ldap-user',
                     [user.get_username()],
-                    input=self.cleaned_data['password'])
+                    input=self.cleaned_data['password'].encode())
             except ActionError:
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
