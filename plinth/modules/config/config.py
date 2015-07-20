@@ -89,8 +89,12 @@ separated by dots.'),
         # pylint: disable-msg=E1101, W0233
         forms.Form.__init__(self, *args, **kwargs)
 
-        self.fields['time_zone'].choices = [(zone, zone)
-                                            for zone in self.get_time_zones()]
+        timezone_options = [(zone, zone)
+                            for zone in self.get_time_zones()]
+
+        timezone_options.append(('none', _('No timezone set')))
+
+        self.fields['time_zone'].choices = timezone_options
 
     @staticmethod
     def get_time_zones():
@@ -141,7 +145,16 @@ def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
             'domainname': get_domainname(),
-            'time_zone': open('/etc/timezone').read().rstrip()}
+            'time_zone': get_current_timezone()}
+
+
+def get_current_timezone():
+    """Get current timezone"""
+    timezone = open('/etc/timezone').read().rstrip()
+    if timezone != '':
+        return timezone
+
+    return 'none'
 
 
 def _apply_changes(request, old_status, new_status):
@@ -168,7 +181,8 @@ def _apply_changes(request, old_status, new_status):
     else:
         messages.info(request, _('Domain name is unchanged'))
 
-    if old_status['time_zone'] != new_status['time_zone']:
+    if old_status['time_zone'] != new_status['time_zone'] and \
+       new_status['time_zone'] != 'none':
         try:
             actions.superuser_run('timezone-change', [new_status['time_zone']])
         except Exception as exception:
