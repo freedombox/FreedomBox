@@ -25,8 +25,8 @@ from plinth import actions
 from plinth.errors import ActionError
 
 GROUP_CHOICES = (
-    ('admin', 'admin'),
-    ('wiki', 'wiki'),
+    ('admin', _('admin')),
+    ('wiki', _('wiki')),
 )
 
 
@@ -61,8 +61,8 @@ class CreateUserForm(UserCreationForm):
         if commit:
             try:
                 actions.superuser_run(
-                    'create-ldap-user',
-                    [user.get_username()],
+                    'ldap',
+                    ['create-user', user.get_username()],
                     input=self.cleaned_data['password1'].encode())
             except ActionError:
                 messages.error(self.request,
@@ -71,8 +71,8 @@ class CreateUserForm(UserCreationForm):
             for group in self.cleaned_data['groups']:
                 try:
                     actions.superuser_run(
-                        'add-ldap-user-to-group',
-                        [user.get_username(), group])
+                        'ldap',
+                        ['add-user-to-group', user.get_username(), group])
                 except ActionError:
                     messages.error(
                         self.request,
@@ -109,14 +109,16 @@ class UserUpdateForm(forms.ModelForm):
         user = super(UserUpdateForm, self).save(commit)
 
         if commit:
-            output = actions.superuser_run('get-ldap-user-groups', [self.username])
+            output = actions.superuser_run(
+                'ldap', ['get-user-groups', self.username])
             old_groups = output.strip().split('\n')
             old_groups = [group for group in old_groups if group]
 
             if self.username != user.get_username():
                 try:
-                    actions.superuser_run('rename-ldap-user',
-                                          [self.username, user.get_username()])
+                    actions.superuser_run(
+                        'ldap',
+                        ['rename-user', self.username, user.get_username()])
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
@@ -125,8 +127,10 @@ class UserUpdateForm(forms.ModelForm):
             for old_group in old_groups:
                 if old_group not in new_groups:
                     try:
-                        actions.superuser_run('remove-ldap-user-from-group',
-                                              [user.get_username(), old_group])
+                        actions.superuser_run(
+                            'ldap',
+                            ['remove-user-from-group', user.get_username(),
+                             old_group])
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to remove user from group.'))
@@ -134,8 +138,10 @@ class UserUpdateForm(forms.ModelForm):
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
-                        actions.superuser_run('add-ldap-user-to-group',
-                                              [user.get_username(), new_group])
+                        actions.superuser_run(
+                            'ldap',
+                            ['add-user-to-group', user.get_username(),
+                             new_group])
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
@@ -157,8 +163,8 @@ class UserChangePasswordForm(SetPasswordForm):
         if commit:
             try:
                 actions.superuser_run(
-                    'change-ldap-user-password',
-                    [user.get_username()],
+                    'ldap',
+                    ['set-user-password', user.get_username()],
                     input=self.cleaned_data['new_password1'].encode())
             except ActionError:
                 messages.error(
