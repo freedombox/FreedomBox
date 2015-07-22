@@ -78,7 +78,7 @@ class CreateUserForm(UserCreationForm):
                         self.request,
                         _('Failed to add new user to %s group.') % group)
 
-                group_object, _ = Group.objects.get_or_create(name=group)
+                group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)
 
         return user
@@ -97,7 +97,7 @@ class UserUpdateForm(forms.ModelForm):
 
     def __init__(self, request, username, *args, **kwargs):
         """Initialize the form with extra request argument."""
-        for group, _ in GROUP_CHOICES:
+        for group, group_name in GROUP_CHOICES:
             Group.objects.get_or_create(name=group)
 
         self.request = request
