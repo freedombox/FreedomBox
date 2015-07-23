@@ -62,8 +62,8 @@ class ConfigurationForm(forms.Form):
     """Main system configuration form"""
     time_zone = forms.ChoiceField(
         label=_('Time Zone'),
-        help_text=_('Set your timezone to get accurate timestamps. \
-This information will be used to set your systemwide timezone'))
+        help_text=_('Set your time zone to get accurate timestamps. \
+This will set the systemwide time zone.'))
 
     # We're more conservative than RFC 952 and RFC 1123
     hostname = TrimmedCharField(
@@ -91,8 +91,9 @@ separated by dots.'),
 
         timezone_options = [(zone, zone)
                             for zone in self.get_time_zones()]
-
-        timezone_options.append(('none', _('No timezone set')))
+        # Show not-set option only when time zone is not set
+        if self.initial.get('time_zone') == 'none':
+            timezone_options.insert(0, ('none', _('-- no time zone set --')))
 
         self.fields['time_zone'].choices = timezone_options
 
@@ -126,7 +127,8 @@ def index(request):
     form = None
 
     if request.method == 'POST':
-        form = ConfigurationForm(request.POST, prefix='configuration')
+        form = ConfigurationForm(request.POST, initial=status,
+                                 prefix='configuration')
         # pylint: disable-msg=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
@@ -151,10 +153,7 @@ def get_status():
 def get_current_timezone():
     """Get current timezone"""
     timezone = open('/etc/timezone').read().rstrip()
-    if timezone != '':
-        return timezone
-
-    return 'none'
+    return timezone or 'none'
 
 
 def _apply_changes(request, old_status, new_status):
