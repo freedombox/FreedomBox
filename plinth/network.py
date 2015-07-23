@@ -64,17 +64,6 @@ def _commit_callback(connection, error, data=None):
     del data
 
 
-def check_interface_usage(interface):
-    """check if a Interface is used by a connection, will return False if
-    the device is not in use or True if the given device is in use"""
-    client = nm.Client.new(None)
-    connections = []
-    for connection in client.get_connections():
-        if connection.get_interface_name() == interface:
-            return True
-    return False
-
-
 def get_interface_list(type):
     """Get a list of Linux devices which are available on this system"""
     interfaces = {}

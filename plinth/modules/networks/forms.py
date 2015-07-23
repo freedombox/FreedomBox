@@ -61,17 +61,11 @@ available over this interfaces. Select Internal only for trusted networks.'),
         validators=[validators.validate_ipv4_address],
         required=False)
 
-
     def clean(self):
         """ validate the form fields """
         cleaned_data = super(forms.Form, self).clean()
         if DEFAULT_SELECT_MSG == cleaned_data.get('interface'):
             raise forms.ValidationError('Please select a interface to be used')
-
-        if network.check_interface_usage( cleaned_data.get('interface') ):
-            raise forms.ValidationError('Interface is used by a \
-            different connection')
-
 
 
 class AddWifiForm(forms.Form):
@@ -122,13 +116,8 @@ Point.'))
         validators=[validators.validate_ipv4_address],
         required=False)
 
-
     def clean(self):
         """ validate the form fields """
         cleaned_data = super(forms.Form, self).clean()
         if DEFAULT_SELECT_MSG == cleaned_data.get('interface'):
             raise forms.ValidationError('Please select a interface to be used')
-
-        if network.check_interface_usage( cleaned_data.get('interface') ):
-            raise forms.ValidationError('Interface is used by a \
-            different connection')
