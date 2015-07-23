@@ -304,4 +304,3 @@ def delete(request, uuid):
                             {'title': _('Delete Connection'),
                              'subsubmenu': subsubmenu,
                              'name': name})
-
