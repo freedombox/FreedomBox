@@ -305,10 +305,3 @@ def delete(request, uuid):
                              'subsubmenu': subsubmenu,
                              'name': name})
 
-
-def clean(self):
-    """ validate the form fields """
-    cleaned_data = super(ConfigureForm, self).clean()
-    raise forms.ValidationError('test')
-    if 'please select' == cleaned_data.get('interface'):
-        raise forms.ValidationError('no interface selected')
