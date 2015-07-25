@@ -67,8 +67,8 @@ than 63 characters in length.'),
 
             try:
                 actions.superuser_run(
-                    'create-ldap-user',
-                    [user.get_username()],
+                    'ldap',
+                    ['create-user', user.get_username()],
                     input=self.cleaned_data['password'].encode())
             except ActionError:
                 messages.error(self.request,
@@ -76,8 +76,8 @@ than 63 characters in length.'),
 
             try:
                 actions.superuser_run(
-                    'add-ldap-user-to-group',
-                    [user.get_username(), 'admin'])
+                    'ldap',
+                    ['add-user-to-group', user.get_username(), 'admin'])
             except ActionError:
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
