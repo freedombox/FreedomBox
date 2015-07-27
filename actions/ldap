@@ -18,7 +18,9 @@
 
 # Store anything available from stdin.
 # This is used to receive passwords from Plinth.
-input="/proc/$$/fd/0"
+if read -t 0; then
+    IFS= read -r input
+fi
 
 set -e  # Exit on failure
 
