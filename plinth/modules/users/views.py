@@ -85,15 +85,6 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         kwargs['username'] = self.object.username
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        """Return the data to be used for rendering templates."""
-        context = super(UserUpdate, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.object.username])
-        context['is_posix_user'] = 'User exists' in output
-        output = actions.run('check-ldap-user-exists', [self.object.username])
-        context['is_ldap_user'] = 'User exists' in output
-        return context
-
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
@@ -111,15 +102,6 @@ class UserDelete(ContextMixin, DeleteView):
     success_url = reverse_lazy('users:index')
     title = _('Delete User')
 
-    def get_context_data(self, **kwargs):
-        """Return the data to be used for rendering templates."""
-        context = super(UserDelete, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.kwargs['slug']])
-        context['is_posix_user'] = 'User exists' in output
-        output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
-        context['is_ldap_user'] = 'User exists' in output
-        return context
-
     def delete(self, *args, **kwargs):
         """Set the success message of deleting the user.
 
@@ -132,13 +114,7 @@ class UserDelete(ContextMixin, DeleteView):
         messages.success(self.request, message)
 
         try:
-            actions.superuser_run('delete-user', [self.kwargs['slug']])
-        except ActionError:
-            messages.error(self.request,
-                           _('Deleting POSIX system user failed.'))
-
-        try:
-            actions.superuser_run('delete-ldap-user', [self.kwargs['slug']])
+            actions.superuser_run('ldap', ['delete-user', self.kwargs['slug']])
         except ActionError:
             messages.error(self.request,
                            _('Deleting LDAP user failed.'))
@@ -159,15 +135,6 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         kwargs['request'] = self.request
         kwargs['user'] = User.objects.get(username=self.kwargs['slug'])
         return kwargs
-
-    def get_context_data(self, **kwargs):
-        """Return the data to be used for rendering templates."""
-        context = super(UserChangePassword, self).get_context_data(**kwargs)
-        output = actions.run('check-user-exists', [self.kwargs['slug']])
-        context['is_posix_user'] = 'User exists' in output
-        output = actions.run('check-ldap-user-exists', [self.kwargs['slug']])
-        context['is_ldap_user'] = 'User exists' in output
-        return context
 
     def get_success_url(self):
         """Return the URL to go to on successful sumbission."""

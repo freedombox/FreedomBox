@@ -25,6 +25,8 @@ import argparse
 import json
 import subprocess
 
+from plinth import action_utils
+
 
 SERVICE_CONFIG = '/etc/default/transmission-daemon'
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
@@ -35,19 +37,11 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Get whether service is enabled
-    subparsers.add_parser('get-enabled',
-                          help='Get whether Transmission service is enabled')
-
     # Enable service
     subparsers.add_parser('enable', help='Enable Transmission service')
 
     # Disable service
     subparsers.add_parser('disable', help='Disable Transmission service')
-
-    # Get whether daemon is running
-    subparsers.add_parser('is-running',
-                          help='Get whether Transmission daemon is running')
 
     # Merge given JSON configration with existing
     merge_configuration = subparsers.add_parser(
@@ -60,69 +54,16 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_get_enabled(_):
-    """Get whether Transmission service is enabled."""
-    try:
-        with open(SERVICE_CONFIG, 'r') as file_handle:
-            for line in file_handle:
-                if line.startswith('ENABLE_DAEMON'):
-                    value = line.split('=')[1].strip()
-                    print('yes' if int(value) else 'no')
-                    return
-    except IOError:
-        pass
-
-    print('no')
-
-
 def subcommand_enable(_):
     """Start Transmission service."""
-    set_service_enable(enable=True)
-    subprocess.call(['service', 'transmission-daemon', 'start'])
-    subprocess.call(['a2enconf', 'transmission-plinth'])
-    subprocess.call(['service', 'apache2', 'reload'])
+    action_utils.service_enable('transmission-daemon')
+    action_utils.webserver_enable('transmission-plinth')
 
 
 def subcommand_disable(_):
     """Stop Transmission service."""
-    subprocess.call(['a2disconf', 'transmission-plinth'])
-    subprocess.call(['service', 'apache2', 'reload'])
-    subprocess.call(['service', 'transmission-daemon', 'stop'])
-    set_service_enable(enable=False)
-
-
-def set_service_enable(enable):
-    """Enable/disable Transmission daemon; enable: boolean."""
-    newline = 'ENABLE_DAEMON=1\n' if enable else 'ENABLE_DAEMON=0\n'
-
-    with open(SERVICE_CONFIG, 'r') as file_handle:
-        lines = file_handle.readlines()
-        for index, line in enumerate(lines):
-            if line.startswith('ENABLE_DAEMON'):
-                lines[index] = newline
-                break
-
-    with open(SERVICE_CONFIG, 'w') as file_handle:
-        file_handle.writelines(lines)
-
-
-def subcommand_is_running(_):
-    """Get whether Transmission is running."""
-    try:
-        output = subprocess.check_output(['service', 'transmission-daemon',
-                                          'status'])
-    except subprocess.CalledProcessError:
-        # If daemon is not running we get a status code != 0 and a
-        # CalledProcessError
-        print('no')
-    else:
-        running = False
-        for line in output.decode().split('\n'):
-            if 'Active' in line and 'running' in line:
-                running = True
-                break
-
-        print('yes' if running else 'no')
+    action_utils.webserver_disable('transmission-plinth')
+    action_utils.service_disable('transmission-daemon')
 
 
 def subcommand_merge_configuration(arguments):
@@ -138,7 +79,7 @@ def subcommand_merge_configuration(arguments):
     new_configuration = json.dumps(new_configuration, indent=4, sort_keys=True)
 
     open(TRANSMISSION_CONFIG, 'w').write(new_configuration)
-    subprocess.call(['service', 'transmission-daemon', 'reload'])
+    action_utils.service_reload('transmission-daemon')
 
 
 def main():

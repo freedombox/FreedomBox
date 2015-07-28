@@ -1,0 +1,170 @@
+#!/bin/bash
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Store anything available from stdin.
+# This is used to receive passwords from Plinth.
+if read -t 0; then
+    IFS= read -r input
+fi
+
+set -e  # Exit on failure
+
+# XXX: ldapscripts has an issue that it can't properly extract
+# built-in templates under certain locales due to grep command
+# recognizing the source file as binary.  Remove using this once the
+# bug is fixed.  Passing '-a' as argument to grep seems to be a
+# solution.
+export LC_ALL=C
+
+
+create_user()
+{
+    username="$1"
+    password="$2"
+
+    # All users shall have 'users' (a group in /etc/group) as primary group.
+    ldapadduser $username users > /dev/null
+
+    set_user_password $username $password
+}
+
+
+delete_user()
+{
+    username="$1"
+
+    groups=$(get_user_groups $username)
+
+    ldapdeleteuser $username
+
+    while read -r group; do
+        ldapdeleteuserfromgroup $username $group > /dev/null || true
+    done <<< "$groups"
+}
+
+
+rename_user()
+{
+    old_username="$1"
+    new_username="$2"
+
+    groups=$(get_user_groups $old_username)
+
+    ldaprenameuser $old_username $new_username
+
+    while read -r group; do
+        ldapdeleteuserfromgroup $old_username $group > /dev/null || true
+        ldapaddusertogroup $new_username $group > /dev/null || true
+    done <<< "$groups"
+}
+
+
+set_user_password()
+{
+    username="$1"
+    password=$(slappasswd -s "$2")
+
+    # XXX: Use ldapsetpasswd as soon as ldapscripts can handle
+    # changing passwords with SASL auth EXTERNAL.
+    cat <<EOF | ldapmodify -Y EXTERNAL -H ldapi:/// > /dev/null
+dn: uid=$username,ou=Users,dc=thisbox
+changetype: modify
+replace: userPassword
+userPassword: $password
+EOF
+}
+
+
+get_user_groups()
+{
+    # Return only supplimentary groups and don't include the 'users'
+    # primary group.
+    username="$1"
+
+    ldapid $username | cut -f 3 -d ' ' | cut -d = -f 2 | sed 's+,+\n+g' | sed "s+.*(\(.*\))+\1+" | grep -v users || true
+}
+
+
+add_user_to_group()
+{
+    username="$1"
+    groupname="$2"
+
+    # Try to create group and ignore failure if group already exists
+    ldapaddgroup $groupname > /dev/null 2>&1 || true
+
+    ldapaddusertogroup $username $groupname > /dev/null
+}
+
+
+remove_user_from_group()
+{
+    username="$1"
+    groupname="$2"
+
+    ldapdeleteuserfromgroup $username $groupname > /dev/null
+}
+
+
+setup()
+{
+    # XXX: Password setting on users is disabled as changing passwords
+    # using SASL Auth is not supported.
+    cat <<EOF | augtool --noload --noautoload --transform 'Shellvars incl /etc/ldapscripts/ldapscripts.conf' > /dev/null
+set /files/etc/ldapscripts/ldapscripts.conf/SERVER '"ldapi://"'
+set /files/etc/ldapscripts/ldapscripts.conf/SASLAUTH '"EXTERNAL"'
+set /files/etc/ldapscripts/ldapscripts.conf/SUFFIX '"dc=thisbox"'
+set /files/etc/ldapscripts/ldapscripts.conf/USUFFIX '"ou=Users"'
+set /files/etc/ldapscripts/ldapscripts.conf/GSUFFIX '"ou=Groups"'
+set /files/etc/ldapscripts/ldapscripts.conf/PASSWORDGEN '"true"'
+save
+EOF
+}
+
+
+setup
+
+command=$1
+shift
+case $command in
+    create-user)
+        create_user "$1" "$input"
+    ;;
+    delete-user)
+        delete_user "$@"
+    ;;
+    rename-user)
+        rename_user "$@"
+    ;;
+    set-user-password)
+        set_user_password "$1" "$input"
+    ;;
+    get-user-groups)
+        get_user_groups "$@"
+    ;;
+    add-user-to-group)
+        add_user_to_group "$@"
+    ;;
+    remove-user-from-group)
+        remove_user_from_group "$@"
+    ;;
+    *)
+        echo "Invalid sub-command"
+        exit -1
+    ;;
+esac

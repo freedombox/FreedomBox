@@ -16,59 +16,67 @@
 #
 
 """
-Plinth module for configuring Roundcube.
+Plinth module to configure XMPP server
 """
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 import logging
+import socket
 
-from .forms import RoundcubeForm
+from .forms import XmppForm
 from plinth import actions
 from plinth import package
-from plinth.modules import roundcube
+from plinth.modules import xmpp
+
 
 logger = logging.getLogger(__name__)
 
 
 def before_install():
     """Preseed debconf values before the packages are installed."""
-    actions.superuser_run('roundcube', ['pre-install'])
+    fqdn = socket.getfqdn()
+    domainname = '.'.join(fqdn.split('.')[1:])
+    logger.info('XMPP service domainname - %s', domainname)
+    actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
 
 
 def on_install():
-    """Setup Roundcube Apache configuration."""
-    actions.superuser_run('roundcube', ['setup'])
+    """Setup jwchat apache conf"""
+    actions.superuser_run('xmpp', ['setup'])
 
 
-@package.required(['sqlite3', 'roundcube', 'roundcube-sqlite3'],
-                  before_install=before_install, on_install=on_install)
+@package.required(['jwchat', 'ejabberd'],
+                  before_install=before_install,
+                  on_install=on_install)
 def index(request):
-    """Serve configuration page."""
+    """Serve configuration page"""
     status = get_status()
 
     form = None
 
     if request.method == 'POST':
-        form = RoundcubeForm(request.POST, prefix='roundcube')
-        # pylint: disable=E1101
+        form = XmppForm(request.POST, prefix='xmpp')
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
-            form = RoundcubeForm(initial=status, prefix='roundcube')
+            form = XmppForm(initial=status, prefix='xmpp')
     else:
-        form = RoundcubeForm(initial=status, prefix='roundcube')
+        form = XmppForm(initial=status, prefix='xmpp')
 
-    return TemplateResponse(request, 'roundcube.html',
-                            {'title': _('Email Client (Roundcube)'),
+    return TemplateResponse(request, 'xmpp.html',
+                            {'title': _('Chat Server (XMPP)'),
                              'status': status,
                              'form': form})
 
 
 def get_status():
-    """Get the current status."""
-    return {'enabled': roundcube.is_enabled()}
+    """Get the current settings."""
+    status = {'enabled': xmpp.is_enabled(),
+              'is_running': xmpp.is_running()}
+
+    return status
 
 
 def _apply_changes(request, old_status, new_status):
@@ -77,7 +85,8 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('roundcube', [sub_command])
+        actions.superuser_run('xmpp', [sub_command])
+        xmpp.service.notify_enabled(None, new_status['enabled'])
         modified = True
 
     if modified:

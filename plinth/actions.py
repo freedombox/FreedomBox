@@ -102,27 +102,28 @@ from plinth.errors import ActionError
 LOGGER = logging.getLogger(__name__)
 
 
-def run(action, options=None, async=False):
+def run(action, options=None, input=None, async=False):
     """Safely run a specific action as the current user.
 
     See actions._run for more information.
     """
-    return _run(action, options, async, False)
+    return _run(action, options, input, async, False)
 
 
-def superuser_run(action, options=None, async=False):
+def superuser_run(action, options=None, input=None, async=False):
     """Safely run a specific action as root.
 
     See actions._run for more information.
     """
-    return _run(action, options, async, True)
+    return _run(action, options, input, async, True)
 
 
-def _run(action, options=None, async=False, run_as_root=False):
+def _run(action, options=None, input=None, async=False, run_as_root=False):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
     - options are added to the action command.
+    - input: data (as bytes) that will be sent to the action command's stdin.
     - async: run asynchronously or wait for the command to complete.
     - run_as_root: execute the command through sudo.
     """
@@ -165,12 +166,13 @@ def _run(action, options=None, async=False, run_as_root=False):
     # Contract 5 (and 6-ish).
     proc = subprocess.Popen(
         cmd,
+        stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         shell=False)
 
     if not async:
-        output, error = proc.communicate()
+        output, error = proc.communicate(input=input)
         output, error = output.decode(), error.decode()
         if proc.returncode != 0:
             LOGGER.error('Error executing command - %s, %s, %s', cmd, output,

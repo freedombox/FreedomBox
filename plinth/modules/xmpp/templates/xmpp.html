@@ -22,13 +22,36 @@
 
 {% block content %}
 
-<p>XMPP is an open and standardized communication protocol.  Here you
-  can run and configure your XMPP server, called ejabberd.  To actually
-  communicate, you can use the <a href='/jwchat'>web client</a> or any
-  other <a href='http://xmpp.org/xmpp-software/clients/'
-  target='_blank'> XMPP client </a>.</p>
+<h2>Chat Server (XMPP)</h2>
+
+<p>XMPP is an open and standardized communication protocol. Here you
+  can run and configure your XMPP server, called ejabberd.</p>
+
+<p>To actually communicate, you can use the <a href='/jwchat'>web client</a> or
+  any other <a href='http://xmpp.org/xmpp-software/clients/' target='_blank'>
+  XMPP client </a>.</p>
 
 <p><a href='/jwchat' target='_blank'class='btn btn-primary'> Launch web
   client</a></p>
+
+<h3>Status</h3>
+
+<p>
+  {% if status.is_running %}
+  <span class="running-status active"></span> ejabberd is running
+  {% else %}
+  <span class="running-status inactive"></span> ejabberd is not running
+  {% endif %}
+</p>
+
+<h3>Configuration</h3>
+
+<form class="form" method="post">
+  {% csrf_token %}
+
+  {{ form|bootstrap }}
+
+  <input type="submit" class="btn btn-primary" value="Update setup"/>
+</form>
 
 {% endblock %}

@@ -27,6 +27,7 @@ from gettext import gettext as _
 
 from .forms import IkiwikiForm, IkiwikiCreateForm
 from plinth import actions
+from plinth import action_utils
 from plinth import package
 from plinth.modules import ikiwiki
 
@@ -49,7 +50,8 @@ def on_install():
                    'libc6-dev',
                    'libtimedate-perl',
                    'libcgi-formbuilder-perl',
-                   'libcgi-session-perl'],
+                   'libcgi-session-perl',
+                   'libxml-writer-perl'],
                   on_install=on_install)
 def index(request):
     """Serve configuration page."""
@@ -75,9 +77,7 @@ def index(request):
 
 def get_status():
     """Get the current setting."""
-    output = actions.run('ikiwiki', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-    return {'enabled': enabled}
+    return {'enabled': ikiwiki.is_enabled()}
 
 
 def _apply_changes(request, old_status, new_status):

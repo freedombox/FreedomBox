@@ -25,6 +25,7 @@ from django.template.response import TemplateResponse
 from gettext import gettext as _
 
 from plinth import actions
+from plinth import action_utils
 from plinth import cfg
 from plinth import package
 
@@ -71,8 +72,6 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    is_running = actions.superuser_run('tor', ['is-running']).strip() == 'yes'
-
     output = actions.superuser_run('tor-get-ports')
     port_info = output.split('\n')
     ports = {}
@@ -99,7 +98,7 @@ def get_status():
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
 
-    return {'is_running': is_running,
+    return {'is_running': action_utils.service_is_running('tor'),
             'ports': ports,
             'hs_enabled': hs_enabled,
             'hs_hostname': hs_hostname,

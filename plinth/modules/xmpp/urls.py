@@ -23,8 +23,6 @@ from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.xmpp.xmpp',
+    'plinth.modules.xmpp.views',
     url(r'^apps/xmpp/$', 'index', name='index'),
-    url(r'^apps/xmpp/configure/$', 'configure', name='configure'),
-    url(r'^apps/xmpp/register/$', 'register', name='register')
 )

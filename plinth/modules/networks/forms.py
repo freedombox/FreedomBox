@@ -20,6 +20,19 @@ from django.core import validators
 from gettext import gettext as _
 
 from plinth import network
+from gi.repository import NM as nm
+
+
+def _get_interface_choices(device_type):
+    """Return a list of choices for a given device type."""
+    interfaces = network.get_interface_list(device_type)
+    choices = [('', _('-- select --'))]
+    for interface, mac in interfaces.items():
+        display_string = _('{interface} ({mac})').format(interface=interface,
+                                                         mac=mac)
+        choices.append((interface, display_string))
+
+    return choices
 
 
 class ConnectionTypeSelectForm(forms.Form):
@@ -33,6 +46,11 @@ class ConnectionTypeSelectForm(forms.Form):
 class AddEthernetForm(forms.Form):
     """Form to create a new ethernet connection."""
     name = forms.CharField(label=_('Connection Name'))
+    interface = forms.ChoiceField(
+        label=_('Physical Interface'),
+        choices=(),
+        help_text=_('The network device that this connection should be bound '
+                    'to.'))
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
@@ -48,10 +66,21 @@ available over this interfaces. Select Internal only for trusted networks.'),
         validators=[validators.validate_ipv4_address],
         required=False)
 
+    def __init__(self, *args, **kwargs):
+        """Initialize the form, populate interface choices."""
+        super(AddEthernetForm, self).__init__(*args, **kwargs)
+        choices = _get_interface_choices(nm.DeviceType.ETHERNET)
+        self.fields['interface'].choices = choices
+
 
 class AddWifiForm(forms.Form):
     """Form to create a new wifi connection."""
     name = forms.CharField(label=_('Connection Name'))
+    interface = forms.ChoiceField(
+        label=_('Physical interface'),
+        choices=(),
+        help_text=_('The network device that this connection should be bound '
+                    'to.'))
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
@@ -86,3 +115,9 @@ Point.'))
         label=_('Address'),
         validators=[validators.validate_ipv4_address],
         required=False)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form, populate interface choices."""
+        super(AddWifiForm, self).__init__(*args, **kwargs)
+        choices = _get_interface_choices(nm.DeviceType.WIFI)
+        self.fields['interface'].choices = choices

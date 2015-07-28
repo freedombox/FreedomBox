@@ -22,6 +22,7 @@ Plinth module to configure Privoxy.
 from gettext import gettext as _
 
 from plinth import actions
+from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
@@ -37,10 +38,17 @@ def init():
     menu.add_urlname(_('Web Proxy (Privoxy)'), 'glyphicon-cloud-upload',
                      'privoxy:index', 50)
 
-    output = actions.run('privoxy', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
     global service
     service = service_module.Service(
         'privoxy', _('Privoxy Web Proxy'),
-        is_external=False, enabled=enabled)
+        is_external=False, enabled=is_enabled())
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    return action_utils.service_is_enabled('privoxy')
+
+
+def is_running():
+    """Return whether the service is running."""
+    return action_utils.service_is_running('privoxy')

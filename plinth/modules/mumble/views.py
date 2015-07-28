@@ -62,16 +62,8 @@ def index(request):
 
 def get_status():
     """Get the current settings from server."""
-    output = actions.run('mumble', ['get-enabled'])
-    enabled = (output.strip() == 'yes')
-
-    output = actions.superuser_run('mumble', ['is-running'])
-    is_running = (output.strip() == 'yes')
-
-    status = {'enabled': enabled,
-              'is_running': is_running}
-
-    return status
+    return {'enabled': mumble.is_enabled(),
+            'is_running': mumble.is_running()}
 
 
 def _apply_changes(request, old_status, new_status):

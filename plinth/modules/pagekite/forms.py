@@ -25,8 +25,7 @@ from django.contrib import messages
 from django.core import validators
 
 from plinth.errors import ActionError
-from .util import _run, get_kite_details, BACKEND_HOST, KITE_NAME, \
-    KITE_SECRET, PREDEFINED_SERVICES
+from . import utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -75,28 +74,28 @@ for your account if no secret is set on the kite'))
 
             if old['kite_name'] != new['kite_name'] or \
                     old['kite_secret'] != new['kite_secret']:
-                _run(['set-kite', '--kite-name', new['kite_name'],
-                      '--kite-secret', new['kite_secret']])
+                utils.run(['set-kite', '--kite-name', new['kite_name'],
+                           '--kite-secret', new['kite_secret']])
                 messages.success(request, _('Kite details set'))
                 config_changed = True
 
             if old['server'] != new['server']:
-                _run(['set-frontend', new['server']])
+                utils.run(['set-frontend', new['server']])
                 messages.success(request, _('Pagekite server set'))
                 config_changed = True
 
             if old['enabled'] != new['enabled']:
                 if new['enabled']:
-                    _run(['start-and-enable'])
+                    utils.run(['start-and-enable'])
                     messages.success(request, _('PageKite enabled'))
                 else:
-                    _run(['stop-and-disable'])
+                    utils.run(['stop-and-disable'])
                     messages.success(request, _('PageKite disabled'))
 
             # Restart the service if the config was changed while the service
             # was running, so changes take effect immediately.
             elif config_changed and new['enabled']:
-                _run(['restart'])
+                utils.run(['restart'])
 
 
 class StandardServiceForm(forms.Form):
@@ -105,8 +104,8 @@ class StandardServiceForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Add the fields from PREDEFINED_SERVICES"""
         super(StandardServiceForm, self).__init__(*args, **kwargs)
-        kite = get_kite_details()
-        for name, service in PREDEFINED_SERVICES.items():
+        kite = utils.get_kite_details()
+        for name, service in utils.PREDEFINED_SERVICES.items():
             if name in ('http', 'https'):
                 help_text = service['help_text'].format(kite['kite_name'])
             else:
@@ -117,16 +116,16 @@ class StandardServiceForm(forms.Form):
 
     def save(self, request):
         formdata = self.cleaned_data
-        for service_name in PREDEFINED_SERVICES.keys():
+        for service_name in utils.PREDEFINED_SERVICES.keys():
             if self.initial[service_name] != formdata[service_name]:
-                service = PREDEFINED_SERVICES[service_name]['params']
+                service = utils.PREDEFINED_SERVICES[service_name]['params']
                 service = json.dumps(service)
                 if formdata[service_name]:
-                    _run(['add-service', '--service', service])
+                    utils.run(['add-service', '--service', service])
                     messages.success(request, _('Service enabled: {name}')
                                      .format(name=service_name))
                 else:
-                    _run(['remove-service', '--service', service])
+                    utils.run(['remove-service', '--service', service])
                     messages.success(request, _('Service disabled: {name}')
                                      .format(name=service_name))
 
@@ -151,11 +150,11 @@ class BaseCustomServiceForm(forms.Form):
         # set kitename and kitesecret if not already set
         if 'kitename' not in formdata:
             if 'subdomains' in formdata and formdata['subdomains']:
-                formdata['kitename'] = "*.%s" % KITE_NAME
+                formdata['kitename'] = "*.%s" % utils.KITE_NAME
             else:
-                formdata['kitename'] = KITE_NAME
+                formdata['kitename'] = utils.KITE_NAME
         if 'secret' not in formdata:
-            formdata['secret'] = KITE_SECRET
+            formdata['secret'] = utils.KITE_SECRET
 
         # merge protocol and frontend_port back to one entry (protocol)
         if 'frontend_port' in formdata:
@@ -163,7 +162,7 @@ class BaseCustomServiceForm(forms.Form):
                 formdata['protocol'] = "%s/%s" % (formdata['protocol'],
                                                   formdata['frontend_port'])
         if 'backend_host' not in formdata:
-            formdata['backend_host'] = BACKEND_HOST
+            formdata['backend_host'] = utils.BACKEND_HOST
 
         return formdata
 
@@ -172,7 +171,7 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
-        _run(['remove-service', '--service', json.dumps(service)])
+        utils.run(['remove-service', '--service', json.dumps(service)])
         messages.success(request, _('Deleted custom service'))
 
 
@@ -183,7 +182,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
         """Returns whether the user input matches a predefined service"""
         service = self.convert_formdata_to_service(formdata)
         match_found = False
-        for predefined_service_obj in PREDEFINED_SERVICES.values():
+        for predefined_service_obj in utils.PREDEFINED_SERVICES.values():
             # manually add the port to compare predefined with custom services
             # that's due to the (sometimes) implicit port in the configuration
             predefined_service = copy.copy(predefined_service_obj['params'])
@@ -215,7 +214,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
     def save(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         try:
-            _run(['add-service', '--service', json.dumps(service)])
+            utils.run(['add-service', '--service', json.dumps(service)])
             messages.success(request, _('Added custom service'))
         except ActionError as exception:
             if "already exists" in str(exception):
