@@ -20,10 +20,10 @@ Plinth module to manage users
 """
 
 from gettext import gettext as _
+import json
 
 from plinth import cfg
-
-__all__ = ['init']
+from plinth import actions
 
 depends = ['plinth.modules.system']
 
@@ -33,3 +33,9 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
                      15)
+
+
+def diagnose():
+    """Run diagnostics and result the results."""
+    output = actions.superuser_run('ldap', ['diagnose'])
+    return json.loads(output)
