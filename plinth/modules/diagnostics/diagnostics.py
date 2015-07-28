@@ -19,11 +19,14 @@
 Plinth module for running diagnostics
 """
 
+from django.http import Http404
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import importlib
 
 from plinth import actions
 from plinth import cfg
+from plinth import module_loader
 from plinth.errors import ActionError
 
 
@@ -55,3 +58,24 @@ def test(request):
                             {'title': _('Diagnostic Test'),
                              'diagnostics_output': output,
                              'diagnostics_error': error})
+
+def module(request, module_name):
+    """Return diagnostics for a particular module."""
+    found = False
+    for module_import_path in module_loader.loaded_modules:
+        if module_name == module_import_path.split('.')[-1]:
+            found = True
+            break
+
+    if not found:
+        raise Http404('Module does not exist or not loaded')
+
+    loaded_module = importlib.import_module(module_import_path)
+    results = []
+    if hasattr(loaded_module, 'diagnose'):
+        results = loaded_module.diagnose()
+
+    return TemplateResponse(request, 'diagnostics_module.html',
+                            {'title': _('Diagnostic Test'),
+                             'module_name': module_name,
+                             'results': results})
