@@ -38,9 +38,10 @@ class TorForm(forms.Form):  # pylint: disable=W0232
 
 
 def init():
-    """Initialize the Tor module"""
+    """Initialize the Tor module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('Tor', 'glyphicon-eye-close', 'tor:index', 30)
+    menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
+                     'tor:index', 30)
 
 
 @package.required(['tor'])
