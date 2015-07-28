@@ -73,7 +73,7 @@ def index(request):
 
 def get_status():
     """Return the current status"""
-    output = actions.superuser_run('tor-get-ports')
+    output = actions.superuser_run('tor', ['get-ports'])
     port_info = output.split('\n')
     ports = {}
     for line in port_info:
