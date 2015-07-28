@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Plinth module for configuring ownCloud.
+"""
+
 from django import forms
 from django.contrib import messages
 from django.template.response import TemplateResponse
@@ -38,7 +42,7 @@ def init():
     """Initialize the ownCloud module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('File Hosting (ownCloud)'), 'glyphicon-picture',
-                     'owncloud:index', 35)
+                     'owncloud:index', 700)
 
     status = get_status()
 

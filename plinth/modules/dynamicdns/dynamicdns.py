@@ -43,7 +43,7 @@ def init():
     """Initialize the dynamicdns module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname('Dynamic DNS', 'glyphicon-refresh',
-                     'dynamicdns:index', 40)
+                     'dynamicdns:index', 500)
 
 
 @package.required(['ez-ipupdate'])

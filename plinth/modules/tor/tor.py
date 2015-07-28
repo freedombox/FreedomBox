@@ -41,7 +41,7 @@ def init():
     """Initialize the Tor module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
-                     'tor:index', 30)
+                     'tor:index', 100)
 
 
 @package.required(['tor'])

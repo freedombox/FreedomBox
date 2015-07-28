@@ -36,7 +36,7 @@ def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Web Proxy (Privoxy)'), 'glyphicon-cloud-upload',
-                     'privoxy:index', 50)
+                     'privoxy:index', 1000)
 
     global service
     service = service_module.Service(

@@ -36,7 +36,7 @@ def init():
     """Initialize the ikiwiki module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Wiki & Blog (Ikiwiki)'), 'glyphicon-edit',
-                     'ikiwiki:index', 38)
+                     'ikiwiki:index', 1100)
 
     global service
     service = service_module.Service(
