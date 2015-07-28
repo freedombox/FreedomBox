@@ -69,13 +69,21 @@ port-forwarded, if necessary:</p>
 
 <div class="row">
   <div class="col-sm-3">
-    <table class="table table-bordered table-condensed">
-      {% for name, port in tor_ports.items %}
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Port</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, port in tor_ports.items %}
         <tr>
           <td>{{ name }}</td>
           <td>{{ port }}</td>
         </tr>
-      {% endfor %}
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 </div>
