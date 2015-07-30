@@ -117,8 +117,8 @@ class TestNetwork(unittest.TestCase):
             'secretpassword')
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_manual_ipv4_address(self):
-        """Check that we can manually set IPv4 address."""
+    def test_ethernet_manual_ipv4_address(self):
+        """Check that we can manually set IPv4 address on ethernet."""
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
             connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
@@ -130,3 +130,19 @@ class TestNetwork(unittest.TestCase):
 
         address = settings_ipv4.get_address(0)
         self.assertEqual(address.get_address(), '169.254.0.1')
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_wifi_manual_ipv4_address(self):
+        """Check that we can manually set IPv4 address on wifi."""
+        connection = network.get_connection(self.wifi_uuid)
+        network.edit_wifi_connection(
+            connection, 'plinth_test_wifi_new', 'wlan0', 'external',
+            'plinthtestwifi', 'adhoc', 'open', '',
+            'manual', '169.254.0.2')
+
+        connection = network.get_connection(self.wifi_uuid)
+        settings_ipv4 = connection.get_setting_ip4_config()
+        self.assertEqual(settings_ipv4.get_method(), 'manual')
+
+        address = settings_ipv4.get_address(0)
+        self.assertEqual(address.get_address(), '169.254.0.2')
