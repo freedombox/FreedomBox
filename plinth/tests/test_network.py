@@ -37,10 +37,10 @@ class TestNetwork(unittest.TestCase):
     @classmethod
     def setUp(cls):
         cls.ethernet_uuid = network.add_ethernet_connection(
-            'plinth_test_eth', 'internal',
+            'plinth_test_eth', 'eth0', 'internal',
             'auto', '')
         cls.wifi_uuid = network.add_wifi_connection(
-            'plinth_test_wifi', 'external',
+            'plinth_test_wifi', 'wlan0', 'external',
             'plinthtestwifi', 'adhoc', 'open', '',
             'auto', '')
 
@@ -76,7 +76,7 @@ class TestNetwork(unittest.TestCase):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'external', 'manual',
+            connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
             '169.254.0.1')
 
         connection = network.get_connection(self.ethernet_uuid)
@@ -96,7 +96,7 @@ class TestNetwork(unittest.TestCase):
         """Check that we can update a wifi connection."""
         connection = network.get_connection(self.wifi_uuid)
         network.edit_wifi_connection(
-            connection, 'plinth_test_wifi_new', 'external',
+            connection, 'plinth_test_wifi_new', 'wlan0', 'external',
             'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
             'auto', '')
 
