@@ -32,15 +32,22 @@ from plinth import package
 
 class TorForm(forms.Form):  # pylint: disable=W0232
     """Tor configuration form"""
-    hs_enabled = forms.BooleanField(
-        label=_('Enable Hidden Service'),
+    enabled = forms.BooleanField(
+        label=_('Enable Tor'),
         required=False)
+    hs_enabled = forms.BooleanField(
+        label=_('Enable Tor Hidden Service'),
+        required=False,
+        help_text=_('A hidden service will allow FreedomBox to provide '
+                    'selected services (such as ownCloud or Chat) without '
+                    'revealing its location.'))
 
 
 def init():
-    """Initialize the Tor module"""
+    """Initialize the Tor module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('Tor', 'glyphicon-eye-close', 'tor:index', 30)
+    menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
+                     'tor:index', 100)
 
 
 @package.required(['tor'])
@@ -62,17 +69,13 @@ def index(request):
 
     return TemplateResponse(request, 'tor.html',
                             {'title': _('Tor Control Panel'),
-                             'is_running': status['is_running'],
-                             'tor_ports': status['ports'],
-                             'tor_hs_enabled': status['hs_enabled'],
-                             'tor_hs_hostname': status['hs_hostname'],
-                             'tor_hs_ports': status['hs_ports'],
+                             'status': status,
                              'form': form})
 
 
 def get_status():
     """Return the current status"""
-    output = actions.superuser_run('tor-get-ports')
+    output = actions.superuser_run('tor', ['get-ports'])
     port_info = output.split('\n')
     ports = {}
     for line in port_info:
@@ -98,7 +101,8 @@ def get_status():
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
 
-    return {'is_running': action_utils.service_is_running('tor'),
+    return {'enabled': action_utils.service_is_enabled('tor'),
+            'is_running': action_utils.service_is_running('tor'),
             'ports': ports,
             'hs_enabled': hs_enabled,
             'hs_hostname': hs_hostname,
@@ -106,16 +110,24 @@ def get_status():
 
 
 def _apply_changes(request, old_status, new_status):
-    """Apply the changes"""
-    if old_status['hs_enabled'] == new_status['hs_enabled']:
+    """Apply the changes."""
+    if old_status['enabled'] == new_status['enabled'] and \
+       old_status['hs_enabled'] == new_status['hs_enabled']:
         messages.info(request, _('Setting unchanged'))
         return
 
-    if new_status['hs_enabled']:
-        messages.success(request, _('Tor hidden service enabled'))
-        command = 'enable-hs'
-    else:
-        messages.success(request, _('Tor hidden service disabled'))
-        command = 'disable-hs'
+    if old_status['enabled'] != new_status['enabled']:
+        if new_status['enabled']:
+            messages.success(request, _('Tor enabled'))
+            actions.superuser_run('tor', ['enable'])
+        else:
+            messages.success(request, _('Tor disabled'))
+            actions.superuser_run('tor', ['disable'])
 
-    actions.superuser_run('tor', [command])
+    if old_status['hs_enabled'] != new_status['hs_enabled']:
+        if new_status['hs_enabled']:
+            messages.success(request, _('Tor hidden service enabled'))
+            actions.superuser_run('tor', ['enable-hs'])
+        else:
+            messages.success(request, _('Tor hidden service disabled'))
+            actions.superuser_run('tor', ['disable-hs'])

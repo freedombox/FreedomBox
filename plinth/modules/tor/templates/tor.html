@@ -22,35 +22,54 @@
 
 {% block content %}
 
-<h2>Tor</h2>
+<h2>Anonymity Network (Tor)</h2>
+
+<p>Tor is an anonymous communication system. You can learn more about
+it from the <a href="https://www.torproject.org/">Tor Project</a>
+website. For best protection when web surfing, the Tor Project
+recommends that you use
+the <a href="https://www.torproject.org/download/download-easy.html.en">
+Tor Browser</a>.</p>
 
 <h3>Status</h3>
 
 <p>
-{% if is_running %}
+{% if status.is_running %}
   <div class='running-status active'></div> Tor is running
 {% else %}
   <div class='running-status inactive'></div> Tor is not running
 {% endif %}
 </p>
 
-<h3>Hidden Service</h3>
+{% if status.hs_enabled %}
+  <div class="row">
+    <div class="col-sm-3">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>Hidden Service</th>
+            <th>Port</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ status.hs_hostname }}</td>
+            <td>{{ status.hs_ports }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
 
-<p>A hidden service will allow your {{ cfg.box_name }} to provide selected
-services (such as OwnCloud or Chat) without revealing its location.
-Here is the current configuration:</p>
+<h3>Configuration</h3>
 
-<ul>
-  <li>Hostname: {{ tor_hs_hostname }}</li>
-  <li>Ports: {{ tor_hs_ports }}</li>
-</ul>
-
-<form class="form form-inline" method="post">
+<form class="form" method="post">
   {% csrf_token %}
 
   {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary btn-sm" value="Update setup"/>
+  <input type="submit" class="btn btn-primary btn-md" value="Update setup"/>
 </form>
 
 <h3>Bridge</h3>
@@ -62,13 +81,21 @@ port-forwarded, if necessary:</p>
 
 <div class="row">
   <div class="col-sm-3">
-    <table class="table table-bordered table-condensed">
-      {% for name, port in tor_ports.items %}
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Port</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, port in status.ports.items %}
         <tr>
           <td>{{ name }}</td>
           <td>{{ port }}</td>
         </tr>
-      {% endfor %}
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 </div>
@@ -77,22 +104,5 @@ port-forwarded, if necessary:</p>
 
 <p>A Tor SOCKS port is available on your {{ cfg.box_name }} on TCP port
 9050.</p>
-
-{% endblock %}
-
-{% block sidebar %}
-
-  <div class="sidebar">
-
-    <h3>Tor</h3>
-
-    <p>Tor is an anonymous communication system. You can learn more about
-    it from the <a href="https://www.torproject.org/">Tor Project</a>
-    website. For best protection when web surfing, the Tor Project
-    recommends that you use the
-    <a href="https://www.torproject.org/download/download-easy.html.en">
-    Tor Browser</a>.</p>
-
-  </div>
 
 {% endblock %}

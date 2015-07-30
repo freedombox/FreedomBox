@@ -36,7 +36,7 @@ def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Voice Chat (Mumble)'), 'glyphicon-headphones',
-                     'mumble:index', 50)
+                     'mumble:index', 900)
 
     global service
     service = service_module.Service(

@@ -36,7 +36,7 @@ def init():
     """Intialize the Transmission module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('BitTorrent (Transmission)'), 'glyphicon-save',
-                     'transmission:index', 100)
+                     'transmission:index', 300)
 
     global service
     service = service_module.Service(

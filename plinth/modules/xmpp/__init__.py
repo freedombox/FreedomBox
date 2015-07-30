@@ -38,7 +38,7 @@ def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Chat Server (XMPP)'), 'glyphicon-comment',
-                     'xmpp:index', 40)
+                     'xmpp:index', 400)
 
     global service
     service = service_module.Service(

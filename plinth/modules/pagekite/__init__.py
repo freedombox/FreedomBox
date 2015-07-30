@@ -31,4 +31,4 @@ def init():
     """Intialize the PageKite module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Public Visibility (PageKite)'),
-                     'glyphicon-flag', 'pagekite:index', 50)
+                     'glyphicon-flag', 'pagekite:index', 800)

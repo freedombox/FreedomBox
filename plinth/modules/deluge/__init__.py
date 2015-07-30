@@ -36,7 +36,7 @@ def init():
     """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('BitTorrent (Deluge)'), 'glyphicon-magnet',
-                     'deluge:index', 60)
+                     'deluge:index', 200)
 
     global service
     service = service_module.Service(

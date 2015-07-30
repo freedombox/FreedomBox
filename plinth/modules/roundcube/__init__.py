@@ -34,7 +34,7 @@ def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Email Client (Roundcube)'), 'glyphicon-envelope',
-                     'roundcube:index', 50)
+                     'roundcube:index', 600)
 
 def is_enabled():
     """Return whether the module is enabled."""
