@@ -76,8 +76,7 @@ class TestNetwork(unittest.TestCase):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
-            '169.254.0.1')
+            connection, 'plinth_test_eth_new', 'eth0', 'external', 'auto', '')
 
         connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(connection.get_id(), 'plinth_test_eth_new')
@@ -86,10 +85,7 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(settings_connection.get_zone(), 'external')
 
         settings_ipv4 = connection.get_setting_ip4_config()
-        self.assertEqual(settings_ipv4.get_method(), 'manual')
-
-        address = settings_ipv4.get_address(0)
-        self.assertEqual(address.get_address(), '169.254.0.1')
+        self.assertEqual(settings_ipv4.get_method(), 'auto')
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_edit_wifi_connection(self):
@@ -119,3 +115,18 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(
             secrets['802-11-wireless-security']['psk'],
             'secretpassword')
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_manual_ipv4_address(self):
+        """Check that we can manually set IPv4 address."""
+        connection = network.get_connection(self.ethernet_uuid)
+        network.edit_ethernet_connection(
+            connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
+            '169.254.0.1')
+
+        connection = network.get_connection(self.ethernet_uuid)
+        settings_ipv4 = connection.get_setting_ip4_config()
+        self.assertEqual(settings_ipv4.get_method(), 'manual')
+
+        address = settings_ipv4.get_address(0)
+        self.assertEqual(address.get_address(), '169.254.0.1')
