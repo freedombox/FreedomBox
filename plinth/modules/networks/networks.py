@@ -23,6 +23,7 @@ from gettext import gettext as _
 from logging import Logger
 
 from .forms import ConnectionTypeSelectForm, AddEthernetForm, AddWifiForm
+from .forms import AddPPPoEForm
 from plinth import cfg
 from plinth import network
 from plinth import package
@@ -70,8 +71,10 @@ def edit(request, uuid):
     if request.method == 'POST':
         if connection.get_connection_type() == '802-11-wireless':
             form = AddWifiForm(request.POST)
-        else:
+        elif connection.get_connection_type() == '802-3-ethernet':
             form = AddEthernetForm(request.POST)
+        elif connection.get_connection_type() == 'pppoe':
+            form = AddPPPoEForm(request.POST)
 
         if form.is_valid():
             name = form.cleaned_data['name']
@@ -79,6 +82,8 @@ def edit(request, uuid):
             zone = form.cleaned_data['zone']
             ipv4_method = form.cleaned_data['ipv4_method']
             ipv4_address = form.cleaned_data['ipv4_address']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
 
             if connection.get_connection_type() == '802-3-ethernet':
                 network.edit_ethernet_connection(
@@ -93,6 +98,9 @@ def edit(request, uuid):
                 network.edit_wifi_connection(
                     connection, name, interface, zone, ssid, mode, auth_mode,
                     passphrase, ipv4_method, ipv4_address)
+            elif connection.get_connection_type() == 'pppoe':
+                network.edit_pppoe_connection(
+                    connection, name, interface, zone, username, password)
 
             return redirect(reverse_lazy('networks:index'))
         else:
@@ -103,6 +111,7 @@ def edit(request, uuid):
     else:
         settings_connection = connection.get_setting_connection()
         settings_ipv4 = connection.get_setting_ip4_config()
+        settings_pppoe = connection.get_setting_pppoe()
         form_data['interface'] = connection.get_interface_name()
         try:
             form_data['zone'] = settings_connection.get_zone()
@@ -110,6 +119,12 @@ def edit(request, uuid):
             form_data['zone'] = 'external'
 
         form_data['ipv4_method'] = settings_ipv4.get_method()
+        if not settings_pppoe:
+            form_data['username'] = ''
+            form_data['password'] = ''
+        else:
+            form_data['username'] = settings_pppoe.get_username()
+            form_data['password'] = settings_pppoe.get_password()
 
         if settings_ipv4.get_num_addresses():
             # XXX: Plinth crashes here. Possibly because a double free bug
@@ -136,8 +151,10 @@ def edit(request, uuid):
                 form_data['auth_mode'] = 'open'
 
             form = AddWifiForm(form_data)
-        else:
+        elif settings_connection.get_connection_type() == '802-3-ethernet':
             form = AddEthernetForm(form_data)
+        elif settings_connection.get_connection_type() == 'pppoe':
+            form = AddPPPoEForm(form_data)
 
         return TemplateResponse(request, 'connections_edit.html',
                                 {'title': _('Edit Connection'),
@@ -196,6 +213,8 @@ def add(request):
                 return redirect(reverse_lazy('networks:add_ethernet'))
             elif connection_type == '802-11-wireless':
                 return redirect(reverse_lazy('networks:add_wifi'))
+            elif connection_type == 'pppoe':
+                return redirect(reverse_lazy('networks:add_pppoe'))
     else:
         form = ConnectionTypeSelectForm()
         return TemplateResponse(request, 'connections_type_select.html',
@@ -225,6 +244,31 @@ def add_ethernet(request):
 
     return TemplateResponse(request, 'connections_create.html',
                             {'title': _('Adding New Ethernet Connection'),
+                             'subsubmenu': subsubmenu,
+                             'form': form})
+
+
+def add_pppoe(request):
+    """Serve pppoe connection create form."""
+    form = None
+
+    if request.method == 'POST':
+        form = AddPPPoEForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            interface = form.cleaned_data['interface']
+            zone = form.cleaned_data['zone']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            network.add_pppoe_connection(
+                name, interface, zone, username, password)
+            return redirect(reverse_lazy('networks:index'))
+    else:
+        form = AddPPPoEForm()
+
+    return TemplateResponse(request, 'connections_create.html',
+                            {'title': _('Adding New PPPoE Connection'),
                              'subsubmenu': subsubmenu,
                              'form': form})
 
