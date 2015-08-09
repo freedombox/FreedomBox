@@ -153,7 +153,11 @@ def get_status():
 def get_current_timezone():
     """Get current timezone"""
     timezone = open('/etc/timezone').read().rstrip()
-    return timezone or 'none'
+
+    if timezone in ConfigurationForm.get_time_zones():
+        return timezone
+
+    return 'none'
 
 
 def _apply_changes(request, old_status, new_status):
