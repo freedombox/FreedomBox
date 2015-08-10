@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,28 +16,37 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-Plinth module to manage users
-"""
+{% block content %}
 
-from gettext import gettext as _
-import json
+<h2>Diagnostic Results</h2>
 
-from plinth import cfg
-from plinth import actions
+<h3>Module: {{ module_name }}</h3>
 
-depends = ['plinth.modules.system']
+{% if results %}
+<div class="row">
+  <div class="col-sm-3">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for test, result in results %}
+        <tr>
+          <td>{{ test }}</td>
+          <td>{{ result }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<p>This module does not support diagnostics</p>
+{% endif %}
 
-
-def init():
-    """Intialize the user module."""
-    menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
-                     15)
-
-
-def diagnose():
-    """Run diagnostics and result the results."""
-    output = actions.superuser_run('ldap', ['diagnose'])
-    return json.loads(output)
+{% endblock %}

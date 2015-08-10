@@ -144,14 +144,14 @@ def get_modules_to_load():
     module_directory = os.path.join(cfg.config_dir, 'modules-enabled')
 
     # Omit hidden files
-    file_names = [file
-                  for file in os.listdir(module_directory)
-                  if not file.startswith('.') and '.dpkg' not in file]
+    file_names = [file_name
+                  for file_name in os.listdir(module_directory)
+                  if not file_name.startswith('.') and '.dpkg' not in file_name]
 
     for file_name in file_names:
         full_file_name = os.path.join(module_directory, file_name)
-        with open(full_file_name, 'r') as file:
-            for line in file:
+        with open(full_file_name, 'r') as file_handle:
+            for line in file_handle:
                 line = re.sub('#.*', '', line)
                 line = line.strip()
                 if line:

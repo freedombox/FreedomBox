@@ -121,6 +121,17 @@ remove_user_from_group()
 }
 
 
+diagnose()
+{
+    result="failed"
+    if lsldap | grep 'dn: dc=thisbox' > /dev/null; then
+        result="passed"
+    fi
+
+    echo "[[\"Access LDAP server locally\", \"$result\"]]"
+}
+
+
 setup()
 {
     # XXX: Password setting on users is disabled as changing passwords
@@ -162,6 +173,9 @@ case $command in
     ;;
     remove-user-from-group)
         remove_user_from_group "$@"
+    ;;
+    diagnose)
+        diagnose "$@"
     ;;
     *)
         echo "Invalid sub-command"
