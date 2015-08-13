@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 CONNECTION_TYPE_NAMES = {
     '802-3-ethernet': 'Ethernet',
     '802-11-wireless': 'Wi-Fi',
+    'pppoe': 'PPPoE',
 }
 
 
@@ -127,8 +128,8 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
-def _update_common_settings(connection, connection_uuid, name, type_, interface,
-                            zone, ipv4_method, ipv4_address):
+def _update_common_settings(connection, connection_uuid, name, type_,
+                            interface, zone, ipv4_method, ipv4_address):
     """Create/edit basic settings for network manager connections."""
     if not connection:
         connection = nm.SimpleConnection.new()
@@ -182,6 +183,59 @@ def _update_ethernet_settings(connection, connection_uuid, name, interface,
         connection.add_setting(settings)
 
     return connection
+
+
+def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
+                           username, password):
+    """Create/edit ethernet settings for network manager connections."""
+    type_ = 'pppoe'
+
+    connection = _update_common_settings(connection, connection_uuid, name,
+                                         type_, interface, zone, 'auto',
+                                         '0.0.0.0')
+
+    #pppoe
+    settings = connection.get_setting_pppoe()
+    if not settings:
+        settings = nm.SettingPppoe.new()
+
+    settings.set_property(nm.SETTING_PPPOE_USERNAME, username)
+    settings.set_property(nm.SETTING_PPPOE_PASSWORD, password)
+    connection.add_setting(settings)
+
+    settings = connection.get_setting_ppp()
+    if not settings:
+        settings = nm.SettingPpp.new()
+
+    #ToDo: make this configurable?
+    #ToDo: apt-get install ppp pppoe
+    settings.set_property(nm.SETTING_PPP_LCP_ECHO_FAILURE, 5)
+    settings.set_property(nm.SETTING_PPP_LCP_ECHO_INTERVAL, 30)
+
+    connection.add_setting(settings)
+    return connection
+
+
+def add_pppoe_connection(name, interface, zone, username, password):
+    """Add an automatic pppoe connection in network manager.
+
+    Return the UUID for the connection.
+    """
+    connection_uuid = str(uuid.uuid4())
+    connection = _update_pppoe_settings(
+        None, connection_uuid, name, interface, zone, username, password)
+    client = nm.Client.new(None)
+    client.add_connection_async(connection, True, None, _callback, None)
+    return connection_uuid
+
+
+def edit_pppoe_connection(connection, name, interface, zone, username,
+                          password):
+    """Edit an existing pppoe connection in network manager."""
+    _update_pppoe_settings(
+        connection, connection.get_uuid(), name, interface, zone, username,
+        password)
+    connection.commit_changes(True)
 
 
 def add_ethernet_connection(name, interface, zone, ipv4_method, ipv4_address):
@@ -271,34 +325,14 @@ def activate_connection(connection_uuid):
     """Find and activate a network connection."""
     # Find the connection
     connection = get_connection(connection_uuid)
-
-    # Find a suitable device
+    interface = connection.get_interface_name()
     client = nm.Client.new(None)
-    connection_type = connection.get_connection_type()
-    if connection_type == 'vpn':
-        for device in client.get_devices():
-            if device.get_state() == nm.DeviceState.ACTIVATED and \
-               device.get_managed():
-                break
-        else:
-            raise DeviceNotFound(connection)
-    else:
-        device_type = {
-            '802-11-wireless': nm.DeviceType.WIFI,
-            '802-3-ethernet': nm.DeviceType.ETHERNET,
-            'gsm': nm.DeviceType.MODEM,
-        }.get(connection_type, connection_type)
-
-        for device in client.get_devices():
-            logger.warn('Device - %s', device.get_hw_address())
-            if device.get_device_type() == device_type and \
-               device.get_state() == nm.DeviceState.DISCONNECTED:
-                break
-        else:
-            raise DeviceNotFound(connection)
-
-    client.activate_connection_async(connection, device, '/', None, _callback,
-                                     None)
+    for device in client.get_devices():
+        if device.get_iface() == interface:
+            client.activate_connection_async(connection,
+                                             device,
+                                             '/', None, _callback,
+                                             None)
     return connection
 
 
