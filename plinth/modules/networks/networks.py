@@ -80,10 +80,12 @@ def edit(request, uuid):
             name = form.cleaned_data['name']
             interface = form.cleaned_data['interface']
             zone = form.cleaned_data['zone']
-            ipv4_method = form.cleaned_data['ipv4_method']
-            ipv4_address = form.cleaned_data['ipv4_address']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            if connection.get_connection_type() == 'pppoe':
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+            else:
+                ipv4_method = form.cleaned_data['ipv4_method']
+                ipv4_address = form.cleaned_data['ipv4_address']
 
             if connection.get_connection_type() == '802-3-ethernet':
                 network.edit_ethernet_connection(
