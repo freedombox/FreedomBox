@@ -325,39 +325,14 @@ def activate_connection(connection_uuid):
     """Find and activate a network connection."""
     # Find the connection
     connection = get_connection(connection_uuid)
-
-    # ToDo: is the following code still needed? Because the connections
-    # are bound to an interface and for this reason, the device name should
-    # be available within connection object. So simply use:
-    # connection.get_interface_name() ??
-
-    # Find a suitable device
+    interface = connection.get_interface_name()
     client = nm.Client.new(None)
-    connection_type = connection.get_connection_type()
-    if connection_type == 'vpn':
-        for device in client.get_devices():
-            if device.get_state() == nm.DeviceState.ACTIVATED and \
-               device.get_managed():
-                break
-        else:
-            raise DeviceNotFound(connection)
-    else:
-        device_type = {
-            '802-11-wireless': nm.DeviceType.WIFI,
-            '802-3-ethernet': nm.DeviceType.ETHERNET,
-            'gsm': nm.DeviceType.MODEM,
-        }.get(connection_type, connection_type)
-
-        for device in client.get_devices():
-            logger.warn('Device - %s', device.get_hw_address())
-            if device.get_device_type() == device_type and \
-               device.get_state() == nm.DeviceState.DISCONNECTED:
-                break
-        else:
-            raise DeviceNotFound(connection)
-
-    client.activate_connection_async(connection, device, '/', None, _callback,
-                                     None)
+    for device in client.get_devices():
+        if device.get_iface() == interface:
+            client.activate_connection_async(connection,
+                                             device,
+                                             '/', None, _callback,
+                                             None)
     return connection
 
 
