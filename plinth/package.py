@@ -263,7 +263,8 @@ def _should_show_install_view(request, package_names):
         return False
     else:
         messages.error(request, _('Error installing packages: {details}')
-                       .format(details=exception.error_string))
+                       .format(details=getattr(exception, 'error_string',
+                                               str(exception))))
         return True
 
 
