@@ -50,7 +50,12 @@ def init():
                      'tor:index', 100)
 
 
-@package.required(['tor'])
+def on_install():
+    """Setup Tor configuration as soon as it is installed."""
+    actions.superuser_run('tor', ['setup'])
+
+
+@package.required(['tor', 'obfsproxy'], on_install=on_install)
 def index(request):
     """Service the index page"""
     status = get_status()

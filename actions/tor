@@ -39,6 +39,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    subparsers.add_parser('setup', help='Setup Tor configuration')
     subparsers.add_parser('enable', help='Enable and start Tor service')
     subparsers.add_parser('disable', help='Disable and stop Tor service')
     subparsers.add_parser('get-hs', help='Get hidden service')
@@ -47,6 +48,37 @@ def parse_arguments():
     subparsers.add_parser('get-ports', help='Get list of Tor ports')
 
     return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup Tor configuration after installing it."""
+    # XXX: Performing this as a post-install step instead of
+    # pre-install setup for now.  Creating a configuration before hand
+    # leads dpkg to ask question about configuration overwrite which
+    # makes aptcc backend of packagekit to wait forever even with
+    # interactive=False.
+    lines = """
+# Run as non-exit bridge relay
+SocksPort 0.0.0.0:9050
+ORPort auto
+ControlPort 9051
+BridgeRelay 1
+Exitpolicy reject *:*
+
+# Enable obfsproxy
+ServerTransportPlugin obfs3,scramblesuit exec /usr/bin/obfsproxy managed
+ExtORPort auto
+
+# Enable transparent proxy
+VirtualAddrNetworkIPv4 10.192.0.0/10
+AutomapHostsOnResolve 1
+TransPort 127.0.0.1:9040
+DNSPort 127.0.0.1:9053
+"""
+    with open(TOR_CONFIG, 'w') as conffile:
+        conffile.writelines(lines)
+
+    action_utils.service_restart('tor')
 
 
 def subcommand_enable(_):
