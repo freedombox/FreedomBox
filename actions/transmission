@@ -24,6 +24,7 @@ Configuration helper for Transmission daemon.
 import argparse
 import json
 import subprocess
+import sys
 
 from plinth import action_utils
 
@@ -44,12 +45,9 @@ def parse_arguments():
     subparsers.add_parser('disable', help='Disable Transmission service')
 
     # Merge given JSON configration with existing
-    merge_configuration = subparsers.add_parser(
-        'merge-configuration',
-        help='Merge given JSON configration with existing')
-    merge_configuration.add_argument(
-        'configuration',
-        help='JSON encoded configuration to merge')
+    subparsers.add_parser(
+        'merge-configuration', 
+        help='Merge JSON configuration from stdin with existing')
 
     return parser.parse_args()
 
@@ -68,7 +66,7 @@ def subcommand_disable(_):
 
 def subcommand_merge_configuration(arguments):
     """Merge given JSON configuration with existing configuration."""
-    configuration = arguments.configuration
+    configuration = ''.join(sys.stdin.readlines())
     configuration = json.loads(configuration)
 
     current_configuration = open(TRANSMISSION_CONFIG, 'r').read()

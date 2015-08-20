@@ -96,8 +96,8 @@ def _apply_changes(request, old_status, new_status):
             'rpc-password': new_status['rpc_password'],
         }
 
-        actions.superuser_run('transmission', ['merge-configuration',
-                                               json.dumps(new_configuration)])
+        actions.superuser_run('transmission', ['merge-configuration'],
+                              input=json.dumps(new_configuration).encode())
         modified = True
 
     if modified:
