@@ -25,6 +25,7 @@ import argparse
 import augeas
 import json
 import os
+import sys
 
 from plinth import action_utils
 from plinth.modules.pagekite import utils
@@ -61,11 +62,11 @@ def parse_arguments():
     # Kite details (name + secret)
     subparsers.add_parser('get-kite',
                           help='Get configured kite name and secret')
-    set_kite = subparsers.add_parser('set-kite',
-                                     help='Configure kite name and its secret')
+    set_kite = subparsers.add_parser(
+        'set-kite',
+        help='Configure kite name and its secret. Secret is read from stdin.')
     set_kite.add_argument('--kite-name',
                           help='Name of the kite (eg: mybox.pagekite.me)')
-    set_kite.add_argument('--kite-secret', help='Secret for the kite')
 
     # Add/remove pagekite services (service_on entries)
     subparsers.add_parser('get-services', help='Get list of enabled services')
@@ -223,7 +224,7 @@ def subcommand_get_kite(_):
 def subcommand_set_kite(arguments):
     """Set details of the kite"""
     aug.set(PATHS['kitename'], arguments.kite_name)
-    aug.set(PATHS['kitesecret'], arguments.kite_secret)
+    aug.set(PATHS['kitesecret'], sys.stdin.readline())
     aug.save()
 
 

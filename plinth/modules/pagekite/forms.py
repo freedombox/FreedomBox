@@ -74,8 +74,8 @@ for your account if no secret is set on the kite'))
 
             if old['kite_name'] != new['kite_name'] or \
                     old['kite_secret'] != new['kite_secret']:
-                utils.run(['set-kite', '--kite-name', new['kite_name'],
-                           '--kite-secret', new['kite_secret']])
+                utils.run(['set-kite', '--kite-name', new['kite_name']],
+                          input=new['kite_secret'].encode())
                 messages.success(request, _('Kite details set'))
                 config_changed = True
 

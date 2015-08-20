@@ -139,7 +139,8 @@ def _create_wiki(request, name, admin_name, admin_password):
         actions.superuser_run(
             'ikiwiki',
             ['create-wiki', '--wiki_name', name,
-             '--admin_name', admin_name, '--admin_password', admin_password])
+             '--admin_name', admin_name],
+            input=admin_password.encode())
         messages.success(request, _('Created wiki %s.') % name)
     except actions.ActionError as err:
         messages.error(request, _('Could not create wiki: %s') % err)
@@ -151,7 +152,8 @@ def _create_blog(request, name, admin_name, admin_password):
         actions.superuser_run(
             'ikiwiki',
             ['create-blog', '--blog_name', name,
-             '--admin_name', admin_name, '--admin_password', admin_password])
+             '--admin_name', admin_name],
+            input=admin_password.encode())
         messages.success(request, _('Created blog %s.') % name)
     except actions.ActionError as err:
         messages.error(request, _('Could not create blog: %s') % err)
