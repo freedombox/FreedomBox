@@ -25,6 +25,7 @@ import importlib
 import logging
 import os
 import stat
+import sys
 
 import cherrypy
 from cherrypy import _cpserver
@@ -35,6 +36,8 @@ from plinth import module_loader
 from plinth import service
 
 logger = logging.getLogger(__name__)
+
+arguments = None
 
 
 def parse_arguments():
@@ -55,12 +58,16 @@ def parse_arguments():
     parser.add_argument(
         '--no-daemon', action='store_true', default=cfg.no_daemon,
         help='do not start as a daemon')
+    parser.add_argument(
+        '--diagnose', action='store_true', default=False,
+        help='run diagnostic tests and exit')
 
-    args = parser.parse_args()
-    cfg.pidfile = args.pidfile
-    cfg.server_dir = args.server_dir
-    cfg.debug = args.debug
-    cfg.no_daemon = args.no_daemon
+    global arguments
+    arguments = parser.parse_args()
+    cfg.pidfile = arguments.pidfile
+    cfg.server_dir = arguments.server_dir
+    cfg.debug = arguments.debug
+    cfg.no_daemon = arguments.no_daemon
 
 
 def setup_logging():
@@ -238,6 +245,26 @@ def configure_django():
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
+def run_diagnostics_and_exit():
+    """Run diagostics on all modules and exit."""
+    module = importlib.import_module('plinth.modules.diagnostics.diagnostics')
+    error_code = 0
+    try:
+        module.run_on_all_modules()
+    except Exception as exception:
+        logger.exception('Error running diagnostics - %s', exception)
+        error_code = 2
+
+    for module, results in module.current_results['results'].items():
+        for test, result_value in results:
+            print('{result_value}: {module}: {test}'.format(
+                result_value=result_value, test=test, module=module))
+            if result_value != 'passed':
+                error_code = 1
+
+    sys.exit(error_code)
+
+
 def main():
     """Intialize and start the application"""
     cfg.read()
@@ -254,6 +281,9 @@ def main():
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
+
+    if arguments.diagnose:
+        run_diagnostics_and_exit()
 
     setup_server()
 
