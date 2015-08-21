@@ -33,13 +33,14 @@ Tor Browser</a>.</p>
 
 <h3>Status</h3>
 
-<p>
-{% if status.is_running %}
-  <div class='running-status active'></div> Tor is running
-{% else %}
-  <div class='running-status inactive'></div> Tor is not running
-{% endif %}
+<p class="running-status-parent">
+  {% if status.is_running %}
+    <span class="running-status active"></span> Tor is running
+  {% else %}
+    <span class="running-status inactive"></span> Tor is not running
+  {% endif %}
 </p>
+{% include "diagnostics_button.html" with module="tor" %}
 
 {% if status.hs_enabled %}
   <div class="row">

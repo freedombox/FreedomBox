@@ -19,9 +19,98 @@
 Plinth module to configure Tor
 """
 
+from gettext import gettext as _
+import json
+
 from . import tor
 from .tor import init
+from plinth import actions
+from plinth import action_utils
 
 __all__ = ['tor', 'init']
 
 depends = ['plinth.modules.apps']
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+    results.append(action_utils.diagnose_port_listening(9050, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(9050, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(9040, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(9040, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(9053, 'udp4'))
+    results.append(action_utils.diagnose_port_listening(9053, 'udp6'))
+
+    results.extend(_diagnose_control_port())
+
+    output = actions.superuser_run('tor', ['get-ports'])
+    ports = [line.split() for line in output.splitlines()]
+    ports = {port_type: int(port) for port_type, port in ports}
+
+    results.append([_('Tor relay port available'),
+                    'passed' if 'orport' in ports else 'failed'])
+    if 'orport' in ports:
+        results.append(action_utils.diagnose_port_listening(ports['orport'],
+                                                            'tcp4'))
+        results.append(action_utils.diagnose_port_listening(ports['orport'],
+                                                            'tcp6'))
+
+    results.append([_('Obfs3 transport registered'),
+                    'passed' if 'obfs3' in ports else 'failed'])
+    if 'obfs3' in ports:
+        results.append(action_utils.diagnose_port_listening(ports['obfs3'],
+                                                            'tcp4'))
+
+    results.append([_('Scramblesuit transport registered'),
+                    'passed' if 'scramblesuit' in ports else 'failed'])
+    if 'scramblesuit' in ports:
+        results.append(action_utils.diagnose_port_listening(
+            ports['scramblesuit'], 'tcp4'))
+
+    results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
+    results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
+
+    results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
+    results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
+
+    return results
+
+
+def _diagnose_control_port():
+    """Diagnose whether a URL is reache able via Tor."""
+    results = []
+
+    addresses = action_utils.get_ip_addresses()
+    for address in addresses:
+        if address['kind'] != '4':
+            continue
+
+        negate = True
+        if address['address'] == '127.0.0.1':
+            negate = False
+
+        results.append(action_utils.diagnose_netcat(
+            address['address'], 9051, input='QUIT\n', negate=negate))
+
+    return results
+
+
+def _diagnose_url_via_tor(url, kind=None):
+    """Diagnose whether a URL is reache able via Tor."""
+    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks')
+    result[0] = _('Access URL {url} on tcp{kind} via Tor') \
+        .format(url=url, kind=kind)
+
+    return result
+
+
+def _diagnose_tor_use(url, kind=None):
+    """Diagnose whether a URL is reache able via Tor."""
+    expected_output = 'Congratulations. This browser is configured to use Tor.'
+    result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks',
+                                       expected_output=expected_output)
+    result[0] = _('Confirm Tor usage at {url} on tcp{kind}') \
+        .format(url=url, kind=kind)
+
+    return result
