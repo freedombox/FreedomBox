@@ -116,6 +116,7 @@ setuptools.setup(
         'django >= 1.7.0',
         'django-bootstrap-form',
         'django-stronghold',
+        'psutil',
         'python-augeas',
         'pyyaml',
     ],
