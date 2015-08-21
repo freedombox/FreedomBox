@@ -34,13 +34,15 @@
 
 <h3>Status</h3>
 
-<p>
+<p class="running-status-parent">
   {% if status.is_running %}
-  <span class='running-status active'></span> Mumble server is running
+  <span class="running-status active"></span> Mumble server is running
   {% else %}
-  <span class='running-status inactive'></span> Mumble server is not running
+  <span class="running-status inactive"></span> Mumble server is not running
   {% endif %}
 </p>
+{% include "diagnostics_button.html" with module="mumble" %}
+
 
 <h3>Configuration</h3>
 
