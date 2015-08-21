@@ -20,6 +20,7 @@ Plinth module to configure Privoxy.
 """
 
 from gettext import gettext as _
+import json
 
 from plinth import actions
 from plinth import action_utils
@@ -52,3 +53,40 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('privoxy')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(8118, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(8118, 'tcp6'))
+    results.append(action_utils.diagnose_url('https://www.debian.org'))
+    results.extend(diagnose_url_with_proxy())
+
+    return results
+
+
+def diagnose_url_with_proxy():
+    """Run a diagnostic on a URL with a proxy."""
+    url = 'https://debian.org/'
+
+    results = []
+    for address in action_utils.get_addresses():
+        if address['kind'] == '6':
+            address['address'] = '[{0}]'.format(address['address'])
+
+        proxy = 'http://{host}:8118/'.format(host=address['address'])
+        if address['kind'] == '4':
+            env = {'http_proxy': proxy}
+        else:
+            env = {'https_proxy': proxy}
+
+        result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
+        result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
+                    .format(url=url, proxy=proxy, kind=address['kind'])
+        results.append(result)
+
+    return results
+
+
