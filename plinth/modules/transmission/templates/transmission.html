@@ -32,13 +32,14 @@
 
 <h3>Status</h3>
 
-<p>
+<p class="running-status-parent">
   {% if status.is_running %}
   <span class='running-status active'></span> Transmission daemon is running
   {% else %}
   <span class='running-status inactive'></span> Transmission daemon is not running
   {% endif %}
 </p>
+{% include "diagnostics_button.html" with module="transmission" %}
 
 <h3>Configuration</h3>
 
