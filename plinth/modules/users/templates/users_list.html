@@ -60,8 +60,7 @@
         {% endfor %}
       </div>
 
-      <a href="{% url 'diagnostics:module' 'users' %}"
-         class="btn btn-default">Run Diagnostics</a>
+      {% include "diagnostics_button.html" with module="users" %}
     </div>
   </div>
 
