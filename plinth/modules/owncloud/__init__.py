@@ -22,6 +22,18 @@ Plinth module to configure ownCloud
 from . import owncloud
 from .owncloud import init
 
+from plinth import action_utils
+
 __all__ = ['owncloud', 'init']
 
 depends = ['plinth.modules.apps']
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.extend(action_utils.diagnose_url_on_all(
+        'https://{host}/roundcube', extra_options=['--no-check-certificate']))
+
+    return results
