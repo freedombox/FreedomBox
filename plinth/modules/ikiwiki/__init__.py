@@ -47,3 +47,13 @@ def init():
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('ikiwiki-plinth')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.extend(action_utils.diagnose_url_on_all(
+        'https://{host}/ikiwiki', extra_options=['--no-check-certificate']))
+
+    return results
