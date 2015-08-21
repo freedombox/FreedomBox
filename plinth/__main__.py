@@ -34,7 +34,7 @@ from plinth import cfg
 from plinth import module_loader
 from plinth import service
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def parse_arguments():
@@ -76,7 +76,7 @@ def setup_logging():
 
 def setup_server():
     """Setup CherryPy server"""
-    LOGGER.info('Setting up CherryPy server')
+    logger.info('Setting up CherryPy server')
 
     # Set the PID file path
     try:
@@ -104,7 +104,7 @@ def setup_server():
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
-    LOGGER.debug('Serving static directory %s on %s', static_dir,
+    logger.debug('Serving static directory %s on %s', static_dir,
                  django.conf.settings.STATIC_URL)
 
     js_dir = '/usr/share/javascript'
@@ -114,7 +114,7 @@ def setup_server():
               'tools.staticdir.on': True,
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, js_url, config)
-    LOGGER.debug('Serving javascript directory %s on %s', js_dir, js_url)
+    logger.debug('Serving javascript directory %s on %s', js_dir, js_url)
 
     for module_import_path in module_loader.loaded_modules:
         module = importlib.import_module(module_import_path)
@@ -130,7 +130,7 @@ def setup_server():
                   'tools.staticdir.dir': '.'}}
         urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
         cherrypy.tree.mount(None, urlprefix, config)
-        LOGGER.debug('Serving static directory %s on %s', static_dir,
+        logger.debug('Serving static directory %s on %s', static_dir,
                      urlprefix)
 
     if not cfg.no_daemon:
@@ -231,9 +231,9 @@ def configure_django():
         USE_X_FORWARDED_HOST=bool(cfg.use_x_forwarded_host))
     django.setup()
 
-    LOGGER.info('Configured Django with applications - %s', applications)
+    logger.info('Configured Django with applications - %s', applications)
 
-    LOGGER.info('Creating or adding new tables to data file')
+    logger.info('Creating or adding new tables to data file')
     django.core.management.call_command('syncdb', interactive=False)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
@@ -250,8 +250,8 @@ def main():
 
     configure_django()
 
-    LOGGER.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
-    LOGGER.info('Script prefix - %s', cfg.server_dir)
+    logger.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
+    logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
 
