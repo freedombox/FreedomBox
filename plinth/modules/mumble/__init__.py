@@ -52,3 +52,15 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('mumble-server')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(64738, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(64738, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(64738, 'udp4'))
+    results.append(action_utils.diagnose_port_listening(64738, 'udp6'))
+
+    return results
