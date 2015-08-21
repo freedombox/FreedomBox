@@ -53,3 +53,16 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('transmission-daemon')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(9091, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(9091, 'tcp6'))
+    results.extend(action_utils.diagnose_url_on_all(
+        'https://{host}/transmission',
+        extra_options=['--no-check-certificate']))
+
+    return results
