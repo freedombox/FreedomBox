@@ -59,11 +59,13 @@ def subcommand_setup(_):
     # interactive=False.
     lines = """
 # Run as non-exit bridge relay
+SocksPort [::]:9050
 SocksPort 0.0.0.0:9050
 ORPort auto
 ControlPort 9051
 BridgeRelay 1
 Exitpolicy reject *:*
+Exitpolicy reject6 *:*
 
 # Enable obfsproxy
 ServerTransportPlugin obfs3,scramblesuit exec /usr/bin/obfsproxy managed
@@ -73,7 +75,9 @@ ExtORPort auto
 VirtualAddrNetworkIPv4 10.192.0.0/10
 AutomapHostsOnResolve 1
 TransPort 127.0.0.1:9040
+TransPort [::1]:9040
 DNSPort 127.0.0.1:9053
+DNSPort [::1]:9053
 """
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
