@@ -58,6 +58,17 @@
       }
     });
 
+    $('#id_show_password').change(function() {
+        // Changing type attribute from password to text is prevented by
+        // most browsers. Making a new form field works.
+        new_type = 'password';
+        if ($('#id_show_password').prop('checked'))
+            new_type = 'text';
+
+        $('#id_password').replaceWith(
+            $('#id_password').clone().attr('type', new_type));
+      });
+
     })(jQuery);
   </script>
 

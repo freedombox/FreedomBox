@@ -58,18 +58,15 @@
       }
     });
 
-    $('#id_showpw').change(function() {
-        //changing type attribute from password to text is prevented by
-        //most browsers make a new form field works for me
-        if ($('#id_showpw').prop('checked')) {
-          $('#id_password').replaceWith(
-            $('#id_password').clone().attr(
-            'type', 'text'));
-        } else {
-          $('#id_password').replaceWith(
-            $('#id_password').clone().attr(
-            'type', 'password'));
-        }
+    $('#id_show_password').change(function() {
+        // Changing type attribute from password to text is prevented by
+        // most browsers. Making a new form field works.
+        new_type = 'password';
+        if ($('#id_show_password').prop('checked'))
+            new_type = 'text';
+
+        $('#id_password').replaceWith(
+            $('#id_password').clone().attr('type', new_type));
       });
 
     })(jQuery);

@@ -89,8 +89,8 @@ available over this interfaces. Select Internal only for trusted networks.'),
     username = forms.CharField(label=_('Username'))
     password = forms.CharField(label=_('Password'),
                                widget=forms.PasswordInput())
-    showpw = forms.BooleanField(label=_('show password'),
-                                required=False)
+    show_password = forms.BooleanField(label=_('Show password'),
+                                       required=False)
 
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
