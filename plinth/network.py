@@ -19,6 +19,7 @@
 Helper functions for working with network manager.
 """
 
+import collections
 from gi.repository import GLib as glib
 from gi.repository import NM as nm
 import logging
@@ -29,11 +30,11 @@ import uuid
 
 logger = logging.getLogger(__name__)
 
-CONNECTION_TYPE_NAMES = {
-    '802-3-ethernet': 'Ethernet',
-    '802-11-wireless': 'Wi-Fi',
-    'pppoe': 'PPPoE',
-}
+CONNECTION_TYPE_NAMES = collections.OrderedDict([
+    ('802-3-ethernet', 'Ethernet'),
+    ('802-11-wireless', 'Wi-Fi'),
+    ('pppoe', 'PPPoE')
+])
 
 
 class ConnectionNotFound(Exception):
