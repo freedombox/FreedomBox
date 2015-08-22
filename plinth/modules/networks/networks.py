@@ -112,27 +112,21 @@ def edit(request, uuid):
                                      'form': form})
     else:
         settings_connection = connection.get_setting_connection()
-        settings_ipv4 = connection.get_setting_ip4_config()
-        settings_pppoe = connection.get_setting_pppoe()
         form_data['interface'] = connection.get_interface_name()
         try:
             form_data['zone'] = settings_connection.get_zone()
         except KeyError:
             form_data['zone'] = 'external'
 
-        form_data['ipv4_method'] = settings_ipv4.get_method()
-        if not settings_pppoe:
-            form_data['username'] = ''
-            form_data['password'] = ''
-        else:
-            form_data['username'] = settings_pppoe.get_username()
-            form_data['password'] = settings_pppoe.get_password()
+        if settings_connection.get_connection_type() != 'pppoe':
+            settings_ipv4 = connection.get_setting_ip4_config()
+            form_data['ipv4_method'] = settings_ipv4.get_method()
 
-        if settings_ipv4.get_num_addresses():
-            # XXX: Plinth crashes here. Possibly because a double free bug
-            # address = settings_ipv4.get_address(0)
-            # form_data['ipv4_address'] = address.get_address()
-            pass
+            if settings_ipv4.get_num_addresses():
+                # XXX: Plinth crashes here. Possibly because a double free bug
+                # address = settings_ipv4.get_address(0)
+                # form_data['ipv4_address'] = address.get_address()
+                pass
 
         if settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
@@ -156,6 +150,10 @@ def edit(request, uuid):
         elif settings_connection.get_connection_type() == '802-3-ethernet':
             form = AddEthernetForm(form_data)
         elif settings_connection.get_connection_type() == 'pppoe':
+            settings_pppoe = connection.get_setting_pppoe()
+            form_data['username'] = settings_pppoe.get_username()
+            secrets = connection.get_secrets('pppoe')
+            form_data['password'] = secrets['pppoe']['password']
             form = AddPPPoEForm(form_data)
 
         return TemplateResponse(request, 'connections_edit.html',

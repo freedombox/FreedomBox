@@ -88,7 +88,7 @@ available over this interfaces. Select Internal only for trusted networks.'),
         choices=[('external', 'External'), ('internal', 'Internal')])
     username = forms.CharField(label=_('Username'))
     password = forms.CharField(label=_('Password'),
-                               widget=forms.PasswordInput())
+                               widget=forms.PasswordInput(render_value=True))
     show_password = forms.BooleanField(label=_('Show password'),
                                        required=False)
 
