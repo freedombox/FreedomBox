@@ -327,16 +327,17 @@ def edit_wifi_connection(connection, name, interface, zone, ssid, mode,
 
 def activate_connection(connection_uuid):
     """Find and activate a network connection."""
-    # Find the connection
     connection = get_connection(connection_uuid)
     interface = connection.get_interface_name()
     client = nm.Client.new(None)
     for device in client.get_devices():
         if device.get_iface() == interface:
-            client.activate_connection_async(connection,
-                                             device,
-                                             '/', None, _callback,
-                                             None)
+            client.activate_connection_async(
+                connection, device, '/', None, _callback, None)
+            break
+    else:
+        raise DeviceNotFound(connection)
+
     return connection
 
 
