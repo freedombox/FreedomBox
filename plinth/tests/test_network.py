@@ -33,6 +33,7 @@ class TestNetwork(unittest.TestCase):
 
     ethernet_uuid = None
     wifi_uuid = None
+    pppoe_uuid = None
 
     @classmethod
     def setUp(cls):
@@ -43,11 +44,15 @@ class TestNetwork(unittest.TestCase):
             'plinth_test_wifi', 'wlan0', 'external',
             'plinthtestwifi', 'adhoc', 'open', '',
             'auto', '')
+        cls.pppoe_uuid = network.add_pppoe_connection(
+            'plinth_test_pppoe', 'eth1', 'internal',
+            'x-user', 'x-password')
 
     @classmethod
     def tearDown(cls):
         network.delete_connection(cls.ethernet_uuid)
         network.delete_connection(cls.wifi_uuid)
+        network.delete_connection(cls.pppoe_uuid)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection_list(self):
@@ -56,6 +61,7 @@ class TestNetwork(unittest.TestCase):
 
         self.assertTrue('plinth_test_eth' in [x['name'] for x in connections])
         self.assertTrue('plinth_test_wifi' in [x['name'] for x in connections])
+        self.assertTrue('plinth_test_pppoe' in [x['name'] for x in connections])
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection(self):
@@ -76,23 +82,48 @@ class TestNetwork(unittest.TestCase):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'eth0', 'external', 'auto', '')
+            connection, 'plinth_test_eth_new', 'eth1', 'external', 'auto', '')
 
         connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(connection.get_id(), 'plinth_test_eth_new')
 
         settings_connection = connection.get_setting_connection()
+        self.assertEqual(settings_connection.get_interface_name(), 'eth1')
         self.assertEqual(settings_connection.get_zone(), 'external')
 
         settings_ipv4 = connection.get_setting_ip4_config()
         self.assertEqual(settings_ipv4.get_method(), 'auto')
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_edit_pppoe_connection(self):
+        """Check that we can update a PPPoE connection."""
+        connection = network.get_connection(self.ethernet_uuid)
+        network.edit_pppoe_connection(
+            connection, 'plinth_test_pppoe_new', 'eth2', 'external',
+            'x-user-new', 'x-password-new')
+
+        connection = network.get_connection(self.ethernet_uuid)
+        self.assertEqual(connection.get_id(), 'plinth_test_pppoe_new')
+
+        settings_connection = connection.get_setting_connection()
+        self.assertEqual(settings_connection.get_interface_name(), 'eth2')
+        self.assertEqual(settings_connection.get_zone(), 'external')
+
+        settings_pppoe = connection.get_setting_pppoe()
+        self.assertEqual(settings_pppoe.get_username(), 'x-user-new')
+        secrets = connection.get_secrets('pppoe')
+        self.assertEqual(secrets['pppoe']['password'], 'x-password-new')
+
+        settings_ppp = connection.get_setting_ppp()
+        self.assertEqual(settings_ppp.get_lcp_echo_failure(), 5)
+        self.assertEqual(settings_ppp.get_lcp_echo_interval(), 30)
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_edit_wifi_connection(self):
         """Check that we can update a wifi connection."""
         connection = network.get_connection(self.wifi_uuid)
         network.edit_wifi_connection(
-            connection, 'plinth_test_wifi_new', 'wlan0', 'external',
+            connection, 'plinth_test_wifi_new', 'wlan1', 'external',
             'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
             'auto', '')
 
@@ -101,6 +132,7 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(connection.get_id(), 'plinth_test_wifi_new')
 
         settings_connection = connection.get_setting_connection()
+        self.assertEqual(settings_connection.get_interface_name(), 'wlan1')
         self.assertEqual(settings_connection.get_zone(), 'external')
 
         settings_wireless = connection.get_setting_wireless()
