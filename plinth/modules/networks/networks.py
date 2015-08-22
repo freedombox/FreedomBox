@@ -65,6 +65,11 @@ def edit(request, uuid):
                                   'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
+    if connection.get_connection_type() not in network.CONNECTION_TYPE_NAMES:
+        messages.error(request,
+                       _('This type of connection is not yet understood.'))
+        return redirect(reverse_lazy('networks:index'))
+
     form = None
     form_data = {'name': connection.get_id()}
 
