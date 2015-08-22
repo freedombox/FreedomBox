@@ -199,21 +199,21 @@ def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
     settings = connection.get_setting_pppoe()
     if not settings:
         settings = nm.SettingPppoe.new()
+        connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_PPPOE_USERNAME, username)
     settings.set_property(nm.SETTING_PPPOE_PASSWORD, password)
-    connection.add_setting(settings)
 
     settings = connection.get_setting_ppp()
     if not settings:
         settings = nm.SettingPpp.new()
+        connection.add_setting(settings)
 
     #ToDo: make this configurable?
     #ToDo: apt-get install ppp pppoe
     settings.set_property(nm.SETTING_PPP_LCP_ECHO_FAILURE, 5)
     settings.set_property(nm.SETTING_PPP_LCP_ECHO_INTERVAL, 30)
 
-    connection.add_setting(settings)
     return connection
 
 
