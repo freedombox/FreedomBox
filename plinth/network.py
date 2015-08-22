@@ -129,13 +129,15 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
-def _update_common_settings(connection, connection_uuid, name, type_,
-                            interface, zone, ipv4_method, ipv4_address):
-    """Create/edit basic settings for network manager connections."""
+def _update_common_settings(connection, connection_uuid, name, type_, interface,
+                            zone):
+    """Create/edit basic settings for network manager connections.
+
+    Return newly created connection object if connection is None.
+    """
     if not connection:
         connection = nm.SimpleConnection.new()
 
-    # Connection
     settings = connection.get_setting_connection()
     if not settings:
         settings = nm.SettingConnection.new()
@@ -147,7 +149,11 @@ def _update_common_settings(connection, connection_uuid, name, type_,
     settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME, interface)
     settings.set_property(nm.SETTING_CONNECTION_ZONE, zone)
 
-    # IPv4
+    return connection
+
+
+def _update_ipv4_settings(connection, ipv4_method, ipv4_address):
+    """Edit IPv4 settings for network manager connections."""
     settings = connection.get_setting_ip4_config()
     if not settings:
         settings = nm.SettingIP4Config.new()
@@ -165,8 +171,6 @@ def _update_common_settings(connection, connection_uuid, name, type_,
     else:
         settings.clear_addresses()
 
-    return connection
-
 
 def _update_ethernet_settings(connection, connection_uuid, name, interface,
                               zone, ipv4_method, ipv4_address):
@@ -174,8 +178,8 @@ def _update_ethernet_settings(connection, connection_uuid, name, interface,
     type_ = '802-3-ethernet'
 
     connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone, ipv4_method,
-                                         ipv4_address)
+                                         type_, interface, zone)
+    _update_ipv4_settings(connection, ipv4_method, ipv4_address)
 
     # Ethernet
     settings = connection.get_setting_wired()
@@ -192,8 +196,7 @@ def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
     type_ = 'pppoe'
 
     connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone, 'auto',
-                                         '0.0.0.0')
+                                         type_, interface, zone)
 
     #pppoe
     settings = connection.get_setting_pppoe()
@@ -270,8 +273,8 @@ def _update_wifi_settings(connection, connection_uuid, name, interface, zone,
     key_mgmt = 'wpa-psk'
 
     connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone, ipv4_method,
-                                         ipv4_address)
+                                         type_, interface, zone)
+    _update_ipv4_settings(connection, ipv4_method, ipv4_address)
 
     # Wireless
     settings = connection.get_setting_wireless()
