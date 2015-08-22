@@ -74,7 +74,7 @@ available over this interfaces. Select Internal only for trusted networks.'),
 
 
 class AddPPPoEForm(forms.Form):
-    """Form to create a new pppoe connection."""
+    """Form to create a new PPPoE connection."""
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
         label=_('Physical Interface'),
@@ -100,7 +100,7 @@ available over this interfaces. Select Internal only for trusted networks.'),
 
 
 class AddWifiForm(forms.Form):
-    """Form to create a new wifi connection."""
+    """Form to create a new Wi-Fi connection."""
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
         label=_('Physical interface'),

@@ -22,8 +22,8 @@ from django.template.response import TemplateResponse
 from gettext import gettext as _
 from logging import Logger
 
-from .forms import ConnectionTypeSelectForm, AddEthernetForm, AddWifiForm
-from .forms import AddPPPoEForm
+from .forms import (ConnectionTypeSelectForm, AddEthernetForm, AddPPPoEForm,
+                    AddWifiForm)
 from plinth import cfg
 from plinth import network
 from plinth import package

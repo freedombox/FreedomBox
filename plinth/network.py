@@ -192,13 +192,13 @@ def _update_ethernet_settings(connection, connection_uuid, name, interface,
 
 def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
                            username, password):
-    """Create/edit ethernet settings for network manager connections."""
+    """Create/edit PPPoE settings for network manager connections."""
     type_ = 'pppoe'
 
     connection = _update_common_settings(connection, connection_uuid, name,
                                          type_, interface, zone)
 
-    #pppoe
+    # PPPoE
     settings = connection.get_setting_pppoe()
     if not settings:
         settings = nm.SettingPppoe.new()
@@ -212,8 +212,8 @@ def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
         settings = nm.SettingPpp.new()
         connection.add_setting(settings)
 
-    #ToDo: make this configurable?
-    #ToDo: apt-get install ppp pppoe
+    # TODO: make this configurable? Some PPP peers don't respond to
+    # echo requests according to NetworkManager documentation.
     settings.set_property(nm.SETTING_PPP_LCP_ECHO_FAILURE, 5)
     settings.set_property(nm.SETTING_PPP_LCP_ECHO_INTERVAL, 30)
 
@@ -221,7 +221,7 @@ def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
 
 
 def add_pppoe_connection(name, interface, zone, username, password):
-    """Add an automatic pppoe connection in network manager.
+    """Add an automatic PPPoE connection in network manager.
 
     Return the UUID for the connection.
     """
