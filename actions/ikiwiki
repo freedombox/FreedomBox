@@ -95,7 +95,7 @@ def subcommand_get_sites(_):
 
 def subcommand_create_wiki(arguments):
     """Create a wiki."""
-    pw_bytes = sys.stdin.readline().encode()
+    pw_bytes = sys.stdin.read().encode()
     proc = subprocess.Popen(
         ['ikiwiki', '-setup', SETUP_WIKI,
          arguments.wiki_name, arguments.admin_name],
@@ -107,7 +107,7 @@ def subcommand_create_wiki(arguments):
 
 def subcommand_create_blog(arguments):
     """Create a blog."""
-    pw_bytes = sys.stdin.readline().encode()
+    pw_bytes = sys.stdin.read().encode()
     proc = subprocess.Popen(
         ['ikiwiki', '-setup', SETUP_BLOG,
          arguments.blog_name, arguments.admin_name],

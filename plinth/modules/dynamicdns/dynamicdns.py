@@ -366,7 +366,7 @@ def _apply_changes(request, old_status, new_status):
               '-U', new_status['dynamicdns_update_url'],
               '-c', disable_ssl_check,
               '-b', use_http_basic_auth],
-             input = new_status['dynamicdns_secret'].encode())
+             input=new_status['dynamicdns_secret'].encode())
 
         if old_status['enabled']:
             _run(['stop'])

@@ -46,7 +46,7 @@ def parse_arguments():
 
     # Merge given JSON configration with existing
     subparsers.add_parser(
-        'merge-configuration', 
+        'merge-configuration',
         help='Merge JSON configuration from stdin with existing')
 
     return parser.parse_args()
@@ -66,7 +66,7 @@ def subcommand_disable(_):
 
 def subcommand_merge_configuration(arguments):
     """Merge given JSON configuration with existing configuration."""
-    configuration = ''.join(sys.stdin.readlines())
+    configuration = sys.stdin.read()
     configuration = json.loads(configuration)
 
     current_configuration = open(TRANSMISSION_CONFIG, 'r').read()

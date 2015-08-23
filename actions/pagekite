@@ -224,7 +224,7 @@ def subcommand_get_kite(_):
 def subcommand_set_kite(arguments):
     """Set details of the kite"""
     aug.set(PATHS['kitename'], arguments.kite_name)
-    aug.set(PATHS['kitesecret'], sys.stdin.readline())
+    aug.set(PATHS['kitesecret'], sys.stdin.read())
     aug.save()
 
 
