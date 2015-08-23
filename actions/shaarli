@@ -31,19 +31,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable shaarli site')
-    subparsers.add_parser('disable', help='Disable shaarli site')
+    subparsers.add_parser('enable', help='Enable Shaarli site')
+    subparsers.add_parser('disable', help='Disable Shaarli site')
 
     return parser.parse_args()
 
 
 def subcommand_enable(_):
-    """Enable shaarli site."""
+    """Enable web configuration and reload."""
     action_utils.webserver_enable('shaarli')
 
 
 def subcommand_disable(_):
-    """Disable shaarli site."""
+    """Disable web configuration and reload."""
     action_utils.webserver_disable('shaarli')
 
 

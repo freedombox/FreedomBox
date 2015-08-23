@@ -32,7 +32,7 @@ service = None
 
 
 def init():
-    """Initialize the Shaarli module."""
+    """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Bookmarks (Shaarli)'), 'glyphicon-bookmark',
                      'shaarli:index', 350)
