@@ -142,14 +142,14 @@ def prepare_service_for_display(service):
     return service
 
 
-def run(arguments, superuser=True):
+def run(arguments, superuser=True, input=None):
     """Run a given command and raise exception if there was an error"""
     command = 'pagekite'
 
     if superuser:
-        return actions.superuser_run(command, arguments)
+        return actions.superuser_run(command, arguments, input=input)
     else:
-        return actions.run(command, arguments)
+        return actions.run(command, arguments, input=input)
 
 
 def convert_service_to_string(service):

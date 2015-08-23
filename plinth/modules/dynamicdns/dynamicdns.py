@@ -361,11 +361,12 @@ def _apply_changes(request, old_status, new_status):
         _run(['configure', '-s', new_status['dynamicdns_server'],
               '-d', new_status['dynamicdns_domain'],
               '-u', new_status['dynamicdns_user'],
-              '-p', new_status['dynamicdns_secret'],
+              '-p',
               '-I', new_status['dynamicdns_ipurl'],
               '-U', new_status['dynamicdns_update_url'],
               '-c', disable_ssl_check,
-              '-b', use_http_basic_auth])
+              '-b', use_http_basic_auth],
+             input = new_status['dynamicdns_secret'].encode())
 
         if old_status['enabled']:
             _run(['stop'])
@@ -378,11 +379,11 @@ def _apply_changes(request, old_status, new_status):
         LOGGER.info('nothing changed')
 
 
-def _run(arguments, superuser=False):
+def _run(arguments, superuser=False, input=None):
     """Run a given command and raise exception if there was an error"""
     command = 'dynamicdns'
 
     if superuser:
-        return actions.superuser_run(command, arguments)
+        return actions.superuser_run(command, arguments, input=input)
     else:
-        return actions.run(command, arguments)
+        return actions.run(command, arguments, input=input)

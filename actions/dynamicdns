@@ -81,7 +81,9 @@ doGetOpt()
                 user=${OPTARG}
             ;;
             p)
-                pass=${OPTARG}
+                if read -t 0; then
+                    IFS= read -r pass
+                fi
             ;;
             I)
                 if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
@@ -426,7 +428,7 @@ case ${cmd} in
         echo "-s <server>             Gnudip Server address"
         echo "-d <domain>             Domain to be updated"
         echo "-u <user>               Account username"
-        echo "-p <password>           Account Password"
+        echo "-p                      Read Account Password from stdin"
         echo "-I <IP check URL>       A URL which returns the IP of the client who is requesting"
         echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
         echo "-c <1|0>                disable SSL check on Update URL"
