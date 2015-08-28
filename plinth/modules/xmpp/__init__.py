@@ -20,6 +20,7 @@ Plinth module to configure XMPP server
 """
 
 from gettext import gettext as _
+import json
 
 from plinth import actions
 from plinth import action_utils
@@ -101,3 +102,18 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
                           ['change-domainname',
                            '--domainname', new_domainname],
                           async=True)
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(5222, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(5222, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(5269, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
+    results.extend(action_utils.diagnose_url_on_all('http://{host}/jwchat'))
+
+    return results

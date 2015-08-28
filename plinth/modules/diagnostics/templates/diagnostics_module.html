@@ -25,28 +25,9 @@
 <h3>Module: {{ module_name }}</h3>
 
 {% if results %}
-<div class="row">
-  <div class="col-sm-3">
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Test</th>
-          <th>Result</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for test, result in results %}
-        <tr>
-          <td>{{ test }}</td>
-          <td>{{ result }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+  {% include "diagnostics_results.html" with results=results %}
 {% else %}
-<p>This module does not support diagnostics</p>
+  <p>This module does not support diagnostics</p>
 {% endif %}
 
 {% endblock %}

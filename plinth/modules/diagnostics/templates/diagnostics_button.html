@@ -1,4 +1,4 @@
-#!/bin/sh
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -15,5 +15,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-/usr/lib/freedombox/testsuite/check
+<form class="form form-diagnostics-button" method="post"
+      action="{% url 'diagnostics:module' module %}">
+  {% csrf_token %}
+
+  <input type="submit" class="btn btn-default" value="Run Diagnostics"/>
+</form>
