@@ -269,7 +269,7 @@ def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
         if exception.returncode == 6:
             result = 'passed'
     except FileNotFoundError:
-        result = 'error: missing command'
+        result = 'error'
 
     if kind:
         return [_('Access URL {url} on tcp{kind}')
