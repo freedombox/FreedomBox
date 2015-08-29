@@ -55,7 +55,7 @@ def index(request):
         form = DateTimeForm(initial=status, prefix='datetime')
 
     return TemplateResponse(request, 'datetime.html',
-                            {'title': _('Voice Chat (Datetime)'),
+                            {'title': _('Date & Time'),
                              'status': status,
                              'form': form})
 
