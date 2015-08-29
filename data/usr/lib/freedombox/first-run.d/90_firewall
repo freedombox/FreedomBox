@@ -20,44 +20,6 @@
 # /var/log/freedombox-first-run.log
 set -x
 
-# Setup interfaces into appropriate zones. XXX: This is ideally done
-# by network configuration as network configuration tool/scripts have
-# better idea of what the interfaces are. There should also be a UI in
-# Plinth to classify each interface as external or internal.
-
-# If more than one interfaces is available, assume eth0 is external
-# and rest are internal interfaces.
-INTERFACES=$(interface-detect | grep wired | grep -v lo | cut -f1 -d,)
-NO_OF_INTERFACES=$(echo $INTERFACES | wc --words)
-if [ $NO_OF_INTERFACES -gt '1' ]
-then
-    for INTERFACE in $INTERFACES
-    do
-        if [ $INTERFACE = 'eth0' ]
-        then
-            ZONE='external'
-        else
-            ZONE='internal'
-        fi
-
-        firewall-cmd --zone=$ZONE --permanent --add-interface=$INTERFACE
-    done
-fi
-
-# If only one interface is available, assume it to be internal so that
-# services are available on this only possible interface. This means
-# that all services which are meant to available only internally will
-# be available externally if the interface is publicly accessible.
-# XXX: To avoid this, FreedomBox should configure at least two
-# interfaces. If only one network hardware device is available, an
-# alias such as 'eth0:1' could be created and can act as internal
-# interface.
-if [ $NO_OF_INTERFACES -eq '1' ]
-then
-    firewall-cmd --zone=internal --permanent --add-interface="$INTERFACES"
-fi
-
-
 # Setup firewall rules for all the services enabled by default.
 # Ideally all non-essential services are enabled from Plinth which
 # automatically takes care of enabling appropirate firewall ports. The
