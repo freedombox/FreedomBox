@@ -16,53 +16,61 @@
 #
 
 """
-Plinth module to manage users
+Plinth module to configure system date and time
 """
 
 from gettext import gettext as _
-import json
 import subprocess
 
-from plinth import cfg
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
+from plinth import service as service_module
+
 
 depends = ['plinth.modules.system']
 
+service = None
+
 
 def init():
-    """Intialize the user module."""
+    """Intialize the date/time module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
-                     15)
+    menu.add_urlname(_('Date & Time'), 'glyphicon-time',
+                     'datetime:index', 900)
+
+    global service
+    service = service_module.Service(
+        'ntp', _('Network Time Server'),
+        is_external=False, enabled=is_enabled())
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    return action_utils.service_is_enabled('ntp')
+
+
+def is_running():
+    """Return whether the service is running."""
+    return action_utils.service_is_running('ntp')
 
 
 def diagnose():
     """Run diagnostics and return the results."""
     results = []
-
-    results.append(action_utils.diagnose_port_listening(389, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(389, 'tcp6'))
-
-    results.append(_diagnose_ldap_entry('dc=thisbox'))
-    results.append(_diagnose_ldap_entry('ou=people'))
-    results.append(_diagnose_ldap_entry('ou=groups'))
+    results.append(_diagnose_ntp_server_count())
 
     return results
 
 
-def _diagnose_ldap_entry(search_item):
-    """Diagnose that an LDAP entry exists."""
+def _diagnose_ntp_server_count():
+    """Diagnose minimum NTP server count."""
     result = 'failed'
-
     try:
-        subprocess.check_output(['ldapsearch', '-x', '-b', 'dc=thisbox',
-                                 search_item])
-        result = 'passed'
+        output = subprocess.check_output(['ntpq', '-n', '-c', 'lpeers'])
+        if len(output.decode().splitlines()[2:]):
+            result = 'passed'
     except subprocess.CalledProcessError:
         pass
 
-    return [_('Check LDAP entry "{search_item}"')
-            .format(search_item=search_item), result]
-
-
+    return [_('NTP client in contact with servers'), result]

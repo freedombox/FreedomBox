@@ -22,27 +22,20 @@
 
 {% block content %}
 
-<h2>Voice Chat (Mumble)</h2>
+<h2>Date & Time</h2>
 
-<p>Mumble is an open source, low-latency, encrypted, high quality voice chat
-  software.</p>
-
-<p>You can connect to your Mumble server on the regular Mumble port 64738.
-  <a href="http://mumble.info">Clients</a> to connect to Mumble from your
-  desktop and Android devices are available.</p>
-
+<p>Network time server is a program that maintians the system time in synchronization with servers on the Internet.</p>
 
 <h3>Status</h3>
 
 <p class="running-status-parent">
   {% if status.is_running %}
-  <span class="running-status active"></span> Mumble server is running
+  <span class="running-status active"></span> Network time server is running
   {% else %}
-  <span class="running-status inactive"></span> Mumble server is not running
+  <span class="running-status inactive"></span> Network time server is not running
   {% endif %}
 </p>
-{% include "diagnostics_button.html" with module="mumble" %}
-
+{% include "diagnostics_button.html" with module="datetime" %}
 
 <h3>Configuration</h3>
 

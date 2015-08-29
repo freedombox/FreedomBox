@@ -21,7 +21,19 @@ Plinth module for system diagnostics
 
 from . import diagnostics
 from .diagnostics import init
+from plinth import action_utils
 
 __all__ = ['diagnostics', 'init']
 
 depends = ['plinth.modules.system']
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+    results.append(action_utils.diagnose_port_listening(8000, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(8000, 'tcp6'))
+    results.extend(action_utils.diagnose_url_on_all(
+        'http://{host}/plinth/', extra_options=['--no-check-certificate']))
+
+    return results

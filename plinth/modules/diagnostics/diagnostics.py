@@ -19,15 +19,24 @@
 Plinth module for running diagnostics
 """
 
+import collections
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 from gettext import gettext as _
 import importlib
+import logging
+import threading
 
-from plinth import actions
 from plinth import cfg
 from plinth import module_loader
-from plinth.errors import ActionError
+
+
+logger = logging.Logger(__name__)
+
+current_results = {}
+
+_running_task = None
 
 
 def init():
@@ -39,26 +48,16 @@ def init():
 
 def index(request):
     """Serve the index page"""
+    if request.method == 'POST' and not _running_task:
+        _start_task()
+
     return TemplateResponse(request, 'diagnostics.html',
-                            {'title': _('System Diagnostics')})
+                            {'title': _('System Diagnostics'),
+                             'is_running': _running_task is not None,
+                             'results': current_results})
 
 
-def test(request):
-    """Run diagnostics and the output page"""
-    output = ''
-    error = ''
-    try:
-        output = actions.superuser_run("diagnostic-test")
-    except ActionError as exception:
-        output, error = exception.args[1:]
-    except Exception as exception:
-        error = str(exception)
-
-    return TemplateResponse(request, 'diagnostics_test.html',
-                            {'title': _('Diagnostic Test'),
-                             'diagnostics_output': output,
-                             'diagnostics_error': error})
-
+@require_POST
 def module(request, module_name):
     """Return diagnostics for a particular module."""
     found = False
@@ -79,3 +78,49 @@ def module(request, module_name):
                             {'title': _('Diagnostic Test'),
                              'module_name': module_name,
                              'results': results})
+
+
+def _start_task():
+    """Start the run task in a separate thread."""
+    if _running_task:
+        raise Exception('Task already running')
+
+    global _running_task
+    _running_task = threading.Thread(target=_run_on_all_modules_wrapper)
+    _running_task.start()
+
+
+def _run_on_all_modules_wrapper():
+    """Wrapper over actual task to catch exceptions."""
+    try:
+        run_on_all_modules()
+    except Exception as exception:
+        logger.exception('Error running diagnostics - %s', exception)
+        current_results['error'] = str(exception)
+
+    global _running_task
+    _running_task = None
+
+
+def run_on_all_modules():
+    """Run diagnostics on all modules and store the result."""
+    global current_results
+    current_results = {'modules': [],
+                       'results': collections.OrderedDict(),
+                       'progress_percentage': 0}
+
+    modules = []
+    for module_import_path in module_loader.loaded_modules:
+        loaded_module = importlib.import_module(module_import_path)
+        if not hasattr(loaded_module, 'diagnose'):
+            continue
+
+        module_name = module_import_path.split('.')[-1]
+        modules.append((module_name, loaded_module))
+        current_results['results'][module_name] = None
+
+    current_results['modules'] = modules
+    for current_index, (module_name, loaded_module) in enumerate(modules):
+        current_results['results'][module_name] = loaded_module.diagnose()
+        current_results['progress_percentage'] = \
+            int((current_index + 1) * 100 / len(modules))

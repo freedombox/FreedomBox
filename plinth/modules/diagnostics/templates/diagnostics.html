@@ -18,16 +18,61 @@
 #
 {% endcomment %}
 
+
+{% block page_head %}
+
+  {% if is_running %}
+    <meta http-equiv="refresh" content="3" />
+  {% endif %}
+
+{% endblock %}
+
+
 {% block content %}
 
 <h2>{{ title }}</h2>
 
 <p>The system diagnostic test will run a number of checks on your
-system to confirm that network services are running and configured
-properly. It may take a minute to complete.</p>
+system to confirm that applications and services are working as expected.</p>
 
-<p><a class="btn btn-primary btn-lg" href="{% url 'diagnostics:test' %}">
-  Run diagnostic test &raquo;
-</a></p>
+{% if not is_running %}
+  <form class="form form-diagnostics-button" method="post"
+        action="{% url 'diagnostics:index' %}">
+    {% csrf_token %}
+
+    <input type="submit" class="btn btn-primary" value="Run Diagnostics"/>
+  </form>
+{% else %}
+  <p>Diagnotics test is currently running</p>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped active"
+         role="progressbar" aria-valuemin="0" aria-valuemax="100"
+         aria-valuenow="{{ results.progress_percentage }}"
+         style="width: {{ results.progress_percentage }}%">
+      {{ results.progress_percentage }}%
+    </div>
+  </div>
+
+{% endif %}
+
+{% if results %}
+  <h3>Results</h3>
+  {% if results.error %}
+    <div class="alert alert-danger alert-dismissable">
+      <a class="close" data-dismiss="alert">&times;</a>
+      {{ results.error }}
+    </div>
+  {% else %}
+    {% for module, module_results in results.results.items %}
+      <h4>Module: {{ module }}</h4>
+
+      {% if module_results %}
+        {% include "diagnostics_results.html" with results=module_results %}
+      {% else %}
+        <p><span class="glyphicon glyphicon-hourglass"></span></p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
 
 {% endblock %}

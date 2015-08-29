@@ -53,3 +53,15 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('deluge-web')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
+    results.extend(action_utils.diagnose_url_on_all(
+        'https://{host}/deluge', extra_options=['--no-check-certificate']))
+
+    return results

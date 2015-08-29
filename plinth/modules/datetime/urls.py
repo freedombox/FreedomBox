@@ -1,5 +1,3 @@
-{% extends 'base.html' %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,20 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
 
-{% block content %}
+"""
+URLs for the date and time module
+"""
 
-<h2>{{title}}</h2>
+from django.conf.urls import patterns, url
 
-{% if diagnostics_error %}
-  <p>The diagnostic test encountered an error:<p>
-  <pre>{{ diagnostics_error }}</pre>
-{% endif %}
 
-{% if diagnostics_output %}
-  <p>Output of diagnostic test:</p>
-  <pre>{{ diagnostics_output }}</pre>
-{% endif %}
-
-{% endblock %}
+urlpatterns = patterns(
+    'plinth.modules.datetime.views',
+    url(r'^sys/datetime/$', 'index', name='index'),
+    )

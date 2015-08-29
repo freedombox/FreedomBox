@@ -8,23 +8,23 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
 """
-URLs for the Diagnostics module
+Forms for configuring date and time
 """
 
-from django.conf.urls import patterns, url
+from django import forms
+from gettext import gettext as _
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.diagnostics.diagnostics',
-    url(r'^sys/diagnostics/$', 'index', name='index'),
-    url(r'^sys/diagnostics/(?P<module_name>[a-z\-]+)/$', 'module',
-        name='module'),
-    )
+class DateTimeForm(forms.Form):
+    """Date/time configuration form."""
+    enabled = forms.BooleanField(
+        label=_('Enable network time'),
+        required=False)
