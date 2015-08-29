@@ -34,6 +34,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/roundcube', extra_options=['--no-check-certificate']))
+        'https://{host}/owncloud', extra_options=['--no-check-certificate']))
 
     return results
