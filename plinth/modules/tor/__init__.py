@@ -78,7 +78,7 @@ def diagnose():
 
 
 def _diagnose_control_port():
-    """Diagnose whether a URL is reache able via Tor."""
+    """Diagnose whether Tor control port is open on 127.0.0.1 only."""
     results = []
 
     addresses = action_utils.get_ip_addresses()
@@ -97,7 +97,7 @@ def _diagnose_control_port():
 
 
 def _diagnose_url_via_tor(url, kind=None):
-    """Diagnose whether a URL is reache able via Tor."""
+    """Diagnose whether a URL is reachable via Tor."""
     result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks')
     result[0] = _('Access URL {url} on tcp{kind} via Tor') \
         .format(url=url, kind=kind)
@@ -106,7 +106,7 @@ def _diagnose_url_via_tor(url, kind=None):
 
 
 def _diagnose_tor_use(url, kind=None):
-    """Diagnose whether a URL is reache able via Tor."""
+    """Diagnose whether webpage at URL reports that we are using Tor."""
     expected_output = 'Congratulations. This browser is configured to use Tor.'
     result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks',
                                        expected_output=expected_output)
