@@ -55,7 +55,7 @@ def on_install():
     actions.superuser_run('tor', ['setup'])
 
 
-@package.required(['tor', 'obfsproxy'], on_install=on_install)
+@package.required(['tor', 'obfsproxy', 'torsocks'], on_install=on_install)
 def index(request):
     """Service the index page"""
     status = get_status()
