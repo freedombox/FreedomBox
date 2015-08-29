@@ -38,15 +38,14 @@
 
 <h3>Status</h3>
 
-<p>
+<p class="running-status-parent">
   {% if status.is_running %}
-  <span class='running-status active'></span> Privoxy is running
+  <span class="running-status active"></span> Privoxy is running
   {% else %}
-  <span class='running-status inactive'></span> Privoxy is not running
+  <span class="running-status inactive"></span> Privoxy is not running
   {% endif %}
-  <a href="{% url 'diagnostics:module' 'privoxy' %}"
-     class="btn btn-default">Run Diagnostics</a>
 </p>
+{% include "diagnostics_button.html" with module="privoxy" %}
 
 <h3>Configuration</h3>
 
