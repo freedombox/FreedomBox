@@ -20,7 +20,6 @@ Plinth module to configure Tor
 """
 
 from gettext import gettext as _
-import json
 
 from . import tor
 from .tor import init
