@@ -27,7 +27,6 @@ import shutil
 import socket
 import subprocess
 import re
-import yaml
 
 from plinth import action_utils
 
@@ -214,12 +213,6 @@ def subcommand_change_domainname(arguments):
         print('Skipping configuring jwchat sitename: %s not found',
               JWCHAT_CONFIG)
 
-    # Check if new domainname is already in ejabberd hosts list.
-    conffile = open(EJABBERD_CONFIG, 'r')
-    conf = yaml.safe_load(conffile)
-    if domainname in conf['hosts']:
-        return
-
     action_utils.service_stop('ejabberd')
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
@@ -227,9 +220,16 @@ def subcommand_change_domainname(arguments):
     with open(EJABBERD_CONFIG, 'r') as conffile:
         lines = conffile.readlines()
     with open(EJABBERD_CONFIG, 'w') as conffile:
+        in_hosts = False
         for line in lines:
+            if in_hosts:
+                if re.match(r'\s*-\s*', line):
+                    continue
+                in_hosts = False
+
             conffile.write(line)
             if re.match(r'\s*hosts:', line):
+                in_hosts = True
                 conffile.write('  - "' + domainname + '"\n')
 
     action_utils.service_start('ejabberd')
