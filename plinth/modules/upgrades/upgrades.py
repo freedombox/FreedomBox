@@ -44,7 +44,12 @@ def init():
                      'upgrades:index', 21)
 
 
-@package.required(['unattended-upgrades'])
+def on_install():
+    """Enable automatic upgrades after install."""
+    actions.superuser_run('upgrades', ['enable-auto'])
+
+
+@package.required(['unattended-upgrades'], on_install=on_install)
 def index(request):
     """Serve the index page."""
     return TemplateResponse(request, 'upgrades.html',
@@ -53,7 +58,7 @@ def index(request):
 
 
 @require_POST
-@package.required(['unattended-upgrades'])
+@package.required(['unattended-upgrades'], on_install=on_install)
 def run(request):
     """Run upgrades and show the output page."""
     output = ''
@@ -81,7 +86,7 @@ run once per day. It will attempt to perform any package upgrades that are \
 available.'))
 
 
-@package.required(['unattended-upgrades'])
+@package.required(['unattended-upgrades'], on_install=on_install)
 def configure(request):
     """Serve the configuration form."""
     status = get_status()
