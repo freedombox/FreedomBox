@@ -19,22 +19,22 @@
 Plinth module for upgrades
 """
 
-from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from gettext import gettext as _
 
+from .forms import ConfigureForm
 from plinth import actions
 from plinth import cfg
 from plinth import package
 from plinth.errors import ActionError
 
 subsubmenu = [{'url': reverse_lazy('upgrades:index'),
-               'text': _('Upgrade Packages')},
-              {'url': reverse_lazy('upgrades:configure'),
-               'text': _('Automatic Upgrades')}]
+               'text': _('Automatic Upgrades')},
+              {'url': reverse_lazy('upgrades:upgrade'),
+               'text': _('Upgrade Packages')}]
 
 
 def init():
@@ -44,45 +44,13 @@ def init():
                      'upgrades:index', 21)
 
 
-@package.required(['unattended-upgrades'])
+def on_install():
+    """Enable automatic upgrades after install."""
+    actions.superuser_run('upgrades', ['enable-auto'])
+
+
+@package.required(['unattended-upgrades'], on_install=on_install)
 def index(request):
-    """Serve the index page."""
-    return TemplateResponse(request, 'upgrades.html',
-                            {'title': _('Package Upgrades'),
-                             'subsubmenu': subsubmenu})
-
-
-@require_POST
-@package.required(['unattended-upgrades'])
-def run(request):
-    """Run upgrades and show the output page."""
-    output = ''
-    error = ''
-    try:
-        output = actions.superuser_run('upgrades', ['run'])
-    except ActionError as exception:
-        output, error = exception.args[1:]
-    except Exception as exception:
-        error = str(exception)
-
-    return TemplateResponse(request, 'upgrades_run.html',
-                            {'title': _('Package Upgrades'),
-                             'subsubmenu': subsubmenu,
-                             'upgrades_output': output,
-                             'upgrades_error': error})
-
-
-class ConfigureForm(forms.Form):
-    """Configuration form to enable/disable automatic upgrades."""
-    auto_upgrades_enabled = forms.BooleanField(
-        label=_('Enable automatic upgrades'), required=False,
-        help_text=_('When enabled, the unattended-upgrades program will be \
-run once per day. It will attempt to perform any package upgrades that are \
-available.'))
-
-
-@package.required(['unattended-upgrades'])
-def configure(request):
     """Serve the configuration form."""
     status = get_status()
 
@@ -101,6 +69,34 @@ def configure(request):
                             {'title': _('Automatic Upgrades'),
                              'form': form,
                              'subsubmenu': subsubmenu})
+
+
+@package.required(['unattended-upgrades'], on_install=on_install)
+def upgrade(request):
+    """Serve the upgrade page."""
+    return TemplateResponse(request, 'upgrades.html',
+                            {'title': _('Package Upgrades'),
+                             'subsubmenu': subsubmenu})
+
+
+@require_POST
+@package.required(['unattended-upgrades'], on_install=on_install)
+def run(request):
+    """Run upgrades and show the output page."""
+    output = ''
+    error = ''
+    try:
+        output = actions.superuser_run('upgrades', ['run'])
+    except ActionError as exception:
+        output, error = exception.args[1:]
+    except Exception as exception:
+        error = str(exception)
+
+    return TemplateResponse(request, 'upgrades_run.html',
+                            {'title': _('Package Upgrades'),
+                             'subsubmenu': subsubmenu,
+                             'upgrades_output': output,
+                             'upgrades_error': error})
 
 
 def get_status():
