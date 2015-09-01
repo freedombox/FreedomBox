@@ -225,6 +225,7 @@ def subcommand_change_domainname(arguments):
             if in_hosts:
                 if re.match(r'\s*-\s*', line):
                     continue
+
                 in_hosts = False
 
             conffile.write(line)

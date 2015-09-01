@@ -39,6 +39,7 @@ def get_domainname():
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
 
+
 def before_install():
     """Preseed debconf values before the packages are installed."""
     domainname = get_domainname()
