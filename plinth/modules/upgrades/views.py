@@ -19,22 +19,22 @@
 Plinth module for upgrades
 """
 
-from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from gettext import gettext as _
 
+from .forms import ConfigureForm
 from plinth import actions
 from plinth import cfg
 from plinth import package
 from plinth.errors import ActionError
 
 subsubmenu = [{'url': reverse_lazy('upgrades:index'),
-               'text': _('Upgrade Packages')},
-              {'url': reverse_lazy('upgrades:configure'),
-               'text': _('Automatic Upgrades')}]
+               'text': _('Automatic Upgrades')},
+              {'url': reverse_lazy('upgrades:upgrade'),
+               'text': _('Upgrade Packages')}]
 
 
 def init():
@@ -51,7 +51,29 @@ def on_install():
 
 @package.required(['unattended-upgrades'], on_install=on_install)
 def index(request):
-    """Serve the index page."""
+    """Serve the configuration form."""
+    status = get_status()
+
+    form = None
+
+    if request.method == 'POST':
+        form = ConfigureForm(request.POST, prefix='upgrades')
+        if form.is_valid():
+            _apply_changes(request, status, form.cleaned_data)
+            status = get_status()
+            form = ConfigureForm(initial=status, prefix='upgrades')
+    else:
+        form = ConfigureForm(initial=status, prefix='upgrades')
+
+    return TemplateResponse(request, 'upgrades_configure.html',
+                            {'title': _('Automatic Upgrades'),
+                             'form': form,
+                             'subsubmenu': subsubmenu})
+
+
+@package.required(['unattended-upgrades'], on_install=on_install)
+def upgrade(request):
+    """Serve the upgrade page."""
     return TemplateResponse(request, 'upgrades.html',
                             {'title': _('Package Upgrades'),
                              'subsubmenu': subsubmenu})
@@ -75,37 +97,6 @@ def run(request):
                              'subsubmenu': subsubmenu,
                              'upgrades_output': output,
                              'upgrades_error': error})
-
-
-class ConfigureForm(forms.Form):
-    """Configuration form to enable/disable automatic upgrades."""
-    auto_upgrades_enabled = forms.BooleanField(
-        label=_('Enable automatic upgrades'), required=False,
-        help_text=_('When enabled, the unattended-upgrades program will be \
-run once per day. It will attempt to perform any package upgrades that are \
-available.'))
-
-
-@package.required(['unattended-upgrades'], on_install=on_install)
-def configure(request):
-    """Serve the configuration form."""
-    status = get_status()
-
-    form = None
-
-    if request.method == 'POST':
-        form = ConfigureForm(request.POST, prefix='upgrades')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = ConfigureForm(initial=status, prefix='upgrades')
-    else:
-        form = ConfigureForm(initial=status, prefix='upgrades')
-
-    return TemplateResponse(request, 'upgrades_configure.html',
-                            {'title': _('Automatic Upgrades'),
-                             'form': form,
-                             'subsubmenu': subsubmenu})
 
 
 def get_status():
