@@ -16,15 +16,17 @@
 #
 
 """
-URLs for the upgrades module
+Forms for configuring unattended-upgrades.
 """
 
-from django.conf.urls import patterns, url
+from django import forms
+from gettext import gettext as _
 
 
-urlpatterns = patterns(
-    'plinth.modules.upgrades.upgrades',
-    url(r'^sys/upgrades/$', 'index', name='index'),
-    url(r'^sys/upgrades/upgrade/$', 'upgrade', name='upgrade'),
-    url(r'^sys/upgrades/upgrade/run/$', 'run', name='run'),
-    )
+class ConfigureForm(forms.Form):
+    """Configuration form to enable/disable automatic upgrades."""
+    auto_upgrades_enabled = forms.BooleanField(
+        label=_('Enable automatic upgrades'), required=False,
+        help_text=_('When enabled, the unattended-upgrades program will be \
+run once per day. It will attempt to perform any package upgrades that are \
+available.'))
