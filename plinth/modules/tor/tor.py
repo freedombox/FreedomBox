@@ -63,6 +63,7 @@ def init():
 def on_install():
     """Setup Tor configuration as soon as it is installed."""
     actions.superuser_run('tor', ['setup'])
+    actions.superuser_run('tor', ['enable-apt-transport-tor'])
 
 
 @package.required(['tor', 'obfsproxy', 'torsocks', 'apt-transport-tor'],
