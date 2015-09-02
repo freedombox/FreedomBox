@@ -27,7 +27,6 @@ from gettext import gettext as _
 
 from .forms import ConfigureForm
 from plinth import actions
-from plinth import cfg
 from plinth import package
 from plinth.errors import ActionError
 
@@ -35,13 +34,6 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
                'text': _('Automatic Upgrades')},
               {'url': reverse_lazy('upgrades:upgrade'),
                'text': _('Upgrade Packages')}]
-
-
-def init():
-    """Initialize the module."""
-    menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Software Upgrades'), 'glyphicon-refresh',
-                     'upgrades:index', 21)
 
 
 def on_install():

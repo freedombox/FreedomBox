@@ -19,9 +19,16 @@
 Plinth module for upgrades
 """
 
-from . import upgrades
-from .upgrades import init
+from gettext import gettext as _
 
-__all__ = ['upgrades', 'init']
+from plinth import cfg
+
 
 depends = ['plinth.modules.system']
+
+
+def init():
+    """Initialize the module."""
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(_('Software Upgrades'), 'glyphicon-refresh',
+                     'upgrades:index', 21)

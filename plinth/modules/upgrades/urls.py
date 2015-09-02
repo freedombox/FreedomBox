@@ -23,7 +23,7 @@ from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
-    'plinth.modules.upgrades.upgrades',
+    'plinth.modules.upgrades.views',
     url(r'^sys/upgrades/$', 'index', name='index'),
     url(r'^sys/upgrades/upgrade/$', 'upgrade', name='upgrade'),
     url(r'^sys/upgrades/upgrade/run/$', 'run', name='run'),
