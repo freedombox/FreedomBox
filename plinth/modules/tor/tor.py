@@ -19,6 +19,7 @@
 Plinth module for configuring Tor
 """
 
+import augeas
 from django import forms
 from django.contrib import messages
 from django.template.response import TemplateResponse
@@ -28,6 +29,9 @@ from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import package
+
+APT_SOURCES_URI_PATH = '/files/etc/apt/sources.list/*/uri'
+APT_TOR_PREFIX = 'tor+'
 
 
 class TorForm(forms.Form):  # pylint: disable=W0232
@@ -41,6 +45,12 @@ class TorForm(forms.Form):  # pylint: disable=W0232
         help_text=_('A hidden service will allow FreedomBox to provide '
                     'selected services (such as ownCloud or Chat) without '
                     'revealing its location.'))
+    apt_transport_tor_enabled = forms.BooleanField(
+        label=_('Download software packages over Tor'),
+        required=False,
+        help_text=_('When enabled, Debian packages will be downloaded over '
+                    'the Tor network for software installs and upgrades. This '
+                    'adds a degree of privacy to your software downloads.'))
 
 
 def init():
@@ -55,7 +65,8 @@ def on_install():
     actions.superuser_run('tor', ['setup'])
 
 
-@package.required(['tor', 'obfsproxy', 'torsocks'], on_install=on_install)
+@package.required(['tor', 'obfsproxy', 'torsocks', 'apt-transport-tor'],
+                  on_install=on_install)
 def index(request):
     """Service the index page"""
     status = get_status()
@@ -106,18 +117,28 @@ def get_status():
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
 
+    apt_transport_tor_enabled = False
+    aug = augeas.Augeas()
+    for uri_path in aug.match(APT_SOURCES_URI_PATH):
+        if aug.get(uri_path).startswith(APT_TOR_PREFIX):
+            apt_transport_tor_enabled = True
+            break
+
     return {'enabled': action_utils.service_is_enabled('tor'),
             'is_running': action_utils.service_is_running('tor'),
             'ports': ports,
             'hs_enabled': hs_enabled,
             'hs_hostname': hs_hostname,
-            'hs_ports': hs_ports}
+            'hs_ports': hs_ports,
+            'apt_transport_tor_enabled': apt_transport_tor_enabled}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the changes."""
     if old_status['enabled'] == new_status['enabled'] and \
-       old_status['hs_enabled'] == new_status['hs_enabled']:
+       old_status['hs_enabled'] == new_status['hs_enabled'] and \
+       old_status['apt_transport_tor_enabled'] == \
+       new_status['apt_transport_tor_enabled']:
         messages.info(request, _('Setting unchanged'))
         return
 
@@ -136,3 +157,12 @@ def _apply_changes(request, old_status, new_status):
         else:
             messages.success(request, _('Tor hidden service disabled'))
             actions.superuser_run('tor', ['disable-hs'])
+
+    if old_status['apt_transport_tor_enabled'] != \
+       new_status['apt_transport_tor_enabled']:
+        if new_status['apt_transport_tor_enabled']:
+            messages.success(request, _('Enabled package download over Tor'))
+            actions.superuser_run('tor', ['enable-apt-transport-tor'])
+        else:
+            messages.success(request, _('Disabled package download over Tor'))
+            actions.superuser_run('tor', ['disable-apt-transport-tor'])

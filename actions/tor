@@ -22,6 +22,7 @@ Configuration helper for the Tor service
 """
 
 import argparse
+import augeas
 import codecs
 import os
 import re
@@ -29,6 +30,8 @@ import socket
 
 from plinth import action_utils
 
+APT_SOURCES_URI_PATH = '/files/etc/apt/sources.list/*/uri'
+APT_TOR_PREFIX = 'tor+'
 TOR_CONFIG = '/etc/tor/torrc'
 TOR_STATE_FILE = '/var/lib/tor/state'
 TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
@@ -46,6 +49,10 @@ def parse_arguments():
     subparsers.add_parser('enable-hs', help='Enable hidden service')
     subparsers.add_parser('disable-hs', help='Disable hidden service')
     subparsers.add_parser('get-ports', help='Get list of Tor ports')
+    subparsers.add_parser('enable-apt-transport-tor',
+                          help='Enable package download over Tor')
+    subparsers.add_parser('disable-apt-transport-tor',
+                          help='Disable package download over Tor')
 
     return parser.parse_args()
 
@@ -192,6 +199,26 @@ def subcommand_get_ports(_):
                                line)
             if matches:
                 print('{0} {1}'.format(matches.group(1), matches.group(2)))
+
+
+def subcommand_enable_apt_transport_tor(_):
+    """Enable package download over Tor."""
+    aug = augeas.Augeas()
+    for uri_path in aug.match(APT_SOURCES_URI_PATH):
+        uri = aug.get(uri_path)
+        if not uri.startswith(APT_TOR_PREFIX):
+            aug.set(uri_path, APT_TOR_PREFIX + uri)
+    aug.save()
+
+
+def subcommand_disable_apt_transport_tor(_):
+    """Disable package download over Tor."""
+    aug = augeas.Augeas()
+    for uri_path in aug.match(APT_SOURCES_URI_PATH):
+        uri = aug.get(uri_path)
+        if uri.startswith(APT_TOR_PREFIX):
+            aug.set(uri_path, uri[len(APT_TOR_PREFIX):])
+    aug.save()
 
 
 def _get_orport():
