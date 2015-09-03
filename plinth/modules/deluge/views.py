@@ -29,7 +29,13 @@ from plinth import package
 from plinth.modules import deluge
 
 
-@package.required(['deluged', 'deluge-web'])
+def on_install():
+    """Tasks to run after package install."""
+    actions.superuser_run('deluge', ['enable'])
+    deluge.service.notify_enabled(None, True)
+
+
+@package.required(['deluged', 'deluge-web'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
