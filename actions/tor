@@ -206,7 +206,7 @@ def subcommand_enable_apt_transport_tor(_):
     aug = augeas.Augeas()
     for uri_path in aug.match(APT_SOURCES_URI_PATH):
         uri = aug.get(uri_path)
-        if not uri.startswith(APT_TOR_PREFIX):
+        if uri.startswith('http://') or uri.startswith('https://'):
             aug.set(uri_path, APT_TOR_PREFIX + uri)
     aug.save()
 
