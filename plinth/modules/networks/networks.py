@@ -19,6 +19,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 from gettext import gettext as _
 from logging import Logger
 
@@ -167,6 +168,7 @@ def edit(request, uuid):
                                  'form': form})
 
 
+@require_POST
 def activate(request, uuid):
     """Activate the connection."""
     try:
@@ -184,6 +186,7 @@ def activate(request, uuid):
     return redirect(reverse_lazy('networks:index'))
 
 
+@require_POST
 def deactivate(request, uuid):
     """Deactivate the connection."""
     try:
