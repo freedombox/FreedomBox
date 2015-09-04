@@ -99,6 +99,7 @@ def subcommand_enable(_):
 
 def subcommand_disable(_):
     """Disable and stop the service."""
+    subcommand_disable_apt_transport_tor(_)
     action_utils.service_disable('tor')
 
 
