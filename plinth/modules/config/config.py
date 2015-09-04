@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module for configuring timezone, hostname etc.
+Plinth module for configuring hostname and domainname.
 """
 
 from django import forms
@@ -24,9 +24,7 @@ from django.contrib import messages
 from django.core import validators
 from django.template.response import TemplateResponse
 from gettext import gettext as _
-import glob
 import logging
-import re
 import socket
 
 from plinth import actions
@@ -61,11 +59,6 @@ class TrimmedCharField(forms.CharField):
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
-    time_zone = forms.ChoiceField(
-        label=_('Time Zone'),
-        help_text=_('Set your time zone to get accurate timestamps. \
-This will set the systemwide time zone.'))
-
     # We're more conservative than RFC 952 and RFC 1123
     hostname = TrimmedCharField(
         label=_('Hostname'),
@@ -85,41 +78,6 @@ separated by dots.'),
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
                                       _('Invalid domain name'))])
-
-    def __init__(self, *args, **kwargs):
-        # pylint: disable-msg=E1101, W0233
-        forms.Form.__init__(self, *args, **kwargs)
-
-        timezone_options = [(zone, zone)
-                            for zone in self.get_time_zones()]
-        # Show not-set option only when time zone is not set
-        if self.initial.get('time_zone') == 'none':
-            timezone_options.insert(0, ('none', _('-- no time zone set --')))
-
-        self.fields['time_zone'].choices = timezone_options
-
-    @staticmethod
-    def get_time_zones():
-        """Return list of available time zones"""
-        time_zones = []
-        for line in open('/usr/share/zoneinfo/zone.tab'):
-            if re.match(r'^(#|\s*$)', line):
-                continue
-
-            try:
-                time_zones.append(line.split()[2])
-            except IndexError:
-                pass
-
-        time_zones.sort()
-
-        additional_time_zones = [
-            path[len('/usr/share/zoneinfo/'):]
-            for path in glob.glob('/usr/share/zoneinfo/Etc/*')]
-
-        # Add additional time zones at the top to make them more
-        # noticeable because people won't look for them
-        return additional_time_zones + time_zones
 
 
 def init():
@@ -154,14 +112,7 @@ def index(request):
 def get_status():
     """Return the current status"""
     return {'hostname': get_hostname(),
-            'domainname': get_domainname(),
-            'time_zone': get_current_timezone()}
-
-
-def get_current_timezone():
-    """Get current timezone"""
-    timezone = open('/etc/timezone').read().rstrip()
-    return timezone or 'none'
+            'domainname': get_domainname()}
 
 
 def _apply_changes(request, old_status, new_status):
@@ -187,18 +138,6 @@ def _apply_changes(request, old_status, new_status):
             messages.success(request, _('Domain name set'))
     else:
         messages.info(request, _('Domain name is unchanged'))
-
-    if old_status['time_zone'] != new_status['time_zone'] and \
-       new_status['time_zone'] != 'none':
-        try:
-            actions.superuser_run('timezone-change', [new_status['time_zone']])
-        except Exception as exception:
-            messages.error(request, _('Error setting time zone: %s') %
-                           exception)
-        else:
-            messages.success(request, _('Time zone set'))
-    else:
-        messages.info(request, _('Time zone is unchanged'))
 
 
 def set_hostname(hostname):

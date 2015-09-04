@@ -63,7 +63,14 @@ def index(request):
 def get_status():
     """Get the current settings from server."""
     return {'enabled': datetime.is_enabled(),
-            'is_running': datetime.is_running()}
+            'is_running': datetime.is_running(),
+            'time_zone': get_current_time_zone()}
+
+
+def get_current_time_zone():
+    """Get current time zone."""
+    time_zone = open('/etc/timezone').read().rstrip()
+    return time_zone or 'none'
 
 
 def _apply_changes(request, old_status, new_status):
@@ -72,11 +79,21 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
+        modified = True
         actions.superuser_run('datetime', [sub_command])
         datetime.service.notify_enabled(None, new_status['enabled'])
-        modified = True
-
-    if modified:
         messages.success(request, _('Configuration updated'))
-    else:
+
+    if old_status['time_zone'] != new_status['time_zone'] and \
+       new_status['time_zone'] != 'none':
+        modified = True
+        try:
+            actions.superuser_run('timezone-change', [new_status['time_zone']])
+        except Exception as exception:
+            messages.error(request, _('Error setting time zone: %s') %
+                           exception)
+        else:
+            messages.success(request, _('Time zone set'))
+
+    if not modified:
         messages.info(request, _('Setting unchanged'))
