@@ -136,6 +136,15 @@ def get_status():
 
 
 def _apply_changes(request, old_status, new_status):
+    """Try to apply changes and handle errors."""
+    try:
+        __apply_changes(request, old_status, new_status)
+    except ActionError as exception:
+        messages.error(request, _('Action error: {0} [{1}] [{2}]').format(
+            exception.args[0], exception.args[1], exception.args[2]))
+
+
+def __apply_changes(request, old_status, new_status):
     """Apply the changes."""
     if old_status['enabled'] == new_status['enabled'] and \
        old_status['hs_enabled'] == new_status['hs_enabled'] and \
@@ -146,25 +155,25 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         if new_status['enabled']:
-            messages.success(request, _('Tor enabled'))
             actions.superuser_run('tor', ['enable'])
+            messages.success(request, _('Tor enabled'))
         else:
-            messages.success(request, _('Tor disabled'))
             actions.superuser_run('tor', ['disable'])
+            messages.success(request, _('Tor disabled'))
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
         if new_status['hs_enabled']:
-            messages.success(request, _('Tor hidden service enabled'))
             actions.superuser_run('tor', ['enable-hs'])
+            messages.success(request, _('Tor hidden service enabled'))
         else:
-            messages.success(request, _('Tor hidden service disabled'))
             actions.superuser_run('tor', ['disable-hs'])
+            messages.success(request, _('Tor hidden service disabled'))
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:
         if new_status['apt_transport_tor_enabled']:
-            messages.success(request, _('Enabled package download over Tor'))
             actions.superuser_run('tor', ['enable-apt-transport-tor'])
+            messages.success(request, _('Enabled package download over Tor'))
         else:
-            messages.success(request, _('Disabled package download over Tor'))
             actions.superuser_run('tor', ['disable-apt-transport-tor'])
+            messages.success(request, _('Disabled package download over Tor'))
