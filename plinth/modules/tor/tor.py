@@ -48,9 +48,10 @@ class TorForm(forms.Form):  # pylint: disable=W0232
     apt_transport_tor_enabled = forms.BooleanField(
         label=_('Download software packages over Tor'),
         required=False,
-        help_text=_('When enabled, Debian packages will be downloaded over '
-                    'the Tor network for software installs and upgrades. This '
-                    'adds a degree of privacy to your software downloads.'))
+        help_text=_('When enabled, software will be downloaded over the Tor '
+                    'network for installations and upgrades. This adds a '
+                    'degree of privacy and security during software '
+                    'downloads.'))
 
 
 def init():
