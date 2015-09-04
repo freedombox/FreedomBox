@@ -24,13 +24,17 @@ from django import forms
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import glob
+import itertools
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import package
+from plinth.errors import ActionError
 
-APT_SOURCES_URI_PATH = '/files/etc/apt/sources.list/*/uri'
+APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
+                         '/files/etc/apt/sources.list.d/*/*/uri')
 APT_TOR_PREFIX = 'tor+'
 
 
@@ -91,6 +95,78 @@ def index(request):
                              'form': form})
 
 
+def get_augeas():
+    """Return an instance of Augeaus for processing APT configuration."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Aptsources/lens', 'Aptsources.lns')
+    aug.set('/augeas/load/Aptsources/incl[last() + 1]', '/etc/apt/sources.list')
+    aug.set('/augeas/load/Aptsources/incl[last() + 1]',
+            '/etc/apt/sources.list.d/*.list')
+    aug.load()
+
+    # Currently, augeas does not handle Deb822 format, it error out.
+    if aug.match('/augeas/files/etc/apt/sources.list/error') or \
+       aug.match('/augeas/files/etc/apt/sources.list.d//error'):
+        raise Exception('Error parsing sources list')
+
+    # Starting with Apt 1.1, /etc/apt/sources.list.d/*.sources will
+    # contain files with Deb822 format.  If they are found, error out
+    # for now.  XXX: Provide proper support Deb822 format with a new
+    # Augeas lens.
+    if glob.glob('/etc/apt/sources.list.d/*.sources'):
+        raise Exception('Can not handle Deb822 source files')
+
+    return aug
+
+
+def iter_apt_uris(aug):
+    """Iterate over all the APT source URIs."""
+    return itertools.chain.from_iterable([aug.match(path)
+                                          for path in APT_SOURCES_URI_PATHS])
+
+
+def get_real_apt_uri_path(aug, path):
+    """Return the actual path which contains APT URL.
+
+    XXX: This is a workaround for Augeas bug parsing Apt source files
+    with '[options]'.  Remove this workaround after Augeas lens is
+    fixed.
+    """
+    uri = aug.get(path)
+    if uri[0] == '[':
+        parent_path = path.rsplit('/', maxsplit=1)[0]
+        skipped = False
+        for child_path in aug.match(parent_path + '/*')[1:]:
+            if skipped:
+                return child_path
+
+            value = aug.get(child_path)
+            if value[-1] == ']':
+                skipped = True
+
+    return path
+
+
+def is_apt_transport_tor_enabled():
+    """Return whether APT is set to download packages over Tor."""
+    try:
+        aug = get_augeas()
+    except Exception:
+        # If there was an error with parsing or there are Deb822
+        # files.
+        return False
+
+    for uri_path in iter_apt_uris(aug):
+        uri_path = get_real_apt_uri_path(aug, uri_path)
+        uri = aug.get(uri_path)
+        if not uri.startswith(APT_TOR_PREFIX) and \
+           (uri.startswith('http://') or uri.startswith('https://')):
+            return False
+
+    return True
+
+
 def get_status():
     """Return the current status"""
     output = actions.superuser_run('tor', ['get-ports'])
@@ -119,20 +195,13 @@ def get_status():
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
 
-    apt_transport_tor_enabled = False
-    aug = augeas.Augeas()
-    for uri_path in aug.match(APT_SOURCES_URI_PATH):
-        if aug.get(uri_path).startswith(APT_TOR_PREFIX):
-            apt_transport_tor_enabled = True
-            break
-
     return {'enabled': action_utils.service_is_enabled('tor'),
             'is_running': action_utils.service_is_running('tor'),
             'ports': ports,
             'hs_enabled': hs_enabled,
             'hs_hostname': hs_hostname,
             'hs_ports': hs_ports,
-            'apt_transport_tor_enabled': apt_transport_tor_enabled}
+            'apt_transport_tor_enabled': is_apt_transport_tor_enabled()}
 
 
 def _apply_changes(request, old_status, new_status):
