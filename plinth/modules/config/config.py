@@ -24,6 +24,7 @@ from django.contrib import messages
 from django.core import validators
 from django.template.response import TemplateResponse
 from gettext import gettext as _
+import glob
 import logging
 import re
 import socket
@@ -111,7 +112,14 @@ separated by dots.'),
                 pass
 
         time_zones.sort()
-        return time_zones
+
+        additional_time_zones = [
+            path[len('/usr/share/zoneinfo/'):]
+            for path in glob.glob('/usr/share/zoneinfo/Etc/*')]
+
+        # Add additional time zones at the top to make them more
+        # noticeable because people won't look for them
+        return additional_time_zones + time_zones
 
 
 def init():
