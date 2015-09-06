@@ -95,13 +95,13 @@
               <span class="glyphicon-question-sign glyphicon nav-icon"></span>
             </a>
           </li>
+          {% if user.is_authenticated %}
           <li>
             <a href="{% url 'system:index' %}">
               <span class="glyphicon-cog glyphicon nav-icon"></span>
             </a>
           </li>
           <li class="dropdown">
-            {% if user.is_authenticated %}
               <a href="{% url 'users:edit' user.username %}"
                  class="dropdown-toggle" data-toggle="dropdown"
                  role="button" aria-expanded="false">
@@ -117,12 +117,15 @@
                 <li><a href="{% url 'users:logout' %}" title="Log out">
                     Log out</a></li>
               </ul>
-            {% else %}
+          </li>
+          {% else %}
+          <li>
               <a href="{% url 'users:login' %}" title="Log in">
                 <i class="glyphicon glyphicon-user nav-icon"></i>
                 Log in</a>
-            {% endif %}
-          </li>
+          </li>  
+          {% endif %}
+
           {% if user.is_authenticated %}
             <li id="logout-nojs">
               <a href="{% url 'users:logout' %}" title="Log out">
