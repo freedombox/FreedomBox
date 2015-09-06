@@ -6,10 +6,7 @@ PDFLATEX=pdflatex
 
 # List text files in the order in which you want them to appear in the
 # complete manual:
-SOURCES=README.mdwn INSTALL.mdwn themes.mdwn hacking.mdwn TODO.mdwn modules.mdwn scripts.mdwn faq.mdwn COPYING.mdwn colophon.mdwn
-OTHER=
-PYTHON_SOURCES:=$(shell find .. -name \*.py)
-TODO_SOURCES=$(patsubst TODO.mdwn,,$(SOURCES)) $(PYTHON_SOURCES)
+SOURCES=README.mdwn INSTALL.mdwn themes.mdwn hacking.mdwn modules.mdwn scripts.mdwn faq.mdwn COPYING.mdwn colophon.mdwn
 MAN_SOURCES=$(patsubst COPYING.mdwn,copyright_notice00,$(SOURCES))
 
 NEWLINE_SOURCES=$(patsubst %,% oneline.txt,$(SOURCES))
@@ -26,14 +23,13 @@ MAN=plinth.1
 OUTPUTS=$(HTML) $(MAN) $(HTML_PART)
 DIST_OUTPUT=$(patsubst %,$(DOCDIR)/%,$(OUTPUTS))
 
-# Yes, do it twice. TODO created during the process requires a second run
-default:
-	make all
 all: oneline.txt $(OUTPUTS) Makefile
 
 $(DOCDIR)/%: %
 	cp $< $@
+
 dist: $(DIST_OUTPUT)
+
 ###############################################################################
 oneline.txt: Makefile
 	perl -e 'print "\n"' > oneline.txt
@@ -46,26 +42,17 @@ $(SOURCES):
 		ln -s ../$(patsubst %.mdwn,%,$@) $@; \
 	fi
 
-../TODO : $(TODO_SOURCES) Makefile
-	grep -ro --exclude=.git* --exclude=plinth.1 --exclude=*.tex --exclude=*.html \
-	     --exclude=README.mdwn --exclude=INSTALL.mdwn --exclude-dir=build \
-	     --exclude=TODO.mdwn --exclude=COPYING.mdwn --exclude-dir=debian \
-	     "TODO\:.*" ../* 2>/dev/null | \
-	     sed -e "s/TODO\://g" | \
-	     sed -e "s/^..\//* /g" | \
-	     sed -e 's/"""$$//g' | \
-	     sed -e 's/<\/p>$$//g' \
-	     > ../TODO
 ###############################################################################
 ##
 ## MAN PAGES
 ##
-$(MAN): $(SOURCES) ../TODO
+$(MAN): $(SOURCES)
 	@csplit -s -f copyright_notice COPYING.mdwn '/##/'
 	cat $(NEWLINE_MAN_SOURCES) | perl -pe 'BEGIN { $$/=undef } $$_ =~ s/\n\n#\s.*/\n/gm; $$_ =~ s/\n\n#/\n\n/gm; $$_ =~ s/(\n\n#\s.*)/uc($$1)/gme' > .make_man
 	$(PANDOC) -s -t man -o $@ .make_man
 	@rm -f copyright_notice0? .make_man
 manpages: $(MAN)
+
 ###############################################################################
 ##
 ## LaTeX
@@ -73,18 +60,18 @@ manpages: $(MAN)
 %.tex: %.mdwn
 	$(PANDOC) -s --toc -f markdown --standalone -o $@ $<
 
-hacking.tex: hacking.mdwn ../TODO
-	$(PANDOC) -s --toc -f markdown -o $@ hacking.mdwn ../TODO
+hacking.tex: hacking.mdwn
+	$(PANDOC) -s --toc -f markdown -o $@ hacking.mdwn
 
-plinth.tex: $(NEWLINE_SOURCES) ../TODO
+plinth.tex: $(NEWLINE_SOURCES)
 	$(PANDOC) -s --toc -f markdown -o $@ $(NEWLINE_SOURCES)
 
 latex: $(LATEX)
+
 ###############################################################################
 ##
 ## HTML
 ##
-
 
 # This gets us the html sections complete with TOC, but without the
 # HTML and head section boilerplate.  /help/page uses the parts.
@@ -94,21 +81,17 @@ latex: $(LATEX)
 	csplit -s -f $@ $@01 '/<\/body>/'
 	mv $@00 $@
 	rm $@01
+
 %.html: %.mdwn Makefile
 	$(PANDOC) -s --toc -f markdown -o $@ $<
 
-hacking.html: hacking.mdwn ../TODO Makefile
-	$(PANDOC) -s --toc -o $@ -f markdown hacking.mdwn ../TODO
-
-#plinth.html: $(NEWLINE_SOURCES) ../TODO style.css Makefile
-#	$(PANDOC) -s --toc -c style.css -o $@ -f markdown $(NEWLINE_SOURCES)
-
-plinth.html: $(NEWLINE_SOURCES) ../TODO Makefile
+plinth.html: $(NEWLINE_SOURCES) Makefile
 	@csplit -s -f copyright_notice COPYING.mdwn '/##/'
 	$(PANDOC) -s --toc -o $@ -f markdown $(NEWLINE_MAN_SOURCES)
 	@rm -f copyright_notice0? .make_man
 
 html: $(HTML) $(HTML_PART)
+
 ###############################################################################
 %.pdf: %.tex
 	$(PDFLATEX) -interaction=batchmode $< >/dev/null
@@ -121,5 +104,5 @@ clean-latex:
 	rm -f *.log *.out *.aux *.toc *.tex
 
 clean: clean-latex
-	rm -f $(OUTPUTS) README.mdwn INSTALL.mdwn TODO.mdwn COPYING.mdwn \
-	     copyright_notice0? \#*\# ../TODO oneline.txt *.pdf
+	rm -f $(OUTPUTS) README.mdwn INSTALL.mdwn COPYING.mdwn \
+	     copyright_notice0? \#*\# oneline.txt *.pdf
