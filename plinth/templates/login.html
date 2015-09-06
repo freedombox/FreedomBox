@@ -26,12 +26,14 @@
 
     <div class="row">
       {% csrf_token %}
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-md-offset-2">
         {{ form|bootstrap }}
-      </div>
+        <div class="text-center">
+        <input type="submit" class="btn btn-primary" value="Login" />
+        </div>
+     </div>
     </div>
 
-    <input type="submit" class="btn btn-primary" value="Login" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
