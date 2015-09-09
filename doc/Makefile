@@ -6,7 +6,7 @@ PDFLATEX=pdflatex
 
 # List text files in the order in which you want them to appear in the
 # complete manual:
-SOURCES=README.mdwn INSTALL.mdwn themes.mdwn hacking.mdwn modules.mdwn scripts.mdwn COPYING.mdwn colophon.mdwn
+SOURCES=README.mdwn INSTALL.mdwn themes.mdwn hacking.mdwn modules.mdwn scripts.mdwn COPYING.mdwn
 MAN_SOURCES=$(patsubst COPYING.mdwn,copyright_notice00,$(SOURCES))
 
 NEWLINE_SOURCES=$(patsubst %,% oneline.txt,$(SOURCES))
