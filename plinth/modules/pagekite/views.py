@@ -29,7 +29,7 @@ from .forms import ConfigurationForm, StandardServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm
 
 
-required_packages = ('pagekite', 'augeas-tools', 'python-augeas')
+required_packages = ('pagekite',)
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
               {'url': reverse_lazy('pagekite:configure'),
