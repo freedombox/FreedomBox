@@ -39,6 +39,7 @@ secure_proxy_ssl_header = None
 debug = False
 no_daemon = False
 server_dir = '/'
+danube_edition = False
 
 main_menu = Menu()
 
@@ -66,32 +67,35 @@ def read():
         })
     parser.read(CONFIG_FILE)
 
-    config_items = {('Name', 'product_name'),
-                    ('Name', 'box_name'),
-                    ('Path', 'root'),
-                    ('Path', 'file_root'),
-                    ('Path', 'config_dir'),
-                    ('Path', 'data_dir'),
-                    ('Path', 'store_file'),
-                    ('Path', 'actions_dir'),
-                    ('Path', 'doc_dir'),
-                    ('Path', 'status_log_file'),
-                    ('Path', 'access_log_file'),
-                    ('Path', 'pidfile'),
-                    ('Path', 'server_dir'),
-                    ('Network', 'host'),
-                    ('Network', 'port'),
-                    ('Network', 'secure_proxy_ssl_header'),
-                    ('Network', 'use_x_forwarded_host')}
+    config_items = {('Name', 'product_name', 'string'),
+                    ('Name', 'box_name', 'string'),
+                    ('Path', 'root', 'string'),
+                    ('Path', 'file_root', 'string'),
+                    ('Path', 'config_dir', 'string'),
+                    ('Path', 'data_dir', 'string'),
+                    ('Path', 'store_file', 'string'),
+                    ('Path', 'actions_dir', 'string'),
+                    ('Path', 'doc_dir', 'string'),
+                    ('Path', 'status_log_file', 'string'),
+                    ('Path', 'access_log_file', 'string'),
+                    ('Path', 'pidfile', 'string'),
+                    ('Path', 'server_dir', 'string'),
+                    ('Network', 'host', 'string'),
+                    ('Network', 'port', 'int'),
+                    ('Network', 'secure_proxy_ssl_header', 'string'),
+                    ('Network', 'use_x_forwarded_host', 'bool'),
+                    ('Misc', 'danube_edition', 'bool')}
 
-    for section, name in config_items:
+    for section, name, datatype in config_items:
         try:
             value = parser.get(section, name)
-            globals()[name] = value
         except (configparser.NoSectionError, configparser.NoOptionError):
             print('Configuration does not contain the {}.{} option.'
                   .format(section, name))
             raise
-
-    global port  # pylint: disable-msg=W0603
-    port = int(port)
+        else:
+            if datatype == 'int':
+                value = int(value)
+            if datatype == 'bool':
+                value = value.lower() == 'true'
+            globals()[name] = value
