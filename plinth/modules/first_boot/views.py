@@ -24,6 +24,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, FormView, TemplateView
 
+from plinth import cfg
 from plinth import kvstore
 from plinth import network
 from plinth.errors import DomainRegistrationError
@@ -39,7 +40,12 @@ class State1View(CreateView):
     """Create user account and log the user in."""
     template_name = 'firstboot_state1.html'
     form_class = State1Form
-    success_url = reverse_lazy('first_boot:state5')
+    success_url = reverse_lazy('first_boot:state10')
+
+    def __init__(self, *args, **kwargs):
+        if cfg.danube_edition:
+            self.success_url = reverse_lazy('first_boot:state5')
+        return super(State1View, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
