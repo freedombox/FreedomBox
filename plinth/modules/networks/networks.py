@@ -57,6 +57,82 @@ def index(request):
                              'connections': connections})
 
 
+def show(request, uuid):
+    """Serve connection information."""
+    try:
+        connection = network.get_connection(uuid)
+    except network.ConnectionNotFound:
+        messages.error(request, _('Cannot show connection: '
+                                  'Connection not found.'))
+        return redirect(reverse_lazy('networks:index'))
+
+    name = connection.get_interface_name()
+    connectiontype = connection.get_connection_type()
+    settings_ipv4 = connection.get_setting_ip4_config()
+
+    mac = network.get_mac_from_device(name)
+    interface = connection.get_interface_name()
+    if connectiontype == '802-11-wireless':
+        settings_wireless = connection.get_setting_wireless()
+        ssid = settings_wireless.get_ssid().get_data()
+        rate = network.get_wifi_rate(interface, ssid)
+        channel = network.get_wifi_channel(interface, ssid)
+        strength = network.get_wifi_signal(interface, ssid)
+        linkstate = True
+    else:
+        ssid = "None"
+        rate = 0
+        channel = 0
+        linkstate = network.get_linkstate_from_device(name)
+        strength = 0
+
+    ip = network.get_all_ip_from_device(name)
+    ip6 = network.get_all_ip6_from_device(name)
+    dns = network.get_namesever_from_device(name)
+    dns6 = network.get_namesever6_from_device(name)
+    gateway = network.get_gateway_from_device(name)
+    gateway6 = network.get_gateway6_from_device(name)
+    method = settings_ipv4.get_method()
+
+    zone = connection.get_setting_connection().get_zone()
+    active = network.connection_is_active(uuid)
+
+    if network.get_primary_connection().get_id() == connection.get_id():
+        primary = True
+    else:
+        primary = False
+
+    if not ip:
+        ip.append("0.0.0.0/0")
+
+    if not ip6:
+        ip6.append("::0/0")
+
+    return TemplateResponse(request, 'connection_show.html',
+                            {'title': _('Show Connection information'),
+                             'ip': ip,
+                             'ip6': ip6,
+                             'gateway': gateway,
+                             'gateway6': gateway6,
+                             'dns': dns,
+                             'dns6': dns6,
+                             'interface': interface,
+                             'mac': mac,
+                             'linkstate': linkstate,
+                             'zone': zone,
+                             'primary': primary,
+                             'subsubmenu': subsubmenu,
+                             'method': method,
+                             'connectiontype': connectiontype,
+                             'ssid': ssid,
+                             'strength': strength,
+                             'rate': rate,
+                             'channel': channel,
+                             'active': active,
+                             'uuid': uuid,
+                             'name': name})
+
+
 def edit(request, uuid):
     """Serve connection editing form."""
     try:

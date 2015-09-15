@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# ToDo: if connection is disabled, no information are visible anymore (Bug)
+{% endcomment %}
+{% block page_head %}
+  <style type="text/css">
+    .list-group-item .btn {
+      margin: -5px 0;
+    }
+  </style>
+{% endblock %}
+{% load bootstrap %}
+
+{% block content %}
+  {% if active %}
+	  <h3>Physical Link Information</h3>
+
+	  {% if linkstate and connectiontype == "802-3-ethernet" %}
+	  <span class='label label-success'>cable is connected</span>
+	  <br/><br/>
+	  {% elif connectiontype == "802-3-ethernet" %}
+	  <span class='label label-warning'>please check cable</span>
+	  <br/><br/>
+	  {% endif %}
+	  <div class="row">
+	    <div class="col-sm-6">
+	      <div class="list-group">
+	      {% if connectiontype == "802-11-wireless" %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">SSID</span>
+	          <span class="connection-type-label pull-right">{{ ssid }}</span>
+	         </div>
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">Speed</span>
+	          <span class="connection-type-label pull-right">{{ rate }}</span>
+	         </div>
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">Signal</span>
+	          <span class="connection-type-label pull-right">
+	            <span class="btn btn-primary btn-xs pull-right">
+	              {{ strength }}%
+	            </span>
+	          </span>
+	         </div>
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">Channel</span>
+	          <span class="connection-type-label pull-right">{{ channel }}</span>
+	         </div>
+	      {% endif %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">MAC adress</span>
+	          <span class="connection-type-label pull-right">{{ mac }}</span>
+	         </div>
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">Interface</span>
+	          <span class="connection-type-label pull-right">{{ interface }}</span>
+	         </div>
+	       </div>
+	    </div>
+	  </div>
+
+	  <h3>IP Address Information</h3>
+
+	  <div class="row">
+	    <div class="col-sm-6">
+	      <div class="list-group">
+	        {% for addr in ip %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">IPv4 Address</span>
+	          <span class="connection-type-label pull-right">{{ addr }}
+	          </span>
+	        </div>
+	        {% endfor %}
+	        {% for addr in ip6 %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">IPv6 Address</span>
+	          <span class="connection-type-label pull-right">{{ addr }}
+	          </span>
+	        </div>
+	        {% endfor %}
+	        {% for server in dns %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">DNS Server</span>
+	          <span class="connection-type-label pull-right">{{ server }}</span>
+	        </div>
+	        {% endfor %}
+	        {% for server in dns6 %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">DNS Server</span>
+	          <span class="connection-type-label pull-right">{{ server }}</span>
+	        </div>
+	        {% endfor %}
+	        {% if gateway %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">IPv4 Default Gateway</span>
+	          <span class="connection-type-label pull-right">{{ gateway }}</span>
+	        </div>
+	        {% endif %}
+	        {% if gateway6 %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">IPv6 Default Gateway</span>
+	          <span class="connection-type-label pull-right">{{ gateway6 }}</span>
+	        </div>
+	        {% endif %}
+	        {% if method == "shared" %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">DHCP Server</span>
+	          <span class="connection-type-label pull-right">enabled</span>
+	        </div>
+	        {% elif method == "auto" %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">IP Method</span>
+	          <span class="connection-type-label pull-right">{{ method }}
+	          </span>
+	        </div>
+	        {% endif %}
+	        {% if primary %}
+	        <div class="list-group-item clearfix">
+	          <span class="connection-type-label pull-left">Default Connection</span>
+	          <span class="connection-type-label pull-right">
+	          <span class='label label-success'>yes</span>
+	          </span>
+	        </div>
+	        {% endif %}
+	       </div>
+	    </div>
+	  </div>
+	  <h3>Security Information</h3>
+	  {% if zone == "internal" %}
+	  Firewall: <span class='label label-success'>{{ zone }}</span><br/><br/>
+	  INFO: This interface should be connected to local network. <br/>
+	  If you connect this interface to a public
+	  network, others may have access to your data.
+	  {% elif zone == "external" %}
+	  Firewall: <span class='label label-warning'>{{ zone }}</span><br/><br/>
+	  INFO: This interface should be connected to your internet upstream
+	  connection
+	  {% else %}
+	  Firewall: <span class='label label-danger'>{{ zone }}</span><br/><br/>
+	  WARNING: This interface is not assigned to a zone which is maintained by
+	  freedombox
+	  {% endif %}
+  {% else %}
+	  This connections is not active. Please activate connection.
+  {% endif %}
+  <br/><hr>
+  <a href="{% url 'networks:edit' uuid %}"
+     class="btn btn-primary"
+     role="button" title="Edit connection">
+     Edit
+  </a>
+  {% if active %}
+   <a href="{% url 'networks:deactivate' uuid %}"
+      class="btn btn-default"
+      role="button" title="Deactivate connection">
+      Deactivate
+   </a>
+   {% else %}
+   <a href="{% url 'networks:activate' uuid %}"
+      class="btn btn-default"
+      role="button" title="Deactivate connection">
+      Activate
+   </a>
+   {% endif %}
+   <a href="{% url 'networks:delete' uuid %}"
+      class="btn btn-default"
+      role="button" title="Delete connection">
+      Delete
+   </a>
+{% endblock %}
