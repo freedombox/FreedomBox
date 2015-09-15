@@ -25,6 +25,8 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'plinth.modules.networks.networks',
     url(r'^sys/networks/$', 'index', name='index'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/show/$',
+        'show', name='show'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/edit/$',
         'edit', name='edit'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/activate/$',
