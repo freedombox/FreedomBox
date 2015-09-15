@@ -76,6 +76,256 @@ def get_interface_list(device_type):
     return interfaces
 
 
+def get_first_wifi_device():
+    """Get a list of network interface available on the system."""
+    interface = "empty"
+    for device in nm.Client.new(None).get_devices():
+        if device.get_device_type() == nm.DeviceType.WIFI:
+            interface = device.get_iface()
+            return interface
+
+    return interface
+
+
+def get_ip_from_device(devicename):
+    """
+    Get the first ip address from the network interface.
+    will return "0.0.0.0" if no ip address is assiged.
+    IP address is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    ip = "0.0.0.0"
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        addresses = ip4_config.get_addresses()
+        if addresses:
+            ip = addresses.__getitem__(0).get_address()
+    return ip
+
+
+def get_ip6_from_device(devicename):
+    """
+    Get the first ip address from the network interface.
+    will return "0.0.0.0" if no ip address is assiged.
+    IP address is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    ip = "0.0.0.0"
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip6_config = device.get_ip6_config()
+    if ip6_config:
+        addresses = ip6_config.get_addresses()
+        if addresses:
+            ip = addresses.__getitem__(0).get_address()
+    return ip
+
+
+def get_all_ip_from_device(devicename):
+    """
+    Get all ipv4 addresses from device
+    IP address is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    ip = []
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        addresses = ip4_config.get_addresses()
+        for address in addresses:
+            netmask = str(address.get_prefix())
+            ip.append(str(address.get_address() + "/" + netmask))
+    return ip
+
+
+def get_all_ip6_from_device(devicename):
+    """
+    Get all ipv6 addresses from device
+    IP address is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    ip = []
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip6_config = device.get_ip6_config()
+    if ip6_config:
+        addresses = ip6_config.get_addresses()
+        for address in addresses:
+            netmask = str(address.get_prefix())
+            ip.append(str(address.get_address() + "/" + netmask))
+    return ip
+
+
+def get_namesever_from_device(devicename):
+    """
+    Get all nameservers which are reachable via this device.
+    Nameservers is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    nameservers = ""
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        nameservers = ip4_config.get_nameservers()
+    return nameservers
+
+
+def get_namesever6_from_device(devicename):
+    """
+    Get all nameservers which are reachable via this device.
+    Nameservers is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    nameservers = ""
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip6_config = device.get_ip6_config()
+    if ip6_config:
+        nameservers = ip6_config.get_nameservers()
+    return nameservers
+
+
+def get_gateway_from_device(devicename):
+    """
+    Get the default Gateway for this device.
+    gateway is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    gateway = ""
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        gateway = device.get_ip4_config().get_gateway()
+    return gateway
+
+
+def get_gateway6_from_device(devicename):
+    """
+    Get the default Gateway for this device.
+    gateway is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    gateway = ""
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip6_config = device.get_ip6_config()
+    if ip6_config:
+        gateway = device.get_ip6_config().get_gateway()
+    return gateway
+
+
+def get_linkstate_from_device(devicename):
+    """
+    Get the physical link state from this device (carrier detected)
+    link state is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    linkstate = False
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        linkstate = device.get_carrier()
+    return linkstate
+
+
+def get_mac_from_device(devicename):
+    """
+    Get the MAC address of the network interface.
+    MAC address is a optional information, will not raise a exception
+    if no information could be returned.
+    ToDo: will not work when connection is or previously was inactive
+    """
+    mac = "00:00:00:00:00:00"
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config = device.get_ip4_config()
+    if ip4_config:
+        mac = device.get_hw_address()
+    return mac
+
+
+def connection_is_active(connection_uuid):
+    """
+    Return True if connection is active
+    Return False if connection is inactive
+    """
+    client = nm.Client.new(None)
+    for connection in client.get_active_connections():
+        if connection.get_uuid() == connection_uuid:
+            return True
+    return False
+
+
+def get_primary_connection():
+    """return the name of the primary (aka internet) connection"""
+    return nm.Client.new(None).get_primary_connection()
+
+
+def get_wifi_signal(devicename, ssid):
+    """Get the wifi signal strenght form a particular SSID"""
+    signal = 0
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    for ap in device.get_access_points():
+        if ap.get_ssid().get_data() == ssid:
+            signal = ap.get_strength()
+    return signal
+
+
+def get_wifi_rate(devicename, ssid):
+    """Get the wifi bitrate form a particular SSID"""
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    rate = device.get_bitrate() / 1000
+    rate = str(str(rate) + "Mbit/s")
+    return rate
+
+
+def get_wifi_channel(devicename, ssid):
+    """Get the wifi channeö form a particular SSID"""
+    channel = 0
+    device = nm.Client.new(None).get_device_by_iface(devicename)
+    for ap in device.get_access_points():
+        if ap.get_ssid().get_data() == ssid:
+            frequency = ap.get_frequency()
+    frequency = frequency / 1000
+
+    """
+    Hard coded list of wifi frequencys and their corresponding channel numbers.
+    ToDo: search for a better solution! Even 5GHz is not included yet.
+    Only the plain frequency will show up on 5GHz AP's.
+    """
+    if frequency == 2.412:
+        channel = 1
+    elif frequency == 2.417:
+        channel = 2
+    elif frequency == 2.422:
+        channel = 3
+    elif frequency == 2.427:
+        channel = 4
+    elif frequency == 2.432:
+        channel = 5
+    elif frequency == 2.437:
+        channel = 6
+    elif frequency == 2.442:
+        channel = 7
+    elif frequency == 2.447:
+        channel = 8
+    elif frequency == 2.452:
+        channel = 9
+    elif frequency == 2.457:
+        channel = 10
+    elif frequency == 2.462:
+        channel = 11
+    else:
+        channel = str(str(frequency) + "GHz")
+
+    return channel
+
+
 def get_connection_list():
     """Get a list of active and available connections."""
     active_uuids = []
@@ -129,8 +379,8 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
-def _update_common_settings(connection, connection_uuid, name, type_, interface,
-                            zone):
+def _update_common_settings(connection, connection_uuid, name, type_,
+                            interface, zone):
     """Create/edit basic settings for network manager connections.
 
     Return newly created connection object if connection is None.
