@@ -22,7 +22,7 @@
 
 {% block page_head %}
   <style type="text/css">
-    .connection-edit-label {
+    .connection-show-label {
       display: inline-block;
       width: 40%;
     }
@@ -50,9 +50,9 @@
                     aria-hidden="true"></span>
             </a>
 
-            <a class="connection-edit-label"
-               href="{% url 'networks:edit' connection.uuid %}"
-               title="Edit connection {{ connection.name }}">
+            <a class="connection-show-label"
+               href="{% url 'networks:show' connection.uuid %}"
+               title="Show connection {{ connection.name }}">
               {{ connection.name }}
             </a>
 
