@@ -6,31 +6,26 @@
 
 ## Name
 
-plinth - a web front end for administering every aspect of a Freedom Box.
+plinth - a web front end for administering FreedomBox
 
 ## Description
 
-The Freedom Box is a net appliance conceived by Eben Moglen.  It
-contains free software and is designed to allow you to interface with
-the rest of the net under conditions of protected privacy and data
-security.
+FreedomBox is a community project to develop, design and promote
+personal servers running free software for private, personal
+communications.  It is a networking appliance designed to allow
+interfacing with the rest of the Internet under conditions of
+protected privacy and data security.  It hosts applications such as
+blog, wiki, website, social network, email, web proxy and a Tor relay
+on a device that can replace your Wi-Fi router so that your data stays
+with you.
 
-The Plinth front end is a web interface to administer the functions of
-the Freedom Box.  For example, the Freedom Box is a wireless router,
-and the front end is where you can adjust its settings.
-
-## Overview
-
-The front end is an extensible web platform for forms and menus.  It
-allows authenticated users to fill out forms.  The interface saves the
-form data and from them generates configuration files for the various
-services running on the box.
-
-The interface is pluggable.  Drop modules into place to add new
-capabilities to Plinth and your Freedom Box.  Replace existing modules
-to get newer, better shinier functions.  The modules will
-automatically integrate into the existing menu system so you can
-control all of the box's parts from one central location.
+Plinth is a web interface to administer the functions of the
+FreedomBox.  It is extensible and provides various applications of
+FreedomBox as modules.  Each module or application provides simplified
+user interface to control the underlying functionality.  As FreedomBox
+can act as a wireless router, it is possible to configure networking
+from Plinth.  Plinth also allows configuration of basic system
+parameters such as time zone, hostname and automatic upgrades.
 
 ## Getting Started
 
