@@ -61,5 +61,3 @@ fetch:
 .PHONY: clean
 clean:
 	rm -f $(OUTPUTS)
-
-
