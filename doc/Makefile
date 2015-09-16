@@ -1,108 +1,65 @@
-DOCDIR=../dist/doc
+#!/usr/bin/make -f
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
-PANDOC=pandoc
-PDFLATEX=pdflatex
+MANUAL_URL="https://wiki.debian.org/FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
+
+OUTPUTS=freedombox-manual.pdf freedombox-manual.html freedombox-manual.part.html
 
 
-# List text files in the order in which you want them to appear in the
-# complete manual:
-SOURCES=README.mdwn INSTALL.mdwn hacking.mdwn COPYING.mdwn
-MAN_SOURCES=$(patsubst COPYING.mdwn,copyright_notice00,$(SOURCES))
+all: $(OUTPUTS)
 
-NEWLINE_SOURCES=$(patsubst %,% oneline.txt,$(SOURCES))
-NEWLINE_MAN_SOURCES=$(patsubst %,% oneline.txt,$(MAN_SOURCES))
+# Do not edit the manual page in this directory.  The manual is
+# maintained as separate pages on the FreedomBox wiki and aggregated
+# into a single page using the MoinMoin include feature.  Then it is
+# exported as Docbook format and kept here.
+#
+# It is important to keep a copy of the manual in this source tree
+# because Debian packages promise an entire source tree including the
+# documentation.
+#
+# Use 'make fetch' to retrieve the latest manual from the wiki and
+# commit it to the repository.  The wiki page is already reviewed, so
+# commits that update the manual just using the 'fetch' target do not
+# require further reviews.
+.PHONY: fetch
+fetch:
+	wget --quiet -O - $(MANUAL_URL) | \
+	  xmllint --format --output freedombox-manual.raw.xml -
+	xsltproc --output freedombox-manual.xml fixes.xslt freedombox-manual.raw.xml
+	xsltproc fetch-images.xslt freedombox-manual.raw.xml | sort -u | \
+	  awk '{print "wget --quiet -O images/" $$1 " " $$2}' | sh
+	rm -f freedombox-manual.raw.xml
 
-HTML=plinth.html $(patsubst %.mdwn,%.html,$(SOURCES))
-HTML_PART=$(patsubst %.html,%.part.html,$(HTML))
-LATEX=plinth.tex $(patsubst %.mdwn,%.tex,$(SOURCES))
-PDF=plinth.pdf $(patsubst %.mdwn,%.pdf,$(SOURCES))
-MAN=plinth.1
 
-## If you want PDF or Latex files, do them separately.  They're not made by default.
+%.pdf: %.xml
+	xmlto --with-dblatex pdf $<
 
-OUTPUTS=$(HTML) $(MAN) $(HTML_PART)
-DIST_OUTPUT=$(patsubst %,$(DOCDIR)/%,$(OUTPUTS))
 
-all: oneline.txt $(OUTPUTS) Makefile
-
-$(DOCDIR)/%: %
-	cp $< $@
-
-dist: $(DIST_OUTPUT)
-
-###############################################################################
-oneline.txt: Makefile
-	perl -e 'print "\n"' > oneline.txt
-
-$(SOURCES):
-	@rm -f $@
-	if [ -f ../$(patsubst %.mdwn,%.md,$@) ]; then \
-		ln -s ../$(patsubst %.mdwn,%.md,$@) $@; \
-	else \
-		ln -s ../$(patsubst %.mdwn,%,$@) $@; \
-	fi
-
-###############################################################################
-##
-## MAN PAGES
-##
-$(MAN): $(SOURCES)
-	@csplit -s -f copyright_notice COPYING.mdwn '/##/'
-	cat $(NEWLINE_MAN_SOURCES) | perl -pe 'BEGIN { $$/=undef } $$_ =~ s/\n\n#\s.*/\n/gm; $$_ =~ s/\n\n#/\n\n/gm; $$_ =~ s/(\n\n#\s.*)/uc($$1)/gme' > .make_man
-	$(PANDOC) -s -t man -o $@ .make_man
-	@rm -f copyright_notice0? .make_man
-manpages: $(MAN)
-
-###############################################################################
-##
-## LaTeX
-##
-%.tex: %.mdwn
-	$(PANDOC) -s --toc -f markdown --standalone -o $@ $<
-
-hacking.tex: hacking.mdwn
-	$(PANDOC) -s --toc -f markdown -o $@ hacking.mdwn
-
-plinth.tex: $(NEWLINE_SOURCES)
-	$(PANDOC) -s --toc -f markdown -o $@ $(NEWLINE_SOURCES)
-
-latex: $(LATEX)
-
-###############################################################################
-##
-## HTML
-##
-
-# This gets us the html sections complete with TOC, but without the
-# HTML and head section boilerplate.  /help/page uses the parts.
 %.part.html: %.html
-	csplit -s -f $@ $< '%.*<body>%'
-	sed '1d' $@00 > $@01
-	csplit -s -f $@ $@01 '/<\/body>/'
-	mv $@00 $@
-	rm $@01
+	perl -pe 'BEGIN {undef $/} s/.*<body[^>]*>(.*)<\/body>.*/$1/s' $< > $@
 
-%.html: %.mdwn Makefile
-	$(PANDOC) -s --toc -f markdown -o $@ $<
 
-plinth.html: $(NEWLINE_SOURCES) Makefile
-	@csplit -s -f copyright_notice COPYING.mdwn '/##/'
-	$(PANDOC) -s --toc -o $@ -f markdown $(NEWLINE_MAN_SOURCES)
-	@rm -f copyright_notice0? .make_man
+%.html: %.xml
+	xmlto html-nochunks $<
 
-html: $(HTML) $(HTML_PART)
 
-###############################################################################
-%.pdf: %.tex
-	$(PDFLATEX) -interaction=batchmode $< >/dev/null
-	$(PDFLATEX) -interaction=batchmode $< >/dev/null  # yes, do it twice so the toc works
+.PHONY: clean
+clean:
+	rm -f $(OUTPUTS)
 
-pdf: $(PDF)
-###############################################################################
 
-clean-latex:
-	rm -f *.log *.out *.aux *.toc *.tex
-
-clean: clean-latex
-	rm -f $(OUTPUTS) README.mdwn INSTALL.mdwn COPYING.mdwn \
-	     copyright_notice0? \#*\# oneline.txt *.pdf
