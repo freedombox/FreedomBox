@@ -18,7 +18,7 @@
 
 MANUAL_URL="https://wiki.debian.org/FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
 
-OUTPUTS=freedombox-manual.pdf freedombox-manual.html freedombox-manual.part.html
+OUTPUTS=freedombox-manual.pdf freedombox-manual.html freedombox-manual.part.html plinth.1
 
 
 all: $(OUTPUTS)
@@ -56,6 +56,10 @@ fetch:
 
 %.html: %.xml
 	xmlto html-nochunks $<
+
+
+%.1: %.xml
+	xmlto man $<
 
 
 .PHONY: clean
