@@ -30,5 +30,5 @@ urlpatterns = patterns(  # pylint: disable-msg=C0103
     url(r'^help/$', 'index', name='index'),
     url(r'^help/index/$', 'index', name='index_explicit'),
     url(r'^help/about/$', 'about', name='about'),
-    url(r'^help/page/(plinth|hacking|faq)/$', 'helppage', name='helppage'),
+    url(r'^help/manual/$', 'manual', name='manual'),
 )

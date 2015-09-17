@@ -28,7 +28,6 @@ import stat
 import sys
 
 import cherrypy
-from cherrypy import _cpserver
 from cherrypy.process.plugins import Daemonizer
 
 from plinth import cfg
@@ -122,6 +121,16 @@ def setup_server():
               'tools.staticdir.dir': '.'}}
     cherrypy.tree.mount(None, js_url, config)
     logger.debug('Serving javascript directory %s on %s', js_dir, js_url)
+
+    manual_dir = os.path.join(cfg.doc_dir, 'images')
+    manual_url = '/'.join([cfg.server_dir, 'help/manual/images']) \
+        .replace('//', '/')
+    config = {
+        '/': {'tools.staticdir.root': manual_dir,
+              'tools.staticdir.on': True,
+              'tools.staticdir.dir': '.'}}
+    cherrypy.tree.mount(None, manual_url, config)
+    logger.debug('Serving manual images %s on %s', manual_dir, manual_url)
 
     for module_import_path in module_loader.loaded_modules:
         module = importlib.import_module(module_import_path)
