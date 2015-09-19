@@ -40,60 +40,61 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <div class="list-group">
-        {% for connection in connections %}
-          <div class="list-group-item clearfix">
-            <a href="{% url 'networks:delete' connection.uuid %}"
-               class="btn btn-default btn-sm pull-right"
-               role="button" title="Delete connection {{ connection.name }}">
-              <span class="glyphicon glyphicon-trash"
-                    aria-hidden="true"></span>
-            </a>
+      <form name="toggle_form" id="toggle_form" class="form" method="post">
+        {% csrf_token %}
 
-            <a class="connection-edit-label"
-               href="{% url 'networks:edit' connection.uuid %}"
-               title="Edit connection {{ connection.name }}">
-              {{ connection.name }}
-            </a>
+        <input name="toggle_params" id="toggle_params" type=hidden />
 
-            <span class="connection-type-label">{{ connection.type }}</span>
+        <div class="list-group">
+          {% for connection in connections %}
+            <div class="list-group-item clearfix">
+              <a href="{% url 'networks:delete' connection.uuid %}"
+                class="btn btn-default btn-sm pull-right"
+                role="button" title="Delete connection {{ connection.name }}">
+                <span class="glyphicon glyphicon-trash"
+                      aria-hidden="true"></span>
+              </a>
 
-            {% if connection.is_active %}
-            <div class="btn-group">
-              <button type="button"
-                      class="btn btn-success btn-xs dropdown-toggle"
-                      data-toggle="dropdown" aria-expanded="false">
-                Active <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="{% url 'networks:deactivate' connection.uuid %}">
+              <a class="connection-edit-label"
+                href="{% url 'networks:edit' connection.uuid %}"
+                title="Edit connection {{ connection.name }}">
+                {{ connection.name }}
+              </a>
+
+              <span class="connection-type-label">{{ connection.type }}</span>
+
+              {% if connection.is_active %}
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-success btn-xs dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">
+                  Active <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li onclick="$('#toggle_params').val('deactivate:{{ connection.uuid }}'); $('#toggle_form').submit()">
                     Deactivate
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {% else %}
-            <div class="btn-group">
-              <button type="button"
-                      class="btn btn-warning btn-xs dropdown-toggle"
-                      data-toggle="dropdown" aria-expanded="false">
-                Not Active <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="{% url 'networks:activate' connection.uuid %}">
+                  </li>
+                </ul>
+              </div>
+              {% else %}
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-warning btn-xs dropdown-toggle"
+                        data-toggle="dropdown" aria-expanded="false">
+                  Not Active <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li onclick="$('#toggle_params').val('activate:{{ connection.uuid }}'); $('#toggle_form').submit()">
                     Activate
-                  </a>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+              </div>
+              {% endif %}
+
             </div>
-            {% endif %}
-
-          </div>
-        {% endfor %}
-      </div>
-
+          {% endfor %}
+        </div>
+      </form>
       {% include "diagnostics_button.html" with module="networks" %}
     </div>
   </div>

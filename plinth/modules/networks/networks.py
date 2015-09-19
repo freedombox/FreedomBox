@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import network
 from plinth import package
 
+from time import sleep
 
 logger = Logger(__name__)
 
@@ -47,7 +48,38 @@ def init():
 
 @package.required(['network-manager'])
 def index(request):
-    """Show connection list."""
+    """Toggle connection state and show connection list."""
+
+    # Toggle connection state.
+    if request.method == 'POST':
+        try:
+            toggle_params = request.POST['toggle_params']
+            [action, uuid] = toggle_params.split(':')
+            connection = network.get_connection(uuid)
+            name = connection.get_id()
+            if action == "activate":
+                network.activate_connection(uuid)
+                messages.success(
+                    request, _('Activated connection %s.') % name)
+            elif action == "deactivate":
+                network.deactivate_connection(uuid)
+                messages.success(
+                    request, _('Deactivated connection %s.') % name)
+
+            # Let this thread sleep so new connection state will be seen
+            # when get_connection_list() is called below.
+            sleep(1)
+        except network.ConnectionNotFound:
+            messages.error(
+                request,
+                _('Failed to %s connection: Connection not found.') % action)
+        except network.DeviceNotFound as exception:
+            name = exception.args[0].get_id()
+            message = _('Failed to {0} connection {1}: '
+                        'No suitable device is available.').format(action, name)
+            messages.error(request, message)
+
+    # Show connection list.
     connections = network.get_connection_list()
 
     return TemplateResponse(request, 'connections_list.html',
@@ -165,36 +197,6 @@ def edit(request, uuid):
                                 {'title': _('Edit Connection'),
                                  'subsubmenu': subsubmenu,
                                  'form': form})
-
-
-def activate(request, uuid):
-    """Activate the connection."""
-    try:
-        connection = network.activate_connection(uuid)
-        name = connection.get_id()
-        messages.success(request, _('Activated connection %s.') % name)
-    except network.ConnectionNotFound:
-        messages.error(request, _('Failed to activate connection: '
-                                  'Connection not found.'))
-    except network.DeviceNotFound as exception:
-        name = exception.args[0].get_id()
-        messages.error(request, _('Failed to activate connection %s: '
-                                  'No suitable device is available.') % name)
-
-    return redirect(reverse_lazy('networks:index'))
-
-
-def deactivate(request, uuid):
-    """Deactivate the connection."""
-    try:
-        active_connection = network.deactivate_connection(uuid)
-        name = active_connection.get_id()
-        messages.success(request, _('Deactivated connection %s.') % name)
-    except network.ConnectionNotFound:
-        messages.error(request, _('Failed to de-activate connection: '
-                                  'Connection not found.'))
-
-    return redirect(reverse_lazy('networks:index'))
 
 
 def scan(request):
