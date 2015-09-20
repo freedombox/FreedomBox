@@ -73,8 +73,9 @@
 
 ## Building the Documentation Separately
 
-Documentation has been collected into a PDF. It also gets built into smaller
-files and other formats, including one suitable for install as a man page.
+Plinth man page is built from DocBook source in the doc/ directory.
+FreedomBox manual is downloaded from the wiki is also available there.
+Both these are build during the installation process.
 
 1. To build the documentation separately, run:
 
@@ -86,12 +87,32 @@ Plinth is available from [GitHub](https://github.com/freedombox/plinth).
 
 ## Bugs & TODO
 
-You can report bugs on Plinth's
-[issue tracker](https://github.com/freedombox/Plinth/issues).
+You can report bugs on Plinth's [issue
+tracker](https://github.com/freedombox/Plinth/issues).
 
-Feel free to pickup a task by announcing it on the issue.  Once you are done,
-request a merge. For information on placing a merge request, consult GitHub
-documentation.
+For new developers looking to start contributing to the project, this
+is a good place to pick up a task to work on.  Tasks that are labeled
+as 'beginner' are easy to work on and have a known solution.  Also,
+other developers are ready to guide you on the implementation for such
+tasks.
+
+Feel free to pickup a task from the issue by announcing it on the
+issue or by creating a new issue for whatever task you are going to
+work on.
+
+## Submitting Your Changes
+
+Once you have completed implementing the solution, request a merge
+into the upstream.
+
+Pacthes can be submitted in either of the two ways:
+
+- Post your patches to the FreedomBox discuss mailing list.  Look at
+  Git documention on how to create submittable patches out of your
+  commits and post them to the list.
+
+- Create a pull request on Github.  For information on placing a merge
+  request, consult GitHub documentation.
 
 ## Coding Practices
 
@@ -107,39 +128,3 @@ yet (we have no translation files), but we need to put the
 infrastructure in place for it from the start.  Use it like this:
 
     log.error(_("Couldn't import %s: %s"), path, e)
-
-## Dependencies
-
-* *Augeas* - Round trip configuration editing utilities
-
-* *Bootstrap Form* - Render Django forms for Twitter Bootstrap
-
-* *CherryPy3* - WSGI web server since Django does not have proper web server
-
-* *Coverage* - Test coverage measurement and reporting tool
-
-* *Django* - Web application framework for Plinth
-
-* *Django Stronghold* - Middleware to make all views default login required
-
-* *JQuery* - Javascript framework used for convenience
-
-* *LDAPscripts* - Scripts to manage LDAP users and groups
-
-* *Modernizer* - HTML5 and CSS3 feature detection
-
-* *Psutil* - Convenience functions for managing processes
-
-* *Python3* - Requires minimum 3.3, tested with version 3.4.1
-
-* *Twitter Bootstrap* - A responsive, mobile first front-end framework
-
-The documentation has the following dependencies:
-
-* *Markdown* - format and style docs
-
-* *Pandoc* - Convert markdown to various formats
-
-* *PDFLatex* - Generate PDF versions of the documentation
-
-* *GNU Make* - Process doc/Makefile.

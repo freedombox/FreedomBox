@@ -34,12 +34,8 @@ def init():
                                      'help:index', 101)
     menu.add_urlname(_('Where to Get Help'), 'glyphicon-search',
                      'help:index_explicit', 5)
-    menu.add_urlname(_('Developer\'s Manual'), 'glyphicon-info-sign',
-                     'help:helppage', 10, url_args=('plinth',))
-    menu.add_urlname(_('FAQ'), 'glyphicon-question-sign', 'help:helppage', 20,
-                     url_args=('faq',))
-    menu.add_item(_('%s Wiki' % cfg.box_name), 'glyphicon-pencil',
-                  'http://wiki.debian.org/FreedomBox', 30)
+    menu.add_urlname(_('FreedomBox Manual'), 'glyphicon-info-sign',
+                     'help:manual', 10)
     menu.add_urlname(_('About'), 'glyphicon-star', 'help:about', 100)
 
 
@@ -61,15 +57,15 @@ def about(request):
 
 
 @public
-def helppage(request, page):
-    """Serve a help page from the 'doc' directory"""
+def manual(request):
+    """Serve the manual page from the 'doc' directory"""
     try:
-        with open(os.path.join(cfg.doc_dir, '%s.part.html' % page), 'r') \
-                as input_file:
+        with open(os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'), 'r') \
+             as input_file:
             content = input_file.read()
     except IOError:
         raise Http404
 
-    title = _('%s Documentation') % cfg.product_name
-    return TemplateResponse(request, 'help_detail.html',
-                            {'title': title, 'content': content})
+    return TemplateResponse(request, 'help_manual.html',
+                            {'title': _('FreedomBox Manual'),
+                             'content': content})
