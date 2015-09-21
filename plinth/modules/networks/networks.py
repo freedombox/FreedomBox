@@ -204,11 +204,8 @@ def edit(request, uuid):
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
 
-            if settings_ipv4.get_num_addresses():
-                # XXX: Plinth crashes here. Possibly because a double free bug
-                # address = settings_ipv4.get_address(0)
-                # form_data['ipv4_address'] = address.get_address()
-                pass
+            name = connection.get_interface_name()
+            form_data['ipv4_address'] = network.get_ip_from_device(name)
 
         if settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
