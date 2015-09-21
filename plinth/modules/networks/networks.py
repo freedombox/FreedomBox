@@ -360,7 +360,9 @@ def add_wifi(request, ssid=None):
     form_data = None
 
     if ssid:
+        device = network.get_first_wifi_device()
         form_data = {'name': ssid,
+                     'interface': device,
                      'zone': 'external',
                      'ssid': ssid,
                      'mode': 'infrastructure',
