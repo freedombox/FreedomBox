@@ -368,8 +368,8 @@ def get_active_connection(connection_uuid):
         raise ConnectionNotFound(connection_uuid)
 
 
-def _update_common_settings(connection, connection_uuid, name, type_, interface,
-                            zone):
+def _update_common_settings(connection, connection_uuid, name, type_,
+                            interface, zone):
     """Create/edit basic settings for network manager connections.
 
     Return newly created connection object if connection is None.
