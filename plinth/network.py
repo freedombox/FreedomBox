@@ -76,6 +76,17 @@ def get_interface_list(device_type):
     return interfaces
 
 
+def get_first_wifi_device():
+    """Get a list of network interface available on the system."""
+    interface = "empty"
+    for device in nm.Client.new(None).get_devices():
+        if device.get_device_type() == nm.DeviceType.WIFI:
+            interface = device.get_iface()
+            return interface
+
+    return interface
+
+
 def get_ip_from_device(devicename):
     """
     Get the first ip address from the network interface.
