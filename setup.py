@@ -135,6 +135,8 @@ setuptools.setup(
                  glob.glob('data/etc/apache2/conf-available/*.conf')),
                 ('/etc/apache2/sites-available',
                  glob.glob('data/etc/apache2/sites-available/*.conf')),
+                ('/etc/apt/apt.conf.d',
+                 ['data/etc/apt/apt.conf.d/51freedombox-upgrades']),
                 ('/etc/ikiwiki',
                  glob.glob('data/etc/ikiwiki/*.setup')),
                 ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
