@@ -51,7 +51,14 @@ def init():
                               is_external=True, enabled=status['enabled'])
 
 
-@package.required(['postgresql', 'php5-pgsql', 'owncloud'])
+def on_install():
+    """Tasks to run after package install."""
+    actions.superuser_run('owncloud-setup', ['enable'], async=True)
+    SERVICE.notify_enabled(None, True)
+
+
+@package.required(['postgresql', 'php5-pgsql', 'owncloud'],
+                  on_install=on_install)
 def index(request):
     """Serve the ownCloud configuration page"""
     status = get_status()
