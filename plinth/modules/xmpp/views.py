@@ -50,6 +50,7 @@ def before_install():
 def on_install():
     """Setup jwchat apache conf"""
     actions.superuser_run('xmpp', ['setup'])
+    xmpp.service.notify_enabled(None, True)
 
 
 @package.required(['jwchat', 'ejabberd'],

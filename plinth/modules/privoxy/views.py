@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 def on_install():
     """Notify that the service is now enabled."""
     actions.superuser_run('privoxy', ['setup'])
+    privoxy.service.notify_enabled(None, True)
 
 
 @package.required(['privoxy'], on_install=on_install)
