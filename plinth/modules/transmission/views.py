@@ -39,6 +39,7 @@ TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 def on_install():
     """Enable transmission as soon as it is installed."""
     actions.superuser_run('transmission', ['enable'])
+    transmission.service.notify_enabled(None, True)
 
 
 @package.required(['transmission-daemon'], on_install=on_install)

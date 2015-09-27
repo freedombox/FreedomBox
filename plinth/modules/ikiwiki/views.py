@@ -43,6 +43,7 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
 def on_install():
     """Enable Ikiwiki on install."""
     actions.superuser_run('ikiwiki', ['setup'])
+    ikiwiki.service.notify_enabled(None, True)
 
 
 @package.required(['ikiwiki',
