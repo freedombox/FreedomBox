@@ -26,7 +26,7 @@ import collections
 from plinth.signals import service_enabled
 
 
-SERVICES = {}
+services = {}
 
 
 class Service(object):
@@ -48,7 +48,7 @@ class Service(object):
         self._enabled = enabled
 
         # Maintain a complete list of services
-        SERVICES[service_id] = self
+        services[service_id] = self
 
     def is_enabled(self):
         """Return whether the service is enabled."""

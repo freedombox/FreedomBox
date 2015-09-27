@@ -27,10 +27,10 @@ from gettext import gettext as _
 from plinth import actions
 from plinth import cfg
 from plinth import package
-from plinth import service
+from plinth import service as service_module
 
 
-SERVICE = None
+service = None
 
 
 class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
@@ -46,15 +46,16 @@ def init():
 
     status = get_status()
 
-    global SERVICE  # pylint: disable-msg=W0603
-    SERVICE = service.Service('owncloud', _('ownCloud'), ['http', 'https'],
-                              is_external=True, enabled=status['enabled'])
+    global service  # pylint: disable-msg=W0603
+    service = service_module.Service(
+        'owncloud', _('ownCloud'), ['http', 'https'], is_external=True,
+        enabled=status['enabled'])
 
 
 def on_install():
     """Tasks to run after package install."""
     actions.superuser_run('owncloud-setup', ['enable'], async=True)
-    SERVICE.notify_enabled(None, True)
+    service.notify_enabled(None, True)
 
 
 @package.required(['postgresql', 'php5-pgsql', 'owncloud'],
@@ -103,4 +104,4 @@ def _apply_changes(request, old_status, new_status):
 
     # Send a signal to other modules that the service is
     # enabled/disabled
-    SERVICE.notify_enabled(None, new_status['enabled'])
+    service.notify_enabled(None, new_status['enabled'])

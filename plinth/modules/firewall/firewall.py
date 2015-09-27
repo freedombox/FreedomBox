@@ -55,7 +55,7 @@ def index(request):
     return TemplateResponse(
         request, 'firewall.html',
         {'title': _('Firewall'),
-         'services': list(service_module.SERVICES.values()),
+         'services': list(service_module.services.values()),
          'internal_enabled_services': internal_enabled_services,
          'external_enabled_services': external_enabled_services})
 
@@ -94,7 +94,7 @@ def on_service_enabled(sender, service_id, enabled, **kwargs):
     external_enabled_services = get_enabled_services(zone='external')
 
     LOGGER.info('Service enabled - %s, %s', service_id, enabled)
-    service = service_module.SERVICES[service_id]
+    service = service_module.services[service_id]
     for port in service.ports:
         if enabled:
             if port not in internal_enabled_services:
@@ -110,7 +110,7 @@ def on_service_enabled(sender, service_id, enabled, **kwargs):
             if port in internal_enabled_services:
                 enabled_services_on_port = [
                     service_.is_enabled()
-                    for service_ in service_module.SERVICES.values()
+                    for service_ in service_module.services.values()
                     if port in service_.ports and
                     service_id != service_.service_id]
                 if not any(enabled_services_on_port):
@@ -119,7 +119,7 @@ def on_service_enabled(sender, service_id, enabled, **kwargs):
             if port in external_enabled_services:
                 enabled_services_on_port = [
                     service_.is_enabled()
-                    for service_ in service_module.SERVICES.values()
+                    for service_ in service_module.services.values()
                     if port in service_.ports and
                     service_id != service_.service_id and
                     service_.is_external]
