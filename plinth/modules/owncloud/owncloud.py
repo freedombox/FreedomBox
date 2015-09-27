@@ -54,7 +54,7 @@ def init():
 
 def on_install():
     """Tasks to run after package install."""
-    actions.superuser_run('owncloud-setup', ['enable'], async=True)
+    actions.superuser_run('owncloud-setup', ['enable'])
     service.notify_enabled(None, True)
 
 
@@ -100,7 +100,7 @@ def _apply_changes(request, old_status, new_status):
         messages.success(request, _('ownCloud disabled'))
         option = 'noenable'
 
-    actions.superuser_run('owncloud-setup', [option], async=True)
+    actions.superuser_run('owncloud-setup', [option])
 
     # Send a signal to other modules that the service is
     # enabled/disabled
