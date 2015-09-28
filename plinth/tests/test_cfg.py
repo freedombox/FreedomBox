@@ -223,7 +223,9 @@ class CfgTestCase(unittest.TestCase):
         self.assertEqual(parser.get('Network', 'secure_proxy_ssl_header'),
                          cfg.secure_proxy_ssl_header)
         self.assertEqual(parser.get('Network', 'use_x_forwarded_host'),
-                         cfg.use_x_forwarded_host)
+                         str(cfg.use_x_forwarded_host))
+        self.assertEqual(parser.get('Misc', 'danube_edition'),
+                         str(cfg.danube_edition))
 
     def read_temp_config_file(self, test_file):
         """Read the specified test configuration file."""
