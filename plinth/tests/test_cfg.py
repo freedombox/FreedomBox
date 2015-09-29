@@ -222,6 +222,7 @@ class CfgTestCase(unittest.TestCase):
         self.assertEqual(int(parser.get('Network', 'port')), cfg.port)
         self.assertEqual(parser.get('Network', 'secure_proxy_ssl_header'),
                          cfg.secure_proxy_ssl_header)
+        self.assertIsInstance(cfg.use_x_forwarded_host, bool)
         self.assertEqual(parser.get('Network', 'use_x_forwarded_host'),
                          str(cfg.use_x_forwarded_host))
         self.assertEqual(parser.get('Misc', 'danube_edition'),

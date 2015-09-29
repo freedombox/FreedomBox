@@ -96,6 +96,8 @@ def read():
         else:
             if datatype == 'int':
                 value = int(value)
+
             if datatype == 'bool':
-                value = value.lower() == 'true'
+                value = (value.lower() == 'true')
+
             globals()[name] = value
