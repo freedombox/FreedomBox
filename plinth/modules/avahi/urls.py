@@ -22,6 +22,6 @@ URLs for the service discovery module
 from django.conf.urls import patterns, url
 
 urlpatterns = patterns( # pylint: disable=C0103
-    'plinth.modules.svcdiscov.views',
-    url(r'^sys/svcdiscov/$', 'index', name='index'),
+    'plinth.modules.avahi.views',
+    url(r'^sys/avahi/$', 'index', name='index'),
     )

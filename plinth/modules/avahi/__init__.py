@@ -38,11 +38,11 @@ def init():
     """Intialize the service discovery module."""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Service Discovery'), 'glyphicon-lamp',
-                     'svcdiscov:index', 950)
+                     'avahi:index', 950)
 
     global service # pylint: disable=W0603
     service = service_module.Service(
-        'svcdiscov', _('Service Discovery'), ['mdns'],
+        'avahi', _('Service Discovery'), ['mdns'],
         is_external=False, enabled=is_enabled())
 
 

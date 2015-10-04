@@ -27,7 +27,7 @@ import logging
 from .forms import ServiceDiscoveryForm
 from plinth import actions
 from plinth import package
-from plinth.modules import svcdiscov
+from plinth.modules import avahi
 
 
 logger = logging.getLogger(__name__) # pylint: disable=C0103
@@ -49,7 +49,7 @@ def index(request):
     else:
         form = ServiceDiscoveryForm(initial=status)
 
-    return TemplateResponse(request, 'svcdiscov.html',
+    return TemplateResponse(request, 'avahi.html',
                             {'title': _('Service Discovery'),
                              'status': status,
                              'form': form})
@@ -57,8 +57,8 @@ def index(request):
 
 def get_status():
     """Get the current settings from server."""
-    return {'enabled': svcdiscov.is_enabled(),
-            'is_running': svcdiscov.is_running()}
+    return {'enabled': avahi.is_enabled(),
+            'is_running': avahi.is_running()}
 
 
 def _apply_changes(request, old_status, new_status):
@@ -68,8 +68,8 @@ def _apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
         modified = True
-        actions.superuser_run('svcdiscov', [sub_command])
-        svcdiscov.service.notify_enabled(None, new_status['enabled'])
+        actions.superuser_run('avahi', [sub_command])
+        avahi.service.notify_enabled(None, new_status['enabled'])
         messages.success(request, _('Configuration updated'))
 
     if not modified:
