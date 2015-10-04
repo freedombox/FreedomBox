@@ -104,7 +104,9 @@ def subcommand_setup(_):
 
     with open(EJABBERD_CONFIG, 'w') as conffile:
         for line in lines:
-            if 'auth_method: internal' in line:
+            if re.match(r'^\s*tls:\s+true', line):
+                conffile.write('    tls: false\n')
+            elif 'auth_method: internal' in line:
                 conffile.write('## ' + line)
             elif '## auth_method: ldap' in line:
                 conffile.write('auth_method: ldap\n')
