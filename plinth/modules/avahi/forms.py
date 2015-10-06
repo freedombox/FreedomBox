@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module for service discovery forms
+Plinth module for service discovery forms.
 """
 
 from django import forms

@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module for service discovery views
+Plinth module for service discovery views.
 """
 
 from django.contrib import messages
@@ -30,7 +30,7 @@ from plinth import package
 from plinth.modules import avahi
 
 
-logger = logging.getLogger(__name__) # pylint: disable=C0103
+logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
 
 @package.required(['avahi-daemon'])
@@ -41,13 +41,13 @@ def index(request):
     form = None
 
     if request.method == 'POST':
-        form = ServiceDiscoveryForm(request.POST)
+        form = ServiceDiscoveryForm(request.POST, prefix='avahi')
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status()
-            form = ServiceDiscoveryForm(initial=status)
+            form = ServiceDiscoveryForm(initial=status, prefix='avahi')
     else:
-        form = ServiceDiscoveryForm(initial=status)
+        form = ServiceDiscoveryForm(initial=status, prefix='avahi')
 
     return TemplateResponse(request, 'avahi.html',
                             {'title': _('Service Discovery'),

@@ -17,7 +17,7 @@
 #
 
 """
-Configuration helper for service discovery
+Configuration helper for service discovery.
 """
 
 import argparse
@@ -38,14 +38,12 @@ def parse_arguments():
 
 def subcommand_enable(_):
     """Start service."""
-    action_utils.service_enable('avahi-daemon.socket')
-    action_utils.service_enable('avahi-daemon.service')
+    action_utils.service_enable('avahi-daemon')
 
 
 def subcommand_disable(_):
     """Stop service."""
-    action_utils.service_disable('avahi-daemon.service')
-    action_utils.service_disable('avahi-daemon.socket')
+    action_utils.service_disable('avahi-daemon')
 
 
 def main():

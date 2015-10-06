@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module for service discovery
+Plinth module for service discovery.
 """
 
 from gettext import gettext as _
@@ -40,7 +40,7 @@ def init():
     menu.add_urlname(_('Service Discovery'), 'glyphicon-lamp',
                      'avahi:index', 950)
 
-    global service # pylint: disable=W0603
+    global service  # pylint: disable=W0603
     service = service_module.Service(
         'avahi', _('Service Discovery'), ['mdns'],
         is_external=False, enabled=is_enabled())
