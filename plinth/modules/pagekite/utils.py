@@ -91,8 +91,12 @@ def get_pagekite_config():
     status = {}
 
     # PageKite service enabled/disabled
-    # This assumes that if pagekite is running it's also enabled as a service
-    status['enabled'] = action_utils.service_is_running('pagekite')
+    # To enable PageKite two things are necessary:
+    # 1) pagekite not being disabled in /etc/pagekite.d/10_account.rc
+    # 2) the pagekite service running
+    is_disabled = run(['is-disabled']).strip()=='true'
+    service_running = action_utils.service_is_running('pagekite')
+    status['enabled'] = service_running and not is_disabled
 
     # PageKite kite details
     status.update(get_kite_details())
