@@ -99,7 +99,15 @@ def get_pagekite_config():
 
     # PageKite frontend server
     server = run(['get-frontend'])
-    status['server'] = server.replace('\n', '')
+    # Frontend-Entries are only considered valid if there's a ':' in them
+    # otherwise, pagekite refuses to work, and we only set values with ':'.
+    if ':' in server:
+        server_domain, server_port = server.strip().split(':')
+        status['server_domain'] = server_domain
+        status['server_port'] = server_port
+    else:
+        # no valid entry exists, default to port 80
+        status['server_port'] = 80
 
     return status
 
