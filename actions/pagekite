@@ -112,7 +112,8 @@ def subcommand_get_frontend(_):
 
 def subcommand_set_frontend(arguments):
     """Set pagekite frontend url, taking care of defaults and pagekite.net"""
-    if arguments.url in ('pagekite.net', 'defaults', 'default'):
+    frontend_domain = arguments.url.split(':')[0]
+    if frontend_domain in ('pagekite.net', 'defaults', 'default'):
         enable_pagekitenet_frontend()
     else:
         aug.remove(PATHS['defaults'])

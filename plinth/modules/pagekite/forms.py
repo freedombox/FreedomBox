@@ -45,12 +45,14 @@ class ConfigurationForm(forms.Form):
 
     enabled = forms.BooleanField(label=_('Enable PageKite'), required=False)
 
-    server = forms.CharField(
-        label=_('Server'), required=False,
-        help_text=_('Select your pagekite.net server. Set "pagekite.net" to '
+    server_domain = forms.CharField(
+        label=_('Server domain'), required=False,
+        help_text=_('Select your pagekite server. Set "pagekite.net" to '
                     'use the default pagekite.net server'),
         widget=forms.TextInput())
-
+    server_port = forms.IntegerField(
+        label=_('Server port'), required=False,
+        help_text=_('Port of your pagekite server (default: 80)'))
     kite_name = TrimmedCharField(
         label=_('Kite name'),
         help_text=_('Example: mybox.pagekite.me'),
@@ -79,8 +81,10 @@ for your account if no secret is set on the kite'))
                 messages.success(request, _('Kite details set'))
                 config_changed = True
 
-            if old['server'] != new['server']:
-                utils.run(['set-frontend', new['server']])
+            if old['server_domain'] != new['server_domain'] or \
+                    old['server_port'] != new['server_port']:
+                server = "%s:%s" % (new['server_domain'], new['server_port'])
+                utils.run(['set-frontend', server])
                 messages.success(request, _('Pagekite server set'))
                 config_changed = True
 
