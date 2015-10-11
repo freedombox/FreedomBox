@@ -354,15 +354,15 @@ def add_pppoe(request):
                              'form': form})
 
 
-def add_wifi(request, ssid=None):
+def add_wifi(request, ssid=None, interface_name=None):
     """Serve wifi connection create form."""
     form = None
     form_data = None
 
     if ssid:
-        device = network.get_first_wifi_device()
+        device = network.get_device_by_interface_name(interface_name)
         form_data = {'name': ssid,
-                     'interface': device,
+                     'interface': interface_name if device else None,
                      'zone': 'external',
                      'ssid': ssid,
                      'mode': 'infrastructure',

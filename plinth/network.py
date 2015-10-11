@@ -624,6 +624,7 @@ def wifi_scan():
             ssid = access_point.get_ssid()
             ssid_string = ssid.get_data() if ssid else ''
             access_points.append({
+                'interface_name': device.get_iface(),
                 'ssid': ssid_string,
                 'strength': access_point.get_strength()})
 

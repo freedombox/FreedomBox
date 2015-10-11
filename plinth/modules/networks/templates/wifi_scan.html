@@ -29,7 +29,7 @@
         <div class="list-group-item clearfix">
           {% if access_point.ssid %}
           <a display="inline-block" width="40%"
-             href="{% url 'networks:add_wifi' access_point.ssid %}">
+             href="{% url 'networks:add_wifi' access_point.ssid access_point.interface_name %}">
              {{ access_point.ssid }}
           </a>
           {% else %}

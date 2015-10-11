@@ -37,7 +37,7 @@ urlpatterns = patterns(
     url(r'^sys/networks/add/$', 'add', name='add'),
     url(r'^sys/networks/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
     url(r'^sys/networks/add/pppoe/$', 'add_pppoe', name='add_pppoe'),
-    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/)?$', 'add_wifi',
+    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/(?P<interface_name>[^/]+)/)?$', 'add_wifi',
         name='add_wifi'),
     url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$',
         'delete', name='delete'),
