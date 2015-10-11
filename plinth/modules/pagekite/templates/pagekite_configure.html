@@ -30,7 +30,8 @@
     <div id='pagekite-post-enabled-form'
          style='display: {{ form.enabled.value|yesno:'block,none' }};'>
       <h3>PageKite Account</h3>
-      {{ form.server|bootstrap_horizontal }}
+      {{ form.server_domain|bootstrap_horizontal }}
+      {{ form.server_port|bootstrap_horizontal }}
       {{ form.kite_name|bootstrap_horizontal }}
       {{ form.kite_secret|bootstrap_horizontal }}
 

@@ -52,6 +52,9 @@ def parse_arguments():
     subparsers.add_parser('start-and-enable', help='Enable PageKite service')
     subparsers.add_parser('stop-and-disable', help='Disable PageKite service')
     subparsers.add_parser('restart', help='Restart PageKite service')
+    subparsers.add_parser('is-disabled',
+                          help=('Wether PageKite is disabled in the file '
+                                '/etc/pagekite.d/10_accounts.rc'))
 
     # Frontend
     subparsers.add_parser('get-frontend', help='Get pagekite frontend')
@@ -86,6 +89,13 @@ def subcommand_restart(_):
     print('restarted')
 
 
+def subcommand_is_disabled(_):
+    if aug.match(PATHS['abort_not_configured']):
+        print('true')
+    else:
+        print('false')
+
+
 def subcommand_start_and_enable(_):
     aug.remove(PATHS['abort_not_configured'])
     aug.save()
@@ -112,7 +122,8 @@ def subcommand_get_frontend(_):
 
 def subcommand_set_frontend(arguments):
     """Set pagekite frontend url, taking care of defaults and pagekite.net"""
-    if arguments.url in ('pagekite.net', 'defaults', 'default'):
+    frontend_domain = arguments.url.split(':')[0]
+    if frontend_domain in ('pagekite.net', 'defaults', 'default'):
         enable_pagekitenet_frontend()
     else:
         aug.remove(PATHS['defaults'])

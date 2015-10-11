@@ -91,15 +91,27 @@ def get_pagekite_config():
     status = {}
 
     # PageKite service enabled/disabled
-    # This assumes that if pagekite is running it's also enabled as a service
-    status['enabled'] = action_utils.service_is_running('pagekite')
+    # To enable PageKite two things are necessary:
+    # 1) pagekite not being disabled in /etc/pagekite.d/10_account.rc
+    # 2) the pagekite service running
+    is_disabled = run(['is-disabled']).strip()=='true'
+    service_running = action_utils.service_is_running('pagekite')
+    status['enabled'] = service_running and not is_disabled
 
     # PageKite kite details
     status.update(get_kite_details())
 
     # PageKite frontend server
     server = run(['get-frontend'])
-    status['server'] = server.replace('\n', '')
+    # Frontend-Entries are only considered valid if there's a ':' in them
+    # otherwise, pagekite refuses to work, and we only set values with ':'.
+    if ':' in server:
+        server_domain, server_port = server.strip().split(':')
+        status['server_domain'] = server_domain
+        status['server_port'] = server_port
+    else:
+        # no valid entry exists, default to port 80
+        status['server_port'] = 80
 
     return status
 
