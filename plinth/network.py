@@ -20,7 +20,10 @@ Helper functions for working with network manager.
 """
 
 import collections
+import gi
+gi.require_version('GLib', '2.0')
 from gi.repository import GLib as glib
+gi.require_version('NM', '1.0')
 from gi.repository import NM as nm
 import logging
 import socket

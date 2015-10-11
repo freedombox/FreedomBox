@@ -20,6 +20,8 @@ from django.core import validators
 from gettext import gettext as _
 
 from plinth import network
+import gi
+gi.require_version('NM', '1.0')
 from gi.repository import NM as nm
 
 
