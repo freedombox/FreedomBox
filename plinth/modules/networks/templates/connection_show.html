@@ -23,164 +23,279 @@
     .list-group-item .btn {
       margin: -5px 0;
     }
+    .form-inline {
+      display: inline;
+    }
   </style>
 {% endblock %}
 {% load bootstrap %}
 
 {% block content %}
-  {% if active %}
-	  <h3>Physical Link Information</h3>
+  <div class="row">
+    <div class="col-sm-6">
+      <div>
+        <a href="{% url 'networks:edit' connection.uuid %}"
+           class="btn btn-primary" role="button"
+           title="Edit connection">Edit</a>
 
-	  {% if linkstate and connectiontype == "802-3-ethernet" %}
-	  <span class='label label-success'>cable is connected</span>
-	  <br/><br/>
-	  {% elif connectiontype == "802-3-ethernet" %}
-	  <span class='label label-warning'>please check cable</span>
-	  <br/><br/>
-	  {% endif %}
-	  <div class="row">
-	    <div class="col-sm-6">
-	      <div class="list-group">
-	      {% if connectiontype == "802-11-wireless" %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">SSID</span>
-	          <span class="connection-type-label pull-right">{{ ssid }}</span>
-	         </div>
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">Speed</span>
-	          <span class="connection-type-label pull-right">{{ rate }}</span>
-	         </div>
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">Signal</span>
-	          <span class="connection-type-label pull-right">
-	            <span class="btn btn-primary btn-xs pull-right">
-	              {{ strength }}%
-	            </span>
-	          </span>
-	         </div>
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">Channel</span>
-	          <span class="connection-type-label pull-right">{{ channel }}</span>
-	         </div>
-	      {% endif %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">MAC adress</span>
-	          <span class="connection-type-label pull-right">{{ mac }}</span>
-	         </div>
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">Interface</span>
-	          <span class="connection-type-label pull-right">{{ interface }}</span>
-	         </div>
-	       </div>
-	    </div>
-	  </div>
+        {% if active_connection %}
+          <form class="form form-inline" method="post"
+                action="{% url 'networks:deactivate' connection.uuid %}">
+            {% csrf_token %}
+            <button class="btn btn-default" type="submit">Deactivate</button>
+          </form>
+        {% else %}
+          <form class="form form-inline" method="post"
+                action="{% url 'networks:activate' connection.uuid %}">
+            {% csrf_token %}
+            <button class="btn btn-default" type="submit">Activate</button>
+          </form>
+        {% endif %}
 
-	  <h3>IP Address Information</h3>
+        <a href="{% url 'networks:delete' connection.uuid %}"
+           class="btn btn-default" role="button"
+           title="Delete connection">Delete</a>
+      </div>
 
-	  <div class="row">
-	    <div class="col-sm-6">
-	      <div class="list-group">
-	        {% for addr in ip %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">IPv4 Address</span>
-	          <span class="connection-type-label pull-right">{{ addr }}
-	          </span>
-	        </div>
-	        {% endfor %}
-	        {% for addr in ip6 %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">IPv6 Address</span>
-	          <span class="connection-type-label pull-right">{{ addr }}
-	          </span>
-	        </div>
-	        {% endfor %}
-	        {% for server in dns %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">DNS Server</span>
-	          <span class="connection-type-label pull-right">{{ server }}</span>
-	        </div>
-	        {% endfor %}
-	        {% for server in dns6 %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">DNS Server</span>
-	          <span class="connection-type-label pull-right">{{ server }}</span>
-	        </div>
-	        {% endfor %}
-	        {% if gateway %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">IPv4 Default Gateway</span>
-	          <span class="connection-type-label pull-right">{{ gateway }}</span>
-	        </div>
-	        {% endif %}
-	        {% if gateway6 %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">IPv6 Default Gateway</span>
-	          <span class="connection-type-label pull-right">{{ gateway6 }}</span>
-	        </div>
-	        {% endif %}
-	        {% if method == "shared" %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">DHCP Server</span>
-	          <span class="connection-type-label pull-right">enabled</span>
-	        </div>
-	        {% elif method == "auto" %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">IP Method</span>
-	          <span class="connection-type-label pull-right">{{ method }}
-	          </span>
-	        </div>
-	        {% endif %}
-	        {% if primary %}
-	        <div class="list-group-item clearfix">
-	          <span class="connection-type-label pull-left">Default Connection</span>
-	          <span class="connection-type-label pull-right">
-	          <span class='label label-success'>yes</span>
-	          </span>
-	        </div>
-	        {% endif %}
-	       </div>
-	    </div>
-	  </div>
-	  <h3>Security Information</h3>
-	  {% if zone == "internal" %}
-	  Firewall: <span class='label label-success'>{{ zone }}</span><br/><br/>
-	  INFO: This interface should be connected to local network. <br/>
-	  If you connect this interface to a public
-	  network, others may have access to your data.
-	  {% elif zone == "external" %}
-	  Firewall: <span class='label label-warning'>{{ zone }}</span><br/><br/>
-	  INFO: This interface should be connected to your internet upstream
-	  connection
-	  {% else %}
-	  Firewall: <span class='label label-danger'>{{ zone }}</span><br/><br/>
-	  WARNING: This interface is not assigned to a zone which is maintained by
-	  freedombox
-	  {% endif %}
-  {% else %}
-	  This connections is not active. Please activate connection.
-  {% endif %}
-  <br/><hr>
-  <a href="{% url 'networks:edit' uuid %}"
-     class="btn btn-primary"
-     role="button" title="Edit connection">
-     Edit
-  </a>
-  {% if active %}
-   <a href="{% url 'networks:deactivate' uuid %}"
-      class="btn btn-default"
-      role="button" title="Deactivate connection">
-      Deactivate
-   </a>
-   {% else %}
-   <a href="{% url 'networks:activate' uuid %}"
-      class="btn btn-default"
-      role="button" title="Deactivate connection">
-      Activate
-   </a>
-   {% endif %}
-   <a href="{% url 'networks:delete' uuid %}"
-      class="btn btn-default"
-      role="button" title="Delete connection">
-      Delete
-   </a>
+      <h3>Connection</h3>
+
+      <div class="list-group">
+        {% if connection.primary %}
+          <div class="list-group-item">
+            Primary connection
+            <div class="pull-right">
+              <span class="label label-success">yes</span>
+            </div>
+          </div>
+        {% endif %}
+        <div class="list-group-item">
+          Name
+          <div class="pull-right">{{ connection.id }}</div>
+        </div>
+      </div>
+
+      <h3>Device</h3>
+
+      <div class="list-group">
+        <div class="list-group-item">
+          State
+          <span class="pull-right">{{ device.state }}</span>
+        </div>
+        {% if device.state_reason != 'none' %}
+          <div class="list-group-item">
+            State reason
+            <span class="pull-right">{{ device.state_reason }}</span>
+          </div>
+        {% endif %}
+        <div class="list-group-item">
+          Type
+          <span class="pull-right">{{ device.type }}</span>
+        </div>
+        <div class="list-group-item">
+          MAC address
+          <span class="pull-right">{{ device.hw_address }}</span>
+        </div>
+        <div class="list-group-item">
+          Interface
+          <span class="pull-right">{{ device.interface_name }}</span>
+        </div>
+        <div class="list-group-item">
+          Description
+          <span class="pull-right">{{ device.description }}</span>
+        </div>
+      </div>
+
+      <h3>Physical Link</h3>
+
+      <div class="list-group">
+        {% if device.ethernet %}
+          <div class="list-group-item">
+            Link state
+            <div class="pull-right">
+              {% if device.ethernet.carrier %}
+                <span class='label label-success'>cable is connected</span>
+              {% else %}
+                <span class='label label-warning'>please check cable</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="list-group-item">
+            Speed
+            <span class="pull-right">{{ device.ethernet.speed }} Mbit/s</span>
+          </div>
+        {% endif %}
+
+        {% if connection.type == "802-11-wireless" %}
+          <div class="list-group-item">
+            SSID
+            <span class="pull-right">{{ connection.wireless.ssid }}</span>
+          </div>
+          <div class="list-group-item">
+            Speed
+            <span class="pull-right">{{ device.wireless.bitrate }} Mbit/s</span>
+          </div>
+          <div class="list-group-item">
+            Mode
+            <span class="pull-right">{{ device.wireless.mode }}</span>
+          </div>
+          {% if access_point.channel %}
+            <div class="list-group-item">
+              Signal strength
+              <div class="pull-right">
+                <span class="btn btn-primary btn-xs">
+                  {{ access_point.strength }}%
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          {% if access_point.channel %}
+            <div class="list-group-item">
+              Channel
+              <span class="pull-right">{{ access_point.channel }}</span>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      {% if active_connection %}
+        <h3>IPv4</h3>
+
+        <div class="list-group">
+          {% if connection.ipv4.method %}
+            <div class="list-group-item">
+              Method
+              <span class="pull-right">{{ connection.ipv4.method }}</span>
+            </div>
+          {% endif %}
+
+          {% for address in device.ip4.addresses %}
+            <div class="list-group-item">
+              IP address
+              <span class="pull-right">
+                {{ address.address }}/{{ address.prefix }}
+              </span>
+            </div>
+          {% endfor %}
+
+          {% if device.ip4.gateway %}
+            <div class="list-group-item">
+              Gateway
+              <span class="pull-right">{{ device.ip4.gateway }}</span>
+            </div>
+          {% endif %}
+
+          {% for server in device.ip4.nameservers %}
+            <div class="list-group-item">
+              DNS server
+              <span class="pull-right">{{ server }}</span>
+            </div>
+          {% endfor %}
+
+          {% if active_connection.ip4.default %}
+            <div class="list-group-item">
+              Default
+              <span class="pull-right">yes</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <h3>IPv6</h3>
+
+        <div class="list-group">
+          {% if connection.ipv6.method %}
+            <div class="list-group-item">
+              Method
+              <span class="pull-right">{{ connection.ipv6.method }}</span>
+            </div>
+          {% endif %}
+
+          {% for address in device.ip6.addresses %}
+            <div class="list-group-item">
+              IP address
+              <span class="pull-right">{{ address.address }}/{{ address.prefix }}</span>
+            </div>
+          {% endfor %}
+
+          {% if device.ip6.gateway %}
+            <div class="list-group-item">
+              Gateway
+              <span class="pull-right">{{ device.ip6.gateway }}</span>
+            </div>
+          {% endif %}
+
+          {% for server in device.ip6.nameservers %}
+            <div class="list-group-item">
+              DNS server
+              <span class="pull-right">{{ server }}</span>
+            </div>
+          {% endfor %}
+
+          {% if active_connection.ip6.default %}
+            <div class="list-group-item">
+              Default
+              <span class="pull-right">yes</span>
+            </div>
+          {% endif %}
+        </div>
+      {% else %}
+        <h3>Status</h3>
+
+        <p>This connection is not active.</p>
+      {% endif %}
+
+      <h3>Security</h3>
+
+      {% if connection.zone == "internal" %}
+        <div class="list-group">
+          <div class="list-group-item">
+            Firewall zone
+            <div class="pull-right">
+              <span class="label label-success">{{ connection.zone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          This interface should be connected to local network/machine.  If you
+          connect this interface to a public network, services meant to
+          be available only internally will become available externally.
+          This is a security risk.
+        </div>
+      {% elif connection.zone == "external" %}
+        <div class="list-group">
+          <div class="list-group-item">
+            Firewall zone
+            <div class="pull-right">
+              <span class="label label-warning">{{ connection.zone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          This interface should receive your Internet connection.  If
+          you connect it your a local network/machine, many services
+          meant to available only internally will not be available.
+        </div>
+      {% else %}
+        <div class="list-group">
+          <div class="list-group-item">
+            Firewall zone
+            <div class="pull-right">
+              <span class="label label-danger">{{ connection.zone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-danger">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          This interface is not maintained by FreedomBox.  Its security
+          status is unknown to FreedomBox.  Many FreedomBox services may
+          not be available on this interface.  It is recommended that
+          you deactivate/delete this connection and re-configure it.
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

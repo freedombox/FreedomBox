@@ -66,71 +66,41 @@ def show(request, uuid):
                                   'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
-    name = connection.get_interface_name()
-    connectiontype = connection.get_connection_type()
-    settings_ipv4 = connection.get_setting_ip4_config()
+    # Connection status
+    connection_status = network.get_status_from_connection(connection)
 
-    mac = network.get_mac_from_device(name)
-    interface = connection.get_interface_name()
-    if connectiontype == '802-11-wireless':
-        settings_wireless = connection.get_setting_wireless()
-        ssid = settings_wireless.get_ssid().get_data()
-        rate = network.get_wifi_rate(interface, ssid)
-        channel = network.get_wifi_channel(interface, ssid)
-        strength = network.get_wifi_signal(interface, ssid)
-        linkstate = True
+    # Active connection status
+    try:
+        active_connection = network.get_active_connection(uuid)
+        active_connection_status = \
+            network.get_status_from_active_connection(active_connection)
+    except network.ConnectionNotFound:
+        active_connection_status = {}
+        active_connection = None
+
+    # Device status
+    if active_connection and active_connection.get_devices():
+        device = active_connection.get_devices()[0]
     else:
-        ssid = "None"
-        rate = 0
-        channel = 0
-        linkstate = network.get_linkstate_from_device(name)
-        strength = 0
+        interface_name = connection_status['interface_name']
+        if interface_name:
+            device = network.get_device_by_interface_name(interface_name)
 
-    ip = network.get_all_ip_from_device(name)
-    ip6 = network.get_all_ip6_from_device(name)
-    dns = network.get_namesever_from_device(name)
-    dns6 = network.get_namesever6_from_device(name)
-    gateway = network.get_gateway_from_device(name)
-    gateway6 = network.get_gateway6_from_device(name)
-    method = settings_ipv4.get_method()
+    device_status = network.get_status_from_device(device)
 
-    zone = connection.get_setting_connection().get_zone()
-    active = network.connection_is_active(uuid)
-
-    if network.get_primary_connection().get_id() == connection.get_id():
-        primary = True
-    else:
-        primary = False
-
-    if not ip:
-        ip.append("0.0.0.0/0")
-
-    if not ip6:
-        ip6.append("::0/0")
+    # Access point status
+    access_point_status = None
+    if connection_status['type'] == '802-11-wireless':
+        access_point_status = network.get_status_from_wifi_access_point(
+            device, connection_status['wireless']['ssid'])
 
     return TemplateResponse(request, 'connection_show.html',
                             {'title': _('Show Connection information'),
-                             'ip': ip,
-                             'ip6': ip6,
-                             'gateway': gateway,
-                             'gateway6': gateway6,
-                             'dns': dns,
-                             'dns6': dns6,
-                             'interface': interface,
-                             'mac': mac,
-                             'linkstate': linkstate,
-                             'zone': zone,
-                             'primary': primary,
                              'subsubmenu': subsubmenu,
-                             'method': method,
-                             'connectiontype': connectiontype,
-                             'ssid': ssid,
-                             'strength': strength,
-                             'rate': rate,
-                             'channel': channel,
-                             'active': active,
-                             'uuid': uuid,
-                             'name': name})
+                             'connection': connection_status,
+                             'active_connection': active_connection_status,
+                             'device': device_status,
+                             'access_point': access_point_status})
 
 
 def edit(request, uuid):
@@ -203,9 +173,9 @@ def edit(request, uuid):
         if settings_connection.get_connection_type() != 'pppoe':
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
-
-            name = connection.get_interface_name()
-            form_data['ipv4_address'] = network.get_ip_from_device(name)
+            address = network.get_first_ip_address_from_connection(connection)
+            if address:
+                form_data['ipv4_address'] = address
 
         if settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
