@@ -30,7 +30,7 @@ import sys
 from plinth import action_utils
 from plinth.modules.pagekite import utils
 
-aug = augeas.Augeas()
+aug = None
 
 PATHS = {
     'service_on': os.path.join(utils.CONF_PATH, '*', 'service_on', '*'),
@@ -239,8 +239,20 @@ def subcommand_set_kite(arguments):
     aug.save()
 
 
+def augeas_load():
+    """Initialize Augeas."""
+    global aug
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Pagekite/lens', 'Pagekite.lns')
+    aug.set('/augeas/load/Pagekite/incl[last() + 1]', '/etc/pagekite.d/*.rc')
+    aug.load()
+
+
 def main():
     """Parse arguments and perform all duties"""
+    augeas_load()
+
     arguments = parse_arguments()
 
     subcommand = arguments.subcommand.replace('-', '_')
