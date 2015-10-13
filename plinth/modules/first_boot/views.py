@@ -28,15 +28,10 @@ from .forms import State0Form
 
 
 class State0View(CreateView):
-    """Setup hostname and create user account"""
+    """Create user account and log the user in."""
     template_name = 'firstboot_state0.html'
     form_class = State0Form
     success_url = reverse_lazy('first_boot:state10')
-
-    def get_initial(self):
-        initial = super(State0View, self).get_initial()
-        initial['hostname'] = config.get_hostname()
-        return initial
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
