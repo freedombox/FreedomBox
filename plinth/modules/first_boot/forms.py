@@ -19,48 +19,30 @@
 Forms for first boot module.
 """
 
-from django import forms
-from django.contrib import auth, messages
+from django.contrib import auth
+from django.contrib import messages
 from gettext import gettext as _
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules.config import config
 from plinth.modules.users.forms import GROUP_CHOICES
 
 
-class State0Form(forms.ModelForm):
+class State0Form(auth.forms.UserCreationForm):
     """Firstboot state 0: create a new user."""
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(State0Form, self).__init__(*args, **kwargs)
 
-    class Meta:
-        model = auth.models.User
-        fields = ('username', 'password')
-        widgets = {
-            'password': forms.PasswordInput,
-        }
-        help_texts = {
-            'username':
-            _('Choose a username and password to access this web interface. '
-              'The password can be changed and other users can be added '
-              'later. An LDAP user with administrative privileges (sudo) is '
-              'also created.'),
-        }
-
     def save(self, commit=True):
         """Create and log the user in."""
-        user = super(State0Form, self).save(commit=False)
-        user.set_password(self.cleaned_data['password'])
+        user = super(State0Form, self).save(commit=commit)
         if commit:
-            user.save()
-
             try:
                 actions.superuser_run(
                     'ldap',
                     ['create-user', user.get_username()],
-                    input=self.cleaned_data['password'].encode())
+                    input=self.cleaned_data['password1'].encode())
             except ActionError:
                 messages.error(self.request,
                                _('Creating LDAP user failed.'))
@@ -80,15 +62,15 @@ class State0Form(forms.ModelForm):
             admin_group = auth.models.Group.objects.get(name='admin')
             admin_group.user_set.add(user)
 
-            self.login_user()
+            self.login_user(self.cleaned_data['username'],
+                            self.cleaned_data['password1'])
 
         return user
 
-    def login_user(self):
+    def login_user(self, username, password):
         """Try to login the user with the credentials provided"""
         try:
-            user = auth.authenticate(username=self.request.POST['username'],
-                                     password=self.request.POST['password'])
+            user = auth.authenticate(username=username, password=password)
             auth.login(self.request, user)
         except Exception:
             pass
