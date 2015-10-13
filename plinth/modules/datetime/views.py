@@ -37,7 +37,7 @@ def on_install():
     datetime.service.notify_enabled(None, True)
 
 
-@package.required(['ntp'])
+@package.required(['ntp'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
