@@ -13,7 +13,9 @@ virtualenv:
   system_site_packages: true
 
 # Command to install dependencies
-install: "pip install -r requirements.txt"
+install:
+  - pip install coverage==3.7
+  - pip install -r requirements.txt
 
 # Command to run tests
 script: python3 setup.py test
