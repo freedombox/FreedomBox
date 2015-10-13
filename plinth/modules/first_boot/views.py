@@ -19,23 +19,27 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic.edit import CreateView
+from django.views.generic import CreateView, TemplateView
 from gettext import gettext as _
 
 from plinth import kvstore
-from plinth.modules.config import config
-from .forms import State0Form
+from .forms import State1Form
 
 
-class State0View(CreateView):
-    """Create user account and log the user in."""
+class State0View(TemplateView):
+    """Show the welcome screen."""
     template_name = 'firstboot_state0.html'
-    form_class = State0Form
+
+
+class State1View(CreateView):
+    """Create user account and log the user in."""
+    template_name = 'firstboot_state1.html'
+    form_class = State1Form
     success_url = reverse_lazy('first_boot:state10')
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
-        kwargs = super(State0View, self).get_form_kwargs()
+        kwargs = super(State1View, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 

@@ -28,15 +28,15 @@ from plinth.errors import ActionError
 from plinth.modules.users.forms import GROUP_CHOICES
 
 
-class State0Form(auth.forms.UserCreationForm):
-    """Firstboot state 0: create a new user."""
+class State1Form(auth.forms.UserCreationForm):
+    """Firstboot state 1: create a new user."""
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
-        super(State0Form, self).__init__(*args, **kwargs)
+        super(State1Form, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
         """Create and log the user in."""
-        user = super(State0Form, self).save(commit=commit)
+        user = super(State1Form, self).save(commit=commit)
         if commit:
             try:
                 actions.superuser_run(

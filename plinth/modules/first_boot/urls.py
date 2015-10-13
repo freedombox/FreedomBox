@@ -22,7 +22,7 @@ URLs for the First Boot module
 from django.conf.urls import patterns, url
 from stronghold.decorators import public
 
-from .views import State0View
+from .views import State0View, State1View
 
 
 urlpatterns = patterns(  # pylint: disable-msg=C0103
@@ -30,5 +30,6 @@ urlpatterns = patterns(  # pylint: disable-msg=C0103
     # Take care of the firstboot middleware when changing URLs
     url(r'^firstboot/$', public(State0View.as_view()), name='index'),
     url(r'^firstboot/state0/$', public(State0View.as_view()), name='state0'),
+    url(r'^firstboot/state1/$', public(State1View.as_view()), name='state1'),
     url(r'^firstboot/state10/$', 'state10', name='state10'),
     )
