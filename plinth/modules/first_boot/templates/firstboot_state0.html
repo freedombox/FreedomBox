@@ -21,32 +21,39 @@
 {% load static %}
 {% load bootstrap %}
 
-{% block content %}
-
-  <h2>Welcome to Your FreedomBox!</h2>
-
-  <p>It looks like this {{ cfg.box_name }} isn't set up yet.  Provide basic
-    data to get started.</p>
-
-  <p>Choose a username and password to access this web interface.  The
-    password can be changed and other users can be added later. An
-    LDAP user with administrative privileges (sudo) is also created.</p>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-    {{ form|bootstrap }}
-    <input type="submit" class="btn btn-primary" value="Box it up!"/>
-
-  </form>
-
+{% block page_head %}
+  <style type="text/css">
+   .navbar-brand {
+       display: none;
+   }
+  </style>
 {% endblock %}
 
-{% block sidebar %}
-  {% include "firstboot_sidebar.html" %}
+{% block add_nav_and_login %}
+  <ul class="nav navbar-nav navbar-right">
+    <li>
+      <a href="{% url 'help:index' %}">
+        <span class="glyphicon-question-sign glyphicon nav-icon"></span>
+      </a>
+    </li>
+  </ul>
 {% endblock %}
 
-{% block page_js %}
-  <script>
-    $('#id_hostname').focus();
-  </script>
+{% block content_row %}
+  <p class="text-center">
+    <img src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
+         alt="FreedomBox" width="640"/>
+  </p>
+
+  <h3 class="text-center">
+    Congratulations! Your FreedomBox is up and running!
+  </h3>
+
+  <p class="text-center">Please provide the following basic
+    information to complete the setup process.</p>
+
+  <p class="text-center">
+    <a href="{% url 'first_boot:state1' %}"
+       class="btn btn-primary btn-large">Next</a>
+  </p>
 {% endblock %}
