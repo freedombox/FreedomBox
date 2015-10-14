@@ -81,7 +81,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="{% url 'index' %}" class="navbar-brand">
+        <a href="{% url 'index' %}" class="navbar-brand" title="Applications">
           <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                alt="FreedomBox" />
           FreedomBox
@@ -91,14 +91,14 @@
       {% block add_nav_and_login %}
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="{% url 'help:index' %}">
+            <a href="{% url 'help:index' %}" title="Help">
               <span class="glyphicon-question-sign glyphicon nav-icon"></span>
             </a>
           </li>
 
           {% if user.is_authenticated %}
             <li>
-              <a href="{% url 'system:index' %}">
+              <a href="{% url 'system:index' %}" title="Configuration">
                 <span class="glyphicon-cog glyphicon nav-icon"></span>
               </a>
             </li>
