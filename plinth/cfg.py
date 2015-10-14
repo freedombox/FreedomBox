@@ -20,7 +20,6 @@ import os
 
 from plinth.menu import Menu
 
-product_name = None
 box_name = None
 root = None
 file_root = None
@@ -67,9 +66,7 @@ def read():
         })
     parser.read(CONFIG_FILE)
 
-    config_items = {('Name', 'product_name', 'string'),
-                    ('Name', 'box_name', 'string'),
-                    ('Path', 'root', 'string'),
+    config_items = {('Path', 'root', 'string'),
                     ('Path', 'file_root', 'string'),
                     ('Path', 'config_dir', 'string'),
                     ('Path', 'data_dir', 'string'),
@@ -84,6 +81,7 @@ def read():
                     ('Network', 'port', 'int'),
                     ('Network', 'secure_proxy_ssl_header', 'string'),
                     ('Network', 'use_x_forwarded_host', 'bool'),
+                    ('Misc', 'box_name', 'string'),
                     ('Misc', 'danube_edition', 'bool')}
 
     for section, name, datatype in config_items:

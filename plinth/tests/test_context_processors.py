@@ -40,7 +40,6 @@ class ContextProcessorsTestCase(TestCase):
 
         config = response['cfg']
         self.assertIsNotNone(config)
-        self.assertEqual('Plinth', config.product_name)
         self.assertEqual('FreedomBox', config.box_name)
 
         submenu = response['submenu']

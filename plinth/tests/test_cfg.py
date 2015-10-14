@@ -198,10 +198,6 @@ class CfgTestCase(unittest.TestCase):
         """Compare two sets of configuration values."""
         # Note that the count of items within each section includes the number
         # of default items (1, for 'root').
-        self.assertEqual(3, len(parser.items('Name')))
-        self.assertEqual(parser.get('Name', 'product_name'), cfg.product_name)
-        self.assertEqual(parser.get('Name', 'box_name'), cfg.box_name)
-
         self.assertEqual(13, len(parser.items('Path')))
         self.assertEqual(parser.get('Path', 'root'), cfg.root)
         self.assertEqual(parser.get('Path', 'file_root'), cfg.file_root)
@@ -225,8 +221,10 @@ class CfgTestCase(unittest.TestCase):
         self.assertIsInstance(cfg.use_x_forwarded_host, bool)
         self.assertEqual(parser.get('Network', 'use_x_forwarded_host'),
                          str(cfg.use_x_forwarded_host))
+        self.assertEqual(3, len(parser.items('Misc')))
         self.assertEqual(parser.get('Misc', 'danube_edition'),
                          str(cfg.danube_edition))
+        self.assertEqual(parser.get('Misc', 'box_name'), cfg.box_name)
 
     def read_temp_config_file(self, test_file):
         """Read the specified test configuration file."""
