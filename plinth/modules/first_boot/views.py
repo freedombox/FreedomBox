@@ -23,6 +23,7 @@ from django.views.generic import CreateView, TemplateView
 from gettext import gettext as _
 
 from plinth import kvstore
+from plinth import network
 from .forms import State1Form
 
 
@@ -53,6 +54,9 @@ def state10(request):
     if User.objects.all():
         kvstore.set('firstboot_state', 10)
 
+    connections = network.get_connection_list()
+
     return render_to_response('firstboot_state10.html',
-                              {'title': _('Setup Complete')},
+                              {'title': _('Setup Complete'),
+                               'connections': connections},
                               context_instance=RequestContext(request))

@@ -213,13 +213,22 @@ def get_connection_list():
     for connection in client.get_connections():
         # Display a friendly type name if known.
         connection_type = connection.get_connection_type()
-        connection_type = CONNECTION_TYPE_NAMES.get(connection_type,
-                                                    connection_type)
+        connection_type_name = CONNECTION_TYPE_NAMES.get(connection_type,
+                                                         connection_type)
+
+        settings_connection = connection.get_setting_connection()
+        zone = settings_connection.get_zone()
+
+        connection.get_interface_name()
+
         connections.append({
             'name': connection.get_id(),
             'uuid': connection.get_uuid(),
+            'interface_name': connection.get_interface_name(),
             'type': connection_type,
+            'type_name': connection_type_name,
             'is_active': connection.get_uuid() in active_uuids,
+            'zone': zone,
         })
     connections.sort(key=lambda connection: connection['is_active'],
                      reverse=True)

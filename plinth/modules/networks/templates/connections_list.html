@@ -56,7 +56,7 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-lg-8">
       <div class="list-group">
         {% for connection in connections %}
           <div class="list-group-item clearfix">
@@ -99,10 +99,12 @@
               {{ connection.name }}
             </a>
 
-            <span class="connection-type-label">{{ connection.type }}</span>
+            <span class="connection-type-label">{{ connection.type_name }}</span>
           </div>
         {% endfor %}
       </div>
+
+      {% include "connections_diagram.html" %}
 
       {% include "diagnostics_button.html" with module="networks" %}
     </div>

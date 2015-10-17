@@ -1,0 +1,126 @@
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load static %}
+
+<style type="text/css">
+  .connection-diagram {
+      margin-top: 32px;
+      margin-bottom: 32px;
+  }
+
+  .col-image {
+      display: block;
+      width: 100%;
+  }
+
+  .network-entity {
+      max-width: 128px;
+  }
+
+  .network-type-icon {
+      width: 24px;
+      height: 24px;
+  }
+
+  .network-connection {
+      height: 8px;
+      margin-bottom: 12px;
+  }
+
+  .network-connection-vertical {
+      width: 8px;
+      margin-left: 60px;
+  }
+
+  .connection-list {
+      margin-left: 24px;
+  }
+
+  .connection-list-heading {
+      font-weight: bold;
+  }
+</style>
+
+<div class="row connection-diagram">
+  <div class="col-sm-2">
+    <img src="{% static 'theme/img/network-internet.svg' %}"
+         class="col-image network-entity" alt="Internet"/>
+  </div>
+  <div class="col-sm-3">
+    <img src="{% static 'theme/img/network-spacing.svg' %}"
+         class="col-image network-spacing hidden-xs" alt="Spacing"/>
+    <img src="{% static 'theme/img/network-connection.svg' %}"
+         class="col-image network-connection hidden-xs" alt="Connection"/>
+    <img src="{% static 'theme/img/network-connection-vertical.svg' %}"
+         class="network-connection-vertical visible-xs-block" alt="Connection"/>
+    <div class="connection-list">
+      <p class="connection-list-heading">External</p>
+      {% for connection in connections %}
+        {% if connection.interface_name and connection.is_active and connection.zone == 'external' %}
+          {% if connection.type == '802-3-ethernet' %}
+            <img src="{% static 'theme/img/network-ethernet.svg' %}"
+                 class="network-type-icon" alt="Ethernet"/>
+          {% elif connection.type == '802-11-wireless' %}
+            <img src="{% static 'theme/img/network-wireless.svg' %}"
+                 class="network-type-icon" alt="Wi-Fi"/>
+          {% endif %}
+          <a href="{% url 'networks:show' connection.uuid %}"
+             title="Show connection {{ connection.name }}">
+            {{ connection.name }} ({{ connection.interface_name }})</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <img src="{% static 'theme/img/network-freedombox.svg' %}"
+         class="col-image network-entity" alt="FreedomBox"/>
+  </div>
+  <div class="col-sm-3">
+    <img src="{% static 'theme/img/network-spacing.svg' %}"
+         class="col-image network-spacing hidden-xs" alt="Spacing"/>
+    <img src="{% static 'theme/img/network-connection.svg' %}"
+         class="col-image network-connection hidden-xs" alt="Connection"/>
+    <div class="connection-list">
+      <p class="connection-list-heading">Internal</p>
+      {% for connection in connections %}
+        {% if connection.interface_name and connection.is_active and connection.zone == 'internal' %}
+          <p>
+            {% if connection.type == '802-3-ethernet' %}
+              <img src="{% static 'theme/img/network-ethernet.svg' %}"
+                   class="network-type-icon" alt="Ethernet"/>
+            {% elif connection.type == '802-11-wireless' %}
+              <img src="{% static 'theme/img/network-wireless.svg' %}"
+                   class="network-type-icon" alt="Wi-Fi"/>
+            {% endif %}
+            <a href="{% url 'networks:show' connection.uuid %}"
+               title="Show connection {{ connection.name }}">
+              {{ connection.name }} ({{ connection.interface_name }})</a>
+          </p>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <img src="{% static 'theme/img/network-connection-vertical.svg' %}"
+         class="network-connection-vertical visible-xs-block" alt="Connection"/>
+  </div>
+  <div class="col-sm-2">
+    <img src="{% static 'theme/img/network-computer.svg' %}"
+         class="col-image network-entity" alt="Computer"/>
+  </div>
+</div>
