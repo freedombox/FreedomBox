@@ -37,13 +37,18 @@ class FirstBootMiddleware(object):
     def process_request(request):
         """Handle a request as Django middleware request handler."""
         state = kvstore.get_default('firstboot_state', 0)
+
         firstboot_index_url = reverse('first_boot:index')
         user_requests_firstboot = request.path.startswith(firstboot_index_url)
+
+        help_index_url = reverse('help:index')
+        user_requests_help = request.path.startswith(help_index_url)
 
         # Setup is complete: Forbid accessing firstboot
         if state >= 10 and user_requests_firstboot:
             return HttpResponseRedirect(reverse('index'))
 
-        # Setup is not complete: Forbid accessing anything but firstboot
-        if state < 10 and not user_requests_firstboot:
+        # Setup is not complete: Forbid accessing anything but firstboot or help
+        if state < 10 and not user_requests_firstboot and \
+           not user_requests_help:
             return HttpResponseRedirect(reverse('first_boot:state%d' % state))
