@@ -74,36 +74,38 @@
         </div>
       </div>
 
-      <h3>Device</h3>
+      {% if device %}
+        <h3>Device</h3>
 
-      <div class="list-group">
-        <div class="list-group-item">
-          State
-          <span class="pull-right">{{ device.state }}</span>
-        </div>
-        {% if device.state_reason != 'none' %}
+        <div class="list-group">
           <div class="list-group-item">
-            State reason
-            <span class="pull-right">{{ device.state_reason }}</span>
+            State
+            <span class="pull-right">{{ device.state }}</span>
           </div>
-        {% endif %}
-        <div class="list-group-item">
-          Type
-          <span class="pull-right">{{ device.type }}</span>
+          {% if device.state_reason != 'none' %}
+            <div class="list-group-item">
+              State reason
+              <span class="pull-right">{{ device.state_reason }}</span>
+            </div>
+          {% endif %}
+          <div class="list-group-item">
+            Type
+            <span class="pull-right">{{ device.type }}</span>
+          </div>
+          <div class="list-group-item">
+            MAC address
+            <span class="pull-right">{{ device.hw_address }}</span>
+          </div>
+          <div class="list-group-item">
+            Interface
+            <span class="pull-right">{{ device.interface_name }}</span>
+          </div>
+          <div class="list-group-item">
+            Description
+            <span class="pull-right">{{ device.description }}</span>
+          </div>
         </div>
-        <div class="list-group-item">
-          MAC address
-          <span class="pull-right">{{ device.hw_address }}</span>
-        </div>
-        <div class="list-group-item">
-          Interface
-          <span class="pull-right">{{ device.interface_name }}</span>
-        </div>
-        <div class="list-group-item">
-          Description
-          <span class="pull-right">{{ device.description }}</span>
-        </div>
-      </div>
+      {% endif %}
 
       <h3>Physical Link</h3>
 
@@ -130,14 +132,16 @@
             SSID
             <span class="pull-right">{{ connection.wireless.ssid }}</span>
           </div>
-          <div class="list-group-item">
-            Speed
-            <span class="pull-right">{{ device.wireless.bitrate }} Mbit/s</span>
-          </div>
-          <div class="list-group-item">
-            Mode
-            <span class="pull-right">{{ device.wireless.mode }}</span>
-          </div>
+          {% if device %}
+            <div class="list-group-item">
+              Speed
+              <span class="pull-right">{{ device.wireless.bitrate }} Mbit/s</span>
+            </div>
+            <div class="list-group-item">
+              Mode
+              <span class="pull-right">{{ device.wireless.mode }}</span>
+            </div>
+          {% endif %}
           {% if access_point.channel %}
             <div class="list-group-item">
               Signal strength

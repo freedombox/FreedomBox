@@ -158,6 +158,9 @@ def get_status_from_wifi_access_point(device, ssid):
     """Return the current status of an access point."""
     status = {}
 
+    if not ssid or not device:
+        return status
+
     for access_point in device.get_access_points():
         if access_point.get_ssid().get_data() == ssid:
             status['strength'] = access_point.get_strength()
