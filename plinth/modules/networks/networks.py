@@ -79,15 +79,13 @@ def show(request, uuid):
         active_connection = None
 
     # Device status
+    device = None
     if active_connection and active_connection.get_devices():
         device = active_connection.get_devices()[0]
     else:
         interface_name = connection_status['interface_name']
         if interface_name:
             device = network.get_device_by_interface_name(interface_name)
-        else:
-            # TODO: What to do in this situation?
-            raise RuntimeError('Could not get device status')
 
     device_status = network.get_status_from_device(device)
 
