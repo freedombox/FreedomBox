@@ -20,12 +20,35 @@
 
 {% load bootstrap %}
 
-{% block content %}
+{% block content_row %}
 
-{% if user.is_authenticated %}
-  <p>Have fun with your {{ cfg.box_name }}!</p>
-{% else %}
-  <p>Proceed to <a href="{% url 'users:login' %}">login</a>.</p>
-{% endif %}
+  <div class="col-lg-6 col-lg-offset-3">
+    {% include 'messages.html' %}
+
+    <h2>Setup Complete!</h2>
+
+    <p>FreedomBox setup is now complete.  However, you should check
+      the network setup and modify it if necessary.  Do not forget to
+      change the default Wi-Fi passwords.</p>
+
+    <p>To make your FreedomBox functional, you need some applications.
+      Applications will be installed the first time you access them.</p>
+
+    <h3>Network Configuration</h3>
+
+    {% include "connections_diagram.html" %}
+
+    <div class="row">
+      <div class="col-xs-6 text-center">
+        <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
+          Go to Networks</a>
+      </div>
+
+      <div class="col-xs-6 text-center">
+        <a class="btn btn-lg btn-primary" href="{% url 'apps:index' %}">
+          Go to Apps</a>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
