@@ -21,21 +21,23 @@
 {% load static %}
 {% load bootstrap %}
 
-{% block content %}
+{% block content_row %}
+  <div class="col-md-6 col-md-offset-3">
 
-  <h2>Administrator Account</h2>
+    <h2>Administrator Account</h2>
 
-  <p>Choose a username and password to access this web interface.  The
-    password can be changed and other users can be added later. An
-    LDAP user with administrative privileges (sudo) is also created.</p>
+    <p>Choose a username and password to access this web interface.
+      The password can be changed and other users can be added
+      later. An LDAP user with administrative privileges (sudo) is
+      also created.</p>
 
-  <form class="form" method="post">
-    {% csrf_token %}
-    {{ form|bootstrap }}
-    <input type="submit" class="btn btn-primary" value="Box it up!"/>
+    <form class="form" method="post">
+      {% csrf_token %}
+      {{ form|bootstrap }}
+      <input type="submit" class="btn btn-primary" value="Box it up!"/>
+    </form>
 
-  </form>
-
+  </div>
 {% endblock %}
 
 {% block page_js %}
