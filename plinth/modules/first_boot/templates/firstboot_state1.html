@@ -22,14 +22,16 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_head %}
+  <style type="text/css">
+   .navbar-brand .glyphicon {
+       display: none;
+   }
+  </style>
+{% endblock %}
+
 {% block add_nav_and_login %}
-  <ul class="nav navbar-nav navbar-right">
-    <li>
-      <a href="{% url 'help:index' %}">
-        <span class="glyphicon-question-sign glyphicon nav-icon"></span>
-      </a>
-    </li>
-  </ul>
+  {% include "firstboot_navbar.html" %}
 {% endblock %}
 
 {% block content_row %}
