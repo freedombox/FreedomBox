@@ -1,0 +1,211 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for OpenVPN server.
+"""
+
+import argparse
+import os
+import subprocess
+
+from plinth import action_utils
+
+KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
+
+DH_KEY = '/etc/openvpn/freedombox-keys/dh4096.pem'
+
+SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
+
+CA_CERTIFICATE_PATH = KEYS_DIRECTORY + '/ca.crt'
+USER_CERTIFICATE_PATH = KEYS_DIRECTORY + '/{username}.crt'
+USER_KEY_PATH = KEYS_DIRECTORY + '/{username}.key'
+
+SERVER_CONFIGURATION = '''
+port 1194
+proto udp
+dev tun
+ca /etc/openvpn/freedombox-keys/ca.crt
+cert /etc/openvpn/freedombox-keys/server.crt
+key /etc/openvpn/freedombox-keys/server.key
+dh /etc/openvpn/freedombox-keys/dh4096.pem
+server 10.91.0.0 255.255.255.0
+keepalive 10 120
+cipher AES-256-CBC
+comp-lzo
+verb 3
+'''
+
+CLIENT_CONFIGURATION = '''
+client
+remote {remote} 1194
+proto udp
+dev tun
+nobind
+remote-cert-tls server
+cipher AES-256-CBC
+comp-lzo
+redirect-gateway
+verb 3
+<ca>
+{ca}</ca>
+<cert>
+{cert}</cert>
+<key>
+{key}</key>'''
+
+CERTIFICATE_CONFIGURATION = {
+    'KEY_CONFIG': '/usr/share/easy-rsa/openssl-1.0.0.cnf',
+    'KEY_DIR': KEYS_DIRECTORY,
+    'OPENSSL': 'openssl',
+    'KEY_SIZE': '4096',
+    'CA_EXPIRE': '3650',
+    'KEY_EXPIRE': '3650',
+    'KEY_COUNTRY': 'US',
+    'KEY_PROVINCE': 'NY',
+    'KEY_CITY': 'New York',
+    'KEY_ORG': 'FreedomBox',
+    'KEY_EMAIL': 'me@freedombox',
+    'KEY_OU': 'Home',
+    'KEY_NAME': 'FreedomBox'
+}
+
+COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION,
+               'cwd': KEYS_DIRECTORY}
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('is-setup', help='Return whether setup is completed')
+    subparsers.add_parser('setup', help='Setup OpenVPN server configuration')
+
+    subparsers.add_parser('enable', help='Enable OpenVPN server')
+    subparsers.add_parser('disable', help='Disable OpenVPN server')
+
+    get_profile = subparsers.add_parser(
+        'get-profile', help='Return the OpenVPN profile of a user')
+    get_profile.add_argument('username', help='User to get profile for')
+    get_profile.add_argument('remote_server',
+                             help='The server name for the user to connect')
+
+    return parser.parse_args()
+
+
+def subcommand_is_setup(_):
+    """Return whether setup is complete."""
+    print('true' if os.path.isfile(DH_KEY) else 'false')
+
+
+def subcommand_setup(_):
+    """Setup configuration, CA and certificates."""
+    _create_server_config()
+    _create_certificates()
+    _setup_firewall()
+    action_utils.service_enable('openvpn@freedombox')
+    action_utils.service_restart('openvpn@freedombox')
+
+
+def _create_server_config():
+    """Write server configuration."""
+    if os.path.exists(SERVER_CONFIGURATION_PATH):
+        return
+
+    with open(SERVER_CONFIGURATION_PATH, 'w') as file_handle:
+        file_handle.write(SERVER_CONFIGURATION)
+
+
+def _setup_firewall():
+    """Add TUN device to internal zone in firewalld."""
+    subprocess.call(['firewall-cmd', '--zone', 'internal',
+                     '--add-interface', 'tun+'])
+    subprocess.call(['firewall-cmd', '--permanent', '--zone', 'internal',
+                     '--add-interface', 'tun+'])
+
+
+def _create_certificates():
+    """Generate CA and server certificates."""
+    try:
+        os.mkdir(KEYS_DIRECTORY, 0o700)
+    except FileExistsError:
+        pass
+
+    subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
+    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
+                          **COMMON_ARGS)
+    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server', 'server'],
+                          **COMMON_ARGS)
+    subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
+
+
+def subcommand_enable(_):
+    """Start OpenVPN service."""
+    action_utils.service_enable('openvpn@freedombox')
+
+
+def subcommand_disable(_):
+    """Stop OpenVPN service."""
+    action_utils.service_disable('openvpn@freedombox')
+
+
+def subcommand_get_profile(arguments):
+    """Return the profile for a user."""
+    username = arguments.username
+    remote_server = arguments.remote_server
+
+    if username == 'ca' or username == 'server':
+        raise Exception('Invalid username')
+
+    user_certificate = USER_CERTIFICATE_PATH.format(username=username)
+    user_key = USER_KEY_PATH.format(username=username)
+
+    if not os.path.isfile(user_certificate) or not os.path.isfile(user_key):
+        subprocess.check_call(['/usr/share/easy-rsa/pkitool', username],
+                              **COMMON_ARGS)
+
+    user_certificate_string = _read_file(user_certificate)
+    user_key_string = _read_file(user_key)
+    ca_string = _read_file(CA_CERTIFICATE_PATH)
+
+    profile = CLIENT_CONFIGURATION.format(
+        ca=ca_string, cert=user_certificate_string, key=user_key_string,
+        remote=remote_server)
+
+    print(profile)
+
+
+def _read_file(filename):
+    """Return the entire contens of a file as string."""
+    with open(filename, 'r') as file_handle:
+        return ''.join(file_handle.readlines())
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
