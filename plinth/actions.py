@@ -180,3 +180,5 @@ def _run(action, options=None, input=None, async=False, run_as_root=False):
             raise ActionError(action, output, error)
 
         return output
+    else:
+        return proc
