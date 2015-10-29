@@ -61,11 +61,11 @@ def diagnose():
         results.append(action_utils.diagnose_port_listening(ports['obfs3'],
                                                             'tcp4'))
 
-    results.append([_('Scramblesuit transport registered'),
-                    'passed' if 'scramblesuit' in ports else 'failed'])
-    if 'scramblesuit' in ports:
+    results.append([_('Obfs4 transport registered'),
+                    'passed' if 'obfs4' in ports else 'failed'])
+    if 'obfs4' in ports:
         results.append(action_utils.diagnose_port_listening(
-            ports['scramblesuit'], 'tcp4'))
+            ports['obfs4'], 'tcp4'))
 
     results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
     results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
