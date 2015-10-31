@@ -21,11 +21,11 @@ Helper functions for working with network manager.
 
 import collections
 from django.utils.translation import ugettext_lazy as _
-import gi
-gi.require_version('GLib', '2.0')
-from gi.repository import GLib as glib
-gi.require_version('NM', '1.0')
-from gi.repository import NM as nm
+import pgi
+pgi.require_version('GLib', '2.0')
+from pgi.repository import GLib as glib
+pgi.require_version('NM', '1.0')
+from pgi.repository import NM as nm
 import logging
 import socket
 import struct
