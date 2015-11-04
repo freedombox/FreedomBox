@@ -97,7 +97,7 @@ def profile(request):
 
 
 def get_status():
-    """Get the current settings from Transmission server."""
+    """Get the current settings from OpenVPN server."""
     status = {'is_setup': openvpn.is_setup(),
               'setup_running': False,
               'enabled': openvpn.is_enabled(),
