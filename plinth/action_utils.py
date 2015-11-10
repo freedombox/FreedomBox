@@ -91,7 +91,7 @@ def webserver_is_enabled(name, kind='config'):
         subprocess.check_output(['a2query', option_map[kind], name],
                                 stderr=subprocess.STDOUT)
         return True
-    except subprocess.CalledProcessError:
+    except (subprocess.CalledProcessError, FileNotFoundError):
         return False
 
 
