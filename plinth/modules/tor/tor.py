@@ -32,6 +32,8 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import package
 from plinth.errors import ActionError
+from plinth.modules.names import SERVICES
+from plinth.signals import domain_added, domain_removed
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -63,6 +65,25 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
                      'tor:index', 100)
+
+    # Register hidden service name with Name Services module.
+    enabled = action_utils.service_is_enabled('tor')
+    is_running = action_utils.service_is_running('tor')
+    (hs_enabled, hs_hostname, hs_ports) = get_hs()
+
+    if enabled and is_running and hs_enabled and hs_hostname:
+        hs_services = []
+        for service in SERVICES:
+            if str(service[2]) in hs_ports:
+                hs_services.append(service[0])
+    else:
+        hs_hostname = None
+        hs_services = None
+
+    domain_added.send_robust(
+        sender='tor', domain_type='hiddenservice',
+        name=hs_hostname, description=_('Tor Hidden Service'),
+        services=hs_services)
 
 
 def on_install():
@@ -167,18 +188,7 @@ def is_apt_transport_tor_enabled():
     return True
 
 
-def get_status():
-    """Return the current status"""
-    output = actions.superuser_run('tor', ['get-ports'])
-    port_info = output.split('\n')
-    ports = {}
-    for line in port_info:
-        try:
-            (key, val) = line.split()
-            ports[key] = val
-        except ValueError:
-            continue
-
+def get_hs():
     output = actions.superuser_run('tor', ['get-hs'])
     output = output.strip()
     if output == '':
@@ -194,6 +204,23 @@ def get_status():
         hs_info = output.split()
         hs_hostname = hs_info[0]
         hs_ports = hs_info[1]
+
+    return (hs_enabled, hs_hostname, hs_ports)
+
+
+def get_status():
+    """Return the current status"""
+    output = actions.superuser_run('tor', ['get-ports'])
+    port_info = output.split('\n')
+    ports = {}
+    for line in port_info:
+        try:
+            (key, val) = line.split()
+            ports[key] = val
+        except ValueError:
+            continue
+
+    (hs_enabled, hs_hostname, hs_ports) = get_hs()
 
     return {'enabled': action_utils.service_is_enabled('tor'),
             'is_running': action_utils.service_is_running('tor'),
@@ -237,6 +264,25 @@ def __apply_changes(request, old_status, new_status):
         else:
             actions.superuser_run('tor', ['disable-hs'])
             messages.success(request, _('Tor hidden service disabled'))
+
+    # Update hidden service name registered with Name Services module.
+    domain_removed.send_robust(
+        sender='tor', domain_type='hiddenservice')
+
+    enabled = action_utils.service_is_enabled('tor')
+    is_running = action_utils.service_is_running('tor')
+    (hs_enabled, hs_hostname, hs_ports) = get_hs()
+
+    if enabled and is_running and hs_enabled and hs_hostname:
+        hs_services = []
+        for service in SERVICES:
+            if str(service[2]) in hs_ports:
+                hs_services.append(service[0])
+
+        domain_added.send_robust(
+            sender='tor', domain_type='hiddenservice',
+            name=hs_hostname, description=_('Tor Hidden Service'),
+            services=hs_services)
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:

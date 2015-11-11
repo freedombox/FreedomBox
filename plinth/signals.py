@@ -28,3 +28,6 @@ post_module_loading = Signal()
 pre_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
 post_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
 domainname_change = Signal(providing_args=['old_domainname', 'new_domainname'])
+domain_added = Signal(providing_args=['domain_type', 'name', 'description',
+                                      'services'])
+domain_removed = Signal(providing_args=['domain_type', 'name'])
