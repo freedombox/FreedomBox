@@ -61,15 +61,19 @@ def get_status():
         domainname = _('Not Available')
         domainname_services = [False for service in SERVICES]
 
-    pagekite_config = pagekite.utils.get_pagekite_config()
-    pagekite_services = pagekite.utils.get_pagekite_services()[0]
-    if pagekite_config['enabled']:
-        pagekite_name = pagekite_config['kite_name']
-        pagekite_status = [pagekite_services[service[0]]
-                           for service in SERVICES]
+    pagekite_name = _('Not Available')
+    pagekite_status = [False for service in SERVICES]
+    try:
+        pagekite_config = pagekite.utils.get_pagekite_config()
+    except IndexError:
+        # no data from 'pagekite get-kite'
+        pass
     else:
-        pagekite_name = _('Not Available')
-        pagekite_status = [False for service in SERVICES]
+        pagekite_services = pagekite.utils.get_pagekite_services()[0]
+        if pagekite_config['enabled']:
+            pagekite_name = pagekite_config['kite_name']
+            pagekite_status = [pagekite_services[service[0]]
+                               for service in SERVICES]
 
     tor_status = tor.get_status()
     if (tor_status['enabled'] and tor_status['is_running'] and \
