@@ -19,7 +19,7 @@
 Framework for working with servers and their services.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 import collections
 
@@ -35,7 +35,6 @@ class Service(object):
     containing information such as current status and ports required
     for operation.
     """
-
     def __init__(self, service_id, name, ports=None, is_external=False,
                  enabled=True):
         if not ports:

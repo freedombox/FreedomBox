@@ -19,7 +19,7 @@
 Plinth module to configure reStore
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils, cfg
 from plinth import service as service_module
 

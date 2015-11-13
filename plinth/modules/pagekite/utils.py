@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import json
 import logging
 import os
@@ -49,9 +49,9 @@ PREDEFINED_SERVICES = {
                    'backend_port': '80',
                    'backend_host': BACKEND_HOST,
                    'secret': KITE_SECRET},
-        'label': _("Web Server (HTTP)"),
-        'help_text': _("Site will be available at "
-                       "<a href=\"http://{0}\">http://{0}</a>"),
+        'label': _('Web Server (HTTP)'),
+        'help_text': _('Site will be available at '
+                       '<a href=\"http://{0}\">http://{0}</a>'),
     },
     'https': {
         'params': {'protocol': 'https',
@@ -59,9 +59,9 @@ PREDEFINED_SERVICES = {
                    'backend_port': '443',
                    'backend_host': BACKEND_HOST,
                    'secret': KITE_SECRET},
-        'label': _("Web Server (HTTPS)"),
-        'help_text': _("Site will be available at "
-                       "<a href=\"https://{0}\">https://{0}</a>"),
+        'label': _('Web Server (HTTPS)'),
+        'help_text': _('Site will be available at '
+                       '<a href=\"https://{0}\">https://{0}</a>'),
     },
     'ssh': {
         'params': {'protocol': 'raw/22',
@@ -69,10 +69,10 @@ PREDEFINED_SERVICES = {
                    'backend_port': '22',
                    'backend_host': BACKEND_HOST,
                    'secret': KITE_SECRET},
-        'label': _("Secure Shell (SSH)"),
-        'help_text': _("See SSH client setup <a href=\""
-                       "https://pagekite.net/wiki/Howto/SshOverPageKite/\">"
-                       "instructions</a>")
+        'label': _('Secure Shell (SSH)'),
+        'help_text': _('See SSH client setup <a href="'
+                       'https://pagekite.net/wiki/Howto/SshOverPageKite/">'
+                       'instructions</a>')
     },
 }
 

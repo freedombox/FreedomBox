@@ -19,7 +19,7 @@
 Plinth module to interface with network-manager
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 from logging import Logger
 import subprocess
 

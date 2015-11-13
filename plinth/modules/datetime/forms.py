@@ -20,7 +20,7 @@ Forms for configuring date and time
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import glob
 import re
 

@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from gettext import gettext as _
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 

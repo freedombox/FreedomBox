@@ -23,7 +23,7 @@ import augeas
 from django import forms
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import glob
 import itertools
 

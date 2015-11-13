@@ -19,7 +19,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
-from gettext import gettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
@@ -38,16 +38,17 @@ class CreateUserForm(UserCreationForm):
 
     groups = forms.MultipleChoiceField(
         choices=GROUP_CHOICES,
-        label=_('Groups'),
+        label=ugettext_lazy('Groups'),
         required=False,
         widget=forms.CheckboxSelectMultiple,
-        help_text=_('Select which services should be available to the new '
-                    'user. The user will be able to log in to services that '
-                    'support single sign-on through LDAP, if they are in the '
-                    'appropriate group.<br /><br />'
-                    'Users in the admin group will be able to log in to all '
-                    'services. They can also log in to the system through SSH '
-                    'and have administrative privileges (sudo).'))
+        help_text=\
+        ugettext_lazy('Select which services should be available to the new '
+                      'user. The user will be able to log in to services that '
+                      'support single sign-on through LDAP, if they are in the '
+                      'appropriate group.<br /><br />Users in the admin group '
+                      'will be able to log in to all services. They can also '
+                      'log in to the system through SSH and have '
+                      'administrative privileges (sudo).'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -76,7 +77,8 @@ class CreateUserForm(UserCreationForm):
                 except ActionError:
                     messages.error(
                         self.request,
-                        _('Failed to add new user to %s group.') % group)
+                        _('Failed to add new user to {group} group.')
+                        .format(group=group))
 
                 group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)

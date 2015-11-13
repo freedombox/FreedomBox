@@ -19,7 +19,7 @@
 Plinth module to configure XMPP server
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import json
 
 from plinth import actions

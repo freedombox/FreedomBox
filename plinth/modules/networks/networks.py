@@ -19,8 +19,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
-from gettext import gettext as _
 from logging import Logger
 
 from .forms import (ConnectionTypeSelectForm, AddEthernetForm, AddPPPoEForm,
@@ -33,17 +33,18 @@ from plinth import package
 logger = Logger(__name__)
 
 subsubmenu = [{'url': reverse_lazy('networks:index'),
-               'text': _('Network Connections')},
+               'text': ugettext_lazy('Network Connections')},
               {'url': reverse_lazy('networks:scan'),
-               'text': _('Nearby Wi-Fi Networks')},
+               'text': ugettext_lazy('Nearby Wi-Fi Networks')},
               {'url': reverse_lazy('networks:add'),
-               'text': _('Add Connection')}]
+               'text': ugettext_lazy('Add Connection')}]
 
 
 def init():
     """Initialize the Networks module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Networks'), 'glyphicon-signal', 'networks:index', 18)
+    menu.add_urlname(ugettext_lazy('Networks'), 'glyphicon-signal',
+                     'networks:index', 18)
 
 
 @package.required(['network-manager'])
@@ -218,14 +219,16 @@ def activate(request, uuid):
     try:
         connection = network.activate_connection(uuid)
         name = connection.get_id()
-        messages.success(request, _('Activated connection %s.') % name)
+        messages.success(request, _('Activated connection {name}.')
+                         .format(name=name))
     except network.ConnectionNotFound:
         messages.error(request, _('Failed to activate connection: '
                                   'Connection not found.'))
     except network.DeviceNotFound as exception:
         name = exception.args[0].get_id()
-        messages.error(request, _('Failed to activate connection %s: '
-                                  'No suitable device is available.') % name)
+        messages.error(request, _('Failed to activate connection {name}: '
+                                  'No suitable device is available.')
+                       .format(name=name))
 
     return redirect(reverse_lazy('networks:index'))
 
@@ -236,7 +239,8 @@ def deactivate(request, uuid):
     try:
         active_connection = network.deactivate_connection(uuid)
         name = active_connection.get_id()
-        messages.success(request, _('Deactivated connection %s.') % name)
+        messages.success(request, _('Deactivated connection {name}.')
+                         .format(name=name))
     except network.ConnectionNotFound:
         messages.error(request, _('Failed to de-activate connection: '
                                   'Connection not found.'))
@@ -378,7 +382,8 @@ def delete(request, uuid):
     if request.method == 'POST':
         try:
             name = network.delete_connection(uuid)
-            messages.success(request, _('Connection %s deleted.') % name)
+            messages.success(request, _('Connection {name} deleted.')
+                             .format(name=name))
         except network.ConnectionNotFound:
             messages.error(request, _('Failed to delete connection: '
                                       'Connection not found.'))

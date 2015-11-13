@@ -21,7 +21,7 @@ Plinth module for configuring Privoxy Server.
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 import logging
 
 from .forms import PrivoxyForm

@@ -21,7 +21,7 @@ Forms for first boot module.
 
 from django.contrib import auth
 from django.contrib import messages
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.errors import ActionError

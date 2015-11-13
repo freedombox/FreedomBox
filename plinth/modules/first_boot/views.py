@@ -19,8 +19,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, TemplateView
-from gettext import gettext as _
 
 from plinth import kvstore
 from plinth import network

@@ -19,7 +19,7 @@
 Python action utility functions.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 import psutil
 import socket
 import subprocess

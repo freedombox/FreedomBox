@@ -20,7 +20,7 @@ Forms for configuring Privoxy.
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class PrivoxyForm(forms.Form):

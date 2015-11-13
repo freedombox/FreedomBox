@@ -20,6 +20,7 @@ Helper functions for working with network manager.
 """
 
 import collections
+from django.utils.translation import ugettext_lazy as _
 import gi
 gi.require_version('GLib', '2.0')
 from gi.repository import GLib as glib
@@ -35,9 +36,9 @@ import uuid
 logger = logging.getLogger(__name__)
 
 CONNECTION_TYPE_NAMES = collections.OrderedDict([
-    ('802-3-ethernet', 'Ethernet'),
-    ('802-11-wireless', 'Wi-Fi'),
-    ('pppoe', 'PPPoE')
+    ('802-3-ethernet', _('Ethernet')),
+    ('802-11-wireless', _('Wi-Fi')),
+    ('pppoe', _('PPPoE'))
 ])
 
 

@@ -16,14 +16,14 @@
 #
 
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 
 
 def init():
     """Initailize the apps module"""
-    cfg.main_menu.add_urlname("Apps", "glyphicon-download-alt", "apps:index",
+    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt', 'apps:index',
                               80)
 
 

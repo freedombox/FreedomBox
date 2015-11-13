@@ -19,7 +19,7 @@
 Plinth module to configure Roundcube.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils

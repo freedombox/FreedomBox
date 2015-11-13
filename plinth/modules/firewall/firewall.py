@@ -20,7 +20,7 @@ Plinth module to configure a firewall
 """
 
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import logging
 
 from plinth import actions

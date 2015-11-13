@@ -20,8 +20,8 @@ Framework for installing and updating distribution packages
 """
 
 from django.contrib import messages
+from django.utils.translation import ugettext as _
 import functools
-from gettext import gettext as _
 import gi
 gi.require_version('GLib', '2.0')
 from gi.repository import GLib as glib

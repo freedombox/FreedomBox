@@ -19,7 +19,7 @@
 Plinth module to configure Privoxy.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import json
 
 from plinth import actions

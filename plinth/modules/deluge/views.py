@@ -21,7 +21,7 @@ Plinth module to configure a Deluge web client.
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 
 from .forms import DelugeForm
 from plinth import actions

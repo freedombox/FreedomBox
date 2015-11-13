@@ -20,7 +20,7 @@ Forms for configuring ikiwiki
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class IkiwikiForm(forms.Form):

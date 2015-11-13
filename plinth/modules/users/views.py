@@ -23,7 +23,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
 from django.views.generic import ListView
-from gettext import gettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm
 from plinth import actions
@@ -31,9 +31,9 @@ from plinth.errors import ActionError
 
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
-               'text': _('Users')},
+               'text': ugettext_lazy('Users')},
               {'url': reverse_lazy('users:create'),
-               'text': _('Create User')}]
+               'text': ugettext_lazy('Create User')}]
 
 
 class ContextMixin(object):
@@ -51,9 +51,9 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
     form_class = CreateUserForm
     template_name = 'users_create.html'
     model = User
-    success_message = _('User %(username)s created.')
+    success_message = ugettext_lazy('User %(username)s created.')
     success_url = reverse_lazy('users:create')
-    title = _('Create User')
+    title = ugettext_lazy('Create User')
 
     def get_form_kwargs(self):
         """Make the request object available to the form."""
@@ -66,7 +66,7 @@ class UserList(ContextMixin, ListView):
     """View to list users."""
     model = User
     template_name = 'users_list.html'
-    title = _('Users')
+    title = ugettext_lazy('Users')
 
 
 class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
@@ -75,8 +75,8 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     slug_field = 'username'
-    success_message = _('User %(username)s updated.')
-    title = _('Edit User')
+    success_message = ugettext_lazy('User %(username)s updated.')
+    title = ugettext_lazy('Edit User')
 
     def get_form_kwargs(self):
         """Make the requst object available to the form."""
@@ -100,7 +100,7 @@ class UserDelete(ContextMixin, DeleteView):
     model = User
     slug_field = 'username'
     success_url = reverse_lazy('users:index')
-    title = _('Delete User')
+    title = ugettext_lazy('Delete User')
 
     def delete(self, *args, **kwargs):
         """Set the success message of deleting the user.
@@ -110,7 +110,7 @@ class UserDelete(ContextMixin, DeleteView):
         """
         output = super(UserDelete, self).delete(*args, **kwargs)
 
-        message = _('User %s deleted.') % self.kwargs['slug']
+        message = _('User {user} deleted.').format(user=self.kwargs['slug'])
         messages.success(self.request, message)
 
         try:
@@ -126,8 +126,8 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     """View to change user password."""
     template_name = 'users_change_password.html'
     form_class = UserChangePasswordForm
-    title = _('Change Password')
-    success_message = _('Password changed successfully.')
+    title = ugettext_lazy('Change Password')
+    success_message = ugettext_lazy('Password changed successfully.')
 
     def get_form_kwargs(self):
         """Make the user object available to the form."""

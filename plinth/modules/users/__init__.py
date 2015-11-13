@@ -19,7 +19,7 @@
 Plinth module to manage users
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import json
 import subprocess
 

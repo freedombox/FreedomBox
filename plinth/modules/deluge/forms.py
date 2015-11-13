@@ -20,7 +20,7 @@ Forms for configuring Deluge web client.
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class DelugeForm(forms.Form):

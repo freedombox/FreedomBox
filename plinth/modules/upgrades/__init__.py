@@ -19,7 +19,7 @@
 Plinth module for upgrades
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 

@@ -19,7 +19,7 @@
 Plinth module to configure Tor
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 
 from . import tor
 from .tor import init

@@ -23,8 +23,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
-from gettext import gettext as _
 import logging
 
 from .forms import OpenVpnForm

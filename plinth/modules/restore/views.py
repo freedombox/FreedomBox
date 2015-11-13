@@ -17,7 +17,7 @@
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 
 from .forms import ReStoreForm
 from plinth import actions, package

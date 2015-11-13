@@ -23,7 +23,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 from .forms import IkiwikiForm, IkiwikiCreateForm
 from plinth import actions
@@ -33,11 +33,11 @@ from plinth.modules import ikiwiki
 
 
 subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
-               'text': _('Configure')},
+               'text': ugettext_lazy('Configure')},
               {'url': reverse_lazy('ikiwiki:manage'),
-               'text': _('Manage')},
+               'text': ugettext_lazy('Manage')},
               {'url': reverse_lazy('ikiwiki:create'),
-               'text': _('Create')}]
+               'text': ugettext_lazy('Create')}]
 
 
 def on_install():
@@ -142,9 +142,10 @@ def _create_wiki(request, name, admin_name, admin_password):
             ['create-wiki', '--wiki_name', name,
              '--admin_name', admin_name],
             input=admin_password.encode())
-        messages.success(request, _('Created wiki %s.') % name)
-    except actions.ActionError as err:
-        messages.error(request, _('Could not create wiki: %s') % err)
+        messages.success(request, _('Created wiki {name}.').format(name=name))
+    except actions.ActionError as error:
+        messages.error(request, _('Could not create wiki: {error}')
+                       .format(error=error))
 
 
 def _create_blog(request, name, admin_name, admin_password):
@@ -155,9 +156,10 @@ def _create_blog(request, name, admin_name, admin_password):
             ['create-blog', '--blog_name', name,
              '--admin_name', admin_name],
             input=admin_password.encode())
-        messages.success(request, _('Created blog %s.') % name)
-    except actions.ActionError as err:
-        messages.error(request, _('Could not create blog: %s') % err)
+        messages.success(request, _('Created blog {name}.').format(name=name))
+    except actions.ActionError as error:
+        messages.error(request, _('Could not create blog: {error}')
+                       .format(error=error))
 
 
 def delete(request, name):
@@ -169,9 +171,10 @@ def delete(request, name):
     if request.method == 'POST':
         try:
             actions.superuser_run('ikiwiki', ['delete', '--name', name])
-            messages.success(request, _('%s deleted.') % name)
-        except actions.ActionError as err:
-            messages.error(request, _('Could not delete %s: %s') % (name, err))
+            messages.success(request, _('{name} deleted.').format(name=name))
+        except actions.ActionError as error:
+            messages.error(request, _('Could not delete {name}: {error}')
+                           .format(name=name, error=error))
 
         return redirect(reverse_lazy('ikiwiki:manage'))
 

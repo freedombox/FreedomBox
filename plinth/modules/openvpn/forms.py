@@ -20,7 +20,7 @@ Plinth module for configuring OpenVPN.
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class OpenVpnForm(forms.Form):  # pylint: disable=W0232

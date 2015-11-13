@@ -23,7 +23,7 @@ import collections
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import importlib
 import logging
 import threading
@@ -42,8 +42,8 @@ _running_task = None
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname("Diagnostics", "glyphicon-screenshot",
-                     "diagnostics:index", 30)
+    menu.add_urlname(_('Diagnostics'), 'glyphicon-screenshot',
+                     'diagnostics:index', 30)
 
 
 def index(request):

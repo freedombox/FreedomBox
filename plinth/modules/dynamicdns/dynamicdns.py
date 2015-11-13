@@ -19,44 +19,43 @@ from django import forms
 from django.contrib import messages
 from django.core import validators
 from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext as _, ugettext_lazy
 from django.template.response import TemplateResponse
-from gettext import gettext as _
 import logging
 
 from plinth import actions
 from plinth import cfg
 from plinth import package
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 EMPTYSTRING = 'none'
 
 subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
-               'text': _('About')},
+               'text': ugettext_lazy('About')},
               {'url': reverse_lazy('dynamicdns:configure'),
-               'text': _('Configure')},
+               'text': ugettext_lazy('Configure')},
               {'url': reverse_lazy('dynamicdns:statuspage'),
-               'text': _('Status')}
-              ]
+               'text': ugettext_lazy('Status')}]
 
 
 def init():
     """Initialize the dynamicdns module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('Dynamic DNS', 'glyphicon-refresh',
+    menu.add_urlname(ugettext_lazy('Dynamic DNS'), 'glyphicon-refresh',
                      'dynamicdns:index', 500)
 
 
 @package.required(['ez-ipupdate'])
 def index(request):
-    """Serve dynamic DNS  page"""
+    """Serve Dynamic DNS page."""
 
     return TemplateResponse(request, 'dynamicdns.html',
-                            {'title': _('dynamicdns'),
+                            {'title': _('Dynamic DNS'),
                              'subsubmenu': subsubmenu})
 
 
 class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
+    """Trim the contents of a CharField."""
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
@@ -66,104 +65,99 @@ class TrimmedCharField(forms.CharField):
 
 
 class ConfigureForm(forms.Form):
-    """Form to configure the dynamic DNS client"""
-
-    hlp_updt_url = 'The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, \
-                    &lt;Domain&gt; may be used within the URL. For details\
-                    see the update URL templates of the example providers.'
-
-    hlp_services = 'Please choose an update protocol according to your \
-                    provider. If your provider does not support the GnudIP \
-                    protocol or your provider is not listed you may use \
-                    the update URL of your provider.'
-
-    hlp_server = 'Please do not enter a URL here (like "https://example.com/")\
-                  but only the hostname of the GnuDIP server (like \
-                  "example.com").'
-
-    hlp_domain = 'The public domain name you want use to reach your box.'
-
-    hlp_disable_ssl = 'Use this option if your provider uses self signed \
-                       certificates.'
-
-    hlp_http_auth = 'If this option is selected, your username and \
-                     password will be used for HTTP basic authentication.'
-
-    hlp_secret = 'Leave this field empty \
-                  if you want to keep your previous configured password.'
-
-    hlp_ipurl = 'Optional Value. If your FreedomBox is not connected \
-                 directly to the Internet (i.e. connected to a NAT \
-                 router) this URL is used to figure out the real Internet \
-                 IP. The URL should simply return the IP where the \
-                 client comes from. Example: \
-                 http://myip.datasystems24.de'
-
-    hlp_user = 'You should have been requested to select a username \
-                when you created the account.'
+    """Form to configure the Dynamic DNS client."""
+    help_update_url = \
+        ugettext_lazy('The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, '
+                      '&lt;Domain&gt; may be used within the URL. For details '
+                      'see the update URL templates of the example providers.')
+    help_services = \
+        ugettext_lazy('Please choose an update protocol according to your '
+                      'provider. If your provider does not support the GnudIP '
+                      'protocol or your provider is not listed you may use the '
+                      'update URL of your provider.')
+    help_server = \
+        ugettext_lazy('Please do not enter a URL here (like '
+                      '"https://example.com/") but only the hostname of the '
+                      'GnuDIP server (like "example.pcom").')
+    help_domain = \
+        ugettext_lazy('The public domain name you want use to reach your box.')
+    help_disable_ssl = \
+        ugettext_lazy('Use this option if your provider uses self signed '
+                      'certificates.')
+    help_http_auth = \
+        ugettext_lazy('If this option is selected, your username and password '
+                      'will be used for HTTP basic authentication.')
+    help_secret = \
+        ugettext_lazy('Leave this field empty if you want to keep your '
+                      'previous configured password.')
+    help_ip_url = \
+        ugettext_lazy('Optional Value. If your FreedomBox is not connected '
+                      'directly to the Internet (i.e. connected to a NAT '
+                      'router) this URL is used to figure out the real '
+                      'Internet IP. The URL should simply return the IP where'
+                      'the client comes from. Example: '
+                      'http://myip.datasystems24.de')
+    help_user = \
+        ugettext_lazy('You should have been requested to select a username '
+                      'when you created the account.')
 
     """ToDo: sync this list with the html template file"""
     provider_choices = (
-                       ('GnuDIP', 'GnuDIP'),
-                       ('noip', 'noip.com'),
-                       ('selfhost', 'selfhost.bz'),
-                       ('freedns', 'freedns.afraid.org'),
-                       ('other', 'other update URL'))
+        ('GnuDIP', 'GnuDIP'),
+        ('noip', 'noip.com'),
+        ('selfhost', 'selfhost.bz'),
+        ('freedns', 'freedns.afraid.org'),
+        ('other', 'other update URL'))
 
-    enabled = forms.BooleanField(label=_('Enable Dynamic DNS'),
+    enabled = forms.BooleanField(label=ugettext_lazy('Enable Dynamic DNS'),
                                  required=False)
 
-    service_type = forms.ChoiceField(label=_('Service type'),
-                                     help_text=_(hlp_services),
+    service_type = forms.ChoiceField(label=ugettext_lazy('Service type'),
+                                     help_text=help_services,
                                      choices=provider_choices)
 
     dynamicdns_server = TrimmedCharField(
-        label=_('GnudIP Server Address'),
+        label=ugettext_lazy('GnudIP Server Address'),
         required=False,
-        help_text=_(hlp_server),
+        help_text=help_server,
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
-                                      _('Invalid server name'))])
+                                      ugettext_lazy('Invalid server name'))])
 
-    dynamicdns_update_url = TrimmedCharField(label=_('Update URL'),
-                                             required=False,
-                                             help_text=_(hlp_updt_url))
+    dynamicdns_update_url = TrimmedCharField(
+        label=ugettext_lazy('Update URL'), required=False,
+        help_text=help_update_url)
 
-    disable_SSL_cert_check = forms.BooleanField(label=_('accept all SSL \
-                                                        certificates'),
-                                                help_text=_(hlp_disable_ssl),
-                                                required=False)
+    disable_SSL_cert_check = forms.BooleanField(
+        label=ugettext_lazy('accept all SSL certificates'),
+        help_text=help_disable_ssl, required=False)
 
-    use_http_basic_auth = forms.BooleanField(label=_('use HTTP basic \
-                                                      authentication'),
-                                             help_text=_(hlp_http_auth),
-                                             required=False)
+    use_http_basic_auth = forms.BooleanField(
+        label=ugettext_lazy('use HTTP basic authentication'),
+        help_text=help_http_auth, required=False)
 
     dynamicdns_domain = TrimmedCharField(
-        label=_('Domain Name'),
-        help_text=_(hlp_domain),
+        label=ugettext_lazy('Domain Name'),
+        help_text=help_domain,
         required=False,
         validators=[
             validators.RegexValidator(r'^[\w-]{1,63}(\.[\w-]{1,63})*$',
-                                      _('Invalid domain name'))])
+                                      ugettext_lazy('Invalid domain name'))])
 
     dynamicdns_user = TrimmedCharField(
-        label=_('Username'),
-        required=False,
-        help_text=_(hlp_user))
+        label=ugettext_lazy('Username'), required=False, help_text=help_user)
 
     dynamicdns_secret = TrimmedCharField(
-        label=_('Password'), widget=forms.PasswordInput(),
-        required=False,
-        help_text=_(hlp_secret))
+        label=ugettext_lazy('Password'), widget=forms.PasswordInput(),
+        required=False, help_text=help_secret)
 
-    showpw = forms.BooleanField(label=_('show password'),
+    showpw = forms.BooleanField(label=ugettext_lazy('show password'),
                                 required=False)
 
     dynamicdns_ipurl = TrimmedCharField(
-        label=_('IP check URL'),
+        label=ugettext_lazy('IP check URL'),
         required=False,
-        help_text=_(hlp_ipurl),
+        help_text=help_ip_url,
         validators=[
             validators.URLValidator(schemes=['http', 'https', 'ftp'])])
 
@@ -177,35 +171,33 @@ class ConfigureForm(forms.Form):
         service_type = cleaned_data.get('service_type')
         old_dynamicdns_secret = self.initial['dynamicdns_secret']
 
-        """clear the fields which are not in use"""
+        # Clear the fields which are not in use
         if service_type == 'GnuDIP':
-            dynamicdns_update_url = ""
+            dynamicdns_update_url = ''
         else:
-            dynamicdns_server = ""
+            dynamicdns_server = ''
 
         if cleaned_data.get('enabled'):
-            """check if gnudip server or update URL is filled"""
+            # Check if gnudip server or update URL is filled
             if not dynamicdns_update_url and not dynamicdns_server:
-                raise forms.ValidationError('please give update URL or \
-                                             a GnuDIP Server')
-                LOGGER.info('no server address given')
+                raise forms.ValidationError(
+                    _('Please provide update URL or a GnuDIP Server'))
 
             if dynamicdns_server and not dynamicdns_user:
-                raise forms.ValidationError('please give GnuDIP username')
+                raise forms.ValidationError(_('Please provide GnuDIP username'))
 
             if dynamicdns_server and not dynamicdns_domain:
-                raise forms.ValidationError('please give GnuDIP domain')
+                raise forms.ValidationError(_('Please provide GnuDIP domain'))
 
-            """check if a password was set before or a password is set now"""
-            if (dynamicdns_server and not dynamicdns_secret
-               and not old_dynamicdns_secret):
-                raise forms.ValidationError('please give a password')
-                LOGGER.info('no password given')
+            # Check if a password was set before or a password is set now
+            if dynamicdns_server and \
+               not dynamicdns_secret and not old_dynamicdns_secret:
+                raise forms.ValidationError(_('Please provide a password'))
 
 
 @package.required(['ez-ipupdate'])
 def configure(request):
-    """Serve the configuration form"""
+    """Serve the configuration form."""
     status = get_status()
     form = None
 
@@ -219,14 +211,14 @@ def configure(request):
         form = ConfigureForm(initial=status)
 
     return TemplateResponse(request, 'dynamicdns_configure.html',
-                            {'title': _('Configure dynamicdns Client'),
+                            {'title': _('Configure Dynamic DNS'),
                              'form': form,
                              'subsubmenu': subsubmenu})
 
 
 @package.required(['ez-ipupdate'])
 def statuspage(request):
-    """Serve the status page """
+    """Serve the status page."""
     check_nat = actions.run('dynamicdns', ['get-nat'])
     last_update = actions.run('dynamicdns', ['get-last-success'])
 
@@ -235,13 +227,13 @@ def statuspage(request):
     timer = actions.run('dynamicdns', ['get-timer'])
 
     if no_nat:
-        LOGGER.info('we are not behind a NAT')
+        logger.info('Not behind a NAT')
 
     if nat_unchecked:
-        LOGGER.info('we did not checked if we are behind a NAT')
+        logger.info('Did not check if we are behind a NAT')
 
     return TemplateResponse(request, 'dynamicdns_status.html',
-                            {'title': _('Status of dynamicdns Client'),
+                            {'title': _('Status of Dynamic DNS'),
                              'no_nat': no_nat,
                              'nat_unchecked': nat_unchecked,
                              'timer': timer,
@@ -250,8 +242,8 @@ def statuspage(request):
 
 
 def get_status():
-    """Return the current status"""
-    """ToDo: use key/value instead of hard coded value list"""
+    """Return the current status."""
+    # TODO: use key/value instead of hard coded value list
     status = {}
     output = actions.run('dynamicdns', ['status'])
     details = output.split()
@@ -269,7 +261,6 @@ def get_status():
         if details[2] == 'disabled':
             status['dynamicdns_domain'] = ''
         else:
-            status['dynamicdns_domain'] = details[2]
             status['dynamicdns_domain'] = details[2].replace("'", "")
     else:
         status['dynamicdns_domain'] = ''
@@ -327,9 +318,9 @@ def get_status():
 
 
 def _apply_changes(request, old_status, new_status):
-    """Apply the changes to Dynamic DNS client"""
-    LOGGER.info('New status is - %s', new_status)
-    LOGGER.info('Old status was - %s', old_status)
+    """Apply the changes to Dynamic DNS client."""
+    logger.info('New status is - %s', new_status)
+    logger.info('Old status was - %s', old_status)
 
     if new_status['dynamicdns_secret'] == '':
         new_status['dynamicdns_secret'] = old_status['dynamicdns_secret']
@@ -370,17 +361,17 @@ def _apply_changes(request, old_status, new_status):
 
         if old_status['enabled']:
             _run(['stop'])
+
         if new_status['enabled']:
             _run(['start'])
 
-        messages.success(request,
-                         _('Dynamic DNS configuration is updated!'))
+        messages.success(request, _('Configuration updated'))
     else:
-        LOGGER.info('nothing changed')
+        logger.info('Nothing changed')
 
 
 def _run(arguments, superuser=False, input=None):
-    """Run a given command and raise exception if there was an error"""
+    """Run a given command and raise exception if there was an error."""
     command = 'dynamicdns'
 
     if superuser:

@@ -20,7 +20,7 @@ Forms for configuring XMPP service.
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class XmppForm(forms.Form):  # pylint: disable=W0232

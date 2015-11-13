@@ -23,6 +23,7 @@ import os
 from gettext import gettext as _
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext as _, ugettext_lazy
 from stronghold.decorators import public
 
 from plinth import cfg, __version__
@@ -30,13 +31,14 @@ from plinth import cfg, __version__
 
 def init():
     """Initialize the Help module"""
-    menu = cfg.main_menu.add_urlname(_('Documentation'), 'glyphicon-book',
-                                     'help:index', 101)
-    menu.add_urlname(_('Where to Get Help'), 'glyphicon-search',
+    menu = cfg.main_menu.add_urlname(ugettext_lazy('Documentation'),
+                                     'glyphicon-book', 'help:index', 101)
+    menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
                      'help:index_explicit', 5)
-    menu.add_urlname(_('FreedomBox Manual'), 'glyphicon-info-sign',
+    menu.add_urlname(ugettext_lazy('FreedomBox Manual'), 'glyphicon-info-sign',
                      'help:manual', 10)
-    menu.add_urlname(_('About'), 'glyphicon-star', 'help:about', 100)
+    menu.add_urlname(ugettext_lazy('About'), 'glyphicon-star', 'help:about',
+                     100)
 
 
 @public
@@ -50,7 +52,7 @@ def index(request):
 def about(request):
     """Serve the about page"""
     context = {
-        'title': _('About the {box_name}').format(box_name=cfg.box_name),
+        'title': _('About {box_name}').format(box_name=cfg.box_name),
         'version': __version__
     }
     return TemplateResponse(request, 'help_about.html', context)

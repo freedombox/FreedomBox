@@ -19,7 +19,7 @@
 Plinth module for service discovery.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 import subprocess
 
 from plinth import actions

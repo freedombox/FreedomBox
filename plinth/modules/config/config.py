@@ -23,7 +23,7 @@ from django import forms
 from django.contrib import messages
 from django.core import validators
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 import logging
 import socket
 
@@ -61,29 +61,33 @@ class ConfigurationForm(forms.Form):
     """Main system configuration form"""
     # We're more conservative than RFC 952 and RFC 1123
     hostname = TrimmedCharField(
-        label=_('Hostname'),
-        help_text=_('Your hostname is the local name by which other machines \
-on your LAN can reach you. It must be alphanumeric, start with an alphabet \
-and must not be greater than 63 characters in length.'),
+        label=ugettext_lazy('Hostname'),
+        help_text=\
+        ugettext_lazy('Your hostname is the local name by which other machines '
+                      'on your LAN can reach you. It must be alphanumeric, '
+                      'start with an alphabet and must not be greater than 63 '
+                      'characters in length.'),
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
-                                      _('Invalid hostname'))])
+                                      ugettext_lazy('Invalid hostname'))])
 
     domainname = TrimmedCharField(
-        label=_('Domain Name'),
-        help_text=_('Your domain name is the global name by which other \
-machines on the Internet can reach you. It must consist of alphanumeric words \
-separated by dots.'),
+        label=ugettext_lazy('Domain Name'),
+        help_text=\
+        ugettext_lazy('Your domain name is the global name by which other '
+                      'machines on the Internet can reach you. It must consist '
+                      'of alphanumeric words separated by dots.'),
         required=False,
         validators=[
             validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
-                                      _('Invalid domain name'))])
+                                      ugettext_lazy('Invalid domain name'))])
 
 
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Configure'), 'glyphicon-cog', 'config:index', 10)
+    menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
+                     'config:index', 10)
 
 
 def index(request):
@@ -121,8 +125,8 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_hostname(new_status['hostname'])
         except Exception as exception:
-            messages.error(request, _('Error setting hostname: %s') %
-                           exception)
+            messages.error(request, _('Error setting hostname: {exception}')
+                           .format(exception=exception))
         else:
             messages.success(request, _('Hostname set'))
     else:
@@ -132,8 +136,8 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_domainname(new_status['domainname'])
         except Exception as exception:
-            messages.error(request, _('Error setting domain name: %s') %
-                           exception)
+            messages.error(request, _('Error setting domain name: {exception}')
+                           .format(exception=exception))
         else:
             messages.success(request, _('Domain name set'))
     else:

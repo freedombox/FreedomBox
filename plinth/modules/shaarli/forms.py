@@ -20,7 +20,7 @@ Forms for configuring Shaarli.
 """
 
 from django import forms
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class ShaarliForm(forms.Form):

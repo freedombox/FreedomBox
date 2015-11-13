@@ -22,8 +22,8 @@ Plinth module for upgrades
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
-from gettext import gettext as _
 
 from .forms import ConfigureForm
 from plinth import actions
@@ -31,9 +31,9 @@ from plinth import package
 from plinth.errors import ActionError
 
 subsubmenu = [{'url': reverse_lazy('upgrades:index'),
-               'text': _('Automatic Upgrades')},
+               'text': ugettext_lazy('Automatic Upgrades')},
               {'url': reverse_lazy('upgrades:upgrade'),
-               'text': _('Upgrade Packages')}]
+               'text': ugettext_lazy('Upgrade Packages')}]
 
 
 def on_install():
@@ -114,8 +114,8 @@ def _apply_changes(request, old_status, new_status):
     except ActionError as exception:
         error = exception.args[2]
         messages.error(
-            request, _('Error when configuring unattended-upgrades: %s') %
-            error)
+            request, _('Error when configuring unattended-upgrades: {error}')
+            .format(error=error))
         return
 
     if option == 'enable-auto':
