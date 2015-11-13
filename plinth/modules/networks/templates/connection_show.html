@@ -18,6 +18,10 @@
 #
 # ToDo: if connection is disabled, no information are visible anymore (Bug)
 {% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
 {% block page_head %}
   <style type="text/css">
     .list-group-item .btn {
@@ -28,123 +32,131 @@
     }
   </style>
 {% endblock %}
-{% load bootstrap %}
 
 {% block content %}
+
   <div class="row">
     <div class="col-sm-8">
       <div>
         <a href="{% url 'networks:edit' connection.uuid %}"
            class="btn btn-primary" role="button"
-           title="Edit connection">Edit</a>
+           title="{% trans "Edit connection" %}">{% trans "Edit" %}</a>
 
         {% if active_connection %}
           <form class="form form-inline" method="post"
                 action="{% url 'networks:deactivate' connection.uuid %}">
             {% csrf_token %}
-            <button class="btn btn-default" type="submit">Deactivate</button>
+            <button class="btn btn-default" type="submit">
+              {% trans "Deactivate" %}</button>
           </form>
         {% else %}
           <form class="form form-inline" method="post"
                 action="{% url 'networks:activate' connection.uuid %}">
             {% csrf_token %}
-            <button class="btn btn-default" type="submit">Activate</button>
+            <button class="btn btn-default" type="submit">
+              {% trans "Activate" %}</button>
           </form>
         {% endif %}
 
         <a href="{% url 'networks:delete' connection.uuid %}"
            class="btn btn-default" role="button"
-           title="Delete connection">Delete</a>
+           title="{% trans "Delete connection" %}">{% trans "Delete" %}</a>
       </div>
 
-      <h3>Connection</h3>
+      <h3>{% trans "Connection" %}</h3>
 
       <div class="list-group">
         {% if connection.primary %}
           <div class="list-group-item">
-            Primary connection
+            {% trans "Primary connection" %}
             <div class="pull-right">
-              <span class="label label-success">yes</span>
+              <span class="label label-success">{% trans "yes" %}</span>
             </div>
           </div>
         {% endif %}
         <div class="list-group-item">
-          Name
+          {% trans "Name" %}
           <div class="pull-right">{{ connection.id }}</div>
         </div>
       </div>
 
       {% if device %}
-        <h3>Device</h3>
+        <h3>{% trans "Device" %}</h3>
 
         <div class="list-group">
           <div class="list-group-item">
-            State
+            {% trans "State" %}
             <span class="pull-right">{{ device.state }}</span>
           </div>
           {% if device.state_reason != 'none' %}
             <div class="list-group-item">
-              State reason
+              {% trans "State reason" %}
               <span class="pull-right">{{ device.state_reason }}</span>
             </div>
           {% endif %}
           <div class="list-group-item">
-            Type
+            {% trans "Type" %}
             <span class="pull-right">{{ device.type }}</span>
           </div>
           <div class="list-group-item">
-            MAC address
+            {% trans "MAC address" %}
             <span class="pull-right">{{ device.hw_address }}</span>
           </div>
           <div class="list-group-item">
-            Interface
+            {% trans "Interface" %}
             <span class="pull-right">{{ device.interface_name }}</span>
           </div>
           <div class="list-group-item">
-            Description
+            {% trans "Description" %}
             <span class="pull-right">{{ device.description }}</span>
           </div>
         </div>
       {% endif %}
 
-      <h3>Physical Link</h3>
+      <h3>{% trans "Physical Link" %}</h3>
 
       <div class="list-group">
         {% if device.ethernet %}
           <div class="list-group-item">
-            Link state
+            {% trans "Link state" %}
             <div class="pull-right">
               {% if device.ethernet.carrier %}
-                <span class='label label-success'>cable is connected</span>
+                <span class='label label-success'>
+                  {% trans "cable is connected" %}</span>
               {% else %}
-                <span class='label label-warning'>please check cable</span>
+                <span class='label label-warning'>
+                  {% trans "please check cable" %}</span>
               {% endif %}
             </div>
           </div>
           <div class="list-group-item">
-            Speed
-            <span class="pull-right">{{ device.ethernet.speed }} Mbit/s</span>
+            {% trans "Speed" %}
+            <span class="pull-right">
+              {% blocktrans %}{{ device.ethernet.speed }} Mbit/s{% endblocktrans %}
+            </span>
           </div>
         {% endif %}
 
         {% if connection.type == "802-11-wireless" %}
           <div class="list-group-item">
-            SSID
+            {% trans "SSID" %}
             <span class="pull-right">{{ connection.wireless.ssid }}</span>
           </div>
           {% if device %}
             <div class="list-group-item">
-              Speed
-              <span class="pull-right">{{ device.wireless.bitrate }} Mbit/s</span>
+              {% trans "Speed" %}
+              <span class="pull-right">
+                {% blocktrans %}{{ device.wireless.bitrate }} Mbit/s{% endblocktrans %}
+              </span>
             </div>
             <div class="list-group-item">
-              Mode
+              {% trans "Mode" %}
               <span class="pull-right">{{ device.wireless.mode }}</span>
             </div>
           {% endif %}
           {% if access_point.channel %}
             <div class="list-group-item">
-              Signal strength
+              {% trans "Signal strength" %}
               <div class="pull-right">
                 <span class="btn btn-primary btn-xs">
                   {{ access_point.strength }}%
@@ -154,7 +166,7 @@
           {% endif %}
           {% if access_point.channel %}
             <div class="list-group-item">
-              Channel
+              {% trans "Channel" %}
               <span class="pull-right">{{ access_point.channel }}</span>
             </div>
           {% endif %}
@@ -162,19 +174,19 @@
       </div>
 
       {% if active_connection %}
-        <h3>IPv4</h3>
+        <h3>{% trans "IPv4" %}</h3>
 
         <div class="list-group">
           {% if connection.ipv4.method %}
             <div class="list-group-item">
-              Method
+              {% trans "Method" %}
               <span class="pull-right">{{ connection.ipv4.method }}</span>
             </div>
           {% endif %}
 
           {% for address in device.ip4.addresses %}
             <div class="list-group-item">
-              IP address
+              {% trans "IP address" %}
               <span class="pull-right">
                 {{ address.address }}/{{ address.prefix }}
               </span>
@@ -183,76 +195,76 @@
 
           {% if device.ip4.gateway %}
             <div class="list-group-item">
-              Gateway
+              {% trans "Gateway" %}
               <span class="pull-right">{{ device.ip4.gateway }}</span>
             </div>
           {% endif %}
 
           {% for server in device.ip4.nameservers %}
             <div class="list-group-item">
-              DNS server
+              {% trans "DNS server" %}
               <span class="pull-right">{{ server }}</span>
             </div>
           {% endfor %}
 
           {% if active_connection.ip4.default %}
             <div class="list-group-item">
-              Default
-              <span class="pull-right">yes</span>
+              {% trans "Default" %}
+              <span class="pull-right">{% trans "yes" %}</span>
             </div>
           {% endif %}
         </div>
 
-        <h3>IPv6</h3>
+        <h3>{% trans "IPv6" %}</h3>
 
         <div class="list-group">
           {% if connection.ipv6.method %}
             <div class="list-group-item">
-              Method
+              {% trans "Method" %}
               <span class="pull-right">{{ connection.ipv6.method }}</span>
             </div>
           {% endif %}
 
           {% for address in device.ip6.addresses %}
             <div class="list-group-item">
-              IP address
+              {% trans "IP address" %}
               <span class="pull-right">{{ address.address }}/{{ address.prefix }}</span>
             </div>
           {% endfor %}
 
           {% if device.ip6.gateway %}
             <div class="list-group-item">
-              Gateway
+              {% trans "Gateway" %}
               <span class="pull-right">{{ device.ip6.gateway }}</span>
             </div>
           {% endif %}
 
           {% for server in device.ip6.nameservers %}
             <div class="list-group-item">
-              DNS server
+              {% trans "DNS server" %}
               <span class="pull-right">{{ server }}</span>
             </div>
           {% endfor %}
 
           {% if active_connection.ip6.default %}
             <div class="list-group-item">
-              Default
-              <span class="pull-right">yes</span>
+              {% trans "Default" %}
+              <span class="pull-right">{% trans "yes" %}</span>
             </div>
           {% endif %}
         </div>
       {% else %}
-        <h3>Status</h3>
+        <h3>{% trans "Status" %}</h3>
 
-        <p>This connection is not active.</p>
+        <p>{% trans "This connection is not active." %}</p>
       {% endif %}
 
-      <h3>Security</h3>
+      <h3>{% trans "Security" %}</h3>
 
       {% if connection.zone == "internal" %}
         <div class="list-group">
           <div class="list-group-item">
-            Firewall zone
+            {% trans "Firewall zone" %}
             <div class="pull-right">
               <span class="label label-success">{{ connection.zone }}</span>
             </div>
@@ -261,15 +273,18 @@
 
         <div class="alert alert-info">
           <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          This interface should be connected to local network/machine.  If you
-          connect this interface to a public network, services meant to
-          be available only internally will become available externally.
-          This is a security risk.
+          {% blocktrans trimmed %}
+            This interface should be connected to local
+            network/machine.  If you connect this interface to a
+            public network, services meant to be available only
+            internally will become available externally.  This is a
+            security risk.
+          {% endblocktrans %}
         </div>
       {% elif connection.zone == "external" %}
         <div class="list-group">
           <div class="list-group-item">
-            Firewall zone
+            {% trans "Firewall zone" %}
             <div class="pull-right">
               <span class="label label-warning">{{ connection.zone }}</span>
             </div>
@@ -278,14 +293,17 @@
 
         <div class="alert alert-info">
           <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          This interface should receive your Internet connection.  If
-          you connect it your a local network/machine, many services
-          meant to available only internally will not be available.
+          {% blocktrans trimmed %}
+            This interface should receive your Internet connection.
+            If you connect it your a local network/machine, many
+            services meant to available only internally will not be
+            available.
+          {% endblocktrans %}
         </div>
       {% else %}
         <div class="list-group">
           <div class="list-group-item">
-            Firewall zone
+            {% trans "Firewall zone" %}
             <div class="pull-right">
               <span class="label label-danger">{{ connection.zone }}</span>
             </div>
@@ -294,10 +312,13 @@
 
         <div class="alert alert-danger">
           <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-          This interface is not maintained by FreedomBox.  Its security
-          status is unknown to FreedomBox.  Many FreedomBox services may
-          not be available on this interface.  It is recommended that
-          you deactivate/delete this connection and re-configure it.
+          {% blocktrans trimmed %}
+            This interface is not maintained by FreedomBox.  Its
+            security status is unknown to FreedomBox.  Many FreedomBox
+            services may not be available on this interface.  It is
+            recommended that you deactivate/delete this connection and
+            re-configure it.
+          {% endblocktrans %}
         </div>
       {% endif %}
     </div>

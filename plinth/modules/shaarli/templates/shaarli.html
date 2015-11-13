@@ -19,25 +19,33 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Bookmarks (Shaarli)</h2>
+  <h2>{% trans "Bookmarks (Shaarli)" %}</h2>
 
-<p>Shaarli allows you to save and share bookmarks.</p>
+  <p>{% trans "Shaarli allows you to save and share bookmarks." %}</p>
 
-<p>When enabled, Shaarli will be available from <a href="/shaarli">/shaarli</a>
-  path on the web server. Note that Shaarli only supports a single user
-  account, which you will need to setup on the initial visit.<p>
+  <p>
+    {% blocktrans trimmed %}
 
-<h3>Configuration</h3>
+      When enabled, Shaarli will be available from <a href="/shaarli">/shaarli</a>
+      path on the web server. Note that Shaarli only supports a single
+      user account, which you will need to setup on the initial visit.
 
-<form class="form" method="post">
-  {% csrf_token %}
+    {% endblocktrans %}
+  </p>
 
-  {{ form|bootstrap }}
+  <h3>{% trans "Configuration" %}</h3>
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

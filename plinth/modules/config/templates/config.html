@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
@@ -27,8 +28,8 @@
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary" value="Submit"/>
-
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Submit" %}"/>
   </form>
 
 {% endblock %}

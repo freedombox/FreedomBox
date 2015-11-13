@@ -19,22 +19,28 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-  <p>When enabled, the blogs and wikis will be available
-    from <a href="/ikiwiki">/ikiwiki</a>.</p>
+  <p>
+    {% blocktrans trimmed %}
+      When enabled, the blogs and wikis will be available
+      from <a href="/ikiwiki">/ikiwiki</a>.
+    {% endblocktrans %}
+  </p>
 
   {% include "diagnostics_button.html" with module="ikiwiki" %}
 
-  <h3>Configuration</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
   <form class="form" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary" value="Update setup"/>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
   </form>
 
 {% endblock %}

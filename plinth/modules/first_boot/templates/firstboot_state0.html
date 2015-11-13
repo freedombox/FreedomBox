@@ -18,8 +18,9 @@
 #
 {% endcomment %}
 
-{% load static %}
 {% load bootstrap %}
+{% load i18n %}
+{% load static %}
 
 {% block page_head %}
   <style type="text/css">
@@ -46,14 +47,18 @@
   </p>
 
   <h3 class="text-center">
-    Congratulations! Your FreedomBox is up and running!
+    {% trans "Congratulations! Your FreedomBox is up and running!" %}
   </h3>
 
-  <p class="text-center">Please provide the following basic
-    information to complete the setup process.</p>
+  <p class="text-center">
+    {% blocktrans trimmed %}
+      Please provide the following basic information to complete the
+      setup process.
+    {% endblocktrans %}
+  </p>
 
   <p class="text-center">
     <a href="{% url 'first_boot:state1' %}"
-       class="btn btn-primary btn-large">Next</a>
+       class="btn btn-primary btn-large">{% trans "Next" %}</a>
   </p>
 {% endblock %}

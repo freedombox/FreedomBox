@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
@@ -30,7 +31,8 @@
         {{ form|bootstrap }}
 
         <div class="text-center">
-          <input type="submit" class="btn btn-primary" value="Login" />
+          <input type="submit" class="btn btn-primary"
+                 value="{% trans "Login" %}" />
         </div>
      </div>
     </div>

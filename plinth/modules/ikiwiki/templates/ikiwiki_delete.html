@@ -19,23 +19,31 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-  <h3>Delete Wiki/Blog <em>{{ name }}</em></h3>
+  <h3>
+    {% blocktrans trimmed %}
+      Delete Wiki/Blog <em>{{ name }}</em>
+    {% endblocktrans %}
+  </h3>
 
-  <p>This action will remove all the posts, pages and comments
-    including revision history.  Delete this wiki/blog
-    permanently?</p>
+  <p>
+    {% blocktrans trimmed %}
+      This action will remove all the posts, pages and comments
+      including revision history.  Delete this wiki/blog permanently?
+    {% endblocktrans %}
+  </p>
 
   <form class="form" method="post">
     {% csrf_token %}
 
     <input type="submit" class="btn btn-md btn-primary"
-           value="Delete {{ name }}"/>
+           value="{% blocktrans %}Delete {{ name }}{% endblocktrans %}"/>
 
     <a href="{% url 'ikiwiki:manage' %}" role="button"
-       class="btn btn-md btn-primary">Cancel</a>
+       class="btn btn-md btn-primary">{% trans "Cancel" %}</a>
   </form>
 
 {% endblock %}

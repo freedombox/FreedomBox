@@ -19,12 +19,13 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-  <h3>Delete Connection <em>{{ name }}</em></h3>
+  <h3>{% blocktrans %}Delete Connection <em>{{ name }}</em>{% endblocktrans %}</h3>
 
-  <p>Delete connection permanently?</p>
+  <p>{% trans "Delete connection permanently?" %}</p>
 
   <form class="form" method="post">
     {% csrf_token %}
@@ -33,7 +34,7 @@
            value="Delete {{ name }}"/>
 
     <a href="{% url 'networks:index' %}" role="button"
-       class="btn btn-md btn-primary">Cancel</a>
+       class="btn btn-md btn-primary">{% trans "Cancel" %}</a>
   </form>
 
 {% endblock %}

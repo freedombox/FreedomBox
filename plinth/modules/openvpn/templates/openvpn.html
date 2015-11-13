@@ -19,7 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
-
+{% load i18n %}
 
 {% block page_head %}
 
@@ -32,84 +32,111 @@
 
 {% block content %}
 
-  <h2>Virtual Private Network (OpenVPN)</h2>
+  <h2>{% trans "Virtual Private Network (OpenVPN)" %}</h2>
 
-  <p>Virtual Private Network (VPN) is a technique for securely
-    connecting two machines in order to access resources of a private
-    network.  While you are away from home, you can connect to your
-    {{ cfg.box_name }} in order to join your home network and access
-    private/internal services provided by {{ cfg.box_name }}.  You can
-    also access the rest of the Internet via {{ cfg.box_name }} for
-    added security and anonymity.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Virtual Private Network (VPN) is a technique for securely
+      connecting two machines in order to access resources of a
+      private network.  While you are away from home, you can connect
+      to your {{ cfg.box_name }} in order to join your home network
+      and access private/internal services provided by
+      {{ cfg.box_name }}.  You can also access the rest of the
+      Internet via {{ cfg.box_name }} for added security and
+      anonymity.
+    {% endblocktrans %}
+  </p>
 
   {% if status.is_setup %}
 
-    <h3>Profile</h3>
+    <h3>{% trans "Profile" %}</h3>
 
-    <p>To connect to {{ cfg.box_name }}'s VPN, you need to download a
-      profile and feed it to an OpenVPN client on your mobile or
-      desktop machine.  OpenVPN Clients are available for most
-      platforms.  See
-      <a href="https://wiki.debian.org/FreedomBox/Manual/OpenVPN"
-         title="FreedomBox Manual - OpenVPN">documentation</a> on
-      recommended clients and instructions on how to configure them.</p>
+    <p>
+      {% blocktrans trimmed %}
+        To connect to {{ cfg.box_name }}'s VPN, you need to download a
+        profile and feed it to an OpenVPN client on your mobile or
+        desktop machine.  OpenVPN Clients are available for most
+        platforms.  See
+        <a href="https://wiki.debian.org/FreedomBox/Manual/OpenVPN"
+           title="FreedomBox Manual - OpenVPN">documentation</a> on
+        recommended clients and instructions on how to configure them.
+      {% endblocktrans %}
+    </p>
 
-    <p>Profile is specific to each user of {{ cfg.box_name }}.  Keep
-      it a secret.</p>
+    <p>
+      {% blocktrans trimmed %}
+        Profile is specific to each user of {{ cfg.box_name }}.  Keep
+        it a secret.
+      {% endblocktrans %}
+    </p>
 
     <form class="form" method="post" action="{% url 'openvpn:profile' %}">
       {% csrf_token %}
 
-      <input type="submit" class="btn btn-primary" value="Download my profile"/>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Download my profile" %}"/>
     </form>
 
   {% endif %}
 
-  <h3>Status</h3>
+  <h3>{% trans "Status" %}</h3>
 
   {% if not status.is_setup and not status.setup_running %}
-    <p>OpenVPN has not yet been setup.  Performing a secure setup
-      takes a very long time.  Depending on how fast your
-      {{ cfg.box_name }} is, it may even take hours.  If the setup is
-      interrupted, you may start it again.</p>
+    <p>
+      {% blocktrans trimmed %}
+        OpenVPN has not yet been setup.  Performing a secure setup
+        takes a very long time.  Depending on how fast your
+        {{ cfg.box_name }} is, it may even take hours.  If the setup
+        is interrupted, you may start it again.
+      {% endblocktrans %}
+    </p>
 
     <form class="form" method="post" action="{% url 'openvpn:setup' %}">
       {% csrf_token %}
 
-      <input type="submit" class="btn btn-primary" value="Start setup"/>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Start setup" %}"/>
     </form>
   {% endif %}
 
   {% if not status.is_setup and status.setup_running %}
     <p class="running-status-parent">
-      <span class='running-status active'></span> OpenVPN setup is running
+      <span class='running-status active'></span>
+      {% trans "OpenVPN setup is running" %}
     </p>
 
-    <p>To perform a secure setup, this process takes a very long time.
-      Depending on how fast your {{ cfg.box_name }} is, it may even
-      take hours.  If the setup is interrupted, you may start it
-      again.</p>
+    <p>
+      {% blocktrans trimmed %}
+        To perform a secure setup, this process takes a very long
+        time.  Depending on how fast your {{ cfg.box_name }} is, it
+        may even take hours.  If the setup is interrupted, you may
+        start it again.
+      {% endblocktrans %}
+    </p>
   {% endif %}
 
   {% if status.is_setup %}
     <p class="running-status-parent">
       {% if status.is_running %}
-        <span class='running-status active'></span> OpenVPN server is running
+        <span class='running-status active'></span>
+        {% trans "OpenVPN server is running" %}
       {% else %}
-        <span class='running-status inactive'></span> OpenVPN server is not running
+        <span class='running-status inactive'></span>
+        {% trans "OpenVPN server is not running" %}
       {% endif %}
     </p>
 
     {% include "diagnostics_button.html" with module="openvpn" %}
 
-    <h3>Configuration</h3>
+    <h3>{% trans "Configuration" %}</h3>
 
     <form class="form" method="post">
       {% csrf_token %}
 
       {{ form|bootstrap }}
 
-      <input type="submit" class="btn btn-primary" value="Update setup"/>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Update setup" %}"/>
     </form>
   {% endif %}
 

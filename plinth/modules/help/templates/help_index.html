@@ -18,24 +18,42 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>Help</h2>
+  <h2>{% trans "Help" %}</h2>
 
-<p>The <a href={% url 'help:manual' %}>FreedomBox Manual</a> is the
-  best place to start for information regarding {{ cfg.box_name }}.</p>
+  <p>
+    {% url 'help:manual' as manual_url %}
+    {% blocktrans trimmed %}
+      The <a href="{{ manual_url }}">FreedomBox Manual</a> is the
+      best place to start for information regarding {{ cfg.box_name }}.
+    {% endblocktrans %}
+  </p>
 
-<p><a href="http://wiki.debian.org/FreedomBox"
-  target="_blank">FreedomBox project wiki </a> contains further
-  information.</p>
+  <p>
+    {% blocktrans trimmed %}
+      <a href="http://wiki.debian.org/FreedomBox" target="_blank">
+        FreedomBox project wiki </a> contains further information.
+    {% endblocktrans %}
+  </p>
 
-<p>To seek help from FreedomBox community, queries may be posted on
-  the
-  <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
-  mailing list</a>.  The list archives also contain information about
-  problems faced by other users and possible solutions.</p>
+  <p>
+    {% blocktrans trimmed %}
+      To seek help from FreedomBox community, queries may be posted on
+      the
+      <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
+      mailing list</a>.  The list archives also contain information
+      about problems faced by other users and possible solutions.
+    {% endblocktrans %}
+  </p>
 
-<p>Many FreedomBox contributors and users are also available on the
-  #freedombox channel of the irc.oftc.net IRC network.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Many FreedomBox contributors and users are also available on the
+      #freedombox channel of the irc.oftc.net IRC network.
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}

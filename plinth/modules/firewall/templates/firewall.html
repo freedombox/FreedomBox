@@ -18,77 +18,96 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>{{ title }}</h2>
+  <h2>{{ title }}</h2>
 
-<p>Firewall is a network security system that controls the incoming
-and outgoing network traffic on your {{ cfg.box_name }}. Keeping a
-firewall enabled and properly configured reduces risk of security
-threat from the Internet.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Firewall is a network security system that controls the incoming
+      and outgoing network traffic on your {{ cfg.box_name }}. Keeping
+      a firewall enabled and properly configured reduces risk of
+      security threat from the Internet.
+    {% endblocktrans %}
+  </p>
 
-<p>The following is the current status:</p>
+  <p>{% trans "The following is the current status:" %}</p>
 
-{% if firewall_status = 'not_running' %}
+  {% if firewall_status = 'not_running' %}
 
-<p>Firewall daemon is not running. Please run it. Firewall comes
-enabled by default on {{ cfg.box_name }}. On any Debian based system
-(such as {{ cfg.box_name }}) you may run it using the command 'service
-firewalld start' or in case of a system with systemd 'systemctl start
-firewalld'</p>
+    <p>
+      {% blocktrans trimmed %}
+        Firewall daemon is not running. Please run it. Firewall comes
+        enabled by default on {{ cfg.box_name }}. On any Debian based
+        system (such as {{ cfg.box_name }}) you may run it using the
+        command 'service firewalld start' or in case of a system with
+        systemd 'systemctl start firewalld'
+      {% endblocktrans %}
+    </p>
 
-{% else %}
+  {% else %}
 
-<div class="row">
-  <div class="col-sm-8">
-    <table class='table table-autowidth table-striped'>
-      <thead>
-        <th>Service/Port</th>
-        <th>Status</th>
-      </thead>
+    <div class="row">
+      <div class="col-sm-8">
+        <table class='table table-autowidth table-striped'>
+          <thead>
+            <th>{% trans "Service/Port" %}</th>
+            <th>{% trans "Status" %}</th>
+          </thead>
 
-      <tbody>
-        {% for service in services %}
-          <tr>
-            <td><strong>{{ service.name }}</strong></td>
-            <td>
-              {% if service.is_enabled %}
-                <span class='label label-success'>Enabled</span>
-              {% else %}
-                <span class='label label-warning'>Disabled</span>
-              {% endif %}
-            </td>
-          </tr>
+          <tbody>
+            {% for service in services %}
+              <tr>
+                <td><strong>{{ service.name }}</strong></td>
+                <td>
+                  {% if service.is_enabled %}
+                    <span class='label label-success'>
+                      {% trans "Enabled" %}</span>
+                  {% else %}
+                    <span class='label label-warning'>
+                      {% trans "Disabled" %}</span>
+                  {% endif %}
+                </td>
+              </tr>
 
-          {% for port in service.ports %}
-            <tr>
-              <td class='cell-indented'><em>{{ port }}</em></td>
-              <td>
-                {% if port in internal_enabled_services and port in external_enabled_services %}
-                  <span class='label label-success'>Permitted</span>
-                {% elif port in internal_enabled_services %}
-                  <span class='label label-warning'>Permitted (internal only)</span>
-                {% elif port in external_enabled_services %}
-                  <span class='label label-warning'>Permitted (external only)</span>
-                {% else %}
-                  <span class='label label-danger'>Blocked</span>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
+              {% for port in service.ports %}
+                <tr>
+                  <td class='cell-indented'><em>{{ port }}</em></td>
+                  <td>
+                    {% if port in internal_enabled_services and port in external_enabled_services %}
+                      <span class='label label-success'>
+                        {% trans "Permitted" %}</span>
+                    {% elif port in internal_enabled_services %}
+                      <span class='label label-warning'>
+                        {% trans "Permitted (internal only)" %}</span>
+                    {% elif port in external_enabled_services %}
+                      <span class='label label-warning'>
+                        {% trans "Permitted (external only)" %}</span>
+                    {% else %}
+                      <span class='label label-danger'>
+                        {% trans "Blocked" %}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-        {% endfor %}
+    <p>
+      <em>
+        {% blocktrans trimmed %}
+          The operation of the firewall is automatic. When you enable
+          a service it is automatically permitted in the firewall and
+          you disable a service is automatically disabled in the firewall.
+        {% endblocktrans %}
+      </em>
+    </p>
 
-      </tbody>
-
-    </table>
-  </div>
-</div>
-
-<p><em>The operation of the firewall is automatic. When you enable a
-service it is automatically permitted in the firewall and you disable
-a service is automatically disabled in the firewall.</em></p>
-
-{% endif %}
+  {% endif %}
 
 {% endblock %}

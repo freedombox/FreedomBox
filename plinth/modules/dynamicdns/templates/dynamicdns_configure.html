@@ -19,22 +19,25 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
   <form class="form" method="post">
     {% csrf_token %}
+
     <noscript>
-      You have disabled Javascript. Dynamic form mode is disabled and 
-      some helper functions may not work <br>
-      (but the main functionality should work)
-      <br><hr>
+      {% blocktrans trimmed %}
+        You have disabled Javascript. Dynamic form mode is disabled
+        and some helper functions may not work (but the main
+        functionality should work).
+      {% endblocktrans %}
     </noscript>
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary" value="Update setup"/>
-
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
   </form>
 
 {% endblock %}

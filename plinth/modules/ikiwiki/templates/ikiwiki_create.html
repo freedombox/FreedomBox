@@ -19,15 +19,17 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

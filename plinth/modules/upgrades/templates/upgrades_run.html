@@ -18,37 +18,42 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>{{title}}</h2>
+  <h2>{{title}}</h2>
 
-{% if upgrades_error %}
-  <div class="alert alert-danger" role="alert">
-    There was an error while upgrading.
-  </div>
-  <h5>Output from unattended-upgrades:</h5>
-  <pre>{{ upgrades_error }}</pre>
-{% endif %}
+  {% if upgrades_error %}
+    <div class="alert alert-danger" role="alert">
+      {% trans "There was an error while upgrading." %}
+    </div>
 
-{% if upgrades_output %}
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="alert alert-success" role="alert">
-        The operating system is up to date now. &nbsp;
-          <button type="button" class="btn btn-default show-details" style='display:none'>
-            Show Details
-            <div class="caret"></div>
-          </button>
+    <h5>{% trans "Output from unattended-upgrades:" %}</h5>
+
+    <pre>{{ upgrades_error }}</pre>
+  {% endif %}
+
+  {% if upgrades_output %}
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="alert alert-success" role="alert">
+          {% trans "The operating system is up to date now. &nbsp;" %}
+            <button type="button" class="btn btn-default show-details"
+                    style='display:none'>
+              {% trans "Show Details" %}
+              <div class="caret"></div>
+            </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="details">
-    <h5>Output from unattended-upgrades:</h5>
-    <pre>{{ upgrades_output }}</pre>
-  </div>
+    <div class="details">
+      <h5>{% trans "Output from unattended-upgrades:" %}</h5>
+      <pre>{{ upgrades_output }}</pre>
+    </div>
 
-{% endif %}
+  {% endif %}
 
 {% endblock %}
 

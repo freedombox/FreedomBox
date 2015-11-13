@@ -19,7 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
-
+{% load i18n %}
 
 {% block page_head %}
 
@@ -32,16 +32,23 @@
 
 {% block content %}
 
-  <h2>Installation</h2>
+  <h2>{% trans "Installation" %}</h2>
 
   {% if not is_installing %}
 
-    <p>This feature requires addtional packages to be installed.  Do you
-      wish to install them?</p>
+    <p>
+      {% blocktrans trimmed %}
+        This feature requires addtional packages to be installed.  Do
+        you wish to install them?
+      {% endblocktrans %}
+    </p>
 
     <table class="table">
       <thead>
-        <tr><th>Package</th><th>Summary</th></tr>
+        <tr>
+          <th>{% trans "Package" %}</th>
+          <th>{% trans "Summary" %}</th>
+        </tr>
       </thead>
       <tbody>
         {% for package_name, package in packages.items %}
@@ -55,21 +62,30 @@
 
     <form action="" method="post">
       {% csrf_token %}
-      <input type="submit" class="btn btn-md btn-primary" value="Install" />
+
+      <input type="submit" class="btn btn-md btn-primary"
+             value="{% trans "Install" %}" />
     </form>
 
   {% else %}
 
     {% for key, transaction in transactions.items %}
-      <div>Installing {{ transaction.package_names|join:", " }}:
-        {{ transaction.status_string }}
+      <div>
+        {% blocktrans trimmed %}
+          Installing {{ transaction.package_names|join:", " }}:
+          {{ transaction.status_string }}
+        {% endblocktrans %}
       </div>
       <div class="progress">
         <div class="progress-bar progress-bar-striped active"
              role="progressbar" aria-valuemin="0" aria-valuemax="100"
              aria-valuenow="{{ transaction.percentage }}"
              style="width: {{ transaction.percentage }}%">
-          <span class="sr-only">{{ transaction.percentage }}% complete</span>
+          <span class="sr-only">
+            {% blocktrans trimmed %}
+              {{ transaction.percentage }}% complete
+            {% endblocktrans %}
+          </span>
         </div>
       </div>
     {% endfor %}

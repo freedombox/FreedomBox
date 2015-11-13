@@ -18,18 +18,25 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>{{ title }}</h2>
+  <h2>{{ title }}</h2>
 
-<p>This will run unattended-upgrades, which will attempt to upgrade your system
-with the latest Debian packages. It may take a few minutes to complete.</p>
+  <p>
+    {% blocktrans trimmed %}
+      This will run unattended-upgrades, which will attempt to upgrade
+      your system with the latest Debian packages. It may take a few
+      minutes to complete.
+    {% endblocktrans %}
+  </p>
 
-<form class="form" method="post" action="{% url 'upgrades:run' %}">
-  {% csrf_token %}
+  <form class="form" method="post" action="{% url 'upgrades:run' %}">
+    {% csrf_token %}
 
-  <input type="submit" class="btn btn-primary" value="Upgrade now &raquo;"/>
-
-</form>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Upgrade now &raquo;" %}"/>
+  </form>
 
 {% endblock %}

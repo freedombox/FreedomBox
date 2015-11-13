@@ -19,40 +19,55 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Email Client (Roundcube)</h2>
+  <h2>{% trans "Email Client (Roundcube)" %}</h2>
 
-<p>Roundcube webmail is a browser-based multilingual IMAP client with
-  an application-like user interface. It provides full functionality
-  you expect from an email client, including MIME support, address
-  book, folder manipulation, message searching and spell checking.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Roundcube webmail is a browser-based multilingual IMAP client
+      with an application-like user interface. It provides full
+      functionality you expect from an email client, including MIME
+      support, address book, folder manipulation, message searching
+      and spell checking.
+    {% endblocktrans %}
+  </p>
 
-<p>You can access Roundcube from <a href="/roundcube">/roundcube</a>.
-  Provide the username and password of the email account you wish to
-  access followed by the domain name of the IMAP server for your email
-  provider, like <code>imap.example.com</code>.  For IMAP over SSL
-  (recommended), fill the server field
-  like <code>imaps://imap.example.com</code>.</p>
+  <p>
+    {% blocktrans trimmed %}
+      You can access Roundcube from <a href="/roundcube">/roundcube</a>.
+      Provide the username and password of the email account you wish
+      to access followed by the domain name of the IMAP server for
+      your email provider, like <code>imap.example.com</code>.  For
+      IMAP over SSL (recommended), fill the server field like
+      <code>imaps://imap.example.com</code>.
+    {% endblocktrans %}
+  </p>
 
-<p>For Gmail, username will be your Gmail address, password will be
-  your Google account password and server will be
-  <code>imaps://imap.gmail.com</code>.  Note that you will also need
-  to enable "Less secure apps" in your Google account settings
-  (<a href="https://www.google.com/settings/security/lesssecureapps"
-  >https://www.google.com/settings/security/lesssecureapps</a>).</p>
+  <p>
+    {% blocktrans trimmed %}
+      For Gmail, username will be your Gmail address, password will be
+      your Google account password and server will be
+      <code>imaps://imap.gmail.com</code>.  Note that you will also need
+      to enable "Less secure apps" in your Google account settings
+      (<a href="https://www.google.com/settings/security/lesssecureapps"
+       >https://www.google.com/settings/security/lesssecureapps</a>).
+    {% endblocktrans %}
+  </p>
 
-{% include "diagnostics_button.html" with module="roundcube" %}
+  {% include "diagnostics_button.html" with module="roundcube" %}
 
-<h3>Configuration</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

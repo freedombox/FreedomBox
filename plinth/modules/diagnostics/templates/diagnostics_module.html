@@ -18,16 +18,18 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>Diagnostic Results</h2>
+  <h2>{% trans "Diagnostic Results" %}</h2>
 
-<h3>Module: {{ module_name }}</h3>
+  <h3>{% blocktrans %}Module: {{ module_name }}{% endblocktrans %}</h3>
 
-{% if results %}
-  {% include "diagnostics_results.html" with results=results %}
-{% else %}
-  <p>This module does not support diagnostics</p>
-{% endif %}
+  {% if results %}
+    {% include "diagnostics_results.html" with results=results %}
+  {% else %}
+    <p>{% trans "This module does not support diagnostics" %}</p>
+  {% endif %}
 
 {% endblock %}

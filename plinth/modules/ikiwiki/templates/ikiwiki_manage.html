@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block page_head %}
   <style type="text/css">
@@ -37,28 +38,29 @@
   <div class="row">
     <div class="col-sm-6">
       {% if not sites %}
-        <p>No wikis or blogs available.</p>
+        <p>{% trans "No wikis or blogs available." %}</p>
         <p>
           <a class="btn btn-primary btn-md"
-             href="{% url 'ikiwiki:create' %}">Create a Wiki or Blog</a>
+             href="{% url 'ikiwiki:create' %}">
+            {% trans "Create a Wiki or Blog" %}
+          </a>
         </p>
       {% else %}
         <div class="list-group">
           {% for site in sites %}
             <div class="list-group-item clearfix">
-  	    <a href="{% url 'ikiwiki:delete' site %}"
+    	      <a href="{% url 'ikiwiki:delete' site %}"
                  class="btn btn-default btn-sm pull-right"
-                 role="button" title="Delete site {{ site }}">
+                 role="button"
+                 title="{% blocktrans %}Delete site {{ site }}{% endblocktrans %}">
                 <span class="glyphicon glyphicon-trash"
                       aria-hidden="true"></span>
               </a>
 
-              <a class="wiki-label"
-  	       href="/ikiwiki/{{ site }}"
-                 title="Go to site {{ site }}">
+              <a class="wiki-label" href="/ikiwiki/{{ site }}"
+                 title="{% blocktrans %}Go to site {{ site }}{% endblocktrans %}">
                 {{ site }}
               </a>
-
             </div>
           {% endfor %}
         </div>

@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block page_head %}
   <style type="text/css">
@@ -62,7 +63,8 @@
           <div class="list-group-item clearfix">
             <a href="{% url 'networks:delete' connection.uuid %}"
                class="btn btn-default btn-sm pull-right"
-               role="button" title="Delete connection {{ connection.name }}">
+               role="button"
+               title="{% blocktrans %}Delete connection {{ connection.name }}{% endblocktrans %}">
               <span class="glyphicon glyphicon-trash"
                     aria-hidden="true"></span>
             </a>
@@ -73,7 +75,7 @@
                 {% csrf_token %}
 
                 <button type="submit" class="btn btn-default btn-sm">
-                  Deactivate</button>
+                  {% trans "Deactivate" %}</button>
               </form>
             {% else %}
               <form class="form pull-right" method="post"
@@ -81,16 +83,16 @@
                 {% csrf_token %}
 
                 <button type="submit" class="btn btn-default btn-sm">
-                    Activate</button>
+                  {% trans "Activate" %}</button>
               </form>
             {% endif %}
 
             {% if connection.is_active %}
               <span class="label label-success connection-status-label">
-                Active</span>
+                {% trans "Active" %}</span>
             {% else %}
               <span class="label label-warning connection-status-label">
-                Inactive</span>
+                {% trans "Inactive" %}</span>
             {% endif %}
 
             <a class="connection-show-label"

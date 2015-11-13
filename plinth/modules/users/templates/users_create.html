@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block page_head %}
   <style type="text/css">
@@ -37,8 +38,8 @@
 
         {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary" value="Create User"/>
-
+        <input type="submit" class="btn btn-primary"
+               value="{%trans "Create User" %}"/>
       </form>
     </div>
   </div>

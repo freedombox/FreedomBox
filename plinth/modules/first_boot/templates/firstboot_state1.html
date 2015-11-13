@@ -18,8 +18,9 @@
 #
 {% endcomment %}
 
-{% load static %}
 {% load bootstrap %}
+{% load i18n %}
+{% load static %}
 
 {% block add_nav_and_login %}
   <ul class="nav navbar-nav navbar-right">
@@ -35,17 +36,24 @@
   <div class="col-md-6 col-md-offset-3">
     {% include 'messages.html' %}
 
-    <h2>Administrator Account</h2>
+    <h2>{% trans "Administrator Account" %}</h2>
 
-    <p>Choose a username and password to access this web interface.
-      The password can be changed and other users can be added
-      later. An LDAP user with administrative privileges (sudo) is
-      also created.</p>
+    <p>
+      {% blocktrans trimmed %}
+        Choose a username and password to access this web interface.
+        The password can be changed and other users can be added
+        later. An LDAP user with administrative privileges (sudo) is
+        also created.
+      {% endblocktrans %}
+    </p>
 
     <form class="form" method="post">
       {% csrf_token %}
+
       {{ form|bootstrap }}
-      <input type="submit" class="btn btn-primary" value="Box it up!"/>
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Box it up!" %}"/>
     </form>
 
   </div>

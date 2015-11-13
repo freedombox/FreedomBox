@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
@@ -29,8 +30,8 @@
 
         {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary" value="Create Connection"/>
-
+        <input type="submit" class="btn btn-primary"
+               value="{% trans "Create Connection" %}"/>
       </form>
     </div>
   </div>

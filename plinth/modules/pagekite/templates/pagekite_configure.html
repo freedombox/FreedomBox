@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
@@ -29,14 +30,15 @@
 
     <div id='pagekite-post-enabled-form'
          style='display: {{ form.enabled.value|yesno:'block,none' }};'>
-      <h3>PageKite Account</h3>
+      <h3>{% trans "PageKite Account" %}</h3>
       {{ form.server_domain|bootstrap_horizontal }}
       {{ form.server_port|bootstrap_horizontal }}
       {{ form.kite_name|bootstrap_horizontal }}
       {{ form.kite_secret|bootstrap_horizontal }}
-
     </div>
-    <input type="submit" class="btn btn-primary" value="Save settings"/>
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Save settings" %}"/>
   </form>
 
 {% endblock %}

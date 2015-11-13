@@ -18,13 +18,19 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>500</h2>
+  <h2>{% trans "500" %}</h2>
 
-<p>This is an internal error and not something you caused or can fix.  Please
-   report the error on
-   the <a href="https://github.com/freedombox/Plinth/issues">bug tracker</a> so
-   we can fix it.</p>
+  <p>
+    {% blocktrans trimmed %}
+      This is an internal error and not something you caused or can
+      fix.  Please report the error on
+      the <a href="https://github.com/freedombox/Plinth/issues">bug
+      tracker</a> so we can fix it.
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}

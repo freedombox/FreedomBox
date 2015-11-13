@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block page_head %}
   <style type="text/css">
@@ -30,13 +31,19 @@
 
 {% block content %}
 
-  <h3>Edit User <em>{{ object.username }}</em></h3>
+  <h3>
+    {% blocktrans trimmed %}
+      Edit User <em>{{ object.username }}</em>
+    {% endblocktrans %}
+  </h3>
 
   <p>
-    Use the
-    <a href='{% url 'users:change_password' object.username %}'>
-      change password form
-    </a> to change the password.
+    {% url 'users:change_password' as change_password_url %}
+
+    {% blocktrans trimmed %}
+      Use the <a href='{{ change_password_url }}'>change password form
+      </a> to change the password.
+    {% endblocktrans %}
   </p>
 
   <div class="row">
@@ -46,8 +53,8 @@
 
         {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary" value="Save Changes"/>
-
+        <input type="submit" class="btn btn-primary"
+               value="{% trans "Save Changes" %}"/>
       </form>
     </div>
   </div>

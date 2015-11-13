@@ -19,25 +19,37 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>reStore</h2>
-<p>reStore is a server for <a href='https://unhosted.org/'>unhosted</a>
-web applications.  The idea is to uncouple web applications from the
-data, and thus the data can be stored on any unhosted storage server.</p>
+  <h2>{% trans "reStore" %}</h2>
 
-<p>You can create and edit accounts in the
-<a href='/restore/'>reStore web-interface</a>.</p>
+  <p>
+    {% blocktrans trimmed %}
+      reStore is a server for <a href='https://unhosted.org/'>unhosted</a>
+      web applications.  The idea is to uncouple web applications from
+      the data, and thus the data can be stored on any unhosted
+      storage server.
+    {% endblocktrans %}
+  </p>
 
-<h3>Configuration</h3>
+  <p>
+    {% blocktrans trimmed %}
+      You can create and edit accounts in the
+      <a href='/restore/'>reStore web-interface</a>.
+    {% endblocktrans %}
+  </p>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <h3>Configuration</h3>
 
-  {{ form|bootstrap }}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

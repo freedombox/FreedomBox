@@ -19,21 +19,26 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-  <h3>Delete User <em>{{ object.username }}</em></h3>
+  <h3>
+    {% blocktrans trimmed %}
+      Delete User <em>{{ object.username }}</em>
+    {% endblocktrans %}
+  </h3>
 
-  <p>Delete user permanently?</p>
+  <p>{% trans "Delete user permanently?" %}</p>
 
   <form class="form" method="post">
     {% csrf_token %}
 
     <input type="submit" class="btn btn-md btn-primary"
-           value="Delete {{ object.username }}"/>
+           value="{% blocktrans %}Delete {{ object.username }}{% endblocktrans %}"/>
 
     <a href="{% url 'users:index' %}" role="button"
-       class="btn btn-md btn-primary">Cancel</a>
+       class="btn btn-md btn-primary">{% trans "Cancel" %}</a>
   </form>
 
 {% endblock %}

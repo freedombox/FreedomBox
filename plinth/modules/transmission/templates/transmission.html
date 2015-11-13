@@ -19,36 +19,49 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Bittorrent (Transmission)</h2>
+  <h2>{% trans "Bittorrent (Transmission)" %}</h2>
 
-<p>BitTorrent is a peer-to-peer file sharing protocol.  Transmission
-   daemon handles Bitorrent file sharing.  Note that BitTorrent is not
-   anonymous.</p>
+  <p>
+    {% blocktrans trimmed %}
+      BitTorrent is a peer-to-peer file sharing protocol.
+      Transmission daemon handles Bitorrent file sharing.  Note that
+      BitTorrent is not anonymous.
+    {% endblocktrans %}
+  </p>
 
-<p>Access the web interface at <a href="/transmission">/transmission</a></p>
+  <p>
+    {% blocktrans trimmed %}
+      Access the web interface at <a href="/transmission">/transmission</a>
+    {% endblocktrans %}
+  </p>
 
-<h3>Status</h3>
+  <h3>{% trans "Status" %}</h3>
 
-<p class="running-status-parent">
-  {% if status.is_running %}
-  <span class='running-status active'></span> Transmission daemon is running
-  {% else %}
-  <span class='running-status inactive'></span> Transmission daemon is not running
-  {% endif %}
-</p>
-{% include "diagnostics_button.html" with module="transmission" %}
+  <p class="running-status-parent">
+    {% if status.is_running %}
+      <span class='running-status active'></span>
+      {% trans "Transmission daemon is running" %}
+    {% else %}
+      <span class='running-status inactive'></span>
+      {% trans "Transmission daemon is not running" %}
+    {% endif %}
+  </p>
 
-<h3>Configuration</h3>
+  {% include "diagnostics_button.html" with module="transmission" %}
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <h3>{% trans "Configuration" %}</h3>
 
-  {{ form|bootstrap }}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

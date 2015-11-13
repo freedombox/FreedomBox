@@ -19,36 +19,45 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Service Discovery</h2>
+  <h2>{% trans "Service Discovery" %}</h2>
 
-<p>Service discovery allows other machines on the network to discover
-  your FreedomBox and services running on it.  It also allows
-  FreedomBox to discover other machines and services running on your
-  local network.  Service discovery is not essential and works only on
-  internal networks.  It may be disabled to improve security
-  especially when connecting to a hostile local network.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Service discovery allows other machines on the network to
+      discover your FreedomBox and services running on it.  It also
+      allows FreedomBox to discover other machines and services
+      running on your local network.  Service discovery is not
+      essential and works only on internal networks.  It may be
+      disabled to improve security especially when connecting to a
+      hostile local network.
+    {% endblocktrans %}
+  </p>
 
-<h3>Status</h3>
+  <h3>{% trans "Status" %}</h3>
 
-<p class="running-status-parent">
-  {% if status.is_running %}
-  <span class="running-status active"></span> Service discovery server is running
-  {% else %}
-  <span class="running-status inactive"></span> Service discovery server is not running
-  {% endif %}
-</p>
+  <p class="running-status-parent">
+    {% if status.is_running %}
+      <span class="running-status active"></span>
+      {% trans "Service discovery server is running" %}
+    {% else %}
+      <span class="running-status inactive"></span>
+      {% trans "Service discovery server is not running" %}
+    {% endif %}
+  </p>
 
-<h3>Configuration</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}

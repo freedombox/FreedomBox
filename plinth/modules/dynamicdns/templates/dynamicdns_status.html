@@ -18,25 +18,35 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
+
+  <h3>{% trans "NAT type" %}</h3>
+
   <p>
-  <h3>NAT type</h3>
-  {% if nat_unchecked %}
-    NAT type not detected yet, if you do not provide a "IP check URL" we will
-    not detect a NAT type.
-  {% else %}
-    {% if no_nat %}
-      Direct connection to the internet.
+    {% if nat_unchecked %}
+      {% blocktrans trimmed %}
+        NAT type not detected yet, if you do not provide a "IP check
+        URL" we will not detect a NAT type.
+      {% endblocktrans %}
     {% else %}
-      Behind NAT, this means that dynamic DNS service will poll the
-      "IP check URL" for changes (we need the "IP check URL" for this reason 
-      - otherwise we will not detect IP changes).
-      It may take up to {{ timer }} minutes until we update your DNS entry in
-       case of WAN IP change.
+      {% if no_nat %}
+        {% trans "Direct connection to the internet." %}
+      {% else %}
+        {% blocktrans trimmed %}
+          Behind NAT, this means that dynamic DNS service will poll
+          the "IP check URL" for changes (we need the "IP check URL"
+          for this reason - otherwise we will not detect IP changes).
+          It may take up to {{ timer }} minutes until we update your
+          DNS entry in case of WAN IP change.
+        {% endblocktrans %}
+      {% endif %}
     {% endif %}
-  {% endif %}
-  <h3>Last update</h3>
-  {{ last_update }}
   </p>
+
+  <h3>{% trans "Last update" %}</h3>
+
+  <p>{{ last_update }}</p>
 
 {% endblock %}

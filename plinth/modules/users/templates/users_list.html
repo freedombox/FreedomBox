@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block page_head %}
   <style type="text/css">
@@ -41,14 +42,15 @@
           <div class="list-group-item clearfix">
             <a href="{% url 'users:delete' user.username %}"
                class="btn btn-default btn-sm pull-right"
-               role="button" title="Delete user {{ user.username }}">
+               role="button"
+               title="{% blocktrans %}Delete user {{ user.username }}{% endblocktrans %}">
               <span class="glyphicon glyphicon-trash"
                     aria-hidden="true"></span>
             </a>
 
             <a class='user-edit-label'
                href="{% url 'users:edit' user.username %}"
-               title="Edit user {{ user.username }}">
+               title="{% blocktrans %}Edit user {{ user.username }}{% endblocktrans %}">
               {{ user.username }}
             </a>
 

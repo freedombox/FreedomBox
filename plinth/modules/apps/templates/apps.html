@@ -18,16 +18,26 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>Services and Applications</h2>
+  <h2>{% trans "Services and Applications" %}</h2>
 
-<p>You can install and run various services and applications on your
-{{ cfg.box_name }}.</p>
+  <p>
+    {% blocktrans trimmed %}
+      You can install and run various services and applications on
+      your {{ cfg.box_name }}.
+    {% endblocktrans %}
+  </p>
 
-<p>This box can be your photo sharing site, your instant
-messaging site, your social networking site, your news site.  Remember
-web portals?  We can be one of those too.  Many of the services you
-use on the web could soon be on site and under your control!</p>
+  <p>
+    {% blocktrans trimmed %}
+      This box can be your photo sharing site, your instant messaging
+      site, your social networking site, your news site.  Remember web
+      portals?  We can be one of those too.  Many of the services you
+      use on the web could soon be on site and under your control!
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}

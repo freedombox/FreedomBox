@@ -18,17 +18,25 @@
 #
 {% endcomment %}
 
+{% load i18n %}
+
 {% block content %}
 
-<h2>404</h2>
+  <h2>{% trans "404" %}</h2>
 
-<p>Requested page {{ request_path }} was not found.</p>
+  <p>
+    {% blocktrans trimmed %}
+      Requested page {{ request_path }} was not found.
+    {% endblocktrans %}
+  </p>
 
-<p>If you believe this missing page should exist, please file a bug with either
-   the Plinth project (<a href="https://github.com/freedombox/Plinth/issues">it
-   has an issue tracker</a>) or the people responsible for the module you are
-   trying to access.</p>
-
-<p>Sorry for the mistake.</p>
+  <p>
+    {% blocktrans trimmed %}
+      If you believe this missing page should exist, please file a bug
+      at the Plinth project
+      <a href="https://github.com/freedombox/Plinth/issues">issue
+      tracker</a>.
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}

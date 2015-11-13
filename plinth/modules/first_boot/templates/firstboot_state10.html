@@ -19,34 +19,44 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content_row %}
 
   <div class="col-lg-6 col-lg-offset-3">
     {% include 'messages.html' %}
 
-    <h2>Setup Complete!</h2>
+    <h2>{% trans "Setup Complete!" %}</h2>
 
-    <p>FreedomBox setup is now complete.  However, you should check
-      the network setup and modify it if necessary.  Do not forget to
-      change the default Wi-Fi passwords.</p>
+    <p>
+      {% blocktrans trimmed %}
+        FreedomBox setup is now complete.  However, you should check
+        the network setup and modify it if necessary.  Do not forget
+        to change the default Wi-Fi passwords.
+      {% endblocktrans %}
+    </p>
 
-    <p>To make your FreedomBox functional, you need some applications.
-      Applications will be installed the first time you access them.</p>
+    <p>
+      {% blocktrans trimmed %}
+        To make your FreedomBox functional, you need some
+        applications.  Applications will be installed the first time
+        you access them.
+      {% endblocktrans %}
+    </p>
 
-    <h3>Network Configuration</h3>
+    <h3>{% trans "Network Configuration" %}</h3>
 
     {% include "connections_diagram.html" %}
 
     <div class="row">
       <div class="col-xs-6 text-center">
         <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
-          Go to Networks</a>
+          {% trans "Go to Networks" %}</a>
       </div>
 
       <div class="col-xs-6 text-center">
         <a class="btn btn-lg btn-primary" href="{% url 'apps:index' %}">
-          Go to Apps</a>
+          {% trans "Go to Apps" %}</a>
       </div>
     </div>
   </div>

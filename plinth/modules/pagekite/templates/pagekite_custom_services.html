@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% load pagekite_extras %}
 
@@ -40,31 +41,39 @@
 {% block content %}
 
   <div class="alert alert-warning" role="alert">
-    <b>Warning:</b><br>Your PageKite frontend server may not support all the
-    protocol/port combinations that you are able to define here. For example,
-    HTTPS on ports other than 443 is known to cause problems.
+    {% blocktrans trimmed %}
+      <b>Warning:</b><br>Your PageKite frontend server may not support
+      all the protocol/port combinations that you are able to define
+      here. For example, HTTPS on ports other than 443 is known to
+      cause problems.
+    {% endblocktrans %}
   </div>
 
   <div class="row custom-services">
 
     <div class="col-lg-6">
       <form class="form add-service" method="post">
-        <h4>Create a custom service</h4>
+        <h4>{% trans "Create a custom service" %}</h4>
         {{ form|bootstrap_horizontal:'col-lg-6' }}
+
         {% csrf_token %}
+
         <div class="form-group">
           <div class=" col-lg-offset-6 col-lg-6">
-            <input type="submit" class="btn btn-primary" value="Add Service"/>
+            <input type="submit" class="btn btn-primary"
+                   value="{% trans "Add Service" %}"/>
           </div>
         </div>
       </form>
     </div>
 
     <div class="col-lg-5 col-lg-offset-1">
-      <h4>Existing custom services</h4>
+      <h4>{% trans "Existing custom services" %}</h4>
+
       {% if not custom_services %}
-        <i>You don't have any Custom Services enabled</i>
+        <i>{% trans "You don't have any Custom Services enabled" %}</i>
       {% endif %}
+
       <div class="list-group">
         {% for service in custom_services %}
           {% create_pagekite_service_url service kite_name as service_url %}
@@ -77,7 +86,9 @@
                   {{ service_url }}
                 {% endif %}
                 <br>
-                connected to {{ service.backend_host }}:{{ service.backend_port }}
+                {% blocktrans trimmed %}
+                  connected to {{ service.backend_host }}:{{ service.backend_port }}
+                {% endblocktrans %}
               </span>
             </span>
             <form class="form pull-right" method="post"
@@ -87,7 +98,7 @@
                 {{ service.form.as_p }}
               </div>
               <button type="submit" class="btn btn-default"
-                      title="Delete this service">
+                      title="{% trans "Delete this service" %}">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true">
                 </span>
               </button> 

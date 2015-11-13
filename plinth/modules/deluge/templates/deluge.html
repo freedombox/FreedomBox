@@ -19,37 +19,46 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>BitTorrent Web Client (Deluge)</h2>
+  <h2>{% trans "BitTorrent Web Client (Deluge)" %}</h2>
 
-<p>Deluge is a BitTorrent client that features a Web UI.</p>
+  <p>{% trans "Deluge is a BitTorrent client that features a Web UI." %}</p>
 
-<p>When enabled, the Deluge web client will be available from
-  <a href="/deluge">/deluge</a> path on the web server. The default
-  password is 'deluge', but you should log in and change it immediately after
-  enabling this service.</p>
+  <p>
+    {% blocktrans trimmed %}
+      When enabled, the Deluge web client will be available from
+      <a href="/deluge">/deluge</a> path on the web server. The
+      default password is 'deluge', but you should log in and change
+      it immediately after enabling this service.
+    {% endblocktrans %}
+  </p>
 
-<h3>Status</h3>
+  <h3>{% trans "Status" %}</h3>
 
-<p class="running-status-parent">
-  {% if status.is_running %}
-  <span class="running-status active"></span> deluge-web is running
-  {% else %}
-  <span class="running-status inactive"></span> deluge-web is not running
-  {% endif %}
-</p>
-{% include "diagnostics_button.html" with module="deluge" %}
+  <p class="running-status-parent">
+    {% if status.is_running %}
+      <span class="running-status active"></span>
+      {% trans "deluge-web is running" %}
+    {% else %}
+      <span class="running-status inactive"></span>
+      {% trans "deluge-web is not running" %}
+    {% endif %}
+  </p>
 
-<h3>Configuration</h3>
+  {% include "diagnostics_button.html" with module="deluge" %}
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <h3>{% trans "Configuration" %}</h3>
 
-  {{ form|bootstrap }}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}
