@@ -245,6 +245,7 @@ def configure_django():
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
         STRONGHOLD_PUBLIC_NAMED_URLS=('users:login', 'users:logout'),
         TEMPLATE_CONTEXT_PROCESSORS=context_processors,
+        USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
     django.setup()
 
