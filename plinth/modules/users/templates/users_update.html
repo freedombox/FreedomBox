@@ -38,7 +38,7 @@
   </h3>
 
   <p>
-    {% url 'users:change_password' as change_password_url %}
+    {% url 'users:change_password' object.username as change_password_url %}
 
     {% blocktrans trimmed %}
       Use the <a href='{{ change_password_url }}'>change password form
