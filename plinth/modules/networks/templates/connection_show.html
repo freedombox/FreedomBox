@@ -132,7 +132,9 @@
           <div class="list-group-item">
             {% trans "Speed" %}
             <span class="pull-right">
-              {% blocktrans %}{{ device.ethernet.speed }} Mbit/s{% endblocktrans %}
+              {% blocktrans trimmed with ethernet_speed=device.ethernet.speed %}
+                {{ ethernet_speed }} Mbit/s
+              {% endblocktrans %}
             </span>
           </div>
         {% endif %}
@@ -146,7 +148,9 @@
             <div class="list-group-item">
               {% trans "Speed" %}
               <span class="pull-right">
-                {% blocktrans %}{{ device.wireless.bitrate }} Mbit/s{% endblocktrans %}
+                {% blocktrans trimmed with wireless_bitrate=device.wireless.bitrate %}
+                  {{ wireless_bitrate }} Mbit/s
+                {% endblocktrans %}
               </span>
             </div>
             <div class="list-group-item">

@@ -32,8 +32,8 @@
 {% block content %}
 
   <h3>
-    {% blocktrans trimmed %}
-      Edit User <em>{{ object.username }}</em>
+    {% blocktrans trimmed with username=object.username %}
+      Edit User <em>{{ username }}</em>
     {% endblocktrans %}
   </h3>
 

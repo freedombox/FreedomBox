@@ -35,15 +35,14 @@
   <h2>{% trans "Virtual Private Network (OpenVPN)" %}</h2>
 
   <p>
-    {% blocktrans trimmed %}
+    {% blocktrans trimmed with box_name=cfg.box_name %}
       Virtual Private Network (VPN) is a technique for securely
       connecting two machines in order to access resources of a
       private network.  While you are away from home, you can connect
-      to your {{ cfg.box_name }} in order to join your home network
-      and access private/internal services provided by
-      {{ cfg.box_name }}.  You can also access the rest of the
-      Internet via {{ cfg.box_name }} for added security and
-      anonymity.
+      to your {{ box_name }} in order to join your home network and
+      access private/internal services provided by {{ box_name }}.
+      You can also access the rest of the Internet via {{ box_name }}
+      for added security and anonymity.
     {% endblocktrans %}
   </p>
 
@@ -52,8 +51,8 @@
     <h3>{% trans "Profile" %}</h3>
 
     <p>
-      {% blocktrans trimmed %}
-        To connect to {{ cfg.box_name }}'s VPN, you need to download a
+      {% blocktrans trimmed with box_name=cfg.box_name %}
+        To connect to {{ box_name }}'s VPN, you need to download a
         profile and feed it to an OpenVPN client on your mobile or
         desktop machine.  OpenVPN Clients are available for most
         platforms.  See
@@ -64,9 +63,9 @@
     </p>
 
     <p>
-      {% blocktrans trimmed %}
-        Profile is specific to each user of {{ cfg.box_name }}.  Keep
-        it a secret.
+      {% blocktrans trimmed with box_name=cfg.box_name %}
+        Profile is specific to each user of {{ box_name }}.  Keep it a
+        secret.
       {% endblocktrans %}
     </p>
 
@@ -83,10 +82,10 @@
 
   {% if not status.is_setup and not status.setup_running %}
     <p>
-      {% blocktrans trimmed %}
+      {% blocktrans trimmed with box_name=cfg.box_name %}
         OpenVPN has not yet been setup.  Performing a secure setup
         takes a very long time.  Depending on how fast your
-        {{ cfg.box_name }} is, it may even take hours.  If the setup
+        {{ box_name }} is, it may even take hours.  If the setup
         is interrupted, you may start it again.
       {% endblocktrans %}
     </p>
@@ -106,11 +105,11 @@
     </p>
 
     <p>
-      {% blocktrans trimmed %}
+      {% blocktrans trimmed with box_name=cfg.box_name %}
         To perform a secure setup, this process takes a very long
-        time.  Depending on how fast your {{ cfg.box_name }} is, it
-        may even take hours.  If the setup is interrupted, you may
-        start it again.
+        time.  Depending on how fast your {{ box_name }} is, it may
+        even take hours.  If the setup is interrupted, you may start
+        it again.
       {% endblocktrans %}
     </p>
   {% endif %}

@@ -64,7 +64,7 @@
             <a href="{% url 'networks:delete' connection.uuid %}"
                class="btn btn-default btn-sm pull-right"
                role="button"
-               title="{% blocktrans %}Delete connection {{ connection.name }}{% endblocktrans %}">
+               title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
               <span class="glyphicon glyphicon-trash"
                     aria-hidden="true"></span>
             </a>

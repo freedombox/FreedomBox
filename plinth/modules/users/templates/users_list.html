@@ -43,14 +43,14 @@
             <a href="{% url 'users:delete' user.username %}"
                class="btn btn-default btn-sm pull-right"
                role="button"
-               title="{% blocktrans %}Delete user {{ user.username }}{% endblocktrans %}">
+               title="{% blocktrans with username=user.username %}Delete user {{ username }}{% endblocktrans %}">
               <span class="glyphicon glyphicon-trash"
                     aria-hidden="true"></span>
             </a>
 
             <a class='user-edit-label'
                href="{% url 'users:edit' user.username %}"
-               title="{% blocktrans %}Edit user {{ user.username }}{% endblocktrans %}">
+               title="{% blocktrans with username=user.username %}Edit user {{ username }}{% endblocktrans %}">
               {{ user.username }}
             </a>
 

@@ -26,9 +26,9 @@
 
   <p>
     {% url 'help:manual' as manual_url %}
-    {% blocktrans trimmed %}
+    {% blocktrans trimmed with box_name=cfg.box_name %}
       The <a href="{{ manual_url }}">FreedomBox Manual</a> is the
-      best place to start for information regarding {{ cfg.box_name }}.
+      best place to start for information regarding {{ box_name }}.
     {% endblocktrans %}
   </p>
 

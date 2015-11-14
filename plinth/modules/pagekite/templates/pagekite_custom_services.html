@@ -86,8 +86,8 @@
                   {{ service_url }}
                 {% endif %}
                 <br>
-                {% blocktrans trimmed %}
-                  connected to {{ service.backend_host }}:{{ service.backend_port }}
+                {% blocktrans trimmed with backend_host=service.backend_host backend_port=service.backend_port %}
+                  connected to {{ backend_host }}:{{ backend_port }}
                 {% endblocktrans %}
               </span>
             </span>
