@@ -68,7 +68,7 @@ class ConfigurationForm(forms.Form):
                       'start with an alphabet and must not be greater than 63 '
                       'characters in length.'),
         validators=[
-            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9]{,62}$',
+            validators.RegexValidator(r'^[a-zA-Z][-a-zA-Z0-9]{,61}[a-zA-Z0-9]$',
                                       ugettext_lazy('Invalid hostname'))])
 
     domainname = TrimmedCharField(
@@ -79,7 +79,7 @@ class ConfigurationForm(forms.Form):
                       'of alphanumeric words separated by dots.'),
         required=False,
         validators=[
-            validators.RegexValidator(r'^[a-zA-Z][a-zA-Z0-9.]*$',
+            validators.RegexValidator(r'^[a-zA-Z][-a-zA-Z0-9.]*[a-zA-Z0-9]$',
                                       ugettext_lazy('Invalid domain name'))])
 
 
