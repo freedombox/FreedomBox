@@ -25,6 +25,7 @@ from django.contrib import messages
 from django.core import validators
 
 from plinth.errors import ActionError
+from plinth.signals import domain_added, domain_removed
 from . import utils
 
 LOGGER = logging.getLogger(__name__)
@@ -100,6 +101,14 @@ for your account if no secret is set on the kite'))
             # was running, so changes take effect immediately.
             elif config_changed and new['enabled']:
                 utils.run(['restart'])
+
+            # Update kite name registered with Name Services module.
+            domain_removed.send_robust(
+                sender='pagekite', domain_type='pagekite')
+            if new['enabled'] and new['kite_name']:
+                domain_added.send_robust(
+                    sender='pagekite', domain_type='pagekite',
+                    name=new['kite_name'], description=_('Pagekite'))
 
 
 class StandardServiceForm(forms.Form):

@@ -21,10 +21,13 @@ Plinth module to configure PageKite
 
 from gettext import gettext as _
 from plinth import cfg
+from plinth.signals import domain_added
+
+from . import utils
 
 __all__ = ['init']
 
-depends = ['plinth.modules.apps']
+depends = ['plinth.modules.apps', 'plinth.modules.names']
 
 
 def init():
@@ -32,3 +35,15 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(_('Public Visibility (PageKite)'),
                      'glyphicon-flag', 'pagekite:index', 800)
+
+    # Register kite name with Name Services module.
+    try:
+        kite_name = utils.get_kite_details()['kite_name']
+        enabled = utils.get_pagekite_config()['enabled']
+    except IndexError:
+        # no data from 'pagekite get-kite'
+        pass
+    else:
+        if enabled and kite_name:
+            domain_added.send_robust(sender='pagekite', domain_type='pagekite',
+                                     name=kite_name, description=_('Pagekite'))

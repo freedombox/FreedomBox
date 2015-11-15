@@ -28,7 +28,7 @@ from plinth import action_utils
 
 __all__ = ['tor', 'init']
 
-depends = ['plinth.modules.apps']
+depends = ['plinth.modules.apps', 'plinth.modules.names']
 
 
 def diagnose():

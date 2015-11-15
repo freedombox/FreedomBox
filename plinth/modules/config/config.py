@@ -31,6 +31,7 @@ from plinth import actions
 from plinth import cfg
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
+from plinth.signals import domain_added, domain_removed
 
 
 LOGGER = logging.getLogger(__name__)
@@ -84,6 +85,12 @@ def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Configure'), 'glyphicon-cog', 'config:index', 10)
+
+    # Register domain with Name Services module.
+    domainname = get_domainname()
+    if domainname:
+        domain_added.send_robust(sender='config', domain_type='domainname',
+                                 name=domainname, description=_('Domain Name'))
 
 
 def index(request):
@@ -173,3 +180,9 @@ def set_domainname(domainname):
     domainname_change.send_robust(sender='config',
                                   old_domainname=old_domainname,
                                   new_domainname=domainname)
+
+    # Update domain registered with Name Services module.
+    domain_removed.send_robust(sender='config', domain_type='domainname')
+    if domainname:
+        domain_added.send_robust(sender='config', domain_type='domainname',
+                                 name=domainname, description=_('Domain Name'))
