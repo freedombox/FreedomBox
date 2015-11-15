@@ -252,14 +252,14 @@ def __apply_changes(request, old_status, new_status):
             actions.superuser_run('tor', ['disable-hs'])
             messages.success(request, _('Tor hidden service disabled'))
 
-        # Update hidden service name registered with Name Services module.
-        domain_removed.send_robust(
-                sender='tor', domain_type='hiddenservice')
-        (hs_enabled, hs_hostname, __) = get_hs()
-        if hs_enabled and hs_hostname:
-            domain_added.send_robust(
-                sender='tor', domain_type='hiddenservice',
-                name=hs_hostname, description=_('Tor Hidden Service'))
+    # Update hidden service name registered with Name Services module.
+    domain_removed.send_robust(
+        sender='tor', domain_type='hiddenservice')
+    (hs_enabled, hs_hostname, __) = get_hs()
+    if new_status['enabled'] and hs_enabled and hs_hostname:
+        domain_added.send_robust(
+            sender='tor', domain_type='hiddenservice',
+            name=hs_hostname, description=_('Tor Hidden Service'))
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:

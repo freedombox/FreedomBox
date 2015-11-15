@@ -63,28 +63,16 @@ def get_status():
 
     pagekite_name = names.get_domain('pagekite')
     if pagekite_name:
-        pagekite_status = [False for service in SERVICES]
-        try:
-            pagekite_config = pagekite.utils.get_pagekite_config()
-        except IndexError:
-            # no data from 'pagekite get-kite'
-            pass
-        else:
-            pagekite_services = pagekite.utils.get_pagekite_services()[0]
-            if pagekite_config['enabled']:
-                pagekite_status = [pagekite_services[service[0]]
-                                   for service in SERVICES]
-            else:
-                pagekite_name = _('Not Available')
-                pagekite_status = [False for service in SERVICES]
+        pagekite_services = pagekite.utils.get_pagekite_services()[0]
+        pagekite_status = [pagekite_services[service[0]]
+                           for service in SERVICES]
     else:
         pagekite_name = _('Not Available')
         pagekite_status = [False for service in SERVICES]
 
     tor_status = tor.get_status()
-    if (tor_status['enabled'] and tor_status['is_running'] and \
-        tor_status['hs_enabled']):
-        hs_name = names.get_domain('hiddenservice')
+    hs_name = names.get_domain('hiddenservice')
+    if hs_name:
         hs_status = [str(service[2]) in tor_status['hs_ports']
                      for service in SERVICES]
     else:
