@@ -59,28 +59,39 @@ class TrimmedCharField(forms.CharField):
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
-    # We're more conservative than RFC 952 and RFC 1123
+    # See:
+    # https://tools.ietf.org/html/rfc952
+    # https://tools.ietf.org/html/rfc1035#section-2.3.1
+    # https://tools.ietf.org/html/rfc1123#section-2
+    # https://tools.ietf.org/html/rfc2181#section-11
     hostname = TrimmedCharField(
         label=ugettext_lazy('Hostname'),
         help_text=\
-        ugettext_lazy('Your hostname is the local name by which other machines '
-                      'on your LAN can reach you. It must be alphanumeric, '
-                      'start with an alphabet and must not be greater than 63 '
-                      'characters in length.'),
+        ugettext_lazy('Hostname is the local name by which other machines on '
+                      'the local network reach your machine.  It must start '
+                      'and end with an alphabet or a digit and have as '
+                      'interior characters only alphabets, digits and '
+                      'hyphens.  Total length must be 63 characters or less.'),
         validators=[
-            validators.RegexValidator(r'^[a-zA-Z][-a-zA-Z0-9]{,61}[a-zA-Z0-9]$',
-                                      ugettext_lazy('Invalid hostname'))])
+            validators.RegexValidator(
+                r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$',
+                ugettext_lazy('Invalid hostname'))])
 
     domainname = TrimmedCharField(
         label=ugettext_lazy('Domain Name'),
         help_text=\
-        ugettext_lazy('Your domain name is the global name by which other '
-                      'machines on the Internet can reach you. It must consist '
-                      'of alphanumeric words separated by dots.'),
+        ugettext_lazy('Domain name is the global name by which other machines '
+                      'on the Internet can reach you.  It must consist of '
+                      'labels separated by dots.  Each label must start and '
+                      'end with an alphabet or a digit and have as interior '
+                      'characters only alphabets, digits and hyphens.  Length '
+                      'of each label must be 63 characters or less.  Total '
+                      'length of domain name must be 253 characters or less.'),
         required=False,
         validators=[
-            validators.RegexValidator(r'^[a-zA-Z][-a-zA-Z0-9.]*[a-zA-Z0-9]$',
-                                      ugettext_lazy('Invalid domain name'))])
+            validators.RegexValidator(
+                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]*[a-zA-Z0-9])?$',
+                ugettext_lazy('Invalid domain name'))])
 
 
 def init():

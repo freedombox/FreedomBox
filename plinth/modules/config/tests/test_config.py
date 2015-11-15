@@ -1,0 +1,65 @@
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Tests for config module.
+"""
+
+import unittest
+
+from ..config import ConfigurationForm
+
+
+class TestConfig(unittest.TestCase):
+    """Test cases for testing the config module."""
+    def test_hostname_field(self):
+        """Test that hostname field accepts only valid hostnames."""
+        valid_hostnames = [
+            'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname', 'example',
+            '012345678901234567890123456789012345678901234567890123456789012']
+        invalid_hostnames = [
+            '', '-', '-a', 'a-', '.a', 'a.', 'a.a', '?', 'a?a',
+            '0123456789012345678901234567890123456789012345678901234567890123']
+
+        for hostname in valid_hostnames:
+            form = ConfigurationForm({'hostname': hostname,
+                                      'domainname': 'example.com'})
+            self.assertTrue(form.is_valid())
+
+        for hostname in invalid_hostnames:
+            form = ConfigurationForm({'hostname': hostname,
+                                      'domainname': 'example.com'})
+            self.assertFalse(form.is_valid())
+
+    def test_domainname_field(self):
+        """Test that domainname field accepts only valid domainnames."""
+        valid_domainnames = [
+            '', 'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname',
+            'example', 'example.org', 'a.b.c.d', 'a-0.b-0.c-0',
+            '012345678901234567890123456789012345678901234567890123456789012']
+        invalid_domainnames = [
+            '-', '-a', 'a-', '.a', 'a.', '?', 'a?a']
+
+        for domainname in valid_domainnames:
+            form = ConfigurationForm({'hostname': 'example',
+                                      'domainname': domainname})
+            self.assertTrue(form.is_valid())
+
+        for domainname in invalid_domainnames:
+            form = ConfigurationForm({'hostname': 'example',
+                                      'domainname': domainname})
+            self.assertFalse(form.is_valid())
