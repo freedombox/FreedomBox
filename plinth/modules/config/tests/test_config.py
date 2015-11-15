@@ -47,12 +47,15 @@ class TestConfig(unittest.TestCase):
 
     def test_domainname_field(self):
         """Test that domainname field accepts only valid domainnames."""
+
         valid_domainnames = [
             '', 'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname',
             'example', 'example.org', 'a.b.c.d', 'a-0.b-0.c-0',
-            '012345678901234567890123456789012345678901234567890123456789012']
+            '012345678901234567890123456789012345678901234567890123456789012',
+            ((('x' * 63) + '.') * 3) + 'x' * 61]
         invalid_domainnames = [
-            '-', '-a', 'a-', '.a', 'a.', '?', 'a?a']
+            '-', '-a', 'a-', '.a', 'a.', '?', 'a?a', 'a..a', 'a.-a', '.',
+            ((('x' * 63) + '.') * 3) + 'x' * 62, 'x' * 64]
 
         for domainname in valid_domainnames:
             form = ConfigurationForm({'hostname': 'example',
