@@ -22,9 +22,11 @@ Plinth module for configuring hostname and domainname.
 from django import forms
 from django.contrib import messages
 from django.core import validators
+from django.core.exceptions import ValidationError
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 import logging
+import re
 import socket
 
 from plinth import actions
@@ -32,6 +34,8 @@ from plinth import cfg
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
+
+HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 
 LOGGER = logging.getLogger(__name__)
 
@@ -56,6 +60,11 @@ class TrimmedCharField(forms.CharField):
 
         return super(TrimmedCharField, self).clean(value)
 
+def domain_labelvalidator(domainname):
+    """Validating Domain Name Labels"""
+    for label in domainname.split("."):
+        if not re.match(HOSTNAME_REGEX, label):
+            raise ValidationError(ugettext_lazy('Invalid Domain Name'))
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
@@ -74,7 +83,7 @@ class ConfigurationForm(forms.Form):
                       'hyphens.  Total length must be 63 characters or less.'),
         validators=[
             validators.RegexValidator(
-                r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$',
+                HOSTNAME_REGEX,
                 ugettext_lazy('Invalid hostname'))])
 
     domainname = TrimmedCharField(
@@ -90,8 +99,9 @@ class ConfigurationForm(forms.Form):
         required=False,
         validators=[
             validators.RegexValidator(
-                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]*[a-zA-Z0-9])?$',
-                ugettext_lazy('Invalid domain name'))])
+                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
+                ugettext_lazy('Invalid domain name')),
+            domain_labelvalidator])
 
 
 def init():
