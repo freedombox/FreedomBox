@@ -21,17 +21,15 @@ Helper functions for working with network manager.
 
 import collections
 from django.utils.translation import ugettext_lazy as _
-import pgi
-pgi.require_version('GLib', '2.0')
-from pgi.repository import GLib as glib
-pgi.require_version('NM', '1.0')
-from pgi.repository import NM as nm
 import logging
 import socket
 import struct
 import subprocess
 import uuid
 
+from plinth.utils import import_from_gi
+glib = import_from_gi('GLib', '2.0')
+nm = import_from_gi('NM', '1.0')
 
 logger = logging.getLogger(__name__)
 

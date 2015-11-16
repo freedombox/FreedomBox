@@ -20,9 +20,8 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import network
-import pgi
-pgi.require_version('NM', '1.0')
-from pgi.repository import NM as nm
+from plinth.utils import import_from_gi
+nm = import_from_gi('NM', '1.0')
 
 
 def _get_interface_choices(device_type):

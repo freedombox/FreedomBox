@@ -22,15 +22,13 @@ Framework for installing and updating distribution packages
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 import functools
-import pgi
-pgi.require_version('GLib', '2.0')
-from pgi.repository import GLib as glib
-pgi.require_version('PackageKitGlib', '1.0')
-from pgi.repository import PackageKitGlib as packagekit
 import logging
 import threading
 
 import plinth
+from plinth.utils import import_from_gi
+glib = import_from_gi('GLib', '2.0')
+packagekit = import_from_gi('PackageKitGlib', '1.0')
 
 
 logger = logging.getLogger(__name__)
