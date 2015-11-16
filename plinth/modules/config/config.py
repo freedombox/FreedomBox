@@ -60,11 +60,12 @@ class TrimmedCharField(forms.CharField):
 
         return super(TrimmedCharField, self).clean(value)
 
-def domain_labelvalidator(domainname):
-    """Validating Domain Name Labels"""
-    for label in domainname.split("."):
+def domain_label_validator(domainname):
+    """Validate domain name labels."""
+    for label in domainname.split('.'):
         if not re.match(HOSTNAME_REGEX, label):
-            raise ValidationError(ugettext_lazy('Invalid Domain Name'))
+            raise ValidationError(_('Invalid domain name'))
+
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
@@ -101,7 +102,7 @@ class ConfigurationForm(forms.Form):
             validators.RegexValidator(
                 r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
                 ugettext_lazy('Invalid domain name')),
-            domain_labelvalidator])
+            domain_label_validator])
 
 
 def init():

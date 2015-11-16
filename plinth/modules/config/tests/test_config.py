@@ -47,7 +47,6 @@ class TestConfig(unittest.TestCase):
 
     def test_domainname_field(self):
         """Test that domainname field accepts only valid domainnames."""
-
         valid_domainnames = [
             '', 'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname',
             'example', 'example.org', 'a.b.c.d', 'a-0.b-0.c-0',
