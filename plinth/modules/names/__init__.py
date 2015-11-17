@@ -52,8 +52,6 @@ def init():
 def on_domain_added(sender, domain_type, name='', description='',
                     services=None, **kwargs):
     """Add domain to global list."""
-    global domain_types, domains
-
     if not domain_type:
         return
     domain_types[domain_type] = description
@@ -73,7 +71,6 @@ def on_domain_added(sender, domain_type, name='', description='',
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Remove domain from global list."""
-    global domains
     if domain_type in domains:
         if name == '':  # remove all domains of this type
             domains[domain_type] = {}
@@ -84,10 +81,12 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 
 
 def get_domain_types():
+    """Get list of domain_types."""
     return list(domain_types.keys())
 
 
 def get_description(domain_type):
+    """Get description of a domain_type, if available."""
     if domain_type in domain_types:
         return domain_types[domain_type]
     else:
@@ -101,7 +100,6 @@ def get_domain(domain_type):
     This function is meant for use with single-domain domain_types. If there is
     more than one domain, any one of the domains may be returned.
     """
-    global domains
     if domain_type in domains and len(domains[domain_type]) > 0:
         return list(domains[domain_type].keys())[0]
     else:
