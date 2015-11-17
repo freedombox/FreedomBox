@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure reStore
+Plinth module to configure reStore.
 """
 
 from django.utils.translation import ugettext_lazy as _
@@ -31,14 +31,14 @@ depends = ['plinth.modules.apps']
 
 
 def init():
-    """Initialize the reStore module"""
+    """Initialize the reStore module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Unhosted storage (reStore)'), 'glyphicon-hdd',
+    menu.add_urlname(_('Unhosted Storage (reStore)'), 'glyphicon-hdd',
                      'restore:index', 750)
 
     global service
     service = service_module.Service(
-        'node-restore', _('reStore'),
+        'node-restore', _('reStore'), ['http', 'https'],
         is_external=False, enabled=is_enabled())
 
 

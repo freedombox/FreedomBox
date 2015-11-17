@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Plinth module for configuring reStore.
+"""
+
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
@@ -27,7 +31,6 @@ from plinth.modules import restore
 @package.required(['node-restore'])
 def index(request):
     """Serve configuration page."""
-
     status = get_status()
 
     if request.method == 'POST':
@@ -40,7 +43,7 @@ def index(request):
         form = ReStoreForm(initial=status, prefix='restore')
 
     return TemplateResponse(request, 'restore_index.html',
-                            {'title': _('Unhosted storage (reStore)'),
+                            {'title': _('Unhosted Storage (reStore)'),
                              'status': status,
                              'form': form})
 

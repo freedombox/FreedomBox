@@ -16,7 +16,7 @@
 #
 
 """
-URLs for the reStore module
+URLs for the reStore module.
 """
 
 from django.conf.urls import patterns, url
