@@ -42,8 +42,19 @@ def init():
         enabled = utils.get_pagekite_config()['enabled']
     except IndexError:
         # no data from 'pagekite get-kite'
-        pass
+        kite_name = None
+        enabled_services = None
     else:
         if enabled and kite_name:
-            domain_added.send_robust(sender='pagekite', domain_type='pagekite',
-                                     name=kite_name, description=_('Pagekite'))
+            services = utils.get_pagekite_services()[0]
+            enabled_services = []
+            for service in services:
+                if services[service]:
+                    enabled_services.append(service)
+        else:
+            kite_name = None
+            enabled_services = None
+
+    domain_added.send_robust(sender='pagekite', domain_type='pagekite',
+                             name=kite_name, description=_('Pagekite'),
+                             services=enabled_services)

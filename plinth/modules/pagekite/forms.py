@@ -106,9 +106,15 @@ for your account if no secret is set on the kite'))
             domain_removed.send_robust(
                 sender='pagekite', domain_type='pagekite')
             if new['enabled'] and new['kite_name']:
+                services = utils.get_pagekite_services()[0]
+                enabled_services = []
+                for service in services:
+                    if services[service]:
+                        enabled_services.append(service)
                 domain_added.send_robust(
                     sender='pagekite', domain_type='pagekite',
-                    name=new['kite_name'], description=_('Pagekite'))
+                    name=new['kite_name'], description=_('Pagekite'),
+                    services=enabled_services)
 
 
 class StandardServiceForm(forms.Form):
@@ -141,6 +147,27 @@ class StandardServiceForm(forms.Form):
                     utils.run(['remove-service', '--service', service])
                     messages.success(request, _('Service disabled: {name}')
                                      .format(name=service_name))
+
+        # Update kite name services registered with Name Services module.
+        domain_removed.send_robust(
+            sender='pagekite', domain_type='pagekite')
+        try:
+            kite_name = utils.get_kite_details()['kite_name']
+            enabled = utils.get_pagekite_config()['enabled']
+        except IndexError:
+            # no data from 'pagekite get-kite'
+            pass
+        else:
+            if enabled and kite_name:
+                services = utils.get_pagekite_services()[0]
+                enabled_services = []
+                for service in services:
+                    if services[service]:
+                        enabled_services.append(service)
+                domain_added.send_robust(
+                    sender='pagekite', domain_type='pagekite',
+                    name=kite_name, description=_('Pagekite'),
+                    services=enabled_services)
 
 
 class BaseCustomServiceForm(forms.Form):

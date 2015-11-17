@@ -26,8 +26,13 @@ from plinth import cfg
 from plinth.signals import domain_added, domain_removed
 
 
-depends = ['plinth.modules.system',
-           'plinth.modules.firewall']
+SERVICES = [
+    ('http', _('HTTP'), 80),
+    ('https', _('HTTPS'), 443),
+    ('ssh', _('SSH'), 22),
+]
+
+depends = ['plinth.modules.system']
 
 domain_types = {}
 domains = {}
@@ -44,16 +49,26 @@ def init():
     domain_removed.connect(on_domain_removed)
 
 
-def on_domain_added(sender, domain_type, name, description, **kwargs):
+def on_domain_added(sender, domain_type, name='', description='',
+                    services=None, **kwargs):
     """Add domain to global list."""
     global domain_types, domains
+
+    if not domain_type:
+        return
     domain_types[domain_type] = description
-    if domain_type in domains and name and name not in domains[domain_type]:
-        domains[domain_type].append(name)
-        logger.info('Added %s domain: %s', domain_type, name)
-    elif name:  # not blank
-        domains[domain_type] = [name]
-        logger.info('Added %s domain: %s', domain_type, name)
+
+    if not name:
+        return
+    if not services:
+        services = []
+
+    if domain_type not in domains:
+        # new domain_type
+        domains[domain_type] = {}
+    domains[domain_type][name] = services
+    logger.info('Added domain %s of type %s with services %s',
+                name, domain_type, str(services))
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
@@ -61,17 +76,48 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     global domains
     if domain_type in domains:
         if name == '':  # remove all domains of this type
-            domains[domain_type] = []
-            logger.info('Removed all %s domains', domain_type)
+            domains[domain_type] = {}
+            logger.info('Removed all domains of type %s', domain_type)
         elif name in domains[domain_type]:
-            domains[domain_type].remove(name)
-            logger.info('Removed %s domain: %s', domain_type, name)
+            del domains[domain_type][name]
+            logger.info('Removed domain %s of type %s', name, domain_type)
+
+
+def get_domain_types():
+    return list(domain_types.keys())
+
+
+def get_description(domain_type):
+    if domain_type in domain_types:
+        return domain_types[domain_type]
+    else:
+        return domain_type
 
 
 def get_domain(domain_type):
-    """Get the first domain of type domain_type."""
+    """
+    Get domain of type domain_type.
+
+    This function is meant for use with single-domain domain_types. If there is
+    more than one domain, any one of the domains may be returned.
+    """
     global domains
     if domain_type in domains and len(domains[domain_type]) > 0:
-        return domains[domain_type][0]
+        return list(domains[domain_type].keys())[0]
     else:
-        return None
+        return _('Not Available')
+
+
+def get_services(domain_type, domain):
+    """Get list of enabled services for a domain."""
+    try:
+        return domains[domain_type][domain]
+    except KeyError:
+        # domain_type or domain not registered
+        return []
+
+
+def get_services_status(domain_type, domain):
+    """Get list of whether each service is enabled for a domain."""
+    enabled = get_services(domain_type, domain)
+    return [service[0] in enabled for service in SERVICES]

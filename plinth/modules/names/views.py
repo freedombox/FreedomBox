@@ -22,17 +22,8 @@ Plinth module for name services
 from django.template.response import TemplateResponse
 from gettext import gettext as _
 
-from plinth.actions import ActionError
-from plinth.modules import names
-from plinth.modules.firewall import firewall
-from plinth.modules import pagekite
-from plinth.modules.tor import tor
-
-SERVICES = [
-    ('http', _('HTTP'), 80),
-    ('https', _('HTTPS'), 443),
-    ('ssh', _('SSH'), 22),
-]
+from . import SERVICES, get_domain_types, get_description
+from . import get_domain, get_services_status
 
 
 def index(request):
@@ -46,57 +37,16 @@ def index(request):
 
 def get_status():
     """Get configured services per name."""
-    domainname = names.get_domain('domainname')
-    if domainname:
-        try:
-            external_enabled_services = firewall.get_enabled_services(
-                zone='external')
-            domainname_services = [service[0] in external_enabled_services
-                                   for service in SERVICES]
-        except ActionError:
-            # This happens when firewalld is not installed.
-            # TODO: Are these services actually enabled?
-            domainname_services = [True for service in SERVICES]
-    else:
-        domainname = _('Not Available')
-        domainname_services = [False for service in SERVICES]
+    name_services = []
+    for domain_type in sorted(get_domain_types()):
+        domain = get_domain(domain_type)
+        name_services.append({
+            'type': get_description(domain_type),
+            'name': domain,
+            'services_enabled': get_services_status(domain_type, domain),
+        })
 
-    pagekite_name = names.get_domain('pagekite')
-    if pagekite_name:
-        pagekite_services = pagekite.utils.get_pagekite_services()[0]
-        pagekite_status = [pagekite_services[service[0]]
-                           for service in SERVICES]
-    else:
-        pagekite_name = _('Not Available')
-        pagekite_status = [False for service in SERVICES]
-
-    tor_status = tor.get_status()
-    hs_name = names.get_domain('hiddenservice')
-    if hs_name:
-        hs_status = [str(service[2]) in tor_status['hs_ports']
-                     for service in SERVICES]
-    else:
-        hs_name = _('Not Available')
-        hs_status = [False for service in SERVICES]
-
-    status = {
+    return {
         'services': [service[1] for service in SERVICES],
-        'name_services': [
-            {
-                'type': _('Domain Name'),
-                'name': domainname,
-                'services_enabled': domainname_services,
-            },
-            {
-                'type': _('Pagekite'),
-                'name': pagekite_name,
-                'services_enabled': pagekite_status,
-            },
-            {
-                'type': _('Tor Hidden Service'),
-                'name': hs_name,
-                'services_enabled': hs_status,
-            },
-        ],
+        'name_services': name_services,
     }
-    return status
