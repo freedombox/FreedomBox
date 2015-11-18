@@ -20,7 +20,7 @@ Plinth module for name services
 """
 
 from django.template.response import TemplateResponse
-from gettext import gettext as _
+from django.utils.translation import ugettext as _
 
 from . import SERVICES, get_domain_types, get_description
 from . import get_domain, get_services_status
