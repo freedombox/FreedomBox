@@ -19,10 +19,11 @@
 {% endcomment %}
 
 {% load bootstrap %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Name Services</h2>
+<h2>{{ title }}</h2>
 
 <div class="row">
   <div class="col-sm-5">
@@ -47,9 +48,9 @@
 	  {% for service in name_service.services_enabled %}
 	  <td>
 	    {% if service %}
-	    <span class="label label-success">Enabled</span>
+	    <span class="label label-success">{% trans "Enabled" %}</span>
 	    {% else %}
-	    <span class="label label-warning">Disabled<span>
+	    <span class="label label-warning">{% trans "Disabled" %}</span>
 	    {% endif %}
 	  </td>
 	  {% endfor %}
