@@ -23,7 +23,9 @@ from django import forms
 from django.contrib import messages
 from django.core import validators
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.template.response import TemplateResponse
+from django.utils import translation
 from django.utils.translation import ugettext as _, ugettext_lazy
 import logging
 import re
@@ -49,6 +51,16 @@ def get_domainname():
     """Return the domainname"""
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
+
+
+def get_language(request):
+    """Return the current language setting"""
+    # TODO: Store the language per user in kvstore,
+    # taking care of setting language on login, and adapting kvstore when
+    # renaming/deleting users
+
+    # The session contains more accurate information than request.LANGUAGE_CODE
+    return request.session[translation.LANGUAGE_SESSION_KEY]
 
 
 class TrimmedCharField(forms.CharField):
@@ -104,6 +116,14 @@ class ConfigurationForm(forms.Form):
                 ugettext_lazy('Invalid domain name')),
             domain_label_validator])
 
+    language = forms.ChoiceField(
+        label=ugettext_lazy('Language'),
+        help_text=\
+        ugettext_lazy('Language for this freedombox web administration '
+                      'interface'),
+        required=False,
+        choices=settings.LANGUAGES)
+
 
 def init():
     """Initialize the module"""
@@ -114,7 +134,7 @@ def init():
 
 def index(request):
     """Serve the configuration form"""
-    status = get_status()
+    status = get_status(request)
 
     form = None
 
@@ -124,7 +144,7 @@ def index(request):
         # pylint: disable-msg=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
+            status = get_status(request)
             form = ConfigurationForm(initial=status,
                                      prefix='configuration')
     else:
@@ -135,10 +155,11 @@ def index(request):
                              'form': form})
 
 
-def get_status():
+def get_status(request):
     """Return the current status"""
     return {'hostname': get_hostname(),
-            'domainname': get_domainname()}
+            'domainname': get_domainname(),
+            'language': get_language(request)}
 
 
 def _apply_changes(request, old_status, new_status):
@@ -151,8 +172,6 @@ def _apply_changes(request, old_status, new_status):
                            .format(exception=exception))
         else:
             messages.success(request, _('Hostname set'))
-    else:
-        messages.info(request, _('Hostname is unchanged'))
 
     if old_status['domainname'] != new_status['domainname']:
         try:
@@ -162,8 +181,17 @@ def _apply_changes(request, old_status, new_status):
                            .format(exception=exception))
         else:
             messages.success(request, _('Domain name set'))
-    else:
-        messages.info(request, _('Domain name is unchanged'))
+
+    if old_status['language'] != new_status['language']:
+        language = new_status['language']
+        try:
+            translation.activate(language)
+            request.session[translation.LANGUAGE_SESSION_KEY] = language
+        except Exception as exception:
+            messages.error(request, _('Error setting language: {exception}')
+                            .format(exception=exception))
+        else:
+            messages.success(request, _('Language changed'))
 
 
 def set_hostname(hostname):

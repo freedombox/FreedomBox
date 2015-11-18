@@ -19,7 +19,10 @@
 Tests for config module.
 """
 
+import os
 import unittest
+
+from plinth import __main__ as plinth_main
 
 from ..config import ConfigurationForm
 
@@ -65,3 +68,12 @@ class TestConfig(unittest.TestCase):
             form = ConfigurationForm({'hostname': 'example',
                                       'domainname': domainname})
             self.assertFalse(form.is_valid())
+
+    def test_locale_path(self):
+        """
+        Test that the 'locale' directory is in the same folder as __main__.py.
+        This is required for detecting translated languages.
+        """
+        plinth_dir = os.path.dirname(plinth_main.__file__)
+        locale_dir = os.path.join(plinth_dir, 'locale')
+        self.assertTrue(os.path.isdir(locale_dir))
