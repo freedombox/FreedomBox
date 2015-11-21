@@ -21,6 +21,7 @@ Plinth module for upgrades
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
@@ -34,6 +35,8 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
                'text': ugettext_lazy('Automatic Upgrades')},
               {'url': reverse_lazy('upgrades:upgrade'),
                'text': ugettext_lazy('Upgrade Packages')}]
+
+upgrade_process = None
 
 
 def on_install():
@@ -66,29 +69,28 @@ def index(request):
 @package.required(['unattended-upgrades'], on_install=on_install)
 def upgrade(request):
     """Serve the upgrade page."""
+    if upgrade_process:
+        result = _collect_upgrade_result(request)
+    else:
+        result = None
+
     return TemplateResponse(request, 'upgrades.html',
                             {'title': _('Package Upgrades'),
-                             'subsubmenu': subsubmenu})
+                             'subsubmenu': subsubmenu,
+                             'running': bool(upgrade_process),
+                             'result': result})
 
 
 @require_POST
 @package.required(['unattended-upgrades'], on_install=on_install)
-def run(request):
-    """Run upgrades and show the output page."""
-    output = ''
-    error = ''
-    try:
-        output = actions.superuser_run('upgrades', ['run'])
-    except ActionError as exception:
-        output, error = exception.args[1:]
-    except Exception as exception:
-        error = str(exception)
+def run(_):
+    """Start the upgrade process."""
+    global upgrade_process
+    if not upgrade_process:
+        upgrade_process = actions.superuser_run(
+            'upgrades', ['run'], async=True)
 
-    return TemplateResponse(request, 'upgrades_run.html',
-                            {'title': _('Package Upgrades'),
-                             'subsubmenu': subsubmenu,
-                             'upgrades_output': output,
-                             'upgrades_error': error})
+    return redirect('upgrades:upgrade')
 
 
 def get_status():
@@ -122,3 +124,30 @@ def _apply_changes(request, old_status, new_status):
         messages.success(request, _('Automatic upgrades enabled'))
     else:
         messages.success(request, _('Automatic upgrades disabled'))
+
+
+def _collect_upgrade_result(request):
+    """Handle upgrade process completion."""
+    global upgrade_process
+    if not upgrade_process:
+        return
+
+    return_code = upgrade_process.poll()
+
+    # Upgrade process is not complete yet
+    if return_code == None:
+        return
+
+    output, error = upgrade_process.communicate()
+    output, error = output.decode(), error.decode()
+
+    if not return_code:
+        messages.success(request, _('Upgrade completed.'))
+    else:
+        messages.info(request, _('Upgrade failed.'))
+
+    upgrade_process = None
+
+    return {'return_code': return_code,
+            'output': output,
+            'error': error}
