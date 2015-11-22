@@ -120,7 +120,7 @@ class ConfigurationForm(forms.Form):
     language = forms.ChoiceField(
         label=ugettext_lazy('Language'),
         help_text=\
-        ugettext_lazy('Language for this freedombox web administration '
+        ugettext_lazy('Language for this FreedomBox web administration '
                       'interface'),
         required=False,
         choices=settings.LANGUAGES)
