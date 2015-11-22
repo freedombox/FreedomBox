@@ -59,8 +59,9 @@ def get_language(request):
     # taking care of setting language on login, and adapting kvstore when
     # renaming/deleting users
 
-    # The session contains more accurate information than request.LANGUAGE_CODE
-    return request.session[translation.LANGUAGE_SESSION_KEY]
+    # The information from the session is more accurate but not always present
+    return request.session.get(translation.LANGUAGE_SESSION_KEY,
+                               request.LANGUAGE_CODE)
 
 
 class TrimmedCharField(forms.CharField):
