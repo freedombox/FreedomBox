@@ -16,14 +16,13 @@
 #
 
 """
-Plinth module for basic system configuration
+URLs for the name services module
 """
 
-from . import config
-from .config import init
+from django.conf.urls import patterns, url
 
-__all__ = ['config', 'init']
 
-depends = ['plinth.modules.system',
-           'plinth.modules.firewall',
-           'plinth.modules.names']
+urlpatterns = patterns(
+    'plinth.modules.names.views',
+    url(r'^sys/names/$', 'index', name='index'),
+)

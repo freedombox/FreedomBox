@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<div class="row">
+  <div class="col-sm-5">
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+	<tr>
+	  <td></td>
+	  {% for service in status.services %}
+	  <td>
+	    <div class="text-center">{{ service }}</div>
+	  </td>
+	  {% endfor %}
+	</tr>
+      </thead>
+      <tbody>
+	{% for name_service in status.name_services %}
+	<tr>
+	  <td>
+	    <b>{{ name_service.type }}</b></br>
+	    <i>{{ name_service.name }}</i>
+	  </td>
+	  {% for service in name_service.services_enabled %}
+	  <td>
+	    {% if service %}
+	    <span class="label label-success">{% trans "Enabled" %}</span>
+	    {% else %}
+	    <span class="label label-warning">{% trans "Disabled" %}</span>
+	    {% endif %}
+	  </td>
+	  {% endfor %}
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

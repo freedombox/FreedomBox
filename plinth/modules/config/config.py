@@ -33,8 +33,11 @@ import socket
 
 from plinth import actions
 from plinth import cfg
+from plinth.modules.firewall import firewall
+from plinth.modules.names import SERVICES
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
+from plinth.signals import domain_added, domain_removed
 
 
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
@@ -132,6 +135,23 @@ def init():
     menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
                      'config:index', 10)
 
+    # Register domain with Name Services module.
+    domainname = get_domainname()
+    if domainname:
+        try:
+            domainname_services = firewall.get_enabled_services(
+                zone='external')
+        except actions.ActionError:
+            # This happens when firewalld is not installed.
+            # TODO: Are these services actually enabled?
+            domainname_services = [service[0] for service in SERVICES]
+    else:
+        domainname_services = None
+
+    domain_added.send_robust(sender='config', domain_type='domainname',
+                             name=domainname, description=_('Domain Name'),
+                             services=domainname_services)
+
 
 def index(request):
     """Serve the configuration form"""
@@ -228,3 +248,18 @@ def set_domainname(domainname):
     domainname_change.send_robust(sender='config',
                                   old_domainname=old_domainname,
                                   new_domainname=domainname)
+
+    # Update domain registered with Name Services module.
+    domain_removed.send_robust(sender='config', domain_type='domainname')
+    if domainname:
+        try:
+            domainname_services = firewall.get_enabled_services(
+                zone='external')
+        except actions.ActionError:
+            # This happens when firewalld is not installed.
+            # TODO: Are these services actually enabled?
+            domainname_services = [service[0] for service in SERVICES]
+
+        domain_added.send_robust(sender='config', domain_type='domainname',
+                                 name=domainname, description=_('Domain Name'),
+                                 services=domainname_services)
