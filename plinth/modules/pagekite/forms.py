@@ -24,7 +24,6 @@ import json
 import logging
 
 from plinth.errors import ActionError
-from plinth.signals import domain_added, domain_removed
 from . import utils
 
 LOGGER = logging.getLogger(__name__)
@@ -105,18 +104,8 @@ class ConfigurationForm(forms.Form):
                 utils.run(['restart'])
 
             # Update kite name registered with Name Services module.
-            domain_removed.send_robust(
-                sender='pagekite', domain_type='pagekite')
-            if new['enabled'] and new['kite_name']:
-                services = utils.get_pagekite_services()[0]
-                enabled_services = []
-                for service in services:
-                    if services[service]:
-                        enabled_services.append(service)
-                domain_added.send_robust(
-                    sender='pagekite', domain_type='pagekite',
-                    name=new['kite_name'], description=_('Pagekite'),
-                    services=enabled_services)
+            utils.update_names_module(enabled=new['enabled'],
+                                      kite_name=new['kite_name'])
 
 
 class StandardServiceForm(forms.Form):
@@ -150,26 +139,8 @@ class StandardServiceForm(forms.Form):
                     messages.success(request, _('Service disabled: {name}')
                                      .format(name=service_name))
 
-        # Update kite name services registered with Name Services module.
-        domain_removed.send_robust(
-            sender='pagekite', domain_type='pagekite')
-        try:
-            kite_name = utils.get_kite_details()['kite_name']
-            enabled = utils.get_pagekite_config()['enabled']
-        except IndexError:
-            # no data from 'pagekite get-kite'
-            pass
-        else:
-            if enabled and kite_name:
-                services = utils.get_pagekite_services()[0]
-                enabled_services = []
-                for service in services:
-                    if services[service]:
-                        enabled_services.append(service)
-                domain_added.send_robust(
-                    sender='pagekite', domain_type='pagekite',
-                    name=kite_name, description=_('Pagekite'),
-                    services=enabled_services)
+        # Update kite services registered with Name Services module.
+        utils.update_names_module()
 
 
 class BaseCustomServiceForm(forms.Form):

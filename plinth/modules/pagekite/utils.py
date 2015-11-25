@@ -22,6 +22,7 @@ import os
 
 from plinth import actions
 from plinth import action_utils
+from plinth.signals import domain_added, domain_removed
 
 LOGGER = logging.getLogger(__name__)
 
@@ -236,6 +237,43 @@ def get_augeas_servicefile_path(protocol):
         relpath = '%s_%s.rc' % (port, _protocol)
 
     return os.path.join(CONF_PATH, relpath, 'service_on')
+
+
+def update_names_module(initial_registration=False, enabled=None,
+                        kite_name=None):
+    """
+    Update the PageKite domain and services of the 'names' module.
+
+    - initial_registration: Boolean (optional): Register also if not enabled
+    - enabled: Boolean (optional) whether PageKite is enabled
+    - kite_name: String (optional)
+    """
+    domain_removed.send_robust(sender='pagekite', domain_type='pagekite')
+
+    if enabled is None:
+        try:
+            enabled = get_pagekite_config()['enabled']
+        except IndexError:
+            enabled = False
+
+    if enabled:
+        # Get enabled services and kite name
+        services = get_pagekite_services()[0]
+        enabled_services = [service for service in services if
+                            services[service]]
+        if kite_name is None:
+            try:
+                kite_name = get_kite_details()['kite_name']
+            except IndexError:
+                pass
+    else:
+        enabled_services = None
+        kite_name = None
+
+    if initial_registration or (enabled and kite_name):
+        domain_added.send_robust(
+            sender='pagekite', domain_type='pagekite', name=kite_name,
+            description=_('Pagekite'), services=enabled_services)
 
 
 if __name__ == "__main__":
