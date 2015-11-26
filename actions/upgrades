@@ -61,15 +61,13 @@ def subcommand_run(_):
         sys.exit(1)
 
     try:
-        output = subprocess.check_output(['unattended-upgrades', '-v'])
+        subprocess.check_call(['unattended-upgrades', '-v'])
     except FileNotFoundError:
         print('Error: unattended-upgrades is not available.', file=sys.stderr)
         sys.exit(2)
     except Exception as error:
         print('Error: {0}'.format(error), file=sys.stderr)
         sys.exit(3)
-    else:
-        print(output.decode())
 
 
 def subcommand_check_auto(_):
