@@ -85,6 +85,12 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         kwargs['username'] = self.object.username
         return kwargs
 
+    def get_initial(self):
+        initial = super(UserUpdate, self).get_initial()
+        initial['ssh_key'] = actions.superuser_run(
+            'ssh', ['get-key', '--username', self.object.username]).strip()
+        return initial
+
     def get_success_url(self):
         """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
