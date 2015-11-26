@@ -31,21 +31,14 @@
     {% endblocktrans %}
   </p>
 
-  <form class="form" method="post" action="{% url 'power:reboot' %}">
-    {% csrf_token %}
+  <p>
+    <a class="btn btn-primary btn-md" href="{% url 'power:reboot' %}">
+      {% trans "Reboot..." %}</a>
+  </p>
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Reboot... &raquo;" %}"/>
-  </form>
-
-  </br>
-
-  <form class="form" method="post" action="{% url 'power:shutdown' %}">
-    {% csrf_token %}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Shut Down... &raquo;" %}"/>
-  </form>
-
+  <p>
+    <a class="btn btn-primary btn-md" href="{% url 'power:shutdown' %}">
+      {% trans "Shut Down..." %}</a>
+  </p>
 
 {% endblock %}

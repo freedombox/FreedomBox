@@ -25,7 +25,5 @@ urlpatterns = patterns(
     'plinth.modules.power.views',
     url(r'^sys/power/$', 'index', name='index'),
     url(r'^sys/power/reboot$', 'reboot', name='reboot'),
-    url(r'^sys/power/reboot/now$', 'reboot_now', name='reboot_now'),
     url(r'^sys/power/shutdown$', 'shutdown', name='shutdown'),
-    url(r'^sys/power/shutdown/now$', 'shutdown_now', name='shutdown_now'),
     )

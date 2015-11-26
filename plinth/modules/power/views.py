@@ -19,6 +19,7 @@
 Plinth module for power module.
 """
 
+from django.forms import Form
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
@@ -33,21 +34,27 @@ def index(request):
 
 def reboot(request):
     """Serve reboot confirmation page."""
+    form = None
+
+    if request.method == 'POST':
+        actions.superuser_run('power', ['reboot'])
+    else:
+        form = Form(prefix='power')
+
     return TemplateResponse(request, 'power_reboot.html',
-                            {'title': _('Power Control')})
-
-
-def reboot_now(request):
-    """Reboot the system."""
-    actions.superuser_run('power', ['reboot'])
+                            {'title': _('Power Control'),
+                             'form': form})
 
 
 def shutdown(request):
     """Serve shutdown confirmation page."""
+    form = None
+
+    if request.method == 'POST':
+        actions.superuser_run('power', ['shutdown'])
+    else:
+        form = Form(prefix='power')
+
     return TemplateResponse(request, 'power_shutdown.html',
-                            {'title': _('Power Control')})
-
-
-def shutdown_now(request):
-    """Shutdown the system."""
-    actions.superuser_run('power', ['shutdown'])
+                            {'title': _('Power Control'),
+                             'form': form})

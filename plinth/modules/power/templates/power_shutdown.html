@@ -31,8 +31,10 @@
     {% endblocktrans %}
   </p>
 
-  <form class="form" method="post" action="{% url 'power:shutdown_now' %}">
+  <form class="form" method="post">
     {% csrf_token %}
+
+    {{ form|bootstrap }}
 
     <input type="submit" class="btn btn-primary"
            value="{% trans "Shut Down Now &raquo;" %}"/>
