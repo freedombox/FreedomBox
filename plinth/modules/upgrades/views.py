@@ -69,10 +69,7 @@ def index(request):
 @package.required(['unattended-upgrades'], on_install=on_install)
 def upgrade(request):
     """Serve the upgrade page."""
-    if upgrade_process:
-        result = _collect_upgrade_result(request)
-    else:
-        result = None
+    result = _collect_upgrade_result(request)
 
     return TemplateResponse(request, 'upgrades.html',
                             {'title': _('Package Upgrades'),
@@ -135,7 +132,7 @@ def _collect_upgrade_result(request):
     return_code = upgrade_process.poll()
 
     # Upgrade process is not complete yet
-    if return_code == None:
+    if return_code is None:
         return
 
     output, error = upgrade_process.communicate()
@@ -144,7 +141,7 @@ def _collect_upgrade_result(request):
     if not return_code:
         messages.success(request, _('Upgrade completed.'))
     else:
-        messages.info(request, _('Upgrade failed.'))
+        messages.error(request, _('Upgrade failed.'))
 
     upgrade_process = None
 

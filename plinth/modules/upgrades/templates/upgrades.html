@@ -35,35 +35,30 @@
 
   {% if result %}
 
-    {% if result.error %}
-      <div class="alert alert-danger" role="alert">
-	{% trans "There was an error while upgrading." %}
-      </div>
+    {% if result.return_code %}
+      <p>
+        {% trans "There was an error while upgrading." %}
+      </p>
 
       <h5>{% trans "Output from unattended-upgrades:" %}</h5>
-
       <pre>{{ result.error }}</pre>
-    {% endif %}
-
-    {% if result.output %}
-      <div class="row">
-	<div class="col-lg-6">
-          <div class="alert alert-success" role="alert">
-            {% trans "The operating system is up to date now. &nbsp;" %}
-              <button type="button" class="btn btn-default show-details"
-                      style='display:none'>
-		{% trans "Show Details" %}
-		<div class="caret"></div>
-              </button>
-          </div>
-	</div>
-      </div>
+      {% if result.output %}
+        <pre>{{ result.output }}</pre>
+      {% endif %}
+    {% else %}
+      <p>
+        {% trans "The operating system is up to date now. &nbsp;" %}
+        <button type="button" class="btn btn-default show-details"
+                style='display: none;'>
+          {% trans "Show Details" %}
+          <div class="caret"></div>
+        </button>
+      </p>
 
       <div class="details">
-	<h5>{% trans "Output from unattended-upgrades:" %}</h5>
-	<pre>{{ result.output }}</pre>
+        <h5>{% trans "Output from unattended-upgrades:" %}</h5>
+        <pre>{{ result.output }}</pre>
       </div>
-
     {% endif %}
 
   {% endif %}
@@ -89,7 +84,7 @@
   {% if running %}
     <p class="running-status-parent">
       <span class="running-status active"></span>
-      {% trans "Upgrade is running" %}
+      {% trans "System is being upgraded." %}
     </p>
   {% endif %}
 
