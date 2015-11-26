@@ -20,23 +20,87 @@
 
 {% load i18n %}
 
+{% block page_head %}
+
+  {% if running %}
+    <meta http-equiv="refresh" content="3"/>
+  {% endif %}
+
+{% endblock %}
+
+
 {% block content %}
 
   <h2>{{ title }}</h2>
 
-  <p>
-    {% blocktrans trimmed %}
-      This will run unattended-upgrades, which will attempt to upgrade
-      your system with the latest Debian packages. It may take a few
-      minutes to complete.
-    {% endblocktrans %}
-  </p>
+  {% if result %}
 
-  <form class="form" method="post" action="{% url 'upgrades:run' %}">
-    {% csrf_token %}
+    {% if result.error %}
+      <div class="alert alert-danger" role="alert">
+	{% trans "There was an error while upgrading." %}
+      </div>
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Upgrade now &raquo;" %}"/>
-  </form>
+      <h5>{% trans "Output from unattended-upgrades:" %}</h5>
 
+      <pre>{{ result.error }}</pre>
+    {% endif %}
+
+    {% if result.output %}
+      <div class="row">
+	<div class="col-lg-6">
+          <div class="alert alert-success" role="alert">
+            {% trans "The operating system is up to date now. &nbsp;" %}
+              <button type="button" class="btn btn-default show-details"
+                      style='display:none'>
+		{% trans "Show Details" %}
+		<div class="caret"></div>
+              </button>
+          </div>
+	</div>
+      </div>
+
+      <div class="details">
+	<h5>{% trans "Output from unattended-upgrades:" %}</h5>
+	<pre>{{ result.output }}</pre>
+      </div>
+
+    {% endif %}
+
+  {% endif %}
+
+
+  {% if not result and not running %}
+    <p>
+      {% blocktrans trimmed %}
+        This will run unattended-upgrades, which will attempt to upgrade
+        your system with the latest Debian packages. It may take a few
+        minutes to complete.
+      {% endblocktrans %}
+    </p>
+
+    <form class="form" method="post" action="{% url 'upgrades:run' %}">
+      {% csrf_token %}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Upgrade now &raquo;" %}"/>
+    </form>
+  {% endif %}
+
+  {% if running %}
+    <p class="running-status-parent">
+      <span class="running-status active"></span>
+      {% trans "Upgrade is running" %}
+    </p>
+  {% endif %}
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+    $('.show-details').show();
+    $('.details').hide();
+    $('.show-details').click(function() {
+      $('.details').toggle("slow");
+    });
+  </script>
 {% endblock %}
