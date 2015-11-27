@@ -26,19 +26,15 @@
   <h2>{{ title }}</h2>
 
   <p>
-    {% blocktrans trimmed %}
-      From here, it is possible to reboot or shut down the system.
-    {% endblocktrans %}
+    {% blocktrans trimmed %}Restart or shut down the system.{% endblocktrans %}
   </p>
 
   <p>
-    <a class="btn btn-primary btn-md" href="{% url 'power:reboot' %}">
-      {% trans "Reboot..." %}</a>
-  </p>
+    <a class="btn btn-default btn-md" href="{% url 'power:restart' %}">
+      {% trans "Restart &raquo;" %}</a>
 
-  <p>
-    <a class="btn btn-primary btn-md" href="{% url 'power:shutdown' %}">
-      {% trans "Shut Down..." %}</a>
+    <a class="btn btn-default btn-md" href="{% url 'power:shutdown' %}">
+      {% trans "Shut Down &raquo;" %}</a>
   </p>
 
 {% endblock %}

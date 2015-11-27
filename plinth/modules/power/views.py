@@ -20,6 +20,8 @@ Plinth module for power module.
 """
 
 from django.forms import Form
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
@@ -28,21 +30,21 @@ from plinth import actions
 
 def index(request):
     """Serve power controls page."""
-    return TemplateResponse(request, 'power.html',
-                            {'title': _('Power Control')})
+    return TemplateResponse(request, 'power.html', {'title': _('Power')})
 
 
-def reboot(request):
-    """Serve reboot confirmation page."""
+def restart(request):
+    """Serve start confirmation page."""
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['reboot'])
+        actions.superuser_run('power', ['restart'], async=True)
+        return redirect(reverse('apps:index'))
     else:
         form = Form(prefix='power')
 
-    return TemplateResponse(request, 'power_reboot.html',
-                            {'title': _('Power Control'),
+    return TemplateResponse(request, 'power_restart.html',
+                            {'title': _('Power'),
                              'form': form})
 
 
@@ -51,10 +53,11 @@ def shutdown(request):
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['shutdown'])
+        actions.superuser_run('power', ['shutdown'], async=True)
+        return redirect(reverse('apps:index'))
     else:
         form = Form(prefix='power')
 
     return TemplateResponse(request, 'power_shutdown.html',
-                            {'title': _('Power Control'),
+                            {'title': _('Power'),
                              'form': form})

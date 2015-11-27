@@ -1,4 +1,4 @@
-\{% extends "base.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -27,7 +27,9 @@
 
   <p>
     {% blocktrans trimmed %}
-      Are you sure you want to reboot?
+      Are you sure you want to restart? You will not be able to access
+      this web interface for a few minutes until the system is
+      restarted.
     {% endblocktrans %}
   </p>
 
@@ -37,8 +39,7 @@
     {{ form|bootstrap }}
 
     <input type="submit" class="btn btn-primary"
-           value="{% trans "Reboot Now &raquo;" %}"/>
-
+           value="{% trans "Restart Now" %}"/>
   </form>
 
 {% endblock %}

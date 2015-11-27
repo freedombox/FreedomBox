@@ -24,6 +24,6 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     'plinth.modules.power.views',
     url(r'^sys/power/$', 'index', name='index'),
-    url(r'^sys/power/reboot$', 'reboot', name='reboot'),
+    url(r'^sys/power/restart$', 'restart', name='restart'),
     url(r'^sys/power/shutdown$', 'shutdown', name='shutdown'),
     )

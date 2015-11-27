@@ -29,14 +29,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('reboot', help='Reboot the system')
+    subparsers.add_parser('restart', help='Restart the system')
     subparsers.add_parser('shutdown', help='Shut down the system')
 
     return parser.parse_args()
 
 
-def subcommand_reboot(_):
-    """Reboot the system."""
+def subcommand_restart(_):
+    """Restart the system."""
     subprocess.call('reboot')
 
 
