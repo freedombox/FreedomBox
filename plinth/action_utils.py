@@ -99,42 +99,54 @@ def webserver_enable(name, kind='config', apply_changes=True):
     """Enable a config/module/site in Apache.
 
     Restart/reload the webserver if apply_changes is True.  Return
-    whether restart(True) or reload(False) is required.  If changes
-    have been applied, return None.
+    whether restart('restart'), reload('reload') or no action (None)
+    is required.  If changes have been applied, then performed action
+    is returned.
     """
+    if webserver_is_enabled(name, kind):
+        return
+
     command_map = {'config': 'a2enconf',
                    'site': 'a2ensite',
                    'module': 'a2enmod'}
     subprocess.check_output([command_map[kind], name])
 
-    if not apply_changes:
-        return kind == 'module'
+    action_required = 'restart' if kind == 'module' else 'reload'
 
-    if kind == 'module':
-        service_restart('apache2')
-    else:
-        service_reload('apache2')
+    if apply_changes:
+        if action_required == 'restart':
+            service_restart('apache2')
+        else:
+            service_reload('apache2')
+
+    return action_required
 
 
 def webserver_disable(name, kind='config', apply_changes=True):
     """Disable config/module/site in Apache.
 
     Restart/reload the webserver if apply_changes is True.  Return
-    whether restart(True) or reload(False) is required.  If changes
-    have been applied, return None.
+    whether restart('restart'), reload('reload') or no action (None)
+    is required.  If changes have been applied, then performed action
+    is returned.
     """
+    if not webserver_is_enabled(name, kind):
+        return
+
     command_map = {'config': 'a2disconf',
                    'site': 'a2dissite',
                    'module': 'a2dismod'}
     subprocess.check_output([command_map[kind], name])
 
-    if not apply_changes:
-        return kind == 'module'
+    action_required = 'restart' if kind == 'module' else 'reload'
 
-    if kind == 'module':
-        service_restart('apache2')
-    else:
-        service_reload('apache2')
+    if apply_changes:
+        if action_required == 'restart':
+            service_restart('apache2')
+        else:
+            service_reload('apache2')
+
+    return action_required
 
 
 class WebserverChange(object):
@@ -142,7 +154,7 @@ class WebserverChange(object):
 
     def __init__(self):
         """Initialize the context object state."""
-        self.restart_required = False
+        self.actions_required = set()
 
     def __enter__(self):
         """Return the context object so methods could be called on it."""
@@ -155,9 +167,9 @@ class WebserverChange(object):
         restart/reload the webserver based on enable/disable
         operations done so far.
         """
-        if self.restart_required:
+        if 'restart' in self.actions_required:
             service_restart('apache2')
-        else:
+        elif 'reload' in self.actions_required:
             service_reload('apache2')
 
 
@@ -166,16 +178,16 @@ class WebserverChange(object):
 
         Don't apply the changes until the context is exited.
         """
-        restart_required = webserver_enable(name, kind, apply_changes=False)
-        self.restart_required = self.restart_required or restart_required
+        action_required = webserver_enable(name, kind, apply_changes=False)
+        self.actions_required.add(action_required)
 
     def disable(self, name, kind='config'):
         """Disable a config/module/site in Apache.
 
         Don't apply the changes until the context is exited.
         """
-        restart_required = webserver_disable(name, kind, apply_changes=False)
-        self.restart_required = self.restart_required or restart_required
+        action_required = webserver_disable(name, kind, apply_changes=False)
+        self.actions_required.add(action_required)
 
 
 def diagnose_port_listening(port, kind='tcp', listen_address=None):
