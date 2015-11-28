@@ -45,18 +45,26 @@
 
     if ($("#id_ipv4_method").prop("value") != "manual") {
       $("#id_ipv4_address").prop("readOnly", true);
+      $("#id_ipv4_netmask").prop("readOnly", true);
+      $("#id_ipv4_gateway").prop("readOnly", true);
     }
     $("#id_name").focus();
 
     $("#id_ipv4_method").change(function() {
-      if ($("#id_ipv4_method").prop("value") == 'manual') {
-        $("#id_ipv4_address").prop("readOnly", false);
-        $("#id_ipv4_address").prop("required", true);
-      } else {
-        $("#id_ipv4_address").val("");
-        $("#id_ipv4_address").prop("readOnly", true);
-        $("#id_ipv4_address").prop("required", false);
-      }
+        if ($("#id_ipv4_method").prop("value") == "manual") {
+          $("#id_ipv4_address").prop("readOnly", false);
+          $("#id_ipv4_address").prop("required", true);
+          $("#id_ipv4_netmask").prop("readOnly", false);
+          $("#id_ipv4_gateway").prop("readOnly", false);
+        } else {
+          $("#id_ipv4_address").val("");
+          $("#id_ipv4_address").prop("readOnly", true);
+          $("#id_ipv4_address").prop("required", false);
+          $("#id_ipv4_netmask").val("");
+          $("#id_ipv4_netmask").prop("readOnly", true);
+          $("#id_ipv4_gateway").val("");
+          $("#id_ipv4_gateway").prop("readOnly", true);
+        }
     });
 
     $('#id_show_password').change(function() {

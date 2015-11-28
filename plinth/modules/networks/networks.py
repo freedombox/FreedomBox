@@ -140,11 +140,16 @@ def edit(request, uuid):
             else:
                 ipv4_method = form.cleaned_data['ipv4_method']
                 ipv4_address = form.cleaned_data['ipv4_address']
+                ipv4_netmask = form.cleaned_data['ipv4_netmask']
+                ipv4_gateway = form.cleaned_data['ipv4_gateway']
+                ipv4_dns = form.cleaned_data['ipv4_dns']
+                ipv4_second_dns = form.cleaned_data['ipv4_second_dns']
 
             if connection.get_connection_type() == '802-3-ethernet':
                 network.edit_ethernet_connection(
                     connection, name, interface, zone, ipv4_method,
-                    ipv4_address)
+                    ipv4_address, ipv4_netmask, ipv4_gateway,
+                    ipv4_dns, ipv4_second_dns)
             elif connection.get_connection_type() == '802-11-wireless':
                 ssid = form.cleaned_data['ssid']
                 mode = form.cleaned_data['mode']
@@ -176,8 +181,20 @@ def edit(request, uuid):
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
             address = network.get_first_ip_address_from_connection(connection)
+            netmask = network.get_first_netmask_from_connection(connection)
+            gateway = settings_ipv4.get_gateway()
+            dns = settings_ipv4.get_dns(0)
+            second_dns = settings_ipv4.get_dns(1)
             if address:
                 form_data['ipv4_address'] = address
+            if netmask:
+                form_data['ipv4_netmask'] = netmask
+            if gateway:
+                form_data['ipv4_gateway'] = gateway
+            if dns:
+                form_data['ipv4_dns'] = dns
+            if second_dns:
+                form_data['ipv4_second_dns'] = second_dns
 
         if settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
@@ -291,9 +308,14 @@ def add_ethernet(request):
             zone = form.cleaned_data['zone']
             ipv4_method = form.cleaned_data['ipv4_method']
             ipv4_address = form.cleaned_data['ipv4_address']
+            ipv4_netmask = form.cleaned_data['ipv4_netmask']
+            ipv4_gateway = form.cleaned_data['ipv4_gateway']
+            ipv4_dns = form.cleaned_data['ipv4_dns']
+            ipv4_second_dns = form.cleaned_data['ipv4_second_dns']
 
             network.add_ethernet_connection(
-                name, interface, zone, ipv4_method, ipv4_address)
+                name, interface, zone, ipv4_method, ipv4_address, ipv4_netmask,
+                ipv4_gateway, ipv4_dns, ipv4_second_dns)
             return redirect(reverse_lazy('networks:index'))
     else:
         form = AddEthernetForm()

@@ -201,6 +201,27 @@ def get_first_ip_address_from_connection(connection):
     return output.strip().split(', ')[0].split('/')[0]
 
 
+def get_first_netmask_from_connection(connection):
+    """Return the first IP address of a connection setting.
+
+    XXX: Work around a bug in NetworkManager/Python GI.  Remove after
+    the bug if fixed.
+    https://bugzilla.gnome.org/show_bug.cgi?id=756380.
+    """
+    command = ['nmcli', '--terse', '--mode', 'tabular', '--fields',
+               'ipv4.addresses', 'connection', 'show', connection.get_uuid()]
+
+    output = subprocess.check_output(command).decode()
+    if '/' not in output:
+        return None
+
+    CIDR = output.strip().split(', ')[0].split('/')[1]
+    netmask = socket.inet_ntoa(struct.pack(">I", (0xffffffff <<
+                                                  (32 - int(CIDR))) &
+                                           0xffffffff))
+    return netmask
+
+
 def get_connection_list():
     """Get a list of active and available connections."""
     active_uuids = []
@@ -291,34 +312,58 @@ def _update_common_settings(connection, connection_uuid, name, type_,
     return connection
 
 
-def _update_ipv4_settings(connection, ipv4_method, ipv4_address):
+def _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
+                          ipv4_gateway, ipv4_dns, ipv4_second_dns):
     """Edit IPv4 settings for network manager connections."""
-    settings = connection.get_setting_ip4_config()
-    if not settings:
-        settings = nm.SettingIP4Config.new()
-        connection.add_setting(settings)
+
+    settings = nm.SettingIP4Config.new()
+    connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4_method)
     if ipv4_method == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and ipv4_address:
         ipv4_address_int = ipv4_string_to_int(ipv4_address)
-        ipv4_prefix = nm.utils_ip4_get_default_prefix(ipv4_address_int)
+        if not ipv4_netmask:
+            ipv4_netmask_int = nm.utils_ip4_get_default_prefix(
+                               ipv4_address_int)
 
-        address = nm.IPAddress.new(socket.AF_INET, ipv4_address, ipv4_prefix)
+        ipv4_netmask_int = nm.utils_ip4_netmask_to_prefix(
+                           ipv4_string_to_int(ipv4_netmask))
+        address = nm.IPAddress.new(socket.AF_INET, ipv4_address,
+                                   ipv4_netmask_int)
         settings.add_address(address)
 
-        settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
+        if ipv4_dns:
+            settings.add_dns(ipv4_dns)
+        if ipv4_second_dns:
+            settings.add_dns(ipv4_second_dns)
+
+        if not ipv4_gateway:
+            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
+        else:
+            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, ipv4_gateway)
     else:
-        settings.clear_addresses()
+        if ipv4_dns or ipv4_second_dns:
+            settings.set_property(nm.SETTING_IP_CONFIG_IGNORE_AUTO_DNS, True)
+
+        if ipv4_dns:
+            settings.add_dns(ipv4_dns)
+        if ipv4_second_dns:
+            settings.add_dns(ipv4_second_dns)
+
+    deactivate_connection(connection.get_uuid())
+    activate_connection(connection.get_uuid())
 
 
 def _update_ethernet_settings(connection, connection_uuid, name, interface,
-                              zone, ipv4_method, ipv4_address):
+                              zone, ipv4_method, ipv4_address, ipv4_netmask,
+                              ipv4_gateway, ipv4_dns, ipv4_second_dns):
     """Create/edit ethernet settings for network manager connections."""
     type_ = '802-3-ethernet'
 
     connection = _update_common_settings(connection, connection_uuid, name,
                                          type_, interface, zone)
-    _update_ipv4_settings(connection, ipv4_method, ipv4_address)
+    _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
+                          ipv4_gateway, ipv4_dns, ipv4_second_dns)
 
     # Ethernet
     settings = connection.get_setting_wired()
@@ -381,7 +426,9 @@ def edit_pppoe_connection(connection, name, interface, zone, username,
     connection.commit_changes(True)
 
 
-def add_ethernet_connection(name, interface, zone, ipv4_method, ipv4_address):
+def add_ethernet_connection(name, interface, zone, ipv4_method, ipv4_address,
+                            ipv4_netmask, ipv4_gateway, ipv4_dns,
+                            ipv4_second_dns):
     """Add an automatic ethernet connection in network manager.
 
     Return the UUID for the connection.
@@ -389,18 +436,19 @@ def add_ethernet_connection(name, interface, zone, ipv4_method, ipv4_address):
     connection_uuid = str(uuid.uuid4())
     connection = _update_ethernet_settings(
         None, connection_uuid, name, interface, zone, ipv4_method,
-        ipv4_address)
+        ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns, ipv4_second_dns)
     client = nm.Client.new(None)
     client.add_connection_async(connection, True, None, _callback, None)
     return connection_uuid
 
 
 def edit_ethernet_connection(connection, name, interface, zone, ipv4_method,
-                             ipv4_address):
+                             ipv4_address, ipv4_netmask, ipv4_gateway,
+                             ipv4_dns, ipv4_second_dns):
     """Edit an existing ethernet connection in network manager."""
     _update_ethernet_settings(
         connection, connection.get_uuid(), name, interface, zone, ipv4_method,
-        ipv4_address)
+        ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns, ipv4_second_dns)
     connection.commit_changes(True)
 
 
