@@ -293,10 +293,8 @@ def _update_common_settings(connection, connection_uuid, name, type_,
 
 def _update_ipv4_settings(connection, ipv4_method, ipv4_address):
     """Edit IPv4 settings for network manager connections."""
-    settings = connection.get_setting_ip4_config()
-    if not settings:
-        settings = nm.SettingIP4Config.new()
-        connection.add_setting(settings)
+    settings = nm.SettingIP4Config.new()
+    connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4_method)
     if ipv4_method == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and ipv4_address:
@@ -307,9 +305,9 @@ def _update_ipv4_settings(connection, ipv4_method, ipv4_address):
         settings.add_address(address)
 
         settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
-    else:
-        settings.clear_addresses()
 
+    deactivate_connection(connection.get_uuid())
+    activate_connection(connection.get_uuid())
 
 def _update_ethernet_settings(connection, connection_uuid, name, interface,
                               zone, ipv4_method, ipv4_address):
