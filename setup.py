@@ -21,8 +21,10 @@ Plinth setup file
 """
 
 from distutils import log
+from distutils.command.build import build
 from distutils.command.clean import clean
 from distutils.command.install_data import install_data
+from distutils.core import Command
 from distutils.util import change_root
 import glob
 import os
@@ -45,12 +47,75 @@ DIRECTORIES_TO_COPY = [
     ('/usr/share/doc/plinth', 'doc'),
 ]
 
+LOCALE_PATHS = [
+    'plinth/locale'
+]
+
+
+class DjangoCommand(Command):
+    """Setup command to run a Django management command."""
+    user_options = []
+
+    def initialize_options(self):
+        """Declare the options for this command."""
+        pass
+
+    def finalize_options(self):
+        """Declare options dependent on others."""
+        pass
+
+    def run(self):
+        """Execute the command."""
+        import django
+        from django.conf import settings
+
+        settings.configure(LOCALE_PATHS=LOCALE_PATHS)
+        django.setup()
+
+        # Trick the commands to use the settings properly
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'x-never-used'
+
+
+class CompileTranslations(DjangoCommand):
+    """New command to compile .po translation files."""
+    description = "compile .po translation files into .mo files"""
+
+    def run(self):
+        """Execute the command."""
+        DjangoCommand.run(self)
+
+        from django.core.management import call_command
+        call_command('compilemessages', verbosity=1)
+
+
+class UpdateTranslations(DjangoCommand):
+    """New command to update .po translation files."""
+    description = "update .po translation files from source code"""
+
+    def run(self):
+        """Execute the command."""
+        DjangoCommand.run(self)
+
+        from django.core.management import call_command
+        call_command('makemessages', all=True, domain='django', verbosity=1)
+
+
+class CustomBuild(build):
+    """Override build command to add a subcommand for translations."""
+    sub_commands = [('compile_translations', None)] + build.sub_commands
+
 
 class CustomClean(clean):
     """Override clean command to clean documentation directory"""
     def run(self):
         """Execute clean command"""
         subprocess.check_call(['make', '-C', 'doc', 'clean'])
+        for dir_path, dir_names, file_names in os.walk('plinth/locale/'):
+            for file_name in file_names:
+                if file_name.endswith('.mo'):
+                    file_path = os.path.join(dir_path, file_name)
+                    log.info("removing '%s'", file_path)
+                    subprocess.check_call(['rm', '-f', file_path])
 
         clean.run(self)
 
@@ -123,7 +188,8 @@ setuptools.setup(
     tests_require=['coverage >= 3.7'],
     include_package_data=True,
     package_data={'plinth': ['templates/*',
-                             'modules/*/templates/*']},
+                             'modules/*/templates/*',
+                             'locale/*/LC_MESSAGES/*.[pm]o']},
     data_files=[('/etc/init.d', ['data/etc/init.d/plinth']),
                 ('/usr/lib/firewalld/services/',
                  glob.glob('data/usr/lib/firewalld/services/*.xml')),
@@ -152,8 +218,11 @@ setuptools.setup(
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
                                         '*')))],
     cmdclass={
+        'build': CustomBuild,
         'clean': CustomClean,
+        'compile_translations': CompileTranslations,
         'install_data': CustomInstallData,
-        'test_coverage': coverage.CoverageCommand
+        'test_coverage': coverage.CoverageCommand,
+        'update_translations': UpdateTranslations,
     },
 )
