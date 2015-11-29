@@ -20,6 +20,33 @@
 # /var/log/freedombox-first-run.log
 set -x
 
+# Set the default firewall zone.  When network connections are
+# configured outside of FreedomBox/Plinth, they will not be able to
+# serve the Plinth web interface.  This is because all such interfaces
+# will fall in the default firewall zone and that is, by default,
+# 'public'.  On 'public' zone we don't allow Plinth web interface as
+# this zone is not managed.
+#
+# Configuration of network connections happen outside for
+# FreedomBox/Plinth for various reasons:
+#
+#  - Existing network connections before installation of
+#    freedombox-setup
+#
+#  - Connections configured in /etc/network/interfaces
+#
+#  - Connections manually configured using nmtui
+#
+#  - Connections created using GUI environments such as GNOME
+#
+# Rather then clearing out /etc/network/interfaces during setup and
+# expecting the connections not to be created outside of Plinth,
+# setting the default firewall zone is a better approach.  This
+# default zone selection fits with the main purpose of FreedomBox to
+# be a router which is also reflected by the fact that only 'external'
+# and 'internal' zones are managed.
+firewall-cmd --set-default-zone=external
+
 # Setup firewall rules for all the services enabled by default.
 # Ideally all non-essential services are enabled from Plinth which
 # automatically takes care of enabling appropirate firewall ports. The
