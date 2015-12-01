@@ -19,19 +19,24 @@
 Tests for tor module.
 """
 
+import os
 import unittest
 
-from ..tor import is_apt_transport_tor_enabled, get_hs, get_status
+euid = os.geteuid()
+if euid == 0:
+    from ..tor import is_apt_transport_tor_enabled, get_hs, get_status
 
 
 class TestTor(unittest.TestCase):
     """Test cases for testing the tor module."""
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_is_apt_transport_tor_enabled(self):
         """Test that is_apt_transport_tor_enabled does not raise any unhandled
         exceptions.
         """
         is_apt_transport_tor_enabled()
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_hs(self):
         """Test that get_hs does not raise any unhandled exceptions.
 
@@ -40,6 +45,7 @@ class TestTor(unittest.TestCase):
         """
         get_hs()
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_status(self):
         """Test that get_status does not raise any unhandled exceptions.
 
