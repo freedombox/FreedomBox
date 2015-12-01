@@ -167,12 +167,15 @@ def get_hidden_service():
     hs_dir = None
     hs_ports = []
 
-    with open(TOR_CONFIG, 'r') as conf_file:
-        for line in conf_file:
-            if line.startswith('HiddenServiceDir'):
-                hs_dir = line.split()[1]
-            elif line.startswith('HiddenServicePort'):
-                hs_ports.append(line.split()[1])
+    try:
+        with open(TOR_CONFIG, 'r') as conf_file:
+            for line in conf_file:
+                if line.startswith('HiddenServiceDir'):
+                    hs_dir = line.split()[1]
+                elif line.startswith('HiddenServicePort'):
+                    hs_ports.append(line.split()[1])
+    except FileNotFoundError:
+        return 'error'
 
     if not hs_dir:
         return ''
@@ -193,12 +196,15 @@ def subcommand_get_ports(_):
     except Exception:
         pass
 
-    with open(TOR_STATE_FILE, 'r') as state_file:
-        for line in state_file:
-            matches = re.match(r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$',
-                               line)
-            if matches:
-                print('{0} {1}'.format(matches.group(1), matches.group(2)))
+    try:
+        with open(TOR_STATE_FILE, 'r') as state_file:
+            for line in state_file:
+                matches = re.match(
+                    r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
+                if matches:
+                    print('{0} {1}'.format(matches.group(1), matches.group(2)))
+    except FileNotFoundError:
+        pass
 
 
 def subcommand_enable_apt_transport_tor(_):
