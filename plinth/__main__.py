@@ -264,7 +264,7 @@ def configure_django():
     logger.info('Configured Django with applications - %s', applications)
 
     logger.info('Creating or adding new tables to data file')
-    django.core.management.call_command('syncdb', interactive=False)
+    django.core.management.call_command('migrate', interactive=False)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
