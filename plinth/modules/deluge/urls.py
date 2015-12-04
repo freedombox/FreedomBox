@@ -19,10 +19,11 @@
 URLs for the Deluge module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.deluge.views',
-    url(r'^apps/deluge/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/deluge/$', views.index, name='index'),
+]

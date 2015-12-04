@@ -19,26 +19,26 @@
 URLs for the Network module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import networks as views
 
 
-urlpatterns = patterns(
-    'plinth.modules.networks.networks',
-    url(r'^sys/networks/$', 'index', name='index'),
-    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/show/$',
-        'show', name='show'),
-    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/edit/$',
-        'edit', name='edit'),
-    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/activate/$',
-        'activate', name='activate'),
-    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/deactivate/$',
-        'deactivate', name='deactivate'),
-    url(r'^sys/networks/scan/$', 'scan', name='scan'),
-    url(r'^sys/networks/add/$', 'add', name='add'),
-    url(r'^sys/networks/add/ethernet/$', 'add_ethernet', name='add_ethernet'),
-    url(r'^sys/networks/add/pppoe/$', 'add_pppoe', name='add_pppoe'),
-    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/(?P<interface_name>[^/]+)/)?$', 'add_wifi',
-        name='add_wifi'),
-    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$',
-        'delete', name='delete'),
-)
+urlpatterns = [
+    url(r'^sys/networks/$', views.index, name='index'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/show/$', views.show, name='show'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/edit/$', views.edit, name='edit'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/activate/$', views.activate,
+        name='activate'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/deactivate/$', views.deactivate,
+        name='deactivate'),
+    url(r'^sys/networks/scan/$', views.scan, name='scan'),
+    url(r'^sys/networks/add/$', views.add, name='add'),
+    url(r'^sys/networks/add/ethernet/$', views.add_ethernet,
+        name='add_ethernet'),
+    url(r'^sys/networks/add/pppoe/$', views.add_pppoe, name='add_pppoe'),
+    url(r'^sys/networks/add/wifi/(?:(?P<ssid>[^/]+)/(?P<interface_name>[^/]+)/)?$',
+        views.add_wifi, name='add_wifi'),
+    url(r'^sys/networks/(?P<uuid>[\w.@+-]+)/delete/$', views.delete,
+        name='delete'),
+]

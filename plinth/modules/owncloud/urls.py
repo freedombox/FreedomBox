@@ -19,10 +19,11 @@
 URLs for the ownCloud module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import owncloud as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.owncloud.owncloud',
-    url(r'^apps/owncloud/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/owncloud/$', views.index, name='index'),
+]

@@ -19,9 +19,11 @@
 URLs for the service discovery module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(  # pylint: disable=C0103
-    'plinth.modules.avahi.views',
-    url(r'^sys/avahi/$', 'index', name='index'),
-    )
+from . import views
+
+
+urlpatterns = [
+    url(r'^sys/avahi/$', views.index, name='index'),
+]

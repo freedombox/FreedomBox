@@ -19,14 +19,14 @@
 URLs for the Users module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 from django.core.urlresolvers import reverse_lazy
 
 from . import views
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^sys/users/$', views.UserList.as_view(), name='index'),
     url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$', views.UserUpdate.as_view(),
@@ -36,8 +36,8 @@ urlpatterns = patterns(
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
         views.UserChangePassword.as_view(), name='change_password'),
     # Add Django's login/logout urls
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+    url(r'^accounts/login/$', auth_views.login,
         {'template_name': 'login.html'}, name='login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+    url(r'^accounts/logout/$', auth_views.logout,
         {'next_page': reverse_lazy('index')}, name='logout'),
-)
+]

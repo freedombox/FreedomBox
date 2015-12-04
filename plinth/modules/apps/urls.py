@@ -19,10 +19,11 @@
 URLs for the Apps module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import apps as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.apps.apps',
-    url(r'^apps/$', 'index', name='index')
-    )
+urlpatterns = [
+    url(r'^apps/$', views.index, name='index'),
+]

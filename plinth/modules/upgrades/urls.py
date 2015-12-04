@@ -19,12 +19,13 @@
 URLs for the upgrades module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.upgrades.views',
-    url(r'^sys/upgrades/$', 'index', name='index'),
-    url(r'^sys/upgrades/upgrade/$', 'upgrade', name='upgrade'),
-    url(r'^sys/upgrades/upgrade/run/$', 'run', name='run'),
-    )
+urlpatterns = [
+    url(r'^sys/upgrades/$', views.index, name='index'),
+    url(r'^sys/upgrades/upgrade/$', views.upgrade, name='upgrade'),
+    url(r'^sys/upgrades/upgrade/run/$', views.run, name='run'),
+]

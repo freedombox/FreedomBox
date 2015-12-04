@@ -19,10 +19,11 @@
 URLs for the Privoxy module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.privoxy.views',
-    url(r'^apps/privoxy/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/privoxy/$', views.index, name='index'),
+]

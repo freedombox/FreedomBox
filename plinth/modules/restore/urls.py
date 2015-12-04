@@ -19,11 +19,11 @@
 URLs for the reStore module.
 """
 
-from django.conf.urls import patterns, url
-from .views import index
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.restore.views',
-    url(r'^apps/restore/$', index, name='index')
-)
+urlpatterns = [
+    url(r'^apps/restore/$', views.index, name='index'),
+]
