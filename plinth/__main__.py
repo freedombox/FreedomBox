@@ -310,7 +310,7 @@ def main():
 
     configure_django()
 
-    logger.info('Configuration loaded from file - %s', cfg.CONFIG_FILE)
+    logger.info('Configuration loaded from file - %s', cfg.config_file)
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
