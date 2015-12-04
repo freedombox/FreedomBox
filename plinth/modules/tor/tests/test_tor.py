@@ -16,15 +16,15 @@
 #
 
 """
-Tests for tor module.
+Tests for Tor module.
 """
 
 import os
 import unittest
 
+from ..tor import is_apt_transport_tor_enabled, get_hs, get_status
+
 euid = os.geteuid()
-if euid == 0:
-    from ..tor import is_apt_transport_tor_enabled, get_hs, get_status
 
 
 class TestTor(unittest.TestCase):
