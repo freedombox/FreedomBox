@@ -21,178 +21,106 @@ Test module for configuration module.
 
 import configparser
 import os
-import shutil
 import unittest
 
 from plinth import cfg
 
 
-CONFIG_FILENAME = 'plinth.config'
-TEST_CONFIG_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                               'data')
-TEST_CONFIG_FILE = os.path.join(TEST_CONFIG_DIR, CONFIG_FILENAME)
-SAVED_CONFIG_FILE = os.path.join(TEST_CONFIG_DIR,
-                                 CONFIG_FILENAME + '.official')
-CONFIG_FILE_WITH_MISSING_OPTIONS = os.path.join(TEST_CONFIG_DIR,
-                                                CONFIG_FILENAME +
-                                                '.with_missing_options')
-CONFIG_FILE_WITH_MISSING_SECTIONS = os.path.join(TEST_CONFIG_DIR,
-                                                 CONFIG_FILENAME +
-                                                 '.with_missing_sections')
+TEST_CONFIG_DIR = \
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
+CONFIG_FILE_WITH_MISSING_OPTIONS = \
+    os.path.join(TEST_CONFIG_DIR, 'plinth.config.with_missing_options')
+CONFIG_FILE_WITH_MISSING_SECTIONS = \
+    os.path.join(TEST_CONFIG_DIR, 'plinth.config.with_missing_sections')
 
 
-class CfgTestCase(unittest.TestCase):
-    """Verify that the Plinth configuration module behaves as expected.
-
-    This class deals with involving the plinth.config file in testing by
-    (1) independently locating the copy of the file that the cfg module would
-    find and read, then (2) copying that file to plinth/tests/data for use for
-    the actual tests, and finally (3) redirecting cfg (via its
-    DEFAULT_CONFIG_FILE attribute) to read that test copy.  The test copy is
-    then deleted as part of the test case cleanup.
-    """
-
-    default_config_file = ''
-    default_root = ''
-    default_config_file_present = False
-    fallback_config_file = ''
-    fallback_root = ''
-    fallback_config_file_present = False
-
-    # Setup and Teardown
-
+class TestCfg(unittest.TestCase):
+    """Verify that the Plinth configuration module behaves as expected."""
     @classmethod
     def setUpClass(cls):
         """Locate and copy the official plinth.config file."""
-        # Save the cfg module default values
-        cls.default_config_file = cfg.DEFAULT_CONFIG_FILE
-        cls.default_root = cfg.DEFAULT_ROOT
-
-        # Look for default config file
-        cls.default_config_file_present =\
-            os.path.isfile(cls.default_config_file)
-
-        # Look for fallback (non-default) config file
-        cls.fallback_root = os.path.realpath('.')
-        cls.fallback_config_file = os.path.join(cls.fallback_root,
-                                                CONFIG_FILENAME)
-        cls.fallback_config_file_present =\
-            os.path.isfile(cls.fallback_config_file)
-
-        # If neither file is found...
-        if not (cls.default_config_file_present or
-                cls.fallback_config_file_present):
-            raise FileNotFoundError('File {} could not be found.'
-                                    .format(CONFIG_FILENAME))
-
-        # Copy an official config file to the plinth/tests/data directory...
-        if cls.default_config_file_present:
-            shutil.copy2(cls.default_config_file, TEST_CONFIG_FILE)
-        elif cls.fallback_config_file_present:
-            shutil.copy2(cls.fallback_config_file, TEST_CONFIG_FILE)
-        # ...and point cfg to that file as the default
-        cfg.DEFAULT_CONFIG_FILE = TEST_CONFIG_FILE
-        cfg.DEFAULT_ROOT = TEST_CONFIG_DIR
+        cls.test_config_file, cls.test_config_dir = cfg.get_config_file()
 
     @classmethod
     def tearDownClass(cls):
         """Cleanup after all tests are completed."""
-        # Restore the cfg module default values
-        cfg.DEFAULT_CONFIG_FILE = cls.default_config_file
-        cfg.DEFAULT_ROOT = cls.default_root
-
-        # Delete the test config file(s)
-        if os.path.isfile(TEST_CONFIG_FILE):
-            os.remove(TEST_CONFIG_FILE)
-        if os.path.isfile(SAVED_CONFIG_FILE):
-            os.remove(SAVED_CONFIG_FILE)
-
-    # Tests
+        cfg.read()
 
     def test_read_main_menu(self):
         """Verify that the cfg.main_menu container is initially empty."""
         # Menu should be empty before...
         self.assertEqual(len(cfg.main_menu.items), 0)
-        cfg.read()
+        cfg.read(self.test_config_file, self.test_config_dir)
         # ...and after reading the config file
         self.assertEqual(len(cfg.main_menu.items), 0)
 
     def test_read_default_config_file(self):
         """Verify that the default config file can be read correctly."""
         # Read the plinth.config file directly
-        parser = self.read_config_file(TEST_CONFIG_FILE, TEST_CONFIG_DIR)
+        parser = configparser.ConfigParser(
+            defaults={'root': self.test_config_dir})
+        parser.read(self.test_config_file)
 
         # Read the plinth.config file via the cfg module
-        cfg.read()
+        cfg.read(self.test_config_file, self.test_config_dir)
 
         # Compare the two results
         self.compare_configurations(parser)
 
-    def test_read_fallback_config_file(self):
-        """Verify that the fallback config file can be read correctly.
+    def test_read_primary_config_file(self):
+        """Verify that the primary config file can be read correctly."""
+        original_file_path = cfg.DEFAULT_CONFIG_FILE
+        original_root_directory = cfg.DEFAULT_ROOT
 
-        This test will be executed only if there is a fallback (non-default)
-        configuration file available for reading.  If so, the cfg default
-        values for config filename and root will be temporarily modified to
-        prevent any default file from being found, thus allowing the fallback
-        file to be located and read.
-        """
-        if not self.fallback_config_file_present:
-            self.skipTest('A fallback copy of {} is not available.'
-                          .format(CONFIG_FILENAME))
-        else:
-            try:
-                cfg.DEFAULT_CONFIG_FILE = '/{}'.format(CONFIG_FILENAME)
-                cfg.DEFAULT_ROOT = '/'
-                parser = self.read_config_file(self.fallback_config_file,
-                                               self.fallback_root)
-                cfg.read()
-                self.compare_configurations(parser)
-            finally:
-                cfg.DEFAULT_CONFIG_FILE = self.default_config_file
-                cfg.DEFAULT_ROOT = self.default_root
+        expected_file_path = CONFIG_FILE_WITH_MISSING_OPTIONS
+        expected_root_directory = 'x-default-root'
+
+        try:
+            cfg.DEFAULT_CONFIG_FILE = expected_file_path
+            cfg.DEFAULT_ROOT = expected_root_directory
+            file_path, root_directoy = cfg.get_config_file()
+            self.assertEqual(file_path, expected_file_path)
+            self.assertEqual(root_directoy, expected_root_directory)
+        finally:
+            cfg.DEFAULT_CONFIG_FILE = original_file_path
+            cfg.DEFAULT_ROOT = original_root_directory
+
+    def test_read_fallback_config_file(self):
+        """Verify that the fallback config file can be read correctly."""
+        original_file_path = cfg.DEFAULT_CONFIG_FILE
+        original_root_directory = cfg.DEFAULT_ROOT
+
+        fallback_root = os.path.realpath('.')
+        fallback_config_file = os.path.join(fallback_root, 'plinth.config')
+        expected_file_path = os.path.realpath(fallback_config_file)
+        expected_root_directory = fallback_root
+
+        try:
+            cfg.DEFAULT_CONFIG_FILE = 'x-non-existant-file'
+            cfg.DEFAULT_ROOT = 'x-non-existant-directory'
+            file_path, root_directoy = cfg.get_config_file()
+            self.assertEqual(file_path, expected_file_path)
+            self.assertEqual(root_directoy, expected_root_directory)
+        finally:
+            cfg.DEFAULT_CONFIG_FILE = original_file_path
+            cfg.DEFAULT_ROOT = original_root_directory
 
     def test_read_missing_config_file(self):
-        """Verify that an exception is raised when there's no config file.
-
-        This test will be executed only if the fallback (non-default) copy of
-        plinth.config is NOT present.  If there is only a single, default
-        config file available, then that file can be copied to a test area and
-        be hidden by temporary renaming.  But if the default file is hidden
-        and the fallback file can be found in its place, the fallback file
-        will not be renamed.  Instead, the entire test will be skipped.
-        """
-        if self.fallback_config_file_present:
-            self.skipTest(
-                'Fallback copy of {} cannot be hidden to establish the test'
-                'pre-condition.'.format(CONFIG_FILENAME))
-        else:
-            with self.assertRaises(FileNotFoundError):
-                try:
-                    self.rename_test_config_file()
-                    cfg.read()
-                finally:
-                    self.restore_test_config_file()
+        """Verify that an exception is raised when there's no config file."""
+        self.assertRaises(FileNotFoundError, cfg.read, 'x-non-existant-file',
+                          'x-root-directory')
 
     def test_read_config_file_with_missing_sections(self):
         """Verify that missing configuration sections can be detected."""
-        self.assertRaises(configparser.NoSectionError,
-                          self.read_temp_config_file,
-                          CONFIG_FILE_WITH_MISSING_SECTIONS)
+        self.assertRaises(
+            configparser.NoSectionError, cfg.read,
+            CONFIG_FILE_WITH_MISSING_SECTIONS, self.test_config_dir)
 
     def test_read_config_file_with_missing_options(self):
         """Verify that missing configuration options can be detected."""
-        self.assertRaises(configparser.NoOptionError,
-                          self.read_temp_config_file,
-                          CONFIG_FILE_WITH_MISSING_OPTIONS)
-
-    # Helper Methods
-
-    def read_config_file(self, config_file, root):
-        """Read the specified configuration file independently from cfg.py."""
-        parser = configparser.ConfigParser(defaults={'root': root})
-        parser.read(config_file)
-        return parser
+        self.assertRaises(
+            configparser.NoOptionError, cfg.read,
+            CONFIG_FILE_WITH_MISSING_OPTIONS, self.test_config_dir)
 
     def compare_configurations(self, parser):
         """Compare two sets of configuration values."""
@@ -225,26 +153,3 @@ class CfgTestCase(unittest.TestCase):
         self.assertEqual(parser.get('Misc', 'danube_edition'),
                          str(cfg.danube_edition))
         self.assertEqual(parser.get('Misc', 'box_name'), cfg.box_name)
-
-    def read_temp_config_file(self, test_file):
-        """Read the specified test configuration file."""
-        self.replace_test_config_file(test_file)
-        try:
-            cfg.read()
-        finally:
-            self.restore_test_config_file()
-
-    def rename_test_config_file(self):
-        """Rename the test config file so that it can't be read."""
-        shutil.move(TEST_CONFIG_FILE, SAVED_CONFIG_FILE)
-
-    def replace_test_config_file(self, test_file):
-        """Replace plinth.config with the specified temporary config file."""
-        self.rename_test_config_file()
-        shutil.copy2(test_file, TEST_CONFIG_FILE)
-
-    def restore_test_config_file(self):
-        """Restore the test plinth.config file."""
-        if os.path.isfile(TEST_CONFIG_FILE):
-            os.remove(TEST_CONFIG_FILE)
-        shutil.move(SAVED_CONFIG_FILE, TEST_CONFIG_FILE)
