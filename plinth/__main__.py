@@ -163,17 +163,6 @@ def configure_django():
     # wrong prefix. Set it here manually to have the correct prefix right away.
     django.core.urlresolvers.set_script_prefix(cfg.server_dir)
 
-    context_processors = [
-        'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.request',
-        'django.core.context_processors.static',
-        'django.core.context_processors.tz',
-        'django.contrib.messages.context_processors.messages',
-        'plinth.context_processors.common']
-
     logging_configuration = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -199,6 +188,26 @@ def configure_django():
             'level': 'DEBUG' if cfg.debug else 'INFO'
             }
         }
+
+    templates = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.contrib.auth.context_processors.auth',
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.i18n',
+                    'django.template.context_processors.media',
+                    'django.template.context_processors.request',
+                    'django.template.context_processors.static',
+                    'django.template.context_processors.tz',
+                    'django.contrib.messages.context_processors.messages',
+                    'plinth.context_processors.common',
+                ],
+            },
+        },
+    ]
 
     applications = ['bootstrapform',
                     'django.contrib.auth',
@@ -256,7 +265,7 @@ def configure_django():
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
         STRONGHOLD_PUBLIC_NAMED_URLS=('users:login', 'users:logout'),
-        TEMPLATE_CONTEXT_PROCESSORS=context_processors,
+        TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
     django.setup()
