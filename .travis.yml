@@ -2,8 +2,12 @@
 
 language: python
 python:
-  - "3.3"
   - "3.4"
+
+env:
+  - DJANGO_VERSION=">=1.7.0,<1.8.0"
+  - DJANGO_VERSION=">=1.8.0,<1.9.0"
+  - DJANGO_VERSION=">=1.9.0"
 
 # Debian packages required
 before_install:
@@ -12,6 +16,7 @@ before_install:
 
 # Command to install dependencies
 install:
+  - pip install Django$DJANGO_VERSION
   - pip install coverage==3.7
   - pip install "pgi>=0.0.10.1"
   - pip install -r requirements.txt
