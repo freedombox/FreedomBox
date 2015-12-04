@@ -19,10 +19,11 @@
 URLs for the System module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import system as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.system.system',
-    url(r'^sys/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^sys/$', views.index, name='index'),
+]

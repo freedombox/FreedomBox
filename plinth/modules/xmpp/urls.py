@@ -19,10 +19,10 @@
 URLs for the XMPP module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
+from . import views
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.xmpp.views',
-    url(r'^apps/xmpp/$', 'index', name='index'),
-)
+urlpatterns = [
+    url(r'^apps/xmpp/$', views.index, name='index'),
+]

@@ -19,10 +19,11 @@
 URLs for the Firewall module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import firewall as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.firewall.firewall',
-    url(r'^sys/firewall/$', 'index', name='index')
-    )
+urlpatterns = [
+    url(r'^sys/firewall/$', views.index, name='index'),
+]

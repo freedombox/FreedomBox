@@ -19,10 +19,10 @@
 URLs for the date and time module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
+from . import views
 
-urlpatterns = patterns(
-    'plinth.modules.datetime.views',
-    url(r'^sys/datetime/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^sys/datetime/$', views.index, name='index'),
+]

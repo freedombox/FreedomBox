@@ -19,12 +19,13 @@
 URLs for the Diagnostics module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import diagnostics as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.diagnostics.diagnostics',
-    url(r'^sys/diagnostics/$', 'index', name='index'),
-    url(r'^sys/diagnostics/(?P<module_name>[a-z\-]+)/$', 'module',
+urlpatterns = [
+    url(r'^sys/diagnostics/$', views.index, name='index'),
+    url(r'^sys/diagnostics/(?P<module_name>[a-z\-]+)/$', views.module,
         name='module'),
-    )
+]

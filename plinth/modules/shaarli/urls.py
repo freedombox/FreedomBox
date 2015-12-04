@@ -19,10 +19,11 @@
 URLs for the Shaarli module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.shaarli.views',
-    url(r'^apps/shaarli/$', 'index', name='index'),
-)
+urlpatterns = [
+    url(r'^apps/shaarli/$', views.index, name='index'),
+]

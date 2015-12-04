@@ -19,10 +19,11 @@
 URLs for the Mumble module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.mumble.views',
-    url(r'^apps/mumble/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/mumble/$', views.index, name='index'),
+]

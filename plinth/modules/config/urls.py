@@ -21,8 +21,9 @@ URLs for the Configuration module
 
 from django.conf.urls import patterns, url
 
+from . import config as views
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.config.config',
-    url(r'^sys/config/$', 'index', name='index'),
-    )
+
+urlpatterns = [
+    url(r'^sys/config/$', views.index, name='index'),
+]

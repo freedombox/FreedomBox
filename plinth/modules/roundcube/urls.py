@@ -19,10 +19,11 @@
 URLs for the Roundcube module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.roundcube.views',
-    url(r'^apps/roundcube/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/roundcube/$', views.index, name='index'),
+]

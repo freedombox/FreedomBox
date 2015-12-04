@@ -19,10 +19,11 @@
 URLs for the Transmission module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.transmission.views',
-    url(r'^apps/transmission/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/transmission/$', views.index, name='index'),
+]

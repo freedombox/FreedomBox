@@ -19,11 +19,13 @@
 URLs for the power module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    'plinth.modules.power.views',
-    url(r'^sys/power/$', 'index', name='index'),
-    url(r'^sys/power/restart$', 'restart', name='restart'),
-    url(r'^sys/power/shutdown$', 'shutdown', name='shutdown'),
-    )
+from . import views
+
+
+urlpatterns = [
+    url(r'^sys/power/$', views.index, name='index'),
+    url(r'^sys/power/restart$', views.restart, name='restart'),
+    url(r'^sys/power/shutdown$', views.shutdown, name='shutdown'),
+]

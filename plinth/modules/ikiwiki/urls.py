@@ -19,14 +19,15 @@
 URLs for the ikiwiki module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(
-    'plinth.modules.ikiwiki.views',
-    url(r'^apps/ikiwiki/$', 'index', name='index'),
-    url(r'^apps/ikiwiki/manage/$', 'manage', name='manage'),
-    url(r'^apps/ikiwiki/(?P<name>[\w.@+-]+)/delete/$',
-        'delete', name='delete'),
-    url(r'^apps/ikiwiki/create/$', 'create', name='create'),
-    )
+urlpatterns = [
+    url(r'^apps/ikiwiki/$', views.index, name='index'),
+    url(r'^apps/ikiwiki/manage/$', views.manage, name='manage'),
+    url(r'^apps/ikiwiki/(?P<name>[\w.@+-]+)/delete/$', views.delete,
+        name='delete'),
+    url(r'^apps/ikiwiki/create/$', views.create, name='create'),
+]

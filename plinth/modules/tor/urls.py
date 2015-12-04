@@ -19,10 +19,11 @@
 URLs for the Tor module
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import tor as views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.tor.tor',
-    url(r'^apps/tor/$', 'index', name='index')
-    )
+urlpatterns = [
+    url(r'^apps/tor/$', views.index, name='index'),
+]

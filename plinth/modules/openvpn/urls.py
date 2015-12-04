@@ -19,12 +19,13 @@
 URLs for the OpenVPN module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from . import views
 
 
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.modules.openvpn.views',
-    url(r'^apps/openvpn/$', 'index', name='index'),
-    url(r'^apps/openvpn/setup/$', 'setup', name='setup'),
-    url(r'^apps/openvpn/profile/$', 'profile', name='profile'),
-    )
+urlpatterns = [
+    url(r'^apps/openvpn/$', views.index, name='index'),
+    url(r'^apps/openvpn/setup/$', views.setup, name='setup'),
+    url(r'^apps/openvpn/profile/$', views.profile, name='profile'),
+]
