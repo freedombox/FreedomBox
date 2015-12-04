@@ -16,9 +16,12 @@
 #
 
 import configparser
+import logging
 import os
 
 from plinth.menu import Menu
+
+logger = logging.getLogger(__name__)
 
 box_name = None
 root = None
@@ -42,60 +45,74 @@ danube_edition = False
 
 main_menu = Menu()
 
-CONFIG_FILE = None
+config_file = None
+
 DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
 DEFAULT_ROOT = '/'
 
 
-def read():
-    """Read configuration"""
-    global CONFIG_FILE  # pylint: disable-msg=W0603
+def get_config_file():
+    """Return the configuration file to read."""
     if os.path.isfile(DEFAULT_CONFIG_FILE):
-        CONFIG_FILE = DEFAULT_CONFIG_FILE
-        directory = DEFAULT_ROOT
+        root_directory = DEFAULT_ROOT
+        file_path = DEFAULT_CONFIG_FILE
     else:
-        directory = os.path.dirname(os.path.realpath(__file__))
-        directory = os.path.join(directory, '..')
-        CONFIG_FILE = os.path.join(directory, 'plinth.config')
-        if not os.path.isfile(CONFIG_FILE):
-            raise FileNotFoundError('No plinth.config file could be found.')
+        root_directory = os.path.dirname(os.path.realpath(__file__))
+        root_directory = os.path.join(root_directory, '..')
+        root_directory = os.path.realpath(root_directory)
+        file_path = os.path.join(root_directory, 'plinth.config')
+
+    return file_path, root_directory
+
+
+def read(file_path=None, root_directory=None):
+    """Read configuration."""
+    if not file_path and not root_directory:
+        file_path, root_directory = get_config_file()
+
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError('No plinth.config file could be found.')
+
+    global config_file  # pylint: disable-msg=invalid-name,global-statement
+    config_file = file_path
 
     parser = configparser.ConfigParser(
         defaults={
-            'root': os.path.realpath(directory),
+            'root': os.path.realpath(root_directory),
         })
-    parser.read(CONFIG_FILE)
+    parser.read(config_file)
 
-    config_items = {('Path', 'root', 'string'),
-                    ('Path', 'file_root', 'string'),
-                    ('Path', 'config_dir', 'string'),
-                    ('Path', 'data_dir', 'string'),
-                    ('Path', 'store_file', 'string'),
-                    ('Path', 'actions_dir', 'string'),
-                    ('Path', 'doc_dir', 'string'),
-                    ('Path', 'status_log_file', 'string'),
-                    ('Path', 'access_log_file', 'string'),
-                    ('Path', 'pidfile', 'string'),
-                    ('Path', 'server_dir', 'string'),
-                    ('Network', 'host', 'string'),
-                    ('Network', 'port', 'int'),
-                    ('Network', 'secure_proxy_ssl_header', 'string'),
-                    ('Network', 'use_x_forwarded_host', 'bool'),
-                    ('Misc', 'box_name', 'string'),
-                    ('Misc', 'danube_edition', 'bool')}
+    config_items = (
+        ('Path', 'root', 'string'),
+        ('Path', 'file_root', 'string'),
+        ('Path', 'config_dir', 'string'),
+        ('Path', 'data_dir', 'string'),
+        ('Path', 'store_file', 'string'),
+        ('Path', 'actions_dir', 'string'),
+        ('Path', 'doc_dir', 'string'),
+        ('Path', 'status_log_file', 'string'),
+        ('Path', 'access_log_file', 'string'),
+        ('Path', 'pidfile', 'string'),
+        ('Path', 'server_dir', 'string'),
+        ('Network', 'host', 'string'),
+        ('Network', 'port', 'int'),
+        ('Network', 'secure_proxy_ssl_header', 'string'),
+        ('Network', 'use_x_forwarded_host', 'bool'),
+        ('Misc', 'box_name', 'string'),
+        ('Misc', 'danube_edition', 'bool'),
+    )
 
     for section, name, datatype in config_items:
         try:
             value = parser.get(section, name)
         except (configparser.NoSectionError, configparser.NoOptionError):
-            print('Configuration does not contain the {}.{} option.'
-                  .format(section, name))
+            logger.error('Configuration does not contain option: %s.%s',
+                         section, name)
             raise
         else:
             if datatype == 'int':
                 value = int(value)
-
-            if datatype == 'bool':
+            elif datatype == 'bool':
                 value = (value.lower() == 'true')
 
             globals()[name] = value
