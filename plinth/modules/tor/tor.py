@@ -92,7 +92,9 @@ def on_install():
     actions.superuser_run('tor', ['enable-apt-transport-tor'])
 
 
-@package.required(['tor', 'obfsproxy', 'torsocks', 'apt-transport-tor'],
+@package.required(['tor', 'tor-geoipdb', 'torsocks',
+                   'obfs4proxy',
+                   'apt-transport-tor'],
                   on_install=on_install)
 def index(request):
     """Service the index page"""
