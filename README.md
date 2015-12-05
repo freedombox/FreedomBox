@@ -1,13 +1,10 @@
 [![Build Status](https://travis-ci.org/freedombox/Plinth.svg?branch=master)](https://travis-ci.org/freedombox/Plinth)
+[![Translation status](https://hosted.weblate.org/widgets/freedombox/-/shields-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
 
 # Plinth
 
 [Plinth](https://wiki.debian.org/FreedomBox/Plinth) - a web front end
 for administering [FreedomBox](https://freedomboxfoundation.org/)
-
-<a href="https://hosted.weblate.org/engage/freedombox/?utm_source=widget">
-<img src="https://hosted.weblate.org/widgets/freedombox/-/status-badge.png" alt="État de la traduction" />
-</a>
 
 # Description
 
@@ -49,8 +46,4 @@ See the HACKING file for contributing to Plinth.
 
 # Localization
 
-
-
-<a href="https://hosted.weblate.org/engage/freedombox/?utm_source=widget">
-<img src="https://hosted.weblate.org/widgets/freedombox/-/287x66-white.png" alt="État de la traduction" />
-</a>
+[![Translation status](https://hosted.weblate.org/widgets/freedombox/-/287x66-white.png)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
