@@ -97,7 +97,8 @@ class UpdateTranslations(DjangoCommand):
         DjangoCommand.run(self)
 
         from django.core.management import call_command
-        call_command('makemessages', all=True, domain='django', verbosity=1)
+        call_command('makemessages', all=True, domain='django', keep_pot=True,
+                     verbosity=1)
 
 
 class CustomBuild(build):
