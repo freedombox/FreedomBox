@@ -5,6 +5,10 @@
 [Plinth](https://wiki.debian.org/FreedomBox/Plinth) - a web front end
 for administering [FreedomBox](https://freedomboxfoundation.org/)
 
+<a href="https://hosted.weblate.org/engage/freedombox/?utm_source=widget">
+<img src="https://hosted.weblate.org/widgets/freedombox/-/status-badge.png" alt="État de la traduction" />
+</a>
+
 # Description
 
 FreedomBox is a community project to develop, design and promote
@@ -42,3 +46,11 @@ Run Plinth on the local system with:
 # Contributing
 
 See the HACKING file for contributing to Plinth.
+
+# Localization
+
+
+
+<a href="https://hosted.weblate.org/engage/freedombox/?utm_source=widget">
+<img src="https://hosted.weblate.org/widgets/freedombox/-/287x66-white.png" alt="État de la traduction" />
+</a>
