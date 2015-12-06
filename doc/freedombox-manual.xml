@@ -6,6 +6,18 @@
     
   </articleinfo>
   <section>
+    <title>FreedomBox Introduction</title>
+    <para>FreedomBox is a personal server that protects your privacy. It is a free software stack, a subset of the Debian universal operating system, that can be installed in many flavors of cheap and power-efficient hardware. The simplicity of setting up and operating a FreedomBox is similar to that of a smart phone. </para>
+    <section>
+      <title>Smart Router</title>
+      <para>FreedomBox runs in a physical computer and can route your traffic. It can sit between various devices at home such as mobiles, laptops and TVs and the Internet replacing a home wireless router.  By routing traffic, FreedomBox can remove tracking advertisements and malicious web bugs before they ever reach your devices.  FreedomBox can cloak your location and protect your anonymity by "onion routing" your traffic over Tor. FreedomBox provides a VPN server that you can use while you are away from home to keep your traffic secret on untrusted public wireless networks and to securely access various devices at home. It can also be carried along with your laptop and used to connect to public networks at work, school, or office to avail its services. It could be used in a village to provide communications throughout the village. In future, FreedomBox intends to provide support for alternative ways of connecting to the Internet such as Mesh networks. </para>
+    </section>
+    <section>
+      <title>Private Cloud</title>
+      <para>FreedomBox provides services: to your computers and mobile devices in your home and to computers and mobile devices of other people who are your friends. FreedomBox provides file sharing like Dropbox, shared calendering like Google or Yahoo and photo sharing. FreedomBox provides instant messaging and truly secure voice conference calling that works on low bandwidth providing high quality. FreedomBox has a blog and wiki to let you publish your content and collaborate with the rest of the world.  Coming soon, a personal email server and federated social networking using GNU Social and Diaspora, providing privacy-respecting alternatives to Gmail and Facebook.  </para>
+    </section>
+  </section>
+  <section>
     <title>Quick Start</title>
     <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
       <listitem>
@@ -20,7 +32,7 @@
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>(Dreamplug only) Plug your computer into the eth1 port (the one toward the end of the box) on the FreedomBox. </para>
+        <para>If your device has a 2nd ethernet port, you can connect your computer to it directly, using an ethernet cable. </para>
       </listitem>
       <listitem>
         <para>Power on your your FreedomBox. </para>
@@ -32,10 +44,10 @@
         <para>After the FreedomBox has rebooted, you can access Plinth through your web browser. </para>
         <itemizedlist>
           <listitem>
-            <para>If your computer is connected directly to the FreedomBox through a second ethernet port, you can browse to: <ulink url="http://freedombox/"/> or <ulink url="http://192.168.1.1/"/>. </para>
+            <para>If your computer is connected directly to the FreedomBox through a second (LAN) ethernet port, you can browse to: <ulink url="http://freedombox/"/> or <ulink url="http://10.42.0.1/"/>. </para>
           </listitem>
           <listitem>
-            <para>If your computer supports mDNS, you can browse to: <ulink url="http://freedombox.local/"/>. </para>
+            <para>If your computer supports mDNS (GNU/Linux, Mac OSX and Windows with mDNS software installed), you can browse to: <ulink url="http://freedombox.local/"/>. </para>
           </listitem>
           <listitem>
             <para>If neither of these methods are available, then you will need to figure out the IP address of your FreedomBox. You can use the "nmap" program to find its IP address: </para>
@@ -53,7 +65,7 @@
         <para>If your computer is connected directly to the FreedomBox, your FreedomBox can act as a router, allowing you to access the Internet. </para>
       </listitem>
     </orderedlist>
-    <para>Now, you can try any of the Apps that are available on FreedomBox. </para>
+    <para>Now, you can try <ulink url="https://wiki.debian.org/FreedomBox/Features#">any of the Apps</ulink> that are available on FreedomBox. </para>
   </section>
   <section>
     <title>Getting Help</title>
@@ -81,627 +93,321 @@
   </section>
   <section>
     <title>Release Notes</title>
-    <para>The following are the release notes for each FreedomBox version. </para>
+    <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.5 (2015-08-07)</title>
-      <section>
-        <title>Notable Features</title>
-        <itemizedlist>
-          <listitem>
-            <para>New targets: CubieTruck, i386, amd64 </para>
-          </listitem>
-          <listitem>
-            <para>New apps in Plinth: Transmission, Dynamic DNS, Mumble, ikiwiki, Deluge, Roundcube, Privoxy </para>
-          </listitem>
-          <listitem>
-            <para>NetworkManager handles network configuration and can be manipulated through Plinth. </para>
-          </listitem>
-          <listitem>
-            <para>Software Upgrades (unattended-upgrades) module can upgrade the system, and enable automatic upgrades. </para>
-          </listitem>
-          <listitem>
-            <para>Plinth is now capable of installing ejabberd, jwchat, and privoxy, so they are not included in image but can be installed when needed. </para>
-          </listitem>
-          <listitem>
-            <para>User authentication through LDAP for SSH, XMPP (ejabberd), and ikiwiki. </para>
-          </listitem>
-          <listitem>
-            <para>Unit test suite is automatically run on Plinth upstream. This helps us catch at least some code errors before they are discovered by users! </para>
-          </listitem>
-          <listitem>
-            <para>New, simpler look for Plinth. </para>
-          </listitem>
-          <listitem>
-            <para>Performance improvements for Plinth. </para>
-          </listitem>
-        </itemizedlist>
-        <section>
-          <title>freedom-maker</title>
-          <itemizedlist>
-            <listitem>
-              <para>Add ability to set build and image mirrors separately </para>
-            </listitem>
-            <listitem>
-              <para>Updated installation instructions </para>
-            </listitem>
-            <listitem>
-              <para>Ability to set specific components based on targets </para>
-            </listitem>
-            <listitem>
-              <para>Add support for CubieTruck </para>
-            </listitem>
-            <listitem>
-              <para>Fix build failure during date change boundary </para>
-            </listitem>
-            <listitem>
-              <para>Disable btrfs for Raspberry Pi </para>
-            </listitem>
-            <listitem>
-              <para>Add support for building i386/amd64 images </para>
-            </listitem>
-            <listitem>
-              <para>Update documentation about the new targets </para>
-            </listitem>
-            <listitem>
-              <para>Corrected the git url for freedom-maker build </para>
-            </listitem>
-            <listitem>
-              <para>Use vmdebootstrap-0.8 </para>
-            </listitem>
-            <listitem>
-              <para>Remove unneeded DHCP config option to vmdebootstrap </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>freedombox-setup</title>
-          <itemizedlist>
-            <listitem>
-              <para>Setup uap0 interface on dreamplug, using hostapd to configure wifi AP. </para>
-            </listitem>
-            <listitem>
-              <para>Set HOME in first-run initscript so etckeeper can find the git config. </para>
-            </listitem>
-            <listitem>
-              <para>Beaglebone: Don't need to copy u-boot files to boot partition. freedom-maker will install it in front of boot partition. </para>
-            </listitem>
-            <listitem>
-              <para>Add initial support for cubietruck. </para>
-            </listitem>
-            <listitem>
-              <para>Remove pagekite recommendation as Plinth now takes care of its installation and setup </para>
-            </listitem>
-            <listitem>
-              <para>Redirect to Plinth from home page instead of showing jwchat </para>
-            </listitem>
-            <listitem>
-              <para>Migrate to dh_python3 from python-support </para>
-            </listitem>
-            <listitem>
-              <para>Use nmcli to setup network connections </para>
-            </listitem>
-            <listitem>
-              <para>Remove jwchat/ejabber setup as it is handle by Plinth </para>
-            </listitem>
-            <listitem>
-              <para>Remove LDAP root password and create ou=groups </para>
-            </listitem>
-            <listitem>
-              <para>Remove renaming of network interfaces as it does not work.  Start using systemd's new predictable naming.  Don't alter /etc/network/interface anymore. </para>
-            </listitem>
-            <listitem>
-              <para>Use network manager for configuring DNS and DHCP servers </para>
-            </listitem>
-            <listitem>
-              <para>Fix hang issue when building Raspberry Pi images </para>
-            </listitem>
-            <listitem>
-              <para>Remove privoxy setup as it happens in Plinth now </para>
-            </listitem>
-            <listitem>
-              <para>Configure PAM for LDAP user logins </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>Plinth 0.4.5</title>
-          <itemizedlist>
-            <listitem>
-              <para>New app modules: </para>
-              <itemizedlist>
-                <listitem>
-                  <para>BitTorrent (Transmission) </para>
-                </listitem>
-                <listitem>
-                  <para>Dynamic DNS </para>
-                </listitem>
-                <listitem>
-                  <para>Voice Chat (Mumble) </para>
-                </listitem>
-                <listitem>
-                  <para>Wiki &amp; Blog (ikiwiki) </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-            <listitem>
-              <para>New system modules: </para>
-              <itemizedlist>
-                <listitem>
-                  <para>Networks </para>
-                </listitem>
-                <listitem>
-                  <para>Software Upgrades </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-            <listitem>
-              <para>Add unit tests with coverage report and Travis-CI integration </para>
-            </listitem>
-            <listitem>
-              <para>Add systemd service file for Plinth </para>
-            </listitem>
-            <listitem>
-              <para>Use augeas to configure Pagekite </para>
-            </listitem>
-            <listitem>
-              <para>Use domainname as ejabberd host </para>
-            </listitem>
-            <listitem>
-              <para>Bugfixes for ownCloud and packagekit </para>
-            </listitem>
-            <listitem>
-              <para>Fixes for user dropdown menu when javascript is disabled </para>
-            </listitem>
-            <listitem>
-              <para>Simpler look </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>Plinth 0.5</title>
-          <itemizedlist>
-            <listitem>
-              <para>New app modules: </para>
-              <itemizedlist>
-                <listitem>
-                  <para>BitTorrent (Deluge) </para>
-                </listitem>
-                <listitem>
-                  <para>Email Client (Roundcube) </para>
-                </listitem>
-                <listitem>
-                  <para>Web Proxy (Privoxy) </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-            <listitem>
-              <para>Use libnm for Networks module </para>
-            </listitem>
-            <listitem>
-              <para>Add support for testing Django-dependent modules </para>
-            </listitem>
-            <listitem>
-              <para>Plinth can now setup ejabberd and jwchat </para>
-            </listitem>
-            <listitem>
-              <para>Setup firewall zones for network-manager connections </para>
-            </listitem>
-            <listitem>
-              <para>Manage LDAP users and groups with ldapscripts package </para>
-            </listitem>
-            <listitem>
-              <para>LDAP user authentication is now used for XMPP, ikiwiki, and SSH </para>
-            </listitem>
-            <listitem>
-              <para>Fixes to cherrypy autoreload and remove unneeded extra server. Plinth now uses much less CPU. </para>
-            </listitem>
-            <listitem>
-              <para>Use django-stronghold for authentication handling </para>
-            </listitem>
-            <listitem>
-              <para>Bundle tests with applications; add Travis-CI status image to README </para>
-            </listitem>
-            <listitem>
-              <para>Move to using python3-augeas for Pagekite </para>
-            </listitem>
-            <listitem>
-              <para>Extend and use action utilities for enabling/disabling services and Apache confs </para>
-            </listitem>
-            <listitem>
-              <para>Fixed timezone list issue </para>
-            </listitem>
-            <listitem>
-              <para>Bind a Network connection to an interface </para>
-            </listitem>
-            <listitem>
-              <para>Many small cleanups </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-      </section>
-    </section>
-    <section>
-      <title>Version 0.3 (2015-01-20)</title>
-      <section>
-        <title>Notable Features</title>
-        <itemizedlist>
-          <listitem>
-            <para>Tor Bridges: All boxes now act as non-exit Tor bridges, routing traffic for the Tor network. </para>
-          </listitem>
-          <listitem>
-            <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink>: firewall is on by default and is automatically managed. </para>
-          </listitem>
-          <listitem>
-            <para>Add BeagleBone support.  We now have images for BeagleBone, RaspberryPi, VirtualBox i386/amd64, and DreamPlug. </para>
-          </listitem>
-          <listitem>
-            <para>Ability to enable and use Tor Hidden Services.  Works with Ejabberd/JWChat and ownCloud services. </para>
-          </listitem>
-          <listitem>
-            <para>Enable Tor obfsproxy with scramblesuit. </para>
-          </listitem>
-          <listitem>
-            <para>Drop well-known root password (an account with sudo capabilities still exists for now but will be removed soon). </para>
-          </listitem>
-          <listitem>
-            <para>Switch to unstable as suite of choice for easier development. </para>
-          </listitem>
-          <listitem>
-            <para>Newer images are built with systemd by default (due to Debian change). </para>
-          </listitem>
-          <listitem>
-            <para>Install and operate firewall automatically (uses firewalld). </para>
-          </listitem>
-          <listitem>
-            <para>Major restructuring of Plinth UI using Python3, Django web development framework and Bootstrap3.  Code quality is much better and UI is more polished. </para>
-          </listitem>
-          <listitem>
-            <para>Introduced packaging framework in Plinth UI for on-demand application installation. </para>
-          </listitem>
-        </itemizedlist>
-        <section>
-          <title>freedom-maker</title>
-          <itemizedlist>
-            <listitem>
-              <para>Newer images use systemd by default </para>
-            </listitem>
-            <listitem>
-              <para>VirtualBox images for amd64 architecture also </para>
-            </listitem>
-            <listitem>
-              <para>Default to btrfs filesytem where supported </para>
-            </listitem>
-            <listitem>
-              <para>Images for BeagleBone </para>
-            </listitem>
-            <listitem>
-              <para>Use Grub for virtualbox images </para>
-            </listitem>
-            <listitem>
-              <para>Use eatmydata to speed up build process </para>
-            </listitem>
-            <listitem>
-              <para>Switch to Debian Unstable as suite of choice </para>
-            </listitem>
-            <listitem>
-              <para>Drop well-known root password (an account with sudo capabilities still exists for now) </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>freedombox-setup</title>
-          <itemizedlist>
-            <listitem>
-              <para>Add BeagleBone support </para>
-            </listitem>
-            <listitem>
-              <para>Enable scramblesuite for obfsproxy </para>
-            </listitem>
-            <listitem>
-              <para>Enable obfsproxy </para>
-            </listitem>
-            <listitem>
-              <para>Updates to testsuite </para>
-            </listitem>
-            <listitem>
-              <para>Pull documentation from Wiki and build it </para>
-            </listitem>
-            <listitem>
-              <para>Enable Tor transparent proxy </para>
-            </listitem>
-            <listitem>
-              <para>Update tests in testsuite </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>Plinth 0.4.1</title>
-          <itemizedlist>
-            <listitem>
-              <para>Ability to enable and see status of Tor Hidden Services. </para>
-            </listitem>
-            <listitem>
-              <para>Fully migrated to Django and removed all code that was re-inventing web frameworks. </para>
-            </listitem>
-            <listitem>
-              <para>Migrated to Python 3. </para>
-            </listitem>
-            <listitem>
-              <para>Ability to write and distribute Plinth modules outside of Plinth repository: FreedomBox Apps. </para>
-            </listitem>
-            <listitem>
-              <para>Improved security using Django authentication and forms. </para>
-            </listitem>
-            <listitem>
-              <para>Reorganized source code to look more like a Python application. </para>
-            </listitem>
-            <listitem>
-              <para>Use Python setup.py instead of custom Makefiles. </para>
-            </listitem>
-            <listitem>
-              <para>Setting up Plinth for development is easier. </para>
-            </listitem>
-            <listitem>
-              <para>Removed dependency on withsqlite package with help from Django models. </para>
-            </listitem>
-            <listitem>
-              <para>Removed duplicated code in Twitter bootstrap JS/CSS by depending on proper Debian packages. </para>
-            </listitem>
-            <listitem>
-              <para>Removed stubs and TODOish messages in UI in preparation of proper public (developer) release. </para>
-            </listitem>
-            <listitem>
-              <para>Code quality clean-ups. </para>
-            </listitem>
-            <listitem>
-              <para>Updated documentation on setting up and using Plinth from source. </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>Plinth 0.4.4</title>
-          <itemizedlist>
-            <listitem>
-              <para>Update to Bootstrap3 and improve styling in general </para>
-            </listitem>
-            <listitem>
-              <para>Fix issue with Apache configuration </para>
-            </listitem>
-            <listitem>
-              <para>Improvements to working behind a proxy server </para>
-            </listitem>
-            <listitem>
-              <para>Introduce package management framework </para>
-            </listitem>
-            <listitem>
-              <para>Show progress bar while installing ownCloud </para>
-            </listitem>
-            <listitem>
-              <para>Tested JWChat/ownCloud on .onion addresses </para>
-            </listitem>
-            <listitem>
-              <para>Test coverage measurement </para>
-            </listitem>
-            <listitem>
-              <para>Rewamped first boot wizard </para>
-            </listitem>
-            <listitem>
-              <para>Proper user management with editing and setting passwords </para>
-            </listitem>
-            <listitem>
-              <para>Remove expert mode </para>
-            </listitem>
-            <listitem>
-              <para>Seperate out domain name vs. hostname configuration </para>
-            </listitem>
-            <listitem>
-              <para>Fix issues with ejabberd configuration update on hostname change </para>
-            </listitem>
-            <listitem>
-              <para>Fix issue with hostname changes </para>
-            </listitem>
-            <listitem>
-              <para>Debian packaging related fixes </para>
-            </listitem>
-            <listitem>
-              <para>Many bug fixes and code cleanups </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-        <section>
-          <title>Firewall</title>
-          <para>Firewall is a network security system that controls the incoming and outgoing network traffic. Keeping a firewall enabled and properly configured reduces risk of security threat from the Internet. </para>
-          <para>The operation of the firewall is automatic. When you enable a service it is automatically permitted in the firewall and you disable a service is automatically disabled in the firewall. </para>
-          <para>Automatic management of firewall in FreedomBox is handled by Plinth web user interface using <ulink url="https://fedoraproject.org/wiki/FirewallD">FirewallD</ulink>. </para>
-        </section>
-      </section>
-    </section>
-    <section>
-      <title>Version 0.2 (2014-03-16)</title>
-      <section>
-        <title>New Architectures</title>
-        <para>In addition to the <ulink url="https://wiki.debian.org/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>, Raspberry Pi and VirtualBox (x86) images are now provided. </para>
-      </section>
-      <section>
-        <title>New Services</title>
-        <para>These services are new as of this release: </para>
-        <itemizedlist>
-          <listitem>
-            <para>Configuration Management UI </para>
-          </listitem>
-          <listitem>
-            <para>Instant Messaging </para>
-          </listitem>
-          <listitem>
-            <para>OwnCloud </para>
-          </listitem>
-          <listitem>
-            <para>dnsmasq </para>
-          </listitem>
-          <listitem>
-            <para>Low-Level Configuration Management </para>
-          </listitem>
-          <listitem>
-            <para>Service Announcement </para>
-          </listitem>
-          <listitem>
-            <para>LDAP Server </para>
-          </listitem>
-          <listitem>
-            <para>LXC Support </para>
-          </listitem>
-          <listitem>
-            <para>Source Packages </para>
-          </listitem>
-        </itemizedlist>
-        <para>See <ulink url="https://wiki.debian.org/FreedomBox/Manual/Jessie#">the user documentation</ulink> for instruction on how to use them. </para>
-        <section>
-          <title>Configuration Management UI</title>
-          <para>The FreedomBox now has an administrative interface, Plinth. </para>
-          <para>To use it: </para>
-          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-            <listitem>
-              <para>Start your FreedomBox. </para>
-            </listitem>
-            <listitem>
-              <para>After Plinth is configured, log in. </para>
-            </listitem>
-          </orderedlist>
-          <para>To configure it: </para>
-          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-            <listitem>
-              <para>Start your FreedomBox. </para>
-            </listitem>
-            <listitem>
-              <para>Plug your Ethernet cable in to your computer and eth1 on your <ulink url="https://wiki.debian.org/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>. </para>
-            </listitem>
-            <listitem>
-              <para>Connect to Plinth. </para>
-            </listitem>
-            <listitem>
-              <para>Set up the user name and password you'll use to log into Plinth. </para>
-            </listitem>
-          </orderedlist>
-        </section>
-        <section>
-          <title>Instant Messaging</title>
-          <para>The FreedomBox now supports instant messaging via <ulink url="https://en.wikipedia.org/wiki/XMPP">XMPP</ulink>, using <ulink url="https://jwchat.org/">JWChat</ulink>. </para>
-          <para>To use it: </para>
-          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-            <listitem>
-              <para>Start your FreedomBox. </para>
-            </listitem>
-            <listitem>
-              <para>Register a new Jabber account. </para>
-            </listitem>
-            <listitem>
-              <para>Log in to your Jabber account. </para>
-            </listitem>
-          </orderedlist>
-        </section>
-        <section>
-          <title>OwnCloud</title>
-          <itemizedlist>
-            <listitem override="none">
-              <para>(with 4GB images) </para>
-            </listitem>
-          </itemizedlist>
-          <para>(What is this?  What is it for?  How do we use it?) </para>
-        </section>
-        <section>
-          <title>dnsmasq</title>
-          <para>(What is this?  What is it for?  How do we use it?) </para>
-        </section>
-        <section>
-          <title>Low-Level Configuration Management</title>
-          <para>Etckeeper is now used for configuration management: after every major system operation, the system automatically takes a configuration snapshot so configuration changes can be reversed, as necessary. </para>
-        </section>
-        <section>
-          <title>Service Announcement</title>
-          <para>Avahi Service Announcement and mDNS Name Resolution. </para>
-          <para>(What is this?  What is it for?  How do we use it?) </para>
-        </section>
-        <section>
-          <title>LDAP server</title>
-          <para>(What is this?  What is it for?  How do we use it?) </para>
-        </section>
-        <section>
-          <title>LXC support</title>
-          <para>(What is this?  What is it for?  How do we use it?) </para>
-        </section>
-        <section>
-          <title>Source Packages</title>
-          <para>Source Packages for each installed package are now stored in the /usr/src/packages/ directory. </para>
-        </section>
-      </section>
-      <section>
-        <title>Changes since 0.1 release</title>
-        <itemizedlist>
-          <listitem>
-            <para>The privoxy setup is now the default from Debian. </para>
-          </listitem>
-        </itemizedlist>
-      </section>
-    </section>
-    <section>
-      <title>Version 0.1 (2013-02-26)</title>
-      <para>I am pleased to announce our first FreedomBox software release. The FreedomBox 0.1 image is available <ulink url="http://download.freedomboxfoundation.org/torrents/freedombox-kickstarter-release.img.xz.torrent">here</ulink> (.torrent) (sha512sum: 867f5bf462102daef82a34165017b9e67ed8e09116fe46edd67730541bbfb731083850ab5e28ee40bdbc5054cb64e4d0e46a201797f27e0b8f0d2881ef083b40). </para>
-      <para>This 0.1 version is primarily a developer release, which means that it focuses on architecture and infrastructure rather than finish work. The exception to this is privoxy-freedombox, the web proxy discussed in previous updates, which people can begin using right now to make their web browsing more secure and private and which will very soon be available on non-FreedomBox systems. More information on that tool at the end of this post. </para>
+      <title>Version 0.7 (unreleased)</title>
       <itemizedlist>
         <listitem>
-          <para>What have we accomplished? </para>
+          <para>Translations! </para>
+        </listitem>
+        <listitem>
+          <para>Support for OLinuXino A20 MICRO and LIME2 </para>
+        </listitem>
+        <listitem>
+          <para>New Plinth applications: OpenVPN, reStore </para>
+        </listitem>
+        <listitem>
+          <para>Improved first-boot experience </para>
+        </listitem>
+        <listitem>
+          <para>Many bugfixes and cleanups </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.6 (2015-10-31)</title>
+      <itemizedlist>
+        <listitem>
+          <para>New supported hardware target: Raspberry Pi 2 </para>
+        </listitem>
+        <listitem>
+          <para>New modules in Plinth: </para>
           <itemizedlist>
-            <listitem override="none">
-              <para>This first release completes a number of important milestones for the project. </para>
+            <listitem>
+              <para>Shaarli: Web application to manage and share bookmarks </para>
             </listitem>
             <listitem>
-              <para>Full hardware support in Debian </para>
-              <itemizedlist>
-                <listitem override="none">
-                  <para>A big part of the vision for the FreedomBox project revolves around the "Boxs", tiny plug servers that are capable of running full size computing loads cheaply and with little use of electricity. In many respects these are wireless routers given the brains of a smart phone. If you want to change the software on a router or smart phone today you normally need to worry about bootloader images, custom roms, and a whole collection of specialized build and install tools. We wanted to the FreedomBox to move beyond this fragmented environment and, with the help of some embedded device experts, we have managed to make our <ulink url="https://www.globalscaletechnologies.com/t-dreamplugdetails.aspx">development hardware</ulink> into a fully supported Debian platform. That means that anyone with a device can install Debian on it just like a laptop or desktop computer. This support is very important for ensuring that the work we do on the FreedomBox is as portable and reusable as possible. </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-          </itemizedlist>
-          <itemizedlist>
-            <listitem>
-              <para>Basic software tools selected </para>
-              <itemizedlist>
-                <listitem override="none">
-                  <para>There is a lot of great free software out there to choose from and we put a lot of thought into which elements would be included in our basic tool kit. This includes the user interface system </para>
-                  <para>"plinth" that I outlined in a <ulink url="http://www.kickstarter.com/projects/721744279/push-the-freedombox-foundation-from-0-to-60-in-30/posts/260995">recent kickstarter update</ulink> as well as basic cryptography tools like gpg and a one named "monkeysphere" that leverages gpg as an authentication tool. All of these are now bundled together and installed on the release image. This common working environment will simplify development going forward. </para>
-                </listitem>
-              </itemizedlist>
+              <para>Date &amp; Time: Configure time zone and NTP service </para>
             </listitem>
             <listitem>
-              <para>Box-to-box communication design </para>
-              <itemizedlist>
-                <listitem override="none">
-                  <para>Some goals of the FreedomBox can be accomplished with one user and one FreedomBox but many, like helping someone route around repressive government firewalls, will require groups of people and groups of boxes working together. One of our greatest architectural challenges has been finding a way for boxes to communicate securely without so slowing down or breaking network access as to make the system unpleasant to use. We have now <ulink url="https://github.com/NickDaly/Plinth/tree/santiago/ugly_hacks/santiago">outlined</ulink> and built the first version of our proposed solution: Freedom-buddy. Freedom-buddy uses the world class <ulink url="https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29">TOR network</ulink> so that boxes can find each other regardless of location or restrictive firewall and then allows the boxes to negotiate secure direct connections to each other for actually sending large or time sensitive data. We believe this blended approach will be most effective at improving the security and usability of personal-server communications and all the services we plan to build into those servers. </para>
-                </listitem>
-              </itemizedlist>
-            </listitem>
-            <listitem>
-              <para>Web cleaning </para>
-              <itemizedlist>
-                <listitem override="none">
-                  <para>Our first service, a piece of software you can use today to start making your web browsing more secure and private, is called "privoxy-freedombox". This software combines the functionality of </para>
-                  <para>the <ulink url="https://adblockplus.org/en/">Adblock Plus</ulink> ad blocker, the <ulink url="https://easylist.adblockplus.org/en/">Easy Privacy</ulink> filtering list, and the (<ulink url="https://www.eff.org/https-everywhere">HTTPS Everywhere</ulink>) website redirection plugin into a single piece of software to run on your FreedomBox. Combining these different plugins into software for your FreedomBox means that you can use them with almost any browser or mobile device using a standard web proxy connection. Because of our focus on building the FreedomBox as part of Debian this software will soon be available to anyone running a Debian system regardless of whether you are using our target DreamPlug hardware, a laptop, or a large rack server somewhere. </para>
-                  <para>As you read this packages should already be available in the <ulink url="http://www.raspbian.org/">Raspbian</ulink> repositories, which is the optimized version of Debian used on the Raspberry Pi hardware. Hopefully we will get that onto the main Debian mirrors over the next month; if you are interested in building it for yourself in the meantime, the source is available from <ulink url="https://www.gitorious.org/freedombox-privoxy/freedombox-privoxy">gitorious</ulink>. As we build additional components for the FreedomBox we will continue to work on making them widely available. </para>
-                </listitem>
-              </itemizedlist>
+              <para>Service Discovery: Configure Avahi service </para>
             </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>What is next? </para>
+          <para>Documentation revamp including new user manual and developer guide </para>
+        </listitem>
+        <listitem>
+          <para>Improved diagnostic tests, available in Plinth </para>
+        </listitem>
+        <listitem>
+          <para>Avoid unnecessary changes when installing on existing Debian system </para>
+        </listitem>
+        <listitem>
+          <para>Network configuration supports PPPoE connections </para>
+        </listitem>
+        <listitem>
+          <para>Debian packages can be download over Tor </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.5 (2015-08-07)</title>
+      <itemizedlist>
+        <listitem>
+          <para>New targets: CubieTruck, i386, amd64 </para>
+        </listitem>
+        <listitem>
+          <para>New apps in Plinth: Transmission, Dynamic DNS, Mumble, ikiwiki, Deluge, Roundcube, Privoxy </para>
+        </listitem>
+        <listitem>
+          <para>NetworkManager handles network configuration and can be manipulated through Plinth. </para>
+        </listitem>
+        <listitem>
+          <para>Software Upgrades (unattended-upgrades) module can upgrade the system, and enable automatic upgrades. </para>
+        </listitem>
+        <listitem>
+          <para>Plinth is now capable of installing ejabberd, jwchat, and privoxy, so they are not included in image but can be installed when needed. </para>
+        </listitem>
+        <listitem>
+          <para>User authentication through LDAP for SSH, XMPP (ejabberd), and ikiwiki. </para>
+        </listitem>
+        <listitem>
+          <para>Unit test suite is automatically run on Plinth upstream. This helps us catch at least some code errors before they are discovered by users! </para>
+        </listitem>
+        <listitem>
+          <para>New, simpler look for Plinth. </para>
+        </listitem>
+        <listitem>
+          <para>Performance improvements for Plinth. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.3 (2015-01-20)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Tor Bridges: All boxes now act as non-exit Tor bridges, routing traffic for the Tor network. </para>
+        </listitem>
+        <listitem>
+          <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink>: firewall is on by default and is automatically managed. </para>
+        </listitem>
+        <listitem>
+          <para>Add BeagleBone support.  We now have images for BeagleBone, RaspberryPi, VirtualBox i386/amd64, and DreamPlug. </para>
+        </listitem>
+        <listitem>
+          <para>Ability to enable and use Tor Hidden Services.  Works with Ejabberd/JWChat and ownCloud services. </para>
+        </listitem>
+        <listitem>
+          <para>Enable Tor obfsproxy with scramblesuit. </para>
+        </listitem>
+        <listitem>
+          <para>Drop well-known root password (an account with sudo capabilities still exists for now but will be removed soon). </para>
+        </listitem>
+        <listitem>
+          <para>Switch to unstable as suite of choice for easier development. </para>
+        </listitem>
+        <listitem>
+          <para>Newer images are built with systemd by default (due to Debian change). </para>
+        </listitem>
+        <listitem>
+          <para>Install and operate firewall automatically (uses firewalld). </para>
+        </listitem>
+        <listitem>
+          <para>Major restructuring of Plinth UI using Python3, Django web development framework and Bootstrap3.  Code quality is much better and UI is more polished. </para>
+        </listitem>
+        <listitem>
+          <para>Introduced packaging framework in Plinth UI for on-demand application installation. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.2 (2014-03-16)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Support for Raspberry Pi and VirtualBox (x86) in addition to the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>. </para>
+        </listitem>
+        <listitem>
+          <para>New Services: </para>
           <itemizedlist>
-            <listitem override="none">
-              <para>As you may have seen, our Project Lead, Bdale Garbee, is about to begin a well earned <ulink url="http://www.gag.com/bdale/blog/posts/Early_Retirement.html">early retirement</ulink> from his long time role as Open Source &amp;<!--RAW HTML: &amp;--> Linux Chief Technologist at Hewlett-Packard. Over the coming month Bdale and the rest of the Foundation team will be putting together plans for the next stage of FreedomBox development and the road to a 1.0 release. News and updates will follow at <ulink url="https://www.freedomboxfoundation.org/">freedomboxfoundation.org</ulink> (<ulink url="https://www.freedomboxfoundation.org/index.en.rss">rss</ulink>). </para>
+            <listitem>
+              <para>Configuration Management UI. </para>
+            </listitem>
+            <listitem>
+              <para>Instant Messaging. </para>
+            </listitem>
+            <listitem>
+              <para>OwnCloud. </para>
+            </listitem>
+            <listitem>
+              <para>dnsmasq. </para>
+            </listitem>
+            <listitem>
+              <para>Low-Level Configuration Management. </para>
+            </listitem>
+            <listitem>
+              <para>Service Announcement. </para>
+            </listitem>
+            <listitem>
+              <para>LDAP Server. </para>
+            </listitem>
+            <listitem>
+              <para>LXC Support. </para>
+            </listitem>
+            <listitem>
+              <para>Source Packages. </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>The privoxy setup is now the default from Debian. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.1 (2013-02-26)</title>
+      <itemizedlist>
+        <listitem>
+          <para>First FreedomBox software release (0.1 image, developer release).  </para>
+        </listitem>
+        <listitem>
+          <para>Full hardware support in Debian </para>
+        </listitem>
+        <listitem>
+          <para>Support for <ulink url="https://wiki.debian.org/FreedomBox/Hardware/DreamPlug#">DreamPlug</ulink>. </para>
+        </listitem>
+        <listitem>
+          <para>Basic software tools selected as common working environment: </para>
+          <itemizedlist>
+            <listitem>
+              <para>User interface system "plinth" </para>
+            </listitem>
+            <listitem>
+              <para>Cryptography tools: gpg or "monkeysphere" </para>
+            </listitem>
+            <listitem>
+              <para>Box-to-box communication design: Freedom-buddy (uses <ulink url="https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29">TOR network</ulink>) </para>
+            </listitem>
+            <listitem>
+              <para>Web cleaning: "privoxy-freedombox". </para>
             </listitem>
           </itemizedlist>
         </listitem>
       </itemizedlist>
+    </section>
+  </section>
+  <section>
+    <title>Download and Install</title>
+    <para>You may either use FreedomBox on one of the supported <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">hardware</ulink>, install it on a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">Debian</ulink> machine, or deploy on a virtual machine. </para>
+    <section>
+      <title>Downloading on Debian</title>
+      <para>If you are installing on Debian, you don't need to download these images. Instead read <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">instructions</ulink> on setting up FreedomBox on Debian. </para>
+    </section>
+    <section>
+      <title>Downloading on Hardware or Virtual Machine</title>
+      <section>
+        <title>Prepare your device</title>
+        <para>See hardware specific instructions on how to prepare your device at the <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">Hardware</ulink> section. Gather and read a lot of documentation on the web about first boot and flashing USB or SD Card on your hardware. </para>
+      </section>
+      <section>
+        <title>Downloading Images</title>
+        <para>Recent images for supported targets are available here: </para>
+        <itemizedlist>
+          <listitem override="none">
+            <para>Official Images: <ulink url="http://ftp.skolelinux.org/pub/freedombox/"/> </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Verifying the Downloaded Images</title>
+        <para>It is important to verify the images you have downloaded to ensure that the file has not be corrupted during the transmission and that it is indeed the image built by FreedomBox developers.  </para>
+        <itemizedlist>
+          <listitem>
+            <para>First open a terminal and import the public key of the FreedomBox developer who built the images: </para>
+            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys 0x36C361440C9BC971</screen>
+          </listitem>
+          <listitem>
+            <para>Next, verify the fingerprint of the public key: </para>
+            <screen format="linespecific">$ gpg --fingerprint 0x36C361440C9BC971
+pub   4096R/0C9BC971 2011-11-12
+      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
+uid                  Sunil Mohan Adapa &lt;sunil@medhas.org&gt;
+sub   4096R/4C1D4B57 2011-11-12</screen>
+          </listitem>
+          <listitem>
+            <para>Finally, verify your downloaded image with its signature file <code>.sig</code>. For example: </para>
+            <screen format="linespecific">$ gpg --verify freedombox-unstable_2015-01-15_beaglebone-armhf-card.tar.bz2.sig freedombox-unstable_2015-01-15_beaglebone-armhf-card.tar.bz2
+gpg: Signature made Thursday 15 January 2015 09:27:50 AM IST using RSA key ID 0C9BC971
+gpg: Good signature from "Sunil Mohan Adapa &lt;sunil@medhas.org&gt;"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</screen>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Installation</title>
+        <para>After the download you can use the image to boot <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">supported hardware</ulink> (including virtual machines).  You'll need to copy the image to the memory card or USB stick as follows: </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Figure out which device your card actually is. </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>Unplug your card. </para>
+              </listitem>
+              <listitem>
+                <para>Run <code>dmesg -w</code> to show and follow the kernel messages. </para>
+              </listitem>
+              <listitem>
+                <para>Plug your card in.  You will see messages such as following: </para>
+                <screen format="linespecific">[33299.023096] usb 4-6: new high-speed USB device number 12 using ehci-pci
+[33299.157160] usb 4-6: New USB device found, idVendor=058f, idProduct=6361
+[33299.157162] usb 4-6: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[33299.157164] usb 4-6: Product: Mass Storage Device
+[33299.157165] usb 4-6: Manufacturer: Generic
+[33299.157167] usb 4-6: SerialNumber: XXXXXXXXXXXX
+[33299.157452] usb-storage 4-6:1.0: USB Mass Storage device detected
+[33299.157683] scsi host13: usb-storage 4-6:1.0
+[33300.155626] scsi 13:0:0:0: Direct-Access     Generic- Compact Flash    1.01 PQ: 0 ANSI: 0
+[33300.156223] scsi 13:0:0:1: Direct-Access     Multiple Flash Reader     1.05 PQ: 0 ANSI: 0
+[33300.157059] sd 13:0:0:0: Attached scsi generic sg4 type 0
+[33300.157462] sd 13:0:0:1: Attached scsi generic sg5 type 0
+[33300.462115] sd 13:0:0:1: [sdg] 30367744 512-byte logical blocks: (15.5 GB/14.4 GiB)
+[33300.464144] sd 13:0:0:1: [sdg] Write Protect is off
+[33300.464159] sd 13:0:0:1: [sdg] Mode Sense: 03 00 00 00
+[33300.465896] sd 13:0:0:1: [sdg] No Caching mode page found
+[33300.465912] sd 13:0:0:1: [sdg] Assuming drive cache: write through
+[33300.470489] sd 13:0:0:0: [sdf] Attached SCSI removable disk
+[33300.479493]  sdg: sdg1
+[33300.483566] sd 13:0:0:1: [sdg] Attached SCSI removable disk</screen>
+              </listitem>
+              <listitem>
+                <para>In the above case, the disk that is newly inserted is available as <emphasis>/dev/sdg</emphasis>.  Very carefully note this and use it in the copying step below. </para>
+              </listitem>
+            </orderedlist>
+          </listitem>
+          <listitem>
+            <para>Decompress the downloaded image using tar: </para>
+            <screen format="linespecific">$ tar -xjvf freedombox-unstable_2015-08-06_beaglebone-armhf-card.tar.bz2</screen>
+            <para>The above command is an example for the <emphasis>beaglebone</emphasis> image built on 2015-08-06.  Your downloaded file name will be different. </para>
+          </listitem>
+          <listitem>
+            <para>Copy the image to your card.  Double check and make sure you don't write to your computer's main storage (such as /dev/sda).  Also make sure that you don't run this step as root to avoid potentially overriding data on your hard drive due to a mistake in identifying the device or errors while typing the command.  USB disks and SD cards inserted into the system should typically be write accessible to normal users.  If you don't have permission to write to your SD card as a user, you may need to run this command as root.  In this case triple check everything before you run the command.  Another safety precaution is to unplug all external disks except the SD card before running the command. </para>
+            <para>For example, if your SD card is <emphasis>/dev/sdf</emphasis> as noted in the first step above, then to copy the image, run: </para>
+            <screen format="linespecific">$ cd build
+$ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/sdf conv=fdatasync</screen>
+            <para>The above command is an example for the <emphasis>beaglebone</emphasis> image built on 2015-08-06.  Your image file name will be different. </para>
+            <para>When picking a device, use the drive-letter destination, like <emphasis>/dev/sdf</emphasis>, not a numbered destination, like <emphasis>/dev/sdf1</emphasis>.  The device without a number refers to the entire device, while the device with a number refers to a specific partition.  We want to use the whole device.  Downloaded images contain complete information about how many partitions there should be, their sizes and types.  You don't have to format your SD card or create partitions.  All the data on the SD card will be wiped off during the write process. </para>
+          </listitem>
+          <listitem>
+            <para>Use the image by inserting the SD card or USB disk into the target </para>
+            <para>device and booting from it.  Your device should also be prepared (see the <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">Hardware</ulink> section). </para>
+          </listitem>
+          <listitem>
+            <para>Read (the rest of) the <ulink url="https://wiki.debian.org/FreedomBox/Manual#">Manual</ulink> for instructions on how to use applications in FreedomBox. </para>
+          </listitem>
+        </orderedlist>
+      </section>
     </section>
   </section>
   <section>
@@ -893,6 +599,48 @@
         <para>Besides the wiki/blog admin, other FreedomBox users can be given access to login and edit wikis and blogs.  However, they will not have all the same permissions as the wiki admin. They can add or edit pages, but cannot change the wiki's configuration. </para>
         <para>To add a wiki user, go to the Users and Groups page in Plinth (under System configuration, the gear icon at the top right corner of the page). Create or modify a user, and add them to the wiki group. (Users in the admin group will also have wiki access.) </para>
         <para>To login as a FreedomBox user, go to the wiki/blog's login page and select the Other tab.  Then click the "Login with HTTP auth" button. The browser will show a popup dialog where you can enter the username and password of the FreedomBox user. </para>
+      </section>
+    </section>
+    <section>
+      <title>Unhosted</title>
+      <para>From <ulink url="http://unhosted.org/"/>: </para>
+      <para>
+        <emphasis>Also known as "serverless", "client-side", or "static" web apps, unhosted web apps do not send your user data to their server. Either you connect your own server at runtime, or your data stays within the browser.</emphasis>
+      </para>
+      <para>Note: This module is not yet part of mainline <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>, but available for testing via <ulink url="http://debian-dev.freedombox.at/"/>. </para>
+      <section>
+        <title>Set up remoteStorage</title>
+        <para>Your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> contains the <ulink url="https://github.com/jcoglan/restore">restore</ulink> remoteStorage server, which means that it can serve as your personal backend for Unhosted apps. Make sure the package is installed in your Plinth. </para>
+        <para>Then create a remoteStorage account at <code>https://&lt;yourdomain&gt;/restore/</code>. </para>
+        <para>Warning: These user accounts are currently not integrated with Plinth user management, and public sign-up is enabled! </para>
+      </section>
+      <section>
+        <title>Try Unhosted apps</title>
+        <para>Once your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> is set up, and both <ulink url="https://wiki.debian.org/PageKite#">PageKite</ulink> and remoteStorage are running, try one of the following Unhosted apps (more are listed at <ulink url="http://unhosted.org/apps"/>): </para>
+        <itemizedlist>
+          <listitem>
+            <para><ulink url="http://litewrite.net/"/> (a notepad) </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://myfavoritedrinks.5apps.com/"/> (list your favorite drinks) </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://todomvc.5apps.com/labs/architecture-examples/remotestorage/"/> (a simple todo list) </para>
+          </listitem>
+        </itemizedlist>
+        <para>To connect the Unhosted app to your remoteStorage, click on the remoteStorage icon and type your address <code>&lt;user&gt;@&lt;yourdomain&gt;</code>, e.g.: </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/remotestorage.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>remotestorage.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>If this doesn't work, make sure that both <ulink url="https://wiki.debian.org/PageKite#">PageKite</ulink> and remoteStorage are running, and that your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> SSL certificate is trusted in your current browser session (important when using private browsing). </para>
+        <para>Finish the OAuth flow by authenticating with your password and authorizing access, then you should get redirected back to the Unhosted app, and you should be able to use it. All data of the Unhosted app is stored on your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>. </para>
       </section>
     </section>
   </section>
@@ -2483,15 +2231,18 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
   <section>
     <title>Hardware</title>
     <para>FreedomBox is aimed as a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device.  Instead we plan to support/customize exiting hardware. </para>
-    <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See <ulink url="https://wiki.debian.org/FreedomBox/Use#">usage</ulink> instructions for more details. </para>
+    <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual#">manual</ulink> for more details. </para>
     <section>
       <title>Supported Hardware</title>
       <section>
         <title>Recommended Hardware</title>
         <informaltable>
-          <tgroup cols="2">
+          <tgroup cols="5">
             <colspec colname="col_0"/>
             <colspec colname="col_1"/>
+            <colspec colname="col_2"/>
+            <colspec colname="col_3"/>
+            <colspec colname="col_4"/>
             <tbody>
               <row rowsep="1">
                 <entry align="center" colsep="1" rowsep="1">
@@ -2527,6 +2278,57 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                   </para>
                   <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Hardware/BeagleBone#">BeagleBone Black</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/A20-OLinuXino-Lime2#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="79.5pt" fileref="images/a20-olinuxino-lime2_thumb.jpg" width="117.5pt"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>A20 OLinuXino Lime2</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/A20-OLinuXino-Lime2#">A20 OLinuXino Lime2</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/A20-OLinuXino-MICRO#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="66pt" fileref="images/a20-olinuxino-micro_thumb.jpg" width="117.5pt"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>A20 OLinuXino MICRO</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/A20-OLinuXino-MICRO#">A20 OLinuXino MICRO</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/APU#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="78.5pt" fileref="images/apu1d_thumb.jpg" width="117.5pt"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>PC Engines APU</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/APU#">PC Engines APU</ulink>
                   </para>
                 </entry>
               </row>
@@ -2640,7 +2442,14 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
     </section>
     <section>
       <title>Targeted Hardware</title>
-      <para>Although the project may focus on supporting specific devices, we are looking to support as wider a variety of hardware as possible that is suitable for FreedomBox needs.  Take a look at the list of <ulink url="https://wiki.debian.org/FreedomBox/TargetedHardware#">hardware targeted</ulink> for support.  If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink> and <ulink url="https://wiki.debian.org/FreedomBox/Setup#">FreedomBox Setup</ulink>. </para>
+      <section>
+        <title>List of Hardware Targeted</title>
+        <para>Although the project may focus on supporting specific devices, we are looking to support as wider a variety of hardware as possible that is suitable for FreedomBox needs.  Take a look at the list of <ulink url="https://wiki.debian.org/FreedomBox/TargetedHardware#">hardware targeted</ulink> for support.   </para>
+      </section>
+      <section>
+        <title>Adding Hardware Support</title>
+        <para>If you are a developer, consider adding hardware support for your device by modifying <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink> and <ulink url="https://wiki.debian.org/FreedomBox/Setup#">FreedomBox Setup</ulink>. </para>
+      </section>
     </section>
     <section>
       <title>Cubietruck</title>
@@ -2664,12 +2473,12 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
       </section>
       <section>
         <title>Download</title>
-        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are being built. </para>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are being built.  These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB. </para>
         <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/InstallingDebianOn/Allwinner#">install Debian</ulink> on Cubietruck and then <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
       </section>
       <section>
         <title>Build Image</title>
-        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink> once the support for it is added. </para>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink>. </para>
       </section>
       <section>
         <title>Availability</title>
@@ -2759,6 +2568,7 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
       <section>
         <title>Download</title>
         <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are available.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
+        <para>Note: This image is for BeagleBone Black. It won't work on BeagleBone Green. </para>
         <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/InstallingDebianOn/TI/BeagleBone#">install Debian</ulink> on BeagleBone and then <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
       </section>
       <section>
@@ -2832,6 +2642,376 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
       </section>
     </section>
     <section>
+      <title>A20 OLinuXino Lime2</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="216pt" fileref="images/a20-olinuxino-lime2.jpg" width="320pt"/>
+          </imageobject>
+          <textobject>
+            <phrase>A20 OLinuXino Lime2</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para>Olimex's <ulink url="https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-LIME2/open-source-hardware">A20 OLinuXino Lime2</ulink> is fully open source hardware single board computer using the Allwinner A20 Dual Core ARM processor.  FreedomBox images are being built for it starting with version 0.7.  For using this board as FreedomBox, a separate <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <section>
+        <title>Similar Hardware</title>
+        <para>The following similar hardware will also work well with FreedomBox. </para>
+        <itemizedlist>
+          <listitem>
+            <para>Olimex's <ulink url="https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-LIME2-4GB/open-source-hardware">A20 OLinuXino Lime2 4GB</ulink>.  This hardware merely has extra 4GB NAND storage that is not used by FreedomBox. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Download</title>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are being built.  These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB. </para>
+        <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink> once the support for it is added. </para>
+      </section>
+      <section>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 45 EUR (A20 OLinuXino Lime2) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 55 EUR (A20 OLinuXino Lime2 4GB) </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/A20/open-source-hardware">Olimex Store</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Source Hardware (OSHW): Yes </para>
+          </listitem>
+          <listitem>
+            <para>CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 1 GiB DDR3 </para>
+          </listitem>
+          <listitem>
+            <para>Storage: 4 GB NAND flash built-in (only on 4GB model), 1x microSD slot </para>
+          </listitem>
+          <listitem>
+            <para>Architecture: armhf </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: 10/100/1000, RJ45 </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: None, use a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>SATA: 1x port </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Non-Free Status</title>
+        <itemizedlist>
+          <listitem>
+            <para>Non-free blobs required: No </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: Not available </para>
+          </listitem>
+          <listitem>
+            <para>Works with stock Debian kernel: Yes </para>
+          </listitem>
+          <listitem>
+            <para>Boot Firmware: <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> (GPLV2+) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Known Issues</title>
+        <itemizedlist>
+          <listitem>
+            <para>WiFi is not available.  A separate <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> is recommended. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>A20 OLinuXino MICRO</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="179.5pt" fileref="images/a20-olinuxino-micro.jpg" width="320pt"/>
+          </imageobject>
+          <textobject>
+            <phrase>A20 OLinuXino MICRO</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para>Olimex's <ulink url="https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-MICRO/open-source-hardware">A20 OLinuXino MICRO</ulink> is fully open source hardware single board computer using the Allwinner A20 Dual Core ARM processor.  FreedomBox images are being built for it starting with version 0.7.  For using this board as FreedomBox, a separate <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <section>
+        <title>Similar Hardware</title>
+        <para>The following similar hardware will also work well with FreedomBox. </para>
+        <itemizedlist>
+          <listitem>
+            <para>Olimex's <ulink url="https://www.olimex.com/Products/OLinuXino/A20/A20-OLinuXIno-MICRO-4GB/open-source-hardware">A20 OLinuXino MICRO 4GB</ulink>.  This hardware merely has extra 4GB NAND storage that is not used by FreedomBox. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Download</title>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are being built.  These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB. </para>
+        <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink> once the support for it is added. </para>
+      </section>
+      <section>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 55 EUR (A20 OLinuXino MICRO) </para>
+          </listitem>
+          <listitem>
+            <para>Price: 65 EUR (A20 OLinuXino MICRO 4GB) </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="https://www.olimex.com/Products/OLinuXino/A20/open-source-hardware">Olimex Store</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Source Hardware (OSHW): Yes </para>
+          </listitem>
+          <listitem>
+            <para>CPU: Allwinner A20, ARM Cortex-A7 @ 1GHz dual-core </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 1 GiB DDR3 </para>
+          </listitem>
+          <listitem>
+            <para>Storage: 4 GB NAND flash built-in (only on 4GB model), 1x microSD slot </para>
+          </listitem>
+          <listitem>
+            <para>Architecture: armhf </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: 10/100, RJ45 </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: None, use a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>SATA: 1x port </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Non-Free Status</title>
+        <itemizedlist>
+          <listitem>
+            <para>Non-free blobs required: No </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: Not available </para>
+          </listitem>
+          <listitem>
+            <para>Works with stock Debian kernel: Yes </para>
+          </listitem>
+          <listitem>
+            <para>Boot Firmware: <ulink url="https://linux-sunxi.org/BROM">BROM</ulink> (GPLV2+) </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Known Issues</title>
+        <itemizedlist>
+          <listitem>
+            <para>WiFi is not available.  A separate <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> is recommended. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>APU</title>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata depth="159.5pt" fileref="images/apu1d.jpg" width="316pt"/>
+          </imageobject>
+          <textobject>
+            <phrase>PC Engines APU 1D</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para><ulink url="http://www.pcengines.ch/apu1d.htm">PC Engines APU 1D</ulink> is a single board computer with 3 Gigabit ethernet ports, a powerful AMD APU and Coreboot firmware.  FreedomBox images built for AMD64 machines are tested to work well for it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
+      <section>
+        <title>Similar Hardware</title>
+        <para>Although untested, the following similar hardware is also likely to work well with FreedomBox. </para>
+        <itemizedlist>
+          <listitem>
+            <para>Using amd64 image: </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/apu1c.htm">apu1c</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/apu1c4.htm">apu1c4</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/apu1d4.htm">apu1d4</ulink>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Using i386 image: </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix1d.htm">alix1d</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix1e.htm">alix1e</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix2d2.htm">alix2d2</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix2d3.htm">alix2d3</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix2d13.htm">alix2d13</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix3d2.htm">alix3d2</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix3d3.htm">alix3d3</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <ulink url="http://www.pcengines.ch/alix6f2.htm">alix6f2</ulink>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Download</title>
+        <para>FreedomBox disk <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are available.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card, USB disk, SSD or hard drive and boot into FreedomBox.  Pick the image meant for all amd64 machines. </para>
+        <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/InstallingDebianOn/Alix3d2#">install Debian</ulink> on the APU and then <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
+      </section>
+      <section>
+        <title>Networking</title>
+        <para>The first network port, the left most one in the above picture, is configured by FreedomBox to be an upstream Internet link and the remaining 2 ports are configured for local computers to connect to. </para>
+      </section>
+      <section>
+        <title>Build Image</title>
+        <para>FreedomBox images for this hardware, which is for all amd64 machines, can be built using <ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink>. </para>
+      </section>
+      <section>
+        <title>Availability</title>
+        <itemizedlist>
+          <listitem>
+            <para>Price: 110 - 170 USD (depending on the board and supplier) </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="http://www.pcengines.ch/order1.php">PC Engines</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <ulink url="http://www.pcengines.ch/order.php">Full list of suppliers</ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Hardware</title>
+        <itemizedlist>
+          <listitem>
+            <para>Open Hardware: No </para>
+          </listitem>
+          <listitem>
+            <para>CPU: <ulink url="http://www.amd.com/en-gb/products/embedded/processors/g-series">AMD G series T40E</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>RAM: 2 GB DDR3-1066 DRAM </para>
+          </listitem>
+          <listitem>
+            <para>Storage: SD card, External USB </para>
+          </listitem>
+          <listitem>
+            <para>Architecture: amd64 </para>
+          </listitem>
+          <listitem>
+            <para>Ethernet: 3 Gigabit Ethernet ports </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: None, use a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>SATA: 1 m-SATA and 1 SATA </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Non-Free Status</title>
+        <itemizedlist>
+          <listitem>
+            <para>Non-free blobs required: No </para>
+          </listitem>
+          <listitem>
+            <para>WiFi: Not available </para>
+          </listitem>
+          <listitem>
+            <para>Works with stock Debian kernel: Yes </para>
+          </listitem>
+          <listitem>
+            <para>Boot firmware: <ulink url="http://www.pcengines.ch/apu1d.htm">Coreboot</ulink> </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Known Issues</title>
+        <para>None </para>
+      </section>
+    </section>
+    <section>
       <title>VirtualBox</title>
       <para>
         <inlinemediaobject>
@@ -2894,7 +3074,7 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
             <para>To configure this go to VM settings -&gt; [Network] -&gt; [Adapter] -&gt; [Port Forwarding].  Map a port such as 2222 from host to guest port 22 and you will be able to ssh into FreedomBox from host machine as follows: </para>
           </listitem>
         </orderedlist>
-        <screen format="linespecific">ssh -p 4443 fbx@localhost</screen>
+        <screen format="linespecific">ssh -p 2222 fbx@localhost</screen>
         <itemizedlist>
           <listitem override="none">
             <para>Map 4443 on host to 443 on the guest.  This make FreedomBox HTTPS service available on host using the URL <ulink url="https://localhost:4443/"/> You will need to add a mapping for each such services from host to guest. </para>
@@ -3136,22 +3316,18 @@ $ cp /tmp/vbox-root1/home/fbx/freedom-maker/build/freedom*vdi ~/
 $ sudo umount /tmp/vbox-root1
 # $ sudo umount /tmp/vbox-img1 # corruption here.</screen>
         </section>
+        <section>
+          <title>Fixing the time after suspend and resume</title>
+          <para>The virtual machine loses the correct time/date after suspending and resuming. One way to fix this is to create a cron-job that restarts the time service <code>ntp</code>. You can add a crontab entry as root to restart ntp every 15 minutes by typing <code>'crontab -e'</code> and adding this line: </para>
+          <screen format="linespecific">*/15 * *   *   *     /etc/init.d/ntp restart</screen>
+          <para>Do not restart this service too often as this increases the load of publicly and freely available NTP servers. </para>
+        </section>
       </section>
     </section>
     <section>
       <title>Debian</title>
-      <para>
-        <inlinemediaobject>
-          <imageobject>
-            <imagedata depth="273pt" fileref="images/debian.png" width="212.5pt"/>
-          </imageobject>
-          <textobject>
-            <phrase>Debian</phrase>
-          </textobject>
-        </inlinemediaobject>
-      </para>
       <para>FreedomBox is a <ulink url="https://wiki.debian.org/DebianPureBlends#">pure blend</ulink> of Debian.  This means that all the work on FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a FreedomBox. </para>
-      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox currently runs Debian Unstable (Sid) and Debian Testing (Strech). </para>
+      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox works in Debian Testing (Stretch) and Unstable (Sid). </para>
       <caution>
         <para>
           <emphasis role="strong">Use a fresh Debian installation</emphasis>
@@ -3162,7 +3338,10 @@ $ sudo umount /tmp/vbox-root1
         <title>Installing on Debian</title>
         <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
           <listitem>
-            <para><ulink url="https://wiki.debian.org/InstallingDebianOn#">Install Debian</ulink> Unstable (Sid) on your hardware. </para>
+            <para>Check the Troubleshooting section below, for any tips or work-arounds that might help during the install. </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/InstallingDebianOn#">Install Debian</ulink> Testing (Stretch) or Unstable (Sid) on your hardware. </para>
             <itemizedlist>
               <listitem>
                 <para>If you choose to create an initial user account, use "fbx" as the login name.  (Once the FreedomBox setup program completes, all user accounts except for the "fbx" account will be locked out via pam_access.  This also affects sudo access.) </para>
@@ -3180,6 +3359,7 @@ $ sudo umount /tmp/vbox-root1
           <listitem>
             <para>Run FreedomBox setup program.  This installs further packages and sets up basic configuration. </para>
             <screen format="linespecific">$ sudo /usr/lib/freedombox/setup | tee freedombox-setup.log</screen>
+            <para>You may have to clear your existing network configuration.  See Troubleshooting note #2 below. </para>
           </listitem>
           <listitem>
             <para>Reboot the system.  This is necessary to trigger the first-run script. </para>
@@ -3203,9 +3383,10 @@ $ sudo apt-get install policykit-1
 $ sudo reboot</screen>
           </listitem>
           <listitem>
-            <para>Freedombox does not support network device configuration via <code>/etc/network/interfaces</code>, and it may misbehave if any non-loopback interfaces are mentioned there. (See <ulink url="https://bugs.debian.org/797614">bug #797614</ulink>.)  Future versions of freedombox-setup will clear this file automatically; for now, edit it manually and ensure that it contains only the following: </para>
+            <para>Freedombox does not support network device configuration via <code>/etc/network/interfaces</code>, and it will not manage any non-loopback interfaces mentioned there. (See <ulink url="https://bugs.debian.org/797614">bug #797614</ulink>.)  Future versions of freedombox-setup will clear this file automatically; for now, edit it manually and ensure that it contains only the following: </para>
             <screen format="linespecific">auto lo
 iface lo inet loopback</screen>
+            <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  After this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firwall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
           </listitem>
         </orderedlist>
       </section>
@@ -3500,6 +3681,14 @@ iface lo inet loopback</screen>
         </listitem>
       </itemizedlist>
       <section>
+        <title>Firmware Installation</title>
+        <para>The free firmware for these devices is not packaged in Debian yet. You can manually download and install the firmware as follows: </para>
+        <screen format="linespecific">sudo su [enter password]
+cd /lib/firmware
+wget https://www.thinkpenguin.com/files/ath9k-htc/version-1.4-beta/htc_9271.fw
+wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw</screen>
+      </section>
+      <section>
         <title>Resources</title>
         <itemizedlist>
           <listitem>
@@ -3535,6 +3724,20 @@ iface lo inet loopback</screen>
   </section>
   <section>
     <title>Contributing</title>
+    <para>From code, design and translation to spreading the world and donation, here is a list of possible contributions to develop FreedomBox. </para>
+    <section>
+      <title>Welcome to newcomers</title>
+      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. </para>
+      <para>In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> web interface.  </para>
+    </section>
+    <section>
+      <title>Development priorities</title>
+      <para>Upcoming priorities have been discussed end of October 2015 by several core developers and the Freedombox Foundation. You'll find on the mailing list archives a <ulink url="http://lists.alioth.debian.org/pipermail/freedombox-discuss/2015-November/006973.html">Medium Term Roadmap</ulink> for 2015 and 2016. Please check next <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>.  </para>
+    </section>
+    <section>
+      <title>Add an Application</title>
+      <para>If you are a developer and wish to see an application available in FreedomBox, you can contribute by adding the application to FreedomBox.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Developer#">FreedomBox Developer Manual</ulink>. </para>
+    </section>
     <section>
       <title>Code</title>
       <para>If you are a developer, you can contribute code to one of the sub-projects of FreedomBox.  Step-by-step process of <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contributing code</ulink> to FreedomBox is available. </para>
@@ -3550,51 +3753,6 @@ iface lo inet loopback</screen>
         </listitem>
       </itemizedlist>
       <para>You can pickup a task from one of the <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO</ulink> lists. The individual page project pages contain information availabily of the code, how to build and TODO lists. </para>
-    </section>
-    <section>
-      <title>Add an Application</title>
-      <para>If you are a developer and wish to see an application available in FreedomBox, you can contribute by adding the application to FreedomBox.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Developer#">FreedomBox Developer Manual</ulink>. </para>
-    </section>
-    <section>
-      <title>Donate</title>
-      <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a Delaware non-profit corporation in the process of applying for 501(c)(3) federal nonprofit recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
-    </section>
-    <section>
-      <title>Document: User Manual, Website and Wiki</title>
-      <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in Plinth and elsewhere. </para>
-      <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
-      <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
-    </section>
-    <section>
-      <title>Quality Assurance</title>
-      <itemizedlist>
-        <listitem>
-          <para>FreedomBox already runs on many platforms and it is not possible for developers to test all possible platforms.  If you have one of the supported hardware you can help with testing FreedomBox on the platform. </para>
-        </listitem>
-        <listitem>
-          <para>When an application is made available on FreedomBox, not all of its functionality is tested in the real world by developer doing the work.  Deploying the application and testing it will help ensure high quality applications in FreedomBox. </para>
-        </listitem>
-      </itemizedlist>
-      <para>See the <ulink url="https://wiki.debian.org/FreedomBox/QualityAssurance#">quality assurance</ulink> page for a basic list of test cases to check for and information on reporting bugs. </para>
-    </section>
-    <section>
-      <title>Translate</title>
-      <para>All text visible to users of FreedomBox needs to be localized to various languages.  This includes: </para>
-      <itemizedlist>
-        <listitem>
-          <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink> web interface for FreedomBox </para>
-        </listitem>
-        <listitem>
-          <para>FreedomBox documentation </para>
-        </listitem>
-        <listitem>
-          <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> </para>
-        </listitem>
-        <listitem>
-          <para>Individual applications that FreedomBox exposes to users such as ownCloud, JWChat etc. </para>
-        </listitem>
-      </itemizedlist>
-      <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
     </section>
     <section>
       <title>Design</title>
@@ -3632,6 +3790,48 @@ iface lo inet loopback</screen>
           </listitem>
         </itemizedlist>
       </section>
+    </section>
+    <section>
+      <title>Donate</title>
+      <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a Delaware non-profit corporation in the process of applying for 501(c)(3) federal nonprofit recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
+    </section>
+    <section>
+      <title>Document: User Manual, Website and Wiki</title>
+      <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in Plinth and elsewhere. </para>
+      <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
+      <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
+    </section>
+    <section>
+      <title>Quality Assurance</title>
+      <itemizedlist>
+        <listitem>
+          <para>FreedomBox already runs on many platforms and it is not possible for developers to test all possible platforms.  If you have one of the supported hardware you can help with testing FreedomBox on the platform. </para>
+        </listitem>
+        <listitem>
+          <para>When an application is made available on FreedomBox, not all of its functionality is tested in the real world by developer doing the work.  Deploying the application and testing it will help ensure high quality applications in FreedomBox. </para>
+        </listitem>
+      </itemizedlist>
+      <para>See the <ulink url="https://wiki.debian.org/FreedomBox/QualityAssurance#">quality assurance</ulink> page for a basic list of test cases to check for and information on reporting bugs. </para>
+    </section>
+    <section>
+      <title>Localization</title>
+      <para>All text visible to users of FreedomBox needs to be localized to various languages.  This translation work includes: </para>
+      <itemizedlist>
+        <listitem>
+          <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink> web interface for FreedomBox </para>
+        </listitem>
+        <listitem>
+          <para>FreedomBox documentation </para>
+        </listitem>
+        <listitem>
+          <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> </para>
+        </listitem>
+        <listitem>
+          <para>Individual applications that FreedomBox exposes to users such as ownCloud, JWChat etc. </para>
+        </listitem>
+      </itemizedlist>
+      <para>Some of the translation work are implemented in user interface (Plinth) since the 0.7 release. Documents for user interface translation are currently available on <ulink url="https://www.transifex.com/freedombox/">Transifex localization platform</ulink> and <ulink url="https://github.com/freedombox/Plinth/tree/master/locale">GitHub</ulink>. If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
+      <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
     </section>
     <section>
       <title>Spread the Word</title>
@@ -3701,7 +3901,7 @@ iface lo inet loopback</screen>
   |     |
   |     +- forms.py
   |     |
-  |     +- views.py
+  |     +- urls.py
   |     |
   |     +- views.py
   |     |
@@ -4170,7 +4370,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>Plinth comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access Plinth by visiting the URL <ulink url="http://freedombox/plinth"/>. </para>
           </listitem>
           <listitem>
-            <para>If you are on a Debian box, you may install Plinth from Debian package archive.  Currently, only Sid (unstable) is supported.  To install Plinth run: </para>
+            <para>If you are on a Debian box, you may install Plinth from Debian package archive.  Currently, only Stretch (testing) and Sid (unstable) are supported.  To install Plinth run: </para>
           </listitem>
         </itemizedlist>
         <screen format="linespecific">$ sudo apt-get install plinth</screen>
@@ -4295,7 +4495,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>If you are on a Debian box, you may install FreedomBox Setup from Debian package archive.  This essentially turns your Debian installation into a FreedomBox!  Currently, only Sid (unstable) is supported.  To install FreedomBox Setup, see <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">instructions</ulink> on setting up FreedomBox on a Debian machine. </para>
           </listitem>
           <listitem>
-            <para>You can also get FreedomBox Setup from its <ulink url="https://alioth.debian.org/anonscm/git/freedombox/freedombox-setup.git">Git repository</ulink> and <ulink url="https://alioth.debian.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=freedombox/freedombox-setup.git;a=blob;f=README">build Debian package from source</ulink>.  </para>
+            <para>You can also get FreedomBox Setup from its <ulink url="https://anonscm.debian.org/cgit/freedombox/freedombox-setup.git">Git repository</ulink> and <ulink url="https://anonscm.debian.org/cgit/freedombox/freedombox-setup.git/tree/README">build Debian package from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -4323,10 +4523,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>FreedomBox Setup is hosted on <ulink url="https://alioth.debian.org/projects/freedombox/">FreedomBox Alioth Portal</ulink>. The primary Git repository is hosted <ulink url="https://alioth.debian.org/anonscm/git/freedombox/freedombox-setup.git">there</ulink>. </para>
-          </listitem>
-          <listitem>
-            <para>Instructions to <ulink url="https://alioth.debian.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=freedombox/freedombox-setup.git;a=blob;f=README">build Debian package from source</ulink> are available. </para>
+            <para>FreedomBox Setup is part of the <ulink url="https://alioth.debian.org/projects/freedombox/">FreedomBox Alioth Project</ulink>. </para>
           </listitem>
           <listitem>
             <para>List of bugs, TODO items, packages issues and feature requests are available on the <ulink url="https://bugs.debian.org/cgi-bin/pkgreport.cgi?src=freedombox-setup">issue tracker</ulink>. </para>
@@ -4426,5 +4623,65 @@ Plinth module to configure Tiny Tiny RSS.
         </itemizedlist>
       </section>
     </section>
+  </section>
+  <section>
+    <title>Other Resources: Manual Older Versions</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/0.3#">0.3 Manual</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/Jessie#">0.2 Manual</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Manual/Jessie#">Jessie Manual</ulink>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>Tell people around you</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Press#">FreedomBox in the Press</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Conferences#">Conferences</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/TalksAndPresentations#">Talks and presentations</ulink>
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/TalksAndPresentations/AvailableMaterial#">Available Material</ulink> Slides and other raw material </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="http://www.facebook.com/freedomboxfoundation">Facebook</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="http://twitter.com/#!/FreedomBoxFndn">Twitter</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="http://meetings-archive.debian.net/pub/debian-meetings/2011/debconf11/low/">Debconf11 Videos</ulink>
+        </para>
+      </listitem>
+    </itemizedlist>
   </section>
 </article>
