@@ -105,7 +105,7 @@ class AddWifiForm(forms.Form):
     """Form to create a new Wi-Fi connection."""
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
-        label=_('Physical interface'),
+        label=_('Physical Interface'),
         choices=(),
         help_text=_('The network device that this connection should be bound '
                     'to.'))
