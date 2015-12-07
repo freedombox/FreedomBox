@@ -306,6 +306,8 @@ def _update_ipv4_settings(connection, ipv4_method, ipv4_address):
 
         settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
 
+    deactivate_connection(connection.get_uuid())
+    activate_connection(connection.get_uuid())
 
 def _update_ethernet_settings(connection, connection_uuid, name, interface,
                               zone, ipv4_method, ipv4_address):
