@@ -37,7 +37,7 @@ default directory, ensure that the new directory exists and is writable by \
 
     rpc_username = forms.CharField(
         label=_('Username'),
-        help_text=_('Username to login to the web interface'))
+        help_text=_('Username to login to the web interface.'))
 
     rpc_password = forms.CharField(
         label=_('Password'),

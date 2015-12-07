@@ -49,7 +49,7 @@ class ConfigurationForm(forms.Form):
         label=ugettext_lazy('Server domain'), required=False,
         help_text=\
         ugettext_lazy('Select your pagekite server. Set "pagekite.net" to use '
-                      'the default pagekite.net server'),
+                      'the default pagekite.net server.'),
         widget=forms.TextInput())
     server_port = forms.IntegerField(
         label=ugettext_lazy('Server port'), required=False,
@@ -65,7 +65,7 @@ class ConfigurationForm(forms.Form):
         label=ugettext_lazy('Kite secret'),
         help_text=\
         ugettext_lazy('A secret associated with the kite or the default secret '
-                      'for your account if no secret is set on the kite'))
+                      'for your account if no secret is set on the kite.'))
 
     def save(self, request):
         """Save the form on submission after validation."""
