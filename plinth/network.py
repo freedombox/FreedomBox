@@ -496,8 +496,8 @@ def add_wifi_connection(name, interface, zone, ssid, mode, auth_mode,
     connection_uuid = str(uuid.uuid4())
     connection = _update_wifi_settings(
         None, connection_uuid, name, interface, zone, ssid, mode, auth_mode,
-        passphrase, ipv4_method, ipv4_address, ipv4_netmask,
-        ipv4_gateway, ipv4_dns, ipv4_second_dns)
+        passphrase, ipv4_method, ipv4_address, ipv4_netmask, ipv4_gateway,
+        ipv4_dns, ipv4_second_dns)
     client = nm.Client.new(None)
     client.add_connection_async(connection, True, None, _callback, None)
     return connection_uuid

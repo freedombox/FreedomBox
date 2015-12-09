@@ -148,8 +148,8 @@ def edit(request, uuid):
             if connection.get_connection_type() == '802-3-ethernet':
                 network.edit_ethernet_connection(
                     connection, name, interface, zone, ipv4_method,
-                    ipv4_address, ipv4_netmask, ipv4_gateway,
-                    ipv4_dns, ipv4_second_dns)
+                    ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns,
+                    ipv4_second_dns)
             elif connection.get_connection_type() == '802-11-wireless':
                 ssid = form.cleaned_data['ssid']
                 mode = form.cleaned_data['mode']
@@ -386,8 +386,8 @@ def add_wifi(request, ssid=None, interface_name=None):
 
             network.add_wifi_connection(
                 name, interface, zone, ssid, mode, auth_mode, passphrase,
-                ipv4_method, ipv4_address, ipv4_netmask,
-                ipv4_gateway, ipv4_dns, ipv4_second_dns)
+                ipv4_method, ipv4_address, ipv4_netmask, ipv4_gateway,
+                ipv4_dns, ipv4_second_dns)
             return redirect(reverse_lazy('networks:index'))
     else:
         if form_data:
