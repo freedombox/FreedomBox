@@ -181,8 +181,8 @@ def edit(request, uuid):
         if settings_connection.get_connection_type() != 'pppoe':
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
-            address = network.get_first_ip_address_from_connection(connection)
-            netmask = network.get_first_netmask_from_connection(connection)
+            address, netmask = network.get_first_ip_address_from_connection(
+                connection)
             gateway = settings_ipv4.get_gateway()
             dns = settings_ipv4.get_dns(0)
             second_dns = settings_ipv4.get_dns(1)

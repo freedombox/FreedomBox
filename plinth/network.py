@@ -52,7 +52,12 @@ class DeviceNotFound(Exception):
 
 def ipv4_string_to_int(address):
     """Return an integer equivalent of a string contain IPv4 address."""
-    return struct.unpack("=I", socket.inet_aton(address))[0]
+    return struct.unpack('=I', socket.inet_aton(address))[0]
+
+
+def ipv4_int_to_string(address_int):
+    """Return an string equivalent of a integer IPv4 address."""
+    return socket.inet_ntoa(struct.pack('=I', address_int))
 
 
 def _callback(source_object, result, user_data):
@@ -198,28 +203,14 @@ def get_first_ip_address_from_connection(connection):
                'ipv4.addresses', 'connection', 'show', connection.get_uuid()]
 
     output = subprocess.check_output(command).decode()
-    return output.strip().split(', ')[0].split('/')[0]
+    first = output.strip().split(', ')[0]
+    if not first:
+        return None, None
 
+    ip_address, prefix = first.split('/')
 
-def get_first_netmask_from_connection(connection):
-    """Return the first IP address of a connection setting.
-
-    XXX: Work around a bug in NetworkManager/Python GI.  Remove after
-    the bug if fixed.
-    https://bugzilla.gnome.org/show_bug.cgi?id=756380.
-    """
-    command = ['nmcli', '--terse', '--mode', 'tabular', '--fields',
-               'ipv4.addresses', 'connection', 'show', connection.get_uuid()]
-
-    output = subprocess.check_output(command).decode()
-    if '/' not in output:
-        return None
-
-    CIDR = output.strip().split(', ')[0].split('/')[1]
-    netmask = socket.inet_ntoa(struct.pack(">I", (0xffffffff <<
-                                                  (32 - int(CIDR))) &
-                                           0xffffffff))
-    return netmask
+    netmask = nm.utils_ip4_prefix_to_netmask(int(prefix))
+    return ip_address, ipv4_int_to_string(netmask)
 
 
 def get_connection_list():
