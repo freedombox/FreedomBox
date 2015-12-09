@@ -312,20 +312,17 @@ def _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
     settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4_method)
     if ipv4_method == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and ipv4_address:
         ipv4_address_int = ipv4_string_to_int(ipv4_address)
+
         if not ipv4_netmask:
             ipv4_netmask_int = nm.utils_ip4_get_default_prefix(
-                               ipv4_address_int)
+                ipv4_address_int)
+        else:
+            ipv4_netmask_int = nm.utils_ip4_netmask_to_prefix(
+                ipv4_string_to_int(ipv4_netmask))
 
-        ipv4_netmask_int = nm.utils_ip4_netmask_to_prefix(
-                           ipv4_string_to_int(ipv4_netmask))
         address = nm.IPAddress.new(socket.AF_INET, ipv4_address,
                                    ipv4_netmask_int)
         settings.add_address(address)
-
-        if ipv4_dns:
-            settings.add_dns(ipv4_dns)
-        if ipv4_second_dns:
-            settings.add_dns(ipv4_second_dns)
 
         if not ipv4_gateway:
             settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
@@ -335,10 +332,11 @@ def _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
         if ipv4_dns or ipv4_second_dns:
             settings.set_property(nm.SETTING_IP_CONFIG_IGNORE_AUTO_DNS, True)
 
-        if ipv4_dns:
-            settings.add_dns(ipv4_dns)
-        if ipv4_second_dns:
-            settings.add_dns(ipv4_second_dns)
+    if ipv4_dns:
+        settings.add_dns(ipv4_dns)
+
+    if ipv4_second_dns:
+        settings.add_dns(ipv4_second_dns)
 
 
 def _update_ethernet_settings(connection, connection_uuid, name, interface,
