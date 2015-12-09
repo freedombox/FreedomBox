@@ -280,8 +280,7 @@ def get_device_by_interface_name(interface_name):
     return nm.Client.new(None).get_device_by_iface(interface_name)
 
 
-def _update_common_settings(connection, connection_uuid, name, type_,
-                            interface, zone):
+def _update_common_settings(connection, connection_uuid, common):
     """Create/edit basic settings for network manager connections.
 
     Return newly created connection object if connection is None.
@@ -295,86 +294,62 @@ def _update_common_settings(connection, connection_uuid, name, type_,
         connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_CONNECTION_UUID, connection_uuid)
-    settings.set_property(nm.SETTING_CONNECTION_ID, name)
-    settings.set_property(nm.SETTING_CONNECTION_TYPE, type_)
-    settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME, interface)
-    settings.set_property(nm.SETTING_CONNECTION_ZONE, zone)
+    settings.set_property(nm.SETTING_CONNECTION_ID, common['name'])
+    settings.set_property(nm.SETTING_CONNECTION_TYPE, common['type'])
+    settings.set_property(nm.SETTING_CONNECTION_INTERFACE_NAME,
+                          common['interface'])
+    settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
 
     return connection
 
 
-def _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
-                          ipv4_gateway, ipv4_dns, ipv4_second_dns):
+def _update_ipv4_settings(connection, ipv4):
     """Edit IPv4 settings for network manager connections."""
     settings = nm.SettingIP4Config.new()
     connection.add_setting(settings)
 
-    settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4_method)
-    if ipv4_method == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and ipv4_address:
-        ipv4_address_int = ipv4_string_to_int(ipv4_address)
+    settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4['method'])
+    if ipv4['method'] == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and \
+       ipv4['address']:
+        ipv4_address_int = ipv4_string_to_int(ipv4['address'])
 
-        if not ipv4_netmask:
+        if not ipv4['netmask']:
             ipv4_netmask_int = nm.utils_ip4_get_default_prefix(
                 ipv4_address_int)
         else:
             ipv4_netmask_int = nm.utils_ip4_netmask_to_prefix(
-                ipv4_string_to_int(ipv4_netmask))
+                ipv4_string_to_int(ipv4['netmask']))
 
-        address = nm.IPAddress.new(socket.AF_INET, ipv4_address,
+        address = nm.IPAddress.new(socket.AF_INET, ipv4['address'],
                                    ipv4_netmask_int)
         settings.add_address(address)
 
-        if not ipv4_gateway:
+        if not ipv4['gateway']:
             settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '0.0.0.0')
         else:
-            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, ipv4_gateway)
+            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY,
+                                  ipv4['gateway'])
     else:
-        if ipv4_dns or ipv4_second_dns:
+        if ipv4['dns'] or ipv4['second_dns']:
             settings.set_property(nm.SETTING_IP_CONFIG_IGNORE_AUTO_DNS, True)
 
-    if ipv4_dns:
-        settings.add_dns(ipv4_dns)
+    if ipv4['dns']:
+        settings.add_dns(ipv4['dns'])
 
-    if ipv4_second_dns:
-        settings.add_dns(ipv4_second_dns)
-
-
-def _update_ethernet_settings(connection, connection_uuid, name, interface,
-                              zone, ipv4_method, ipv4_address, ipv4_netmask,
-                              ipv4_gateway, ipv4_dns, ipv4_second_dns):
-    """Create/edit ethernet settings for network manager connections."""
-    type_ = '802-3-ethernet'
-
-    connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone)
-    _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
-                          ipv4_gateway, ipv4_dns, ipv4_second_dns)
-
-    # Ethernet
-    settings = connection.get_setting_wired()
-    if not settings:
-        settings = nm.SettingWired.new()
-        connection.add_setting(settings)
-
-    return connection
+    if ipv4['second_dns']:
+        settings.add_dns(ipv4['second_dns'])
 
 
-def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
-                           username, password):
+def _update_pppoe_settings(connection, pppoe):
     """Create/edit PPPoE settings for network manager connections."""
-    type_ = 'pppoe'
-
-    connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone)
-
     # PPPoE
     settings = connection.get_setting_pppoe()
     if not settings:
         settings = nm.SettingPppoe.new()
         connection.add_setting(settings)
 
-    settings.set_property(nm.SETTING_PPPOE_USERNAME, username)
-    settings.set_property(nm.SETTING_PPPOE_PASSWORD, password)
+    settings.set_property(nm.SETTING_PPPOE_USERNAME, pppoe['username'])
+    settings.set_property(nm.SETTING_PPPOE_PASSWORD, pppoe['password'])
 
     settings = connection.get_setting_ppp()
     if not settings:
@@ -389,66 +364,9 @@ def _update_pppoe_settings(connection, connection_uuid, name, interface, zone,
     return connection
 
 
-def add_pppoe_connection(name, interface, zone, username, password):
-    """Add an automatic PPPoE connection in network manager.
-
-    Return the UUID for the connection.
-    """
-    connection_uuid = str(uuid.uuid4())
-    connection = _update_pppoe_settings(
-        None, connection_uuid, name, interface, zone, username, password)
-    client = nm.Client.new(None)
-    client.add_connection_async(connection, True, None, _callback, None)
-    return connection_uuid
-
-
-def edit_pppoe_connection(connection, name, interface, zone, username,
-                          password):
-    """Edit an existing pppoe connection in network manager."""
-    _update_pppoe_settings(
-        connection, connection.get_uuid(), name, interface, zone, username,
-        password)
-    connection.commit_changes(True)
-
-
-def add_ethernet_connection(name, interface, zone, ipv4_method, ipv4_address,
-                            ipv4_netmask, ipv4_gateway, ipv4_dns,
-                            ipv4_second_dns):
-    """Add an automatic ethernet connection in network manager.
-
-    Return the UUID for the connection.
-    """
-    connection_uuid = str(uuid.uuid4())
-    connection = _update_ethernet_settings(
-        None, connection_uuid, name, interface, zone, ipv4_method,
-        ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns, ipv4_second_dns)
-    client = nm.Client.new(None)
-    client.add_connection_async(connection, True, None, _callback, None)
-    return connection_uuid
-
-
-def edit_ethernet_connection(connection, name, interface, zone, ipv4_method,
-                             ipv4_address, ipv4_netmask, ipv4_gateway,
-                             ipv4_dns, ipv4_second_dns):
-    """Edit an existing ethernet connection in network manager."""
-    _update_ethernet_settings(
-        connection, connection.get_uuid(), name, interface, zone, ipv4_method,
-        ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns, ipv4_second_dns)
-    connection.commit_changes(True)
-
-
-def _update_wifi_settings(connection, connection_uuid, name, interface, zone,
-                          ssid, mode, auth_mode, passphrase, ipv4_method,
-                          ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns,
-                          ipv4_second_dns):
+def _update_wireless_settings(connection, wireless):
     """Create/edit wifi settings for network manager connections."""
-    type_ = '802-11-wireless'
     key_mgmt = 'wpa-psk'
-
-    connection = _update_common_settings(connection, connection_uuid, name,
-                                         type_, interface, zone)
-    _update_ipv4_settings(connection, ipv4_method, ipv4_address, ipv4_netmask,
-                          ipv4_gateway, ipv4_dns, ipv4_second_dns)
 
     # Wireless
     settings = connection.get_setting_wireless()
@@ -456,51 +374,57 @@ def _update_wifi_settings(connection, connection_uuid, name, interface, zone,
         settings = nm.SettingWireless.new()
         connection.add_setting(settings)
 
-    ssid_gbytes = glib.Bytes.new(ssid.encode())
+    ssid_gbytes = glib.Bytes.new(wireless['ssid'].encode())
     settings.set_property(nm.SETTING_WIRELESS_SSID, ssid_gbytes)
-    settings.set_property(nm.SETTING_WIRELESS_MODE, mode)
+    settings.set_property(nm.SETTING_WIRELESS_MODE, wireless['mode'])
 
     # Wireless Security
-    if auth_mode == 'wpa' and passphrase:
+    if wireless['auth_mode'] == 'wpa' and wireless['passphrase']:
         settings = connection.get_setting_wireless_security()
         if not settings:
             settings = nm.SettingWirelessSecurity.new()
             connection.add_setting(settings)
 
         settings.set_property(nm.SETTING_WIRELESS_SECURITY_KEY_MGMT, key_mgmt)
-        settings.set_property(nm.SETTING_WIRELESS_SECURITY_PSK, passphrase)
+        settings.set_property(nm.SETTING_WIRELESS_SECURITY_PSK,
+                              wireless['passphrase'])
     else:
         connection.remove_setting(nm.SettingWirelessSecurity)
 
     return connection
 
 
-def add_wifi_connection(name, interface, zone, ssid, mode, auth_mode,
-                        passphrase, ipv4_method, ipv4_address, ipv4_netmask,
-                        ipv4_gateway, ipv4_dns, ipv4_second_dns):
-    """Add an automatic Wi-Fi connection in network manager.
+def _update_settings(connection, connection_uuid, settings):
+    """Create/edit wifi settings for network manager connections."""
+    connection = _update_common_settings(connection, connection_uuid,
+                                         settings['common'])
+    if 'ipv4' in settings and settings['ipv4']:
+        _update_ipv4_settings(connection, settings['ipv4'])
+
+    if 'pppoe' in settings and settings['pppoe']:
+        _update_pppoe_settings(connection, settings['pppoe'])
+
+    if 'wireless' in settings and settings['wireless']:
+        _update_wireless_settings(connection, settings['wireless'])
+
+    return connection
+
+
+def add_connection(settings):
+    """Add an connection in network manager.
 
     Return the UUID for the connection.
     """
     connection_uuid = str(uuid.uuid4())
-    connection = _update_wifi_settings(
-        None, connection_uuid, name, interface, zone, ssid, mode, auth_mode,
-        passphrase, ipv4_method, ipv4_address, ipv4_netmask, ipv4_gateway,
-        ipv4_dns, ipv4_second_dns)
+    connection = _update_settings(None, connection_uuid, settings)
     client = nm.Client.new(None)
     client.add_connection_async(connection, True, None, _callback, None)
     return connection_uuid
 
 
-def edit_wifi_connection(connection, name, interface, zone, ssid, mode,
-                         auth_mode, passphrase, ipv4_method, ipv4_address,
-                         ipv4_netmask, ipv4_gateway, ipv4_dns,
-                         ipv4_second_dns):
-    """Edit an existing wifi connection in network manager."""
-    _update_wifi_settings(
-        connection, connection.get_uuid(), name, interface, zone, ssid, mode,
-        auth_mode, passphrase, ipv4_method, ipv4_address, ipv4_netmask,
-        ipv4_gateway, ipv4_dns, ipv4_second_dns)
+def edit_connection(connection, settings):
+    """Edit an existing connection in network manager."""
+    _update_settings(connection, connection.get_uuid(), settings)
     connection.commit_changes(True)
 
 
