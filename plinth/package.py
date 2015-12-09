@@ -260,7 +260,7 @@ def _should_show_install_view(request, package_names):
     exception = transaction.collect_result()
     if not exception:
         messages.success(request,
-                         _('Installed and configured packages successfully'))
+                         _('Installed and configured packages successfully.'))
         return False
     else:
         error_string = getattr(exception, 'error_string', str(exception))

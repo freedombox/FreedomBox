@@ -98,7 +98,7 @@ def _diagnose_control_port():
 def _diagnose_url_via_tor(url, kind=None):
     """Diagnose whether a URL is reachable via Tor."""
     result = action_utils.diagnose_url(url, kind=kind, wrapper='torsocks')
-    result[0] = _('Access URL {url} on tcp{kind} via Tor') \
+    result[0] = _('Access URL {url} on tcp {kind} via Tor') \
         .format(url=url, kind=kind)
 
     return result

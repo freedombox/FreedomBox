@@ -40,7 +40,7 @@
       <div>
         <a href="{% url 'networks:edit' connection.uuid %}"
            class="btn btn-primary" role="button"
-           title="{% trans "Edit connection" %}">{% trans "Edit" %}</a>
+           title="{% trans "Edit Connection" %}">{% trans "Edit" %}</a>
 
         {% if active_connection %}
           <form class="form form-inline" method="post"
@@ -60,7 +60,7 @@
 
         <a href="{% url 'networks:delete' connection.uuid %}"
            class="btn btn-default" role="button"
-           title="{% trans "Delete connection" %}">{% trans "Delete" %}</a>
+           title="{% trans "Delete Connection" %}">{% trans "Delete" %}</a>
       </div>
 
       <h3>{% trans "Connection" %}</h3>
@@ -268,7 +268,7 @@
       {% if connection.zone == "internal" %}
         <div class="list-group">
           <div class="list-group-item">
-            {% trans "Firewall zone" %}
+            {% trans "Firewall Zone" %}
             <div class="pull-right">
               <span class="label label-success">{{ connection.zone }}</span>
             </div>
