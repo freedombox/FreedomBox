@@ -23,13 +23,13 @@
 
 {% block content %}
 
-  <h3>
-    {% blocktrans trimmed with username=object.username %}
-      Delete User <em>{{ username }}</em>
-    {% endblocktrans %}
-  </h3>
+  <h3>{% trans "Delete User" %}</h3>
 
-  <p>{% trans "Delete user permanently?" %}</p>
+  <p>
+    {% blocktrans trimmed with username=object.username %}
+      Delete user <strong>{{ username }}</strong> permanently?
+    {% endblocktrans %}
+  </p>
 
   <form class="form" method="post">
     {% csrf_token %}
