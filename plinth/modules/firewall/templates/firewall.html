@@ -35,7 +35,7 @@
 
   <p>{% trans "The following is the current status:" %}</p>
 
-  {% if firewall_status = 'not_running' %}
+  {% if firewall_status == 'not_running' %}
 
     <p>
       {% blocktrans trimmed with box_name=cfg.box_name %}
