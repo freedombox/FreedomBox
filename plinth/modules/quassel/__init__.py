@@ -50,3 +50,13 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('quasselcore')
+
+
+def diagnose():
+    """Run diagnostics and return the results."""
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(4242, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(4242, 'tcp6'))
+
+    return results
