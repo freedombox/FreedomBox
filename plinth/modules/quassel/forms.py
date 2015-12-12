@@ -16,7 +16,7 @@
 #
 
 """
-Forms for quassel module.
+Forms for Quassel module.
 """
 
 from django import forms

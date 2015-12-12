@@ -16,7 +16,7 @@
 #
 
 """
-Views for quassel module.
+Views for Quassel module.
 """
 
 from django.contrib import messages
@@ -51,7 +51,7 @@ def index(request):
         form = QuasselForm(initial=status, prefix='quassel')
 
     return TemplateResponse(request, 'quassel.html',
-                            {'title': _('Quassel IRC'),
+                            {'title': _('IRC Client (Quassel)'),
                              'status': status,
                              'form': form})
 

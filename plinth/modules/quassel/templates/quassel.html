@@ -23,7 +23,7 @@
 
 {% block content %}
 
-  <h2>{% trans "Quassel IRC" %}</h2>
+  <h2>{% trans "IRC Client (Quassel)" %}</h2>
 
   <p>
     {% blocktrans trimmed with box_name=cfg.box_name %}
@@ -31,7 +31,19 @@
       "core" and a "client". This allows the core to remain connected
       to IRC servers, and to continue receiving messages, even when
       the client is disconnected. {{ box_name }} can run the Quassel
-      core service.
+      core service keeping you always online and one or more Quassel
+      clients from a desktop or a mobile can be used to connect and
+      disconnect from it.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+    You can connect to your Quassel core on the default Quassel port
+    4242.  Clients to connect to Quassel from your
+    <a href="http://quassel-irc.org/downloads">desktop</a> and
+    <a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices
+    are available.
     {% endblocktrans %}
   </p>
 
