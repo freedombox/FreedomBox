@@ -38,7 +38,7 @@ def init():
 
     global service
     service = service_module.Service(
-        'quassel', _('Quassel IRC Client'),
+        'quassel-plinth', _('Quassel IRC Client'),
         is_external=True, enabled=is_enabled())
 
 
