@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-12 22:08+0530\n"
-"PO-Revision-Date: 2015-12-13 17:41+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2015-12-13 18:55+0000\n"
+"Last-Translator: Philippe Baret <weblate@hyperlecture.net>\n"
 "Language-Team: French "
 "<https://hosted.weblate.org/projects/freedombox/plinth/fr/>\n"
 "Language: fr\n"
@@ -1250,6 +1250,8 @@ msgid ""
 "\"Shared\" method will start a DHCP server and \"Automatic\" method will "
 "acquire configuration from a DHCP server."
 msgstr ""
+"La méthode « partagée » démarre un serveur DHCP. La méthode « Automatique » "
+"importe une configuration d'un serveur DHCP."
 
 #: plinth/modules/networks/forms.py:68 plinth/modules/networks/forms.py:170
 msgid "Address"
@@ -1257,13 +1259,15 @@ msgstr "Adresse"
 
 #: plinth/modules/networks/forms.py:72 plinth/modules/networks/forms.py:174
 msgid "Netmask"
-msgstr ""
+msgstr "Masque sous-réseau"
 
 #: plinth/modules/networks/forms.py:73 plinth/modules/networks/forms.py:175
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr ""
+"Valeur optionnelle. Si laissée vide, un masque de sous-réseau basé sur "
+"l'adresse sera utilisé par défaut."
 
 #: plinth/modules/networks/forms.py:78 plinth/modules/networks/forms.py:180
 #: plinth/modules/networks/templates/connection_show.html:202
@@ -1273,7 +1277,7 @@ msgstr "Passerelle"
 
 #: plinth/modules/networks/forms.py:79 plinth/modules/networks/forms.py:181
 msgid "Optional value."
-msgstr ""
+msgstr "Valeur optionnelle."
 
 #: plinth/modules/networks/forms.py:83 plinth/modules/networks/forms.py:185
 #| msgid "DNS server"
@@ -1285,18 +1289,23 @@ msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
+"Valeur optionnelle. Si cette valeur est renseignée et que la méthode "
+"d'adressage IPv4 est « Automatique », les serveurs DNS fournis par le "
+"serveur DHCP seront ignorés."
 
 #: plinth/modules/networks/forms.py:90 plinth/modules/networks/forms.py:192
-#, fuzzy
 #| msgid "DNS server"
 msgid "Second DNS Server"
-msgstr "Serveur DNS"
+msgstr "Second Serveur DNS"
 
 #: plinth/modules/networks/forms.py:91 plinth/modules/networks/forms.py:193
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
+"Valeur optionnelle. Si cette valeur est renseignée et que la méthode "
+"d'adressage IPv4 est « Automatique », les serveurs DNS fournis par le "
+"serveur DHCP seront ignorés."
 
 #: plinth/modules/networks/forms.py:121
 msgid "Show password"
@@ -1626,10 +1635,10 @@ msgid "Create Connection"
 msgstr "Créer Connexion"
 
 #: plinth/modules/networks/templates/connections_delete.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete connection permanently?"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
-msgstr "Supprimer la connexion de façon permanente ?"
+msgstr "Supprimer la connexion <strong>%(name)s</strong> de façon permanente ?"
 
 #: plinth/modules/networks/templates/connections_diagram.html:65
 msgid "Internet"
@@ -2250,17 +2259,16 @@ msgstr "Privoxy n'est pas actif"
 #: plinth/modules/quassel/templates/quassel.html:26
 #: plinth/modules/quassel/views.py:54
 msgid "IRC Client (Quassel)"
-msgstr ""
+msgstr "Client IRC (Quassel)"
 
 #: plinth/modules/quassel/__init__.py:41
 msgid "Quassel IRC Client"
-msgstr ""
+msgstr "Client IRC Quassel"
 
 #: plinth/modules/quassel/forms.py:29
-#, fuzzy
 #| msgid "Enable Tor Hidden Service"
 msgid "Enable Quassel core service"
-msgstr "Activer les Services Cachés Tor"
+msgstr "Activer Quassel core"
 
 #: plinth/modules/quassel/templates/quassel.html:29
 #, python-format
@@ -2272,6 +2280,12 @@ msgid ""
 "one or more Quassel clients from a desktop or a mobile can be used to "
 "connect and disconnect from it."
 msgstr ""
+"Quassel est une application IRC divisée en deux parties, une cœur (« core») "
+"et un logiciel (« client »). Cette division permet au cœur de rester "
+"connecté aux serveurs IRC et de continuer à recevoir des messages même si le "
+"client est déconnecté. %(box_name)s peut utiliser « Quassel core » pour que "
+"vous soyez toujours en ligne. Un ou plusieurs clients Quassel basés sur un "
+"ordinateur ou un mobile servent à se brancher sur le cœur ou s'en débrancher."
 
 #: plinth/modules/quassel/templates/quassel.html:41
 msgid ""
@@ -2280,18 +2294,21 @@ msgid ""
 "downloads\">desktop</a> and <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobile</a> devices are available."
 msgstr ""
+"Vous pouvez connecter votre cœur Quassel sur le port Quassel par défaut "
+"4242. Les clients destinés à la connexion depuis votre <a href=\"http"
+"://quassel-irc.org/downloads\">ordinateur</a> ou votre <a href=\""
+"http://quasseldroid.iskrembilen.com/\">mobile</a> sont disponibles pour "
+"téléchargement."
 
 #: plinth/modules/quassel/templates/quassel.html:55
-#, fuzzy
 #| msgid "Mumble server is running"
 msgid "Quassel core service is running"
-msgstr "Le serveur Mumble est actif"
+msgstr "Quassel core est actif"
 
 #: plinth/modules/quassel/templates/quassel.html:58
-#, fuzzy
 #| msgid "Mumble server is not running"
 msgid "Quassel core service is not running"
-msgstr "Le serveur Mumble n'est pas actif"
+msgstr "Quassel core n'est pas actif"
 
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
@@ -2828,7 +2845,7 @@ msgstr "Supprimer Utilisateur"
 #, python-format
 #| msgid "Delete User <em>%(username)s</em>"
 msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr "Supprimer définitivement l'utilisateur <strong>%(username)s</strong>?"
+msgstr "Supprimer définitivement l'utilisateur <strong>%(username)s</strong> ?"
 
 #: plinth/modules/users/templates/users_delete.html:38
 #, python-format
