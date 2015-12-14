@@ -27,11 +27,14 @@ import itertools
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import service as service_module
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
 
 
 depends = ['plinth.modules.apps', 'plinth.modules.names']
+
+service = None
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -44,14 +47,19 @@ def init():
     menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
                      'tor:index', 100)
 
+    global service
+    service = service_module.Service(
+        'tor-socks', _('Tor Anonymity Network'),
+        is_external=False, enabled=is_enabled())
+
     # Register hidden service name with Name Services module.
     (hs_enabled, hs_hostname, hs_ports) = get_hs()
 
     if is_enabled() and is_running() and hs_enabled and hs_hostname:
         hs_services = []
-        for service in SERVICES:
-            if str(service[2]) in hs_ports:
-                hs_services.append(service[0])
+        for service_type in SERVICES:
+            if str(service_type[2]) in hs_ports:
+                hs_services.append(service_type[0])
     else:
         hs_hostname = None
         hs_services = None
