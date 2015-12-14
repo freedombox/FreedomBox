@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from .forms import TorForm
 from plinth import actions
-from plinth import action_utils
 from plinth import package
 from plinth.errors import ActionError
 from plinth.modules import tor
@@ -37,6 +36,7 @@ def on_install():
     """Setup Tor configuration as soon as it is installed."""
     actions.superuser_run('tor', ['setup'])
     actions.superuser_run('tor', ['enable-apt-transport-tor'])
+    tor.service.notify_enabled(None, True)
 
 
 @package.required(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
@@ -75,38 +75,38 @@ def _apply_changes(request, old_status, new_status):
 
 def __apply_changes(request, old_status, new_status):
     """Apply the changes."""
-    if old_status['enabled'] == new_status['enabled'] and \
-       old_status['hs_enabled'] == new_status['hs_enabled'] and \
-       old_status['apt_transport_tor_enabled'] == \
-       new_status['apt_transport_tor_enabled']:
-        messages.info(request, _('Setting unchanged'))
-        return
+    modified = False
 
     if old_status['enabled'] != new_status['enabled']:
-        if new_status['enabled']:
-            actions.superuser_run('tor', ['enable'])
-            messages.success(request, _('Tor enabled'))
-        else:
-            actions.superuser_run('tor', ['disable'])
-            messages.success(request, _('Tor disabled'))
+        sub_command = 'enable' if new_status['enabled'] else 'disable'
+        actions.superuser_run('tor', [sub_command])
+        tor.service.notify_enabled(None, new_status['enabled'])
+        modified = True
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
-        if new_status['hs_enabled']:
-            actions.superuser_run('tor', ['enable-hs'])
-            messages.success(request, _('Tor hidden service enabled'))
-        else:
-            actions.superuser_run('tor', ['disable-hs'])
-            messages.success(request, _('Tor hidden service disabled'))
+        sub_command = 'enable-hs' if new_status['hs_enabled'] else 'disable-hs'
+        actions.superuser_run('tor', [sub_command])
+        modified = True
+
+    if old_status['apt_transport_tor_enabled'] != \
+       new_status['apt_transport_tor_enabled']:
+        sub_command = 'enable-apt-transport-tor' \
+                      if new_status['apt_transport_tor_enabled'] \
+                         else 'disable-apt-transport-tor'
+        actions.superuser_run('tor', [sub_command])
+        modified = True
+
+    if modified:
+        messages.success(request, _('Configuration updated'))
+    else:
+        messages.info(request, _('Setting unchanged'))
 
     # Update hidden service name registered with Name Services module.
     domain_removed.send_robust(
         sender='tor', domain_type='hiddenservice')
 
-    enabled = action_utils.service_is_enabled('tor')
-    is_running = action_utils.service_is_running('tor')
     (hs_enabled, hs_hostname, hs_ports) = tor.get_hs()
-
-    if enabled and is_running and hs_enabled and hs_hostname:
+    if tor.is_enabled() and tor.is_running() and hs_enabled and hs_hostname:
         hs_services = []
         for service in SERVICES:
             if str(service[2]) in hs_ports:
@@ -116,12 +116,3 @@ def __apply_changes(request, old_status, new_status):
             sender='tor', domain_type='hiddenservice',
             name=hs_hostname, description=_('Tor Hidden Service'),
             services=hs_services)
-
-    if old_status['apt_transport_tor_enabled'] != \
-       new_status['apt_transport_tor_enabled']:
-        if new_status['apt_transport_tor_enabled']:
-            actions.superuser_run('tor', ['enable-apt-transport-tor'])
-            messages.success(request, _('Enabled package download over Tor'))
-        else:
-            actions.superuser_run('tor', ['disable-apt-transport-tor'])
-            messages.success(request, _('Disabled package download over Tor'))
