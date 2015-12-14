@@ -22,7 +22,7 @@ Tests for Tor module.
 import os
 import unittest
 
-from ..tor import is_apt_transport_tor_enabled, get_hs, get_status
+from plinth.modules.tor import is_apt_transport_tor_enabled, get_hs, get_status
 
 euid = os.geteuid()
 
