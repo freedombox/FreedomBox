@@ -34,7 +34,8 @@ from plinth.signals import domain_added
 
 depends = ['plinth.modules.apps', 'plinth.modules.names']
 
-service = None
+socks_service = None
+bridge_service = None
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -47,10 +48,16 @@ def init():
     menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
                      'tor:index', 100)
 
-    global service
-    service = service_module.Service(
+    global socks_service
+    socks_service = service_module.Service(
         'tor-socks', _('Tor Anonymity Network'),
         is_external=False, enabled=is_enabled())
+
+    global bridge_service
+    bridge_service = service_module.Service(
+        'tor-bridge', _('Tor Bridge Relay'),
+        ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
+        is_external=True, enabled=is_enabled())
 
     # Register hidden service name with Name Services module.
     (hs_enabled, hs_hostname, hs_ports) = get_hs()

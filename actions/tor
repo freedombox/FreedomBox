@@ -26,11 +26,13 @@ import codecs
 import os
 import re
 import socket
+import time
 
 from plinth import action_utils
 from plinth.modules.tor.tor import get_augeas, get_real_apt_uri_path, \
     iter_apt_uris, APT_TOR_PREFIX
 
+SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/etc/tor/torrc'
 TOR_STATE_FILE = '/var/lib/tor/state'
 TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
@@ -89,11 +91,13 @@ DNSPort [::1]:9053
         conffile.writelines(lines)
 
     action_utils.service_restart('tor')
+    _update_ports()
 
 
 def subcommand_enable(_):
     """Enable and start the service."""
     action_utils.service_enable('tor')
+    _update_ports()
 
 
 def subcommand_disable(_):
@@ -190,21 +194,10 @@ def get_hidden_service():
 
 
 def subcommand_get_ports(_):
-    """Return a list of running Tor ports."""
-    try:
-        print('orport', _get_orport())
-    except Exception:
-        pass
-
-    try:
-        with open(TOR_STATE_FILE, 'r') as state_file:
-            for line in state_file:
-                matches = re.match(
-                    r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
-                if matches:
-                    print('{0} {1}'.format(matches.group(1), matches.group(2)))
-    except FileNotFoundError:
-        pass
+    """Get list of Tor ports."""
+    ports = get_ports()
+    for name, number in ports.items():
+        print(name, number)
 
 
 def subcommand_enable_apt_transport_tor(_):
@@ -242,6 +235,27 @@ def subcommand_disable_apt_transport_tor(_):
     aug.save()
 
 
+def get_ports():
+    """Return dict mapping port names to numbers."""
+    ports = {}
+    try:
+        ports['orport'] = _get_orport()
+    except Exception:
+        pass
+
+    try:
+        with open(TOR_STATE_FILE, 'r') as state_file:
+            for line in state_file:
+                matches = re.match(
+                    r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
+                if matches:
+                    ports[matches.group(1)] = matches.group(2)
+    except FileNotFoundError:
+        pass
+
+    return ports
+
+
 def _get_orport():
     """Return the ORPort by querying running instance."""
     cookie = open(TOR_AUTH_COOKIE, 'rb').read()
@@ -261,6 +275,37 @@ QUIT
     line = response.split(b'\r\n')[1].decode()
     matches = re.match(r'.*="[^:]+:(\d+)"', line)
     return matches.group(1)
+
+
+def _update_ports():
+    """Update firewall service information."""
+    ready = False
+    tries = 0
+
+    # port information may not be available immediately after Tor started
+    while not ready:
+        time.sleep(5)
+
+        ports = get_ports()
+        ready = 'orport' in ports and 'obfs3' in ports and 'obfs4' in ports
+        if ready:
+            break
+
+        tries += 1
+        if tries >= 12:
+            return
+
+    lines = """<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Tor - {0}</short>
+  <port protocol="tcp" port="{1}"/>
+</service>
+"""
+    for name, number in ports.items():
+        with open(SERVICE_FILE.format(name), 'w') as service_file:
+            service_file.writelines(lines.format(name, number))
+
+    action_utils.service_restart('firewalld')
 
 
 def main():

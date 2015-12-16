@@ -36,7 +36,8 @@ def on_install():
     """Setup Tor configuration as soon as it is installed."""
     actions.superuser_run('tor', ['setup'])
     actions.superuser_run('tor', ['enable-apt-transport-tor'])
-    tor.service.notify_enabled(None, True)
+    tor.socks_service.notify_enabled(None, True)
+    tor.bridge_service.notify_enabled(None, True)
 
 
 @package.required(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
@@ -80,7 +81,8 @@ def __apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         sub_command = 'enable' if new_status['enabled'] else 'disable'
         actions.superuser_run('tor', [sub_command])
-        tor.service.notify_enabled(None, new_status['enabled'])
+        tor.socks_service.notify_enabled(None, new_status['enabled'])
+        tor.bridge_service.notify_enabled(None, new_status['enabled'])
         modified = True
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
