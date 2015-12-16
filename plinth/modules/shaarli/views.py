@@ -28,6 +28,9 @@ from plinth import actions
 from plinth import package
 from plinth.modules import shaarli
 
+def on_install():
+"""Notify that the service is now enabled."""
+shaarli.service.notify_enabled(None, True)
 
 @package.required(['shaarli'])
 def index(request):
