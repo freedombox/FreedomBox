@@ -229,6 +229,14 @@ def _enable_hs(restart=True):
         if is_enabled() and is_running():
             action_utils.service_restart('tor')
 
+            # wait until hidden service information is available
+            tries = 0
+            while not get_hidden_service():
+                tries += 1
+                if tries >= 12:
+                    return
+                time.sleep(10)
+
 
 def _disable_hs(restart=True):
     """Disable Tor hidden service"""
@@ -326,8 +334,11 @@ def _update_ports():
 </service>
 """
     for name, number in ports.items():
-        with open(SERVICE_FILE.format(name), 'w') as service_file:
-            service_file.writelines(lines.format(name, number))
+        try:
+            with open(SERVICE_FILE.format(name), 'w') as service_file:
+                service_file.writelines(lines.format(name, number))
+        except FileNotFoundError:
+            return
 
     action_utils.service_restart('firewalld')
 
