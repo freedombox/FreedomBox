@@ -48,11 +48,10 @@ def on_install():
                   on_install=on_install)
 def index(request):
     """Serve configuration page."""
-    status = tor.get_status()
-
     if config_process:
-        _collect_config_result(request, status)
+        _collect_config_result(request)
 
+    status = tor.get_status()
     form = None
 
     if request.method == 'POST':
@@ -109,7 +108,7 @@ def __apply_changes(request, old_status, new_status):
         messages.info(request, _('Setting unchanged'))
 
 
-def _collect_config_result(request, status):
+def _collect_config_result(request):
     """Handle config process completion."""
     global config_process
     if not config_process:
@@ -120,6 +119,8 @@ def _collect_config_result(request, status):
     # Config process is not complete yet
     if return_code == None:
         return
+
+    status = tor.get_status()
 
     tor.socks_service.notify_enabled(None, status['enabled'])
     tor.bridge_service.notify_enabled(None, status['enabled'])
