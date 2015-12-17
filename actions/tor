@@ -231,11 +231,13 @@ def _enable_hs(restart=True):
 
             # wait until hidden service information is available
             tries = 0
-            while not get_hidden_service():
+            hs = get_hidden_service()
+            while hs == '' or hs == 'error':
                 tries += 1
                 if tries >= 12:
                     return
                 time.sleep(10)
+                hs = get_hidden_service()
 
 
 def _disable_hs(restart=True):
