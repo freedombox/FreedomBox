@@ -31,6 +31,8 @@ from plinth.modules import tor
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
+config_process = None
+
 
 def on_install():
     """Setup Tor configuration as soon as it is installed."""
@@ -48,6 +50,9 @@ def index(request):
     """Serve configuration page."""
     status = tor.get_status()
 
+    if config_process:
+        _collect_config_result(request, status)
+
     form = None
 
     if request.method == 'POST':
@@ -63,6 +68,7 @@ def index(request):
     return TemplateResponse(request, 'tor.html',
                             {'title': _('Tor Control Panel'),
                              'status': status,
+                             'config_running': bool(config_process),
                              'form': form})
 
 
@@ -95,25 +101,48 @@ def __apply_changes(request, old_status, new_status):
         arguments.extend(['--apt-transport-tor', arg_value])
 
     if arguments:
-        actions.superuser_run('tor', ['configure'] + arguments)
-        tor.socks_service.notify_enabled(None, new_status['enabled'])
-        tor.bridge_service.notify_enabled(None, new_status['enabled'])
-        messages.success(request, _('Configuration updated'))
+        global config_process
+        if not config_process:
+            config_process = actions.superuser_run(
+                'tor', ['configure'] + arguments, async=True)
     else:
         messages.info(request, _('Setting unchanged'))
+
+
+def _collect_config_result(request, status):
+    """Handle config process completion."""
+    global config_process
+    if not config_process:
+        return
+
+    return_code = config_process.poll()
+
+    # Config process is not complete yet
+    if return_code == None:
+        return
+
+    tor.socks_service.notify_enabled(None, status['enabled'])
+    tor.bridge_service.notify_enabled(None, status['enabled'])
 
     # Update hidden service name registered with Name Services module.
     domain_removed.send_robust(
         sender='tor', domain_type='hiddenservice')
 
-    (hs_enabled, hs_hostname, hs_ports) = tor.get_hs()
-    if tor.is_enabled() and tor.is_running() and hs_enabled and hs_hostname:
+    if status['enabled'] and status['is_running'] and \
+       status['hs_enabled'] and status['hs_hostname']:
         hs_services = []
         for service in SERVICES:
-            if str(service[2]) in hs_ports:
+            if str(service[2]) in status['hs_ports']:
                 hs_services.append(service[0])
 
         domain_added.send_robust(
             sender='tor', domain_type='hiddenservice',
-            name=hs_hostname, description=_('Tor Hidden Service'),
+            name=status['hs_hostname'], description=_('Tor Hidden Service'),
             services=hs_services)
+
+    if not return_code:
+        messages.success(request, _('Configuration updated.'))
+    else:
+        messages.info(request, _('Error occurred during configuration.'))
+
+    config_process = None

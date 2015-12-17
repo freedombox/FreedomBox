@@ -309,8 +309,6 @@ def _update_ports():
 
     # port information may not be available immediately after Tor started
     while not ready:
-        time.sleep(5)
-
         ports = get_ports()
         ready = 'orport' in ports and 'obfs3' in ports and 'obfs4' in ports
         if ready:
@@ -319,6 +317,7 @@ def _update_ports():
         tries += 1
         if tries >= 12:
             return
+        time.sleep(10)
 
     lines = """<?xml version="1.0" encoding="utf-8"?>
 <service>

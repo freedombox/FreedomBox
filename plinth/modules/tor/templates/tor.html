@@ -21,6 +21,15 @@
 {% load bootstrap %}
 {% load i18n %}
 
+{% block page_head %}
+
+  {% if config_running %}
+    <meta http-equiv="refresh" content="3" />
+  {% endif %}
+
+{% endblock %}
+
+
 {% block content %}
 
   <h2>{% trans "Anonymity Network (Tor)" %}</h2>
@@ -38,89 +47,100 @@
 
   <h3>{% trans "Status" %}</h3>
 
-  <p class="running-status-parent">
-    {% if status.is_running %}
+  {% if config_running %}
+
+    <p class="running-status-parent">
       <span class="running-status active"></span>
-      {% trans "Tor is running" %}
-    {% else %}
-      <span class="running-status inactive"></span>
-      {% trans "Tor is not running" %}
+      {% trans "Tor configuration is being updated" %}
+    </p>
+
+  {% else %}
+
+    <p class="running-status-parent">
+      {% if status.is_running %}
+        <span class="running-status active"></span>
+        {% trans "Tor is running" %}
+      {% else %}
+        <span class="running-status inactive"></span>
+        {% trans "Tor is not running" %}
+      {% endif %}
+    </p>
+
+    {% include "diagnostics_button.html" with module="tor" %}
+
+    {% if status.hs_enabled %}
+      <div class="row">
+        <div class="col-sm-3">
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
+              <tr>
+                <th>{% trans "Hidden Service" %}</th>
+                <th>{% trans "Port" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ status.hs_hostname }}</td>
+                <td>{{ status.hs_ports }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     {% endif %}
-  </p>
 
-  {% include "diagnostics_button.html" with module="tor" %}
+    <h3>{% trans "Configuration" %}</h3>
 
-  {% if status.hs_enabled %}
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary btn-md"
+             value="{% trans "Update setup" %}"/>
+    </form>
+
+    <h3>{% trans "Bridge" %}</h3>
+
+    <p>
+      {% blocktrans trimmed %}
+        Your {{ box_name }} is configured as a Tor bridge with obfsproxy,
+        so it can help circumvent censorship. If your {{ box_name }} is
+        behind a router or firewall, you should make sure the following
+        ports are open, and port-forwarded, if necessary:
+      {% endblocktrans %}
+    </p>
+
     <div class="row">
       <div class="col-sm-3">
         <table class="table table-bordered table-condensed table-striped">
           <thead>
             <tr>
-              <th>{% trans "Hidden Service" %}</th>
+              <th>{% trans "Service" %}</th>
               <th>{% trans "Port" %}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>{{ status.hs_hostname }}</td>
-              <td>{{ status.hs_ports }}</td>
-            </tr>
+            {% for name, port in status.ports.items %}
+              <tr>
+                <td>{{ name }}</td>
+                <td>{{ port }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
+
+    <h3>{% trans "SOCKS" %}</h3>
+
+    <p>
+      {% blocktrans trimmed %}
+        A Tor SOCKS port is available on your {{ box_name }} on TCP port
+        9050.
+      {% endblocktrans %}
+    </p>
+
   {% endif %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary btn-md"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
-  <h3>{% trans "Bridge" %}</h3>
-
-  <p>
-    {% blocktrans trimmed %}
-      Your {{ box_name }} is configured as a Tor bridge with obfsproxy,
-      so it can help circumvent censorship. If your {{ box_name }} is
-      behind a router or firewall, you should make sure the following
-      ports are open, and port-forwarded, if necessary:
-    {% endblocktrans %}
-  </p>
-
-  <div class="row">
-    <div class="col-sm-3">
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>{% trans "Service" %}</th>
-            <th>{% trans "Port" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for name, port in status.ports.items %}
-            <tr>
-              <td>{{ name }}</td>
-              <td>{{ port }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <h3>{% trans "SOCKS" %}</h3>
-
-  <p>
-    {% blocktrans trimmed %}
-      A Tor SOCKS port is available on your {{ box_name }} on TCP port
-      9050.
-    {% endblocktrans %}
-  </p>
 
 {% endblock %}
