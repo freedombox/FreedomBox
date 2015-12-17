@@ -29,8 +29,8 @@ import socket
 import time
 
 from plinth import action_utils
-from plinth.modules.tor.tor import get_augeas, get_real_apt_uri_path, \
-    iter_apt_uris, APT_TOR_PREFIX
+from plinth.modules.tor import is_enabled, is_running, get_augeas, \
+    get_real_apt_uri_path, iter_apt_uris, APT_TOR_PREFIX
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/etc/tor/torrc'
@@ -109,15 +109,17 @@ def subcommand_get_hs(_):
 
 def subcommand_configure(arguments):
     """Configure Tor."""
-    if arguments.service == 'enable':
-        _enable()
-    elif arguments.service == 'disable':
+    if arguments.service == 'disable':
         _disable()
 
+    restart = arguments.service == None
     if arguments.hidden_service == 'enable':
-        _enable_hs()
+        _enable_hs(restart=restart)
     elif arguments.hidden_service == 'disable':
-        _disable_hs()
+        _disable_hs(restart=restart)
+
+    if arguments.service == 'enable':
+        _enable()
 
     if arguments.apt_transport_tor == 'enable':
         _enable_apt_transport_tor()
@@ -206,7 +208,7 @@ def _disable():
     action_utils.service_disable('tor')
 
 
-def _enable_hs():
+def _enable_hs(restart=True):
     """Enable Tor hidden service"""
     if get_hidden_service():
         return
@@ -223,10 +225,12 @@ def _enable_hs():
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
 
-    action_utils.service_restart('tor')
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
 
 
-def _disable_hs():
+def _disable_hs(restart=True):
     """Disable Tor hidden service"""
     if not get_hidden_service():
         return
@@ -258,7 +262,9 @@ def _disable_hs():
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(filtered_lines)
 
-    action_utils.service_restart('tor')
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
 
 
 def _enable_apt_transport_tor():
