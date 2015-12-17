@@ -44,16 +44,17 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup Tor configuration')
-    subparsers.add_parser('enable', help='Enable and start Tor service')
-    subparsers.add_parser('disable', help='Disable and stop Tor service')
-    subparsers.add_parser('get-hs', help='Get hidden service')
-    subparsers.add_parser('enable-hs', help='Enable hidden service')
-    subparsers.add_parser('disable-hs', help='Disable hidden service')
     subparsers.add_parser('get-ports', help='Get list of Tor ports')
-    subparsers.add_parser('enable-apt-transport-tor',
-                          help='Enable package download over Tor')
-    subparsers.add_parser('disable-apt-transport-tor',
-                          help='Disable package download over Tor')
+    subparsers.add_parser('get-hs', help='Get hidden service')
+
+    configure = subparsers.add_parser('configure', help='Configure Tor')
+    configure.add_argument('--service', choices=['enable', 'disable'],
+                           help='Configure Tor service')
+    configure.add_argument('--hidden-service', choices=['enable', 'disable'],
+                           help='Configure hidden service')
+    configure.add_argument('--apt-transport-tor',
+                           choices=['enable', 'disable'],
+                           help='Configure package download over Tor')
 
     return parser.parse_args()
 
@@ -94,105 +95,6 @@ DNSPort [::1]:9053
     _update_ports()
 
 
-def subcommand_enable(_):
-    """Enable and start the service."""
-    action_utils.service_enable('tor')
-    _update_ports()
-
-
-def subcommand_disable(_):
-    """Disable and stop the service."""
-    subcommand_disable_apt_transport_tor(_)
-    action_utils.service_disable('tor')
-
-
-def subcommand_get_hs(_):
-    """Print currently configured Tor hidden service information"""
-    print(get_hidden_service())
-
-
-def subcommand_enable_hs(_):
-    """Enable Tor hidden service"""
-    if get_hidden_service():
-        return
-
-    with open(TOR_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-
-    lines.append('# Hidden Service configured by Plinth\n')
-    lines.append('HiddenServiceDir /var/lib/tor/hidden_service/\n')
-    lines.append('HiddenServicePort 80 127.0.0.1:80\n')
-    lines.append('HiddenServicePort 443 127.0.0.1:443\n')
-    lines.append('# end of Plinth Hidden Service config\n')
-
-    with open(TOR_CONFIG, 'w') as conffile:
-        conffile.writelines(lines)
-
-    action_utils.service_restart('tor')
-
-
-def subcommand_disable_hs(_):
-    """Disable Tor hidden service"""
-    if not get_hidden_service():
-        return
-
-    with open(TOR_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
-
-        filtered_lines = []
-        removing = False
-        for line in lines:
-            if removing:
-                if line.startswith('# end of Plinth Hidden Service config'):
-                    # last line of Plinth hidden service block
-                    # stop removing after this line
-                    removing = False
-                elif not line.startswith('HiddenService'):
-                    # end of Plinth hidden service block
-                    # stop removing lines
-                    removing = False
-                    filtered_lines.append(line)
-            else:
-                if line.startswith('# Hidden Service configured by Plinth'):
-                    # start of Plinth hidden service block
-                    # remove following HiddenService lines
-                    removing = True
-                else:
-                    filtered_lines.append(line)
-
-    with open(TOR_CONFIG, 'w') as conffile:
-        conffile.writelines(filtered_lines)
-
-    action_utils.service_restart('tor')
-
-
-def get_hidden_service():
-    """Return a string with configured Tor hidden service information"""
-    hs_dir = None
-    hs_ports = []
-
-    try:
-        with open(TOR_CONFIG, 'r') as conf_file:
-            for line in conf_file:
-                if line.startswith('HiddenServiceDir'):
-                    hs_dir = line.split()[1]
-                elif line.startswith('HiddenServicePort'):
-                    hs_ports.append(line.split()[1])
-    except FileNotFoundError:
-        return 'error'
-
-    if not hs_dir:
-        return ''
-
-    try:
-        with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
-            hs_hostname = conf_file.read().strip()
-    except Exception:
-        return 'error'
-
-    return hs_hostname + ' ' + ','.join(hs_ports)
-
-
 def subcommand_get_ports(_):
     """Get list of Tor ports."""
     ports = get_ports()
@@ -200,39 +102,27 @@ def subcommand_get_ports(_):
         print(name, number)
 
 
-def subcommand_enable_apt_transport_tor(_):
-    """Enable package download over Tor."""
-    try:
-        aug = get_augeas()
-    except Exception:
-        # If there was an error, don't proceed
-        print('Error: Unable to understand sources format.')
-        exit(1)
-
-    for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
-        uri = aug.get(uri_path)
-        if uri.startswith('http://') or uri.startswith('https://'):
-            aug.set(uri_path, APT_TOR_PREFIX + uri)
-
-    aug.save()
+def subcommand_get_hs(_):
+    """Print currently configured Tor hidden service information"""
+    print(get_hidden_service())
 
 
-def subcommand_disable_apt_transport_tor(_):
-    """Disable package download over Tor."""
-    try:
-        aug = get_augeas()
-    except Exception:
-        # Disable what we can, so APT is not unusable.
-        pass
+def subcommand_configure(arguments):
+    """Configure Tor."""
+    if arguments.service == 'enable':
+        _enable()
+    elif arguments.service == 'disable':
+        _disable()
 
-    for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
-        uri = aug.get(uri_path)
-        if uri.startswith(APT_TOR_PREFIX):
-            aug.set(uri_path, uri[len(APT_TOR_PREFIX):])
+    if arguments.hidden_service == 'enable':
+        _enable_hs()
+    elif arguments.hidden_service == 'disable':
+        _disable_hs()
 
-    aug.save()
+    if arguments.apt_transport_tor == 'enable':
+        _enable_apt_transport_tor()
+    elif arguments.apt_transport_tor == 'disable':
+        _disable_apt_transport_tor()
 
 
 def get_ports():
@@ -275,6 +165,135 @@ QUIT
     line = response.split(b'\r\n')[1].decode()
     matches = re.match(r'.*="[^:]+:(\d+)"', line)
     return matches.group(1)
+
+
+def get_hidden_service():
+    """Return a string with configured Tor hidden service information"""
+    hs_dir = None
+    hs_ports = []
+
+    try:
+        with open(TOR_CONFIG, 'r') as conf_file:
+            for line in conf_file:
+                if line.startswith('HiddenServiceDir'):
+                    hs_dir = line.split()[1]
+                elif line.startswith('HiddenServicePort'):
+                    hs_ports.append(line.split()[1])
+    except FileNotFoundError:
+        return 'error'
+
+    if not hs_dir:
+        return ''
+
+    try:
+        with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
+            hs_hostname = conf_file.read().strip()
+    except Exception:
+        return 'error'
+
+    return hs_hostname + ' ' + ','.join(hs_ports)
+
+
+def _enable():
+    """Enable and start the service."""
+    action_utils.service_enable('tor')
+    _update_ports()
+
+
+def _disable():
+    """Disable and stop the service."""
+    _disable_apt_transport_tor()
+    action_utils.service_disable('tor')
+
+
+def _enable_hs():
+    """Enable Tor hidden service"""
+    if get_hidden_service():
+        return
+
+    with open(TOR_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+    lines.append('# Hidden Service configured by Plinth\n')
+    lines.append('HiddenServiceDir /var/lib/tor/hidden_service/\n')
+    lines.append('HiddenServicePort 80 127.0.0.1:80\n')
+    lines.append('HiddenServicePort 443 127.0.0.1:443\n')
+    lines.append('# end of Plinth Hidden Service config\n')
+
+    with open(TOR_CONFIG, 'w') as conffile:
+        conffile.writelines(lines)
+
+    action_utils.service_restart('tor')
+
+
+def _disable_hs():
+    """Disable Tor hidden service"""
+    if not get_hidden_service():
+        return
+
+    with open(TOR_CONFIG, 'r') as conffile:
+        lines = conffile.readlines()
+
+        filtered_lines = []
+        removing = False
+        for line in lines:
+            if removing:
+                if line.startswith('# end of Plinth Hidden Service config'):
+                    # last line of Plinth hidden service block
+                    # stop removing after this line
+                    removing = False
+                elif not line.startswith('HiddenService'):
+                    # end of Plinth hidden service block
+                    # stop removing lines
+                    removing = False
+                    filtered_lines.append(line)
+            else:
+                if line.startswith('# Hidden Service configured by Plinth'):
+                    # start of Plinth hidden service block
+                    # remove following HiddenService lines
+                    removing = True
+                else:
+                    filtered_lines.append(line)
+
+    with open(TOR_CONFIG, 'w') as conffile:
+        conffile.writelines(filtered_lines)
+
+    action_utils.service_restart('tor')
+
+
+def _enable_apt_transport_tor():
+    """Enable package download over Tor."""
+    try:
+        aug = get_augeas()
+    except Exception:
+        # If there was an error, don't proceed
+        print('Error: Unable to understand sources format.')
+        exit(1)
+
+    for uri_path in iter_apt_uris(aug):
+        uri_path = get_real_apt_uri_path(aug, uri_path)
+        uri = aug.get(uri_path)
+        if uri.startswith('http://') or uri.startswith('https://'):
+            aug.set(uri_path, APT_TOR_PREFIX + uri)
+
+    aug.save()
+
+
+def _disable_apt_transport_tor():
+    """Disable package download over Tor."""
+    try:
+        aug = get_augeas()
+    except Exception:
+        # Disable what we can, so APT is not unusable.
+        pass
+
+    for uri_path in iter_apt_uris(aug):
+        uri_path = get_real_apt_uri_path(aug, uri_path)
+        uri = aug.get(uri_path)
+        if uri.startswith(APT_TOR_PREFIX):
+            aug.set(uri_path, uri[len(APT_TOR_PREFIX):])
+
+    aug.save()
 
 
 def _update_ports():

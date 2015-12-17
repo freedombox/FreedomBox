@@ -76,29 +76,27 @@ def _apply_changes(request, old_status, new_status):
 
 def __apply_changes(request, old_status, new_status):
     """Apply the changes."""
-    modified = False
+    arguments = []
 
     if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('tor', [sub_command])
-        tor.socks_service.notify_enabled(None, new_status['enabled'])
-        tor.bridge_service.notify_enabled(None, new_status['enabled'])
-        modified = True
+        arg_value = 'enable' if new_status['enabled'] else 'disable'
+        arguments.extend(['--service', arg_value])
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
-        sub_command = 'enable-hs' if new_status['hs_enabled'] else 'disable-hs'
-        actions.superuser_run('tor', [sub_command])
-        modified = True
+        arg_value = 'enable' if new_status['hs_enabled'] else 'disable'
+        arguments.extend(['--hidden-service', arg_value])
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:
-        sub_command = 'enable-apt-transport-tor' \
-                      if new_status['apt_transport_tor_enabled'] \
-                         else 'disable-apt-transport-tor'
-        actions.superuser_run('tor', [sub_command])
-        modified = True
+        arg_value = 'disable'
+        if new_status['enabled'] and new_status['apt_transport_tor_enabled']:
+            arg_value = 'enable'
+        arguments.extend(['--apt-transport-tor', arg_value])
 
-    if modified:
+    if arguments:
+        actions.superuser_run('tor', ['configure'] + arguments)
+        tor.socks_service.notify_enabled(None, new_status['enabled'])
+        tor.bridge_service.notify_enabled(None, new_status['enabled'])
         messages.success(request, _('Configuration updated'))
     else:
         messages.info(request, _('Setting unchanged'))
