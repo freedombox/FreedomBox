@@ -37,7 +37,8 @@ config_process = None
 def on_install():
     """Setup Tor configuration as soon as it is installed."""
     actions.superuser_run('tor', ['setup'])
-    actions.superuser_run('tor', ['enable-apt-transport-tor'])
+    actions.superuser_run('tor',
+                          ['configure', '--apt-transport-tor', 'enable'])
     tor.socks_service.notify_enabled(None, True)
     tor.bridge_service.notify_enabled(None, True)
 
