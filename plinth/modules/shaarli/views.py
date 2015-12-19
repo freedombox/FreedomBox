@@ -29,10 +29,10 @@ from plinth import package
 from plinth.modules import shaarli
 
 def on_install():
-"""Notify that the service is now enabled."""
-shaarli.service.notify_enabled(None, True)
+    """Notify that the service is now enabled."""
+    shaarli.service.notify_enabled(None, True)
 
-@package.required(['shaarli'])
+@package.required(['shaarli'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
