@@ -149,7 +149,8 @@ def init():
         domainname_services = None
 
     domain_added.send_robust(sender='config', domain_type='domainname',
-                             name=domainname, description=_('Domain Name'),
+                             name=domainname,
+                             description=ugettext_lazy('Domain Name'),
                              services=domainname_services)
 
 
