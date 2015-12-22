@@ -42,7 +42,7 @@ def get_status():
         domain = get_domain(domain_type)
         name_services.append({
             'type': get_description(domain_type),
-            'name': domain,
+            'name': domain or _('Not Available'),
             'services_enabled': get_services_status(domain_type, domain),
         })
 
