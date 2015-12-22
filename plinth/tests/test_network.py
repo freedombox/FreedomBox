@@ -39,11 +39,11 @@ class TestNetwork(unittest.TestCase):
     def setUp(cls):
         cls.ethernet_uuid = network.add_ethernet_connection(
             'plinth_test_eth', 'eth0', 'internal',
-            'auto', '')
+            'auto', '', '', '', '', '')
         cls.wifi_uuid = network.add_wifi_connection(
             'plinth_test_wifi', 'wlan0', 'external',
             'plinthtestwifi', 'adhoc', 'open', '',
-            'auto', '')
+            'auto', '', '', '', '', '')
         cls.pppoe_uuid = network.add_pppoe_connection(
             'plinth_test_pppoe', 'eth1', 'internal',
             'x-user', 'x-password')
@@ -82,7 +82,8 @@ class TestNetwork(unittest.TestCase):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'eth1', 'external', 'auto', '')
+            connection, 'plinth_test_eth_new', 'eth1', 'external',
+            'auto', '', '', '', '', '')
 
         connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(connection.get_id(), 'plinth_test_eth_new')
@@ -125,7 +126,7 @@ class TestNetwork(unittest.TestCase):
         network.edit_wifi_connection(
             connection, 'plinth_test_wifi_new', 'wlan1', 'external',
             'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
-            'auto', '')
+            'auto', '', '', '', '', '')
 
         connection = network.get_connection(self.wifi_uuid)
 
@@ -154,7 +155,7 @@ class TestNetwork(unittest.TestCase):
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
             connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
-            '169.254.0.1')
+            '169.254.0.1', '', '', '', '')
 
         connection = network.get_connection(self.ethernet_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
@@ -170,7 +171,7 @@ class TestNetwork(unittest.TestCase):
         network.edit_wifi_connection(
             connection, 'plinth_test_wifi_new', 'wlan0', 'external',
             'plinthtestwifi', 'adhoc', 'open', '',
-            'manual', '169.254.0.2')
+            'manual', '169.254.0.2', '', '', '', '')
 
         connection = network.get_connection(self.wifi_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
