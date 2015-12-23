@@ -155,7 +155,8 @@ class TestNetwork(unittest.TestCase):
         connection = network.get_connection(self.ethernet_uuid)
         network.edit_ethernet_connection(
             connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
-            '169.254.0.1', '', '', '', '')
+            '169.254.0.1', '255.255.254.0', '169.254.0.254', '1.2.3.4',
+            '1.2.3.5')
 
         connection = network.get_connection(self.ethernet_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
@@ -163,6 +164,11 @@ class TestNetwork(unittest.TestCase):
 
         address = settings_ipv4.get_address(0)
         self.assertEqual(address.get_address(), '169.254.0.1')
+        self.assertEqual(address.get_prefix(), 23)
+        self.assertEqual(settings_ipv4.get_gateway(), '169.254.0.254')
+        self.assertEqual(settings_ipv4.get_num_dns(), 2)
+        self.assertEqual(settings_ipv4.get_dns(0), '1.2.3.4')
+        self.assertEqual(settings_ipv4.get_dns(1), '1.2.3.5')
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_wifi_manual_ipv4_address(self):
@@ -170,8 +176,8 @@ class TestNetwork(unittest.TestCase):
         connection = network.get_connection(self.wifi_uuid)
         network.edit_wifi_connection(
             connection, 'plinth_test_wifi_new', 'wlan0', 'external',
-            'plinthtestwifi', 'adhoc', 'open', '',
-            'manual', '169.254.0.2', '', '', '', '')
+            'plinthtestwifi', 'adhoc', 'open', '', 'manual', '169.254.0.2',
+            '255.255.254.0', '169.254.0.254', '1.2.3.4', '1.2.3.5')
 
         connection = network.get_connection(self.wifi_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
@@ -179,3 +185,8 @@ class TestNetwork(unittest.TestCase):
 
         address = settings_ipv4.get_address(0)
         self.assertEqual(address.get_address(), '169.254.0.2')
+        self.assertEqual(address.get_prefix(), 23)
+        self.assertEqual(settings_ipv4.get_gateway(), '169.254.0.254')
+        self.assertEqual(settings_ipv4.get_num_dns(), 2)
+        self.assertEqual(settings_ipv4.get_dns(0), '1.2.3.4')
+        self.assertEqual(settings_ipv4.get_dns(1), '1.2.3.5')
