@@ -38,6 +38,10 @@ TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 def on_install():
     """Enable transmission as soon as it is installed."""
+    new_configuration = {'rpc-whitelist-enabled': False}
+    actions.superuser_run('transmission', ['merge-configuration'],
+                          input=json.dumps(new_configuration).encode())
+
     actions.superuser_run('transmission', ['enable'])
     transmission.service.notify_enabled(None, True)
 
