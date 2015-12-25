@@ -1,5 +1,3 @@
-{% extends 'help_base.html' %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,18 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
 
-{% load i18n %}
+from django import template
 
-{% block page_head %}
-  <style type="text/css">
-    dd {
-      margin-left: 30px;
-    }
-  </style>
-{% endblock %}
+from plinth import kvstore
 
-{% block content %}
-  {{ content|safe }}
-{% endblock %}
+register = template.Library()
+
+
+@register.simple_tag
+def firstboot_is_finished():
+    state = kvstore.get_default('firstboot_state', 0)
+    return state >= 10
