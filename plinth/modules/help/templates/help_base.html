@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,37 +18,41 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
 {% load i18n %}
+{% load firstboot_extras %}
 {% load static %}
 
-{% block page_head %}
-  <style type="text/css">
-   .navbar-brand {
-       display: none;
-   }
-  </style>
+
+{# Adapt mainmenu-links during firstboot #}
+{% block mainmenu_left %}
+
+  {% firstboot_is_finished as firstboot_finished %}
+  {% if not firstboot_finished %}
+
+    <span class="navbar-brand">
+      <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
+           alt="{{ cfg.box_name }}" />
+      <a href="{% url 'index' %}">
+        {% blocktrans trimmed with box_name=cfg.box_name %}
+          {{ box_name }} Setup
+        {% endblocktrans %}
+      </a>
+    </span>
+
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+
 {% endblock %}
+
 
 {% block mainmenu_right %}
-  {% include "firstboot_navbar.html" %}
-{% endblock %}
 
-{% block content_row %}
-  <p class="text-center">
-    <img src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
-         alt="{{ cfg.box_name }}" width="640"/>
-  </p>
+  {% firstboot_is_finished as firstboot_finished %}
+  {% if not firstboot_finished %}
+    {% include "firstboot_navbar.html" %}
+  {% else %}
+    {{ block.super }}
+  {% endif %}
 
-  <p class="text-center">
-    <a href="{% url 'first_boot:state1' %}"
-       class="btn btn-primary btn-lg">{% trans "Start Setup" %}</a>
-  </p>
-
-  <p class="text-center" style="font-size: larger">
-    {% blocktrans trimmed with box_name=cfg.box_name %}
-      To complete the setup of your {{ box_name }}, please provide
-      some basic information.
-    {% endblocktrans %}
-  </p>
 {% endblock %}
