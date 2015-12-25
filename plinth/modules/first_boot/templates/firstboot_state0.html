@@ -31,13 +31,7 @@
 {% endblock %}
 
 {% block add_nav_and_login %}
-  <ul class="nav navbar-nav navbar-right">
-    <li>
-      <a href="{% url 'help:index' %}">
-        <span class="glyphicon-question-sign glyphicon nav-icon"></span>
-      </a>
-    </li>
-  </ul>
+  {% include "firstboot_navbar.html" %}
 {% endblock %}
 
 {% block content_row %}
@@ -46,19 +40,15 @@
          alt="FreedomBox" width="640"/>
   </p>
 
-  <h3 class="text-center">
-    {% trans "Congratulations! Your FreedomBox is up and running!" %}
-  </h3>
-
-  <p class="text-center">
-    {% blocktrans trimmed %}
-      Please provide the following basic information to complete the
-      setup process.
-    {% endblocktrans %}
-  </p>
-
   <p class="text-center">
     <a href="{% url 'first_boot:state1' %}"
-       class="btn btn-primary btn-large">{% trans "Next" %}</a>
+       class="btn btn-primary btn-lg">{% trans "Start Setup" %}</a>
+  </p>
+
+  <p class="text-center" style="font-size: larger">
+    {% blocktrans trimmed with box_name=cfg.box_name %}
+      To complete the setup of your {{ box_name }}, please provide
+      some basic information.
+    {% endblocktrans %}
   </p>
 {% endblock %}
