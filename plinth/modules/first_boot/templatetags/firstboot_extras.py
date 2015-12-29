@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Template tags for first boot module.
+"""
+
 from django import template
 
 from plinth import kvstore
@@ -24,5 +28,6 @@ register = template.Library()
 
 @register.simple_tag
 def firstboot_is_finished():
+    """Return whether firstboot process is completed."""
     state = kvstore.get_default('firstboot_state', 0)
     return state >= 10
