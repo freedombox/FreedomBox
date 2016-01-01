@@ -23,8 +23,8 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
 from logging import Logger
 
-from .forms import (ConnectionTypeSelectForm, AddEthernetForm, AddPPPoEForm,
-                    AddWifiForm)
+from .forms import (ConnectionTypeSelectForm, EthernetForm, PPPoEForm,
+                    WifiForm)
 from plinth import cfg
 from plinth import network
 from plinth import package
@@ -124,45 +124,14 @@ def edit(request, uuid):
 
     if request.method == 'POST':
         if connection.get_connection_type() == '802-11-wireless':
-            form = AddWifiForm(request.POST)
+            form = WifiForm(request.POST)
         elif connection.get_connection_type() == '802-3-ethernet':
-            form = AddEthernetForm(request.POST)
+            form = EthernetForm(request.POST)
         elif connection.get_connection_type() == 'pppoe':
-            form = AddPPPoEForm(request.POST)
+            form = PPPoEForm(request.POST)
 
         if form.is_valid():
-            name = form.cleaned_data['name']
-            interface = form.cleaned_data['interface']
-            zone = form.cleaned_data['zone']
-            if connection.get_connection_type() == 'pppoe':
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-            else:
-                ipv4_method = form.cleaned_data['ipv4_method']
-                ipv4_address = form.cleaned_data['ipv4_address']
-                ipv4_netmask = form.cleaned_data['ipv4_netmask']
-                ipv4_gateway = form.cleaned_data['ipv4_gateway']
-                ipv4_dns = form.cleaned_data['ipv4_dns']
-                ipv4_second_dns = form.cleaned_data['ipv4_second_dns']
-
-            if connection.get_connection_type() == '802-3-ethernet':
-                network.edit_ethernet_connection(
-                    connection, name, interface, zone, ipv4_method,
-                    ipv4_address, ipv4_netmask, ipv4_gateway, ipv4_dns,
-                    ipv4_second_dns)
-            elif connection.get_connection_type() == '802-11-wireless':
-                ssid = form.cleaned_data['ssid']
-                mode = form.cleaned_data['mode']
-                auth_mode = form.cleaned_data['auth_mode']
-                passphrase = form.cleaned_data['passphrase']
-
-                network.edit_wifi_connection(
-                    connection, name, interface, zone, ssid, mode, auth_mode,
-                    passphrase, ipv4_method, ipv4_address, ipv4_netmask,
-                    ipv4_gateway, ipv4_dns, ipv4_second_dns)
-            elif connection.get_connection_type() == 'pppoe':
-                network.edit_pppoe_connection(
-                    connection, name, interface, zone, username, password)
+            network.edit_connection(connection, form.get_settings())
 
             return redirect(reverse_lazy('networks:index'))
         else:
@@ -215,15 +184,15 @@ def edit(request, uuid):
             except KeyError:
                 form_data['auth_mode'] = 'open'
 
-            form = AddWifiForm(form_data)
+            form = WifiForm(form_data)
         elif settings_connection.get_connection_type() == '802-3-ethernet':
-            form = AddEthernetForm(form_data)
+            form = EthernetForm(form_data)
         elif settings_connection.get_connection_type() == 'pppoe':
             settings_pppoe = connection.get_setting_pppoe()
             form_data['username'] = settings_pppoe.get_username()
             secrets = connection.get_secrets('pppoe')
             form_data['password'] = secrets['pppoe']['password']
-            form = AddPPPoEForm(form_data)
+            form = PPPoEForm(form_data)
 
         return TemplateResponse(request, 'connections_edit.html',
                                 {'title': _('Edit Connection'),
@@ -302,24 +271,12 @@ def add_ethernet(request):
     form = None
 
     if request.method == 'POST':
-        form = AddEthernetForm(request.POST)
+        form = EthernetForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            interface = form.cleaned_data['interface']
-            zone = form.cleaned_data['zone']
-            ipv4_method = form.cleaned_data['ipv4_method']
-            ipv4_address = form.cleaned_data['ipv4_address']
-            ipv4_netmask = form.cleaned_data['ipv4_netmask']
-            ipv4_gateway = form.cleaned_data['ipv4_gateway']
-            ipv4_dns = form.cleaned_data['ipv4_dns']
-            ipv4_second_dns = form.cleaned_data['ipv4_second_dns']
-
-            network.add_ethernet_connection(
-                name, interface, zone, ipv4_method, ipv4_address, ipv4_netmask,
-                ipv4_gateway, ipv4_dns, ipv4_second_dns)
+            network.add_connection(form.get_settings())
             return redirect(reverse_lazy('networks:index'))
     else:
-        form = AddEthernetForm()
+        form = EthernetForm()
 
     return TemplateResponse(request, 'connections_create.html',
                             {'title': _('Adding New Ethernet Connection'),
@@ -332,19 +289,12 @@ def add_pppoe(request):
     form = None
 
     if request.method == 'POST':
-        form = AddPPPoEForm(request.POST)
+        form = PPPoEForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            interface = form.cleaned_data['interface']
-            zone = form.cleaned_data['zone']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            network.add_pppoe_connection(
-                name, interface, zone, username, password)
+            network.add_connection(form.get_settings())
             return redirect(reverse_lazy('networks:index'))
     else:
-        form = AddPPPoEForm()
+        form = PPPoEForm()
 
     return TemplateResponse(request, 'connections_create.html',
                             {'title': _('Adding New PPPoE Connection'),
@@ -368,32 +318,15 @@ def add_wifi(request, ssid=None, interface_name=None):
                      'ipv4_method': 'auto'}
 
     if request.method == 'POST':
-        form = AddWifiForm(request.POST)
+        form = WifiForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            interface = form.cleaned_data['interface']
-            zone = form.cleaned_data['zone']
-            ssid = form.cleaned_data['ssid']
-            mode = form.cleaned_data['mode']
-            auth_mode = form.cleaned_data['auth_mode']
-            passphrase = form.cleaned_data['passphrase']
-            ipv4_method = form.cleaned_data['ipv4_method']
-            ipv4_address = form.cleaned_data['ipv4_address']
-            ipv4_netmask = form.cleaned_data['ipv4_netmask']
-            ipv4_gateway = form.cleaned_data['ipv4_gateway']
-            ipv4_dns = form.cleaned_data['ipv4_dns']
-            ipv4_second_dns = form.cleaned_data['ipv4_second_dns']
-
-            network.add_wifi_connection(
-                name, interface, zone, ssid, mode, auth_mode, passphrase,
-                ipv4_method, ipv4_address, ipv4_netmask, ipv4_gateway,
-                ipv4_dns, ipv4_second_dns)
+            network.add_connection(form.get_settings())
             return redirect(reverse_lazy('networks:index'))
     else:
         if form_data:
-            form = AddWifiForm(form_data)
+            form = WifiForm(form_data)
         else:
-            form = AddWifiForm()
+            form = WifiForm()
 
     return TemplateResponse(request, 'connections_create.html',
                             {'title': _('Adding New Wi-Fi Connection'),

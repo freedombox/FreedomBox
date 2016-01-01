@@ -24,18 +24,6 @@ from plinth.utils import import_from_gi
 nm = import_from_gi('NM', '1.0')
 
 
-def _get_interface_choices(device_type):
-    """Return a list of choices for a given device type."""
-    interfaces = network.get_interface_list(device_type)
-    choices = [('', _('-- select --'))]
-    for interface, mac in interfaces.items():
-        display_string = '{interface} ({mac})'.format(interface=interface,
-                                                      mac=mac)
-        choices.append((interface, display_string))
-
-    return choices
-
-
 class ConnectionTypeSelectForm(forms.Form):
     """Form to select type for new connection."""
     connection_type = forms.ChoiceField(
@@ -44,8 +32,8 @@ class ConnectionTypeSelectForm(forms.Form):
                  for key, value in network.CONNECTION_TYPE_NAMES.items()])
 
 
-class AddEthernetForm(forms.Form):
-    """Form to create a new ethernet connection."""
+class ConnectionForm(forms.Form):
+    """Base form to create/edit a connection."""
     name = forms.CharField(label=_('Connection Name'))
     interface = forms.ChoiceField(
         label=_('Physical Interface'),
@@ -94,53 +82,95 @@ available over this interfaces. Select Internal only for trusted networks.'),
         validators=[validators.validate_ipv4_address],
         required=False)
 
+    @staticmethod
+    def _get_interface_choices(device_type):
+        """Return a list of choices for a given device type."""
+        interfaces = network.get_interface_list(device_type)
+        choices = [('', _('-- select --'))]
+        for interface, mac in interfaces.items():
+            display_string = '{interface} ({mac})'.format(interface=interface,
+                                                          mac=mac)
+            choices.append((interface, display_string))
+
+        return choices
+
+
+    def get_settings(self):
+        """Return settings dict from cleaned data."""
+        settings = {}
+        settings['common'] = {
+            'name': self.cleaned_data['name'],
+            'interface': self.cleaned_data['interface'],
+            'zone': self.cleaned_data['zone'],
+        }
+        settings['ipv4'] = self.get_ipv4_settings()
+        return settings
+
+    def get_ipv4_settings(self):
+        """Return IPv4 dict from cleaned data."""
+        ipv4 = {
+            'method': self.cleaned_data['ipv4_method'],
+            'address': self.cleaned_data['ipv4_address'],
+            'netmask': self.cleaned_data['ipv4_netmask'],
+            'gateway': self.cleaned_data['ipv4_gateway'],
+            'dns': self.cleaned_data['ipv4_dns'],
+            'second_dns': self.cleaned_data['ipv4_second_dns'],
+        }
+        return ipv4
+
+
+class EthernetForm(ConnectionForm):
+    """Form to create/edit a ethernet connection."""
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
-        super(AddEthernetForm, self).__init__(*args, **kwargs)
-        choices = _get_interface_choices(nm.DeviceType.ETHERNET)
+        super(EthernetForm, self).__init__(*args, **kwargs)
+        choices = self._get_interface_choices(nm.DeviceType.ETHERNET)
         self.fields['interface'].choices = choices
 
+    def get_settings(self):
+        """Return settings dict from cleaned data."""
+        settings = super().get_settings()
+        settings['common']['type'] = '802-3-ethernet'
+        return settings
 
-class AddPPPoEForm(forms.Form):
+
+class PPPoEForm(EthernetForm):
     """Form to create a new PPPoE connection."""
-    name = forms.CharField(label=_('Connection Name'))
-    interface = forms.ChoiceField(
-        label=_('Physical Interface'),
-        choices=(),
-        help_text=_('The network device that this connection should be bound '
-                    'to.'))
-    zone = forms.ChoiceField(
-        label=_('Firewall Zone'),
-        help_text=_('The firewall zone will control which services are '
-                    'available over this interfaces. Select Internal only '
-                    'for trusted networks.'),
-        choices=[('external', 'External'), ('internal', 'Internal')])
+    ipv4_method = None
+    ipv4_address = None
+    ipv4_netmask = None
+    ipv4_gateway = None
+    ipv4_dns = None
+    ipv4_second_dns = None
+
     username = forms.CharField(label=_('Username'))
     password = forms.CharField(label=_('Password'),
                                widget=forms.PasswordInput(render_value=True))
     show_password = forms.BooleanField(label=_('Show password'),
                                        required=False)
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the form, populate interface choices."""
-        super(AddPPPoEForm, self).__init__(*args, **kwargs)
-        choices = _get_interface_choices(nm.DeviceType.ETHERNET)
-        self.fields['interface'].choices = choices
+
+    def get_settings(self):
+        """Return setting dict from cleaned data."""
+        settings = super().get_settings()
+        settings['common']['type'] = 'pppoe'
+        settings['pppoe'] = {
+            'username': self.cleaned_data['username'],
+            'password': self.cleaned_data['password'],
+        }
+        return settings
+
+    def get_ipv4_settings(self):
+        """Return IPv4 settings from cleaned data."""
+        return None
 
 
-class AddWifiForm(forms.Form):
-    """Form to create a new Wi-Fi connection."""
-    name = forms.CharField(label=_('Connection Name'))
-    interface = forms.ChoiceField(
-        label=_('Physical Interface'),
-        choices=(),
-        help_text=_('The network device that this connection should be bound '
-                    'to.'))
-    zone = forms.ChoiceField(
-        label=_('Firewall Zone'),
-        help_text=_('The firewall zone will control which services are \
-available over this interfaces. Select Internal only for trusted networks.'),
-        choices=[('external', 'External'), ('internal', 'Internal')])
+class WifiForm(ConnectionForm):
+    """Form to create/edit a Wi-Fi connection."""
+    field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'auth_mode',
+                   'passphrase', 'ipv4_method', 'ipv4_address', 'ipv4_netmask',
+                   'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns']
+
     ssid = forms.CharField(
         label=_('SSID'),
         help_text=_('The visible name of the network.'))
@@ -158,46 +188,21 @@ requires clients to have the password to connect.'),
         label=_('Passphrase'),
         validators=[validators.MinLengthValidator(8)],
         required=False)
-    ipv4_method = forms.ChoiceField(
-        label=_('IPv4 Addressing Method'),
-        choices=[('auto', 'Automatic (DHCP)'),
-                 ('shared', 'Shared'),
-                 ('manual', 'Manual')],
-        help_text=_('Select Automatic (DHCP) if you are connecting to an \
-existing wireless network. Shared mode is useful when running an Access \
-Point.'))
-    ipv4_address = forms.CharField(
-        label=_('Address'),
-        validators=[validators.validate_ipv4_address],
-        required=False)
-    ipv4_netmask = forms.CharField(
-        label=_('Netmask'),
-        help_text=_('Optional value. If left blank, a default netmask '
-                    'based on the address will be used.'),
-        validators=[validators.validate_ipv4_address],
-        required=False)
-    ipv4_gateway = forms.CharField(
-        label=_('Gateway'),
-        help_text=_('Optional value.'),
-        validators=[validators.validate_ipv4_address],
-        required=False)
-    ipv4_dns = forms.CharField(
-        label=_('DNS Server'),
-        help_text=_('Optional value. If this value is given and IPv4 '
-                    'addressing method is "Automatic", the DNS Servers '
-                    'provided by a DHCP server will be ignored.'),
-        validators=[validators.validate_ipv4_address],
-        required=False)
-    ipv4_second_dns = forms.CharField(
-        label=_('Second DNS Server'),
-        help_text=_('Optional value. If this value is given and IPv4 '
-                    'Addressing Method is "Automatic", the DNS Servers '
-                    'provided by a DHCP server will be ignored.'),
-        validators=[validators.validate_ipv4_address],
-        required=False)
 
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
-        super(AddWifiForm, self).__init__(*args, **kwargs)
-        choices = _get_interface_choices(nm.DeviceType.WIFI)
+        super(WifiForm, self).__init__(*args, **kwargs)
+        choices = self._get_interface_choices(nm.DeviceType.WIFI)
         self.fields['interface'].choices = choices
+
+    def get_settings(self):
+        """Return setting dict from cleaned data."""
+        settings = super().get_settings()
+        settings['common']['type'] = '802-11-wireless'
+        settings['wireless'] = {
+            'ssid': self.cleaned_data['ssid'],
+            'mode': self.cleaned_data['mode'],
+            'auth_mode': self.cleaned_data['auth_mode'],
+            'passphrase': self.cleaned_data['passphrase'],
+        }
+        return settings
