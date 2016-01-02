@@ -113,20 +113,11 @@ doGetOpt()
         esac
     done
     if [ $stdin -eq 1 ];then
-        # try to use with timeout and hidden input first
-        read -s -p "enter password and hit [ENTER]: " -t 10 password
-        RET=$?
-        # return 142 means: timeout
-        if [ -z ${password} -a ${RET} -ne 142 ];then
-            # ancient bash version does not support timeouts or hidden input
-            read -p "enter password and hit [ENTER]: " password
+        if read -t 0; then
+            IFS= read -r pass
         fi
-        if [ ${RET} -eq 142 ];then
-            echo "Failed to read password from stdin, try -P instead"
-            exit 1
-        fi
-        pass=${password}
     fi
+
 }
 
 # this function will write a persistent config file to disk
