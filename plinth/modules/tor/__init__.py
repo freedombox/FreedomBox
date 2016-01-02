@@ -23,13 +23,14 @@ import augeas
 from django.utils.translation import ugettext_lazy as _
 import glob
 import itertools
+import json
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.modules.names import SERVICES
-from plinth.signals import domain_added
+from plinth.signals import domain_added, domain_removed
 
 
 version = 1
@@ -72,20 +73,23 @@ def init():
         is_external=True, enabled=is_enabled())
 
     # Register hidden service name with Name Services module.
-    (hs_enabled, hs_hostname, hs_ports) = get_hs()
+    hs_info = get_hs()
+    hostname = hs_info['hostname']
+    hs_virtports = [port['virtport'] for port in hs_info['ports']]
 
-    if is_enabled() and is_running() and hs_enabled and hs_hostname:
+    if is_enabled() and is_running() and \
+       hs_info['enabled'] and hs_info['hostname']:
         hs_services = []
         for service_type in SERVICES:
-            if str(service_type[2]) in hs_ports:
+            if str(service_type[2]) in hs_virtports:
                 hs_services.append(service_type[0])
     else:
-        hs_hostname = None
+        hostname = None
         hs_services = None
 
     domain_added.send_robust(
         sender='tor', domain_type='hiddenservice',
-        name=hs_hostname, description=_('Tor Hidden Service'),
+        name=hostname, description=_('Tor Hidden Service'),
         services=hs_services)
 
 
@@ -98,6 +102,23 @@ def setup(helper, old_version=None):
                 ['configure', '--apt-transport-tor', 'enable'])
     helper.call('post', socks_service.notify_enabled, None, True)
     helper.call('post', bridge_service.notify_enabled, None, True)
+    helper.call('post', update_hidden_service_domain)
+
+
+def update_hidden_service_domain(status=None):
+    """Update HS domain with Name Services module."""
+    if not status:
+        status = get_status()
+
+    domain_removed.send_robust(
+        sender='tor', domain_type='hiddenservice')
+
+    if status['enabled'] and status['is_running'] and \
+       status['hs_enabled'] and status['hs_hostname']:
+        domain_added.send_robust(
+            sender='tor', domain_type='hiddenservice',
+            name=status['hs_hostname'], description=_('Tor Hidden Service'),
+            services=status['hs_services'])
 
 
 def is_enabled():
@@ -113,45 +134,30 @@ def is_running():
 def get_status():
     """Return current Tor status."""
     output = actions.superuser_run('tor', ['get-ports'])
-    port_info = output.split('\n')
-    ports = {}
-    for line in port_info:
-        try:
-            (key, val) = line.split()
-            ports[key] = val
-        except ValueError:
-            continue
+    ports = json.loads(output)
 
-    (hs_enabled, hs_hostname, hs_ports) = get_hs()
+    hs_info = get_hs()
+    hs_services = []
+    hs_virtports = [port['virtport'] for port in hs_info['ports']]
+    for service_type in SERVICES:
+        if str(service_type[2]) in hs_virtports:
+            hs_services.append(service_type[0])
 
     return {'enabled': is_enabled(),
             'is_running': is_running(),
             'ports': ports,
-            'hs_enabled': hs_enabled,
-            'hs_hostname': hs_hostname,
-            'hs_ports': hs_ports,
+            'hs_enabled': hs_info['enabled'],
+            'hs_status': hs_info['status'],
+            'hs_hostname': hs_info['hostname'],
+            'hs_ports': hs_info['ports'],
+            'hs_services': hs_services,
             'apt_transport_tor_enabled': is_apt_transport_tor_enabled()}
 
 
 def get_hs():
     """Return hidden service status."""
     output = actions.superuser_run('tor', ['get-hs'])
-    output = output.strip()
-    if output == '':
-        hs_enabled = False
-        hs_hostname = 'Not Configured'
-        hs_ports = ''
-    elif output == 'error':
-        hs_enabled = False
-        hs_hostname = 'Not available (Run Tor at least once)'
-        hs_ports = ''
-    else:
-        hs_enabled = True
-        hs_info = output.split()
-        hs_hostname = hs_info[0]
-        hs_ports = hs_info[1]
-
-    return (hs_enabled, hs_hostname, hs_ports)
+    return json.loads(output)
 
 
 def get_augeas():
@@ -239,8 +245,7 @@ def diagnose():
     results.extend(_diagnose_control_port())
 
     output = actions.superuser_run('tor', ['get-ports'])
-    ports = [line.split() for line in output.splitlines()]
-    ports = {port_type: int(port) for port_type, port in ports}
+    ports = json.loads(output)
 
     results.append([_('Tor relay port available'),
                     'passed' if 'orport' in ports else 'failed'])
