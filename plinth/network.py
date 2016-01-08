@@ -102,9 +102,10 @@ def get_status_from_connection(connection):
         status['wireless']['ssid'] = setting_wireless.get_ssid().get_data()
 
     primary_connection = nm.Client.new(None).get_primary_connection()
-    if primary_connection:
-        status['primary'] = (primary_connection.get_uuid() ==
-                             connection.get_uuid())
+    status['primary'] = (
+        primary_connection and
+        primary_connection.get_uuid() == connection.get_uuid()
+    )
 
     return status
 
