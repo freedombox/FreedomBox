@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+<style type="text/css">
+ .table .form .btn {
+     width: 7em;
+ }
+
+ .form-inline {
+     display: inline;
+ }
+</style>
+{% endblock %}
+
+{% block content %}
+
+  <h2>{% trans "Certificates (Let's Encrypt)" %}</h2>
+
+  <p>
+    {% blocktrans trimmed with box_name=cfg.box_name %}
+      A digital certficate allows users of a web service to verify the
+      identity of the service and to securely communicate with it.
+      {{ box_name }} can automatically obtain and setup digital
+      certificates for each available domain.  It does so by proving
+      itself to be the owner of a domain to Let's Encrypt, a
+      certficate authority (CA).
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Let's Encrypt is a free, automated, and open certificate
+      authority, run for the public’s benefit by the Internet Security
+      Research Group (ISRG).  Please read and agree with the
+      <a href="https://letsencrypt.org/repository/">Let's Encrypt
+      Subscriber Agreement</a> before using this service.
+    {% endblocktrans %}
+  </p>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Domain" %}</th>
+            <th>{% trans "Certificate Status" %}</th>
+            <th>{% trans "Website Security" %}</th>
+            <th>{% trans "Actions" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for domain, domain_status in status.domains.items %}
+            <tr>
+              <td>{{ domain }}</td>
+              <td>
+                {% if domain_status.certificate_available %}
+                  <span class="label label-success">
+                    {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
+                      Expires on {{ expiry_date }}
+                    {% endblocktrans %}
+                  </span>
+                {% else %}
+                  <span class="label label-warning">
+                    {% trans "No certficate" %}
+                  </span>
+                {% endif %}
+              </td>
+              <td>
+                {% if domain_status.web_enabled %}
+                  <span class="label label-success">{% trans "Enabled" %}</span>
+                {% else %}
+                  <span class="label label-warning">{% trans "Disabled" %}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if domain_status.certificate_available %}
+                  <form class="form form-inline" method="post"
+                        action="{% url 'letsencrypt:revoke' domain %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-default" type="submit">
+                      {% trans "Revoke" %}</button>
+                  </form>
+                  <form class="form form-inline" method="post"
+                        action="{% url 'letsencrypt:obtain' domain %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-default" type="submit">
+                      {% trans "Re-obtain" %}</button>
+                  </form>
+                {% else %}
+                  <form class="form form-inline" method="post"
+                        action="{% url 'letsencrypt:obtain' domain %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-primary" type="submit">
+                      {% trans "Obtain" %}</button>
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% include "diagnostics_button.html" with module="letsencrypt" %}
+
+{% endblock %}

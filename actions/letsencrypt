@@ -1,0 +1,184 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Let's Encrypt.
+"""
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+
+from plinth import action_utils
+
+TEST_MODE = False
+LIVE_DIRECTORY = '/etc/letsencrypt/live/'
+APACHE_PREFIX = '/etc/apache2/sites-available/'
+APACHE_CONFIGURATION = '''
+<IfModule mod_gnutls.c>
+<VirtualHost _default_:443>
+	ServerAdmin webmaster@localhost
+	ServerName {domain}
+	DocumentRoot /var/www/html
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/html>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+	<Directory "/usr/lib/cgi-bin">
+		AllowOverride None
+		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		Order allow,deny
+		Allow from all
+	</Directory>
+	ErrorLog ${{APACHE_LOG_DIR}}/error.log
+	# Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+	LogLevel warn
+	CustomLog ${{APACHE_LOG_DIR}}/ssl_access.log combined
+	#   GnuTLS Switch: Enable/Disable SSL/TLS for this virtual host.
+	GnuTLSEnable On
+	#   Automatically obtained certficates from Let's Encrypt
+	GnuTLSCertificateFile	/etc/letsencrypt/live/{domain}/fullchain.pem
+	GnuTLSKeyFile /etc/letsencrypt/live/{domain}/privkey.pem
+	#   See http://www.outoforder.cc/projects/apache/mod_gnutls/docs/#GnuTLSPriorities
+	GnuTLSPriorities NORMAL
+</VirtualHost>
+</IfModule>
+'''
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser(
+        'get-status', help='Return the status of configured domains.')
+    revoke_parser = subparsers.add_parser(
+        'revoke', help='Disable and domain and revoke its certificate.')
+    revoke_parser.add_argument(
+        '--domain', help='Domain name to revoke certificate for')
+    obtain_parser = subparsers.add_parser(
+        'obtain', help='Obtain certficate for a domain and setup website.')
+    obtain_parser.add_argument(
+        '--domain', help='Domain name to obtain certificate for')
+
+    return parser.parse_args()
+
+
+def get_certficate_expiry(domain):
+    """Return the expiry date of a certificate."""
+    certificate_file = os.path.join(LIVE_DIRECTORY, domain, 'cert.pem')
+    output = subprocess.check_output(['openssl', 'x509', '-enddate', '-noout',
+                                      '-in', certificate_file])
+    return output.decode().strip().split('=')[1]
+
+
+def subcommand_get_status(_):
+    """Return a JSON dictionary of currently configured domains."""
+    domains = os.listdir(LIVE_DIRECTORY)
+    domains = [domain for domain in domains
+               if os.path.isdir(os.path.join(LIVE_DIRECTORY, domain))]
+
+    domain_status = {}
+    for domain in domains:
+        domain_status[domain] = {
+            'certificate_available': True,
+            'expiry_date': get_certficate_expiry(domain),
+            'web_enabled':
+            action_utils.webserver_is_enabled(domain, kind='site')
+        }
+
+    print(json.dumps({'domains': domain_status}))
+
+
+def subcommand_revoke(arguments):
+    """Disable a domain and revoke the certificate."""
+    domain = arguments.domain
+
+    command = ['letsencrypt', 'revoke', '--domain', domain, '--cert-path',
+               os.path.join(LIVE_DIRECTORY, domain, 'cert.pem')]
+    if TEST_MODE:
+        command.append('--staging')
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode:
+        print(stderr.decode(), file=sys.stderr)
+        sys.exit(1)
+
+    action_utils.webserver_disable(domain, kind='site')
+
+
+def subcommand_obtain(arguments):
+    """Obtain a certificate for a domain and setup website."""
+    domain = arguments.domain
+
+    command = [
+        'letsencrypt', 'certonly', '--agree-tos',
+        '--register-unsafely-without-email', '--domain', arguments.domain,
+        '--authenticator', 'webroot', '--webroot-path', '/var/www/html/',
+        '--renew-by-default']
+    if TEST_MODE:
+        command.append('--staging')
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdin, stderr = process.communicate()
+    if process.returncode:
+        print(stderr.decode(), file=sys.stderr)
+        sys.exit(1)
+
+    setup_webserver_config(domain)
+
+    action_utils.webserver_enable(domain, kind='site')
+
+
+def setup_webserver_config(domain):
+    """Create SSL web server configuration for a domain.
+
+    Do so only if there is no configuration existing.
+    """
+    file_name = os.path.join(APACHE_PREFIX, domain + '.conf')
+    if os.path.isfile(file_name):
+        return
+
+    with open(file_name, 'w') as file_handle:
+        file_handle.write(APACHE_CONFIGURATION.format(domain=domain))
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
