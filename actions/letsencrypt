@@ -99,7 +99,11 @@ def get_certficate_expiry(domain):
 
 def subcommand_get_status(_):
     """Return a JSON dictionary of currently configured domains."""
-    domains = os.listdir(LIVE_DIRECTORY)
+    try:
+        domains = os.listdir(LIVE_DIRECTORY)
+    except OSError:
+        domains = []
+
     domains = [domain for domain in domains
                if os.path.isdir(os.path.join(LIVE_DIRECTORY, domain))]
 
