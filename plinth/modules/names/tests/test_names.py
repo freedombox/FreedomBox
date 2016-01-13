@@ -24,7 +24,7 @@ import unittest
 from .. import domain_types, domains
 from .. import on_domain_added, on_domain_removed
 from .. import get_domain_types, get_description
-from .. import get_domain, get_services, get_services_status
+from .. import get_domain, get_enabled_services, get_services_status
 
 
 class TestNames(unittest.TestCase):
@@ -73,20 +73,20 @@ class TestNames(unittest.TestCase):
         on_domain_added('', 'hiddenservice', 'aaaaa.onion')
         self.assertEqual(get_domain('hiddenservice'), 'aaaaa.onion')
 
-        self.assertEqual('Not Available', get_domain('abcdef'))
+        self.assertEqual(None, get_domain('abcdef'))
 
         on_domain_removed('', 'hiddenservice')
-        self.assertEqual('Not Available', get_domain('hiddenservice'))
+        self.assertEqual(None, get_domain('hiddenservice'))
 
-    def test_get_services(self):
+    def test_get_enabled_services(self):
         """Test getting enabled services for a domain."""
         on_domain_added('', 'domainname', 'bbbbb', '',
                         ['http', 'https', 'ssh'])
-        self.assertEqual(get_services('domainname', 'bbbbb'),
+        self.assertEqual(get_enabled_services('domainname', 'bbbbb'),
                          ['http', 'https', 'ssh'])
 
-        self.assertEqual(get_services('xxxxx', 'yyyyy'), [])
-        self.assertEqual(get_services('domainname', 'zzzzz'), [])
+        self.assertEqual(get_enabled_services('xxxxx', 'yyyyy'), [])
+        self.assertEqual(get_enabled_services('domainname', 'zzzzz'), [])
 
     def test_get_services_status(self):
         """Test getting whether each service is enabled for a domain."""
