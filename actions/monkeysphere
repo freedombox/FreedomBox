@@ -21,10 +21,9 @@ Configuration helper for monkeysphere.
 """
 
 import argparse
+import json
 import os
 import subprocess
-
-HOST_TOOL = 'monkeysphere-host'
 
 
 def parse_arguments():
@@ -32,31 +31,29 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    host_show_key = subparsers.add_parser('host-show-key',
-                                          help='Show host key fingerprint')
-    host_show_key.add_argument('keyid', nargs='*',
-                               help='Optional list of KEYIDs')
+    host_show_keys = subparsers.add_parser(
+        'host-show-keys', help='Show host key fingerprints')
+    host_show_keys.add_argument(
+        'key_ids', nargs='*', help='Optional list of KEYIDs')
 
-    host_import_ssh_key = subparsers.add_parser('host-import-ssh-key',
-                                                help='Import host SSH key')
-    host_import_ssh_key.add_argument('hostname',
-                                     help='Fully-qualified hostname')
+    host_import_ssh_key = subparsers.add_parser(
+        'host-import-ssh-key', help='Import host SSH key')
+    host_import_ssh_key.add_argument(
+        'hostname', help='Fully-qualified hostname')
 
     host_publish_key = subparsers.add_parser(
-        'host-publish-key',
-        help='Push host key to keyserver')
+        'host-publish-key', help='Push host key to keyserver')
     host_publish_key.add_argument(
-        'keyid', nargs='*',
-        help='Optional list of KEYIDs')
+        'key_ids', nargs='*', help='Optional list of KEYIDs')
 
     return parser.parse_args()
 
 
-def subcommand_host_show_key(arguments):
-    """Show host key fingerprint."""
-    keyid = ' '.join(arguments.keyid)
+def subcommand_host_show_keys(arguments):
+    """Show host key fingerprints."""
     try:
-        output = subprocess.check_output([HOST_TOOL, 'show-key', keyid])
+        output = subprocess.check_output(
+            ['monkeysphere-host', 'show-keys'] + arguments.key_ids)
     except subprocess.CalledProcessError:
         # no keys available
         return
@@ -75,32 +72,29 @@ def subcommand_host_show_key(arguments):
             keys[-1]['pgp_fingerprint'] = line.lstrip('Open PGP fingerprint:')
         elif line.startswith('ssh fingerprint:'):
             data = line.lstrip('ssh fingerprint:').split()
-            keys[-1]['ssh_keysize'] = data[0]
+            keys[-1]['ssh_key_size'] = data[0]
             keys[-1]['ssh_fingerprint'] = data[1]
-            keys[-1]['ssh_keytype'] = data[2].strip('()')
+            keys[-1]['ssh_key_type'] = data[2].strip('()')
         elif line == '':
             keys.append(dict())
 
-    for key in keys:
-        print(key['pub'], key['date'], key['uid'], key['pgp_fingerprint'],
-              key['ssh_keysize'], key['ssh_fingerprint'], key['ssh_keytype'])
+    print(json.dumps({'keys': keys}))
 
 
 def subcommand_host_import_ssh_key(arguments):
     """Import host SSH key."""
     output = subprocess.check_output(
-        [HOST_TOOL, 'import-key',
+        ['monkeysphere-host', 'import-key',
          '/etc/ssh/ssh_host_rsa_key', arguments.hostname])
     print(output.decode())
 
 
 def subcommand_host_publish_key(arguments):
     """Push host key to keyserver."""
-    keyid = ' '.join(arguments.keyid)
     # setting TMPDIR as workaround for Debian bug #656750
     proc = subprocess.Popen(
-        [HOST_TOOL, 'publish-keys', keyid],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,
+        ['monkeysphere-host', 'publish-keys'] + arguments.key_ids,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         env=dict(
             os.environ,
             TMPDIR='/var/lib/monkeysphere/authentication/tmp/',

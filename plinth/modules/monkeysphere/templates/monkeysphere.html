@@ -32,77 +32,81 @@
 
 {% block content %}
 
-<h2>{% trans "Monkeysphere" %}</h2>
+  <h2>{% trans "Monkeysphere" %}</h2>
 
-<p>
-  {% blocktrans trimmed with box_name=cfg.box_name %}
-    With Monkeysphere, a PGP key can be generated for each domain
-    serving SSH on this {{ box_name }}. The PGP public key can then be
-    uploaded to the PGP keyservers. Users connecting to this {{ box_name }}
-    through SSH can verify that they are connecting to the correct
-    host. See the
-    <a href="http://web.monkeysphere.info/getting-started-ssh/">
-    Monkeysphere SSH documentation</a> for more details.
-  {% endblocktrans %}
-</p>
-
-{% if running %}
-  <p class="running-status-parent">
-    <span class="running-status active"></span>
-    {% trans "Publishing key to keyserver..." %}
-
-    <form class="form" method="post"
-          action="{% url 'monkeysphere:cancel' %}">
-      {% csrf_token %}
-
-      <button type="submit" class="btn btn-warning btn-sm">
-        {% trans "Cancel" %}</button>
-    </form>
+  <p>
+    {% blocktrans trimmed %}
+      With Monkeysphere, a PGP key can be generated for each configured domain
+      serving SSH. The PGP public key can then be uploaded to the PGP
+      keyservers. Users connecting to this machine through SSH can verify that
+      they are connecting to the correct host.  For users to trust the key, at
+      least one person (usually the machine owner) must sign the key using the
+      regular PGP key signing process.  See the
+      <a href="http://web.monkeysphere.info/getting-started-ssh/">
+      Monkeysphere SSH documentation</a> for more details.
+    {% endblocktrans %}
   </p>
-{% endif %}
 
-<div class="row">
-  <div class="col-sm-8">
-    <table class="table table-bordered table-condensed table-striped">
-      {% for name_service in status.name_services %}
-        <tr>
-          <td>
-            <b>{{ name_service.type }}</b><br>
-            <i>{{ name_service.name }}</i>
-          </td>
-          <td>
-            {% if name_service.key %}
-              {{ name_service.key.pgp_fingerprint }}
-            {% else %}
-              {% trans "Not Available" %}
-            {% endif %}
-          </td>
-          <td>
-            {% if name_service.available %}
-              {% if not name_service.key %}
-              <form class="form" method="post"
-                    action="{% url 'monkeysphere:generate' name_service.short_type %}">
-                {% csrf_token %}
+  {% if running %}
+    <p class="running-status-parent">
+      <span class="running-status active"></span>
+      {% trans "Publishing key to keyserver..." %}
 
-                <button type="submit" class="btn btn-primary btn-sm pull-right">
-                  {% trans "Generate PGP Key" %}</button>
-              </form>
+      <form class="form" method="post"
+            action="{% url 'monkeysphere:cancel' %}">
+        {% csrf_token %}
 
-              {% elif not running %}
-              <form class="form" method="post"
-                    action="{% url 'monkeysphere:publish' name_service.key.pgp_fingerprint %}">
-                {% csrf_token %}
+        <button type="submit" class="btn btn-warning btn-sm">
+          {% trans "Cancel" %}</button>
+      </form>
+    </p>
+  {% endif %}
 
-                <button type="submit" class="btn btn-warning btn-sm pull-right">
-                  {% trans "Publish Key" %}</button>
-              </form>
-              {% endif %}
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+  <div class="row">
+    <div class="col-sm-8">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Domain" %}</th>
+            <th>{% trans "GPG Fingerprint" %}</th>
+            <th>{% trans "Actions" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for domain in status.domains %}
+            <tr>
+              <td>{{ domain.name }}</td>
+              <td>
+                {% if domain.key %}
+                  {{ domain.key.pgp_fingerprint }}
+                {% else %}
+                  {% trans "Not Available" %}
+                {% endif %}
+              </td>
+              <td>
+                {% if not domain.key %}
+                  <form class="form" method="post"
+                        action="{% url 'monkeysphere:generate' domain.name %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary btn-sm pull-right">
+                      {% trans "Generate PGP Key" %}</button>
+                  </form>
+                {% elif not running %}
+                  <form class="form" method="post"
+                        action="{% url 'monkeysphere:publish' domain.key.pgp_fingerprint %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-warning btn-sm pull-right">
+                      {% trans "Publish Key" %}</button>
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
 {% endblock %}

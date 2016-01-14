@@ -25,6 +25,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
+import json
 
 from plinth import actions
 from plinth import package
@@ -46,19 +47,17 @@ def index(request):
 
 
 @require_POST
-def generate(request, service):
+def generate(request, domain):
     """Generate PGP key for SSH service."""
-    for domain_type in sorted(names.get_domain_types()):
-        if domain_type == service:
-            domain = names.get_domain(domain_type)
-
-    try:
-        actions.superuser_run(
-            'monkeysphere',
-            ['host-import-ssh-key', 'ssh://' + domain])
-        messages.success(request, _('Generated PGP key'))
-    except actions.ActionError as exception:
-        messages.error(request, str(exception))
+    valid_domain = any((domain in domains
+                        for domains in names.domains.values()))
+    if valid_domain:
+        try:
+            actions.superuser_run(
+                'monkeysphere', ['host-import-ssh-key', 'ssh://' + domain])
+            messages.success(request, _('Generated PGP key.'))
+        except actions.ActionError as exception:
+            messages.error(request, str(exception))
 
     return redirect(reverse_lazy('monkeysphere:index'))
 
@@ -81,47 +80,28 @@ def cancel(request):
     if publish_process:
         publish_process.terminate()
         publish_process = None
-        messages.info(request, _('Cancelled publish key.'))
+        messages.info(request, _('Cancelled key publishing.'))
 
     return redirect(reverse_lazy('monkeysphere:index'))
 
 
 def get_status():
     """Get the current status."""
-    output = actions.superuser_run('monkeysphere', ['host-show-key'])
-    keys = []
-    for line in output.split('\n'):
-        data = line.strip().split()
-        if data and len(data) == 7:
-            keys.append(dict())
-            keys[-1]['pub'] = data[0]
-            keys[-1]['date'] = data[1]
-            keys[-1]['uid'] = data[2]
-            keys[-1]['name'] = data[2].replace('ssh://', '')
-            keys[-1]['pgp_fingerprint'] = data[3]
-            keys[-1]['ssh_keysize'] = data[4]
-            keys[-1]['ssh_fingerprint'] = data[5]
-            keys[-1]['ssh_keytype'] = data[6]
+    output = actions.superuser_run('monkeysphere', ['host-show-keys'])
+    keys = {}
+    for key in json.loads(output)['keys']:
+        key['name'] = key['uid'].replace('ssh://', '')
+        keys[key['name']] = key
 
-    name_services = []
-    for domain_type in sorted(names.get_domain_types()):
-        domain = names.get_domain(domain_type)
-        name_services.append({
-            'type': names.get_description(domain_type),
-            'short_type': domain_type,
-            'name': domain or _('Not Available'),
-            'available': bool(domain),
-            'key': None,
-        })
+    domains = []
+    for domains_of_a_type in names.domains.values():
+        for domain in domains_of_a_type:
+            domains.append({
+                'name': domain,
+                'key': keys.get(domain),
+            })
 
-    # match up keys with name services
-    for key in keys:
-        for name_service in name_services:
-            if key['name'] == name_service['name']:
-                name_service['key'] = key
-                continue
-
-    return {'name_services': name_services}
+    return {'domains': domains}
 
 
 def _collect_publish_result(request):
