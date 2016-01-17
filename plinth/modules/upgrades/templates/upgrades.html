@@ -22,7 +22,7 @@
 
 {% block page_head %}
 
-  {% if running %}
+  {% if is_busy %}
     <meta http-equiv="refresh" content="3"/>
   {% endif %}
 
@@ -33,47 +33,25 @@
 
   <h2>{{ title }}</h2>
 
-  {% if result %}
+  <p>
+    {% blocktrans trimmed %}
+      Upgrades install the latest software and security updates. When automatic
+      upgrades are enabled, upgrades are automatically run every night. You
+      don't normally need to start the upgrade process.
+    {% endblocktrans %}
+  </p>
 
-    {% if result.return_code %}
-      <p>
-        {% trans "There was an error while upgrading." %}
-      </p>
+  <p>
+    {% blocktrans trimmed %}
+      Depending on the number of packages to install, this may take a long time
+      to complete.  While upgrades are in progress, you will not be able to
+      install other packages.  During the upgrade, this web interface may be
+      temporarily unavailable and show an error.  Refresh the page to continue.
+    {% endblocktrans %}
+  </p>
 
-      <h5>{% trans "Output from unattended-upgrades:" %}</h5>
-      <pre>{{ result.error }}</pre>
-      {% if result.output %}
-        <pre>{{ result.output }}</pre>
-      {% endif %}
-    {% else %}
-      <p>
-        {% trans "The operating system is up to date now. &nbsp;" %}
-        <button type="button" class="btn btn-default show-details"
-                style='display: none;'>
-          {% trans "Show Details" %}
-          <div class="caret"></div>
-        </button>
-      </p>
-
-      <div class="details">
-        <h5>{% trans "Output from unattended-upgrades:" %}</h5>
-        <pre>{{ result.output }}</pre>
-      </div>
-    {% endif %}
-
-  {% endif %}
-
-
-  {% if not result and not running %}
-    <p>
-      {% blocktrans trimmed %}
-        This will run unattended-upgrades, which will attempt to upgrade
-        your system with the latest Debian packages. It may take a few
-        minutes to complete.
-      {% endblocktrans %}
-    </p>
-
-    <form class="form" method="post" action="{% url 'upgrades:run' %}">
+  {% if not is_busy %}
+    <form class="form" method="post" action="{% url 'upgrades:upgrade' %}">
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
@@ -81,11 +59,17 @@
     </form>
   {% endif %}
 
-  {% if running %}
+  {% if is_busy %}
     <p class="running-status-parent">
       <span class="running-status active"></span>
-      {% trans "System is being upgraded." %}
+      {% trans "A package manager is running." %}
     </p>
+  {% endif %}
+
+  {% if log %}
+    <h5>{% trans "Recent log from upgrades:" %}</h5>
+
+    <pre>{{ log }}</pre>
   {% endif %}
 
 {% endblock %}
