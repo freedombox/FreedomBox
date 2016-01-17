@@ -25,6 +25,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
+import subprocess
 
 from .forms import ConfigureForm
 from plinth import actions
@@ -36,7 +37,8 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
               {'url': reverse_lazy('upgrades:upgrade'),
                'text': ugettext_lazy('Upgrade Packages')}]
 
-upgrade_process = None
+LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
+LOCK_FILE = '/var/log/dpkg/lock'
 
 
 def on_install():
@@ -65,29 +67,42 @@ def index(request):
                              'form': form,
                              'subsubmenu': subsubmenu})
 
+def is_package_manager_busy():
+    """Return whether a package manager is running."""
+    try:
+        subprocess.check_output(['lsof', '/var/lib/dpkg/lock'])
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def get_log():
+    """Return the current log for unattended upgrades."""
+    try:
+        with open(LOG_FILE, 'r') as file_handle:
+            return file_handle.read()
+    except IOError:
+        return None
+
 
 @package.required(['unattended-upgrades'], on_install=on_install)
 def upgrade(request):
     """Serve the upgrade page."""
-    result = _collect_upgrade_result(request)
+    is_busy = is_package_manager_busy()
+
+    if request.method == 'POST':
+        try:
+            actions.superuser_run('upgrades', ['run'])
+            messages.success(request, _('Upgrade process started.'))
+            is_busy = True
+        except ActionError:
+            messages.error(request, _('Starting upgrade failed.'))
 
     return TemplateResponse(request, 'upgrades.html',
                             {'title': _('Package Upgrades'),
                              'subsubmenu': subsubmenu,
-                             'running': bool(upgrade_process),
-                             'result': result})
-
-
-@require_POST
-@package.required(['unattended-upgrades'], on_install=on_install)
-def run(_):
-    """Start the upgrade process."""
-    global upgrade_process
-    if not upgrade_process:
-        upgrade_process = actions.superuser_run(
-            'upgrades', ['run'], async=True)
-
-    return redirect('upgrades:upgrade')
+                             'is_busy': is_busy,
+                             'log': get_log()})
 
 
 def get_status():
@@ -121,30 +136,3 @@ def _apply_changes(request, old_status, new_status):
         messages.success(request, _('Automatic upgrades enabled'))
     else:
         messages.success(request, _('Automatic upgrades disabled'))
-
-
-def _collect_upgrade_result(request):
-    """Handle upgrade process completion."""
-    global upgrade_process
-    if not upgrade_process:
-        return
-
-    return_code = upgrade_process.poll()
-
-    # Upgrade process is not complete yet
-    if return_code is None:
-        return
-
-    output, error = upgrade_process.communicate()
-    output, error = output.decode(), error.decode()
-
-    if not return_code:
-        messages.success(request, _('Upgrade completed.'))
-    else:
-        messages.error(request, _('Upgrade failed.'))
-
-    upgrade_process = None
-
-    return {'return_code': return_code,
-            'output': output,
-            'error': error}
