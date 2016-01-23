@@ -16,12 +16,12 @@
 #
 
 """
-URLs for the Tor module
+URLs for the Tor module.
 """
 
 from django.conf.urls import url
 
-from . import tor as views
+from . import views
 
 
 urlpatterns = [

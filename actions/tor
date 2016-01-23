@@ -26,11 +26,13 @@ import codecs
 import os
 import re
 import socket
+import time
 
 from plinth import action_utils
-from plinth.modules.tor.tor import get_augeas, get_real_apt_uri_path, \
-    iter_apt_uris, APT_TOR_PREFIX
+from plinth.modules.tor import is_enabled, is_running, get_augeas, \
+    get_real_apt_uri_path, iter_apt_uris, APT_TOR_PREFIX
 
+SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/etc/tor/torrc'
 TOR_STATE_FILE = '/var/lib/tor/state'
 TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
@@ -42,16 +44,17 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup Tor configuration')
-    subparsers.add_parser('enable', help='Enable and start Tor service')
-    subparsers.add_parser('disable', help='Disable and stop Tor service')
-    subparsers.add_parser('get-hs', help='Get hidden service')
-    subparsers.add_parser('enable-hs', help='Enable hidden service')
-    subparsers.add_parser('disable-hs', help='Disable hidden service')
     subparsers.add_parser('get-ports', help='Get list of Tor ports')
-    subparsers.add_parser('enable-apt-transport-tor',
-                          help='Enable package download over Tor')
-    subparsers.add_parser('disable-apt-transport-tor',
-                          help='Disable package download over Tor')
+    subparsers.add_parser('get-hs', help='Get hidden service')
+
+    configure = subparsers.add_parser('configure', help='Configure Tor')
+    configure.add_argument('--service', choices=['enable', 'disable'],
+                           help='Configure Tor service')
+    configure.add_argument('--hidden-service', choices=['enable', 'disable'],
+                           help='Configure hidden service')
+    configure.add_argument('--apt-transport-tor',
+                           choices=['enable', 'disable'],
+                           help='Configure package download over Tor')
 
     return parser.parse_args()
 
@@ -89,17 +92,14 @@ DNSPort [::1]:9053
         conffile.writelines(lines)
 
     action_utils.service_restart('tor')
+    _update_ports()
 
 
-def subcommand_enable(_):
-    """Enable and start the service."""
-    action_utils.service_enable('tor')
-
-
-def subcommand_disable(_):
-    """Disable and stop the service."""
-    subcommand_disable_apt_transport_tor(_)
-    action_utils.service_disable('tor')
+def subcommand_get_ports(_):
+    """Get list of Tor ports."""
+    ports = get_ports()
+    for name, number in ports.items():
+        print(name, number)
 
 
 def subcommand_get_hs(_):
@@ -107,7 +107,108 @@ def subcommand_get_hs(_):
     print(get_hidden_service())
 
 
-def subcommand_enable_hs(_):
+def subcommand_configure(arguments):
+    """Configure Tor."""
+    if arguments.service == 'disable':
+        _disable()
+
+    restart = arguments.service == None
+    if arguments.hidden_service == 'enable':
+        _enable_hs(restart=restart)
+    elif arguments.hidden_service == 'disable':
+        _disable_hs(restart=restart)
+
+    if arguments.service == 'enable':
+        _enable()
+
+    if arguments.apt_transport_tor == 'enable':
+        _enable_apt_transport_tor()
+    elif arguments.apt_transport_tor == 'disable':
+        _disable_apt_transport_tor()
+
+
+def get_ports():
+    """Return dict mapping port names to numbers."""
+    ports = {}
+    try:
+        ports['orport'] = _get_orport()
+    except Exception:
+        pass
+
+    try:
+        with open(TOR_STATE_FILE, 'r') as state_file:
+            for line in state_file:
+                matches = re.match(
+                    r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
+                if matches:
+                    ports[matches.group(1)] = matches.group(2)
+    except FileNotFoundError:
+        pass
+
+    return ports
+
+
+def _get_orport():
+    """Return the ORPort by querying running instance."""
+    cookie = open(TOR_AUTH_COOKIE, 'rb').read()
+    cookie = codecs.encode(cookie, 'hex').decode()
+
+    commands = '''AUTHENTICATE {cookie}
+GETINFO net/listeners/or
+QUIT
+'''.format(cookie=cookie)
+
+    tor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tor_socket.connect(('localhost', 9051))
+    tor_socket.send(commands.encode())
+    response = tor_socket.recv(1024)
+    tor_socket.close()
+
+    line = response.split(b'\r\n')[1].decode()
+    matches = re.match(r'.*="[^:]+:(\d+)"', line)
+    return matches.group(1)
+
+
+def get_hidden_service():
+    """Return a string with configured Tor hidden service information"""
+    hs_dir = None
+    hs_ports = []
+
+    try:
+        with open(TOR_CONFIG, 'r') as conf_file:
+            for line in conf_file:
+                if line.startswith('HiddenServiceDir'):
+                    hs_dir = line.split()[1]
+                elif line.startswith('HiddenServicePort'):
+                    hs_ports.append(line.split()[1])
+    except FileNotFoundError:
+        return 'error'
+
+    if not hs_dir:
+        return ''
+
+    try:
+        with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
+            hs_hostname = conf_file.read().strip()
+    except Exception:
+        return 'error'
+
+    return hs_hostname + ' ' + ','.join(hs_ports)
+
+
+def _enable():
+    """Enable and start the service."""
+    action_utils.service_enable('tor')
+    _update_ports()
+
+
+def _disable():
+    """Disable and stop the service."""
+    _disable_apt_transport_tor()
+    action_utils.service_disable('tor')
+
+
+def _enable_hs(restart=True):
     """Enable Tor hidden service"""
     if get_hidden_service():
         return
@@ -124,10 +225,22 @@ def subcommand_enable_hs(_):
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(lines)
 
-    action_utils.service_restart('tor')
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
+
+            # wait until hidden service information is available
+            tries = 0
+            hs = get_hidden_service()
+            while hs == '' or hs == 'error':
+                tries += 1
+                if tries >= 12:
+                    return
+                time.sleep(10)
+                hs = get_hidden_service()
 
 
-def subcommand_disable_hs(_):
+def _disable_hs(restart=True):
     """Disable Tor hidden service"""
     if not get_hidden_service():
         return
@@ -159,55 +272,12 @@ def subcommand_disable_hs(_):
     with open(TOR_CONFIG, 'w') as conffile:
         conffile.writelines(filtered_lines)
 
-    action_utils.service_restart('tor')
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
 
 
-def get_hidden_service():
-    """Return a string with configured Tor hidden service information"""
-    hs_dir = None
-    hs_ports = []
-
-    try:
-        with open(TOR_CONFIG, 'r') as conf_file:
-            for line in conf_file:
-                if line.startswith('HiddenServiceDir'):
-                    hs_dir = line.split()[1]
-                elif line.startswith('HiddenServicePort'):
-                    hs_ports.append(line.split()[1])
-    except FileNotFoundError:
-        return 'error'
-
-    if not hs_dir:
-        return ''
-
-    try:
-        with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
-            hs_hostname = conf_file.read().strip()
-    except Exception:
-        return 'error'
-
-    return hs_hostname + ' ' + ','.join(hs_ports)
-
-
-def subcommand_get_ports(_):
-    """Return a list of running Tor ports."""
-    try:
-        print('orport', _get_orport())
-    except Exception:
-        pass
-
-    try:
-        with open(TOR_STATE_FILE, 'r') as state_file:
-            for line in state_file:
-                matches = re.match(
-                    r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
-                if matches:
-                    print('{0} {1}'.format(matches.group(1), matches.group(2)))
-    except FileNotFoundError:
-        pass
-
-
-def subcommand_enable_apt_transport_tor(_):
+def _enable_apt_transport_tor():
     """Enable package download over Tor."""
     try:
         aug = get_augeas()
@@ -225,7 +295,7 @@ def subcommand_enable_apt_transport_tor(_):
     aug.save()
 
 
-def subcommand_disable_apt_transport_tor(_):
+def _disable_apt_transport_tor():
     """Disable package download over Tor."""
     try:
         aug = get_augeas()
@@ -242,25 +312,37 @@ def subcommand_disable_apt_transport_tor(_):
     aug.save()
 
 
-def _get_orport():
-    """Return the ORPort by querying running instance."""
-    cookie = open(TOR_AUTH_COOKIE, 'rb').read()
-    cookie = codecs.encode(cookie, 'hex').decode()
+def _update_ports():
+    """Update firewall service information."""
+    ready = False
+    tries = 0
 
-    commands = '''AUTHENTICATE {cookie}
-GETINFO net/listeners/or
-QUIT
-'''.format(cookie=cookie)
+    # port information may not be available immediately after Tor started
+    while not ready:
+        ports = get_ports()
+        ready = 'orport' in ports and 'obfs3' in ports and 'obfs4' in ports
+        if ready:
+            break
 
-    tor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tor_socket.connect(('localhost', 9051))
-    tor_socket.send(commands.encode())
-    response = tor_socket.recv(1024)
-    tor_socket.close()
+        tries += 1
+        if tries >= 12:
+            return
+        time.sleep(10)
 
-    line = response.split(b'\r\n')[1].decode()
-    matches = re.match(r'.*="[^:]+:(\d+)"', line)
-    return matches.group(1)
+    lines = """<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Tor - {0}</short>
+  <port protocol="tcp" port="{1}"/>
+</service>
+"""
+    for name, number in ports.items():
+        try:
+            with open(SERVICE_FILE.format(name), 'w') as service_file:
+                service_file.writelines(lines.format(name, number))
+        except FileNotFoundError:
+            return
+
+    action_utils.service_restart('firewalld')
 
 
 def main():
