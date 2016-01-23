@@ -20,6 +20,7 @@ Miscelleneous utility method.
 """
 
 import importlib
+from django.utils.functional import lazy
 
 
 def import_from_gi(library, version):
@@ -34,3 +35,12 @@ def import_from_gi(library, version):
     package.require_version(library, version)
 
     return importlib.import_module(package_name + '.repository.' + library)
+
+
+def _format_lazy(string, *args, **kwargs):
+    """Lazily format a lazy string."""
+    string = str(string)
+    return string.format(*args, **kwargs)
+
+
+format_lazy = lazy(_format_lazy, str)
