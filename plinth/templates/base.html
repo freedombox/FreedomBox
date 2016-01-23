@@ -46,10 +46,12 @@
   <meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
   <meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
   <meta name="description"
-        content="{% trans "Plinth administrative interface for the FreedomBox" %}" />
+        content="{% blocktrans trimmed %}
+                   Plinth administrative interface for the {{ box_name }}
+                 {% endblocktrans %}" />
   {% block title %}
     <title>
-      {% if title %} {{ title }} {% else %} {% trans "FreedomBox" %} {% endif %}
+      {% if title %} {{ title }} {% else %} {{ box_name }} {% endif %}
     </title>
   {% endblock %}
 

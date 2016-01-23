@@ -35,7 +35,7 @@ def init():
                                      'glyphicon-book', 'help:index', 101)
     menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
                      'help:index_explicit', 5)
-    menu.add_urlname(ugettext_lazy('FreedomBox Manual'), 'glyphicon-info-sign',
+    menu.add_urlname(ugettext_lazy('Manual'), 'glyphicon-info-sign',
                      'help:manual', 10)
     menu.add_urlname(ugettext_lazy('About'), 'glyphicon-star', 'help:about',
                      100)
@@ -52,7 +52,7 @@ def index(request):
 def about(request):
     """Serve the about page"""
     context = {
-        'title': _('About {box_name}').format(box_name=cfg.box_name),
+        'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__
     }
     return TemplateResponse(request, 'help_about.html', context)
@@ -68,6 +68,7 @@ def manual(request):
     except IOError:
         raise Http404
 
-    return TemplateResponse(request, 'help_manual.html',
-                            {'title': _('FreedomBox Manual'),
-                             'content': content})
+    return TemplateResponse(
+        request, 'help_manual.html',
+        {'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
+         'content': content})

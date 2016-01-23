@@ -19,12 +19,12 @@
 Framework for working with servers and their services.
 """
 
+import collections
 from django.utils.translation import ugettext_lazy as _
 
-import collections
-
+from plinth import cfg
 from plinth.signals import service_enabled
-
+from plinth.utils import format_lazy
 
 services = {}
 
@@ -75,5 +75,7 @@ def init():
             is_external=True, enabled=True)
     Service('ssh', _('Secure Shell (SSH) Server'), ['ssh'], is_external=True,
             enabled=True)
-    Service('plinth', _('FreedomBox Web Interface (Plinth)'), ['https'],
-            is_external=True, enabled=True)
+    Service('plinth',
+            format_lazy(_('{box_name} Web Interface (Plinth)'),
+                        box_name=_(cfg.box_name)),
+            ['https'], is_external=True, enabled=True)
