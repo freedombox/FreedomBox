@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 class IkiwikiForm(forms.Form):
     """ikiwiki configuration form."""
     enabled = forms.BooleanField(
-        label=_('Enable Ikiwiki'),
+        label=_('Enable ikiwiki'),
         required=False)
 
 

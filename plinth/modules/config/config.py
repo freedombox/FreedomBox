@@ -38,6 +38,7 @@ from plinth.modules.names import SERVICES
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
 
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
@@ -92,12 +93,12 @@ class ConfigurationForm(forms.Form):
     # https://tools.ietf.org/html/rfc2181#section-11
     hostname = TrimmedCharField(
         label=ugettext_lazy('Hostname'),
-        help_text=\
-        ugettext_lazy('Hostname is the local name by which other machines on '
-                      'the local network reach your machine.  It must start '
-                      'and end with an alphabet or a digit and have as '
-                      'interior characters only alphabets, digits and '
-                      'hyphens.  Total length must be 63 characters or less.'),
+        help_text=format_lazy(ugettext_lazy(
+            'Hostname is the local name by which other devices on the local '
+            'network can reach your {box_name}.  It must start and end with '
+            'an alphabet or a digit and have as interior characters only '
+            'alphabets, digits and hyphens.  Total length must be 63 '
+            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
         validators=[
             validators.RegexValidator(
                 HOSTNAME_REGEX,
@@ -105,14 +106,14 @@ class ConfigurationForm(forms.Form):
 
     domainname = TrimmedCharField(
         label=ugettext_lazy('Domain Name'),
-        help_text=\
-        ugettext_lazy('Domain name is the global name by which other machines '
-                      'on the Internet can reach you.  It must consist of '
-                      'labels separated by dots.  Each label must start and '
-                      'end with an alphabet or a digit and have as interior '
-                      'characters only alphabets, digits and hyphens.  Length '
-                      'of each label must be 63 characters or less.  Total '
-                      'length of domain name must be 253 characters or less.'),
+        help_text=format_lazy(ugettext_lazy(
+            'Domain name is the global name by which other devices on the '
+            'Internet can reach your {box_name}.  It must consist of labels '
+            'separated by dots.  Each label must start and end with an '
+            'alphabet or a digit and have as interior characters only '
+            'alphabets, digits and hyphens.  Length of each label must be 63 '
+            'characters or less.  Total length of domain name must be 253 '
+            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
         required=False,
         validators=[
             validators.RegexValidator(
@@ -123,8 +124,7 @@ class ConfigurationForm(forms.Form):
     language = forms.ChoiceField(
         label=ugettext_lazy('Language'),
         help_text=\
-        ugettext_lazy('Language for this FreedomBox web administration '
-                      'interface'),
+        ugettext_lazy('Language for this web administration interface'),
         required=False,
         choices=settings.LANGUAGES)
 

@@ -41,7 +41,7 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
 
 
 def on_install():
-    """Enable Ikiwiki on install."""
+    """Enable ikiwiki on install."""
     actions.superuser_run('ikiwiki', ['setup'])
     ikiwiki.service.notify_enabled(None, True)
 
@@ -70,7 +70,7 @@ def index(request):
         form = IkiwikiForm(initial=status, prefix='ikiwiki')
 
     return TemplateResponse(request, 'ikiwiki.html',
-                            {'title': _('Wiki & Blog'),
+                            {'title': _('Wiki and Blog'),
                              'status': status,
                              'form': form,
                              'subsubmenu': subsubmenu})
@@ -129,7 +129,7 @@ def create(request):
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
     return TemplateResponse(request, 'ikiwiki_create.html',
-                            {'title': _('Create Wiki/Blog'),
+                            {'title': _('Create Wiki or Blog'),
                              'form': form,
                              'subsubmenu': subsubmenu})
 
@@ -179,6 +179,6 @@ def delete(request, name):
         return redirect(reverse_lazy('ikiwiki:manage'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html',
-                            {'title': _('Delete Wiki/Blog'),
+                            {'title': _('Delete Wiki or Blog'),
                              'subsubmenu': subsubmenu,
                              'name': name})

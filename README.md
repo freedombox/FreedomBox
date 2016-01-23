@@ -13,9 +13,9 @@ personal servers running free software for private, personal
 communications.  It is a networking appliance designed to allow
 interfacing with the rest of the Internet under conditions of
 protected privacy and data security.  It hosts applications such as
-blog, wiki, website, social network, email, web proxy and a Tor relay
-on a device that can replace your Wi-Fi router so that your data stays
-with you.
+blog, wiki, website, social network, email, web proxy and a Tor relay,
+on a device that can replace your Wi-Fi router, so that your data
+stays with you.
 
 Plinth is a web interface to administer the functions of the
 FreedomBox.  It is extensible and provides various applications of
