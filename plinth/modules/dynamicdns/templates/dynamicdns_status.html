@@ -35,11 +35,11 @@
         {% trans "Direct connection to the internet." %}
       {% else %}
         {% blocktrans trimmed %}
-          Behind NAT, this means that dynamic DNS service will poll
-          the "IP check URL" for changes (we need the "IP check URL"
-          for this reason - otherwise we will not detect IP changes).
-          It may take up to {{ timer }} minutes until we update your
-          DNS entry in case of WAN IP change.
+          Behind NAT. This means that the dynamic DNS service will poll
+          the "IP check URL" for changes (the "IP check URL" entry is
+          needed for for this - otherwise IP changes will not be detected).
+          It may take up to %(timer)s minutes until your DNS entry is
+          updated, in case the WAN IP changes.
         {% endblocktrans %}
       {% endif %}
     {% endif %}
