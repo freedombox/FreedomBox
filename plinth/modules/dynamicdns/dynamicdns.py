@@ -78,9 +78,9 @@ class ConfigureForm(forms.Form):
     help_server = \
         ugettext_lazy('Please do not enter a URL here (like '
                       '"https://example.com/") but only the hostname of the '
-                      'GnuDIP server (like "example.pcom").')
+                      'GnuDIP server (like "example.com").')
     help_domain = \
-        ugettext_lazy('The public domain name you want use to reach your box.')
+        ugettext_lazy('The public domain name you want use to reach your FreedomBox.')
     help_disable_ssl = \
         ugettext_lazy('Use this option if your provider uses self signed '
                       'certificates.')
@@ -94,9 +94,9 @@ class ConfigureForm(forms.Form):
         ugettext_lazy('Optional Value. If your FreedomBox is not connected '
                       'directly to the Internet (i.e. connected to a NAT '
                       'router) this URL is used to figure out the real '
-                      'Internet IP. The URL should simply return the IP where'
-                      'the client comes from. Example: '
-                      'http://myip.datasystems24.de')
+                      'Internet IP. The URL should simply return the IP where '
+                      'the client comes from. (example: '
+                      'http://myip.datasystems24.de).')
     help_user = \
         ugettext_lazy('You should have been requested to select a username '
                       'when you created the account.')
