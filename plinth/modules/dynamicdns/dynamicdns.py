@@ -26,6 +26,7 @@ import logging
 from plinth import actions
 from plinth import cfg
 from plinth import package
+from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
 EMPTYSTRING = 'none'
@@ -78,9 +79,10 @@ class ConfigureForm(forms.Form):
     help_server = \
         ugettext_lazy('Please do not enter a URL here (like '
                       '"https://example.com/") but only the hostname of the '
-                      'GnuDIP server (like "example.pcom").')
-    help_domain = \
-        ugettext_lazy('The public domain name you want use to reach your box.')
+                      'GnuDIP server (like "example.com").')
+    help_domain = format_lazy(
+        ugettext_lazy('The public domain name you want use to reach your '
+                      '{box_name}.'), box_name=ugettext_lazy(cfg.box_name))
     help_disable_ssl = \
         ugettext_lazy('Use this option if your provider uses self signed '
                       'certificates.')
@@ -90,13 +92,14 @@ class ConfigureForm(forms.Form):
     help_secret = \
         ugettext_lazy('Leave this field empty if you want to keep your '
                       'previous configured password.')
-    help_ip_url = \
-        ugettext_lazy('Optional Value. If your FreedomBox is not connected '
+    help_ip_url = format_lazy(
+        ugettext_lazy('Optional Value. If your {box_name} is not connected '
                       'directly to the Internet (i.e. connected to a NAT '
                       'router) this URL is used to figure out the real '
-                      'Internet IP. The URL should simply return the IP where'
-                      'the client comes from. Example: '
-                      'http://myip.datasystems24.de')
+                      'Internet IP. The URL should simply return the IP where '
+                      'the client comes from (example: '
+                      'http://myip.datasystems24.de).'),
+        box_name=ugettext_lazy(cfg.box_name))
     help_user = \
         ugettext_lazy('You should have been requested to select a username '
                       'when you created the account.')
@@ -129,11 +132,11 @@ class ConfigureForm(forms.Form):
         help_text=help_update_url)
 
     disable_SSL_cert_check = forms.BooleanField(
-        label=ugettext_lazy('accept all SSL certificates'),
+        label=ugettext_lazy('Accept all SSL certificates'),
         help_text=help_disable_ssl, required=False)
 
     use_http_basic_auth = forms.BooleanField(
-        label=ugettext_lazy('use HTTP basic authentication'),
+        label=ugettext_lazy('Use HTTP basic authentication'),
         help_text=help_http_auth, required=False)
 
     dynamicdns_domain = TrimmedCharField(
@@ -151,7 +154,7 @@ class ConfigureForm(forms.Form):
         label=ugettext_lazy('Password'), widget=forms.PasswordInput(),
         required=False, help_text=help_secret)
 
-    showpw = forms.BooleanField(label=ugettext_lazy('show password'),
+    showpw = forms.BooleanField(label=ugettext_lazy('Show password'),
                                 required=False)
 
     dynamicdns_ipurl = TrimmedCharField(

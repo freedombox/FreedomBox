@@ -35,9 +35,9 @@
   <h2>{% trans "Virtual Private Network (OpenVPN)" %}</h2>
 
   <p>
-    {% blocktrans trimmed with box_name=cfg.box_name %}
+    {% blocktrans trimmed %}
       Virtual Private Network (VPN) is a technique for securely
-      connecting two machines in order to access resources of a
+      connecting two devices in order to access resources of a
       private network.  While you are away from home, you can connect
       to your {{ box_name }} in order to join your home network and
       access private/internal services provided by {{ box_name }}.
@@ -51,19 +51,19 @@
     <h3>{% trans "Profile" %}</h3>
 
     <p>
-      {% blocktrans trimmed with box_name=cfg.box_name %}
+      {% blocktrans trimmed %}
         To connect to {{ box_name }}'s VPN, you need to download a
         profile and feed it to an OpenVPN client on your mobile or
         desktop machine.  OpenVPN Clients are available for most
         platforms.  See
         <a href="https://wiki.debian.org/FreedomBox/Manual/OpenVPN"
-           title="FreedomBox Manual - OpenVPN">documentation</a> on
+           title="{{ box_name }} Manual - OpenVPN">documentation</a> on
         recommended clients and instructions on how to configure them.
       {% endblocktrans %}
     </p>
 
     <p>
-      {% blocktrans trimmed with box_name=cfg.box_name %}
+      {% blocktrans trimmed %}
         Profile is specific to each user of {{ box_name }}.  Keep it a
         secret.
       {% endblocktrans %}
@@ -82,7 +82,7 @@
 
   {% if not status.is_setup and not status.setup_running %}
     <p>
-      {% blocktrans trimmed with box_name=cfg.box_name %}
+      {% blocktrans trimmed %}
         OpenVPN has not yet been setup.  Performing a secure setup
         takes a very long time.  Depending on how fast your
         {{ box_name }} is, it may even take hours.  If the setup
@@ -105,7 +105,7 @@
     </p>
 
     <p>
-      {% blocktrans trimmed with box_name=cfg.box_name %}
+      {% blocktrans trimmed %}
         To perform a secure setup, this process takes a very long
         time.  Depending on how fast your {{ box_name }} is, it may
         even take hours.  If the setup is interrupted, you may start

@@ -46,10 +46,12 @@
   <meta name="msnbot" content="noindex, nofollow, noarchive, noodp" />
   <meta name="slurp" content="noindex, nofollow, noarchive, noodp, noydir" />
   <meta name="description"
-        content="{% trans "Plinth administrative interface for the FreedomBox" %}" />
+        content="{% blocktrans trimmed %}
+                   Plinth administrative interface for the {{ box_name }}
+                 {% endblocktrans %}" />
   {% block title %}
     <title>
-      {% if title %} {{ title }} {% else %} {% trans "FreedomBox" %} {% endif %}
+      {% if title %} {{ title }} {% else %} {{ box_name }} {% endif %}
     </title>
   {% endblock %}
 
@@ -86,7 +88,7 @@
         {% block mainmenu_left %}
           <span class="navbar-brand">
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
-                 alt="{{ cfg.box_name }}" />
+                 alt="{{ box_name }}" />
           </span>
           <a href="{% url 'index' %}" class="navbar-brand" title="{% trans "Applications" %}">
             <span class="glyphicon glyphicon-th"></span>

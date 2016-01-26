@@ -26,8 +26,8 @@
 
   <p>
     {% url 'help:manual' as manual_url %}
-    {% blocktrans trimmed with box_name=cfg.box_name %}
-      The <a href="{{ manual_url }}">FreedomBox Manual</a> is the
+    {% blocktrans trimmed %}
+      The <a href="{{ manual_url }}">{{ box_name }} Manual</a> is the
       best place to start for information regarding {{ box_name }}.
     {% endblocktrans %}
   </p>
@@ -35,13 +35,13 @@
   <p>
     {% blocktrans trimmed %}
       <a href="http://wiki.debian.org/FreedomBox" target="_blank">
-        FreedomBox project wiki </a> contains further information.
+        {{ box_name }} project wiki </a> contains further information.
     {% endblocktrans %}
   </p>
 
   <p>
     {% blocktrans trimmed %}
-      To seek help from FreedomBox community, queries may be posted on
+      To seek help from {{ box_name }} community, queries may be posted on
       the
       <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
       mailing list</a>.  The list archives also contain information
@@ -51,8 +51,8 @@
 
   <p>
     {% blocktrans trimmed %}
-      Many FreedomBox contributors and users are also available on the irc.oftc.net IRC network.
-      Join and request help on the
+      Many {{ box_name }} contributors and users are also available on
+      the irc.oftc.net IRC network.  Join and request help on the
       <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
       #freedombox</a> channel using the IRC web interface.
     {% endblocktrans %}

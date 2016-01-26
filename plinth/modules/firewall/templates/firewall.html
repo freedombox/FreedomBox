@@ -25,20 +25,20 @@
   <h2>{{ title }}</h2>
 
   <p>
-    {% blocktrans trimmed with box_name=cfg.box_name %}
-      Firewall is a network security system that controls the incoming
-      and outgoing network traffic on your {{ box_name }}. Keeping a
+    {% blocktrans trimmed %}
+      Firewall is a security system that controls the incoming and
+      outgoing network traffic on your {{ box_name }}. Keeping a
       firewall enabled and properly configured reduces risk of
       security threat from the Internet.
     {% endblocktrans %}
   </p>
 
-  <p>{% trans "The following is the current status:" %}</p>
+  <p>{% trans "Current status:" %}</p>
 
   {% if firewall_status == 'not_running' %}
 
     <p>
-      {% blocktrans trimmed with box_name=cfg.box_name %}
+      {% blocktrans trimmed %}
         Firewall daemon is not running. Please run it. Firewall comes
         enabled by default on {{ box_name }}. On any Debian based
         system (such as {{ box_name }}) you may run it using the
@@ -102,8 +102,8 @@
       <em>
         {% blocktrans trimmed %}
           The operation of the firewall is automatic. When you enable
-          a service it is automatically permitted in the firewall and
-          you disable a service is automatically disabled in the firewall.
+          a service it is also permitted in the firewall and when you
+          disable a service it is also disabled in the firewall.
         {% endblocktrans %}
       </em>
     </p>

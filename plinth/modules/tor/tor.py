@@ -34,6 +34,7 @@ from plinth import package
 from plinth.errors import ActionError
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -48,9 +49,10 @@ class TorForm(forms.Form):  # pylint: disable=W0232
     hs_enabled = forms.BooleanField(
         label=_('Enable Tor Hidden Service'),
         required=False,
-        help_text=_('A hidden service will allow FreedomBox to provide '
-                    'selected services (such as ownCloud or Chat) without '
-                    'revealing its location.'))
+        help_text=format_lazy(_(
+            'A hidden service will allow {box_name} to provide selected '
+            'services (such as ownCloud or chat) without revealing its '
+            'location.'), box_name=_(cfg.box_name)))
     apt_transport_tor_enabled = forms.BooleanField(
         label=_('Download software packages over Tor'),
         required=False,
