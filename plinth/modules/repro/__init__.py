@@ -33,12 +33,12 @@ service = None
 def init():
     """Initialize the repro module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('SIP Proxy (Repro)'), 'glyphicon-phone-alt',
-                     'repro:index', 800)
+    menu.add_urlname(_('SIP Server (repro)'), 'glyphicon-phone-alt',
+                     'repro:index', 825)
 
     global service
     service = service_module.Service(
-        'repro', _('repro SIP Proxy'), ['sip-plinth', 'sip-tls-plinth'],
+        'repro', _('repro SIP Server'), ['sip-plinth', 'sip-tls-plinth'],
         is_external=True, enabled=is_enabled())
 
 

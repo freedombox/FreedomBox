@@ -52,7 +52,7 @@ def index(request):
         form = ReproForm(initial=status, prefix='repro')
 
     return TemplateResponse(request, 'repro.html',
-                            {'title': _('SIP Proxy (Repro)'),
+                            {'title': _('SIP Server (repro)'),
                              'status': status,
                              'form': form})
 

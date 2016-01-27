@@ -26,5 +26,5 @@ from django.utils.translation import ugettext_lazy as _
 class ReproForm(forms.Form):
     """Configuration form."""
     enabled = forms.BooleanField(
-        label=_('Enable Repro service'),
+        label=_('Enable repro service'),
         required=False)

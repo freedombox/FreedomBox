@@ -23,58 +23,61 @@
 
 {% block content %}
 
-<h2>{% trans "SIP Proxy (Repro)" %}</h2>
+  <h2>{% trans "SIP Server (repro)" %}</h2>
 
-<p>
-  {% blocktrans trimmed %}
-  Repro is a SIP proxy service that a SIP softphone can connect to. Before
-  using Repro, the domain and users will need to be configured using the
-  web-based configuration panel, available at
-  <a href="/repro/domains.html">/repro/domains.html</a>. Users in the
-  <i>admin</i> group will be able to log in to the Repro configuration panel.
-  {% endblocktrans %}
-</p>
+  <p>
+    {% blocktrans trimmed %}
+      repro provides various SIP services that a SIP softphone can utilize to
+      provide audio and video calls as well as presence and instant messaging.
+      repro provides a server and SIP user accounts that clients can use to let
+      their presence known.  It also acts as a proxy to federate SIP
+      communications to other servers on the Internet similar to email.
+    {% endblocktrans %}
+  </p>
 
-<p>
-  {% blocktrans trimmed %}
-  <b>Note:</b> After setting the domain, it is required to restart the Repro
-  service. Disable the service using the checkbox and Update setup button
-  below. Then, re-enable the service.
-  {% endblocktrans %}
-</p>
+  <p>
+    {% blocktrans trimmed %}
+      To make SIP calls, a client application is needed. Available clients
+      include <a href="https://jitsi.org/">Jitsi</a> (for computers) and
+      <a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple">
+        CSipSimple</a> (for Android phones).
+    {% endblocktrans %}
+  </p>
 
-<p>
-  {% blocktrans trimmed %}
-  To make SIP calls, a client application is needed. Available clients include
-  <a href="https://jitsi.org/">Jitsi</a> (for computers) and
-  <a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple">
-    CSipSimple</a> (for Android phones).
-  {% endblocktrans %}
-</p>
+  <p>
+    {% blocktrans trimmed %}
+      <strong>Note:</strong>  Before using repro, domains and users will need
+      to be configured using the <a href="/repro/domains.html">web-based
+      configuration panel</a>. Users in the <em>admin</em> group will be able
+      to log in to the repro configuration panel. After setting the domain, it
+      is required to restart the repro service. Disable the service and
+      re-enable it.
+    {% endblocktrans %}
+  </p>
 
-<h3>{% trans "Status" %}</h3>
+  <h3>{% trans "Status" %}</h3>
 
-<p class="running-status-parent">
-  {% if status.is_running %}
-  <span class="running-status active"></span>
-  {% trans "Repro service is running" %}
-  {% else %}
-  <span class="running-status inactive"></span>
-  {% trans "Repro service is not running" %}
-  {% endif %}
-</p>
+  <p class="running-status-parent">
+    {% if status.is_running %}
+      <span class="running-status active"></span>
+      {% trans "repro service is running" %}
+    {% else %}
+      <span class="running-status inactive"></span>
+      {% trans "repro service is not running" %}
+    {% endif %}
+  </p>
 
-{% include "diagnostics_button.html" with module="repro" %}
+  {% include "diagnostics_button.html" with module="repro" %}
 
-<h3>{% trans "Configuration" %}</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary"
-	 value="{% trans "Update setup" %}"/>
-</form>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}
