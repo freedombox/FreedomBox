@@ -38,7 +38,7 @@ def init():
 
     global service
     service = service_module.Service(
-        'repro', _('Repro SIP Proxy'),
+        'repro', _('repro SIP Proxy'), ['sip-plinth', 'sip-tls-plinth'],
         is_external=True, enabled=is_enabled())
 
 
