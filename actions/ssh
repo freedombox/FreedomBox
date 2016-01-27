@@ -1,0 +1,106 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for SSH server.
+"""
+
+import argparse
+import os
+import re
+import shutil
+import stat
+import sys
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    get_key = subparsers.add_parser('get-key', help='Get SSH authorized key')
+    get_key.add_argument('--username')
+
+    set_key = subparsers.add_parser('set-key', help='Set SSH authorized key')
+    set_key.add_argument('--username')
+    set_key.add_argument('--key')
+
+    return parser.parse_args()
+
+
+def subcommand_get_key(arguments):
+    """Get SSH authorized key."""
+    user = arguments.username
+    if not re.match(r'^[a-z][-a-z0-9_]*$', user):
+        print('Bad username')
+        sys.exit(-1)
+
+    home = '/home/' + user
+    ssh_folder = home + '/.ssh'
+    keyfile_path = ssh_folder + '/authorized_keys'
+
+    if not os.path.exists(keyfile_path):
+        return
+
+    with open(keyfile_path, 'r') as keyfile:
+        key = keyfile.read()
+
+    print(key)
+
+
+def subcommand_set_key(arguments):
+    """Set SSH authorized key."""
+    user = arguments.username
+    if not re.match(r'^[a-z][-a-z0-9_]*$', user):
+        print('Bad username')
+        sys.exit(-1)
+
+    home = '/home/' + user
+    ssh_folder = home + '/.ssh'
+    keyfile_path = ssh_folder + '/authorized_keys'
+
+    if not os.path.exists(home):
+        shutil.copytree('/etc/skel', home)
+        shutil.chown(home, user, 'users')
+        for root, dirs, files in os.walk(home):
+            for directory in dirs:
+                shutil.chown(os.path.join(root, directory), user, 'users')
+            for filename in files:
+                shutil.chown(os.path.join(root, filename), user, 'users')
+
+    if not os.path.exists(ssh_folder):
+        os.makedirs(ssh_folder)
+        shutil.chown(ssh_folder, user, 'users')
+
+    with open(keyfile_path, 'w') as keyfile:
+        keyfile.write(arguments.key)
+    shutil.chown(keyfile_path, user, 'users')
+    os.chmod(keyfile_path, stat.S_IRUSR | stat.S_IWUSR)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
