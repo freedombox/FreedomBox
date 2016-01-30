@@ -82,6 +82,11 @@ def _apply_changes(request, old_status, new_status):
 
 def __apply_changes(request, old_status, new_status):
     """Apply the changes."""
+    global config_process
+    if config_process:
+        # Already running a configuration task
+        return
+
     arguments = []
 
     if old_status['enabled'] != new_status['enabled']:
@@ -100,10 +105,8 @@ def __apply_changes(request, old_status, new_status):
         arguments.extend(['--apt-transport-tor', arg_value])
 
     if arguments:
-        global config_process
-        if not config_process:
-            config_process = actions.superuser_run(
-                'tor', ['configure'] + arguments, async=True)
+        config_process = actions.superuser_run(
+            'tor', ['configure'] + arguments, async=True)
     else:
         messages.info(request, _('Setting unchanged'))
 
@@ -144,6 +147,6 @@ def _collect_config_result(request):
     if not return_code:
         messages.success(request, _('Configuration updated.'))
     else:
-        messages.info(request, _('Error occurred during configuration.'))
+        messages.error(request, _('An error occurred during configuration.'))
 
     config_process = None

@@ -235,6 +235,7 @@ def _enable_hs(restart=True):
                 tries += 1
                 if tries >= 12:
                     return
+
                 time.sleep(10)
 
 
@@ -325,6 +326,7 @@ def _update_ports():
         tries += 1
         if tries >= 12:
             return
+
         time.sleep(10)
 
     lines = """<?xml version="1.0" encoding="utf-8"?>
@@ -340,6 +342,8 @@ def _update_ports():
         except FileNotFoundError:
             return
 
+    # XXX: We should ideally do firewalld reload instead.  However,
+    # firewalld seems to fail to successfully reload sometimes.
     action_utils.service_restart('firewalld')
 
 
