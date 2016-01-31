@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 12:27+0530\n"
+"POT-Creation-Date: 2016-01-31 22:19+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,8 @@ msgstr ""
 #: plinth/modules/openvpn/templates/openvpn.html:81
 #: plinth/modules/privoxy/templates/privoxy.html:48
 #: plinth/modules/quassel/templates/quassel.html:50
-#: plinth/modules/tor/templates/tor.html:39
+#: plinth/modules/repro/templates/repro.html:58
+#: plinth/modules/tor/templates/tor.html:48
 #: plinth/modules/transmission/templates/transmission.html:42
 #: plinth/modules/xmpp/templates/xmpp.html:58
 msgid "Status"
@@ -133,9 +134,10 @@ msgstr ""
 #: plinth/modules/owncloud/templates/owncloud.html:51
 #: plinth/modules/privoxy/templates/privoxy.html:62
 #: plinth/modules/quassel/templates/quassel.html:65
+#: plinth/modules/repro/templates/repro.html:72
 #: plinth/modules/roundcube/templates/roundcube.html:62
 #: plinth/modules/shaarli/templates/shaarli.html:40
-#: plinth/modules/tor/templates/tor.html:74
+#: plinth/modules/tor/templates/tor.html:92
 #: plinth/modules/transmission/templates/transmission.html:56
 #: plinth/modules/xmpp/templates/xmpp.html:72
 msgid "Configuration"
@@ -151,10 +153,11 @@ msgstr ""
 #: plinth/modules/openvpn/templates/openvpn.html:138
 #: plinth/modules/privoxy/templates/privoxy.html:70
 #: plinth/modules/quassel/templates/quassel.html:73
+#: plinth/modules/repro/templates/repro.html:80
 #: plinth/modules/restore/templates/restore_index.html:54
 #: plinth/modules/roundcube/templates/roundcube.html:70
 #: plinth/modules/shaarli/templates/shaarli.html:48
-#: plinth/modules/tor/templates/tor.html:82
+#: plinth/modules/tor/templates/tor.html:100
 #: plinth/modules/transmission/templates/transmission.html:64
 #: plinth/modules/upgrades/templates/upgrades_configure.html:34
 #: plinth/modules/xmpp/templates/xmpp.html:80
@@ -166,9 +169,10 @@ msgstr ""
 #: plinth/modules/dynamicdns/dynamicdns.py:371
 #: plinth/modules/ikiwiki/views.py:95 plinth/modules/mumble/views.py:80
 #: plinth/modules/openvpn/views.py:142 plinth/modules/privoxy/views.py:83
-#: plinth/modules/quassel/views.py:76 plinth/modules/restore/views.py:68
-#: plinth/modules/roundcube/views.py:84 plinth/modules/shaarli/views.py:74
-#: plinth/modules/transmission/views.py:109 plinth/modules/xmpp/views.py:100
+#: plinth/modules/quassel/views.py:76 plinth/modules/repro/views.py:77
+#: plinth/modules/restore/views.py:68 plinth/modules/roundcube/views.py:84
+#: plinth/modules/shaarli/views.py:74 plinth/modules/transmission/views.py:109
+#: plinth/modules/xmpp/views.py:100
 msgid "Configuration updated"
 msgstr ""
 
@@ -176,9 +180,10 @@ msgstr ""
 #: plinth/modules/deluge/views.py:82 plinth/modules/ikiwiki/views.py:97
 #: plinth/modules/mumble/views.py:82 plinth/modules/openvpn/views.py:144
 #: plinth/modules/owncloud/owncloud.py:93 plinth/modules/privoxy/views.py:85
-#: plinth/modules/quassel/views.py:78 plinth/modules/restore/views.py:70
-#: plinth/modules/roundcube/views.py:86 plinth/modules/shaarli/views.py:76
-#: plinth/modules/tor/tor.py:252 plinth/modules/transmission/views.py:111
+#: plinth/modules/quassel/views.py:78 plinth/modules/repro/views.py:79
+#: plinth/modules/restore/views.py:70 plinth/modules/roundcube/views.py:86
+#: plinth/modules/shaarli/views.py:76 plinth/modules/tor/views.py:111
+#: plinth/modules/transmission/views.py:111
 #: plinth/modules/upgrades/views.py:118 plinth/modules/xmpp/views.py:102
 msgid "Setting unchanged"
 msgstr ""
@@ -2160,6 +2165,54 @@ msgstr ""
 msgid "Quassel core service is not running"
 msgstr ""
 
+#: plinth/modules/repro/__init__.py:36
+#: plinth/modules/repro/templates/repro.html:26
+#: plinth/modules/repro/views.py:55
+msgid "SIP Server (repro)"
+msgstr ""
+
+#: plinth/modules/repro/__init__.py:41
+msgid "repro SIP Server"
+msgstr ""
+
+#: plinth/modules/repro/forms.py:29
+msgid "Enable repro service"
+msgstr ""
+
+#: plinth/modules/repro/templates/repro.html:29
+msgid ""
+"repro provides various SIP services that a SIP softphone can utilize to "
+"provide audio and video calls as well as presence and instant messaging. "
+"repro provides a server and SIP user accounts that clients can use to let "
+"their presence known.  It also acts as a proxy to federate SIP "
+"communications to other servers on the Internet similar to email."
+msgstr ""
+
+#: plinth/modules/repro/templates/repro.html:39
+msgid ""
+"To make SIP calls, a client application is needed. Available clients include "
+"<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
+"\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
+"a> (for Android phones)."
+msgstr ""
+
+#: plinth/modules/repro/templates/repro.html:48
+msgid ""
+"<strong>Note:</strong>  Before using repro, domains and users will need to "
+"be configured using the <a href=\"/repro/domains.html\">web-based "
+"configuration panel</a>. Users in the <em>admin</em> group will be able to "
+"log in to the repro configuration panel. After setting the domain, it is "
+"required to restart the repro service. Disable the service and re-enable it."
+msgstr ""
+
+#: plinth/modules/repro/templates/repro.html:63
+msgid "repro service is running"
+msgstr ""
+
+#: plinth/modules/repro/templates/repro.html:66
+msgid "repro service is not running"
+msgstr ""
+
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
 #: plinth/modules/restore/views.py:46
@@ -2273,33 +2326,71 @@ msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:50
-msgid "Tor relay port available"
+#: plinth/modules/tor/__init__.py:48 plinth/modules/tor/templates/tor.html:35
+msgid "Anonymity Network (Tor)"
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:53
+msgid "Tor Anonymity Network"
 msgstr ""
 
 #: plinth/modules/tor/__init__.py:58
+msgid "Tor Bridge Relay"
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:76 plinth/modules/tor/views.py:144
+msgid "Tor Hidden Service"
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:222
+msgid "Tor relay port available"
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:230
 msgid "Obfs3 transport registered"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:64
+#: plinth/modules/tor/__init__.py:236
 msgid "Obfs4 transport registered"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:101
+#: plinth/modules/tor/__init__.py:273
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:112
+#: plinth/modules/tor/__init__.py:284
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:26 plinth/modules/tor/tor.py:68
-msgid "Anonymity Network (Tor)"
+#: plinth/modules/tor/forms.py:32
+msgid "Enable Tor"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:29
+#: plinth/modules/tor/forms.py:35
+msgid "Enable Tor Hidden Service"
+msgstr ""
+
+#: plinth/modules/tor/forms.py:38
+#, python-brace-format
+msgid ""
+"A hidden service will allow {box_name} to provide selected services (such as "
+"ownCloud or chat) without revealing its location."
+msgstr ""
+
+#: plinth/modules/tor/forms.py:42
+msgid "Download software packages over Tor"
+msgstr ""
+
+#: plinth/modules/tor/forms.py:44
+msgid ""
+"When enabled, software will be downloaded over the Tor network for "
+"installations and upgrades. This adds a degree of privacy and security "
+"during software downloads."
+msgstr ""
+
+#: plinth/modules/tor/templates/tor.html:38
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -2308,28 +2399,32 @@ msgid ""
 "Tor Browser</a>."
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:44
+#: plinth/modules/tor/templates/tor.html:54
+msgid "Tor configuration is being updated"
+msgstr ""
+
+#: plinth/modules/tor/templates/tor.html:62
 msgid "Tor is running"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:47
+#: plinth/modules/tor/templates/tor.html:65
 msgid "Tor is not running"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:59
+#: plinth/modules/tor/templates/tor.html:77
 msgid "Hidden Service"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:60
-#: plinth/modules/tor/templates/tor.html:102
+#: plinth/modules/tor/templates/tor.html:78
+#: plinth/modules/tor/templates/tor.html:120
 msgid "Port"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:85
+#: plinth/modules/tor/templates/tor.html:103
 msgid "Bridge"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:88
+#: plinth/modules/tor/templates/tor.html:106
 #, python-format
 msgid ""
 "Your %(box_name)s is configured as a Tor bridge with obfsproxy, so it can "
@@ -2338,80 +2433,34 @@ msgid ""
 "forwarded, if necessary:"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:101
+#: plinth/modules/tor/templates/tor.html:119
 msgid "Service"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:117
+#: plinth/modules/tor/templates/tor.html:135
 msgid "SOCKS"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:120
+#: plinth/modules/tor/templates/tor.html:138
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 
-#: plinth/modules/tor/tor.py:47
-msgid "Enable Tor"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:50
-msgid "Enable Tor Hidden Service"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:53
-#, python-brace-format
-msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
-"ownCloud or chat) without revealing its location."
-msgstr ""
-
-#: plinth/modules/tor/tor.py:57
-msgid "Download software packages over Tor"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:59
-msgid ""
-"When enabled, software will be downloaded over the Tor network for "
-"installations and upgrades. This adds a degree of privacy and security "
-"during software downloads."
-msgstr ""
-
-#: plinth/modules/tor/tor.py:87 plinth/modules/tor/tor.py:287
-msgid "Tor Hidden Service"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:117
+#: plinth/modules/tor/views.py:68
 msgid "Tor Control Panel"
 msgstr ""
 
-#: plinth/modules/tor/tor.py:242
+#: plinth/modules/tor/views.py:79
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr ""
 
-#: plinth/modules/tor/tor.py:258
-msgid "Tor enabled"
+#: plinth/modules/tor/views.py:148
+msgid "Configuration updated."
 msgstr ""
 
-#: plinth/modules/tor/tor.py:261
-msgid "Tor disabled"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:266
-msgid "Tor hidden service enabled"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:269
-msgid "Tor hidden service disabled"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:294
-msgid "Enabled package download over Tor"
-msgstr ""
-
-#: plinth/modules/tor/tor.py:297
-msgid "Disabled package download over Tor"
+#: plinth/modules/tor/views.py:150
+msgid "An error occurred during configuration."
 msgstr ""
 
 #: plinth/modules/transmission/__init__.py:38
@@ -2577,19 +2626,30 @@ msgstr ""
 msgid "Failed to add new user to {group} group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:126
+#: plinth/modules/users/forms.py:92
+msgid "SSH Keys"
+msgstr ""
+
+#: plinth/modules/users/forms.py:96
+msgid ""
+"Setting an SSH public key will allow this user to securely log in to the "
+"system without using a password. You may enter multiple keys, one on each "
+"line. Blank lines and lines starting with # will be ignored."
+msgstr ""
+
+#: plinth/modules/users/forms.py:136
 msgid "Renaming LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:138
+#: plinth/modules/users/forms.py:148
 msgid "Failed to remove user from group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:149
+#: plinth/modules/users/forms.py:159
 msgid "Failed to add user to group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:174
+#: plinth/modules/users/forms.py:188
 msgid "Changing LDAP user password failed."
 msgstr ""
 
@@ -2608,7 +2668,7 @@ msgid "Create User"
 msgstr ""
 
 #: plinth/modules/users/templates/users_delete.html:26
-#: plinth/modules/users/views.py:103
+#: plinth/modules/users/views.py:110
 msgid "Delete User"
 msgstr ""
 
@@ -2661,20 +2721,20 @@ msgstr ""
 msgid "Edit User"
 msgstr ""
 
-#: plinth/modules/users/views.py:113
+#: plinth/modules/users/views.py:120
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr ""
 
-#: plinth/modules/users/views.py:120
+#: plinth/modules/users/views.py:127
 msgid "Deleting LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/views.py:129
+#: plinth/modules/users/views.py:136
 msgid "Change Password"
 msgstr ""
 
-#: plinth/modules/users/views.py:130
+#: plinth/modules/users/views.py:137
 msgid "Password changed successfully."
 msgstr ""
 
