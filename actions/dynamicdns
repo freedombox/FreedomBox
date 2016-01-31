@@ -64,8 +64,8 @@ doGetOpt()
 {
     basicauth=0
     ignoreCertError=0
-
-    while getopts ":s:d:u:p:I:U:c:b:" opt; do
+    stdin=0
+    while getopts ":s:d:u:P:I:U:c:b:p" opt; do
         case ${opt} in
             s)
                 if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
@@ -80,10 +80,11 @@ doGetOpt()
             u)
                 user=${OPTARG}
             ;;
+            P)
+                pass=${OPTARG}
+            ;;
             p)
-                if read -t 0; then
-                    IFS= read -r pass
-                fi
+                stdin=1
             ;;
             I)
                 if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
@@ -111,6 +112,12 @@ doGetOpt()
             ;;
         esac
     done
+    if [ $stdin -eq 1 ];then
+        if read -t 0; then
+            IFS= read -r pass
+        fi
+    fi
+
 }
 
 # this function will write a persistent config file to disk
@@ -293,7 +300,7 @@ doGetWANIP()
 doUpdate()
 {
     local dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
-    if [ "${dnsentry}" =  "${wanip}" ];then
+    if [ "${dnsentry}" = "${wanip}" ];then
         return
     fi
     if [ ! -z "${server}" ];then
@@ -428,6 +435,7 @@ case ${cmd} in
         echo "-s <server>             Gnudip Server address"
         echo "-d <domain>             Domain to be updated"
         echo "-u <user>               Account username"
+        echo "-P <password>           Account password"
         echo "-p                      Read Account Password from stdin"
         echo "-I <IP check URL>       A URL which returns the IP of the client who is requesting"
         echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
