@@ -339,7 +339,7 @@ case ${cmd} in
         if [ "$(grep ^NAT ${HELPERCFG} | awk '{print $2}')" = "no" ];then
             #if we are not behind a NAT device and we use gnudip, start the daemon tool
             gnudipServer=$(grep ^server= ${cfgfile} 2> /dev/null | cut -d = -f 2- |grep -v ^\'\')
-            if [ -f ${CFG} -a ! -z "${gnudipServer}" ];then
+            if [ ! -f ${CFG} -a ! -z "${gnudipServer}" ];then
                 mv ${CFG_disabled} ${CFG}
                 /etc/init.d/${TOOLNAME} start
             fi
