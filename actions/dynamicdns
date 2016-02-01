@@ -167,11 +167,11 @@ doWriteCFG()
             echo "NAT no" >> ${HELPERCFG}
             # if this file is added ez-ipupdate will take ip form this interface
             {
-                "interface=${default_interface}"
+                echo "interface=${default_interface}"
                 # if this line is added to config file, ez-ipupdate will be launched on startup via init.d
-                "daemon"
-                "execute=${0} success"
-            } > ${out_file}
+                echo "daemon"
+                echo "execute=${0} success"
+            } >> ${out_file}
         fi
     fi
 }
