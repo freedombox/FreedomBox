@@ -35,7 +35,7 @@ def on_install():
     radicale.service.notify_enabled(None, True)
 
 
-@package.required(['radicale', 'python-ldap'], on_install=on_install)
+@package.required(['radicale'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
