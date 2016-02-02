@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-31 22:19+0530\n"
-"PO-Revision-Date: 2016-01-15 21:21+0000\n"
-"Last-Translator: Caly <caly@aktivix.org>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
-"plinth/tr/>\n"
+"PO-Revision-Date: 2016-02-02 19:24+0000\n"
+"Last-Translator: ultrapeer <kolrac@numericable.fr>\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +98,7 @@ msgid "Enable service discovery"
 msgstr "Servis keşfini etkinleştir"
 
 #: plinth/modules/avahi/templates/avahi.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Service discovery allows other machines on the network to discover your "
 #| "FreedomBox and services running on it.  It also allows FreedomBox to "
@@ -114,9 +114,9 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Servis keşfi şebekedeki diğer makinelerin sizin FreedomBox'unuzu ve onun "
-"üzerinde çalışan servisleri keşfetmelerine yarar. Buna ek olarak "
-"FreedomBox'un yerel ağınızdaki diğer makineleri ve etkin servisleri "
+"Servis keşfi şebekedeki diğer makinelerin sizin  %(box_name)s kutunuzu ve "
+"onun üzerinde çalışan servisleri keşfetmelerine yarar. Buna ek olarak  "
+"%(box_name)s kutusunun yerel ağınızdaki diğer makineleri ve etkin servisleri "
 "keşfetmesine de yarar. Servis keşfi mutlaka gerekli değildir ve sadece "
 "dahili şebekelerde çalışır. Özellikle düşman yerel bir ağa bağlanıldığında "
 "güvenliği arttırmak için devre dışı bırakılabilir."
@@ -219,7 +219,7 @@ msgid "Hostname"
 msgstr "Makine ismi"
 
 #: plinth/modules/config/config.py:97
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Hostname is the local name by which other machines on the local network "
 #| "reach your machine.  It must start and end with an alphabet or a digit "
@@ -231,10 +231,10 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
-"Makine ismi yerel şebekedeki diğer makinelerin sizin makinenize erişmek için "
-"kullanacakları yerel isimdir. Bir harf ya da sayı ile başlayıp sona ermesi "
-"gerekir ve sadece alfabe harfleri, sayılar ve tireler içerebilir. Toplam "
-"uzunluğun 63 karakter veya daha azı olması gerekmektedir."
+"Makine ismi yerel şebekedeki diğer cihazların sizin {box_name} kutunuza "
+"erişmebilmek için kullanacakları yerel isimdir. Bir harf ya da sayı ile "
+"başlayıp sona ermesi gerekir ve sadece alfabe harfleri, sayılar ve tireler "
+"içerebilir. Toplam uzunluğun 63 karakter veya daha azı olması gerekmektedir."
 
 #: plinth/modules/config/config.py:105
 msgid "Invalid hostname"
@@ -247,7 +247,7 @@ msgid "Domain Name"
 msgstr "Alan Adı"
 
 #: plinth/modules/config/config.py:110
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Domain name is the global name by which other machines on the Internet "
 #| "can reach you.  It must consist of labels separated by dots.  Each label "
@@ -263,22 +263,21 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"Alan adı, İnternet'teki diğer makinelerin size erişmek için kullanacakları "
-"global isimdir. Noktalarla ayrılmış gruplardan oluşmalıdır. Her grubun bir "
-"alfabe harfi ya da bir sayı ile başlaması ve sona ermesi gerekir ve içerik "
-"harfler, sayılar ve tireler ile sınırlı kalmalıdır. Her grubun uzunluğu 63 "
-"karakter ya da daha azı olmalıdır. Alan adının toplam uzunluğu 253 karakter "
-"ya da daha azı olmalıdır."
+"Alan adı, İnternet'teki diğer cihazların sizin {box_name} kutunuza erişmek "
+"için kullanacakları global isimdir. Noktalarla ayrılmış gruplardan "
+"oluşmalıdır. Her grubun bir alfabe harfi ya da bir sayı ile başlaması ve "
+"sona ermesi gerekir ve içerik harfler, sayılar ve tireler ile sınırlı "
+"kalmalıdır. Her grubun uzunluğu 63 karakter ya da daha azı olmalıdır. Alan "
+"adının toplam uzunluğu 253 karakter ya da daha azı olmalıdır."
 
 #: plinth/modules/config/config.py:125
 msgid "Language"
 msgstr "Lisan"
 
 #: plinth/modules/config/config.py:127
-#, fuzzy
 #| msgid "Language for this FreedomBox web administration interface"
 msgid "Language for this web administration interface"
-msgstr "Bu FreedomBox'un web yönetim arayüzü için kullanılacak dil"
+msgstr "Bu web yönetim arayüzü için kullanılacak dil"
 
 #: plinth/modules/config/config.py:135
 #: plinth/modules/dynamicdns/dynamicdns.py:37
@@ -508,7 +507,6 @@ msgstr ""
 "sağlayıcınızın güncelleme bağlantısını (URL) kullanabilirsiniz."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:80
-#, fuzzy
 #| msgid ""
 #| "Please do not enter a URL here (like \"https://example.com/\") but only "
 #| "the hostname of the GnuDIP server (like \"example.pcom\")."
@@ -520,10 +518,12 @@ msgstr ""
 "sunucusunun makine ismini girin (\"example.com\" gibi)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:84
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "The public domain name you want use to reach your box."
 msgid "The public domain name you want use to reach your {box_name}."
-msgstr "Kutunuza erişilmesi için kullanmak istediğiniz herkese açık alan ismi."
+msgstr ""
+"{box_name} kutunuza erişilmesi için kullanmak istediğiniz herkese açık alan "
+"ismi."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:87
 msgid "Use this option if your provider uses self signed certificates."
@@ -545,7 +545,7 @@ msgstr ""
 "Önceki yapılandırılmış parolanızı tutmak istiyorsanız bu alanı boş bırakın."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:96
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Optional Value. If your FreedomBox is not connected directly to the "
 #| "Internet (i.e. connected to a NAT router) this URL is used to figure out "
@@ -557,10 +557,10 @@ msgid ""
 "Internet IP. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Seçeneğe bağlı değer. FreedomBox'unuz İnternet'e doğrudan bağlı değilse "
-"(yani bir NAT yönlendiricisine bağlıysa) bu URL gerçek İnternet IP adresini "
+"Seçeneğe bağlı değer. {box_name} kutunuz İnternet'e doğrudan bağlı değilse ("
+"yani bir NAT yönlendiricisine bağlıysa) bu URL gerçek İnternet IP adresini "
 "bulmak için kullanılır. URL sadece istemcinin bulunduğu yerin IP'sini "
-"vermelidir. Mesela: http://myip.datasystems24.de"
+"vermelidir (mesela: http://myip.datasystems24.de)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:104
 msgid ""
@@ -590,16 +590,14 @@ msgid "Update URL"
 msgstr "URL'i Güncelle"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:135
-#, fuzzy
 #| msgid "accept all SSL certificates"
 msgid "Accept all SSL certificates"
 msgstr "Tüm SSL sertifikalarını kabul et"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:139
-#, fuzzy
 #| msgid "use HTTP basic authentication"
 msgid "Use HTTP basic authentication"
-msgstr "temel HTTP kimlik doğrulamasını kullan"
+msgstr "Temel HTTP kimlik doğrulamasını kullan"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
 #: plinth/modules/networks/forms.py:146 plinth/modules/transmission/forms.py:39
@@ -645,13 +643,12 @@ msgid "Status of Dynamic DNS"
 msgstr "Dinamik DNS Durumu"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:25
-#, fuzzy
 #| msgid "DynamicDNS client"
 msgid "Dynamic DNS Client"
-msgstr "DynamicDNS istemcisi"
+msgstr "Dinamik DNS istemcisi"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your internet provider changes your IP address periodic (i.e. every "
 #| "24h) it may be hard for others to find you in the WEB. And for this "
@@ -662,13 +659,12 @@ msgid ""
 "it may be hard for others to find you in the WEB. And for this reason nobody "
 "may find the services which are provided by %(box_name)s, such as ownCloud."
 msgstr ""
-"Eğer İnternet erişim sağlayıcınız IP adresinizi periyodik bir şekilde "
-"(mesela her 24 saatte bir) değiştiriyorsa diğer kişiler sizi ağda bulmakta "
-"zorlanabilir. Ve bu sebeple kimse FreedomBox tarafından sunulan servisleri "
-"(sizin ownCloud'unuz gibi) bulamayabilir."
+"Eğer İnternet erişim sağlayıcınız IP adresinizi periyodik bir şekilde ("
+"mesela her 24 saatte bir) değiştiriyorsa diğer kişiler sizi ağda bulmakta "
+"zorlanabilir. Ve bu sebeple kimse sizin ownCloud'unuz gibi %(box_name)s "
+"tarafından sunulan servisleri bulamayabilir."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:37
-#, fuzzy
 #| msgid ""
 #| "The solution is to assign a DNS name to your IP address and update the "
 #| "DNS name every time your IP is changed by your Internet provider. Dynamic "
@@ -687,10 +683,11 @@ msgid ""
 msgstr ""
 "Çözüm, IP adresinize bir DNS ismi atamak ve DNS ismini IP adresiniz İnternet "
 "erişim sağlayıcınız tarafından her değiştirildiğinde güncellemektir. Dinamik "
-"DNS güncel genel İnternet adresinizi bir <a href='http://gnudip2.sourceforge."
-"net/' target='_blank'> gnudip </a> sunucusuna gönderir. Bunun ardından "
-"sunucu DNS isminizi yeni IP adresi ile ilişkilendirecek ve İnternet'te "
-"birisi DNS isminizi sorguladığında güncel IP adresinizi elde edebilecektir."
+"DNS güncel genel İnternet adresinizi bir <a "
+"href='http://gnudip2.sourceforge.net/' target='_blank'> gnudip </a> "
+"sunucusuna gönderir. Bunun ardından sunucu DNS isminizi yeni IP adresi ile "
+"ilişkilendirecek ve İnternet'te birisi DNS isminizi sorguladığında güncel IP "
+"adresinizi elde edebilecektir."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:50
 msgid ""
@@ -707,7 +704,7 @@ msgstr ""
 "afraid.org</a> adresinde bulabilirsiniz."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:61
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your freedombox is connected behind some NAT router, don't forget to "
 #| "add portforwarding (i.e. forward some standard ports like 80 and 443) to "
@@ -716,9 +713,9 @@ msgid ""
 "If your %(box_name)s is connected behind some NAT router, don't forget to "
 "add port forwarding (i.e. forward some standard ports like 80 and 443)."
 msgstr ""
-"Eğer FreedomBox'unuz bir NAT yönlendiriciye bağlıysa, FreedomBox cihazınıza "
-"port yönlendirme (yani 80 ve 443 gibi bazı standart portları yönlendirmeyi) "
-"eklemeyi unutmayınız."
+"Eğer %(box_name)s kutunuz bir NAT yönlendiriciye bağlıysa, port yönlendirme ("
+"yani 80 ve 443 gibi bazı standart portları yönlendirmeyi) eklemeyi "
+"unutmayınız."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
@@ -741,13 +738,12 @@ msgstr ""
 "girmezseniz NAT türü tespit edilmeyecektir."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
-#, fuzzy
 #| msgid "Direct connection to the internet."
 msgid "Direct connection to the Internet."
 msgstr "İnternet'e doğrudan bağlantı."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Behind NAT, this means that dynamic DNS service will poll the \"IP check "
 #| "URL\" for changes (we need the \"IP check URL\" for this reason - "
@@ -759,11 +755,11 @@ msgid ""
 "changes will not be detected).  In case the WAN IP changes, it may take up "
 "to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"NAT arkasında, bu, dinamik DNS servisinin \"IP kontrolü bağlantısını\" "
-"değişiklikler için yoklayacağı anlamına gelir (\"IP kontrolü bağlantısına\" "
-"bu sebeple ihtiyaç duymaktayız - aksi takdirde IP değişikliklerini tespit "
-"edemeyiz). WAN IP değişikliği durumunda DNS girdisini güncellememiz "
-"%(timer)s dakika alabilir."
+"NAT arkasında. Bu, dinamik DNS servisinin \"IP kontrolü bağlantısını\" "
+"değişiklikler için yoklayacağı anlamına gelir (\"IP kontrolü bağlantısı\" bu "
+"sebeple gereklidir - aksi takdirde IP değişiklikleri tespit edilemez). WAN "
+"IP değişikliği durumunda DNS girdinizin güncellenmesi %(timer)s dakika "
+"alabilir."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
@@ -776,7 +772,7 @@ msgid "Firewall"
 msgstr "Güvenlik Duvarı"
 
 #: plinth/modules/firewall/templates/firewall.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Firewall is a network security system that controls the incoming and "
 #| "outgoing network traffic on your %(box_name)s. Keeping a firewall enabled "
@@ -787,13 +783,13 @@ msgid ""
 "properly configured reduces risk of security threat from the Internet."
 msgstr ""
 "Güvenlik duvarı %(box_name)s kutunuzda içeri gelen ve dışarı giden şebeke "
-"trafiğini kontrol eden bir ağ güvenlik sistemidir. Güvenlik duvarını "
+"trafiğini kontrol eden bir güvenlik sistemidir. Güvenlik duvarını "
 "etkinleştirip gerektiği gibi yapılandırmak İnternet'ten gelen güvenlik "
 "tehditlerini azaltır."
 
 #: plinth/modules/firewall/templates/firewall.html:36
 msgid "Current status:"
-msgstr ""
+msgstr "Güncel durum:"
 
 #: plinth/modules/firewall/templates/firewall.html:41
 #, python-format
@@ -842,7 +838,6 @@ msgid "Blocked"
 msgstr "Engellenmiş"
 
 #: plinth/modules/firewall/templates/firewall.html:103
-#, fuzzy
 #| msgid ""
 #| "The operation of the firewall is automatic. When you enable a service it "
 #| "is automatically permitted in the firewall and you disable a service is "
@@ -853,8 +848,8 @@ msgid ""
 "disabled in the firewall."
 msgstr ""
 "Güvenlik duvarının işleyişi otomatiktir. Bir servisi etkinleştirdiğinizde "
-"otomatik olarak güvenlik duvarında izinli hale gelir ve devre dışı "
-"bıraktığınızda otomatik olarak güvenlik duvarında da devre dışı bırakılır."
+"güvenlik duvarında da izinli hale gelir ve devre dışı bıraktığınızda "
+"güvenlik duvarında da devre dışı bırakılır."
 
 #: plinth/modules/first_boot/forms.py:48 plinth/modules/users/forms.py:70
 msgid "Creating LDAP user failed."
@@ -910,7 +905,7 @@ msgid "Setup Complete!"
 msgstr "Yapılandırma Tamamlandı!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:32
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "%(box_name)s setup is now complete.  To make your %(box_name)s "
 #| "functional, you need some applications.  Applications will be installed "
@@ -958,7 +953,7 @@ msgstr "Nerede Yardım Bulabilirim"
 
 #: plinth/modules/help/help.py:38
 msgid "Manual"
-msgstr ""
+msgstr "El ile"
 
 #: plinth/modules/help/help.py:48
 msgid "Documentation and FAQ"
@@ -970,13 +965,13 @@ msgid "About {box_name}"
 msgstr "{box_name} hakkında"
 
 #: plinth/modules/help/help.py:73
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "About {box_name}"
 msgid "{box_name} Manual"
-msgstr "{box_name} hakkında"
+msgstr "{box_name} Kılavuzu"
 
 #: plinth/modules/help/templates/help_about.html:30
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "FreedomBox is a community project to develop, design and promote personal "
 #| "servers running free software for private, personal communications.  It "
@@ -994,13 +989,13 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"FreedomBox, özel iletişimler için özgür yazılım çalıştıran kişisel sunucular "
-"tasarlayan, geliştiren ve kullanımını teşvik eden bir topluluk projesidir. "
-"Veri güvenliğini ve gizliliği koruyan şartlarda İnternet'e bağlantıda arayüz "
-"görevi görecek bir ağ cihazıdır. Verilerinizin sizinle kalması için Wi-Fi "
-"yönlendiricisinin yerine geçebilecek bir cihazda blog, viki, ağ sitesi, "
-"sosyal ağ, e-posta, vekil sunucu ve Tor aktarıcısı gibi uygulamalar "
-"barındırır."
+"%(box_name)s, özel iletişimler için özgür yazılım çalıştıran kişisel "
+"sunucular tasarlayan, geliştiren ve kullanımını teşvik eden bir topluluk "
+"projesidir. Veri güvenliğini ve gizliliği koruyan şartlarda İnternet'e "
+"bağlantıda arayüz görevi görecek bir ağ cihazıdır. Verilerinizin sizinle "
+"kalması için Wi-Fi yönlendiricisinin yerine geçebilecek bir cihazda blog, "
+"viki, ağ sitesi, sosyal ağ, e-posta, vekil sunucu ve Tor aktarıcısı gibi "
+"uygulamalar barındırır."
 
 #: plinth/modules/help/templates/help_about.html:43
 msgid ""
@@ -1019,7 +1014,7 @@ msgstr ""
 "İnternet'i amaçlanan eşten eşe mimarisine geri getiriyoruz."
 
 #: plinth/modules/help/templates/help_about.html:56
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "There are a number of projects working to realize a future of distributed "
 #| "services; FreedomBox aims to bring them all together in a convenient "
@@ -1030,11 +1025,11 @@ msgid ""
 "package."
 msgstr ""
 "Eşten eşe, dağıtılmış servisler geleceği için çalışan çeşitli projeler "
-"bulunmaktadır: FreedomBox'un amacı onların tümünü kişisel bir sunucuda bir "
-"araya getirmektir."
+"bulunmaktadır: %(box_name)s kutusunun amacı onların tümünü kişisel bir "
+"sunucuda bir araya getirmektir."
 
 #: plinth/modules/help/templates/help_about.html:64
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "For more information about the FreedomBox project, see the <a href="
 #| "\"https://wiki.debian.org/FreedomBox\">FreedomBox Wiki</a>."
@@ -1042,8 +1037,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"FreedomBox projesi hakkında daha fazla bilgi için <a href=\"https://wiki."
-"debian.org/FreedomBox\">FreedomBox Vikisini</a> okuyunuz."
+"%(box_name)s projesi hakkında daha fazla bilgi için <a href=\""
+"https://wiki.debian.org/FreedomBox\">%(box_name)s Vikisini</a> okuyunuz."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
@@ -1060,7 +1055,7 @@ msgid "%(box_name)s Setup"
 msgstr "%(box_name)s Kurulumu"
 
 #: plinth/modules/help/templates/help_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "The <a href=\"%(manual_url)s\">FreedomBox Manual</a> is the best place to "
 #| "start for information regarding %(box_name)s."
@@ -1068,11 +1063,11 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
-"%(box_name)s. hakkında daha fazla bilgi edinmeye başlamak için en uygun yer "
-"<a href=\"%(manual_url)s\">FreedomBox Kullanım Kılavuzudur</a>."
+"%(box_name)s. hakkında daha fazla bilgi edinmeye başlamak için en uygun yer <"
+"a href=\"%(manual_url)s\">%(box_name)s Kullanım Kılavuzudur</a>."
 
 #: plinth/modules/help/templates/help_index.html:36
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 #| "FreedomBox project wiki </a> contains further information."
@@ -1080,11 +1075,11 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> FreedomBox "
-"proje vikisi </a> daha fazla bilgi içerir."
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> %(box_name)"
+"s proje vikisi </a> daha fazla bilgi içerir."
 
 #: plinth/modules/help/templates/help_index.html:43
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To seek help from FreedomBox community, queries may be posted on the <a "
 #| "href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
@@ -1096,10 +1091,11 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
-"FreedomBox topluluğundan yardım istiyorsanız, sorularınızı <a href=\"https://"
-"lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\"> e-posta "
-"listesine </a> yollayabilirsiniz.  Liste arşivleri diğer kullanıcıların "
-"karşılaştıkları sorunlar ve mümkün çözümler hakkında da bilgi içerir."
+"%(box_name)s topluluğundan yardım istiyorsanız, sorularınızı <a href=\""
+"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\"> e-"
+"posta listesine </a> yollayabilirsiniz.  Liste arşivleri diğer "
+"kullanıcıların karşılaştıkları sorunlar ve mümkün çözümler hakkında da bilgi "
+"içerir."
 
 #: plinth/modules/help/templates/help_index.html:53
 #, python-format
@@ -1109,24 +1105,25 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
+"Birçok %(box_name)s iştirakçisi ve kullancısı irc.oftc.net IRC ağında da "
+"bulunabilir. IRC web arayüzünü kullanarak <a href=\""
+"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
+"#freedombox</a> kanalına katılın ve yardım talebinde bulunun."
 
 #: plinth/modules/ikiwiki/__init__.py:38
-#, fuzzy
 #| msgid "Wiki & Blog (Ikiwiki)"
 msgid "Wiki and Blog (ikiwiki)"
-msgstr "Viki & Blog (Ikiwiki)"
+msgstr "Viki ve Blog (ikiwiki)"
 
 #: plinth/modules/ikiwiki/__init__.py:43
-#, fuzzy
 #| msgid "Ikiwiki wikis and blogs"
 msgid "ikiwiki wikis and blogs"
-msgstr "Ikiwiki vikileri ve blogları"
+msgstr "ikiwiki vikileri ve blogları"
 
 #: plinth/modules/ikiwiki/forms.py:29
-#, fuzzy
 #| msgid "Enable Ikiwiki"
 msgid "Enable ikiwiki"
-msgstr "Ikiwiki'yi etkinleştir"
+msgstr "ikiwiki'yi Etkinleştir"
 
 #: plinth/modules/ikiwiki/forms.py:36
 #: plinth/modules/networks/templates/connection_show.html:98
@@ -1155,13 +1152,12 @@ msgstr ""
 "ikiwiki</a> adresinden mümkün olacaktır."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete Wiki/Blog <em>%(name)s</em>"
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
-msgstr "<em>%(name)s</em> ismli Viki/Blogu sil"
+msgstr "<em>%(name)s</em> isimli Viki ya da Blogu sil"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:33
-#, fuzzy
 #| msgid ""
 #| "This action will remove all the posts, pages and comments including "
 #| "revision history.  Delete this wiki/blog permanently?"
@@ -1170,7 +1166,8 @@ msgid ""
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
 "Bu eylem revizyon geçmişi de dahil olmak üzere tüm mesajları, sayfaları ve "
-"yorumları silecektir. Bu viki/blogu daimi olarak silmek istiyor musunuz?"
+"yorumları silecektir. Bu viki ya da blogu daimi olarak silmek istiyor "
+"musunuz?"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
@@ -1211,20 +1208,18 @@ msgid "Create"
 msgstr "Oluştur"
 
 #: plinth/modules/ikiwiki/views.py:73
-#, fuzzy
 #| msgid "Wiki & Blog"
 msgid "Wiki and Blog"
-msgstr "Viki & Blog"
+msgstr "Viki ve Blog"
 
 #: plinth/modules/ikiwiki/views.py:106
 msgid "Manage Wikis and Blogs"
 msgstr "Viki ve Blogları Yönet"
 
 #: plinth/modules/ikiwiki/views.py:132
-#, fuzzy
 #| msgid "Create a Wiki or Blog"
 msgid "Create Wiki or Blog"
-msgstr "Bir Viki ya da Blog oluştur"
+msgstr "Viki ya da Blog oluştur"
 
 #: plinth/modules/ikiwiki/views.py:145
 #, python-brace-format
@@ -1257,10 +1252,9 @@ msgid "Could not delete {name}: {error}"
 msgstr "{name} silinemedi: {error}"
 
 #: plinth/modules/ikiwiki/views.py:182
-#, fuzzy
 #| msgid "Delete Wiki/Blog"
 msgid "Delete Wiki or Blog"
-msgstr "Viki/Blogu Sil"
+msgstr "Viki ya da Blogu Sil"
 
 #: plinth/modules/letsencrypt/__init__.py:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
@@ -1361,7 +1355,7 @@ msgstr "{domain} alanı için sertifika edinilemedi: {error}"
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:35
 #: plinth/modules/monkeysphere/views.py:44
 msgid "Monkeysphere"
-msgstr ""
+msgstr "Monkeysphere"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 msgid ""
@@ -1373,14 +1367,22 @@ msgid ""
 "key signing process.  See the <a href=\"http://web.monkeysphere.info/getting-"
 "started-ssh/\"> Monkeysphere SSH documentation</a> for more details."
 msgstr ""
+"Monkeysphere ile her SSH sunan yapılandırılmış alan için bir PGP anahtarı "
+"oluşturulabilir. Bunun ardından herkese açık PGP anahtarı PGP anahtar "
+"sunucularına yüklenebilir. Bu makineye SSH vasıtasıyla bağlanan kullanıcılar "
+"doğru makineye bağlandıklarını teyit edebilirler. Kullanıcıların anahtara "
+"güvenebilmeleri için en az bir kişinin (genellikle makine sahibi) anahtarı "
+"olağan PGP anahtar imzalama süreciyle imzalaması gerekir. Daha fazla bilgi "
+"için  <a href=\"http://web.monkeysphere.info/getting-started-ssh/\"> "
+"Monkeysphere SSH belgelendirmesine</a> bakınız."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:53
 msgid "Publishing key to keyserver..."
-msgstr ""
+msgstr "Anahtar, anahtar sunucusuna yayınlanıyor..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:71
 msgid "GPG Fingerprint"
-msgstr ""
+msgstr "GPG Parmak izi"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:83
 #: plinth/modules/names/views.py:45
@@ -1389,27 +1391,27 @@ msgstr "Mevcut değil"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:93
 msgid "Generate PGP Key"
-msgstr ""
+msgstr "PGP Anahtarı Oluştur"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:101
 msgid "Publish Key"
-msgstr ""
+msgstr "Anahtarı Yayınla"
 
 #: plinth/modules/monkeysphere/views.py:58
 msgid "Generated PGP key."
-msgstr ""
+msgstr "Oluşturulan PGP anahtarı."
 
 #: plinth/modules/monkeysphere/views.py:83
 msgid "Cancelled key publishing."
-msgstr ""
+msgstr "Anahtar yayını iptal edildi."
 
 #: plinth/modules/monkeysphere/views.py:120
 msgid "Published key to keyserver."
-msgstr ""
+msgstr "Anahtar, anahtar sunucusuna yayınlandı."
 
 #: plinth/modules/monkeysphere/views.py:122
 msgid "Error occurred while publishing key."
-msgstr ""
+msgstr "Anahtarın yayınlanmasında bir hata meydana geldi."
 
 #: plinth/modules/mumble/__init__.py:38
 #: plinth/modules/mumble/templates/mumble.html:26
@@ -1842,7 +1844,6 @@ msgid "Firewall zone"
 msgstr "Güvenlik duvarı alanı"
 
 #: plinth/modules/networks/templates/connection_show.html:280
-#, fuzzy
 #| msgid ""
 #| "This interface should be connected to local network/machine.  If you "
 #| "connect this interface to a public network, services meant to be "
@@ -1853,12 +1854,11 @@ msgid ""
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
-"Bu arayüz yerel ağa/makineye bağlı olmalıdır. Eğer bu arayüzü herkese açık "
-"bir şebekeye bağlarsanız, sadece dahili olması amaçlanan servislere harici "
-"erişim mümkün olacaktır. Bu bir güvenlik riskidir."
+"Bu arayüz yerel bir ağa/makineye bağlı olmalıdır. Eğer bu arayüzü herkese "
+"açık bir şebekeye bağlarsanız, sadece dahili olması amaçlanan servislere "
+"harici erişim mümkün olacaktır. Bu bir güvenlik riskidir."
 
 #: plinth/modules/networks/templates/connection_show.html:300
-#, fuzzy
 #| msgid ""
 #| "This interface should receive your Internet connection. If you connect it "
 #| "your a local network/machine, many services meant to available only "
@@ -1873,7 +1873,7 @@ msgstr ""
 "servislerin birçoğuna erişim mümkün olmayacaktır."
 
 #: plinth/modules/networks/templates/connection_show.html:319
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This interface is not maintained by FreedomBox.  Its security status is "
 #| "unknown to FreedomBox.  Many FreedomBox services may not be available on "
@@ -1885,10 +1885,10 @@ msgid ""
 "this interface.  It is recommended that you deactivate or delete this "
 "connection and re-configure it."
 msgstr ""
-"Bu arayüz FreedomBox tarafından korunmaz. Güvenlik durumu FreedomBox "
-"tarafından bilinmemektedir. Birçok FreedomBox servisi bu arayüzde mevcut "
-"olmayabilir. Bu bağlantıyı devre dışı bırakmanız/silmeniz ve yeniden "
-"yapılandırmanız tavsiye edilir."
+"Bu arayüzün bakımı %(box_name)s tarafından yapılmaz. Güvenlik durumu "
+"%(box_name)s tarafından bilinmemektedir. Birçok %(box_name)s servisi bu "
+"arayüzde mevcut olmayabilir. Bu bağlantıyı devre dışı bırakmanız/silmeniz ve "
+"yeniden yapılandırmanız tavsiye edilir."
 
 #: plinth/modules/networks/templates/connections_add.html:34
 #: plinth/modules/networks/templates/connections_type_select.html:34
@@ -1975,7 +1975,7 @@ msgid "Enable OpenVPN server"
 msgstr "OpenVPN sunucusunu etkinleştir"
 
 #: plinth/modules/openvpn/templates/openvpn.html:38
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Virtual Private Network (VPN) is a technique for securely connecting two "
 #| "machines in order to access resources of a private network.  While you "
@@ -1992,7 +1992,7 @@ msgid ""
 "security and anonymity."
 msgstr ""
 "Sanal Özel Ağ (Virtual Private Network, VPN), özel bir ağın kaynaklarına "
-"erişmek için iki makine arasında güvenli bir şekilde bağlantı kurmak için "
+"erişmek için iki cihaz arasında güvenli bir şekilde bağlantı kurmak için "
 "kullanılan tekniktir. Evinizden uzaktayken ev ağınıza erişmek için "
 "%(box_name)s kutusuna bağlanıp %(box_name)s tarafından sunulan özel/dahili "
 "servisleri kullanabilirsiniz. Aynı zamanda ek güvenlik ve anonimlik için "
@@ -2003,7 +2003,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:54
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
 #| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
@@ -2022,9 +2022,9 @@ msgstr ""
 "%(box_name)s kutusunun VPN'ine erişmek için bir profil indirmeniz ve bunu "
 "mobil ya da masaüstü makinenize yüklemeniz gerekir. OpenVPN istemcileri "
 "platformların çoğu için mevcuttur. Tavsiye edilen istemciler ve onları "
-"yapılandırma talimatları için <a href=\"https://wiki.debian.org/FreedomBox/"
-"Manual/OpenVPN\" title=\"FreedomBox Manual - OpenVPN\">belgelendirmeyi</a> "
-"okuyun."
+"yapılandırma talimatları için <a href=\""
+"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s "
+"Manual - OpenVPN\">belgelendirmeyi</a> okuyun."
 
 #: plinth/modules/openvpn/templates/openvpn.html:66
 #, python-format
@@ -2574,22 +2574,19 @@ msgstr "Quassel çekirdek servisi çalışmamaktadır"
 #: plinth/modules/repro/__init__.py:36
 #: plinth/modules/repro/templates/repro.html:26
 #: plinth/modules/repro/views.py:55
-#, fuzzy
 #| msgid "Server port"
 msgid "SIP Server (repro)"
-msgstr "Sunucu portu"
+msgstr "SIP Sunucusu (repro)"
 
 #: plinth/modules/repro/__init__.py:41
-#, fuzzy
 #| msgid "Second DNS Server"
 msgid "repro SIP Server"
-msgstr "İkinci DNS Sunucusu"
+msgstr "repro SIP Sunucusu"
 
 #: plinth/modules/repro/forms.py:29
-#, fuzzy
 #| msgid "Enable Quassel core service"
 msgid "Enable repro service"
-msgstr "Quassel çekirdek servisini etkinleştir"
+msgstr "repro servisini etkinleştir"
 
 #: plinth/modules/repro/templates/repro.html:29
 msgid ""
@@ -2599,6 +2596,11 @@ msgid ""
 "their presence known.  It also acts as a proxy to federate SIP "
 "communications to other servers on the Internet similar to email."
 msgstr ""
+"repro, bir SIP telefonunun hem varlık ve anlık mesajlaşma, hem de ses ya da "
+"video aramalar için kullanabileceği çeşitli SIP hizmetleri sunar. repro, "
+"istemcilerin varlıklarını bildirebilecekleri bir sunucu ve SIP kullanıcı "
+"hesapları sağlar. Aynı zamanda e-postaya benzer bir şekilde diğer sunucular "
+"ile SIP bağlantılarını federe edecek bir vekil sunucu görevi de yapar."
 
 #: plinth/modules/repro/templates/repro.html:39
 msgid ""
@@ -2607,6 +2609,10 @@ msgid ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android phones)."
 msgstr ""
+"SIP aramalarında bulunabilmek için istemci bir programa ihtiyaç vardır. "
+"Mevcut istemciler <a href=\"https://jitsi.org/\"> Jitsi</a> (bilgisayarlar "
+"için) ve <a href=\"https://f-droid.org/repository/browse/?fdid=com."
+"csipsimple\"> CSipSimple</a>'ı (Android telefonlar için) içerir."
 
 #: plinth/modules/repro/templates/repro.html:48
 msgid ""
@@ -2616,18 +2622,22 @@ msgid ""
 "log in to the repro configuration panel. After setting the domain, it is "
 "required to restart the repro service. Disable the service and re-enable it."
 msgstr ""
+"<strong>Not:</strong> repro'yu kullanmadan önce alanlar ve kullanıcılar <a "
+"href=\"/repro/domains.html\"> ağ tabanlı yapılandırma paneli</a> ile "
+"yapılandırılmalıdır. <em>admin (yani yönetici)</em> grubundaki kullanıcılar "
+"repro yapılandırma paneline giriş yapabileceklerdir. Alan ayarlandıktan "
+"sonra repro servisini tekrar başlatmak gerekir. Servisi devre dışı bırakıp "
+"tekrar etkinleştirin."
 
 #: plinth/modules/repro/templates/repro.html:63
-#, fuzzy
 #| msgid "Quassel core service is running"
 msgid "repro service is running"
-msgstr "Quassel çekirdek servisi çalışmaktadır"
+msgstr "repro servisi çalışmaktadır"
 
 #: plinth/modules/repro/templates/repro.html:66
-#, fuzzy
 #| msgid "Quassel core service is not running"
 msgid "repro service is not running"
-msgstr "Quassel çekirdek servisi çalışmamaktadır"
+msgstr "repro servisi çalışmamaktadır"
 
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
@@ -2644,7 +2654,7 @@ msgid "Enable reStore"
 msgstr "reStore'u Etkinleştir"
 
 #: plinth/modules/restore/templates/restore_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
 #| "applications.  The idea is to uncouple web applications from data.  No "
@@ -2662,8 +2672,8 @@ msgstr ""
 "uygulamaları için bir sunucudur. Öne çıkan fikir, ağ uygulamalarının "
 "verilerden ayrılmasıdır. Ağ uygulamalarının nereden sunulduğuna bakmaksızın "
 "veriler kullanıcının seçtiği herhangi bir barındırılmayan depolama "
-"sunucusunda depolanabilir. reStore ile %(cfg.box_name)s kutunuz "
-"barındırılmayan depolama sunucunuz haline gelir."
+"sunucusunda depolanabilir. reStore ile %(box_name)s kutunuz barındırılmayan "
+"depolama sunucunuz haline gelir."
 
 #: plinth/modules/restore/templates/restore_index.html:40
 msgid ""
@@ -2782,14 +2792,13 @@ msgid "Anonymity Network (Tor)"
 msgstr "Anonimlik Ağı (Tor)"
 
 #: plinth/modules/tor/__init__.py:53
-#, fuzzy
 #| msgid "Anonymity Network (Tor)"
 msgid "Tor Anonymity Network"
-msgstr "Anonimlik Ağı (Tor)"
+msgstr "Tor Anonimlik Ağı"
 
 #: plinth/modules/tor/__init__.py:58
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Tor Köprü Aktarması"
 
 #: plinth/modules/tor/__init__.py:76 plinth/modules/tor/views.py:144
 msgid "Tor Hidden Service"
@@ -2826,7 +2835,7 @@ msgid "Enable Tor Hidden Service"
 msgstr "Tor Gizli Servisi Etkinleştir"
 
 #: plinth/modules/tor/forms.py:38
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "A hidden service will allow FreedomBox to provide selected services (such "
 #| "as ownCloud or Chat) without revealing its location."
@@ -2834,8 +2843,8 @@ msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "ownCloud or chat) without revealing its location."
 msgstr ""
-"Gizli servisler FreedomBox'un (ownCloud ya da sohbet gibi) seçili servisleri "
-"konumunu ortaya çıkarmadan sağlamasına imkân verir."
+"Gizli servisler {box_name} kutusunun (ownCloud ya da sohbet gibi) seçili "
+"servisleri konumunu ortaya çıkarmadan sağlamasına imkân verir."
 
 #: plinth/modules/tor/forms.py:42
 msgid "Download software packages over Tor"
@@ -2866,10 +2875,9 @@ msgstr ""
 "Tarayıcısını</a> kullanmanızı tavsiye eder."
 
 #: plinth/modules/tor/templates/tor.html:54
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Tor configuration is being updated"
-msgstr "Kurulum güncellendi"
+msgstr "Tor yapılandırması güncellenmektedir"
 
 #: plinth/modules/tor/templates/tor.html:62
 msgid "Tor is running"
@@ -2930,14 +2938,13 @@ msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Eylem hatası: {0} [{1}] [{2}]"
 
 #: plinth/modules/tor/views.py:148
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Configuration updated."
-msgstr "Kurulum güncellendi"
+msgstr "Kurulum güncellendi."
 
 #: plinth/modules/tor/views.py:150
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
 #: plinth/modules/transmission/__init__.py:38
 #: plinth/modules/transmission/templates/transmission.html:26
@@ -3026,6 +3033,10 @@ msgid ""
 "upgrades are enabled, upgrades are automatically run every night. You don't "
 "normally need to start the upgrade process."
 msgstr ""
+"Yükseltmeler en son yazılım ve güvenlik güncellemelerini kurar. Otomatik "
+"yükseltmeler etkinleştirildiğinde yükseltmeler her gece otomatik olarak "
+"çalıştırılacaktır. Normal olarak yükseltme sürecini başlatmanıza gerek "
+"yoktur."
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid ""
@@ -3034,20 +3045,23 @@ msgid ""
 "other packages.  During the upgrade, this web interface may be temporarily "
 "unavailable and show an error.  Refresh the page to continue."
 msgstr ""
+"Kurulacak paket sayısına göre bunun tamamlanması uzun bir süre alabilir. "
+"Yükseltmeler sürmekteyken başka paket kurmanız mümkün olmayacaktır. "
+"Yükseltme sırasında bu ağ arayüzüne geçici olarak erişim mümkün olmayabilir "
+"ve bir hata gösterebilir. Devam etmek için sayfayı tazeleyin."
 
 #: plinth/modules/upgrades/templates/upgrades.html:58
 msgid "Upgrade now &raquo;"
 msgstr "Şimdi yükselt &raquo;"
 
 #: plinth/modules/upgrades/templates/upgrades.html:65
-#, fuzzy
 #| msgid "ejabberd is running"
 msgid "A package manager is running."
-msgstr "ejabberd çalışmaktadır"
+msgstr "Bir paket yöneticisi çalışmaktadır."
 
 #: plinth/modules/upgrades/templates/upgrades.html:70
 msgid "Recent log from upgrades:"
-msgstr ""
+msgstr "Yükseltmelerin yakın geçmişteki kütüğü:"
 
 #: plinth/modules/upgrades/views.py:36 plinth/modules/upgrades/views.py:66
 msgid "Automatic Upgrades"
@@ -3058,16 +3072,14 @@ msgid "Upgrade Packages"
 msgstr "Paketleri Yükselt"
 
 #: plinth/modules/upgrades/views.py:96
-#, fuzzy
 #| msgid "Upgrade completed."
 msgid "Upgrade process started."
-msgstr "Yükseltme tamamlandı."
+msgstr "Yükseltme süreci başlamıştır."
 
 #: plinth/modules/upgrades/views.py:99
-#, fuzzy
 #| msgid "Upgrade failed."
 msgid "Starting upgrade failed."
-msgstr "Yükseltme başarısız oldu."
+msgstr "Yükseltmenin başlatılması başarısız oldu."
 
 #: plinth/modules/upgrades/views.py:102
 msgid "Package Upgrades"
@@ -3128,7 +3140,7 @@ msgstr "{group} grubuna yeni kullanıcı ilâve edilmesi başarısız oldu."
 
 #: plinth/modules/users/forms.py:92
 msgid "SSH Keys"
-msgstr ""
+msgstr "SSH Anahtarları"
 
 #: plinth/modules/users/forms.py:96
 msgid ""
@@ -3136,6 +3148,10 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
+"Herkese açık bir SSH anahtarı ayarlamak, bu kullanıcının sisteme parola "
+"kullanmadan güvenli bir şekilde giriş yapmasına müsaade edecektir. Birden "
+"çok anahtar girebilirsiniz, her anahtarı yeni bir satırda girin. Boş "
+"satırlar ve # ile başlayan satırlar görmezden gelinecektir."
 
 #: plinth/modules/users/forms.py:136
 msgid "Renaming LDAP user failed."
@@ -3321,10 +3337,10 @@ msgid "Secure Shell (SSH) Server"
 msgstr "Güvenli Kabuk (SSH) Sunucusu"
 
 #: plinth/service.py:79
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "FreedomBox Web Interface (Plinth)"
 msgid "{box_name} Web Interface (Plinth)"
-msgstr "FreedomBox Ağ Arayüzü (Plinth)"
+msgstr "{box_name} Ağ Arayüzü (Plinth)"
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -3360,10 +3376,10 @@ msgstr ""
 "\">hata izleyicisinde</a> rapor edin ki sorunu giderebilelim."
 
 #: plinth/templates/base.html:49
-#, fuzzy, python-format
+#, python-format
 #| msgid "Plinth administrative interface for the FreedomBox"
 msgid "Plinth administrative interface for the %(box_name)s"
-msgstr "FreedomBox için Plinth yönetim arayüzü"
+msgstr "%(box_name)s için Plinth yönetim arayüzü"
 
 #: plinth/templates/base.html:83
 msgid "Toggle navigation"
