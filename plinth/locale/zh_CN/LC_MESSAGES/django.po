@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-31 22:19+0530\n"
-"PO-Revision-Date: 2016-02-02 12:20+0000\n"
+"PO-Revision-Date: 2016-02-04 02:36+0000\n"
 "Last-Translator: Tong Hui <tonghuix@gmail.com>\n"
 "Language-Team: Chinese (China) "
 "<https://hosted.weblate.org/projects/freedombox/plinth/zh_CN/>\n"
@@ -103,6 +103,8 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
+"服务发现允许其他设备在网络上发现你的 %(box_name)s 和在其上运行的服务。它还允许 %(box_name)s "
+"发现在您本地网络上运行的其他设备和服务。服务发现是非必需的，且只能在内部网络上运行。可以禁用以提高安全性，尤其是当连接到一个充满敌意的本地网络。"
 
 #: plinth/modules/avahi/templates/avahi.html:40
 #: plinth/modules/datetime/templates/datetime.html:35
@@ -209,6 +211,8 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
+"主机名是本地网络上的其他设备可以到达你 {box_name} 的本地名称。它必须以字母或数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 "
+"63 个字符或更少。"
 
 #: plinth/modules/config/config.py:105
 msgid "Invalid hostname"
@@ -2226,25 +2230,25 @@ msgstr ""
 
 #: plinth/modules/repro/templates/repro.html:63
 msgid "repro service is running"
-msgstr ""
+msgstr "repro 服务正在运行"
 
 #: plinth/modules/repro/templates/repro.html:66
 msgid "repro service is not running"
-msgstr ""
+msgstr "repro 服务未运行"
 
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
 #: plinth/modules/restore/views.py:46
 msgid "Unhosted Storage (reStore)"
-msgstr ""
+msgstr "未托管存储（reStrore）"
 
 #: plinth/modules/restore/__init__.py:41
 msgid "reStore"
-msgstr ""
+msgstr "reStore"
 
 #: plinth/modules/restore/forms.py:29
 msgid "Enable reStore"
-msgstr ""
+msgstr "启用 reStore"
 
 #: plinth/modules/restore/templates/restore_index.html:29
 #, python-format
@@ -2260,17 +2264,17 @@ msgstr ""
 msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
-msgstr ""
+msgstr "您可以在<a href='/restore/'> reStrore 的 web 界面</a> 中创建和编辑帐户 。"
 
 #: plinth/modules/roundcube/__init__.py:36
 #: plinth/modules/roundcube/templates/roundcube.html:26
 #: plinth/modules/roundcube/views.py:64
 msgid "Email Client (Roundcube)"
-msgstr ""
+msgstr "邮件客户端（Roundcube）"
 
 #: plinth/modules/roundcube/forms.py:29
 msgid "Enable Roundcube"
-msgstr ""
+msgstr "启用 Roundcube"
 
 #: plinth/modules/roundcube/templates/roundcube.html:29
 msgid ""
@@ -2303,19 +2307,19 @@ msgstr ""
 #: plinth/modules/shaarli/templates/shaarli.html:26
 #: plinth/modules/shaarli/views.py:52
 msgid "Bookmarks (Shaarli)"
-msgstr ""
+msgstr "书签（Shaarli）"
 
 #: plinth/modules/shaarli/__init__.py:42
 msgid "Shaarli"
-msgstr ""
+msgstr "Shaarli"
 
 #: plinth/modules/shaarli/forms.py:29
 msgid "Enable Shaarli"
-msgstr ""
+msgstr "启用 Shaarli"
 
 #: plinth/modules/shaarli/templates/shaarli.html:28
 msgid "Shaarli allows you to save and share bookmarks."
-msgstr ""
+msgstr "Shaarli 允许您保存和共享书签。"
 
 #: plinth/modules/shaarli/templates/shaarli.html:31
 msgid ""
@@ -2323,91 +2327,93 @@ msgid ""
 "a> path on the web server. Note that Shaarli only supports a single user "
 "account, which you will need to setup on the initial visit."
 msgstr ""
+"当启用时，Shaarli 将可从 <a href=\"/shaarli\"> /shaarli</a> 路径访问。请注意，Shaarli "
+"只支持单用户帐户，您在首次访问时安装程序。"
 
 #: plinth/modules/system/system.py:26
 msgid "System"
-msgstr ""
+msgstr "系统"
 
 #: plinth/modules/system/system.py:33
 #: plinth/modules/system/templates/system.html:25
 #: plinth/templates/base.html:109
 msgid "System Configuration"
-msgstr ""
+msgstr "系统配置"
 
 #: plinth/modules/system/templates/system.html:28
 #, python-format
 msgid "Here you can administrate the underlying system of your %(box_name)s."
-msgstr ""
+msgstr "在这里您可以管理 %(box_name)s 的底层系统。"
 
 #: plinth/modules/system/templates/system.html:35
 #, python-format
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
-msgstr ""
+msgstr "此选项会在通用层面影响 %(box_name)s 所以要小心！"
 
 #: plinth/modules/tor/__init__.py:48 plinth/modules/tor/templates/tor.html:35
 msgid "Anonymity Network (Tor)"
-msgstr ""
+msgstr "匿名网络（Tor）"
 
 #: plinth/modules/tor/__init__.py:53
 msgid "Tor Anonymity Network"
-msgstr ""
+msgstr "Tor 匿名网络"
 
 #: plinth/modules/tor/__init__.py:58
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Tor 网桥中继"
 
 #: plinth/modules/tor/__init__.py:76 plinth/modules/tor/views.py:144
 msgid "Tor Hidden Service"
-msgstr ""
+msgstr "隐藏的 Tor 服务"
 
 #: plinth/modules/tor/__init__.py:222
 msgid "Tor relay port available"
-msgstr ""
+msgstr "Tor 中继端口可用"
 
 #: plinth/modules/tor/__init__.py:230
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "已注册 Obfs3 传输"
 
 #: plinth/modules/tor/__init__.py:236
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "已注册 Obfs4 传输"
 
 #: plinth/modules/tor/__init__.py:273
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr ""
+msgstr "在 tcp{kind} 上通过 Tor 访问 {url}"
 
 #: plinth/modules/tor/__init__.py:284
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr ""
+msgstr "确认使用 Tor 通过 tcp{kind} 访问 {url}"
 
 #: plinth/modules/tor/forms.py:32
 msgid "Enable Tor"
-msgstr ""
+msgstr "启用 Tor"
 
 #: plinth/modules/tor/forms.py:35
 msgid "Enable Tor Hidden Service"
-msgstr ""
+msgstr "启用隐藏的 Tor 服务"
 
 #: plinth/modules/tor/forms.py:38
 #, python-brace-format
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "ownCloud or chat) without revealing its location."
-msgstr ""
+msgstr "隐藏的服务将允许 {box_name} 提供某些服务（如 ownCloud 或聊天），而不暴露其位置。"
 
 #: plinth/modules/tor/forms.py:42
 msgid "Download software packages over Tor"
-msgstr ""
+msgstr "通过 Tor 下载软件包"
 
 #: plinth/modules/tor/forms.py:44
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
-msgstr ""
+msgstr "当启用时，软件将会下载 Tor 网络的安装和升级。这在软件下载过程中添加了一定程度的隐私和安全。"
 
 #: plinth/modules/tor/templates/tor.html:38
 msgid ""
@@ -2420,28 +2426,28 @@ msgstr ""
 
 #: plinth/modules/tor/templates/tor.html:54
 msgid "Tor configuration is being updated"
-msgstr ""
+msgstr "Tor 配置已更新"
 
 #: plinth/modules/tor/templates/tor.html:62
 msgid "Tor is running"
-msgstr ""
+msgstr "Tor 正在运行"
 
 #: plinth/modules/tor/templates/tor.html:65
 msgid "Tor is not running"
-msgstr ""
+msgstr "Tor 未运行"
 
 #: plinth/modules/tor/templates/tor.html:77
 msgid "Hidden Service"
-msgstr ""
+msgstr "隐藏的服务"
 
 #: plinth/modules/tor/templates/tor.html:78
 #: plinth/modules/tor/templates/tor.html:120
 msgid "Port"
-msgstr ""
+msgstr "端口"
 
 #: plinth/modules/tor/templates/tor.html:103
 msgid "Bridge"
-msgstr ""
+msgstr "网桥"
 
 #: plinth/modules/tor/templates/tor.html:106
 #, python-format
@@ -2454,108 +2460,109 @@ msgstr ""
 
 #: plinth/modules/tor/templates/tor.html:119
 msgid "Service"
-msgstr ""
+msgstr "服务"
 
 #: plinth/modules/tor/templates/tor.html:135
 msgid "SOCKS"
-msgstr ""
+msgstr "SOCKS"
 
 #: plinth/modules/tor/templates/tor.html:138
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr ""
+msgstr "Tor SOCKS 端口是你 %(box_name)s 上的 TCP 端口 9050 。"
 
 #: plinth/modules/tor/views.py:68
 msgid "Tor Control Panel"
-msgstr ""
+msgstr "Tor 控制面板"
 
 #: plinth/modules/tor/views.py:79
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
-msgstr ""
+msgstr "操作错误：{0} [{1}] [{2}]"
 
 #: plinth/modules/tor/views.py:148
 msgid "Configuration updated."
-msgstr ""
+msgstr "配置已更新。"
 
 #: plinth/modules/tor/views.py:150
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "在配置过程中出错。"
 
 #: plinth/modules/transmission/__init__.py:38
 #: plinth/modules/transmission/templates/transmission.html:26
 #: plinth/modules/transmission/views.py:67
 msgid "BitTorrent (Transmission)"
-msgstr ""
+msgstr "BitTorrent（Transmission）"
 
 #: plinth/modules/transmission/__init__.py:43
 msgid "Transmission BitTorrent"
-msgstr ""
+msgstr "Transmission BitTorrent"
 
 #: plinth/modules/transmission/forms.py:29
 msgid "Enable Transmission daemon"
-msgstr ""
+msgstr "启用 Transmission 守护进程"
 
 #: plinth/modules/transmission/forms.py:33
 msgid "Download directory"
-msgstr ""
+msgstr "下载目录"
 
 #: plinth/modules/transmission/forms.py:34
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
 "\" user."
-msgstr ""
+msgstr "保存下载的目录。 如果您更改默认目录，请确保新目录存在并且允许用户“debian-transmission”可写。"
 
 #: plinth/modules/transmission/forms.py:40
 msgid "Username to login to the web interface."
-msgstr ""
+msgstr "登录到 web 界面的用户名。"
 
 #: plinth/modules/transmission/forms.py:44
 msgid ""
 "Password to login to the web interface.  Current password is shown in a "
 "hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
+msgstr "登录到 web 界面的密码。当前密码以哈希格式所示。若要设置一个新密码，请以纯文本格式输入密码。"
 
 #: plinth/modules/transmission/templates/transmission.html:29
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
 msgstr ""
+"BitTorrent 是对等文件共享协议。Transmission 守护进程处理 Bitorrent 文件共享。请注意，BitTorrent 不是匿名。"
 
 #: plinth/modules/transmission/templates/transmission.html:37
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
-msgstr ""
+msgstr "通过 <a href=\"/transmission\">/transmission</a> 访问其 web 界面。"
 
 #: plinth/modules/transmission/templates/transmission.html:47
 msgid "Transmission daemon is running"
-msgstr ""
+msgstr "Transmission 守护程序正在运行"
 
 #: plinth/modules/transmission/templates/transmission.html:50
 msgid "Transmission daemon is not running."
-msgstr ""
+msgstr "Transmission 守护程序未运行。"
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
-msgstr ""
+msgstr "软件升级"
 
 #: plinth/modules/upgrades/forms.py:29
 msgid "Enable automatic upgrades"
-msgstr ""
+msgstr "启用自动升级"
 
 #: plinth/modules/upgrades/forms.py:30
 msgid ""
 "When enabled, the unattended-upgrades program will be run once per day. It "
 "will attempt to perform any package upgrades that are available."
-msgstr ""
+msgstr "当启用时，将每天一次运行无人值守升级程序。它会尝试执行任何可用的软件包升级。"
 
 #: plinth/modules/upgrades/templates/upgrades.html:37
 msgid ""
 "Upgrades install the latest software and security updates. When automatic "
 "upgrades are enabled, upgrades are automatically run every night. You don't "
 "normally need to start the upgrade process."
-msgstr ""
+msgstr "升级安装最新的软件和安全更新。启用自动升级后，每个夜晚自动运行升级。你通常不需要经常关注升级过程。"
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid ""
@@ -2564,72 +2571,74 @@ msgid ""
 "other packages.  During the upgrade, this web interface may be temporarily "
 "unavailable and show an error.  Refresh the page to continue."
 msgstr ""
+"根据要安装的程序包数量，这可能需要很长的时间才能完成。升级进行时，你将无法安装其它软件包。升级期间，此 web "
+"界面可能暂时不可用并显示错误消息。刷新页面后，可以继续。"
 
 #: plinth/modules/upgrades/templates/upgrades.html:58
 msgid "Upgrade now &raquo;"
-msgstr ""
+msgstr "现在升级 &raquo;"
 
 #: plinth/modules/upgrades/templates/upgrades.html:65
 msgid "A package manager is running."
-msgstr ""
+msgstr "软件包管理器正在运行。"
 
 #: plinth/modules/upgrades/templates/upgrades.html:70
 msgid "Recent log from upgrades:"
-msgstr ""
+msgstr "最新更新日志："
 
 #: plinth/modules/upgrades/views.py:36 plinth/modules/upgrades/views.py:66
 msgid "Automatic Upgrades"
-msgstr ""
+msgstr "自动升级"
 
 #: plinth/modules/upgrades/views.py:38
 msgid "Upgrade Packages"
-msgstr ""
+msgstr "升级软件包"
 
 #: plinth/modules/upgrades/views.py:96
 msgid "Upgrade process started."
-msgstr ""
+msgstr "升级过程开始。"
 
 #: plinth/modules/upgrades/views.py:99
 msgid "Starting upgrade failed."
-msgstr ""
+msgstr "开始升级失败。"
 
 #: plinth/modules/upgrades/views.py:102
 msgid "Package Upgrades"
-msgstr ""
+msgstr "软件包升级"
 
 #: plinth/modules/upgrades/views.py:131
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
-msgstr ""
+msgstr "配置无人参与升级时错误：{error}"
 
 #: plinth/modules/upgrades/views.py:136
 msgid "Automatic upgrades enabled"
-msgstr ""
+msgstr "已启用自动升级"
 
 #: plinth/modules/upgrades/views.py:138
 msgid "Automatic upgrades disabled"
-msgstr ""
+msgstr "已禁用自动升级"
 
 #: plinth/modules/users/__init__.py:36
 msgid "Users and Groups"
-msgstr ""
+msgstr "用户和组"
 
 #: plinth/modules/users/__init__.py:65
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
-msgstr ""
+msgstr "请检查 LDAP 条目“{search_item}”"
 
 #: plinth/modules/users/forms.py:28
 msgid "admin"
-msgstr ""
+msgstr "管理员"
 
 #: plinth/modules/users/forms.py:29
 msgid "wiki"
-msgstr ""
+msgstr "维基"
 
 #: plinth/modules/users/forms.py:41
 msgid "Groups"
-msgstr ""
+msgstr "群組"
 
 #: plinth/modules/users/forms.py:45
 msgid ""
@@ -2643,134 +2652,134 @@ msgstr ""
 #: plinth/modules/users/forms.py:80
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
-msgstr ""
+msgstr "未能将新用户添加到 {group}。"
 
 #: plinth/modules/users/forms.py:92
 msgid "SSH Keys"
-msgstr ""
+msgstr "SSH 密钥"
 
 #: plinth/modules/users/forms.py:96
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
-msgstr ""
+msgstr "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行一个。将忽略空行和以 # 开头的行。"
 
 #: plinth/modules/users/forms.py:136
 msgid "Renaming LDAP user failed."
-msgstr ""
+msgstr "重命名 LDAP 用户失败。"
 
 #: plinth/modules/users/forms.py:148
 msgid "Failed to remove user from group."
-msgstr ""
+msgstr "无法从组中删除用户。"
 
 #: plinth/modules/users/forms.py:159
 msgid "Failed to add user to group."
-msgstr ""
+msgstr "无法将用户添加到组。"
 
 #: plinth/modules/users/forms.py:188
 msgid "Changing LDAP user password failed."
-msgstr ""
+msgstr "更改 LDAP 用户密码失败。"
 
 #: plinth/modules/users/templates/users_change_password.html:27
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
-msgstr ""
+msgstr "为<em>%(username)s</em>更改密码"
 
 #: plinth/modules/users/templates/users_change_password.html:40
 msgid "Save Password"
-msgstr ""
+msgstr "保存密码"
 
 #: plinth/modules/users/templates/users_create.html:42
 #: plinth/modules/users/views.py:36 plinth/modules/users/views.py:56
 msgid "Create User"
-msgstr ""
+msgstr "创建用户"
 
 #: plinth/modules/users/templates/users_delete.html:26
 #: plinth/modules/users/views.py:110
 msgid "Delete User"
-msgstr ""
+msgstr "删除用户"
 
 #: plinth/modules/users/templates/users_delete.html:29
 #, python-format
 msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr ""
+msgstr "永久删除用户 <strong>%(username)s</strong>？"
 
 #: plinth/modules/users/templates/users_delete.html:38
 #, python-format
 msgid "Delete %(username)s"
-msgstr ""
+msgstr "删除 %(username)s"
 
 #: plinth/modules/users/templates/users_list.html:46
 #, python-format
 msgid "Delete user %(username)s"
-msgstr ""
+msgstr "删除用户 %(username)s"
 
 #: plinth/modules/users/templates/users_list.html:53
 #, python-format
 msgid "Edit user %(username)s"
-msgstr ""
+msgstr "编辑用户 %(username)s"
 
 #: plinth/modules/users/templates/users_update.html:39
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
-msgstr ""
+msgstr "使用 <a href='%(change_password_url)s'>更改密码窗口</a> 更改密码。"
 
 #: plinth/modules/users/templates/users_update.html:53
 msgid "Save Changes"
-msgstr ""
+msgstr "保存更改"
 
 #: plinth/modules/users/views.py:34 plinth/modules/users/views.py:69
 msgid "Users"
-msgstr ""
+msgstr "用户"
 
 #: plinth/modules/users/views.py:54
 #, python-format
 msgid "User %(username)s created."
-msgstr ""
+msgstr "用户 %(username)s 已创建。"
 
 #: plinth/modules/users/views.py:78
 #, python-format
 msgid "User %(username)s updated."
-msgstr ""
+msgstr "用户 %(username)s 已更新。"
 
 #: plinth/modules/users/views.py:79
 msgid "Edit User"
-msgstr ""
+msgstr "编辑用户"
 
 #: plinth/modules/users/views.py:120
 #, python-brace-format
 msgid "User {user} deleted."
-msgstr ""
+msgstr "用户 {user} 已删除。"
 
 #: plinth/modules/users/views.py:127
 msgid "Deleting LDAP user failed."
-msgstr ""
+msgstr "删除 LDAP 用户失败。"
 
 #: plinth/modules/users/views.py:136
 msgid "Change Password"
-msgstr ""
+msgstr "更改密码"
 
 #: plinth/modules/users/views.py:137
 msgid "Password changed successfully."
-msgstr ""
+msgstr "已成功更改密码。"
 
 #: plinth/modules/xmpp/__init__.py:41 plinth/modules/xmpp/__init__.py:46
 #: plinth/modules/xmpp/templates/xmpp.html:26 plinth/modules/xmpp/views.py:75
 msgid "Chat Server (XMPP)"
-msgstr ""
+msgstr "聊天服务器（XMPP）"
 
 #: plinth/modules/xmpp/forms.py:29
 msgid "Enable XMPP"
-msgstr ""
+msgstr "启用 XMPP"
 
 #: plinth/modules/xmpp/templates/xmpp.html:29
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
-msgstr ""
+msgstr "XMPP 是一种开放标准的通信协议。在这里你可以运行并配置您的 XMPP 服务器，称为 ejabberd。"
 
 #: plinth/modules/xmpp/templates/xmpp.html:36
 msgid ""
@@ -2778,6 +2787,8 @@ msgid ""
 "any other <a href='http://xmpp.org/xmpp-software/clients/' "
 "target='_blank'>XMPP client</a>."
 msgstr ""
+"要实际沟通，您可以使用 <a href='/jwchat'> web 客户端</a> 或任何其他 <a href='http://xmpp.org"
+"/xmpp-software/clients/' target='_blank'> XMPP 客户端</a>。"
 
 #: plinth/modules/xmpp/templates/xmpp.html:45
 #, python-format
@@ -2789,58 +2800,58 @@ msgstr ""
 
 #: plinth/modules/xmpp/templates/xmpp.html:55
 msgid "Launch web client"
-msgstr ""
+msgstr "启动 web 客户端"
 
 #: plinth/modules/xmpp/templates/xmpp.html:63
 msgid "ejabberd is running"
-msgstr ""
+msgstr "ejabberd 正在运行"
 
 #: plinth/modules/xmpp/templates/xmpp.html:66
 msgid "ejabberd is not running"
-msgstr ""
+msgstr "ejabberd 未运行"
 
 #: plinth/network.py:39
 msgid "PPPoE"
-msgstr ""
+msgstr "PPPoE"
 
 #: plinth/package.py:156
 msgid "packages not found"
-msgstr ""
+msgstr "找不到软件包"
 
 #: plinth/package.py:263
 msgid "Installed and configured packages successfully."
-msgstr ""
+msgstr "安装和配置软件包成功。"
 
 #: plinth/package.py:268
 #, python-brace-format
 msgid "Error installing packages: {string} {details}"
-msgstr ""
+msgstr "安装软件包时出错：{string}{details}"
 
 #: plinth/service.py:73
 msgid "Web Server"
-msgstr ""
+msgstr "Web 服务器"
 
 #: plinth/service.py:74
 msgid "Web Server over Secure Socket Layer"
-msgstr ""
+msgstr "Web 服务器安全套接字层"
 
 #: plinth/service.py:76
 msgid "Secure Shell (SSH) Server"
-msgstr ""
+msgstr "安全 Shell（SSH）服务器"
 
 #: plinth/service.py:79
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
-msgstr ""
+msgstr "{box_name} Web 界面（Plinth）"
 
 #: plinth/templates/404.html:25
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: plinth/templates/404.html:28
 #, python-format
 msgid "Requested page %(request_path)s was not found."
-msgstr ""
+msgstr "找不到请求的页面 %(request_path)s。"
 
 #: plinth/templates/404.html:34
 msgid ""
@@ -2848,10 +2859,12 @@ msgid ""
 "Plinth project <a href=\"https://github.com/freedombox/Plinth/issues\">issue "
 "tracker</a>."
 msgstr ""
+"如果你相信这个丢失的页面应该存在，请在 Plinth 项目 <a href=\"https://github.com/freedombox/Plinth/"
+"issues\"> 问题跟踪</a> 报告 bug。"
 
 #: plinth/templates/500.html:25
 msgid "500"
-msgstr ""
+msgstr "500"
 
 #: plinth/templates/500.html:28
 msgid ""
@@ -2859,61 +2872,63 @@ msgid ""
 "report the error on the <a href=\"https://github.com/freedombox/Plinth/issues"
 "\">bug tracker</a> so we can fix it."
 msgstr ""
+"这是一个内部错误，不是你造成的或可以修复。 请报告到 <a href=\"https://github.com/freedombox/Plinth/"
+"issues\"> bug 追踪器</a> 上这样我们就可以修复该错误。"
 
 #: plinth/templates/base.html:49
 #, python-format
 msgid "Plinth administrative interface for the %(box_name)s"
-msgstr ""
+msgstr "Plinth %(box_name)s 管理界面"
 
 #: plinth/templates/base.html:83
 msgid "Toggle navigation"
-msgstr ""
+msgstr "切换导航"
 
 #: plinth/templates/base.html:125 plinth/templates/base.html.py:126
 msgid "Change password"
-msgstr ""
+msgstr "更改密码"
 
 #: plinth/templates/base.html:129 plinth/templates/base.html.py:130
 #: plinth/templates/base.html:143 plinth/templates/base.html.py:145
 msgid "Log out"
-msgstr ""
+msgstr "登出"
 
 #: plinth/templates/base.html:135 plinth/templates/base.html.py:137
 msgid "Log in"
-msgstr ""
+msgstr "登录"
 
 #: plinth/templates/login.html:35
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #: plinth/templates/package_install.html:35
 msgid "Installation"
-msgstr ""
+msgstr "安装"
 
 #: plinth/templates/package_install.html:40
 msgid ""
 "This feature requires addtional packages to be installed.  Do you wish to "
 "install them?"
-msgstr ""
+msgstr "此功能需要安装额外的软件包。你想安装它们吗?"
 
 #: plinth/templates/package_install.html:49
 msgid "Package"
-msgstr ""
+msgstr "软件包"
 
 #: plinth/templates/package_install.html:50
 msgid "Summary"
-msgstr ""
+msgstr "摘要"
 
 #: plinth/templates/package_install.html:67
 msgid "Install"
-msgstr ""
+msgstr "安装"
 
 #: plinth/templates/package_install.html:74
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
-msgstr ""
+msgstr "正在安装 %(package_names)s：%(status)s"
 
 #: plinth/templates/package_install.html:84
 #, python-format
 msgid "%(percentage)s%% complete"
-msgstr ""
+msgstr "已完成 %(percentage)s%%"
