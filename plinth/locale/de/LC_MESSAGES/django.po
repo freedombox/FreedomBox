@@ -10,10 +10,10 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-31 22:19+0530\n"
-"PO-Revision-Date: 2015-12-20 17:46+0000\n"
+"PO-Revision-Date: 2016-02-05 22:07+0000\n"
 "Last-Translator: Dietmar <ndcdhimdsa@gmx.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
-"de/>\n"
+"Language-Team: German "
+"<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,7 +102,7 @@ msgid "Enable service discovery"
 msgstr "Dienste-Erkennung einschalten"
 
 #: plinth/modules/avahi/templates/avahi.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Service discovery allows other machines on the network to discover your "
 #| "FreedomBox and services running on it.  It also allows FreedomBox to "
@@ -118,9 +118,9 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Dienste-Erkennung erlaubt es anderen Geräten im Netzwerk die FreedomBox und "
-"deren Dienste zu finden. Zudem erlaubt es der FreedomBox andere Geräte im "
-"Netzwerk ausfindig zu machen. Dienste-Erkennung ist nicht zwingend "
+"Die Dienste-Erkennung erlaubt es anderen Geräten im Netzwerk Ihre %(box_name)"
+"s und deren Dienste zu finden. Zudem erlaubt es  %(box_name)s andere Geräte "
+"im Netzwerk ausfindig zu machen. Dienste-Erkennung ist nicht zwingend "
 "erforderlich und funktioniert nur in internen Netzen. Es kann deaktiviert "
 "werden um die Sicherheit vor allem in einem unsicheren Netz zu erhöhen."
 
@@ -222,7 +222,7 @@ msgid "Hostname"
 msgstr "Hostname"
 
 #: plinth/modules/config/config.py:97
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Hostname is the local name by which other machines on the local network "
 #| "reach your machine.  It must start and end with an alphabet or a digit "
@@ -235,7 +235,7 @@ msgid ""
 "length must be 63 characters or less."
 msgstr ""
 "Ein Hostname ist der lokale Name unter dem andere Geräte im lokalen Netzwerk "
-"Ihr Gerät erreichen können. Er muss alphanumerisch sein, mit einem "
+"Ihre {box_name} erreichen können. Er muss alphanumerisch sein, mit einem "
 "Buchstaben beginnen und enden und darf nicht länger als 63 Zeichen sein."
 
 #: plinth/modules/config/config.py:105
@@ -249,7 +249,7 @@ msgid "Domain Name"
 msgstr "Domain-Name"
 
 #: plinth/modules/config/config.py:110
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Domain name is the global name by which other machines on the Internet "
 #| "can reach you.  It must consist of labels separated by dots.  Each label "
@@ -265,8 +265,8 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"Ein Domainname ist der globale Name unter dem andere Geräte im Internet Ihr "
-"Gerät erreichen können. Er muss aus durch Punkte getrennte Kennungen "
+"Ein Domainname ist der globale Name unter dem andere Geräte im Internet Ihre "
+"{box_name} erreichen können. Er muss aus durch Punkte getrennte Kennungen "
 "bestehen. Jede Kennung muss alphanumerisch beginnen und enden und aus "
 "alphanumerischen Zeichen und Bindestrichen bestehen. Jede Kennung darf "
 "maximal 63 Zeichen lang sein, die Gesamtlänge des Domainnames 253 Zeichen."
@@ -276,10 +276,9 @@ msgid "Language"
 msgstr "Sprache"
 
 #: plinth/modules/config/config.py:127
-#, fuzzy
 #| msgid "Language for this FreedomBox web administration interface"
 msgid "Language for this web administration interface"
-msgstr "Sprache für dieses FreedomBox Web-Interface"
+msgstr "Sprache dieses Web-Interfaces"
 
 #: plinth/modules/config/config.py:135
 #: plinth/modules/dynamicdns/dynamicdns.py:37
@@ -508,7 +507,6 @@ msgstr ""
 "kann die Aktualisierungs-URL Ihres Anbieters angegeben werden."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:80
-#, fuzzy
 #| msgid ""
 #| "Please do not enter a URL here (like \"https://example.com/\") but only "
 #| "the hostname of the GnuDIP server (like \"example.pcom\")."
@@ -520,12 +518,11 @@ msgstr ""
 "den Hostnamen des GnuDIP Servers (wie \"example.com\")."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:84
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "The public domain name you want use to reach your box."
 msgid "The public domain name you want use to reach your {box_name}."
 msgstr ""
-"Der öffentliche Domain Name unter welchem die FreedomBox erreichbar sein "
-"soll."
+"Der öffentliche Domain Name unter dem Ihre {box_name} erreichbar sein soll."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:87
 msgid "Use this option if your provider uses self signed certificates."
@@ -548,7 +545,7 @@ msgid ""
 msgstr "Wird dieses Feld leer gelassen, dann bleibt das Passwort unverändert."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:96
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Optional Value. If your FreedomBox is not connected directly to the "
 #| "Internet (i.e. connected to a NAT router) this URL is used to figure out "
@@ -560,11 +557,10 @@ msgid ""
 "Internet IP. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Optionaler Wert. Wenn die FreedomBox nicht direkt mit dem Internet verbunden "
-"ist (zum Beispiel weil die Box an einen Router angeschlossen ist welcher die "
-"IP per NAT umsetzt) wird diese URL verwendet um die öffentliche IP Adresse "
-"in Erfahrung zu bringen. Die URL sollte nichts weiter als die IP Adresse "
-"liefern. Beispiel: http://myip.datasystems24.de"
+"Optionaler Wert. Wenn Ihre {box_name} nicht direkt mit dem Internet "
+"verbunden ist, (zum Beispiel über ein NAT) wird diese URL verwendet um die "
+"öffentliche IP Adresse in Erfahrung zu bringen. Die URL sollte einfach nur "
+"IP-Adresse des Clients liefern (zum Beispiel: http://myip.datasystems24.de)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:104
 msgid ""
@@ -595,13 +591,11 @@ msgid "Update URL"
 msgstr "Update URL"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:135
-#, fuzzy
 #| msgid "accept all SSL certificates"
 msgid "Accept all SSL certificates"
-msgstr "alle Zertifikate akzeptieren"
+msgstr "Alle Zertifikate akzeptieren"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:139
-#, fuzzy
 #| msgid "use HTTP basic authentication"
 msgid "Use HTTP basic authentication"
 msgstr "HTTP basic authentication verwenden"
@@ -650,13 +644,12 @@ msgid "Status of Dynamic DNS"
 msgstr "Status des Dynamischen DNS"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:25
-#, fuzzy
 #| msgid "DynamicDNS client"
 msgid "Dynamic DNS Client"
 msgstr "Dynamischer DNS Client"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your internet provider changes your IP address periodic (i.e. every "
 #| "24h) it may be hard for others to find you in the WEB. And for this "
@@ -669,12 +662,10 @@ msgid ""
 msgstr ""
 "Wenn Ihr Internetanbieter die öffentliche IP Adresse zyklisch erneuert (zum "
 "Beispiel alle 24 Stunden) dann ist es für andere Internetnutzer nicht "
-"möglich Ihre FreedomBox im Netz zu finden. Aus diesem Grund können "
-"FreedomBox Dienste wie zum Beispiel ownCloud nicht aus dem Internet erreicht "
-"werden."
+"möglich Sie im Netz zu finden. Aus diesem Grund können %(box_name)s Dienste "
+"wie zum Beispiel ownCloud nicht aus dem Internet erreicht werden."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:37
-#, fuzzy
 #| msgid ""
 #| "The solution is to assign a DNS name to your IP address and update the "
 #| "DNS name every time your IP is changed by your Internet provider. Dynamic "
@@ -691,12 +682,13 @@ msgid ""
 "the Server will assign your DNS name with the new IP and if someone from the "
 "Internet asks for your DNS name he will get your current IP answered."
 msgstr ""
-"Die Lösung ist, einen Dynamischen Domain Namen (DNS) mit der IP Adresse zu "
+"Die Lösung ist, einen Dynamischen Domain Namen (DNS) mit der IP-Adresse zu "
 "verknüpfen und diesen DNS Eintrag jedes mal zu aktualisieren wenn sich die "
 "IP Adresse ändert. Dynamisches DNS erlaubt es die aktuelle IP Adresse zu "
 "einem  <a href='http://gnudip2.sourceforge.net/' target='_blank'>gnudip</a> "
 "Server zu übertragen. Anschließend wird der Server die aktuelle IP Adresse "
-"mit dem DNS Namen verknüpfen."
+"mit dem DNS Namen verknüpfen und wenn jemand aus dem Internet nach Ihrem DNS "
+"Namen sucht erhält er die aktuelle IP-Adresse."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:50
 msgid ""
@@ -713,7 +705,7 @@ msgstr ""
 "target='_blank'>freedns.afraid.org</a> können per update URL genutzt werden."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:61
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your freedombox is connected behind some NAT router, don't forget to "
 #| "add portforwarding (i.e. forward some standard ports like 80 and 443) to "
@@ -722,10 +714,9 @@ msgid ""
 "If your %(box_name)s is connected behind some NAT router, don't forget to "
 "add port forwarding (i.e. forward some standard ports like 80 and 443)."
 msgstr ""
-"Wenn die FreedomBox an einen NAT Router angeschlossen ist, muss zusätzlich "
-"ein Portforwarding im Router eingerichtet werden. Zum Beispiel können die "
-"TCP Standard Ports (80 und 443) auf die IP Adresse der FreedomBox weiter "
-"geleitet werden."
+"Wenn Ihre %(box_name)s an einen NAT Router angeschlossen ist, muss "
+"zusätzlich ein Portforwarding im Router eingerichtet werden (zum Beispiel "
+"Standard Ports wie 80 und 443)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
@@ -749,13 +740,12 @@ msgstr ""
 "angegeben wurde, dann kann der NAT Typ nicht erkannt werden."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
-#, fuzzy
 #| msgid "Direct connection to the internet."
 msgid "Direct connection to the Internet."
 msgstr "Direkte Verbindung zum Internet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Behind NAT, this means that dynamic DNS service will poll the \"IP check "
 #| "URL\" for changes (we need the \"IP check URL\" for this reason - "
@@ -767,9 +757,9 @@ msgid ""
 "changes will not be detected).  In case the WAN IP changes, it may take up "
 "to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"Hinter einem NAT; das bedeutet dass der Dynamische DNS Dienst zyklisch die "
-"\"IP check URL\" abfragen wird (aus diesem Grund wird eine \"IP check URL\" "
-"zwingend benötigt). Nach einer Änderung der IP Adresse durch Ihren "
+"Hinter einem NAT; das bedeutet dass der Dynamische DNS Dienst zyklisch die \""
+"IP check URL\" abfragen wird (aus diesem Grund wird eine \"IP check URL\" "
+"zwingend benötigt). Nach einer Änderung der IP-Adresse durch Ihren "
 "Internetanbieter kann es bis zu %(timer)s Minuten dauern bis die neue IP "
 "Adresse dem DNS Server bekannt gemacht wird."
 
@@ -784,7 +774,7 @@ msgid "Firewall"
 msgstr "Firewall"
 
 #: plinth/modules/firewall/templates/firewall.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Firewall is a network security system that controls the incoming and "
 #| "outgoing network traffic on your %(box_name)s. Keeping a firewall enabled "
@@ -794,13 +784,13 @@ msgid ""
 "network traffic on your %(box_name)s. Keeping a firewall enabled and "
 "properly configured reduces risk of security threat from the Internet."
 msgstr ""
-"Firewall ist ein Netzwerk-Sicherheitssystem das den ein- und ausgehenden "
-"Verkehr der %(box_name)s kontrolliert. Die Firewall aktiv und korrekt "
-"konfiguriert zu halten reduziert Sicherheitsrisiken aus dem Internet."
+"Firewall ist ein Sicherheitssystem das den ein- und ausgehenden Verkehr der "
+"%(box_name)s kontrolliert. Die Firewall aktiv und korrekt konfiguriert zu "
+"halten reduziert Sicherheitsrisiken aus dem Internet."
 
 #: plinth/modules/firewall/templates/firewall.html:36
 msgid "Current status:"
-msgstr ""
+msgstr "Aktueller Status:"
 
 #: plinth/modules/firewall/templates/firewall.html:41
 #, python-format
@@ -848,7 +838,6 @@ msgid "Blocked"
 msgstr "Geblockt"
 
 #: plinth/modules/firewall/templates/firewall.html:103
-#, fuzzy
 #| msgid ""
 #| "The operation of the firewall is automatic. When you enable a service it "
 #| "is automatically permitted in the firewall and you disable a service is "
@@ -859,8 +848,8 @@ msgid ""
 "disabled in the firewall."
 msgstr ""
 "Der Betrieb der Firewall erfolgt automatisch. Wenn ein Dienst eingeschaltet "
-"wird, wird er automatisch in der Firewall zugelassen und wenn ein Dienst "
-"ausgeschaltet wird, wird er automatisch in der Firewall verboten."
+"wird, wird er auch in der Firewall zugelassen und wenn ein Dienst "
+"ausgeschaltet wird, wird er auch in der Firewall verboten."
 
 #: plinth/modules/first_boot/forms.py:48 plinth/modules/users/forms.py:70
 msgid "Creating LDAP user failed."
@@ -881,7 +870,6 @@ msgid "Help"
 msgstr "Hilfe"
 
 #: plinth/modules/first_boot/templates/firstboot_state0.html:45
-#, fuzzy
 #| msgid "Start setup"
 msgid "Start Setup"
 msgstr "Einrichten beginnen"
@@ -892,6 +880,8 @@ msgid ""
 "To complete the setup of your %(box_name)s, please provide some basic "
 "information."
 msgstr ""
+"Um die Installation Ihrer %(box_name)s abzuschließen, stellen Sie bitte "
+"einige Grundinformationen bereit."
 
 #: plinth/modules/first_boot/templates/firstboot_state1.html:41
 msgid "Administrator Account"
@@ -917,7 +907,7 @@ msgid "Setup Complete!"
 msgstr "Installation komplett!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:32
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To make your FreedomBox functional, you need some applications.  "
 #| "Applications will be installed the first time you access them."
@@ -926,22 +916,20 @@ msgid ""
 "you need some applications.  They will be installed the first time you "
 "access them."
 msgstr ""
-"Um Ihre FreedomBox funktionsfähig zu machen benötigen Sie einige Anwendungen "
-"(Apps). Die Anwendungen werden installiert wenn Sie das erste Mal auf sie "
-"zugreifen."
+"%(box_name)s Installation ist jetzt abgeschlossen. Um Ihre %(box_name)s "
+"funktionsfähig zu machen benötigen Sie einige Anwendungen (Apps). Die "
+"Anwendungen werden installiert wenn Sie das erste Mal auf sie zugreifen."
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:41
 msgid "Go to Apps"
 msgstr "Zu den Anwendungen"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:44
-#, fuzzy
 #| msgid "Network Configuration"
 msgid "Current Network Configuration"
-msgstr "Netzwerk-Konfiguration"
+msgstr "Aktuelle Netzwerk-Konfiguration"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:47
-#, fuzzy
 #| msgid ""
 #| "FreedomBox setup is now complete.  However, you should check the network "
 #| "setup and modify it if necessary.  Do not forget to change the default Wi-"
@@ -950,9 +938,8 @@ msgid ""
 "You should check the network setup and modify it if necessary. Do not forget "
 "to change the default Wi-Fi passwords!"
 msgstr ""
-"Die FreedomBox Installation ist jetzt abgeschlossen. Allerdings sollten Sie "
-"die Netzwerkkonfiguration überprüfen und gegebenenfalls ändern. Vergessen "
-"Sie nicht, die standardmäßigen WLAN-Passwörter zu ändern."
+"Sie sollten die Netzwerkkonfiguration überprüfen und gegebenenfalls ändern. "
+"Vergessen Sie nicht, die standardmäßigen Wi-Fi-Passwörter zu ändern!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:57
 msgid "Go to Networks"
@@ -972,7 +959,7 @@ msgstr "Wo man Hilfe bekommt"
 
 #: plinth/modules/help/help.py:38
 msgid "Manual"
-msgstr ""
+msgstr "Handbuch"
 
 #: plinth/modules/help/help.py:48
 msgid "Documentation and FAQ"
@@ -984,13 +971,13 @@ msgid "About {box_name}"
 msgstr "Über {box_name}"
 
 #: plinth/modules/help/help.py:73
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "About {box_name}"
 msgid "{box_name} Manual"
-msgstr "Über {box_name}"
+msgstr "{box_name} Handbuch"
 
 #: plinth/modules/help/templates/help_about.html:30
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "FreedomBox is a community project to develop, design and promote personal "
 #| "servers running free software for private, personal communications.  It "
@@ -1008,12 +995,12 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"FreedomBox ist ein Gemeinschaftsprojekt zur Entwicklung, Gestaltung und "
-"Förderung  persönlicher Server mit freier Software für die private, "
+"%(box_name)s ist ein Gemeinschaftsprojekt zur Entwicklung, Gestaltung und "
+"Förderung persönlicher Server mit freier Software für die private, "
 "persönliche Kommunikation. Es ist als Netzwerkgerät so konzipiert, dass es "
 "eine Schnittstelle mit dem Internet darstellt bei Beibehaltung der "
 "geschützten Privatsphäre und Datensicherheit. Es beherbergt Anwendungen wie "
-"Blog, Wiki, Website, soziale Netzwerke, E-Mail, Web-Proxy und einen Tor-"
+"Blog, Wiki, Webseite, soziale Netzwerke, E-Mail, Web-Proxy und einen Tor-"
 "Server auf einem Gerät, das Wi-Fi-Router ersetzen kann, so dass Ihre Daten "
 "immer bei Ihnen bleiben."
 
@@ -1036,7 +1023,7 @@ msgstr ""
 "vorgesehenen Peer-to-Peer-Architektur (Gleiche mit Gleichen) zurück."
 
 #: plinth/modules/help/templates/help_about.html:56
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "There are a number of projects working to realize a future of distributed "
 #| "services; FreedomBox aims to bring them all together in a convenient "
@@ -1047,11 +1034,11 @@ msgid ""
 "package."
 msgstr ""
 "Es gibt eine Vielzahl von Projekten die an eine Zukunft von verteilten "
-"Diensten arbeiten; FreedomBox zielt darauf ab diese alle in einem "
-"praktischen Paket zusammenzubringen ."
+"Diensten arbeiten; %(box_name)s zielt darauf ab diese alle in einem "
+"praktischen Paket zusammenzubringen."
 
 #: plinth/modules/help/templates/help_about.html:64
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "For more information about the FreedomBox project, see the <a href="
 #| "\"https://wiki.debian.org/FreedomBox\">FreedomBox Wiki</a>."
@@ -1059,8 +1046,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Mehr Informationen über das FreedomBox Projekt finden Sie auf dem <a href="
-"\"https://wiki.debian.org/de/FreedomBox\">FreedomBox Wiki</a>."
+"Mehr Informationen über das %(box_name)s Projekt finden Sie im <a href=\""
+"https://wiki.debian.org/de/FreedomBox\">%(box_name)s Wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
@@ -1074,10 +1061,10 @@ msgstr "Es läuft Plinth Version %(version)s."
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
 msgid "%(box_name)s Setup"
-msgstr ""
+msgstr "%(box_name)s Installation"
 
 #: plinth/modules/help/templates/help_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "The <a href=\"%(manual_url)s\">FreedomBox Manual</a> is the best place to "
 #| "start for information regarding %(box_name)s."
@@ -1085,11 +1072,11 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
-"Das <a href=\"%(manual_url)s\">FreedomBox Handbuch</a> ist der beste Ort für "
-"erste Informationen über %(box_name)s."
+"Das <a href=\"%(manual_url)s\">%(box_name)s Handbuch</a> ist der beste Ort "
+"für erste Informationen über %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:36
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 #| "FreedomBox project wiki </a> contains further information."
@@ -1097,11 +1084,11 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"Das <a href=\"http://wiki.debian.org/de/FreedomBox\" target=\"_blank"
-"\">FreedomBox Wiki Projekt</a> enthält weitere Informationen."
+"Das <a href=\"http://wiki.debian.org/de/FreedomBox\" target=\"_blank\""
+">%(box_name)s Wiki Projekt</a> enthält weitere Informationen."
 
 #: plinth/modules/help/templates/help_index.html:43
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To seek help from FreedomBox community, queries may be posted on the <a "
 #| "href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
@@ -1113,9 +1100,9 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
-"Um Hilfe von der FreedomBox Gemeinschaft zu bekommen können Anfragen an die "
-"<a href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
-"\">Mailingliste</a> gestellt werden. Das Listenarchiv enthält auch "
+"Um Hilfe von der %(box_name)s Gemeinschaft zu bekommen können Anfragen an "
+"die <a href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-"
+"discuss\">Mailingliste</a> gestellt werden. Das Listenarchiv enthält auch "
 "Informationen über Probleme anderer Benutzer und mögliche Lösungen."
 
 #: plinth/modules/help/templates/help_index.html:53
@@ -1126,24 +1113,25 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
+"Viele %(box_name)s Mitarbeiter und Benutzer sind auch im irc.oftc.net IRC "
+"Netzwerk erreichbar. Treten Sie ihm bei und bitten um Hilfe im <a href=\""
+"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
+"#freedombox</a> Kanal des IRC Web-Interfaces."
 
 #: plinth/modules/ikiwiki/__init__.py:38
-#, fuzzy
 #| msgid "Wiki & Blog (Ikiwiki)"
 msgid "Wiki and Blog (ikiwiki)"
-msgstr "Wiki & Blog (Ikiwiki)"
+msgstr "Wiki und Blog (ikiwiki)"
 
 #: plinth/modules/ikiwiki/__init__.py:43
-#, fuzzy
 #| msgid "Ikiwiki wikis and blogs"
 msgid "ikiwiki wikis and blogs"
-msgstr "Ikiwiki Wikis und Blogs"
+msgstr "ikiwiki Wikis und Blogs"
 
 #: plinth/modules/ikiwiki/forms.py:29
-#, fuzzy
 #| msgid "Enable Ikiwiki"
 msgid "Enable ikiwiki"
-msgstr "Ikiwiki einschalten"
+msgstr "ikiwiki einschalten"
 
 #: plinth/modules/ikiwiki/forms.py:36
 #: plinth/modules/networks/templates/connection_show.html:98
@@ -1172,13 +1160,12 @@ msgstr ""
 "ikiwiki</a> zur Verfügung."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete Wiki/Blog <em>%(name)s</em>"
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
-msgstr "Lösche Wiki/Blog <em>%(name)s</em>"
+msgstr "Lösche Wiki oder Blog <em>%(name)s</em>"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:33
-#, fuzzy
 #| msgid ""
 #| "This action will remove all the posts, pages and comments including "
 #| "revision history.  Delete this wiki/blog permanently?"
@@ -1187,7 +1174,7 @@ msgid ""
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
 "Diese Aktion wird alle Posts, Seiten und Kommentare einschließlich der "
-"Historie löschen. Dieses Wiki/Blog permanent löschen?"
+"Historie löschen. Dieses Wiki oder den Blog permanent löschen?"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
@@ -1228,20 +1215,18 @@ msgid "Create"
 msgstr "Anlegen"
 
 #: plinth/modules/ikiwiki/views.py:73
-#, fuzzy
 #| msgid "Wiki & Blog"
 msgid "Wiki and Blog"
-msgstr "Wiki & Blog"
+msgstr "Wiki und Blog"
 
 #: plinth/modules/ikiwiki/views.py:106
 msgid "Manage Wikis and Blogs"
 msgstr "Wikis und Blogs verwalten"
 
 #: plinth/modules/ikiwiki/views.py:132
-#, fuzzy
 #| msgid "Create a Wiki or Blog"
 msgid "Create Wiki or Blog"
-msgstr "Ein Wiki oder Blog anlegen"
+msgstr "Wiki oder Blog anlegen"
 
 #: plinth/modules/ikiwiki/views.py:145
 #, python-brace-format
@@ -1274,16 +1259,15 @@ msgid "Could not delete {name}: {error}"
 msgstr "Konnte {name} nicht löschen: {error}"
 
 #: plinth/modules/ikiwiki/views.py:182
-#, fuzzy
 #| msgid "Delete Wiki/Blog"
 msgid "Delete Wiki or Blog"
-msgstr "Lösche Wiki/Blog"
+msgstr "Lösche Wiki oder Blog"
 
 #: plinth/modules/letsencrypt/__init__.py:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/letsencrypt/views.py:45
 msgid "Certificates (Let's Encrypt)"
-msgstr ""
+msgstr "Zertifikate (Let's Encrypt)"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:41
 #, python-format
@@ -1294,6 +1278,12 @@ msgid ""
 "domain.  It does so by proving itself to be the owner of a domain to Let's "
 "Encrypt, a certficate authority (CA)."
 msgstr ""
+"Ein digitales Zertifikat ermöglicht es Benutzern von einem Web-Service, die "
+"Identität des Dienstes zu überprüfen und sicher mit ihm zu kommunizieren. "
+"%(box_name)s kann automatisch digitale Zertifikate für jede verfügbare "
+"Domain beziehen und installieren. Es tut dies, indem es gegenüber Let's "
+"Encrypt, einer Zertifizierungsstelle (CA), nachweist der Inhaber einer "
+"Domain zu sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:52
 msgid ""
@@ -1302,77 +1292,79 @@ msgid ""
 "read and agree with the <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
+"Let's Encrypt ist eine freie, automatisierte und offene "
+"Zertifizierungsstelle, zum Nutzen der Öffentlichkeit betrieben von der "
+"Internet Security Research Group (ISRG). Bitte lesen und akzeptieren Sie die "
+"<a href=\"https://letsencrypt.org/repository/\">Let's Encrypt "
+"Abonnentenvereinbarung</a> vor der Verwendung dieses Dienstes."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:66
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:70
-#, fuzzy
 #| msgid "Domain Name"
 msgid "Domain"
-msgstr "Domain-Name"
+msgstr "Domain"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:67
 msgid "Certificate Status"
-msgstr ""
+msgstr "Status des Zertifikats"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:68
-#, fuzzy
 #| msgid "Security"
 msgid "Website Security"
-msgstr "Sicherheit"
+msgstr "Webseiten-Sicherheit"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:72
-#, fuzzy
 #| msgid "Applications"
 msgid "Actions"
-msgstr "Anwendungen"
+msgstr "Aktion"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:79
 #, python-format
 msgid "Expires on %(expiry_date)s"
-msgstr ""
+msgstr "Verfällt am %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:85
 msgid "No certficate"
-msgstr ""
+msgstr "Kein Zertifikat"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:102
 msgid "Revoke"
-msgstr ""
+msgstr "Zurückziehen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:108
 msgid "Re-obtain"
-msgstr ""
+msgstr "Wieder erhalten"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:115
 msgid "Obtain"
-msgstr ""
+msgstr "Erhalten"
 
 #: plinth/modules/letsencrypt/views.py:55
 #, python-brace-format
 msgid "Certificate successfully revoked for domain {domain}"
-msgstr ""
+msgstr "Zertifikat erfolgreich zurückgezogen für Domain {domain}"
 
 #: plinth/modules/letsencrypt/views.py:60
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Zurückziehen des Zertifikats für Domain {domain} gescheiter: {error}"
 
 #: plinth/modules/letsencrypt/views.py:72
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
-msgstr ""
+msgstr "Zertifikat erfolgreich erhalten für Domain {domain}"
 
 #: plinth/modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Erhalten des Zertifikats für Domain {domain} fehlgeschlagen: {error}"
 
 #: plinth/modules/monkeysphere/__init__.py:32
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:35
 #: plinth/modules/monkeysphere/views.py:44
 msgid "Monkeysphere"
-msgstr ""
+msgstr "Monkeysphere"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 msgid ""
@@ -1384,14 +1376,23 @@ msgid ""
 "key signing process.  See the <a href=\"http://web.monkeysphere.info/getting-"
 "started-ssh/\"> Monkeysphere SSH documentation</a> for more details."
 msgstr ""
+"Mit Monkeysphere kann ein PGP-Schlüssel für jede konfigurierte Domain die "
+"SSH bedient generiert werden. Die öffentlichen PGP-Schlüssel können dann auf "
+"die PGP-Schlüsselserver hochgeladen werden. Benutzer, die mit diesem Gerät "
+"über SSH verbunden sind, können überprüfen, ob sie mit den richtigen Host "
+"verbunden sind. Damit Anwender dem Schlüssel vertrauen können, muss "
+"mindestens eine Person (in der Regel der Gerätebetreiber) den Schlüssel mit "
+"dem regulären PGP Keysigning-Verfahren signieren. Siehe die <a href=\""
+"http://web.monkeysphere.info/getting-started-ssh/\">Monkeysphere SSH "
+"Dokumentation</a> für weitere Details."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:53
 msgid "Publishing key to keyserver..."
-msgstr ""
+msgstr "Veröffentliche den Schlüssel beim Schlüssel-Server..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:71
 msgid "GPG Fingerprint"
-msgstr ""
+msgstr "GPG Fingerabdruck"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:83
 #: plinth/modules/names/views.py:45
@@ -1400,27 +1401,27 @@ msgstr "Nicht verfügbar"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:93
 msgid "Generate PGP Key"
-msgstr ""
+msgstr "Generiere PGP Schlüssel"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:101
 msgid "Publish Key"
-msgstr ""
+msgstr "Schlüssel veröffentlichen"
 
 #: plinth/modules/monkeysphere/views.py:58
 msgid "Generated PGP key."
-msgstr ""
+msgstr "PGP Schlüssel erzeugt."
 
 #: plinth/modules/monkeysphere/views.py:83
 msgid "Cancelled key publishing."
-msgstr ""
+msgstr "Schlüssel-Veröffentlichung abgebrochen."
 
 #: plinth/modules/monkeysphere/views.py:120
 msgid "Published key to keyserver."
-msgstr ""
+msgstr "Veröffentlichte Schlüssel auf dem Server."
 
 #: plinth/modules/monkeysphere/views.py:122
 msgid "Error occurred while publishing key."
-msgstr ""
+msgstr "Ein Fehler ist beim Veröffentlichen des Schlüssels aufgetreten."
 
 #: plinth/modules/mumble/__init__.py:38
 #: plinth/modules/mumble/templates/mumble.html:26
@@ -1853,7 +1854,6 @@ msgid "Firewall zone"
 msgstr "Firewall Zone"
 
 #: plinth/modules/networks/templates/connection_show.html:280
-#, fuzzy
 #| msgid ""
 #| "This interface should be connected to local network/machine.  If you "
 #| "connect this interface to a public network, services meant to be "
@@ -1864,13 +1864,12 @@ msgid ""
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
-"Diese Schnittstelle sollte auf lokales Netzwerk / Gerät angeschlossen sein. "
-"Wenn Sie diese Schnittstelle mit einem öffentlichen Netzwerk verbinden, "
-"werden Dienste die nur intern zur  Verfügung stehen sollten extern "
+"Diese Schnittstelle sollte an ein lokales Netzwerk / Gerät angeschlossen "
+"sein. Wenn Sie diese Schnittstelle mit einem öffentlichen Netzwerk "
+"verbinden, werden Dienste die nur intern zur Verfügung stehen sollten extern "
 "erreichbar sein. Dies ist ein Sicherheitsrisiko."
 
 #: plinth/modules/networks/templates/connection_show.html:300
-#, fuzzy
 #| msgid ""
 #| "This interface should receive your Internet connection. If you connect it "
 #| "your a local network/machine, many services meant to available only "
@@ -1885,7 +1884,7 @@ msgstr ""
 "intern zur Verfügung stehen sollten nicht verfügbar sein."
 
 #: plinth/modules/networks/templates/connection_show.html:319
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This interface is not maintained by FreedomBox.  Its security status is "
 #| "unknown to FreedomBox.  Many FreedomBox services may not be available on "
@@ -1897,10 +1896,11 @@ msgid ""
 "this interface.  It is recommended that you deactivate or delete this "
 "connection and re-configure it."
 msgstr ""
-"Diese Schnittstelle wird von FreedomBox nicht gepflegt. Sein "
-"Sicherheitsstatus ist FreedomBox unbekannt. Viele FreedomBox Dienste sind "
-"möglicherweise nicht über diese Schnittstelle erreichbar. Es wird empfohlen "
-"diese Verbindung zu deaktivieren /  löschen und neu zu konfigurieren."
+"Diese Schnittstelle wird von %(box_name)s nicht gepflegt. Sein "
+"Sicherheitsstatus ist %(box_name)s unbekannt. Viele %(box_name)s Dienste "
+"sind möglicherweise nicht über diese Schnittstelle erreichbar. Es wird "
+"empfohlen diese Verbindung zu deaktivieren oder zu löschen und neu zu "
+"konfigurieren."
 
 #: plinth/modules/networks/templates/connections_add.html:34
 #: plinth/modules/networks/templates/connections_type_select.html:34
@@ -1987,7 +1987,7 @@ msgid "Enable OpenVPN server"
 msgstr "OpenVPN Server einschalten"
 
 #: plinth/modules/openvpn/templates/openvpn.html:38
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Virtual Private Network (VPN) is a technique for securely connecting two "
 #| "machines in order to access resources of a private network.  While you "
@@ -2016,7 +2016,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:54
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
 #| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
@@ -2036,7 +2036,7 @@ msgstr ""
 "herunterladen und einem OpenVPN-Client auf Ihrem Mobiltelefon oder Desktop-"
 "Rechner weiterleiten. OpenVPN-Clients sind für die meisten Plattformen "
 "verfügbar. Siehe die <a href=\"https://wiki.debian.org/FreedomBox/Manual/"
-"OpenVPN\" title=\"FreedomBox Manuell-OpenVPN\">Dokumentation</a> zu "
+"OpenVPN\" title=\"%(box_name)s Handbuch OpenVPN\">Dokumentation</a> zu "
 "empfohlenen Clients und Hinweisen, wie sie zu konfigurieren sind."
 
 #: plinth/modules/openvpn/templates/openvpn.html:66
@@ -2590,22 +2590,19 @@ msgstr "Quassel Kern läuft nicht"
 #: plinth/modules/repro/__init__.py:36
 #: plinth/modules/repro/templates/repro.html:26
 #: plinth/modules/repro/views.py:55
-#, fuzzy
 #| msgid "Server port"
 msgid "SIP Server (repro)"
-msgstr "Server Port"
+msgstr "SIP Server (repro)"
 
 #: plinth/modules/repro/__init__.py:41
-#, fuzzy
 #| msgid "Second DNS Server"
 msgid "repro SIP Server"
-msgstr "Zweiter DNS Server"
+msgstr "repro SIP Server"
 
 #: plinth/modules/repro/forms.py:29
-#, fuzzy
 #| msgid "Enable Quassel core service"
 msgid "Enable repro service"
-msgstr "Quassel-Kern einschalten"
+msgstr "repro Dienst einschalten"
 
 #: plinth/modules/repro/templates/repro.html:29
 msgid ""
@@ -2615,6 +2612,12 @@ msgid ""
 "their presence known.  It also acts as a proxy to federate SIP "
 "communications to other servers on the Internet similar to email."
 msgstr ""
+"repro bietet verschiedene SIP-Dienste an, die ein SIP-Softphone nutzen kann "
+"um Audio- und Video-Anrufe sowie Präsenz und Sofortnachrichten zur Verfügung "
+"zu stellen. repro stellt einen Server und SIP-Benutzerkonten bereit, die "
+"Kunden nutzen können, um ihre Präsenz bekannt zu machen. Es fungiert auch "
+"als Proxy zu verbündeten SIP-Kommunikationen mit anderen Servern über das "
+"Internet ähnlich wie E-Mail."
 
 #: plinth/modules/repro/templates/repro.html:39
 msgid ""
@@ -2623,6 +2626,10 @@ msgid ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android phones)."
 msgstr ""
+"Um SIP-Anrufe zu tätigen wird eine Client-Anwendung benötigt. Verfügbare "
+"Clients sind unter anderem <a href=\"https://jitsi.org/\">Jitsi</a> (für "
+"Computer) und <a href=\"https://f-droid.org/repository/browse/?fdid=com."
+"csipsimple\">CSipSimple</a> (für Android-Telefone)."
 
 #: plinth/modules/repro/templates/repro.html:48
 msgid ""
@@ -2632,18 +2639,22 @@ msgid ""
 "log in to the repro configuration panel. After setting the domain, it is "
 "required to restart the repro service. Disable the service and re-enable it."
 msgstr ""
+"<strong>Hinweis:</strong> Vor der Verwendung von repro, müssen Domains und "
+"Benutzer über das <a href=\"/repro/domains.html\"> web-basierte "
+"Konfigurations-Panel</a> konfiguriert werden. Die Nutzer der <em>admin</em> "
+"Gruppe können sich dort anmelden. Nach dem Festlegen der Domain ist es "
+"erforderlich den repro Dienst neu zu starten. Deaktivieren Sie den Dienst "
+"und aktivieren ihn wieder."
 
 #: plinth/modules/repro/templates/repro.html:63
-#, fuzzy
 #| msgid "Quassel core service is running"
 msgid "repro service is running"
-msgstr "Quassel Kern läuft"
+msgstr "repro service läuft"
 
 #: plinth/modules/repro/templates/repro.html:66
-#, fuzzy
 #| msgid "Quassel core service is not running"
 msgid "repro service is not running"
-msgstr "Quassel Kern läuft nicht"
+msgstr "repro Dienst läuft nicht"
 
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
@@ -2660,7 +2671,7 @@ msgid "Enable reStore"
 msgstr "reStore einschalten"
 
 #: plinth/modules/restore/templates/restore_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
 #| "applications.  The idea is to uncouple web applications from data.  No "
@@ -2678,7 +2689,7 @@ msgstr ""
 "Anwendungen. Die Idee ist, Web-Anwendungen von den Daten zu entkoppeln. "
 "Unabhängig davon von wo eine Web-Anwendung aus bedient wird, können die "
 "Daten auf einem unhosted Speicherserver der Wahl des Benutzers gespeichert "
-"werden. Mit reStore, wird Ihre %(cfg.box_name)s Ihr unhosted Speicherserver."
+"werden. Mit reStore, wird Ihre %(box_name)s Ihr unhosted Speicherserver."
 
 #: plinth/modules/restore/templates/restore_index.html:40
 msgid ""
@@ -2798,14 +2809,13 @@ msgid "Anonymity Network (Tor)"
 msgstr "Anonymisierungsnetzwerk (Tor)"
 
 #: plinth/modules/tor/__init__.py:53
-#, fuzzy
 #| msgid "Anonymity Network (Tor)"
 msgid "Tor Anonymity Network"
-msgstr "Anonymisierungsnetzwerk (Tor)"
+msgstr "Tor Anonymisierungs-Netzwerk"
 
 #: plinth/modules/tor/__init__.py:58
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Tor Bridge Relay"
 
 #: plinth/modules/tor/__init__.py:76 plinth/modules/tor/views.py:144
 msgid "Tor Hidden Service"
@@ -2842,7 +2852,7 @@ msgid "Enable Tor Hidden Service"
 msgstr "Tor Verborgenen Dienst einschalten"
 
 #: plinth/modules/tor/forms.py:38
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "A hidden service will allow FreedomBox to provide selected services (such "
 #| "as ownCloud or Chat) without revealing its location."
@@ -2850,7 +2860,7 @@ msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "ownCloud or chat) without revealing its location."
 msgstr ""
-"Ein verborgener Dienst ermöglicht FreedomBox ausgewählte Dienste (wie "
+"Ein verborgener Dienst ermöglicht {box_name} ausgewählte Dienste (wie "
 "ownCloud oder Chat) ohne Offenlegung seiner Position anzubieten."
 
 #: plinth/modules/tor/forms.py:42
@@ -2875,17 +2885,16 @@ msgid ""
 "the <a href=\"https://www.torproject.org/download/download-easy.html.en\"> "
 "Tor Browser</a>."
 msgstr ""
-"Tor ist ein anonymes Kommunikationssystem. Sie können mehr darüber auf der "
-"<a href=\"https://www.torproject.org/\">Tor Projekt</a> Website erfahren. "
+"Tor ist ein anonymes Kommunikationssystem. Sie können mehr darüber auf der <"
+"a href=\"https://www.torproject.org/\">Tor Projekt</a> Webseite erfahren. "
 "Für besten Schutz beim Surfen im Web, empfiehlt das Tor-Projekt, dass Sie "
-"den <a href=\"https://www.torproject.org/download/download-easy.html.en"
-"\">Tor Browser</a> verwenden."
+"den <a href=\"https://www.torproject.org/download/download-easy.html.en\">"
+"Tor Browser</a> verwenden."
 
 #: plinth/modules/tor/templates/tor.html:54
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Tor configuration is being updated"
-msgstr "Konfiguration aktualisiert"
+msgstr "Tor-Konfiguration wird aktualisiert"
 
 #: plinth/modules/tor/templates/tor.html:62
 msgid "Tor is running"
@@ -2945,14 +2954,13 @@ msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Action error: {0} [{1}] [{2}]"
 
 #: plinth/modules/tor/views.py:148
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Configuration updated."
-msgstr "Konfiguration aktualisiert"
+msgstr "Konfiguration aktualisiert."
 
 #: plinth/modules/tor/views.py:150
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
 
 #: plinth/modules/transmission/__init__.py:38
 #: plinth/modules/transmission/templates/transmission.html:26
@@ -3042,6 +3050,10 @@ msgid ""
 "upgrades are enabled, upgrades are automatically run every night. You don't "
 "normally need to start the upgrade process."
 msgstr ""
+"Upgrades installiert die neuesten Software- und Sicherheitsupdates. Wenn "
+"automatische Upgrades aktiviert sind, werden Aktualisierungen automatisch "
+"jede Nacht durchgeführt. Sie brauchen normalerweise den Upgrade-Prozess "
+"nicht zu starten."
 
 #: plinth/modules/upgrades/templates/upgrades.html:45
 msgid ""
@@ -3050,20 +3062,24 @@ msgid ""
 "other packages.  During the upgrade, this web interface may be temporarily "
 "unavailable and show an error.  Refresh the page to continue."
 msgstr ""
+"Abhängig von der Anzahl der zu installierenden Pakete, kann dies eine lange "
+"Zeit dauern. Während Aktualisierungen im Gange sind, werden Sie nicht in der "
+"Lage sein, andere Pakete zu installieren. Während der Aktualisierung kann "
+"dieses Web-Interface vorübergehend nicht verfügbar sein und eine "
+"Fehlermeldung anzeigen. Aktualisieren Sie die Seite um fortzufahren."
 
 #: plinth/modules/upgrades/templates/upgrades.html:58
 msgid "Upgrade now &raquo;"
 msgstr "Updates jetzt durchführen &raquo;"
 
 #: plinth/modules/upgrades/templates/upgrades.html:65
-#, fuzzy
 #| msgid "ejabberd is running"
 msgid "A package manager is running."
-msgstr "ejabberd läuft"
+msgstr "Ein Paket-Manager läuft."
 
 #: plinth/modules/upgrades/templates/upgrades.html:70
 msgid "Recent log from upgrades:"
-msgstr ""
+msgstr "Letzte Protokolle der Aktualisierungen:"
 
 #: plinth/modules/upgrades/views.py:36 plinth/modules/upgrades/views.py:66
 msgid "Automatic Upgrades"
@@ -3074,16 +3090,14 @@ msgid "Upgrade Packages"
 msgstr "Pakete aktualisieren"
 
 #: plinth/modules/upgrades/views.py:96
-#, fuzzy
 #| msgid "Upgrade completed."
 msgid "Upgrade process started."
-msgstr "Aktualisierung beendet."
+msgstr "Aktualisierung begonnen."
 
 #: plinth/modules/upgrades/views.py:99
-#, fuzzy
 #| msgid "Upgrade failed."
 msgid "Starting upgrade failed."
-msgstr "Aktualisierung fehlgeschlagen."
+msgstr "Starten der Aktualisierung fehlgeschlagen."
 
 #: plinth/modules/upgrades/views.py:102
 msgid "Package Upgrades"
@@ -3144,7 +3158,7 @@ msgstr "Der Benutzer konnte nicht der Gruppe {group} hinzugefügt werden."
 
 #: plinth/modules/users/forms.py:92
 msgid "SSH Keys"
-msgstr ""
+msgstr "SSH Schlüssel"
 
 #: plinth/modules/users/forms.py:96
 msgid ""
@@ -3152,6 +3166,10 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
+"Einen SSH-Public-Key festzulegen erlaubt dem Benutzer erlauben sich sicher "
+"ohne Kennwort an das System anzumelden. Sie können mehrere Schlüssel, einen "
+"auf jeder Zeile, eingeben. Leerzeilen und Zeilen beginnend mit # werden "
+"ignoriert."
 
 #: plinth/modules/users/forms.py:136
 msgid "Renaming LDAP user failed."
@@ -3338,10 +3356,10 @@ msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) Server"
 
 #: plinth/service.py:79
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "FreedomBox Web Interface (Plinth)"
 msgid "{box_name} Web Interface (Plinth)"
-msgstr "FreedomBox Web Benutzerschnittstelle (Plinth)"
+msgstr "{box_name} Web Benutzerschnittstelle (Plinth)"
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -3377,10 +3395,10 @@ msgstr ""
 "com/freedombox/Plinth/issues\">Bugtracker</a>, so dass wir es beheben können."
 
 #: plinth/templates/base.html:49
-#, fuzzy, python-format
+#, python-format
 #| msgid "Plinth administrative interface for the FreedomBox"
 msgid "Plinth administrative interface for the %(box_name)s"
-msgstr "Plinth Verwaltungsschnittstelle für die FreedomBox"
+msgstr "Plinth Verwaltungsschnittstelle für %(box_name)s"
 
 #: plinth/templates/base.html:83
 msgid "Toggle navigation"
