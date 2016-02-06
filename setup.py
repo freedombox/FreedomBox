@@ -107,9 +107,10 @@ class CustomBuild(build):
 
 
 class CustomClean(clean):
-    """Override clean command to clean documentation directory"""
+    """Override clean command to clean doc, locales, and egg-info."""
     def run(self):
         """Execute clean command"""
+        subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
         subprocess.check_call(['make', '-C', 'doc', 'clean'])
         for dir_path, dir_names, file_names in os.walk('plinth/locale/'):
             for file_name in file_names:
