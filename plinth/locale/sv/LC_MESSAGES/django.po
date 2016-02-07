@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-15 19:42+0530\n"
-"PO-Revision-Date: 2016-01-31 18:23+0000\n"
+"PO-Revision-Date: 2016-02-07 20:49+0000\n"
 "Last-Translator: Caly <caly@aktivix.org>\n"
 "Language-Team: Swedish "
 "<https://hosted.weblate.org/projects/freedombox/plinth/sv/>\n"
@@ -51,7 +51,7 @@ msgstr "Kan inte ansluta till {host}:{port}"
 
 #: plinth/context_processors.py:36
 msgid "FreedomBox"
-msgstr ""
+msgstr "FreedomBox"
 
 #: plinth/modules/apps/apps.py:26
 msgid "Apps"
@@ -99,7 +99,7 @@ msgid "Enable service discovery"
 msgstr "Aktivera tjänstidentifiering"
 
 #: plinth/modules/avahi/templates/avahi.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Service discovery allows other machines on the network to discover your "
 #| "FreedomBox and services running on it.  It also allows FreedomBox to "
@@ -115,12 +115,12 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Tjänstidentifiering tilllåter andra enheter i nätverket att upptäcka din "
-"FreedomBox och se vilka tjänster den kör. Det  tillåter även din FreedomBox "
-"att upptäcka andra maskiner och vilka tjänster de kör på ditt lokala "
-"nätverk. Tjänstidentifiering är inte nödvändigt och fungerar bara på interna "
-"nätverk. Du kan låta den vara inaktiverad för att förbättra din säkerhet, "
-"särskilt om du ansluter till ett osäkert lokalt nätverk."
+"Tjänstidentifiering tillåter andra enheter i nätverket att upptäcka din "
+"%(box_name)s och se vilka tjänster den kör. Det  tillåter även din "
+"%(box_name)s att upptäcka andra maskiner och vilka tjänster de kör på ditt "
+"lokala nätverk. Tjänstidentifiering är inte nödvändigt och fungerar bara på "
+"interna nätverk. Du kan låta den vara inaktiverad för att förbättra din "
+"säkerhet, särskilt om du ansluter till ett osäkert lokalt nätverk."
 
 #: plinth/modules/avahi/templates/avahi.html:40
 #: plinth/modules/datetime/templates/datetime.html:35
@@ -220,7 +220,7 @@ msgid "Hostname"
 msgstr "Värdnamn"
 
 #: plinth/modules/config/config.py:97
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Hostname is the local name by which other machines on the local network "
 #| "reach your machine.  It must start and end with an alphabet or a digit "
@@ -232,9 +232,10 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
-"Värdnamn är namnet på din enhet som andra enheter i det lokala nätverket kan "
-"nå dig via.  Det får endast bestå av bokstäver, siffror och bindestreck, men "
-"får inte börja eller sluta med bindestreck. Värdnamn får vara max 63 tecken."
+"Värdnamn är namnet på din {box_name} som andra enheter i det lokala "
+"nätverket kan nå dig via.  Det får endast bestå av bokstäver, siffror och "
+"bindestreck, men får inte börja eller sluta med bindestreck. Värdnamn får "
+"vara max 63 tecken."
 
 #: plinth/modules/config/config.py:105
 msgid "Invalid hostname"
@@ -247,7 +248,7 @@ msgid "Domain Name"
 msgstr "Domännamn"
 
 #: plinth/modules/config/config.py:110
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Domain name is the global name by which other machines on the Internet "
 #| "can reach you.  It must consist of labels separated by dots.  Each label "
@@ -263,21 +264,20 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"Domännamn är det globala namn som andra maskiner på Internet kan nå dig "
-"via.  Det skall bestå av ord åtskilda av punkter. Varje ord får endast bestå "
-"av bokstäver, siffror och bindestreck, men får inte börja eller sluta med "
-"bindestreck. Varje ord får vara max 63 tecken. Total längd på domännamnet "
-"får max vara 253 tecken."
+"Domännamn är det globala namn som andra enheter på Internet kan nå din "
+"{box_name} via.  Det skall bestå av ord åtskilda av punkter. Varje ord får "
+"endast bestå av bokstäver, siffror och bindestreck, men får inte börja eller "
+"sluta med bindestreck. Varje ord får vara max 63 tecken. Total längd på "
+"domännamnet får max vara 253 tecken."
 
 #: plinth/modules/config/config.py:125
 msgid "Language"
 msgstr "Språkval"
 
 #: plinth/modules/config/config.py:127
-#, fuzzy
 #| msgid "Language for this FreedomBox web administration interface"
 msgid "Language for this web administration interface"
-msgstr "Språkval för webbgränssnittet att administrera denna FreedomBox med"
+msgstr "Språkval för detta administrations-webbgränssnitt"
 
 #: plinth/modules/config/config.py:135
 #: plinth/modules/dynamicdns/dynamicdns.py:37
@@ -508,7 +508,6 @@ msgstr ""
 "leverantörs uppdateringsadress."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:80
-#, fuzzy
 #| msgid ""
 #| "Please do not enter a URL here (like \"https://example.com/\") but only "
 #| "the hostname of the GnuDIP server (like \"example.pcom\")."
@@ -516,15 +515,15 @@ msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
-"Skriv inte en full webadress här (tex: \"https://exempel.com/\"), utan "
-"endast värdnamnet för GnuDIP servern (tex: \"exempel.com\")."
+"Skriv inte en full webbadress här (t.ex.: \"https://exempel.com/\"), utan "
+"endast värdnamnet för GnuDIP servern (t.ex.: \"exempel.com\")."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:84
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "The public domain name you want use to reach your box."
 msgid "The public domain name you want use to reach your {box_name}."
 msgstr ""
-"Publikt domännamn du önskar använda för att ansluta till din FreedomBox."
+"Publikt domännamn du önskar använda för att ansluta till din {box_name}."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:87
 msgid "Use this option if your provider uses self signed certificates."
@@ -546,7 +545,7 @@ msgid ""
 msgstr "Lämna fältet tomt om du vill behålla tidigare konfigurerat  lösenord."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:96
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Optional Value. If your FreedomBox is not connected directly to the "
 #| "Internet (i.e. connected to a NAT router) this URL is used to figure out "
@@ -558,10 +557,10 @@ msgid ""
 "Internet IP. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Tillval. Om din FreedomBox inte är direkt ansluten till Internet (dvs "
+"Tillval. Om din {box_name} inte är direkt ansluten till Internet (dvs "
 "anslutna via en NAT-router) används denna webbadress för att hitta korrekt "
 "IP. Webbadressen ska helt enkelt returnera det IP som klienten kommer från. "
-"(exempel: http://myip.datasystems24.de)"
+"(exempel: http://myip.datasystems24.de)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:104
 msgid ""
@@ -590,16 +589,14 @@ msgid "Update URL"
 msgstr "Adress för uppdateringar"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:135
-#, fuzzy
 #| msgid "accept all SSL certificates"
 msgid "Accept all SSL certificates"
 msgstr "Acceptera alla SSL-certifikat"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:139
-#, fuzzy
 #| msgid "use HTTP basic authentication"
 msgid "Use HTTP basic authentication"
-msgstr "Avänd grundläggande HTTP-autentisering"
+msgstr "Använd grundläggande HTTP-autentisering"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
 #: plinth/modules/networks/forms.py:146 plinth/modules/transmission/forms.py:39
@@ -645,13 +642,12 @@ msgid "Status of Dynamic DNS"
 msgstr "Status för Dynamisk DNS"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:25
-#, fuzzy
 #| msgid "DynamicDNS client"
 msgid "Dynamic DNS Client"
 msgstr "Klient för Dynamisk DNS"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your internet provider changes your IP address periodic (i.e. every "
 #| "24h) it may be hard for others to find you in the WEB. And for this "
@@ -664,10 +660,9 @@ msgid ""
 msgstr ""
 "Om din Internetleverantör periodiskt ändrar din IP-adress (dvs varje 24h) "
 "kan det vara svårt för andra att hitta dig på nätet. Då kan ingen hitta de "
-"tjänster som tillhandahålls av FreedomBox (tex. din ownCloud)."
+"tjänster som tillhandahålls av %(box_name)s (tex. din ownCloud)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:37
-#, fuzzy
 #| msgid ""
 #| "The solution is to assign a DNS name to your IP address and update the "
 #| "DNS name every time your IP is changed by your Internet provider. Dynamic "
@@ -686,10 +681,10 @@ msgid ""
 msgstr ""
 "Lösningen är att tilldela DNS-namn till din IP-adress och uppdatera DNS-namn "
 "varje gång din IP ändras av din Internetleverantör. Dynamisk DNS kopplar din "
-"nuvarande offentliga IP-adressen till en <a href='http://gnudip2.sourceforge."
-"net/' target='_blank'> gnudip</a> server. Därefter tilldelar servern ditt "
-"DNS-namn med din nya IP, och om någon från Internet ber om din DNS-namn, "
-"kommer han bli skickad till din aktuella IP."
+"nuvarande offentliga IP-adressen till en <a "
+"href='http://gnudip2.sourceforge.net/' target='_blank'> gnudip</a> server. "
+"Därefter tilldelar servern ditt DNS-namn med din nya IP, och om någon från "
+"Internet ber om ditt DNS-namn, kommer han bli skickad till din aktuella IP."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:50
 msgid ""
@@ -706,7 +701,7 @@ msgstr ""
 "target='_blank'> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:61
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your freedombox is connected behind some NAT router, don't forget to "
 #| "add portforwarding (i.e. forward some standard ports like 80 and 443) to "
@@ -715,8 +710,9 @@ msgid ""
 "If your %(box_name)s is connected behind some NAT router, don't forget to "
 "add port forwarding (i.e. forward some standard ports like 80 and 443)."
 msgstr ""
-"Om din FreedomBox är ansluten bakom en NAT-router, glöm inte att lägga till "
-"port forwarding (dvs vidarebefordra några standardportar, såsom 80 och 443)."
+"Om din %(box_name)s är ansluten bakom en NAT-router, glöm inte att lägga "
+"till port forwarding (dvs vidarebefordra några standardportar, såsom 80 och "
+"443)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
@@ -740,13 +736,12 @@ msgstr ""
 "kommer vi inte att upptäcka en NAT-typ."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
-#, fuzzy
 #| msgid "Direct connection to the internet."
 msgid "Direct connection to the Internet."
 msgstr "Direktanslutning till Internet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Behind NAT, this means that dynamic DNS service will poll the \"IP check "
 #| "URL\" for changes (we need the \"IP check URL\" for this reason - "
@@ -758,10 +753,10 @@ msgid ""
 "changes will not be detected).  In case the WAN IP changes, it may take up "
 "to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"Bakom NAT. Detta innebär att tjänsten dynamisk DNS kommer att fråga \"IP-"
-"kontrolladress\" för ändringar (vi behöver därför \"IP-kontrolladress\"  - "
-"annars kommer vi inte att upptäcka ändringar av IP). Det kan ta upp till "
-"%(timer)s minuter tills vi uppdaterar din DNS-inställning om WAN IP ändrats."
+"Bakom NAT. Detta betyder att dynamisk DNS-tjänsten kommer att fråga \"IP-"
+"kontrolladress\" om ändringar skett (\"IP-kontrolladress\" behöver därför "
+"anges, annars kan inte ändringar av IP adress upptäckas). Det kan ta upp "
+"till %(timer)s minuter tills din DNS-inställning uppdateras."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
@@ -774,7 +769,7 @@ msgid "Firewall"
 msgstr "Brandvägg"
 
 #: plinth/modules/firewall/templates/firewall.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Firewall is a network security system that controls the incoming and "
 #| "outgoing network traffic on your %(box_name)s. Keeping a firewall enabled "
@@ -790,7 +785,7 @@ msgstr ""
 
 #: plinth/modules/firewall/templates/firewall.html:36
 msgid "Current status:"
-msgstr ""
+msgstr "Nuvarande status:"
 
 #: plinth/modules/firewall/templates/firewall.html:41
 #, python-format
@@ -838,7 +833,6 @@ msgid "Blocked"
 msgstr "Blockerade"
 
 #: plinth/modules/firewall/templates/firewall.html:103
-#, fuzzy
 #| msgid ""
 #| "The operation of the firewall is automatic. When you enable a service it "
 #| "is automatically permitted in the firewall and you disable a service is "
@@ -906,7 +900,7 @@ msgid "Setup Complete!"
 msgstr "Installation klar!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:32
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "%(box_name)s setup is now complete.  To make your %(box_name)s "
 #| "functional, you need some applications.  Applications will be installed "
@@ -916,7 +910,7 @@ msgid ""
 "you need some applications.  They will be installed the first time you "
 "access them."
 msgstr ""
-"%(box_name)s installationen är klar.  För att göra din %(box_name)s "
+"Installationen av %(box_name)s är klar.  För att göra din %(box_name)s "
 "funktionell, behöver du några applikationer. De kommer att installeras "
 "första gången du använder dem."
 
@@ -953,8 +947,9 @@ msgid "Where to Get Help"
 msgstr "Vart Du Kan Få Hjälp"
 
 #: plinth/modules/help/help.py:38
+#, fuzzy
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: plinth/modules/help/help.py:48
 msgid "Documentation and FAQ"
@@ -966,13 +961,13 @@ msgid "About {box_name}"
 msgstr "Om {box_name}"
 
 #: plinth/modules/help/help.py:73
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "About {box_name}"
 msgid "{box_name} Manual"
-msgstr "Om {box_name}"
+msgstr "{box_name} Manual"
 
 #: plinth/modules/help/templates/help_about.html:30
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "FreedomBox is a community project to develop, design and promote personal "
 #| "servers running free software for private, personal communications.  It "
@@ -990,13 +985,13 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"FreedomBox är ett kollaborativtprojekt för att utveckla, designa och främja "
-"personliga servrar med fri programvara för privat och personlig "
+"%(box_name)s är ett kollaborativt projekt för att utveckla, designa och "
+"främja personliga servrar med fri programvara för privat och personlig "
 "kommunikation. Det är en nätverksenhet gjord för att kommunicera med resten "
 "av Internet under skyddad sekretess och hög datasäkerhet. Den har "
-"applikationer såsom blogg, wiki, hemsida, sociala nätverk, e-post, webbproxy "
-"och en Tor-server, på en enhet som kan ersätta din Wi-Fi-router, så att din "
-"personliga data alltid stannar hos dig och under din kontroll."
+"applikationer såsom blogg, wiki, hemsida, sociala nätverk, e-post, webb-"
+"proxy och en Tor-server, på en enhet som kan ersätta din Wi-Fi-router, så "
+"att din personliga data alltid stannar hos dig och under din kontroll."
 
 #: plinth/modules/help/templates/help_about.html:43
 msgid ""
@@ -1016,7 +1011,7 @@ msgstr ""
 "peer-arkitektur."
 
 #: plinth/modules/help/templates/help_about.html:56
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "There are a number of projects working to realize a future of distributed "
 #| "services; FreedomBox aims to bring them all together in a convenient "
@@ -1027,11 +1022,11 @@ msgid ""
 "package."
 msgstr ""
 "Det finns ett flertal projekt avsedda att förverkliga en framtid av "
-"distribuerade tjänster. FreedomBox avser att samla dem alla tillsammans i "
+"distribuerade tjänster. %(box_name)s avser att samla dem alla tillsammans i "
 "ett enda praktiskt paket."
 
 #: plinth/modules/help/templates/help_about.html:64
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "For more information about the FreedomBox project, see the <a href="
 #| "\"https://wiki.debian.org/FreedomBox\">FreedomBox Wiki</a>."
@@ -1039,8 +1034,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Mer information om FreedomBox-projektet finns på <a href=\"https://wiki."
-"debian.org/FreedomBox\"> FreedomBox wiki</a>."
+"Mer information om %(box_name)s -projektet finns på <a href=\""
+"https://wiki.debian.org/FreedomBox\"> %(box_name)s  wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
@@ -1057,7 +1052,7 @@ msgid "%(box_name)s Setup"
 msgstr "%(box_name)s Installation"
 
 #: plinth/modules/help/templates/help_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "The <a href=\"%(manual_url)s\">FreedomBox Manual</a> is the best place to "
 #| "start for information regarding %(box_name)s."
@@ -1065,11 +1060,11 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
-"<a href=\"%(manual_url)s\">FreedomBox Manual</a> är det bästa stället att "
-"börja för information om %(box_name)s."
+"<a href=\"%(manual_url)s\">%(box_name)s  Manual</a> är det bästa stället att "
+"börja för aff få information om %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:36
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 #| "FreedomBox project wiki </a> contains further information."
@@ -1077,11 +1072,11 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> FreedomBox "
-"project wiki </a> innehåller ytterligare information."
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> %(box_name)"
+"s projekt-wiki </a> innehåller ytterligare information."
 
 #: plinth/modules/help/templates/help_index.html:43
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To seek help from FreedomBox community, queries may be posted on the <a "
 #| "href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
@@ -1093,13 +1088,13 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
-"För att få hjälp från FreedomBox användargrupp kan du  ställa frågor på <a "
-"href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
-"\"> mailing list</a>.  Arkiven innehåller även information om möjliga "
-"lösningar på problem som andra användare haft."
+"För att få hjälp från %(box_name)s användargrupp kan du  ställa frågor på <a "
+"href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\">"
+" e-post-lista</a>.  Arkiven innehåller även information om möjliga lösningar "
+"på problem som andra användare haft."
 
 #: plinth/modules/help/templates/help_index.html:53
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Many FreedomBox contributors and users are also available on the irc.oftc."
 #| "net IRC network. Join and request help on the <a href=\"https://webchat."
@@ -1111,28 +1106,25 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
-"Många utvecklare och användare av FreedomBox finns också tillgängliga på IRC-"
-"nätverket irc.oftc.net. Gå med, ställ frågor och be om hjälp i <a href="
-"\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
+"Många utvecklare och användare av %(box_name)s finns också tillgängliga på "
+"IRC-nätverket irc.oftc.net. Gå med, ställ frågor och be om hjälp i <a href=\""
+"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
 "#freedombox</a> kanal via webbchatten."
 
 #: plinth/modules/ikiwiki/__init__.py:38
-#, fuzzy
 #| msgid "Wiki & Blog (Ikiwiki)"
 msgid "Wiki and Blog (ikiwiki)"
-msgstr "Wiki & Blogg (Ikiwiki)"
+msgstr "Wiki och Blogg (ikiwiki)"
 
 #: plinth/modules/ikiwiki/__init__.py:43
-#, fuzzy
 #| msgid "Ikiwiki wikis and blogs"
 msgid "ikiwiki wikis and blogs"
-msgstr "Ikiwiki wikis och bloggar"
+msgstr "ikiwiki wikis och bloggar"
 
 #: plinth/modules/ikiwiki/forms.py:29
-#, fuzzy
 #| msgid "Enable Ikiwiki"
 msgid "Enable ikiwiki"
-msgstr "Aktivera Ikiwiki"
+msgstr "Aktivera ikiwiki"
 
 #: plinth/modules/ikiwiki/forms.py:36
 #: plinth/modules/networks/templates/connection_show.html:98
@@ -1161,13 +1153,12 @@ msgstr ""
 "ikiwiki\">/ikiwiki</a>."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete Wiki/Blog <em>%(name)s</em>"
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
-msgstr "Ta bort Wiki/Blogg <em>%(name)s</em>"
+msgstr "Ta bort Wiki eller Blogg <em>%(name)s</em>"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:33
-#, fuzzy
 #| msgid ""
 #| "This action will remove all the posts, pages and comments including "
 #| "revision history.  Delete this wiki/blog permanently?"
@@ -1176,7 +1167,7 @@ msgid ""
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
 "Den här åtgärden tar bort alla inlägg, sidor och kommentarer, även "
-"versionshistorik.  Ta bort denna wiki/blogg permanent?"
+"versionshistorik.  Ta bort denna wiki eller blogg permanent?"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
@@ -1217,20 +1208,18 @@ msgid "Create"
 msgstr "Skapa"
 
 #: plinth/modules/ikiwiki/views.py:73
-#, fuzzy
 #| msgid "Wiki & Blog"
 msgid "Wiki and Blog"
-msgstr "Wiki och blogg"
+msgstr "Wiki och Blogg"
 
 #: plinth/modules/ikiwiki/views.py:106
 msgid "Manage Wikis and Blogs"
 msgstr "Hantera wikis och bloggar"
 
 #: plinth/modules/ikiwiki/views.py:132
-#, fuzzy
 #| msgid "Create a Wiki or Blog"
 msgid "Create Wiki or Blog"
-msgstr "Skapa en wiki eller blogg"
+msgstr "Skapa en Wiki eller Blogg"
 
 #: plinth/modules/ikiwiki/views.py:145
 #, python-brace-format
@@ -1263,10 +1252,9 @@ msgid "Could not delete {name}: {error}"
 msgstr "Kunde inte ta bort {name}: {error}"
 
 #: plinth/modules/ikiwiki/views.py:182
-#, fuzzy
 #| msgid "Delete Wiki/Blog"
 msgid "Delete Wiki or Blog"
-msgstr "Ta bort wiki eller blogg"
+msgstr "Ta Bort Wiki eller Blogg"
 
 #: plinth/modules/letsencrypt/__init__.py:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
@@ -1542,7 +1530,6 @@ msgstr ""
 #: plinth/modules/networks/forms.py:66
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
-#, fuzzy
 msgid "Gateway"
 msgstr "Gateway"
 
@@ -1581,7 +1568,6 @@ msgstr "--Välj--"
 
 #: plinth/modules/networks/forms.py:175
 #: plinth/modules/networks/templates/connection_show.html:144
-#, fuzzy
 msgid "SSID"
 msgstr "SSID"
 
@@ -1627,106 +1613,108 @@ msgstr "Lägg till Anslutning"
 
 #: plinth/modules/networks/networks.py:46
 msgid "Networks"
-msgstr ""
+msgstr "Nätverk"
 
 #: plinth/modules/networks/networks.py:66
 msgid "Cannot show connection: Connection not found."
-msgstr ""
+msgstr "Kan inte visa anslutning: Ingen anslutning hittades."
 
 #: plinth/modules/networks/networks.py:100
 msgid "Show Connection information"
-msgstr ""
+msgstr "Visa Anslutningsinformation"
 
 #: plinth/modules/networks/networks.py:113
 msgid "Cannot edit connection: Connection not found."
-msgstr ""
+msgstr "Kan inte redigera anslutning: Ingen anslutning hittades."
 
 #: plinth/modules/networks/networks.py:119
 msgid "This type of connection is not yet understood."
-msgstr ""
+msgstr "Denna typ av anslutning är inte förstådd ännu."
 
 #: plinth/modules/networks/networks.py:139
 #: plinth/modules/networks/networks.py:198
 #: plinth/modules/networks/templates/connections_edit.html:34
 msgid "Edit Connection"
-msgstr ""
+msgstr "Redigera Anslutning"
 
 #: plinth/modules/networks/networks.py:209
 #, python-brace-format
 msgid "Activated connection {name}."
-msgstr ""
+msgstr "Aktiverad anslutning {name}."
 
 #: plinth/modules/networks/networks.py:212
 msgid "Failed to activate connection: Connection not found."
-msgstr ""
+msgstr "Det gick inte att aktivera anslutning: Ingen anslutning hittades."
 
 #: plinth/modules/networks/networks.py:216
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
+"Det gick inte att aktivera anslutningen {name}: Ingen lämplig enhet är "
+"tillgänglig."
 
 #: plinth/modules/networks/networks.py:229
 #, python-brace-format
 msgid "Deactivated connection {name}."
-msgstr ""
+msgstr "Inaktiverade anslutning {name}."
 
 #: plinth/modules/networks/networks.py:232
 msgid "Failed to de-activate connection: Connection not found."
-msgstr ""
+msgstr "Kunde inte de-aktivera anslutning: Anslutning hittades inte."
 
 #: plinth/modules/networks/networks.py:282
 msgid "Adding New Ethernet Connection"
-msgstr ""
+msgstr "Lägg Till Ny Ethernet-Anslutning"
 
 #: plinth/modules/networks/networks.py:300
 msgid "Adding New PPPoE Connection"
-msgstr ""
+msgstr "Lägg Till Ny PPPoE-Anslutning"
 
 #: plinth/modules/networks/networks.py:332
 msgid "Adding New Wi-Fi Connection"
-msgstr ""
+msgstr "Lägg Till Ny Wi-Fi-Anslutning"
 
 #: plinth/modules/networks/networks.py:346
 #, python-brace-format
 msgid "Connection {name} deleted."
-msgstr ""
+msgstr "Anslutning {name} borttagen."
 
 #: plinth/modules/networks/networks.py:349
 #: plinth/modules/networks/networks.py:358
 msgid "Failed to delete connection: Connection not found."
-msgstr ""
+msgstr "Det gick inte att ta bort anslutning: Anslutning hittades inte."
 
 #: plinth/modules/networks/networks.py:363
 #: plinth/modules/networks/templates/connections_delete.html:26
 msgid "Delete Connection"
-msgstr ""
+msgstr "Ta Bort Anslutning"
 
 #: plinth/modules/networks/templates/connection_show.html:43
 msgid "Edit connection"
-msgstr ""
+msgstr "Redigera anslutning"
 
 #: plinth/modules/networks/templates/connection_show.html:43
 #: plinth/templates/base.html:123
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 #: plinth/modules/networks/templates/connection_show.html:50
 #: plinth/modules/networks/templates/connections_list.html:78
 msgid "Deactivate"
-msgstr ""
+msgstr "Avaktivera"
 
 #: plinth/modules/networks/templates/connection_show.html:57
 #: plinth/modules/networks/templates/connections_list.html:86
 msgid "Activate"
-msgstr ""
+msgstr "Aktivera"
 
 #: plinth/modules/networks/templates/connection_show.html:63
 msgid "Delete connection"
-msgstr ""
+msgstr "Ta bort anslutning"
 
 #: plinth/modules/networks/templates/connection_show.html:63
 msgid "Delete"
-msgstr ""
+msgstr "Ta bort"
 
 #: plinth/modules/networks/templates/connection_show.html:66
 #: plinth/modules/networks/templates/connections_diagram.html:73
@@ -1734,21 +1722,21 @@ msgstr ""
 #: plinth/modules/networks/templates/connections_diagram.html:105
 #: plinth/modules/networks/templates/connections_diagram.html:127
 msgid "Connection"
-msgstr ""
+msgstr "Anslutning"
 
 #: plinth/modules/networks/templates/connection_show.html:71
 msgid "Primary connection"
-msgstr ""
+msgstr "Primär anslutning"
 
 #: plinth/modules/networks/templates/connection_show.html:73
 #: plinth/modules/networks/templates/connection_show.html:217
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "yes"
-msgstr ""
+msgstr "Ja"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 msgid "Device"
-msgstr ""
+msgstr "Enhet"
 
 #: plinth/modules/networks/templates/connection_show.html:88
 msgid "State"
@@ -2460,20 +2448,18 @@ msgstr ""
 #: plinth/modules/repro/__init__.py:36
 #: plinth/modules/repro/templates/repro.html:26
 #: plinth/modules/repro/views.py:55
-#, fuzzy
 #| msgid "GnudIP Server Address"
 msgid "SIP Server (repro)"
-msgstr "GnudIP Serveradress"
+msgstr "SIP-Server (repro)"
 
 #: plinth/modules/repro/__init__.py:41
 msgid "repro SIP Server"
 msgstr ""
 
 #: plinth/modules/repro/forms.py:29
-#, fuzzy
 #| msgid "Enable service discovery"
 msgid "Enable repro service"
-msgstr "Aktivera tjänstidentifiering"
+msgstr "Aktivera tjänsten repro"
 
 #: plinth/modules/repro/templates/repro.html:29
 msgid ""
@@ -2502,16 +2488,14 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/repro/templates/repro.html:63
-#, fuzzy
 #| msgid "Mumble server is running"
 msgid "repro service is running"
-msgstr "Mumble-servern är aktiverad"
+msgstr "Tjänsten repro är aktiverad"
 
 #: plinth/modules/repro/templates/repro.html:66
-#, fuzzy
 #| msgid "Mumble server is not running"
 msgid "repro service is not running"
-msgstr "Mumble-servern är inaktiverad"
+msgstr "Tjänsten repro är inaktiverad"
 
 #: plinth/modules/restore/__init__.py:36
 #: plinth/modules/restore/templates/restore_index.html:26
@@ -2631,10 +2615,9 @@ msgid "Anonymity Network (Tor)"
 msgstr ""
 
 #: plinth/modules/tor/__init__.py:53
-#, fuzzy
 #| msgid "Go to Networks"
 msgid "Tor Anonymity Network"
-msgstr "Gå till Nätverk"
+msgstr "Tor Anonymitetsnätverk"
 
 #: plinth/modules/tor/__init__.py:58
 msgid "Tor Bridge Relay"
@@ -2702,10 +2685,9 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/tor/templates/tor.html:54
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Tor configuration is being updated"
-msgstr "Konfiguration uppdaterad"
+msgstr "Konfigurationen av Tor uppdateras"
 
 #: plinth/modules/tor/templates/tor.html:62
 msgid "Tor is running"
@@ -2760,10 +2742,9 @@ msgid "Action error: {0} [{1}] [{2}]"
 msgstr ""
 
 #: plinth/modules/tor/views.py:148
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Configuration updated."
-msgstr "Konfiguration uppdaterad"
+msgstr "Konfiguration uppdaterad."
 
 #: plinth/modules/tor/views.py:150
 msgid "An error occurred during configuration."
@@ -2877,10 +2858,9 @@ msgid "Upgrade process started."
 msgstr ""
 
 #: plinth/modules/upgrades/views.py:99
-#, fuzzy
 #| msgid "Creating LDAP user failed."
 msgid "Starting upgrade failed."
-msgstr "Det gick inte att skapa LDAP-användare."
+msgstr "Det gick inte att starta uppgraderingen."
 
 #: plinth/modules/upgrades/views.py:102
 msgid "Package Upgrades"
