@@ -19,6 +19,7 @@
 Test module for network configuration utilities.
 """
 
+import copy
 import os
 import unittest
 
@@ -26,6 +27,52 @@ import unittest
 euid = os.geteuid()
 if euid == 0:
     from plinth import network
+
+ethernet_settings = {
+    'common': {
+        'type': '802-3-ethernet',
+        'name': 'plinth_test_eth',
+        'interface': 'eth0',
+        'zone': 'internal',
+    },
+    'ipv4': {
+        'method': 'auto',
+        'dns': '',
+        'second_dns': '',
+    },
+}
+
+wifi_settings = {
+    'common': {
+        'type': '802-11-wireless',
+        'name': 'plinth_test_wifi',
+        'interface': 'wlan0',
+        'zone': 'external',
+    },
+    'ipv4': {
+        'method': 'auto',
+        'dns': '',
+        'second_dns': '',
+    },
+    'wireless': {
+        'ssid': 'plinthtestwifi',
+        'mode': 'adhoc',
+        'auth_mode': 'open',
+    },
+}
+
+pppoe_settings = {
+    'common': {
+        'type': 'pppoe',
+        'name': 'plinth_test_pppoe',
+        'interface': 'eth1',
+        'zone': 'internal',
+    },
+    'pppoe': {
+        'username': 'x-user',
+        'password': 'x-password',
+    },
+}
 
 
 class TestNetwork(unittest.TestCase):
@@ -37,16 +84,9 @@ class TestNetwork(unittest.TestCase):
 
     @classmethod
     def setUp(cls):
-        cls.ethernet_uuid = network.add_ethernet_connection(
-            'plinth_test_eth', 'eth0', 'internal',
-            'auto', '', '', '', '', '')
-        cls.wifi_uuid = network.add_wifi_connection(
-            'plinth_test_wifi', 'wlan0', 'external',
-            'plinthtestwifi', 'adhoc', 'open', '',
-            'auto', '', '', '', '', '')
-        cls.pppoe_uuid = network.add_pppoe_connection(
-            'plinth_test_pppoe', 'eth1', 'internal',
-            'x-user', 'x-password')
+        cls.ethernet_uuid = network.add_connection(ethernet_settings)
+        cls.wifi_uuid = network.add_connection(wifi_settings)
+        cls.pppoe_uuid = network.add_connection(pppoe_settings)
 
     @classmethod
     def tearDown(cls):
@@ -81,9 +121,12 @@ class TestNetwork(unittest.TestCase):
     def test_edit_ethernet_connection(self):
         """Check that we can update an ethernet connection."""
         connection = network.get_connection(self.ethernet_uuid)
-        network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'eth1', 'external',
-            'auto', '', '', '', '', '')
+        ethernet_settings2 = copy.deepcopy(ethernet_settings)
+        ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
+        ethernet_settings2['common']['interface'] = 'eth1'
+        ethernet_settings2['common']['zone'] = 'external'
+        ethernet_settings2['ipv4']['method'] = 'auto'
+        network.edit_connection(connection, ethernet_settings2)
 
         connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(connection.get_id(), 'plinth_test_eth_new')
@@ -99,9 +142,13 @@ class TestNetwork(unittest.TestCase):
     def test_edit_pppoe_connection(self):
         """Check that we can update a PPPoE connection."""
         connection = network.get_connection(self.ethernet_uuid)
-        network.edit_pppoe_connection(
-            connection, 'plinth_test_pppoe_new', 'eth2', 'external',
-            'x-user-new', 'x-password-new')
+        pppoe_settings2 = copy.deepcopy(pppoe_settings)
+        pppoe_settings2['common']['name'] = 'plinth_test_pppoe_new'
+        pppoe_settings2['common']['interface'] = 'eth2'
+        pppoe_settings2['common']['zone'] = 'external'
+        pppoe_settings2['pppoe']['username'] = 'x-user-new'
+        pppoe_settings2['pppoe']['password'] = 'x-password-new'
+        network.edit_connection(connection, pppoe_settings2)
 
         connection = network.get_connection(self.ethernet_uuid)
         self.assertEqual(connection.get_id(), 'plinth_test_pppoe_new')
@@ -123,10 +170,16 @@ class TestNetwork(unittest.TestCase):
     def test_edit_wifi_connection(self):
         """Check that we can update a wifi connection."""
         connection = network.get_connection(self.wifi_uuid)
-        network.edit_wifi_connection(
-            connection, 'plinth_test_wifi_new', 'wlan1', 'external',
-            'plinthtestwifi2', 'infrastructure', 'wpa', 'secretpassword',
-            'auto', '', '', '', '', '')
+        wifi_settings2 = copy.deepcopy(wifi_settings)
+        wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
+        wifi_settings2['common']['interface'] = 'wlan1'
+        wifi_settings2['common']['zone'] = 'external'
+        wifi_settings2['ipv4']['method'] = 'auto'
+        wifi_settings2['wireless']['ssid'] = 'plinthtestwifi2'
+        wifi_settings2['wireless']['mode'] = 'infrastructure'
+        wifi_settings2['wireless']['auth_mode'] = 'wpa'
+        wifi_settings2['wireless']['passphrase'] = 'secretpassword'
+        network.edit_connection(connection, wifi_settings2)
 
         connection = network.get_connection(self.wifi_uuid)
 
@@ -153,10 +206,17 @@ class TestNetwork(unittest.TestCase):
     def test_ethernet_manual_ipv4_address(self):
         """Check that we can manually set IPv4 address on ethernet."""
         connection = network.get_connection(self.ethernet_uuid)
-        network.edit_ethernet_connection(
-            connection, 'plinth_test_eth_new', 'eth0', 'external', 'manual',
-            '169.254.0.1', '255.255.254.0', '169.254.0.254', '1.2.3.4',
-            '1.2.3.5')
+        ethernet_settings2 = copy.deepcopy(ethernet_settings)
+        ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
+        ethernet_settings2['common']['interface'] = 'eth0'
+        ethernet_settings2['common']['zone'] = 'external'
+        ethernet_settings2['ipv4']['method'] = 'manual'
+        ethernet_settings2['ipv4']['address'] = '169.254.0.1'
+        ethernet_settings2['ipv4']['netmask'] = '255.255.254.0'
+        ethernet_settings2['ipv4']['gateway'] = '169.254.0.254'
+        ethernet_settings2['ipv4']['dns'] = '1.2.3.4'
+        ethernet_settings2['ipv4']['second_dns'] = '1.2.3.5'
+        network.edit_connection(connection, ethernet_settings2)
 
         connection = network.get_connection(self.ethernet_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
@@ -174,10 +234,20 @@ class TestNetwork(unittest.TestCase):
     def test_wifi_manual_ipv4_address(self):
         """Check that we can manually set IPv4 address on wifi."""
         connection = network.get_connection(self.wifi_uuid)
-        network.edit_wifi_connection(
-            connection, 'plinth_test_wifi_new', 'wlan0', 'external',
-            'plinthtestwifi', 'adhoc', 'open', '', 'manual', '169.254.0.2',
-            '255.255.254.0', '169.254.0.254', '1.2.3.4', '1.2.3.5')
+        wifi_settings2 = copy.deepcopy(wifi_settings)
+        wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
+        wifi_settings2['common']['interface'] = 'wlan0'
+        wifi_settings2['common']['zone'] = 'external'
+        wifi_settings2['ipv4']['method'] = 'manual'
+        wifi_settings2['ipv4']['address'] = '169.254.0.2'
+        wifi_settings2['ipv4']['netmask'] = '255.255.254.0'
+        wifi_settings2['ipv4']['gateway'] = '169.254.0.254'
+        wifi_settings2['ipv4']['dns'] = '1.2.3.4'
+        wifi_settings2['ipv4']['second_dns'] = '1.2.3.5'
+        wifi_settings2['wireless']['ssid'] = 'plinthtestwifi'
+        wifi_settings2['wireless']['mode'] = 'adhoc'
+        wifi_settings2['wireless']['auth_mode'] = 'open'
+        network.edit_connection(connection, wifi_settings2)
 
         connection = network.get_connection(self.wifi_uuid)
         settings_ipv4 = connection.get_setting_ip4_config()
