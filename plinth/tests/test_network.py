@@ -207,9 +207,6 @@ class TestNetwork(unittest.TestCase):
         """Check that we can manually set IPv4 address on ethernet."""
         connection = network.get_connection(self.ethernet_uuid)
         ethernet_settings2 = copy.deepcopy(ethernet_settings)
-        ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
-        ethernet_settings2['common']['interface'] = 'eth0'
-        ethernet_settings2['common']['zone'] = 'external'
         ethernet_settings2['ipv4']['method'] = 'manual'
         ethernet_settings2['ipv4']['address'] = '169.254.0.1'
         ethernet_settings2['ipv4']['netmask'] = '255.255.254.0'
@@ -235,9 +232,6 @@ class TestNetwork(unittest.TestCase):
         """Check that we can manually set IPv4 address on wifi."""
         connection = network.get_connection(self.wifi_uuid)
         wifi_settings2 = copy.deepcopy(wifi_settings)
-        wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
-        wifi_settings2['common']['interface'] = 'wlan0'
-        wifi_settings2['common']['zone'] = 'external'
         wifi_settings2['ipv4']['method'] = 'manual'
         wifi_settings2['ipv4']['address'] = '169.254.0.2'
         wifi_settings2['ipv4']['netmask'] = '255.255.254.0'
