@@ -167,11 +167,11 @@ doWriteCFG()
             echo "NAT no" >> ${HELPERCFG}
             # if this file is added ez-ipupdate will take ip form this interface
             {
-                "interface=${default_interface}"
+                echo "interface=${default_interface}"
                 # if this line is added to config file, ez-ipupdate will be launched on startup via init.d
-                "daemon"
-                "execute=${0} success"
-            } > ${out_file}
+                echo "daemon"
+                echo "execute=${0} success"
+            } >> ${out_file}
         fi
     fi
 }
@@ -189,10 +189,10 @@ doReadCFG()
     ipurl=""
 
     if [ ! -z "${cfgfile}" ];then
-        host=$(grep host "${cfgfile}" 2> /dev/null |cut -d = -f 2)
-        server=$(grep server "${cfgfile}" 2> /dev/null |cut -d = -f 2 |grep -v ^\'\')
-        user=$(grep user "${cfgfile}" 2> /dev/null |cut -d = -f 2 |cut -d : -f 1 )
-        pass=$(grep user "${cfgfile}" 2> /dev/null |cut -d = -f 2 |cut -d : -f 2)
+        host=$(grep ^host= "${cfgfile}" 2> /dev/null | cut -d = -f 2-)
+        server=$(grep ^server= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | grep -v ^\'\')
+        user=$(grep ^user= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | cut -d : -f 1 )
+        pass=$(grep ^user= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | cut -d : -f 2-)
     fi
 
     if [ ! -z ${HELPERCFG} ];then
@@ -338,8 +338,8 @@ case ${cmd} in
         doGetWANIP
         if [ "$(grep ^NAT ${HELPERCFG} | awk '{print $2}')" = "no" ];then
             #if we are not behind a NAT device and we use gnudip, start the daemon tool
-            local gnudipServer=$(grep server ${cfgfile} 2> /dev/null |cut -d = -f 2 |grep -v ^\'\')
-            if [ -f ${CFG} -a ! -z "${gnudipServer}" ];then
+            gnudipServer=$(grep ^server= ${cfgfile} 2> /dev/null | cut -d = -f 2- |grep -v ^\'\')
+            if [ ! -f ${CFG} -a ! -z "${gnudipServer}" ];then
                 mv ${CFG_disabled} ${CFG}
                 /etc/init.d/${TOOLNAME} start
             fi
@@ -374,10 +374,10 @@ case ${cmd} in
         fi
         # if we don't know our WAN IP do a blind update once a hour
         if [ "${wanip}" = ${NOIP} ];then
-            uptime=$(cut -d . -f 1 /proc/uptime)
+            currenttime=$(date +%s)
             LAST=0
             [ -f ${LASTUPDATE} ] && LAST=$(cat ${LASTUPDATE})
-            diff=$((uptime - LAST))
+            diff=$((currenttime - LAST))
             if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
                 doUpdate
             fi
@@ -392,7 +392,7 @@ case ${cmd} in
     success)
         date=$(date)
         echo "last update done (${date})" > ${STATUSFILE}
-        awk '{print $1}' /proc/uptime |cut -d . -f 1 > ${LASTUPDATE}
+        date +%s > ${LASTUPDATE}
         # if called from cronjob, the current IP is given as parameter
         if [ $# -eq 1 ];then
             echo "${1}" > ${IPFILE}
