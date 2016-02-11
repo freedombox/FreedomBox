@@ -60,19 +60,14 @@ def index(request):
 @require_POST
 def module(request, module_name):
     """Return diagnostics for a particular module."""
-    found = False
-    for module_import_path in module_loader.loaded_modules:
-        if module_name == module_import_path.split('.')[-1]:
-            found = True
-            break
-
-    if not found:
+    try:
+        module = module_loader.loaded_modules[module_name]
+    except KeyError:
         raise Http404('Module does not exist or not loaded')
 
-    loaded_module = importlib.import_module(module_import_path)
     results = []
-    if hasattr(loaded_module, 'diagnose'):
-        results = loaded_module.diagnose()
+    if hasattr(module, 'diagnose'):
+        results = module.diagnose()
 
     return TemplateResponse(request, 'diagnostics_module.html',
                             {'title': _('Diagnostic Test'),
@@ -110,17 +105,15 @@ def run_on_all_modules():
                        'progress_percentage': 0}
 
     modules = []
-    for module_import_path in module_loader.loaded_modules:
-        loaded_module = importlib.import_module(module_import_path)
-        if not hasattr(loaded_module, 'diagnose'):
+    for module_name, module in module_loader.loaded_modules.items():
+        if not hasattr(module, 'diagnose'):
             continue
 
-        module_name = module_import_path.split('.')[-1]
-        modules.append((module_name, loaded_module))
+        modules.append((module_name, module))
         current_results['results'][module_name] = None
 
     current_results['modules'] = modules
-    for current_index, (module_name, loaded_module) in enumerate(modules):
-        current_results['results'][module_name] = loaded_module.diagnose()
+    for current_index, (module_name, module) in enumerate(modules):
+        current_results['results'][module_name] = module.diagnose()
         current_results['progress_percentage'] = \
             int((current_index + 1) * 100 / len(modules))

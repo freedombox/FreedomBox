@@ -31,7 +31,7 @@ from plinth import network
 
 __all__ = ['networks', 'init']
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 logger = Logger(__name__)
 

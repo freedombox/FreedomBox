@@ -25,7 +25,7 @@ from plinth import action_utils
 
 __all__ = ['diagnostics', 'init']
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 
 def diagnose():

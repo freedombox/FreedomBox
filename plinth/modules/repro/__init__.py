@@ -25,7 +25,7 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 service = None
 

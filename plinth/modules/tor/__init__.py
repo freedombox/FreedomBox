@@ -32,7 +32,7 @@ from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
 
 
-depends = ['plinth.modules.apps', 'plinth.modules.names']
+depends = ['apps', 'names']
 
 socks_service = None
 bridge_service = None

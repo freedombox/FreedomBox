@@ -26,7 +26,7 @@ from plinth import action_utils
 
 __all__ = ['owncloud', 'init']
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 
 def diagnose():

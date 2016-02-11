@@ -20,7 +20,6 @@ Plinth module to configure Privoxy.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 
 from plinth import actions
 from plinth import action_utils
@@ -28,7 +27,7 @@ from plinth import cfg
 from plinth import service as service_module
 
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 service = None
 
@@ -84,9 +83,7 @@ def diagnose_url_with_proxy():
 
         result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
-                    .format(url=url, proxy=proxy, kind=address['kind'])
+            .format(url=url, proxy=proxy, kind=address['kind'])
         results.append(result)
 
     return results
-
-

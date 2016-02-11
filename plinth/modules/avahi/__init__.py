@@ -20,16 +20,14 @@ Plinth module for service discovery.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import subprocess
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
 # pylint: disable=C0103
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 service = None
 

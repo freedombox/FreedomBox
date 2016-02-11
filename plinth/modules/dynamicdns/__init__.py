@@ -24,4 +24,4 @@ from .dynamicdns import init
 
 __all__ = ['dynamicdns', 'init']
 
-depends = ['plinth.modules.apps']
+depends = ['apps']

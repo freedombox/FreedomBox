@@ -26,7 +26,7 @@ from . import utils
 
 __all__ = ['init']
 
-depends = ['plinth.modules.apps', 'plinth.modules.names']
+depends = ['apps', 'names']
 
 
 def init():

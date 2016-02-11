@@ -24,7 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import cfg
 
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 
 def init():

@@ -20,7 +20,6 @@ Plinth module to configure XMPP server
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 
 from plinth import actions
 from plinth import action_utils
@@ -30,7 +29,7 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 service = None
 

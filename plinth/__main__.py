@@ -132,9 +132,7 @@ def setup_server():
     cherrypy.tree.mount(None, manual_url, config)
     logger.debug('Serving manual images %s on %s', manual_dir, manual_url)
 
-    for module_import_path in module_loader.loaded_modules:
-        module = importlib.import_module(module_import_path)
-        module_name = module_import_path.split('.')[-1]
+    for module_name, module in module_loader.loaded_modules.items():
         module_path = os.path.dirname(module.__file__)
         static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):

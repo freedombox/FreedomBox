@@ -24,4 +24,4 @@ from .firewall import init
 
 __all__ = ['firewall', 'init']
 
-depends = ['plinth.modules.system']
+depends = ['system']

@@ -27,7 +27,7 @@ service = None
 
 __all__ = ['init']
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 
 def init():

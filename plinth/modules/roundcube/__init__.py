@@ -21,13 +21,11 @@ Plinth module to configure Roundcube.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
-from plinth import service as service_module
 
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
 
 
 def init():

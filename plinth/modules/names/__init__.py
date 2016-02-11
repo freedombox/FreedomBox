@@ -31,7 +31,7 @@ SERVICES = (
     ('ssh', _('SSH'), 22),
 )
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 domain_types = {}
 domains = {}

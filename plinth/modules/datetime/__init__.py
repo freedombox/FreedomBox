@@ -22,13 +22,12 @@ Plinth module to configure system date and time
 from django.utils.translation import ugettext_lazy as _
 import subprocess
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 service = None
 

@@ -20,19 +20,13 @@ Plinth module for using Let's Encrypt.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
-from plinth import service as service_module
 from plinth.modules import names
 
 
-depends = [
-    'plinth.modules.apps',
-    'plinth.modules.names'
-]
+depends = ['apps', 'names']
 
 service = None
 

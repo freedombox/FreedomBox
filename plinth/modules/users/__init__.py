@@ -20,14 +20,12 @@ Plinth module to manage users
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 import subprocess
 
 from plinth import cfg
-from plinth import actions
 from plinth import action_utils
 
-depends = ['plinth.modules.system']
+depends = ['system']
 
 
 def init():
