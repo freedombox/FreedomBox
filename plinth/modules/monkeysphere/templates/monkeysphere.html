@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -30,22 +30,7 @@
 {% endblock %}
 
 
-{% block content %}
-
-  <h2>{% trans "Monkeysphere" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      With Monkeysphere, a PGP key can be generated for each configured domain
-      serving SSH. The PGP public key can then be uploaded to the PGP
-      keyservers. Users connecting to this machine through SSH can verify that
-      they are connecting to the correct host.  For users to trust the key, at
-      least one person (usually the machine owner) must sign the key using the
-      regular PGP key signing process.  See the
-      <a href="http://web.monkeysphere.info/getting-started-ssh/">
-      Monkeysphere SSH documentation</a> for more details.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   {% if running %}
     <p class="running-status-parent">

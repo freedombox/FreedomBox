@@ -28,20 +28,20 @@ from django.views.decorators.http import require_POST
 import json
 
 from plinth import actions
-from plinth import package
+from plinth.modules import monkeysphere
 from plinth.modules import names
 
 publish_process = None
 
 
-@package.required(['monkeysphere'])
 def index(request):
     """Serve configuration page."""
     _collect_publish_result(request)
     status = get_status()
     return TemplateResponse(
         request, 'monkeysphere.html',
-        {'title': _('Monkeysphere'),
+        {'title': monkeysphere.title,
+         'description': monkeysphere.description,
          'status': status,
          'running': bool(publish_process)})
 
