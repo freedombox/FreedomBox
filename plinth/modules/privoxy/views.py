@@ -26,19 +26,11 @@ import logging
 
 from .forms import PrivoxyForm
 from plinth import actions
-from plinth import package
 from plinth.modules import privoxy
 
 logger = logging.getLogger(__name__)
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    actions.superuser_run('privoxy', ['setup'])
-    privoxy.service.notify_enabled(None, True)
-
-
-@package.required(['privoxy'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -56,7 +48,8 @@ def index(request):
         form = PrivoxyForm(initial=status, prefix='privoxy')
 
     return TemplateResponse(request, 'privoxy.html',
-                            {'title': _('Web Proxy (Privoxy)'),
+                            {'title': privoxy.title,
+                             'description': privoxy.description,
                              'status': status,
                              'form': form})
 
