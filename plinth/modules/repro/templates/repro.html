@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,39 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "SIP Server (repro)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      repro provides various SIP services that a SIP softphone can utilize to
-      provide audio and video calls as well as presence and instant messaging.
-      repro provides a server and SIP user accounts that clients can use to let
-      their presence known.  It also acts as a proxy to federate SIP
-      communications to other servers on the Internet similar to email.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      To make SIP calls, a client application is needed. Available clients
-      include <a href="https://jitsi.org/">Jitsi</a> (for computers) and
-      <a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple">
-        CSipSimple</a> (for Android phones).
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      <strong>Note:</strong>  Before using repro, domains and users will need
-      to be configured using the <a href="/repro/domains.html">web-based
-      configuration panel</a>. Users in the <em>admin</em> group will be able
-      to log in to the repro configuration panel. After setting the domain, it
-      is required to restart the repro service. Disable the service and
-      re-enable it.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <h3>{% trans "Status" %}</h3>
 
