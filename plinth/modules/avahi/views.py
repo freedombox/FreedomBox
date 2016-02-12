@@ -26,14 +26,12 @@ import logging
 
 from .forms import ServiceDiscoveryForm
 from plinth import actions
-from plinth import package
 from plinth.modules import avahi
 
 
 logger = logging.getLogger(__name__)  # pylint: disable=C0103
 
 
-@package.required(['avahi-daemon'])
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -50,7 +48,8 @@ def index(request):
         form = ServiceDiscoveryForm(initial=status, prefix='avahi')
 
     return TemplateResponse(request, 'avahi.html',
-                            {'title': _('Service Discovery'),
+                            {'title': avahi.title,
+                             'description': avahi.description,
                              'status': status,
                              'form': form})
 
