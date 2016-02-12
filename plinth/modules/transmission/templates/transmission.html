@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,17 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "BitTorrent (Transmission)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      BitTorrent is a peer-to-peer file sharing protocol.
-      Transmission daemon handles Bitorrent file sharing.  Note that
-      BitTorrent is not anonymous.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <p>
     {% blocktrans trimmed %}
