@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'app.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -29,17 +29,7 @@
 {% endblock %}
 
 
-{% block content %}
-
-  <h2>{{ title }}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Upgrades install the latest software and security updates. When automatic
-      upgrades are enabled, upgrades are automatically run every night. You
-      don't normally need to start the upgrade process.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <p>
     {% blocktrans trimmed %}
