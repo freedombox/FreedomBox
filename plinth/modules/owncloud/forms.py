@@ -1,5 +1,3 @@
-{% extends "app.html" %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,24 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
 
-{% load bootstrap %}
-{% load i18n %}
+"""
+Forms for configuring ownCloud.
+"""
 
-{% block configuration %}
+from django import forms
+from django.utils.translation import ugettext_lazy as _
 
-  {% include "diagnostics_button.html" with module="owncloud" %}
 
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary btn-md"
-           value="{% trans "Apply changes" %}"/>
-  </form>
-
-{% endblock %}
+class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
+    """ownCloud configuration form"""
+    enabled = forms.BooleanField(
+        label=_('Enable ownCloud'),
+        required=False)

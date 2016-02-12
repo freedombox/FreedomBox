@@ -21,7 +21,7 @@ URLs for the ownCloud module
 
 from django.conf.urls import url
 
-from . import owncloud as views
+from . import views
 
 
 urlpatterns = [
