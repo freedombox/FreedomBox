@@ -16,18 +16,12 @@
 #
 
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
-
-
-def init():
-    """Initialize the system module"""
-    cfg.main_menu.add_urlname(_('System'), 'glyphicon-cog', 'system:index',
-                              100)
+from plinth.modules import system
 
 
 def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'system.html',
-                            {'title': _('System Configuration')})
+                            {'title': system.title,
+                             'description': system.description})
