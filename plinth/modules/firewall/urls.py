@@ -21,7 +21,7 @@ URLs for the Firewall module
 
 from django.conf.urls import url
 
-from . import firewall as views
+from . import views
 
 
 urlpatterns = [
