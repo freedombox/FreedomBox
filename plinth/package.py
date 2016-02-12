@@ -94,15 +94,15 @@ class Transaction(object):
                     self.package_names, self.allow_cancel, self.status_string,
                     self.percentage, self.package, self.item_progress)
 
-    def start_install(self):
+    def start_install_in_thread(self):
         """Start a PackageKit transaction to install given list of packages.
 
         This operation is non-blocking at it spawns a new thread.
         """
-        thread = threading.Thread(target=self._install)
+        thread = threading.Thread(target=self.install)
         thread.start()
 
-    def _install(self):
+    def install(self):
         """Run a PackageKit transaction to install given packages."""
         try:
             if self.before_install:
@@ -319,4 +319,4 @@ def start_install(package_names, before_install=None, on_install=None):
                               on_install=on_install)
     transactions[frozenset(package_names)] = transaction
 
-    transaction.start_install()
+    transaction.start_install_in_thread()
