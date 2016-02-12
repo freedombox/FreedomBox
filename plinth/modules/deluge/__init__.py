@@ -21,12 +21,26 @@ Plinth module to configure a Deluge web client.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
 
+version = 1
+
 depends = ['apps']
+
+title = _('BitTorrent Web Client (Deluge)')
+
+description = [
+    _('Deluge is a BitTorrent client that features a Web UI.'),
+
+    _('When enabled, the Deluge web client will be available from '
+      '<a href="/deluge">/deluge</a> path on the web server. The '
+      'default password is \'deluge\', but you should log in and change '
+      'it immediately after enabling this service.')
+]
 
 service = None
 
@@ -34,13 +48,19 @@ service = None
 def init():
     """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('BitTorrent (Deluge)'), 'glyphicon-magnet',
-                     'deluge:index', 200)
+    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index', 200)
 
     global service
     service = service_module.Service(
-        'deluge', _('Deluge BitTorrent'), ['http', 'https'],
-        is_external=True, enabled=is_enabled())
+        'deluge', title, ['http', 'https'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['deluged', 'deluge-web'])
+    helper.call('post', actions.superuser_run, 'deluge', ['enable'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():
