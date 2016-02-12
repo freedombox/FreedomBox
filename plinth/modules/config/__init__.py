@@ -24,4 +24,8 @@ from .config import init
 
 __all__ = ['config', 'init']
 
+version = 1
+
+is_essential = True
+
 depends = ['system', 'firewall', 'names']
