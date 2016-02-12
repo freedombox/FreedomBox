@@ -24,12 +24,11 @@ from django.http import Http404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext_lazy as _
-import importlib
 import logging
 import threading
 
-from plinth import cfg
 from plinth import module_loader
+from plinth.modules import diagnostics
 
 
 logger = logging.Logger(__name__)
@@ -39,20 +38,14 @@ current_results = {}
 _running_task = None
 
 
-def init():
-    """Initialize the module"""
-    menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Diagnostics'), 'glyphicon-screenshot',
-                     'diagnostics:index', 30)
-
-
 def index(request):
     """Serve the index page"""
     if request.method == 'POST' and not _running_task:
         _start_task()
 
     return TemplateResponse(request, 'diagnostics.html',
-                            {'title': _('System Diagnostics'),
+                            {'title': diagnostics.title,
+                             'description': diagnostics.description,
                              'is_running': _running_task is not None,
                              'results': current_results})
 
