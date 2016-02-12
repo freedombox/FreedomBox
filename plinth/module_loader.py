@@ -28,6 +28,7 @@ import re
 
 from plinth import cfg
 from plinth import urls
+from plinth import setup
 from plinth.signals import pre_module_loading, post_module_loading
 
 logger = logging.getLogger(__name__)
@@ -73,7 +74,7 @@ def load_modules():
     logger.debug('Module load order - %s', ordered_modules)
 
     for module_name in ordered_modules:
-        _initialize_module(modules[module_name])
+        _initialize_module(module_name, modules[module_name])
         loaded_modules[module_name] = modules[module_name]
 
     post_module_loading.send_robust(sender="module_loader")
@@ -119,8 +120,11 @@ def _include_module_urls(module_import_path, module_name):
             raise
 
 
-def _initialize_module(module):
+def _initialize_module(module_name, module):
     """Call initialization method in the module if it exists"""
+    # Perform setup related initialization on the module
+    setup.init(module_name, module)
+
     try:
         init = module.init
     except AttributeError:
