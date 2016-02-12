@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,13 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{{ title }}</h2>
-
-  <p>
-    {% blocktrans trimmed %}Restart or shut down the system.{% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <p>
     <a class="btn btn-default btn-md" href="{% url 'power:restart' %}">
