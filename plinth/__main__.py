@@ -256,6 +256,7 @@ def configure_django():
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
+            'plinth.middleware.SetupMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
