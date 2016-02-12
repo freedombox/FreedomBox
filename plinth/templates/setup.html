@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+
+  {% if setup_helper.current_operation %}
+    <meta http-equiv="refresh" content="3" />
+  {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+  <h2>{% trans "Installation" %}: {{ setup_helper.module.title }}</h2>
+
+  {% for paragraph in setup_helper.module.description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  {% if not setup_helper.current_operation %}
+
+    {% if setup_helper.get_state == 'needs-setup' %}
+      <p>
+        {% blocktrans trimmed %}
+          Install this application?
+        {% endblocktrans %}
+      </p>
+
+      <form action="" method="post">
+        {% csrf_token %}
+
+        <input type="submit" class="btn btn-md btn-primary"
+               value="{% trans "Install" %}" />
+      </form>
+    {% elif setup_helper.get_state == 'needs-update' %}
+      <p>
+        {% blocktrans trimmed %}
+          This application needs an update. Update now?
+        {% endblocktrans %}
+      </p>
+
+      <form action="" method="post">
+        {% csrf_token %}
+
+        <input type="submit" class="btn btn-md btn-primary"
+               value="{% trans "Update" %}" />
+      </form>
+    {% endif %}
+
+  {% else %}
+
+    {% if setup_helper.current_operation.step == 'pre' %}
+      {% trans "Performing pre-install operation" %}
+    {% elif setup_helper.current_operation.step == 'post' %}
+      {% trans "Performing post-install operation" %}
+    {% elif setup_helper.current_operation.step == 'install' %}
+      {% with transaction=setup_helper.current_operation.transaction %}
+        <div>
+          {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
+            Installing {{ package_names }}: {{ status }}
+          {% endblocktrans %}
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active"
+               role="progressbar" aria-valuemin="0" aria-valuemax="100"
+               aria-valuenow="{{ transaction.percentage }}"
+               style="width: {{ transaction.percentage }}%">
+            <span class="sr-only">
+              {% blocktrans trimmed with percentage=transaction.percentage %}
+                {{ percentage }}% complete
+              {% endblocktrans %}
+            </span>
+          </div>
+        </div>
+      {% endwith %}
+    {% endif %}
+
+  {% endif %}
+
+{% endblock %}

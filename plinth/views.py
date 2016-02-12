@@ -22,6 +22,7 @@ Main Plinth views
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.views.generic import TemplateView
+import time
 
 from plinth import package as package_module
 
@@ -60,4 +61,29 @@ class PackageInstallView(TemplateView):
             self.kwargs['package_names'],
             before_install=self.kwargs.get('before_install'),
             on_install=self.kwargs.get('on_install'))
+        return self.render_to_response(self.get_context_data())
+
+
+class SetupView(TemplateView):
+    """View to prompt and setup applications."""
+    template_name = 'setup.html'
+
+    def get_context_data(self, **kwargs):
+        """Return the context data rendering the template."""
+        context = super(SetupView, self).get_context_data(**kwargs)
+        context['setup_helper'] = self.kwargs['setup_helper']
+        return context
+
+    def post(self, *args, **kwargs):
+        """Handle installing/upgrading applications.
+
+        Start the application setup, and refresh the page every few
+        seconds to keep displaying the status.
+        """
+        self.kwargs['setup_helper'].run_in_thread()
+
+        # Give a moment for the setup process to start and show
+        # meaningful status.
+        time.sleep(1)
+
         return self.render_to_response(self.get_context_data())
