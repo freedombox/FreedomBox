@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,41 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "Email Client (Roundcube)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Roundcube webmail is a browser-based multilingual IMAP client
-      with an application-like user interface. It provides full
-      functionality you expect from an email client, including MIME
-      support, address book, folder manipulation, message searching
-      and spell checking.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      You can access Roundcube from <a href="/roundcube">/roundcube</a>.
-      Provide the username and password of the email account you wish
-      to access followed by the domain name of the IMAP server for
-      your email provider, like <code>imap.example.com</code>.  For
-      IMAP over SSL (recommended), fill the server field like
-      <code>imaps://imap.example.com</code>.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      For Gmail, username will be your Gmail address, password will be
-      your Google account password and server will be
-      <code>imaps://imap.gmail.com</code>.  Note that you will also need
-      to enable "Less secure apps" in your Google account settings
-      (<a href="https://www.google.com/settings/security/lesssecureapps"
-       >https://www.google.com/settings/security/lesssecureapps</a>).
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   {% include "diagnostics_button.html" with module="roundcube" %}
 
