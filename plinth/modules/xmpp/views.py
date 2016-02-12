@@ -23,39 +23,15 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 import logging
-import socket
 
 from .forms import XmppForm
 from plinth import actions
-from plinth import package
 from plinth.modules import xmpp
 
 
 logger = logging.getLogger(__name__)
 
 
-def get_domainname():
-    """Return the domainname"""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
-
-
-def before_install():
-    """Preseed debconf values before the packages are installed."""
-    domainname = get_domainname()
-    logger.info('XMPP service domainname - %s', domainname)
-    actions.superuser_run('xmpp', ['pre-install', '--domainname', domainname])
-
-
-def on_install():
-    """Setup jwchat apache conf"""
-    actions.superuser_run('xmpp', ['setup'])
-    xmpp.service.notify_enabled(None, True)
-
-
-@package.required(['jwchat', 'ejabberd'],
-                  before_install=before_install,
-                  on_install=on_install)
 def index(request):
     """Serve configuration page"""
     status = get_status()
@@ -72,7 +48,8 @@ def index(request):
         form = XmppForm(initial=status, prefix='xmpp')
 
     return TemplateResponse(request, 'xmpp.html',
-                            {'title': _('Chat Server (XMPP)'),
+                            {'title': xmpp.title,
+                             'description': xmpp.description,
                              'status': status,
                              'form': form})
 
@@ -81,7 +58,7 @@ def get_status():
     """Get the current settings."""
     status = {'enabled': xmpp.is_enabled(),
               'is_running': xmpp.is_running(),
-              'domainname': get_domainname()}
+              'domainname': xmpp.get_domainname()}
 
     return status
 
