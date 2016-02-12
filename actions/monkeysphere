@@ -53,9 +53,11 @@ def subcommand_host_show_keys(arguments):
     """Show host key fingerprints."""
     try:
         output = subprocess.check_output(
-            ['monkeysphere-host', 'show-keys'] + arguments.key_ids)
+            ['monkeysphere-host', 'show-keys'] + arguments.key_ids,
+            stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         # no keys available
+        print(json.dumps({'keys': []}))
         return
 
     # parse output
