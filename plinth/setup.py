@@ -98,9 +98,6 @@ class Helper(object):
         }
 
         transaction.install()
-        if transaction.exception:
-            logger.error('Error running install - %s', transaction.exception)
-            raise transaction.exception
 
     def call(self, step, method, *args, **kwargs):
         """Call an arbitrary method during setup and note down its stage."""
