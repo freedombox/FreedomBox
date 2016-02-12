@@ -25,14 +25,9 @@ from django.utils.translation import ugettext as _
 
 from .forms import ShaarliForm
 from plinth import actions
-from plinth import package
 from plinth.modules import shaarli
 
-def on_install():
-    """Notify that the service is now enabled."""
-    shaarli.service.notify_enabled(None, True)
 
-@package.required(['shaarli'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -49,7 +44,8 @@ def index(request):
         form = ShaarliForm(initial=status, prefix='shaarli')
 
     return TemplateResponse(request, 'shaarli.html',
-                            {'title': _('Bookmarks (Shaarli)'),
+                            {'title': shaarli.title,
+                             'description': shaarli.description,
                              'status': status,
                              'form': form})
 

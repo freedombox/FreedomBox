@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,21 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "Bookmarks (Shaarli)" %}</h2>
-
-  <p>{% trans "Shaarli allows you to save and share bookmarks." %}</p>
-
-  <p>
-    {% blocktrans trimmed %}
-
-      When enabled, Shaarli will be available from <a href="/shaarli">/shaarli</a>
-      path on the web server. Note that Shaarli only supports a single
-      user account, which you will need to setup on the initial visit.
-
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <h3>{% trans "Configuration" %}</h3>
 
