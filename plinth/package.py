@@ -46,6 +46,11 @@ class PackageException(Exception):
         self.error_string = error_string
         self.error_details = error_details
 
+    def __str__(self):
+        """Return the strin representation of the exception."""
+        return 'PackageException(error_string="{0}", error_details="{1}")' \
+            .format(self.error_string, self.error_details)
+
 
 class Transaction(object):
     """Information about an ongoing transaction."""
