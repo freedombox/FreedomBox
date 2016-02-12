@@ -27,8 +27,6 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from .forms import IkiwikiForm, IkiwikiCreateForm
 from plinth import actions
-from plinth import action_utils
-from plinth import package
 from plinth.modules import ikiwiki
 
 
@@ -40,20 +38,6 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
                'text': ugettext_lazy('Create')}]
 
 
-def on_install():
-    """Enable ikiwiki on install."""
-    actions.superuser_run('ikiwiki', ['setup'])
-    ikiwiki.service.notify_enabled(None, True)
-
-
-@package.required(['ikiwiki',
-                   'gcc',
-                   'libc6-dev',
-                   'libtimedate-perl',
-                   'libcgi-formbuilder-perl',
-                   'libcgi-session-perl',
-                   'libxml-writer-perl'],
-                  on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -70,7 +54,8 @@ def index(request):
         form = IkiwikiForm(initial=status, prefix='ikiwiki')
 
     return TemplateResponse(request, 'ikiwiki.html',
-                            {'title': _('Wiki and Blog'),
+                            {'title': ikiwiki.title,
+                             'description': ikiwiki.description,
                              'status': status,
                              'form': form,
                              'subsubmenu': subsubmenu})
