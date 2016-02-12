@@ -26,18 +26,11 @@ import logging
 
 from .forms import DateTimeForm
 from plinth import actions
-from plinth import package
 from plinth.modules import datetime
 
 logger = logging.getLogger(__name__)
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    datetime.service.notify_enabled(None, True)
-
-
-@package.required(['ntp'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -55,7 +48,8 @@ def index(request):
         form = DateTimeForm(initial=status, prefix='datetime')
 
     return TemplateResponse(request, 'datetime.html',
-                            {'title': _('Date & Time'),
+                            {'title': datetime.title,
+                             'description': datetime.description,
                              'status': status,
                              'form': form})
 
