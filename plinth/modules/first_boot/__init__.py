@@ -18,3 +18,7 @@
 """
 Plinth module for first boot wizard
 """
+
+version = 1
+
+is_essential = True
