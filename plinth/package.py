@@ -88,7 +88,7 @@ class Transaction(object):
         try:
             self._do_install()
         except glib.Error as exception:
-            raise PackageException(exception.message)
+            raise PackageException(exception.message) from exception
 
     def _do_install(self):
         """Run a PackageKit transaction to install given packages.
