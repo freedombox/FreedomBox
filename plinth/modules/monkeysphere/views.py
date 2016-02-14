@@ -48,14 +48,14 @@ def index(request):
 
 @require_POST
 def generate(request, domain):
-    """Generate PGP key for SSH service."""
+    """Generate OpenPGP key for SSH service."""
     valid_domain = any((domain in domains
                         for domains in names.domains.values()))
     if valid_domain:
         try:
             actions.superuser_run(
                 'monkeysphere', ['host-import-ssh-key', 'ssh://' + domain])
-            messages.success(request, _('Generated PGP key.'))
+            messages.success(request, _('Generated OpenPGP key.'))
         except actions.ActionError as exception:
             messages.error(request, str(exception))
 
@@ -64,7 +64,7 @@ def generate(request, domain):
 
 @require_POST
 def publish(request, fingerprint):
-    """Publish PGP key for SSH service."""
+    """Publish OpenPGP key for SSH service."""
     global publish_process
     if not publish_process:
         publish_process = actions.superuser_run(
