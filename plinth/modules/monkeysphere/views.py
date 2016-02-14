@@ -62,6 +62,13 @@ def generate(request, domain):
     return redirect(reverse_lazy('monkeysphere:index'))
 
 
+def details(request, fingerprint):
+    """Get details for an OpenPGP key."""
+    key = get_key(fingerprint)
+    return TemplateResponse(request, 'monkeysphere_details.html',
+                            {'title': _('Monkeysphere'), 'key': key})
+
+
 @require_POST
 def publish(request, fingerprint):
     """Publish OpenPGP key for SSH service."""
@@ -102,6 +109,17 @@ def get_status():
             })
 
     return {'domains': domains}
+
+
+def get_key(fingerprint):
+    """Get key by fingerprint."""
+    output = actions.superuser_run('monkeysphere',
+                                   ['host-show-keys', fingerprint])
+    if output:
+        keys = json.loads(output)['keys']
+        return keys[0]
+
+    return None
 
 
 def _collect_publish_result(request):
