@@ -53,7 +53,7 @@
         <thead>
           <tr>
             <th>{% trans "Domain" %}</th>
-            <th>{% trans "GPG Fingerprint" %}</th>
+            <th>{% trans "OpenPGP Fingerprint" %}</th>
             <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
@@ -75,7 +75,7 @@
                     {% csrf_token %}
 
                     <button type="submit" class="btn btn-primary btn-sm pull-right">
-                      {% trans "Generate PGP Key" %}</button>
+                      {% trans "Generate OpenPGP Key" %}</button>
                   </form>
                 {% elif not running %}
                   <form class="form" method="post"
