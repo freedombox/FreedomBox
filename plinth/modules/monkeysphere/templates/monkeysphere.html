@@ -78,7 +78,10 @@
               <td>{{ domain.name }}</td>
               <td>
                 {% if domain.key %}
-                  {{ domain.key.pgp_fingerprint }}
+		  <a href="{% url 'monkeysphere:details' domain.key.pgp_fingerprint %}"
+		     title="Show details for key {{ domain.key.pgp_fingerprint }}">
+                    {{ domain.key.pgp_fingerprint }}
+		  </a>
                 {% else %}
                   {% trans "Not Available" %}
                 {% endif %}
