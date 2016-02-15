@@ -58,8 +58,8 @@ def on_install():
     service.notify_enabled(None, True)
 
 
-@package.required(['postgresql', 'php5-pgsql', 'owncloud'],
-                  on_install=on_install)
+@package.required(['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
+                   'php-google-api-php-client'], on_install=on_install)
 def index(request):
     """Serve the ownCloud configuration page"""
     status = get_status()
