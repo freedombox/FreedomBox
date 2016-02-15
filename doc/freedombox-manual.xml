@@ -7,7 +7,7 @@
   </articleinfo>
   <section>
     <title>FreedomBox Introduction</title>
-    <para>FreedomBox is a personal server that protects your privacy. It is a free software stack, a subset of the Debian universal operating system, that can be installed in many flavors of cheap and power-efficient hardware. The simplicity of setting up and operating a FreedomBox is similar to that of a smart phone. </para>
+    <para>FreedomBox is a personal server that protects your privacy. It is a free software stack, a subset of the Debian universal operating system, that can be installed in many flavors of inexpensive and power-efficient <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">hardware</ulink>. The simplicity of setting up and operating a FreedomBox is similar to that of a smart phone. </para>
     <section>
       <title>Smart Router</title>
       <para>FreedomBox runs in a physical computer and can route your traffic. It can sit between various devices at home such as mobiles, laptops and TVs and the Internet replacing a home wireless router.  By routing traffic, FreedomBox can remove tracking advertisements and malicious web bugs before they ever reach your devices.  FreedomBox can cloak your location and protect your anonymity by "onion routing" your traffic over Tor. FreedomBox provides a VPN server that you can use while you are away from home to keep your traffic secret on untrusted public wireless networks and to securely access various devices at home. It can also be carried along with your laptop and used to connect to public networks at work, school, or office to avail its services. It could be used in a village to provide communications throughout the village. In future, FreedomBox intends to provide support for alternative ways of connecting to the Internet such as Mesh networks. </para>
@@ -41,22 +41,30 @@
         <para>On first boot, the FreedomBox will perform initial setup and then reboot. This may take several minutes. </para>
       </listitem>
       <listitem>
-        <para>After the FreedomBox has rebooted, you can access Plinth through your web browser. </para>
+        <para>After the FreedomBox has rebooted, you can access its web interface (called Plinth) through your web browser. </para>
         <itemizedlist>
           <listitem>
             <para>If your computer is connected directly to the FreedomBox through a second (LAN) ethernet port, you can browse to: <ulink url="http://freedombox/"/> or <ulink url="http://10.42.0.1/"/>. </para>
           </listitem>
           <listitem>
-            <para>If your computer supports mDNS (GNU/Linux, Mac OSX and Windows with mDNS software installed), you can browse to: <ulink url="http://freedombox.local/"/>. </para>
+            <para>If your computer supports mDNS (GNU/Linux, Mac OSX and Windows with mDNS software installed), you can browse to: <ulink url="http://freedombox.local/"/> (or <ulink url="http://the-hostname-you-entered-during-install.local/"/>) </para>
           </listitem>
           <listitem>
             <para>If neither of these methods are available, then you will need to figure out the IP address of your FreedomBox. You can use the "nmap" program to find its IP address: </para>
             <screen format="linespecific">     nmap -p 80 --open -sV 192.168.0.0/24</screen>
+            <para>Your FreedomBox will show up as an IP address with an open tcp port 80 using Apache httpd service on Debian, such as the example below which would make it accessible at <ulink url="http://192.168.0.165"/>: </para>
+            <screen format="linespecific">     Nmap scan report for 192.168.0.165
+     Host is up (0.00088s latency).
+     PORT   STATE SERVICE VERSION
+     80/tcp open  http    Apache httpd 2.4.17 ((Debian))</screen>
           </listitem>
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>When you first access Plinth, you will see a welcome page that asks you to provide some basic information for setting up your FreedomBox. </para>
+        <para>On accessing Plinth your browser will warn you that it communicates securely but that it regards the security certificate for doing so as invalid. This is a fact you need to accept because the certificate is auto generated on the box and therefore "self-signed" (the browser might also use words such as "untrusted", "not private", "privacy error" or "unknown issuer/authority"). Telling your browser that you are aware of this might involve pressing buttons such as "I understand the Risks", "proceed to ... (unsafe)" or "Add exception". </para>
+      </listitem>
+      <listitem>
+        <para>On the intial access you will see a welcome page that asks you to provide some basic information for setting up your FreedomBox. </para>
       </listitem>
       <listitem>
         <para>After completing the form, you will be logged in to Plinth and able to access apps and configuration through the interface. </para>
@@ -95,10 +103,39 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.7 (unreleased)</title>
+      <title>Version 0.8 (2016-02)</title>
       <itemizedlist>
         <listitem>
-          <para>Translations! </para>
+          <para>Added Quassel, an IRC client that stays connected to IRC networks and can synchronize multiple frontends. </para>
+        </listitem>
+        <listitem>
+          <para>Improved first boot user interface. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed Transmission RPC whitelist issue. </para>
+        </listitem>
+        <listitem>
+          <para>Added translations for Turkish, Chinese, and Russian. Fixed and updated translations in other languages. </para>
+        </listitem>
+        <listitem>
+          <para>Added Monkeysphere, which uses PGP web of trust for SSH host key verification. </para>
+        </listitem>
+        <listitem>
+          <para>Added Let's Encrypt, to obtain certificates for domains, so that browser certificate warnings can be avoided. </para>
+        </listitem>
+        <listitem>
+          <para>Added repro, a SIP server for audio and video calls. </para>
+        </listitem>
+        <listitem>
+          <para>Allow users to set their SSH public keys, so they can login over SSH without a password. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.7 (2015-12-13)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Translations! Full translations of the interface in Danish, Dutch, French, German and Norwegian Bokmål, and partial Telugu. </para>
         </listitem>
         <listitem>
           <para>Support for OLinuXino A20 MICRO and LIME2 </para>
@@ -298,7 +335,7 @@
   </section>
   <section>
     <title>Download and Install</title>
-    <para>You may either use FreedomBox on one of the supported <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">hardware</ulink>, install it on a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">Debian</ulink> machine, or deploy on a virtual machine. </para>
+    <para>Wellcome to the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> download page. You may either install FreedomBox on one of the supported inexpensive <ulink url="https://wiki.debian.org/FreedomBox/Hardware#">hardware</ulink>, on a Linux <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">Debian</ulink> operating system, or deploy on a virtual machine. Installing on Debian is easy because <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> is available as packages. On hardware, you may need a little bit of technical expertise to setup. What we are requiring is to buy a device and plug in an SD card. In case of trouble, please read and interact with the <ulink url="https://wiki.debian.org/FreedomBox/QuestionsAndAnswers#">Questions and Answers</ulink> page based on <ulink url="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">Freedombox-discuss</ulink> mailing list archives. </para>
     <section>
       <title>Downloading on Debian</title>
       <para>If you are installing on Debian, you don't need to download these images. Instead read <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">instructions</ulink> on setting up FreedomBox on Debian. </para>
@@ -336,7 +373,7 @@ sub   4096R/4C1D4B57 2011-11-12</screen>
           </listitem>
           <listitem>
             <para>Finally, verify your downloaded image with its signature file <code>.sig</code>. For example: </para>
-            <screen format="linespecific">$ gpg --verify freedombox-unstable_2015-01-15_beaglebone-armhf-card.tar.bz2.sig freedombox-unstable_2015-01-15_beaglebone-armhf-card.tar.bz2
+            <screen format="linespecific">$ gpg --verify freedombox-unstable-free_2015-12-13_cubietruck-armhf.img.xz.sig freedombox-unstable-free_2015-12-13_cubietruck-armhf.img.xz
 gpg: Signature made Thursday 15 January 2015 09:27:50 AM IST using RSA key ID 0C9BC971
 gpg: Good signature from "Sunil Mohan Adapa &lt;sunil@medhas.org&gt;"
 gpg: WARNING: This key is not certified with a trusted signature!
@@ -388,15 +425,14 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
           </listitem>
           <listitem>
             <para>Decompress the downloaded image using tar: </para>
-            <screen format="linespecific">$ tar -xjvf freedombox-unstable_2015-08-06_beaglebone-armhf-card.tar.bz2</screen>
-            <para>The above command is an example for the <emphasis>beaglebone</emphasis> image built on 2015-08-06.  Your downloaded file name will be different. </para>
+            <screen format="linespecific">$ xz -d freedombox-unstable-free_2015-12-13_cubietruck-armhf.img.xz</screen>
+            <para>The above command is an example for the <emphasis>cubietruck</emphasis> image built on 2015-12-13.  Your downloaded file name will be different. </para>
           </listitem>
           <listitem>
             <para>Copy the image to your card.  Double check and make sure you don't write to your computer's main storage (such as /dev/sda).  Also make sure that you don't run this step as root to avoid potentially overriding data on your hard drive due to a mistake in identifying the device or errors while typing the command.  USB disks and SD cards inserted into the system should typically be write accessible to normal users.  If you don't have permission to write to your SD card as a user, you may need to run this command as root.  In this case triple check everything before you run the command.  Another safety precaution is to unplug all external disks except the SD card before running the command. </para>
             <para>For example, if your SD card is <emphasis>/dev/sdf</emphasis> as noted in the first step above, then to copy the image, run: </para>
-            <screen format="linespecific">$ cd build
-$ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/sdf conv=fdatasync</screen>
-            <para>The above command is an example for the <emphasis>beaglebone</emphasis> image built on 2015-08-06.  Your image file name will be different. </para>
+            <screen format="linespecific">$ dd bs=1M if=freedombox-unstable-free_2015-12-13_cubietruck-armhf.img of=/dev/sdf conv=fdatasync</screen>
+            <para>The above command is an example for the <emphasis>cubietruck</emphasis> image built on 2015-12-13.  Your image file name will be different. </para>
             <para>When picking a device, use the drive-letter destination, like <emphasis>/dev/sdf</emphasis>, not a numbered destination, like <emphasis>/dev/sdf1</emphasis>.  The device without a number refers to the entire device, while the device with a number refers to a specific partition.  We want to use the whole device.  Downloaded images contain complete information about how many partitions there should be, their sizes and types.  You don't have to format your SD card or create partitions.  All the data on the SD card will be wiped off during the write process. </para>
           </listitem>
           <listitem>
@@ -415,6 +451,10 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
     <section>
       <title>Anonymity Network (Tor)</title>
       <section>
+        <title>What is Tor?</title>
+        <para>Tor is a network of server operated by volunteers. It allows users of these servers to improve their privacy and security while surfing on the Internet. You and your friends are able to access to your FreedomBox via Tor network without revealing its IP address. Activating Tor application on your FreedomBox, you will be able to offer remote services (chat, wiki, file sharing, etc...) without showing your location. This application will give you a better protection than a public web server because you will be less exposed to intrusive people on the web. </para>
+      </section>
+      <section>
         <title>Using Tor to browse anonymously</title>
         <para>Tor Browser is the recommended way to browse the web using Tor. You can download the Tor Browser from <ulink url="https://www.torproject.org/projects/torbrowser.html"/> and follow the instructions on that site to install and run it. </para>
       </section>
@@ -431,10 +471,35 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
       </section>
     </section>
     <section>
+      <title>Deluge</title>
+      <section>
+        <title>What is Deluge?</title>
+        <para>Your FreedomBox provides a Deluge application to enable. Deluge is a lightweight Bit Torrent client. Bit Torrent is a communications protocol using peer-to-peer (P2P) file sharing. P2P is a system that aims to interconnect end-user machines. Highly configurable, Deluge offers functionalities in the form of plugins.  </para>
+      </section>
+    </section>
+    <section>
+      <title>Transmission</title>
+      <section>
+        <title>What is Transmission ?</title>
+        <para>In addition to Deluge Bit Torrent, your FreedomBox provides a Transmission application to enable. Transmission is a lightweight Bit Torrent client allowing end-user machine to share files (documents, pictures, sounds, videos and programs). Transmission is well known for its simplicity and a default configuration that "Just Works". </para>
+      </section>
+    </section>
+    <section>
+      <title>Shaarli</title>
+      <section>
+        <title>What is Shaarli?</title>
+        <para>Shaarli is personal (single-user) bookmarking application to install on your FreedomBox. It can also be used for micro-blogging, pastebin, online notepad and snippet archive. Shaarli is designed as a no-database delicious clone. As such, it provides very fast services, easy backup and import/export links as desktop or mobile browser bookmarks. Links stored can be public or private. Shaarli delivers ATOM and RSS feeds from its minimalist interface. </para>
+      </section>
+    </section>
+    <section>
       <title>Chat Server (XMPP)</title>
       <section>
+        <title>What is XMPP?</title>
+        <para>XMPP is a federated protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. </para>
+      </section>
+      <section>
         <title>Setting the Domain Name</title>
-        <para>XMPP is a federated protocol for Instant Messaging. This means that users who have accounts on one server, can talk to users that are on another server. However, for this to work, your FreedomBox needs to have a Domain Name that can be accessed over the public Internet. You can read more about obtaining a Domain Name in the Dynamic DNS section of this manual. </para>
+        <para>For XMPP to work, your FreedomBox needs to have a Domain Name that can be accessed over the public Internet. You can read more about obtaining a Domain Name in the Dynamic DNS section of this manual. </para>
         <para>Once you have a Domain Name, you can tell your FreedomBox to use it by setting the Domain Name in the System Config. </para>
         <para>Please note that Pagekite does not support the XMPP protocol at this time. </para>
       </section>
@@ -445,9 +510,12 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
     </section>
     <section>
       <title>Dynamic DNS</title>
-      <para>In order reach a server on the Internet, the server needs to have permanent address also know as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
-      <para>Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server. </para>
-      <para>For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on FreedomBox, such as ownCloud, to the Internet. </para>
+      <section>
+        <title>What is Dynamic DNS?</title>
+        <para>In order to reach a server on the Internet, the server needs to have permanent address also know as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
+        <para>Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server. </para>
+        <para>For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on FreedomBox, such as ownCloud, to the Internet. </para>
+      </section>
       <section>
         <title>GnuDIP vs. Update URL</title>
         <para>There are two main mechanism to notify the Dynamic DNS server of your new IP address; using the <emphasis>GnuDIP</emphasis> protocol and using the <emphasis>Update URL</emphasis> mechanism. </para>
@@ -511,50 +579,72 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
       </section>
     </section>
     <section>
+      <title>Roundcube</title>
+      <section>
+        <title>What is Roundcube?</title>
+        <para>RoundCube is a browser-based multilingual email client with an application-like user interface. RoundCube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching and spell checking. </para>
+      </section>
+    </section>
+    <section>
+      <title>ownCloud</title>
+      <section>
+        <title>What is ownCloud?</title>
+        <para>ownCloud is a self-hosted file sync and share server. It provides access to your data through a platform to view, sync and share across devices. Calendars and Contacts feature will help you keeping google at a nice distance. ownCloud's functionalities are native or available via plugins (Collaborative Editing, Play Music, Watch Movies, Store Passwords, Dashboard, Mozilla Sync...) via <ulink url="https://apps.owncloud.com/"/> </para>
+      </section>
+      <section>
+        <title>Installation</title>
+        <para>Clicking on the ownCloud application in Plinth will show an installation prompt.  Proceed to install.  After the installation, visit the /owncloud link provided in the ownCloud page.  First time installation wizard will show up asking for administrator username and password to setup (no additional details such as database configuration are requested).  After providing the details, you will be logged.  You will be able to start using the ownCloud and create more users. </para>
+        <section>
+          <title>External Storage</title>
+          <para>ownCloud's external storage plugin allows you to expose the contents of a hard drive or those of an online storage account as a folder.  Following are the steps required to setup such storage. </para>
+          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+            <listitem>
+              <para>Mount your hard drive or external storage to any fixed directory on the system. </para>
+            </listitem>
+            <listitem>
+              <para>Install two packages needed via the 'apt-get' on the SSH command line shell (this step will not be needed in future): </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <screen format="linespecific">$ sudo apt-get install php-google-api-php-client php-dropbox  </screen>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Goto ownCloud Apps section and enable 'External Storage Support' plugin. </para>
+            </listitem>
+            <listitem>
+              <para>Goto 'Admin' section and add your hard drive mount path in the external storage section.  This folder will now show up in your folders list to access and sync across devices. </para>
+            </listitem>
+          </orderedlist>
+        </section>
+      </section>
+    </section>
+    <section>
       <title>PageKite</title>
-      <para>PageKite is free Software solution for tunneling HTTP, HTTPS and SSH servers through firewalls and NAT. </para>
-      <para>See <ulink url="http://pagekite.net/downloads/">PageKite</ulink> website. </para>
+      <section>
+        <title>What is PageKite?</title>
+        <para>PageKite makes local websites and services publicly accessible immediately without creating yourself a public IP address. PageKite provides "Kites" and "Services". Kites aims to make accessible in a second a web page (for instance foo.pagekite.me). Services can expose a file or a folder. Technically speaking, PageKite is free Software solution for tunneling HTTP, HTTPS and SSH servers through firewalls and NAT. </para>
+      </section>
+      <section>
+        <title>Use PageKite</title>
+        <para>See <ulink url="http://pagekite.net/downloads/">PageKite</ulink> website. </para>
+      </section>
     </section>
     <section>
       <title>Secure Shell</title>
-      <para>FreedomBox runs <code>openssh-server</code> server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell. </para>
+      <section>
+        <title>What is Secure Shell?</title>
+        <para>FreedomBox runs <code>openssh-server</code> server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell. </para>
+      </section>
       <section>
         <title>Default User Account</title>
-        <para>FreedomBox is bundled with a preset user account.  This user also has superuser privileges via sudo. The default credentials are: </para>
-        <informaltable>
-          <tgroup cols="2">
-            <colspec colname="col_0"/>
-            <colspec colname="col_1"/>
-            <tbody>
-              <row rowsep="1">
-                <entry colsep="1" rowsep="1">
-                  <para>
-                    <emphasis role="strong">Username</emphasis>
-                  </para>
-                </entry>
-                <entry colsep="1" rowsep="1">
-                  <para>
-                    <emphasis role="strong">Password</emphasis>
-                  </para>
-                </entry>
-              </row>
-              <row rowsep="1">
-                <entry colsep="1" rowsep="1">
-                  <para> fbx </para>
-                </entry>
-                <entry colsep="1" rowsep="1">
-                  <para> frdm </para>
-                </entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <warning>
-          <para>
-            <emphasis role="strong">Change the password</emphasis>
-          </para>
-          <para>Soon after you get your FreedomBox working, you <emphasis role="strong">must</emphasis> change the default password for the <emphasis>fbx</emphasis> user.  If you fail to do this, since the password is public knowledge, anyone will be able to take control of your device. </para>
-        </warning>
+        <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
+        <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
+        <para>1. Decompress the image file. </para>
+        <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
+        <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
+        <para>4. Copy the image file to SD card and boot device as normal. </para>
+        <para>The "fbx" user also has superuser privileges via sudo. </para>
       </section>
       <section>
         <title>Logging In</title>
@@ -583,7 +673,25 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
       </section>
     </section>
     <section>
+      <title>Mumble</title>
+      <section>
+        <title>What is Mumble?</title>
+        <para>Mumble is a voice chat software. Primarily intended for use while gaming, it is suitable for simple talking with high audio quality, noise suppression, encrypted communication, public/private-key authentication by default, and "wizards" to configure your microphone for instance. A user can be marked as a "priority speaker" within a channel. </para>
+      </section>
+    </section>
+    <section>
+      <title>Privoxy</title>
+      <section>
+        <title>What is Privoxy?</title>
+        <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). Learning about networking protocols like HTTP, about HTML, and "Regular Expressions" can help a lot using Privoxy. </para>
+      </section>
+    </section>
+    <section>
       <title>Wiki &amp; Blog (Ikiwiki)</title>
+      <section>
+        <title>What is Ikiwiki?</title>
+        <para>Ikiwiki converts wiki pages into HTML pages suitable for publishing on a website. It provides particularly blogging, podcasting, calendars and a large selection of plugins. </para>
+      </section>
       <section>
         <title>Creating a wiki or blog</title>
         <para>You can create a wiki or blog to be hosted on your FreedomBox through the Wiki &amp; Blog (Ikiwiki) page in Plinth. The first time you visit this page, it will ask to install packages required by Ikiwiki. </para>
@@ -602,24 +710,27 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
       </section>
     </section>
     <section>
-      <title>Unhosted</title>
-      <para>From <ulink url="http://unhosted.org/"/>: </para>
-      <para>
-        <emphasis>Also known as "serverless", "client-side", or "static" web apps, unhosted web apps do not send your user data to their server. Either you connect your own server at runtime, or your data stays within the browser.</emphasis>
-      </para>
-      <para>Note: This module is not yet part of mainline <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>, but available for testing via <ulink url="http://debian-dev.freedombox.at/"/>. </para>
+      <title>Unhosted Storage</title>
       <section>
-        <title>Set up remoteStorage</title>
-        <para>Your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> contains the <ulink url="https://github.com/jcoglan/restore">restore</ulink> remoteStorage server, which means that it can serve as your personal backend for Unhosted apps. Make sure the package is installed in your Plinth. </para>
-        <para>Then create a remoteStorage account at <code>https://&lt;yourdomain&gt;/restore/</code>. </para>
-        <para>Warning: These user accounts are currently not integrated with Plinth user management, and public sign-up is enabled! </para>
+        <title>What is Unhosted?</title>
+        <para><ulink url="http://unhosted.org/">Unhosted</ulink> is a way to uncouple web applications from data.  No matter where a web application is served from, the data can be stored on an Unhosted storage server of user's choice.  Unhosted web apps do not send your user data to their server and are hence known as "serverless", "client-side", or "static" web apps.  Either you connect your own server at runtime, or your data stays within the browser.  Your FreedomBox can become your Unhosted storage server using a remoteStorage server know as <emphasis>reStore</emphasis>. </para>
+        <note>
+          <para>This module is currently disabled in FreedomBox as the package required for reStore server is not available in Debian yet.  The package is available for testing via <ulink url="http://debian-dev.freedombox.at/"/> </para>
+        </note>
+      </section>
+      <section>
+        <title>Setup</title>
+        <para>Your FreedomBox contains a remoteStorage server called <ulink url="https://github.com/jcoglan/restore">reStore</ulink>, that can serve as your personal storage server for Unhosted web apps.  To setup reStore, simply install and enable in FreedomBox web UI.  After the setup, create an account by visiting the link provided on the Unhosted app page <code>https://&lt;yourdomain&gt;/restore/</code>. </para>
+        <warning>
+          <para>User accounts are currently not integrated with Plinth user management, and public sign-up is enabled! </para>
+        </warning>
       </section>
       <section>
         <title>Try Unhosted apps</title>
-        <para>Once your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> is set up, and both <ulink url="https://wiki.debian.org/PageKite#">PageKite</ulink> and remoteStorage are running, try one of the following Unhosted apps (more are listed at <ulink url="http://unhosted.org/apps"/>): </para>
+        <para>Once Unhosted is setup on FreedomBox and when FreedomBox is accessible by a domain name (such by using PageKite, Dynamic DNS or Tor Hidden Service), try one of the following Unhosted web apps (more are listed at <ulink url="http://unhosted.org/apps"/>): </para>
         <itemizedlist>
           <listitem>
-            <para><ulink url="http://litewrite.net/"/> (a notepad) </para>
+            <para><ulink url="http://litewrite.net/"/> (a note taking application) </para>
           </listitem>
           <listitem>
             <para><ulink url="https://myfavoritedrinks.5apps.com/"/> (list your favorite drinks) </para>
@@ -628,7 +739,7 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
             <para><ulink url="https://todomvc.5apps.com/labs/architecture-examples/remotestorage/"/> (a simple todo list) </para>
           </listitem>
         </itemizedlist>
-        <para>To connect the Unhosted app to your remoteStorage, click on the remoteStorage icon and type your address <code>&lt;user&gt;@&lt;yourdomain&gt;</code>, e.g.: </para>
+        <para>To connect the Unhosted app to your FreedomBox's Unhosted storage, click on the remoteStorage icon and type your address <code>&lt;user&gt;@&lt;yourdomain&gt;</code>, e.g.: </para>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -639,8 +750,40 @@ $ dd bs=1M if=freedombox-unstable_2015-08-06_beaglebone-armhf-card.img of=/dev/s
             </textobject>
           </inlinemediaobject>
         </para>
-        <para>If this doesn't work, make sure that both <ulink url="https://wiki.debian.org/PageKite#">PageKite</ulink> and remoteStorage are running, and that your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> SSL certificate is trusted in your current browser session (important when using private browsing). </para>
-        <para>Finish the OAuth flow by authenticating with your password and authorizing access, then you should get redirected back to the Unhosted app, and you should be able to use it. All data of the Unhosted app is stored on your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>. </para>
+        <para>If this doesn't work, make sure that </para>
+        <itemizedlist>
+          <listitem>
+            <para>FreedomBox has a domain name using PageKite, Dynamic DNS or Tor Hidden Service. </para>
+          </listitem>
+          <listitem>
+            <para>The reStore server is running. </para>
+          </listitem>
+          <listitem>
+            <para>You have created the account specified in the reStore server. </para>
+          </listitem>
+          <listitem>
+            <para>Your FreedomBox SSL certificate is trusted in your current browser session (important when using private browsing). </para>
+          </listitem>
+        </itemizedlist>
+        <para>Finish the OAuth flow by authenticating with your password and authorizing access, then you should get redirected back to the Unhosted app, and be able to use it. All data of the Unhosted web app is now stored on your FreedomBox. </para>
+      </section>
+    </section>
+    <section>
+      <title>OpenVPN</title>
+      <section>
+        <title>What is OpenVPN?</title>
+        <para>OpenVPN provides to your FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT. </para>
+      </section>
+    </section>
+    <section>
+      <title>GnuSocial</title>
+      <section>
+        <title>What is GNU social?</title>
+        <para>GNU social is a continuation of the <ulink url="https://wiki.debian.org/StatusNet#">StatusNet</ulink> project. It is social communication software for both public and private communications. It is widely supported and has a large userbase. It is already used by the Free Software Foundation, and Richard Stallman himself. Think of GNU Social as twitter and beyond. </para>
+      </section>
+      <section>
+        <title>Status of package</title>
+        <para>GNU Social is still getting packaged for debian and will be available soon for everyone to use. check the progress by tracking the bug #782812. </para>
       </section>
     </section>
   </section>
@@ -746,6 +889,7 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
         <title>Manual Upgrades</title>
         <para>In the Plinth web interface, you can initiate a manual upgrade process from <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section.  Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
         <para>Under some circumstances, automatic upgrades may fail and require you perform a manual upgrade action.  Even upgrades initiated from Plinth may not finish properly.  This may be because the upgrade process requires you to make a decision.  In these cases, manual upgrade on the terminal may be the only option. </para>
+        <para>In addition, while the upgrade task is running any application installations will wait until the upgrade task is finished. Depending on the hardware, the upgrade task may take a little time, therefore, giving the impression that the application installation stalled. </para>
         <para>To perform manual upgrades on the terminal, login into FreedomBox on a terminal or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
         <screen format="linespecific">$ sudo su -
 Password:
@@ -2192,9 +2336,9 @@ firewall-cmd --permanent --zone=internal --remove-service=xmpp-bosh</screen>
           <screen format="linespecific">firewall-cmd --zone=internal --remove-port=&lt;port&gt;/&lt;protocol&gt;
 firewall-cmd --permanent --zone=internal --remove-port=&lt;port&gt;/&lt;protocol&gt;</screen>
           <para>Example: </para>
-          <screen format="linespecific">firewall-cmd --zone=internal --remove-service=5353/udp
+          <screen format="linespecific">firewall-cmd --zone=internal --remove-port=5353/udp
 firewall-cmd --permanent --zone=internal --remove-port=5353/udp</screen>
-          <para>To add a port to a zone: </para>
+          <para>To add a service to a zone: </para>
           <screen format="linespecific">firewall-cmd --zone=&lt;zone&gt; --add-service=&lt;service&gt;
 firewall-cmd --permanent --zone=&lt;zone&gt; --add-service=&lt;interface&gt;</screen>
           <para>Example: </para>
@@ -2204,7 +2348,7 @@ firewall-cmd --permanent --zone=internal --add-service=xmpp-bosh</screen>
           <screen format="linespecific">firewall-cmd --zone=internal --add-port=&lt;port&gt;/&lt;protocol&gt;
 firewall-cmd --permanent --zone=internal --add-port=&lt;port&gt;/&lt;protocol&gt;</screen>
           <para>Example: </para>
-          <screen format="linespecific">firewall-cmd --zone=internal --add-service=5353/udp
+          <screen format="linespecific">firewall-cmd --zone=internal --add-port=5353/udp
 firewall-cmd --permanent --zone=internal --add-port=5353/udp</screen>
         </section>
         <section>
@@ -2220,10 +2364,10 @@ firewall-cmd --permanent --zone=&lt;zone&gt; --remove-interface=&lt;interface&gt
 firewall-cmd --permanent --zone=external --remove-interface=eth0</screen>
           <para>To add an interface to a zone: </para>
           <screen format="linespecific">firewall-cmd --zone=&lt;zone&gt; --add-interface=&lt;interface&gt;
-firewall-cmd --permanent --zone=&lt;zone&gt; --remove-interface=&lt;interface&gt;</screen>
+firewall-cmd --permanent --zone=&lt;zone&gt; --add-interface=&lt;interface&gt;</screen>
           <para>Example: </para>
           <screen format="linespecific">firewall-cmd --zone=internal --add-interface=eth0
-firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
+firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
         </section>
       </section>
     </section>
@@ -2265,6 +2409,23 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                 </entry>
                 <entry align="center" colsep="1" rowsep="1">
                   <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Cubieboard2#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="78pt" fileref="images/cubieboard2_thumb.jpg" width="117.5pt"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Cubieboard 2</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Cubieboard2#">Cubieboard2</ulink>
+                  </para>
+                </entry>
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Hardware/BeagleBone#">
                       <inlinemediaobject>
                         <imageobject>
@@ -2280,6 +2441,8 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                     <ulink url="https://wiki.debian.org/FreedomBox/Hardware/BeagleBone#">BeagleBone Black</ulink>
                   </para>
                 </entry>
+              </row>
+              <row rowsep="1">
                 <entry align="center" colsep="1" rowsep="1">
                   <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Hardware/A20-OLinuXino-Lime2#">
@@ -3076,27 +3239,27 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
             <para>First and the recommended option is to use the <emphasis>Bridge</emphasis> type of network.  This option exposes the guest machine to the same network that host network is connected to.  The guest obtains network configuration information from a router or DHCP server on the network.  The guest will appear as just another machine in the network.  A major advantage of this of setup is that the host and all other machines in the network will be able to access the services provided by guest without requiring any further setup. The only drawback of this approach is that if the host is not connected to any network, the guest's network will remain unconfigured making it inaccessible even from the host. </para>
           </listitem>
           <listitem>
-            <para>Second method is <emphasis>Host only</emphasis> type of networking.  With a guest's network interface configured in this manner, it will only be accessible from the host machine.  The guest will not able access any other machine but the host.  It, however, does not require that the host machine be connected to a network.  All services all accessible from the host machine without any special configuration such as port forwarding. </para>
+            <para>Second method is <emphasis>Host only</emphasis> type of networking.  With a guest's network interface configured in this manner, it will only be accessible from the host machine.  The guest will not able access any other machine but the host, so you do not have internet access on the guest. All services on the guest are available to the host machine without any configuration such as port forwarding. </para>
           </listitem>
           <listitem>
-            <para>The final option is to use the <emphasis>NAT</emphasis> type of network.  This the networking type that VirtualBox assigns to a freshly created virtual machine.  This option works even when host is not connected to any network.  The guest is automatically configured and is able to access the Internet and local networks that host is able to connect to. However, the services provided by the guest require port forwarding configuration setup to be available outside. </para>
+            <para>The third option is to use the <emphasis>NAT</emphasis> type of network.  This the networking type that VirtualBox assigns to a freshly created virtual machine.  This option works even when host is not connected to any network.  The guest is automatically configured and is able to access the Internet and local networks that host is able to connect to. However, the services provided by the guest require port forwarding configuration setup to be available outside. </para>
             <para>To configure this go to VM settings -&gt; [Network] -&gt; [Adapter] -&gt; [Port Forwarding].  Map a port such as 2222 from host to guest port 22 and you will be able to ssh into FreedomBox from host machine as follows: </para>
-          </listitem>
-        </orderedlist>
-        <screen format="linespecific">ssh -p 2222 fbx@localhost</screen>
-        <itemizedlist>
-          <listitem override="none">
+            <screen format="linespecific"> ssh -p 2222 fbx@localhost</screen>
             <para>Map 4443 on host to 443 on the guest.  This make FreedomBox HTTPS service available on host using the URL <ulink url="https://localhost:4443/"/> You will need to add a mapping for each such services from host to guest. </para>
           </listitem>
-        </itemizedlist>
+          <listitem>
+            <para>The final option is to create two network interfaces, one <emphasis>host only</emphasis> and one <emphasis>NAT</emphasis> type.  This way you can access the guest without any additional configuration, and you have internet access on the guest. The guest will be invisible to any other machines on the network. </para>
+          </listitem>
+        </orderedlist>
         <para>Summary of various network types: </para>
         <informaltable>
-          <tgroup cols="5">
+          <tgroup cols="6">
             <colspec colname="col_0"/>
             <colspec colname="col_1"/>
             <colspec colname="col_2"/>
             <colspec colname="col_3"/>
             <colspec colname="col_4"/>
+            <colspec colname="col_5"/>
             <tbody>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
@@ -3122,11 +3285,16 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                     <emphasis role="strong">Works without host connected to network</emphasis>
                   </para>
                 </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">Guest has internet access</emphasis>
+                  </para>
+                </entry>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
                   <para>
-                    <emphasis role="strong">Bridged Adapter</emphasis>
+                    <emphasis role="strong">Bridged</emphasis>
                   </para>
                 </entry>
                 <entry colsep="1" rowsep="1">
@@ -3173,6 +3341,18 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                       </imageobject>
                       <textobject>
                         <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
                       </textobject>
                     </inlinemediaobject>
                   </para>
@@ -3232,6 +3412,18 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                     </inlinemediaobject>
                   </para>
                 </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/icon-error.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
               </row>
               <row rowsep="1">
                 <entry colsep="1" rowsep="1">
@@ -3287,6 +3479,85 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
                     </inlinemediaobject>
                   </para>
                 </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <emphasis role="strong">NAT and Host </emphasis>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/icon-error.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>{X}</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>
+                    <inlinemediaobject>
+                      <imageobject>
+                        <imagedata depth="8pt" fileref="images/checkmark.png" width="8pt"/>
+                      </imageobject>
+                      <textobject>
+                        <phrase>(./)</phrase>
+                      </textobject>
+                    </inlinemediaobject>
+                  </para>
+                </entry>
               </row>
             </tbody>
           </tgroup>
@@ -3294,13 +3565,7 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
       </section>
       <section>
         <title>Using</title>
-        <para>You can log in as the following user: </para>
-        <itemizedlist>
-          <listitem override="none">
-            <para>Username: <code>fbx</code> </para>
-            <para>Password: <code>frdm</code> </para>
-          </listitem>
-        </itemizedlist>
+        <para>You can log in as the user created during Plinth setup. </para>
         <para>After logging in, you can become root with the command <code>sudo su</code>.   See the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Use#">usage</ulink> page for more details.   </para>
       </section>
       <section>
@@ -3309,6 +3574,12 @@ firewall-cmd --permanent --zone=internal --remove-interface=eth0</screen>
       </section>
       <section>
         <title>Tips &amp; Troubleshooting</title>
+        <section>
+          <title>Finding out the IP address of the virtual machine</title>
+          <para>This depends on the network configuration you chose. With a <emphasis>bridged adapter</emphasis>, your virtual machine gets its IP address from the DHCP server of your network, most likely of your Router. You can try the first couple of IP addresses or check your router web interface for a list of connected devices. </para>
+          <para>If you chose <emphasis>host-only adapter</emphasis>, the IP address is assigned by the DHCP server of your VirtualBox network. In the VirtualBox Manager, go to File -&gt; Preferences -&gt; Network -&gt; Host-only Networks. You can see and edit the DHCP address range there, typically you get assigned addresses close to the <emphasis>Lower Address Bound</emphasis>. </para>
+          <para>Another possibility of finding the IP address is to login via the Virtualbox Manager (or similar software). The FreedomBox images do not have any default user accounts, so you need to set an initial user and password using the <ulink url="https://github.com/freedombox/freedom-maker/blob/master/bin/passwd-in-image">passwd-in-image script</ulink>. </para>
+        </section>
         <section>
           <title>Networking Problems with macchanger</title>
           <para>The package <code>macchanger</code> can cause network problems with VirtualBox.  If you have a valid IP address on your guest's host network adapter (like 192.168.56.101) but are not able to ping or access the host (like 192.168.56.1), try uninstalling <code>macchanger</code>: </para>
@@ -3342,6 +3613,10 @@ $ sudo umount /tmp/vbox-root1
           <emphasis role="strong">Use a fresh Debian installation</emphasis>
         </para>
         <para>Installing FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install FreedomBox on a fresh Debian installation instead of an existing setup. </para>
+        <para>
+          <emphasis role="strong">use "fbx" as the login name</emphasis>
+        </para>
+        <para> If you choose to create an initial user account, use "fbx" as the login name.  (Once the FreedomBox setup program completes, all user accounts except for the "fbx" account will be locked out via pam_access.  This also affects sudo access.) </para>
       </caution>
       <section>
         <title>Installing on Debian</title>
@@ -3351,11 +3626,6 @@ $ sudo umount /tmp/vbox-root1
           </listitem>
           <listitem>
             <para><ulink url="https://wiki.debian.org/InstallingDebianOn#">Install Debian</ulink> Testing (Stretch) or Unstable (Sid) on your hardware. </para>
-            <itemizedlist>
-              <listitem>
-                <para>If you choose to create an initial user account, use "fbx" as the login name.  (Once the FreedomBox setup program completes, all user accounts except for the "fbx" account will be locked out via pam_access.  This also affects sudo access.) </para>
-              </listitem>
-            </itemizedlist>
           </listitem>
           <listitem>
             <para>Update your package list. </para>
@@ -3364,6 +3634,11 @@ $ sudo umount /tmp/vbox-root1
           <listitem>
             <para>Install <code>freedombox-setup</code> package. </para>
             <screen format="linespecific">$ sudo apt-get install freedombox-setup</screen>
+            <itemizedlist>
+              <listitem>
+                <para>When asked to specify whether Macchanger should be set up to run automatically, please choose "No". </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para>Run FreedomBox setup program.  This installs further packages and sets up basic configuration. </para>
@@ -3735,116 +4010,135 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <title>Contributing</title>
     <para>From code, design and translation to spreading the world and donation, here is a list of possible contributions to develop FreedomBox. </para>
     <section>
+      <title>Quick Links</title>
+      <para>
+        <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">Progess calls</ulink>
+      </para>
+      <para>
+        <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink>
+      </para>
+      <para>
+        <ulink url="https://www.freedomboxfoundation.org/donate/">Donation page</ulink>
+      </para>
+    </section>
+    <section>
       <title>Welcome to newcomers</title>
-      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. </para>
-      <para>In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> web interface.  </para>
+      <para>As a newcomer, you are more than welcome to introduce yourself to all users and doers on the "FreedomBox-discuss" <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel. In addition to make useful contacts, you can start reporting bugs and translate (see below) the wiki website and the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> web interface.  </para>
     </section>
     <section>
       <title>Development priorities</title>
-      <para>Upcoming priorities have been discussed end of October 2015 by several core developers and the Freedombox Foundation. You'll find on the mailing list archives a <ulink url="http://lists.alioth.debian.org/pipermail/freedombox-discuss/2015-November/006973.html">Medium Term Roadmap</ulink> for 2015 and 2016. Please check next <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>.  </para>
+      <para>Upcoming priorities have been discussed end of October 2015 by several core developers and the Freedombox Foundation. You'll find on the mailing list archives a <ulink url="http://lists.alioth.debian.org/pipermail/freedombox-discuss/2015-November/006973.html">Medium Term Roadmap</ulink> for 2015 and 2016. We want to enjoy soon a version 1.0. We are targeting mid January for a 0.8 release. The main focus of the 0.8 release is going to be integrated in the PGP based SSL Client authentication work. We are planning on a 0.9 polish release for late February with general usability improvements.</para>
+      <para>Please check next <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>.  </para>
     </section>
     <section>
-      <title>Add an Application</title>
-      <para>If you are a developer and wish to see an application available in FreedomBox, you can contribute by adding the application to FreedomBox.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Developer#">FreedomBox Developer Manual</ulink>. </para>
-    </section>
-    <section>
-      <title>Code</title>
-      <para>If you are a developer, you can contribute code to one of the sub-projects of FreedomBox.  Step-by-step process of <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contributing code</ulink> to FreedomBox is available. </para>
-      <itemizedlist>
-        <listitem>
-          <para><ulink url="https://wiki.debian.org/FreedomBox/Setup#">FreedomBox Setup</ulink>: a Debian package for setting up the FreedomBox. </para>
-        </listitem>
-        <listitem>
-          <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink>: a web interface to administer the functions of FreedomBox. </para>
-        </listitem>
-        <listitem>
-          <para><ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink>: a script to build FreedomBox disk images for use on various hardware devices or virtual machines. </para>
-        </listitem>
-      </itemizedlist>
-      <para>You can pickup a task from one of the <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO</ulink> lists. The individual page project pages contain information availabily of the code, how to build and TODO lists. </para>
-    </section>
-    <section>
-      <title>Design</title>
+      <title>Contributions needed</title>
       <section>
-        <title>User Experience Design</title>
-        <para>If you are a user experience designer, you can help FreedomBox with the following items: </para>
-        <itemizedlist>
-          <listitem>
-            <para>UI experience for the Plinth web interface </para>
-          </listitem>
-          <listitem>
-            <para>Web design for <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> pages </para>
-          </listitem>
-          <listitem>
-            <para>Logo and branding (we currently have <ulink url="https://github.com/freedombox/Plinth/tree/master/static/themes/default/">an identity manual and logos</ulink>) </para>
-          </listitem>
-          <listitem>
-            <para>Possible designs for custom FreedomBox cases on single board computers </para>
-          </listitem>
-          <listitem>
-            <para>
-              <ulink url="https://wiki.debian.org/FreedomBox/Design#">User experience design</ulink>
-            </para>
-          </listitem>
-        </itemizedlist>
+        <title>Add an Application</title>
+        <para>If you are a developer and wish to see an application available in FreedomBox, you can contribute by adding the application to FreedomBox.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Developer#">FreedomBox Developer Manual</ulink>. </para>
       </section>
       <section>
-        <title>Technical Design</title>
-        <para>FreedomBox is still under development any many components are yet to be worked on.  You can contribute to the discussion on various technical design and implementation aspects of FreedomBox.  See: </para>
+        <title>Bugs</title>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. </para>
+      </section>
+      <section>
+        <title>Code</title>
+        <para>If you are a developer, you can contribute code to one of the sub-projects of FreedomBox.  Step-by-step process of <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contributing code</ulink> to FreedomBox is available. </para>
         <itemizedlist>
           <listitem>
-            <para>
-              <ulink url="https://wiki.debian.org/FreedomBox/Design#">Design portal</ulink>
-            </para>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Setup#">FreedomBox Setup</ulink>: a Debian package for setting up the FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink>: a web interface to administer the functions of FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Maker#">Freedom Maker</ulink>: a script to build FreedomBox disk images for use on various hardware devices or virtual machines. </para>
           </listitem>
         </itemizedlist>
+        <para>You can pickup a task from one of the <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO</ulink> lists. The individual page project pages contain information availabily of the code, how to build and TODO lists. </para>
       </section>
-    </section>
-    <section>
-      <title>Donate</title>
-      <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a Delaware non-profit corporation in the process of applying for 501(c)(3) federal nonprofit recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
-    </section>
-    <section>
-      <title>Document: User Manual, Website and Wiki</title>
-      <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in Plinth and elsewhere. </para>
-      <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
-      <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
-    </section>
-    <section>
-      <title>Quality Assurance</title>
-      <itemizedlist>
-        <listitem>
-          <para>FreedomBox already runs on many platforms and it is not possible for developers to test all possible platforms.  If you have one of the supported hardware you can help with testing FreedomBox on the platform. </para>
-        </listitem>
-        <listitem>
-          <para>When an application is made available on FreedomBox, not all of its functionality is tested in the real world by developer doing the work.  Deploying the application and testing it will help ensure high quality applications in FreedomBox. </para>
-        </listitem>
-      </itemizedlist>
-      <para>See the <ulink url="https://wiki.debian.org/FreedomBox/QualityAssurance#">quality assurance</ulink> page for a basic list of test cases to check for and information on reporting bugs. </para>
-    </section>
-    <section>
-      <title>Localization</title>
-      <para>All text visible to users of FreedomBox needs to be localized to various languages.  This translation work includes: </para>
-      <itemizedlist>
-        <listitem>
-          <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink> web interface for FreedomBox </para>
-        </listitem>
-        <listitem>
-          <para>FreedomBox documentation </para>
-        </listitem>
-        <listitem>
-          <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> </para>
-        </listitem>
-        <listitem>
-          <para>Individual applications that FreedomBox exposes to users such as ownCloud, JWChat etc. </para>
-        </listitem>
-      </itemizedlist>
-      <para>Some of the translation work are implemented in user interface (Plinth) since the 0.7 release. Documents for user interface translation are currently available on <ulink url="https://www.transifex.com/freedombox/">Transifex localization platform</ulink> and <ulink url="https://github.com/freedombox/Plinth/tree/master/locale">GitHub</ulink>. If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
-      <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
-    </section>
-    <section>
-      <title>Spread the Word</title>
-      <para>Speak to your family, friends, local community or at global conferences about the importance of FreedomBox.  To be a successful project we need many more participants, be it users or contributors.  Write about your efforts at the <ulink url="https://www.freedomboxfoundation.org/appearances/index.en.html">talks page</ulink> and on the <ulink url="https://wiki.debian.org/FreedomBox/TalksAndPresentations#">wiki</ulink>. </para>
+      <section>
+        <title>Design</title>
+        <section>
+          <title>User Experience Design</title>
+          <para>If you are a user experience designer, you can help FreedomBox with the following items: </para>
+          <itemizedlist>
+            <listitem>
+              <para>UI experience for the Plinth web interface </para>
+            </listitem>
+            <listitem>
+              <para>Web design for <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> pages </para>
+            </listitem>
+            <listitem>
+              <para>Logo and branding (we currently have <ulink url="https://github.com/freedombox/Plinth/tree/master/static/themes/default/">an identity manual and logos</ulink>) </para>
+            </listitem>
+            <listitem>
+              <para>Possible designs for custom FreedomBox cases on single board computers </para>
+            </listitem>
+            <listitem>
+              <para>
+                <ulink url="https://wiki.debian.org/FreedomBox/Design#">User experience design</ulink>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Technical Design</title>
+          <para>FreedomBox is still under development any many components are yet to be worked on.  You can contribute to the discussion on various technical design and implementation aspects of FreedomBox.  See: </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <ulink url="https://wiki.debian.org/FreedomBox/Design#">Design portal</ulink>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+      <section>
+        <title>Donate</title>
+        <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a Delaware non-profit corporation in the process of applying for 501(c)(3) federal nonprofit recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
+      </section>
+      <section>
+        <title>Document: User Manual, Website and Wiki</title>
+        <para>FreedomBox needs better documentation for users and contributors.  FreedomBox manual is prepared by aggregating various pages on the wiki and exporting to various formats.  The manual is then used in Plinth and elsewhere. </para>
+        <para>If you wish to contribute to the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> (and consequently the FreedomBox manual), you can create a wiki account and start editing. </para>
+        <para>For contributing to the website please start a discussion on the FreedomBox <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink>. </para>
+      </section>
+      <section>
+        <title>Quality Assurance</title>
+        <itemizedlist>
+          <listitem>
+            <para>FreedomBox already runs on many platforms and it is not possible for developers to test all possible platforms.  If you have one of the supported hardware you can help with testing FreedomBox on the platform. </para>
+          </listitem>
+          <listitem>
+            <para>When an application is made available on FreedomBox, not all of its functionality is tested in the real world by developer doing the work.  Deploying the application and testing it will help ensure high quality applications in FreedomBox. </para>
+          </listitem>
+        </itemizedlist>
+        <para>See the <ulink url="https://wiki.debian.org/FreedomBox/QualityAssurance#">quality assurance</ulink> page for a basic list of test cases to check for and information on reporting bugs. </para>
+      </section>
+      <section>
+        <title>Localization</title>
+        <para>All text visible to users of FreedomBox needs to be localized to various languages.  This translation work includes: </para>
+        <itemizedlist>
+          <listitem>
+            <para><ulink url="https://wiki.debian.org/FreedomBox/Plinth#">Plinth</ulink> web interface for FreedomBox </para>
+          </listitem>
+          <listitem>
+            <para>FreedomBox documentation </para>
+          </listitem>
+          <listitem>
+            <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> </para>
+          </listitem>
+          <listitem>
+            <para>Individual applications that FreedomBox exposes to users such as ownCloud, JWChat etc. </para>
+          </listitem>
+        </itemizedlist>
+        <para>Some of the translation work are implemented in user interface (Plinth) since the 0.7 release. Documents for user interface translation are currently available on <ulink url="https://www.transifex.com/freedombox/">Transifex localization platform</ulink> and <ulink url="https://github.com/freedombox/Plinth/tree/master/locale">GitHub</ulink>. If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
+        <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
+      </section>
+      <section>
+        <title>Spread the Word</title>
+        <para>Speak to your family, friends, local community or at global conferences about the importance of FreedomBox.  To be a successful project we need many more participants, be it users or contributors.  Write about your efforts at the <ulink url="https://www.freedomboxfoundation.org/appearances/index.en.html">talks page</ulink> and on the <ulink url="https://wiki.debian.org/FreedomBox/TalksAndPresentations#">wiki</ulink>. </para>
+      </section>
     </section>
   </section>
   <section>
@@ -3879,7 +4173,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <section>
         <title>Packaging the application</title>
         <para>Majority of the effort in creating an application for FreedomBox is to package it for Debian and get it uploaded to Debian repositories. Going through the process of packaging itself is outside the scope of this tutorial.  It is, however, well documented elsewhere.  You should start <ulink url="https://wiki.debian.org/Packaging">here</ulink>. </para>
-        <para>Debian packaging might seem like an unnecessary process that takes time with its adherence to standards, review process, legal checks, etc.  However, upon close examination, one will find that without these steps the goals of the FreedomBox project cannot be met without such a process.  Some of the advantages of Debian packaging are listed below: </para>
+        <para>Debian packaging might seem like an unnecessary process that takes time with its adherence to standards, review process, legal checks, etc.  However, upon close examination, one will find that without these steps the goals of the FreedomBox project cannot be met.  Some of the advantages of Debian packaging are listed below: </para>
         <itemizedlist>
           <listitem>
             <para>Legal check ensures that proprietary licensed code or code with bad licenses does not inadvertently creep in. </para>
@@ -3947,12 +4241,13 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <section>
         <title>Writing the URLs</title>
         <para>For a user to visit our application in Plinth, we need to provide a URL.  When the user visits this URL, a view is executed and a page is displayed.  In <code>urls.py</code> write the following: </para>
-        <screen format="linespecific">from django.conf.urls import patterns, url
+        <screen format="linespecific">from django.conf.urls import url
 
-urlpatterns = patterns(
-    'plinth.modules.ttrss.views',
-    url(r'^apps/ttrss/$', 'index', name='index'),
-    )</screen>
+from . import views
+
+urlpatterns = [
+    url(r'^apps/ttrss/$', views.index, name='index'),
+]</screen>
         <para>This routes the <code>/apps/ttrss/</code> URL to a view called <code>index</code> defined in <code>plinth/modules/ttrss/views.py</code>.  This is no different than how routing URLs are written in Django.  See <ulink url="https://docs.djangoproject.com/en/stable/topics/http/urls/">Django URL dispatcher</ulink> for more information. </para>
       </section>
       <section>
@@ -4105,9 +4400,9 @@ def _apply_changes(request, old_status, new_status):
         modified = True
 
     if modified:
-        messages.success(request, _('Configuration updated'))
+        messages.success(request, 'Configuration updated')
     else:
-        messages.info(request, _('Setting unchanged'))</screen>
+        messages.info(request, 'Setting unchanged')</screen>
         <para>We check to make sure that we don't try to disable the application when it is already disabled or try to enable the application when it is already enabled.  Although Plinth's operations are idempotent, meaning that running them twice will not be problematic, we still wish avoid unnecessary operations for the sake of speed. </para>
         <para>We are actually perform the operation using Plinth actions.  We will implement the action to be performed a bit later. </para>
         <para>After we perform the operation, we will show a message on the response page showing that the action was successful or that nothing happened. We use the Django messaging framework to accomplish this.  See <ulink url="https://docs.djangoproject.com/en/stable/ref/contrib/messages/">Django messaging framework</ulink> for more information. </para>
@@ -4246,16 +4541,8 @@ def example_method():
       </section>
       <section>
         <title>Internationalization</title>
-        <para>Every string message that is visible to the user must localized to user's native language.  For this to happen, our application needs to be internationalized.  This requires marking the user visible messages for translation.  Plinth applications use the <code>gettext</code> library to make that happen. </para>
-        <screen format="linespecific">from gettext import gettext as _
-
-def init():
-    """Intialize the module."""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('News Feed Reader (Tiny Tiny RSS)'), 'glyphicon-envelope',
-                     'ttrss:index', 600)</screen>
-        <para>Notice that the menu item's display name is wrapped in the <code>_()</code> method call.  Let us do that for the title of the application page too. </para>
-        <screen format="linespecific">from gettext import gettext as _
+        <para>Every string message that is visible to the user must be localized to user's native language.  For this to happen, our application needs to be internationalized.  This requires marking the user visible messages for translation.  Plinth applications use the Django's localization methods to make that happen. </para>
+        <screen format="linespecific">from django.utils.translation import ugettext as _
 
 def index(request):
     ...
@@ -4263,6 +4550,16 @@ def index(request):
                             {'title': _('News Feed Reader (Tiny Tiny RSS)'),
                              'status': status,
                              'form': form})</screen>
+        <para>Notice that the page's title is wrapped in the <code>_()</code> method call. Let us do that for the menu item of the application too. </para>
+        <screen format="linespecific">from django.utils.translation import ugettext_lazy as _
+
+def init():
+    """Intialize the module."""
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(_('News Feed Reader (Tiny Tiny RSS)'), 'glyphicon-envelope',
+                     'ttrss:index', 600)</screen>
+        <para>Notice that in this case, we have used the <code>ugettext_lazy</code> and in the first case we have used the regular <code>ugettext</code>.  This is because in the second case the <code>gettext</code> lookup is made once and reused for every user looking at the interface.  These users may each have a different language set for their interface.  Lookup made for one language should not be used for other users.  The <code>_lazy</code> method provided by Django makes sure that the return value is an object that will actually be converted to string at the final moment when the string is being displayed.  In the first case, the looked is made and string is returned immediately. </para>
+        <para>All of this is the usual way internationalization is done in Django.  See <ulink url="https://docs.djangoproject.com/en/stable/topics/i18n/">Django internationalization and localization</ulink> documentation for more information. </para>
       </section>
       <section>
         <title>Coding standards</title>
