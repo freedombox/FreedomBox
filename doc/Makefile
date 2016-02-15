@@ -55,7 +55,7 @@ fetch:
 
 
 %.html: %.xml
-	xmlto html-nochunks $<
+	docbook2html --nochunks $<
 
 
 %.1: %.xml
