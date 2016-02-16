@@ -89,9 +89,10 @@ def get_status():
     """Get the current status."""
     output = actions.superuser_run('monkeysphere', ['host-show-keys'])
     keys = {}
-    for key in json.loads(output)['keys']:
-        key['name'] = key['uid'].replace('ssh://', '')
-        keys[key['name']] = key
+    if output:
+        for key in json.loads(output)['keys']:
+            key['name'] = key['uid'].replace('ssh://', '')
+            keys[key['name']] = key
 
     domains = []
     for domains_of_a_type in names.domains.values():
