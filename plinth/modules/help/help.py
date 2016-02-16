@@ -62,8 +62,8 @@ def about(request):
 def manual(request):
     """Serve the manual page from the 'doc' directory"""
     try:
-        with open(os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'), 'r') \
-             as input_file:
+        with open(os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'),
+                  'r', encoding='utf-8') as input_file:
             content = input_file.read()
     except IOError:
         raise Http404
