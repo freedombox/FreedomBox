@@ -54,7 +54,7 @@ def generate(request, domain):
     if valid_domain:
         try:
             actions.superuser_run(
-                'monkeysphere', ['host-import-ssh-key', 'ssh://' + domain])
+                'monkeysphere', ['host-import-ssh-key', domain])
             messages.success(request, _('Generated OpenPGP key.'))
         except actions.ActionError as exception:
             messages.error(request, str(exception))
@@ -70,7 +70,7 @@ def generate_https(request, domain):
     if valid_domain:
         try:
             actions.superuser_run(
-                'monkeysphere', ['host-import-https-key', 'https://' + domain])
+                'monkeysphere', ['host-import-https-key', domain])
             messages.success(request, _('Generated OpenPGP key.'))
         except actions.ActionError as exception:
             messages.error(request, str(exception))
