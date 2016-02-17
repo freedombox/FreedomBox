@@ -41,6 +41,11 @@ def parse_arguments():
     host_import_ssh_key.add_argument(
         'hostname', help='Fully-qualified hostname')
 
+    host_import_https_key = subparsers.add_parser(
+        'host-import-https-key', help='Import host HTTPS key')
+    host_import_https_key.add_argument(
+        'hostname', help='Fully-qualified hostname')
+
     host_publish_key = subparsers.add_parser(
         'host-publish-key', help='Push host key to keyserver')
     host_publish_key.add_argument(
@@ -88,6 +93,14 @@ def subcommand_host_import_ssh_key(arguments):
     output = subprocess.check_output(
         ['monkeysphere-host', 'import-key',
          '/etc/ssh/ssh_host_rsa_key', arguments.hostname])
+    print(output.decode())
+
+
+def subcommand_host_import_https_key(arguments):
+    """Import host HTTPS key."""
+    output = subprocess.check_output(
+        ['monkeysphere-host', 'import-key',
+         '/etc/ssl/private/ssl-cert-snakeoil.key', arguments.hostname])
     print(output.decode())
 
 

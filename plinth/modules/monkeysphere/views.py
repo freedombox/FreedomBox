@@ -62,6 +62,22 @@ def generate(request, domain):
     return redirect(reverse_lazy('monkeysphere:index'))
 
 
+@require_POST
+def generate_https(request, domain):
+    """Generate OpenPGP key for HTTPS service."""
+    valid_domain = any((domain in domains
+                        for domains in names.domains.values()))
+    if valid_domain:
+        try:
+            actions.superuser_run(
+                'monkeysphere', ['host-import-https-key', 'https://' + domain])
+            messages.success(request, _('Generated OpenPGP key.'))
+        except actions.ActionError as exception:
+            messages.error(request, str(exception))
+
+    return redirect(reverse_lazy('monkeysphere:index'))
+
+
 def details(request, fingerprint):
     """Get details for an OpenPGP key."""
     key = get_key(fingerprint)
@@ -96,9 +112,14 @@ def get_status():
     """Get the current status."""
     output = actions.superuser_run('monkeysphere', ['host-show-keys'])
     keys = {}
+    https_keys = {}
     for key in json.loads(output)['keys']:
-        key['name'] = key['uid'].replace('ssh://', '')
-        keys[key['name']] = key
+        if key['uid'].startswith('ssh'):
+            key['name'] = key['uid'].replace('ssh://', '')
+            keys[key['name']] = key
+        elif key['uid'].startswith('https'):
+            key['name'] = key['uid'].replace('https://', '')
+            https_keys[key['name']] = key
 
     domains = []
     for domains_of_a_type in names.domains.values():
@@ -108,7 +129,15 @@ def get_status():
                 'key': keys.get(domain),
             })
 
-    return {'domains': domains}
+    https_domains = []
+    for domains_of_a_type in names.domains.values():
+        for domain in domains_of_a_type:
+            https_domains.append({
+                'name': domain,
+                'key': https_keys.get(domain),
+            })
+
+    return {'domains': domains, 'https_domains': https_domains}
 
 
 def get_key(fingerprint):

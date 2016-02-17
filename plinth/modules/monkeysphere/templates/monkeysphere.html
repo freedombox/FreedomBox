@@ -47,6 +47,8 @@
     </p>
   {% endif %}
 
+  <h3>{% trans "Secure Shell (SSH)" %}</h3>
+
   <div class="row">
     <div class="col-sm-8">
       <table class="table table-bordered table-condensed table-striped">
@@ -75,6 +77,73 @@
                 {% if not domain.key %}
                   <form class="form" method="post"
                         action="{% url 'monkeysphere:generate' domain.name %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary btn-sm pull-right">
+                      {% trans "Generate OpenPGP Key" %}</button>
+                  </form>
+                {% elif not running %}
+                  <form class="form" method="post"
+                        action="{% url 'monkeysphere:publish' domain.key.pgp_fingerprint %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-warning btn-sm pull-right">
+                      {% trans "Publish Key" %}</button>
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>{% trans "Secure Web Server (HTTPS)" %}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      Monkeysphere can also generate an OpenPGP key for each Secure Web Server
+      (HTTPS) certificate installed on this machine. The OpenPGP public key can
+      then be uploaded to the OpenPGP keyservers. Users accessing the web
+      server through HTTPS can verify that they are connecting to the correct
+      host. To validate the certificate, the user will need to install some
+      software that is available on the
+      <a href="https://web.monkeysphere.info/download/">
+      Monkeysphere website</a>.
+    {% endblocktrans %}
+  </p>
+
+  <h4>{% trans "Self-signed Certificate" %}</h4>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Domain" %}</th>
+            <th>{% trans "OpenPGP Fingerprint" %}</th>
+            <th>{% trans "Actions" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for domain in status.https_domains %}
+            <tr>
+              <td>{{ domain.name }}</td>
+              <td>
+                {% if domain.key %}
+		  <a href="{% url 'monkeysphere:details' domain.key.pgp_fingerprint %}"
+		     title="Show details for key {{ domain.key.pgp_fingerprint }}">
+                    {{ domain.key.pgp_fingerprint }}
+		  </a>
+                {% else %}
+                  {% trans "Not Available" %}
+                {% endif %}
+              </td>
+              <td>
+                {% if not domain.key %}
+                  <form class="form" method="post"
+                        action="{% url 'monkeysphere:generate_https' domain.name %}">
                     {% csrf_token %}
 
                     <button type="submit" class="btn btn-primary btn-sm pull-right">

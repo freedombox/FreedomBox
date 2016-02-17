@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^sys/monkeysphere/$', views.index, name='index'),
     url(r'^sys/monkeysphere/(?P<domain>[^/]+)/generate/$',
         views.generate, name='generate'),
+    url(r'^sys/monkeysphere/(?P<domain>[^/]+)/generate_https/$',
+        views.generate_https, name='generate_https'),
     url(r'^sys/monkeysphere/(?P<fingerprint>[0-9A-Fa-f]+)/details/$',
         views.details, name='details'),
     url(r'^sys/monkeysphere/(?P<fingerprint>[0-9A-Fa-f]+)/publish/$',
