@@ -41,9 +41,14 @@ def parse_arguments():
     host_import_ssh_key.add_argument(
         'domain', help='Fully-qualified domain name')
 
-    host_import_https_key = subparsers.add_parser(
-        'host-import-https-key', help='Import host HTTPS key')
-    host_import_https_key.add_argument(
+    host_import_snakeoil_key = subparsers.add_parser(
+        'host-import-snakeoil-key', help='Import host snakeoil key')
+    host_import_snakeoil_key.add_argument(
+        'domain', help='Fully-qualified domain name')
+
+    host_import_letsencrypt_key = subparsers.add_parser(
+        'host-import-letsencrypt-key', help="Import Let's Encrypt key")
+    host_import_letsencrypt_key.add_argument(
         'domain', help='Fully-qualified domain name')
 
     host_publish_key = subparsers.add_parser(
@@ -96,13 +101,41 @@ def subcommand_host_import_ssh_key(arguments):
     print(output.decode())
 
 
-def subcommand_host_import_https_key(arguments):
-    """Import host HTTPS key."""
-    output = subprocess.check_output(
+def subcommand_host_import_snakeoil_key(arguments):
+    """Import host snakeoil key."""
+    proc = subprocess.Popen(
         ['monkeysphere-host', 'import-key',
          '/etc/ssl/private/ssl-cert-snakeoil.key',
-         'https://' + arguments.domain])
-    print(output.decode())
+         'https://' + arguments.domain],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        env=dict(
+            os.environ,
+            MONKEYSPHERE_PROMPT='false'))
+    output, error = proc.communicate()
+    output, error = output.decode(), error.decode()
+    if proc.returncode != 0:
+        raise Exception(output, error)
+
+    print(output)
+
+
+def subcommand_host_import_letsencrypt_key(arguments):
+    """Import Let's Encrypt key."""
+    proc = subprocess.Popen(
+        ['monkeysphere-host', 'import-key',
+         os.path.join('/etc/letsencrypt/live',
+                      arguments.domain, 'privkey.pem'),
+         'https://' + arguments.domain],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        env=dict(
+            os.environ,
+            MONKEYSPHERE_PROMPT='false'))
+    output, error = proc.communicate()
+    output, error = output.decode(), error.decode()
+    if proc.returncode != 0:
+        raise Exception(output, error)
+
+    print(output)
 
 
 def subcommand_host_publish_key(arguments):

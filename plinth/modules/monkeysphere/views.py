@@ -63,14 +63,30 @@ def generate(request, domain):
 
 
 @require_POST
-def generate_https(request, domain):
-    """Generate OpenPGP key for HTTPS service."""
+def generate_snakeoil(request, domain):
+    """Generate OpenPGP key for snakeoil certificate."""
     valid_domain = any((domain in domains
                         for domains in names.domains.values()))
     if valid_domain:
         try:
             actions.superuser_run(
-                'monkeysphere', ['host-import-https-key', domain])
+                'monkeysphere', ['host-import-snakeoil-key', domain])
+            messages.success(request, _('Generated OpenPGP key.'))
+        except actions.ActionError as exception:
+            messages.error(request, str(exception))
+
+    return redirect(reverse_lazy('monkeysphere:index'))
+
+
+@require_POST
+def generate_letsencrypt(request, domain):
+    """Generate OpenPGP key for Let's Encrypt certificate."""
+    valid_domain = any((domain in domains
+                        for domains in names.domains.values()))
+    if valid_domain:
+        try:
+            actions.superuser_run(
+                'monkeysphere', ['host-import-letsencrypt-key', domain])
             messages.success(request, _('Generated OpenPGP key.'))
         except actions.ActionError as exception:
             messages.error(request, str(exception))
@@ -129,15 +145,31 @@ def get_status():
                 'key': keys.get(domain),
             })
 
-    https_domains = []
+    # XXX: Currently, there's no way to tell if keys in monkeysphere are for
+    # snakeoil or letsencrypt certs. If snakeoil cert is imported for a domain,
+    # then later that domain is activated for letsencrypt, the snakeoil cert
+    # will be shown in the letsencrypt table.
+    output = actions.superuser_run('letsencrypt', ['get-status'])
+    letsencrypt_domains_all = json.loads(output)['domains']
+    letsencrypt_domains = []
+    snakeoil_domains = []
     for domains_of_a_type in names.domains.values():
         for domain in domains_of_a_type:
-            https_domains.append({
-                'name': domain,
-                'key': https_keys.get(domain),
-            })
+            if domain in letsencrypt_domains_all and \
+               letsencrypt_domains_all[domain]['certificate_available']:
+                letsencrypt_domains.append({
+                    'name': domain,
+                    'key': https_keys.get(domain),
+                })
+            else:
+                snakeoil_domains.append({
+                    'name': domain,
+                    'key': https_keys.get(domain),
+                })
 
-    return {'domains': domains, 'https_domains': https_domains}
+    return {'domains': domains,
+            'snakeoil_domains': snakeoil_domains,
+            'letsencrypt_domains': letsencrypt_domains}
 
 
 def get_key(fingerprint):
