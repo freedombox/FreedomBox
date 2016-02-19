@@ -39,7 +39,17 @@ def parse_arguments():
     host_import_ssh_key = subparsers.add_parser(
         'host-import-ssh-key', help='Import host SSH key')
     host_import_ssh_key.add_argument(
-        'hostname', help='Fully-qualified hostname')
+        'domain', help='Fully-qualified domain name')
+
+    host_import_snakeoil_key = subparsers.add_parser(
+        'host-import-snakeoil-key', help='Import host snakeoil key')
+    host_import_snakeoil_key.add_argument(
+        'domain', help='Fully-qualified domain name')
+
+    host_import_letsencrypt_key = subparsers.add_parser(
+        'host-import-letsencrypt-key', help="Import Let's Encrypt key")
+    host_import_letsencrypt_key.add_argument(
+        'domain', help='Fully-qualified domain name')
 
     host_publish_key = subparsers.add_parser(
         'host-publish-key', help='Push host key to keyserver')
@@ -87,8 +97,45 @@ def subcommand_host_import_ssh_key(arguments):
     """Import host SSH key."""
     output = subprocess.check_output(
         ['monkeysphere-host', 'import-key',
-         '/etc/ssh/ssh_host_rsa_key', arguments.hostname])
+         '/etc/ssh/ssh_host_rsa_key', 'ssh://' + arguments.domain])
     print(output.decode())
+
+
+def subcommand_host_import_snakeoil_key(arguments):
+    """Import host snakeoil key."""
+    proc = subprocess.Popen(
+        ['monkeysphere-host', 'import-key',
+         '/etc/ssl/private/ssl-cert-snakeoil.key',
+         'https://' + arguments.domain],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        env=dict(
+            os.environ,
+            MONKEYSPHERE_PROMPT='false'))
+    output, error = proc.communicate()
+    output, error = output.decode(), error.decode()
+    if proc.returncode != 0:
+        raise Exception(output, error)
+
+    print(output)
+
+
+def subcommand_host_import_letsencrypt_key(arguments):
+    """Import Let's Encrypt key."""
+    proc = subprocess.Popen(
+        ['monkeysphere-host', 'import-key',
+         os.path.join('/etc/letsencrypt/live',
+                      arguments.domain, 'privkey.pem'),
+         'https://' + arguments.domain],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        env=dict(
+            os.environ,
+            MONKEYSPHERE_PROMPT='false'))
+    output, error = proc.communicate()
+    output, error = output.decode(), error.decode()
+    if proc.returncode != 0:
+        raise Exception(output, error)
+
+    print(output)
 
 
 def subcommand_host_publish_key(arguments):
