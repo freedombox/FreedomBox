@@ -85,7 +85,11 @@ def get_status():
     status = actions.superuser_run('letsencrypt', ['get-status'])
     status = json.loads(status)
 
-    for domains in names.domains.values():
+    for domain_type, domains in names.domains.items():
+        # XXX: Remove when Let's Encrypt supports .onion addresses
+        if domain_type == 'hiddenservice':
+            continue
+
         for domain in domains:
             status['domains'].setdefault(domain, {})
 
