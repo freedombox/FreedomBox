@@ -143,7 +143,7 @@ def subcommand_obtain(arguments):
     domain = arguments.domain
 
     command = [
-        'letsencrypt', 'certonly', '--agree-tos',
+        'letsencrypt', 'certonly', '--text', '--agree-tos',
         '--register-unsafely-without-email', '--domain', arguments.domain,
         '--authenticator', 'webroot', '--webroot-path', '/var/www/html/',
         '--renew-by-default']
