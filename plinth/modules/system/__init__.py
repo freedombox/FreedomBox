@@ -27,7 +27,7 @@ from plinth.utils import format_lazy
 
 version = 1
 
-is_essential = 1
+is_essential = True
 
 title = _('System Configuration')
 

@@ -26,4 +26,4 @@ __all__ = ['help', 'init']
 
 version = 1
 
-is_essential = 1
+is_essential = True
