@@ -20,16 +20,32 @@ Plinth module for service discovery.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import subprocess
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.utils import format_lazy
 
 # pylint: disable=C0103
 
-depends = ['plinth.modules.system']
+version = 1
+
+is_essential = True
+
+depends = ['system']
+
+title = _('Service Discovery')
+
+description = [
+    format_lazy(
+        _('Service discovery allows other devices on the network to '
+          'discover your {{ box_name }} and services running on it.  It '
+          'also allows {{ box_name }} to discover other devices and '
+          'services running on your local network.  Service discovery is '
+          'not essential and works only on internal networks.  It may be '
+          'disabled to improve security especially when connecting to a '
+          'hostile local network.'), box_name=_(cfg.box_name))
+]
 
 service = None
 
@@ -37,13 +53,16 @@ service = None
 def init():
     """Intialize the service discovery module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Service Discovery'), 'glyphicon-lamp',
-                     'avahi:index', 950)
+    menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index', 950)
 
     global service  # pylint: disable=W0603
     service = service_module.Service(
-        'avahi', _('Service Discovery'), ['mdns'],
-        is_external=False, enabled=is_enabled())
+        'avahi', title, ['mdns'], is_external=False, enabled=is_enabled())
+
+
+def setup(helper, old_version=False):
+    """Install and configure the module."""
+    helper.install(['avahi-daemon'])
 
 
 def is_enabled():

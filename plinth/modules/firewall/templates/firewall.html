@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,18 +20,7 @@
 
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{{ title }}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Firewall is a security system that controls the incoming and
-      outgoing network traffic on your {{ box_name }}. Keeping a
-      firewall enabled and properly configured reduces risk of
-      security threat from the Internet.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <p>{% trans "Current status:" %}</p>
 

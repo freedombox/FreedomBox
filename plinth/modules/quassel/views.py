@@ -25,16 +25,9 @@ from django.utils.translation import ugettext as _
 
 from .forms import QuasselForm
 from plinth import actions
-from plinth import package
 from plinth.modules import quassel
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    quassel.service.notify_enabled(None, True)
-
-
-@package.required(['quassel-core'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -51,7 +44,8 @@ def index(request):
         form = QuasselForm(initial=status, prefix='quassel')
 
     return TemplateResponse(request, 'quassel.html',
-                            {'title': _('IRC Client (Quassel)'),
+                            {'title': quassel.title,
+                             'description': quassel.description,
                              'status': status,
                              'form': form})
 

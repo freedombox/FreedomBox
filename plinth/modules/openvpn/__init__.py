@@ -25,9 +25,25 @@ from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.utils import format_lazy
 
 
-depends = ['plinth.modules.apps']
+version = 1
+
+depends = ['apps']
+
+title = _('Virtual Private Network (OpenVPN)')
+
+description = [
+    format_lazy(
+        _('Virtual Private Network (VPN) is a technique for securely '
+          'connecting two devices in order to access resources of a '
+          'private network.  While you are away from home, you can connect '
+          'to your {box_name} in order to join your home network and '
+          'access private/internal services provided by {box_name}. '
+          'You can also access the rest of the Internet via {box_name} '
+          'for added security and anonymity.'), box_name=_(cfg.box_name))
+]
 
 service = None
 
@@ -35,13 +51,16 @@ service = None
 def init():
     """Intialize the OpenVPN module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Virtual Private Network (OpenVPN)'), 'glyphicon-lock',
-                     'openvpn:index', 850)
+    menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index', 850)
 
     global service
     service = service_module.Service(
-        'openvpn', _('OpenVPN'), ['openvpn'],
-        is_external=True, enabled=is_enabled())
+        'openvpn', title, ['openvpn'], is_external=True, enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['openvpn', 'easy-rsa'])
 
 
 def is_enabled():

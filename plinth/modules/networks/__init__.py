@@ -19,21 +19,35 @@
 Plinth module to interface with network-manager
 """
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from logging import Logger
 import subprocess
 
-from . import networks
-from .networks import init
 from plinth import action_utils
+from plinth import cfg
 from plinth import network
 
 
-__all__ = ['networks', 'init']
+version = 1
 
-depends = ['plinth.modules.system']
+is_essential = True
+
+depends = ['system']
+
+title = _('Networks')
 
 logger = Logger(__name__)
+
+
+def init():
+    """Initialize the Networks module."""
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(title, 'glyphicon-signal', 'networks:index', 18)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['network-manager'])
 
 
 def diagnose():
@@ -44,8 +58,10 @@ def diagnose():
     addresses = _get_interface_addresses(interfaces)
 
     for address in addresses:
-        results.append(action_utils.diagnose_port_listening(53, 'tcp', address))
-        results.append(action_utils.diagnose_port_listening(53, 'udp', address))
+        results.append(
+            action_utils.diagnose_port_listening(53, 'tcp', address))
+        results.append(
+            action_utils.diagnose_port_listening(53, 'udp', address))
 
     results.append(_diagnose_dnssec('4'))
     results.append(_diagnose_dnssec('6'))

@@ -28,7 +28,6 @@ import socket
 
 from .forms import TransmissionForm
 from plinth import actions
-from plinth import package
 from plinth.modules import transmission
 
 logger = logging.getLogger(__name__)
@@ -36,17 +35,6 @@ logger = logging.getLogger(__name__)
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 
-def on_install():
-    """Enable transmission as soon as it is installed."""
-    new_configuration = {'rpc-whitelist-enabled': False}
-    actions.superuser_run('transmission', ['merge-configuration'],
-                          input=json.dumps(new_configuration).encode())
-
-    actions.superuser_run('transmission', ['enable'])
-    transmission.service.notify_enabled(None, True)
-
-
-@package.required(['transmission-daemon'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -64,7 +52,8 @@ def index(request):
         form = TransmissionForm(initial=status, prefix='transmission')
 
     return TemplateResponse(request, 'transmission.html',
-                            {'title': _('BitTorrent (Transmission)'),
+                            {'title': transmission.title,
+                             'description': transmission.description,
                              'status': status,
                              'form': form})
 

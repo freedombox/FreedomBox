@@ -31,7 +31,13 @@ SERVICES = (
     ('ssh', _('SSH'), 22),
 )
 
-depends = ['plinth.modules.system']
+version = 1
+
+is_essential = True
+
+depends = ['system']
+
+title = _('Name Services')
 
 domain_types = {}
 domains = {}
@@ -42,8 +48,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the names module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Name Services'), 'glyphicon-tag',
-                     'names:index', 19)
+    menu.add_urlname(title, 'glyphicon-tag', 'names:index', 19)
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
@@ -54,6 +59,7 @@ def on_domain_added(sender, domain_type, name='', description='',
     """Add domain to global list."""
     if not domain_type:
         return
+
     domain_types[domain_type] = description
 
     if not name:

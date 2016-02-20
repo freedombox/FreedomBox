@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,14 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <p>
-    {% blocktrans trimmed %}
-      When enabled, the blogs and wikis will be available
-      from <a href="/ikiwiki">/ikiwiki</a>.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   {% include "diagnostics_button.html" with module="ikiwiki" %}
 

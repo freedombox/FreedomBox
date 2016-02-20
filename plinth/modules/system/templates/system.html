@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'app.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -17,25 +17,3 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {% endcomment %}
-
-{% load i18n %}
-
-{% block content %}
-
-  <h2>{% trans "System Configuration" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Here you can administrate the underlying system of your
-      {{ box_name }}.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      The options affect the {{ box_name }} at its most general level,
-      so be careful!
-    {% endblocktrans %}
-  </p>
-
-{% endblock %}

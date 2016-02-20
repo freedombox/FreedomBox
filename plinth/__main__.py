@@ -33,6 +33,7 @@ from cherrypy.process.plugins import Daemonizer
 from plinth import cfg
 from plinth import module_loader
 from plinth import service
+from plinth import setup
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +58,9 @@ def parse_arguments():
     parser.add_argument(
         '--no-daemon', action='store_true', default=cfg.no_daemon,
         help='do not start as a daemon')
+    parser.add_argument(
+        '--setup', action='store_true', default=False,
+        help='run setup tasks on all essential modules and exit')
     parser.add_argument(
         '--diagnose', action='store_true', default=False,
         help='run diagnostic tests and exit')
@@ -132,9 +136,7 @@ def setup_server():
     cherrypy.tree.mount(None, manual_url, config)
     logger.debug('Serving manual images %s on %s', manual_dir, manual_url)
 
-    for module_import_path in module_loader.loaded_modules:
-        module = importlib.import_module(module_import_path)
-        module_name = module_import_path.split('.')[-1]
+    for module_name, module in module_loader.loaded_modules.items():
         module_path = os.path.dirname(module.__file__)
         static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):
@@ -258,6 +260,7 @@ def configure_django():
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
+            'plinth.middleware.SetupMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
@@ -276,6 +279,18 @@ def configure_django():
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
+
+def run_setup_and_exit():
+    """Run setup on all essential modules and exit."""
+    error_code = 0
+    try:
+        setup.setup_all_modules(essential=True)
+    except Exception as exception:
+        logger.error('Error running setup - %s', exception)
+        error_code = 1
+
+    sys.exit(error_code)
 
 
 def run_diagnostics_and_exit():
@@ -314,6 +329,9 @@ def main():
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
+
+    if arguments.setup:
+        run_setup_and_exit()
 
     if arguments.diagnose:
         run_diagnostics_and_exit()

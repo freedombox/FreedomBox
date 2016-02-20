@@ -20,15 +20,36 @@ Plinth module to configure Privoxy.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.utils import format_lazy
 
 
-depends = ['plinth.modules.apps']
+version = 1
+
+is_essential = False
+
+depends = ['apps']
+
+title = _('Web Proxy (Privoxy)')
+
+description = [
+    _('Privoxy is a non-caching web proxy with advanced filtering '
+      'capabilities for enhancing privacy, modifying web page data and '
+      'HTTP headers, controlling access, and removing ads and other '
+      'obnoxious Internet junk. '),
+
+    format_lazy(
+        _('You can use Privoxy by modifying your browser proxy settings to '
+          'your {box_name} hostname (or IP address) with port 8118. '
+          'While using Privoxy, you can see its configuration details and '
+          'documentation at '
+          '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
+          'or <a href="http://p.p">http://p.p</a>.'), box_name=_(cfg.box_name))
+]
 
 service = None
 
@@ -36,13 +57,18 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Web Proxy (Privoxy)'), 'glyphicon-cloud-upload',
-                     'privoxy:index', 1000)
+    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index', 1000)
 
     global service
     service = service_module.Service(
-        'privoxy', _('Privoxy Web Proxy'),
-        is_external=False, enabled=is_enabled())
+        'privoxy', title, is_external=False, enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['privoxy'])
+    helper.call('post', actions.superuser_run, 'privoxy', ['setup'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():
@@ -84,9 +110,7 @@ def diagnose_url_with_proxy():
 
         result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
-                    .format(url=url, proxy=proxy, kind=address['kind'])
+            .format(url=url, proxy=proxy, kind=address['kind'])
         results.append(result)
 
     return results
-
-

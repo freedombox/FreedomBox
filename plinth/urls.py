@@ -19,10 +19,9 @@
 Django URLconf file containing all urls
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from . import views
 
-
-urlpatterns = patterns(  # pylint: disable-msg=C0103
-    'plinth.views',
-    url(r'^$', 'index', name='index')
-)
+urlpatterns = [
+    url(r'^$', views.index, name='index')
+]

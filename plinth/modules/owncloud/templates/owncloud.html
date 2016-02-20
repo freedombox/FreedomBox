@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,30 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "File Hosting (ownCloud)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      ownCloud gives you universal access to your files through a web
-      interface or WebDAV. It also provides a platform to easily view
-      & sync your contacts, calendars and bookmarks across all your
-      devices and enables basic editing right on the web. Installation
-      has minimal server requirements, doesn't need special
-      permissions and is quick. ownCloud is extendable via a simple
-      but powerful API for applications and plugins.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      When enabled, the ownCloud installation will be available
-      from <a href="/owncloud">/owncloud</a> path on the web server.
-      Visit this URL to set up the initial administration account for
-      ownCloud.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   {% include "diagnostics_button.html" with module="owncloud" %}
 

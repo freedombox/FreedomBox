@@ -23,3 +23,7 @@ from . import apps
 from .apps import init
 
 __all__ = ['apps', 'init']
+
+version = 1
+
+is_essential = 1

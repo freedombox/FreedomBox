@@ -25,7 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from .forms import TorForm
 from plinth import actions
-from plinth import package
 from plinth.errors import ActionError
 from plinth.modules import tor
 from plinth.modules.names import SERVICES
@@ -34,18 +33,6 @@ from plinth.signals import domain_added, domain_removed
 config_process = None
 
 
-def on_install():
-    """Setup Tor configuration as soon as it is installed."""
-    actions.superuser_run('tor', ['setup'])
-    actions.superuser_run('tor',
-                          ['configure', '--apt-transport-tor', 'enable'])
-    tor.socks_service.notify_enabled(None, True)
-    tor.bridge_service.notify_enabled(None, True)
-
-
-@package.required(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
-                   'apt-transport-tor'],
-                  on_install=on_install)
 def index(request):
     """Serve configuration page."""
     if config_process:
@@ -65,7 +52,8 @@ def index(request):
         form = TorForm(initial=status, prefix='tor')
 
     return TemplateResponse(request, 'tor.html',
-                            {'title': _('Tor Control Panel'),
+                            {'title': tor.title,
+                             'description': tor.description,
                              'status': status,
                              'config_running': bool(config_process),
                              'form': form})

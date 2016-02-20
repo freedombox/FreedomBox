@@ -21,16 +21,14 @@ Plinth module for upgrades
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
-from django.views.decorators.http import require_POST
 import subprocess
 
 from .forms import ConfigureForm
 from plinth import actions
-from plinth import package
 from plinth.errors import ActionError
+from plinth.modules import upgrades
 
 subsubmenu = [{'url': reverse_lazy('upgrades:index'),
                'text': ugettext_lazy('Automatic Upgrades')},
@@ -41,12 +39,6 @@ LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 LOCK_FILE = '/var/log/dpkg/lock'
 
 
-def on_install():
-    """Enable automatic upgrades after install."""
-    actions.superuser_run('upgrades', ['enable-auto'])
-
-
-@package.required(['unattended-upgrades'], on_install=on_install)
 def index(request):
     """Serve the configuration form."""
     status = get_status()
@@ -63,9 +55,11 @@ def index(request):
         form = ConfigureForm(initial=status, prefix='upgrades')
 
     return TemplateResponse(request, 'upgrades_configure.html',
-                            {'title': _('Automatic Upgrades'),
+                            {'title': upgrades.title,
+                             'description': upgrades.description,
                              'form': form,
                              'subsubmenu': subsubmenu})
+
 
 def is_package_manager_busy():
     """Return whether a package manager is running."""
@@ -85,7 +79,6 @@ def get_log():
         return None
 
 
-@package.required(['unattended-upgrades'], on_install=on_install)
 def upgrade(request):
     """Serve the upgrade page."""
     is_busy = is_package_manager_busy()
@@ -99,7 +92,8 @@ def upgrade(request):
             messages.error(request, _('Starting upgrade failed.'))
 
     return TemplateResponse(request, 'upgrades.html',
-                            {'title': _('Package Upgrades'),
+                            {'title': upgrades.title,
+                             'description': upgrades.description,
                              'subsubmenu': subsubmenu,
                              'is_busy': is_busy,
                              'log': get_log()})

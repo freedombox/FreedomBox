@@ -24,17 +24,49 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
-from plinth import service as service_module
 
 
-depends = ['plinth.modules.apps']
+version = 1
+
+depends = ['apps']
+
+title = _('Email Client (Roundcube)')
+
+description = [
+    _('Roundcube webmail is a browser-based multilingual IMAP '
+      'client with an application-like user interface. It provides '
+      'full functionality you expect from an email client, including '
+      'MIME support, address book, folder manipulation, message '
+      'searching and spell checking.'),
+
+    _('You can access Roundcube from <a href="/roundcube">'
+      '/roundcube</a>. Provide the username and password of the email '
+      'account you wish to access followed by the domain name of the '
+      'IMAP server for your email provider, like <code>imap.example.com'
+      '</code>.  For IMAP over SSL (recommended), fill the server field '
+      'like <code>imaps://imap.example.com</code>.'),
+
+    _('For Gmail, username will be your Gmail address, password will be '
+      'your Google account password and server will be '
+      '<code>imaps://imap.gmail.com</code>.  Note that you will also need '
+      'to enable "Less secure apps" in your Google account settings '
+      '(<a href="https://www.google.com/settings/security/lesssecureapps"'
+      '>https://www.google.com/settings/security/lesssecureapps</a>).'),
+]
 
 
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Email Client (Roundcube)'), 'glyphicon-envelope',
-                     'roundcube:index', 600)
+    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index', 600)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
+    helper.install(['sqlite3', 'roundcube', 'roundcube-sqlite3'])
+    helper.call('pre', actions.superuser_run, 'roundcube', ['setup'])
+
 
 def is_enabled():
     """Return whether the module is enabled."""

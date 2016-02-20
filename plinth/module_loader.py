@@ -19,6 +19,7 @@
 Discover, load and manage Plinth modules
 """
 
+import collections
 import django
 import importlib
 import logging
@@ -27,11 +28,12 @@ import re
 
 from plinth import cfg
 from plinth import urls
+from plinth import setup
 from plinth.signals import pre_module_loading, post_module_loading
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-loaded_modules = []
+loaded_modules = collections.OrderedDict()
 _modules_to_load = None
 
 
@@ -42,16 +44,18 @@ def load_modules():
     """
     pre_module_loading.send_robust(sender="module_loader")
     modules = {}
-    for module_name in get_modules_to_load():
-        LOGGER.info('Importing %s', module_name)
+    for module_import_path in get_modules_to_load():
+        logger.info('Importing %s', module_import_path)
+        module_name = module_import_path.split('.')[-1]
         try:
-            modules[module_name] = importlib.import_module(module_name)
+            modules[module_name] = importlib.import_module(module_import_path)
         except Exception as exception:
-            LOGGER.exception('Could not import %s: %s', module_name, exception)
+            logger.exception('Could not import %s: %s', module_import_path,
+                             exception)
             if cfg.debug:
                 raise
 
-        _include_module_urls(module_name)
+        _include_module_urls(module_import_path, module_name)
 
     ordered_modules = []
     remaining_modules = dict(modules)  # Make a copy
@@ -64,14 +68,14 @@ def load_modules():
             _insert_modules(module_name, module, remaining_modules,
                             ordered_modules)
         except KeyError:
-            LOGGER.error('Unsatified dependency for module - %s',
+            logger.error('Unsatified dependency for module - %s',
                          module_name)
 
-    LOGGER.debug('Module load order - %s', ordered_modules)
+    logger.debug('Module load order - %s', ordered_modules)
 
     for module_name in ordered_modules:
-        _initialize_module(modules[module_name])
-        loaded_modules.append(module_name)
+        _initialize_module(module_name, modules[module_name])
+        loaded_modules[module_name] = modules[module_name]
 
     post_module_loading.send_robust(sender="module_loader")
 
@@ -94,7 +98,7 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
         try:
             module = remaining_modules.pop(dependency)
         except KeyError:
-            LOGGER.error('Not found or circular dependency - %s, %s',
+            logger.error('Not found or circular dependency - %s, %s',
                          module_name, dependency)
             raise
 
@@ -103,32 +107,34 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
     ordered_modules.append(module_name)
 
 
-def _include_module_urls(module_name):
+def _include_module_urls(module_import_path, module_name):
     """Include the module's URLs in global project URLs list"""
-    namespace = module_name.split('.')[-1]
-    url_module = module_name + '.urls'
+    url_module = module_import_path + '.urls'
     try:
         urls.urlpatterns += [
             django.conf.urls.url(
-                r'', django.conf.urls.include(url_module, namespace))]
+                r'', django.conf.urls.include(url_module, module_name))]
     except ImportError:
-        LOGGER.debug('No URLs for %s', module_name)
+        logger.debug('No URLs for %s', module_name)
         if cfg.debug:
             raise
 
 
-def _initialize_module(module):
+def _initialize_module(module_name, module):
     """Call initialization method in the module if it exists"""
+    # Perform setup related initialization on the module
+    setup.init(module_name, module)
+
     try:
         init = module.init
     except AttributeError:
-        LOGGER.debug('No init() for module - %s', module.__name__)
+        logger.debug('No init() for module - %s', module.__name__)
         return
 
     try:
         init()
     except Exception as exception:
-        LOGGER.exception('Exception while running init for %s: %s',
+        logger.exception('Exception while running init for %s: %s',
                          module, exception)
         if cfg.debug:
             raise

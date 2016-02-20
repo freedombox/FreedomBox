@@ -20,19 +20,37 @@ Plinth module for using Let's Encrypt.
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
-from plinth import service as service_module
 from plinth.modules import names
+from plinth.utils import format_lazy
 
 
-depends = [
-    'plinth.modules.apps',
-    'plinth.modules.names'
+version = 1
+
+is_essential = True
+
+depends = ['apps', 'names']
+
+title = _('Certificates (Let\'s Encrypt)')
+
+description = [
+    format_lazy(
+        _('A digital certficate allows users of a web service to verify the '
+          'identity of the service and to securely communicate with it. '
+          '{box_name} can automatically obtain and setup digital '
+          'certificates for each available domain.  It does so by proving '
+          'itself to be the owner of a domain to Let\'s Encrypt, a '
+          'certficate authority (CA).'), box_name=_(cfg.box_name)),
+
+    _('Let\'s Encrypt is a free, automated, and open certificate '
+      'authority, run for the public’s benefit by the Internet Security '
+      'Research Group (ISRG).  Please read and agree with the '
+      '<a href="https://letsencrypt.org/repository/">Let\'s Encrypt '
+      'Subscriber Agreement</a> before using this service.')
 ]
+
 
 service = None
 
@@ -42,6 +60,11 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Certificates (Let\'s Encrypt)'),
                      'glyphicon-lock', 'letsencrypt:index', 20)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['letsencrypt'])
 
 
 def diagnose():

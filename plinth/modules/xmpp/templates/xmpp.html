@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,24 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "Chat Server (XMPP)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      XMPP is an open and standardized communication protocol. Here
-      you can run and configure your XMPP server, called ejabberd.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      To actually communicate, you can use the <a href='/jwchat'>web
-      client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/'
-      target='_blank'>XMPP client</a>.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <p>
     {% url 'config:index' as index_url %}

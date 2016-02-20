@@ -20,21 +20,24 @@ Plinth module to manage users
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
 import subprocess
 
 from plinth import cfg
-from plinth import actions
 from plinth import action_utils
 
-depends = ['plinth.modules.system']
+version = 1
+
+is_essential = True
+
+depends = ['system']
+
+title = _('Users and Groups')
 
 
 def init():
     """Intialize the user module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Users and Groups'), 'glyphicon-user', 'users:index',
-                     15)
+    menu.add_urlname(title, 'glyphicon-user', 'users:index', 15)
 
 
 def diagnose():

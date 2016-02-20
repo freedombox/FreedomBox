@@ -19,13 +19,9 @@
 Framework for installing and updating distribution packages
 """
 
-from django.contrib import messages
 from django.utils.translation import ugettext as _
-import functools
 import logging
-import threading
 
-import plinth
 from plinth.utils import import_from_gi
 glib = import_from_gi('GLib', '2.0')
 packagekit = import_from_gi('PackageKitGlib', '1.0')
@@ -46,19 +42,21 @@ class PackageException(Exception):
         self.error_string = error_string
         self.error_details = error_details
 
+    def __str__(self):
+        """Return the strin representation of the exception."""
+        return 'PackageException(error_string="{0}", error_details="{1}")' \
+            .format(self.error_string, self.error_details)
+
 
 class Transaction(object):
     """Information about an ongoing transaction."""
 
-    def __init__(self, package_names, before_install=None, on_install=None):
+    def __init__(self, package_names):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
         self.package_names = package_names
-        # XXX: This is hack, remove after implementing proper setup mechanism.
-        self.before_install = before_install
-        self.on_install = on_install
 
         # Progress
         self.allow_cancel = None
@@ -74,10 +72,6 @@ class Transaction(object):
         self.download_size_remaining = None
         self.speed = None
 
-        # Completion
-        self.is_finished = False
-        self.exception = None
-
     def get_id(self):
         """Return a identifier to use as a key in a map of transactions."""
         return frozenset(self.package_names)
@@ -89,43 +83,12 @@ class Transaction(object):
                     self.package_names, self.allow_cancel, self.status_string,
                     self.percentage, self.package, self.item_progress)
 
-    def start_install(self):
-        """Start a PackageKit transaction to install given list of packages.
-
-        This operation is non-blocking at it spawns a new thread.
-        """
-        thread = threading.Thread(target=self._install)
-        thread.start()
-
-    def _install(self):
+    def install(self):
         """Run a PackageKit transaction to install given packages."""
         try:
-            if self.before_install:
-                self.before_install()
-        except Exception as exception:
-            logger.exception('Error during setup before install - %s',
-                             exception)
-            self.finish(exception)
-            return
-
-        try:
             self._do_install()
-        except PackageException as exception:
-            self.finish(exception)
-            return
         except glib.Error as exception:
-            self.finish(PackageException(exception.message))
-            return
-
-        try:
-            if self.on_install:
-                self.on_install()
-        except Exception as exception:
-            logger.exception('Error during setup - %s', exception)
-            self.finish(exception)
-            return
-
-        self.finish()
+            raise PackageException(exception.message) from exception
 
     def _do_install(self):
         """Run a PackageKit transaction to install given packages.
@@ -203,115 +166,3 @@ class Transaction(object):
         else:
             logger.info('Unhandle packagekit progress callback - %s, %s',
                         progress, progress_type)
-
-    def finish(self, exception=None):
-        """Mark transaction as complected and store exception if any."""
-        self.is_finished = True
-        self.exception = exception
-
-    def collect_result(self):
-        """Retrieve the result of this transaction.
-
-        Also remove self from global transactions list.
-        """
-        assert self.is_finished
-
-        del transactions[self.get_id()]
-        return self.exception
-
-
-def required(package_names, before_install=None, on_install=None):
-    """Decorate a view to check and install required packages."""
-
-    def wrapper2(func):
-        """Return a function to check and install packages."""
-
-        @functools.wraps(func)
-        def wrapper(request, *args, **kwargs):
-            """Check and install packages required by a view."""
-            if not _should_show_install_view(request, package_names):
-                return func(request, *args, **kwargs)
-
-            view = plinth.views.PackageInstallView.as_view()
-            return view(request, package_names=package_names,
-                        before_install=before_install, on_install=on_install,
-                        *args, **kwargs)
-
-        return wrapper
-
-    return wrapper2
-
-
-def _should_show_install_view(request, package_names):
-    """Return whether the installation view should be shown."""
-    transaction_id = frozenset(package_names)
-
-    # No transaction in progress
-    if transaction_id not in transactions:
-        is_installed = check_installed(package_names)
-        return not is_installed
-
-    # Installing
-    transaction = transactions[transaction_id]
-    if not transaction.is_finished:
-        return True
-
-    # Transaction finished, waiting to show the result
-    exception = transaction.collect_result()
-    if not exception:
-        messages.success(request,
-                         _('Installed and configured packages successfully.'))
-        return False
-    else:
-        error_string = getattr(exception, 'error_string', str(exception))
-        error_details = getattr(exception, 'error_details', '')
-        messages.error(request, _('Error installing packages: {string} {details}')
-                       .format(string=error_string, details=error_details))
-        return True
-
-
-def check_installed(package_names):
-    """Return a boolean installed status of package.
-
-    This operation is blocking and waits until the check is finished.
-    """
-    def _callback(progress, progress_type, user_data):
-        """Process progress updates on package resolve operation."""
-        pass
-
-    client = packagekit.Client()
-    response = client.resolve(packagekit.FilterEnum.INSTALLED,
-                              tuple(package_names) + (None, ), None,
-                              _callback, None)
-
-    installed_package_names = []
-    for package in response.get_package_array():
-        if package.get_info() == packagekit.InfoEnum.INSTALLED:
-            installed_package_names.append(package.get_name())
-
-        packages_resolved[package.get_name()] = package
-
-    # When package names could not be resolved
-    for package_name in package_names:
-        if package_name not in packages_resolved:
-            packages_resolved[package_name] = None
-
-    return set(installed_package_names) == set(package_names)
-
-
-def is_installing(package_names):
-    """Return whether a set of packages are currently being installed."""
-    return frozenset(package_names) in transactions
-
-
-def start_install(package_names, before_install=None, on_install=None):
-    """Start a PackageKit transaction to install given list of packages.
-
-    This operation is non-blocking at it spawns a new thread.
-    """
-    transaction = Transaction(package_names,
-                              before_install=before_install,
-                              on_install=on_install)
-    transactions[frozenset(package_names)] = transaction
-
-    transaction.start_install()

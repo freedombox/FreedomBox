@@ -19,13 +19,30 @@
 Plinth module for system diagnostics
 """
 
-from . import diagnostics
-from .diagnostics import init
+from django.utils.translation import ugettext_lazy as _
+
 from plinth import action_utils
+from plinth import cfg
 
-__all__ = ['diagnostics', 'init']
+version = 1
 
-depends = ['plinth.modules.system']
+is_essential = True
+
+title = _('Diagnostics')
+
+description = [
+    _('The system diagnostic test will run a number of checks on your '
+      'system to confirm that applications and services are working as '
+      'expected.')
+]
+
+depends = ['system']
+
+
+def init():
+    """Initialize the module"""
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(title, 'glyphicon-screenshot', 'diagnostics:index', 30)
 
 
 def diagnose():

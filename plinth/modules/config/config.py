@@ -33,7 +33,7 @@ import socket
 
 from plinth import actions
 from plinth import cfg
-from plinth.modules.firewall import firewall
+from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change

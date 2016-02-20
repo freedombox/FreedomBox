@@ -26,11 +26,14 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from plinth import actions
+from plinth.modules import power
 
 
 def index(request):
     """Serve power controls page."""
-    return TemplateResponse(request, 'power.html', {'title': _('Power')})
+    return TemplateResponse(request, 'power.html',
+                            {'title': power.title,
+                             'description': power.description})
 
 
 def restart(request):

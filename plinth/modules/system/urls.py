@@ -21,7 +21,7 @@ URLs for the System module
 
 from django.conf.urls import url
 
-from . import system as views
+from . import views
 
 
 urlpatterns = [

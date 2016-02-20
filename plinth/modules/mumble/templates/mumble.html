@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,25 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "Voice Chat (Mumble)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Mumble is an open source, low-latency, encrypted, high quality
-      voice chat software.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      You can connect to your Mumble server on the regular Mumble port 64738.
-      <a href="http://mumble.info">Clients</a> to connect to Mumble
-      from your desktop and Android devices are available.
-    {% endblocktrans %}
-  </p>
-
+{% block configuration %}
 
   <h3>{% trans "Status" %}</h3>
 

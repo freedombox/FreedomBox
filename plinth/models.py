@@ -37,3 +37,9 @@ class KVStore(models.Model):
     def value(self, val):
         """Store the value of the key/value pair by JSON encoding it"""
         self.value_json = json.dumps(val)
+
+
+class Module(models.Model):
+    """Model to store current setup versions of a module."""
+    name = models.TextField(primary_key=True)
+    setup_version = models.IntegerField()

@@ -24,11 +24,10 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from .forms import ReStoreForm
-from plinth import actions, package
+from plinth import actions
 from plinth.modules import restore
 
 
-@package.required(['node-restore'])
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -43,7 +42,8 @@ def index(request):
         form = ReStoreForm(initial=status, prefix='restore')
 
     return TemplateResponse(request, 'restore_index.html',
-                            {'title': _('Unhosted Storage (reStore)'),
+                            {'title': restore.title,
+                             'description': restore.description,
                              'status': status,
                              'form': form})
 

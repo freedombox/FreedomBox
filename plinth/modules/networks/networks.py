@@ -25,9 +25,7 @@ from logging import Logger
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, PPPoEForm,
                     WifiForm)
-from plinth import cfg
 from plinth import network
-from plinth import package
 
 
 logger = Logger(__name__)
@@ -40,14 +38,6 @@ subsubmenu = [{'url': reverse_lazy('networks:index'),
                'text': ugettext_lazy('Add Connection')}]
 
 
-def init():
-    """Initialize the Networks module."""
-    menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(ugettext_lazy('Networks'), 'glyphicon-signal',
-                     'networks:index', 18)
-
-
-@package.required(['network-manager'])
 def index(request):
     """Show connection list."""
     connections = network.get_connection_list()

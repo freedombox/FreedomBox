@@ -21,11 +21,37 @@ Plinth module for repro.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
-depends = ['plinth.modules.apps']
+version = 1
+
+depends = ['apps']
+
+title = _('SIP Server (repro)')
+
+description = [
+    _('repro provides various SIP services that a SIP softphone can utilize '
+      'to provide audio and video calls as well as presence and instant '
+      'messaging. repro provides a server and SIP user accounts that clients '
+      'can use to let their presence known.  It also acts as a proxy to '
+      'federate SIP communications to other servers on the Internet similar '
+      'to email.'),
+
+    _('To make SIP calls, a client application is needed. Available clients '
+      'include <a href="https://jitsi.org/">Jitsi</a> (for computers) and '
+      '<a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple"> '
+      'CSipSimple</a> (for Android phones).'),
+
+    _('<strong>Note:</strong>  Before using repro, domains and users will '
+      'need to be configured using the <a href="/repro/domains.html">'
+      'web-based configuration panel</a>. Users in the <em>admin</em> group '
+      'will be able to log in to the repro configuration panel. After setting '
+      'the domain, it is required to restart the repro service. Disable the '
+      'service and re-enable it.'),
+]
 
 service = None
 
@@ -33,13 +59,19 @@ service = None
 def init():
     """Initialize the repro module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('SIP Server (repro)'), 'glyphicon-phone-alt',
-                     'repro:index', 825)
+    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index', 825)
 
     global service
     service = service_module.Service(
-        'repro', _('repro SIP Server'), ['sip-plinth', 'sip-tls-plinth'],
-        is_external=True, enabled=is_enabled())
+        'repro', title, ['sip-plinth', 'sip-tls-plinth'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['repro'])
+    helper.call('post', actions.superuser_run, 'repro', ['setup'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():

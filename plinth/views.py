@@ -22,8 +22,7 @@ Main Plinth views
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.views.generic import TemplateView
-
-from plinth import package as package_module
+import time
 
 
 def index(request):
@@ -31,33 +30,26 @@ def index(request):
     return HttpResponseRedirect(reverse('apps:index'))
 
 
-class PackageInstallView(TemplateView):
-    """View to prompt and install packages."""
-    template_name = 'package_install.html'
+class SetupView(TemplateView):
+    """View to prompt and setup applications."""
+    template_name = 'setup.html'
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
-        context = super(PackageInstallView, self).get_context_data(**kwargs)
-
-        if 'packages_names' not in context:
-            context['package_names'] = self.kwargs.get('package_names', [])
-        context['packages'] = {
-            package_name: package_module.packages_resolved[package_name]
-            for package_name in context['package_names']}
-        context['is_installing'] = \
-            package_module.is_installing(context['package_names'])
-        context['transactions'] = package_module.transactions
-
+        context = super(SetupView, self).get_context_data(**kwargs)
+        context['setup_helper'] = self.kwargs['setup_helper']
         return context
 
     def post(self, *args, **kwargs):
-        """Handle installing packages
+        """Handle installing/upgrading applications.
 
-        Start the package installation, and refresh the page every x seconds to
-        keep displaying PackageInstallView.get() with the installation status.
+        Start the application setup, and refresh the page every few
+        seconds to keep displaying the status.
         """
-        package_module.start_install(
-            self.kwargs['package_names'],
-            before_install=self.kwargs.get('before_install'),
-            on_install=self.kwargs.get('on_install'))
+        self.kwargs['setup_helper'].run_in_thread()
+
+        # Give a moment for the setup process to start and show
+        # meaningful status.
+        time.sleep(1)
+
         return self.render_to_response(self.get_context_data())

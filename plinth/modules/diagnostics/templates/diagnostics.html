@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'app.html' %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -29,17 +29,7 @@
 {% endblock %}
 
 
-{% block content %}
-
-  <h2>{{ title }}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      The system diagnostic test will run a number of checks on your
-      system to confirm that applications and services are working as
-      expected.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   {% if not is_running %}
     <form class="form form-diagnostics-button" method="post"

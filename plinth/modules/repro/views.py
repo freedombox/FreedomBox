@@ -25,17 +25,9 @@ from django.utils.translation import ugettext as _
 
 from .forms import ReproForm
 from plinth import actions
-from plinth import package
 from plinth.modules import repro
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    actions.superuser_run('repro', ['setup'])
-    repro.service.notify_enabled(None, True)
-
-
-@package.required(['repro'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -52,7 +44,8 @@ def index(request):
         form = ReproForm(initial=status, prefix='repro')
 
     return TemplateResponse(request, 'repro.html',
-                            {'title': _('SIP Server (repro)'),
+                            {'title': repro.title,
+                             'description': repro.description,
                              'status': status,
                              'form': form})
 

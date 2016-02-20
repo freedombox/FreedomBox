@@ -27,7 +27,16 @@ from plinth import cfg
 from plinth import service as service_module
 
 
-depends = ['plinth.modules.apps']
+version = 1
+
+depends = ['apps']
+
+title = _('Wiki and Blog (ikiwiki)')
+
+description = [
+    _('When enabled, the blogs and wikis will be available '
+      'from <a href="/ikiwiki">/ikiwiki</a>.')
+]
 
 service = None
 
@@ -35,13 +44,25 @@ service = None
 def init():
     """Initialize the ikiwiki module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Wiki and Blog (ikiwiki)'), 'glyphicon-edit',
-                     'ikiwiki:index', 1100)
+    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index', 1100)
 
     global service
     service = service_module.Service(
-        'ikiwiki', _('ikiwiki wikis and blogs'), ['http', 'https'],
-        is_external=True, enabled=is_enabled())
+        'ikiwiki', title, ['http', 'https'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['ikiwiki',
+                    'gcc',
+                    'libc6-dev',
+                    'libtimedate-perl',
+                    'libcgi-formbuilder-perl',
+                    'libcgi-session-perl',
+                    'libxml-writer-perl'])
+    helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():

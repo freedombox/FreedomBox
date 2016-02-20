@@ -20,7 +20,7 @@ Plinth module to configure Tor.
 """
 
 import augeas
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 import glob
 import itertools
 
@@ -32,7 +32,20 @@ from plinth.modules.names import SERVICES
 from plinth.signals import domain_added
 
 
-depends = ['plinth.modules.apps', 'plinth.modules.names']
+version = 1
+
+depends = ['apps', 'names']
+
+title = _('Anonymity Network (Tor)')
+
+description = [
+    _('Tor is an anonymous communication system. You can learn more '
+      'about it from the <a href="https://www.torproject.org/">Tor '
+      'Project</a> website. For best protection when web surfing, the '
+      'Tor Project recommends that you use the '
+      '<a href="https://www.torproject.org/download/download-easy.html.en">'
+      'Tor Browser</a>.')
+]
 
 socks_service = None
 bridge_service = None
@@ -45,8 +58,7 @@ APT_TOR_PREFIX = 'tor+'
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Anonymity Network (Tor)'), 'glyphicon-eye-close',
-                     'tor:index', 100)
+    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index', 100)
 
     global socks_service
     socks_service = service_module.Service(
@@ -75,6 +87,17 @@ def init():
         sender='tor', domain_type='hiddenservice',
         name=hs_hostname, description=_('Tor Hidden Service'),
         services=hs_services)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
+                    'apt-transport-tor'])
+    helper.call('post', actions.superuser_run, 'tor', ['setup'])
+    helper.call('post', actions.superuser_run, 'tor',
+                ['configure', '--apt-transport-tor', 'enable'])
+    helper.call('post', socks_service.notify_enabled, None, True)
+    helper.call('post', bridge_service.notify_enabled, None, True)
 
 
 def is_enabled():

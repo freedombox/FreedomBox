@@ -26,24 +26,11 @@ import logging
 
 from .forms import RoundcubeForm
 from plinth import actions
-from plinth import package
 from plinth.modules import roundcube
 
 logger = logging.getLogger(__name__)
 
 
-def before_install():
-    """Preseed debconf values before the packages are installed."""
-    actions.superuser_run('roundcube', ['pre-install'])
-
-
-def on_install():
-    """Setup Roundcube Apache configuration."""
-    actions.superuser_run('roundcube', ['setup'])
-
-
-@package.required(['sqlite3', 'roundcube', 'roundcube-sqlite3'],
-                  before_install=before_install, on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -61,7 +48,8 @@ def index(request):
         form = RoundcubeForm(initial=status, prefix='roundcube')
 
     return TemplateResponse(request, 'roundcube.html',
-                            {'title': _('Email Client (Roundcube)'),
+                            {'title': roundcube.title,
+                             'description': roundcube.description,
                              'status': status,
                              'form': form})
 

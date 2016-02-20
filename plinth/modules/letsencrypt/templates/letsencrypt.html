@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -33,30 +33,7 @@
 </style>
 {% endblock %}
 
-{% block content %}
-
-  <h2>{% trans "Certificates (Let's Encrypt)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      A digital certficate allows users of a web service to verify the
-      identity of the service and to securely communicate with it.
-      {{ box_name }} can automatically obtain and setup digital
-      certificates for each available domain.  It does so by proving
-      itself to be the owner of a domain to Let's Encrypt, a
-      certficate authority (CA).
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      Let's Encrypt is a free, automated, and open certificate
-      authority, run for the public’s benefit by the Internet Security
-      Research Group (ISRG).  Please read and agree with the
-      <a href="https://letsencrypt.org/repository/">Let's Encrypt
-      Subscriber Agreement</a> before using this service.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <div class="row">
     <div class="col-lg-8">

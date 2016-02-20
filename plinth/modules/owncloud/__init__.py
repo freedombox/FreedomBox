@@ -19,14 +19,60 @@
 Plinth module to configure ownCloud
 """
 
-from . import owncloud
-from .owncloud import init
+from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
+from plinth import cfg
+from plinth import service as service_module
 
-__all__ = ['owncloud', 'init']
+version = 1
 
-depends = ['plinth.modules.apps']
+depends = ['apps']
+
+title = _('File Hosting (ownCloud)')
+
+description = [
+    _('ownCloud gives you universal access to your files through a web '
+      'interface or WebDAV. It also provides a platform to easily view '
+      '& sync your contacts, calendars and bookmarks across all your '
+      'devices and enables basic editing right on the web. Installation '
+      'has minimal server requirements, doesn\'t need special '
+      'permissions and is quick. ownCloud is extendable via a simple '
+      'but powerful API for applications and plugins.'),
+
+    _('When enabled, the ownCloud installation will be available '
+      'from <a href="/owncloud">/owncloud</a> path on the web server. '
+      'Visit this URL to set up the initial administration account for '
+      'ownCloud.')
+]
+
+service = None
+
+
+def init():
+    """Initialize the ownCloud module"""
+    menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index', 700)
+
+    global service
+    service = service_module.Service(
+        'owncloud', title, ['http', 'https'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
+                    'php-google-api-php-client'])
+    helper.call('post', actions.superuser_run, 'owncloud-setup', ['enable'])
+    helper.call('post', service.notify_enabled, None, True)
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    output = actions.run('owncloud-setup', ['status'])
+    return 'enable' in output.split()
 
 
 def diagnose():

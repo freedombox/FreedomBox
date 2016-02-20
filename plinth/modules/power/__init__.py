@@ -23,11 +23,20 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 
-depends = ['plinth.modules.system']
+version = 1
+
+is_essential = True
+
+depends = ['system']
+
+title = _('Power')
+
+description = [
+    _('Restart or shut down the system.')
+]
 
 
 def init():
     """Initialize the power module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(_('Power'), 'glyphicon-off',
-                     'power:index', 1000)
+    menu.add_urlname(title, 'glyphicon-off', 'power:index', 1000)

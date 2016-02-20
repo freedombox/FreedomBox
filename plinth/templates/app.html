@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,20 +16,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
+{% load i18n %}
 
-from plinth import cfg
+{% block content %}
+  <h2>{{ title }}</h2>
 
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
 
-def init():
-    """Initialize the system module"""
-    cfg.main_menu.add_urlname(_('System'), 'glyphicon-cog', 'system:index',
-                              100)
+  {% block configuration %}
+  {% endblock %}
 
-
-def index(request):
-    """Serve the index page"""
-    return TemplateResponse(request, 'system.html',
-                            {'title': _('System Configuration')})
+{% endblock %}

@@ -29,7 +29,6 @@ import logging
 
 from .forms import OpenVpnForm
 from plinth import actions
-from plinth import package
 from plinth.modules import openvpn
 from plinth.modules.config import config
 
@@ -38,7 +37,6 @@ logger = logging.getLogger(__name__)
 setup_process = None
 
 
-@package.required(['openvpn', 'easy-rsa'])
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -59,7 +57,8 @@ def index(request):
         form = OpenVpnForm(initial=status, prefix='openvpn')
 
     return TemplateResponse(request, 'openvpn.html',
-                            {'title': _('Virtual Private Network (OpenVPN)'),
+                            {'title': openvpn.title,
+                             'description': openvpn.description,
                              'status': status,
                              'form': form})
 

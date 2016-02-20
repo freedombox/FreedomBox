@@ -1,5 +1,3 @@
-{% extends "app.html" %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,15 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
 
-{% load i18n %}
+from django.template.response import TemplateResponse
 
-{% block configuration %}
+from plinth.modules import system
 
-  <p>
-    <a class="btn btn-primary btn-md" href="{% url 'pagekite:configure' %}">
-      {% trans "Configure PageKite" %}</a>
-  </p>
 
-{% endblock %}
+def index(request):
+    """Serve the index page"""
+    return TemplateResponse(request, 'system.html',
+                            {'title': system.title,
+                             'description': system.description})

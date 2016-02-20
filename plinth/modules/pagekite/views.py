@@ -18,18 +18,16 @@
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import package
 from . import utils
 from .forms import ConfigurationForm, StandardServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm
+from plinth.modules import pagekite
 
 
-required_packages = ('pagekite',)
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
               {'url': reverse_lazy('pagekite:configure'),
@@ -43,7 +41,8 @@ subsubmenu = [{'url': reverse_lazy('pagekite:index'),
 def index(request):
     """Serve introduction page"""
     return TemplateResponse(request, 'pagekite_introduction.html',
-                            {'title': _('Public Visibility (PageKite)'),
+                            {'title': pagekite.title,
+                             'description': pagekite.description,
                              'subsubmenu': subsubmenu})
 
 
@@ -59,7 +58,6 @@ class ContextMixin(object):
         context['subsubmenu'] = subsubmenu
         return context
 
-    @method_decorator(package.required(required_packages))
     def dispatch(self, *args, **kwargs):
         return super(ContextMixin, self).dispatch(*args, **kwargs)
 
@@ -81,8 +79,9 @@ class CustomServiceView(ContextMixin, TemplateView):
         unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)
-        context['custom_services'] = [utils.prepare_service_for_display(service)
-                                      for service in custom_services]
+        context['custom_services'] = [
+            utils.prepare_service_for_display(service)
+            for service in custom_services]
         context.update(utils.get_kite_details())
         return context
 

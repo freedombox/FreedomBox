@@ -23,7 +23,22 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 
-depends = ['plinth.modules.system']
+version = 1
+
+depends = ['system']
+
+title = _('Monkeysphere')
+
+description = [
+    _('With Monkeysphere, a PGP key can be generated for each configured '
+      'domain serving SSH. The PGP public key can then be uploaded to the PGP '
+      'keyservers. Users connecting to this machine through SSH can verify '
+      'that they are connecting to the correct host.  For users to trust the '
+      'key, at least one person (usually the machine owner) must sign the key '
+      'using the regular PGP key signing process.  See the '
+      '<a href="http://web.monkeysphere.info/getting-started-ssh/"> '
+      'Monkeysphere SSH documentation</a> for more details.')
+]
 
 
 def init():
@@ -31,3 +46,8 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Monkeysphere'), 'glyphicon-certificate',
                      'monkeysphere:index', 970)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['monkeysphere'])

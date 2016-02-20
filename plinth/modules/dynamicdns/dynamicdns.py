@@ -25,7 +25,7 @@ import logging
 
 from plinth import actions
 from plinth import cfg
-from plinth import package
+from plinth.modules import dynamicdns
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
@@ -39,19 +39,11 @@ subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
                'text': ugettext_lazy('Status')}]
 
 
-def init():
-    """Initialize the dynamicdns module"""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(ugettext_lazy('Dynamic DNS'), 'glyphicon-refresh',
-                     'dynamicdns:index', 500)
-
-
-@package.required(['ez-ipupdate'])
 def index(request):
     """Serve Dynamic DNS page."""
-
     return TemplateResponse(request, 'dynamicdns.html',
-                            {'title': _('Dynamic DNS'),
+                            {'title': dynamicdns.title,
+                             'description': dynamicdns.description,
                              'subsubmenu': subsubmenu})
 
 
@@ -198,7 +190,6 @@ class ConfigureForm(forms.Form):
                 raise forms.ValidationError(_('Please provide a password'))
 
 
-@package.required(['ez-ipupdate'])
 def configure(request):
     """Serve the configuration form."""
     status = get_status()
@@ -219,7 +210,6 @@ def configure(request):
                              'subsubmenu': subsubmenu})
 
 
-@package.required(['ez-ipupdate'])
 def statuspage(request):
     """Serve the status page."""
     check_nat = actions.run('dynamicdns', ['get-nat'])

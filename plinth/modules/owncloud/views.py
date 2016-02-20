@@ -19,47 +19,15 @@
 Plinth module for configuring ownCloud.
 """
 
-from django import forms
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 
+from .forms import OwnCloudForm
 from plinth import actions
-from plinth import cfg
-from plinth import package
-from plinth import service as service_module
+from plinth.modules import owncloud
 
 
-service = None
-
-
-class OwnCloudForm(forms.Form):  # pylint: disable-msg=W0232
-    """ownCloud configuration form"""
-    enabled = forms.BooleanField(label=_('Enable ownCloud'), required=False)
-
-
-def init():
-    """Initialize the ownCloud module"""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('File Hosting (ownCloud)'), 'glyphicon-picture',
-                     'owncloud:index', 700)
-
-    status = get_status()
-
-    global service  # pylint: disable-msg=W0603
-    service = service_module.Service(
-        'owncloud', _('ownCloud'), ['http', 'https'], is_external=True,
-        enabled=status['enabled'])
-
-
-def on_install():
-    """Tasks to run after package install."""
-    actions.superuser_run('owncloud-setup', ['enable'])
-    service.notify_enabled(None, True)
-
-
-@package.required(['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
-                   'php-google-api-php-client'], on_install=on_install)
 def index(request):
     """Serve the ownCloud configuration page"""
     status = get_status()
@@ -77,14 +45,14 @@ def index(request):
         form = OwnCloudForm(initial=status, prefix='owncloud')
 
     return TemplateResponse(request, 'owncloud.html',
-                            {'title': _('ownCloud'),
+                            {'title': owncloud.title,
+                             'description': owncloud.description,
                              'form': form})
 
 
 def get_status():
     """Return the current status"""
-    output = actions.run('owncloud-setup', ['status'])
-    return {'enabled': 'enable' in output.split()}
+    return {'enabled': owncloud.is_enabled()}
 
 
 def _apply_changes(request, old_status, new_status):
@@ -104,4 +72,4 @@ def _apply_changes(request, old_status, new_status):
 
     # Send a signal to other modules that the service is
     # enabled/disabled
-    service.notify_enabled(None, new_status['enabled'])
+    owncloud.service.notify_enabled(None, new_status['enabled'])

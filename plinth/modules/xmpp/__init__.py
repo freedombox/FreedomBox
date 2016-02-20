@@ -20,7 +20,8 @@ Plinth module to configure XMPP server
 """
 
 from django.utils.translation import ugettext_lazy as _
-import json
+import logging
+import socket
 
 from plinth import actions
 from plinth import action_utils
@@ -30,26 +31,52 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-depends = ['plinth.modules.apps']
+version = 1
+
+depends = ['apps']
+
+title = _('Chat Server (XMPP)')
+
+description = [
+    _('XMPP is an open and standardized communication protocol. Here '
+      'you can run and configure your XMPP server, called ejabberd.'),
+
+    _('To actually communicate, you can use the <a href=\'/jwchat\'>web '
+      'client</a> or any other '
+      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
+      '>XMPP client</a>.')
+]
 
 service = None
+
+logger = logging.getLogger(__name__)
 
 
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Chat Server (XMPP)'), 'glyphicon-comment',
-                     'xmpp:index', 400)
+    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index', 400)
 
     global service
     service = service_module.Service(
-        'xmpp', _('Chat Server (XMPP)'),
-        ['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
+        'xmpp', title, ['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
         is_external=True, enabled=is_enabled())
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    domainname = get_domainname()
+    logger.info('XMPP service domainname - %s', domainname)
+
+    helper.call('pre', actions.superuser_run, 'xmpp',
+                ['pre-install', '--domainname', domainname])
+    helper.install(['jwchat', 'ejabberd'])
+    helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():
@@ -61,6 +88,12 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('ejabberd')
+
+
+def get_domainname():
+    """Return the domainname"""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

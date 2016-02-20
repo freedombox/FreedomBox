@@ -26,18 +26,11 @@ import logging
 
 from .forms import MumbleForm
 from plinth import actions
-from plinth import package
 from plinth.modules import mumble
 
 logger = logging.getLogger(__name__)
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    mumble.service.notify_enabled(None, True)
-
-
-@package.required(['mumble-server'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -55,7 +48,8 @@ def index(request):
         form = MumbleForm(initial=status, prefix='mumble')
 
     return TemplateResponse(request, 'mumble.html',
-                            {'title': _('Voice Chat (Mumble)'),
+                            {'title': mumble.title,
+                             'description': mumble.description,
                              'status': status,
                              'form': form})
 
