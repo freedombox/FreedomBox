@@ -122,15 +122,10 @@ def _collect_config_result(request):
 
     if status['enabled'] and status['is_running'] and \
        status['hs_enabled'] and status['hs_hostname']:
-        hs_services = []
-        for service in SERVICES:
-            if str(service[2]) in status['hs_ports']:
-                hs_services.append(service[0])
-
         domain_added.send_robust(
             sender='tor', domain_type='hiddenservice',
             name=status['hs_hostname'], description=_('Tor Hidden Service'),
-            services=hs_services)
+            services=status['hs_services'])
 
     if not return_code:
         messages.success(request, _('Configuration updated.'))

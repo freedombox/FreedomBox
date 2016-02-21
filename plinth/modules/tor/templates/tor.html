@@ -62,13 +62,19 @@
             <thead>
               <tr>
                 <th>{% trans "Hidden Service" %}</th>
-                <th>{% trans "Port" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Ports" %}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{{ status.hs_hostname }}</td>
-                <td>{{ status.hs_ports }}</td>
+                <td>{{ status.hs_status }}</td>
+                <td>
+                  {% for service in status.hs_services %}
+                    {{ service }}
+                  {% endfor %}
+                </td>
               </tr>
             </tbody>
           </table>
