@@ -218,8 +218,10 @@ def _enable_hs(restart=True):
     aug.set(TOR_CONFIG + '/HiddenServiceDir',
             '/var/lib/tor/hidden_service')
     aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
-            '80 127.0.0.1:80')
+            '22 127.0.0.1:22')
     aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
+            '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[3]',
             '443 127.0.0.1:443')
     aug.save()
 
