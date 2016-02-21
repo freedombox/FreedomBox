@@ -27,8 +27,6 @@ from .forms import TorForm
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
-from plinth.modules.names import SERVICES
-from plinth.signals import domain_added, domain_removed
 
 config_process = None
 
@@ -115,17 +113,7 @@ def _collect_config_result(request):
 
     tor.socks_service.notify_enabled(None, status['enabled'])
     tor.bridge_service.notify_enabled(None, status['enabled'])
-
-    # Update hidden service name registered with Name Services module.
-    domain_removed.send_robust(
-        sender='tor', domain_type='hiddenservice')
-
-    if status['enabled'] and status['is_running'] and \
-       status['hs_enabled'] and status['hs_hostname']:
-        domain_added.send_robust(
-            sender='tor', domain_type='hiddenservice',
-            name=status['hs_hostname'], description=_('Tor Hidden Service'),
-            services=status['hs_services'])
+    tor.update_hidden_service_domain(status)
 
     if not return_code:
         messages.success(request, _('Configuration updated.'))

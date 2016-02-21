@@ -89,10 +89,29 @@ def subcommand_setup(_):
     aug.set(TOR_CONFIG + '/TransPort[2]', '[::1]:9040')
     aug.set(TOR_CONFIG + '/DNSPort[1]', '127.0.0.1:9053')
     aug.set(TOR_CONFIG + '/DNSPort[2]', '[::1]:9053')
+
+    aug.set(TOR_CONFIG + '/HiddenServiceDir',
+            '/var/lib/tor/hidden_service')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
+            '22 127.0.0.1:22')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
+            '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG + '/HiddenServicePort[3]',
+            '443 127.0.0.1:443')
+
     aug.save()
 
     action_utils.service_restart('tor')
     _update_ports()
+
+    # wait until hidden service information is available
+    tries = 0
+    while not get_hidden_service()['enabled']:
+        tries += 1
+        if tries >= 12:
+            return
+
+        time.sleep(10)
 
 
 def subcommand_get_ports(_):

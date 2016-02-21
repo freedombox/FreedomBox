@@ -30,7 +30,7 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.modules.names import SERVICES
-from plinth.signals import domain_added
+from plinth.signals import domain_added, domain_removed
 
 
 version = 1
@@ -102,6 +102,23 @@ def setup(helper, old_version=None):
                 ['configure', '--apt-transport-tor', 'enable'])
     helper.call('post', socks_service.notify_enabled, None, True)
     helper.call('post', bridge_service.notify_enabled, None, True)
+    helper.call('post', update_hidden_service_domain)
+
+
+def update_hidden_service_domain(status=None):
+    """Update HS domain with Name Services module."""
+    if not status:
+        status = get_status()
+
+    domain_removed.send_robust(
+        sender='tor', domain_type='hiddenservice')
+
+    if status['enabled'] and status['is_running'] and \
+       status['hs_enabled'] and status['hs_hostname']:
+        domain_added.send_robust(
+            sender='tor', domain_type='hiddenservice',
+            name=status['hs_hostname'], description=_('Tor Hidden Service'),
+            services=status['hs_services'])
 
 
 def is_enabled():
