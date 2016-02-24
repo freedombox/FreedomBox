@@ -231,8 +231,9 @@ def configure_django():
         translated_language_codes = next(os.walk(locale_dir))[1]
         all_languages = dict(django.conf.global_settings.LANGUAGES)
         for code in translated_language_codes:
-            if code in all_languages:
-                languages.append((code, all_languages[code]))
+            lang_code = code.replace('_', '-')
+            if lang_code in all_languages:
+                languages.append((code, all_languages[lang_code]))
         languages = sorted(languages, key=lambda tup: tup[1])
 
     django.conf.settings.configure(
