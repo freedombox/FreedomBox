@@ -21,6 +21,7 @@ import django.conf
 from django.contrib.messages import constants as message_constants
 import django.core.management
 import django.core.wsgi
+from django.utils import translation
 import importlib
 import logging
 import os
@@ -224,18 +225,6 @@ def configure_django():
     if cfg.secure_proxy_ssl_header:
         secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
 
-    # Read translated languages from the 'locale' directory
-    languages = [('en', 'English')]
-    locale_dir = os.path.join(os.path.dirname(__file__), 'locale')
-    if os.path.isdir(locale_dir):
-        translated_language_codes = next(os.walk(locale_dir))[1]
-        all_languages = dict(django.conf.global_settings.LANGUAGES)
-        for code in translated_language_codes:
-            lang_code = code.replace('_', '-')
-            if lang_code in all_languages:
-                languages.append((code, all_languages[lang_code]))
-        languages = sorted(languages, key=lambda tup: tup[1])
-
     django.conf.settings.configure(
         ALLOWED_HOSTS=['*'],
         CACHES={'default':
@@ -245,7 +234,6 @@ def configure_django():
                     'NAME': cfg.store_file}},
         DEBUG=cfg.debug,
         INSTALLED_APPS=applications,
-        LANGUAGES=languages,
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='apps:index',

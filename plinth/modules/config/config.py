@@ -28,9 +28,11 @@ from django.template.response import TemplateResponse
 from django.utils import translation
 from django.utils.translation import ugettext as _, ugettext_lazy
 import logging
+import os
 import re
 import socket
 
+import plinth
 from plinth import actions
 from plinth import cfg
 from plinth.modules import firewall
@@ -76,6 +78,7 @@ class TrimmedCharField(forms.CharField):
             value = value.strip()
 
         return super(TrimmedCharField, self).clean(value)
+
 
 def domain_label_validator(domainname):
     """Validate domain name labels."""
@@ -123,10 +126,22 @@ class ConfigurationForm(forms.Form):
 
     language = forms.ChoiceField(
         label=ugettext_lazy('Language'),
-        help_text=\
-        ugettext_lazy('Language for this web administration interface'),
-        required=False,
-        choices=settings.LANGUAGES)
+        help_text=ugettext_lazy(
+            'Language for this web administration interface'),
+        required=False)
+
+    def __init__(self, *args, **kwargs):
+        """Set limited language choices."""
+        super().__init__(*args, **kwargs)
+        languages = []
+        for language_code, language_name in settings.LANGUAGES:
+            locale_code = translation.to_locale(language_code)
+            plinth_dir = os.path.dirname(plinth.__file__)
+            if language_code == 'en' or os.path.exists(
+                    os.path.join(plinth_dir, 'locale', locale_code)):
+                languages.append((language_code, language_name))
+
+        self.fields['language'].choices = languages
 
 
 def init():
