@@ -21,11 +21,28 @@ Plinth module for radicale.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.utils import format_lazy
 
-depends = ['plinth.modules.apps']
+
+version = 1
+
+depends = ['apps']
+
+title = _('Calendar and Addressbook (Radicale)')
+
+description = [
+    format_lazy(
+        _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
+          'and sharing of scheduling and contact data. To use Radicale, a '
+          '<a href="http://radicale.org/user_documentation/'
+          '#idcaldav-and-carddav-clients"> supported client application</a> '
+          'is needed. Radicale can be accessed by any user with a {box_name} '
+          'login.'), box_name=_(cfg.box_name)),
+]
 
 service = None
 
@@ -33,13 +50,19 @@ service = None
 def init():
     """Initialize the radicale module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Calendar and Addressbook (Radicale)'),
-                     'glyphicon-calendar', 'radicale:index', 375)
+    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index', 375)
 
     global service
     service = service_module.Service(
-        'radicale-plinth', _('Radicale CalDAV and CardDAV Server'),
-        is_external=True, enabled=is_enabled())
+        'radicale', title, ['http', 'https'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['radicale'])
+    helper.call('post', actions.superuser_run, 'radicale', ['setup'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():
@@ -56,6 +79,8 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
+    results.append(action_utils.diagnose_port_listening(5232, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(5232, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
         'https://{host}/radicale', extra_options=['--no-check-certificate']))
 

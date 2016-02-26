@@ -25,17 +25,9 @@ from django.utils.translation import ugettext as _
 
 from .forms import RadicaleForm
 from plinth import actions
-from plinth import package
 from plinth.modules import radicale
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    actions.superuser_run('radicale', ['setup'])
-    radicale.service.notify_enabled(None, True)
-
-
-@package.required(['radicale'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -52,7 +44,8 @@ def index(request):
         form = RadicaleForm(initial=status, prefix='radicale')
 
     return TemplateResponse(request, 'radicale.html',
-                            {'title': _('Calendar and Addressbook (Radicale)'),
+                            {'title': radicale.title,
+                             'description': radicale.description,
                              'status': status,
                              'form': form})
 
