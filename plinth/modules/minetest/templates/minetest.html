@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,19 +21,7 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-
-  <h2>{% trans "Block Sandbox (Minetest)" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-    Minetest is a multiplayer infinite-world block sandbox. This module
-    enables the Minetest server to be run on this {{ box_name }}, on the
-    default port (30000). To connect to the server, a
-    <a href="http://www.minetest.net/downloads/">Minetest client</a>
-    is needed.
-    {% endblocktrans %}
-  </p>
+{% block configuration %}
 
   <h3>{% trans "Status" %}</h3>
 

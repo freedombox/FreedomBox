@@ -24,22 +24,41 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.utils import format_lazy
 
-depends = ['plinth.modules.apps']
+
+version = 1
+
+depends = ['apps']
+
+title = _('Block Sandbox (Minetest)')
+
+description = [
+    format_lazy(
+        _('Minetest is a multiplayer infinite-world block sandbox. This '
+          'module enables the Minetest server to be run on this '
+          '{box_name}, on the default port (30000). To connect to the server, '
+          'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
+          'is needed.'), box_name=_(cfg.box_name)),
+]
 
 service = None
 
 
 def init():
-    """Initialize the minetest module."""
+    """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('Block Sandbox (Minetest)'), 'glyphicon-th-large',
-                     'minetest:index', 325)
+    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index', 325)
 
     global service
     service = service_module.Service(
-        'minetest-plinth', _('Minetest Server'),
-        is_external=True, enabled=is_enabled())
+        'minetest-plinth', title, is_external=True, enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['minetest-server'])
+    helper.call('post', service.notify_enabled, None, True)
 
 
 def is_enabled():

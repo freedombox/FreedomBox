@@ -25,16 +25,9 @@ from django.utils.translation import ugettext as _
 
 from .forms import MinetestForm
 from plinth import actions
-from plinth import package
 from plinth.modules import minetest
 
 
-def on_install():
-    """Notify that the service is now enabled."""
-    minetest.service.notify_enabled(None, True)
-
-
-@package.required(['minetest-server'], on_install=on_install)
 def index(request):
     """Serve configuration page."""
     status = get_status()
@@ -51,7 +44,8 @@ def index(request):
         form = MinetestForm(initial=status, prefix='minetest')
 
     return TemplateResponse(request, 'minetest.html',
-                            {'title': _('Block Sandbox (Minetest)'),
+                            {'title': minetest.title,
+                             'description': minetest.description,
                              'status': status,
                              'form': form})
 
