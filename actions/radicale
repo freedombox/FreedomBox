@@ -49,7 +49,7 @@ def subcommand_setup(_):
     aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
 
     aug.set('/files' + CONFIG_FILE + '/server/hosts',
-            '0.0.0.0:5232, [::]:5232')
+            '127.0.0.1:5232, [::1]:5232')
     aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
     aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
             '/radicale/%(user)s/caldav/')
