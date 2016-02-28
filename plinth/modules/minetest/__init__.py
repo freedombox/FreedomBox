@@ -21,6 +21,7 @@ Plinth module for minetest.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
@@ -61,6 +62,12 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Get the current service status."""
+    return {'enabled': is_enabled(),
+            'is_running': is_running()}
+
+
 def is_enabled():
     """Return whether the service is enabled."""
     return action_utils.service_is_enabled('minetest-server')
@@ -69,6 +76,13 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('minetest-server')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('minetest', [sub_command])
+    service.notify_enabled(None, should_enable)
 
 
 def diagnose():
