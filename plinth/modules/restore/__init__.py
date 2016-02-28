@@ -20,11 +20,12 @@ Plinth module to configure reStore.
 """
 
 from django.utils.translation import ugettext_lazy as _
+
+from plinth import actions
 from plinth import action_utils, cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
 
-service = None
 
 version = 1
 
@@ -45,6 +46,8 @@ description = [
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
 
+service = None
+
 
 def init():
     """Initialize the reStore module."""
@@ -62,6 +65,18 @@ def setup(helper, old_version=None):
     helper.install(['node-restore'])
 
 
+def get_status():
+    """Get the current settings."""
+    return {'enabled': is_enabled()}
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.service_is_enabled('node-restore')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('restore', [sub_command])
+    service.notify_enabled(None, should_enable)

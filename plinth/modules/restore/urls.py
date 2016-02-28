@@ -21,9 +21,10 @@ URLs for the reStore module.
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
-    url(r'^apps/restore/$', views.index, name='index'),
+    url(r'^apps/restore/$', ConfigurationView.as_view(module_name='restore'),
+        name='index'),
 ]
