@@ -20,74 +20,43 @@ Plinth module for configuring date and time
 """
 
 from django.contrib import messages
-from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 import logging
 
 from .forms import DateTimeForm
 from plinth import actions
+from plinth import views
 from plinth.modules import datetime
 
 logger = logging.getLogger(__name__)
 
 
-def index(request):
+class ConfigurationView(views.ConfigurationView):
     """Serve configuration page."""
-    status = get_status()
+    form_class = DateTimeForm
 
-    form = None
+    def apply_changes(self, old_status, new_status):
+        """Apply the changes."""
+        modified = False
 
-    if request.method == 'POST':
-        form = DateTimeForm(request.POST, prefix='datetime')
-        # pylint: disable=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = DateTimeForm(initial=status, prefix='datetime')
-    else:
-        form = DateTimeForm(initial=status, prefix='datetime')
+        if old_status['enabled'] != new_status['enabled']:
+            sub_command = 'enable' if new_status['enabled'] else 'disable'
+            modified = True
+            actions.superuser_run('datetime', [sub_command])
+            datetime.service.notify_enabled(None, new_status['enabled'])
+            messages.success(self.request, _('Configuration updated'))
 
-    return TemplateResponse(request, 'datetime.html',
-                            {'title': datetime.title,
-                             'description': datetime.description,
-                             'status': status,
-                             'form': form})
+        if old_status['time_zone'] != new_status['time_zone'] and \
+           new_status['time_zone'] != 'none':
+            modified = True
+            try:
+                actions.superuser_run(
+                    'timezone-change', [new_status['time_zone']])
+            except Exception as exception:
+                messages.error(
+                    self.request, _('Error setting time zone: {exception}')
+                    .format(exception=exception))
+            else:
+                messages.success(self.request, _('Time zone set'))
 
-
-def get_status():
-    """Get the current settings from server."""
-    return {'enabled': datetime.is_enabled(),
-            'is_running': datetime.is_running(),
-            'time_zone': get_current_time_zone()}
-
-
-def get_current_time_zone():
-    """Get current time zone."""
-    time_zone = open('/etc/timezone').read().rstrip()
-    return time_zone or 'none'
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes."""
-    modified = False
-
-    if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        modified = True
-        actions.superuser_run('datetime', [sub_command])
-        datetime.service.notify_enabled(None, new_status['enabled'])
-        messages.success(request, _('Configuration updated'))
-
-    if old_status['time_zone'] != new_status['time_zone'] and \
-       new_status['time_zone'] != 'none':
-        modified = True
-        try:
-            actions.superuser_run('timezone-change', [new_status['time_zone']])
-        except Exception as exception:
-            messages.error(request, _('Error setting time zone: {exception}')
-                           .format(exception=exception))
-        else:
-            messages.success(request, _('Time zone set'))
-
-    if not modified:
-        messages.info(request, _('Setting unchanged'))
+        return modified
