@@ -27,6 +27,7 @@ import subprocess
 
 from .forms import ConfigureForm
 from plinth import actions
+from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import upgrades
 
@@ -39,26 +40,43 @@ LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 LOCK_FILE = '/var/log/dpkg/lock'
 
 
-def index(request):
-    """Serve the configuration form."""
-    status = get_status()
+class ConfigurationView(views.ConfigurationView):
+    """Serve configuration page."""
+    form_class = ConfigureForm
 
-    form = None
+    def get_context_data(self, **kwargs):
+        """Return the context data for rendering the template view."""
+        if 'subsubmenu' not in kwargs:
+            kwargs['subsubmenu'] = subsubmenu
 
-    if request.method == 'POST':
-        form = ConfigureForm(request.POST, prefix='upgrades')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = ConfigureForm(initial=status, prefix='upgrades')
-    else:
-        form = ConfigureForm(initial=status, prefix='upgrades')
+        return super().get_context_data(**kwargs)
 
-    return TemplateResponse(request, 'upgrades_configure.html',
-                            {'title': upgrades.title,
-                             'description': upgrades.description,
-                             'form': form,
-                             'subsubmenu': subsubmenu})
+    def get_template_names(self):
+        """Return the list of template names for the view."""
+        return ['upgrades_configure.html']
+
+    def apply_changes(self, old_status, new_status):
+        """Apply the form changes."""
+        if old_status['auto_upgrades_enabled'] \
+           == new_status['auto_upgrades_enabled']:
+            return False
+
+        try:
+            upgrades.enable(new_status['auto_upgrades_enabled'])
+        except ActionError as exception:
+            error = exception.args[2]
+            messages.error(
+                self.request,
+                _('Error when configuring unattended-upgrades: {error}')
+                .format(error=error))
+            return True
+
+        if new_status['auto_upgrades_enabled']:
+            messages.success(self.request, _('Automatic upgrades enabled'))
+        else:
+            messages.success(self.request, _('Automatic upgrades disabled'))
+
+        return True
 
 
 def is_package_manager_busy():
@@ -97,36 +115,3 @@ def upgrade(request):
                              'subsubmenu': subsubmenu,
                              'is_busy': is_busy,
                              'log': get_log()})
-
-
-def get_status():
-    """Return the current status."""
-    output = actions.run('upgrades', ['check-auto'])
-    return {'auto_upgrades_enabled': 'True' in output.split()}
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the form changes."""
-    if old_status['auto_upgrades_enabled'] \
-       == new_status['auto_upgrades_enabled']:
-        messages.info(request, _('Setting unchanged'))
-        return
-
-    if new_status['auto_upgrades_enabled']:
-        option = 'enable-auto'
-    else:
-        option = 'disable-auto'
-
-    try:
-        actions.superuser_run('upgrades', [option])
-    except ActionError as exception:
-        error = exception.args[2]
-        messages.error(
-            request, _('Error when configuring unattended-upgrades: {error}')
-            .format(error=error))
-        return
-
-    if option == 'enable-auto':
-        messages.success(request, _('Automatic upgrades enabled'))
-    else:
-        messages.success(request, _('Automatic upgrades disabled'))
