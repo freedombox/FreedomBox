@@ -21,8 +21,10 @@ URLs for the XMPP module
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
+
 
 urlpatterns = [
-    url(r'^apps/xmpp/$', views.index, name='index'),
+    url(r'^apps/xmpp/$', ConfigurationView.as_view(module_name='xmpp'),
+        name='index'),
 ]

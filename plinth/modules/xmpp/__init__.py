@@ -79,6 +79,13 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Get the current settings."""
+    return {'enabled': is_enabled(),
+            'is_running': is_running(),
+            'domainname': get_domainname()}
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('ejabberd') and
@@ -94,6 +101,13 @@ def get_domainname():
     """Return the domainname"""
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('xmpp', [sub_command])
+    service.notify_enabled(None, should_enable)
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
