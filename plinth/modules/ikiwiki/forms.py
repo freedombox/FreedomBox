@@ -23,13 +23,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 
-class IkiwikiForm(forms.Form):
-    """ikiwiki configuration form."""
-    enabled = forms.BooleanField(
-        label=_('Enable ikiwiki'),
-        required=False)
-
-
 class IkiwikiCreateForm(forms.Form):
     """Form to create a wiki or blog."""
     site_type = forms.ChoiceField(

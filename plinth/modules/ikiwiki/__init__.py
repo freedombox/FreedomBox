@@ -65,9 +65,21 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Get the current setting."""
+    return {'enabled': is_enabled()}
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('ikiwiki-plinth')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('ikiwiki', [sub_command])
+    service.notify_enabled(None, should_enable)
 
 
 def diagnose():

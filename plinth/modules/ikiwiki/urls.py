@@ -25,7 +25,8 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^apps/ikiwiki/$', views.index, name='index'),
+    url(r'^apps/ikiwiki/$',
+        views.ConfigurationView.as_view(module_name='ikiwiki'), name='index'),
     url(r'^apps/ikiwiki/manage/$', views.manage, name='manage'),
     url(r'^apps/ikiwiki/(?P<name>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),

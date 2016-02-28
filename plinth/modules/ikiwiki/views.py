@@ -25,9 +25,9 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from .forms import IkiwikiForm, IkiwikiCreateForm
+from .forms import IkiwikiCreateForm
 from plinth import actions
-from plinth.modules import ikiwiki
+from plinth import views
 
 
 subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
@@ -38,48 +38,14 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
                'text': ugettext_lazy('Create')}]
 
 
-def index(request):
+class ConfigurationView(views.ConfigurationView):
     """Serve configuration page."""
-    status = get_status()
+    def get_context_data(self, **kwargs):
+        """Return the context data for rendering the template view."""
+        if 'subsubmenu' not in kwargs:
+            kwargs['subsubmenu'] = subsubmenu
 
-    form = None
-
-    if request.method == 'POST':
-        form = IkiwikiForm(request.POST, prefix='ikiwiki')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = IkiwikiForm(initial=status, prefix='ikiwiki')
-    else:
-        form = IkiwikiForm(initial=status, prefix='ikiwiki')
-
-    return TemplateResponse(request, 'ikiwiki.html',
-                            {'title': ikiwiki.title,
-                             'description': ikiwiki.description,
-                             'status': status,
-                             'form': form,
-                             'subsubmenu': subsubmenu})
-
-
-def get_status():
-    """Get the current setting."""
-    return {'enabled': ikiwiki.is_enabled()}
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes."""
-    modified = False
-
-    if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('ikiwiki', [sub_command])
-        ikiwiki.service.notify_enabled(None, new_status['enabled'])
-        modified = True
-
-    if modified:
-        messages.success(request, _('Configuration updated'))
-    else:
-        messages.info(request, _('Setting unchanged'))
+        return super().get_context_data(**kwargs)
 
 
 def manage(request):
