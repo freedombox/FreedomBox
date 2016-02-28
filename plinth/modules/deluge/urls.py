@@ -21,9 +21,10 @@ URLs for the Deluge module.
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
-    url(r'^apps/deluge/$', views.index, name='index'),
+    url(r'^apps/deluge/$', ConfigurationView.as_view(module_name='deluge'),
+        name='index'),
 ]
