@@ -20,7 +20,6 @@ Help module for Plinth.
 """
 
 import os
-from gettext import gettext as _
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy

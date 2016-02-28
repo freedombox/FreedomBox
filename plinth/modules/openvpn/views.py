@@ -116,7 +116,7 @@ def _collect_setup_result(request):
     return_code = setup_process.poll()
 
     # Setup process is not complete yet
-    if return_code == None:
+    if return_code is None:
         return
 
     if not return_code:
