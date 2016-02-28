@@ -21,6 +21,7 @@ Plinth module to configure Transmission server
 
 from django.utils.translation import ugettext_lazy as _
 import json
+import socket
 
 from plinth import actions
 from plinth import action_utils
@@ -41,6 +42,8 @@ description = [
 ]
 
 service = None
+
+TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 
 def init():
@@ -67,6 +70,19 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Get the current settings from Transmission server."""
+    configuration = open(TRANSMISSION_CONFIG, 'r').read()
+    status = json.loads(configuration)
+    status = {key.translate(str.maketrans({'-': '_'})): value
+              for key, value in status.items()}
+    status['enabled'] = is_enabled()
+    status['is_running'] = is_running()
+    status['hostname'] = socket.gethostname()
+
+    return status
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('transmission-daemon') and
@@ -76,6 +92,13 @@ def is_enabled():
 def is_running():
     """Return whether the service is running."""
     return action_utils.service_is_running('transmission-daemon')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('transmission', [sub_command])
+    service.notify_enabled(None, should_enable)
 
 
 def diagnose():
