@@ -29,7 +29,7 @@ from django.utils.translation import ugettext as _
 import time
 
 from . import forms
-from . import module_loader
+import plinth
 
 
 def index(request):
@@ -57,7 +57,7 @@ class ConfigurationView(FormView):
 
     def get_module(self):
         """Return the module associated with the view."""
-        return module_loader.loaded_modules[self.get_module_name()]
+        return plinth.module_loader.loaded_modules[self.get_module_name()]
 
     def get_initial(self):
         """Return the status of the module to fill in the form."""
