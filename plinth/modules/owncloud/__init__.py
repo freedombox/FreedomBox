@@ -69,10 +69,25 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Return the current status"""
+    return {'enabled': is_enabled()}
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     output = actions.run('owncloud-setup', ['status'])
     return 'enable' in output.split()
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    option = 'enable' if should_enable else 'noenable'
+    actions.superuser_run('owncloud-setup', [option])
+
+    # Send a signal to other modules that the service is
+    # enabled/disabled
+    service.notify_enabled(None, should_enable)
 
 
 def diagnose():
