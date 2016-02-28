@@ -68,9 +68,20 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'roundcube', ['setup'])
 
 
+def get_status():
+    """Get the current status."""
+    return {'enabled': is_enabled()}
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('roundcube')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('roundcube', [sub_command])
 
 
 def diagnose():
