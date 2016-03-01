@@ -172,7 +172,8 @@ def get_status_from_wifi_access_point(device, ssid):
         return status
 
     for access_point in device.get_access_points():
-        if access_point.get_ssid().get_data() == ssid:
+        if access_point and access_point.get_ssid() and \
+           access_point.get_ssid().get_data() == ssid:
             status['strength'] = access_point.get_strength()
             frequency = access_point.get_frequency()
             status['channel'] = _get_wifi_channel_from_frequency(frequency)
