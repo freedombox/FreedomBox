@@ -21,9 +21,10 @@ URLs for the ownCloud module
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
-    url(r'^apps/owncloud/$', views.index, name='index'),
+    url(r'^apps/owncloud/$', ConfigurationView.as_view(module_name='owncloud'),
+        name='index'),
 ]

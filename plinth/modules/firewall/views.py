@@ -26,7 +26,7 @@ import plinth.service as service_module
 
 
 def index(request):
-    """Serve introcution page"""
+    """Serve introduction page"""
     if not firewall.get_enabled_status():
         return TemplateResponse(request, 'firewall.html',
                                 {'title': firewall.title,

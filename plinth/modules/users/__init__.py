@@ -67,5 +67,3 @@ def _diagnose_ldap_entry(search_item):
 
     return [_('Check LDAP entry "{search_item}"')
             .format(search_item=search_item), result]
-
-

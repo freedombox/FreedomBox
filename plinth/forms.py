@@ -8,23 +8,23 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 """
-Forms for configuring Shaarli.
+Common forms for use by modules.
 """
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 
-class ShaarliForm(forms.Form):
-    """Shaarli configuration form."""
+class ConfigurationForm(forms.Form):
+    """Generic configuration form for simple modules."""
     enabled = forms.BooleanField(
-        label=_('Enable Shaarli'),
+        label=_('Enable application'),
         required=False)

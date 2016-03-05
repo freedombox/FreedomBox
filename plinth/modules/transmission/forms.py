@@ -22,13 +22,11 @@ Plinth module for configuring Transmission.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.forms import ConfigurationForm
 
-class TransmissionForm(forms.Form):  # pylint: disable=W0232
+
+class TransmissionForm(ConfigurationForm):  # pylint: disable=W0232
     """Transmission configuration form"""
-    enabled = forms.BooleanField(
-        label=_('Enable Transmission daemon'),
-        required=False)
-
     download_dir = forms.CharField(
         label=_('Download directory'),
         help_text=_('Directory where downloads are saved.  If you change the \

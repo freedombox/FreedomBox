@@ -23,8 +23,8 @@ from plinth import cfg
 
 def init():
     """Initailize the apps module"""
-    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt', 'apps:index',
-                              80)
+    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt',
+                              'apps:index', 80)
 
 
 def index(request):

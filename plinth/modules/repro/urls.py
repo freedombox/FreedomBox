@@ -21,9 +21,10 @@ URLs for the repro module.
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
-    url(r'^apps/repro/$', views.index, name='index'),
+    url(r'^apps/repro/$', ConfigurationView.as_view(module_name='repro'),
+        name='index'),
 ]

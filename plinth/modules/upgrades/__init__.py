@@ -50,3 +50,20 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['unattended-upgrades'])
     helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+
+
+def get_status():
+    """Return the current status."""
+    return {'auto_upgrades_enabled': 'is_enabled'}
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    output = actions.run('upgrades', ['check-auto'])
+    return 'True' in output.split()
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    option = 'enable-auto' if should_enable else 'disable-auto'
+    actions.superuser_run('upgrades', [option])

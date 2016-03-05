@@ -59,6 +59,19 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
+def get_status():
+    """Get the current settings from server."""
+    return {'enabled': is_enabled(),
+            'is_running': is_running(),
+            'time_zone': get_current_time_zone()}
+
+
+def get_current_time_zone():
+    """Get current time zone."""
+    time_zone = open('/etc/timezone').read().rstrip()
+    return time_zone or 'none'
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.service_is_enabled('ntp')

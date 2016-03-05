@@ -108,7 +108,7 @@ def _collect_config_result(request):
     return_code = config_process.poll()
 
     # Config process is not complete yet
-    if return_code == None:
+    if return_code is None:
         return
 
     status = tor.get_status()

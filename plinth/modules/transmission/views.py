@@ -20,81 +20,37 @@ Plinth module for configuring Transmission Server
 """
 
 from django.contrib import messages
-from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 import json
 import logging
-import socket
 
 from .forms import TransmissionForm
 from plinth import actions
-from plinth.modules import transmission
+from plinth import views
 
 logger = logging.getLogger(__name__)
 
-TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
-
-def index(request):
+class ConfigurationView(views.ConfigurationView):
     """Serve configuration page."""
-    status = get_status()
+    form_class = TransmissionForm
 
-    form = None
+    def apply_changes(self, old_status, new_status):
+        """Apply the changes submitted in the form."""
+        modified = super().apply_changes(old_status, new_status)
 
-    if request.method == 'POST':
-        form = TransmissionForm(request.POST, prefix='transmission')
-        # pylint: disable=E1101
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = TransmissionForm(initial=status, prefix='transmission')
-    else:
-        form = TransmissionForm(initial=status, prefix='transmission')
+        if old_status['download_dir'] != new_status['download_dir'] or \
+           old_status['rpc_username'] != new_status['rpc_username'] or \
+           old_status['rpc_password'] != new_status['rpc_password']:
+            new_configuration = {
+                'download-dir': new_status['download_dir'],
+                'rpc-username': new_status['rpc_username'],
+                'rpc-password': new_status['rpc_password'],
+            }
 
-    return TemplateResponse(request, 'transmission.html',
-                            {'title': transmission.title,
-                             'description': transmission.description,
-                             'status': status,
-                             'form': form})
+            actions.superuser_run('transmission', ['merge-configuration'],
+                                  input=json.dumps(new_configuration).encode())
+            messages.success(self.request, _('Configuration updated'))
+            return True
 
-
-def get_status():
-    """Get the current settings from Transmission server."""
-    configuration = open(TRANSMISSION_CONFIG, 'r').read()
-    status = json.loads(configuration)
-    status = {key.translate(str.maketrans({'-': '_'})): value
-              for key, value in status.items()}
-    status['enabled'] = transmission.is_enabled()
-    status['is_running'] = transmission.is_running()
-    status['hostname'] = socket.gethostname()
-
-    return status
-
-
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes"""
-    modified = False
-
-    if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('transmission', [sub_command])
-        transmission.service.notify_enabled(None, new_status['enabled'])
-        modified = True
-
-    if old_status['download_dir'] != new_status['download_dir'] or \
-       old_status['rpc_username'] != new_status['rpc_username'] or \
-       old_status['rpc_password'] != new_status['rpc_password']:
-        new_configuration = {
-            'download-dir': new_status['download_dir'],
-            'rpc-username': new_status['rpc_username'],
-            'rpc-password': new_status['rpc_password'],
-        }
-
-        actions.superuser_run('transmission', ['merge-configuration'],
-                              input=json.dumps(new_configuration).encode())
-        modified = True
-
-    if modified:
-        messages.success(request, _('Configuration updated'))
-    else:
-        messages.info(request, _('Setting unchanged'))
+        return modified

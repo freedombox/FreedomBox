@@ -226,7 +226,7 @@ def _apply_changes(request, old_status, new_status):
             request.session[translation.LANGUAGE_SESSION_KEY] = language
         except Exception as exception:
             messages.error(request, _('Error setting language: {exception}')
-                            .format(exception=exception))
+                           .format(exception=exception))
         else:
             messages.success(request, _('Language changed'))
 

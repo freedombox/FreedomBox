@@ -21,9 +21,10 @@ URLs for the radicale module.
 
 from django.conf.urls import url
 
-from . import views
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
-    url(r'^apps/radicale/$', views.index, name='index'),
+    url(r'^apps/radicale/$', ConfigurationView.as_view(module_name='radicale'),
+        name='index'),
 ]
