@@ -28,32 +28,32 @@
   <table class="table table-bordered table-condensed table-striped">
     <tbody>
       <tr>
-	<td>{% trans "OpenPGP Fingerprint" %}</td>
-	<td>{{ key.pgp_fingerprint }}</td>
+        <td>{% trans "OpenPGP Fingerprint" %}</td>
+        <td>{{ key.pgp_fingerprint }}</td>
       </tr>
       <tr>
-	<td>{% trans "OpenPGP Key ID" %}</td>
-	<td>{{ key.pub }}</td>
+        <td>{% trans "OpenPGP Key ID" %}</td>
+        <td>{{ key.pub }}</td>
       </tr>
       <tr>
-	<td>{% trans "OpenPGP User ID" %}</td>
-	<td>{{ key.uid }}</td>
+        <td>{% trans "OpenPGP User ID" %}</td>
+        <td>{{ key.uid }}</td>
       </tr>
       <tr>
-	<td>{% trans "Key Generation Date" %}</td>
-	<td>{{ key.date }}</td>
+        <td>{% trans "Key Generation Date" %}</td>
+        <td>{{ key.date }}</td>
       </tr>
       <tr>
-	<td>{% trans "SSH Key Type" %}</td>
-	<td>{{ key.ssh_key_type }}</td>
+        <td>{% trans "SSH Key Type" %}</td>
+        <td>{{ key.ssh_key_type }}</td>
       </tr>
       <tr>
-	<td>{% trans "SSH Key Size" %}</td>
-	<td>{{ key.ssh_key_size }}</td>
+        <td>{% trans "SSH Key Size" %}</td>
+        <td>{{ key.ssh_key_size }}</td>
       </tr>
       <tr>
-	<td>{% trans "SSH Fingerprint" %}</td>
-	<td>{{ key.ssh_fingerprint }}</td>
+        <td>{% trans "SSH Fingerprint" %}</td>
+        <td>{{ key.ssh_fingerprint }}</td>
       </tr>
     </tbody>
   </table>
@@ -65,12 +65,14 @@
     {% endblocktrans %}
   </p>
   <pre>
-    {% trans "# download the key" %}
-    gpg --recv-key {{ key.pgp_fingerprint }}
-    {% trans "# sign the key" %}
-    gpg --sign-key {{ key.pgp_fingerprint }}
-    {% trans "# send the key back to the keyservers" %}
-    gpg --send-key {{ key.pgp_fingerprint }}
-  </pre>
+# {% trans "Download the key" %}
+gpg --recv-key {{ key.pgp_fingerprint }}
+
+# {% trans "Sign the key" %}
+gpg --sign-key {{ key.pgp_fingerprint }}
+
+# {% trans "Send the key back to the keyservers" %}
+gpg --send-key {{ key.pgp_fingerprint }}
+</pre>
 
 {% endblock %}
