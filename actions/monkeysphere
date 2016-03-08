@@ -21,8 +21,10 @@ Configuration helper for monkeysphere.
 """
 
 import argparse
+import augeas
 import json
 import os
+import re
 import subprocess
 
 
@@ -32,24 +34,16 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     host_show_keys = subparsers.add_parser(
-        'host-show-keys', help='Show host key fingerprints')
+        'host-show-keys', help='Show imported/importable keys')
     host_show_keys.add_argument(
-        'key_ids', nargs='*', help='Optional list of KEYIDs')
+        'key_id', nargs='?', help='Optional KEYID to retrieve details for')
 
-    host_import_ssh_key = subparsers.add_parser(
-        'host-import-ssh-key', help='Import host SSH key')
-    host_import_ssh_key.add_argument(
-        'domain', help='Fully-qualified domain name')
-
-    host_import_snakeoil_key = subparsers.add_parser(
-        'host-import-snakeoil-key', help='Import host snakeoil key')
-    host_import_snakeoil_key.add_argument(
-        'domain', help='Fully-qualified domain name')
-
-    host_import_letsencrypt_key = subparsers.add_parser(
-        'host-import-letsencrypt-key', help="Import Let's Encrypt key")
-    host_import_letsencrypt_key.add_argument(
-        'domain', help='Fully-qualified domain name')
+    host_import_key = subparsers.add_parser(
+        'host-import-key', help='Import a key into monkeysphere')
+    host_import_key.add_argument(
+        'ssh_fingerprint', help='SSH fingerprint of the key to import')
+    host_import_key.add_argument(
+        'domains', nargs='*', help='List of available domains')
 
     host_publish_key = subparsers.add_parser(
         'host-publish-key', help='Push host key to keyserver')
@@ -59,16 +53,75 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_host_show_keys(arguments):
-    """Show host key fingerprints."""
-    try:
+def get_ssh_keys():
+    """Return all SSH keys."""
+    keys = {}
+
+    key_files = ['/etc/ssh/ssh_host_rsa_key']
+    for key_file in key_files:
         output = subprocess.check_output(
-            ['monkeysphere-host', 'show-keys'] + arguments.key_ids,
+            ['ssh-keygen', '-l', '-E', 'MD5', '-f', key_file])
+        fingerprint = output.decode().split()[1].lstrip('MD5:')
+        keys[fingerprint] = {'ssh_fingerprint': fingerprint,
+                             'service': 'ssh',
+                             'key_file': key_file,
+                             'available_domains': ['*']}
+
+    return keys
+
+
+def get_pem_ssh_fingerprint(pem_file):
+    """Return the SSH fingerprint of a PEM file."""
+    public_key = subprocess.check_output(
+        ['openssl', 'rsa', '-in', pem_file, '-pubout'],
+        stderr=subprocess.DEVNULL)
+    ssh_public_key = subprocess.check_output(
+        ['ssh-keygen', '-i', '-m', 'PKCS8', '-f', '/dev/stdin'],
+        input=public_key)
+    fingerprint = subprocess.check_output(
+        ['ssh-keygen', '-l', '-E', 'md5', '-f', '/dev/stdin'],
+        input=ssh_public_key)
+
+    return fingerprint.decode().split()[1].lstrip('MD5:')
+
+
+def get_https_keys():
+    """Return all HTTPS keys."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
+    aug.set('/augeas/load/Httpd/incl[last() + 1]',
+            '/etc/apache2/sites-available/*')
+    aug.load()
+
+    keys = {}
+    path = '/files/etc/apache2/sites-available//VirtualHost'
+    for match in aug.match(path):
+        host = {'available_domains': ['*'], 'service': 'https'}
+        for directive in aug.match(match + '/directive'):
+            name = aug.get(directive)
+            if name == 'ServerName':
+                host['available_domains'] = [aug.get(directive + '/arg')]
+            elif name in ('GnuTLSKeyFile', 'SSLCertificateKeyFile'):
+                host['key_file'] = aug.get(directive + '/arg')
+
+        if 'key_file' in host:
+            host['ssh_fingerprint'] = get_pem_ssh_fingerprint(host['key_file'])
+            keys[host['ssh_fingerprint']] = host
+
+    return keys
+
+
+def get_monkeysphere_keys(key_id=None):
+    """Return the list of keys imported into monkeysphere."""
+    try:
+        key_ids = [] if not key_id else [key_id]
+        output = subprocess.check_output(
+            ['monkeysphere-host', 'show-keys'] + key_ids,
             stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         # no keys available
-        print(json.dumps({'keys': []}))
-        return
+        return {}
 
     # parse output
     keys = [dict()]
@@ -79,9 +132,15 @@ def subcommand_host_show_keys(arguments):
             keys[-1]['pub'] = data[0]
             keys[-1]['date'] = data[1]
         elif line.startswith('uid'):
-            keys[-1]['uid'] = line.lstrip('uid').strip()
+            uid = line.lstrip('uid').strip()
+            keys[-1].setdefault('uids', []).append(uid)
+            matches = re.match('([a-zA-Z]*)://(.*)(:\d*)?', uid)
+            keys[-1]['service'] = matches.group(1)
+            keys[-1].setdefault('imported_domains', []) \
+                    .append(matches.group(2))
         elif line.startswith('OpenPGP fingerprint:'):
-            keys[-1]['pgp_fingerprint'] = line.lstrip('Open PGP fingerprint:')
+            keys[-1]['openpgp_fingerprint'] = \
+                line.lstrip('OpenPGP fingerprint:')
         elif line.startswith('ssh fingerprint:'):
             data = line.lstrip('ssh fingerprint:').split()
             keys[-1]['ssh_key_size'] = data[0]
@@ -90,52 +149,60 @@ def subcommand_host_show_keys(arguments):
         elif line == '':
             keys.append(dict())
 
-    print(json.dumps({'keys': keys}))
+    return {key['ssh_fingerprint']: key for key in keys}
 
 
-def subcommand_host_import_ssh_key(arguments):
+def get_merged_keys(key_id=None):
+    """Return merged list of system and monkeysphere keys."""
+    keys = get_monkeysphere_keys(key_id)
+
+    system_keys = list(get_ssh_keys().items()) + list(get_https_keys().items())
+    for ssh_fingerprint, key in system_keys:
+        if key_id and ssh_fingerprint not in keys:
+            continue
+
+        if ssh_fingerprint in keys:
+            keys[ssh_fingerprint].update({
+                'available_domains': key['available_domains'],
+                'key_file': key['key_file']})
+        else:
+            keys[ssh_fingerprint] = key
+
+    return keys
+
+
+def subcommand_host_show_keys(arguments):
+    """Show host key fingerprints."""
+    print(json.dumps({'keys': get_merged_keys(arguments.key_id)}))
+
+
+def subcommand_host_import_key(arguments, second_run=False):
     """Import host SSH key."""
-    output = subprocess.check_output(
-        ['monkeysphere-host', 'import-key',
-         '/etc/ssh/ssh_host_rsa_key', 'ssh://' + arguments.domain])
-    print(output.decode())
+    keys = get_merged_keys()
+    if arguments.ssh_fingerprint not in keys:
+        raise Exception('Unknown SSH fingerprint')
 
+    key = keys[arguments.ssh_fingerprint]
+    if '*' in key['available_domains']:
+        key['available_domains'] = arguments.domains
 
-def subcommand_host_import_snakeoil_key(arguments):
-    """Import host snakeoil key."""
-    proc = subprocess.Popen(
-        ['monkeysphere-host', 'import-key',
-         '/etc/ssl/private/ssl-cert-snakeoil.key',
-         'https://' + arguments.domain],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env=dict(
-            os.environ,
-            MONKEYSPHERE_PROMPT='false'))
-    output, error = proc.communicate()
-    output, error = output.decode(), error.decode()
-    if proc.returncode != 0:
-        raise Exception(output, error)
+    if 'openpgp_fingerprint' not in key and not second_run:
+        env = dict(os.environ, MONKEYSPHERE_PROMPT='false')
+        subprocess.check_call(
+            ['monkeysphere-host', 'import-key',
+             key['key_file'], key['service'] + '://' +
+             key['available_domains'][0]], env=env)
+        subcommand_host_import_key(arguments, second_run=True)
+    else:
+        for domain in key['available_domains']:
+            if domain in key['imported_domains']:
+                continue
 
-    print(output)
-
-
-def subcommand_host_import_letsencrypt_key(arguments):
-    """Import Let's Encrypt key."""
-    proc = subprocess.Popen(
-        ['monkeysphere-host', 'import-key',
-         os.path.join('/etc/letsencrypt/live',
-                      arguments.domain, 'privkey.pem'),
-         'https://' + arguments.domain],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env=dict(
-            os.environ,
-            MONKEYSPHERE_PROMPT='false'))
-    output, error = proc.communicate()
-    output, error = output.decode(), error.decode()
-    if proc.returncode != 0:
-        raise Exception(output, error)
-
-    print(output)
+            env = dict(os.environ, MONKEYSPHERE_PROMPT='false')
+            subprocess.check_call(
+                ['monkeysphere-host', 'add-servicename',
+                 key['service'] + '://' + domain, key['openpgp_fingerprint']],
+                env=env)
 
 
 def subcommand_host_publish_key(arguments):

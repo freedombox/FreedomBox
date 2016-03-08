@@ -47,58 +47,27 @@ def index(request):
 
 
 @require_POST
-def generate(request, domain):
-    """Generate OpenPGP key for SSH service."""
-    valid_domain = any((domain in domains
-                        for domains in names.domains.values()))
-    if valid_domain:
-        try:
-            actions.superuser_run(
-                'monkeysphere', ['host-import-ssh-key', domain])
-            messages.success(request, _('Generated OpenPGP key.'))
-        except actions.ActionError as exception:
-            messages.error(request, str(exception))
-
-    return redirect(reverse_lazy('monkeysphere:index'))
-
-
-@require_POST
-def generate_snakeoil(request, domain):
-    """Generate OpenPGP key for snakeoil certificate."""
-    valid_domain = any((domain in domains
-                        for domains in names.domains.values()))
-    if valid_domain:
-        try:
-            actions.superuser_run(
-                'monkeysphere', ['host-import-snakeoil-key', domain])
-            messages.success(request, _('Generated OpenPGP key.'))
-        except actions.ActionError as exception:
-            messages.error(request, str(exception))
-
-    return redirect(reverse_lazy('monkeysphere:index'))
-
-
-@require_POST
-def generate_letsencrypt(request, domain):
-    """Generate OpenPGP key for Let's Encrypt certificate."""
-    valid_domain = any((domain in domains
-                        for domains in names.domains.values()))
-    if valid_domain:
-        try:
-            actions.superuser_run(
-                'monkeysphere', ['host-import-letsencrypt-key', domain])
-            messages.success(request, _('Generated OpenPGP key.'))
-        except actions.ActionError as exception:
-            messages.error(request, str(exception))
+def import_key(request, ssh_fingerprint):
+    """Import a key into monkeysphere."""
+    available_domains = [domain
+                         for domains in names.domains.values()
+                         for domain in domains]
+    try:
+        actions.superuser_run(
+            'monkeysphere', ['host-import-key', ssh_fingerprint] +
+            available_domains)
+        messages.success(request, _('Imported key.'))
+    except actions.ActionError as exception:
+        messages.error(request, str(exception))
 
     return redirect(reverse_lazy('monkeysphere:index'))
 
 
 def details(request, fingerprint):
     """Get details for an OpenPGP key."""
-    key = get_key(fingerprint)
     return TemplateResponse(request, 'monkeysphere_details.html',
-                            {'title': _('Monkeysphere'), 'key': key})
+                            {'title': monkeysphere.title,
+                             'key': get_key(fingerprint)})
 
 
 @require_POST
@@ -126,61 +95,36 @@ def cancel(request):
 
 def get_status():
     """Get the current status."""
-    output = actions.superuser_run('monkeysphere', ['host-show-keys'])
-    keys = {}
-    https_keys = {}
-    for key in json.loads(output)['keys']:
-        if key['uid'].startswith('ssh'):
-            key['name'] = key['uid'].replace('ssh://', '')
-            keys[key['name']] = key
-        elif key['uid'].startswith('https'):
-            key['name'] = key['uid'].replace('https://', '')
-            https_keys[key['name']] = key
+    return {'keys': get_keys()}
 
-    domains = []
-    for domains_of_a_type in names.domains.values():
-        for domain in domains_of_a_type:
-            domains.append({
-                'name': domain,
-                'key': keys.get(domain),
-            })
 
-    # XXX: Currently, there's no way to tell if keys in monkeysphere are for
-    # snakeoil or letsencrypt certs. If snakeoil cert is imported for a domain,
-    # then later that domain is activated for letsencrypt, the snakeoil cert
-    # will be shown in the letsencrypt table.
-    output = actions.superuser_run('letsencrypt', ['get-status'])
-    letsencrypt_domains_all = json.loads(output)['domains']
-    letsencrypt_domains = []
-    snakeoil_domains = []
-    for domains_of_a_type in names.domains.values():
-        for domain in domains_of_a_type:
-            if domain in letsencrypt_domains_all and \
-               letsencrypt_domains_all[domain]['certificate_available']:
-                letsencrypt_domains.append({
-                    'name': domain,
-                    'key': https_keys.get(domain),
-                })
-            else:
-                snakeoil_domains.append({
-                    'name': domain,
-                    'key': https_keys.get(domain),
-                })
+def get_keys(fingerprint=None):
+    """Get keys."""
+    fingerprint = [fingerprint] if fingerprint else []
+    output = actions.superuser_run('monkeysphere',
+                                   ['host-show-keys'] + fingerprint)
+    keys = json.loads(output)['keys']
 
-    return {'domains': domains,
-            'snakeoil_domains': snakeoil_domains,
-            'letsencrypt_domains': letsencrypt_domains}
+    domains = [domain
+               for domains_of_a_type in names.domains.values()
+               for domain in domains_of_a_type]
+    for key in keys.values():
+        if '*' in key['available_domains']:
+            key['available_domains'] = set(domains)
+        else:
+            key['available_domains'] = set(key['available_domains'])
+
+        if 'imported_domains' in key:
+            key['imported_domains'] = set(key['imported_domains']) \
+                .intersection(key['available_domains'])
+
+    return keys
 
 
 def get_key(fingerprint):
     """Get key by fingerprint."""
-    output = actions.superuser_run('monkeysphere',
-                                   ['host-show-keys', fingerprint])
-    if output:
-        keys = json.loads(output)['keys']
-        return keys[0]
-
-    return None
+    keys = get_keys(fingerprint)
+    return list(keys.values())[0] if len(keys) else None
 
 
 def _collect_publish_result(request):

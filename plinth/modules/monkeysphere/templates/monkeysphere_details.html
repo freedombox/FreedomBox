@@ -29,18 +29,18 @@
     <tbody>
       <tr>
         <td>{% trans "OpenPGP Fingerprint" %}</td>
-        <td>{{ key.pgp_fingerprint }}</td>
+        <td>{{ key.openpgp_fingerprint }}</td>
       </tr>
       <tr>
         <td>{% trans "OpenPGP Key ID" %}</td>
         <td>{{ key.pub }}</td>
       </tr>
       <tr>
-        <td>{% trans "OpenPGP User ID" %}</td>
-        <td>{{ key.uid }}</td>
+        <td>{% trans "OpenPGP User IDs" %}</td>
+        <td>{{ key.uids|join:', ' }}</td>
       </tr>
       <tr>
-        <td>{% trans "Key Generation Date" %}</td>
+        <td>{% trans "Key Import Date" %}</td>
         <td>{{ key.date }}</td>
       </tr>
       <tr>
@@ -55,6 +55,30 @@
         <td>{% trans "SSH Fingerprint" %}</td>
         <td>{{ key.ssh_fingerprint }}</td>
       </tr>
+      <tr>
+        <td>{% trans "Service" %}</td>
+        <td>
+          {% if key.service == 'ssh' %}
+            {% trans "Secure Shell" %}
+          {% elif key.service == 'https' %}
+            {% trans "Web Server" %}
+          {% else %}
+            {% trans "Other" %}
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td>{% trans "Key File" %}</td>
+        <td>{{ key.key_file }}</td>
+      </tr>
+      <tr>
+        <td>{% trans "Available Domains" %}</td>
+        <td>{{ key.available_domains|join:', ' }}</td>
+      </tr>
+      <tr>
+        <td>{% trans "Added Domains" %}</td>
+        <td>{{ key.imported_domains|join:', ' }}</td>
+      </tr>
     </tbody>
   </table>
 
@@ -66,13 +90,13 @@
   </p>
   <pre>
 # {% trans "Download the key" %}
-gpg --recv-key {{ key.pgp_fingerprint }}
+gpg --recv-key {{ key.openpgp_fingerprint }}
 
 # {% trans "Sign the key" %}
-gpg --sign-key {{ key.pgp_fingerprint }}
+gpg --sign-key {{ key.openpgp_fingerprint }}
 
 # {% trans "Send the key back to the keyservers" %}
-gpg --send-key {{ key.pgp_fingerprint }}
+gpg --send-key {{ key.openpgp_fingerprint }}
 </pre>
 
 {% endblock %}
