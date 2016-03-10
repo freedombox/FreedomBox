@@ -16,13 +16,15 @@
 #
 
 """
-URLs for the ttrss module
+URLs for the ttrss module.
 """
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+
+from plinth.views import ConfigurationView
 
 
-urlpatterns = patterns( 
-    'plinth.modules.ttrss.views',
-    url(r'^apps/ttrss/$', 'index', name='index'),
-    )
+urlpatterns = [
+    url(r'^apps/ttrss/$', ConfigurationView.as_view(module_name='ttrss'),
+        name='index'),
+]

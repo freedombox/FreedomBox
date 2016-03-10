@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-
-{% load bootstrap %}
-
+{% extends "app.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,24 +18,23 @@
 #
 {% endcomment %}
 
-{% block content %}
+{% load bootstrap %}
+{% load i18n %}
 
-<h2>News Feed Reader (Tiny Tiny RSS)</h2>
+{% block configuration %}
 
-<p>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator,
-  designed to allow you to read news from any location, while feeling
-  as close to a real desktop application as possible.</p>
+  {% include "diagnostics_button.html" with module="ttrss" %}
 
-{% include "diagnostics_button.html" with module="ttrss" %}
 
-<h3>Configuration</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
-<form class="form" method="post">
-  {% csrf_token %}
+  <form class="form" method="post">
+    {% csrf_token %}
 
-  {{ form|bootstrap }}
+    {{ form|bootstrap }}
 
-  <input type="submit" class="btn btn-primary" value="Update setup"/>
-</form>
+    <input type="submit" class="btn btn-primary"
+	   value="{% trans "Update setup" %}"/>
+  </form>
 
 {% endblock %}
