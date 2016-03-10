@@ -58,18 +58,25 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['tt-rss'])
+    helper.install(['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php5-pgsql'])
+    helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 
 
 def get_status():
     """Get the current settings."""
-    return {'enabled': is_enabled()}
+    return {'enabled': is_enabled(),
+            'is_running': is_running()}
 
 
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('50-tt-rss')
+
+
+def is_running():
+    """Return whether the service is running."""
+    return action_utils.service_is_running('tt-rss')
 
 
 def enable(should_enable):

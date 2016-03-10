@@ -23,6 +23,18 @@
 
 {% block configuration %}
 
+  <h3>{% trans "Status" %}</h3>
+
+  <p class="running-status-parent">
+    {% if status.is_running %}
+      <span class="running-status active"></span>
+      {% trans "Tiny Tiny RSS feed update service is running" %}
+    {% else %}
+      <span class="running-status inactive"></span>
+      {% trans "Tiny Tiny RSS feed update service is not running" %}
+    {% endif %}
+  </p>
+
   {% include "diagnostics_button.html" with module="ttrss" %}
 
 
