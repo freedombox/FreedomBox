@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-31 22:19+0530\n"
-"PO-Revision-Date: 2016-03-02 20:06+0000\n"
+"PO-Revision-Date: 2016-03-10 01:29+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@openmailbox.org>\n"
 "Language-Team: Spanish "
 "<https://hosted.weblate.org/projects/freedombox/plinth/es/>\n"
@@ -45,7 +45,7 @@ msgid "Connect to {host}:{port}"
 msgstr "Conectar a {host}:{port}"
 
 #: plinth/action_utils.py:324
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "No se pudo conectar a {host}:{port}"
 
@@ -55,9 +55,8 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/modules/apps/apps.py:26
-#, fuzzy
 msgid "Apps"
-msgstr "Apps"
+msgstr "Aplicaciones"
 
 #: plinth/modules/apps/apps.py:32 plinth/templates/base.html.py:93
 msgid "Applications"
@@ -79,7 +78,6 @@ msgstr ""
 "aplicación y decidir si la instala."
 
 #: plinth/modules/apps/templates/apps.html:36
-#, fuzzy
 msgid ""
 "This box can be your photo sharing site, your instant messaging site, your "
 "social networking site, your news site.  Remember web portals?  We can be "
@@ -231,7 +229,7 @@ msgstr ""
 
 #: plinth/modules/config/config.py:105
 msgid "Invalid hostname"
-msgstr ""
+msgstr "Nombre de equipo no válido"
 
 #: plinth/modules/config/config.py:108 plinth/modules/config/config.py:153
 #: plinth/modules/config/config.py:265
@@ -275,14 +273,13 @@ msgid "General Configuration"
 msgstr "Configuración general"
 
 #: plinth/modules/config/config.py:193
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Error setting hostname: {exception}"
-msgstr "Error al definir el hostname: {exception}"
+msgstr "Error al definir el nombre del equipo: {exception}"
 
 #: plinth/modules/config/config.py:196
-#, fuzzy
 msgid "Hostname set"
-msgstr "Asignar hostname"
+msgstr "Asignar nombre de equipo"
 
 #: plinth/modules/config/config.py:202
 #, python-brace-format
@@ -371,8 +368,9 @@ msgid "BitTorrent (Deluge)"
 msgstr "BitTorrent (Deluge)"
 
 #: plinth/modules/deluge/__init__.py:43
+#, fuzzy
 msgid "Deluge BitTorrent"
-msgstr ""
+msgstr "Deluge BitTorrent"
 
 #: plinth/modules/deluge/forms.py:29
 msgid "Enable Deluge"
@@ -384,7 +382,7 @@ msgstr "Cliente web de BitTorren (Deluge)"
 
 #: plinth/modules/deluge/templates/deluge.html:28
 msgid "Deluge is a BitTorrent client that features a Web UI."
-msgstr ""
+msgstr "Deluge es un cliente BitTorrent con interfaz web."
 
 #: plinth/modules/deluge/templates/deluge.html:31
 msgid ""
@@ -457,9 +455,8 @@ msgid "This module does not support diagnostics"
 msgstr "Este módulo no soporta diagnósticos"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:27
-#, fuzzy
 msgid "Test"
-msgstr "Test"
+msgstr "Prueba"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:28
 msgid "Result"
@@ -591,7 +588,7 @@ msgstr "Mostrar clave"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:161
 msgid "IP check URL"
-msgstr ""
+msgstr "URL para comprobación de IP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:187
 msgid "Please provide update URL or a GnuDIP Server"
@@ -690,6 +687,8 @@ msgid ""
 "NAT type not detected yet, if you do not provide a \"IP check URL\" we will "
 "not detect a NAT type."
 msgstr ""
+"Tipo de NAT no detectado aún. Si no ha facilitado una \"URL para "
+"comprobación de IP\" no se detectará el tipo de NAT."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
 msgid "Direct connection to the Internet."
@@ -703,6 +702,11 @@ msgid ""
 "changes will not be detected).  In case the WAN IP changes, it may take up "
 "to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
+"Detrás del NAT. El servicio de DNS dinámico consultará los cambios a través "
+"de la \"URL para comprobación de IP\" (se necesita el valor de \"URL para "
+"comprobación de IP\", de otro modo no se detectarán los cambios de IP). En "
+"caso de que cambie la IP WAN, se necesitarán %(timer)s minutos para "
+"actualizar su DNS."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
@@ -745,35 +749,35 @@ msgstr ""
 
 #: plinth/modules/firewall/templates/firewall.html:56
 msgid "Service/Port"
-msgstr ""
+msgstr "Servicio/Puerto"
 
 #: plinth/modules/firewall/templates/firewall.html:67
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 #: plinth/modules/names/templates/names.html:51
 msgid "Enabled"
-msgstr ""
+msgstr "Activado"
 
 #: plinth/modules/firewall/templates/firewall.html:70
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:93
 #: plinth/modules/names/templates/names.html:53
 msgid "Disabled"
-msgstr ""
+msgstr "Desactivado"
 
 #: plinth/modules/firewall/templates/firewall.html:81
 msgid "Permitted"
-msgstr ""
+msgstr "Permitido"
 
 #: plinth/modules/firewall/templates/firewall.html:84
 msgid "Permitted (internal only)"
-msgstr ""
+msgstr "Permitido (solo interno)"
 
 #: plinth/modules/firewall/templates/firewall.html:87
 msgid "Permitted (external only)"
-msgstr ""
+msgstr "Permitido (solo externo)"
 
 #: plinth/modules/firewall/templates/firewall.html:90
 msgid "Blocked"
-msgstr ""
+msgstr "Bloqueado"
 
 #: plinth/modules/firewall/templates/firewall.html:103
 msgid ""
@@ -781,28 +785,31 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
+"La funcionamiento del firewall es automático. Cuando usted activa un "
+"servicio este se autoriza en el firewall, y cuando lo desactiva también se "
+"desactiva en el firewall."
 
 #: plinth/modules/first_boot/forms.py:48 plinth/modules/users/forms.py:70
 msgid "Creating LDAP user failed."
-msgstr ""
+msgstr "Falló la creación de usuario LDAP."
 
 #: plinth/modules/first_boot/forms.py:56
 msgid "Failed to add new user to admin group."
-msgstr ""
+msgstr "Falló al añadir usuario nuevo al grupo admin."
 
 #: plinth/modules/first_boot/forms.py:78
 msgid "User account created, you are now logged in"
-msgstr ""
+msgstr "Creada cuenta de usuario, ya está usted conectado"
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
 #: plinth/templates/base.html:102
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: plinth/modules/first_boot/templates/firstboot_state0.html:45
 msgid "Start Setup"
-msgstr ""
+msgstr "Iniciar configuración"
 
 #: plinth/modules/first_boot/templates/firstboot_state0.html:49
 #, python-format
@@ -810,10 +817,12 @@ msgid ""
 "To complete the setup of your %(box_name)s, please provide some basic "
 "information."
 msgstr ""
+"Para completar la configuración de su %(box_name)s, por favor facilite "
+"alguna información básica."
 
 #: plinth/modules/first_boot/templates/firstboot_state1.html:41
 msgid "Administrator Account"
-msgstr ""
+msgstr "Cuenta de Administrador"
 
 #: plinth/modules/first_boot/templates/firstboot_state1.html:44
 msgid ""
@@ -821,6 +830,9 @@ msgid ""
 "can be changed later. This user will be granted administrative privileges. "
 "Other users can be added later."
 msgstr ""
+"Elija un nombre de usuario y una clave para acceder. La clave puede "
+"cambiarla más adelante. El usuario disfrutará de privilegios "
+"administrativos. Más adelante se pueden añadir otros usuarios."
 
 #: plinth/modules/first_boot/templates/firstboot_state1.html:57
 msgid "Box it up!"
@@ -828,7 +840,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:29
 msgid "Setup Complete!"
-msgstr ""
+msgstr "¡Configuración completada!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:32
 #, python-format
@@ -837,54 +849,59 @@ msgid ""
 "you need some applications.  They will be installed the first time you "
 "access them."
 msgstr ""
+"La configuración de su %(box_name)s ya está completa. Para que su %(box_name)"
+"s sea funcional necesitará algunas aplicaciones, que serán instaladas la "
+"primera vez que acceda a ellas."
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:41
 msgid "Go to Apps"
-msgstr ""
+msgstr "Ir a Aplicaciones"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:44
 msgid "Current Network Configuration"
-msgstr ""
+msgstr "Configuración actual de la red"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:47
 msgid ""
 "You should check the network setup and modify it if necessary. Do not forget "
 "to change the default Wi-Fi passwords!"
 msgstr ""
+"Debería comprobar la configuración de la red y modificarla si hace falta. ¡"
+"No olvide cambiar la clave Wi-Fi!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:57
 msgid "Go to Networks"
-msgstr ""
+msgstr "Ir a redes"
 
 #: plinth/modules/first_boot/views.py:60
 msgid "Setup Complete"
-msgstr ""
+msgstr "Configuración completada"
 
 #: plinth/modules/help/help.py:34
 msgid "Documentation"
-msgstr ""
+msgstr "Documentación"
 
 #: plinth/modules/help/help.py:36
 msgid "Where to Get Help"
-msgstr ""
+msgstr "Dónde obtener ayuda"
 
 #: plinth/modules/help/help.py:38
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: plinth/modules/help/help.py:48
 msgid "Documentation and FAQ"
-msgstr ""
+msgstr "Documentación y Preguntas frecuentes"
 
 #: plinth/modules/help/help.py:55
 #, python-brace-format
 msgid "About {box_name}"
-msgstr ""
+msgstr "Acerca de {box_name}"
 
 #: plinth/modules/help/help.py:73
 #, python-brace-format
 msgid "{box_name} Manual"
-msgstr ""
+msgstr "Manual de {box_name}"
 
 #: plinth/modules/help/templates/help_about.html:30
 #, python-format
@@ -897,6 +914,13 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
+"%(box_name)s es un proyecto comunitario para diseñar, desarrollar y promover "
+"el uso de servidores personales basados en software libre para la "
+"comunicación privada personal. Es un dispositivo de red diseñado para "
+"conectarse a Internet bajo condiciones de protección de la privacidad y "
+"seguridad. Dispone de aplicaciones como blog, wiki, red social, email, web, "
+"proxy y servidor Tor, todo ello sobre un equipo que puede reemplazar su "
+"router Wi-Fi de forma que sus datos permanezcan con usted."
 
 #: plinth/modules/help/templates/help_about.html:43
 msgid ""
@@ -907,6 +931,13 @@ msgid ""
 "giving back power to the users over their networks and machines, we are "
 "returning the Internet to its intended peer-to-peer architecture."
 msgstr ""
+"Estamos en un mundo en el que el uso que hacemos de la red está mediado por "
+"aquellos que no siempre tienen las mejores intenciones. Con software que no "
+"requiere de un servicio central podemos recuperar el control y la "
+"privacidad. Conservando nuestros datos en casa conseguimos protección legal "
+"sobre ellos. Al devolverle a los usuarios el control sobre sus redes y "
+"equipos tratamos de que Internet vuelva a su arquitectura peer-to-peer "
+"original."
 
 #: plinth/modules/help/templates/help_about.html:56
 #, python-format
@@ -915,6 +946,9 @@ msgid ""
 "services; %(box_name)s aims to bring them all together in a convenient "
 "package."
 msgstr ""
+"Hay una serie de distintos proyectos trabajando en un futuro de servicios "
+"distribuidos. %(box_name)s trata de ofrecerlos juntos y convenientemente "
+"empaquetados."
 
 #: plinth/modules/help/templates/help_about.html:64
 #, python-format
@@ -922,20 +956,22 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
+"Para ampliar información sobre el proyecto %(box_name)s, consulte la <a href="
+"\"https://wiki.debian.org/FreedomBox\">Wiki de %(box_name)s</a>."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
-msgstr ""
+msgstr "Aprenda más&raquo;"
 
 #: plinth/modules/help/templates/help_about.html:76
 #, python-format
 msgid "You are running Plinth version %(version)s."
-msgstr ""
+msgstr "Está ejecutando Plinth versión %(version)s."
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
 msgid "%(box_name)s Setup"
-msgstr ""
+msgstr "Configuración de %(box_name)s"
 
 #: plinth/modules/help/templates/help_index.html:29
 #, python-format
@@ -943,6 +979,8 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
+"El <a href=\"%(manual_url)s\">Manual de %(box_name)s</a> es el mejor punto "
+"de partida para conocer su %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:36
 #, python-format
@@ -950,6 +988,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
+"La <a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">Wiki del "
+"proyecto %(box_name)s</a> contiene información adicional."
 
 #: plinth/modules/help/templates/help_index.html:43
 #, python-format
@@ -959,6 +999,10 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
+"Para obtener ayuda de la comunidad %(box_name)s, las preguntas deben "
+"enviarse a la <a href=\"https://lists.alioth.debian.org/mailman/listinfo"
+"/freedombox-discuss\">Lista de correo</a>. Esta lista también archiva "
+"información sobre problemas y posibles soluciones de otros usuarios."
 
 #: plinth/modules/help/templates/help_index.html:53
 #, python-format
@@ -968,143 +1012,151 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
+"Muchos de los participantes y usuarios del proyecto %(box_name)s están "
+"disponibles en la red IRC  irc.oftc.net. Únase y solicite ayuda en el canal  "
+"<a href=\"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt="
+"1\">#freedombox</a> con la interfaz IRC web."
 
 #: plinth/modules/ikiwiki/__init__.py:38
 msgid "Wiki and Blog (ikiwiki)"
-msgstr ""
+msgstr "Wiki y Blog (ikiwiki)"
 
 #: plinth/modules/ikiwiki/__init__.py:43
 msgid "ikiwiki wikis and blogs"
-msgstr ""
+msgstr "ikiwiki wikis y blogs"
 
 #: plinth/modules/ikiwiki/forms.py:29
 msgid "Enable ikiwiki"
-msgstr ""
+msgstr "Activar ikiwiki"
 
 #: plinth/modules/ikiwiki/forms.py:36
 #: plinth/modules/networks/templates/connection_show.html:98
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: plinth/modules/ikiwiki/forms.py:39
 #: plinth/modules/networks/templates/connection_show.html:78
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: plinth/modules/ikiwiki/forms.py:41
 msgid "Admin Account Name"
-msgstr ""
+msgstr "Nombre de la cuenta de administrador"
 
 #: plinth/modules/ikiwiki/forms.py:44
 msgid "Admin Account Password"
-msgstr ""
+msgstr "Clave de la cuenta de administrador"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki.html:27
 msgid ""
 "When enabled, the blogs and wikis will be available from <a href=\"/ikiwiki"
 "\">/ikiwiki</a>."
 msgstr ""
+"Cuando está activada los blogs y wikis están disponibles en <a href=\"/"
+"ikiwiki\">/ikiwiki</a>."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
-msgstr ""
+msgstr "Borrar Wiki o Blog <em>%(name)s</em>"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:33
 msgid ""
 "This action will remove all the posts, pages and comments including revision "
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
+"Esta acción eliminará todas las entradas, páginas y comentarios incluido el "
+"historial. ¿Borrar este wiki o blog definitivamente?"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
 msgid "Delete %(name)s"
-msgstr ""
+msgstr "Borrar %(name)s"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:47
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:60
 #: plinth/modules/networks/templates/connections_delete.html:41
 #: plinth/modules/users/templates/users_delete.html:41
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:41
 msgid "No wikis or blogs available."
-msgstr ""
+msgstr "No hay wikis o blogs disponibles."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:45
 msgid "Create a Wiki or Blog"
-msgstr ""
+msgstr "Crear un Wiki o Blog"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:55
 #, python-format
 msgid "Delete site %(site)s"
-msgstr ""
+msgstr "Borrar sitio %(site)s"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_manage.html:61
 #, python-format
 msgid "Go to site %(site)s"
-msgstr ""
+msgstr "Ir al sitio %(site)s"
 
 #: plinth/modules/ikiwiki/views.py:38
 msgid "Manage"
-msgstr ""
+msgstr "Gestionar"
 
 #: plinth/modules/ikiwiki/views.py:40
 msgid "Create"
-msgstr ""
+msgstr "Crear"
 
 #: plinth/modules/ikiwiki/views.py:73
 msgid "Wiki and Blog"
-msgstr ""
+msgstr "Wiki y Blog"
 
 #: plinth/modules/ikiwiki/views.py:106
 msgid "Manage Wikis and Blogs"
-msgstr ""
+msgstr "Gestionar Wikis y Blogs"
 
 #: plinth/modules/ikiwiki/views.py:132
 msgid "Create Wiki or Blog"
-msgstr ""
+msgstr "Crear Wiki o Blog"
 
 #: plinth/modules/ikiwiki/views.py:145
 #, python-brace-format
 msgid "Created wiki {name}."
-msgstr ""
+msgstr "Wiki {name} creado."
 
 #: plinth/modules/ikiwiki/views.py:147
 #, python-brace-format
 msgid "Could not create wiki: {error}"
-msgstr ""
+msgstr "No se pudo crear el wiki: {error}"
 
 #: plinth/modules/ikiwiki/views.py:159
 #, python-brace-format
 msgid "Created blog {name}."
-msgstr ""
+msgstr "Blog {name} creado."
 
 #: plinth/modules/ikiwiki/views.py:161
 #, python-brace-format
 msgid "Could not create blog: {error}"
-msgstr ""
+msgstr "No se pudo crear el blog: {error}"
 
 #: plinth/modules/ikiwiki/views.py:174
 #, python-brace-format
 msgid "{name} deleted."
-msgstr ""
+msgstr "{name} borrado."
 
 #: plinth/modules/ikiwiki/views.py:176
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
-msgstr ""
+msgstr "No se pudo borrar {name}: {error}"
 
 #: plinth/modules/ikiwiki/views.py:182
 msgid "Delete Wiki or Blog"
-msgstr ""
+msgstr "Borrar Wiki o Blog"
 
 #: plinth/modules/letsencrypt/__init__.py:43
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/letsencrypt/views.py:45
 msgid "Certificates (Let's Encrypt)"
-msgstr ""
+msgstr "Certificados (Let's Encrypt)"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:41
 #, python-format
@@ -1115,6 +1167,11 @@ msgid ""
 "domain.  It does so by proving itself to be the owner of a domain to Let's "
 "Encrypt, a certficate authority (CA)."
 msgstr ""
+"Un certificado digital permite a los usuarios de un servicio web verificar "
+"la identidad del servicio y comunicar con él de forma segura. %(box_name)s "
+"puede obtener y configurar automáticamente un certificado digital para cada "
+"dominio disponible. Lo hace mostrándose a sí mismo como propietario de un "
+"dominio a Let's Encrypt, autoridad de certificación (CA)."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:52
 msgid ""
@@ -1123,71 +1180,77 @@ msgid ""
 "read and agree with the <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
+"Let's Encrypt es una autoridad de certificación libre, automatizada y "
+"abierta, puesta a disposición y por el beneficio público por el ISRG ("
+"Internet Security Research Group). Por favor lea y acepte el <a href=\""
+"https://letsencrypt.org/repository/\">Acuerdo del suscriptor de Let's "
+"Encrypt</a> antes de usar este servicio."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:66
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:70
 msgid "Domain"
-msgstr ""
+msgstr "Dominio"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:67
 msgid "Certificate Status"
-msgstr ""
+msgstr "Estado del certificado"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:68
 msgid "Website Security"
-msgstr ""
+msgstr "Seguridad del sitio"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:72
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:79
 #, python-format
 msgid "Expires on %(expiry_date)s"
-msgstr ""
+msgstr "Expira el %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:85
 msgid "No certficate"
-msgstr ""
+msgstr "No certificado"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:102
 msgid "Revoke"
-msgstr ""
+msgstr "Revocar"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:108
 msgid "Re-obtain"
-msgstr ""
+msgstr "Volver a obtener"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:115
 msgid "Obtain"
-msgstr ""
+msgstr "Obtener"
 
 #: plinth/modules/letsencrypt/views.py:55
 #, python-brace-format
 msgid "Certificate successfully revoked for domain {domain}"
-msgstr ""
+msgstr "El certificado para el dominio {domain} ha sido revocado con éxito"
 
 #: plinth/modules/letsencrypt/views.py:60
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Falló la revocación del certificado para el dominio {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:72
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
-msgstr ""
+msgstr "Se ha obtenido con éxito el certificado para el dominio {domain}"
 
 #: plinth/modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Falló al obtener el certificado para el dominio {domain}: {error}"
 
 #: plinth/modules/monkeysphere/__init__.py:32
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:35
 #: plinth/modules/monkeysphere/views.py:44
+#, fuzzy
 msgid "Monkeysphere"
-msgstr ""
+msgstr "Monkeysphere"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:38
 msgid ""
@@ -1199,39 +1262,47 @@ msgid ""
 "key signing process.  See the <a href=\"http://web.monkeysphere.info/getting-"
 "started-ssh/\"> Monkeysphere SSH documentation</a> for more details."
 msgstr ""
+"Con Monkeysphere puede crear una clave PGP para cada dominio con acceso SSH "
+"configurado. Puede subir la clave PGP pública a un servidor de claves PGP, "
+"de esta forma los usuarios que accedan por SSH a su servidor podrán "
+"verificar la conexión. Para que los usuarios confíen en la clave, al menos "
+"una persona (generalmente el propietario de la máquina) debe firmarla usando "
+"el proceso de firmado habitual de PGP. Consulte <a href=\""
+"http://web.monkeysphere.info/getting-started-ssh/\">Documentación de "
+"Monkeysphere SSH</a> para más detalles."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:53
 msgid "Publishing key to keyserver..."
-msgstr ""
+msgstr "Publicando la clave en el servidor de claves..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:71
 msgid "GPG Fingerprint"
-msgstr ""
+msgstr "Huella digital GPG"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:83
 #: plinth/modules/names/views.py:45
 msgid "Not Available"
-msgstr ""
+msgstr "No disponible"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:93
 msgid "Generate PGP Key"
-msgstr ""
+msgstr "Generar clave PGP"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:101
 msgid "Publish Key"
-msgstr ""
+msgstr "Publicar clave"
 
 #: plinth/modules/monkeysphere/views.py:58
 msgid "Generated PGP key."
-msgstr ""
+msgstr "Clave PGP generada."
 
 #: plinth/modules/monkeysphere/views.py:83
 msgid "Cancelled key publishing."
-msgstr ""
+msgstr "Publicación de clave cancelada."
 
 #: plinth/modules/monkeysphere/views.py:120
 msgid "Published key to keyserver."
-msgstr ""
+msgstr "Publicada la clave en el servidor de claves."
 
 #: plinth/modules/monkeysphere/views.py:122
 msgid "Error occurred while publishing key."
