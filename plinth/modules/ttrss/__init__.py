@@ -16,25 +16,68 @@
 #
 
 """
-Plinth module to configure Tiny Tiny RSS
+Plinth module to configure Tiny Tiny RSS.
 """
 
-from gettext import gettext as _
+from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
+from plinth import actions
 from plinth import action_utils
+from plinth import cfg
+from plinth import service as service_module
+
+
+version = 1
+
+depends = ['apps']
+
+title = _('News Feed Reader (Tiny Tiny RSS)')
+
+description = [
+    _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
+      'designed to allow reading news from any location, while feeling as '
+      'close to a real desktop application as possible.'),
+
+    _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-rss">'
+      '/tt-rss</a> path on the web server.'),
+]
+
+service = None
+
 
 def init():
-    """Intialize  Tiny Tiny RSS module."""
+    """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(_('News Feed Reader (Tiny Tiny RSS)'), 'glyphicon-envelope',
-                     'ttrss:index', 600)
+    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index', 780)
 
-depends = ['plinth.modules.apps']
+    global service
+    service = service_module.Service(
+        'tt-rss', title, ['http', 'https'], is_external=True,
+        enabled=is_enabled())
+
+
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(['tt-rss'])
+    helper.call('post', service.notify_enabled, None, True)
+
+
+def get_status():
+    """Get the current settings."""
+    return {'enabled': is_enabled()}
+
 
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('50-tt-rss')
+
+
+def enable(should_enable):
+    """Enable/disable the module."""
+    sub_command = 'enable' if should_enable else 'disable'
+    actions.superuser_run('ttrss', [sub_command])
+    service.notify_enabled(None, should_enable)
+
 
 def diagnose():
     """Run diagnostics and return the results."""

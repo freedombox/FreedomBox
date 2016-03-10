@@ -18,8 +18,9 @@
 #
 
 """
-Configuration helper for News Feed Reader (Tiny Tiny RSS)
+Configuration helper for Tiny Tiny RSS.
 """
+
 import argparse
 
 from plinth import action_utils
@@ -30,8 +31,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable Tiny Tiny RSS')
-    subparsers.add_parser('disable', help='Disable Tiny Tiny RSS')
+    subparsers.add_parser('enable', help='Enable Tiny Tiny RSS site')
+    subparsers.add_parser('disable', help='Disable Tiny Tiny RSS site')
 
     return parser.parse_args()
 
