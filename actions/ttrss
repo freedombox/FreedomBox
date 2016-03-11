@@ -51,22 +51,24 @@ def subcommand_setup(_):
     for match in aug.match('/files' + CONFIG_FILE + '/define'):
         if aug.get(match) == 'SELF_URL_PATH':
             aug.set(match + '/value', "'http://localhost/tt-rss/'")
+        elif aug.get(match) == 'PLUGINS':
+            aug.set(match + '/value', "'auth_remote, note'")
 
     aug.save()
 
     action_utils.service_restart('tt-rss')
-    action_utils.webserver_enable('50-tt-rss')
+    action_utils.webserver_enable('tt-rss-plinth')
 
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('tt-rss')
-    action_utils.webserver_enable('50-tt-rss')
+    action_utils.webserver_enable('tt-rss-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('50-tt-rss')
+    action_utils.webserver_disable('tt-rss-plinth')
     action_utils.service_disable('tt-rss')
 
 
