@@ -1,0 +1,97 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Tiny Tiny RSS.
+"""
+
+import argparse
+import augeas
+
+from plinth import action_utils
+
+CONFIG_FILE = '/etc/tt-rss/config.php'
+DEFAULT_FILE = '/etc/default/tt-rss'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Setup Tiny Tiny RSS configuration')
+    subparsers.add_parser('enable', help='Enable Tiny Tiny RSS site')
+    subparsers.add_parser('disable', help='Disable Tiny Tiny RSS site')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup Tiny Tiny RSS configuration."""
+    aug = load_augeas()
+
+    aug.set('/files' + DEFAULT_FILE + '/DISABLED', '0')
+
+    for match in aug.match('/files' + CONFIG_FILE + '/define'):
+        if aug.get(match) == 'SELF_URL_PATH':
+            aug.set(match + '/value', "'http://localhost/tt-rss/'")
+        elif aug.get(match) == 'PLUGINS':
+            aug.set(match + '/value', "'auth_remote, note'")
+
+    aug.save()
+
+    action_utils.service_restart('tt-rss')
+    action_utils.webserver_enable('tt-rss-plinth')
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.service_enable('tt-rss')
+    action_utils.webserver_enable('tt-rss-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('tt-rss-plinth')
+    action_utils.service_disable('tt-rss')
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+    aug.set('/augeas/load/Phpvars/lens', 'Phpvars.lns')
+    aug.set('/augeas/load/Phpvars/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
