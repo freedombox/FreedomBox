@@ -65,7 +65,7 @@ class ConfigureForm(forms.Form):
                       'see the update URL templates of the example providers.')
     help_services = \
         ugettext_lazy('Please choose an update protocol according to your '
-                      'provider. If your provider does not support the GnudIP '
+                      'provider. If your provider does not support the GnuDIP '
                       'protocol or your provider is not listed you may use the '
                       'update URL of your provider.')
     help_server = \
@@ -73,7 +73,7 @@ class ConfigureForm(forms.Form):
                       '"https://example.com/") but only the hostname of the '
                       'GnuDIP server (like "example.com").')
     help_domain = format_lazy(
-        ugettext_lazy('The public domain name you want use to reach your '
+        ugettext_lazy('The public domain name you want to use to reach your '
                       '{box_name}.'), box_name=ugettext_lazy(cfg.box_name))
     help_disable_ssl = \
         ugettext_lazy('Use this option if your provider uses self signed '
@@ -83,18 +83,18 @@ class ConfigureForm(forms.Form):
                       'will be used for HTTP basic authentication.')
     help_secret = \
         ugettext_lazy('Leave this field empty if you want to keep your '
-                      'previous configured password.')
+                      'current password.')
     help_ip_url = format_lazy(
         ugettext_lazy('Optional Value. If your {box_name} is not connected '
                       'directly to the Internet (i.e. connected to a NAT '
-                      'router) this URL is used to figure out the real '
-                      'Internet IP. The URL should simply return the IP where '
+                      'router) this URL is used to determine the real '
+                      'IP address. The URL should simply return the IP where '
                       'the client comes from (example: '
                       'http://myip.datasystems24.de).'),
         box_name=ugettext_lazy(cfg.box_name))
     help_user = \
-        ugettext_lazy('You should have been requested to select a username '
-                      'when you created the account.')
+        ugettext_lazy('The username that was used when the account was '
+                      'created.')
 
     """ToDo: sync this list with the html template file"""
     provider_choices = (
@@ -107,12 +107,12 @@ class ConfigureForm(forms.Form):
     enabled = forms.BooleanField(label=ugettext_lazy('Enable Dynamic DNS'),
                                  required=False)
 
-    service_type = forms.ChoiceField(label=ugettext_lazy('Service type'),
+    service_type = forms.ChoiceField(label=ugettext_lazy('Service Type'),
                                      help_text=help_services,
                                      choices=provider_choices)
 
     dynamicdns_server = TrimmedCharField(
-        label=ugettext_lazy('GnudIP Server Address'),
+        label=ugettext_lazy('GnuDIP Server Address'),
         required=False,
         help_text=help_server,
         validators=[
@@ -150,7 +150,7 @@ class ConfigureForm(forms.Form):
                                 required=False)
 
     dynamicdns_ipurl = TrimmedCharField(
-        label=ugettext_lazy('IP check URL'),
+        label=ugettext_lazy('IP Check URL'),
         required=False,
         help_text=help_ip_url,
         validators=[
@@ -176,7 +176,7 @@ class ConfigureForm(forms.Form):
             # Check if gnudip server or update URL is filled
             if not dynamicdns_update_url and not dynamicdns_server:
                 raise forms.ValidationError(
-                    _('Please provide update URL or a GnuDIP Server'))
+                    _('Please provide update URL or a GnuDIP server'))
 
             if dynamicdns_server and not dynamicdns_user:
                 raise forms.ValidationError(_('Please provide GnuDIP username'))
@@ -223,10 +223,10 @@ def statuspage(request):
         logger.info('Not behind a NAT')
 
     if nat_unchecked:
-        logger.info('Did not check if we are behind a NAT')
+        logger.info('Did not check if behind a NAT')
 
     return TemplateResponse(request, 'dynamicdns_status.html',
-                            {'title': _('Status of Dynamic DNS'),
+                            {'title': _('Dynamic DNS Status'),
                              'no_nat': no_nat,
                              'nat_unchecked': nat_unchecked,
                              'timer': timer,
