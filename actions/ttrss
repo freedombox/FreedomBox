@@ -23,6 +23,7 @@ Configuration helper for Tiny Tiny RSS.
 
 import argparse
 import augeas
+import subprocess
 
 from plinth import action_utils
 
@@ -35,11 +36,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    subparsers.add_parser('pre-setup', help='Perform pre-setup operations')
     subparsers.add_parser('setup', help='Setup Tiny Tiny RSS configuration')
     subparsers.add_parser('enable', help='Enable Tiny Tiny RSS site')
     subparsers.add_parser('disable', help='Disable Tiny Tiny RSS site')
 
     return parser.parse_args()
+
+
+def subcommand_pre_setup(_):
+    """Preseed debconf values before packages are installed."""
+    subprocess.check_output(
+        ['debconf-set-selections'],
+        input=b'tt-rss tt-rss/database-type string pgsql')
 
 
 def subcommand_setup(_):

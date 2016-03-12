@@ -16,7 +16,7 @@
 #
 
 """
-URLs for the ttrss module.
+URLs for the Tiny Tiny RSS module.
 """
 
 from django.conf.urls import url
