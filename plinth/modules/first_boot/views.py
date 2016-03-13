@@ -43,8 +43,10 @@ class State1View(CreateView):
     success_url = reverse_lazy('first_boot:state10')
 
     def __init__(self, *args, **kwargs):
+        """Initialize the view object."""
         if cfg.danube_edition:
             self.success_url = reverse_lazy('first_boot:state5')
+
         return super(State1View, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
@@ -72,26 +74,26 @@ def state10(request):
 
 
 class State5View(FormView):
-    """
-    State 5 is is the (optional) setup of the pagekite freedombox.me subdomain
-    """
+    """State 5 is the (optional) setup of the Pagekite subdomain."""
     template_name = 'firstboot_state5.html'
     form_class = State5Form
     success_url = reverse_lazy('first_boot:state10')
 
     def get(self, *args, **kwargs):
+        """Respond to GET request."""
         kvstore.set('firstboot_state', 5)
         return super(State5View, self).get(*args, **kwargs)
 
     def form_valid(self, form):
+        """Act on valid form submission."""
         try:
             form.register_domain()
-        except DomainRegistrationError as err:
-            messages.error(self.request, err)
+        except DomainRegistrationError as error:
+            messages.error(self.request, error)
             return HttpResponseRedirect(reverse_lazy('first_boot:state5'))
         else:
             form.setup_pagekite()
-            msg = _("Pagekite setup finished. The HTTP and HTTPS services \
-            are activated now.")
-            messages.success(self.request, msg)
+            message = _('Pagekite setup finished. The HTTP and HTTPS services '
+                        'are activated now.')
+            messages.success(self.request, message)
             return super(State5View, self).form_valid(form)
