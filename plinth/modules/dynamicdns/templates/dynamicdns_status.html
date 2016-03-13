@@ -27,18 +27,18 @@
   <p>
     {% if nat_unchecked %}
       {% blocktrans trimmed %}
-        NAT type not detected yet, if you do not provide a "IP check
-        URL" we will not detect a NAT type.
+        NAT type was not detected yet. If you do not provide an "IP Check
+        URL", we will not detect a NAT type.
       {% endblocktrans %}
     {% else %}
       {% if no_nat %}
-        {% trans "Direct connection to the Internet." %}
+        {% trans "Direct connection to the internet." %}
       {% else %}
         {% blocktrans trimmed %}
           Behind NAT. This means that Dynamic DNS service will poll
-          the "IP check URL" for changes (the "IP check URL" entry is
-          needed for this - otherwise IP changes will not be
-          detected).  In case the WAN IP changes, it may take up to
+          the "IP Check URL" for changes (the "IP Check URL" entry is
+          needed for this, otherwise IP changes will not be
+          detected). In case the WAN IP changes, it may take up to
           {{ timer }} minutes until your DNS entry is updated.
         {% endblocktrans %}
       {% endif %}
