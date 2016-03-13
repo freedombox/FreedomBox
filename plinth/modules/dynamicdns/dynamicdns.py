@@ -176,13 +176,16 @@ class ConfigureForm(forms.Form):
             # Check if gnudip server or update URL is filled
             if not dynamicdns_update_url and not dynamicdns_server:
                 raise forms.ValidationError(
-                    _('Please provide update URL or a GnuDIP server'))
+                    _('Please provide an update URL or a GnuDIP server '
+                      'address'))
 
             if dynamicdns_server and not dynamicdns_user:
-                raise forms.ValidationError(_('Please provide GnuDIP username'))
+                raise forms.ValidationError(
+                    _('Please provide a GnuDIP username'))
 
             if dynamicdns_server and not dynamicdns_domain:
-                raise forms.ValidationError(_('Please provide GnuDIP domain'))
+                raise forms.ValidationError(
+                    _('Please provide a GnuDIP domain name'))
 
             # Check if a password was set before or a password is set now
             if dynamicdns_server and \

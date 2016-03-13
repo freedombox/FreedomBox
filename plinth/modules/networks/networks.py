@@ -87,7 +87,7 @@ def show(request, uuid):
             device, connection_status['wireless']['ssid'])
 
     return TemplateResponse(request, 'connection_show.html',
-                            {'title': _('Show Connection Information'),
+                            {'title': _('Connection Information'),
                              'subsubmenu': subsubmenu,
                              'connection': connection_status,
                              'active_connection': active_connection_status,
