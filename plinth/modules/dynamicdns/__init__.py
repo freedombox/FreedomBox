@@ -32,15 +32,15 @@ title = _('Dynamic DNS Client')
 
 description = [
     format_lazy(
-        _('If your internet provider changes your IP address periodically '
+        _('If your Internet provider changes your IP address periodically '
           '(i.e. every 24h), it may be hard for others to find you on the '
-          'internet. This will prevent others from finding services which are '
+          'Internet. This will prevent others from finding services which are '
           'provided by this {box_name}.'),
         box_name=_(cfg.box_name)),
 
     _('The solution is to assign a DNS name to your IP address and '
       'update the DNS name every time your IP is changed by your '
-      'internet provider. Dynamic DNS allows you to push your current '
+      'Internet provider. Dynamic DNS allows you to push your current '
       'public IP address to a '
       '<a href=\'http://gnudip2.sourceforge.net/\' target=\'_blank\'> '
       'GnuDIP</a> server. Afterwards, the server will assign your DNS name '
