@@ -15,16 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, FormView, TemplateView
 
+from plinth import cfg
 from plinth import kvstore
 from plinth import network
-from .forms import State1Form
+from plinth.errors import DomainRegistrationError
+from .forms import State1Form, State5Form
 
 
 class State0View(TemplateView):
@@ -37,6 +41,11 @@ class State1View(CreateView):
     template_name = 'firstboot_state1.html'
     form_class = State1Form
     success_url = reverse_lazy('first_boot:state10')
+
+    def __init__(self, *args, **kwargs):
+        if cfg.danube_edition:
+            self.success_url = reverse_lazy('first_boot:state5')
+        return super(State1View, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
@@ -60,3 +69,29 @@ def state10(request):
                               {'title': _('Setup Complete'),
                                'connections': connections},
                               context_instance=RequestContext(request))
+
+
+class State5View(FormView):
+    """
+    State 5 is is the (optional) setup of the pagekite freedombox.me subdomain
+    """
+    template_name = 'firstboot_state5.html'
+    form_class = State5Form
+    success_url = reverse_lazy('first_boot:state10')
+
+    def get(self, *args, **kwargs):
+        kvstore.set('firstboot_state', 5)
+        return super(State5View, self).get(*args, **kwargs)
+
+    def form_valid(self, form):
+        try:
+            form.register_domain()
+        except DomainRegistrationError as err:
+            messages.error(self.request, err)
+            return HttpResponseRedirect(reverse_lazy('first_boot:state5'))
+        else:
+            form.setup_pagekite()
+            msg = _("Pagekite setup finished. The HTTP and HTTPS services \
+            are activated now.")
+            messages.success(self.request, msg)
+            return super(State5View, self).form_valid(form)

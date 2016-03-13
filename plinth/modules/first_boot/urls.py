@@ -22,7 +22,7 @@ URLs for the First Boot module
 from django.conf.urls import url
 from stronghold.decorators import public
 
-from .views import State0View, State1View, state10
+from .views import State0View, State1View, State5View, state10
 
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^firstboot/$', public(State0View.as_view()), name='index'),
     url(r'^firstboot/state0/$', public(State0View.as_view()), name='state0'),
     url(r'^firstboot/state1/$', public(State1View.as_view()), name='state1'),
+    url(r'^firstboot/state5/$', State5View.as_view(), name='state5'),
     url(r'^firstboot/state10/$', state10, name='state10'),
 ]
