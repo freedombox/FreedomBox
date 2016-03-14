@@ -31,7 +31,7 @@ from plinth import views
 logger = logging.getLogger(__name__)
 
 
-class ConfigurationView(views.ConfigurationView):
+class TransmissionConfigurationView(views.ConfigurationView):
     """Serve configuration page."""
     form_class = TransmissionForm
 
