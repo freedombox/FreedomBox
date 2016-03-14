@@ -21,7 +21,7 @@ URLs for the date and time module
 
 from django.conf.urls import url
 
-from .views import ConfigurationView
+from plinth.views import ConfigurationView
 
 
 urlpatterns = [
