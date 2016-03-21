@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-15 20:46-0400\n"
-"PO-Revision-Date: 2016-03-17 03:25+0000\n"
+"PO-Revision-Date: 2016-03-21 15:03+0000\n"
 "Last-Translator: Mikkel Kirkgaard Nielsen <memb_weblate@mikini.dk>\n"
 "Language-Team: Danish "
 "<https://hosted.weblate.org/projects/freedombox/plinth/da/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5\n"
+"X-Generator: Weblate 2.6-dev\n"
 
 #: plinth/action_utils.py:203
 #, python-brace-format
@@ -56,28 +56,26 @@ msgid "FreedomBox"
 msgstr "FreedomBox"
 
 #: plinth/forms.py:29
-#, fuzzy
 #| msgid "Applications"
 msgid "Enable application"
-msgstr "Applikationer"
+msgstr "Aktiver applikation"
 
 #: plinth/middleware.py:55
-#, fuzzy
 #| msgid "Applications"
 msgid "Application installed."
-msgstr "Applikationer"
+msgstr "Applikation installeret."
 
 #: plinth/middleware.py:61
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error installing packages: {string} {details}"
 msgid "Error installing application: {string} {details}"
-msgstr "Kunne ikke installere pakker: {string} {details}"
+msgstr "Kunne ikke installere applikation: {string} {details}"
 
 #: plinth/middleware.py:65
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error installing packages: {string} {details}"
 msgid "Error installing application: {error}"
-msgstr "Kunne ikke installere pakker: {string} {details}"
+msgstr "Kunne ikke installere applikation: {error}"
 
 #: plinth/modules/apps/apps.py:26
 msgid "Apps"
@@ -119,7 +117,7 @@ msgid "Service Discovery"
 msgstr "Tjenestesøgning"
 
 #: plinth/modules/avahi/__init__.py:42
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Service discovery allows other machines on the network to discover your "
 #| "FreedomBox and services running on it.  It also allows FreedomBox to "
@@ -135,9 +133,9 @@ msgid ""
 "disabled to improve security especially when connecting to a hostile local "
 "network."
 msgstr ""
-"Tjenestesøgning gør det muligt for andre maskiner på netværket at finde din "
-"FreedomBox og de tjenester den tilbyder. Det gør det også muligt for "
-"FreedomBox at finde andre maskiner og tjenester i dit lokalnetværk. "
+"Tjenestesøgning gør det muligt for andre enheder på netværket at finde din "
+"{box_name} og de tjenester den tilbyder. Det gør det også muligt for "
+"{box_name} at finde andre enheder og tjenester i dit lokalnetværk. "
 "Tjenestesøgning er ikke påkrævet og fungerer kun på interne netværk. "
 "Deaktivering vil forbedre sikkerheden, specielt hvis du forbinder til et "
 "fjendtligt lokalnetværk."
@@ -226,7 +224,7 @@ msgid "Hostname"
 msgstr "Værtsnavn"
 
 #: plinth/modules/config/config.py:100
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Hostname is the local name by which other machines on the local network "
 #| "reach your machine.  It must start and end with an alphabet or a digit "
@@ -238,10 +236,10 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
-"Værtsnavn er det lokale navn under hvilket maskiner på dit lokalnetværk kan "
-"nå dig. Det skal starte og slutte med et bogstav eller er tal, og derimellem "
-"må kun være bogstaver, tal og bindestreger. Den samlede længde skal være 63 "
-"tegn eller derunder."
+"Værtsnavn er det lokale navn under hvilket enheder på dit lokalnetværk kan "
+"nå din {box_name}. Det skal starte og slutte med et bogstav eller er tal, og "
+"derimellem må kun være bogstaver, tal og bindestreger. Den samlede længde "
+"skal være 63 tegn eller derunder."
 
 #: plinth/modules/config/config.py:108
 msgid "Invalid hostname"
@@ -254,7 +252,7 @@ msgid "Domain Name"
 msgstr "Domænenavn"
 
 #: plinth/modules/config/config.py:113
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Domain name is the global name by which other machines on the Internet "
 #| "can reach you.  It must consist of labels separated by dots.  Each label "
@@ -270,21 +268,20 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"Domænenavn er det globale navn under hvilket maskiner på internettet kan nå "
-"dig. Det skal bestå af ord adskilt af punktummer. Hver ord skal starte og "
-"slutte med et bogstav eller et tal, og derimellem må kun være bogstaver, tal "
-"og bindestreger. Hvert ord skal være på 63 tegn eller derunder. Den samlede "
-"længde skal være 253 tegn eller derunder."
+"Domænenavn er det globale navn under hvilket enheder på internettet kan nå "
+"din {box_name}. Det skal bestå af ord adskilt af punktummer. Hver ord skal "
+"starte og slutte med et bogstav eller et tal, og derimellem må kun være "
+"bogstaver, tal og bindestreger. Hvert ord skal være på 63 tegn eller "
+"derunder. Den samlede længde skal være 253 tegn eller derunder."
 
 #: plinth/modules/config/config.py:128
 msgid "Language"
 msgstr "Sprog"
 
 #: plinth/modules/config/config.py:130
-#, fuzzy
 #| msgid "Language for this FreedomBox web administration interface"
 msgid "Language for this web administration interface"
-msgstr "Sprog i FreedomBox administrationsværktøjet"
+msgstr "Sprog i dette administrationsværktøj"
 
 #: plinth/modules/config/config.py:150
 #: plinth/modules/dynamicdns/dynamicdns.py:37
@@ -468,13 +465,12 @@ msgid "Result"
 msgstr "Resultat"
 
 #: plinth/modules/dynamicdns/__init__.py:31
-#, fuzzy
 #| msgid "DynamicDNS client"
 msgid "Dynamic DNS Client"
-msgstr "Dynamisk DNS"
+msgstr "Dynamisk DNS Klient"
 
 #: plinth/modules/dynamicdns/__init__.py:35
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "If your internet provider changes your IP address periodic (i.e. every "
 #| "24h) it may be hard for others to find you in the WEB. And for this "
@@ -486,11 +482,10 @@ msgid ""
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
 "Hvis din internetudbyder periodisk ændrer din IP-adresse (f.eks. en gang i "
-"døgnet), kan det være svært for andre at finde dig og de tjenester (såsom "
-"din ownCloud) din FreedomBox udbyder på nettet."
+"døgnet), kan det være svært for andre at finde dig på internettet. Dette vil "
+"forhindre andre i at finde de tjenester denne {box_name} udbyder."
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
 #| msgid ""
 #| "The solution is to assign a DNS name to your IP address and update the "
 #| "DNS name every time your IP is changed by your Internet provider. Dynamic "
@@ -512,7 +507,7 @@ msgstr ""
 "navn hver gang IP-adressen ændres af din udbyder. Dynamisk DNS gør det "
 "muligt at opdatere en <a href='http://gnudip2.sourceforge.net/' "
 "target='_blank'>GnuDIP</a>-server med din aktuelle IP-adresse. Serveren vil "
-"opdatere dit DNS-navn med denne IP-adresse, således at hvis nogen på "
+"opdatere dit DNS-navn med den nye IP-adresse, således at hvis nogen på "
 "internettet spørger til adressen vil de få din aktuelle IP-adresse."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:39
@@ -530,7 +525,6 @@ msgstr ""
 "eksemplernes tjenester."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:67
-#, fuzzy
 #| msgid ""
 #| "Please choose an update protocol according to your provider. If your "
 #| "provider does not support the GnudIP protocol or your provider is not "
@@ -545,7 +539,6 @@ msgstr ""
 "kan en opdaterings-URL fra din udbyder angives direkte."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:72
-#, fuzzy
 #| msgid ""
 #| "Please do not enter a URL here (like \"https://example.com/\") but only "
 #| "the hostname of the GnuDIP server (like \"example.pcom\")."
@@ -557,10 +550,10 @@ msgstr ""
 "værtsnavnet for GnuDIP-serveren (såsom \"example.com\")."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:76
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "The public domain name you want use to reach your box."
 msgid "The public domain name you want to use to reach your {box_name}."
-msgstr "Det offentlige domænenavn du vil bruge til at nå din boks."
+msgstr "Det offentlige domænenavn du vil bruge til at nå din {box_name}."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:79
 msgid "Use this option if your provider uses self signed certificates."
@@ -575,17 +568,14 @@ msgstr ""
 "til basal (\"basic\") HTTP-autentifikation."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:85
-#, fuzzy
 #| msgid ""
 #| "Leave this field empty if you want to keep your previous configured "
 #| "password."
 msgid "Leave this field empty if you want to keep your current password."
-msgstr ""
-"Lad dette felt stå tomt hvis du vil beholde det tidligere konfigurerede "
-"kodeord."
+msgstr "Lad dette felt stå tomt hvis du vil beholde dit nuværende kodeord."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:88
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Optional Value. If your FreedomBox is not connected directly to the "
 #| "Internet (i.e. connected to a NAT router) this URL is used to figure out "
@@ -597,10 +587,11 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Ikke obligatorisk. Hvis din FreedomBox ikke er tilsluttet direkte til "
+"Ikke obligatorisk. Hvis din {box_name} ikke er tilsluttet direkte til "
 "internettet (hvis den f.eks.er bag en NAT-router) bruges denne URL til at "
 "afgøre dens offentlige IP. Denne URL skal simpelthen returnere IP-adressen "
-"hvorfra klientens forespørgsel kommer. Eksempel: http://myip.datasystems24.de"
+"hvorfra klientens forespørgsel kommer (eksempelvis: "
+"http://myip.datasystems24.de)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:96
 msgid "The username that was used when the account was created."
@@ -611,13 +602,11 @@ msgid "Enable Dynamic DNS"
 msgstr "Aktiver Dynamisk DNS"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:110
-#, fuzzy
 #| msgid "Service type"
 msgid "Service Type"
 msgstr "Servicetype"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:115
-#, fuzzy
 #| msgid "GnudIP Server Address"
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Serveradresse"
@@ -631,16 +620,14 @@ msgid "Update URL"
 msgstr "Opdaterings-URL"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:127
-#, fuzzy
 #| msgid "accept all SSL certificates"
 msgid "Accept all SSL certificates"
-msgstr "accepter alle SSL-certifikater"
+msgstr "Accepter alle SSL-certifikater"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:131
-#, fuzzy
 #| msgid "use HTTP basic authentication"
 msgid "Use HTTP basic authentication"
-msgstr "brug basal (\"basic\") HTTP-autentifikation"
+msgstr "Brug basal (\"basic\") HTTP-autentifikation"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:143
 #: plinth/modules/networks/forms.py:146 plinth/modules/transmission/forms.py:37
@@ -658,28 +645,24 @@ msgid "Show password"
 msgstr "Vis kodeord"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:153
-#, fuzzy
 #| msgid "IP check URL"
 msgid "IP Check URL"
 msgstr "URL for IP-kontrol"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:179
-#, fuzzy
 #| msgid "Please provide update URL or a GnuDIP Server"
 msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Angiv venligst opdaterings-URL eller GnuDIP-server"
+msgstr "Angiv venligst opdaterings-URL eller GnuDIP serveradresse"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:184
-#, fuzzy
 #| msgid "Please provide GnuDIP username"
 msgid "Please provide a GnuDIP username"
-msgstr "Angiv venligst brugernavn til GnuDIP"
+msgstr "Angiv venligst et brugernavn til GnuDIP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:188
-#, fuzzy
 #| msgid "Please provide GnuDIP domain"
 msgid "Please provide a GnuDIP domain name"
-msgstr "Angiv venligst domæne til GnuDIP-server"
+msgstr "Angiv venligst et domæne til GnuDIP-server"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:193
 msgid "Please provide a password"
@@ -690,13 +673,11 @@ msgid "Configure Dynamic DNS"
 msgstr "Konfigurer Dynamisk DNS"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:232
-#, fuzzy
 #| msgid "Dynamic DNS"
 msgid "Dynamic DNS Status"
-msgstr "Dynamisk DNS"
+msgstr "Dynamisk DNS Status"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:25
-#, fuzzy
 #| msgid ""
 #| "If you are looking for a free dynamic DNS account, you may find a free "
 #| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
@@ -711,12 +692,13 @@ msgid ""
 "freedns.afraid.org</a>."
 msgstr ""
 "Leder du efter en gratis dynamisk DNS-konto kan du få en gratis GnuDIP-"
-"tjeneste på <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
-"datasystems24.net</a> eller du kan få en gratis URL-baseret tjeneste på <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
+"tjeneste på <a href='http://gnudip.datasystems24.net' "
+"target='_blank'>gnudip.datasystems24.net</a> eller du kan få en gratis URL-"
+"baseret tjeneste på <a href='http://freedns.afraid.org/' target='_blank'> "
+"freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "If your freedombox is connected behind some NAT router, don't forget to "
 #| "add portforwarding (i.e. forward some standard ports like 80 and 443) to "
@@ -726,9 +708,8 @@ msgid ""
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
-"Hvis din FreedomBox er tilsluttet bag en NAT-router, så glem ikke at "
-"viderestille de relevante porte (som f.eks. standard portene for HTTP 80 og "
-"443) fra routeren til din FreedomBox."
+"Hvis din %(box_name)s er tilsluttet bag en NAT-router, så glem ikke at "
+"viderestille standardporte såsom TCP-port 80 (HTTP) og TCP-port 443 (HTTPS)."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:30
 msgid ""
@@ -744,7 +725,6 @@ msgid "NAT type"
 msgstr "NAT-type"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:29
-#, fuzzy
 #| msgid ""
 #| "NAT type not detected yet, if you do not provide a \"IP check URL\" we "
 #| "will not detect a NAT type."
@@ -752,17 +732,16 @@ msgid ""
 "NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
 "will not detect a NAT type."
 msgstr ""
-"NAT-typen er ikke endnu detekteret, hvis du ikke har indtastet en \"URL for "
+"NAT-typen er endnu ikke detekteret. Hvis du ikke har indtastet en \"URL for "
 "IP-kontrol\" kan den ikke detekteres."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:35
-#, fuzzy
 #| msgid "Direct connection to the internet."
 msgid "Direct connection to the Internet."
 msgstr "Direkte forbindelse til internettet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Behind NAT, this means that dynamic DNS service will poll the \"IP check "
 #| "URL\" for changes (we need the \"IP check URL\" for this reason - "
@@ -774,10 +753,11 @@ msgid ""
 "changes will not be detected). In case the WAN IP changes, it may take up to "
 "%(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"Bagved NAT betyder at Dynamisk DNS-tjenesten med \"URL for IP-kontrol\" vil "
-"tjekke din IP-adresse for ændringer (vi behøver denne URL af samme grund - "
-"ellers kan ændringer ikke detekteres). Det kan tage op til %(timer)s "
-"minutter inden din DNS opdateres hvis din offentlige (WAN) IP-adresse ændres."
+"Bagved NAT. Dette betyder at Dynamisk DNS-tjenesten ved brug af \"URL for IP-"
+"kontrol\" vil tjekke din IP-adresse for ændringer (URL'en er nødvendig af "
+"denne grund, ellers kan ændringer i IP ikke detekteres). Hvis din offentlige "
+"(WAN) IP-adresse ændres, kan det tage op til %(timer)s minutter inden din "
+"registrering i DNS opdateres."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
 msgid "Last update"
@@ -788,7 +768,7 @@ msgid "Firewall"
 msgstr "Firewall"
 
 #: plinth/modules/firewall/__init__.py:41
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Firewall is a network security system that controls the incoming and "
 #| "outgoing network traffic on your %(box_name)s. Keeping a firewall enabled "
@@ -798,9 +778,9 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
-"En firewall er et netværksbeskyttelsessystem som styrer indgående og "
-"udgående trafik på din %(box_name)s. At holde en firewall aktiveret og "
-"velkonfigureret reducerer risikoen for sikkerhedstrusler fra internettet."
+"En firewall er et beskyttelsessystem som styrer indgående og udgående trafik "
+"på din{box_name}. At holde en firewall aktiveret og velkonfigureret "
+"reducerer risikoen for sikkerhedstrusler fra internettet."
 
 #: plinth/modules/firewall/templates/firewall.html:25
 msgid "Current status:"
@@ -852,7 +832,6 @@ msgid "Blocked"
 msgstr "Blokeret"
 
 #: plinth/modules/firewall/templates/firewall.html:92
-#, fuzzy
 #| msgid ""
 #| "The operation of the firewall is automatic. When you enable a service it "
 #| "is automatically permitted in the firewall and you disable a service is "
@@ -863,8 +842,8 @@ msgid ""
 "disabled in the firewall."
 msgstr ""
 "Denne firewall er autokonfigurerende. Når du aktiverer en tjeneste vil den "
-"automatiskt blive åbnet i firewallen, og når du deaktiverer en tjeneste "
-"blokeres den automatiskt."
+"også blive åbnet i firewallen, og når du deaktiverer en tjeneste blokeres "
+"den igen."
 
 #: plinth/modules/first_boot/forms.py:59 plinth/modules/users/forms.py:70
 msgid "Creating LDAP user failed."
@@ -884,25 +863,23 @@ msgid "The voucher you received with your {box_name} Danube Edition"
 msgstr "Rabatkuponen som du modtog sammen med din {box_name} Danube Edition"
 
 #: plinth/modules/first_boot/forms.py:121
-#, fuzzy
 #| msgid "Enable Subdomains"
 msgid "Subdomain"
-msgstr "Aktiver Subdomæner"
+msgstr "Subdomæne"
 
 #: plinth/modules/first_boot/forms.py:123
 msgid "The subdomain you want to register"
 msgstr "Subdomænet du vil registrere"
 
 #: plinth/modules/first_boot/forms.py:146
-#, fuzzy
 #| msgid "This connection is not active."
 msgid "This code is not valid"
-msgstr "Denne forbindelse er ikke aktiv."
+msgstr "Denne kode er ikke gyldig"
 
 #: plinth/modules/first_boot/forms.py:152
 #, python-brace-format
 msgid "This code is bound to the domain {domain}."
-msgstr "Denne kode er specifik for domænet {domain}"
+msgstr "Denne kode er specifik for domænet {domain}."
 
 #: plinth/modules/first_boot/forms.py:162
 msgid "The requested domain is already registered."
@@ -920,13 +897,12 @@ msgid "Help"
 msgstr "Hjælp"
 
 #: plinth/modules/first_boot/templates/firstboot_state0.html:41
-#, fuzzy
 #| msgid "Start setup"
 msgid "Start Setup"
-msgstr "Start opsætning"
+msgstr "Start Konfiguration"
 
 #: plinth/modules/first_boot/templates/firstboot_state0.html:45
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To complete the setup of your %(box_name)s, please provide some basic "
 "information."
@@ -957,7 +933,7 @@ msgid "Setup Complete!"
 msgstr "Konfiguration er færdig!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:32
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To make your FreedomBox functional, you need some applications.  "
 #| "Applications will be installed the first time you access them."
@@ -966,21 +942,20 @@ msgid ""
 "you need some applications.  They will be installed the first time you "
 "access them."
 msgstr ""
-"For at kunne noget nyttigt skal din FreedomBox bruge nogle applikationer. "
-"Disse installeres første gang du tilgår dem."
+"Konfiguration af %(box_name)s er nu færdig. For at kunne noget nyttigt skal "
+"du bruge nogle applikationer på din %(box_name)s. Disse installeres første "
+"gang du tilgår dem."
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:41
 msgid "Go to Apps"
 msgstr "Gå til Apps"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:44
-#, fuzzy
 #| msgid "Network Configuration"
 msgid "Current Network Configuration"
-msgstr "Netværkskonfiguration"
+msgstr "Nuværende Netværkskonfiguration"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:47
-#, fuzzy
 #| msgid ""
 #| "FreedomBox setup is now complete.  However, you should check the network "
 #| "setup and modify it if necessary.  Do not forget to change the default Wi-"
@@ -989,9 +964,8 @@ msgid ""
 "You should check the network setup and modify it if necessary. Do not forget "
 "to change the default Wi-Fi passwords!"
 msgstr ""
-"Konfigurationen af FreedomBox er nu færdig. Du bør dog kontrollere "
-"netværksopsætningen og tilpasse den hvis nødvendigt. Glem ikke at ændre "
-"standardkodeordene for Wi-Fi."
+"Du bør kontrollere netværksopsætningen og tilpasse den hvis nødvendigt. Glem "
+"ikke at ændre standardkodeordene for Wi-Fi!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:57
 msgid "Go to Networks"
@@ -1061,13 +1035,13 @@ msgid "About {box_name}"
 msgstr "Om {box_name}"
 
 #: plinth/modules/help/help.py:72
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "About {box_name}"
 msgid "{box_name} Manual"
-msgstr "Om {box_name}"
+msgstr "{box_name} Brugervejledning"
 
 #: plinth/modules/help/templates/help_about.html:30
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "FreedomBox is a community project to develop, design and promote personal "
 #| "servers running free software for private, personal communications.  It "
@@ -1085,7 +1059,7 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"FreedomBox er et fællesskabsdrevet projekt med det mål at udvikle, designe "
+"%(box_name)s er et fællesskabsdrevet projekt med det mål at udvikle, designe "
 "og promovere personlige servere der drives af fri software til privat og "
 "personlig kommunikation. Det er en netværksenhed designet til at være "
 "bindeled til resten af internettet under forbedrede forhold for privatliv og "
@@ -1111,7 +1085,7 @@ msgstr ""
 "tilbage til dets påtænkte peer-to-peer arkitektur."
 
 #: plinth/modules/help/templates/help_about.html:56
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "There are a number of projects working to realize a future of distributed "
 #| "services; FreedomBox aims to bring them all together in a convenient "
@@ -1122,11 +1096,11 @@ msgid ""
 "package."
 msgstr ""
 "Der findes et antal projekter som arbejder på at realisere en fremtid hvor "
-"distribuerede tjenester er mere udbredte end i dag; FreedomBox har som mål "
+"distribuerede tjenester er mere udbredte end i dag; %(box_name)s har som mål "
 "at kombinere alle disse i én letanvendelig pakke."
 
 #: plinth/modules/help/templates/help_about.html:64
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "For more information about the FreedomBox project, see the <a href="
 #| "\"https://wiki.debian.org/FreedomBox\">FreedomBox Wiki</a>."
@@ -1134,8 +1108,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"For mere information om FreedomBox-projektet, se <a href=\"https://wiki."
-"debian.org/FreedomBox\">FreedomBox Wiki-siden</a>."
+"For mere information om %(box_name)s-projektet, se <a href=\""
+"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki-siden</a>."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
@@ -1152,7 +1126,7 @@ msgid "%(box_name)s Setup"
 msgstr "%(box_name)s Konfiguration"
 
 #: plinth/modules/help/templates/help_index.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "The <a href=\"%(manual_url)s\">FreedomBox Manual</a> is the best place to "
 #| "start for information regarding %(box_name)s."
@@ -1160,11 +1134,11 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
-"<a href=\"%(manual_url)s\">FreedomBox Brugervejledningen</a> er det bedste "
+"<a href=\"%(manual_url)s\">%(box_name)s Brugervejledningen</a> er det bedste "
 "sted at starte når du har brug for information om %(box_name)s."
 
 #: plinth/modules/help/templates/help_index.html:36
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 #| "FreedomBox project wiki </a> contains further information."
@@ -1172,11 +1146,11 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">FreedomBox "
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">%(box_name)s "
 "wiki-siden</a> indeholder yderligere information."
 
 #: plinth/modules/help/templates/help_index.html:43
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To seek help from FreedomBox community, queries may be posted on the <a "
 #| "href=\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
@@ -1188,10 +1162,10 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
-"Ønsker du hjælp af FreedomBox-fællesskabet, kan du skrive til <a href="
-"\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss"
-"\">postlisten</a>. I listens arkiv kan du også finde information om "
-"problemer andre brugere har oplevet og muligvis løsninger på dem."
+"Ønsker du hjælp af %(box_name)s-fællesskabet, kan du skrive til <a href=\""
+"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\""
+">postlisten</a>. I listens arkiv kan du også finde information om problemer "
+"andre brugere har oplevet og mulige løsninger på dem."
 
 #: plinth/modules/help/templates/help_index.html:53
 #, python-format
@@ -1207,10 +1181,9 @@ msgstr ""
 "#freedombox</a> med IRC web-brugerfladen."
 
 #: plinth/modules/ikiwiki/__init__.py:34
-#, fuzzy
 #| msgid "Wiki & Blog (Ikiwiki)"
 msgid "Wiki and Blog (ikiwiki)"
-msgstr "Wiki & Blog (Ikiwiki)"
+msgstr "Wiki og Blog (ikiwiki)"
 
 #: plinth/modules/ikiwiki/__init__.py:37
 msgid ""
@@ -1239,13 +1212,12 @@ msgid "Admin Account Password"
 msgstr "Administratorkontokodeord"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:27
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete Wiki/Blog <em>%(name)s</em>"
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
-msgstr "Slet Wiki/Blog <em>%(name)s</em>"
+msgstr "Slet Wiki eller Blog <em>%(name)s</em>"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:33
-#, fuzzy
 #| msgid ""
 #| "This action will remove all the posts, pages and comments including "
 #| "revision history.  Delete this wiki/blog permanently?"
@@ -1254,7 +1226,7 @@ msgid ""
 "history.  Delete this wiki or blog permanently?"
 msgstr ""
 "Denne handling fjerner alle artikler, sider og kommentater inklusiv al "
-"historik. Slet denne wiki/blog permanent?"
+"historik. Slet denne wiki eller blog permanent?"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:44
 #, python-format
@@ -1299,10 +1271,9 @@ msgid "Manage Wikis and Blogs"
 msgstr "Administrer Wikier og Blogs"
 
 #: plinth/modules/ikiwiki/views.py:83
-#, fuzzy
 #| msgid "Create a Wiki or Blog"
 msgid "Create Wiki or Blog"
-msgstr "Opret en Wiki eller Blog"
+msgstr "Opret Wiki eller Blog"
 
 #: plinth/modules/ikiwiki/views.py:96
 #, python-brace-format
@@ -1335,10 +1306,9 @@ msgid "Could not delete {name}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
 
 #: plinth/modules/ikiwiki/views.py:133
-#, fuzzy
 #| msgid "Delete Wiki/Blog"
 msgid "Delete Wiki or Blog"
-msgstr "Slet Wiki/Blog"
+msgstr "Slet Wiki eller Blog"
 
 #: plinth/modules/letsencrypt/__init__.py:36
 #: plinth/modules/letsencrypt/__init__.py:61
@@ -1374,26 +1344,23 @@ msgstr ""
 "abonnementsbetingelser</a> inden tjenesten tages i anvendelse."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:43
-#, fuzzy
 #| msgid "Domain Name"
 msgid "Domain"
-msgstr "Domænenavn"
+msgstr "Domæne"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Certificate Status"
 msgstr "Certifikat Status"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:45
-#, fuzzy
 #| msgid "Security"
 msgid "Website Security"
-msgstr "Sikkerhed"
+msgstr "Webside-sikkerhed"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:46
-#, fuzzy
 #| msgid "Applications"
 msgid "Actions"
-msgstr "Applikationer"
+msgstr "Handlinger"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
 #, python-format
@@ -1455,16 +1422,14 @@ msgstr ""
 "http://www.minetest.net/downloads/\">Minetest klient</a>."
 
 #: plinth/modules/minetest/templates/minetest.html:31
-#, fuzzy
 #| msgid "Mumble server is running"
 msgid "Minetest server is running"
-msgstr "Mumble-server er aktiv"
+msgstr "Minetest-server er aktiv"
 
 #: plinth/modules/minetest/templates/minetest.html:34
-#, fuzzy
 #| msgid "Mumble server is not running"
 msgid "Minetest server is not running"
-msgstr "Mumble-server er ikke aktiv"
+msgstr "Minetest-server er ikke aktiv"
 
 #: plinth/modules/monkeysphere/__init__.py:30
 #: plinth/modules/monkeysphere/__init__.py:56
@@ -1483,6 +1448,15 @@ msgid ""
 "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</a> "
 "for more details."
 msgstr ""
+"Med Monkeysphere kan der genereres en OpenPGP-nøgle for hvert konfigureret "
+"domæne der serviceres af SSH. Den offentlige OpenPGP-nøgle kan så uploades "
+"til OpenPGP-nøgleserverne. Brugere der forbinder til denne maskine ved hjælp "
+"af SSH, er på denne måde i stand til at sikre at de forbinder til den "
+"korrekte vært. For at brugere kan stole på nøglen, skal mindst en person ("
+"normalt maskinens ejer) underskrive nøglen ved brug af den almindelige "
+"process for OpenPGP nøgleunderskrift.  Se <a href=\""
+"http://web.monkeysphere.info/getting-started-ssh/\">Monkeysphere SSH-"
+"dokumentationen</a> for flere detaljer."
 
 #: plinth/modules/monkeysphere/__init__.py:42
 msgid ""
@@ -1494,10 +1468,18 @@ msgid ""
 "is available on the <a href=\"https://web.monkeysphere.info/download/\"> "
 "Monkeysphere website</a>."
 msgstr ""
+"Monkeysphere kan også generere en OpenPGP-nøgle for hvert certifikat til en "
+"Sikker Web Server (HTTPS) der er installeret på denne maskine. Den "
+"offentlige OpenPGP-nøgle kan så uploades til OpenPGP-nøgleserverne. Brugere "
+"der tilgår denne maskine gennem HTTPS, er på denne måde i stand til at sikre "
+"at de forbinder til den korrekte vært. For at validere certifikatet er "
+"brugeren nødt til at installere noget software som er tilgængeligt på <a "
+"href=\"https://web.monkeysphere.info/download/\">Monkeysphere "
+"hjemmesiden</a>."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:57
 msgid "Publishing key to keyserver..."
-msgstr ""
+msgstr "Distribuerer nøgle til nøgleserver..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:74
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
@@ -1506,22 +1488,20 @@ msgid "Service"
 msgstr "Tjeneste"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:75
-#, fuzzy
 #| msgid "Domain Name"
 msgid "Domains"
-msgstr "Domænenavn"
+msgstr "Domæner"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:76
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:31
 msgid "OpenPGP Fingerprint"
-msgstr ""
+msgstr "OpenPGP-fingeraftryk"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:85
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:58
-#, fuzzy
 #| msgid "Secure Shell (SSH)"
 msgid "Secure Shell"
-msgstr "Secure Shell (SSH)"
+msgstr "Secure Shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:87
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
@@ -1531,105 +1511,102 @@ msgstr "Webserver"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:89
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:62
-#, fuzzy
 #| msgid "Ethernet"
 msgid "Other"
-msgstr "Ethernet"
+msgstr "Andet"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:113
 #, python-format
 msgid "Show details for key %(fingerprint)s"
-msgstr ""
+msgstr "Vis detaljer for nøgle %(fingerprint)s"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:119
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:129
 msgid "Import Key"
-msgstr ""
+msgstr "Importer Nøgle"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:138
 msgid "Publish Key"
-msgstr ""
+msgstr "Distribuer Nøgle"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:147
-#, fuzzy
 #| msgid "Domain Name"
 msgid "Add Domains"
-msgstr "Domænenavn"
+msgstr "Tilføj Domæner"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:35
 msgid "OpenPGP User IDs"
-msgstr ""
+msgstr "OpenPGP-bruger-id'er"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:39
 msgid "Key Import Date"
-msgstr ""
+msgstr "Nøgleimportdato"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:43
 msgid "SSH Key Type"
-msgstr ""
+msgstr "SSH-nøgletype"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:47
 msgid "SSH Key Size"
-msgstr ""
+msgstr "SSH-nøglestørrelse"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:51
 msgid "SSH Fingerprint"
-msgstr ""
+msgstr "SSH-fingeraftryk"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:67
 msgid "Key File"
-msgstr ""
+msgstr "Nøglefil"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:71
-#, fuzzy
 #| msgid "Enable Subdomains"
 msgid "Available Domains"
-msgstr "Aktiver Subdomæner"
+msgstr "Tilgængelige Domæner"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
-#, fuzzy
 #| msgid "Domain Name"
 msgid "Added Domains"
-msgstr "Domænenavn"
+msgstr "Tilføjede Domæner"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:82
 msgid ""
 "After this key is published to the keyservers, it can be signed using <a "
 "href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
 msgstr ""
+"Når denne nøgle er distribueret til nøgleserverne, kan den underskrives med <"
+"a href=\"https://www.gnupg.org/\">GnuPG</a> ved brug af følgende kommandoer:"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:88
-#, fuzzy
 #| msgid "Download directory"
 msgid "Download the key"
-msgstr "Download-mappe"
+msgstr "Hent nøglen"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:91
 msgid "Sign the key"
-msgstr ""
+msgstr "Underskriv nøglen"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:94
 msgid "Send the key back to the keyservers"
-msgstr ""
+msgstr "Send nøglen tilbage til nøgleserverne"
 
 #: plinth/modules/monkeysphere/views.py:59
 msgid "Imported key."
-msgstr ""
+msgstr "Nøglen blev importeret."
 
 #: plinth/modules/monkeysphere/views.py:91
 msgid "Cancelled key publishing."
-msgstr ""
+msgstr "Distribution af nøglen annulleret."
 
 #: plinth/modules/monkeysphere/views.py:143
 msgid "Published key to keyserver."
-msgstr ""
+msgstr "Nøgle distribueret til nøgleserver."
 
 #: plinth/modules/monkeysphere/views.py:145
 msgid "Error occurred while publishing key."
-msgstr ""
+msgstr "Fejl under distribuering af nøgle."
 
 #: plinth/modules/mumble/__init__.py:34
 msgid "Voice Chat (Mumble)"
@@ -1836,10 +1813,9 @@ msgid "Cannot show connection: Connection not found."
 msgstr "Kan ikke vise forbindelse: Forbindelse ikke fundet."
 
 #: plinth/modules/networks/networks.py:90
-#, fuzzy
 #| msgid "Show Connection information"
 msgid "Connection Information"
-msgstr "Vis Forbindelsesinformation"
+msgstr "Forbindelsesinformation"
 
 #: plinth/modules/networks/networks.py:103
 msgid "Cannot edit connection: Connection not found."
@@ -2057,7 +2033,6 @@ msgid "Firewall zone"
 msgstr "Firewall-zone"
 
 #: plinth/modules/networks/templates/connection_show.html:280
-#, fuzzy
 #| msgid ""
 #| "This interface should be connected to local network/machine.  If you "
 #| "connect this interface to a public network, services meant to be "
@@ -2074,7 +2049,6 @@ msgstr ""
 "Dette er en sikkerhedsrisiko."
 
 #: plinth/modules/networks/templates/connection_show.html:300
-#, fuzzy
 #| msgid ""
 #| "This interface should receive your Internet connection. If you connect it "
 #| "your a local network/machine, many services meant to available only "
@@ -2089,7 +2063,7 @@ msgstr ""
 "beregnet til at være eksternt tilgængelige ikke være det."
 
 #: plinth/modules/networks/templates/connection_show.html:319
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This interface is not maintained by FreedomBox.  Its security status is "
 #| "unknown to FreedomBox.  Many FreedomBox services may not be available on "
@@ -2101,8 +2075,8 @@ msgid ""
 "this interface.  It is recommended that you deactivate or delete this "
 "connection and re-configure it."
 msgstr ""
-"Dette netværksinterface vedligeholdes ikke af FreedomBox. Dets "
-"sikkerhedsstatus er ukendt for FreedomBox. Mange FreedomBox-tjenester er "
+"Dette netværksinterface vedligeholdes ikke af %(box_name)s. Dets "
+"sikkerhedsstatus er ukendt for %(box_name)s. Mange %(box_name)s-tjenester er "
 "muligvis ikke tilgængelig på dette interface. Det anbefales at du "
 "deaktiverer/sletter denne forbindelse og rekonfigurerer det."
 
@@ -2181,7 +2155,7 @@ msgid "Virtual Private Network (OpenVPN)"
 msgstr "Virtuelt Privat Netværk (OpenVPN)"
 
 #: plinth/modules/openvpn/__init__.py:39
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Virtual Private Network (VPN) is a technique for securely connecting two "
 #| "machines in order to access resources of a private network.  While you "
@@ -2198,11 +2172,11 @@ msgid ""
 "security and anonymity."
 msgstr ""
 "Et Virtuelt Privat Netværk (VPN) er en teknik der på en sikker måde kan "
-"forbinde to maskiner, så ressourcerne på et privat netværk kan deles. Mens "
-"du er fysisk væk fra dit hjem, kan du forbinde til din %(box_name)s for at "
-"blive en del af dit hjemmenetværk og tilgå private/interne tjenester der "
-"udbydes af %(box_name)s. Du kan også tilgå resten af internettet igennem "
-"%(box_name)s for øget sikkerhed og anonymitet."
+"forbinde to enheder, så ressourcerne på et privat netværk kan deles. Mens du "
+"er fysisk væk fra dit hjem, kan du forbinde til din {box_name} for at blive "
+"en del af dit hjemmenetværk og tilgå private/interne tjenester der udbydes "
+"af {box_name}. Du kan også tilgå resten af internettet igennem {box_name} "
+"for øget sikkerhed og anonymitet."
 
 #: plinth/modules/openvpn/forms.py:29
 msgid "Enable OpenVPN server"
@@ -2213,7 +2187,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:40
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
 #| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
@@ -2231,10 +2205,10 @@ msgid ""
 msgstr ""
 "For at forbinde til %(box_name)ss VPN skal du downloade en profil og "
 "installere den i en OpenVPN-klient på din mobil eller computer. OpenVPN-"
-"klienter er tilgængelige på de fleste platforme. Se mere <a href=\"https://"
-"wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"FreedomBox Manual - "
-"OpenVPN\">dokumentation</a> om anbefalede klienter og instruktioner til "
-"opsætning af dem."
+"klienter er tilgængelige på de fleste platforme. Se mere <a href=\""
+"https://wiki.debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s "
+"Brugervejledning - OpenVPN\">dokumentation</a> om anbefalede klienter og "
+"instruktioner til opsætning af dem."
 
 #: plinth/modules/openvpn/templates/openvpn.html:52
 #, python-format
@@ -2338,7 +2312,7 @@ msgid "Public Visibility (PageKite)"
 msgstr "Offentlig Tilgængelighed (PageKite)"
 
 #: plinth/modules/pagekite/__init__.py:36
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "PageKite is a system for exposing %(box_name)s services when you don't "
 #| "have a direct connection to the Internet. You only need this if your "
@@ -2350,24 +2324,24 @@ msgid ""
 "services are unreachable from the rest of the Internet. This includes the "
 "following situations:"
 msgstr ""
-"PageKite er et system der kan eksponere tjenesterne på  %(box_name)s, når du "
+"PageKite er et system der kan eksponere tjenesterne på {box_name}, når du "
 "ikke har en direkte forbindelse til internettet, Du har kun brug for dette "
-"hvis %(box_name)s tjenester ikke kan nås fra resten af internettet. Dette "
+"hvis {box_name} tjenester ikke kan nås fra resten af internettet. Dette "
 "inkluderer de følgende situationer:"
 
 #: plinth/modules/pagekite/__init__.py:43
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "%(box_name)s is behind a restricted firewall."
 msgid "{box_name} is behind a restricted firewall."
-msgstr "%(box_name)s er bag en restriktiv firewall."
+msgstr "{box_name} er bag en restriktiv firewall."
 
 #: plinth/modules/pagekite/__init__.py:47
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "%(box_name)s is connected to a (wireless) router which you don't control."
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
-"%(box_name)s er forbundet til en (trådløs) router som du ikke selv "
+"{box_name} er forbundet til en (trådløs) router som du ikke selv "
 "kontrollerer."
 
 #: plinth/modules/pagekite/__init__.py:50
@@ -2391,7 +2365,7 @@ msgid "Your ISP limits incoming connections."
 msgstr "Din internetudbyder begrænser indgående forbindelser."
 
 #: plinth/modules/pagekite/__init__.py:59
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
 #| "a combination of tunnels and reverse proxies. You can use any pagekite "
@@ -2406,9 +2380,9 @@ msgid ""
 msgstr ""
 "PageKite omgår NAT, firewalls og begrænsninger på IP-adresser ved at bruge "
 "en kombination af tunneller og omvendte proxier. Du kan bruge enhver "
-"PageKite-udbyder, eksempelvis  <a href=\"https://pagekite.net\">pagekite."
-"net</a>. I fremtiden vil det måske blive muligt at bruge din vens "
-"%(box_name)s til dette."
+"PageKite-udbyder, eksempelvis  <a href=\"https://pagekite.net\""
+">pagekite.net</a>. I fremtiden vil det måske blive muligt at bruge din vens "
+"{box_name} til dette."
 
 #: plinth/modules/pagekite/forms.py:46
 msgid "Enable PageKite"
@@ -2574,7 +2548,6 @@ msgid "<b>Warning:</b><br/>"
 msgstr "<b>Advarsel:</b><br/>"
 
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
-#, fuzzy
 #| msgid ""
 #| "Published services are accessible and attackable from the evil internet."
 msgid ""
@@ -2679,7 +2652,6 @@ msgid "Web Proxy (Privoxy)"
 msgstr "Webproxy (Privoxy)"
 
 #: plinth/modules/privoxy/__init__.py:40
-#, fuzzy
 #| msgid ""
 #| "Privoxy is a non-caching web proxy with advanced filtering capabilities "
 #| "for enhancing privacy, modifying web page data and HTTP headers, "
@@ -2692,10 +2664,10 @@ msgstr ""
 "Privoxy er en ikke-cachende webproxy med avancerede filtreringsmuligheder "
 "der kan forbedre sikkerheden for dit privatliv, modificere hjemmesidedata og "
 "HTTP-headers, styre adgang og fjerne reklamer og andet vedderstyggeligt "
-"internetskrald."
+"internetskrald. "
 
 #: plinth/modules/privoxy/__init__.py:46
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "You can use Privoxy by modifying your browser proxy settings to your "
 #| "%(box_name)s hostname (or IP address) with port 8118. While using "
@@ -2710,7 +2682,7 @@ msgid ""
 "\">http://p.p</a>."
 msgstr ""
 "Du anvender Privoxy ved at konfigurere din browser til at bruge en proxy-"
-"forbindelse via din %(box_name)s værtsnavn (eller IP-adresse) på port-nummer "
+"forbindelse via din {box_name}s værtsnavn (eller IP-adresse) på port-nummer "
 "8118. Mens du bruger Privoxy kan konfigurationsdetaljer og dokumentation ses "
 "på <a href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> "
 "eller <a href=\"http://p.p\">http://p.p</a>."
@@ -2733,7 +2705,7 @@ msgid "IRC Client (Quassel)"
 msgstr "IRC-klient (Quassel)"
 
 #: plinth/modules/quassel/__init__.py:38
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Quassel is an IRC application that is split into two parts, a \"core\" "
 #| "and a \"client\". This allows the core to remain connected to IRC "
@@ -2749,10 +2721,10 @@ msgid ""
 "one or more Quassel clients from a desktop or a mobile can be used to "
 "connect and disconnect from it."
 msgstr ""
-"Quassel er en IRC-applikation som er opdelt i to; en \"kerne\" og en \"klient"
-"\". Dette gør det muligt for kerne-delen at forblive tilsluttet til IRC-"
-"servere og fortsætte med at modtage beskeder, selv når klienten afbryder "
-"forbindelsen. %(box_name)s kan køre Quassel kerne-tjenesten og holde dig "
+"Quassel er en IRC-applikation som er opdelt i to; en \"kerne\" og en \""
+"klient\". Dette gør det muligt for kerne-delen at forblive tilsluttet til "
+"IRC-servere og fortsætte med at modtage beskeder, selv når klienten afbryder "
+"forbindelsen. {box_name} kan køre Quassel kerne-tjenesten og holde dig "
 "kontinuerligt online, og du vil kunne bruge en eller flere Quassel-klienter "
 "fra en computer eller en mobil til at forbinde til den."
 
@@ -2778,7 +2750,7 @@ msgstr "Quassel kerne-tjeneste er ikke aktiv"
 
 #: plinth/modules/radicale/__init__.py:35
 msgid "Calendar and Addressbook (Radicale)"
-msgstr ""
+msgstr "Kalender og Adressebog (Radicale)"
 
 #: plinth/modules/radicale/__init__.py:39
 #, python-brace-format
@@ -2789,26 +2761,29 @@ msgid ""
 "client application</a> is needed. Radicale can be accessed by any user with "
 "a {box_name} login."
 msgstr ""
+"Radicale er en CalDAV og CardDAV-server. Den gør det muligt at synkronisere "
+"og dele planlægnings og kontakt-data. For at kunne anvende Radicale har man "
+"brug for en <a href=\"http://radicale.org/user_documentation/#idcaldav-and-"
+"carddav-clients\">understøttet klient-applikation</a>. Radicale kan tilgås "
+"af enhver bruger der har et log ind til {box_name}."
 
 #: plinth/modules/radicale/templates/radicale.html:31
-#, fuzzy
 #| msgid "Quassel core service is running"
 msgid "Radicale service is running"
-msgstr "Quassel kerne-tjeneste er aktiv"
+msgstr "Radicale-tjenesten er aktiv"
 
 #: plinth/modules/radicale/templates/radicale.html:34
-#, fuzzy
 #| msgid "Quassel core service is not running"
 msgid "Radicale service is not running"
-msgstr "Quassel kerne-tjeneste er ikke aktiv"
+msgstr "Radicale-tjenesten er ikke aktiv"
 
 #: plinth/modules/repro/__init__.py:33
-#, fuzzy
 #| msgid "Server port"
 msgid "SIP Server (repro)"
-msgstr "Serverport"
+msgstr "SIP-server (repro)"
 
 #: plinth/modules/repro/__init__.py:36
+#, fuzzy
 msgid ""
 "repro provides various SIP services that a SIP softphone can utilize to "
 "provide audio and video calls as well as presence and instant messaging. "
@@ -2816,6 +2791,12 @@ msgid ""
 "their presence known.  It also acts as a proxy to federate SIP "
 "communications to other servers on the Internet similar to email."
 msgstr ""
+"repro stiller forskellige SIP-servicer til rådighed som en SIP-softphone kan "
+"bruge for at give adgang til lyd og video-opkald, såvel som tilgængelighed "
+"og instant messaging. repro forsyner klienter med en en server og SIP-"
+"brugerkontoer som kan annoncere tilgængelighed.  Den fungerer også som "
+"bindeled for at fordele SIP-kommunikation til andre servere på internettet, "
+"på samme måde som email."
 
 #: plinth/modules/repro/__init__.py:43
 msgid ""
@@ -2824,6 +2805,10 @@ msgid ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android phones)."
 msgstr ""
+"En klient-applikation er nødvendig for at foretage SIP-opkald. Mulige "
+"klienter inkluderer <a href=\"https://jitsi.org/\">Jitsi</a> (til computere) "
+"og <a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\""
+">CSipSimple</a> (til Android-enheder)."
 
 #: plinth/modules/repro/__init__.py:48
 msgid ""
@@ -2833,25 +2818,29 @@ msgid ""
 "log in to the repro configuration panel. After setting the domain, it is "
 "required to restart the repro service. Disable the service and re-enable it."
 msgstr ""
+"<strong>Bemærk:</strong>  Før brug af repo skal domæner og brugere "
+"konfigureres ved hjælp af det <a href=\"/repro/domains.html\">web-baserede "
+"konfigurationspanel</a>. Brugere i <em>admin</em>-gruppen vil have adgang "
+"til at logge ind i konfigurationspanelet. Efter at have opsat domænet, er "
+"det nødvendigt at genstarte repo-servicen. Deaktiver servicen og genaktiver "
+"den for at gøre dette."
 
 #: plinth/modules/repro/templates/repro.html:31
-#, fuzzy
 #| msgid "Quassel core service is running"
 msgid "repro service is running"
-msgstr "Quassel kerne-tjeneste er aktiv"
+msgstr "repro-tjenesten er aktiv"
 
 #: plinth/modules/repro/templates/repro.html:34
-#, fuzzy
 #| msgid "Quassel core service is not running"
 msgid "repro service is not running"
-msgstr "Quassel kerne-tjeneste er ikke aktiv"
+msgstr "repro-tjenesten er ikke aktiv"
 
 #: plinth/modules/restore/__init__.py:34
 msgid "Unhosted Storage (reStore)"
 msgstr "Ikke-hostet Lagerplads (reStore)"
 
 #: plinth/modules/restore/__init__.py:38
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
 #| "applications.  The idea is to uncouple web applications from data.  No "
@@ -2869,7 +2858,7 @@ msgstr ""
 "anvender standarden kaldet <a href='https://unhosted.org/'>unhosted.org</a>. "
 "Grundideen er at afkoble selve applikationen fra dens data. Ligegyldigt hvor "
 "en web-applikation indlæses fra, kan data gemmes i et unhosted datalager "
-"efter brugerens valg. Med reStore bliver din %(cfg.box_name)s dit unhosted "
+"efter brugerens valg. Med reStore bliver din {box_name} dit unhosted "
 "datalager."
 
 #: plinth/modules/restore/__init__.py:45
@@ -2911,7 +2900,6 @@ msgstr ""
 "også angive protokollen således <code>imaps://imap.example.com</code>."
 
 #: plinth/modules/roundcube/__init__.py:49
-#, fuzzy
 #| msgid ""
 #| "For Gmail, username will be your Gmail address, password will be your "
 #| "Google account password and server will be <code>imaps://imap.gmail.com</"
@@ -2928,12 +2916,12 @@ msgid ""
 "a>)."
 msgstr ""
 "Ved tilgang til Gmail skal brugernavnet være din komplette Gmail-adresse, "
-"kodeordet dit Google-konto kodeord og serveren <code>imaps://imap.gmail.com</"
-"code>. Bemærk at du også er nødt til at aktivere \"Adgang for mindre sikre "
-"apps\" (engelsk: \"Access for less secure apps\") i indstillingerne for din "
-"Google-konto (<a href=\"https://www.google.com/settings/security/"
-"lesssecureapps\" >https://www.google.com/settings/security/lesssecureapps</"
-"a>)."
+"kodeordet dit Google-konto kodeord og serveren "
+"<code>imaps://imap.gmail.com</code>. Bemærk at du også er nødt til at "
+"aktivere \"Adgang for mindre sikre apps\" (engelsk: \"Access for less secure "
+"apps\") i indstillingerne for din Google-konto (<a href=\""
+"https://www.google.com/settings/security/lesssecureapps\""
+">https://www.google.com/settings/security/lesssecureapps</a>)."
 
 #: plinth/modules/shaarli/__init__.py:34
 msgid "Bookmarks (Shaarli)"
@@ -2958,11 +2946,11 @@ msgid "System Configuration"
 msgstr "Systemkonfiguration"
 
 #: plinth/modules/system/__init__.py:36
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "Here you can administrate the underlying system of your %(box_name)s."
 msgid "Here you can administrate the underlying system of your {box_name}."
-msgstr "Her administrerer du det underliggende system på din %(box_name)s."
+msgstr "Her administrerer du det underliggende system på din {box_name}."
 
 #: plinth/modules/system/__init__.py:40
 #, fuzzy, python-brace-format
@@ -2972,7 +2960,7 @@ msgstr "Her administrerer du det underliggende system på din %(box_name)s."
 msgid ""
 "The options affect the {box_name} at its most general level, so be careful!"
 msgstr ""
-"Disse muligheder påvirker %(box_name)s på det meste grundlæggende niveau, så "
+"Disse muligheder påvirker {box_name} på det meste grundlæggende niveau, så "
 "vær forsigtig!"
 
 #: plinth/modules/tor/__init__.py:40
@@ -2980,7 +2968,6 @@ msgid "Anonymity Network (Tor)"
 msgstr "Anonymiseringstjeneste (Tor)"
 
 #: plinth/modules/tor/__init__.py:43
-#, fuzzy
 #| msgid ""
 #| "Tor is an anonymous communication system. You can learn more about it "
 #| "from the <a href=\"https://www.torproject.org/\">Tor Project</a> website. "
@@ -2997,18 +2984,18 @@ msgstr ""
 "Tor er et system der muliggør anonym kommunikation. Du kan lære mere om det "
 "på <a href=\"https://www.torproject.org/\">Tor-projektets</a> hjemmeside.  "
 "For den bedste beskyttelse når du bruger webbet, anbefaler Tor-projektet at "
-"du bruger <a href=\"https://www.torproject.org/download/download-easy.html.en"
-"\">Tor-browseren</a>."
+"du bruger <a href=\"https://www.torproject.org/download/download-easy.html."
+"en\">Tor-browseren</a>."
 
 #: plinth/modules/tor/__init__.py:66
-#, fuzzy
 #| msgid "Anonymity Network (Tor)"
 msgid "Tor Anonymity Network"
-msgstr "Anonymiseringstjeneste (Tor)"
+msgstr "Tor Anonymiseringstjeneste"
 
 #: plinth/modules/tor/__init__.py:71
+#, fuzzy
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Tor Bridge Relay"
 
 #: plinth/modules/tor/__init__.py:92 plinth/modules/tor/__init__.py:120
 msgid "Tor Hidden Service"
@@ -3045,7 +3032,7 @@ msgid "Enable Tor Hidden Service"
 msgstr "Aktiver Tor Skjult Tjeneste"
 
 #: plinth/modules/tor/forms.py:38
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "A hidden service will allow FreedomBox to provide selected services (such "
 #| "as ownCloud or Chat) without revealing its location."
@@ -3053,8 +3040,8 @@ msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "ownCloud or chat) without revealing its location."
 msgstr ""
-"En skjult tjeneste tillader FreedomBox at levere udvalgte tjenester (såsom "
-"ownCloud og Chat) uden at afsløre sin lokation."
+"En skjult tjeneste tillader {box_name} at levere udvalgte tjenester (såsom "
+"ownCloud og chat) uden at afsløre sin lokation."
 
 #: plinth/modules/tor/forms.py:42
 msgid "Download software packages over Tor"
@@ -3071,10 +3058,9 @@ msgstr ""
 "under hentningen."
 
 #: plinth/modules/tor/templates/tor.html:41
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Tor configuration is being updated"
-msgstr "Konfiguration opdateret"
+msgstr "Tor-konfiguration opdateres"
 
 #: plinth/modules/tor/templates/tor.html:49
 msgid "Tor is running"
@@ -3089,10 +3075,9 @@ msgid "Hidden Service"
 msgstr "Skjult Tjeneste"
 
 #: plinth/modules/tor/templates/tor.html:66
-#, fuzzy
 #| msgid "Port"
 msgid "Ports"
-msgstr "Port"
+msgstr "Porte"
 
 #: plinth/modules/tor/templates/tor.html:96
 msgid "Bridge"
@@ -3130,14 +3115,13 @@ msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Fejl under handling: {0} [{1}] [{2}]"
 
 #: plinth/modules/tor/views.py:119
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Configuration updated."
-msgstr "Konfiguration opdateret"
+msgstr "Konfiguration opdateret."
 
 #: plinth/modules/tor/views.py:121
 msgid "An error occurred during configuration."
-msgstr ""
+msgstr "Der opstod en fejl under konfigurationen."
 
 #: plinth/modules/transmission/__init__.py:36
 msgid "BitTorrent (Transmission)"
@@ -3193,8 +3177,9 @@ msgid "Transmission daemon is not running."
 msgstr "Transmission er ikke aktiv."
 
 #: plinth/modules/ttrss/__init__.py:34
+#, fuzzy
 msgid "News Feed Reader (Tiny Tiny RSS)"
-msgstr ""
+msgstr "Nyhedsstrømlæser (Tiny Tiny RSS)"
 
 #: plinth/modules/ttrss/__init__.py:37
 msgid ""
@@ -3202,9 +3187,11 @@ msgid ""
 "allow reading news from any location, while feeling as close to a real "
 "desktop application as possible."
 msgstr ""
+"Tiny Tiny RSS er en læser og sammenfletter til nyhedsstrømme (RSS/Atom), som "
+"er designet til at læse nyheder på farten, men samtidig føles så meget som "
+"en rigtig desktop-applikation som muligt."
 
 #: plinth/modules/ttrss/__init__.py:41
-#, fuzzy
 #| msgid ""
 #| "When enabled, the blogs and wikis will be available from <a href=\"/"
 #| "ikiwiki\">/ikiwiki</a>."
@@ -3212,20 +3199,18 @@ msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
 "rss</a> path on the web server."
 msgstr ""
-"Når aktiveret, vil blogs og wikier være tilgængelige på <a href=\"/ikiwiki"
-"\">/ikiwiki</a>."
+"Når aktiveret, vil Tiny Tiny RSS være tilgængelige på stien <a href=\"/tt-"
+"rss\">/tt-rss</a> på webserveren."
 
 #: plinth/modules/ttrss/templates/ttrss.html:31
-#, fuzzy
 #| msgid "Quassel core service is running"
 msgid "Tiny Tiny RSS feed update service is running"
-msgstr "Quassel kerne-tjeneste er aktiv"
+msgstr "Tiny Tiny RSS strømopdaterings-tjenesten er aktiv"
 
 #: plinth/modules/ttrss/templates/ttrss.html:34
-#, fuzzy
 #| msgid "Quassel core service is not running"
 msgid "Tiny Tiny RSS feed update service is not running"
-msgstr "Quassel kerne-tjeneste er ikke aktiv"
+msgstr "Tiny Tiny RSS strømopdaterings-tjenesten er ikke aktiv"
 
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Software Upgrades"
@@ -3237,6 +3222,10 @@ msgid ""
 "upgrades are enabled, upgrades are automatically run every night. You don't "
 "normally need to start the upgrade process."
 msgstr ""
+"Opdateringer installerer de seneste software og sikkerheds-opdateringer. "
+"Hvis automatiske opdateringer er aktiveret udføres opdateringer automatisk "
+"hver nat. Normalt er det ikke nødvendigt manuelt at starte "
+"opdateringsprocessen."
 
 #: plinth/modules/upgrades/forms.py:29
 msgid "Enable automatic upgrades"
@@ -3257,20 +3246,24 @@ msgid ""
 "other packages.  During the upgrade, this web interface may be temporarily "
 "unavailable and show an error.  Refresh the page to continue."
 msgstr ""
+"Afhængigt af antallet af pakker der skal installeres, kan dette tage lang "
+"tid at gennemføre.  Mens opdateringen er i gang vil du ikke være i stand til "
+"at installere andre pakker.  Under opdateringen kan dette web-interface "
+"blive midlertidigt utilgængeligt og vise en fejl.  Genindlæs siden for at "
+"fortsætte."
 
 #: plinth/modules/upgrades/templates/upgrades.html:48
 msgid "Upgrade now &raquo;"
 msgstr "Opdater nu &raquo;"
 
 #: plinth/modules/upgrades/templates/upgrades.html:55
-#, fuzzy
 #| msgid "ejabberd is running"
 msgid "A package manager is running."
-msgstr "ejabberd er aktiv"
+msgstr "En pakkehåndtering kører allerede."
 
 #: plinth/modules/upgrades/templates/upgrades.html:60
 msgid "Recent log from upgrades:"
-msgstr ""
+msgstr "Seneste log-meddelelser fra opdateringer:"
 
 #: plinth/modules/upgrades/views.py:35
 msgid "Automatic Upgrades"
@@ -3295,16 +3288,14 @@ msgid "Automatic upgrades disabled"
 msgstr "Automatisk opdatering deaktiveret"
 
 #: plinth/modules/upgrades/views.py:107
-#, fuzzy
 #| msgid "Upgrade completed."
 msgid "Upgrade process started."
-msgstr "Opdatering færdig."
+msgstr "Opdateringsprocessen er startet."
 
 #: plinth/modules/upgrades/views.py:110
-#, fuzzy
 #| msgid "Upgrade failed."
 msgid "Starting upgrade failed."
-msgstr "Opdatering fejlede."
+msgstr "Kunne ikke starte opdatering."
 
 #: plinth/modules/users/__init__.py:34
 msgid "Users and Groups"
@@ -3349,7 +3340,7 @@ msgstr "Kunne ikke tilføje ny bruger til gruppen {group}."
 
 #: plinth/modules/users/forms.py:92
 msgid "SSH Keys"
-msgstr ""
+msgstr "SSH-nøgler"
 
 #: plinth/modules/users/forms.py:96
 msgid ""
@@ -3357,6 +3348,9 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
+"At opsætte en offentlig SSH-nøgle vil give denne bruger adgang til at logge "
+"sikkert ind på systemet uden et kodeord. Der kan defineres flere nøgler, en "
+"på hver linje. Tomme linjer og linjer som starter med # bliver ignoreret."
 
 #: plinth/modules/users/forms.py:136
 msgid "Renaming LDAP user failed."
@@ -3523,10 +3517,10 @@ msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) Server"
 
 #: plinth/service.py:79
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "FreedomBox Web Interface (Plinth)"
 msgid "{box_name} Web Interface (Plinth)"
-msgstr "FreedomBox Web-brugerflade (Plinth)"
+msgstr "{box_name} Web-brugerflade (Plinth)"
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -3562,10 +3556,10 @@ msgstr ""
 "issues\">fejlhåndteringsvørktøjet</a> så vi kan rette den."
 
 #: plinth/templates/base.html:49
-#, fuzzy, python-format
+#, python-format
 #| msgid "Plinth administrative interface for the FreedomBox"
 msgid "Plinth administrative interface for the %(box_name)s"
-msgstr "Plinth administrationsværktøj til FreedomBox"
+msgstr "Plinth administrationsværktøj til %(box_name)s"
 
 #: plinth/templates/base.html:83
 msgid "Toggle navigation"
@@ -3593,10 +3587,9 @@ msgid "Installation"
 msgstr "Installation"
 
 #: plinth/templates/setup.html:45
-#, fuzzy
 #| msgid "Installation"
 msgid "Install this application?"
-msgstr "Installation"
+msgstr "Installer denne applikation?"
 
 #: plinth/templates/setup.html:54
 msgid "Install"
@@ -3604,21 +3597,20 @@ msgstr "Installer"
 
 #: plinth/templates/setup.html:58
 msgid "This application needs an update. Update now?"
-msgstr ""
+msgstr "Denne applikation har brug for en opdatering. Opdater nu?"
 
 #: plinth/templates/setup.html:67
-#, fuzzy
 #| msgid "Update URL"
 msgid "Update"
-msgstr "Opdaterings-URL"
+msgstr "Opdater"
 
 #: plinth/templates/setup.html:74
 msgid "Performing pre-install operation"
-msgstr ""
+msgstr "Udfører før-installationshandlinger"
 
 #: plinth/templates/setup.html:76
 msgid "Performing post-install operation"
-msgstr ""
+msgstr "Udfører efter-installationshandlinger"
 
 #: plinth/templates/setup.html:80
 #, python-format
@@ -3631,16 +3623,14 @@ msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% færdig"
 
 #: plinth/views.py:110
-#, fuzzy
 #| msgid "Applications"
 msgid "Application enabled"
-msgstr "Applikationer"
+msgstr "Applikation aktiveret"
 
 #: plinth/views.py:112
-#, fuzzy
 #| msgid "Applications"
 msgid "Application disabled"
-msgstr "Applikationer"
+msgstr "Applikation deaktiveret"
 
 #~ msgid "Enable service discovery"
 #~ msgstr "Aktiver tjenestesøgning"
