@@ -103,7 +103,33 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.8 (2016-02)</title>
+      <title>Version 0.9 (not released yet)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Fixed Wi-Fi AP setup. </para>
+        </listitem>
+        <listitem>
+          <para>Prevent lockout of users in 'sudo' group after setup is complete. </para>
+        </listitem>
+        <listitem>
+          <para>Improved setup mechanism for Plinth modules. Allows users to see what a module is useful for, before doing the setup and package install. Also allows essential modules to be setup by default during FreedomBox install. </para>
+        </listitem>
+        <listitem>
+          <para>Added HTTPS certificates to Monkeysphere page. Reorganized so that multiple domains can be added to a key. </para>
+        </listitem>
+        <listitem>
+          <para>Added Radicale, a CalDAV and CardDAV server. </para>
+        </listitem>
+        <listitem>
+          <para>Added Minetest Server, a multiplayer infinite-world block sandbox. </para>
+        </listitem>
+        <listitem>
+          <para>Added Tiny Tiny RSS, a news feed reader. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.8 (2016-02-20)</title>
       <itemizedlist>
         <listitem>
           <para>Added Quassel, an IRC client that stays connected to IRC networks and can synchronize multiple frontends. </para>
@@ -783,7 +809,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
       <section>
         <title>Status of package</title>
-        <para>GNU Social is still getting packaged for debian and will be available soon for everyone to use. check the progress by tracking the bug #782812. </para>
+        <para>GNU Social is still getting packaged for debian and will be available soon for everyone to use. check the progress by tracking the bug <ulink url="https://bugs.debian.org/782812#">#782812</ulink>. </para>
       </section>
     </section>
   </section>
@@ -822,7 +848,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
       <section>
         <title>Internet Connection Sharing</title>
-        <para>Although the primary duty of FreedomBox is to provide decentralized services, it can't also act like a home router.  Hence, in most cases, FreedomBox connects to the Internet and provides other machines in the network the ability to use that Internet connection.  FreedomBox can do this in two ways: using a <code>shared</code> mode connection or using an <code>internal</code> connection. </para>
+        <para>Although the primary duty of FreedomBox is to provide decentralized services, it can also act like a home router.  Hence, in most cases, FreedomBox connects to the Internet and provides other machines in the network the ability to use that Internet connection.  FreedomBox can do this in two ways: using a <code>shared</code> mode connection or using an <code>internal</code> connection. </para>
         <para>When an interface is set in <code>shared</code> mode, you may connect your machine directly to it.  This is either by plugging in an ethernet cable from this interface to your machine or by connecting to a Wi-Fi access point.  This case is the simplest to use, as FreedomBox automatically provides your machine with the necessary network configuration.  Your machine will automatically connect to FreedomBox provided network and will be able to connect to the Internet given that FreedomBox can itself connect to the Internet. </para>
         <para>Sometimes the above setup may not be possible because the hardware device may have only one network interface or for other reasons.  Even in this case, your machine can still connect to the Internet via FreedomBox.  For this to work, make sure that the network interface that your machine is connecting to is in <code>internal</code> mode.  Then, connect your machine to network in which FreedomBox is present.  After this, in your machine's network configuration, set FreedomBox's IP address as the gateway.  FreedomBox will then accept your network traffic from your machine and send it over to the Internet.  This works because network interfaces in <code>internal</code> mode are configured to <code>masquerade</code> packets from local machines to the Internet and receive packets from Internet and forward them back to local machines. </para>
       </section>
@@ -4038,7 +4064,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       </section>
       <section>
         <title>Bugs</title>
-        <para><ulink url="https://wiki.debian.org/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. </para>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Contribute/Bugs#">List of bugs</ulink> listed on Debian universal system. Also see the <ulink url="https://qa.debian.org/developer.php?login=freedombox-pkg-team%40lists.alioth.debian.org&amp;comaint=yes">Packages overview for FreedomBox packaging team</ulink> for status of various packages that we use. </para>
       </section>
       <section>
         <title>Code</title>
