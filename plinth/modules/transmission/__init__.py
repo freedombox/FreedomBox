@@ -33,6 +33,8 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['transmission-daemon']
+
 title = _('BitTorrent (Transmission)')
 
 description = [
