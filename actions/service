@@ -1,0 +1,162 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Wrapper to list and handle system services
+"""
+
+import argparse
+from importlib import import_module
+import os
+import json
+import subprocess
+
+from plinth import action_utils, cfg
+
+cfg.read()
+module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
+
+
+def add_service_action(subparsers, action, help):
+    parser = subparsers.add_parser(action, help=help)
+    parser.add_argument('service', help='name of the service')
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    add_service_action(subparsers, 'start', 'start a service')
+    add_service_action(subparsers, 'stop', 'stop a service')
+    add_service_action(subparsers, 'enable', 'enable a service')
+    add_service_action(subparsers, 'disable', 'disable a service')
+    add_service_action(subparsers, 'reload', 'reload a service')
+    add_service_action(subparsers, 'is-running', 'status of a service')
+    add_service_action(subparsers, 'is-enabled', 'status a service')
+
+    subparsers.add_parser('list', help='List of running system services')
+
+    return parser.parse_args()
+
+
+def subcommand_start(arguments):
+    action_utils.service_start(arguments.service)
+
+
+def subcommand_stop(arguments):
+    action_utils.service_stop(arguments.service)
+
+
+def subcommand_enable(arguments):
+    action_utils.service_enable(arguments.service)
+
+
+def subcommand_disable(arguments):
+    action_utils.service_disable(arguments.service)
+
+
+def subcommand_reload(arguments):
+    action_utils.service_reload(arguments.service)
+
+
+def subcommand_is_enabled(arguments):
+    print(action_utils.service_is_enabled(arguments.service))
+
+
+def subcommand_is_running(arguments):
+    print(action_utils.service_is_running(arguments.service))
+
+
+def subcommand_list(_):
+    """Get list of plinth-managed services with their status (running or not)"""
+    managed_services = _get_managed_services()
+    services = dict.fromkeys(managed_services, {'running': False})
+
+    output = subprocess.check_output(['systemctl', 'list-units'])
+    for line in output.decode().strip().split('\n'):
+        if line.startswith('UNIT'): continue
+        # Stop parsing on empty line after the service list
+        if not len(line): break
+
+        try:
+            unit, load, active, sub = line.split()[:4]
+        except ValueError:
+            continue
+        suffix = '.service'
+        if unit.endswith(suffix):
+            name = unit[:-len(suffix)]
+            if name in services:
+                services[name] = {'running': (sub=='running')}
+
+    print(json.dumps(services))
+
+
+def _get_managed_services_of_module(modulepath):
+    """Import a module and return content of its 'managed_services' variable"""
+    try:
+        module = import_module(modulepath)
+    except ImportError:
+        return []
+    else:
+        return getattr(module, 'managed_services', [])
+
+
+def _get_managed_services():
+    """
+    Get a set of all services managed by Plinth
+
+    This collects all service-names inside the 'managed_services' variable of
+    modules inside 'module_config_path'
+    """
+    services = set()
+    for filename in os.listdir(module_config_path):
+        # Omit hidden files
+        if filename.startswith('.'):
+            continue
+
+        filepath = os.path.join(module_config_path, filename)
+        if os.path.isfile(filepath):
+            with open(filepath, 'r') as f:
+                modulepath = f.read().strip()
+                services.update(_get_managed_services_of_module(modulepath))
+
+    return services
+
+
+def _assert_service_is_managed_by_plinth(service_name):
+    managed_services = _get_managed_services()
+    if service_name not in managed_services:
+        msg = ("The service '%s' is not managed by Plinth. Access is only "
+               "permitted for services listed in the 'managed_services' "
+               "variable of any Plinth module.")  % service_name
+        raise ValueError(msg)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    if hasattr(arguments, 'service'):
+        _assert_service_is_managed_by_plinth(arguments.service)
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

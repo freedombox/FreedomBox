@@ -31,6 +31,8 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['quasselcore']
+
 title = _('IRC Client (Quassel)')
 
 description = [
