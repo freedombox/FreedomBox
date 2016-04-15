@@ -1,0 +1,131 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for the LDAP user directory
+"""
+
+import argparse
+import subprocess
+
+from plinth import action_utils
+
+ACCESS_CONF = '/etc/security/access.conf'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed')
+    subparsers.add_parser('setup', help='Setup LDAP')
+
+    return parser.parse_args()
+
+
+def subcommand_pre_install(_):
+    """Preseed debconf values before packages are installed."""
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'slapd slapd/domain string thisbox',
+        check=True)
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'nslcd nslcd/ldap-uris string "ldapi:///"',
+        check=True)
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'nslcd nslcd/ldap-base string "dc=thisbox"',
+        check=True)
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'nslcd nslcd/ldap-auth-type select SASL',
+        check=True)
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'nslcd nslcd/ldap-sasl-mech select EXTERNAL',
+        check=True)
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'libnss-ldapd libnss-ldapd/nsswitch multiselect group, passwd, shadow',
+        check=True)
+
+
+def subcommand_setup(_):
+    """Setup LDAP."""
+    # Make sure slapd isn't running when we use slapadd.
+    action_utils.service_stop('slapd')
+    subprocess.run(['slapadd'], input=b'''
+dn: ou=users,dc=thisbox
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=thisbox
+objectClass: top
+objectClass: organizationalUnit
+ou: groups
+''')
+    action_utils.service_start('slapd')
+
+    # Update pam configs for access and mkhomedir.
+    subprocess.run(['pam-auth-update', '--package'], check=True)
+
+    # Restrict console login to users in admin or sudo group.
+    with open(ACCESS_CONF, 'r') as conffile:
+        lines = conffile.readlines()
+
+    access_conf_completed = False
+    for line in lines:
+        if '-:ALL EXCEPT root fbx (admin) (sudo):ALL' in line:
+            access_conf_completed = True
+
+    if not access_conf_completed:
+        with open(ACCESS_CONF, 'a') as conffile:
+            conffile.write('-:ALL EXCEPT root fbx (admin) (sudo):ALL\n')
+
+    # Remove LDAP admin password. Allow root to modify the users directory.
+    subprocess.run(
+        ['ldapmodify', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+        input=b'''
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+delete: olcRootPW
+
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+''')
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
