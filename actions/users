@@ -24,9 +24,11 @@ Configuration helper for the LDAP user directory
 import argparse
 import subprocess
 
+import augeas
 from plinth import action_utils
 
 ACCESS_CONF = '/etc/security/access.conf'
+LDAPSCRIPTS_CONF = '/etc/ldapscripts/ldapscripts.conf'
 
 
 def parse_arguments():
@@ -116,6 +118,22 @@ changetype: modify
 replace: olcRootDN
 olcRootDN: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 ''')
+
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', LDAPSCRIPTS_CONF)
+    aug.load()
+
+    # XXX: Password setting on users is disabled as changing passwords
+    # using SASL Auth is not supported.
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/SERVER', '"ldapi://"')
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/SASLAUTH', '"EXTERNAL"')
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/SUFFIX', '"dc=thisbox"')
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/USUFFIX', '"ou=Users"')
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/GSUFFIX', '"ou=Groups"')
+    aug.set('/files' + LDAPSCRIPTS_CONF + '/PASSWORDGEN', '"true"')
+    aug.save()
 
 
 def main():

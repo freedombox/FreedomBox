@@ -121,24 +121,6 @@ remove_user_from_group()
 }
 
 
-setup()
-{
-    # XXX: Password setting on users is disabled as changing passwords
-    # using SASL Auth is not supported.
-    cat <<EOF | augtool --noload --noautoload --transform 'Shellvars incl /etc/ldapscripts/ldapscripts.conf' > /dev/null
-set /files/etc/ldapscripts/ldapscripts.conf/SERVER '"ldapi://"'
-set /files/etc/ldapscripts/ldapscripts.conf/SASLAUTH '"EXTERNAL"'
-set /files/etc/ldapscripts/ldapscripts.conf/SUFFIX '"dc=thisbox"'
-set /files/etc/ldapscripts/ldapscripts.conf/USUFFIX '"ou=Users"'
-set /files/etc/ldapscripts/ldapscripts.conf/GSUFFIX '"ou=Groups"'
-set /files/etc/ldapscripts/ldapscripts.conf/PASSWORDGEN '"true"'
-save
-EOF
-}
-
-
-setup
-
 command=$1
 shift
 case $command in
