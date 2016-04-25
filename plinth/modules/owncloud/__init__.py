@@ -20,6 +20,7 @@ Plinth module to configure ownCloud
 """
 
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 
 from plinth import actions
 from plinth import action_utils
@@ -57,8 +58,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'owncloud', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        'owncloud', title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=_enable, disable=_disable)
 
 
 def setup(helper, old_version=None):
@@ -98,3 +99,7 @@ def diagnose():
         'https://{host}/owncloud', extra_options=['--no-check-certificate']))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

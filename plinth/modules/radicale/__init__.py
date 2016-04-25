@@ -19,6 +19,8 @@
 Plinth module for radicale.
 """
 
+from functools import partial
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -46,6 +48,8 @@ description = [
 
 service = None
 
+managed_services = ['radicale']
+
 
 def init():
     """Initialize the radicale module."""
@@ -54,8 +58,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'radicale', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        enable=_enable, disable=_disable)
 
 
 def setup(helper, old_version=None):
@@ -67,18 +71,8 @@ def setup(helper, old_version=None):
 
 def get_status():
     """Get the current service status."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
-
-
-def is_enabled():
-    """Return whether the service is enabled."""
-    return action_utils.service_is_enabled('radicale')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('radicale')
+    return {'enabled': service.is_enabled(),
+            'is_running': service.is_running()}
 
 
 def enable(should_enable):
@@ -98,3 +92,7 @@ def diagnose():
         'https://{host}/radicale', extra_options=['--no-check-certificate']))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

@@ -20,6 +20,7 @@ Plinth module to configure Tiny Tiny RSS.
 """
 
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 
 from plinth import actions
 from plinth import action_utils
@@ -44,6 +45,8 @@ description = [
 
 service = None
 
+managed_services = ['tt-rss']
+
 
 def init():
     """Intialize the module."""
@@ -52,8 +55,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'tt-rss', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=_enable, disable=_disable)
 
 
 def setup(helper, old_version=None):
@@ -67,18 +70,13 @@ def setup(helper, old_version=None):
 def get_status():
     """Get the current settings."""
     return {'enabled': is_enabled(),
-            'is_running': is_running()}
+            'is_running': service.is_running()}
 
 
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('tt-rss') and
             action_utils.webserver_is_enabled('tt-rss-plinth'))
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('tt-rss')
 
 
 def enable(should_enable):
@@ -96,3 +94,7 @@ def diagnose():
         'https://{host}/tt-rss', extra_options=['--no-check-certificate']))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

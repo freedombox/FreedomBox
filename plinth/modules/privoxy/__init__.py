@@ -53,6 +53,8 @@ description = [
 
 service = None
 
+managed_services = ['privoxy']
+
 
 def init():
     """Intialize the module."""
@@ -61,7 +63,7 @@ def init():
 
     global service
     service = service_module.Service(
-        'privoxy', title, is_external=False, enabled=is_enabled())
+        managed_services[0], title, is_external=False)
 
 
 def setup(helper, old_version=None):
@@ -73,25 +75,16 @@ def setup(helper, old_version=None):
 
 def get_status():
     """Get the current settings from server."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('privoxy')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('privoxy')
+    return {'enabled': service.is_enabled(),
+            'is_running': service.is_running()}
 
 
 def enable(should_enable):
     """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('privoxy', [sub_command])
-    service.notify_enabled(None, should_enable)
+    if should_enable:
+        service.enable()
+    else:
+        service.disable()
 
 
 def diagnose():
