@@ -37,8 +37,6 @@ def parse_arguments():
 
     subparsers.add_parser('setup',
                           help='Perform Privoxy configuration setup')
-    subparsers.add_parser('enable', help='Enable Privoxy service')
-    subparsers.add_parser('disable', help='Disable Privoxy service')
 
     return parser.parse_args()
 
@@ -61,16 +59,6 @@ def subcommand_setup(_):
             conffile.write('listen-address [::]:8118')
 
     action_utils.service_restart('privoxy')
-
-
-def subcommand_enable(_):
-    """Start service."""
-    action_utils.service_enable('privoxy')
-
-
-def subcommand_disable(_):
-    """Stop service."""
-    action_utils.service_disable('privoxy')
 
 
 def main():

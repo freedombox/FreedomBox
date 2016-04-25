@@ -20,6 +20,7 @@ Plinth module to configure ikiwiki
 """
 
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 
 from plinth import actions
 from plinth import action_utils
@@ -48,8 +49,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'ikiwiki', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        'ikiwiki', title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=_enable, disable=_disable)
 
 
 def setup(helper, old_version=None):
@@ -90,3 +91,7 @@ def diagnose():
         'https://{host}/ikiwiki', extra_options=['--no-check-certificate']))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

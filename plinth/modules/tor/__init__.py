@@ -64,13 +64,13 @@ def init():
     global socks_service
     socks_service = service_module.Service(
         'tor-socks', _('Tor Anonymity Network'),
-        is_external=False, enabled=is_enabled())
+        is_external=False, is_enabled=is_enabled, is_running=is_running)
 
     global bridge_service
     bridge_service = service_module.Service(
         'tor-bridge', _('Tor Bridge Relay'),
         ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
-        is_external=True, enabled=is_enabled())
+        is_external=True, is_enabled=is_enabled, is_running=is_running)
 
     # Register hidden service name with Name Services module.
     hs_info = get_hs()

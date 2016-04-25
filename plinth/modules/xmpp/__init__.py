@@ -20,6 +20,7 @@ Plinth module to configure XMPP server
 """
 
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 import logging
 import socket
 
@@ -51,6 +52,8 @@ service = None
 
 logger = logging.getLogger(__name__)
 
+managed_services = ['ejabberd']
+
 
 def init():
     """Initialize the XMPP module"""
@@ -59,8 +62,9 @@ def init():
 
     global service
     service = service_module.Service(
-        'xmpp', title, ['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-        is_external=True, enabled=is_enabled())
+        'ejabberd', title, ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
+        is_external=True, is_enabled=is_enabled, enable=_enable,
+        disable=_disable)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
@@ -81,8 +85,8 @@ def setup(helper, old_version=None):
 
 def get_status():
     """Get the current settings."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running(),
+    return {'enabled': service.is_enabled(),
+            'is_running': service.is_running(),
             'domainname': get_domainname()}
 
 
@@ -90,11 +94,6 @@ def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('ejabberd') and
             action_utils.webserver_is_enabled('jwchat-plinth'))
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('ejabberd')
 
 
 def get_domainname():
@@ -164,3 +163,7 @@ def diagnose():
     results.extend(action_utils.diagnose_url_on_all('http://{host}/jwchat'))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

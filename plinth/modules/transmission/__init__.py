@@ -20,6 +20,7 @@ Plinth module to configure Transmission server
 """
 
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 import json
 import socket
 
@@ -33,8 +34,6 @@ version = 1
 
 depends = ['apps']
 
-managed_services = ['transmission-daemon']
-
 title = _('BitTorrent (Transmission)')
 
 description = [
@@ -44,6 +43,8 @@ description = [
 ]
 
 service = None
+
+managed_services = ['transmission-daemon']
 
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
@@ -55,8 +56,9 @@ def init():
 
     global service
     service = service_module.Service(
-        'transmission', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=_enable, disable=_disable,
+        description=description)
 
 
 def setup(helper, old_version=None):
@@ -79,7 +81,7 @@ def get_status():
     status = {key.translate(str.maketrans({'-': '_'})): value
               for key, value in status.items()}
     status['enabled'] = is_enabled()
-    status['is_running'] = is_running()
+    status['is_running'] = service.is_running()
     status['hostname'] = socket.gethostname()
 
     return status
@@ -89,11 +91,6 @@ def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('transmission-daemon') and
             action_utils.webserver_is_enabled('transmission-plinth'))
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('transmission-daemon')
 
 
 def enable(should_enable):
@@ -114,3 +111,7 @@ def diagnose():
         extra_options=['--no-check-certificate']))
 
     return results
+
+
+_enable = partial(enable, True)
+_disable = partial(enable, False)

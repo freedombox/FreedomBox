@@ -40,10 +40,11 @@ class ConfigurationView(views.ConfigurationView):
         modified = False
 
         if old_status['enabled'] != new_status['enabled']:
-            sub_command = 'enable' if new_status['enabled'] else 'disable'
+            if new_status['enabled']:
+                datetime.service.enable()
+            else:
+                datetime.service.disable()
             modified = True
-            actions.superuser_run('datetime', [sub_command])
-            datetime.service.notify_enabled(None, new_status['enabled'])
             messages.success(self.request, _('Configuration updated'))
 
         if old_status['time_zone'] != new_status['time_zone'] and \
