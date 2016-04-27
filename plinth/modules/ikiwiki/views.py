@@ -43,9 +43,9 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
 class IkiwikiServiceView(views.ServiceView):
     """Serve configuration page."""
     service_id = "ikiwiki"
-    template_name = "apache_service.html"
-    diagnostics_module_name = "ikiwiki"
     description = ikiwiki.description
+    diagnostics_module_name = "ikiwiki"
+    show_status_block = False
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""

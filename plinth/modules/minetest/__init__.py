@@ -65,9 +65,9 @@ def setup(helper, old_version=None):
 
 class MinetestServiceView(ServiceView):
     service_id = managed_services[0]
-    template_name = "apache_service.html"
     diagnostics_module_name = "minetest"
     description = description
+    show_status_block = False
 
 
 def diagnose():

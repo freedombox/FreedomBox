@@ -18,6 +18,8 @@
 #
 {% endcomment %}
 
+{# Template to display/configure a Service, used by views.ServiceView #}
+
 {% load bootstrap %}
 {% load i18n %}
 
@@ -33,16 +35,18 @@
   {% endblock %}
 
   {% block status %}
-    <h3>Status</h3>
-    <p class="running-status-parent">
-      {% if service.is_running %}
-        <span class="running-status active"></span>
-        Service <i>{{ service.name }}</i> {% trans "is running" %}
-      {% else %}
-        <span class="running-status inactive"></span>
-        Service <i>{{ service.name }}</i> {% trans "is not running" %}
-      {% endif %}
-    </p>
+    {% if show_status_block %}
+      <h3>Status</h3>
+      <p class="running-status-parent">
+        {% if service.is_running %}
+          <span class="running-status active"></span>
+          Service <i>{{ service.name }}</i> {% trans "is running" %}
+        {% else %}
+          <span class="running-status inactive"></span>
+          Service <i>{{ service.name }}</i> {% trans "is not running" %}
+        {% endif %}
+      </p>
+    {% endif %}
   {% endblock %}
 
   {% block diagnostics %}

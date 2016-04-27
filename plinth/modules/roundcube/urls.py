@@ -30,6 +30,6 @@ urlpatterns = [
             service_id="roundcube",
             diagnostics_module_name="roundcube",
             description=roundcube.description,
-            template_name="apache_service.html"
+            show_status_block=False
         ), name='index'),
 ]
