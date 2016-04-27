@@ -18,15 +18,16 @@
 """
 Plinth module for configuring Tor.
 """
-
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 
+from . import utils as tor_utils
 from .forms import TorForm
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
+
 
 config_process = None
 
@@ -36,7 +37,7 @@ def index(request):
     if config_process:
         _collect_config_result(request)
 
-    status = tor.get_status()
+    status = tor_utils.get_status()
     form = None
 
     if request.method == 'POST':
@@ -44,7 +45,7 @@ def index(request):
         # pylint: disable=E1101
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
-            status = tor.get_status()
+            status = tor_utils.get_status()
             form = TorForm(initial=status, prefix='tor')
     else:
         form = TorForm(initial=status, prefix='tor')
@@ -109,7 +110,7 @@ def _collect_config_result(request):
     if return_code is None:
         return
 
-    status = tor.get_status()
+    status = tor_utils.get_status()
 
     tor.socks_service.notify_enabled(None, status['enabled'])
     tor.bridge_service.notify_enabled(None, status['enabled'])

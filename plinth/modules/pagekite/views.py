@@ -42,7 +42,6 @@ def index(request):
     """Serve introduction page"""
     return TemplateResponse(request, 'pagekite_introduction.html',
                             {'title': pagekite.title,
-                             'description': pagekite.description,
                              'subsubmenu': subsubmenu})
 
 

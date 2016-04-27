@@ -57,23 +57,9 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, ports=['http', 'https'], is_external=False,
-        description=description)
+        managed_services[0], title, ports=['http', 'https'], is_external=False)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['node-restore'])
-
-
-def get_status():
-    """Get the current settings."""
-    return {'enabled': service.is_enabled()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()

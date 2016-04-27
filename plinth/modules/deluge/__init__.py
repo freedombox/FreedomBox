@@ -20,7 +20,6 @@ Plinth module to configure a Deluge web client.
 """
 
 from django.utils.translation import ugettext_lazy as _
-from functools import partial
 
 from plinth import actions
 from plinth import action_utils
@@ -31,6 +30,10 @@ from plinth import service as service_module
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['deluge-web']
 
 title = _('BitTorrent Web Client (Deluge)')
 
@@ -43,10 +46,6 @@ description = [
       'it immediately after enabling this service.')
 ]
 
-service = None
-
-managed_services = ['deluge-web']
-
 
 def init():
     """Initialize the Deluge module."""
@@ -56,7 +55,7 @@ def init():
     global service
     service = service_module.Service(
         managed_services[0], title, ports=['http', 'https'], is_external=True,
-        is_enabled=is_enabled, enable=_enable, disable=_disable)
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -66,23 +65,20 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.webserver_is_enabled('deluge-plinth') and
             action_utils.service_is_enabled('deluge-web'))
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('deluge', [sub_command])
-    service.notify_enabled(None, should_enable)
+def enable():
+    """Enable the module."""
+    actions.superuser_run('deluge', ['enable'])
+
+
+def disable():
+    """Disable the module."""
+    actions.superuser_run('deluge', ['disable'])
 
 
 def diagnose():
@@ -95,7 +91,3 @@ def diagnose():
         'https://{host}/deluge', extra_options=['--no-check-certificate']))
 
     return results
-
-
-_enable = partial(enable, True)
-_disable = partial(enable, False)

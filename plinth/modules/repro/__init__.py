@@ -25,6 +25,7 @@ from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.views import ServiceView
 
 version = 1
 
@@ -69,25 +70,17 @@ def init():
         is_external=True)
 
 
+class ReproServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = "repro"
+    description = description
+
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['repro'])
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
-
-
-def get_status():
-    """Get the current service status."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
 
 
 def diagnose():

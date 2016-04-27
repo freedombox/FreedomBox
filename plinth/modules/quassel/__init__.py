@@ -25,10 +25,15 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['quasselcore']
 
 title = _('IRC Client (Quassel)')
 
@@ -49,10 +54,6 @@ description = [
       'are available.')
 ]
 
-service = None
-
-managed_services = ['quasselcore']
-
 
 def init():
     """Initialize the quassel module."""
@@ -61,27 +62,19 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, description=description, is_external=True)
+        managed_services[0], title, is_external=True)
+
+
+class QuasselServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = "quassel"
+    description = description
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['quassel-core'])
     helper.call('post', service.notify_enabled, None, True)
-
-
-def get_status():
-    """Get the current service status."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
 
 
 def diagnose():

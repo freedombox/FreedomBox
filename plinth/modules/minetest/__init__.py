@@ -25,11 +25,16 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['minetest-server']
 
 title = _('Block Sandbox (Minetest)')
 
@@ -41,11 +46,6 @@ description = [
           'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
-
-service = None
-
-managed_services = ['minetest-server']
-
 
 def init():
     """Initialize the module."""
@@ -63,18 +63,11 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current service status."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
+class MinetestServiceView(ServiceView):
+    service_id = managed_services[0]
+    template_name = "apache_service.html"
+    diagnostics_module_name = "minetest"
+    description = description
 
 
 def diagnose():

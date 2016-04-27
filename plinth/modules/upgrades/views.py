@@ -23,11 +23,11 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
+from django.views.generic.edit import FormView
 import subprocess
 
 from .forms import ConfigureForm
 from plinth import actions
-from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import upgrades
 
@@ -40,43 +40,52 @@ LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 LOCK_FILE = '/var/log/dpkg/lock'
 
 
-class ConfigurationView(views.ConfigurationView):
+class UpgradesConfigurationView(FormView):
     """Serve configuration page."""
     form_class = ConfigureForm
+    success_url = reverse_lazy('upgrades:index')
+    template_name = "upgrades_configure.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         """Return the context data for rendering the template view."""
-        if 'subsubmenu' not in kwargs:
-            kwargs['subsubmenu'] = subsubmenu
+        context = super().get_context_data(*args, **kwargs)
+        context['subsubmenu'] = subsubmenu
+        context['title'] = upgrades.title
+        context['description'] = upgrades.description
+        return context
 
-        return super().get_context_data(**kwargs)
+    def get_initial(self):
+        return {'auto_upgrades_enabled': upgrades.service.is_enabled()}
 
-    def get_template_names(self):
-        """Return the list of template names for the view."""
-        return ['upgrades_configure.html']
-
-    def apply_changes(self, old_status, new_status):
+    def form_valid(self, form):
         """Apply the form changes."""
+        old_status = form.initial
+        new_status = form.cleaned_data
+
         if old_status['auto_upgrades_enabled'] \
-           == new_status['auto_upgrades_enabled']:
-            return False
+           != new_status['auto_upgrades_enabled']:
 
-        try:
-            upgrades.enable(new_status['auto_upgrades_enabled'])
-        except ActionError as exception:
-            error = exception.args[2]
-            messages.error(
-                self.request,
-                _('Error when configuring unattended-upgrades: {error}')
-                .format(error=error))
-            return True
+            try:
+                if new_status['auto_upgrades_enabled']:
+                    upgrades.service.enable()
+                else:
+                    upgrades.service.disable()
+            except ActionError as exception:
+                error = exception.args[2]
+                messages.error(
+                    self.request,
+                    _('Error when configuring unattended-upgrades: {error}')
+                    .format(error=error))
 
-        if new_status['auto_upgrades_enabled']:
-            messages.success(self.request, _('Automatic upgrades enabled'))
+            if new_status['auto_upgrades_enabled']:
+                messages.success(self.request, _('Automatic upgrades enabled'))
+            else:
+                messages.success(self.request, _('Automatic upgrades disabled'))
         else:
-            messages.success(self.request, _('Automatic upgrades disabled'))
+            messages.info(self.request, _('Settings unchanged'))
 
-        return True
+        return super().form_valid(form)
+
 
 
 def is_package_manager_busy():

@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "service.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,34 +18,11 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
-{% load i18n %}
+{% comment %}
+# The status block uses is_running, but apache services by default don't 
+# provide this method. We could use is_enabled instead, but this information is
+# available in the enable/disable checkbox already. So omit it altogether.
+{% endcomment %}
 
-{% block configuration %}
-
-  <h3>{% trans "Status" %}</h3>
-
-  <p class="running-status-parent">
-    {% if status.is_running %}
-      <span class="running-status active"></span>
-      {% trans "deluge-web is running" %}
-    {% else %}
-      <span class="running-status inactive"></span>
-      {% trans "deluge-web is not running" %}
-    {% endif %}
-  </p>
-
-  {% include "diagnostics_button.html" with module="deluge" %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
+{% block status %}
 {% endblock %}

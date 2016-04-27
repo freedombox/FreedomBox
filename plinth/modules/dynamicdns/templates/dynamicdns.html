@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,7 +20,33 @@
 
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  <p>
+    {% blocktrans trimmed %}
+      If your Internet provider changes your IP address periodically
+      (i.e. every 24h), it may be hard for others to find you on the
+      Internet. This will prevent others from finding services which are
+      provided by this {box_name}.
+    {% endblocktrans %}
+  </p>
+  <p>
+    {% blocktrans trimmed %}
+      The solution is to assign a DNS name to your IP address and
+      update the DNS name every time your IP is changed by your
+      Internet provider. Dynamic DNS allows you to push your current
+      public IP address to a
+      <a href='http://gnudip2.sourceforge.net/' target='_blank'>
+      GnuDIP</a> server. Afterwards, the server will assign your DNS name
+      to the new IP, and if someone from the Internet asks for your DNS
+      name, they will get a response with your current IP address.
+    {% endblocktrans %}
+  </p>
   <p>
     {% blocktrans trimmed %}
       If you are looking for a free dynamic DNS account, you may find
@@ -39,4 +65,5 @@
       and TCP port 443 (HTTPS).
     {% endblocktrans %}
   </p>
+
 {% endblock %}

@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.views import ServiceView
 
 
 version = 1
@@ -31,6 +32,10 @@ version = 1
 depends = ['apps']
 
 title = _('Voice Chat (Mumble)')
+
+service = None
+
+managed_services = ['mumble-server']
 
 description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
@@ -40,10 +45,6 @@ description = [
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and Android devices are available.')
 ]
-
-service = None
-
-managed_services = ['mumble-server']
 
 
 def init():
@@ -56,24 +57,16 @@ def init():
         managed_services[0], title, is_external=True)
 
 
+class MumbleServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = "mumble"
+    description = description
+
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['mumble-server'])
     helper.call('post', service.notify_enabled, None, True)
-
-
-def get_status():
-    """Get the current settings from server."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
 
 
 def diagnose():

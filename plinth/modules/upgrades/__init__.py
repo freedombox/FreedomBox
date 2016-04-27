@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import cfg
+from plinth import service as service_module
 
 
 version = 1
@@ -39,11 +40,17 @@ description = [
       'night. You don\'t normally need to start the upgrade process.')
 ]
 
+service = None
+
 
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(title, 'glyphicon-refresh', 'upgrades:index', 21)
+    global service
+    service = service_module.Service(
+        'auto-upgrades', title, is_external=False, is_enabled=is_enabled,
+        enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -52,18 +59,17 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
 
 
-def get_status():
-    """Return the current status."""
-    return {'auto_upgrades_enabled': 'is_enabled'}
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     output = actions.run('upgrades', ['check-auto'])
     return 'True' in output.split()
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    option = 'enable-auto' if should_enable else 'disable-auto'
-    actions.superuser_run('upgrades', [option])
+def enable():
+    """Enable the module."""
+    actions.superuser_run('upgrades', ['enable-auto'])
+
+
+def disable():
+    """Disable the module."""
+    actions.superuser_run('upgrades', ['disable-auto'])
