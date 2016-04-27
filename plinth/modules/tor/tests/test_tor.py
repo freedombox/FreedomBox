@@ -22,7 +22,7 @@ Tests for Tor module.
 import os
 import unittest
 
-from plinth.modules.tor import is_apt_transport_tor_enabled, get_hs, get_status
+from plinth.modules.tor import utils
 
 euid = os.geteuid()
 
@@ -34,7 +34,7 @@ class TestTor(unittest.TestCase):
         """Test that is_apt_transport_tor_enabled does not raise any unhandled
         exceptions.
         """
-        is_apt_transport_tor_enabled()
+        utils._is_apt_transport_tor_enabled()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_hs(self):
@@ -43,7 +43,7 @@ class TestTor(unittest.TestCase):
         This should work regardless of whether tor is installed, or
         /etc/tor/torrc exists.
         """
-        get_hs()
+        utils.get_hs()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_status(self):
@@ -52,4 +52,4 @@ class TestTor(unittest.TestCase):
         This should work regardless of whether tor is installed, or
         /etc/tor/torrc exists.
         """
-        get_status()
+        utils.get_status()
