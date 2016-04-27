@@ -35,7 +35,7 @@ class DateTimeServiceView(ServiceView):
     description = datetime.description
     form_class = DateTimeForm
     service_id = datetime.managed_services[0]
-    template_name = "datetime.html"
+    diagnostics_module_name = "datetime"
 
     def get_initial(self):
         return {'is_enabled': self.service.is_enabled(),
