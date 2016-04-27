@@ -20,7 +20,6 @@ Plinth module to configure ikiwiki
 """
 
 from django.utils.translation import ugettext_lazy as _
-from functools import partial
 
 from plinth import actions
 from plinth import action_utils
@@ -32,14 +31,14 @@ version = 1
 
 depends = ['apps']
 
+service = None
+
 title = _('Wiki and Blog (ikiwiki)')
 
 description = [
     _('When enabled, the blogs and wikis will be available '
       'from <a href="/ikiwiki">/ikiwiki</a>.')
 ]
-
-service = None
 
 
 def init():
@@ -50,7 +49,7 @@ def init():
     global service
     service = service_module.Service(
         'ikiwiki', title, ports=['http', 'https'], is_external=True,
-        is_enabled=is_enabled, enable=_enable, disable=_disable)
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -66,21 +65,19 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current setting."""
-    return {'enabled': is_enabled()}
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('ikiwiki-plinth')
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('ikiwiki', [sub_command])
-    service.notify_enabled(None, should_enable)
+def enable():
+    """Enable the module."""
+    actions.superuser_run('ikiwiki', ['enable'])
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('ikiwiki', ['disable'])
 
 
 def diagnose():
@@ -91,7 +88,3 @@ def diagnose():
         'https://{host}/ikiwiki', extra_options=['--no-check-certificate']))
 
     return results
-
-
-_enable = partial(enable, True)
-_disable = partial(enable, False)

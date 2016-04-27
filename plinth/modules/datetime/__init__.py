@@ -60,27 +60,6 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings from server."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running(),
-            'time_zone': get_current_time_zone()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
-
-
-def get_current_time_zone():
-    """Get current time zone."""
-    time_zone = open('/etc/timezone').read().rstrip()
-    return time_zone or 'none'
-
-
 def diagnose():
     """Run diagnostics and return the results."""
     results = []

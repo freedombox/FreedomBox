@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "service.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,33 +18,8 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
-{% load i18n %}
-
-{% block configuration %}
-
-  <h3>{% trans "Status" %}</h3>
-
-  <p class="running-status-parent">
-    {% if status.is_running %}
-      <span class="running-status active"></span>
-      {% trans "Network time server is running" %}
-    {% else %}
-      <span class="running-status inactive"></span>
-      {% trans "Network time server is not running" %}
-    {% endif %}
+{% block diagnostics %}
+  <p>
+    {% include "diagnostics_button.html" with module="datetime" %}
   </p>
-  {% include "diagnostics_button.html" with module="datetime" %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
 {% endblock %}

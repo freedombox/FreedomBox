@@ -25,7 +25,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^sys/upgrades/$',
-        views.ConfigurationView.as_view(module_name='upgrades'), name='index'),
+    url(r'^sys/upgrades/$', views.UpgradesConfigurationView.as_view(),
+        name='index'),
     url(r'^sys/upgrades/upgrade/$', views.upgrade, name='upgrade'),
 ]

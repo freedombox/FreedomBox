@@ -19,8 +19,6 @@
 Plinth module to configure Shaarli.
 """
 
-from functools import partial
-
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -55,7 +53,7 @@ def init():
     global service
     service = service_module.Service(
         'shaarli', title, ports=['http', 'https'], is_external=True,
-        is_enabled=is_enabled, enable=_enable, disable=_disable)
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -64,22 +62,17 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings."""
-    return {'enabled': service.is_enabled()}
-
 
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('shaarli')
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('shaarli', [sub_command])
-    service.notify_enabled(None, should_enable)
+def enable():
+    """Enable the module."""
+    actions.superuser_run('shaarli', ['enable'])
 
 
-_enable = partial(enable, True)
-_disable = partial(enable, False)
+def disable():
+    """Enable the module."""
+    actions.superuser_run('shaarli', ['disable'])

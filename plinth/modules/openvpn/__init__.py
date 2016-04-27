@@ -32,6 +32,10 @@ version = 1
 
 depends = ['apps']
 
+service = None
+
+managed_services = ['openvpn@freedombox']
+
 title = _('Virtual Private Network (OpenVPN)')
 
 description = [
@@ -44,10 +48,6 @@ description = [
           'You can also access the rest of the Internet via {box_name} '
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
-
-service = None
-
-managed_services = ['openvpn@freedombox']
 
 
 def init():

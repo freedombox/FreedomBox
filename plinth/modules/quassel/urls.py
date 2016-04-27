@@ -21,10 +21,9 @@ URLs for the quassel module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.modules.quassel import QuasselServiceView
 
 
 urlpatterns = [
-    url(r'^apps/quassel/$', ConfigurationView.as_view(module_name='quassel'),
-        name='index'),
+    url(r'^apps/quassel/$', QuasselServiceView.as_view(), name='index'),
 ]

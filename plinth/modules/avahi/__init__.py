@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 # pylint: disable=C0103
 
@@ -66,15 +67,6 @@ def setup(helper, old_version=False):
     helper.install(['avahi-daemon'])
 
 
-def get_status():
-    """Get the current settings from server."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    if should_enable:
-        service.enable()
-    else:
-        service.disable()
+class AvahiServiceView(ServiceView):
+    service_id = managed_services[0]
+    description = description

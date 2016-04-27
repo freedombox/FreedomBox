@@ -21,10 +21,9 @@ URLs for the Privoxy module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.modules.privoxy import PrivoxyServiceView
 
 
 urlpatterns = [
-    url(r'^apps/privoxy/$', ConfigurationView.as_view(module_name='privoxy'),
-        name='index'),
+    url(r'^apps/privoxy/$', PrivoxyServiceView.as_view(), name='index'),
 ]

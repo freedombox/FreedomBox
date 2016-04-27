@@ -19,8 +19,6 @@
 Plinth module for radicale.
 """
 
-from functools import partial
-
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -28,11 +26,16 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['radicale']
 
 title = _('Calendar and Addressbook (Radicale)')
 
@@ -46,10 +49,6 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
-service = None
-
-managed_services = ['radicale']
-
 
 def init():
     """Initialize the radicale module."""
@@ -59,7 +58,13 @@ def init():
     global service
     service = service_module.Service(
         managed_services[0], title, ports=['http', 'https'], is_external=True,
-        enable=_enable, disable=_disable)
+        enable=enable, disable=disable)
+
+
+class RadicaleServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = 'radicale'
+    description = description
 
 
 def setup(helper, old_version=None):
@@ -69,17 +74,14 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current service status."""
-    return {'enabled': service.is_enabled(),
-            'is_running': service.is_running()}
+def enable():
+    """Enable the module."""
+    actions.superuser_run('radicale', ['enable'])
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('radicale', [sub_command])
-    service.notify_enabled(None, should_enable)
+def disable():
+    """Disable the module."""
+    actions.superuser_run('radicale', ['disable'])
 
 
 def diagnose():
@@ -92,7 +94,3 @@ def diagnose():
         'https://{host}/radicale', extra_options=['--no-check-certificate']))
 
     return results
-
-
-_enable = partial(enable, True)
-_disable = partial(enable, False)

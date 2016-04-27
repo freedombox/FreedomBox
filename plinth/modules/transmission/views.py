@@ -23,21 +23,39 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 import json
 import logging
+import socket
 
 from .forms import TransmissionForm
 from plinth import actions
 from plinth import views
+from plinth.modules import transmission
 
 logger = logging.getLogger(__name__)
 
 
-class TransmissionConfigurationView(views.ConfigurationView):
+class TransmissionServiceView(views.ServiceView):
     """Serve configuration page."""
+    description = transmission.description
+    diagnostics_module_name = 'transmission'
     form_class = TransmissionForm
+    service_id = transmission.managed_services[0]
 
-    def apply_changes(self, old_status, new_status):
+    def get_initial(self):
+        """Get the current settings from Transmission server."""
+        configuration = open(transmission.TRANSMISSION_CONFIG, 'r').read()
+        status = json.loads(configuration)
+        status = {key.translate(str.maketrans({'-': '_'})): value
+                  for key, value in status.items()}
+        status['is_enabled'] = self.service.is_enabled()
+        status['is_running'] = self.service.is_running()
+        status['hostname'] = socket.gethostname()
+
+        return status
+
+    def form_valid(self, form):
         """Apply the changes submitted in the form."""
-        modified = super().apply_changes(old_status, new_status)
+        old_status = form.initial
+        new_status = form.cleaned_data
 
         if old_status['download_dir'] != new_status['download_dir'] or \
            old_status['rpc_username'] != new_status['rpc_username'] or \
@@ -51,6 +69,5 @@ class TransmissionConfigurationView(views.ConfigurationView):
             actions.superuser_run('transmission', ['merge-configuration'],
                                   input=json.dumps(new_configuration).encode())
             messages.success(self.request, _('Configuration updated'))
-            return True
 
-        return modified
+        return super().form_valid(form)

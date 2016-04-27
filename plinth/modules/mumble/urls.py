@@ -21,10 +21,9 @@ URLs for the Mumble module
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.modules.mumble import MumbleServiceView
 
 
 urlpatterns = [
-    url(r'^apps/mumble/$', ConfigurationView.as_view(module_name='mumble'),
-        name='index'),
+    url(r'^apps/mumble/$', MumbleServiceView.as_view(), name='index'),
 ]

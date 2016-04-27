@@ -21,10 +21,9 @@ URLs for the minetest module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.modules.minetest import MinetestServiceView
 
 
 urlpatterns = [
-    url(r'^apps/minetest/$', ConfigurationView.as_view(module_name='minetest'),
-        name='index'),
+    url(r'^apps/minetest/$', MinetestServiceView.as_view(), name='index'),
 ]
