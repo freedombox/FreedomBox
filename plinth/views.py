@@ -38,7 +38,7 @@ def index(request):
 
 
 class ServiceView(FormView):
-    """A generic view for configuring simple modules."""
+    """A generic view for configuring simple services."""
     service_id = None
     form_class = forms.ServiceForm
     template_name = 'service.html'
@@ -70,7 +70,7 @@ class ServiceView(FormView):
         return service
 
     def get_initial(self):
-        """Return the status of the module to fill in the form."""
+        """Return the status of the service to fill in the form."""
         return {'is_enabled': self.service.is_enabled(),
                 'is_running': self.service.is_running()}
 

@@ -39,16 +39,14 @@ class Service(object):
     - service_id: unique service name. If possible this should be the name of
                   the service on operating system level (as in /etc/init.d/).
     - name: service name as to be displayed in the GUI
-    - description (optional): list of paragraphs that describe the service
     - is_enabled (optional): Boolean, or a Function returning Boolean
     - enable (optional): Function
     - disable (optional): Function
     - is_running (optional): Boolean, or a Function returning Boolean
 
     """
-    def __init__(self, service_id, name, ports=None, description=None,
-                 is_external=False, is_enabled=None, enable=None, disable=None,
-                 is_running=None):
+    def __init__(self, service_id, name, ports=None, is_external=False,
+                 is_enabled=None, enable=None, disable=None, is_running=None):
         if ports is None:
             ports = [service_id]
 
@@ -57,7 +55,6 @@ class Service(object):
 
         self.service_id = service_id
         self.name = name
-        self.description = description
         self.ports = ports
         self.is_external = is_external
         self._is_enabled = is_enabled
