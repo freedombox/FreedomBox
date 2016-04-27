@@ -46,6 +46,10 @@ class ServiceView(FormView):
     diagnostics_module_name = ""
     # List of paragraphs describing the service
     description = ""
+    # Display the 'status' block of the service.html template
+    # This block uses information from service.is_running. This method is
+    # optional, so allow not showing this block here.
+    show_status_block = True
 
     @property
     def success_url(self):
@@ -98,6 +102,7 @@ class ServiceView(FormView):
             context['diagnostics_module_name'] = self.diagnostics_module_name
         if self.description:
             context['description'] = self.description
+        context['show_status_block'] = self.show_status_block
         return context
 
 

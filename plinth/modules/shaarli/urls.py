@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^apps/shaarli/$', ServiceView.as_view(
             service_id="shaarli",
             description=shaarli.description,
-            template_name="apache_service.html"
+            show_status_block=False,
         ), name='index'),
 ]

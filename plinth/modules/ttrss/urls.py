@@ -30,6 +30,6 @@ urlpatterns = [
             service_id=ttrss.managed_services[0],
             diagnostics_module_name="ttrss",
             description=ttrss.description,
-            template_name="apache_service.html"
+            show_status_block=False
         ), name='index'),
 ]
