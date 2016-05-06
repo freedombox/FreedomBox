@@ -70,10 +70,10 @@ def module(request, module_name):
 
 def _start_task():
     """Start the run task in a separate thread."""
+    global _running_task
     if _running_task:
         raise Exception('Task already running')
 
-    global _running_task
     _running_task = threading.Thread(target=_run_on_all_modules_wrapper)
     _running_task.start()
 
