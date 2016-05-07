@@ -21,6 +21,7 @@ Framework for installing and updating distribution packages
 
 from django.utils.translation import ugettext as _
 import logging
+import subprocess
 
 from plinth.utils import import_from_gi
 glib = import_from_gi('GLib', '2.0')
@@ -166,3 +167,25 @@ class Transaction(object):
         else:
             logger.info('Unhandle packagekit progress callback - %s, %s',
                         progress, progress_type)
+
+
+class AptTransaction(object):
+    """Install a package using Apt."""
+    def __init__(self, package_names):
+        """Initialize transaction object."""
+        self.package_names = package_names
+
+    def install(self):
+        """Run a PackageKit transaction to install given packages.
+
+        Plinth needs to be running as root when calling this.
+        Currently, this is meant to be only during first time setup
+        when --setup is argument is passed.
+        """
+        try:
+            subprocess.run(['apt-get', 'update'])
+            subprocess.run(['apt-get', '-y', 'install'] + self.package_names,
+                           check=True)
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Error installing package: %s', exception)
+            raise

@@ -27,6 +27,8 @@ import plinth
 
 logger = logging.getLogger(__name__)
 
+running_initial_setup = False
+
 
 class Helper(object):
     """Helper routines for modules to show progress."""
@@ -91,6 +93,11 @@ class Helper(object):
         """Install a set of packages marking progress."""
         logger.info('Running install for module - %s, packages - %s',
                     self.module_name, package_names)
+        if running_initial_setup:
+            transaction = package.AptTransaction(package_names)
+            transaction.install()
+            return
+
         transaction = package.Transaction(package_names)
         self.current_operation = {
             'step': 'install',
@@ -153,6 +160,8 @@ def init(module_name, module):
 def setup_all_modules(essential=False):
     """Run setup on all essential modules and exit."""
     logger.info('Running setup for all modules, essential - %s', essential)
+    global running_initial_setup
+    running_initial_setup = True
     for module_name, module in plinth.module_loader.loaded_modules.items():
         if essential and not getattr(module, 'is_essential', False):
             continue
