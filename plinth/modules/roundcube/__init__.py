@@ -65,7 +65,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
     helper.install(['sqlite3', 'roundcube', 'roundcube-sqlite3'])
-    helper.call('pre', actions.superuser_run, 'roundcube', ['setup'])
+    helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
 
 
 def get_status():
