@@ -25,8 +25,23 @@ import itertools
 import json
 
 from plinth import actions
-from plinth.modules import tor
+from plinth import action_utils
 from plinth.modules.names import SERVICES
+
+
+APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
+                         '/files/etc/apt/sources.list.d/*/*/uri')
+APT_TOR_PREFIX = 'tor+'
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    return action_utils.service_is_enabled('tor')
+
+
+def is_running():
+    """Return whether the service is running."""
+    return action_utils.service_is_running('tor')
 
 
 def get_hs():
@@ -47,8 +62,8 @@ def get_status():
         if str(service_type[2]) in hs_virtports:
             hs_services.append(service_type[0])
 
-    return {'enabled': tor.is_enabled(),
-            'is_running': tor.is_running(),
+    return {'enabled': is_enabled(),
+            'is_running': is_running(),
             'ports': ports,
             'hs_enabled': hs_info['enabled'],
             'hs_status': hs_info['status'],
@@ -63,7 +78,7 @@ def get_status():
 def iter_apt_uris(aug):
     """Iterate over all the APT source URIs."""
     return itertools.chain.from_iterable([aug.match(path) for \
-                                          path in tor.APT_SOURCES_URI_PATHS])
+                                          path in APT_SOURCES_URI_PATHS])
 
 
 def get_real_apt_uri_path(aug, path):
@@ -125,7 +140,7 @@ def _is_apt_transport_tor_enabled():
     for uri_path in iter_apt_uris(aug):
         uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
-        if not uri.startswith(tor.APT_TOR_PREFIX) and \
+        if not uri.startswith(APT_TOR_PREFIX) and \
            (uri.startswith('http://') or uri.startswith('https://')):
             return False
 
