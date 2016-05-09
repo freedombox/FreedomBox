@@ -29,7 +29,7 @@ from plinth import service as service_module
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
-from . import utils as tor_utils
+from . import utils
 
 
 version = 1
@@ -50,10 +50,6 @@ description = [
 socks_service = None
 bridge_service = None
 
-APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
-                         '/files/etc/apt/sources.list.d/*/*/uri')
-APT_TOR_PREFIX = 'tor+'
-
 
 def init():
     """Initialize the module."""
@@ -63,20 +59,22 @@ def init():
     global socks_service
     socks_service = service_module.Service(
         'tor-socks', _('Tor Anonymity Network'),
-        is_external=False, is_enabled=is_enabled, is_running=is_running)
+        is_external=False, is_enabled=utils.is_enabled,
+        is_running=utils.is_running)
 
     global bridge_service
     bridge_service = service_module.Service(
         'tor-bridge', _('Tor Bridge Relay'),
         ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
-        is_external=True, is_enabled=is_enabled, is_running=is_running)
+        is_external=True, is_enabled=utils.is_enabled,
+        is_running=utils.is_running)
 
     # Register hidden service name with Name Services module.
-    hs_info = tor_utils.get_hs()
+    hs_info = utils.get_hs()
     hostname = hs_info['hostname']
     hs_virtports = [port['virtport'] for port in hs_info['ports']]
 
-    if is_enabled() and is_running() and \
+    if utils.is_enabled() and utils.is_running() and \
        hs_info['enabled'] and hs_info['hostname']:
         hs_services = []
         for service_type in SERVICES:
@@ -107,7 +105,7 @@ def setup(helper, old_version=None):
 def update_hidden_service_domain(status=None):
     """Update HS domain with Name Services module."""
     if not status:
-        status = tor_utils.get_status()
+        status = utils.get_status()
 
     domain_removed.send_robust(
         sender='tor', domain_type='hiddenservice')
@@ -119,15 +117,6 @@ def update_hidden_service_domain(status=None):
             name=status['hs_hostname'], description=_('Tor Hidden Service'),
             services=status['hs_services'])
 
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('tor')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('tor')
 
 
 def diagnose():
