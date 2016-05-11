@@ -25,30 +25,34 @@ import logging
 
 from .forms import DateTimeForm
 from plinth import actions
-from plinth import views
 from plinth.modules import datetime
+from plinth.views import ServiceView
 
 logger = logging.getLogger(__name__)
 
 
-class ConfigurationView(views.ConfigurationView):
-    """Serve configuration page."""
+class DateTimeServiceView(ServiceView):
+    description = datetime.description
     form_class = DateTimeForm
+    service_id = datetime.managed_services[0]
+    diagnostics_module_name = "datetime"
 
-    def apply_changes(self, old_status, new_status):
-        """Apply the changes."""
-        modified = False
+    def get_initial(self):
+        return {'is_enabled': self.service.is_enabled(),
+                'is_running': self.service.is_running(),
+                'time_zone': self.get_current_time_zone()}
 
-        if old_status['enabled'] != new_status['enabled']:
-            sub_command = 'enable' if new_status['enabled'] else 'disable'
-            modified = True
-            actions.superuser_run('datetime', [sub_command])
-            datetime.service.notify_enabled(None, new_status['enabled'])
-            messages.success(self.request, _('Configuration updated'))
+    def get_current_time_zone(self):
+        """Get current time zone."""
+        time_zone = open('/etc/timezone').read().rstrip()
+        return time_zone or 'none'
+
+    def form_valid(self, form):
+        old_status = form.initial
+        new_status = form.cleaned_data
 
         if old_status['time_zone'] != new_status['time_zone'] and \
            new_status['time_zone'] != 'none':
-            modified = True
             try:
                 actions.superuser_run(
                     'timezone-change', [new_status['time_zone']])
@@ -59,4 +63,4 @@ class ConfigurationView(views.ConfigurationView):
             else:
                 messages.success(self.request, _('Time zone set'))
 
-        return modified
+        return super().form_valid(form)

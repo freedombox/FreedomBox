@@ -25,9 +25,11 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 
-from .forms import IkiwikiCreateForm
 from plinth import actions
 from plinth import views
+from plinth.modules import ikiwiki
+
+from .forms import IkiwikiCreateForm
 
 
 subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
@@ -38,14 +40,18 @@ subsubmenu = [{'url': reverse_lazy('ikiwiki:index'),
                'text': ugettext_lazy('Create')}]
 
 
-class ConfigurationView(views.ConfigurationView):
+class IkiwikiServiceView(views.ServiceView):
     """Serve configuration page."""
+    service_id = "ikiwiki"
+    description = ikiwiki.description
+    diagnostics_module_name = "ikiwiki"
+    show_status_block = False
+
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
-        if 'subsubmenu' not in kwargs:
-            kwargs['subsubmenu'] = subsubmenu
-
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context['subsubmenu'] = subsubmenu
+        return context
 
 
 def manage(request):

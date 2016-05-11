@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,7 +20,13 @@
 
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
   <p>
     {% blocktrans trimmed %}
       If you are looking for a free dynamic DNS account, you may find
@@ -39,4 +45,5 @@
       and TCP port 443 (HTTPS).
     {% endblocktrans %}
   </p>
+
 {% endblock %}

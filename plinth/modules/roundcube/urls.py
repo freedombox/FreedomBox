@@ -21,10 +21,15 @@ URLs for the Roundcube module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.views import ServiceView
+from plinth.modules import roundcube
 
 
 urlpatterns = [
-    url(r'^apps/roundcube/$',
-        ConfigurationView.as_view(module_name='roundcube'), name='index'),
+    url(r'^apps/roundcube/$', ServiceView.as_view(
+            service_id="roundcube",
+            diagnostics_module_name="roundcube",
+            description=roundcube.description,
+            show_status_block=False
+        ), name='index'),
 ]

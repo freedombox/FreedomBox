@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,34 +18,18 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
+{# Template for simple service configuration/description pages #}
+
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
+  <h2>{{ title }}</h2>
 
-  <h3>{% trans "Status" %}</h3>
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
 
-  <p class="running-status-parent">
-    {% if status.is_running %}
-      <span class="running-status active"></span>
-      {% trans "deluge-web is running" %}
-    {% else %}
-      <span class="running-status inactive"></span>
-      {% trans "deluge-web is not running" %}
-    {% endif %}
-  </p>
-
-  {% include "diagnostics_button.html" with module="deluge" %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
+  {% block configuration %}
+  {% endblock %}
 
 {% endblock %}

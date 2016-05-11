@@ -98,9 +98,6 @@ def parse_arguments():
     subparsers.add_parser('is-setup', help='Return whether setup is completed')
     subparsers.add_parser('setup', help='Setup OpenVPN server configuration')
 
-    subparsers.add_parser('enable', help='Enable OpenVPN server')
-    subparsers.add_parser('disable', help='Disable OpenVPN server')
-
     get_profile = subparsers.add_parser(
         'get-profile', help='Return the OpenVPN profile of a user')
     get_profile.add_argument('username', help='User to get profile for')
@@ -154,16 +151,6 @@ def _create_certificates():
     subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server', 'server'],
                           **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
-
-
-def subcommand_enable(_):
-    """Start OpenVPN service."""
-    action_utils.service_enable('openvpn@freedombox')
-
-
-def subcommand_disable(_):
-    """Stop OpenVPN service."""
-    action_utils.service_disable('openvpn@freedombox')
 
 
 def subcommand_get_profile(arguments):

@@ -26,11 +26,16 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['radicale']
 
 title = _('Calendar and Addressbook (Radicale)')
 
@@ -44,8 +49,6 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
-service = None
-
 
 def init():
     """Initialize the radicale module."""
@@ -54,8 +57,14 @@ def init():
 
     global service
     service = service_module.Service(
-        'radicale', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        enable=enable, disable=disable)
+
+
+class RadicaleServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = 'radicale'
+    description = description
 
 
 def setup(helper, old_version=None):
@@ -65,27 +74,14 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current service status."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
+def enable():
+    """Enable the module."""
+    actions.superuser_run('radicale', ['enable'])
 
 
-def is_enabled():
-    """Return whether the service is enabled."""
-    return action_utils.service_is_enabled('radicale')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('radicale')
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('radicale', [sub_command])
-    service.notify_enabled(None, should_enable)
+def disable():
+    """Disable the module."""
+    actions.superuser_run('radicale', ['disable'])
 
 
 def diagnose():

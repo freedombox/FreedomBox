@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import service as service_module
 
 
 version = 1
@@ -54,11 +55,18 @@ description = [
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
 
+service = None
+
 
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index', 600)
+
+    global service
+    service = service_module.Service(
+        'roundcube', title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -68,20 +76,19 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
 
 
-def get_status():
-    """Get the current status."""
-    return {'enabled': is_enabled()}
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('roundcube')
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('roundcube', [sub_command])
+def enable():
+    """Enable the module."""
+    actions.superuser_run('roundcube', ['enable'])
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('roundcube', ['disable'])
 
 
 def diagnose():

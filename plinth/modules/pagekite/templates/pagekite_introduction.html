@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,7 +20,54 @@
 
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+      PageKite is a system for exposing {box_name} services when
+      you don\'t have a direct connection to the Internet. You only
+      need this if your {{ box_name }} services are unreachable from
+      the rest of the Internet. This includes the following
+      situations:
+    {% endblocktrans %}
+  </p>
+  <ul>
+    <li>
+      {{ box_name }} {% trans "is behind a restricted firewall." %}
+    </li>
+    <li>
+      {{ box_name }}
+      {% blocktrans trimmed %}
+        is connected to a (wireless) router which you don't control.
+      {% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        Your ISP does not provide you an external IP address and
+        instead provides Internet connection through NAT.
+      {% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        Your ISP does not provide you a static IP address and your IP
+        address changes evertime you connect to Internet.
+      {% endblocktrans %}
+    </li>
+    <li>
+      Your ISP limits incoming connections.
+    </li>
+  </ul>
+
+  <p>
+    {% blocktrans trimmed %}
+      PageKite works around NAT, firewalls and IP-address limitations
+      by using a combination of tunnels and reverse proxies. You can
+      use any pagekite service provider, for example
+      <a href="https://pagekite.net">pagekite.net</a>.  In future it
+      might be possible to use your buddy's {{ box_name }} for this.
+    {% endblocktrans %}
+  </p>
 
   <p>
     <a class="btn btn-primary btn-md" href="{% url 'pagekite:configure' %}">

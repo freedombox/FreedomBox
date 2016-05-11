@@ -99,8 +99,8 @@ def get_status():
     """Get the current settings from OpenVPN server."""
     status = {'is_setup': openvpn.is_setup(),
               'setup_running': False,
-              'enabled': openvpn.is_enabled(),
-              'is_running': openvpn.is_running()}
+              'enabled': openvpn.service.is_enabled(),
+              'is_running': openvpn.service.is_running()}
 
     status['setup_running'] = bool(setup_process)
 
@@ -132,9 +132,10 @@ def _apply_changes(request, old_status, new_status):
     modified = False
 
     if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('openvpn', [sub_command])
-        openvpn.service.notify_enabled(None, new_status['enabled'])
+        if new_status['enabled']:
+            openvpn.service.enable()
+        else:
+            openvpn.service.disable()
         modified = True
 
     if modified:

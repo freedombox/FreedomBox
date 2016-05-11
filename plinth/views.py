@@ -37,6 +37,76 @@ def index(request):
     return HttpResponseRedirect(reverse('apps:index'))
 
 
+class ServiceView(FormView):
+    """A generic view for configuring simple services."""
+    service_id = None
+    form_class = forms.ServiceForm
+    template_name = 'service.html'
+    # Set diagnostics_module_name to the module name to show diagnostics button
+    diagnostics_module_name = ""
+    # List of paragraphs describing the service
+    description = ""
+    # Display the 'status' block of the service.html template
+    # This block uses information from service.is_running. This method is
+    # optional, so allow not showing this block here.
+    show_status_block = True
+
+    @property
+    def success_url(self):
+        return self.request.path
+
+    @property
+    def service(self):
+        if hasattr(self, '_service'):
+            return self._service
+
+        if not self.service_id:
+            raise ImproperlyConfigured("missing attribute: 'service_id'")
+        service = plinth.service.services.get(self.service_id, None)
+        if service is None:
+            message = "Could not find service %s" % self.service_id
+            raise ImproperlyConfigured(message)
+        self._service = service
+        return service
+
+    def get_initial(self):
+        """Return the status of the service to fill in the form."""
+        return {'is_enabled': self.service.is_enabled(),
+                'is_running': self.service.is_running()}
+
+    def form_valid(self, form):
+        """Enable/disable a service and set messages."""
+        old_status = form.initial
+        new_status = form.cleaned_data
+
+        if old_status['is_enabled'] == new_status['is_enabled']:
+            # TODO: find a more reliable/official way to check whether the
+            # request has messages attached.
+            if not self.request._messages._queued_messages:
+                messages.info(self.request, _('Setting unchanged'))
+        else:
+            if new_status['is_enabled']:
+                self.service.enable()
+                messages.success(self.request, _('Application enabled'))
+            else:
+                self.service.disable()
+                messages.success(self.request, _('Application disabled'))
+
+        return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        """Add service to the context data."""
+        context = super().get_context_data(*args, **kwargs)
+        context['service'] = self.service
+        if self.diagnostics_module_name:
+            context['diagnostics_module_name'] = self.diagnostics_module_name
+        if self.description:
+            context['description'] = self.description
+        context['show_status_block'] = self.show_status_block
+        return context
+
+
+# TODO: remove this view once owncloud is gone.
 class ConfigurationView(FormView):
     """A generic view for configuring simple modules."""
     form_class = forms.ConfigurationForm

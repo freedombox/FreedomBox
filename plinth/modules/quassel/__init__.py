@@ -21,15 +21,19 @@ Plinth module for Quassel.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['quasselcore']
 
 title = _('IRC Client (Quassel)')
 
@@ -50,8 +54,6 @@ description = [
       'are available.')
 ]
 
-service = None
-
 
 def init():
     """Initialize the quassel module."""
@@ -60,36 +62,19 @@ def init():
 
     global service
     service = service_module.Service(
-        'quassel-plinth', title, is_external=True, enabled=is_enabled())
+        managed_services[0], title, is_external=True)
+
+
+class QuasselServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = "quassel"
+    description = description
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['quassel-core'])
     helper.call('post', service.notify_enabled, None, True)
-
-
-def get_status():
-    """Get the current service status."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
-
-
-def is_enabled():
-    """Return whether the service is enabled."""
-    return action_utils.service_is_enabled('quasselcore')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('quasselcore')
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('quassel', [sub_command])
-    service.notify_enabled(None, should_enable)
 
 
 def diagnose():

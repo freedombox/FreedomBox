@@ -22,7 +22,6 @@ Plinth module to configure system date and time
 from django.utils.translation import ugettext_lazy as _
 import subprocess
 
-from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 
@@ -32,6 +31,8 @@ version = 1
 is_essential = True
 
 depends = ['system']
+
+managed_services = ['ntp']
 
 title = _('Date & Time')
 
@@ -50,36 +51,13 @@ def init():
 
     global service
     service = service_module.Service(
-        'ntp', title, is_external=False, enabled=is_enabled())
+        managed_services[0], title, is_external=False)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['ntp'])
     helper.call('post', service.notify_enabled, None, True)
-
-
-def get_status():
-    """Get the current settings from server."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running(),
-            'time_zone': get_current_time_zone()}
-
-
-def get_current_time_zone():
-    """Get current time zone."""
-    time_zone = open('/etc/timezone').read().rstrip()
-    return time_zone or 'none'
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('ntp')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('ntp')
 
 
 def diagnose():

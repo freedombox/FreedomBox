@@ -32,6 +32,10 @@ version = 1
 
 depends = ['apps']
 
+service = None
+
+managed_services = ['openvpn@freedombox']
+
 title = _('Virtual Private Network (OpenVPN)')
 
 description = [
@@ -45,8 +49,6 @@ description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-service = None
-
 
 def init():
     """Intialize the OpenVPN module."""
@@ -55,22 +57,12 @@ def init():
 
     global service
     service = service_module.Service(
-        'openvpn', title, ['openvpn'], is_external=True, enabled=is_enabled())
+        managed_services[0], title, ports=['openvpn'], is_external=True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(['openvpn', 'easy-rsa'])
-
-
-def is_enabled():
-    """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('openvpn@freedombox')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('openvpn@freedombox')
 
 
 def is_setup():

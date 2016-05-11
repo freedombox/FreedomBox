@@ -1,4 +1,4 @@
-{% extends "app.html" %}
+{% extends "service.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -18,10 +18,13 @@
 #
 {% endcomment %}
 
-{% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
+{% block description %}
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
 
   <p>
     {% url 'config:index' as index_url %}
@@ -37,30 +40,4 @@
     <a href='/jwchat' target='_blank' class='btn btn-primary'>
       {% trans "Launch web client" %}</a>
   </p>
-
-  <h3>{% trans "Status" %}</h3>
-
-  <p class="running-status-parent">
-    {% if status.is_running %}
-      <span class="running-status active"></span>
-      {% trans "ejabberd is running" %}
-    {% else %}
-      <span class="running-status inactive"></span>
-      {% trans "ejabberd is not running" %}
-    {% endif %}
-  </p>
-
-  {% include "diagnostics_button.html" with module="xmpp" %}
-
-  <h3>{% trans "Configuration" %}</h3>
-
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-
 {% endblock %}

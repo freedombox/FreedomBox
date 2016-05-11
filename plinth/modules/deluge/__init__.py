@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+service = None
+
+managed_services = ['deluge-web']
+
 title = _('BitTorrent Web Client (Deluge)')
 
 description = [
@@ -42,8 +46,6 @@ description = [
       'it immediately after enabling this service.')
 ]
 
-service = None
-
 
 def init():
     """Initialize the Deluge module."""
@@ -52,8 +54,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'deluge', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -63,28 +65,20 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.webserver_is_enabled('deluge-plinth') and
             action_utils.service_is_enabled('deluge-web'))
 
 
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('deluge-web')
+def enable():
+    """Enable the module."""
+    actions.superuser_run('deluge', ['enable'])
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('deluge', [sub_command])
-    service.notify_enabled(None, should_enable)
+def disable():
+    """Disable the module."""
+    actions.superuser_run('deluge', ['disable'])
 
 
 def diagnose():

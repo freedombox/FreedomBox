@@ -33,8 +33,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Configure repro')
-    subparsers.add_parser('enable', help='Enable repro service')
-    subparsers.add_parser('disable', help='Disable repro service')
 
     return parser.parse_args()
 
@@ -59,16 +57,6 @@ def subcommand_setup(_):
 
     action_utils.service_restart('repro')
     action_utils.webserver_enable('repro-plinth')
-
-
-def subcommand_enable(_):
-    """Start service."""
-    action_utils.service_enable('repro')
-
-
-def subcommand_disable(_):
-    """Stop service."""
-    action_utils.service_disable('repro')
 
 
 def main():

@@ -52,8 +52,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'shaarli', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        'shaarli', title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -62,18 +62,17 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings."""
-    return {'enabled': is_enabled()}
-
 
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('shaarli')
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('shaarli', [sub_command])
-    service.notify_enabled(None, should_enable)
+def enable():
+    """Enable the module."""
+    actions.superuser_run('shaarli', ['enable'])
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('shaarli', ['disable'])

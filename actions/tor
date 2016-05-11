@@ -31,8 +31,9 @@ import socket
 import time
 
 from plinth import action_utils
-from plinth.modules.tor import is_enabled, is_running, get_augeas, \
-    get_real_apt_uri_path, iter_apt_uris, APT_TOR_PREFIX
+from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
+                                     get_augeas, is_running, is_enabled, \
+                                     APT_TOR_PREFIX
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/torrc'

@@ -24,13 +24,11 @@ from django.utils.translation import ugettext_lazy as _
 import glob
 import re
 
+from plinth.forms import ServiceForm
 
-class DateTimeForm(forms.Form):
+
+class DateTimeForm(ServiceForm):
     """Date/time configuration form."""
-    enabled = forms.BooleanField(
-        label=_('Enable network time'),
-        required=False)
-
     time_zone = forms.ChoiceField(
         label=_('Time Zone'),
         help_text=_('Set your time zone to get accurate timestamps. \

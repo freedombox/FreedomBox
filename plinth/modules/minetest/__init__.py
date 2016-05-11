@@ -21,16 +21,20 @@ Plinth module for minetest.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.views import ServiceView
 
 
 version = 1
 
 depends = ['apps']
+
+service = None
+
+managed_services = ['minetest-server']
 
 title = _('Block Sandbox (Minetest)')
 
@@ -43,9 +47,6 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
-service = None
-
-
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
@@ -53,36 +54,20 @@ def init():
 
     global service
     service = service_module.Service(
-        'minetest-plinth', title, is_external=True, enabled=is_enabled())
+        managed_services[0], title, is_external=True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['minetest-server'])
+    helper.install(managed_services)
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current service status."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running()}
-
-
-def is_enabled():
-    """Return whether the service is enabled."""
-    return action_utils.service_is_enabled('minetest-server')
-
-
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('minetest-server')
-
-
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('minetest', [sub_command])
-    service.notify_enabled(None, should_enable)
+class MinetestServiceView(ServiceView):
+    service_id = managed_services[0]
+    diagnostics_module_name = "minetest"
+    description = description
+    show_status_block = False
 
 
 def diagnose():

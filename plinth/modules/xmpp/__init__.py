@@ -27,6 +27,7 @@ from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
+from plinth.views import ServiceView
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
@@ -51,6 +52,8 @@ service = None
 
 logger = logging.getLogger(__name__)
 
+managed_services = ['ejabberd']
+
 
 def init():
     """Initialize the XMPP module"""
@@ -59,8 +62,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'xmpp', title, ['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-        is_external=True, enabled=is_enabled())
+        'ejabberd', title, ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
+        is_external=True, is_enabled=is_enabled, enable=enable, disable=disable)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
@@ -79,11 +82,16 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings."""
-    return {'enabled': is_enabled(),
-            'is_running': is_running(),
-            'domainname': get_domainname()}
+class EjabberdServiceView(ServiceView):
+    service_id = managed_services[0]
+    template_name = "xmpp.html"
+    description = description
+    diagnostics_module_name = "xmpp"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['domainname'] = get_domainname()
+        return context
 
 
 def is_enabled():
@@ -92,22 +100,20 @@ def is_enabled():
             action_utils.webserver_is_enabled('jwchat-plinth'))
 
 
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('ejabberd')
-
-
 def get_domainname():
     """Return the domainname"""
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('xmpp', [sub_command])
-    service.notify_enabled(None, should_enable)
+def enable():
+    """Enable the module."""
+    actions.superuser_run('xmpp', ['enable'])
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('xmpp', ['disable'])
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

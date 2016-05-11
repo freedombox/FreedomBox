@@ -21,7 +21,6 @@ Plinth module to configure Transmission server
 
 from django.utils.translation import ugettext_lazy as _
 import json
-import socket
 
 from plinth import actions
 from plinth import action_utils
@@ -38,10 +37,13 @@ title = _('BitTorrent (Transmission)')
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Transmission daemon handles Bitorrent file sharing.  Note that '
-      'BitTorrent is not anonymous.')
+      'BitTorrent is not anonymous.'),
+    _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
 
 service = None
+
+managed_services = ['transmission-daemon']
 
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
@@ -53,8 +55,8 @@ def init():
 
     global service
     service = service_module.Service(
-        'transmission', title, ['http', 'https'], is_external=True,
-        enabled=is_enabled())
+        managed_services[0], title, ports=['http', 'https'], is_external=True,
+        is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def setup(helper, old_version=None):
@@ -70,35 +72,20 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-def get_status():
-    """Get the current settings from Transmission server."""
-    configuration = open(TRANSMISSION_CONFIG, 'r').read()
-    status = json.loads(configuration)
-    status = {key.translate(str.maketrans({'-': '_'})): value
-              for key, value in status.items()}
-    status['enabled'] = is_enabled()
-    status['is_running'] = is_running()
-    status['hostname'] = socket.gethostname()
-
-    return status
-
-
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.service_is_enabled('transmission-daemon') and
             action_utils.webserver_is_enabled('transmission-plinth'))
 
 
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.service_is_running('transmission-daemon')
+def enable():
+    """Enable the module."""
+    actions.superuser_run('transmission', ['enable'])
 
 
-def enable(should_enable):
-    """Enable/disable the module."""
-    sub_command = 'enable' if should_enable else 'disable'
-    actions.superuser_run('transmission', [sub_command])
-    service.notify_enabled(None, should_enable)
+def disable():
+    """Enable the module."""
+    actions.superuser_run('transmission', ['disable'])
 
 
 def diagnose():

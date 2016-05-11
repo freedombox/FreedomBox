@@ -23,8 +23,16 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 
+# TODO: remove this form once owncloud is removed (it's the last using it).
 class ConfigurationForm(forms.Form):
     """Generic configuration form for simple modules."""
     enabled = forms.BooleanField(
+        label=_('Enable application'),
+        required=False)
+
+
+class ServiceForm(forms.Form):
+    """Generic configuration form for a service."""
+    is_enabled = forms.BooleanField(
         label=_('Enable application'),
         required=False)

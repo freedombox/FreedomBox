@@ -21,10 +21,15 @@ URLs for the Tiny Tiny RSS module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.views import ServiceView
+from plinth.modules import ttrss
 
 
 urlpatterns = [
-    url(r'^apps/ttrss/$', ConfigurationView.as_view(module_name='ttrss'),
-        name='index'),
+    url(r'^apps/ttrss/$', ServiceView.as_view(
+            service_id=ttrss.managed_services[0],
+            diagnostics_module_name="ttrss",
+            description=ttrss.description,
+            show_status_block=False
+        ), name='index'),
 ]

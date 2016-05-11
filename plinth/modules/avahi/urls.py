@@ -21,10 +21,10 @@ URLs for the service discovery module.
 
 from django.conf.urls import url
 
-from plinth.views import ConfigurationView
+from plinth.modules.avahi import AvahiServiceView
 
 
 urlpatterns = [
-    url(r'^sys/avahi/$', ConfigurationView.as_view(module_name='avahi'),
+    url(r'^sys/avahi/$', AvahiServiceView.as_view(),
         name='index'),
 ]
