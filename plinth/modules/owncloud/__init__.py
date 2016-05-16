@@ -21,6 +21,7 @@ Plinth module to configure ownCloud
 
 from django.utils.translation import ugettext_lazy as _
 from functools import partial
+import os
 
 from plinth import actions
 from plinth import action_utils
@@ -53,6 +54,11 @@ service = None
 
 def init():
     """Initialize the ownCloud module"""
+    # XXX: ownCloud has been removed from Debian
+    if not os.path.isfile('/etc/owncloud/config.php') and \
+       not os.path.isfile('/etc/owncloud/autoconfig.php'):
+        return
+
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index', 700)
 
