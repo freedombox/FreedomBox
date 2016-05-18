@@ -20,9 +20,15 @@ Python action utility functions.
 """
 
 from django.utils.translation import ugettext as _
+import os
 import psutil
 import socket
 import subprocess
+
+
+def is_systemd_running():
+    """Return if we are running under systemd."""
+    return os.path.exists('/run/systemd')
 
 
 def service_is_running(servicename):
@@ -31,7 +37,13 @@ def service_is_running(servicename):
     Does not need to run as root.
     """
     try:
-        subprocess.check_output(['systemctl', 'status', servicename])
+        if is_systemd_running():
+            subprocess.run(['systemctl', 'status', servicename], check=True,
+                           stdout=subprocess.DEVNULL)
+        else:
+            subprocess.run(['service', servicename, 'status'], check=True,
+                           stdout=subprocess.DEVNULL)
+
         return True
     except subprocess.CalledProcessError:
         # If a service is not running we get a status code != 0 and
@@ -64,23 +76,43 @@ def service_disable(service_name):
 
 
 def service_start(service_name):
-    """Start a service."""
-    subprocess.call(['systemctl', 'start', service_name])
+    """Start a service with systemd or sysvinit."""
+    if is_systemd_running():
+        subprocess.run(['systemctl', 'start', service_name],
+                       stdout=subprocess.DEVNULL)
+    else:
+        subprocess.run(['service', service_name, 'start'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_stop(service_name):
-    """Stop a service."""
-    subprocess.call(['systemctl', 'stop', service_name])
+    """Stop a service with systemd or sysvinit."""
+    if is_systemd_running():
+        subprocess.run(['systemctl', 'stop', service_name],
+                       stdout=subprocess.DEVNULL)
+    else:
+        subprocess.run(['service', service_name, 'stop'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_restart(service_name):
-    """Restart service with systemd."""
-    subprocess.call(['systemctl', 'restart', service_name])
+    """Restart a service with systemd or sysvinit."""
+    if is_systemd_running():
+        subprocess.run(['systemctl', 'restart', service_name],
+                       stdout=subprocess.DEVNULL)
+    else:
+        subprocess.run(['service', service_name, 'restart'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_reload(service_name):
-    """Reload service with systemd."""
-    subprocess.call(['systemctl', 'reload', service_name])
+    """Reload a service with systemd or sysvinit."""
+    if is_systemd_running():
+        subprocess.run(['systemctl', 'reload', service_name],
+                       stdout=subprocess.DEVNULL)
+    else:
+        subprocess.run(['service', service_name, 'reload'],
+                       stdout=subprocess.DEVNULL)
 
 
 def webserver_is_enabled(name, kind='config'):
