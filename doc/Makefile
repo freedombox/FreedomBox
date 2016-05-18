@@ -20,6 +20,17 @@ MANUAL_URL="https://wiki.debian.org/FreedomBox/Manual?action=show&mimetype=text%
 
 OUTPUTS=freedombox-manual.pdf freedombox-manual.html freedombox-manual.part.html plinth.1
 
+# In order to debug various problems with the documents especially
+# intermediate LaTeX state, run make as follows:
+#
+#   $ make DEBUG=true
+#   or
+#   $ make DEBUG=true <target>
+#
+XMLTO_DEBUG_FLAGS=
+ifneq ($(DEBUG),)
+    XMLTO_DEBUG_FLAGS=--noclean -p '--debug'
+endif
 
 all: $(OUTPUTS)
 
@@ -47,7 +58,7 @@ fetch:
 
 
 %.pdf: %.xml
-	xmlto --with-dblatex pdf $<
+	xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf $<
 
 
 %.part.html: %.html
