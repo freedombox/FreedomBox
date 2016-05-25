@@ -69,8 +69,8 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
+    helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
     helper.install(['privoxy'])
-    helper.call('post', actions.superuser_run, 'privoxy', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 
 
