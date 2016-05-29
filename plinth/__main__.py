@@ -45,9 +45,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser(
         description='Plinth web interface for FreedomBox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        '--pidfile', default=cfg.pidfile,
-        help='specify a file in which the server may write its pid')
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument(
         '--server_dir', default=cfg.server_dir,
@@ -64,7 +61,6 @@ def parse_arguments():
 
     global arguments
     arguments = parser.parse_args()
-    cfg.pidfile = arguments.pidfile
     cfg.server_dir = arguments.server_dir
     cfg.debug = arguments.debug
 
@@ -82,22 +78,14 @@ def setup_server():
     """Setup CherryPy server"""
     logger.info('Setting up CherryPy server')
 
-    # Set the PID file path
-    try:
-        if cfg.pidfile:
-            from cherrypy.process.plugins import PIDFile
-            PIDFile(cherrypy.engine, cfg.pidfile).subscribe()
-    except AttributeError:
-        pass
-
     # Configure default server
-    cherrypy.config.update(
-        {'server.socket_host': cfg.host,
-         'server.socket_port': cfg.port,
-         'server.thread_pool': 10,
-         # Avoid stating files once per second in production
-         'engine.autoreload.on': cfg.debug,
-        })
+    cherrypy.config.update({
+        'server.socket_host': cfg.host,
+        'server.socket_port': cfg.port,
+        'server.thread_pool': 10,
+        # Avoid stating files once per second in production
+        'engine.autoreload.on': cfg.debug,
+    })
 
     application = django.core.wsgi.get_wsgi_application()
     cherrypy.tree.graft(application, cfg.server_dir)
