@@ -29,7 +29,6 @@ import stat
 import sys
 
 import cherrypy
-from cherrypy.process.plugins import Daemonizer
 
 from plinth import cfg
 from plinth import module_loader
@@ -57,9 +56,6 @@ def parse_arguments():
         '--debug', action='store_true', default=cfg.debug,
         help='enable debugging and run server *insecurely*')
     parser.add_argument(
-        '--no-daemon', action='store_true', default=cfg.no_daemon,
-        help='do not start as a daemon')
-    parser.add_argument(
         '--setup', action='store_true', default=False,
         help='run setup tasks on all essential modules and exit')
     parser.add_argument(
@@ -71,7 +67,6 @@ def parse_arguments():
     cfg.pidfile = arguments.pidfile
     cfg.server_dir = arguments.server_dir
     cfg.debug = arguments.debug
-    cfg.no_daemon = arguments.no_daemon
 
 
 def setup_logging():
@@ -81,8 +76,6 @@ def setup_logging():
 
     cherrypy.log.error_file = cfg.status_log_file
     cherrypy.log.access_file = cfg.access_log_file
-    if not cfg.no_daemon:
-        cherrypy.log.screen = False
 
 
 def setup_server():
@@ -151,9 +144,6 @@ def setup_server():
         cherrypy.tree.mount(None, urlprefix, config)
         logger.debug('Serving static directory %s on %s', static_dir,
                      urlprefix)
-
-    if not cfg.no_daemon:
-        Daemonizer(cherrypy.engine).subscribe()
 
     cherrypy.engine.signal_handler.subscribe()
 

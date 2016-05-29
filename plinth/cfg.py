@@ -39,7 +39,6 @@ port = None
 use_x_forwarded_host = False
 secure_proxy_ssl_header = None
 debug = False
-no_daemon = False
 server_dir = '/'
 danube_edition = False
 
