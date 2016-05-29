@@ -38,9 +38,7 @@
       <command>plinth</command>
       <arg><option>-h, </option><option>--help</option></arg>
       <arg><option>--server_dir</option><arg choice="req">SERVER_DIR</arg></arg>
-      <arg><option>--pidfile</option><arg choice="req">PIDFILE</arg></arg>
       <arg><option>--debug</option></arg>
-      <arg><option>--no-daemon</option></arg>
       <arg><option>--diagnose</option></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
@@ -73,24 +71,6 @@
     <title>Options</title>
     <variablelist>
       <varlistentry>
-	<term><option>--pidfile PIDFILE</option></term>
-	<listitem>
-	  <para>
-            Write the process ID of the daemon into the provided
-            PIDFILE.  By default the value from
-            <filename>plinth.config</filename> is used.  Plinth is
-            shipped with a value of
-            <filename>/var/run/plinth.pid</filename> in
-            <filename>/etc/plinth/plinth.config</filename>.  When
-            <filename>/etc/plinth/plinth.config</filename> is not
-            available, <filename>plinth.config</filename> from current
-            directory is used.  In source directory, this has the
-            default value of
-            <filename>./data/var/run/plinth.pid</filename>.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
 	<term><option>--server_dir SERVER_DIR</option></term>
 	<listitem>
 	  <para>
@@ -117,18 +97,6 @@
 	    changes and restart Plinth on modifications.  Turn on
 	    Django debug mode to show details on error pages.  Die if
 	    there is an error during module initialization.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term><option>--no-daemon</option></term>
-	<listitem>
-	  <para>
-	    Normally Plinth goes into daemon mode as soon as it
-	    finishes initialization.  This is useful when performing
-	    development and debugging on the command line.  Further,
-	    this is useful when running as systemd service as systemd
-	    takes care of sending the process into background.
 	  </para>
 	</listitem>
       </varlistentry>
@@ -161,21 +129,20 @@
     <title>Examples</title>
 
     <example>
-      <title>Start Plinth as daemon with default options</title>
+      <title>Start Plinth with default options</title>
       <synopsis>$ plinth</synopsis>
       <para>
-        Become a daemon after initialization and write a PIDFILE as
-        specified in the configuration.
+        Run Plinth as guided by configuration file.
       </para>
     </example>
 
     <example>
       <title>Run Plinth for debugging</title>
-      <synopsis>$ plinth --server_dir=/plinth --debug --no-daemon</synopsis>
+      <synopsis>$ plinth --server_dir=/plinth --debug</synopsis>
       <para>
-        Enable debug mode and don't become a daemon.  Also override
-        the configuration file value for the URL fragment to start
-        Plinth under and set it to /plinth.
+        Enable debug mode and run on terminal.  Also override the
+        configuration file value for the URL fragment to start Plinth
+        under and set it to /plinth.
       </para>
     </example>
 </refsect1>
