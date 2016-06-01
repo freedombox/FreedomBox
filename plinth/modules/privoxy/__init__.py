@@ -102,10 +102,7 @@ def diagnose_url_with_proxy():
             address['address'] = '[{0}]'.format(address['address'])
 
         proxy = 'http://{host}:8118/'.format(host=address['address'])
-        if address['kind'] == '4':
-            env = {'http_proxy': proxy}
-        else:
-            env = {'https_proxy': proxy}
+        env = {'https_proxy': proxy}
 
         result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
