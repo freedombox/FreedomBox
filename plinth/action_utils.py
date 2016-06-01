@@ -322,16 +322,13 @@ def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
         return [_('Access URL {url}').format(url=url), result]
 
 
-def diagnose_url_on_all(url, extra_options=None):
+def diagnose_url_on_all(url, **kwargs):
     """Run a diagnostic on whether a URL is accessible."""
     results = []
     for address in get_addresses():
-        if address['kind'] == '6' and ':' in address['address']:
-            address['address'] = '[{0}]'.format(address['address'])
-
-        current_url = url.format(host=address['address'])
+        current_url = url.format(host=address['url_address'])
         results.append(diagnose_url(current_url, kind=address['kind'],
-                                    extra_options=extra_options))
+                                    **kwargs))
 
     return results
 
@@ -363,10 +360,19 @@ def get_addresses():
     addresses = get_ip_addresses()
 
     hostname = get_hostname()
-    addresses.append({'kind': '4', 'address': 'localhost'})
-    addresses.append({'kind': '6', 'address': 'localhost'})
-    addresses.append({'kind': '4', 'address': hostname})
-    addresses.append({'kind': '6', 'address': hostname})
+    addresses.append({'kind': '4', 'address': 'localhost', 'numeric': False,
+                      'url_address': 'localhost'})
+    addresses.append({'kind': '6', 'address': 'localhost', 'numeric': False,
+                      'url_address': 'localhost'})
+    addresses.append({'kind': '4', 'address': hostname, 'numeric': False,
+                      'url_address': hostname})
+
+    # XXX: When a hostname is resolved to IPv6 address, it may likely
+    # be link-local address.  Link local IPv6 addresses are valid only
+    # for a given link and need to be scoped with interface name such
+    # as '%eth0' to work.  Tools such as curl don't seem to handle
+    # this correctly.
+    # addresses.append({'kind': '6', 'address': hostname, 'numeric': False})
 
     return addresses
 
@@ -378,8 +384,21 @@ def get_ip_addresses():
     output = subprocess.check_output(['ip', '-o', 'addr'])
     for line in output.decode().splitlines():
         parts = line.split()
-        addresses.append({'kind': '4' if parts[2] == 'inet' else '6',
-                          'address': parts[3].split('/')[0]})
+        address = {'kind': '4' if parts[2] == 'inet' else '6',
+                   'address': parts[3].split('/')[0],
+                   'url_address': parts[3].split('/')[0],
+                   'numeric': True,
+                   'scope': parts[5],
+                   'interface': parts[1]}
+
+        if address['kind'] == '6' and address['numeric']:
+            if address['scope'] != 'link':
+                address['url_address'] = '[{0}]'.format(address['address'])
+            else:
+                address['url_address'] = '[{0}%{1}]'.format(
+                    address['url_address'], address['interface'])
+
+        addresses.append(address)
 
     return addresses
 
