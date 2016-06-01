@@ -21,9 +21,12 @@ Python action utility functions.
 
 from django.utils.translation import ugettext as _
 import os
+import logging
 import psutil
 import socket
 import subprocess
+
+logger = logging.getLogger(__name__)
 
 
 def is_systemd_running():
@@ -204,7 +207,6 @@ class WebserverChange(object):
         elif 'reload' in self.actions_required:
             service_reload('apache2')
 
-
     def enable(self, name, kind='config'):
         """Enable a config/module/site in Apache.
 
@@ -233,10 +235,10 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
 
     if listen_address:
         test = _('Listening on {kind} port {listen_address}:{port}') \
-        .format(kind=kind, listen_address=listen_address, port=port)
+               .format(kind=kind, listen_address=listen_address, port=port)
     else:
         test = _('Listening on {kind} port {port}') \
-        .format(kind=kind, port=port)
+               .format(kind=kind, port=port)
 
     return [test, 'passed' if result else 'failed']
 
