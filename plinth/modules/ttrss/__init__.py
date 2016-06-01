@@ -87,6 +87,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/tt-rss', extra_options=['--no-check-certificate']))
+        'https://{host}/tt-rss', check_certificate=False))
 
     return results

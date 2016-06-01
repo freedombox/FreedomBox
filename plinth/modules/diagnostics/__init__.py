@@ -51,6 +51,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(8000, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8000, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'http://{host}/plinth/', extra_options=['--no-check-certificate']))
+        'http://{host}/plinth/', check_certificate=False))
 
     return results
