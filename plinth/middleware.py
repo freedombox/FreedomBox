@@ -36,7 +36,7 @@ class SetupMiddleware(object):
     """Show setup page or progress if setup is neccessary or running."""
 
     @staticmethod
-    def process_request(request):
+    def process_view(request, view_func, view_args, view_kwargs):
         """Handle a request as Django middleware request handler."""
         # Perform a URL resolution. This is slightly inefficient as
         # Django will do this resolution again.
