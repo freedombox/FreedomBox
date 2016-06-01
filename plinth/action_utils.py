@@ -285,16 +285,19 @@ def _check_port(port, kind='tcp', listen_address=None):
     return False
 
 
-def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
-                 expected_output=None):
+def diagnose_url(url, kind=None, env=None, check_certificate=True,
+                 extra_options=None, wrapper=None, expected_output=None):
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
     """
-    command = ['wget', '-q', '-O', '-', url]
+    command = ['curl', '-f', '-w', '%{response_code}', url]
 
     if wrapper:
         command.insert(0, wrapper)
+
+    if not check_certificate:
+        command.append('-k')
 
     if extra_options:
         command.extend(extra_options)
@@ -303,14 +306,16 @@ def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
         command.append({'4': '-4', '6': '-6'}[kind])
 
     try:
-        output = subprocess.check_output(command, env=env)
+        process = subprocess.run(
+            command, env=env, check=True, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         result = 'passed'
-        if expected_output and expected_output not in output.decode():
+        if expected_output and expected_output not in process.stdout.decode():
             result = 'failed'
     except subprocess.CalledProcessError as exception:
         result = 'failed'
         # Authorization failed is a success
-        if exception.returncode == 6:
+        if exception.stdout.decode().strip() == '401':
             result = 'passed'
     except FileNotFoundError:
         result = 'error'

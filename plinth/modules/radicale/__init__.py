@@ -91,6 +91,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5232, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5232, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/radicale', extra_options=['--no-check-certificate']))
+        'https://{host}/radicale', check_certificate=False))
 
     return results

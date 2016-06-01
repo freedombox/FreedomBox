@@ -88,6 +88,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/deluge', extra_options=['--no-check-certificate']))
+        'https://{host}/deluge', check_certificate=False))
 
     return results

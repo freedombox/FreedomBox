@@ -95,7 +95,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(9091, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(9091, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/transmission',
-        extra_options=['--no-check-certificate']))
+        'https://{host}/transmission', check_certificate=False))
 
     return results

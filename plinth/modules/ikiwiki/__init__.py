@@ -85,6 +85,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/ikiwiki', extra_options=['--no-check-certificate']))
+        'https://{host}/ikiwiki', check_certificate=False))
 
     return results
