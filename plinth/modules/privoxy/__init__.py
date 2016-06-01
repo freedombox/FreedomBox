@@ -94,14 +94,11 @@ def diagnose():
 
 def diagnose_url_with_proxy():
     """Run a diagnostic on a URL with a proxy."""
-    url = 'https://debian.org/'
+    url = 'https://debian.org/'  # Gives a simple redirect to www.
 
     results = []
     for address in action_utils.get_addresses():
-        if address['kind'] == '6':
-            address['address'] = '[{0}]'.format(address['address'])
-
-        proxy = 'http://{host}:8118/'.format(host=address['address'])
+        proxy = 'http://{host}:8118/'.format(host=address['url_address'])
         env = {'https_proxy': proxy}
 
         result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
