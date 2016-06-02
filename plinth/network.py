@@ -313,7 +313,8 @@ def _update_ipv4_settings(connection, ipv4):
     connection.add_setting(settings)
 
     settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv4['method'])
-    if ipv4['method'] == nm.SETTING_IP4_CONFIG_METHOD_MANUAL and \
+    if (ipv4['method'] == nm.SETTING_IP4_CONFIG_METHOD_MANUAL or
+        ipv4['method'] == nm.SETTING_IP4_CONFIG_METHOD_SHARED) and \
        ipv4['address']:
         ipv4_address_int = ipv4_string_to_int(ipv4['address'])
 

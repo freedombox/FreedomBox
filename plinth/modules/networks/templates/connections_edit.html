@@ -43,29 +43,40 @@
   <script type="text/javascript">
     (function($) {
 
-        if ($("#id_ipv4_method").prop("value") != "manual") {
-            $("#id_ipv4_address").prop("readOnly", true);
-            $("#id_ipv4_netmask").prop("readOnly", true);
-            $("#id_ipv4_gateway").prop("readOnly", true);
+        function ipv4_required(required, fields) {
+            for (var i = 0; i < fields.length; i++) {
+                $('#id_ipv4_' + fields[i]).prop("required", required);
+            }
         }
+
+        function ipv4_readonly(readonly, fields) {
+            for (var i = 0; i < fields.length; i++) {
+                $('#id_ipv4_' + fields[i]).prop("readOnly", readonly);
+                if (readonly) {
+                    $('#id_ipv4_' + fields[i]).val("");
+                    $('#id_ipv4_' + fields[i]).prop("required", false);
+                }
+            }
+        }
+
+        function on_ipv4_method_change() {
+            if ($("#id_ipv4_method").prop("value") == "manual") {
+                ipv4_required(true, ['address']);
+                ipv4_readonly(false, ['address', 'netmask', 'gateway', 'dns',
+                                      'second_dns']);
+            } else if ($("#id_ipv4_method").prop("value") == "shared") {
+                ipv4_required(false, ['address']);
+                ipv4_readonly(false, ['address', 'netmask']);
+                ipv4_readonly(true, ['gateway', 'dns', 'second_dns']);
+            } else {
+                ipv4_readonly(true, ['address', 'netmask', 'gateway']);
+                ipv4_readonly(false, ['dns', 'second_dns']);
+            }
+        }
+
         $("#id_name").focus();
 
-        $("#id_ipv4_method").change(function() {
-            if ($("#id_ipv4_method").prop("value") == "manual") {
-                $("#id_ipv4_address").prop("readOnly", false);
-                $("#id_ipv4_address").prop("required", true);
-                $("#id_ipv4_netmask").prop("readOnly", false);
-                $("#id_ipv4_gateway").prop("readOnly", false);
-            } else {
-                $("#id_ipv4_address").val("");
-                $("#id_ipv4_address").prop("readOnly", true);
-                $("#id_ipv4_address").prop("required", false);
-                $("#id_ipv4_netmask").val("");
-                $("#id_ipv4_netmask").prop("readOnly", true);
-                $("#id_ipv4_gateway").val("");
-                $("#id_ipv4_gateway").prop("readOnly", true);
-            }
-        });
+        $("#id_ipv4_method").change(on_ipv4_method_change).change();
 
         $('#id_show_password').change(function() {
             // Changing type attribute from password to text is prevented by

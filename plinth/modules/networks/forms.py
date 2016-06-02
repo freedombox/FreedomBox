@@ -94,7 +94,6 @@ available over this interfaces. Select Internal only for trusted networks.'),
 
         return choices
 
-
     def get_settings(self):
         """Return settings dict from cleaned data."""
         settings = {}
@@ -148,7 +147,6 @@ class PPPoEForm(EthernetForm):
                                widget=forms.PasswordInput(render_value=True))
     show_password = forms.BooleanField(label=_('Show password'),
                                        required=False)
-
 
     def get_settings(self):
         """Return setting dict from cleaned data."""
