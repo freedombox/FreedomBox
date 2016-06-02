@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "connections_edit.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -35,50 +35,5 @@
       </form>
     </div>
   </div>
-
-{% endblock %}
-
-{% block page_js %}
-
-  <script type="text/javascript">
-    (function($) {
-
-        if ($("#id_ipv4_method").prop("value") != "manual") {
-            $("#id_ipv4_address").prop("readOnly", true);
-            $("#id_ipv4_netmask").prop("readOnly", true);
-            $("#id_ipv4_gateway").prop("readOnly", true);
-        }
-        $("#id_name").focus();
-
-        $("#id_ipv4_method").change(function() {
-            if ($("#id_ipv4_method").prop("value") == "manual") {
-                $("#id_ipv4_address").prop("readOnly", false);
-                $("#id_ipv4_address").prop("required", true);
-                $("#id_ipv4_netmask").prop("readOnly", false);
-                $("#id_ipv4_gateway").prop("readOnly", false);
-            } else {
-                $("#id_ipv4_address").val("");
-                $("#id_ipv4_address").prop("readOnly", true);
-                $("#id_ipv4_address").prop("required", false);
-                $("#id_ipv4_netmask").val("");
-                $("#id_ipv4_netmask").prop("readOnly", true);
-                $("#id_ipv4_gateway").val("");
-                $("#id_ipv4_gateway").prop("readOnly", true);
-            }
-        });
-
-        $('#id_show_password').change(function() {
-            // Changing type attribute from password to text is prevented by
-            // most browsers. Making a new form field works.
-            new_type = 'password';
-            if ($('#id_show_password').prop('checked'))
-                new_type = 'text';
-
-            $('#id_password').replaceWith(
-                $('#id_password').clone().attr('type', new_type));
-        });
-
-    })(jQuery);
-  </script>
 
 {% endblock %}
