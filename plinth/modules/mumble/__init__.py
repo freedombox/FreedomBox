@@ -54,7 +54,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['mumble-plinth'], is_external=True)
 
 
 class MumbleServiceView(ServiceView):

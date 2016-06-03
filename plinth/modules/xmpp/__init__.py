@@ -63,7 +63,8 @@ def init():
     global service
     service = service_module.Service(
         'ejabberd', title, ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-        is_external=True, is_enabled=is_enabled, enable=enable, disable=disable)
+        is_external=True, is_enabled=is_enabled, enable=enable,
+        disable=disable)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
