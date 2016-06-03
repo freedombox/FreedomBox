@@ -37,18 +37,17 @@ class Service(object):
     for operation.
 
     - service_id: unique service name. If possible this should be the name of
-                  the service on operating system level (as in /etc/init.d/).
+                  the service's systemd unit file (without the extension).
     - name: service name as to be displayed in the GUI
-    - is_enabled (optional): Boolean, or a Function returning Boolean
-    - enable (optional): Function
-    - disable (optional): Function
-    - is_running (optional): Boolean, or a Function returning Boolean
-
+    - is_enabled (optional): Boolean or a method returning Boolean
+    - enable (optional): method
+    - disable (optional): method
+    - is_running (optional): Boolean or a method returning Boolean
     """
     def __init__(self, service_id, name, ports=None, is_external=False,
                  is_enabled=None, enable=None, disable=None, is_running=None):
         if ports is None:
-            ports = [service_id]
+            ports = []
 
         if is_enabled is None:
             is_enabled = self._default_is_enabled
@@ -123,4 +122,4 @@ def init():
             is_external=True, is_enabled=True)
     Service('plinth', format_lazy(_('{box_name} Web Interface (Plinth)'),
                                   box_name=_(cfg.box_name)),
-                      ports=['https'], is_external=True, is_enabled=True)
+            ports=['https'], is_external=True, is_enabled=True)
