@@ -64,7 +64,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=False)
+        managed_services[0], title, ports=['privoxy'], is_external=False)
 
 
 def setup(helper, old_version=None):

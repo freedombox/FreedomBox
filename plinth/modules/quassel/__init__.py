@@ -62,7 +62,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['quassel-plinth'], is_external=True)
 
 
 class QuasselServiceView(ServiceView):

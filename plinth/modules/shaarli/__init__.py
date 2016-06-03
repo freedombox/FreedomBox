@@ -62,7 +62,6 @@ def setup(helper, old_version=None):
     helper.call('post', service.notify_enabled, None, True)
 
 
-
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.webserver_is_enabled('shaarli')

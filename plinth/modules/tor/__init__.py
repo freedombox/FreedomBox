@@ -58,7 +58,7 @@ def init():
 
     global socks_service
     socks_service = service_module.Service(
-        'tor-socks', _('Tor Anonymity Network'),
+        'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
         is_external=False, is_enabled=utils.is_enabled,
         is_running=utils.is_running)
 

@@ -47,6 +47,7 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
@@ -54,7 +55,8 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['minetest-plinth'],
+        is_external=True)
 
 
 def setup(helper, old_version=None):
