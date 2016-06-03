@@ -47,7 +47,6 @@
           </thead>
 
           <tbody>
-            {% for service in services %}
               <tr>
                 <td><strong>{{ service.name }}</strong></td>
                 <td>
@@ -62,6 +61,7 @@
               </tr>
 
               {% for port in service.ports %}
+            {% for service in services|dictsort:"name" %}
                 <tr>
                   <td class='cell-indented'><em>{{ port }}</em></td>
                   <td>
