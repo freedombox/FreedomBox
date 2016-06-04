@@ -26,7 +26,7 @@ from plinth.utils import format_lazy
 
 version = 1
 
-depends = ['apps']
+depends = ['system']
 
 title = _('Dynamic DNS Client')
 
@@ -51,7 +51,7 @@ description = [
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = cfg.main_menu.get('system:index')
     menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
 
 
