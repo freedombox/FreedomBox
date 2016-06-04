@@ -56,9 +56,9 @@ class Menu(object):
 
         raise KeyError('Menu item not found')
 
-    def sort_items(self):
-        """Sort the items in self.items by order."""
-        self.items = sorted(self.items, key=lambda x: x.order, reverse=False)
+    def sorted_items(self):
+        """Return menu items in sorted order according to current locale."""
+        return sorted(self.items, key=lambda x: (x.order, x.label))
 
     def add_urlname(self, label, icon, urlname, order=50, url_args=None,
                     url_kwargs=None):
@@ -77,7 +77,6 @@ class Menu(object):
         """
         item = Menu(label=label, icon=icon, url=url, order=order)
         self.items.append(item)
-        self.sort_items()
         return item
 
     def active_item(self, request):

@@ -54,7 +54,7 @@ def init():
     """Initialize the monkeysphere module."""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Monkeysphere'), 'glyphicon-certificate',
-                     'monkeysphere:index', 970)
+                     'monkeysphere:index')
 
 
 def setup(helper, old_version=None):

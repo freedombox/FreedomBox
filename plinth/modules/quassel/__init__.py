@@ -58,7 +58,7 @@ description = [
 def init():
     """Initialize the quassel module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index', 730)
+    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
 
     global service
     service = service_module.Service(

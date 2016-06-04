@@ -53,7 +53,7 @@ managed_services = ['node-restore']
 def init():
     """Initialize the reStore module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-hdd', 'restore:index', 750)
+    menu.add_urlname(title, 'glyphicon-hdd', 'restore:index')
 
     global service
     service = service_module.Service(

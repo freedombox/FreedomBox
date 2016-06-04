@@ -148,7 +148,7 @@ def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
-                     'config:index', 10)
+                     'config:index')
 
     # Register domain with Name Services module.
     domainname = get_domainname()

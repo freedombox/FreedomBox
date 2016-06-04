@@ -47,7 +47,7 @@ service = None
 def init():
     """Intialize the date/time module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-time', 'datetime:index', 900)
+    menu.add_urlname(title, 'glyphicon-time', 'datetime:index')
 
     global service
     service = service_module.Service(

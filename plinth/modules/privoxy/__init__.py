@@ -60,7 +60,7 @@ managed_services = ['privoxy']
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index', 1000)
+    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
 
     global service
     service = service_module.Service(

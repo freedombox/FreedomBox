@@ -44,7 +44,7 @@ description = [
 def init():
     """Initialize the ikiwiki module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index', 1100)
+    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index')
 
     global service
     service = service_module.Service(

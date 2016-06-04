@@ -51,7 +51,7 @@ TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 def init():
     """Intialize the Transmission module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-save', 'transmission:index', 300)
+    menu.add_urlname(title, 'glyphicon-save', 'transmission:index')
 
     global service
     service = service_module.Service(

@@ -52,7 +52,7 @@ description = [
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index', 500)
+    menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
 
 
 def setup(helper, old_version=None):
