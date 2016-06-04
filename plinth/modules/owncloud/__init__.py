@@ -60,7 +60,7 @@ def init():
         return
 
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index', 700)
+    menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index')
 
     global service
     service = service_module.Service(

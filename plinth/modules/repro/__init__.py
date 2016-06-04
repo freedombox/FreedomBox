@@ -62,7 +62,7 @@ managed_services = ['repro']
 def init():
     """Initialize the repro module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index', 825)
+    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
 
     global service
     service = service_module.Service(

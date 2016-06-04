@@ -50,7 +50,7 @@ description = [
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index', 900)
+    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
 
     global service
     service = service_module.Service(

@@ -31,7 +31,7 @@ from plinth import cfg, __version__
 def init():
     """Initialize the Help module"""
     menu = cfg.main_menu.add_urlname(ugettext_lazy('Documentation'),
-                                     'glyphicon-book', 'help:index', 101)
+                                     'glyphicon-book', 'help:index')
     menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
                      'help:index_explicit', 5)
     menu.add_urlname(ugettext_lazy('Manual'), 'glyphicon-info-sign',

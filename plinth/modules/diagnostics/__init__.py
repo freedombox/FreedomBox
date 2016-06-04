@@ -42,7 +42,7 @@ depends = ['system']
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-screenshot', 'diagnostics:index', 30)
+    menu.add_urlname(title, 'glyphicon-screenshot', 'diagnostics:index')
 
 
 def diagnose():

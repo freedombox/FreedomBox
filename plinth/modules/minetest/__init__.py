@@ -50,7 +50,7 @@ description = [
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index', 325)
+    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
 
     global service
     service = service_module.Service(

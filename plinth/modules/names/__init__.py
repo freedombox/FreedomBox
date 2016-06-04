@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the names module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-tag', 'names:index', 19)
+    menu.add_urlname(title, 'glyphicon-tag', 'names:index')
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)

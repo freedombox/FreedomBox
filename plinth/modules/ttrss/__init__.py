@@ -50,7 +50,7 @@ managed_services = ['tt-rss']
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index', 780)
+    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
 
     global service
     service = service_module.Service(

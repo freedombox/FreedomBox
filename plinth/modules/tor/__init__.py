@@ -54,7 +54,7 @@ bridge_service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index', 100)
+    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
 
     global socks_service
     socks_service = service_module.Service(

@@ -50,7 +50,7 @@ LOGGER = logging.getLogger(__name__)
 def init():
     """Initailze firewall module"""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-fire', 'firewall:index', 50)
+    menu.add_urlname(title, 'glyphicon-fire', 'firewall:index')
 
     service_enabled.connect(on_service_enabled)
 

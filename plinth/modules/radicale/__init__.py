@@ -53,7 +53,7 @@ description = [
 def init():
     """Initialize the radicale module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index', 375)
+    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
 
     global service
     service = service_module.Service(

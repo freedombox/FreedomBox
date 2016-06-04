@@ -58,7 +58,7 @@ managed_services = ['ejabberd']
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index', 400)
+    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
 
     global service
     service = service_module.Service(

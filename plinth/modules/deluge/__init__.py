@@ -50,7 +50,7 @@ description = [
 def init():
     """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index', 200)
+    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
 
     global service
     service = service_module.Service(

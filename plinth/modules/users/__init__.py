@@ -38,7 +38,7 @@ title = _('Users and Groups')
 def init():
     """Intialize the user module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-user', 'users:index', 15)
+    menu.add_urlname(title, 'glyphicon-user', 'users:index')
 
 
 def setup(helper, old_version=None):

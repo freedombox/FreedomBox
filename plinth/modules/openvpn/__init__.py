@@ -53,7 +53,7 @@ description = [
 def init():
     """Intialize the OpenVPN module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index', 850)
+    menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index')
 
     global service
     service = service_module.Service(

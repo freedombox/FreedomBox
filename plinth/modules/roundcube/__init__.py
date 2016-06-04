@@ -61,7 +61,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index', 600)
+    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
 
     global service
     service = service_module.Service(

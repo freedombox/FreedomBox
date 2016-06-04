@@ -55,7 +55,7 @@ service = None
 def init():
     """Intialize the service discovery module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index', 950)
+    menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index')
 
     global service  # pylint: disable=W0603
     service = service_module.Service(
