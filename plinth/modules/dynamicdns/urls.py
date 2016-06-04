@@ -25,7 +25,7 @@ from . import dynamicdns as views
 
 
 urlpatterns = [
-    url(r'^apps/dynamicdns/$', views.index, name='index'),
-    url(r'^apps/dynamicdns/configure/$', views.configure, name='configure'),
-    url(r'^apps/dynamicdns/statuspage/$', views.statuspage, name='statuspage'),
+    url(r'^sys/dynamicdns/$', views.index, name='index'),
+    url(r'^sys/dynamicdns/configure/$', views.configure, name='configure'),
+    url(r'^sys/dynamicdns/statuspage/$', views.statuspage, name='statuspage'),
 ]
