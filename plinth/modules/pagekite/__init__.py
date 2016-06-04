@@ -26,14 +26,14 @@ from . import utils
 
 version = 1
 
-depends = ['apps', 'names']
+depends = ['system', 'names']
 
 title = _('Public Visibility (PageKite)')
 
 
 def init():
     """Intialize the PageKite module"""
-    menu = cfg.main_menu.get('apps:index')
+    menu = cfg.main_menu.get('system:index')
     menu.add_urlname(title, 'glyphicon-flag', 'pagekite:index', 800)
 
     # Register kite name with Name Services module.

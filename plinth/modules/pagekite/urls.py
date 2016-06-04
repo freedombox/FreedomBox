@@ -26,13 +26,13 @@ from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
 
 
 urlpatterns = [
-    url(r'^apps/pagekite/$', index, name='index'),
-    url(r'^apps/pagekite/configure/$', ConfigurationView.as_view(),
+    url(r'^sys/pagekite/$', index, name='index'),
+    url(r'^sys/pagekite/configure/$', ConfigurationView.as_view(),
         name='configure'),
-    url(r'^apps/pagekite/services/standard$', StandardServiceView.as_view(),
+    url(r'^sys/pagekite/services/standard$', StandardServiceView.as_view(),
         name='standard-services'),
-    url(r'^apps/pagekite/services/custom$', CustomServiceView.as_view(),
+    url(r'^sys/pagekite/services/custom$', CustomServiceView.as_view(),
         name='custom-services'),
-    url(r'^apps/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
+    url(r'^sys/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
         name='delete-custom-service'),
 ]
