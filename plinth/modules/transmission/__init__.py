@@ -32,6 +32,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['transmission-daemon']
+
+managed_packages = ['transmission-daemon']
+
 title = _('BitTorrent (Transmission)')
 
 description = [
@@ -42,8 +46,6 @@ description = [
 ]
 
 service = None
-
-managed_services = ['transmission-daemon']
 
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
@@ -61,7 +63,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['transmission-daemon'])
+    helper.install(managed_packages)
 
     new_configuration = {'rpc-whitelist-enabled': False}
     helper.call('post', actions.superuser_run, 'transmission',

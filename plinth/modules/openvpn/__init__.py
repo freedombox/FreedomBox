@@ -36,6 +36,8 @@ service = None
 
 managed_services = ['openvpn@freedombox']
 
+managed_packages = ['openvpn', 'easy-rsa']
+
 title = _('Virtual Private Network (OpenVPN)')
 
 description = [
@@ -62,7 +64,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['openvpn', 'easy-rsa'])
+    helper.install(managed_packages)
 
 
 def is_setup():

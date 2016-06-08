@@ -37,6 +37,8 @@ service = None
 
 managed_services = ['mumble-server']
 
+managed_packages = ['mumble-server']
+
 description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),
@@ -65,7 +67,7 @@ class MumbleServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['mumble-server'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

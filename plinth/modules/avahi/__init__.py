@@ -36,6 +36,8 @@ depends = ['system']
 
 managed_services = ['avahi-daemon']
 
+managed_packages = ['avahi-daemon']
+
 title = _('Service Discovery')
 
 description = [
@@ -64,7 +66,7 @@ def init():
 
 def setup(helper, old_version=False):
     """Install and configure the module."""
-    helper.install(['avahi-daemon'])
+    helper.install(managed_packages)
 
 
 class AvahiServiceView(ServiceView):

@@ -33,6 +33,8 @@ is_essential = True
 
 depends = ['apps', 'names']
 
+managed_packages = ['letsencrypt']
+
 title = _('Certificates (Let\'s Encrypt)')
 
 description = [
@@ -64,7 +66,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['letsencrypt'])
+    helper.install(managed_packages)
 
 
 def diagnose():

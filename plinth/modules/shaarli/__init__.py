@@ -31,6 +31,8 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['shaarli']
+
 title = _('Bookmarks (Shaarli)')
 
 description = [
@@ -58,7 +60,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['shaarli'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

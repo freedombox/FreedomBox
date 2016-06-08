@@ -35,6 +35,8 @@ service = None
 
 managed_services = ['deluge-web']
 
+managed_packages = ['deluged', 'deluge-web']
+
 title = _('BitTorrent Web Client (Deluge)')
 
 description = [
@@ -60,7 +62,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['deluged', 'deluge-web'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['enable'])
     helper.call('post', service.notify_enabled, None, True)
 

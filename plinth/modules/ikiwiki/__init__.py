@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['ikiwiki', 'gcc', 'libc6-dev', 'libtimedate-perl',
+                    'libcgi-formbuilder-perl', 'libcgi-session-perl',
+                    'libxml-writer-perl']
+
 service = None
 
 title = _('Wiki and Blog (ikiwiki)')
@@ -54,13 +58,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['ikiwiki',
-                    'gcc',
-                    'libc6-dev',
-                    'libtimedate-perl',
-                    'libcgi-formbuilder-perl',
-                    'libcgi-session-perl',
-                    'libxml-writer-perl'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

@@ -32,6 +32,9 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['ldapscripts', 'ldap-utils', 'libnss-ldapd',
+                    'libpam-ldapd', 'nslcd', 'slapd']
+
 title = _('Users and Groups')
 
 
@@ -44,8 +47,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'users', ['pre-install'])
-    helper.install(['ldapscripts', 'ldap-utils', 'libnss-ldapd',
-                    'libpam-ldapd', 'nslcd', 'slapd'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'users', ['setup'])
 
 

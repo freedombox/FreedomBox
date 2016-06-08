@@ -27,6 +27,8 @@ version = 1
 
 depends = ['system']
 
+managed_packages = ['monkeysphere']
+
 title = _('Monkeysphere')
 
 description = [
@@ -59,4 +61,4 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['monkeysphere'])
+    helper.install(managed_packages)

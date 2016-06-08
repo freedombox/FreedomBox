@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['repro']
+
+managed_packages = ['repro']
+
 title = _('SIP Server (repro)')
 
 description = [
@@ -56,8 +60,6 @@ description = [
 
 service = None
 
-managed_services = ['repro']
-
 
 def init():
     """Initialize the repro module."""
@@ -78,7 +80,7 @@ class ReproServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['repro'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

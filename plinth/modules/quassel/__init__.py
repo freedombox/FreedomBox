@@ -35,6 +35,8 @@ service = None
 
 managed_services = ['quasselcore']
 
+managed_packages = ['quassel-core']
+
 title = _('IRC Client (Quassel)')
 
 description = [
@@ -73,7 +75,7 @@ class QuasselServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['quassel-core'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

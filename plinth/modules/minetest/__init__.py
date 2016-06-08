@@ -36,6 +36,8 @@ service = None
 
 managed_services = ['minetest-server']
 
+managed_packages = ['minetest-server']
+
 title = _('Block Sandbox (Minetest)')
 
 description = [
@@ -61,7 +63,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_services)
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

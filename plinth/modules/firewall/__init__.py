@@ -34,6 +34,8 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['firewalld']
+
 title = _('Firewall')
 
 description = [
@@ -57,7 +59,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['firewalld'])
+    helper.install(managed_packages)
 
 
 def get_enabled_status():
