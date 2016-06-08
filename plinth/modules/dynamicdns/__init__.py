@@ -28,6 +28,8 @@ version = 1
 
 depends = ['system']
 
+managed_packages = ['ez-ipupdate']
+
 title = _('Dynamic DNS Client')
 
 description = [
@@ -57,4 +59,4 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['ez-ipupdate'])
+    helper.install(managed_packages)

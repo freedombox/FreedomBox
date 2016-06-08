@@ -35,6 +35,10 @@ is_essential = False
 
 depends = ['apps']
 
+managed_services = ['privoxy']
+
+managed_packages = ['privoxy']
+
 title = _('Web Proxy (Privoxy)')
 
 description = [
@@ -54,8 +58,6 @@ description = [
 
 service = None
 
-managed_services = ['privoxy']
-
 
 def init():
     """Intialize the module."""
@@ -70,7 +72,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
-    helper.install(['privoxy'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

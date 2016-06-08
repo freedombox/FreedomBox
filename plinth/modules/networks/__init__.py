@@ -34,6 +34,8 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['network-manager']
+
 title = _('Networks')
 
 logger = Logger(__name__)
@@ -47,7 +49,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['network-manager'])
+    helper.install(managed_packages)
 
 
 def diagnose():

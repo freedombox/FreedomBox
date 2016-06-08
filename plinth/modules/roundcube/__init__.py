@@ -31,6 +31,8 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
+
 title = _('Email Client (Roundcube)')
 
 description = [
@@ -72,7 +74,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
-    helper.install(['sqlite3', 'roundcube', 'roundcube-sqlite3'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
 
 

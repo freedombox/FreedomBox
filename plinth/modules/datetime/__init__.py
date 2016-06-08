@@ -34,6 +34,8 @@ depends = ['system']
 
 managed_services = ['ntp']
 
+managed_packages = ['ntp']
+
 title = _('Date & Time')
 
 description = [
@@ -56,7 +58,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['ntp'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

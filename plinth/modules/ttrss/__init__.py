@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['tt-rss']
+
+managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
+
 title = _('News Feed Reader (Tiny Tiny RSS)')
 
 description = [
@@ -43,8 +47,6 @@ description = [
 ]
 
 service = None
-
-managed_services = ['tt-rss']
 
 
 def init():
@@ -61,7 +63,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    helper.install(['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

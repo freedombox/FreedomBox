@@ -36,6 +36,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['ejabberd']
+
+managed_packages = ['jwchat', 'ejabberd']
+
 title = _('Chat Server (XMPP)')
 
 description = [
@@ -51,8 +55,6 @@ description = [
 service = None
 
 logger = logging.getLogger(__name__)
-
-managed_services = ['ejabberd']
 
 
 def init():
@@ -78,7 +80,7 @@ def setup(helper, old_version=None):
 
     helper.call('pre', actions.superuser_run, 'xmpp',
                 ['pre-install', '--domainname', domainname])
-    helper.install(['jwchat', 'ejabberd'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

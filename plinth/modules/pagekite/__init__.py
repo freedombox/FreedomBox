@@ -29,6 +29,8 @@ version = 1
 
 depends = ['system', 'names']
 
+managed_packages = ['pagekite']
+
 title = _('Public Visibility (PageKite)')
 
 description = [
@@ -76,4 +78,4 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['pagekite'])
+    helper.install(managed_packages)

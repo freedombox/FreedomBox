@@ -37,6 +37,8 @@ service = None
 
 managed_services = ['radicale']
 
+managed_packages = ['radicale']
+
 title = _('Calendar and Addressbook (Radicale)')
 
 description = [
@@ -69,7 +71,7 @@ class RadicaleServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['radicale'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'radicale', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

@@ -36,6 +36,9 @@ version = 1
 
 depends = ['apps', 'names']
 
+managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
+                    'apt-transport-tor']
+
 title = _('Anonymity Network (Tor)')
 
 description = [
@@ -92,8 +95,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
-                    'apt-transport-tor'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'tor', ['setup'])
     helper.call('post', actions.superuser_run, 'tor',
                 ['configure', '--apt-transport-tor', 'enable'])

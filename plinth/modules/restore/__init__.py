@@ -30,6 +30,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['node-restore']
+
+managed_packages = ['node-restore']
+
 title = _('Unhosted Storage (reStore)')
 
 description = [
@@ -47,8 +51,6 @@ description = [
 
 service = None
 
-managed_services = ['node-restore']
-
 
 def init():
     """Initialize the reStore module."""
@@ -62,4 +64,4 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['node-restore'])
+    helper.install(managed_packages)

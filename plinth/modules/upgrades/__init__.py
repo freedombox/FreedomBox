@@ -32,6 +32,8 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['unattended-upgrades']
+
 title = _('Software Upgrades')
 
 description = [
@@ -55,7 +57,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['unattended-upgrades'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
 
 
