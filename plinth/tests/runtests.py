@@ -33,8 +33,8 @@ def run_tests(pattern=None, return_to_caller=False):
     os.environ['DJANGO_SETTINGS_MODULE'] = \
         'plinth.tests.data.django_test_settings'
     django.setup()
-    TestRunner = get_runner(settings)
-    test_runner = TestRunner()
+    test_runner_cls = get_runner(settings)
+    test_runner = test_runner_cls()
 
     if pattern is None:
         pattern_list = [
@@ -47,6 +47,7 @@ def run_tests(pattern=None, return_to_caller=False):
     failures = test_runner.run_tests(pattern_list)
     if failures > 0 or not return_to_caller:
         sys.exit(bool(failures))
+
 
 if __name__ == '__main__':
     run_tests()
