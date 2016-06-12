@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.9.3] - 2016-06-12
 ### Added
 - Added Polish translation.
 - Added check to Diagnostics to skip tests for modules that have not
@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
   positive results.
 - Fixed some username checks that could cause errors when editing the
   user.
+- Switched to using apt-get for module setup in Plinth. This fixes
+  several issues that were seen during package installs.
 
 ### Changed
 - Moved Dynamic DNS and Pagekite from Applications to System
@@ -36,4 +38,4 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.9.2...HEAD
+[0.9.3]: https://github.com/freedombox/Plinth/compare/v0.9.2...v0.9.3
