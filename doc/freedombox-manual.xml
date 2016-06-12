@@ -7,8 +7,8 @@
   </articleinfo>
   <section>
     <title>FreedomBox: take your online privacy back</title>
-    <para>FreedomBox is a ready made personal server designed with privacy in mind. Made of free software only, it is a subset of <ulink url="https://www.debian.org/">Debian universal operating system</ulink>. It can be installed as a full system on a small board dedicated for that use from home. It can also be installed on your computer as an additional program although it is not recommended.</para>
-    <para>In order to replace communication services proposed by private companies mining your entire life, you will be able to activate independent services and provide them on the Internet or at home only. These applications are communication services accessible from clients or browsers on your phones like chat and voice calls, calendar, address book, file or news feed sharing and synchronization, webmail... To provide a spy free chat service for instance, activate the service from your administration interface and create some new users. You will then be able to provide XMPP addresses to your friends. They will instant use XMPP clients (Conversations or Xabber on Android, Pidgin on Windows and Linux, Messages on Mac OS) for encrypted communications.</para>
+    <para>FreedomBox is a ready made personal server designed with privacy and data ownership in mind. Made of free software only, it is a subset of <ulink url="https://www.debian.org/">Debian universal operating system</ulink>. It can be installed as a full system on a small board dedicated for that use from home. It can also be installed on your computer as an additional program although it is not recommended.</para>
+    <para>In order to replace communication services proposed by private companies mining your entire life, you will be able to activate independent services and access them from the Internet or from home only. These applications are communication services accessible from clients or browsers on your phones like chat and voice calls, calendar, address book, file or news feed sharing and synchronization, webmail... To setup and use a spy free chat service for instance, activate the service from your administration interface and create some new users. You will then be able to offer XMPP addresses to your friends. They will instant use XMPP clients (Conversations or Xabber on Android, Pidgin on Windows and Linux, Messages on Mac OS) for encrypted communications.</para>
     <para>FreedomBox is also optionally a Wi-Fi router for more advanced users. </para>
     <para>You need a bit of technical expertise or help from the community to set up FreedomBox at home on a specific inexpensive and power-efficient hardware or on your computer running Debian. But once installed , its use is similar to that of a smart phone. </para>
     <para>Related documentation: </para>
@@ -41,11 +41,11 @@
     </itemizedlist>
     <section>
       <title>Easy: Private Cloud</title>
-      <para>FreedomBox provides services: to your computers and mobile devices in your home and to computers and mobile devices of other people who are your friends. FreedomBox provides file sharing like Dropbox, shared calendering like Google or Yahoo and photo sharing. FreedomBox provides instant messaging and truly secure voice conference calling that works on low bandwidth providing high quality. FreedomBox has a blog and wiki to let you publish your content and collaborate with the rest of the world.  Coming soon, a personal email server and federated social networking using GNU Social and Diaspora, providing privacy-respecting alternatives to Gmail and Facebook.  </para>
+      <para>FreedomBox provides services: to your computers and mobile devices in your home and to computers and mobile devices of other people who are your friends. FreedomBox brings file sharing like Dropbox, shared calendaring like Google or Yahoo and photo sharing. FreedomBox supplies instant messaging and truly secure voice conference calling that works on low bandwidth providing high quality. FreedomBox has a blog and wiki to let you publish your content and collaborate with the rest of the world.  Coming soon, a personal email server and federated social networking using GNU Social and Diaspora, providing privacy-respecting alternatives to Gmail and Facebook.  </para>
     </section>
     <section>
       <title>Advanced: Smart Home Router</title>
-      <para>FreedomBox runs in a physical computer and can route your traffic. It can sit between various devices at home such as mobiles, laptops and TVs and the Internet replacing a home wireless router.  By routing traffic, FreedomBox can remove tracking advertisements and malicious web bugs before they ever reach your devices.  FreedomBox can cloak your location and protect your anonymity by "onion routing" your traffic over Tor. FreedomBox provides a VPN server that you can use while you are away from home to keep your traffic secret on untrusted public wireless networks and to securely access various devices at home. It can also be carried along with your laptop and used to connect to public networks at work, school, or office to avail its services. It could be used in a village to provide communications throughout the village. In future, FreedomBox intends to provide support for alternative ways of connecting to the Internet such as Mesh networks. </para>
+      <para>FreedomBox runs in a physical computer and can route your traffic. It can sit between various devices at home such as mobiles, laptops and TVs and the Internet replacing a home wireless router.  By routing traffic, FreedomBox can remove tracking advertisements and malicious web bugs before they ever reach your devices.  FreedomBox can cloak your location and protect your anonymity by "onion routing" your traffic over Tor. FreedomBox provides a VPN server that you can use while you are away from home to keep your traffic secret on untrusted public wireless networks and to securely access various devices at home. It can also be carried along with your laptop and used to connect to public networks at work, school, or office to avail its services. It could be used in a village to make avaible digital communications throughout the village. In future, FreedomBox intends to deliver support for alternative ways of connecting to the Internet such as Mesh networks. </para>
     </section>
     <section>
       <title>FreedomBox Interface Screenshot</title>
@@ -147,6 +147,56 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
+      <title>Version 0.9.3 (2016-06-xx)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Added Polish translation. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed issue preventing access to Plinth on a non-standard port. </para>
+        </listitem>
+        <listitem>
+          <para>Dealt with ownCloud removal from Debian. The ownCloud page in Plinth will be hidden if it has not been setup. Otherwise, a warning is shown. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed issue in Privoxy configuration. Two overlapping listen-addresses were configured, which prevented privoxy service from starting. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed issue that could allow someone to start a module setup process without being logged in to Plinth. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed issues with some diagnostic tests that would show false positive results. </para>
+        </listitem>
+        <listitem>
+          <para>Added check to Diagnostics to skip tests for modules that have not been setup. </para>
+        </listitem>
+        <listitem>
+          <para>Fixed some username checks that could cause errors when editing the user. </para>
+        </listitem>
+        <listitem>
+          <para>Added sorting of menu items per locale. </para>
+        </listitem>
+        <listitem>
+          <para>Moved Dynamic DNS and Pagekite from Applications to System Configuration. </para>
+        </listitem>
+        <listitem>
+          <para>Allowed setting IP for shared network connections. </para>
+        </listitem>
+        <listitem>
+          <para>Switched Dreamplug image from "non-free" to "free". This means that we no longer include the non-free firmware for the built-in wifi on Dreamplug. </para>
+        </listitem>
+        <listitem>
+          <para>Added the "userdir" module for the Apache web server. This allows users in the "admin" group to create a folder called "public_html" under their home folder, and to publicly share files placed in this folder. </para>
+        </listitem>
+        <listitem>
+          <para>New wiki and manual content licence: <emphasis><ulink url="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</ulink></emphasis> (from June 13rd 2016). </para>
+        </listitem>
+        <listitem>
+          <para>Switched to using apt-get for module setup in Plinth. This fixes several issues that were seen during package installs. </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
       <title>Version 0.9 (2016-04-24)</title>
       <itemizedlist>
         <listitem>
@@ -205,7 +255,7 @@
       <title>Version 0.7 (2015-12-13)</title>
       <itemizedlist>
         <listitem>
-          <para>Translations! Full translations of the interface in Danish, Dutch, French, German and Norwegian , and partial Telugu. </para>
+          <para>Translations! Full translations of the interface in Danish, Dutch, French, German and Norwegian Bokmål, and partial Telugu. </para>
         </listitem>
         <listitem>
           <para>Support for OLinuXino A20 MICRO and LIME2 </para>
@@ -850,6 +900,32 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
         <para>To add a wiki user, go to the Users and Groups page in Plinth (under System configuration, the gear icon at the top right corner of the page). Create or modify a user, and add them to the wiki group. (Users in the admin group will also have wiki access.) </para>
         <para>To login as a FreedomBox user, go to the wiki/blog's login page and select the Other tab.  Then click the "Login with HTTP auth" button. The browser will show a popup dialog where you can enter the username and password of the FreedomBox user. </para>
       </section>
+      <section>
+        <title>Adding FreedomBox users as wiki admins</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Login to the wiki, using the admin account that was specified when the wiki was created. </para>
+          </listitem>
+          <listitem>
+            <para>Click "Preferences", then "Setup". </para>
+          </listitem>
+          <listitem>
+            <para>Under "main", in the "users who are wiki admins", add the name of a user on the FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para>(Optional) Under "auth plugin: passwordauth", uncheck the "enable passwordauth?" option. (Note: This will disable the old admin account login. Only SSO login using HTTP auth will be possible.) </para>
+          </listitem>
+          <listitem>
+            <para>Click "Save Setup". </para>
+          </listitem>
+          <listitem>
+            <para>Click "Preferences", then "Logout". </para>
+          </listitem>
+          <listitem>
+            <para>Login as the new admin user using "Login with HTTP auth". </para>
+          </listitem>
+        </orderedlist>
+      </section>
     </section>
     <section>
       <title>Unhosted Storage</title>
@@ -985,6 +1061,23 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
             </itemizedlist>
           </listitem>
         </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>SIP Server (repro)</title>
+      <section>
+        <title>How to set up the SIP server</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Configure the domain at /repro/domains.html on the FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para>Add users at /repro/addUser.html. </para>
+          </listitem>
+          <listitem>
+            <para>Disable and re-enable the repro application in Plinth. </para>
+          </listitem>
+        </orderedlist>
       </section>
     </section>
   </section>
@@ -2582,12 +2675,10 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
       <section>
         <title>Recommended Hardware</title>
         <informaltable>
-          <tgroup cols="5">
+          <tgroup cols="3">
             <colspec colname="col_0"/>
             <colspec colname="col_1"/>
             <colspec colname="col_2"/>
-            <colspec colname="col_3"/>
-            <colspec colname="col_4"/>
             <tbody>
               <row rowsep="1">
                 <entry align="center" colsep="1" rowsep="1">
@@ -2734,12 +2825,6 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
                 <entry colsep="1" rowsep="1">
                   <para>.</para>
                 </entry>
-                <entry colsep="1" rowsep="1">
-                  <para>.</para>
-                </entry>
-                <entry colsep="1" rowsep="1">
-                  <para>.</para>
-                </entry>
               </row>
             </tbody>
           </tgroup>
@@ -2805,6 +2890,31 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
                   <para>
                     <ulink url="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi2#">Raspberry Pi 2</ulink>
                   </para>
+                </entry>
+              </row>
+              <row rowsep="1">
+                <entry align="center" colsep="1" rowsep="1">
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi3#">
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata depth="77.5pt" fileref="images/raspberrypi3_thumb.jpg" width="117.5pt"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Raspberry Pi 3</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </ulink>
+                  </para>
+                  <para>
+                    <ulink url="https://wiki.debian.org/FreedomBox/Hardware/RaspberryPi3#">Raspberry Pi 3</ulink>
+                  </para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>.</para>
+                </entry>
+                <entry colsep="1" rowsep="1">
+                  <para>.</para>
                 </entry>
               </row>
             </tbody>
@@ -4140,7 +4250,7 @@ iface lo inet loopback</screen>
         </inlinemediaobject>
       </para>
       <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi Model B+ with much faster processor and more RAM.  FreedomBox images are built and tested for it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
-      <para><emphasis>Note:</emphasis> For FreedomBox release 0.5, the Debian architecture used for this device is <code>armel</code>.  This means floating point computations are done in software and most operations are slower than what Raspberry Pi 2 is capable of.  Starting with FreedomBox release 0.6 separate <code>armhf</code> images with full hardware floating point support will be available. </para>
+      <para><emphasis>Note:</emphasis> For FreedomBox release 0.5, the Debian architecture used for this device is <code>armel</code>.  This means floating point computations are done in software and most operations are slower than what Raspberry Pi 2 is capable of.  Starting with FreedomBox release 0.6 separate <code>armhf</code> images with full hardware floating point support are available. </para>
       <section>
         <title>Download</title>
         <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Download#">images</ulink> for this hardware are available.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
