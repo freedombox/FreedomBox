@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+  <style type="text/css">
+    .progress {
+        margin-bottom: 0;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  <div>{% trans "The following disks are in use:" %}</div>
+  <div class="row">
+    <div class="col-lg-8">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Device" %}</th>
+            <th>{% trans "Mount Point" %}</th>
+            <th>{% trans "Type" %}</th>
+            <th>{% trans "Used" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for disk in disks %}
+            <tr>
+              <td>{{ disk.device }}</td>
+              <td>{{ disk.mount_point }}</td>
+              <td>{{ disk.file_system_type }}</td>
+              <td>
+                <div class="progress">
+                  {% if disk.percentage_used < 75 %}
+                    <div class="progress-bar progress-bar-striped progress-bar-success"
+                  {% elif disk.percentage_used < 90 %}
+                    <div class="progress-bar progress-bar-striped progress-bar-warning"
+                  {% else %}
+                    <div class="progress-bar progress-bar-striped progress-bar-danger"
+                  {% endif %}
+                         role="progressbar" aria-valuenow="disk.percentage_used"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ disk.percentage_used }}%;">
+                      {{ disk.percentage_used }}%
+                    </div>
+                </div>
+                <div>{{ disk.used }} / {{ disk.size }}</div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if expandable_root_size %}
+    <h3>Expandable Partition</h3>
+    <p>
+      {% blocktrans trimmed %}
+        There is {{ expandable_root_size }} of unallocated space
+        available after your root partition.  Root partition can be
+        expanded to use this space.  This will provide you additional
+        free space to store your files.
+      {% endblocktrans %}
+    </p>
+    <p>
+      <a class="btn btn-primary btn-md" href="{% url 'disks:expand' %}">
+        {% trans "Expand Root Partition" %}</a>
+    </p>
+  {% endif %}
+
+{% endblock %}
