@@ -22,6 +22,7 @@ Configuration helper for the LDAP user directory
 """
 
 import argparse
+import os
 import subprocess
 
 import augeas
@@ -36,41 +37,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser(
-        'pre-install',
-        help='Preseed debconf values before packages are installed')
     subparsers.add_parser('setup', help='Setup LDAP')
 
     return parser.parse_args()
-
-
-def subcommand_pre_install(_):
-    """Preseed debconf values before packages are installed."""
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'slapd slapd/domain string thisbox',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-uris string ldapi:///',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-base string dc=thisbox',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-auth-type select SASL',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-sasl-mech select EXTERNAL',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'libnss-ldapd libnss-ldapd/nsswitch multiselect '
-        b'group, passwd, shadow',
-        check=True)
 
 
 def subcommand_setup(_):
@@ -85,6 +54,13 @@ def subcommand_setup(_):
 
 def configure_slapd():
     """Configure LDAP authentication and basic structure."""
+    _reconfigure('slapd', {'domain': 'thisbox'})
+    _reconfigure('nslcd', {'ldap-uris': 'ldapi:///',
+                           'ldap-base': 'dc=thisbox',
+                           'ldap-auth-type': 'SASL',
+                           'ldap-sasl-mech': 'EXTERNAL'})
+    _reconfigure('libnss-ldapd', {'nsswitch': 'group, passwd, shadow'})
+
     was_running = action_utils.service_is_running('slapd')
     if not was_running:
         action_utils.service_start('slapd')
@@ -168,6 +144,28 @@ def configure_ldapscripts():
     aug.set('/files' + LDAPSCRIPTS_CONF + '/GSUFFIX', '"ou=Groups"')
     aug.set('/files' + LDAPSCRIPTS_CONF + '/PASSWORDGEN', '"true"')
     aug.save()
+
+
+def _reconfigure(package, config):
+    """Reconfigure package using debconf database override."""
+    override_template = '''
+Name: {package}/{key}
+Template: {package}/{key}
+Value: {value}
+Owners: {package}
+'''
+    override_data = ''
+    for key, value in config.items():
+        override_data += override_template.format(
+            package=package, key=key, value=value)
+
+    with open('/tmp/override.dat', 'w') as override_file:
+        override_file.write(override_data)
+
+    env = os.environ.copy()
+    env['DEBCONF_DB_OVERRIDE'] = 'File{/tmp/override.dat readonly:true}'
+    env['DEBIAN_FRONTEND'] = 'noninteractive'
+    subprocess.run(['dpkg-reconfigure', package], env=env)
 
 
 def main():
