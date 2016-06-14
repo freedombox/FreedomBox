@@ -52,11 +52,11 @@ def subcommand_pre_install(_):
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-uris string "ldapi:///"',
+        input=b'nslcd nslcd/ldap-uris string ldapi:///',
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-base string "dc=thisbox"',
+        input=b'nslcd nslcd/ldap-base string dc=thisbox',
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
