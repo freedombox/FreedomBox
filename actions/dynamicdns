@@ -371,6 +371,12 @@ case ${cmd} in
         # if we know our WAN IP, only update if IP changes
         if [ "${dnsentry}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
             doUpdate
+        else
+            # If nothing has changed, nothing needs to be done but we
+            # need to write the success status (if no success was
+            # recorded yet because maybe DNS record was up to date
+            # when script is executed for the first time)
+            ${0} success ${wanip}
         fi
         # if we don't know our WAN IP do a blind update once a hour
         if [ "${wanip}" = ${NOIP} ];then
@@ -391,7 +397,7 @@ case ${cmd} in
     ;;
     success)
         date=$(date)
-        echo "last update done (${date})" > ${STATUSFILE}
+        echo "DNS record is up to date (${date})" > ${STATUSFILE}
         date +%s > ${LASTUPDATE}
         # if called from cronjob, the current IP is given as parameter
         if [ $# -eq 1 ];then
