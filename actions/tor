@@ -47,10 +47,8 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup Tor configuration')
-    subparsers.add_parser('get-ports',
-                          help='Get Tor ports in JSON format')
-    subparsers.add_parser('get-hs',
-                          help='Get hidden service information in JSON format')
+    subparsers.add_parser('get-status',
+                          help='Get Tor status in JSON format')
 
     configure = subparsers.add_parser('configure', help='Configure Tor')
     configure.add_argument('--service', choices=['enable', 'disable'],
@@ -115,14 +113,9 @@ def subcommand_setup(_):
         time.sleep(10)
 
 
-def subcommand_get_ports(_):
-    """Get Tor ports in JSON format."""
-    print(json.dumps(get_ports()))
-
-
-def subcommand_get_hs(_):
-    """Get hidden service information in JSON format."""
-    print(json.dumps(get_hidden_service()))
+def subcommand_get_status(_):
+    """Get Tor status in JSON format."""
+    print(json.dumps(get_status()))
 
 
 def subcommand_configure(arguments):
@@ -143,6 +136,11 @@ def subcommand_configure(arguments):
         _enable_apt_transport_tor()
     elif arguments.apt_transport_tor == 'disable':
         _disable_apt_transport_tor()
+
+
+def get_status():
+    """Return dict with Tor status."""
+    return {'ports': get_ports(), 'hidden_service': get_hidden_service()}
 
 
 def get_ports():

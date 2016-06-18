@@ -44,18 +44,13 @@ def is_running():
     return action_utils.service_is_running('tor')
 
 
-def get_hs():
-    """Return hidden service status."""
-    output = actions.superuser_run('tor', ['get-hs'])
-    return json.loads(output)
-
-
 def get_status():
     """Return current Tor status."""
-    output = actions.superuser_run('tor', ['get-ports'])
-    ports = json.loads(output)
+    output = actions.superuser_run('tor', ['get-status'])
+    status = json.loads(output)
+    ports = status['ports']
 
-    hs_info = get_hs()
+    hs_info = status['hidden_service']
     hs_services = []
     hs_virtports = [port['virtport'] for port in hs_info['ports']]
     for service_type in SERVICES:
