@@ -37,15 +37,6 @@ class TestTor(unittest.TestCase):
         utils._is_apt_transport_tor_enabled()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_get_hs(self):
-        """Test that get_hs does not raise any unhandled exceptions.
-
-        This should work regardless of whether tor is installed, or
-        /etc/tor/torrc exists.
-        """
-        utils.get_hs()
-
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_status(self):
         """Test that get_status does not raise any unhandled exceptions.
 

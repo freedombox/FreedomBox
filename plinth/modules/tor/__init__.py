@@ -73,12 +73,12 @@ def init():
         is_running=utils.is_running)
 
     # Register hidden service name with Name Services module.
-    hs_info = utils.get_hs()
-    hostname = hs_info['hostname']
-    hs_virtports = [port['virtport'] for port in hs_info['ports']]
+    status = utils.get_status()
+    hostname = status['hs_hostname']
+    hs_virtports = [port['virtport'] for port in status['hs_ports']]
 
     if utils.is_enabled() and utils.is_running() and \
-       hs_info['enabled'] and hs_info['hostname']:
+       status['hs_enabled'] and status['hs_hostname']:
         hs_services = []
         for service_type in SERVICES:
             if str(service_type[2]) in hs_virtports:
@@ -133,8 +133,8 @@ def diagnose():
 
     results.extend(_diagnose_control_port())
 
-    output = actions.superuser_run('tor', ['get-ports'])
-    ports = json.loads(output)
+    output = actions.superuser_run('tor', ['get-status'])
+    ports = json.loads(output)['ports']
 
     results.append([_('Tor relay port available'),
                     'passed' if 'orport' in ports else 'failed'])
