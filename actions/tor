@@ -53,6 +53,8 @@ def parse_arguments():
     configure = subparsers.add_parser('configure', help='Configure Tor')
     configure.add_argument('--service', choices=['enable', 'disable'],
                            help='Configure Tor service')
+    configure.add_argument('--relay', choices=['enable', 'disable'],
+                           help='Configure relay')
     configure.add_argument('--hidden-service', choices=['enable', 'disable'],
                            help='Configure hidden service')
     configure.add_argument('--apt-transport-tor',
@@ -123,6 +125,12 @@ def subcommand_configure(arguments):
     if arguments.service == 'disable':
         _disable()
 
+    restart = arguments.service == None and arguments.hidden_service == None
+    if arguments.relay == 'enable':
+        _enable_relay(restart=restart)
+    elif arguments.relay == 'disable':
+        _disable_relay(restart=restart)
+
     restart = arguments.service == None
     if arguments.hidden_service == 'enable':
         _enable_hs(restart=restart)
@@ -140,7 +148,17 @@ def subcommand_configure(arguments):
 
 def get_status():
     """Return dict with Tor status."""
-    return {'ports': get_ports(), 'hidden_service': get_hidden_service()}
+    return {'relay_enabled': is_relay_enabled(),
+            'ports': get_ports(),
+            'hidden_service': get_hidden_service()}
+
+
+def is_relay_enabled():
+    """Return whether bridge relay is enabled."""
+    aug = augeas_load()
+    orport = aug.get(TOR_CONFIG + '/ORPort')
+    bridge = aug.get(TOR_CONFIG + '/BridgeRelay')
+    return orport == 'auto' and bridge == '1'
 
 
 def get_ports():
@@ -225,6 +243,30 @@ def _disable():
     """Disable and stop the service."""
     _disable_apt_transport_tor()
     action_utils.service_disable('tor')
+
+
+def _enable_relay(restart=True):
+    """Enable Tor bridge relay."""
+    aug = augeas_load()
+    aug.set(TOR_CONFIG + '/ORPort', 'auto')
+    aug.set(TOR_CONFIG + '/BridgeRelay', '1')
+    aug.save()
+
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
+
+
+def _disable_relay(restart=False):
+    """Disable Tor bridge relay."""
+    aug = augeas_load()
+    aug.remove(TOR_CONFIG + '/ORPort')
+    aug.set(TOR_CONFIG + '/BridgeRelay', '0')
+    aug.save()
+
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
 
 
 def _enable_hs(restart=True):
