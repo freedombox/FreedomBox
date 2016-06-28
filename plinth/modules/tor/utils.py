@@ -59,6 +59,7 @@ def get_status():
 
     return {'enabled': is_enabled(),
             'is_running': is_running(),
+            'relay_enabled': status['relay_enabled'],
             'ports': ports,
             'hs_enabled': hs_info['enabled'],
             'hs_status': hs_info['status'],

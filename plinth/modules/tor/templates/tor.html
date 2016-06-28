@@ -93,17 +93,15 @@
              value="{% trans "Update setup" %}"/>
     </form>
 
-    <h3>{% trans "Bridge" %}</h3>
-
+    {% if status.relay_enabled %}
+    <h3>{% trans "Bridge Relay" %}</h3>
     <p>
       {% blocktrans trimmed %}
-        Your {{ box_name }} is configured as a Tor bridge with obfsproxy,
-        so it can help circumvent censorship. If your {{ box_name }} is
-        behind a router or firewall, you should make sure the following
-        ports are open, and port-forwarded, if necessary:
+        If your {{ box_name }} is behind a router or firewall, you should
+        make sure the following ports are open, and port-forwarded, if
+        necessary:
       {% endblocktrans %}
     </p>
-
     <div class="row">
       <div class="col-sm-3">
         <table class="table table-bordered table-condensed table-striped">
@@ -124,6 +122,7 @@
         </table>
       </div>
     </div>
+    {% endif %}
 
     <h3>{% trans "SOCKS" %}</h3>
 

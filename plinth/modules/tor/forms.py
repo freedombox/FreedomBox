@@ -31,6 +31,13 @@ class TorForm(forms.Form):  # pylint: disable=W0232
     enabled = forms.BooleanField(
         label=_('Enable Tor'),
         required=False)
+    relay_enabled = forms.BooleanField(
+        label=_('Enable Tor bridge relay'),
+        required=False,
+        help_text=format_lazy(_(
+            'When enabled, your {box_name} will run a Tor bridge relay with '
+            'obfsproxy, so it can help circumvent censorship.'),
+                              box_name=_(cfg.box_name)))
     hs_enabled = forms.BooleanField(
         label=_('Enable Tor Hidden Service'),
         required=False,
