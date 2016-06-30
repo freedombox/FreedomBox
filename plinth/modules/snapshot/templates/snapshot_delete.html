@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  <p>
+    {% blocktrans trimmed %}
+    The snapshot will be permanently deleted. Please confirm.
+    {% endblocktrans %}
+  </p>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <table class="table table-bordered table-condensed table-striped">
+	<thead>
+	  <th>{% trans "Number" %}</th>
+	  <th>{% trans "Date" %}</th>
+	  <th>{% trans "Description" %}</th>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td>{{ snapshot.number }}</td>
+	    <td>{{ snapshot.date }}</td>
+	    <td>{{ snapshot.description }}</td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% blocktrans with number=snapshot.number %}Delete Snapshot #{{ number }}{% endblocktrans %}"/>
+    </form>
+  </p>
+
+{% endblock %}
