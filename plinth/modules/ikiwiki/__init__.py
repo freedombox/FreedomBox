@@ -40,7 +40,10 @@ service = None
 title = _('Wiki and Blog (ikiwiki)')
 
 description = [
-    _('When enabled, the blogs and wikis will be available '
+    _('ikiwiki is a simple wiki and blog application. It supports '
+      'several lightweight markup languages, including Markdown, and '
+      'common blogging functionality such as comments and RSS feeds. '
+      'When enabled, the blogs and wikis will be available '
       'from <a href="/ikiwiki">/ikiwiki</a>.')
 ]
 
