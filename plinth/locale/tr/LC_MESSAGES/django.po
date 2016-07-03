@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-01 07:45+0530\n"
-"PO-Revision-Date: 2016-03-17 17:59+0000\n"
+"PO-Revision-Date: 2016-07-03 17:39+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
-"plinth/tr/>\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.5\n"
+"X-Generator: Weblate 2.7-dev\n"
 
 #: plinth/action_utils.py:237
 #, python-brace-format
@@ -341,13 +341,12 @@ msgstr "Sonuç"
 
 #: plinth/modules/disks/__init__.py:35 plinth/modules/disks/views.py:39
 msgid "Disks"
-msgstr ""
+msgstr "Diskler"
 
 #: plinth/modules/disks/templates/disks.html:35
-#, fuzzy
 #| msgid "The following is the current status:"
 msgid "The following disks are in use:"
-msgstr "Aşağıdaki güncel durumdur:"
+msgstr "Aşağıdaki diskler kullanımdadır:"
 
 #: plinth/modules/disks/templates/disks.html:41
 #: plinth/modules/networks/templates/connection_show.html:84
@@ -356,7 +355,7 @@ msgstr "Cihaz"
 
 #: plinth/modules/disks/templates/disks.html:42
 msgid "Mount Point"
-msgstr ""
+msgstr "Bağlama Noktası"
 
 #: plinth/modules/disks/templates/disks.html:43
 #: plinth/modules/ikiwiki/forms.py:29
@@ -366,7 +365,7 @@ msgstr "Tür"
 
 #: plinth/modules/disks/templates/disks.html:44
 msgid "Used"
-msgstr ""
+msgstr "Kullanılan"
 
 #: plinth/modules/disks/templates/disks.html:80
 #, python-format
@@ -375,12 +374,16 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Kök disk bölümünden sonra ayrılmamış kullanılabilir %(expandable_root_size)s "
+"değerinde alan bulunmaktadır. Kök bölümü bu alanı kullanmak için "
+"genişletilebilir. Bu, size dosyalarınızı saklamak için ilave boş alan "
+"sunacaktır."
 
 #: plinth/modules/disks/templates/disks.html:89
 #: plinth/modules/disks/templates/disks_expand.html:45
 #: plinth/modules/disks/views.py:56
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Kök Bölümünü Genişlet"
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -389,43 +392,45 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Lütfen devam etmeden önce verilerinizi yedekleyin. Bu işlemden sonra kök "
+"bölümünüzde ilave  %(expandable_root_size)s değerinde boş alan "
+"kullanılabilir olacaktır."
 
 #: plinth/modules/disks/views.py:65
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error setting time zone: {exception}"
 msgid "Error expanding partition: {exception}"
-msgstr "Saat diliminin ayarlanmasında hata: {exception}"
+msgstr "Bölümün genişletilmesinde hata: {exception}"
 
 #: plinth/modules/disks/views.py:68
-#, fuzzy
 #| msgid "Password changed successfully."
 msgid "Partition expanded successfully."
-msgstr "Parola başarılı bir şekilde değiştirildi."
+msgstr "Bölüm başarılı bir şekilde genişletildi."
 
 #: plinth/modules/disks/views.py:77
 #, python-brace-format
 msgid "{disk_size} bytes"
-msgstr ""
+msgstr "{disk_size} bayt"
 
 #: plinth/modules/disks/views.py:81
 #, python-brace-format
 msgid "{disk_size} KiB"
-msgstr ""
+msgstr "{disk_size} KiB"
 
 #: plinth/modules/disks/views.py:85
 #, python-brace-format
 msgid "{disk_size} MiB"
-msgstr ""
+msgstr "{disk_size} MiB"
 
 #: plinth/modules/disks/views.py:89
 #, python-brace-format
 msgid "{disk_size} GiB"
-msgstr ""
+msgstr "{disk_size} GiB"
 
 #: plinth/modules/disks/views.py:92
 #, python-brace-format
 msgid "{disk_size} TiB"
-msgstr ""
+msgstr "{disk_size} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:33
 msgid "Dynamic DNS Client"
@@ -1077,6 +1082,11 @@ msgid ""
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
 "wikis will be available from <a href=\"/ikiwiki\">/ikiwiki</a>."
 msgstr ""
+"ikiwiki sade bir blog ve viki uygulamasıdır. Birçok hafif işaretleme "
+"dillerini destekler ki buna Markdown dahildir, ayrıca RSS beslemeleri ve "
+"yorumlar gibi olağan günlük işlevleri de desteklenir. Etkinleştirildiğinde, "
+"bloglar ve vikiler <a href=\"/ikiwiki\">/ikiwiki</a> adresinden erişilebilir "
+"olacaktır."
 
 #: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -1553,6 +1563,10 @@ msgid ""
 "network making it a client. \"Shared\" method will make {box_name} act as a "
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
+"\"Otomatik\" metodu {box_name} kutusunun yapılandırmasını bu ağdan almasını "
+"sağlayacak ve onu bir istemci yapacaktır. \"Paylaşılan\" metodu  {box_name} "
+"kutusunun bir yönlendirici olarak iş görmesini, bu ağdaki istemcileri "
+"yapılandırmasını ve İnternet bağlantısını paylaşmasını sağlayacaktır."
 
 #: plinth/modules/networks/forms.py:62
 msgid "Address"
@@ -2130,6 +2144,9 @@ msgid ""
 "Debian.  Please migrate your data to an alternative solution or manage "
 "ownCloud manually from the command line."
 msgstr ""
+"ownCloud Debian'dan kaldırıldığı için bundan böyle %(box_name)s tarafından "
+"desteklenmektedir. Lütfen verilerinizi alternatif bir çözüme taşıyınız ya da "
+"ownCloud'u elle komut satırından yönetiniz."
 
 #: plinth/modules/owncloud/templates/owncloud.html:47
 msgid "Apply changes"
@@ -2991,10 +3008,9 @@ msgid "Automatic upgrades disabled"
 msgstr "Otomatik yükseltmeler devre dışı bırakıldı"
 
 #: plinth/modules/upgrades/views.py:85
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "Settings unchanged"
-msgstr "Ayar değiştirilmedi"
+msgstr "Ayarlar değiştirilmedi"
 
 #: plinth/modules/upgrades/views.py:116
 msgid "Upgrade process started."
@@ -3205,32 +3221,29 @@ msgid "PPPoE"
 msgstr "PPPoE"
 
 #: plinth/package.py:105
-#, fuzzy
 #| msgid "Performing pre-install operation"
 msgid "Error during installation"
-msgstr "Kurulum öncesi işlemleri yapılıyor"
+msgstr "Kurulum sırasında hata"
 
 #: plinth/package.py:126
-#, fuzzy
 #| msgid "Installation"
 msgid "installing"
-msgstr "Kurulum"
+msgstr "kuruluyor"
 
 #: plinth/package.py:127
 msgid "downloading"
-msgstr ""
+msgstr "indiriliyor"
 
 #: plinth/package.py:128
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
-msgstr "Ayar değiştirilmedi"
+msgstr "ortam değiştirme"
 
 #: plinth/package.py:129
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
-msgstr "Yapılandırma"
+msgstr "Yapılandırma dosyası: {file}"
 
 #: plinth/service.py:119
 msgid "Web Server over Secure Socket Layer"
@@ -3305,16 +3318,14 @@ msgid "Login"
 msgstr "Giriş"
 
 #: plinth/templates/service.html:43
-#, fuzzy
 #| msgid "Tor is running"
 msgid "is running"
-msgstr "Tor çalışmaktadır"
+msgstr "çalışmaktadır"
 
 #: plinth/templates/service.html:46
-#, fuzzy
 #| msgid "Tor is not running"
 msgid "is not running"
-msgstr "Tor çalışmamaktadır"
+msgstr "çalışmamaktadır"
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
