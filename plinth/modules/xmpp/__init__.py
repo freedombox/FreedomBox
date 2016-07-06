@@ -42,6 +42,8 @@ managed_packages = ['jwchat', 'ejabberd']
 
 title = _('Chat Server (XMPP)')
 
+category = _('Chat')
+
 description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
@@ -60,6 +62,12 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
 
     global service

@@ -35,6 +35,8 @@ managed_packages = ['shaarli']
 
 title = _('Bookmarks (Shaarli)')
 
+category = _('Organizer')
+
 description = [
     _('Shaarli allows you to save and share bookmarks.'),
 
@@ -50,6 +52,12 @@ service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
 
     global service

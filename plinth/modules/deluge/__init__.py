@@ -39,6 +39,8 @@ managed_packages = ['deluged', 'deluge-web']
 
 title = _('BitTorrent Web Client (Deluge)')
 
+category = _('File Transfer')
+
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
 
@@ -52,6 +54,12 @@ description = [
 def init():
     """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
 
     global service

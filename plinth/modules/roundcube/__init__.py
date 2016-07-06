@@ -35,6 +35,8 @@ managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
 
 title = _('Email Client (Roundcube)')
 
+category = _('Email')
+
 description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
       'client with an application-like user interface. It provides '
@@ -63,6 +65,12 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
 
     global service

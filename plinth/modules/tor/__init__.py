@@ -41,6 +41,8 @@ managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
 
 title = _('Anonymity Network (Tor)')
 
+category = _('Network')
+
 description = [
     _('Tor is an anonymous communication system. You can learn more '
       'about it from the <a href="https://www.torproject.org/">Tor '
@@ -57,6 +59,12 @@ bridge_service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
 
     global socks_service

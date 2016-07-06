@@ -37,6 +37,8 @@ managed_packages = ['repro']
 
 title = _('SIP Server (repro)')
 
+category = _('Voice')
+
 description = [
     _('repro provides various SIP services that a SIP softphone can utilize '
       'to provide audio and video calls as well as presence and instant '
@@ -64,6 +66,12 @@ service = None
 def init():
     """Initialize the repro module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
 
     global service

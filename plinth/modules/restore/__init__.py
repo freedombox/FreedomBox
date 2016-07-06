@@ -36,6 +36,8 @@ managed_packages = ['node-restore']
 
 title = _('Unhosted Storage (reStore)')
 
+category = _('Data')
+
 description = [
     format_lazy(
         _('reStore is a server for <a href=\'https://unhosted.org/\'>'
@@ -55,6 +57,12 @@ service = None
 def init():
     """Initialize the reStore module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-hdd', 'restore:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-hdd', 'restore:index')
 
     global service

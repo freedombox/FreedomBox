@@ -40,6 +40,8 @@ managed_packages = ['minetest-server']
 
 title = _('Block Sandbox (Minetest)')
 
+category = _('Games')
+
 description = [
     format_lazy(
         _('Minetest is a multiplayer infinite-world block sandbox. This '
@@ -53,6 +55,12 @@ description = [
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
 
     global service

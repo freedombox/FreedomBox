@@ -40,6 +40,8 @@ managed_packages = ['openvpn', 'easy-rsa']
 
 title = _('Virtual Private Network (OpenVPN)')
 
+category = _('Network')
+
 description = [
     format_lazy(
         _('Virtual Private Network (VPN) is a technique for securely '
@@ -55,6 +57,12 @@ description = [
 def init():
     """Intialize the OpenVPN module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index')
 
     global service

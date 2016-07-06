@@ -33,6 +33,8 @@ depends = ['apps']
 
 title = _('Voice Chat (Mumble)')
 
+category = _('Voice')
+
 service = None
 
 managed_services = ['mumble-server']
@@ -52,6 +54,12 @@ description = [
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
 
     global service

@@ -39,6 +39,8 @@ service = None
 
 title = _('Wiki and Blog (ikiwiki)')
 
+category = _('Publishing')
+
 description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
       'several lightweight markup languages, including Markdown, and '
@@ -51,6 +53,12 @@ description = [
 def init():
     """Initialize the ikiwiki module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index')
 
     global service

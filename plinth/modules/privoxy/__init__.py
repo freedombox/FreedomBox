@@ -41,6 +41,8 @@ managed_packages = ['privoxy']
 
 title = _('Web Proxy (Privoxy)')
 
+category = _('Network')
+
 description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '
@@ -62,6 +64,12 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
 
     global service
