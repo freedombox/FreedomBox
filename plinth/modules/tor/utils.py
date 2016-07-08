@@ -56,10 +56,17 @@ def get_status():
         if str(service_type[2]) in hs_virtports:
             hs_services.append(service_type[0])
 
+    # Filter out obfs3/4 ports when bridge relay is disabled
+    ports = {service_type: port
+             for service_type, port in status['ports'].items()
+             if service_type not in ['obfs4', 'obfs3'] or
+             status['bridge_relay_enabled']}
+
     return {'enabled': is_enabled(),
             'is_running': is_running(),
             'relay_enabled': status['relay_enabled'],
-            'ports': status['ports'],
+            'bridge_relay_enabled': status['bridge_relay_enabled'],
+            'ports': ports,
             'hs_enabled': hs_info['enabled'],
             'hs_status': hs_info['status'],
             'hs_hostname': hs_info['hostname'],
