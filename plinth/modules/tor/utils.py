@@ -48,7 +48,6 @@ def get_status():
     """Return current Tor status."""
     output = actions.superuser_run('tor', ['get-status'])
     status = json.loads(output)
-    ports = status['ports']
 
     hs_info = status['hidden_service']
     hs_services = []
@@ -60,21 +59,21 @@ def get_status():
     return {'enabled': is_enabled(),
             'is_running': is_running(),
             'relay_enabled': status['relay_enabled'],
-            'ports': ports,
+            'ports': status['ports'],
             'hs_enabled': hs_info['enabled'],
             'hs_status': hs_info['status'],
             'hs_hostname': hs_info['hostname'],
             'hs_ports': hs_info['ports'],
             'hs_services': hs_services,
-            'apt_transport_tor_enabled': \
-                    _is_apt_transport_tor_enabled()
+            'apt_transport_tor_enabled':
+                _is_apt_transport_tor_enabled()
             }
 
 
 def iter_apt_uris(aug):
     """Iterate over all the APT source URIs."""
-    return itertools.chain.from_iterable([aug.match(path) for \
-                                          path in APT_SOURCES_URI_PATHS])
+    return itertools.chain.from_iterable([aug.match(path)
+                                          for path in APT_SOURCES_URI_PATHS])
 
 
 def get_real_apt_uri_path(aug, path):
@@ -104,7 +103,8 @@ def get_augeas():
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Aptsources/lens', 'Aptsources.lns')
-    aug.set('/augeas/load/Aptsources/incl[last() + 1]', '/etc/apt/sources.list')
+    aug.set('/augeas/load/Aptsources/incl[last() + 1]',
+            '/etc/apt/sources.list')
     aug.set('/augeas/load/Aptsources/incl[last() + 1]',
             '/etc/apt/sources.list.d/*.list')
     aug.load()
