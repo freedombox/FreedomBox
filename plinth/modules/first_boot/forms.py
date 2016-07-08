@@ -33,6 +33,7 @@ from plinth import actions
 from plinth import cfg
 from plinth.errors import ActionError, DomainRegistrationError
 from plinth.modules.pagekite.utils import PREDEFINED_SERVICES, run
+from plinth.modules.security.views import set_restricted_access
 from plinth.modules.users.forms import GROUP_CHOICES
 from plinth.utils import format_lazy
 
@@ -75,6 +76,9 @@ class State1Form(auth.forms.UserCreationForm):
 
             self.login_user(self.cleaned_data['username'],
                             self.cleaned_data['password1'])
+
+            # Restrict console login to users in admin or sudo group
+            set_restricted_access(True)
 
         return user
 
