@@ -44,7 +44,8 @@ class TorForm(forms.Form):  # pylint: disable=W0232
         help_text=format_lazy(_(
             'A hidden service will allow {box_name} to provide selected '
             'services (such as ownCloud or chat) without revealing its '
-            'location.'), box_name=_(cfg.box_name)))
+            'location. Do not use this for strong anonymity yet.'),
+                              box_name=_(cfg.box_name)))
     apt_transport_tor_enabled = forms.BooleanField(
         label=_('Download software packages over Tor'),
         required=False,
