@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-01 07:45+0530\n"
-"PO-Revision-Date: 2016-03-18 03:22+0000\n"
-"Last-Translator: Diederik de Haas <github@cknow.org>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
-"nl/>\n"
+"PO-Revision-Date: 2016-07-08 10:00+0000\n"
+"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"Language-Team: Dutch "
+"<https://hosted.weblate.org/projects/freedombox/plinth/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5\n"
+"X-Generator: Weblate 2.7-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -342,13 +342,12 @@ msgstr "Resultaat"
 
 #: plinth/modules/disks/__init__.py:35 plinth/modules/disks/views.py:39
 msgid "Disks"
-msgstr ""
+msgstr "Schijven"
 
 #: plinth/modules/disks/templates/disks.html:35
-#, fuzzy
 #| msgid "The following is the current status:"
 msgid "The following disks are in use:"
-msgstr "De huidige status is als volgt:"
+msgstr "De volgende schijven worden gebruikt:"
 
 #: plinth/modules/disks/templates/disks.html:41
 #: plinth/modules/networks/templates/connection_show.html:84
@@ -357,7 +356,7 @@ msgstr "Apparaat"
 
 #: plinth/modules/disks/templates/disks.html:42
 msgid "Mount Point"
-msgstr ""
+msgstr "Koppelpunt"
 
 #: plinth/modules/disks/templates/disks.html:43
 #: plinth/modules/ikiwiki/forms.py:29
@@ -367,7 +366,7 @@ msgstr "Type"
 
 #: plinth/modules/disks/templates/disks.html:44
 msgid "Used"
-msgstr ""
+msgstr "Gebruikt"
 
 #: plinth/modules/disks/templates/disks.html:80
 #, python-format
@@ -376,12 +375,16 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Er is %(expandable_root_size)s niet-toegewezen ruimte beschikbaar na uw root-"
+"partitie.  De root-partitie kan worden uitgebreid zodat deze ruimte kan "
+"worden gebruikt.  Dit geeft u extra vrije ruimte voor het opslaan van "
+"bestanden."
 
 #: plinth/modules/disks/templates/disks.html:89
 #: plinth/modules/disks/templates/disks_expand.html:45
 #: plinth/modules/disks/views.py:56
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Root-partitie uitbreiden"
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -390,43 +393,45 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Neem een back-up van uw gegevens voordat u verdergaat.  Na deze operatie zal "
+"%(expandable_root_size)s extra vrije ruimte in de root-partitie beschikbaar "
+"zijn."
 
 #: plinth/modules/disks/views.py:65
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error setting time zone: {exception}"
 msgid "Error expanding partition: {exception}"
-msgstr "Fout bij tijdzone instellen: {exception}"
+msgstr "Fout bij partitie uitbreiden: {exception}"
 
 #: plinth/modules/disks/views.py:68
-#, fuzzy
 #| msgid "Password changed successfully."
 msgid "Partition expanded successfully."
-msgstr "Wachtwoord succesvol gewijzigd."
+msgstr "Partitie succesvol uitgebreid."
 
 #: plinth/modules/disks/views.py:77
 #, python-brace-format
 msgid "{disk_size} bytes"
-msgstr ""
+msgstr "{disk_size} bytes"
 
 #: plinth/modules/disks/views.py:81
 #, python-brace-format
 msgid "{disk_size} KiB"
-msgstr ""
+msgstr "{disk_size} KiB"
 
 #: plinth/modules/disks/views.py:85
 #, python-brace-format
 msgid "{disk_size} MiB"
-msgstr ""
+msgstr "{disk_size} MiB"
 
 #: plinth/modules/disks/views.py:89
 #, python-brace-format
 msgid "{disk_size} GiB"
-msgstr ""
+msgstr "{disk_size} GiB"
 
 #: plinth/modules/disks/views.py:92
 #, python-brace-format
 msgid "{disk_size} TiB"
-msgstr ""
+msgstr "{disk_size} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:33
 msgid "Dynamic DNS Client"
@@ -1078,6 +1083,11 @@ msgid ""
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
 "wikis will be available from <a href=\"/ikiwiki\">/ikiwiki</a>."
 msgstr ""
+"ikiwiki is een eenvoudig wiki- en blog programma. Het ondersteunt "
+"verschillende lichtgewicht markup-talen, met inbegrip van Markdown, en "
+"algemene blogging functionaliteit zoals opmerkingen en RSS-feeds. Als "
+"ingeschakeld, zijn de blogs en wiki's beschikbaar via <a href=\"/ikiwiki\""
+">/ikiwiki</a>."
 
 #: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -1556,6 +1566,10 @@ msgid ""
 "network making it a client. \"Shared\" method will make {box_name} act as a "
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
+"De \"Automatische\" methode zorgt dat {box_name} de configuratie van dit "
+"netwerk gebruikt waardoor het een client wordt. De 'Gedeeld' methode zorgt "
+"ervoor dat {box_name} fungeert als een router, die het configureren van "
+"clients op dit netwerk regelt en de Internet-verbinding deelt."
 
 #: plinth/modules/networks/forms.py:62
 msgid "Address"
@@ -2131,6 +2145,9 @@ msgid ""
 "Debian.  Please migrate your data to an alternative solution or manage "
 "ownCloud manually from the command line."
 msgstr ""
+"ownCloud wordt niet langer ondersteund door %(box_name)s vanwege diens "
+"verwijdering uit Debian.  Gelieve de gegevens te migreren naar een "
+"alternatieve oplossing of beheer ownCloud handmatig vanaf de commandoregel."
 
 #: plinth/modules/owncloud/templates/owncloud.html:47
 msgid "Apply changes"
@@ -2989,10 +3006,9 @@ msgid "Automatic upgrades disabled"
 msgstr "Automatisch bijwerken uitgeschakeld"
 
 #: plinth/modules/upgrades/views.py:85
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "Settings unchanged"
-msgstr "Instelling onveranderd"
+msgstr "Instellingen onveranderd"
 
 #: plinth/modules/upgrades/views.py:116
 msgid "Upgrade process started."
@@ -3203,32 +3219,29 @@ msgid "PPPoE"
 msgstr "PPPoE"
 
 #: plinth/package.py:105
-#, fuzzy
 #| msgid "Performing pre-install operation"
 msgid "Error during installation"
-msgstr "Pre-Install bewerkingen worden uitvoerd"
+msgstr "Fout tijdens installatie"
 
 #: plinth/package.py:126
-#, fuzzy
 #| msgid "Installation"
 msgid "installing"
-msgstr "Installatie"
+msgstr "installeren"
 
 #: plinth/package.py:127
 msgid "downloading"
-msgstr ""
+msgstr "downloaden"
 
 #: plinth/package.py:128
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
-msgstr "Instelling onveranderd"
+msgstr "media wijzigen"
 
 #: plinth/package.py:129
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
-msgstr "Configuratie"
+msgstr "configuratiebestand: {file}"
 
 #: plinth/service.py:119
 msgid "Web Server over Secure Socket Layer"
@@ -3304,16 +3317,14 @@ msgid "Login"
 msgstr "Aanmelding"
 
 #: plinth/templates/service.html:43
-#, fuzzy
 #| msgid "Tor is running"
 msgid "is running"
-msgstr "Tor draait"
+msgstr "draait"
 
 #: plinth/templates/service.html:46
-#, fuzzy
 #| msgid "Tor is not running"
 msgid "is not running"
-msgstr "Tor draait niet"
+msgstr "draait niet"
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
