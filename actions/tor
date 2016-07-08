@@ -55,6 +55,8 @@ def parse_arguments():
                            help='Configure Tor service')
     configure.add_argument('--relay', choices=['enable', 'disable'],
                            help='Configure relay')
+    configure.add_argument('--bridge-relay', choices=['enable', 'disable'],
+                           help='Configure bridge relay')
     configure.add_argument('--hidden-service', choices=['enable', 'disable'],
                            help='Configure hidden service')
     configure.add_argument('--apt-transport-tor',
@@ -72,16 +74,10 @@ def subcommand_setup(_):
             'Run as non-exit bridge relay')
     aug.set(TOR_CONFIG + '/SocksPort[1]', '[::]:9050')
     aug.set(TOR_CONFIG + '/SocksPort[2]', '0.0.0.0:9050')
-    aug.set(TOR_CONFIG + '/ORPort', 'auto')
     aug.set(TOR_CONFIG + '/ControlPort', '9051')
-    aug.set(TOR_CONFIG + '/BridgeRelay', '1')
+    _enable_relay(relay='enable', bridge='enable', restart=False, aug=aug)
     aug.set(TOR_CONFIG + '/ExitPolicy[1]', 'reject *:*')
     aug.set(TOR_CONFIG + '/ExitPolicy[2]', 'reject6 *:*')
-
-    aug.set(TOR_CONFIG + '/#comment[last() + 1]', 'Enable obfsproxy')
-    aug.set(TOR_CONFIG + '/ServerTransportPlugin',
-            'obfs3,obfs4 exec /usr/bin/obfs4proxy')
-    aug.set(TOR_CONFIG + '/ExtORPort', 'auto')
 
     aug.set(TOR_CONFIG + '/#comment[last() + 1]', 'Enable transparent proxy')
     aug.set(TOR_CONFIG + '/VirtualAddrNetworkIPv4', '10.192.0.0/10')
@@ -125,11 +121,8 @@ def subcommand_configure(arguments):
     if arguments.service == 'disable':
         _disable()
 
-    restart = arguments.service == None and arguments.hidden_service == None
-    if arguments.relay == 'enable':
-        _enable_relay(restart=restart)
-    elif arguments.relay == 'disable':
-        _disable_relay(restart=restart)
+    restart = arguments.service is None and arguments.hidden_service is None
+    _enable_relay(arguments.relay, arguments.bridge_relay, restart=restart)
 
     restart = arguments.service is None
     if arguments.hidden_service == 'enable':
@@ -150,15 +143,21 @@ def get_status():
     """Return dict with Tor status."""
     aug = augeas_load()
     return {'relay_enabled': _is_relay_enabled(aug),
+            'bridge_relay_enabled': _is_bridge_relay_enabled(aug),
             'ports': _get_ports(),
             'hidden_service': _get_hidden_service(aug)}
 
 
 def _is_relay_enabled(aug):
-    """Return whether bridge relay is enabled."""
+    """Return whether a relay is enabled."""
     orport = aug.get(TOR_CONFIG + '/ORPort')
+    return bool(orport) and orport != '0'
+
+
+def _is_bridge_relay_enabled(aug):
+    """Return whether bridge relay is enabled."""
     bridge = aug.get(TOR_CONFIG + '/BridgeRelay')
-    return orport == 'auto' and bridge == '1'
+    return bridge == '1'
 
 
 def _get_ports():
@@ -247,23 +246,29 @@ def _disable():
     action_utils.service_disable('tor')
 
 
-def _enable_relay(restart=True):
+def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
     """Enable Tor bridge relay."""
-    aug = augeas_load()
-    aug.set(TOR_CONFIG + '/ORPort', 'auto')
-    aug.set(TOR_CONFIG + '/BridgeRelay', '1')
-    aug.save()
+    if relay is None and bridge is None:
+        return
 
-    if restart:
-        if is_enabled() and is_running():
-            action_utils.service_restart('tor')
+    if not aug:
+        aug = augeas_load()
 
+    if relay == 'enable':
+        aug.set(TOR_CONFIG + '/ORPort', 'auto')
+    elif relay == 'disable':
+        aug.remove(TOR_CONFIG + '/ORPort')
 
-def _disable_relay(restart=False):
-    """Disable Tor bridge relay."""
-    aug = augeas_load()
-    aug.remove(TOR_CONFIG + '/ORPort')
-    aug.set(TOR_CONFIG + '/BridgeRelay', '0')
+    if bridge == 'enable':
+        aug.set(TOR_CONFIG + '/BridgeRelay', '1')
+        aug.set(TOR_CONFIG + '/ServerTransportPlugin',
+                'obfs3,obfs4 exec /usr/bin/obfs4proxy')
+        aug.set(TOR_CONFIG + '/ExtORPort', 'auto')
+    elif bridge == 'disable':
+        aug.remove(TOR_CONFIG + '/BridgeRelay')
+        aug.remove(TOR_CONFIG + '/ServerTransportPlugin')
+        aug.remove(TOR_CONFIG + '/ExtORPort')
+
     aug.save()
 
     if restart:
