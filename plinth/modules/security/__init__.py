@@ -22,6 +22,7 @@ Plinth module for security configuration
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
+from plinth import actions
 
 
 version = 1
@@ -33,7 +34,32 @@ depends = ['system']
 title = _('Security')
 
 
+ACCESS_CONF_FILE = '/etc/security/access.conf'
+ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+
+
 def init():
     """Initialize the module"""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(title, 'glyphicon-lock', 'security:index')
+
+
+def get_restricted_access_enabled():
+    """Return whether restricted access is enabled"""
+    with open(ACCESS_CONF_FILE, 'r') as conffile:
+        lines = conffile.readlines()
+
+    for line in lines:
+        if ACCESS_CONF_SNIPPET in line:
+            return True
+
+    return False
+
+
+def set_restricted_access(enabled):
+    """Enable or disable restricted access"""
+    action = 'disable-restricted-access'
+    if enabled:
+        action = 'enable-restricted-access'
+
+    actions.superuser_run('security', [action])

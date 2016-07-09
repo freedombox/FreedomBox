@@ -49,7 +49,7 @@ def subcommand_enable_restricted_access(_):
         lines = conffile.readlines()
 
     for line in lines:
-        if ACCESS_CONF_SNIPPET in line:
+        if ACCESS_CONF_SNIPPET == line.strip():
             return
 
     with open(ACCESS_CONF_FILE, 'a') as conffile:
@@ -63,7 +63,7 @@ def subcommand_disable_restricted_access(_):
 
     with open(ACCESS_CONF_FILE, 'w') as conffile:
         for line in lines:
-            if ACCESS_CONF_SNIPPET not in line:
+            if ACCESS_CONF_SNIPPET != line.strip():
                 conffile.write(line)
 
 

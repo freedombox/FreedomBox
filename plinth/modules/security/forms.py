@@ -26,7 +26,8 @@ from django.utils.translation import ugettext_lazy as _
 class SecurityForm(forms.Form):
     """Security configuration form"""
     restricted_access = forms.BooleanField(
-        label=_('Restrict console logins'), required=False,
+        label=_('Restrict console logins (recommended)'), required=False,
         help_text=_('When this option is enabled, only users in the "admin" '
-                    'group will be able to login through an attached '
-                    'keyboard/monitor or serial console.'))
+                    'group will be able to log in to console or via SSH. '
+                    'Console users may be able to access some services '
+                    'without further authorization.'))

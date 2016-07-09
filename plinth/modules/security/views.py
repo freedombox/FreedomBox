@@ -24,11 +24,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from .forms import SecurityForm
-from plinth import actions
-
-
-ACCESS_CONF_FILE = '/etc/security/access.conf'
-ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+from plinth.modules import security
 
 
 def index(request):
@@ -53,14 +49,14 @@ def index(request):
 
 def get_status(request):
     """Return the current status"""
-    return {'restricted_access': get_restricted_access_enabled()}
+    return {'restricted_access': security.get_restricted_access_enabled()}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes"""
     if old_status['restricted_access'] != new_status['restricted_access']:
         try:
-            set_restricted_access(new_status['restricted_access'])
+            security.set_restricted_access(new_status['restricted_access'])
         except Exception as exception:
             messages.error(
                 request,
@@ -68,23 +64,3 @@ def _apply_changes(request, old_status, new_status):
                 .format(exception=exception))
         else:
             messages.success(request, _('Updated security configuration'))
-
-
-def get_restricted_access_enabled():
-    """Return whether restricted access is enabled"""
-    with open(ACCESS_CONF_FILE, 'r') as conffile:
-        lines = conffile.readlines()
-
-    for line in lines:
-        if ACCESS_CONF_SNIPPET in line:
-            return True
-
-    return False
-
-
-def set_restricted_access(enabled):
-    """Enable or disable restricted access"""
-    action = 'disable-restricted-access'
-    if enabled:
-        action = 'enable-restricted-access'
-    actions.superuser_run('security', [action])
