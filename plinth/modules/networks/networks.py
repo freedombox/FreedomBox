@@ -23,8 +23,8 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.decorators.http import require_POST
 from logging import Logger
 
-from .forms import (ConnectionTypeSelectForm, EthernetForm, PPPoEForm,
-                    WifiForm)
+from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
+                    PPPoEForm, WifiForm)
 from plinth import network
 
 
@@ -113,7 +113,9 @@ def edit(request, uuid):
     form_data = {'name': connection.get_id()}
 
     if request.method == 'POST':
-        if connection.get_connection_type() == '802-11-wireless':
+        if connection.get_connection_type() == 'generic':
+            form = GenericForm(request.POST)
+        elif connection.get_connection_type() == '802-11-wireless':
             form = WifiForm(request.POST)
         elif connection.get_connection_type() == '802-3-ethernet':
             form = EthernetForm(request.POST)
@@ -156,7 +158,9 @@ def edit(request, uuid):
             if second_dns:
                 form_data['ipv4_second_dns'] = second_dns
 
-        if settings_connection.get_connection_type() == '802-11-wireless':
+        if settings_connection.get_connection_type() == 'generic':
+            form = GenericForm(form_data)
+        elif settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
             form_data['ssid'] = settings_wireless.get_ssid().get_data()
             form_data['mode'] = settings_wireless.get_mode()
@@ -242,7 +246,9 @@ def add(request):
         form = ConnectionTypeSelectForm(request.POST)
         if form.is_valid():
             connection_type = form.cleaned_data['connection_type']
-            if connection_type == '802-3-ethernet':
+            if connection_type == 'generic':
+                return redirect(reverse_lazy('networks:add_generic'))
+            elif connection_type == '802-3-ethernet':
                 return redirect(reverse_lazy('networks:add_ethernet'))
             elif connection_type == '802-11-wireless':
                 return redirect(reverse_lazy('networks:add_wifi'))
@@ -254,6 +260,24 @@ def add(request):
                                 {'title': _('Add Connection'),
                                  'subsubmenu': subsubmenu,
                                  'form': form})
+
+
+def add_generic(request):
+    """Serve generic connection create form."""
+    form = None
+
+    if request.method == 'POST':
+        form = GenericForm(request.POST)
+        if form.is_valid():
+            network.add_connection(form.get_settings())
+            return redirect(reverse_lazy('networks:index'))
+    else:
+        form = GenericForm()
+
+    return TemplateResponse(request, 'connections_create.html',
+                            {'title': _('Adding New Generic Connection'),
+                             'subsubmenu': subsubmenu,
+                             'form': form})
 
 
 def add_ethernet(request):
