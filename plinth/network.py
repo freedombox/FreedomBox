@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 CONNECTION_TYPE_NAMES = collections.OrderedDict([
     ('802-3-ethernet', _('Ethernet')),
     ('802-11-wireless', _('Wi-Fi')),
-    ('pppoe', _('PPPoE'))
+    ('pppoe', _('PPPoE')),
+    ('generic', _('Generic')),
 ])
 
 

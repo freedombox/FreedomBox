@@ -124,6 +124,21 @@ available over this interfaces. Select Internal only for trusted networks.'),
         return ipv4
 
 
+class GenericForm(ConnectionForm):
+    """Form to create/edit a generic connection."""
+    def __init__(self, *args, **kwargs):
+        """Initialize the form, populate interface choices."""
+        super(GenericForm, self).__init__(*args, **kwargs)
+        choices = self._get_interface_choices(nm.DeviceType.GENERIC)
+        self.fields['interface'].choices = choices
+
+    def get_settings(self):
+        """Return settings dict from cleaned data."""
+        settings = super().get_settings()
+        settings['common']['type'] = 'generic'
+        return settings
+
+
 class EthernetForm(ConnectionForm):
     """Form to create/edit a ethernet connection."""
     def __init__(self, *args, **kwargs):
