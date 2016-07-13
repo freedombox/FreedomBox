@@ -68,9 +68,12 @@
                 ipv4_required(false, ['address']);
                 ipv4_readonly(false, ['address', 'netmask']);
                 ipv4_readonly(true, ['gateway', 'dns', 'second_dns']);
-            } else {
+            } else if ($("#id_ipv4_method").prop("value") == "auto") {
                 ipv4_readonly(true, ['address', 'netmask', 'gateway']);
                 ipv4_readonly(false, ['dns', 'second_dns']);
+            } else {
+                ipv4_readonly(true, ['address', 'netmask', 'gateway', 'dns',
+                                     'second_dns']);
             }
         }
 

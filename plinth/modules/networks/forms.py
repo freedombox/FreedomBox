@@ -45,7 +45,8 @@ class ConnectionForm(forms.Form):
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
 available over this interfaces. Select Internal only for trusted networks.'),
-        choices=[('external', 'External'), ('internal', 'Internal')])
+        choices=[('external', _('External')),
+                 ('internal', _('Internal'))])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         help_text=format_lazy(
@@ -55,9 +56,10 @@ available over this interfaces. Select Internal only for trusted networks.'),
                 'method will make {box_name} act as a router, configure '
                 'clients on this network and share its Internet connection.'),
             box_name=ugettext_lazy(cfg.box_name)),
-        choices=[('auto', 'Automatic (DHCP)'),
-                 ('shared', 'Shared'),
-                 ('manual', 'Manual')])
+        choices=[('auto', _('Automatic (DHCP)')),
+                 ('shared', _('Shared')),
+                 ('manual', _('Manual')),
+                 ('disabled', _('Disabled'))])
     ipv4_address = forms.CharField(
         label=_('Address'),
         validators=[validators.validate_ipv4_address],
@@ -195,14 +197,15 @@ class WifiForm(ConnectionForm):
         help_text=_('The visible name of the network.'))
     mode = forms.ChoiceField(
         label=_('Mode'),
-        choices=[('infrastructure', 'Infrastructure'),
-                 ('ap', 'Access Point'),
-                 ('adhoc', 'Ad-hoc')])
+        choices=[('infrastructure', _('Infrastructure')),
+                 ('ap', _('Access Point')),
+                 ('adhoc', _('Ad-hoc'))])
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
         help_text=_('Select WPA if the wireless network is secured and \
 requires clients to have the password to connect.'),
-        choices=[('wpa', 'WPA'), ('open', 'Open')])
+        choices=[('wpa', _('WPA')),
+                 ('open', _('Open'))])
     passphrase = forms.CharField(
         label=_('Passphrase'),
         validators=[validators.MinLengthValidator(8)],
