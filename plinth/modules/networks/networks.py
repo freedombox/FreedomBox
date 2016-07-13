@@ -164,6 +164,9 @@ def edit(request, uuid):
             settings_wireless = connection.get_setting_wireless()
             form_data['ssid'] = settings_wireless.get_ssid().get_data()
             form_data['mode'] = settings_wireless.get_mode()
+            form_data['band'] = settings_wireless.get_band() or 'auto'
+            form_data['channel'] = settings_wireless.get_channel()
+            form_data['bssid'] = settings_wireless.get_bssid()
             try:
                 wifi_sec = connection.get_setting_wireless_security()
                 if wifi_sec:
@@ -328,6 +331,7 @@ def add_wifi(request, ssid=None, interface_name=None):
                      'zone': 'external',
                      'ssid': ssid,
                      'mode': 'infrastructure',
+                     'band': 'auto',
                      'auth_mode': 'wpa',
                      'ipv4_method': 'auto'}
 
