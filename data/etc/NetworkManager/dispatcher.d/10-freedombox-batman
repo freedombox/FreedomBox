@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+set -e  # Exit with code on error
+
+IFACE="$1"
+ACTION="$2"
+
+if [[ "$CONNECTION_ID" != *"BATMAN"* ]]; then
+    exit 0
+fi
+
+case ${ACTION} in
+    up)
+        logger "Setting up B.A.T.M.A.N. Advanced on interface $IFACE"
+        ip link set mtu 1560 dev ${IFACE}
+        modprobe batman-adv
+        echo "bat0" > /sys/class/net/${IFACE}/batman_adv/mesh_iface
+        ip link set up dev bat0
+        ;;
+    down)
+        logger "Clearing B.A.T.M.A.N. Advanced on interface $IFACE"
+        ip link set down dev bat0
+        echo "none" > /sys/class/net/${IFACE}/batman_adv/mesh_iface
+        ip link set mtu 1500 dev ${IFACE}
+        ;;
+    *)
+        ;;
+esac
