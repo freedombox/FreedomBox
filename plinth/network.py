@@ -383,6 +383,14 @@ def _update_wireless_settings(connection, wireless):
     ssid_gbytes = glib.Bytes.new(wireless['ssid'].encode())
     settings.set_property(nm.SETTING_WIRELESS_SSID, ssid_gbytes)
     settings.set_property(nm.SETTING_WIRELESS_MODE, wireless['mode'])
+    band = wireless['band'] if wireless['band'] != 'auto' else None
+    settings.set_property(nm.SETTING_WIRELESS_BAND, band)
+    channel = wireless['channel']
+    if wireless['band'] == 'auto' or not wireless['channel']:
+        channel = 0
+
+    settings.set_property(nm.SETTING_WIRELESS_CHANNEL, channel)
+    settings.set_property(nm.SETTING_WIRELESS_BSSID, wireless['bssid'] or None)
 
     # Wireless Security
     if wireless['auth_mode'] == 'wpa' and wireless['passphrase']:

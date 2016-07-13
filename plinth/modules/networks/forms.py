@@ -188,8 +188,9 @@ class PPPoEForm(EthernetForm):
 
 class WifiForm(ConnectionForm):
     """Form to create/edit a Wi-Fi connection."""
-    field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'auth_mode',
-                   'passphrase', 'ipv4_method', 'ipv4_address', 'ipv4_netmask',
+    field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'band',
+                   'channel', 'bssid', 'auth_mode', 'passphrase',
+                   'ipv4_method', 'ipv4_address', 'ipv4_netmask',
                    'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns']
 
     ssid = forms.CharField(
@@ -200,6 +201,27 @@ class WifiForm(ConnectionForm):
         choices=[('infrastructure', _('Infrastructure')),
                  ('ap', _('Access Point')),
                  ('adhoc', _('Ad-hoc'))])
+    band = forms.ChoiceField(
+        label=_('Frequency Band'),
+        choices=[('auto', _('Automatic')),
+                 ('a', _('A (5 GHz)')),
+                 ('bg', _('B/G (2.4 GHz)'))])
+    channel = forms.IntegerField(
+        label=_('Channel'),
+        help_text=_('Optional value. Wireless channel in the selected '
+                    'frequency band to restrict to. Blank or 0 value means '
+                    'automatic selection.'),
+        min_value=0,
+        max_value=255,
+        required=False)
+    bssid = forms.RegexField(
+        label=_('BSSID'),
+        help_text=_('Optional value. Unique identifier for the access point. '
+                    'When connecting to an access point, connect only if the '
+                    'BSSID of the access point matches the one provided. '
+                    'Example: 00:11:22:aa:bb:cc.'),
+        regex=r'^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$',
+        required=False)
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
         help_text=_('Select WPA if the wireless network is secured and \
@@ -224,6 +246,9 @@ requires clients to have the password to connect.'),
         settings['wireless'] = {
             'ssid': self.cleaned_data['ssid'],
             'mode': self.cleaned_data['mode'],
+            'band': self.cleaned_data['band'],
+            'channel': self.cleaned_data['channel'],
+            'bssid': self.cleaned_data['bssid'],
             'auth_mode': self.cleaned_data['auth_mode'],
             'passphrase': self.cleaned_data['passphrase'],
         }
