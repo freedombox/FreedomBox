@@ -35,7 +35,7 @@ from plinth import cfg
 from plinth.errors import ActionError, DomainRegistrationError
 from plinth.modules.pagekite.utils import PREDEFINED_SERVICES, run
 from plinth.modules.security import set_restricted_access
-from plinth.modules.users.forms import GROUP_CHOICES
+from plinth.modules.users.forms import GROUP_CHOICES, RESTRICTED_USERNAMES
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
@@ -55,7 +55,8 @@ class State1Form(auth.forms.UserCreationForm):
             # Exit code 0 means that the username is already in use.
             raise ValidationError(_('Username is reserved'))
         except subprocess.CalledProcessError:
-            pass
+            if username in RESTRICTED_USERNAMES:
+                raise ValidationError(_('Username is reserved'))
 
         return super().clean()
 

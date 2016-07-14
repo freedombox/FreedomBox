@@ -27,6 +27,23 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from plinth import actions
 from plinth.errors import ActionError
 
+# Usernames used by optional services (that might not be installed yet).
+RESTRICTED_USERNAMES = [
+    'debian-deluged',
+    'Debian-minetest',
+    'debian-tor',
+    'debian-transmission',
+    'ejabberd',
+    'ez-ipupd',
+    'monkeysphere',
+    'mumble-server',
+    'node-restore',
+    'quasselcore',
+    'radicale',
+    'repro',
+    'privoxy',
+]
+
 GROUP_CHOICES = (
     ('admin', _('admin')),
     ('wiki', _('wiki')),
@@ -66,7 +83,8 @@ class CreateUserForm(UserCreationForm):
             # Exit code 0 means that the username is already in use.
             raise ValidationError(_('Username is reserved'))
         except subprocess.CalledProcessError:
-            pass
+            if username in RESTRICTED_USERNAMES:
+                raise ValidationError(_('Username is reserved'))
 
         return super().clean()
 
@@ -139,7 +157,8 @@ class UserUpdateForm(forms.ModelForm):
             # Exit code 0 means that the username is already in use.
             raise ValidationError(_('Username is reserved'))
         except subprocess.CalledProcessError:
-            pass
+            if username in RESTRICTED_USERNAMES:
+                raise ValidationError(_('Username is reserved'))
 
         return super().clean()
 
