@@ -22,6 +22,7 @@ Forms for first boot module.
 import json
 import logging
 import requests
+import subprocess
 
 from django import forms
 from django.contrib import auth
@@ -45,6 +46,18 @@ class State1Form(auth.forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
+
+    def clean(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        try:
+            subprocess.run(['getent', 'passwd', username], check=True)
+            # Exit code 0 means that the username is already in use.
+            raise ValidationError(_('Username is reserved'))
+        except subprocess.CalledProcessError:
+            pass
+
+        return super().clean()
 
     def save(self, commit=True):
         """Create and log the user in."""
