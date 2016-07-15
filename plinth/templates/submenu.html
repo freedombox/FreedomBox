@@ -20,17 +20,16 @@
 {% load i18n %}
 
 <ul class="nav nav-pills nav-stacked">
-  {% for item in menu.items %}
+  {% for item in menu.sorted_items %}
 
     {% if item.url in active_menu_urls %}
       <li class="active">
         <a href="{{ item.url }}" class="active">
-          <span class="{{ item.icon }} glyphicon"></span>
     {% else %}
       <li>
         <a href="{{ item.url }}">
-          <span class="{{ item.icon }} glyphicon"></span>
     {% endif %}
+          <span class="{{ item.icon }} glyphicon"></span>
           {{ item.label }}
         </a>
       </li>

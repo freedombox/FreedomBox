@@ -28,8 +28,8 @@ from plinth import cfg
 
 
 test_dir = os.path.split(__file__)[0]
-root_dir = os.path.abspath(os.path.join(test_dir, os.path.pardir + os.path.sep +
-                                        os.path.pardir))
+root_dir = os.path.abspath(os.path.join(test_dir, os.path.pardir +
+                                        os.path.sep + os.path.pardir))
 cfg.actions_dir = os.path.join(root_dir, 'actions')
 
 
@@ -53,7 +53,7 @@ class TestPrivileged(unittest.TestCase):
     def notest_run_as_root(self):
         """1. Privileged actions run as root. """
         self.assertEqual(
-            '0', # user 0 is root
+            '0',  # user 0 is root
             superuser_run('id', ['-ur'])[0].strip())
 
     def test_breakout_actions_dir(self):
@@ -114,7 +114,8 @@ class TestPrivileged(unittest.TestCase):
     def test_breakout_option_list(self):
         """3D. Option lists can't be used to run other actions.
 
-        Verify that shell control characters aren't interpreted in option lists.
+        Verify that shell control characters aren't interpreted in
+        option lists.
         """
         option_lists = ((';', 'echo', 'hello'),
                         ('&&', 'echo', 'hello'),

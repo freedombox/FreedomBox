@@ -36,6 +36,8 @@ depends = ['system']
 
 managed_services = ['avahi-daemon']
 
+managed_packages = ['avahi-daemon']
+
 title = _('Service Discovery')
 
 description = [
@@ -55,7 +57,7 @@ service = None
 def init():
     """Intialize the service discovery module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index', 950)
+    menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index')
 
     global service  # pylint: disable=W0603
     service = service_module.Service(
@@ -64,7 +66,7 @@ def init():
 
 def setup(helper, old_version=False):
     """Install and configure the module."""
-    helper.install(['avahi-daemon'])
+    helper.install(managed_packages)
 
 
 class AvahiServiceView(ServiceView):

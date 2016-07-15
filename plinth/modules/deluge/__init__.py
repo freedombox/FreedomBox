@@ -35,6 +35,8 @@ service = None
 
 managed_services = ['deluge-web']
 
+managed_packages = ['deluged', 'deluge-web']
+
 title = _('BitTorrent Web Client (Deluge)')
 
 description = [
@@ -50,7 +52,7 @@ description = [
 def init():
     """Initialize the Deluge module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index', 200)
+    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
 
     global service
     service = service_module.Service(
@@ -60,7 +62,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['deluged', 'deluge-web'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['enable'])
     helper.call('post', service.notify_enabled, None, True)
 
@@ -88,6 +90,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/deluge', extra_options=['--no-check-certificate']))
+        'https://{host}/deluge', check_certificate=False))
 
     return results

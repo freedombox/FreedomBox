@@ -33,6 +33,8 @@ is_essential = True
 
 depends = ['apps', 'names']
 
+managed_packages = ['letsencrypt']
+
 title = _('Certificates (Let\'s Encrypt)')
 
 description = [
@@ -59,12 +61,12 @@ def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Certificates (Let\'s Encrypt)'),
-                     'glyphicon-lock', 'letsencrypt:index', 20)
+                     'glyphicon-lock', 'letsencrypt:index')
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['letsencrypt'])
+    helper.install(managed_packages)
 
 
 def diagnose():

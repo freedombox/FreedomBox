@@ -32,6 +32,8 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['unattended-upgrades']
+
 title = _('Software Upgrades')
 
 description = [
@@ -46,7 +48,7 @@ service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-refresh', 'upgrades:index', 21)
+    menu.add_urlname(title, 'glyphicon-refresh', 'upgrades:index')
     global service
     service = service_module.Service(
         'auto-upgrades', title, is_external=False, is_enabled=is_enabled,
@@ -55,7 +57,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['unattended-upgrades'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
 
 

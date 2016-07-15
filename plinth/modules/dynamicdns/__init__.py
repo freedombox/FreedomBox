@@ -26,7 +26,9 @@ from plinth.utils import format_lazy
 
 version = 1
 
-depends = ['apps']
+depends = ['system']
+
+managed_packages = ['ez-ipupdate']
 
 title = _('Dynamic DNS Client')
 
@@ -51,10 +53,10 @@ description = [
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index', 500)
+    menu = cfg.main_menu.get('system:index')
+    menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['ez-ipupdate'])
+    helper.install(managed_packages)

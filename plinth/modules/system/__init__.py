@@ -44,4 +44,4 @@ description = [
 
 def init():
     """Initialize the system module"""
-    cfg.main_menu.add_urlname(title, 'glyphicon-cog', 'system:index', 100)
+    cfg.main_menu.add_urlname(title, 'glyphicon-cog', 'system:index')

@@ -22,15 +22,12 @@ Framework for installing and updating distribution packages
 from django.utils.translation import ugettext as _
 import logging
 import subprocess
+import threading
 
-from plinth.utils import import_from_gi
-glib = import_from_gi('GLib', '2.0')
-packagekit = import_from_gi('PackageKitGlib', '1.0')
+from plinth import actions
 
 
 logger = logging.getLogger(__name__)
-transactions = {}
-packages_resolved = {}
 
 
 class PackageException(Exception):
@@ -52,128 +49,25 @@ class PackageException(Exception):
 class Transaction(object):
     """Information about an ongoing transaction."""
 
-    def __init__(self, package_names):
+    def __init__(self, module_name, package_names):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
+        self.module_name = module_name
         self.package_names = package_names
 
-        # Progress
-        self.allow_cancel = None
-        self.percentage = None
-        self.status = None
-        self.status_string = None
-        self.flags = None
-        self.package = None
-        self.package_id = None
-        self.item_progress = None
-        self.role = None
-        self.caller_active = None
-        self.download_size_remaining = None
-        self.speed = None
+        self._reset_status()
 
     def get_id(self):
         """Return a identifier to use as a key in a map of transactions."""
         return frozenset(self.package_names)
 
-    def __str__(self):
-        """Return the string representation of the object"""
-        return ('Transaction(packages={0}, allow_cancel={1}, status={2}, '
-                ' percentage={3}, package={4}, item_progress={5})').format(
-                    self.package_names, self.allow_cancel, self.status_string,
-                    self.percentage, self.package, self.item_progress)
-
-    def install(self):
-        """Run a PackageKit transaction to install given packages."""
-        try:
-            self._do_install()
-        except glib.Error as exception:
-            raise PackageException(exception.message) from exception
-
-    def _do_install(self):
-        """Run a PackageKit transaction to install given packages.
-
-        Raise exception in case of error.
-        """
-        client = packagekit.Client()
-        client.set_interactive(False)
-
-        # Refresh package cache from all enabled repositories
-        results = client.refresh_cache(
-            False, None, self.progress_callback, self)
-        self._assert_success(results)
-
-        # Resolve packages again to get the latest versions after refresh
-        results = client.resolve(packagekit.FilterEnum.INSTALLED,
-                                 tuple(self.package_names) + (None, ),
-                                 None, self.progress_callback, self)
-        self._assert_success(results)
-
-        for package in results.get_package_array():
-            packages_resolved[package.get_name()] = package
-
-        package_ids = []
-        for package_name in self.package_names:
-            if package_name not in packages_resolved or \
-               not packages_resolved[package_name]:
-                raise PackageException(_('packages not found'))
-
-            package_ids.append(packages_resolved[package_name].get_id())
-
-        # Start package installation
-        results = client.install_packages(
-            packagekit.TransactionFlagEnum.ONLY_TRUSTED, package_ids + [None],
-            None, self.progress_callback, self)
-        self._assert_success(results)
-
-    def _assert_success(self, results):
-        """Check that the most recent operation was a success."""
-        if results and results.get_error_code() is not None:
-            error = results.get_error_code()
-            error_code = error.get_code() if error else None
-            error_string = packagekit.ErrorEnum.to_string(error_code) \
-                if error_code else None
-            error_details = error.get_details() if error else None
-            raise PackageException(error_string, error_details)
-
-    def progress_callback(self, progress, progress_type, user_data):
-        """Process progress updates on package resolve operation"""
-        if progress_type == packagekit.ProgressType.PERCENTAGE:
-            self.percentage = progress.props.percentage
-        elif progress_type == packagekit.ProgressType.PACKAGE:
-            self.package = progress.props.package
-        elif progress_type == packagekit.ProgressType.ALLOW_CANCEL:
-            self.allow_cancel = progress.props.allow_cancel
-        elif progress_type == packagekit.ProgressType.PACKAGE_ID:
-            self.package_id = progress.props.package_id
-        elif progress_type == packagekit.ProgressType.ITEM_PROGRESS:
-            self.item_progress = progress.props.item_progress
-        elif progress_type == packagekit.ProgressType.STATUS:
-            self.status = progress.props.status
-            self.status_string = \
-                packagekit.StatusEnum.to_string(progress.props.status)
-        elif progress_type == packagekit.ProgressType.TRANSACTION_FLAGS:
-            self.flags = progress.props.transaction_flags
-        elif progress_type == packagekit.ProgressType.ROLE:
-            self.role = progress.props.role
-        elif progress_type == packagekit.ProgressType.CALLER_ACTIVE:
-            self.caller_active = progress.props.caller_active
-        elif progress_type == packagekit.ProgressType.DOWNLOAD_SIZE_REMAINING:
-            self.download_size_remaining = \
-                progress.props.download_size_remaining
-        elif progress_type == packagekit.ProgressType.SPEED:
-            self.speed = progress.props.speed
-        else:
-            logger.info('Unhandle packagekit progress callback - %s, %s',
-                        progress, progress_type)
-
-
-class AptTransaction(object):
-    """Install a package using Apt."""
-    def __init__(self, package_names):
-        """Initialize transaction object."""
-        self.package_names = package_names
+    def _reset_status(self):
+        """Reset the current status progress."""
+        self.status_string = ''
+        self.percentage = 0
+        self.stderr = None
 
     def install(self):
         """Run a PackageKit transaction to install given packages.
@@ -183,9 +77,57 @@ class AptTransaction(object):
         when --setup is argument is passed.
         """
         try:
-            subprocess.run(['apt-get', 'update'])
-            subprocess.run(['apt-get', '-y', 'install'] + self.package_names,
-                           check=True)
+            self._run_apt_command(['update'])
+            self._run_apt_command(['install', self.module_name] +
+                                  self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
             raise
+
+    def _run_apt_command(self, arguments):
+        """Run apt-get and update progress."""
+        self._reset_status()
+
+        process = actions.superuser_run('packages', arguments, async=True)
+        process.stdin.close()
+
+        stdout_thread = threading.Thread(target=self._read_stdout,
+                                         args=(process,))
+        stderr_thread = threading.Thread(target=self._read_stderr,
+                                         args=(process,))
+        stdout_thread.start()
+        stderr_thread.start()
+        stdout_thread.join()
+        stderr_thread.join()
+
+        return_code = process.wait()
+        if return_code != 0:
+            raise PackageException(_('Error during installation'), self.stderr)
+
+    def _read_stdout(self, process):
+        """Read the stdout of the process and update progress."""
+        for line in process.stdout:
+            self._parse_progress(line.decode())
+
+    def _read_stderr(self, process):
+        """Read the stderr of the process and store in buffer."""
+        self.stderr = process.stderr.read().decode()
+
+    def _parse_progress(self, line):
+        """Parse the apt-get process output line.
+
+        See README.progress-reporting in apt source code.
+        """
+        parts = line.split(':')
+        if len(parts) < 4:
+            return
+
+        status_map = {
+            'pmstatus': _('installing'),
+            'dlstatus': _('downloading'),
+            'media-change': _('media change'),
+            'pmconffile': _('configuration file: {file}').format(
+                file=parts[1]),
+        }
+        self.status_string = status_map.get(parts[0], '')
+        self.percentage = int(float(parts[2]))

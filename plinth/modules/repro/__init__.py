@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['repro']
+
+managed_packages = ['repro']
+
 title = _('SIP Server (repro)')
 
 description = [
@@ -56,13 +60,11 @@ description = [
 
 service = None
 
-managed_services = ['repro']
-
 
 def init():
     """Initialize the repro module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index', 825)
+    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
 
     global service
     service = service_module.Service(
@@ -78,7 +80,7 @@ class ReproServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['repro'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

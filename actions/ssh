@@ -22,7 +22,7 @@ Configuration helper for SSH server.
 
 import argparse
 import os
-import re
+import pwd
 import shutil
 import stat
 import subprocess
@@ -34,30 +34,32 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    get_keys = subparsers.add_parser('get-keys', help='Get SSH authorized keys')
+    get_keys = subparsers.add_parser('get-keys',
+                                     help='Get SSH authorized keys')
     get_keys.add_argument('--username')
 
-    set_keys = subparsers.add_parser('set-keys', help='Set SSH authorized keys')
+    set_keys = subparsers.add_parser('set-keys',
+                                     help='Set SSH authorized keys')
     set_keys.add_argument('--username')
     set_keys.add_argument('--keys')
 
     return parser.parse_args()
 
 
-def _assert_valid_username(username):
-    """Verify that username is a valid one."""
-    if not re.match(r'^[a-z][-a-z0-9_]*$', username):
-        print('Bad username')
+def get_user_homedir(username):
+    """Return the home dir of a user by looking up in password database."""
+    try:
+        return pwd.getpwnam(username).pw_dir
+    except KeyError as exception:
+        print('Username not found')
         sys.exit(1)
 
 
 def subcommand_get_keys(arguments):
     """Get SSH authorized keys."""
     user = arguments.username
-    _assert_valid_username(user)
 
-    path = os.path.join(os.path.expanduser('~' + user),
-                        '.ssh', 'authorized_keys')
+    path = os.path.join(get_user_homedir(user), '.ssh', 'authorized_keys')
     try:
         with open(path, 'r') as file_handle:
             print(file_handle.read())
@@ -68,12 +70,11 @@ def subcommand_get_keys(arguments):
 def subcommand_set_keys(arguments):
     """Set SSH authorized keys."""
     user = arguments.username
-    _assert_valid_username(user)
+
+    ssh_folder = os.path.join(get_user_homedir(user), '.ssh')
+    key_file_path = os.path.join(ssh_folder, 'authorized_keys')
 
     subprocess.check_call(['mkhomedir_helper', user])
-
-    ssh_folder = os.path.join(os.path.expanduser('~' + user), '.ssh')
-    key_file_path = os.path.join(ssh_folder, 'authorized_keys')
 
     if not os.path.exists(ssh_folder):
         os.makedirs(ssh_folder)

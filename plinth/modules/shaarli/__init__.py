@@ -31,6 +31,8 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['shaarli']
+
 title = _('Bookmarks (Shaarli)')
 
 description = [
@@ -48,7 +50,7 @@ service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index', 350)
+    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
 
     global service
     service = service_module.Service(
@@ -58,9 +60,8 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['shaarli'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
-
 
 
 def is_enabled():

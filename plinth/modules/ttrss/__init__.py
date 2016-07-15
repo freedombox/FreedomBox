@@ -31,6 +31,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['tt-rss']
+
+managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
+
 title = _('News Feed Reader (Tiny Tiny RSS)')
 
 description = [
@@ -44,13 +48,11 @@ description = [
 
 service = None
 
-managed_services = ['tt-rss']
-
 
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index', 780)
+    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
 
     global service
     service = service_module.Service(
@@ -61,7 +63,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    helper.install(['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 
@@ -87,6 +89,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/tt-rss', extra_options=['--no-check-certificate']))
+        'https://{host}/tt-rss', check_certificate=False))
 
     return results

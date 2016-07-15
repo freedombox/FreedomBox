@@ -80,6 +80,10 @@ def __apply_changes(request, old_status, new_status):
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
 
+    if old_status['relay_enabled'] != new_status['relay_enabled']:
+        arg_value = 'enable' if new_status['relay_enabled'] else 'disable'
+        arguments.extend(['--relay', arg_value])
+
     if old_status['hs_enabled'] != new_status['hs_enabled']:
         arg_value = 'enable' if new_status['hs_enabled'] else 'disable'
         arguments.extend(['--hidden-service', arg_value])

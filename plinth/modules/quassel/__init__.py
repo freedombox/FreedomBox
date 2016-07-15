@@ -35,6 +35,8 @@ service = None
 
 managed_services = ['quasselcore']
 
+managed_packages = ['quassel-core']
+
 title = _('IRC Client (Quassel)')
 
 description = [
@@ -58,11 +60,11 @@ description = [
 def init():
     """Initialize the quassel module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index', 730)
+    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['quassel-plinth'], is_external=True)
 
 
 class QuasselServiceView(ServiceView):
@@ -73,7 +75,7 @@ class QuasselServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['quassel-core'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

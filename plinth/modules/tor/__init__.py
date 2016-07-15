@@ -36,6 +36,9 @@ version = 1
 
 depends = ['apps', 'names']
 
+managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
+                    'apt-transport-tor']
+
 title = _('Anonymity Network (Tor)')
 
 description = [
@@ -54,11 +57,11 @@ bridge_service = None
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index', 100)
+    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
 
     global socks_service
     socks_service = service_module.Service(
-        'tor-socks', _('Tor Anonymity Network'),
+        'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
         is_external=False, is_enabled=utils.is_enabled,
         is_running=utils.is_running)
 
@@ -70,12 +73,12 @@ def init():
         is_running=utils.is_running)
 
     # Register hidden service name with Name Services module.
-    hs_info = utils.get_hs()
-    hostname = hs_info['hostname']
-    hs_virtports = [port['virtport'] for port in hs_info['ports']]
+    status = utils.get_status()
+    hostname = status['hs_hostname']
+    hs_virtports = [port['virtport'] for port in status['hs_ports']]
 
     if utils.is_enabled() and utils.is_running() and \
-       hs_info['enabled'] and hs_info['hostname']:
+       status['hs_enabled'] and status['hs_hostname']:
         hs_services = []
         for service_type in SERVICES:
             if str(service_type[2]) in hs_virtports:
@@ -92,8 +95,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
-                    'apt-transport-tor'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'tor', ['setup'])
     helper.call('post', actions.superuser_run, 'tor',
                 ['configure', '--apt-transport-tor', 'enable'])
@@ -131,8 +133,8 @@ def diagnose():
 
     results.extend(_diagnose_control_port())
 
-    output = actions.superuser_run('tor', ['get-ports'])
-    ports = json.loads(output)
+    output = actions.superuser_run('tor', ['get-status'])
+    ports = json.loads(output)['ports']
 
     results.append([_('Tor relay port available'),
                     'passed' if 'orport' in ports else 'failed'])

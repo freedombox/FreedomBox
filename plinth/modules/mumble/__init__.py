@@ -37,6 +37,8 @@ service = None
 
 managed_services = ['mumble-server']
 
+managed_packages = ['mumble-server']
+
 description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),
@@ -50,11 +52,11 @@ description = [
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index', 900)
+    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['mumble-plinth'], is_external=True)
 
 
 class MumbleServiceView(ServiceView):
@@ -65,7 +67,7 @@ class MumbleServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['mumble-server'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

@@ -17,10 +17,11 @@
 
 from django import forms
 from django.core import validators
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext_lazy
 
+from plinth import cfg
 from plinth import network
-from plinth.utils import import_from_gi
+from plinth.utils import format_lazy, import_from_gi
 nm = import_from_gi('NM', '1.0')
 
 
@@ -47,8 +48,13 @@ available over this interfaces. Select Internal only for trusted networks.'),
         choices=[('external', 'External'), ('internal', 'Internal')])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
-        help_text=_('"Shared" method will start a DHCP server and "Automatic" '
-                    'method will acquire configuration from a DHCP server.'),
+        help_text=format_lazy(
+            ugettext_lazy(
+                '"Automatic" method will make {box_name} acquire '
+                'configuration from this network making it a client. "Shared" '
+                'method will make {box_name} act as a router, configure '
+                'clients on this network and share its Internet connection.'),
+            box_name=ugettext_lazy(cfg.box_name)),
         choices=[('auto', 'Automatic (DHCP)'),
                  ('shared', 'Shared'),
                  ('manual', 'Manual')])
@@ -93,7 +99,6 @@ available over this interfaces. Select Internal only for trusted networks.'),
             choices.append((interface, display_string))
 
         return choices
-
 
     def get_settings(self):
         """Return settings dict from cleaned data."""
@@ -148,7 +153,6 @@ class PPPoEForm(EthernetForm):
                                widget=forms.PasswordInput(render_value=True))
     show_password = forms.BooleanField(label=_('Show password'),
                                        required=False)
-
 
     def get_settings(self):
         """Return setting dict from cleaned data."""

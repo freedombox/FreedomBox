@@ -33,13 +33,11 @@ actions_dir = None
 doc_dir = None
 status_log_file = None
 access_log_file = None
-pidfile = None
 host = None
 port = None
 use_x_forwarded_host = False
 secure_proxy_ssl_header = None
 debug = False
-no_daemon = False
 server_dir = '/'
 danube_edition = False
 
@@ -92,7 +90,6 @@ def read(file_path=None, root_directory=None):
         ('Path', 'doc_dir', 'string'),
         ('Path', 'status_log_file', 'string'),
         ('Path', 'access_log_file', 'string'),
-        ('Path', 'pidfile', 'string'),
         ('Path', 'server_dir', 'string'),
         ('Network', 'host', 'string'),
         ('Network', 'port', 'int'),

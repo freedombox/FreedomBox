@@ -31,6 +31,8 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
+
 title = _('Email Client (Roundcube)')
 
 description = [
@@ -61,7 +63,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index', 600)
+    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
 
     global service
     service = service_module.Service(
@@ -72,7 +74,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
-    helper.install(['sqlite3', 'roundcube', 'roundcube-sqlite3'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
 
 
@@ -96,6 +98,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/roundcube', extra_options=['--no-check-certificate']))
+        'https://{host}/roundcube', check_certificate=False))
 
     return results

@@ -21,9 +21,12 @@ Python action utility functions.
 
 from django.utils.translation import ugettext as _
 import os
+import logging
 import psutil
 import socket
 import subprocess
+
+logger = logging.getLogger(__name__)
 
 
 def is_systemd_running():
@@ -204,7 +207,6 @@ class WebserverChange(object):
         elif 'reload' in self.actions_required:
             service_reload('apache2')
 
-
     def enable(self, name, kind='config'):
         """Enable a config/module/site in Apache.
 
@@ -233,10 +235,10 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
 
     if listen_address:
         test = _('Listening on {kind} port {listen_address}:{port}') \
-        .format(kind=kind, listen_address=listen_address, port=port)
+               .format(kind=kind, listen_address=listen_address, port=port)
     else:
         test = _('Listening on {kind} port {port}') \
-        .format(kind=kind, port=port)
+               .format(kind=kind, port=port)
 
     return [test, 'passed' if result else 'failed']
 
@@ -285,16 +287,19 @@ def _check_port(port, kind='tcp', listen_address=None):
     return False
 
 
-def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
-                 expected_output=None):
+def diagnose_url(url, kind=None, env=None, check_certificate=True,
+                 extra_options=None, wrapper=None, expected_output=None):
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
     """
-    command = ['wget', '-q', '-O', '-', url]
+    command = ['curl', '-f', '-w', '%{response_code}', url]
 
     if wrapper:
         command.insert(0, wrapper)
+
+    if not check_certificate:
+        command.append('-k')
 
     if extra_options:
         command.extend(extra_options)
@@ -303,14 +308,16 @@ def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
         command.append({'4': '-4', '6': '-6'}[kind])
 
     try:
-        output = subprocess.check_output(command, env=env)
+        process = subprocess.run(
+            command, env=env, check=True, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         result = 'passed'
-        if expected_output and expected_output not in output.decode():
+        if expected_output and expected_output not in process.stdout.decode():
             result = 'failed'
     except subprocess.CalledProcessError as exception:
         result = 'failed'
         # Authorization failed is a success
-        if exception.returncode == 6:
+        if exception.stdout.decode().strip() == '401':
             result = 'passed'
     except FileNotFoundError:
         result = 'error'
@@ -322,16 +329,13 @@ def diagnose_url(url, kind=None, env=None, extra_options=None, wrapper=None,
         return [_('Access URL {url}').format(url=url), result]
 
 
-def diagnose_url_on_all(url, extra_options=None):
+def diagnose_url_on_all(url, **kwargs):
     """Run a diagnostic on whether a URL is accessible."""
     results = []
     for address in get_addresses():
-        if address['kind'] == '6' and ':' in address['address']:
-            address['address'] = '[{0}]'.format(address['address'])
-
-        current_url = url.format(host=address['address'])
+        current_url = url.format(host=address['url_address'])
         results.append(diagnose_url(current_url, kind=address['kind'],
-                                    extra_options=extra_options))
+                                    **kwargs))
 
     return results
 
@@ -363,10 +367,19 @@ def get_addresses():
     addresses = get_ip_addresses()
 
     hostname = get_hostname()
-    addresses.append({'kind': '4', 'address': 'localhost'})
-    addresses.append({'kind': '6', 'address': 'localhost'})
-    addresses.append({'kind': '4', 'address': hostname})
-    addresses.append({'kind': '6', 'address': hostname})
+    addresses.append({'kind': '4', 'address': 'localhost', 'numeric': False,
+                      'url_address': 'localhost'})
+    addresses.append({'kind': '6', 'address': 'localhost', 'numeric': False,
+                      'url_address': 'localhost'})
+    addresses.append({'kind': '4', 'address': hostname, 'numeric': False,
+                      'url_address': hostname})
+
+    # XXX: When a hostname is resolved to IPv6 address, it may likely
+    # be link-local address.  Link local IPv6 addresses are valid only
+    # for a given link and need to be scoped with interface name such
+    # as '%eth0' to work.  Tools such as curl don't seem to handle
+    # this correctly.
+    # addresses.append({'kind': '6', 'address': hostname, 'numeric': False})
 
     return addresses
 
@@ -378,8 +391,21 @@ def get_ip_addresses():
     output = subprocess.check_output(['ip', '-o', 'addr'])
     for line in output.decode().splitlines():
         parts = line.split()
-        addresses.append({'kind': '4' if parts[2] == 'inet' else '6',
-                          'address': parts[3].split('/')[0]})
+        address = {'kind': '4' if parts[2] == 'inet' else '6',
+                   'address': parts[3].split('/')[0],
+                   'url_address': parts[3].split('/')[0],
+                   'numeric': True,
+                   'scope': parts[5],
+                   'interface': parts[1]}
+
+        if address['kind'] == '6' and address['numeric']:
+            if address['scope'] != 'link':
+                address['url_address'] = '[{0}]'.format(address['address'])
+            else:
+                address['url_address'] = '[{0}%{1}]'.format(
+                    address['url_address'], address['interface'])
+
+        addresses.append(address)
 
     return addresses
 

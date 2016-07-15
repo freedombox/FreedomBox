@@ -37,6 +37,8 @@ service = None
 
 managed_services = ['radicale']
 
+managed_packages = ['radicale']
+
 title = _('Calendar and Addressbook (Radicale)')
 
 description = [
@@ -53,7 +55,7 @@ description = [
 def init():
     """Initialize the radicale module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index', 375)
+    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
 
     global service
     service = service_module.Service(
@@ -69,7 +71,7 @@ class RadicaleServiceView(ServiceView):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['radicale'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'radicale', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 
@@ -91,6 +93,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5232, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5232, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/radicale', extra_options=['--no-check-certificate']))
+        'https://{host}/radicale', check_certificate=False))
 
     return results

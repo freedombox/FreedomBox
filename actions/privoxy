@@ -22,12 +22,7 @@ Configuration helper for Privoxy server.
 """
 
 import argparse
-import re
-
-from plinth import action_utils
-
-
-CONFIG_FILE = '/etc/privoxy/config'
+import subprocess
 
 
 def parse_arguments():
@@ -35,30 +30,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup',
-                          help='Perform Privoxy configuration setup')
+    subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed')
 
     return parser.parse_args()
 
 
-def subcommand_setup(_):
-    """Setup configuration for the first time."""
-    with open(CONFIG_FILE, 'r') as conffile:
-        lines = conffile.readlines()
-
-    with open(CONFIG_FILE, 'w') as conffile:
-        written = False
-        for line in lines:
-            if re.match(r'#?listen-address', line) and not written:
-                conffile.write('listen-address [::]:8118\n')
-                written = True
-            else:
-                conffile.write(line)
-
-        if not written:
-            conffile.write('listen-address [::]:8118')
-
-    action_utils.service_restart('privoxy')
+def subcommand_pre_install(_):
+    """Preseed debconf values before packages are installed."""
+    subprocess.run(
+        ['debconf-set-selections'],
+        input=b'privoxy privoxy/listen-address string [::]:8118',
+        check=True)
 
 
 def main():

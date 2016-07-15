@@ -102,6 +102,11 @@ def run_on_all_modules():
         if not hasattr(module, 'diagnose'):
             continue
 
+        # Don't run setup on modules have not been setup yet.
+        # However, run on modules that need an upgrade.
+        if module.setup_helper.get_state() == 'needs-setup':
+            continue
+
         modules.append((module_name, module))
         current_results['results'][module_name] = None
 

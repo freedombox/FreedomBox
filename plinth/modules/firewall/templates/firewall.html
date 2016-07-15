@@ -47,40 +47,42 @@
           </thead>
 
           <tbody>
-            {% for service in services %}
-              <tr>
-                <td><strong>{{ service.name }}</strong></td>
-                <td>
-                  {% if service.is_enabled %}
-                    <span class='label label-success'>
-                      {% trans "Enabled" %}</span>
-                  {% else %}
-                    <span class='label label-warning'>
-                      {% trans "Disabled" %}</span>
-                  {% endif %}
-                </td>
-              </tr>
-
-              {% for port in service.ports %}
+            {% for service in services|dictsort:"name" %}
+              {% if service.ports %}
                 <tr>
-                  <td class='cell-indented'><em>{{ port }}</em></td>
+                  <td><strong>{{ service.name }}</strong></td>
                   <td>
-                    {% if port in internal_enabled_services and port in external_enabled_services %}
+                    {% if service.is_enabled %}
                       <span class='label label-success'>
-                        {% trans "Permitted" %}</span>
-                    {% elif port in internal_enabled_services %}
-                      <span class='label label-warning'>
-                        {% trans "Permitted (internal only)" %}</span>
-                    {% elif port in external_enabled_services %}
-                      <span class='label label-warning'>
-                        {% trans "Permitted (external only)" %}</span>
+                        {% trans "Enabled" %}</span>
                     {% else %}
-                      <span class='label label-danger'>
-                        {% trans "Blocked" %}</span>
+                      <span class='label label-warning'>
+                        {% trans "Disabled" %}</span>
                     {% endif %}
                   </td>
                 </tr>
-              {% endfor %}
+
+                {% for port in service.ports %}
+                  <tr>
+                    <td class='cell-indented'><em>{{ port }}</em></td>
+                    <td>
+                      {% if port in internal_enabled_services and port in external_enabled_services %}
+                        <span class='label label-success'>
+                          {% trans "Permitted" %}</span>
+                      {% elif port in internal_enabled_services %}
+                        <span class='label label-warning'>
+                          {% trans "Permitted (internal only)" %}</span>
+                      {% elif port in external_enabled_services %}
+                        <span class='label label-warning'>
+                          {% trans "Permitted (external only)" %}</span>
+                      {% else %}
+                        <span class='label label-danger'>
+                          {% trans "Blocked" %}</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% endif %}
             {% endfor %}
           </tbody>
         </table>

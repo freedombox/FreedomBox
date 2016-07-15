@@ -32,6 +32,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['transmission-daemon']
+
+managed_packages = ['transmission-daemon']
+
 title = _('BitTorrent (Transmission)')
 
 description = [
@@ -43,15 +47,13 @@ description = [
 
 service = None
 
-managed_services = ['transmission-daemon']
-
 TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
 
 
 def init():
     """Intialize the Transmission module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-save', 'transmission:index', 300)
+    menu.add_urlname(title, 'glyphicon-save', 'transmission:index')
 
     global service
     service = service_module.Service(
@@ -61,7 +63,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['transmission-daemon'])
+    helper.install(managed_packages)
 
     new_configuration = {'rpc-whitelist-enabled': False}
     helper.call('post', actions.superuser_run, 'transmission',
@@ -95,7 +97,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(9091, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(9091, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/transmission',
-        extra_options=['--no-check-certificate']))
+        'https://{host}/transmission', check_certificate=False))
 
     return results

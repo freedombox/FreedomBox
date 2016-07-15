@@ -20,7 +20,7 @@ Django middleware to show pre-setup message and setup progress.
 """
 
 from django.contrib import messages
-from django.core.urlresolvers import resolve
+from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _
 import logging
 
@@ -36,11 +36,15 @@ class SetupMiddleware(object):
     """Show setup page or progress if setup is neccessary or running."""
 
     @staticmethod
-    def process_request(request):
+    def process_view(request, view_func, view_args, view_kwargs):
         """Handle a request as Django middleware request handler."""
         # Perform a URL resolution. This is slightly inefficient as
         # Django will do this resolution again.
-        resolver_match = resolve(request.path_info)
+        try:
+            resolver_match = urlresolvers.resolve(request.path_info)
+        except urlresolvers.Resolver404:
+            return
+
         if not resolver_match.namespaces or not len(resolver_match.namespaces):
             # Requested URL does not belong to any application
             return

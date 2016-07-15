@@ -119,13 +119,21 @@ class MenuTestCase(TestCase):
 
     def test_sort_items(self):
         """Verify that menu items are sorted correctly."""
-        menu = build_menu()
+        size = 1000
+        menu = build_menu(size)
+
+        for index in range(0, 200):
+            menu.items[index].order = 100
 
         # Verify that the order of every item is equal to or greater
-        # than the order of the item preceding it
-        for index in range(1, 5):
-            self.assertGreaterEqual(menu.items[index].order,
-                                    menu.items[index - 1].order)
+        # than the order of the item preceding it and if the order is
+        # the same, the labels are considered.
+        items = menu.sorted_items()
+        for index in range(1, size):
+            self.assertGreaterEqual(items[index].order, items[index - 1].order)
+            if items[index].order == items[index - 1].order:
+                self.assertGreaterEqual(items[index].label,
+                                        items[index - 1].label)
 
     def test_add_urlname(self):
         """Verify that a named URL can be added to a menu correctly."""

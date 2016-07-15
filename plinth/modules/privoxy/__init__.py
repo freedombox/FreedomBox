@@ -35,6 +35,10 @@ is_essential = False
 
 depends = ['apps']
 
+managed_services = ['privoxy']
+
+managed_packages = ['privoxy']
+
 title = _('Web Proxy (Privoxy)')
 
 description = [
@@ -54,23 +58,21 @@ description = [
 
 service = None
 
-managed_services = ['privoxy']
-
 
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index', 1000)
+    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=False)
+        managed_services[0], title, ports=['privoxy'], is_external=False)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['privoxy'])
-    helper.call('post', actions.superuser_run, 'privoxy', ['setup'])
+    helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 
@@ -94,18 +96,12 @@ def diagnose():
 
 def diagnose_url_with_proxy():
     """Run a diagnostic on a URL with a proxy."""
-    url = 'https://debian.org/'
+    url = 'https://debian.org/'  # Gives a simple redirect to www.
 
     results = []
     for address in action_utils.get_addresses():
-        if address['kind'] == '6':
-            address['address'] = '[{0}]'.format(address['address'])
-
-        proxy = 'http://{host}:8118/'.format(host=address['address'])
-        if address['kind'] == '4':
-            env = {'http_proxy': proxy}
-        else:
-            env = {'https_proxy': proxy}
+        proxy = 'http://{host}:8118/'.format(host=address['url_address'])
+        env = {'https_proxy': proxy}
 
         result = action_utils.diagnose_url(url, kind=address['kind'], env=env)
         result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \

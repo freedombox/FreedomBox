@@ -34,6 +34,8 @@ depends = ['system']
 
 managed_services = ['ntp']
 
+managed_packages = ['ntp']
+
 title = _('Date & Time')
 
 description = [
@@ -47,16 +49,16 @@ service = None
 def init():
     """Intialize the date/time module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-time', 'datetime:index', 900)
+    menu.add_urlname(title, 'glyphicon-time', 'datetime:index')
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=False)
+        managed_services[0], title, ports=['ntp'], is_external=False)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['ntp'])
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 

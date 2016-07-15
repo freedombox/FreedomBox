@@ -36,6 +36,10 @@ version = 1
 
 depends = ['apps']
 
+managed_services = ['ejabberd']
+
+managed_packages = ['jwchat', 'ejabberd']
+
 title = _('Chat Server (XMPP)')
 
 description = [
@@ -52,18 +56,17 @@ service = None
 
 logger = logging.getLogger(__name__)
 
-managed_services = ['ejabberd']
-
 
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index', 400)
+    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
 
     global service
     service = service_module.Service(
         'ejabberd', title, ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-        is_external=True, is_enabled=is_enabled, enable=enable, disable=disable)
+        is_external=True, is_enabled=is_enabled, enable=enable,
+        disable=disable)
 
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
@@ -77,7 +80,7 @@ def setup(helper, old_version=None):
 
     helper.call('pre', actions.superuser_run, 'xmpp',
                 ['pre-install', '--domainname', domainname])
-    helper.install(['jwchat', 'ejabberd'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
 

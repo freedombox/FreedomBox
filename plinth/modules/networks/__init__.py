@@ -34,6 +34,8 @@ is_essential = True
 
 depends = ['system']
 
+managed_packages = ['network-manager']
+
 title = _('Networks')
 
 logger = Logger(__name__)
@@ -42,12 +44,12 @@ logger = Logger(__name__)
 def init():
     """Initialize the Networks module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-signal', 'networks:index', 18)
+    menu.add_urlname(title, 'glyphicon-signal', 'networks:index')
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['network-manager'])
+    helper.install(managed_packages)
 
 
 def diagnose():

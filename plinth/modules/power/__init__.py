@@ -39,4 +39,4 @@ description = [
 def init():
     """Initialize the power module."""
     menu = cfg.main_menu.get('system:index')
-    menu.add_urlname(title, 'glyphicon-off', 'power:index', 1000)
+    menu.add_urlname(title, 'glyphicon-off', 'power:index')

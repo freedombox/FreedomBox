@@ -32,6 +32,9 @@ version = 1
 
 depends = ['apps']
 
+managed_packages = ['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
+                    'php-google-api-php-client']
+
 title = _('File Hosting (ownCloud)')
 
 description = [
@@ -60,7 +63,7 @@ def init():
         return
 
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index', 700)
+    menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index')
 
     global service
     service = service_module.Service(
@@ -70,8 +73,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
-                    'php-google-api-php-client'])
+    helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'owncloud-setup', ['enable'])
     helper.call('post', service.notify_enabled, None, True)
 
@@ -102,7 +104,7 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/owncloud', extra_options=['--no-check-certificate']))
+        'https://{host}/owncloud', check_certificate=False))
 
     return results
 

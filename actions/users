@@ -52,11 +52,11 @@ def subcommand_pre_install(_):
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-uris string "ldapi:///"',
+        input=b'nslcd nslcd/ldap-uris string ldapi:///',
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-base string "dc=thisbox"',
+        input=b'nslcd nslcd/ldap-base string dc=thisbox',
         check=True)
     subprocess.run(
         ['debconf-set-selections'],
@@ -75,8 +75,6 @@ def subcommand_pre_install(_):
 
 def subcommand_setup(_):
     """Setup LDAP."""
-    configure_access_conf()
-
     # Update pam configs for access and mkhomedir.
     subprocess.run(['pam-auth-update', '--package'], check=True)
 
@@ -151,19 +149,6 @@ changetype: modify
 replace: olcRootDN
 olcRootDN: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 ''')
-
-
-def configure_access_conf():
-    """Restrict console login to users in admin or sudo group."""
-    with open(ACCESS_CONF, 'r') as conffile:
-        lines = conffile.readlines()
-
-    for line in lines:
-        if '-:ALL EXCEPT root fbx (admin) (sudo):ALL' in line:
-            return
-
-    with open(ACCESS_CONF, 'a') as conffile:
-        conffile.write('-:ALL EXCEPT root fbx (admin) (sudo):ALL\n')
 
 
 def configure_ldapscripts():

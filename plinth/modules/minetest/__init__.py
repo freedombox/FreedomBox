@@ -36,6 +36,8 @@ service = None
 
 managed_services = ['minetest-server']
 
+managed_packages = ['minetest-server']
+
 title = _('Block Sandbox (Minetest)')
 
 description = [
@@ -47,19 +49,21 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+
 def init():
     """Initialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index', 325)
+    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
 
     global service
     service = service_module.Service(
-        managed_services[0], title, is_external=True)
+        managed_services[0], title, ports=['minetest-plinth'],
+        is_external=True)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_services)
+    helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
 
 
