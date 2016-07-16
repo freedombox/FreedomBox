@@ -7,6 +7,7 @@
     $ sudo apt-get install \
     augeas-tools \
     dblatex \
+    docbook-utils \
     gettext \
     gir1.2-glib-2.0 \
     gir1.2-networkmanager-1.0 \
@@ -30,8 +31,7 @@
     python3-requests \
     python3-setuptools \
     python3-yaml \
-    xmlto \
-    docbook-utils
+    xmlto
 
 2. Install Plinth:
 
@@ -48,13 +48,24 @@
 
     Plinth UI should be accessible at http://localhost:8000
 
-Note:- 
-Django 1.9 is required to run plinth
-You can check the version by running django-admin --version in terminal
-If apt-get provided django<=1.9 then follow the below steps
-i) Uninstall Older django versions
-	sudo apt-get remove python3-django python3-django-stronghold python3-bootstrap 
-ii) Install Python3 pip
-	sudo apt-get install python3-pip 
-iii) Install django1.9 through pip 
-	sudo pip3 install django django-bootstrap-form django-stronghold  --upgrade
+# Note on Django version:
+
+Django 1.9 is required to run Plinth. You can check the version by running:
+
+    $ django-admin --version
+
+If apt-get provided django<1.9, then follow the steps below:
+
+1. Uninstall older django versions:
+
+    $ sudo apt-get remove python3-django python3-django-stronghold \
+    python3-bootstrap
+
+2. Install Python3 pip:
+
+    $ sudo apt-get install python3-pip
+
+3. Install django1.9 through pip:
+
+    $ sudo pip3 install django django-bootstrap-form django-stronghold \
+    --upgrade
