@@ -53,11 +53,12 @@
                   <td><strong>{{ service.name }}</strong></td>
                   <td>
                     {% if service.is_enabled %}
-                      <span class='label label-success'>
-                        {% trans "Enabled" %}</span>
+                     <i> <span class='label label-primary'>
+                        {% trans "Enabled" %}</span></i>
                     {% else %}
-                      <span class='label label-warning'>
+                  <i>    <span class='label label-default'>
                         {% trans "Disabled" %}</span>
+</i>
                     {% endif %}
                   </td>
                 </tr>
@@ -67,7 +68,7 @@
                     <td class='cell-indented'><em>{{ port }}</em></td>
                     <td>
                       {% if port in internal_enabled_services and port in external_enabled_services %}
-                        <span class='label label-success'>
+                        <span class='label label-primary'>
                           {% trans "Permitted" %}</span>
                       {% elif port in internal_enabled_services %}
                         <span class='label label-warning'>
@@ -76,7 +77,7 @@
                         <span class='label label-warning'>
                           {% trans "Permitted (external only)" %}</span>
                       {% else %}
-                        <span class='label label-danger'>
+                        <span class='label label-warning'>
                           {% trans "Blocked" %}</span>
                       {% endif %}
                     </td>
