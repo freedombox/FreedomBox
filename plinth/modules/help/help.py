@@ -71,3 +71,17 @@ def manual(request):
         request, 'help_manual.html',
         {'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
          'content': content})
+
+
+def status_logs(request):
+    """ Serves the last 100 lines of Status log"""
+    nr_lines = 100
+    logfile = open(cfg.status_log_file, "r")
+    data = logfile.readlines()
+    data = "".join(data[-nr_lines:])
+    context = {
+        "nr_lines": nr_lines,
+        "data": data
+    }
+    logfile.close()
+    return TemplateResponse(request, "statuslog.html", context)
