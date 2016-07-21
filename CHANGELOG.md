@@ -11,6 +11,11 @@ All notable changes to this project will be documented in this file.
 - Added Security module to control login restrictions.
 - Added a page to display recent status log from Plinth. It is
   accessible from the 500 error page.
+- networks: Added ability to configure generic interfaces.
+- networks: Added 'disabled' IPv4 method.
+- networks: Added configuration of wireless BSSID, band, and channel.
+- networks: Added NetworkManager dispatcher script to configure
+  batman-adv mesh networking.
 
 ### Fixed
 - Improved Dynamic DNS status message when no update needed.
