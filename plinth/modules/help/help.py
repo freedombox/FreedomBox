@@ -74,14 +74,14 @@ def manual(request):
 
 
 def status_logs(request):
-    """ Serves the last 100 lines of Status log"""
-    nr_lines = 100
-    logfile = open(cfg.status_log_file, "r")
+    """Serve the last 100 lines of plinth's status log"""
+    num_lines = 100
+    logfile = open(cfg.status_log_file, 'r')
     data = logfile.readlines()
-    data = "".join(data[-nr_lines:])
+    data = ''.join(data[-num_lines:])
     context = {
-        "nr_lines": nr_lines,
-        "data": data
+        'num_lines': num_lines,
+        'data': data
     }
     logfile.close()
-    return TemplateResponse(request, "statuslog.html", context)
+    return TemplateResponse(request, 'statuslog.html', context)

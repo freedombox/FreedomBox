@@ -4,11 +4,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Added Disks module to show free space of mounted partitions and
-allow expanding the root partition.
+  allow expanding the root partition.
 - Added Persian (fa) locale.
 - Added Indonesian (id) locale.
 - Added options to toggle Tor relay and bridge relay modes.
 - Added Security module to control login restrictions.
+- Added a page to display recent status log from Plinth. It is
+  accessible from the 500 error page.
 
 ### Fixed
 - Improved Dynamic DNS status message when no update needed.
