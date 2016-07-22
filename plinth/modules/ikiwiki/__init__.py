@@ -31,9 +31,7 @@ version = 1
 
 depends = ['apps']
 
-managed_packages = ['ikiwiki', 'gcc', 'libc6-dev', 'libtimedate-perl',
-                    'libcgi-formbuilder-perl', 'libcgi-session-perl',
-                    'libxml-writer-perl']
+managed_packages = ['ikiwiki', 'libdigest-sha-perl']
 
 service = None
 
