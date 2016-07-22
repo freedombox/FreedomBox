@@ -45,7 +45,8 @@ class ConnectionForm(forms.Form):
         label=_('Firewall Zone'),
         help_text=_('The firewall zone will control which services are \
 available over this interfaces. Select Internal only for trusted networks.'),
-        choices=[('external', 'External'), ('internal', 'Internal')])
+        choices=[('external', _('External')),
+                 ('internal', _('Internal'))])
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'),
         help_text=format_lazy(
@@ -55,9 +56,10 @@ available over this interfaces. Select Internal only for trusted networks.'),
                 'method will make {box_name} act as a router, configure '
                 'clients on this network and share its Internet connection.'),
             box_name=ugettext_lazy(cfg.box_name)),
-        choices=[('auto', 'Automatic (DHCP)'),
-                 ('shared', 'Shared'),
-                 ('manual', 'Manual')])
+        choices=[('auto', _('Automatic (DHCP)')),
+                 ('shared', _('Shared')),
+                 ('manual', _('Manual')),
+                 ('disabled', _('Disabled'))])
     ipv4_address = forms.CharField(
         label=_('Address'),
         validators=[validators.validate_ipv4_address],
@@ -124,6 +126,21 @@ available over this interfaces. Select Internal only for trusted networks.'),
         return ipv4
 
 
+class GenericForm(ConnectionForm):
+    """Form to create/edit a generic connection."""
+    def __init__(self, *args, **kwargs):
+        """Initialize the form, populate interface choices."""
+        super(GenericForm, self).__init__(*args, **kwargs)
+        choices = self._get_interface_choices(nm.DeviceType.GENERIC)
+        self.fields['interface'].choices = choices
+
+    def get_settings(self):
+        """Return settings dict from cleaned data."""
+        settings = super().get_settings()
+        settings['common']['type'] = 'generic'
+        return settings
+
+
 class EthernetForm(ConnectionForm):
     """Form to create/edit a ethernet connection."""
     def __init__(self, *args, **kwargs):
@@ -171,8 +188,9 @@ class PPPoEForm(EthernetForm):
 
 class WifiForm(ConnectionForm):
     """Form to create/edit a Wi-Fi connection."""
-    field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'auth_mode',
-                   'passphrase', 'ipv4_method', 'ipv4_address', 'ipv4_netmask',
+    field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'band',
+                   'channel', 'bssid', 'auth_mode', 'passphrase',
+                   'ipv4_method', 'ipv4_address', 'ipv4_netmask',
                    'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns']
 
     ssid = forms.CharField(
@@ -180,14 +198,36 @@ class WifiForm(ConnectionForm):
         help_text=_('The visible name of the network.'))
     mode = forms.ChoiceField(
         label=_('Mode'),
-        choices=[('infrastructure', 'Infrastructure'),
-                 ('ap', 'Access Point'),
-                 ('adhoc', 'Ad-hoc')])
+        choices=[('infrastructure', _('Infrastructure')),
+                 ('ap', _('Access Point')),
+                 ('adhoc', _('Ad-hoc'))])
+    band = forms.ChoiceField(
+        label=_('Frequency Band'),
+        choices=[('auto', _('Automatic')),
+                 ('a', _('A (5 GHz)')),
+                 ('bg', _('B/G (2.4 GHz)'))])
+    channel = forms.IntegerField(
+        label=_('Channel'),
+        help_text=_('Optional value. Wireless channel in the selected '
+                    'frequency band to restrict to. Blank or 0 value means '
+                    'automatic selection.'),
+        min_value=0,
+        max_value=255,
+        required=False)
+    bssid = forms.RegexField(
+        label=_('BSSID'),
+        help_text=_('Optional value. Unique identifier for the access point. '
+                    'When connecting to an access point, connect only if the '
+                    'BSSID of the access point matches the one provided. '
+                    'Example: 00:11:22:aa:bb:cc.'),
+        regex=r'^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$',
+        required=False)
     auth_mode = forms.ChoiceField(
         label=_('Authentication Mode'),
         help_text=_('Select WPA if the wireless network is secured and \
 requires clients to have the password to connect.'),
-        choices=[('wpa', 'WPA'), ('open', 'Open')])
+        choices=[('wpa', _('WPA')),
+                 ('open', _('Open'))])
     passphrase = forms.CharField(
         label=_('Passphrase'),
         validators=[validators.MinLengthValidator(8)],
@@ -206,6 +246,9 @@ requires clients to have the password to connect.'),
         settings['wireless'] = {
             'ssid': self.cleaned_data['ssid'],
             'mode': self.cleaned_data['mode'],
+            'band': self.cleaned_data['band'],
+            'channel': self.cleaned_data['channel'],
+            'bssid': self.cleaned_data['bssid'],
             'auth_mode': self.cleaned_data['auth_mode'],
             'passphrase': self.cleaned_data['passphrase'],
         }

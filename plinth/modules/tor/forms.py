@@ -32,18 +32,27 @@ class TorForm(forms.Form):  # pylint: disable=W0232
         label=_('Enable Tor'),
         required=False)
     relay_enabled = forms.BooleanField(
+        label=_('Enable Tor relay'),
+        required=False,
+        help_text=format_lazy(_(
+            'When enabled, your {box_name} will run a Tor relay and donate '
+            'bandwidth to the Tor network. Do this if you have more than '
+            '2 megabits/s of upload and download bandwidth.'),
+                              box_name=_(cfg.box_name)))
+    bridge_relay_enabled = forms.BooleanField(
         label=_('Enable Tor bridge relay'),
         required=False,
         help_text=format_lazy(_(
-            'When enabled, your {box_name} will run a Tor bridge relay with '
-            'obfsproxy, so it can help circumvent censorship.'),
+            'When enabled, relay information is published in the Tor bridge '
+            'database instead of public Tor relay database making it harder '
+            'to censor this node. This helps others circumvent censorship.'),
                               box_name=_(cfg.box_name)))
     hs_enabled = forms.BooleanField(
         label=_('Enable Tor Hidden Service'),
         required=False,
         help_text=format_lazy(_(
             'A hidden service will allow {box_name} to provide selected '
-            'services (such as ownCloud or chat) without revealing its '
+            'services (such as wiki or chat) without revealing its '
             'location. Do not use this for strong anonymity yet.'),
                               box_name=_(cfg.box_name)))
     apt_transport_tor_enabled = forms.BooleanField(

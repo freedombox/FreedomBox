@@ -94,34 +94,34 @@
     </form>
 
     {% if status.relay_enabled %}
-    <h3>{% trans "Bridge Relay" %}</h3>
-    <p>
-      {% blocktrans trimmed %}
-        If your {{ box_name }} is behind a router or firewall, you should
-        make sure the following ports are open, and port-forwarded, if
-        necessary:
-      {% endblocktrans %}
-    </p>
-    <div class="row">
-      <div class="col-sm-3">
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th>{% trans "Service" %}</th>
-              <th>{% trans "Port" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for name, port in status.ports.items %}
+      <h3>{% trans "Relay" %}</h3>
+      <p>
+        {% blocktrans trimmed %}
+          If your {{ box_name }} is behind a router or firewall, you should
+          make sure the following ports are open, and port-forwarded, if
+          necessary:
+        {% endblocktrans %}
+      </p>
+      <div class="row">
+        <div class="col-sm-3">
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
               <tr>
-                <td>{{ name }}</td>
-                <td>{{ port }}</td>
+                <th>{% trans "Service" %}</th>
+                <th>{% trans "Port" %}</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for name, port in status.ports.items %}
+                <tr>
+                  <td>{{ name }}</td>
+                  <td>{{ port }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
     {% endif %}
 
     <h3>{% trans "SOCKS" %}</h3>
@@ -134,5 +134,23 @@
     </p>
 
   {% endif %}
+
+{% endblock %}
+
+
+{% block page_js %}
+
+  <script type="text/javascript">
+    (function($) {
+        $('#id_tor-relay_enabled').change(function() {
+            var bridge = $('#id_tor-bridge_relay_enabled');
+            var disable = ! $('#id_tor-relay_enabled').prop('checked');
+            bridge.prop('disabled', disable);
+            if (disable) {
+                $('#id_tor-bridge_relay_enabled').prop('checked', false);
+            }
+        }).change();
+    })(jQuery);
+  </script>
 
 {% endblock %}

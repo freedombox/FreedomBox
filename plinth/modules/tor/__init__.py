@@ -77,7 +77,7 @@ def init():
     hostname = status['hs_hostname']
     hs_virtports = [port['virtport'] for port in status['hs_ports']]
 
-    if utils.is_enabled() and utils.is_running() and \
+    if status['enabled'] and status['is_running'] and \
        status['hs_enabled'] and status['hs_hostname']:
         hs_services = []
         for service_type in SERVICES:
@@ -118,7 +118,6 @@ def update_hidden_service_domain(status=None):
             sender='tor', domain_type='hiddenservice',
             name=status['hs_hostname'], description=_('Tor Hidden Service'),
             services=status['hs_services'])
-
 
 
 def diagnose():

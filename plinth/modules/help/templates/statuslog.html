@@ -1,0 +1,46 @@
+{% extends 'help_base.html' %}
+{% comment %}
+    #
+    # This file is part of Plinth.
+    #
+    # This program is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU Affero General Public License as
+    # published by the Free Software Foundation, either version 3 of the
+    # License, or (at your option) any later version.
+    #
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU Affero General Public License for more details.
+    #
+    # You should have received a copy of the GNU Affero General Public License
+    # along with this program.  If not,see <http://www.gnu.org/licenses/>.
+    #
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+<p>
+  {% blocktrans trimmed %}
+    This is the last {{ num_lines }} lines of the status log for this web
+    interface. If you want to report a bug, please use the
+    <a href="https://github.com/freedombox/Plinth/issues">bugtracker</a> and
+    attach this status log to the bug report.
+  {% endblocktrans %}
+</p>
+
+<p>
+  <b>
+  {% blocktrans trimmed %}
+    Caution: Please remove any passwords or other personal information from the
+    log, before submitting the bug report.
+  {% endblocktrans %}
+  </b>
+</p>
+
+<p>
+  <pre>{{ data }}</pre>
+</p>
+{% endblock %}

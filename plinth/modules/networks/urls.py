@@ -34,6 +34,7 @@ urlpatterns = [
         name='deactivate'),
     url(r'^sys/networks/scan/$', views.scan, name='scan'),
     url(r'^sys/networks/add/$', views.add, name='add'),
+    url(r'^sys/networks/add/generic/$', views.add_generic, name='add_generic'),
     url(r'^sys/networks/add/ethernet/$', views.add_ethernet,
         name='add_ethernet'),
     url(r'^sys/networks/add/pppoe/$', views.add_pppoe, name='add_pppoe'),
