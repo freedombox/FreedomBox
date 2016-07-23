@@ -31,7 +31,7 @@ version = 1
 
 depends = ['apps']
 
-managed_packages = ['ikiwiki', 'libdigest-sha-perl']
+managed_packages = ['ikiwiki', 'libdigest-sha-perl','libxml-writer-perl','xapian-omega','libsearch-xapian-perl','libimage-magick-perl']
 
 service = None
 
