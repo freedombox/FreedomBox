@@ -47,12 +47,16 @@
 {% block configuration %}
 
   
-
-  {% if config_running %}
-  <h3>{% trans "Status" %}</h3>
-     <div class="loader"></div>
-  {% else %}
 <h3>{% trans "Status" %}</h3>
+  {% if config_running %}
+
+    <p class="running-status-parent">
+      <span class="running-status active"></span>
+      {% trans "Tor configuration is being updated" %}
+    </p>  
+    <div class="loader"></div>
+  {% else %}
+
 
     <p class="running-status-parent">
       {% if status.is_running %}
