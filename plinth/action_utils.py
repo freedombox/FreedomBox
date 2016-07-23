@@ -20,6 +20,7 @@ Python action utility functions.
 """
 
 from django.utils.translation import ugettext as _
+from distutils import spawn
 import os
 import logging
 import psutil
@@ -121,13 +122,16 @@ def service_reload(service_name):
 def webserver_is_enabled(name, kind='config'):
     """Return whether a config/module/site is enabled in Apache."""
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
-    try:
-        # Don't print anything on the terminal
-        subprocess.check_output(['a2query', option_map[kind], name],
-                                stderr=subprocess.STDOUT)
-        return True
-    except subprocess.CalledProcessError:
-        return False
+    if spawn.find_executable('a2query'):
+        try:
+            # Don't print anything on the terminal
+            subprocess.check_output(['a2query', option_map[kind], name],
+                                    stderr=subprocess.STDOUT)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+    else:
+        print "web configuration is not enabled,please reinstall apache2 web server"
 
 
 def webserver_enable(name, kind='config', apply_changes=True):
