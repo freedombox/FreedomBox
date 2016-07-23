@@ -131,7 +131,7 @@ def webserver_is_enabled(name, kind='config'):
         except subprocess.CalledProcessError:
             return False
     else:
-        print "web configuration is not enabled,please reinstall apache2 web server"
+        print("web configuration is not enabled,please reinstall apache2 web server")
 
 
 def webserver_enable(name, kind='config', apply_changes=True):
