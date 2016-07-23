@@ -21,6 +21,10 @@ All notable changes to this project will be documented in this file.
 - Improved Dynamic DNS status message when no update needed.
 - Improved Ikiwiki description.
 
+### Changed
+- Added suggested packages for ikiwiki. Removed recommends since they
+  are installed automatically.
+
 ## [0.9.4] - 2016-06-14
 ### Fixed
 - Fixed quoted values in nslcd config.
