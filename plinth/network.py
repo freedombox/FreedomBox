@@ -204,19 +204,16 @@ def get_first_ip_address_from_connection(connection):
     the bug if fixed.
     https://bugzilla.gnome.org/show_bug.cgi?id=756380.
     """
-    command = ['nmcli', '--terse', '--mode', 'tabular', '--fields',
-               'ipv4.addresses', 'connection', 'show', connection.get_uuid()]
-
-    output = subprocess.check_output(command).decode()
-    first = output.strip().split(', ')[0]
-    if not first:
-        return None, None
-
-    ip_address, prefix = first.split('/')
-
-    netmask = nm.utils_ip4_prefix_to_netmask(int(prefix))
-    return ip_address, ipv4_int_to_string(netmask)
-
+    devicename=connection.get_interface_name()
+    ip="0.0.0.0"
+    device=nm.Client.new(None).get_device_by_iface(devicename)
+    ip4_config=device.get_ip4_config()
+    if ip4_config:
+        addresses=ip4_config.get_addresses()
+        if addresses:
+            ip_address=addresses.__getitem__(0).get_address()
+            netmask=addresses.__getitem__(0).get_prefix()
+    return ip_address,ipv4_int_to_string(netmask)
 
 def get_connection_list():
     """Get a list of active and available connections."""
