@@ -18,9 +18,13 @@
 """
 Plinth module for radicale.
 """
+import augeas
 
+from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.forms import ServiceForm
+from django import forms
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
@@ -51,6 +55,23 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
+CONFIG_FILE = '/etc/radicale/config'
+DEFAULT_FILE = '/etc/default/radicale'
+
+
+def load_augeas():
+    """Prepares the augeas"""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                              augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+
+    # INI file lens
+    aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
+    aug.set('/augeas/load/Puppet/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
 
 def init():
     """Initialize the radicale module."""
@@ -63,10 +84,51 @@ def init():
         enable=enable, disable=disable)
 
 
+def get_rights_value():
+    """Returns the current Rights value"""
+    aug = load_augeas()
+    value = aug.get('/files' + CONFIG_FILE + '/rights/type')
+    aug.close()
+    return value
+
+
+def set_rights_value(rights_value):
+    """Changes the rights in the config file"""
+    aug = load_augeas()
+    aug.set('/files' + CONFIG_FILE + '/rights/type', rights_value)
+    aug.save()
+    aug.close()
+
+
+class RadicaleForm(ServiceForm):
+    """Specialized configuration form for radicale service."""
+    CHOICES = [('authenticated', 'Authenticated'),
+               ('owner_only', 'Owner Only'),
+               ('owner_write', 'Owner Write'), ]
+    rights = forms.ChoiceField(choices=CHOICES, required=True,
+                               widget=forms.RadioSelect())
+
+
 class RadicaleServiceView(ServiceView):
+    """A specialized view for configuring radicale service."""
     service_id = managed_services[0]
+    form_class = RadicaleForm
     diagnostics_module_name = 'radicale'
     description = description
+
+    def get_initial(self):
+        """Return the values to fill in the form"""
+        initial = super().get_initial()
+        initial['rights'] = get_rights_value()
+        return initial
+
+    def form_valid(self, form):
+        """Change the access control of Radicale service."""
+        data = form.cleaned_data
+        if get_rights_value() != data['rights']:
+            set_rights_value(data['rights'])
+            messages.success(self.request, _('Status Changed'))
+        return super().form_valid(form)
 
 
 def setup(helper, old_version=None):
