@@ -21,7 +21,7 @@ URLs for the radicale module.
 
 from django.conf.urls import url
 
-from plinth.modules.radicale import RadicaleServiceView
+from .views import RadicaleServiceView
 
 
 urlpatterns = [
