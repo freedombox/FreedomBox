@@ -20,13 +20,10 @@ Plinth module for radicale.
 """
 
 from django.utils.translation import ugettext_lazy as _
-
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
-from plinth.utils import format_lazy
-from plinth.views import ServiceView
 
 
 version = 1
@@ -41,16 +38,6 @@ managed_packages = ['radicale']
 
 title = _('Calendar and Addressbook (Radicale)')
 
-description = [
-    format_lazy(
-        _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
-          'and sharing of scheduling and contact data. To use Radicale, a '
-          '<a href="http://radicale.org/user_documentation/'
-          '#idcaldav-and-carddav-clients"> supported client application</a> '
-          'is needed. Radicale can be accessed by any user with a {box_name} '
-          'login.'), box_name=_(cfg.box_name)),
-]
-
 
 def init():
     """Initialize the radicale module."""
@@ -61,12 +48,6 @@ def init():
     service = service_module.Service(
         managed_services[0], title, ports=['http', 'https'], is_external=True,
         enable=enable, disable=disable)
-
-
-class RadicaleServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = 'radicale'
-    description = description
 
 
 def setup(helper, old_version=None):
