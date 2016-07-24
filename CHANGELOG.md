@@ -16,10 +16,13 @@ All notable changes to this project will be documented in this file.
 - networks: Added configuration of wireless BSSID, band, and channel.
 - networks: Added NetworkManager dispatcher script to configure
   batman-adv mesh networking.
+- radicale: Added access rights control.
 
 ### Fixed
 - Improved Dynamic DNS status message when no update needed.
 - Improved Ikiwiki description.
+- Added check if a2query is installed before using it, since apache2
+  is not a dependency for Plinth.
 
 ### Changed
 - Added suggested packages for ikiwiki. Removed recommends since they

@@ -19,12 +19,14 @@
 Plinth module for radicale.
 """
 
+import augeas
 from django.utils.translation import ugettext_lazy as _
+
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
 from plinth import service as service_module
-
+from plinth.utils import format_lazy
 
 version = 1
 
@@ -37,6 +39,18 @@ managed_services = ['radicale']
 managed_packages = ['radicale']
 
 title = _('Calendar and Addressbook (Radicale)')
+
+description = [
+    format_lazy(
+        _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
+          'and sharing of scheduling and contact data. To use Radicale, a '
+          '<a href="http://radicale.org/user_documentation/'
+          '#idcaldav-and-carddav-clients"> supported client application</a> '
+          'is needed. Radicale can be accessed by any user with a {box_name} '
+          'login.'), box_name=_(cfg.box_name)),
+]
+
+CONFIG_FILE = '/etc/radicale/config'
 
 
 def init():
@@ -65,6 +79,26 @@ def enable():
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
+
+
+def load_augeas():
+    """Prepares the augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+
+    # INI file lens
+    aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
+    aug.set('/augeas/load/Puppet/incl[last() + 1]', CONFIG_FILE)
+
+    aug.load()
+    return aug
+
+
+def get_rights_value():
+    """Returns the current Rights value."""
+    aug = load_augeas()
+    value = aug.get('/files' + CONFIG_FILE + '/rights/type')
+    return value
 
 
 def diagnose():
