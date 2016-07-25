@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-01 07:45+0530\n"
-"PO-Revision-Date: 2016-03-18 22:27+0000\n"
+"PO-Revision-Date: 2016-07-25 19:25+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@openmailbox.org>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
-"plinth/es/>\n"
+"Language-Team: Spanish "
+"<https://hosted.weblate.org/projects/freedombox/plinth/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: plinth/action_utils.py:237
 #, python-brace-format
@@ -343,11 +343,11 @@ msgstr "Resultado"
 
 #: plinth/modules/disks/__init__.py:35 plinth/modules/disks/views.py:39
 msgid "Disks"
-msgstr ""
+msgstr "Discos"
 
 #: plinth/modules/disks/templates/disks.html:35
 msgid "The following disks are in use:"
-msgstr ""
+msgstr "Se están usando los siguientes discos:"
 
 #: plinth/modules/disks/templates/disks.html:41
 #: plinth/modules/networks/templates/connection_show.html:84
@@ -356,7 +356,7 @@ msgstr "Dispositivo"
 
 #: plinth/modules/disks/templates/disks.html:42
 msgid "Mount Point"
-msgstr ""
+msgstr "Punto de montaje"
 
 #: plinth/modules/disks/templates/disks.html:43
 #: plinth/modules/ikiwiki/forms.py:29
@@ -366,7 +366,7 @@ msgstr "Tipo"
 
 #: plinth/modules/disks/templates/disks.html:44
 msgid "Used"
-msgstr ""
+msgstr "Usado"
 
 #: plinth/modules/disks/templates/disks.html:80
 #, python-format
@@ -375,12 +375,15 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Hay %(expandable_root_size)s de espacio disponible a continuación de la "
+"partición raíz. Se puede ampliar la partición raíz para usarlo y disponer de "
+"espacio libre adicional para almacenar sus archivos."
 
 #: plinth/modules/disks/templates/disks.html:89
 #: plinth/modules/disks/templates/disks_expand.html:45
 #: plinth/modules/disks/views.py:56
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Ampliar partición raíz"
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -389,43 +392,45 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Por favor, haga una copia de seguridad antes de continuar. Después de esta "
+"operación su partición raíz dispondrá de %(expandable_root_size)s espacio "
+"libre adicional."
 
 #: plinth/modules/disks/views.py:65
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error setting time zone: {exception}"
 msgid "Error expanding partition: {exception}"
-msgstr "Error al definir zona horaria: {exception}"
+msgstr "Error al ampliar partición: {exception}"
 
 #: plinth/modules/disks/views.py:68
-#, fuzzy
 #| msgid "Password changed successfully."
 msgid "Partition expanded successfully."
-msgstr "Clave de acceso cambiada con éxito."
+msgstr "Partición ampliada con éxito."
 
 #: plinth/modules/disks/views.py:77
 #, python-brace-format
 msgid "{disk_size} bytes"
-msgstr ""
+msgstr "{disk_size} bytes"
 
 #: plinth/modules/disks/views.py:81
 #, python-brace-format
 msgid "{disk_size} KiB"
-msgstr ""
+msgstr "{disk_size} KiB"
 
 #: plinth/modules/disks/views.py:85
 #, python-brace-format
 msgid "{disk_size} MiB"
-msgstr ""
+msgstr "{disk_size} MiB"
 
 #: plinth/modules/disks/views.py:89
 #, python-brace-format
 msgid "{disk_size} GiB"
-msgstr ""
+msgstr "{disk_size} GiB"
 
 #: plinth/modules/disks/views.py:92
 #, python-brace-format
 msgid "{disk_size} TiB"
-msgstr ""
+msgstr "{disk_size} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:33
 msgid "Dynamic DNS Client"
@@ -1077,6 +1082,10 @@ msgid ""
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
 "wikis will be available from <a href=\"/ikiwiki\">/ikiwiki</a>."
 msgstr ""
+"ikiwiki es una sencilla aplicación de wiki y blog. Soporta algunos lenguajes "
+"de marcado,  Markdown incluido, y funcionalidades comunes de los blogs como "
+"comentarios o fuentes RSS. Cuando está activo los blogs y wikis están "
+"accesibles en <a href=\"/ikiwiki\">/ikiwiki</a>."
 
 #: plinth/modules/ikiwiki/forms.py:32
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -1549,6 +1558,10 @@ msgid ""
 "network making it a client. \"Shared\" method will make {box_name} act as a "
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
+"El método \"automático\" hará que {box_name} solicite su configuración a la "
+"red y actúe como cualquier otro cliente. El método \"compartido\" hará que "
+"{box_name} se comporte como un router, configure los clientes de esta red y "
+"comparta su conexión a Internet."
 
 #: plinth/modules/networks/forms.py:62
 msgid "Address"
@@ -2125,6 +2138,9 @@ msgid ""
 "Debian.  Please migrate your data to an alternative solution or manage "
 "ownCloud manually from the command line."
 msgstr ""
+"ownCloud ha sido retirado de Debian y por tanto ya no es soportado por "
+"%(box_name)s. Por favor, migre sus datos a una opción alternativa o gestione "
+"ownCloud manualmente en el terminal de consola."
 
 #: plinth/modules/owncloud/templates/owncloud.html:47
 msgid "Apply changes"
@@ -2982,7 +2998,6 @@ msgid "Automatic upgrades disabled"
 msgstr "Actualizaciones automáticas desactivadas"
 
 #: plinth/modules/upgrades/views.py:85
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "Settings unchanged"
 msgstr "Configuración sin cambio"
@@ -3195,32 +3210,29 @@ msgid "PPPoE"
 msgstr "PPPoE"
 
 #: plinth/package.py:105
-#, fuzzy
 #| msgid "Performing pre-install operation"
 msgid "Error during installation"
-msgstr "Realizando operaciones previas a la instalación"
+msgstr "Error durante la instalación"
 
 #: plinth/package.py:126
-#, fuzzy
 #| msgid "Installation"
 msgid "installing"
-msgstr "Instalación"
+msgstr "instalando"
 
 #: plinth/package.py:127
 msgid "downloading"
-msgstr ""
+msgstr "descargando"
 
 #: plinth/package.py:128
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
-msgstr "Configuración sin cambio"
+msgstr "cambio de medio"
 
 #: plinth/package.py:129
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
-msgstr "Configuración"
+msgstr "archivo de configuración: {file}"
 
 #: plinth/service.py:119
 msgid "Web Server over Secure Socket Layer"
@@ -3296,16 +3308,14 @@ msgid "Login"
 msgstr "Inicio de sesión"
 
 #: plinth/templates/service.html:43
-#, fuzzy
 #| msgid "Tor is running"
 msgid "is running"
-msgstr "Tor se está ejecutando"
+msgstr "se está ejecutando"
 
 #: plinth/templates/service.html:46
-#, fuzzy
 #| msgid "Tor is not running"
 msgid "is not running"
-msgstr "Tor no se está ejecutando"
+msgstr "no se está ejecutando"
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
