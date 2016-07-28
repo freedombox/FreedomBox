@@ -150,7 +150,7 @@ class ConfigureForm(forms.Form):
                                 required=False)
 
     dynamicdns_ipurl = TrimmedCharField(
-        label=ugettext_lazy('URL to lookup public IP'),
+        label=ugettext_lazy('URL to look up public IP'),
         required=False,
         help_text=help_ip_url,
         validators=[
