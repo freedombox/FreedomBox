@@ -26,37 +26,39 @@
   {% if config_running %}
     <meta http-equiv="refresh" content="3" />
   {% endif %}
-<style type="text/css">
-  .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
+  <style type="text/css">
+    .loader {
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
 {% endblock %}
 
 
 {% block configuration %}
 
-  
-<h3>{% trans "Status" %}</h3>
+  <h3>{% trans "Status" %}</h3>
+
   {% if config_running %}
 
     <p class="running-status-parent">
       <span class="running-status active"></span>
       {% trans "Tor configuration is being updated" %}
-    </p>  
+    </p>
     <div class="loader"></div>
-  {% else %}
 
+  {% else %}
 
     <p class="running-status-parent">
       {% if status.is_running %}
