@@ -53,7 +53,7 @@ def parse_arguments():
         '--debug', action='store_true', default=cfg.debug,
         help='enable debugging and run server *insecurely*')
     parser.add_argument(
-        '--setup', action='store_true', default=False,
+        '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
     parser.add_argument(
         '--diagnose', action='store_true', default=False,
@@ -248,11 +248,14 @@ def configure_django():
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
-def run_setup_and_exit():
+def run_setup_and_exit(module_list):
     """Run setup on all essential modules and exit."""
     error_code = 0
     try:
-        setup.setup_all_modules(essential=True)
+        if len(module_list) == 0:
+            setup.setup_all_modules(essential=True)
+        else:
+            setup.setup_selected(module_list)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         error_code = 1
@@ -297,8 +300,8 @@ def main():
 
     module_loader.load_modules()
 
-    if arguments.setup:
-        run_setup_and_exit()
+    if arguments.setup is not None:
+        run_setup_and_exit(arguments.setup)
 
     if arguments.diagnose:
         run_diagnostics_and_exit()

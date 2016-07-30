@@ -158,3 +158,12 @@ def setup_all_modules(essential=False):
             continue
 
         module.setup_helper.run()
+
+def setup_selected(module_list):
+    """Runs setup for selected modules and exit."""
+    logger.info('Running setup for Given modules')
+    for module_name, module in plinth.module_loader.loaded_modules.items():
+        if module_name not in module_list:
+            continue
+
+        module.setup_helper.run()
