@@ -150,20 +150,13 @@ def init(module_name, module):
         module.setup_helper = Helper(module_name, module)
 
 
-def setup_all_modules(essential=False):
+def setup_modules(module_list=None,essential=False):
     """Run setup on all essential modules and exit."""
-    logger.info('Running setup for all modules, essential - %s', essential)
+    logger.info('Running setup for modules, essential - %s, selected modules - %s', essential,module_list)
     for module_name, module in plinth.module_loader.loaded_modules.items():
         if essential and not getattr(module, 'is_essential', False):
             continue
-
-        module.setup_helper.run()
-
-def setup_selected(module_list):
-    """Runs setup for selected modules and exit."""
-    logger.info('Running setup for Given modules')
-    for module_name, module in plinth.module_loader.loaded_modules.items():
-        if module_name not in module_list:
+        if len(module_list)!=0 and module_name not in module_list:
             continue
 
         module.setup_helper.run()

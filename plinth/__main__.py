@@ -253,9 +253,9 @@ def run_setup_and_exit(module_list):
     error_code = 0
     try:
         if len(module_list) == 0:
-            setup.setup_all_modules(essential=True)
+            setup.setup_modules(essential=True)
         else:
-            setup.setup_selected(module_list)
+            setup.setup_modules(module_list)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         error_code = 1
