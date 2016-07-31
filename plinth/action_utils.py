@@ -26,6 +26,7 @@ import logging
 import psutil
 import socket
 import subprocess
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -417,3 +418,31 @@ def get_ip_addresses():
 def get_hostname():
     """Return the current hostname."""
     return subprocess.check_output(['hostname']).decode().strip()
+
+
+def dpkg_reconfigure(package, config):
+    """Reconfigure package using debconf database override."""
+    override_template = '''
+Name: {package}/{key}
+Template: {package}/{key}
+Value: {value}
+Owners: {package}
+'''
+    override_data = ''
+    for key, value in config.items():
+        override_data += override_template.format(
+            package=package, key=key, value=value)
+
+    with tempfile.NamedTemporaryFile(mode='w', delete=False) as override_file:
+        override_file.write(override_data)
+
+    env = os.environ.copy()
+    env['DEBCONF_DB_OVERRIDE'] = 'File{' + override_file.name + \
+                                 ' readonly:true}'
+    env['DEBIAN_FRONTEND'] = 'noninteractive'
+    subprocess.run(['dpkg-reconfigure', package], env=env)
+
+    try:
+        os.remove(override_file)
+    except OSError:
+        pass

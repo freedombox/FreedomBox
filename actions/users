@@ -22,9 +22,7 @@ Configuration helper for the LDAP user directory
 """
 
 import argparse
-import os
 import subprocess
-import tempfile
 
 import augeas
 from plinth import action_utils
@@ -55,12 +53,13 @@ def subcommand_setup(_):
 
 def configure_slapd():
     """Configure LDAP authentication and basic structure."""
-    _reconfigure('slapd', {'domain': 'thisbox'})
-    _reconfigure('nslcd', {'ldap-uris': 'ldapi:///',
-                           'ldap-base': 'dc=thisbox',
-                           'ldap-auth-type': 'SASL',
-                           'ldap-sasl-mech': 'EXTERNAL'})
-    _reconfigure('libnss-ldapd', {'nsswitch': 'group, passwd, shadow'})
+    action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
+    action_utils.dpkg_reconfigure('nslcd', {'ldap-uris': 'ldapi:///',
+                                            'ldap-base': 'dc=thisbox',
+                                            'ldap-auth-type': 'SASL',
+                                            'ldap-sasl-mech': 'EXTERNAL'})
+    action_utils.dpkg_reconfigure('libnss-ldapd',
+                                  {'nsswitch': 'group, passwd, shadow'})
 
     was_running = action_utils.service_is_running('slapd')
     if not was_running:
@@ -145,29 +144,6 @@ def configure_ldapscripts():
     aug.set('/files' + LDAPSCRIPTS_CONF + '/GSUFFIX', '"ou=Groups"')
     aug.set('/files' + LDAPSCRIPTS_CONF + '/PASSWORDGEN', '"true"')
     aug.save()
-
-
-def _reconfigure(package, config):
-    """Reconfigure package using debconf database override."""
-    override_template = '''
-Name: {package}/{key}
-Template: {package}/{key}
-Value: {value}
-Owners: {package}
-'''
-    override_data = ''
-    for key, value in config.items():
-        override_data += override_template.format(
-            package=package, key=key, value=value)
-
-    with tempfile.NamedTemporaryFile(mode='w', delete=False) as override_file:
-        override_file.write(override_data)
-
-    env = os.environ.copy()
-    env['DEBCONF_DB_OVERRIDE'] = 'File{' + override_file.name + \
-                                 ' readonly:true}'
-    env['DEBIAN_FRONTEND'] = 'noninteractive'
-    subprocess.run(['dpkg-reconfigure', package], env=env)
 
 
 def main():
