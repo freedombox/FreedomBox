@@ -443,6 +443,6 @@ Owners: {package}
     subprocess.run(['dpkg-reconfigure', package], env=env)
 
     try:
-        os.remove(override_file)
+        os.remove(override_file.name)
     except OSError:
         pass
