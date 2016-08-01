@@ -299,8 +299,7 @@ def main():
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.load_modules()
-
-    if arguments.setup is not None:
+    if arguments.setup:
         run_setup_and_exit(arguments.setup)
 
     if arguments.diagnose:
