@@ -1,6 +1,33 @@
 # Hacking
 
-## Installing for Development
+## Setting Up Development Environment Using Vagrant
+
+Vagrant is a free software command line utility for managing the life
+cycle of virtual machines.  FreedomBox project provides ready made
+virtual machines for use with Vagrant.  These images make setting up
+of environment for Plinth development rather simple.
+
+1. Install Vagrant and VirtualBox:
+
+   $ sudo apt install virtualbox vagrant
+
+2. Download, setup, run and configure virtual machine for Plinth
+   development using Vagrant:
+
+   $ vagrant up
+
+3. To access Plinth, visit https://localhost:4430/plinth/
+
+4. Make changes to the source code on your host machine as usual.
+   Then to make the changes reflect on the virtual machine, run:
+
+   $ vagrant provision
+
+## Manually Setting Up for Development
+
+It is recommended that you use Vagrant to setup your development
+environment.  However, for some reason, you wish setup manually, the
+following tips will help:
 
 1. Instead of running "setup.py install" after every source modification, run
    the following command:
@@ -34,6 +61,19 @@
        You need to add 'actions' directory to be allowed for 'sudo' commands.
        See data/etc/sudoers.d/plinth for a hint.
 
+### Testing Inside a Virtual Machine
+
+1. Checkout source on the host.
+
+2. Share the source folder and mount it on virtual machine.  This could be done
+   over NFS, SSH-fs or 'Shared Folders' feature on VirtualBox.
+
+3. Run 'setup.py develop' or 'setup.py install' as described above on guest
+   machine.
+
+4. Access the guest machine's Plinth web UI from host after setting bridging or
+   NATing for guest virtual machine.
+
 ## Running Tests
 
 1. Run tests:
@@ -57,19 +97,6 @@
     displays the contents of that file, with color-coding in the left margin to
     indicate which statements or branches were executed via the tests (green)
     and which statements or branches were not executed (red).
-
-## Testing Inside a Virtual Machine
-
-1. Checkout source on the host.
-
-2. Share the source folder and mount it on virtual machine.  This could be done
-   over NFS, SSH-fs or 'Shared Folders' feature on VirtualBox.
-
-3. Run 'setup.py develop' or 'setup.py install' as described above on guest
-   machine.
-
-4. Access the guest machine's Plinth web UI from host after setting bridging or
-   NATing for guest virtual machine.
 
 ## Building the Documentation Separately
 
