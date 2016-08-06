@@ -197,24 +197,6 @@ def _get_wifi_channel_from_frequency(frequency):
         return str(frequency / 1000) + 'GHz'
 
 
-def get_first_ip_address_from_connection(connection):
-    """Return the first IP address of a connection setting.
-
-    XXX: Work around a bug in NetworkManager/Python GI.  Remove after
-    the bug if fixed.
-    https://bugzilla.gnome.org/show_bug.cgi?id=756380.
-    """
-    devicename=connection.get_interface_name()
-    ip="0.0.0.0"
-    device=nm.Client.new(None).get_device_by_iface(devicename)
-    ip4_config=device.get_ip4_config()
-    if ip4_config:
-        addresses=ip4_config.get_addresses()
-        if addresses:
-            ip_address=addresses.__getitem__(0).get_address()
-            netmask=addresses.__getitem__(0).get_prefix()
-    return ip_address,ipv4_int_to_string(netmask)
-
 def get_connection_list():
     """Get a list of active and available connections."""
     active_uuids = []

@@ -142,19 +142,22 @@ def edit(request, uuid):
         if settings_connection.get_connection_type() != 'pppoe':
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
-            address, netmask = network.get_first_ip_address_from_connection(
-                connection)
+            if settings_ipv4.get_num_addresses():
+                address = settings_ipv4.get_address(0)
+                form_data['ipv4_address'] = address.get_address()
+                prefix = address.get_prefix()
+                netmask = network.nm.utils_ip4_prefix_to_netmask(prefix)
+                form_data['ipv4_netmask'] = network.ipv4_int_to_string(netmask)
+
             gateway = settings_ipv4.get_gateway()
             dns = settings_ipv4.get_dns(0)
             second_dns = settings_ipv4.get_dns(1)
-            if address:
-                form_data['ipv4_address'] = address
-            if netmask:
-                form_data['ipv4_netmask'] = netmask
             if gateway:
                 form_data['ipv4_gateway'] = gateway
+
             if dns:
                 form_data['ipv4_dns'] = dns
+
             if second_dns:
                 form_data['ipv4_second_dns'] = second_dns
 
