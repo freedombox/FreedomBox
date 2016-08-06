@@ -150,16 +150,15 @@ def edit(request, uuid):
                 form_data['ipv4_netmask'] = network.ipv4_int_to_string(netmask)
 
             gateway = settings_ipv4.get_gateway()
-            dns = settings_ipv4.get_dns(0)
-            second_dns = settings_ipv4.get_dns(1)
             if gateway:
                 form_data['ipv4_gateway'] = gateway
 
-            if dns:
-                form_data['ipv4_dns'] = dns
+            number_of_dns = settings_ipv4.get_num_dns()
+            if number_of_dns:
+                form_data['ipv4_dns'] = settings_ipv4.get_dns(0)
 
-            if second_dns:
-                form_data['ipv4_second_dns'] = second_dns
+            if number_of_dns > 1:
+                form_data['ipv4_second_dns'] = settings_ipv4.get_dns(1)
 
         if settings_connection.get_connection_type() == 'generic':
             form = GenericForm(form_data)
