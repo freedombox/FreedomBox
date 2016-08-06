@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 Vagrant.configure(2) do |config|
-  config.vm.box = "jvalleroy/plinth-dev"
+  config.vm.box = "freedombox/plinth-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
   config.vm.provision "shell", inline: <<-SHELL
     cd /vagrant/
