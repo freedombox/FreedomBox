@@ -24,9 +24,13 @@
 {% block content %}
   <h2>{{ title }}</h2>
 
+  <p>{% trans "Roll back the system to this snapshot?" %}</p>
+
   <p>
     {% blocktrans trimmed %}
-    The system will be rolled back to the selected snapshot. Please confirm.
+      A new snapshot with the current state of the file system will be
+      automatically created. You will be able to undo a rollback by
+      reverting to the newly created snapshot.
     {% endblocktrans %}
   </p>
 
@@ -54,7 +58,9 @@
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
-             value="{% blocktrans with number=snapshot.number %}Rollback to Snapshot #{{ number }}{% endblocktrans %}"/>
+             value="{% blocktrans trimmed with number=snapshot.number %}
+                      Rollback to Snapshot #{{ number }}
+                    {% endblocktrans %}"/>
     </form>
   </p>
 

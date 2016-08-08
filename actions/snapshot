@@ -85,17 +85,27 @@ def subcommand_list(_):
         parts = [part.strip() for part in line.split('|')]
         snapshots.append(dict(zip(keys, parts)))
 
-    # Mark default subvolume.
+    default = _get_default_snapshot()
+    for snapshot in snapshots:
+        snapshot['is_default'] = (snapshot['number'] == default)
+
+    print(json.dumps(snapshots))
+
+
+def _get_default_snapshot():
+    """Return the default snapshot by looking at default subvolume."""
     command = ['btrfs', 'subvolume', 'get-default', '/']
     process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     output = process.stdout.decode()
-    default = None
-    if '.snapshots' in output:
-        default = output.split('/')[1]
-    for snapshot in snapshots:
-        snapshot['is_default'] = snapshot['number'] == default
 
-    print(json.dumps(snapshots))
+    output_parts = output.split()
+    if len(output_parts) >= 9:
+        path = output.split()[8]
+        path_parts = path.split('/')
+        if len(path_parts) == 3 and path_parts[0] == '.snapshots':
+            return path_parts[1]
+
+    return None
 
 
 def subcommand_create(_):

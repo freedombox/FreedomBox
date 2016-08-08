@@ -41,6 +41,7 @@ def index(request):
 
     return TemplateResponse(request, 'snapshot.html',
                             {'title': snapshot_module.title,
+                             'description': snapshot_module.description,
                              'snapshots': snapshots})
 
 
@@ -48,16 +49,17 @@ def delete(request, number):
     """Show confirmation to delete a snapshot."""
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['delete', number])
-        messages.success(request, _('Deleted snapshot.'))
+        messages.success(
+            request, _('Deleted snapshot #{number}.').format(number=number))
         return redirect(reverse('snapshot:index'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
 
     snapshot = None
-    for s in snapshots:
-        if s['number'] == number:
-            snapshot = s
+    for current_snapshot in snapshots:
+        if current_snapshot['number'] == number:
+            snapshot = current_snapshot
 
     return TemplateResponse(request, 'snapshot_delete.html',
                             {'title': _('Delete Snapshot'),
@@ -68,7 +70,9 @@ def rollback(request, number):
     """Show confirmation to rollback to a snapshot."""
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['rollback', number])
-        messages.success(request, _('Set default subvolume for rollback.'))
+        messages.success(
+            request,
+            _('Rolled back to snapshot #{number}.').format(number=number))
         messages.warning(
             request,
             _('The system must be restarted to complete the rollback.'))
@@ -78,9 +82,9 @@ def rollback(request, number):
     snapshots = json.loads(output)
 
     snapshot = None
-    for s in snapshots:
-        if s['number'] == number:
-            snapshot = s
+    for current_snapshot in snapshots:
+        if current_snapshot['number'] == number:
+            snapshot = current_snapshot
 
     return TemplateResponse(request, 'snapshot_rollback.html',
                             {'title': _('Rollback to Snapshot'),

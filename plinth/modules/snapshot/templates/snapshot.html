@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "simple_service.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -21,55 +21,58 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content %}
-  <h2>{{ title }}</h2>
+{% block configuration %}
 
   <div class="row">
     <div class="col-lg-8">
       <table class="table table-bordered table-condensed table-striped">
-	<thead>
-	  <th>{% trans "Number" %}</th>
-	  <th>{% trans "Date" %}</th>
-	  <th>{% trans "Description" %}</th>
-	  <th>{% trans "Rollback" %}</th>
-	  <th>{% trans "Delete" %}</th>
-	</thead>
-	<tbody>
-	  {% for snapshot in snapshots %}
-	    {% if snapshot.description != "current" %}
-	      <tr>
-		<td>{{ snapshot.number }}</td>
-		<td>{{ snapshot.date }}</td>
-		<td>
-		  {% if snapshot.is_default %}
-	            {% trans "[default subvolume]" %}<br />
-		  {% endif %}
-		  {{ snapshot.description }}
-		</td>
-		<td>
-		  <a href="{% url 'snapshot:rollback' snapshot.number %}"
-		     class="btn btn-default btn-sm"
-		     role="button"
-		     title="{% blocktrans with number=snapshot.number %}Rollback to snapshot #{{ number }}{% endblocktrans %}">
-		    <span class="glyphicon glyphicon-repeat"
-			  aria-hidden="true"></span>
-		  </a>
-		</td>
-		<td>
-		  {% if not snapshot.is_default %}
-		  <a href="{% url 'snapshot:delete' snapshot.number %}"
-		     class="btn btn-default btn-sm"
-		     role="button"
-		     title="{% blocktrans with number=snapshot.number %}Delete snapshot #{{ number }}{% endblocktrans %}">
-		    <span class="glyphicon glyphicon-trash"
-			  aria-hidden="true"></span>
-		  </a>
-		  {% endif %}
-		</td>
-	      </tr>
-	    {% endif %}
-	  {% endfor %}
-	</tbody>
+        <thead>
+          <th>{% trans "Number" %}</th>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Description" %}</th>
+          <th>{% trans "Rollback" %}</th>
+          <th>{% trans "Delete" %}</th>
+        </thead>
+        <tbody>
+          {% for snapshot in snapshots %}
+            {% if snapshot.description != "current" %}
+              <tr>
+                <td>
+                  {{ snapshot.number }}
+                  {% if snapshot.is_default %}
+                    <span class="label label-primary">
+                      {% trans "active" %}
+                    </span>
+                  {% endif %}
+                </td>
+                <td>{{ snapshot.date }}</td>
+                <td>{{ snapshot.description }}</td>
+                <td>
+                  <a href="{% url 'snapshot:rollback' snapshot.number %}"
+                     class="btn btn-default btn-sm" role="button"
+                     title="{% blocktrans trimmed with number=snapshot.number %}
+                              Rollback to snapshot #{{ number }}
+                            {% endblocktrans %}">
+                    <span class="glyphicon glyphicon-repeat"
+                          aria-hidden="true"></span>
+                  </a>
+                </td>
+                <td>
+                  {% if not snapshot.is_default %}
+                    <a href="{% url 'snapshot:delete' snapshot.number %}"
+                       class="btn btn-default btn-sm" role="button"
+                       title="{% blocktrans trimmed with number=snapshot.number %}
+                                Delete snapshot #{{ number }}
+                              {% endblocktrans %}">
+                      <span class="glyphicon glyphicon-trash"
+                            aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
@@ -79,7 +82,8 @@
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
-	     value="{% trans "Create Snapshot" %}"/>
+             value="{% trans "Create Snapshot" %}"/>
     </form>
   </p>
+
 {% endblock %}

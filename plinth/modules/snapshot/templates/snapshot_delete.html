@@ -24,11 +24,7 @@
 {% block content %}
   <h2>{{ title }}</h2>
 
-  <p>
-    {% blocktrans trimmed %}
-    The snapshot will be permanently deleted. Please confirm.
-    {% endblocktrans %}
-  </p>
+  <p>{% trans "Delete this snapshot permanently?" %}</p>
 
   <div class="row">
     <div class="col-lg-8">
@@ -54,7 +50,9 @@
       {% csrf_token %}
 
       <input type="submit" class="btn btn-primary"
-             value="{% blocktrans with number=snapshot.number %}Delete Snapshot #{{ number }}{% endblocktrans %}"/>
+             value="{% blocktrans trimmed with number=snapshot.number %}
+                      Delete Snapshot #{{ number }}
+                    {% endblocktrans %}"/>
     </form>
   </p>
 

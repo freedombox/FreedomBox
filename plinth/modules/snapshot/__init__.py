@@ -35,7 +35,16 @@ title = _('Snapshots')
 
 description = [
     _('Snapshots allows creating and managing filesystem snapshots. These can '
-      'be used to roll back the system to a previous state.')
+      'be used to roll back the system to a previously known good state in '
+      'case of unwanted changes to the system.'),
+
+    _('Automatic snapshots are taken every hour, day, month and year. Older '
+      'snapshots are automatically deleted keeping 10 of each kind and 50 in '
+      'total. Although snapshots are efficient and only store the '
+      'differences, they may be deleted to reclaim free space.  Individual '
+      'files from older snapshots can be accessed by visiting ".snapshots" '
+      'directory in the filesystem. Snapshots are not a replacement for '
+      'backups.')
 ]
 
 service = None
