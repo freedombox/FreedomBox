@@ -20,11 +20,14 @@
 Configuration helper for filesystem snapshots.
 """
 
+import augeas
 import argparse
 import json
+import os
 import subprocess
 
 FSTAB = '/etc/fstab'
+AUG_FSTAB = '/files/etc/fstab'
 
 
 def parse_arguments():
@@ -57,20 +60,38 @@ def subcommand_setup(_):
         command = ['snapper', 'create-config', '/']
         subprocess.run(command, check=True)
 
-    # Add mountpoint for subvolumes.
-    with open(FSTAB, 'r') as fstab:
-        lines = fstab.readlines()
+    _add_fstab_entry('/')
+
+
+def _add_fstab_entry(mount_point):
+    """Add mountpoint for subvolumes."""
+    snapshots_mount_point = os.path.join(mount_point, '.snapshots')
+
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Fstab/lens', 'Fstab.lns')
+    aug.set('/augeas/load/Fstab/incl[last() + 1]', FSTAB)
+    aug.load()
 
     spec = None
-    for line in lines:
-        if '.snapshots' in line:
+    for entry in aug.match(AUG_FSTAB + '/*'):
+        entry_mount_point = aug.get(entry + '/file')
+        if entry_mount_point == snapshots_mount_point:
             return
-        if 'btrfs' in line:
-            spec = line.split(' ')[0]
+
+        if entry_mount_point == mount_point and \
+           aug.get(entry + '/vfstype') == 'btrfs':
+            spec = aug.get(entry + '/spec')
 
     if spec:
-        with open(FSTAB, 'a') as fstab:
-            fstab.write(spec + ' /.snapshots btrfs subvol=.snapshots 0 1\n')
+        aug.set(AUG_FSTAB + '/01/spec', spec)
+        aug.set(AUG_FSTAB + '/01/file', snapshots_mount_point)
+        aug.set(AUG_FSTAB + '/01/vfstype', 'btrfs')
+        aug.set(AUG_FSTAB + '/01/opt', 'subvol')
+        aug.set(AUG_FSTAB + '/01/opt/value', '.snapshots')
+        aug.set(AUG_FSTAB + '/01/dump', '0')
+        aug.set(AUG_FSTAB + '/01/passno', '1')
+        aug.save()
 
 
 def subcommand_list(_):
