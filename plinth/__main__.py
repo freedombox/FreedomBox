@@ -138,12 +138,6 @@ def setup_server():
 
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
-
-    # In module_loader.py we reverse URLs for the menu before having a proper
-    # request. In this case, get_script_prefix (used by reverse) returns the
-    # wrong prefix. Set it here manually to have the correct prefix right away.
-    django.core.urlresolvers.set_script_prefix(cfg.server_dir)
-
     logging_configuration = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -211,6 +205,7 @@ def configure_django():
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
         DEBUG=cfg.debug,
+        FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
@@ -238,7 +233,7 @@ def configure_django():
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
-    django.setup()
+    django.setup(set_prefix=True)
 
     logger.info('Configured Django with applications - %s', applications)
 
