@@ -180,7 +180,7 @@ setuptools.setup(
     setup_requires=['setuptools-git'],
     install_requires=[
         'cherrypy >= 3.0',
-        'django >= 1.7.0',
+        'django >= 1.10.0',
         'django-bootstrap-form',
         'django-stronghold',
         'psutil',
