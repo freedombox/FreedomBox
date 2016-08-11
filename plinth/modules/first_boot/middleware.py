@@ -20,8 +20,8 @@ Django middleware to redirect to firstboot wizard if it has not be run
 yet.
 """
 
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 import logging
 
 from plinth import kvstore
@@ -48,7 +48,8 @@ class FirstBootMiddleware(object):
         if state >= 10 and user_requests_firstboot:
             return HttpResponseRedirect(reverse('index'))
 
-        # Setup is not complete: Forbid accessing anything but firstboot or help
+        # Setup is not complete: Forbid accessing anything but
+        # firstboot or help
         if state < 10 and not user_requests_firstboot and \
            not user_requests_help:
             return HttpResponseRedirect(reverse('first_boot:state%d' % state))

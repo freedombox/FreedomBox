@@ -21,10 +21,10 @@ Main Plinth views
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 import time
 

@@ -19,9 +19,9 @@
 Test module for menus.
 """
 
-from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 from django.test import TestCase
+from django.urls import reverse
 import random
 
 from plinth.menu import Menu

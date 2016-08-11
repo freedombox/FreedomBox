@@ -67,7 +67,7 @@ class TestSetupMiddleware(TestCase):
         self.assertEqual(response, None)
 
     @patch('plinth.module_loader.loaded_modules')
-    @patch('django.core.urlresolvers.resolve')
+    @patch('django.urls.resolve')
     def test_module_is_up_to_date(self, resolve, loaded_modules):
         """Test that none is returned when module is up-to-date."""
         resolve.return_value.namespaces = ['mockapp']
@@ -84,7 +84,7 @@ class TestSetupMiddleware(TestCase):
 
     @patch('plinth.views.SetupView')
     @patch('plinth.module_loader.loaded_modules')
-    @patch('django.core.urlresolvers.resolve')
+    @patch('django.urls.resolve')
     def test_module_view(self, resolve, loaded_modules, setup_view):
         """Test that setup view is returned."""
         resolve.return_value.namespaces = ['mockapp']
@@ -102,7 +102,7 @@ class TestSetupMiddleware(TestCase):
 
     @patch('django.contrib.messages.success')
     @patch('plinth.module_loader.loaded_modules')
-    @patch('django.core.urlresolvers.resolve')
+    @patch('django.urls.resolve')
     def test_install_result_collection(self, resolve, loaded_modules,
                                        messages_success):
         """Test that module installation result is collected properly."""
