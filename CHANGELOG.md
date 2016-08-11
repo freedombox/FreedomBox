@@ -17,16 +17,26 @@ All notable changes to this project will be documented in this file.
 - networks: Added NetworkManager dispatcher script to configure
   batman-adv mesh networking.
 - radicale: Added access rights control.
+- tor: Added spinner when configuration process is ongoing.
+- Allowed --setup command to take a list of modules to setup.
+- Added Vagrantfile.
+- Added Snapshots module to manage Btrfs snapshots.
+
+### Removed
+- networks: Removed hack for IP address fetching.
 
 ### Fixed
 - Improved Dynamic DNS status message when no update needed.
 - Improved Ikiwiki description.
 - Added check if a2query is installed before using it, since apache2
-  is not a dependency for Plinth.
+is not a dependency for Plinth.
+- networks: Fixed incorrect access for retrieving DNS entries.
 
 ### Changed
 - Added suggested packages for ikiwiki. Removed recommends since they
   are installed automatically.
+- users: Switched to using dpkg-reconfigure to configure several
+  packages. This will work even if the package is already installed.
 
 ## [0.9.4] - 2016-06-14
 ### Fixed
