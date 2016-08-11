@@ -217,7 +217,6 @@ def configure_django():
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='apps:index',
-        LOGOUT_URL='users:logout',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
