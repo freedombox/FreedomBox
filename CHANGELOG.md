@@ -29,14 +29,17 @@ All notable changes to this project will be documented in this file.
 - Improved Dynamic DNS status message when no update needed.
 - Improved Ikiwiki description.
 - Added check if a2query is installed before using it, since apache2
-is not a dependency for Plinth.
+  is not a dependency for Plinth.
 - networks: Fixed incorrect access for retrieving DNS entries.
+- Fixed issue with lost menus in Django 1.10.
+- Added workaround for script prefix problem in stronghold.
 
 ### Changed
 - Added suggested packages for ikiwiki. Removed recommends since they
   are installed automatically.
 - users: Switched to using dpkg-reconfigure to configure several
   packages. This will work even if the package is already installed.
+- Bumped required version of Django to 1.10.
 
 ## [0.9.4] - 2016-06-14
 ### Fixed
