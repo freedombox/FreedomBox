@@ -20,9 +20,9 @@ Views for disks module.
 """
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from plinth.modules import disks as disks_module

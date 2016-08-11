@@ -20,9 +20,9 @@ Views for the monkeysphere module.
 """
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 import json

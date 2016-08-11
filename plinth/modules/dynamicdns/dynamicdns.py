@@ -18,7 +18,7 @@
 from django import forms
 from django.contrib import messages
 from django.core import validators
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.template.response import TemplateResponse
 import logging
