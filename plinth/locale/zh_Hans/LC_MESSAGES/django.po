@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-01 07:45+0530\n"
+"POT-Creation-Date: 2016-08-11 19:55-0400\n"
 "PO-Revision-Date: 2016-03-24 12:14+0000\n"
 "Last-Translator: YFdyh000 <yfdyh000@gmail.com>\n"
 "Language-Team: Simplified Chinese <https://hosted.weblate.org/projects/"
@@ -19,32 +19,32 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.6-dev\n"
 
-#: plinth/action_utils.py:237
+#: plinth/action_utils.py:242
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "正在 {kind} 侦听端口 {listen_address}：{port}"
 
-#: plinth/action_utils.py:240
+#: plinth/action_utils.py:245
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "正在 {kind} 侦听端口 {port}"
 
-#: plinth/action_utils.py:326
+#: plinth/action_utils.py:331
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "在 tcp {kind} 访问 URL {url}"
 
-#: plinth/action_utils.py:329
+#: plinth/action_utils.py:334
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "访问 URL {url}"
 
-#: plinth/action_utils.py:357
+#: plinth/action_utils.py:362
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "连接到的主机 {host}: {port}"
 
-#: plinth/action_utils.py:360
+#: plinth/action_utils.py:365
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "不能连接到的主机 {host}: {port}"
@@ -211,6 +211,7 @@ msgid "Language changed"
 msgstr "语言已更改"
 
 #: plinth/modules/config/templates/config.html:32
+#: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "提交"
 
@@ -437,8 +438,8 @@ msgstr "关于"
 #: plinth/modules/firewall/templates/firewall.html:46
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:67
-#: plinth/modules/tor/templates/tor.html:35
-#: plinth/modules/tor/templates/tor.html:65
+#: plinth/modules/tor/templates/tor.html:51
+#: plinth/modules/tor/templates/tor.html:82
 msgid "Status"
 msgstr "状态"
 
@@ -529,23 +530,23 @@ msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:143
-#: plinth/modules/networks/forms.py:151 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:168 plinth/modules/transmission/forms.py:37
 msgid "Username"
 msgstr "用户名"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:146
-#: plinth/modules/networks/forms.py:152 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:169 plinth/modules/transmission/forms.py:41
 msgid "Password"
 msgstr "密码"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:149
-#: plinth/modules/networks/forms.py:154
+#: plinth/modules/networks/forms.py:171
 msgid "Show password"
 msgstr "显示密码"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:153
-msgid "IP Check URL"
-msgstr "IP 检查 URL"
+msgid "URL to look up public IP"
+msgstr ""
 
 #: plinth/modules/dynamicdns/dynamicdns.py:179
 msgid "Please provide an update URL or a GnuDIP server address"
@@ -606,7 +607,7 @@ msgstr ""
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/openvpn/templates/openvpn.html:124
-#: plinth/modules/tor/templates/tor.html:93
+#: plinth/modules/tor/templates/tor.html:110
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #: plinth/templates/service.html:67
 msgid "Update setup"
@@ -629,13 +630,13 @@ msgstr "直接连接到互联网。"
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
 #, python-format
 msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"IP Check URL"
-"\" for changes (the \"IP Check URL\" entry is needed for this, otherwise IP "
-"changes will not be detected). In case the WAN IP changes, it may take up to "
-"%(timer)s minutes until your DNS entry is updated."
+"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
+"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
+"for this, otherwise IP changes will not be detected). In case the WAN IP "
+"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:48
+#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
 msgid "Last update"
 msgstr "最后一次更新"
 
@@ -679,6 +680,7 @@ msgstr "启用"
 #: plinth/modules/firewall/templates/firewall.html:60
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:70
 #: plinth/modules/names/templates/names.html:51
+#: plinth/modules/networks/forms.py:62
 msgid "Disabled"
 msgstr "已禁用"
 
@@ -707,45 +709,55 @@ msgstr ""
 "防火墙的操作是自动的。当您启用服务时它也在防火墙中允许，当禁用一项服务时也会"
 "禁用防火墙中的相应服务。"
 
-#: plinth/modules/first_boot/forms.py:59 plinth/modules/users/forms.py:70
+#: plinth/modules/first_boot/forms.py:60 plinth/modules/users/forms.py:70
 msgid "Creating LDAP user failed."
 msgstr "创建 LDAP 用户失败。"
 
-#: plinth/modules/first_boot/forms.py:67
+#: plinth/modules/first_boot/forms.py:68
 msgid "Failed to add new user to admin group."
 msgstr "未能将新用户添加到管理员组。"
 
+#: plinth/modules/first_boot/forms.py:83
+msgid ""
+"Console login access restricted to users in \"admin\" group. This can be "
+"configured in security settings."
+msgstr ""
+
 #: plinth/modules/first_boot/forms.py:89
+msgid "Failed to restrict console access."
+msgstr ""
+
+#: plinth/modules/first_boot/forms.py:101
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
-#: plinth/modules/first_boot/forms.py:116
+#: plinth/modules/first_boot/forms.py:128
 #, python-brace-format
 msgid "The voucher you received with your {box_name} Danube Edition"
 msgstr "您收到的您的 {box_name} Danube 版本优惠卷"
 
-#: plinth/modules/first_boot/forms.py:121
+#: plinth/modules/first_boot/forms.py:133
 msgid "Subdomain"
 msgstr "子域"
 
-#: plinth/modules/first_boot/forms.py:123
+#: plinth/modules/first_boot/forms.py:135
 msgid "The subdomain you want to register"
 msgstr "您想注册的子域名"
 
-#: plinth/modules/first_boot/forms.py:146
+#: plinth/modules/first_boot/forms.py:158
 msgid "This code is not valid"
 msgstr "此代码无效"
 
-#: plinth/modules/first_boot/forms.py:152
+#: plinth/modules/first_boot/forms.py:164
 #, python-brace-format
 msgid "This code is bound to the domain {domain}."
 msgstr ""
 
-#: plinth/modules/first_boot/forms.py:162
+#: plinth/modules/first_boot/forms.py:174
 msgid "The requested domain is already registered."
 msgstr "请求的域名已经注册。"
 
-#: plinth/modules/first_boot/forms.py:176
+#: plinth/modules/first_boot/forms.py:188
 #, python-brace-format
 msgid "Domain registration failed: {response}."
 msgstr "域名注册失败：{response}。"
@@ -844,11 +856,11 @@ msgstr "注册"
 msgid "Skip Registration"
 msgstr "跳过注册"
 
-#: plinth/modules/first_boot/views.py:71
+#: plinth/modules/first_boot/views.py:70
 msgid "Setup Complete"
 msgstr "安装完成"
 
-#: plinth/modules/first_boot/views.py:96
+#: plinth/modules/first_boot/views.py:94
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr ""
 
@@ -860,7 +872,7 @@ msgstr "文档"
 msgid "Where to Get Help"
 msgstr "从何处获得帮助"
 
-#: plinth/modules/help/help.py:37
+#: plinth/modules/help/help.py:37 plinth/modules/networks/forms.py:61
 msgid "Manual"
 msgstr "手册"
 
@@ -965,6 +977,27 @@ msgid ""
 "net IRC network.  Join and request help on the <a href=\"https://webchat."
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
+msgstr ""
+
+#: plinth/modules/help/templates/statuslog.html:26
+#, fuzzy, python-format
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix.  "
+#| "Please report the error on the <a href=\"https://github.com/freedombox/"
+#| "Plinth/issues\">bug tracker</a> so we can fix it."
+msgid ""
+"This is the last %(num_lines)s lines of the status log for this web "
+"interface. If you want to report a bug, please use the <a href=\"https://"
+"github.com/freedombox/Plinth/issues\">bugtracker</a> and attach this status "
+"log to the bug report."
+msgstr ""
+"这是一个内部错误，不是你造成的或可以修复。 请报告到 <a href=\"https://github."
+"com/freedombox/Plinth/issues\"> bug 追踪器</a> 上这样我们就可以修复该错误。"
+
+#: plinth/modules/help/templates/statuslog.html:36
+msgid ""
+"Caution: Please remove any passwords or other personal information from the "
+"log, before submitting the bug report."
 msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:40
@@ -1212,7 +1245,7 @@ msgstr "正在发布密钥到密钥服务器..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:74
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
-#: plinth/modules/tor/templates/tor.html:112
+#: plinth/modules/tor/templates/tor.html:127
 msgid "Service"
 msgstr "服务"
 
@@ -1402,11 +1435,21 @@ msgid ""
 "interfaces. Select Internal only for trusted networks."
 msgstr "防火墙区域将控制哪些服务可用在此接口。选择内部只有受信任的网络。"
 
-#: plinth/modules/networks/forms.py:50
+#: plinth/modules/networks/forms.py:48
+#: plinth/modules/networks/templates/connections_diagram.html:78
+msgid "External"
+msgstr "外网"
+
+#: plinth/modules/networks/forms.py:49
+#: plinth/modules/networks/templates/connections_diagram.html:107
+msgid "Internal"
+msgstr "内网"
+
+#: plinth/modules/networks/forms.py:51
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 寻址方式"
 
-#: plinth/modules/networks/forms.py:53
+#: plinth/modules/networks/forms.py:54
 #, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -1414,35 +1457,43 @@ msgid ""
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:59
+msgid "Automatic (DHCP)"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:60
+msgid "Shared"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:64
 msgid "Address"
 msgstr "地址"
 
-#: plinth/modules/networks/forms.py:66
+#: plinth/modules/networks/forms.py:68
 msgid "Netmask"
 msgstr "子网掩码"
 
-#: plinth/modules/networks/forms.py:67
+#: plinth/modules/networks/forms.py:69
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr "可选的值。如果为空，则将使用基于地址的默认子网掩码。"
 
-#: plinth/modules/networks/forms.py:72
+#: plinth/modules/networks/forms.py:74
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
 msgid "Gateway"
 msgstr "网关"
 
-#: plinth/modules/networks/forms.py:73
+#: plinth/modules/networks/forms.py:75
 msgid "Optional value."
 msgstr "可选的值。"
 
-#: plinth/modules/networks/forms.py:77
+#: plinth/modules/networks/forms.py:79
 msgid "DNS Server"
 msgstr "DNS 服务器"
 
-#: plinth/modules/networks/forms.py:78
+#: plinth/modules/networks/forms.py:80
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1450,11 +1501,11 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方法是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:84
+#: plinth/modules/networks/forms.py:86
 msgid "Second DNS Server"
 msgstr "备选 DNS 服务器"
 
-#: plinth/modules/networks/forms.py:85
+#: plinth/modules/networks/forms.py:87
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1462,35 +1513,99 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv4 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: plinth/modules/networks/forms.py:95
+#: plinth/modules/networks/forms.py:97
 msgid "-- select --"
 msgstr "-- 选择 --"
 
-#: plinth/modules/networks/forms.py:179
+#: plinth/modules/networks/forms.py:197
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:180
+#: plinth/modules/networks/forms.py:198
 msgid "The visible name of the network."
 msgstr "可见网络的名称。"
 
-#: plinth/modules/networks/forms.py:182
+#: plinth/modules/networks/forms.py:200
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "模式"
 
-#: plinth/modules/networks/forms.py:187
+#: plinth/modules/networks/forms.py:201
+msgid "Infrastructure"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:202
+msgid "Access Point"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:203
+msgid "Ad-hoc"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:205
+msgid "Frequency Band"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:206
+#, fuzzy
+#| msgid "Automatic Upgrades"
+msgid "Automatic"
+msgstr "自动升级"
+
+#: plinth/modules/networks/forms.py:207
+msgid "A (5 GHz)"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:208
+msgid "B/G (2.4 GHz)"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:210
+#: plinth/modules/networks/templates/connection_show.html:173
+msgid "Channel"
+msgstr "信道"
+
+#: plinth/modules/networks/forms.py:211
+msgid ""
+"Optional value. Wireless channel in the selected frequency band to restrict "
+"to. Blank or 0 value means automatic selection."
+msgstr ""
+
+#: plinth/modules/networks/forms.py:218
+#, fuzzy
+#| msgid "SSID"
+msgid "BSSID"
+msgstr "SSID"
+
+#: plinth/modules/networks/forms.py:219
+msgid ""
+"Optional value. Unique identifier for the access point. When connecting to "
+"an access point, connect only if the BSSID of the access point matches the "
+"one provided. Example: 00:11:22:aa:bb:cc."
+msgstr ""
+
+#: plinth/modules/networks/forms.py:226
 msgid "Authentication Mode"
 msgstr "身份验证模式"
 
-#: plinth/modules/networks/forms.py:188
+#: plinth/modules/networks/forms.py:227
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "如果无线网络安全的和要求客户端具有密码才能连接，请选择 WPA。"
 
-#: plinth/modules/networks/forms.py:192
+#: plinth/modules/networks/forms.py:229
+msgid "WPA"
+msgstr ""
+
+#: plinth/modules/networks/forms.py:230
+#, fuzzy
+#| msgid "OpenVPN"
+msgid "Open"
+msgstr "OpenVPN"
+
+#: plinth/modules/networks/forms.py:232
 msgid "Passphrase"
 msgstr "密码"
 
@@ -1500,12 +1615,12 @@ msgid "Network Connections"
 msgstr "网络连接"
 
 #: plinth/modules/networks/networks.py:36
-#: plinth/modules/networks/networks.py:232
+#: plinth/modules/networks/networks.py:241
 msgid "Nearby Wi-Fi Networks"
 msgstr "附近的无线网络"
 
 #: plinth/modules/networks/networks.py:38
-#: plinth/modules/networks/networks.py:254
+#: plinth/modules/networks/networks.py:265
 msgid "Add Connection"
 msgstr "添加连接"
 
@@ -1525,58 +1640,64 @@ msgstr "不能编辑连接: 找不到连接。"
 msgid "This type of connection is not yet understood."
 msgstr "这种类型的连接尚没有引入。"
 
-#: plinth/modules/networks/networks.py:129
-#: plinth/modules/networks/networks.py:188
+#: plinth/modules/networks/networks.py:131
+#: plinth/modules/networks/networks.py:197
 #: plinth/modules/networks/templates/connections_edit.html:34
 msgid "Edit Connection"
 msgstr "编辑连接"
 
-#: plinth/modules/networks/networks.py:199
+#: plinth/modules/networks/networks.py:208
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "激活的连接 {name}。"
 
-#: plinth/modules/networks/networks.py:202
+#: plinth/modules/networks/networks.py:211
 msgid "Failed to activate connection: Connection not found."
 msgstr "未能激活连接: 找不到连接。"
 
-#: plinth/modules/networks/networks.py:206
+#: plinth/modules/networks/networks.py:215
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "未能激活连接 {name}: 没有合适的设备是可用。"
 
-#: plinth/modules/networks/networks.py:219
+#: plinth/modules/networks/networks.py:228
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "停用的连接 {name}。"
 
-#: plinth/modules/networks/networks.py:222
+#: plinth/modules/networks/networks.py:231
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "无法取消激活连接: 找不到连接。"
 
-#: plinth/modules/networks/networks.py:272
+#: plinth/modules/networks/networks.py:283
+#, fuzzy
+#| msgid "Adding New Ethernet Connection"
+msgid "Adding New Generic Connection"
+msgstr "添加新的以太网连接"
+
+#: plinth/modules/networks/networks.py:301
 msgid "Adding New Ethernet Connection"
 msgstr "添加新的以太网连接"
 
-#: plinth/modules/networks/networks.py:290
+#: plinth/modules/networks/networks.py:319
 msgid "Adding New PPPoE Connection"
 msgstr "添加新的 PPPoE 连接"
 
-#: plinth/modules/networks/networks.py:322
+#: plinth/modules/networks/networks.py:352
 msgid "Adding New Wi-Fi Connection"
 msgstr "添加新的 Wi-Fi 连接"
 
-#: plinth/modules/networks/networks.py:336
+#: plinth/modules/networks/networks.py:366
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "连接 {name} 已删除。"
 
-#: plinth/modules/networks/networks.py:339
-#: plinth/modules/networks/networks.py:348
+#: plinth/modules/networks/networks.py:369
+#: plinth/modules/networks/networks.py:378
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
-#: plinth/modules/networks/networks.py:353
+#: plinth/modules/networks/networks.py:383
 #: plinth/modules/networks/templates/connections_delete.html:26
 msgid "Delete Connection"
 msgstr "删除连接"
@@ -1605,6 +1726,7 @@ msgid "Delete connection"
 msgstr "删除连接"
 
 #: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/snapshot/templates/snapshot.html:34
 msgid "Delete"
 msgstr "删除"
 
@@ -1643,6 +1765,9 @@ msgid "Interface"
 msgstr "接口"
 
 #: plinth/modules/networks/templates/connection_show.html:110
+#: plinth/modules/snapshot/templates/snapshot.html:32
+#: plinth/modules/snapshot/templates/snapshot_delete.html:35
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:43
 msgid "Description"
 msgstr "描述"
 
@@ -1681,10 +1806,6 @@ msgstr "%(wireless_bitrate)s Mbit/s"
 msgid "Signal strength"
 msgstr "信号强度"
 
-#: plinth/modules/networks/templates/connection_show.html:173
-msgid "Channel"
-msgstr "信道"
-
 #: plinth/modules/networks/templates/connection_show.html:181
 msgid "IPv4"
 msgstr "IPv4"
@@ -1718,6 +1839,7 @@ msgid "This connection is not active."
 msgstr "此连接未处于激活状态。"
 
 #: plinth/modules/networks/templates/connection_show.html:266
+#: plinth/modules/security/__init__.py:34 plinth/modules/security/views.py:46
 msgid "Security"
 msgstr "安全"
 
@@ -1777,10 +1899,6 @@ msgstr "互联网"
 msgid "Spacing"
 msgstr "间距"
 
-#: plinth/modules/networks/templates/connections_diagram.html:78
-msgid "External"
-msgstr "外网"
-
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
 #: plinth/network.py:37
@@ -1797,10 +1915,6 @@ msgstr "Wi-Fi"
 #, python-format
 msgid "Show connection %(connection.name)s"
 msgstr "显示连接 %(connection.name)s"
-
-#: plinth/modules/networks/templates/connections_diagram.html:107
-msgid "Internal"
-msgstr "内网"
 
 #: plinth/modules/networks/templates/connections_diagram.html:119
 #, python-format
@@ -1905,7 +2019,7 @@ msgstr "OpenVPN 服务器未运行"
 
 #: plinth/modules/openvpn/templates/openvpn.html:116
 #: plinth/modules/owncloud/templates/owncloud.html:39
-#: plinth/modules/tor/templates/tor.html:85
+#: plinth/modules/tor/templates/tor.html:102
 msgid "Configuration"
 msgstr "配置"
 
@@ -1917,7 +2031,7 @@ msgstr "安装已完成。"
 msgid "Setup failed."
 msgstr "安装失败。"
 
-#: plinth/modules/openvpn/views.py:144 plinth/modules/tor/views.py:98
+#: plinth/modules/openvpn/views.py:144 plinth/modules/tor/views.py:109
 #: plinth/views.py:86 plinth/views.py:167
 msgid "Setting unchanged"
 msgstr "设置未改变"
@@ -2301,11 +2415,11 @@ msgid ""
 "\">mobile</a> devices are available."
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:42
+#: plinth/modules/radicale/__init__.py:41
 msgid "Calendar and Addressbook (Radicale)"
 msgstr "日历和通讯录 (Radicale)"
 
-#: plinth/modules/radicale/__init__.py:46
+#: plinth/modules/radicale/__init__.py:45
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -2314,6 +2428,26 @@ msgid ""
 "client application</a> is needed. Radicale can be accessed by any user with "
 "a {box_name} login."
 msgstr ""
+
+#: plinth/modules/radicale/forms.py:28
+msgid "Only the owner of a calendar/addressbook can view or make changes."
+msgstr ""
+
+#: plinth/modules/radicale/forms.py:30
+msgid ""
+"Any user can view any calendar/addressbook, but only the owner can make "
+"changes."
+msgstr ""
+
+#: plinth/modules/radicale/forms.py:32
+msgid "Any user can view or make changes to any calendar/addressbook."
+msgstr ""
+
+#: plinth/modules/radicale/views.py:53
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "Access rights configuration updated"
+msgstr "配置已更新"
 
 #: plinth/modules/repro/__init__.py:38
 msgid "SIP Server (repro)"
@@ -2397,6 +2531,29 @@ msgid ""
 "a>)."
 msgstr ""
 
+#: plinth/modules/security/forms.py:29
+msgid "Restrict console logins (recommended)"
+msgstr ""
+
+#: plinth/modules/security/forms.py:30
+msgid ""
+"When this option is enabled, only users in the \"admin\" group will be able "
+"to log in to console or via SSH. Console users may be able to access some "
+"services without further authorization."
+msgstr ""
+
+#: plinth/modules/security/views.py:63
+#, fuzzy, python-brace-format
+#| msgid "Error setting time zone: {exception}"
+msgid "Error setting restricted access: {exception}"
+msgstr "设置时区错误：{exception}"
+
+#: plinth/modules/security/views.py:66
+#, fuzzy
+#| msgid "General Configuration"
+msgid "Updated security configuration"
+msgstr "常规配置"
+
 #: plinth/modules/shaarli/__init__.py:36
 msgid "Bookmarks (Shaarli)"
 msgstr "书签（Shaarli）"
@@ -2413,6 +2570,122 @@ msgid ""
 msgstr ""
 "当启用时，Shaarli 将可从 <a href=\"/shaarli\"> /shaarli</a> 路径访问。请注"
 "意，Shaarli 只支持单用户帐户，您在首次访问时安装程序。"
+
+#: plinth/modules/snapshot/__init__.py:34
+msgid "Snapshots"
+msgstr ""
+
+#: plinth/modules/snapshot/__init__.py:37
+msgid ""
+"Snapshots allows creating and managing filesystem snapshots. These can be "
+"used to roll back the system to a previously known good state in case of "
+"unwanted changes to the system."
+msgstr ""
+
+#: plinth/modules/snapshot/__init__.py:41
+msgid ""
+"Automatic snapshots are taken every hour, day, month and year. Older "
+"snapshots are automatically deleted keeping 10 of each kind and 50 in total. "
+"Although snapshots are efficient and only store the differences, they may be "
+"deleted to reclaim free space.  Individual files from older snapshots can be "
+"accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
+"are not a replacement for backups."
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot.html:30
+#: plinth/modules/snapshot/templates/snapshot_delete.html:33
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:41
+msgid "Number"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot.html:31
+#: plinth/modules/snapshot/templates/snapshot_delete.html:34
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:42
+msgid "Date"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot.html:33
+msgid "Rollback"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot.html:44
+#, fuzzy
+#| msgid "Inactive"
+msgid "active"
+msgstr "未激活"
+
+#: plinth/modules/snapshot/templates/snapshot.html:53
+#, python-format
+msgid "Rollback to snapshot #%(number)s"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot.html:64
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete snapshot #%(number)s"
+msgstr "删除 %(name)s"
+
+#: plinth/modules/snapshot/templates/snapshot.html:85
+#, fuzzy
+#| msgid "Create User"
+msgid "Create Snapshot"
+msgstr "创建用户"
+
+#: plinth/modules/snapshot/templates/snapshot_delete.html:27
+#, fuzzy
+#| msgid "Delete connection <strong>%(name)s</strong> permanently?"
+msgid "Delete this snapshot permanently?"
+msgstr "永久删除连接 <strong>%(name)s</strong>？"
+
+#: plinth/modules/snapshot/templates/snapshot_delete.html:53
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete Snapshot #%(number)s"
+msgstr "删除 %(name)s"
+
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:27
+msgid "Roll back the system to this snapshot?"
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:30
+msgid ""
+"A new snapshot with the current state of the file system will be "
+"automatically created. You will be able to undo a rollback by reverting to "
+"the newly created snapshot."
+msgstr ""
+
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:61
+#, python-format
+msgid "Rollback to Snapshot #%(number)s"
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:37
+msgid "Created snapshot."
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:53
+#, python-brace-format
+msgid "Deleted snapshot #{number}."
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:65
+#, fuzzy
+#| msgid "Delete %(name)s"
+msgid "Delete Snapshot"
+msgstr "删除 %(name)s"
+
+#: plinth/modules/snapshot/views.py:75
+#, python-brace-format
+msgid "Rolled back to snapshot #{number}."
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:78
+msgid "The system must be restarted to complete the rollback."
+msgstr ""
+
+#: plinth/modules/snapshot/views.py:90
+msgid "Rollback to Snapshot"
+msgstr ""
 
 #: plinth/modules/system/__init__.py:32 plinth/templates/base.html:109
 msgid "System Configuration"
@@ -2454,24 +2727,24 @@ msgstr "Tor 网桥中继"
 msgid "Tor Hidden Service"
 msgstr "隐藏的 Tor 服务"
 
-#: plinth/modules/tor/__init__.py:139
+#: plinth/modules/tor/__init__.py:138
 msgid "Tor relay port available"
 msgstr "Tor 中继端口可用"
 
-#: plinth/modules/tor/__init__.py:147
+#: plinth/modules/tor/__init__.py:146
 msgid "Obfs3 transport registered"
 msgstr "已注册 Obfs3 传输"
 
-#: plinth/modules/tor/__init__.py:153
+#: plinth/modules/tor/__init__.py:152
 msgid "Obfs4 transport registered"
 msgstr "已注册 Obfs4 传输"
 
-#: plinth/modules/tor/__init__.py:190
+#: plinth/modules/tor/__init__.py:189
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "在 tcp{kind} 上通过 Tor 访问 {url}"
 
-#: plinth/modules/tor/__init__.py:201
+#: plinth/modules/tor/__init__.py:200
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "确认使用 Tor 通过 tcp{kind} 访问 {url}"
@@ -2481,23 +2754,54 @@ msgid "Enable Tor"
 msgstr "启用 Tor"
 
 #: plinth/modules/tor/forms.py:35
-msgid "Enable Tor Hidden Service"
-msgstr "启用隐藏的 Tor 服务"
+#, fuzzy
+#| msgid "Enable Tor"
+msgid "Enable Tor relay"
+msgstr "启用 Tor"
 
 #: plinth/modules/tor/forms.py:38
 #, python-brace-format
 msgid ""
+"When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
+"the Tor network. Do this if you have more than 2 megabits/s of upload and "
+"download bandwidth."
+msgstr ""
+
+#: plinth/modules/tor/forms.py:43
+#, fuzzy
+#| msgid "Tor Bridge Relay"
+msgid "Enable Tor bridge relay"
+msgstr "Tor 网桥中继"
+
+#: plinth/modules/tor/forms.py:46
+msgid ""
+"When enabled, relay information is published in the Tor bridge database "
+"instead of public Tor relay database making it harder to censor this node. "
+"This helps others circumvent censorship."
+msgstr ""
+
+#: plinth/modules/tor/forms.py:51
+msgid "Enable Tor Hidden Service"
+msgstr "启用隐藏的 Tor 服务"
+
+#: plinth/modules/tor/forms.py:54
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as ownCloud or chat) without revealing its location."
+msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
-"ownCloud or chat) without revealing its location."
+"wiki or chat) without revealing its location. Do not use this for strong "
+"anonymity yet."
 msgstr ""
 "隐藏的服务将允许 {box_name} 提供某些服务（如 ownCloud 或聊天），而不暴露其位"
 "置。"
 
-#: plinth/modules/tor/forms.py:42
+#: plinth/modules/tor/forms.py:59
 msgid "Download software packages over Tor"
 msgstr "通过 Tor 下载软件包"
 
-#: plinth/modules/tor/forms.py:44
+#: plinth/modules/tor/forms.py:61
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
@@ -2506,48 +2810,46 @@ msgstr ""
 "当启用时，软件将会下载 Tor 网络的安装和升级。这在软件下载过程中添加了一定程度"
 "的隐私和安全。"
 
-#: plinth/modules/tor/templates/tor.html:41
+#: plinth/modules/tor/templates/tor.html:57
 msgid "Tor configuration is being updated"
 msgstr "Tor 配置已更新"
 
-#: plinth/modules/tor/templates/tor.html:49
+#: plinth/modules/tor/templates/tor.html:66
 msgid "Tor is running"
 msgstr "Tor 正在运行"
 
-#: plinth/modules/tor/templates/tor.html:52
+#: plinth/modules/tor/templates/tor.html:69
 msgid "Tor is not running"
 msgstr "Tor 未运行"
 
-#: plinth/modules/tor/templates/tor.html:64
+#: plinth/modules/tor/templates/tor.html:81
 msgid "Hidden Service"
 msgstr "隐藏的服务"
 
-#: plinth/modules/tor/templates/tor.html:66
+#: plinth/modules/tor/templates/tor.html:83
 msgid "Ports"
 msgstr "端口"
 
-#: plinth/modules/tor/templates/tor.html:96
-msgid "Bridge"
-msgstr "网桥"
-
-#: plinth/modules/tor/templates/tor.html:99
-#, python-format
-msgid ""
-"Your %(box_name)s is configured as a Tor bridge with obfsproxy, so it can "
-"help circumvent censorship. If your %(box_name)s is behind a router or "
-"firewall, you should make sure the following ports are open, and port-"
-"forwarded, if necessary:"
+#: plinth/modules/tor/templates/tor.html:114
+msgid "Relay"
 msgstr ""
 
-#: plinth/modules/tor/templates/tor.html:113
+#: plinth/modules/tor/templates/tor.html:116
+#, python-format
+msgid ""
+"If your %(box_name)s is behind a router or firewall, you should make sure "
+"the following ports are open, and port-forwarded, if necessary:"
+msgstr ""
+
+#: plinth/modules/tor/templates/tor.html:128
 msgid "Port"
 msgstr "端口"
 
-#: plinth/modules/tor/templates/tor.html:128
+#: plinth/modules/tor/templates/tor.html:144
 msgid "SOCKS"
 msgstr "SOCKS"
 
-#: plinth/modules/tor/templates/tor.html:131
+#: plinth/modules/tor/templates/tor.html:147
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Tor SOCKS 端口是你 %(box_name)s 上的 TCP 端口 9050 。"
@@ -2557,11 +2859,11 @@ msgstr "Tor SOCKS 端口是你 %(box_name)s 上的 TCP 端口 9050 。"
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "操作错误：{0} [{1}] [{2}]"
 
-#: plinth/modules/tor/views.py:120
+#: plinth/modules/tor/views.py:131
 msgid "Configuration updated."
 msgstr "配置已更新。"
 
-#: plinth/modules/tor/views.py:122
+#: plinth/modules/tor/views.py:133
 msgid "An error occurred during configuration."
 msgstr "在配置过程中出错。"
 
@@ -2712,7 +3014,7 @@ msgstr "开始升级失败。"
 msgid "Users and Groups"
 msgstr "用户和组"
 
-#: plinth/modules/users/__init__.py:79
+#: plinth/modules/users/__init__.py:78
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
@@ -2895,6 +3197,10 @@ msgstr "启动 web 客户端"
 msgid "PPPoE"
 msgstr "PPPoE"
 
+#: plinth/network.py:40
+msgid "Generic"
+msgstr ""
+
 #: plinth/package.py:105
 #, fuzzy
 #| msgid "Performing pre-install operation"
@@ -2959,10 +3265,16 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:28
+#, fuzzy
+#| msgid ""
+#| "This is an internal error and not something you caused or can fix.  "
+#| "Please report the error on the <a href=\"https://github.com/freedombox/"
+#| "Plinth/issues\">bug tracker</a> so we can fix it."
 msgid ""
 "This is an internal error and not something you caused or can fix.  Please "
 "report the error on the <a href=\"https://github.com/freedombox/Plinth/issues"
-"\">bug tracker</a> so we can fix it."
+"\">bug tracker</a> so we can fix it. Also, please attach the <a href=\"/"
+"plinth/help/status-logs\">Status Log</a> to the bug report."
 msgstr ""
 "这是一个内部错误，不是你造成的或可以修复。 请报告到 <a href=\"https://github."
 "com/freedombox/Plinth/issues\"> bug 追踪器</a> 上这样我们就可以修复该错误。"
@@ -3050,6 +3362,12 @@ msgstr "应用程序已启用"
 #: plinth/views.py:93 plinth/views.py:182
 msgid "Application disabled"
 msgstr "应用程序已禁用"
+
+#~ msgid "IP Check URL"
+#~ msgstr "IP 检查 URL"
+
+#~ msgid "Bridge"
+#~ msgstr "网桥"
 
 #~ msgid "Service discovery server is running"
 #~ msgstr "服务发现服务正在运行"
@@ -3193,9 +3511,6 @@ msgstr "应用程序已禁用"
 
 #~ msgid "Enable Mumble daemon"
 #~ msgstr "启用 Mumble 守护进程"
-
-#~ msgid "OpenVPN"
-#~ msgstr "OpenVPN"
 
 #~ msgid "Enable ownCloud"
 #~ msgstr "启用 ownCloud"
