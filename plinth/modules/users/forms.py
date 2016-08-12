@@ -15,14 +15,34 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import subprocess
+
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
+
+# Usernames used by optional services (that might not be installed yet).
+RESTRICTED_USERNAMES = [
+    'debian-deluged',
+    'Debian-minetest',
+    'debian-tor',
+    'debian-transmission',
+    'ejabberd',
+    'ez-ipupd',
+    'monkeysphere',
+    'mumble-server',
+    'node-restore',
+    'quasselcore',
+    'radicale',
+    'repro',
+    'privoxy',
+]
 
 GROUP_CHOICES = (
     ('admin', _('admin')),
@@ -54,6 +74,19 @@ class CreateUserForm(UserCreationForm):
         """Initialize the form with extra request argument."""
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        try:
+            subprocess.run(['getent', 'passwd', username], check=True)
+            # Exit code 0 means that the username is already in use.
+            raise ValidationError(_('Username is reserved'))
+        except subprocess.CalledProcessError:
+            if username in RESTRICTED_USERNAMES:
+                raise ValidationError(_('Username is reserved'))
+
+        return super().clean()
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
@@ -115,6 +148,19 @@ class UserUpdateForm(forms.ModelForm):
         self.request = request
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        try:
+            subprocess.run(['getent', 'passwd', username], check=True)
+            # Exit code 0 means that the username is already in use.
+            raise ValidationError(_('Username is reserved'))
+        except subprocess.CalledProcessError:
+            if username in RESTRICTED_USERNAMES:
+                raise ValidationError(_('Username is reserved'))
+
+        return super().clean()
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
