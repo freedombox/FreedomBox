@@ -88,8 +88,13 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def get_initial(self):
         """Return the data for initial form load."""
         initial = super(UserUpdate, self).get_initial()
-        initial['ssh_keys'] = actions.superuser_run(
-            'ssh', ['get-keys', '--username', self.object.username]).strip()
+        try:
+            ssh_keys = actions.superuser_run(
+                'ssh', ['get-keys', '--username', self.object.username])
+            initial['ssh_keys'] = ssh_keys.strip()
+        except ActionError:
+            pass
+
         return initial
 
     def get_success_url(self):

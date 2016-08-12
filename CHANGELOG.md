@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file.
 - networks: Fixed incorrect access for retrieving DNS entries.
 - Fixed issue with lost menus in Django 1.10.
 - Added workaround for script prefix problem in stronghold.
+- users: Fixed editing users without SSH keys.
 
 ### Changed
 - Added suggested packages for ikiwiki. Removed recommends since they
