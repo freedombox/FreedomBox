@@ -35,30 +35,17 @@ from plinth import cfg
 from plinth.errors import ActionError, DomainRegistrationError
 from plinth.modules.pagekite.utils import PREDEFINED_SERVICES, run
 from plinth.modules.security import set_restricted_access
-from plinth.modules.users.forms import GROUP_CHOICES, RESTRICTED_USERNAMES
+from plinth.modules.users.forms import GROUP_CHOICES, ValidNewUsernameCheckMixin
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
 
 
-class State1Form(auth.forms.UserCreationForm):
+class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     """Firstboot state 1: create a new user."""
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
-
-    def clean(self):
-        """Check for username collisions with system users."""
-        username = self.cleaned_data['username']
-        try:
-            subprocess.run(['getent', 'passwd', username], check=True)
-            # Exit code 0 means that the username is already in use.
-            raise ValidationError(_('Username is reserved'))
-        except subprocess.CalledProcessError:
-            if username in RESTRICTED_USERNAMES:
-                raise ValidationError(_('Username is reserved'))
-
-        return super().clean()
 
     def save(self, commit=True):
         """Create and log the user in."""

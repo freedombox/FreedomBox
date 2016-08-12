@@ -28,7 +28,7 @@ from plinth import actions
 from plinth.errors import ActionError
 
 # Usernames used by optional services (that might not be installed yet).
-RESTRICTED_USERNAMES = [
+RESERVED_USERNAMES = [
     'debian-deluged',
     'Debian-minetest',
     'debian-tor',
@@ -50,7 +50,33 @@ GROUP_CHOICES = (
 )
 
 
-class CreateUserForm(UserCreationForm):
+class ValidNewUsernameCheckMixin(object):
+    """Mixin to check if a username is valid for created new user."""
+    def clean(self):
+        """Check for username collisions with system users."""
+        if not self.is_valid_new_username():
+            raise ValidationError(_('Username is taken or is reserved'))
+
+        return super().clean()
+
+    def is_valid_new_username(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        try:
+            subprocess.run(['getent', 'passwd', username],
+                           stdout=subprocess.DEVNULL, check=True)
+            # Exit code 0 means that the username is already in use.
+            return False
+        except subprocess.CalledProcessError:
+            pass
+
+        if username in RESERVED_USERNAMES:
+            return False
+
+        return True
+
+
+class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
     """Custom user create form.
 
     Include options to add user to groups.
@@ -74,19 +100,6 @@ class CreateUserForm(UserCreationForm):
         """Initialize the form with extra request argument."""
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
-
-    def clean(self):
-        """Check for username collisions with system users."""
-        username = self.cleaned_data['username']
-        try:
-            subprocess.run(['getent', 'passwd', username], check=True)
-            # Exit code 0 means that the username is already in use.
-            raise ValidationError(_('Username is reserved'))
-        except subprocess.CalledProcessError:
-            if username in RESTRICTED_USERNAMES:
-                raise ValidationError(_('Username is reserved'))
-
-        return super().clean()
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
@@ -119,7 +132,7 @@ class CreateUserForm(UserCreationForm):
         return user
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
         label=ugettext_lazy('SSH Keys'),
@@ -148,19 +161,6 @@ class UserUpdateForm(forms.ModelForm):
         self.request = request
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
-
-    def clean(self):
-        """Check for username collisions with system users."""
-        username = self.cleaned_data['username']
-        try:
-            subprocess.run(['getent', 'passwd', username], check=True)
-            # Exit code 0 means that the username is already in use.
-            raise ValidationError(_('Username is reserved'))
-        except subprocess.CalledProcessError:
-            if username in RESTRICTED_USERNAMES:
-                raise ValidationError(_('Username is reserved'))
-
-        return super().clean()
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
