@@ -147,7 +147,61 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.9.3 (2016-06-xx)</title>
+      <title>Version 0.10 (2016-08)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Updated Plinth to support Django 1.10. </para>
+        </listitem>
+        <listitem>
+          <para>Added a page to display recent status log from Plinth. It is accessible from the 500 error page. </para>
+        </listitem>
+        <listitem>
+          <para>Tor: Added options to toggle relay and bridge relay modes. </para>
+        </listitem>
+        <listitem>
+          <para>Radicale: Added access rights control. </para>
+        </listitem>
+        <listitem>
+          <para>Ikiwiki: Updated suggested packages. </para>
+        </listitem>
+        <listitem>
+          <para>Users and Groups: Fixed editing users without SSH keys. </para>
+        </listitem>
+        <listitem>
+          <para>Networks: Added basic support for configuring batman-adv mesh networking. </para>
+        </listitem>
+        <listitem>
+          <para>Networks: Fixed incorrect access for retrieving DNS entries. </para>
+        </listitem>
+        <listitem>
+          <para>New languages: </para>
+          <itemizedlist>
+            <listitem>
+              <para>Persian (50% translated) </para>
+            </listitem>
+            <listitem>
+              <para>Indonesian (not started, contributions needed) </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>New modules added to Plinth: </para>
+          <itemizedlist>
+            <listitem>
+              <para>Disks: Shows free space of mounted partitions, and allows expanding the root partition. </para>
+            </listitem>
+            <listitem>
+              <para>Security: Controls login restrictions. </para>
+            </listitem>
+            <listitem>
+              <para>Snapshots: Manages Btrfs snapshots. </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.9.4 (2016-06-24)</title>
       <itemizedlist>
         <listitem>
           <para>Added Polish translation. </para>
@@ -471,7 +525,10 @@
         <title>Downloading Images</title>
         <para>Recent images for supported targets are available here: </para>
         <itemizedlist>
-          <listitem override="none">
+          <listitem>
+            <para>Official Images: <ulink url="http://ftp.freedombox.org/pub/freedombox/"/> </para>
+          </listitem>
+          <listitem>
             <para>Official Images: <ulink url="http://ftp.skolelinux.org/pub/freedombox/"/> </para>
           </listitem>
         </itemizedlist>
@@ -482,11 +539,11 @@
         <itemizedlist>
           <listitem>
             <para>First open a terminal and import the public key of the FreedomBox developer who built the images: </para>
-            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys 0x36C361440C9BC971</screen>
+            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971</screen>
           </listitem>
           <listitem>
             <para>Next, verify the fingerprint of the public key: </para>
-            <screen format="linespecific">$ gpg --fingerprint 0x36C361440C9BC971
+            <screen format="linespecific">$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
 pub   4096R/0C9BC971 2011-11-12
       Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
 uid                  Sunil Mohan Adapa &lt;sunil@medhas.org&gt;
@@ -500,6 +557,17 @@ gpg: Good signature from "Sunil Mohan Adapa &lt;sunil@medhas.org&gt;"
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</screen>
+          </listitem>
+          <listitem>
+            <para>For version 0.9, some of the images are signed using the following key instead of the regular key: </para>
+            <screen format="linespecific">$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy &lt;jvalleroy@mailbox.org&gt;
+uid                  James Valleroy &lt;jvalleroy@freedombox.org&gt;
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22</screen>
           </listitem>
         </itemizedlist>
       </section>
@@ -607,6 +675,12 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
     </section>
     <section>
       <title>Shaarli</title>
+      <caution>
+        <para>
+          <emphasis role="strong">Currently not functional</emphasis>
+        </para>
+        <para>Shaarli is currently not available in Debian testing and the version in sid is said to be not functional. We are expecting this will soon be resolved and Shaarli will be again available in the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>. </para>
+      </caution>
       <section>
         <title>What is Shaarli?</title>
         <para>Shaarli is personal (single-user) bookmarking application to install on your FreedomBox. It can also be used for micro-blogging, pastebin, online notepad and snippet archive. Shaarli is designed as a no-database delicious clone. As such, it provides very fast services, easy backup and import/export links as desktop or mobile browser bookmarks. Links stored can be public or private. Shaarli delivers ATOM and RSS feeds from its minimalist interface. </para>
@@ -761,6 +835,12 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
     </section>
     <section>
       <title>ownCloud</title>
+      <caution>
+        <para>
+          <emphasis role="strong">ownCloud was removed from Debian</emphasis>
+        </para>
+        <para>ownCloud was removed from Debian, so it is not available in the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> any more. Existing installations however are still working for time being. We are working on finding an adequate alternative. </para>
+      </caution>
       <section>
         <title>What is ownCloud?</title>
         <para>ownCloud is a self-hosted file sync and share server. It provides access to your data through a platform to view, sync and share across devices. Calendars and Contacts feature will help you keeping google at a nice distance. ownCloud's functionalities are native or available via plugins (Collaborative Editing, Play Music, Watch Movies, Store Passwords, Dashboard, Mozilla Sync...) via <ulink url="https://apps.owncloud.com/"/> </para>
@@ -854,10 +934,81 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
     </section>
     <section>
-      <title>Privoxy</title>
+      <title>Web Proxy (Privoxy)</title>
+      <para>A web proxy acts as a filter for incoming and outgoing internet traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
+      <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
       <section>
-        <title>What is Privoxy?</title>
-        <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). Learning about networking protocols like HTTP, about HTML, and "Regular Expressions" can help a lot using Privoxy. </para>
+        <title>Setting up</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>In Plinth install <emphasis>Web Proxy (Privoxy)</emphasis>  </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/Privoxy-Installation.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Privoxy-Installation.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Adapt your browser proxy settings to your FreedomBox hostname (or IP address) with port 8118. Please note that Privoxy can only proxy HTTP and HTTPS traffic. It will not work with FTP or other protocols.  </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/Privoxy-BrowserSettings.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Privoxy-BrowserSettings.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Go to page <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. If Privoxy is installed properly, you will be able to configure it in detail; if not you will see an error message. </para>
+          </listitem>
+          <listitem>
+            <para>If you are using a laptop that occasionally has to connect through other routers than yours with the FreedomBox and Privoxy, you may want to install a proxy switch add-on that allows you to easily turn the proxy on or off.  </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Advanced Users</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises.  </para>
+          </listitem>
+          <listitem>
+            <para>While using Privoxy, you can see its configuration details and documentation at <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. </para>
+          </listitem>
+          <listitem>
+            <para>To enable changing these configurations, you first have to change the value of <code>enable-edit-actions</code> in <code>/etc/privoxy/config</code> to <code>1</code>. Before doing so, read carefully the manual, especially:    </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <emphasis>Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.</emphasis>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Now you find an <code>EDIT</code> button on the configuration screen in <code>http://config.privoxy.org/</code>. </para>
+          </listitem>
+          <listitem>
+            <para>The <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
+          </listitem>
+        </orderedlist>
+        <para>Screencast of the setting-up: <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy_Installation.webm">Privoxy_Installation.webm</ulink> </para>
       </section>
     </section>
     <section>
@@ -1005,62 +1156,161 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
     </section>
     <section>
-      <title>Radicale</title>
-      <section>
-        <title>What is Radicale?</title>
-        <para>Radicale is a CalDAV and CardDAV server. It allows synchronization and sharing of calendar and contact data. To use the application, a <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed. Radicale can be accessed by any user with a FreedomBox login. </para>
-      </section>
+      <title>Calendar, ToDo-List and Addressbook Server (through radicale)</title>
+      <para>With radicale you can synchronize your personal Calendars, ToDo-Lists and Addressbooks with your various computers, tables, smartphones etc. and share them with friends without letting third parties know your personal Schedule or Contacts. </para>
       <section>
         <title>Why running Radicale?</title>
         <para>Using Radicale, you can get rid of centralized services like Google Calendar or Apple Calendar (iCloud) mining your events and social connections.  </para>
       </section>
       <section>
         <title>How to setup Radicale?</title>
-        <para>First, the Radicale server needs to be activated on your box.  Then the mobile and computer clients need to be configured. </para>
+        <para>First, the Radicale server needs to be activated on your box.  </para>
         <itemizedlist>
           <listitem>
-            <para>From your FreedomBox interface, go to "Calendar and Addressbook (Radicale)" page and install the application. After the installation is complete, make sure the application is marked "enabled" in the FreedomBox interface.  Enabling the application launches the Radicale server CalDAV.  </para>
+            <para>Within Plinth </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>select <emphasis>Applications</emphasis> </para>
+              </listitem>
+              <listitem>
+                <para>go to <emphasis>Calendar and Addressbook (Radicale)</emphasis> and  </para>
+              </listitem>
+              <listitem>
+                <para>install the application. After the installation is complete, make sure the application is marked "enabled" in the FreedomBox interface. Enabling the application launches the Radicale server CalDAV.  <inlinemediaobject><imageobject><imagedata fileref="images/Radicale-Plinth-Docu.png"/></imageobject><textobject><phrase>Radicale-Plinth-Docu.png</phrase></textobject></inlinemediaobject> </para>
+              </listitem>
+            </orderedlist>
           </listitem>
-          <listitem>
-            <para>Now open your clients to create new calendar and address books that will use your FreedomBox and Radicale server. Remember, your clients must be CalDAV and CardDAV compatible. The Radicale website provides <ulink url="http://radicale.org/user_documentation/#idstarting-the-client">tutorials to setup</ulink> a large selection of clients.  </para>
-          </listitem>
+        </itemizedlist>
+        <para>Radicale can be accessed by any user with a FreedomBox login. However, each user only has access to <emphasis role="strong">his</emphasis> data. If you want to share a calendar with friends, the simplest approach is to create an additional user for your friends and to share that user name and password with them. </para>
+        <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed.     </para>
+        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/user_documentation/#idstarting-the-client">tutorials to setup</ulink> a large selection of clients. Below are the steps for two examples: </para>
+        <itemizedlist>
           <listitem>
             <para>Example of setup with Evolution client:   </para>
             <itemizedlist>
               <listitem>
-                <para>Contacts </para>
+                <para>Calendar </para>
                 <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
                   <listitem>
-                    <para>Create new address book </para>
+                    <para>Create a new calendar </para>
                   </listitem>
                   <listitem>
-                    <para>For "Type," select "WebDAV" </para>
+                    <para>For "Type," select "CalDAV" </para>
                   </listitem>
                   <listitem>
-                    <para>When "WebDAV" is selected, additional options will appear in the dialogue window. </para>
+                    <para>When "CalDAV" is selected, additional options will appear in the dialogue window. </para>
                   </listitem>
                   <listitem>
-                    <para>URL: <code>https://IP</code> <emphasis>address or domain for your server</emphasis>/radicale/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf/.  In addition, if you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf.  Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+                    <para>URL: <code>https://IP</code> <emphasis>address or domain for your server</emphasis>/radicale/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.ics/. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+                    <itemizedlist>
+                      <listitem>
+                        <para>note the trailing <code>/</code> in the path, it is important. </para>
+                      </listitem>
+                    </itemizedlist>
                   </listitem>
                   <listitem>
                     <para>Select/check "Use a secure connection."     </para>
                   </listitem>
                   <listitem>
-                    <para>Name the address book </para>
+                    <para>Name the calendar </para>
+                  </listitem>
+                  <listitem>
+                    <para>A ToDo-List is basically the same as a calendar. <inlinemediaobject><imageobject><imagedata fileref="images/Radicale-Evolution-Docu.png"/></imageobject><textobject><phrase>Radicale-Evolution-Docu.png</phrase></textobject></inlinemediaobject> </para>
                   </listitem>
                 </orderedlist>
               </listitem>
               <listitem>
-                <para>Calendar </para>
+                <para>Contacts </para>
                 <itemizedlist>
                   <listitem>
-                    <para>Follow the same steps described above and replace WebDAV with CalDAV.  The extension of the calendar file will be .ics. </para>
+                    <para>Follow the same steps described above and replace CalDAV with WebDAV.  The extension of the address book will be .vcf. </para>
                   </listitem>
                 </itemizedlist>
               </listitem>
             </itemizedlist>
           </listitem>
+          <listitem>
+            <para>Android </para>
+            <itemizedlist>
+              <listitem>
+                <para>There are various Apps that allow the integration of the *radicale* server. This example uses DAVdroid, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>. </para>
+              </listitem>
+              <listitem>
+                <para>If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
+              </listitem>
+              <listitem>
+                <para>Install DAVdroid </para>
+              </listitem>
+              <listitem>
+                <para>Create an accound DAVdroid with the same settings as described for Evolution </para>
+              </listitem>
+              <listitem>
+                <para>Click the newly created account and synchronize. </para>
+              </listitem>
+              <listitem>
+                <para>The settings, such as periodicity of synchronizsation, can be adjusted. </para>
+              </listitem>
+              <listitem>
+                <para>A contact or calendar file, that was created before appears.  </para>
+              </listitem>
+              <listitem>
+                <para>Enable it.  </para>
+              </listitem>
+              <listitem>
+                <para>It may take some minutes before e.g. the calendar is visible in your calendar app. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Experienced Users</title>
+        <section>
+          <title>Sharing ressources</title>
+          <para>Above was shown an easy way to create a ressource for a group of people by creating a dedicated account for all. Here will be described an alternative method where two users <code>User1</code> and <code>User2</code> are granted access to a calendar. This requires SSH-access to the FreedomBox. </para>
+          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+            <listitem>
+              <para>create a file <code>/etc/radicale/rights</code> </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <screen format="linespecific">[friends_calendar]
+user: ^(User1|User2)$
+collection: ^.*/calendar_of_my_friends.ics$
+permission: rw
+
+# Give write access to owners
+[owner-write]
+user: .+
+collection: ^%(login)s/.+$
+permission: rw</screen>
+                </listitem>
+                <listitem>
+                  <para><code>[friends_calendar]</code> is just an identifier, can be any name. </para>
+                </listitem>
+                <listitem>
+                  <para>The <code>[owner-write]</code> section makes sure that owners have access to their own files </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>edit file <code>/etc/radicale/config</code> and make the following changes in section <code>[rights)</code> </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <screen format="linespecific">[rights]
+type = from_file
+file = /etc/radicale/rights</screen>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Restart the radicale server or the FreedbomBox </para>
+            </listitem>
+          </orderedlist>
+        </section>
+        <section>
+          <title>Importing files</title>
+          <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
+        </section>
       </section>
     </section>
     <section>
