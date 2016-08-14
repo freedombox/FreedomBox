@@ -366,11 +366,6 @@ def _apply_changes(request, old_status, new_status):
         logger.info('Nothing changed')
 
 
-def _run(arguments, superuser=False, input=None):
+def _run(arguments, input=None):
     """Run a given command and raise exception if there was an error."""
-    command = 'dynamicdns'
-
-    if superuser:
-        return actions.superuser_run(command, arguments, input=input)
-    else:
-        return actions.run(command, arguments, input=input)
+    return actions.superuser_run('dynamicdns', arguments, input=input)
