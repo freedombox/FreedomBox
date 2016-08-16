@@ -42,7 +42,8 @@ class TransmissionServiceView(views.ServiceView):
 
     def get_initial(self):
         """Get the current settings from Transmission server."""
-        configuration = open(transmission.TRANSMISSION_CONFIG, 'r').read()
+        configuration = actions.superuser_run(
+            'transmission', ['get-configuration'])
         status = json.loads(configuration)
         status = {key.translate(str.maketrans({'-': '_'})): value
                   for key, value in status.items()}

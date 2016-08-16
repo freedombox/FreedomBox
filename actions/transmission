@@ -37,13 +37,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Enable service
     subparsers.add_parser('enable', help='Enable Transmission service')
-
-    # Disable service
     subparsers.add_parser('disable', help='Disable Transmission service')
-
-    # Merge given JSON configration with existing
+    subparsers.add_parser(
+        'get-configuration', help='Return the current configuration')
     subparsers.add_parser(
         'merge-configuration',
         help='Merge JSON configuration from stdin with existing')
@@ -61,6 +58,12 @@ def subcommand_disable(_):
     """Stop Transmission service."""
     action_utils.webserver_disable('transmission-plinth')
     action_utils.service_disable('transmission-daemon')
+
+
+def subcommand_get_configuration(_):
+    """Return the current configuration in JSON format."""
+    configuration = open(TRANSMISSION_CONFIG, 'r').read()
+    print(configuration)
 
 
 def subcommand_merge_configuration(arguments):
