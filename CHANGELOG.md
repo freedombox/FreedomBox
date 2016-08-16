@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - dynamicdns: Allowed Plinth to run as non-root.
+- transmission: Read configuration as super user.
 
 ## [0.10.0] - 2016-08-12
 ### Added

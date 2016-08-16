@@ -47,8 +47,6 @@ description = [
 
 service = None
 
-TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
-
 
 def init():
     """Intialize the Transmission module."""
