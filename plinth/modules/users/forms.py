@@ -207,9 +207,15 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
 
-            actions.superuser_run(
-                'ssh', ['set-keys', '--username', user.get_username(),
-                        '--keys', self.cleaned_data['ssh_keys'].strip()])
+            try:
+                actions.superuser_run(
+                    'ssh', ['set-keys', '--username', user.get_username(),
+                            '--keys', self.cleaned_data['ssh_keys'].strip()])
+            except ActionError:
+                messages.error(
+                    self.request,
+                    _('Unable to set SSH keys. Please wait a minute and then '
+                      'try again.'))
 
         return user
 
