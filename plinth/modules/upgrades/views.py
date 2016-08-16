@@ -36,9 +36,6 @@ subsubmenu = [{'url': reverse_lazy('upgrades:index'),
               {'url': reverse_lazy('upgrades:upgrade'),
                'text': ugettext_lazy('Upgrade Packages')}]
 
-LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
-LOCK_FILE = '/var/log/dpkg/lock'
-
 
 class UpgradesConfigurationView(FormView):
     """Serve configuration page."""
@@ -91,19 +88,15 @@ class UpgradesConfigurationView(FormView):
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
-        subprocess.check_output(['lsof', '/var/lib/dpkg/lock'])
+        actions.superuser_run('upgrades', ['is-package-manager-busy'])
         return True
-    except subprocess.CalledProcessError:
+    except actions.ActionError:
         return False
 
 
 def get_log():
     """Return the current log for unattended upgrades."""
-    try:
-        with open(LOG_FILE, 'r') as file_handle:
-            return file_handle.read()
-    except IOError:
-        return None
+    return actions.superuser_run('upgrades', ['get-log'])
 
 
 def upgrade(request):
