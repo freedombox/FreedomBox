@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-11 19:55-0400\n"
+"POT-Creation-Date: 2016-08-20 09:43+0530\n"
 "PO-Revision-Date: 2016-08-19 12:39+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@openmailbox.org>\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/freedombox/plinth/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
+"plinth/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -618,7 +618,7 @@ msgid "Dynamic DNS Status"
 msgstr "Estado del DNS dinámico"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:364
-#: plinth/modules/openvpn/views.py:142 plinth/modules/transmission/views.py:71
+#: plinth/modules/openvpn/views.py:142 plinth/modules/transmission/views.py:72
 msgid "Configuration updated"
 msgstr "Configuración actualizada"
 
@@ -683,11 +683,6 @@ msgstr "Acceso directo a Internet."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
 #, python-format
-#| msgid ""
-#| "Behind NAT. This means that Dynamic DNS service will poll the \"IP Check "
-#| "URL\" for changes (the \"IP Check URL\" entry is needed for this, "
-#| "otherwise IP changes will not be detected). In case the WAN IP changes, "
-#| "it may take up to %(timer)s minutes until your DNS entry is updated."
 msgid ""
 "Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
 "up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
@@ -779,57 +774,57 @@ msgstr ""
 "se autoriza en el firewall, y cuando lo desactiva también se desactiva en el "
 "firewall."
 
-#: plinth/modules/first_boot/forms.py:60 plinth/modules/users/forms.py:70
+#: plinth/modules/first_boot/forms.py:61 plinth/modules/users/forms.py:119
 msgid "Creating LDAP user failed."
 msgstr "Ha fallado la creación de usuario LDAP."
 
-#: plinth/modules/first_boot/forms.py:68
+#: plinth/modules/first_boot/forms.py:69
 msgid "Failed to add new user to admin group."
 msgstr "Ha fallado añadir usuario nuevo al grupo admin."
 
-#: plinth/modules/first_boot/forms.py:83
+#: plinth/modules/first_boot/forms.py:84
 msgid ""
 "Console login access restricted to users in \"admin\" group. This can be "
 "configured in security settings."
 msgstr ""
-"Acceso al terminal de consola  restringido a los usuarios del grupo \"admin\""
-". Se puede configurar en las opciones de seguridad."
+"Acceso al terminal de consola  restringido a los usuarios del grupo \"admin"
+"\". Se puede configurar en las opciones de seguridad."
 
-#: plinth/modules/first_boot/forms.py:89
+#: plinth/modules/first_boot/forms.py:90
 msgid "Failed to restrict console access."
 msgstr "Falló al restringir el acceso a la consola."
 
-#: plinth/modules/first_boot/forms.py:101
+#: plinth/modules/first_boot/forms.py:102
 msgid "User account created, you are now logged in"
 msgstr "Creada cuenta de usuario, ya está usted en el sistema"
 
-#: plinth/modules/first_boot/forms.py:128
+#: plinth/modules/first_boot/forms.py:129
 #, python-brace-format
 msgid "The voucher you received with your {box_name} Danube Edition"
 msgstr "El cupón que recibió con su {box_name} Danube Edition"
 
-#: plinth/modules/first_boot/forms.py:133
+#: plinth/modules/first_boot/forms.py:134
 msgid "Subdomain"
 msgstr "Subdominio"
 
-#: plinth/modules/first_boot/forms.py:135
+#: plinth/modules/first_boot/forms.py:136
 msgid "The subdomain you want to register"
 msgstr "Subdominio que desea registrar"
 
-#: plinth/modules/first_boot/forms.py:158
+#: plinth/modules/first_boot/forms.py:159
 msgid "This code is not valid"
 msgstr "Código no válido"
 
-#: plinth/modules/first_boot/forms.py:164
+#: plinth/modules/first_boot/forms.py:165
 #, python-brace-format
 msgid "This code is bound to the domain {domain}."
 msgstr "El código está unido al dominio {domain}."
 
-#: plinth/modules/first_boot/forms.py:174
+#: plinth/modules/first_boot/forms.py:175
 msgid "The requested domain is already registered."
 msgstr "El dominio solicitado ya está registrado."
 
-#: plinth/modules/first_boot/forms.py:188
+#: plinth/modules/first_boot/forms.py:189
 #, python-brace-format
 msgid "Domain registration failed: {response}."
 msgstr "Ha fallado el registro del dominio: {response}."
@@ -1090,10 +1085,6 @@ msgstr ""
 
 #: plinth/modules/help/templates/statuslog.html:26
 #, python-format
-#| msgid ""
-#| "This is an internal error and not something you caused or can fix.  "
-#| "Please report the error on the <a href=\"https://github.com/freedombox/"
-#| "Plinth/issues\">bug tracker</a> so we can fix it."
 msgid ""
 "This is the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -1101,9 +1092,9 @@ msgid ""
 "log to the bug report."
 msgstr ""
 "Estas son las últimas %(num_lines)s líneas del registro de estado. Si quiere "
-"informar de un fallo, por favor utilice <a href=\""
-"https://github.com/freedombox/Plinth/issues\">bugtracker</a> y adjunte esta "
-"información al informe."
+"informar de un fallo, por favor utilice <a href=\"https://github.com/"
+"freedombox/Plinth/issues\">bugtracker</a> y adjunte esta información al "
+"informe."
 
 #: plinth/modules/help/templates/statuslog.html:36
 msgid ""
@@ -1256,9 +1247,16 @@ msgstr ""
 "dominio a Let's Encrypt, autoridad de certificación (CA)."
 
 #: plinth/modules/letsencrypt/__init__.py:49
+#, fuzzy
+#| msgid ""
+#| "Let's Encrypt is a free, automated, and open certificate authority, run "
+#| "for the public’s benefit by the Internet Security Research Group (ISRG).  "
+#| "Please read and agree with the <a href=\"https://letsencrypt.org/"
+#| "repository/\">Let's Encrypt Subscriber Agreement</a> before using this "
+#| "service."
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
-"the public’s benefit by the Internet Security Research Group (ISRG).  Please "
+"the public's benefit by the Internet Security Research Group (ISRG).  Please "
 "read and agree with the <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
@@ -1708,7 +1706,6 @@ msgid "Frequency Band"
 msgstr "Banda de frecuencia"
 
 #: plinth/modules/networks/forms.py:206
-#| msgid "Automatic Upgrades"
 msgid "Automatic"
 msgstr "Automática"
 
@@ -1734,7 +1731,6 @@ msgstr ""
 "seleccionada. Valor 0 o en blanco implica selección automática."
 
 #: plinth/modules/networks/forms.py:218
-#| msgid "SSID"
 msgid "BSSID"
 msgstr "BSSID"
 
@@ -1835,7 +1831,6 @@ msgid "Failed to de-activate connection: Connection not found."
 msgstr "Ha fallado la desactivación de la conexión: no se encontró."
 
 #: plinth/modules/networks/networks.py:283
-#| msgid "Adding New Ethernet Connection"
 msgid "Adding New Generic Connection"
 msgstr "Añadir nueva conexión genérica"
 
@@ -2694,7 +2689,6 @@ msgstr ""
 "Cualquier usuario puede ver o hacer cambios en cualquier calendario/agenda."
 
 #: plinth/modules/radicale/views.py:53
-#| msgid "Configuration updated"
 msgid "Access rights configuration updated"
 msgstr "Configuración de derechos de acceso actualizada"
 
@@ -2835,12 +2829,10 @@ msgstr ""
 
 #: plinth/modules/security/views.py:63
 #, python-brace-format
-#| msgid "Error setting time zone: {exception}"
 msgid "Error setting restricted access: {exception}"
 msgstr "Error al definir el acceso restringido: {exception}"
 
 #: plinth/modules/security/views.py:66
-#| msgid "General Configuration"
 msgid "Updated security configuration"
 msgstr "Configuración de seguridad actualizada"
 
@@ -2889,8 +2881,8 @@ msgstr ""
 "antiguos se eliminan automáticamente manteniendo 10 de cada clase y un total "
 "de 50. Aunque las instantáneas son eficientes y solo almacenan las "
 "diferencias, pueden borrase si hace falta espacio. Los archivos individuales "
-"de instantáneas anteriores pueden consultarse en el directorio \".snapshots\""
-". Snapshots no es un sustituto de la copia de seguridad."
+"de instantáneas anteriores pueden consultarse en el directorio \".snapshots"
+"\". Snapshots no es un sustituto de la copia de seguridad."
 
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
@@ -2909,7 +2901,6 @@ msgid "Rollback"
 msgstr "Revertir"
 
 #: plinth/modules/snapshot/templates/snapshot.html:44
-#| msgid "Inactive"
 msgid "active"
 msgstr "Activa"
 
@@ -2920,23 +2911,19 @@ msgstr "Revertir a instantánea %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot.html:64
 #, python-format
-#| msgid "Delete %(name)s"
 msgid "Delete snapshot #%(number)s"
 msgstr "Eliminar instantánea %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot.html:85
-#| msgid "Create User"
 msgid "Create Snapshot"
 msgstr "Crear instantánea"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:27
-#| msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgid "Delete this snapshot permanently?"
 msgstr "¿Eliminar esta instantánea definitivamente?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:53
 #, python-format
-#| msgid "Delete %(name)s"
 msgid "Delete Snapshot #%(number)s"
 msgstr "Eliminar instantánea %(number)s"
 
@@ -2968,7 +2955,6 @@ msgid "Deleted snapshot #{number}."
 msgstr "Borrar instantánea {number}."
 
 #: plinth/modules/snapshot/views.py:65
-#| msgid "Delete %(name)s"
 msgid "Delete Snapshot"
 msgstr "Eliminar instantánea"
 
@@ -3059,7 +3045,6 @@ msgid "Enable Tor"
 msgstr "Activar Tor"
 
 #: plinth/modules/tor/forms.py:35
-#| msgid "Enable Tor"
 msgid "Enable Tor relay"
 msgstr "Activar Tor"
 
@@ -3075,7 +3060,6 @@ msgstr ""
 "ancho de banda para descarga y subida."
 
 #: plinth/modules/tor/forms.py:43
-#| msgid "Tor Bridge Relay"
 msgid "Enable Tor bridge relay"
 msgstr "Activar puente de retransmisión Tor"
 
@@ -3095,9 +3079,6 @@ msgstr "Activar el servicio de ocultación de Tor"
 
 #: plinth/modules/tor/forms.py:54
 #, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as ownCloud or chat) without revealing its location."
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
@@ -3147,11 +3128,6 @@ msgstr "Retransmisión"
 
 #: plinth/modules/tor/templates/tor.html:116
 #, python-format
-#| msgid ""
-#| "Your %(box_name)s is configured as a Tor bridge with obfsproxy, so it can "
-#| "help circumvent censorship. If your %(box_name)s is behind a router or "
-#| "firewall, you should make sure the following ports are open, and port-"
-#| "forwarded, if necessary:"
 msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
 "the following ports are open, and port-forwarded, if necessary:"
@@ -3315,28 +3291,28 @@ msgstr "Actualizaciones automáticas"
 msgid "Upgrade Packages"
 msgstr "Actualizar paquetes"
 
-#: plinth/modules/upgrades/views.py:77
+#: plinth/modules/upgrades/views.py:74
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Error al configurar las actualizaciones desatendidas: {error}"
 
-#: plinth/modules/upgrades/views.py:81
+#: plinth/modules/upgrades/views.py:78
 msgid "Automatic upgrades enabled"
 msgstr "Actualizaciones automáticas activadas"
 
-#: plinth/modules/upgrades/views.py:83
+#: plinth/modules/upgrades/views.py:80
 msgid "Automatic upgrades disabled"
 msgstr "Actualizaciones automáticas desactivadas"
 
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:82
 msgid "Settings unchanged"
 msgstr "Configuración sin cambio"
 
-#: plinth/modules/upgrades/views.py:116
+#: plinth/modules/upgrades/views.py:109
 msgid "Upgrade process started."
 msgstr "Proceso de actualización iniciado."
 
-#: plinth/modules/upgrades/views.py:119
+#: plinth/modules/upgrades/views.py:112
 msgid "Starting upgrade failed."
 msgstr "No se ha podido iniciar la actualización."
 
@@ -3349,19 +3325,23 @@ msgstr "Usuarios y grupos"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Comprobar la entrada LDAP \"{search_item}\""
 
-#: plinth/modules/users/forms.py:28
+#: plinth/modules/users/forms.py:48
 msgid "admin"
 msgstr "admin"
 
-#: plinth/modules/users/forms.py:29
+#: plinth/modules/users/forms.py:49
 msgid "wiki"
 msgstr "wiki"
 
-#: plinth/modules/users/forms.py:41
+#: plinth/modules/users/forms.py:60
+msgid "Username is taken or is reserved."
+msgstr ""
+
+#: plinth/modules/users/forms.py:90
 msgid "Groups"
 msgstr "Grupos"
 
-#: plinth/modules/users/forms.py:45
+#: plinth/modules/users/forms.py:94
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -3376,16 +3356,16 @@ msgstr ""
 "servicios, también podrán acceder al sistema por SSH con privilegios de "
 "administrador (sudo)."
 
-#: plinth/modules/users/forms.py:80
+#: plinth/modules/users/forms.py:129
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Ha fallado añadir usuario nuevo al grupo {group}."
 
-#: plinth/modules/users/forms.py:92
+#: plinth/modules/users/forms.py:141
 msgid "SSH Keys"
 msgstr "Claves SSH"
 
-#: plinth/modules/users/forms.py:96
+#: plinth/modules/users/forms.py:145
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -3395,19 +3375,19 @@ msgstr ""
 "necesidad de una clave. Puede introducir más de una clave, cada una en una "
 "línea. Las líneas en blanco y las que empiecen por # se ignorarán."
 
-#: plinth/modules/users/forms.py:136
+#: plinth/modules/users/forms.py:185
 msgid "Renaming LDAP user failed."
 msgstr "Ha fallado renombrar al usuario LDAP."
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:197
 msgid "Failed to remove user from group."
 msgstr "Ha fallado la eliminación del usuario del grupo."
 
-#: plinth/modules/users/forms.py:159
+#: plinth/modules/users/forms.py:208
 msgid "Failed to add user to group."
 msgstr "Ha fallado añadir el usuario al grupo."
 
-#: plinth/modules/users/forms.py:188
+#: plinth/modules/users/forms.py:237
 msgid "Changing LDAP user password failed."
 msgstr "Ha fallado cambiar la clave del usuario LDAP."
 
@@ -3426,7 +3406,7 @@ msgid "Create User"
 msgstr "Crear usuario"
 
 #: plinth/modules/users/templates/users_delete.html:26
-#: plinth/modules/users/views.py:110
+#: plinth/modules/users/views.py:115
 msgid "Delete User"
 msgstr "Eliminar usuario"
 
@@ -3481,20 +3461,20 @@ msgstr "El usuario %(username)s ha sido actualizado."
 msgid "Edit User"
 msgstr "Editar usuario"
 
-#: plinth/modules/users/views.py:120
+#: plinth/modules/users/views.py:125
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "El usuario {user} ha sido eliminado."
 
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:132
 msgid "Deleting LDAP user failed."
 msgstr "Ha fallado la eliminación del usuario LDAP."
 
-#: plinth/modules/users/views.py:136
+#: plinth/modules/users/views.py:141
 msgid "Change Password"
 msgstr "Cambiar clave de acceso"
 
-#: plinth/modules/users/views.py:137
+#: plinth/modules/users/views.py:142
 msgid "Password changed successfully."
 msgstr "Clave de acceso cambiada con éxito."
 
@@ -3601,10 +3581,6 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:28
-#| msgid ""
-#| "This is an internal error and not something you caused or can fix.  "
-#| "Please report the error on the <a href=\"https://github.com/freedombox/"
-#| "Plinth/issues\">bug tracker</a> so we can fix it."
 msgid ""
 "This is an internal error and not something you caused or can fix.  Please "
 "report the error on the <a href=\"https://github.com/freedombox/Plinth/issues"
@@ -3612,10 +3588,10 @@ msgid ""
 "plinth/help/status-logs\">Status Log</a> to the bug report."
 msgstr ""
 "Este ha sido un error interno y no algo provocado por usted o que pueda "
-"corregir. Por favor informe del error en el <a href=\""
-"https://github.com/freedombox/Plinth/issues\">sistema de seguimiento de "
-"incidentes</a> para que podamos solucionarlo. Por favor, también adjunte el <"
-"a href=\"/plinth/help/status-logs\">Satatus log</a> al informe de error."
+"corregir. Por favor informe del error en el <a href=\"https://github.com/"
+"freedombox/Plinth/issues\">sistema de seguimiento de incidentes</a> para que "
+"podamos solucionarlo. Por favor, también adjunte el <a href=\"/plinth/help/"
+"status-logs\">Satatus log</a> al informe de error."
 
 #: plinth/templates/base.html:49
 #, python-format
