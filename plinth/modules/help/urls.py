@@ -32,5 +32,5 @@ urlpatterns = [
     url(r'^help/index/$', views.index, name='index_explicit'),
     url(r'^help/about/$', views.about, name='about'),
     url(r'^help/manual/$', views.manual, name='manual'),
-    url(r'^help/status-logs/$', views.status_logs, name='status-logs'),
+    url(r'^help/status-log/$', views.status_log, name='status-log'),
 ]
