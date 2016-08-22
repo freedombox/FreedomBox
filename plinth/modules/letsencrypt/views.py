@@ -48,7 +48,7 @@ def index(request):
 
 @require_POST
 def revoke(request, domain):
-    """Revoke a certficate for a given domain."""
+    """Revoke a certificate for a given domain."""
     try:
         actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
         messages.success(
@@ -65,7 +65,7 @@ def revoke(request, domain):
 
 @require_POST
 def obtain(request, domain):
-    """Obtain and install a certficate for a given domain."""
+    """Obtain and install a certificate for a given domain."""
     try:
         actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
         messages.success(
