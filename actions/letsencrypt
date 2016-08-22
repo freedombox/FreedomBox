@@ -60,7 +60,7 @@ APACHE_CONFIGURATION = '''
 	CustomLog ${{APACHE_LOG_DIR}}/ssl_access.log combined
 	#   GnuTLS Switch: Enable/Disable SSL/TLS for this virtual host.
 	GnuTLSEnable On
-	#   Automatically obtained certficates from Let's Encrypt
+	#   Automatically obtained certificates from Let's Encrypt
 	GnuTLSCertificateFile	/etc/letsencrypt/live/{domain}/fullchain.pem
 	GnuTLSKeyFile /etc/letsencrypt/live/{domain}/privkey.pem
 	#   See http://www.outoforder.cc/projects/apache/mod_gnutls/docs/#GnuTLSPriorities
@@ -82,14 +82,14 @@ def parse_arguments():
     revoke_parser.add_argument(
         '--domain', help='Domain name to revoke certificate for')
     obtain_parser = subparsers.add_parser(
-        'obtain', help='Obtain certficate for a domain and setup website.')
+        'obtain', help='Obtain certificate for a domain and setup website.')
     obtain_parser.add_argument(
         '--domain', help='Domain name to obtain certificate for')
 
     return parser.parse_args()
 
 
-def get_certficate_expiry(domain):
+def get_certificate_expiry(domain):
     """Return the expiry date of a certificate."""
     certificate_file = os.path.join(LIVE_DIRECTORY, domain, 'cert.pem')
     output = subprocess.check_output(['openssl', 'x509', '-enddate', '-noout',
@@ -111,7 +111,7 @@ def subcommand_get_status(_):
     for domain in domains:
         domain_status[domain] = {
             'certificate_available': True,
-            'expiry_date': get_certficate_expiry(domain),
+            'expiry_date': get_certificate_expiry(domain),
             'web_enabled':
             action_utils.webserver_is_enabled(domain, kind='site')
         }

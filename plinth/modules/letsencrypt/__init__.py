@@ -39,12 +39,12 @@ title = _('Certificates (Let\'s Encrypt)')
 
 description = [
     format_lazy(
-        _('A digital certficate allows users of a web service to verify the '
+        _('A digital certificate allows users of a web service to verify the '
           'identity of the service and to securely communicate with it. '
           '{box_name} can automatically obtain and setup digital '
           'certificates for each available domain.  It does so by proving '
           'itself to be the owner of a domain to Let\'s Encrypt, a '
-          'certficate authority (CA).'), box_name=_(cfg.box_name)),
+          'certificate authority (CA).'), box_name=_(cfg.box_name)),
 
     _('Let\'s Encrypt is a free, automated, and open certificate '
       'authority, run for the public\'s benefit by the Internet Security '
