@@ -25,12 +25,13 @@
   <h2>{% trans "500" %}</h2>
 
   <p>
+    {% url 'help:status-log' as status_log_url %}
     {% blocktrans trimmed %}
       This is an internal error and not something you caused or can
       fix.  Please report the error on
       the <a href="https://github.com/freedombox/Plinth/issues">bug
       tracker</a> so we can fix it. Also, please attach the
-      <a href="/plinth/help/status-logs">Status Log</a> to the bug report.
+      <a href="{{ status_log_url }}">status log</a> to the bug report.
     {% endblocktrans %}
   </p>
 
