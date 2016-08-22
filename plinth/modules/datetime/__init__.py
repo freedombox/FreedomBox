@@ -39,7 +39,7 @@ managed_packages = ['ntp']
 title = _('Date & Time')
 
 description = [
-    _('Network time server is a program that maintians the system time '
+    _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
 ]
 
