@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-20 09:43+0530\n"
-"PO-Revision-Date: 2016-07-02 04:34+0000\n"
+"PO-Revision-Date: 2016-08-23 07:22+0000\n"
 "Last-Translator: Алексей Докучаев <deathlike333@gmail.com>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
-"plinth/ru/>\n"
+"Language-Team: Russian "
+"<https://hosted.weblate.org/projects/freedombox/plinth/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.7-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.8-dev\n"
 
 #: plinth/action_utils.py:242
 #, python-brace-format
@@ -588,7 +588,7 @@ msgstr "Показать пароль"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:153
 msgid "URL to look up public IP"
-msgstr ""
+msgstr "URL-адрес для поиска публичного IP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:179
 msgid "Please provide an update URL or a GnuDIP server address"
@@ -679,7 +679,7 @@ msgid "Direct connection to the Internet."
 msgstr "Прямое подключение к Интернету."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:37
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Behind NAT. This means that Dynamic DNS service will poll the \"IP Check "
 #| "URL\" for changes (the \"IP Check URL\" entry is needed for this, "
@@ -691,11 +691,11 @@ msgid ""
 "for this, otherwise IP changes will not be detected). In case the WAN IP "
 "changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
-"Behind NAT. Это означает, что служба динамического DNS будет опрашивать «IP "
-"проверка URL-адреса» для изменения (для этого необходима запись «IP проверка "
-"URL-адреса» - в противном случае не будет обнаружено изменение  IP). В "
-"случае, если WAN IP меняется, это может занять до %(timer)s минут до тех "
-"пор, пока ваша DNS-запись обновляется."
+"Behind NAT. Это означает, что служба динамического DNS будет опрашивать «"
+"Публичный IP URL-адреса» для изменения (для этого необходима запись «"
+"Публичный IP URL-адреса» - в противном случае не будет обнаружено изменение  "
+"IP). В случае, если WAN IP меняется, это может занять до %(timer)s минут до "
+"тех пор, пока ваша DNS-запись обновляется."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
 msgid "Last update"
@@ -791,10 +791,12 @@ msgid ""
 "Console login access restricted to users in \"admin\" group. This can be "
 "configured in security settings."
 msgstr ""
+"Консольный вход доступен только для пользователей группы \"admin\" Это можно "
+"настроить в настройках безопасности."
 
 #: plinth/modules/first_boot/forms.py:90
 msgid "Failed to restrict console access."
-msgstr ""
+msgstr "Не удалось ограничить доступ к консоли."
 
 #: plinth/modules/first_boot/forms.py:102
 msgid "User account created, you are now logged in"
@@ -1082,7 +1084,7 @@ msgstr ""
 "#freedombox</a> используя веб-интерфейс."
 
 #: plinth/modules/help/templates/statuslog.html:26
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This is an internal error and not something you caused or can fix.  "
 #| "Please report the error on the <a href=\"https://github.com/freedombox/"
@@ -1093,15 +1095,18 @@ msgid ""
 "github.com/freedombox/Plinth/issues\">bugtracker</a> and attach this status "
 "log to the bug report."
 msgstr ""
-"Это внутренняя ошибка, не Вы были её причиной и вряд ли можете её устранить. "
-"Пожалуйста, сообщите об ошибке на <a href=\"https://github.com/freedombox/"
-"Plinth/issues\">bug tracker</a> и мы исправим это."
+"Последняя строка %(num_lines)s это журнал состояния для этого веб-"
+"интерфейса. Если вы хотите отправить отчет об ошибке, пожалуйста, "
+"используйте <a href=\"https://github.com/freedombox/Plinth/issues\"> "
+"bugtracker</a> и прикрепите этот журнал состояния к этом отчету."
 
 #: plinth/modules/help/templates/statuslog.html:36
 msgid ""
 "Caution: Please remove any passwords or other personal information from the "
 "log, before submitting the bug report."
 msgstr ""
+"Внимание: Удалите любые пароли или другую личную информацию из журнала перед "
+"отправкой отчета об ошибке."
 
 #: plinth/modules/ikiwiki/__init__.py:40
 msgid "Wiki and Blog (ikiwiki)"
@@ -1245,7 +1250,6 @@ msgstr ""
 "доступного домена."
 
 #: plinth/modules/letsencrypt/__init__.py:49
-#, fuzzy
 #| msgid ""
 #| "Let's Encrypt is a free, automated, and open certificate authority, run "
 #| "for the public’s benefit by the Internet Security Research Group (ISRG).  "
@@ -1610,11 +1614,11 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:59
 msgid "Automatic (DHCP)"
-msgstr ""
+msgstr "Автоматически (DHCP)"
 
 #: plinth/modules/networks/forms.py:60
 msgid "Shared"
-msgstr ""
+msgstr "Общее"
 
 #: plinth/modules/networks/forms.py:64
 msgid "Address"
@@ -1686,33 +1690,32 @@ msgstr "Режим"
 
 #: plinth/modules/networks/forms.py:201
 msgid "Infrastructure"
-msgstr ""
+msgstr "Инфраструктура"
 
 #: plinth/modules/networks/forms.py:202
 msgid "Access Point"
-msgstr ""
+msgstr "Точка доступа"
 
 #: plinth/modules/networks/forms.py:203
 msgid "Ad-hoc"
-msgstr ""
+msgstr "Беспроводная  Ad-hoc"
 
 #: plinth/modules/networks/forms.py:205
 msgid "Frequency Band"
-msgstr ""
+msgstr "Полоса частот"
 
 #: plinth/modules/networks/forms.py:206
-#, fuzzy
 #| msgid "Automatic Upgrades"
 msgid "Automatic"
-msgstr "Автоматические обновления"
+msgstr "Автоматически"
 
 #: plinth/modules/networks/forms.py:207
 msgid "A (5 GHz)"
-msgstr ""
+msgstr "А (5 ГГц)"
 
 #: plinth/modules/networks/forms.py:208
 msgid "B/G (2.4 GHz)"
-msgstr ""
+msgstr "B/G (2,4 ГГц)"
 
 #: plinth/modules/networks/forms.py:210
 #: plinth/modules/networks/templates/connection_show.html:173
@@ -1724,12 +1727,13 @@ msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr ""
+"Необязательное значение. Ограничение беспроводного канала в выбранном "
+"диапазоне частот. Оставьте пустым или укажите 0 для автоматического выбора."
 
 #: plinth/modules/networks/forms.py:218
-#, fuzzy
 #| msgid "SSID"
 msgid "BSSID"
-msgstr "SSID"
+msgstr "BSSID"
 
 #: plinth/modules/networks/forms.py:219
 msgid ""
@@ -1737,6 +1741,9 @@ msgid ""
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
+"Необязательное значение. Уникальный идентификатор для точки доступа. При "
+"подключении к точке доступа, подключатся только по BSSID. Пример: "
+"00:11:22:aa:bb:cc."
 
 #: plinth/modules/networks/forms.py:226
 msgid "Authentication Mode"
@@ -1752,13 +1759,12 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:229
 msgid "WPA"
-msgstr ""
+msgstr "WPA"
 
 #: plinth/modules/networks/forms.py:230
-#, fuzzy
 #| msgid "OpenVPN"
 msgid "Open"
-msgstr "OpenVPN"
+msgstr "Open"
 
 #: plinth/modules/networks/forms.py:232
 msgid "Passphrase"
@@ -1825,10 +1831,9 @@ msgid "Failed to de-activate connection: Connection not found."
 msgstr "Не удалось разорвать подключение: соединение не найдено."
 
 #: plinth/modules/networks/networks.py:283
-#, fuzzy
 #| msgid "Adding New Ethernet Connection"
 msgid "Adding New Generic Connection"
-msgstr "Добавление нового подключения Ethernet"
+msgstr "Добавление нового общего подключения"
 
 #: plinth/modules/networks/networks.py:301
 msgid "Adding New Ethernet Connection"
@@ -2362,7 +2367,6 @@ msgid "Kite secret"
 msgstr "Kite secrеt"
 
 #: plinth/modules/pagekite/forms.py:67
-#, fuzzy
 msgid ""
 "A secret associated with the kite or the default secret for your account if "
 "no secret is set on the kite."
@@ -2670,22 +2674,27 @@ msgstr ""
 #: plinth/modules/radicale/forms.py:28
 msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr ""
+"Только владелец календаря/адресной книги можно просмотреть или внести "
+"изменения."
 
 #: plinth/modules/radicale/forms.py:30
 msgid ""
 "Any user can view any calendar/addressbook, but only the owner can make "
 "changes."
 msgstr ""
+"Любой пользователь может просматривать любой календарь/адресную книгу, но "
+"только владелец может вносить изменения."
 
 #: plinth/modules/radicale/forms.py:32
 msgid "Any user can view or make changes to any calendar/addressbook."
 msgstr ""
+"Любой пользователь может просматривать или вносить изменения в любой "
+"календарь/адресную книгу."
 
 #: plinth/modules/radicale/views.py:53
-#, fuzzy
 #| msgid "Configuration updated"
 msgid "Access rights configuration updated"
-msgstr "Конфигурация обновлена"
+msgstr "Конфигурация прав доступа обновлена"
 
 #: plinth/modules/repro/__init__.py:38
 msgid "SIP Server (repro)"
@@ -2807,7 +2816,7 @@ msgstr ""
 
 #: plinth/modules/security/forms.py:29
 msgid "Restrict console logins (recommended)"
-msgstr ""
+msgstr "Ограничение консольного входа (рекомендуется)"
 
 #: plinth/modules/security/forms.py:30
 msgid ""
@@ -2815,18 +2824,21 @@ msgid ""
 "to log in to console or via SSH. Console users may be able to access some "
 "services without further authorization."
 msgstr ""
+"Если этот параметр включен, только пользователи группы «Администратор» будут "
+"иметь возможность войти через консоль или через SSH. Пользователи консоли "
+"могут иметь возможность доступа к некоторым службам без дополнительного "
+"разрешения."
 
 #: plinth/modules/security/views.py:63
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid "Error setting time zone: {exception}"
 msgid "Error setting restricted access: {exception}"
-msgstr "Ошибка установки часового пояса: {exception}"
+msgstr "Ошибка настройки ограничения доступа: {exception}"
 
 #: plinth/modules/security/views.py:66
-#, fuzzy
 #| msgid "General Configuration"
 msgid "Updated security configuration"
-msgstr "Общие настройки"
+msgstr "Обновлена настройка безопасности"
 
 #: plinth/modules/shaarli/__init__.py:36
 msgid "Bookmarks (Shaarli)"
@@ -2848,7 +2860,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:34
 msgid "Snapshots"
-msgstr ""
+msgstr "Снимки системы"
 
 #: plinth/modules/snapshot/__init__.py:37
 msgid ""
@@ -2856,6 +2868,9 @@ msgid ""
 "used to roll back the system to a previously known good state in case of "
 "unwanted changes to the system."
 msgstr ""
+"Снимки системы позволяют создавать и управлять снимками файловой системы. "
+"Они могут и пользоваться для отката системы к последнему рабочему состоянию "
+"в случае неприемлемых изменений в системе."
 
 #: plinth/modules/snapshot/__init__.py:41
 msgid ""
@@ -2866,61 +2881,64 @@ msgid ""
 "accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
 "are not a replacement for backups."
 msgstr ""
+"Автоматические снимки системы моту выполнятся раз в час, день, месяц и год. "
+"Старые снимки автоматические удаляются, если их достигнет определенное "
+"количество. Хоть снимки и являются эффективными и хранят только различия, их "
+"можно удалить для освобождения свободного места. Отдельные файлы из старых "
+"снимков можно найти в каталоге «.snapshots» в файловой системе. Моментальные "
+"снимки не являются заменой для резервных копий."
 
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
-msgstr ""
+msgstr "Номер"
 
 #: plinth/modules/snapshot/templates/snapshot.html:31
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: plinth/modules/snapshot/templates/snapshot.html:33
 msgid "Rollback"
-msgstr ""
+msgstr "Откат"
 
 #: plinth/modules/snapshot/templates/snapshot.html:44
-#, fuzzy
 #| msgid "Inactive"
 msgid "active"
-msgstr "Неактивен"
+msgstr "активен"
 
 #: plinth/modules/snapshot/templates/snapshot.html:53
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
-msgstr ""
+msgstr "Откат к снимку #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot.html:64
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete %(name)s"
 msgid "Delete snapshot #%(number)s"
-msgstr "Удаление %(name)s"
+msgstr "Удалить снимок #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot.html:85
-#, fuzzy
 #| msgid "Create User"
 msgid "Create Snapshot"
-msgstr "Создать пользователя"
+msgstr "Создать снимок"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:27
-#, fuzzy
 #| msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgid "Delete this snapshot permanently?"
-msgstr "Окончательно удалить подключение  <strong>%(name)s</strong>?"
+msgstr "Окончательно удалить этот снимок?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:53
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete %(name)s"
 msgid "Delete Snapshot #%(number)s"
-msgstr "Удаление %(name)s"
+msgstr "Удалить снимок %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
-msgstr ""
+msgstr "Откат системы до этого снимка?"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:30
 msgid ""
@@ -2928,39 +2946,40 @@ msgid ""
 "automatically created. You will be able to undo a rollback by reverting to "
 "the newly created snapshot."
 msgstr ""
+"Будет автоматически создан новый снимок текущего состояния файловой системы. "
+"Вы сможете отменить откат, возвращаясь к вновь созданному снимку."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:61
 #, python-format
 msgid "Rollback to Snapshot #%(number)s"
-msgstr ""
+msgstr "Откат к снимку %(number)s"
 
 #: plinth/modules/snapshot/views.py:37
 msgid "Created snapshot."
-msgstr ""
+msgstr "Создан снимок."
 
 #: plinth/modules/snapshot/views.py:53
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
-msgstr ""
+msgstr "Удаленный снимок {number}."
 
 #: plinth/modules/snapshot/views.py:65
-#, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Delete Snapshot"
-msgstr "Удаление %(name)s"
+msgstr "Удалить снимок"
 
 #: plinth/modules/snapshot/views.py:75
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
-msgstr ""
+msgstr "Откат к снимку #{number}."
 
 #: plinth/modules/snapshot/views.py:78
 msgid "The system must be restarted to complete the rollback."
-msgstr ""
+msgstr "Необходимо перезагрузить систему для завершения отката."
 
 #: plinth/modules/snapshot/views.py:90
 msgid "Rollback to Snapshot"
-msgstr ""
+msgstr "Откат к снимку"
 
 #: plinth/modules/system/__init__.py:32 plinth/templates/base.html:109
 msgid "System Configuration"
@@ -3035,10 +3054,9 @@ msgid "Enable Tor"
 msgstr "Включить Tor"
 
 #: plinth/modules/tor/forms.py:35
-#, fuzzy
 #| msgid "Enable Tor"
 msgid "Enable Tor relay"
-msgstr "Включить Tor"
+msgstr "Включить ретранслятор Tor"
 
 #: plinth/modules/tor/forms.py:38
 #, python-brace-format
@@ -3047,9 +3065,11 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Когда включен, ваш {box_name} может быть участником сети Tor и жертвовать "
+"часть пропускной способности сети Tor. Сделайте это, если у вас более ширина "
+"канала более 2Мбит/c."
 
 #: plinth/modules/tor/forms.py:43
-#, fuzzy
 #| msgid "Tor Bridge Relay"
 msgid "Enable Tor bridge relay"
 msgstr "Ретранслятор Tor типа мост"
@@ -3060,13 +3080,16 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"При включении, информация публикуется в базе данных моста Tor вместо "
+"общественной базы данных ретрансляции Tor. Это помогает другим обойти "
+"цензуру."
 
 #: plinth/modules/tor/forms.py:51
 msgid "Enable Tor Hidden Service"
 msgstr "Включить скрытый сервис Tor"
 
 #: plinth/modules/tor/forms.py:54
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "A hidden service will allow {box_name} to provide selected services (such "
 #| "as ownCloud or chat) without revealing its location."
@@ -3075,8 +3098,9 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Скрытый сервис позволит {box_name} предоставлять услуги, (например, ownCloud "
-"или чат) не раскрывая его расположение."
+"Скрытый сервис позволит {box_name} предоставлять услуги, (например, wiki или "
+"чат) не раскрывая его расположение. Не используйте это для повышения "
+"анонимности."
 
 #: plinth/modules/tor/forms.py:59
 msgid "Download software packages over Tor"
@@ -3114,10 +3138,10 @@ msgstr "Порты"
 
 #: plinth/modules/tor/templates/tor.html:114
 msgid "Relay"
-msgstr ""
+msgstr "Ретранслятор"
 
 #: plinth/modules/tor/templates/tor.html:116
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "Your %(box_name)s is configured as a Tor bridge with obfsproxy, so it can "
 #| "help circumvent censorship. If your %(box_name)s is behind a router or "
@@ -3127,10 +3151,9 @@ msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
 "the following ports are open, and port-forwarded, if necessary:"
 msgstr ""
-"Ваш %(box_name)s настроен как Tor - мост с obfsproxy, поэтому он может "
-"помочь обойти цензуру. Если ваш %(box_name)s находится за маршрутизатором "
-"или брандмауэром, вы должны убедиться, что следующие порты являются "
-"открытыми и проброшены, если необходимо:"
+"Если ваш %(box_name)s находится за маршрутизатором или брандмауэром, вы "
+"должны убедиться, что следующие порты являются открытыми и проброшены, если "
+"необходимо:"
 
 #: plinth/modules/tor/templates/tor.html:128
 msgid "Port"
@@ -3327,7 +3350,7 @@ msgstr "Wiki"
 
 #: plinth/modules/users/forms.py:60
 msgid "Username is taken or is reserved."
-msgstr ""
+msgstr "Имя пользователя уже занято."
 
 #: plinth/modules/users/forms.py:90
 msgid "Groups"
@@ -3513,7 +3536,7 @@ msgstr "PPPоE"
 
 #: plinth/network.py:40
 msgid "Generic"
-msgstr ""
+msgstr "Универсальный"
 
 #: plinth/package.py:105
 msgid "Error during installation"
@@ -3573,7 +3596,6 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:28
-#, fuzzy
 #| msgid ""
 #| "This is an internal error and not something you caused or can fix.  "
 #| "Please report the error on the <a href=\"https://github.com/freedombox/"
@@ -3585,8 +3607,10 @@ msgid ""
 "plinth/help/status-logs\">Status Log</a> to the bug report."
 msgstr ""
 "Это внутренняя ошибка, не Вы были её причиной и вряд ли можете её устранить. "
-"Пожалуйста, сообщите об ошибке на <a href=\"https://github.com/freedombox/"
-"Plinth/issues\">bug tracker</a> и мы исправим это."
+"Пожалуйста, сообщите об ошибке на <a href=\""
+"https://github.com/freedombox/Plinth/issues\">bug tracker</a> и мы исправим "
+"это. Так же, пожалуйста, прикрепите <a href=\"/plinth/help/status-logs\">"
+"Status Log</a> к отчету об ошибке."
 
 #: plinth/templates/base.html:49
 #, python-format
