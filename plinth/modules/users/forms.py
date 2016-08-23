@@ -212,10 +212,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
                     'ssh', ['set-keys', '--username', user.get_username(),
                             '--keys', self.cleaned_data['ssh_keys'].strip()])
             except ActionError:
-                messages.error(
-                    self.request,
-                    _('Unable to set SSH keys. Please wait a minute and then '
-                      'try again.'))
+                messages.error(self.request, _('Unable to set SSH keys.'))
 
         return user
 
