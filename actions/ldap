@@ -34,6 +34,8 @@ create_user()
     ldapadduser $username users > /dev/null
 
     set_user_password $username $password
+
+    flush_cache
 }
 
 
@@ -48,6 +50,8 @@ delete_user()
     while read -r group; do
         ldapdeleteuserfromgroup $username $group > /dev/null || true
     done <<< "$groups"
+
+    flush_cache
 }
 
 
@@ -64,6 +68,8 @@ rename_user()
         ldapdeleteuserfromgroup $old_username $group > /dev/null || true
         ldapaddusertogroup $new_username $group > /dev/null || true
     done <<< "$groups"
+
+    flush_cache
 }
 
 
@@ -95,6 +101,8 @@ add_user_to_group()
     ldapaddgroup $groupname > /dev/null 2>&1 || true
 
     ldapaddusertogroup $username $groupname > /dev/null
+
+    flush_cache
 }
 
 
@@ -104,6 +112,16 @@ remove_user_from_group()
     groupname="$2"
 
     ldapdeleteuserfromgroup $username $groupname > /dev/null
+
+    flush_cache
+}
+
+
+flush_cache()
+{
+    # Flush nscd cache
+    nscd --invalidate=passwd
+    nscd --invalidate=group
 }
 
 

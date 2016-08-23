@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - help: Minor updates and fixes to status log.
 - Updated translations to fix weblate errors.
 - Fixed spelling errors in datetime and letsencrypt modules.
+- users: Flush nscd cache after user operations.
 
 ### Changed
 - dynamicdns, transmission, upgrades: Allowed Plinth to run as non-root.
