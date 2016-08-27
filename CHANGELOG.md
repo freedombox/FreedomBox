@@ -2,13 +2,18 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Added loading icon for other busy operations.
+
 ### Fixed
 - users: Fixed checking restricted usernames.
+- users: Display error message if unable to set SSH keys.
+- help: Minor updates and fixes to status log.
+- Updated translations to fix weblate errors.
+- Fixed spelling errors in datetime and letsencrypt modules.
 
 ### Changed
-- dynamicdns: Allowed Plinth to run as non-root.
-- transmission: Read configuration as super user.
-- upgrades: Run status operations as non-root.
+- dynamicdns, transmission, upgrades: Allowed Plinth to run as non-root.
 
 ## [0.10.0] - 2016-08-12
 ### Added
