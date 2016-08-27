@@ -27,6 +27,7 @@ import shutil
 import socket
 import subprocess
 import re
+import ruamel.yaml
 
 from plinth import action_utils
 
@@ -100,23 +101,24 @@ def subcommand_pre_install(arguments):
 def subcommand_setup(_):
     """Enabled LDAP authentication and setup jwchat apache conf"""
     with open(EJABBERD_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
+        confdata = conffile.read()
+        conf = ruamel.yaml.round_trip_load(confdata, preserve_quotes=True)
 
+    for listen_port in conf['listen']:
+        if 'starttls' in listen_port:
+            listen_port['starttls'] = False
+        if 'tls' in listen_port:
+            listen_port['tls'] = False
+
+    conf['auth_method'] = 'ldap'
+    conf['ldap_servers'] = ['localhost']
+    conf['ldap_base'] = '"ou=users,dc=thisbox"'
+
+    confdata = ruamel.yaml.round_trip_dump(conf)
+    confdata = confdata.replace(
+        '\'"ou=users,dc=thisbox"\'', '"ou=users,dc=thisbox"')
     with open(EJABBERD_CONFIG, 'w') as conffile:
-        for line in lines:
-            if re.match(r'^\s*tls:\s+true', line):
-                conffile.write('    tls: false\n')
-            elif 'auth_method: internal' in line:
-                conffile.write('## ' + line)
-            elif '## auth_method: ldap' in line:
-                conffile.write('auth_method: ldap\n')
-            elif '## ldap_servers:' in line:
-                conffile.write('ldap_servers:\n')
-                conffile.write('  - "localhost"\n')
-            elif '## ldap_base:' in line:
-                conffile.write('ldap_base: "ou=users,dc=thisbox"\n')
-            else:
-                conffile.write(line)
+        conffile.write(confdata)
 
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
@@ -220,20 +222,16 @@ def subcommand_change_domainname(arguments):
 
     # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r') as conffile:
-        lines = conffile.readlines()
+        confdata = conffile.read()
+        conf = ruamel.yaml.round_trip_load(confdata, preserve_quotes=True)
+
+    conf['hosts'].append('"' + domainname + '"')
+
+    confdata = ruamel.yaml.round_trip_dump(conf)
+    confdata = confdata.replace(
+        '\'"' + domainname + '"\'', '"' + domainname + '"')
     with open(EJABBERD_CONFIG, 'w') as conffile:
-        in_hosts = False
-        for line in lines:
-            if in_hosts:
-                if re.match(r'\s*-\s*', line):
-                    continue
-
-                in_hosts = False
-
-            conffile.write(line)
-            if re.match(r'\s*hosts:', line):
-                in_hosts = True
-                conffile.write('  - "' + domainname + '"\n')
+        conffile.write(confdata)
 
     action_utils.service_start('ejabberd')
 
