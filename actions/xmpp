@@ -100,9 +100,8 @@ def subcommand_pre_install(arguments):
 
 def subcommand_setup(_):
     """Enabled LDAP authentication and setup jwchat apache conf"""
-    with open(EJABBERD_CONFIG, 'r') as conffile:
-        confdata = conffile.read()
-        conf = ruamel.yaml.round_trip_load(confdata, preserve_quotes=True)
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
     for listen_port in conf['listen']:
         if 'starttls' in listen_port:
@@ -112,13 +111,11 @@ def subcommand_setup(_):
 
     conf['auth_method'] = 'ldap'
     conf['ldap_servers'] = ['localhost']
-    conf['ldap_base'] = '"ou=users,dc=thisbox"'
+    conf['ldap_base'] = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+        'ou=users,dc=thisbox')
 
-    confdata = ruamel.yaml.round_trip_dump(conf)
-    confdata = confdata.replace(
-        '\'"ou=users,dc=thisbox"\'', '"ou=users,dc=thisbox"')
-    with open(EJABBERD_CONFIG, 'w') as conffile:
-        conffile.write(confdata)
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
 
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
@@ -221,17 +218,14 @@ def subcommand_change_domainname(arguments):
     subprocess.call(['pkill', '-u', 'ejabberd'])
 
     # Add updated domainname to ejabberd hosts list.
-    with open(EJABBERD_CONFIG, 'r') as conffile:
-        confdata = conffile.read()
-        conf = ruamel.yaml.round_trip_load(confdata, preserve_quotes=True)
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
-    conf['hosts'].append('"' + domainname + '"')
+    conf['hosts'].append(ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+        domainname))
 
-    confdata = ruamel.yaml.round_trip_dump(conf)
-    confdata = confdata.replace(
-        '\'"' + domainname + '"\'', '"' + domainname + '"')
-    with open(EJABBERD_CONFIG, 'w') as conffile:
-        conffile.write(confdata)
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
 
     action_utils.service_start('ejabberd')
 
