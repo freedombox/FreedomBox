@@ -86,7 +86,8 @@ def cancel(request):
     """Cancel ongoing process."""
     global publish_process
     if publish_process:
-        publish_process.terminate()
+        actions.superuser_run(
+            'monkeysphere', ['host-cancel-publish', str(publish_process.pid)])
         publish_process = None
         messages.info(request, _('Cancelled key publishing.'))
 

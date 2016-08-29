@@ -24,7 +24,9 @@ import argparse
 import augeas
 import json
 import os
+import psutil
 import re
+import signal
 import subprocess
 
 
@@ -49,6 +51,10 @@ def parse_arguments():
         'host-publish-key', help='Push host key to keyserver')
     host_publish_key.add_argument(
         'key_ids', nargs='*', help='Optional list of KEYIDs')
+
+    host_cancel_publish = subparsers.add_parser(
+        'host-cancel-publish', help='Cancel a running publish operation')
+    host_cancel_publish.add_argument('pid', help='PID of the publish process')
 
     return parser.parse_args()
 
@@ -235,6 +241,26 @@ def subcommand_host_publish_key(arguments):
         raise Exception(output, error)
 
     print(output)
+
+
+def subcommand_host_cancel_publish(arguments):
+    """Kill a running publish process."""
+    process = psutil.Process(int(arguments.pid))
+
+    # Perform tight checks on the process before killing for security.
+    arguments = process.cmdline()
+    if not arguments:
+        # Process already completed
+        return
+
+    # Remove the sudo prefix if present
+    while arguments[0] == 'sudo' or arguments[0].startswith('-'):
+        arguments = arguments[1:]
+
+    if len(arguments) >= 2 and \
+       arguments[0].split('/')[-1] == 'monkeysphere' and \
+       arguments[1] == 'host-publish-key':
+        process.send_signal(signal.SIGTERM)
 
 
 def main():
