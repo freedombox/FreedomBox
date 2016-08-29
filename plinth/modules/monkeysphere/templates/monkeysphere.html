@@ -78,7 +78,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for key in status.keys.values %}
+          {% for key in status.keys.values|dictsort:"ssh_fingerprint" %}
             <tr>
               <td>
                 {% if key.service == 'ssh' %}
