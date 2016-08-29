@@ -130,13 +130,13 @@
                   </form>
                 {% else %}
                   {% if not running %}
-                  <form class="form pull-right" method="post"
-                        action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
-                    {% csrf_token %}
+                    <form class="form pull-right" method="post"
+                          action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
+                      {% csrf_token %}
 
-                    <button type="submit" class="btn btn-warning btn-sm pull-right">
-                      {% trans "Publish Key" %}</button>
-                  </form>
+                      <button type="submit" class="btn btn-warning btn-sm pull-right">
+                        {% trans "Publish Key" %}</button>
+                    </form>
                   {% endif %}
                   {% if key.imported_domains != key.available_domains %}
                     <form class="form pull-right" method="post"
