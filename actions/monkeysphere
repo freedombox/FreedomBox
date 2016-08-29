@@ -53,15 +53,15 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def get_ssh_keys():
+def get_ssh_keys(fingerprint_hash):
     """Return all SSH keys."""
     keys = {}
 
     key_files = ['/etc/ssh/ssh_host_rsa_key']
     for key_file in key_files:
         output = subprocess.check_output(
-            ['ssh-keygen', '-l', '-E', 'MD5', '-f', key_file])
-        fingerprint = output.decode().split()[1].lstrip('MD5:')
+            ['ssh-keygen', '-l', '-E', fingerprint_hash, '-f', key_file])
+        fingerprint = output.decode().split()[1]
         keys[fingerprint] = {'ssh_fingerprint': fingerprint,
                              'service': 'ssh',
                              'key_file': key_file,
@@ -70,7 +70,7 @@ def get_ssh_keys():
     return keys
 
 
-def get_pem_ssh_fingerprint(pem_file):
+def get_pem_ssh_fingerprint(pem_file, fingerprint_hash):
     """Return the SSH fingerprint of a PEM file."""
     public_key = subprocess.check_output(
         ['openssl', 'rsa', '-in', pem_file, '-pubout'],
@@ -79,13 +79,13 @@ def get_pem_ssh_fingerprint(pem_file):
         ['ssh-keygen', '-i', '-m', 'PKCS8', '-f', '/dev/stdin'],
         input=public_key)
     fingerprint = subprocess.check_output(
-        ['ssh-keygen', '-l', '-E', 'md5', '-f', '/dev/stdin'],
+        ['ssh-keygen', '-l', '-E', fingerprint_hash, '-f', '/dev/stdin'],
         input=ssh_public_key)
 
-    return fingerprint.decode().split()[1].lstrip('MD5:')
+    return fingerprint.decode().split()[1]
 
 
-def get_https_keys():
+def get_https_keys(fingerprint_hash):
     """Return all HTTPS keys."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
@@ -106,7 +106,8 @@ def get_https_keys():
                 host['key_file'] = aug.get(directive + '/arg')
 
         if 'key_file' in host:
-            host['ssh_fingerprint'] = get_pem_ssh_fingerprint(host['key_file'])
+            host['ssh_fingerprint'] = get_pem_ssh_fingerprint(
+                host['key_file'], fingerprint_hash)
             keys[host['ssh_fingerprint']] = host
 
     return keys
@@ -156,7 +157,17 @@ def get_merged_keys(key_id=None):
     """Return merged list of system and monkeysphere keys."""
     keys = get_monkeysphere_keys(key_id)
 
-    system_keys = list(get_ssh_keys().items()) + list(get_https_keys().items())
+    # Monkeysphere used use MD5 for fingerprint hash and recently
+    # changed to SHA256.  In case of SHA256 the string 'SHA256:' is
+    # being prepended to the fingerprint.  Hoping that such a prefix
+    # will be available in all future changes, extract it from one key
+    # (assuming all the others will be the same) and use it.
+    fingerprint_hash = 'SHA256'
+    if keys:
+        fingerprint_hash = list(keys.keys())[0].split(':')[0]
+
+    system_keys = list(get_ssh_keys(fingerprint_hash).items()) + \
+        list(get_https_keys(fingerprint_hash).items())
     for ssh_fingerprint, key in system_keys:
         if key_id and ssh_fingerprint not in keys:
             continue
