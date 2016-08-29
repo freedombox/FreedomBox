@@ -134,6 +134,9 @@ def get_monkeysphere_keys(key_id=None):
             keys[-1]['date'] = data[1]
         elif line.startswith('uid'):
             uid = line.lstrip('uid').strip()
+            if uid.startswith('['):
+                uid = uid[uid.index(']') + 1:].strip()
+
             keys[-1].setdefault('uids', []).append(uid)
             matches = re.match('([a-zA-Z]*)://(.*)(:\d*)?', uid)
             keys[-1]['service'] = matches.group(1)
