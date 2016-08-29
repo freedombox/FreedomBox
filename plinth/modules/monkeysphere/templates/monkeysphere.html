@@ -91,16 +91,20 @@
               </td>
               <td>
                 <ul>
-                  {% for domain in key.available_domains %}
+                  {% for domain in key.all_domains %}
                     <li>
-                      {% if domain in key.imported_domains %}
-                        <span class="label label-success"
-                          ><span class="glyphicon glyphicon-ok" aria-hidden="true"
-                          ></span></span>
-                      {% else %}
+                      {% if domain not in key.imported_domains %}
                         <span class="label label-default"
-                          ><span class="glyphicon glyphicon-remove" aria-hidden="true"
-                          ></span></span>
+                          ><span class="glyphicon glyphicon-remove"
+                                 aria-hidden="true"></span></span>
+                      {% elif domain not in key.available_domains %}
+                        <span class="label label-warning"
+                          ><span class="glyphicon glyphicon-warning-sign"
+                                 aria-hidden="true"></span></span>
+                      {% else %}
+                        <span class="label label-success"
+                          ><span class="glyphicon glyphicon-ok"
+                                 aria-hidden="true"></span></span>
                       {% endif %}
                       {{ domain }}
                     </li>
@@ -138,7 +142,7 @@
                         {% trans "Publish Key" %}</button>
                     </form>
                   {% endif %}
-                  {% if key.imported_domains != key.available_domains %}
+                  {% if key.importable_domains %}
                     <form class="form pull-right" method="post"
                           action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                       {% csrf_token %}
