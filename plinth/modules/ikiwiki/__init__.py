@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 
 
@@ -58,12 +59,20 @@ def init():
         'ikiwiki', title, ports=['http', 'https'], is_external=True,
         is_enabled=is_enabled, enable=enable, disable=disable)
 
+    if is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('ikiwiki', title, '/ikiwiki', 'glyphicon-edit')
 
 
 def is_enabled():
@@ -74,11 +83,13 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['disable'])
+    frontpage.remove_shortcut('ikiwiki')
 
 
 def diagnose():

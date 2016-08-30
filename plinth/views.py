@@ -21,20 +21,23 @@ Main Plinth views
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
-from django.http.response import HttpResponseRedirect
+from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.urls import reverse
 from django.utils.translation import ugettext as _
+from stronghold.decorators import public
 import time
 
-from . import forms
+from . import forms, frontpage
 import plinth
 
 
+@public
 def index(request):
     """Serve the main index page."""
-    return HttpResponseRedirect(reverse('apps:index'))
+    return TemplateResponse(request, 'index.html',
+                            {'title': _('FreedomBox'),
+                             'shortcuts': frontpage.get_shortcuts()})
 
 
 class ServiceView(FormView):
