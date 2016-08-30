@@ -25,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
 
@@ -63,22 +64,33 @@ def init():
         managed_services[0], title, ports=['http', 'https'], is_external=True,
         enable=enable, disable=disable)
 
+    if service.is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'radicale', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('radicale', title, '?selected=radicale',
+                           'glyphicon-calendar', description)
 
 
 def enable():
     """Enable the module."""
     actions.superuser_run('radicale', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
+    frontpage.remove_shortcut('radicale')
 
 
 def load_augeas():
