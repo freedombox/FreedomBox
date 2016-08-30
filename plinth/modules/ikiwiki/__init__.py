@@ -60,7 +60,7 @@ def init():
         is_enabled=is_enabled, enable=enable, disable=disable)
 
     if is_enabled():
-        add_shortcut()
+        add_shortcuts()
 
 
 def setup(helper, old_version=None):
@@ -68,11 +68,14 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
 
 
-def add_shortcut():
-    frontpage.add_shortcut('ikiwiki', title, '/ikiwiki', 'glyphicon-edit')
+def add_shortcuts():
+    sites = actions.run('ikiwiki', ['get-sites']).split('\n')
+    sites = [name for name in sites if name != '']
+    for site in sites:
+        frontpage.add_shortcut(
+            'ikiwiki_' + site, site, '/ikiwiki/' + site, 'glyphicon-edit')
 
 
 def is_enabled():
@@ -83,13 +86,13 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['enable'])
-    add_shortcut()
+    add_shortcuts()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('ikiwiki', ['disable'])
-    frontpage.remove_shortcut('ikiwiki')
+    frontpage.remove_shortcut('ikiwiki*')
 
 
 def diagnose():

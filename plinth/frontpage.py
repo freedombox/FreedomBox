@@ -37,6 +37,15 @@ def add_shortcut(app, label, url, icon):
 
 
 def remove_shortcut(app):
-    """Remove shortcut from front page."""
-    if app in shortcuts:
+    """
+    Remove shortcut from front page.
+
+    If app ends with *, remove all shortcuts with that prefix.
+    """
+    if app[-1] == '*':
+        remove = [k for k in shortcuts if k.startswith(app[:-1])]
+        for k in remove:
+            del shortcuts[k]
+
+    elif app in shortcuts:
         del shortcuts[app]
