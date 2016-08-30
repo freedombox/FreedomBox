@@ -22,17 +22,23 @@
 
 {% block content %}
 
+  <div class="row">
   {% if shortcuts %}
 
     {% for shortcut in shortcuts %}
       <div class="col-sm-4">
         <ul class="nav nav-pills nav-stacked">
-          <li>
-            <a href="{{ shortcut.url }}">
-              <span class="{{ shortcut.icon }} glyphicon"></span>
-              {{ shortcut.label }}
-            </a>
-          </li>
+          {% if selected_app == shortcut.app %}
+            <li class="active">
+              <a href="{{ shortcut.url }}" class="active">
+          {% else %}
+            <li>
+              <a href="{{ shortcut.url }}">
+          {% endif %}
+                <span class="{{ shortcut.icon }} glyphicon"></span>
+                {{ shortcut.label }}
+              </a>
+            </li>
         </ul>
       </div>
     {% endfor %}
@@ -49,6 +55,22 @@
       {% endblocktrans %}
     </h4>
 
+  {% endif %}
+  </div>
+
+  <br>
+  {% if details %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ details_label }}</h3>
+      </div>
+
+      {% for paragraph in details %}
+        <div class="panel-body">
+	  {{ paragraph|safe }}
+        </div>
+      {% endfor %}
+    </div>
   {% endif %}
 
 {% endblock %}

@@ -27,12 +27,14 @@ def get_shortcuts():
     return sorted(shortcuts.values(), key=lambda x: x['label'])
 
 
-def add_shortcut(app, label, url, icon):
+def add_shortcut(app, label, url, icon, details=None):
     """Add shortcut to front page."""
     shortcuts[app] = {
+        'app': app,
         'label': label,
         'url': url,
         'icon': icon,
+        'details': details,
     }
 
 

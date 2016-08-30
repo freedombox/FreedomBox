@@ -35,9 +35,20 @@ import plinth
 @public
 def index(request):
     """Serve the main index page."""
+    shortcuts = frontpage.get_shortcuts()
+    selection = request.GET.get('selected')
+
+    details, details_label = None, None
+    if selection in frontpage.shortcuts:
+        details = frontpage.shortcuts[selection]['details']
+        details_label = frontpage.shortcuts[selection]['label']
+
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
-                             'shortcuts': frontpage.get_shortcuts()})
+                             'shortcuts': shortcuts,
+                             'selected_app': selection,
+                             'details': details,
+                             'details_label': details_label})
 
 
 class ServiceView(FormView):
