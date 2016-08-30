@@ -91,7 +91,10 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('xmpp', title, '/jwchat', 'glyphicon-comment')
+    frontpage.add_shortcut('jwchat', _('Chat Client (JWChat)'), '/jwchat',
+                           'glyphicon-comment')
+    frontpage.add_shortcut('xmpp', title, '?selected=xmpp',
+                           'glyphicon-comment', description)
 
 
 class EjabberdServiceView(ServiceView):
@@ -127,6 +130,7 @@ def enable():
 def disable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['disable'])
+    frontpage.remove_shortcut('jwchat')
     frontpage.remove_shortcut('xmpp')
 
 
