@@ -19,10 +19,12 @@
 Plinth module with utilites for performing application setup operations.
 """
 
+import apt
 import logging
 import threading
 
 from . import package
+from .errors import PackageNotInstalledError
 import plinth
 
 logger = logging.getLogger(__name__)
@@ -58,7 +60,7 @@ class Helper(object):
         self.is_finished = None
         return exception
 
-    def run(self):
+    def run(self, allow_install=True):
         """Execute the setup process."""
         # Setup for the module is already running
         if self.current_operation:
@@ -68,6 +70,7 @@ class Helper(object):
         if current_version >= self.module.version:
             return
 
+        self.allow_install = allow_install
         self.exception = None
         self.current_operation = None
         self.is_finished = False
@@ -89,6 +92,14 @@ class Helper(object):
 
     def install(self, package_names):
         """Install a set of packages marking progress."""
+        if self.allow_install is False:
+            # Raise error if packages are not already installed.
+            cache = apt.Cache()
+            for package_name in package_names:
+                if not cache[package_name].is_installed:
+                    raise PackageNotInstalledError(package_name)
+            return
+
         logger.info('Running install for module - %s, packages - %s',
                     self.module_name, package_names)
 
@@ -150,7 +161,7 @@ def init(module_name, module):
         module.setup_helper = Helper(module_name, module)
 
 
-def setup_modules(module_list=None, essential=False):
+def setup_modules(module_list=None, essential=False, allow_install=True):
     """Run setup on selected or essential modules."""
     logger.info('Running setup for modules, essential - %s, '
                 'selected modules - %s', essential, module_list)
@@ -161,4 +172,4 @@ def setup_modules(module_list=None, essential=False):
         if module_list and module_name not in module_list:
             continue
 
-        module.setup_helper.run()
+        module.setup_helper.run(allow_install=allow_install)
