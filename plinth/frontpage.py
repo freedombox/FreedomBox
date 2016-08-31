@@ -19,23 +19,23 @@
 Manage application shortcuts on front page.
 """
 
-shortcuts = {}
+shortcuts = []
 
 
 def get_shortcuts():
     """Return menu items in sorted order according to current locale."""
-    return sorted(shortcuts.values(), key=lambda x: x['label'])
+    return sorted(shortcuts, key=lambda x: x['label'])
 
 
 def add_shortcut(app, label, url, icon, details=None):
     """Add shortcut to front page."""
-    shortcuts[app] = {
+    shortcuts.append({
         'app': app,
         'label': label,
         'url': url,
         'icon': icon,
         'details': details,
-    }
+    })
 
 
 def remove_shortcut(app):
@@ -44,10 +44,8 @@ def remove_shortcut(app):
 
     If app ends with *, remove all shortcuts with that prefix.
     """
+    match = lambda x: x['app'] == app
     if app[-1] == '*':
-        remove = [k for k in shortcuts if k.startswith(app[:-1])]
-        for k in remove:
-            del shortcuts[k]
+        match = lambda x: x['app'].startswith(app[:-1])
 
-    elif app in shortcuts:
-        del shortcuts[app]
+    shortcuts[:] = [shortcut for shortcut in shortcuts if not match(shortcut)]
