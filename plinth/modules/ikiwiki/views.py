@@ -26,6 +26,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
+from plinth import frontpage
 from plinth import views
 from plinth.modules import ikiwiki
 
@@ -81,6 +82,10 @@ def create(request):
                              form.cleaned_data['admin_name'],
                              form.cleaned_data['admin_password'])
 
+            site = form.cleaned_data['name'].replace(' ', '')
+            frontpage.add_shortcut('ikiwiki_' + site, site,
+                                   '/ikiwiki/' + site, 'glyphicon-edit')
+
             return redirect(reverse_lazy('ikiwiki:manage'))
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
@@ -129,6 +134,7 @@ def delete(request, name):
         try:
             actions.superuser_run('ikiwiki', ['delete', '--name', name])
             messages.success(request, _('{name} deleted.').format(name=name))
+            frontpage.remove_shortcut('ikiwiki_' + name)
         except actions.ActionError as error:
             messages.error(request, _('Could not delete {name}: {error}')
                            .format(name=name, error=error))

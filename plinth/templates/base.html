@@ -86,11 +86,13 @@
           <span class="icon-bar"></span>
         </button>
         {% block mainmenu_left %}
-          <span class="navbar-brand">
+          <a href="{% url 'index' %}"  class="navbar-brand"
+             title="{{ box_name }}">
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                  alt="{{ box_name }}" />
-          </span>
-          <a href="{% url 'index' %}" class="navbar-brand" title="{% trans "Applications" %}">
+          </a>
+          <a href="{% url 'apps:index' %}" class="navbar-brand"
+             title="{% trans "Applications" %}">
             <span class="glyphicon glyphicon-th"></span>
           </a>
         {% endblock %}

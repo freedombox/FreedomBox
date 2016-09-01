@@ -26,6 +26,7 @@ import socket
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.views import ServiceView
 from plinth.signals import pre_hostname_change, post_hostname_change
@@ -72,6 +73,9 @@ def init():
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
 
+    if is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
@@ -83,6 +87,14 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('jwchat', _('Chat Client (JWChat)'), '/jwchat',
+                           'glyphicon-comment')
+    frontpage.add_shortcut('xmpp', title, '?selected=xmpp',
+                           'glyphicon-comment', description)
 
 
 class EjabberdServiceView(ServiceView):
@@ -112,11 +124,14 @@ def get_domainname():
 def enable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['disable'])
+    frontpage.remove_shortcut('jwchat')
+    frontpage.remove_shortcut('xmpp')
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
