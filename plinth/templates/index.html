@@ -23,39 +23,37 @@
 {% block content %}
 
   <div class="row">
-  {% if shortcuts %}
+    {% if shortcuts %}
 
-    {% for shortcut in shortcuts %}
-      <div class="col-sm-4">
-        <ul class="nav nav-pills nav-stacked">
-          {% if selected_app == shortcut.app %}
-            <li class="active">
-              <a href="{{ shortcut.url }}" class="active">
-          {% else %}
-            <li>
-              <a href="{{ shortcut.url }}">
-          {% endif %}
-                <span class="{{ shortcut.icon }} glyphicon"></span>
-                {{ shortcut.label }}
-              </a>
-            </li>
-        </ul>
-      </div>
-    {% endfor %}
+      {% for shortcut in shortcuts %}
+        <div class="col-sm-4">
+          <ul class="nav nav-pills nav-stacked">
+            {% if selected_id == shortcut.id %}
+              <li class="active">
+                <a href="{{ shortcut.url }}" class="active">
+            {% else %}
+              <li>
+                <a href="{{ shortcut.url }}">
+            {% endif %}
+                  <span class="{{ shortcut.icon }} glyphicon"></span>
+                  {{ shortcut.label }}
+                </a>
+              </li>
+          </ul>
+        </div>
+      {% endfor %}
 
-  {% else %}
+    {% else %}
 
-    <h4>
-      {% url 'apps:index' as apps_url %}
-      {% blocktrans trimmed %}
+      <h4>
+        {% url 'apps:index' as apps_url %}
+        {% blocktrans trimmed %}
+          Enable some <a href="{{ apps_url }}">applications</a> to add
+          shortcuts to this page.
+        {% endblocktrans %}
+      </h4>
 
-        Enable some <a href="{{ apps_url }}">applications</a> to add
-        shortcuts to this page.
-
-      {% endblocktrans %}
-    </h4>
-
-  {% endif %}
+    {% endif %}
   </div>
 
   <br>
@@ -67,7 +65,7 @@
 
       {% for paragraph in details %}
         <div class="panel-body">
-	  {{ paragraph|safe }}
+          {{ paragraph|safe }}
         </div>
       {% endfor %}
     </div>
@@ -86,32 +84,26 @@
 
   <p>
     {% blocktrans trimmed %}
-
       {{ box_name }}, a Debian pure blend, is a 100% free software
       self-hosting web server to deploy social applications on small
       machines. It provides online communication tools respecting your
       privacy and data ownership.
-
     {% endblocktrans %}
   </p>
 
   <p>
     {% blocktrans trimmed %}
-
       More info about {{ box_name }} is available on the
       project <a href="https://freedombox.org">homepage</a>
       and <a href="https://wiki.debian.org/FreedomBox">wiki</a>.
-
     {% endblocktrans %}
   </p>
 
   <p>
     {% blocktrans trimmed %}
-
       This portal is a part of Plinth, the {{ box_name }} web
       interface. Plinth is free software, distributed under the GNU
       Affero General Public License, Version 3 or later.
-
     {% endblocktrans %}
   </p>
 

@@ -46,7 +46,7 @@ def index(request):
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
                              'shortcuts': shortcuts,
-                             'selected_app': selection,
+                             'selected_id': selection,
                              'details': details,
                              'details_label': details_label})
 
