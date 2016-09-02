@@ -104,8 +104,6 @@ def subcommand_setup(_):
         conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
     for listen_port in conf['listen']:
-        if 'starttls' in listen_port:
-            listen_port['starttls'] = False
         if 'tls' in listen_port:
             listen_port['tls'] = False
 
