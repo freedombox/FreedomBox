@@ -68,6 +68,7 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcuts)
 
 
 def add_shortcuts():
