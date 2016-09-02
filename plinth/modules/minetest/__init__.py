@@ -94,7 +94,7 @@ class MinetestServiceView(ServiceView):
     service_id = managed_services[0]
     diagnostics_module_name = "minetest"
     description = description
-    show_status_block = False
+    show_status_block = True
 
 
 def diagnose():

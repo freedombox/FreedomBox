@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - monkeysphere: Sort items for consistent display.
 - monkeysphere: Handle new uid format of gpg2.
 - monkeysphere: Fixed handling of unavailable imported domains.
+- minetest: Fixed showing status block and diagnostics.
 
 ### Changed
 - dynamicdns, monkeysphere, transmission, upgrades: Use actions where
