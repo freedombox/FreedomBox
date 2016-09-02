@@ -91,10 +91,12 @@
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                  alt="{{ box_name }}" />
           </a>
-          <a href="{% url 'apps:index' %}" class="navbar-brand"
-             title="{% trans "Applications" %}">
-            <span class="glyphicon glyphicon-th"></span>
-          </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'apps:index' %}" class="navbar-brand"
+               title="{% trans "Applications" %}">
+              <span class="glyphicon glyphicon-th"></span>
+            </a>
+          {% endif %}
         {% endblock %}
       </div>
       <div class="collapse navbar-collapse">
