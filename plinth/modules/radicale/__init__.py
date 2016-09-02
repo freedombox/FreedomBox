@@ -77,8 +77,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('radicale', title, '?selected=radicale',
-                           'glyphicon-calendar', description)
+    frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
+                           description)
 
 
 def enable():

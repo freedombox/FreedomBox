@@ -93,8 +93,8 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jwchat', _('Chat Client (JWChat)'), '/jwchat',
                            'glyphicon-comment')
-    frontpage.add_shortcut('xmpp', title, '?selected=xmpp',
-                           'glyphicon-comment', description)
+    frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
+                           description)
 
 
 class EjabberdServiceView(ServiceView):

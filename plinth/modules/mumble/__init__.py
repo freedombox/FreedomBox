@@ -79,8 +79,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('mumble', title, '?selected=mumble',
-                           'glyphicon-headphones', description)
+    frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
+                           description)
 
 
 def enable():

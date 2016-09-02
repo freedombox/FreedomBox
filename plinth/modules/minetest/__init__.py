@@ -74,8 +74,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('minetest', title, '?selected=minetest',
-                           'glyphicon-th-large', description)
+    frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
+                           description)
 
 
 def enable():

@@ -29,6 +29,9 @@ def get_shortcuts():
 
 def add_shortcut(id, label, url, icon, details=None):
     """Add shortcut to front page."""
+    if not url:
+        url = '?selected={id}'.format(id=id)
+
     shortcuts[id] = {
         'id': id,
         'label': label,

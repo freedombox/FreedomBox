@@ -87,8 +87,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('quassel', title, '?selected=quassel',
-                           'glyphicon-retweet', description)
+    frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
+                           description)
 
 
 def enable():
