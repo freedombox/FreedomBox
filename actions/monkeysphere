@@ -145,7 +145,7 @@ def get_monkeysphere_keys(key_id=None):
                 uid = uid[uid.index(']') + 1:].strip()
 
             keys[-1].setdefault('uids', []).append(uid)
-            matches = re.match('([a-zA-Z]*)://(.*)(:\d*)?', uid)
+            matches = re.match(r'([a-zA-Z]*)://(.*)(:\d*)?', uid)
             keys[-1]['service'] = matches.group(1)
             keys[-1]['imported_domains'].append(matches.group(2))
         elif line.startswith('OpenPGP fingerprint:'):

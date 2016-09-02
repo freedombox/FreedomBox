@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Added loading icon for other busy operations.
+- Added basic front page with shortcuts to web apps, and information
+  about enabled services.
 
 ### Fixed
 - users: Fixed checking restricted usernames.
@@ -12,9 +14,14 @@ All notable changes to this project will be documented in this file.
 - Updated translations to fix weblate errors.
 - Fixed spelling errors in datetime and letsencrypt modules.
 - users: Flush nscd cache after user operations.
+- monkeysphere: Adopted to using SHA256 fingerprints.
+- monkeysphere: Sort items for consistent display.
+- monkeysphere: Handle new uid format of gpg2.
+- monkeysphere: Fixed handling of unavailable imported domains.
 
 ### Changed
-- dynamicdns, transmission, upgrades: Allowed Plinth to run as non-root.
+- dynamicdns, monkeysphere, transmission, upgrades: Use actions where
+  root is required, so that Plinth can run as non-root.
 - xmpp: Switched to using ruamel.yaml to modify ejabberd config.
 - Exit with error if any of the setup steps fail.
 
