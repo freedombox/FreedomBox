@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.views import ServiceView
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
+from plinth.signals import letsencrypt_cert_obtained, letsencrypt_cert_revoked
 
 
 version = 1
@@ -71,6 +72,8 @@ def init():
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
+    letsencrypt_cert_obtained.connect(on_letsencrypt_cert_obtained)
+    letsencrypt_cert_revoked.connect(on_letsencrypt_cert_revoked)
 
 
 def setup(helper, old_version=None):
@@ -158,6 +161,18 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
                           ['change-domainname',
                            '--domainname', new_domainname],
                           async=True)
+
+
+def on_letsencrypt_cert_obtained(sender, domain, **kwargs):
+    """Start using letsencrypt certificate if it matches configured domain."""
+    actions.superuser_run(
+        'xmpp', ['add-letsencrypt', '--domain', domain], async=True)
+
+
+def on_letsencrypt_cert_revoked(sender, domain, **kwargs):
+    """Stop using letsencrypt certificate if it matches configured domain."""
+    actions.superuser_run(
+        'xmpp', ['drop-letsencrypt', '--domain', domain], async=True)
 
 
 def diagnose():

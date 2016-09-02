@@ -25,6 +25,7 @@ import argparse
 import os
 import shutil
 import socket
+import stat
 import subprocess
 import re
 import ruamel.yaml
@@ -36,6 +37,7 @@ JWCHAT_CONFIG = '/etc/jwchat/config.js'
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
+EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
 
 
 def parse_arguments():
@@ -43,7 +45,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Preseed debconf values before packages are installed.
     pre_install = subparsers.add_parser(
         'pre-install',
         help='Preseed debconf values before packages are installed.')
@@ -51,13 +52,10 @@ def parse_arguments():
         '--domainname',
         help='The domain name that will be used by the XMPP service.')
 
-    # Setup jwchat apache conf
     subparsers.add_parser('setup', help='Setup jwchat apache conf')
-
     subparsers.add_parser('enable', help='Enable XMPP service')
     subparsers.add_parser('disable', help='Disable XMPP service')
 
-    # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
         'pre-change-hostname',
         help='Prepare ejabberd for nodename change')
@@ -66,7 +64,6 @@ def parse_arguments():
     pre_hostname_change.add_argument('--new-hostname',
                                      help='New hostname')
 
-    # Update ejabberd nodename
     hostname_change = subparsers.add_parser('change-hostname',
                                             help='Update ejabberd nodename')
     hostname_change.add_argument('--old-hostname',
@@ -74,11 +71,20 @@ def parse_arguments():
     hostname_change.add_argument('--new-hostname',
                                  help='New hostname')
 
-    # Update ejabberd and jwchat with new domainname
     domainname_change = subparsers.add_parser(
         'change-domainname',
         help='Update ejabberd and jwchat with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
+
+    add_letsencrypt = subparsers.add_parser(
+        'add-letsencrypt', help='Start using letsencrypt certificate if it '
+        'matches configured domain')
+    add_letsencrypt.add_argument('--domain', help='Certificate domain')
+
+    drop_letsencrypt = subparsers.add_parser(
+        'drop-letsencrypt', help='Stop using letsencrypt certificate if it '
+        'matches configured domain')
+    drop_letsencrypt.add_argument('--domain', help='Certificate domain')
 
     return parser.parse_args()
 
@@ -226,6 +232,67 @@ def subcommand_change_domainname(arguments):
         ruamel.yaml.round_trip_dump(conf, file_handle)
 
     action_utils.service_start('ejabberd')
+
+
+def subcommand_add_letsencrypt(arguments):
+    """Start using letsencrypt certificate if it matches configured domain."""
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    if arguments.domain in conf['hosts']:
+        cert_folder = '/etc/ejabberd/letsencrypt/' + arguments.domain
+        if not os.path.exists(cert_folder):
+            os.makedirs(cert_folder)
+            shutil.chown(cert_folder, 'ejabberd', 'ejabberd')
+
+        cert_file = cert_folder + '/ejabberd.pem'
+        le_folder = '/etc/letsencrypt/live/' + arguments.domain
+        with open(cert_file, 'w') as outfile:
+            with open(le_folder + '/privkey.pem', 'r') as infile:
+                for line in infile:
+                    if line.strip():
+                        outfile.write(line)
+            with open(le_folder + '/fullchain.pem', 'r') as infile:
+                for line in infile:
+                    if line.strip():
+                        outfile.write(line)
+        shutil.chown(cert_file, 'ejabberd', 'ejabberd')
+        os.chmod(cert_file, stat.S_IRUSR | stat.S_IWUSR)
+
+        cert_file = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+            cert_file)
+        for listen_port in conf['listen']:
+            if 'certfile' in listen_port:
+                listen_port['certfile'] = cert_file
+        conf['s2s_certfile'] = cert_file
+
+        with open(EJABBERD_CONFIG, 'w') as file_handle:
+            ruamel.yaml.round_trip_dump(conf, file_handle)
+
+        action_utils.service_restart('ejabberd')
+
+
+def subcommand_drop_letsencrypt(arguments):
+    """Stop using letsencrypt certificate if it matches configured domain."""
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    cert_folder = '/etc/ejabberd/letsencrypt/' + arguments.domain
+    cert_file = cert_folder + '/ejabberd.pem'
+    orig_cert_file = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+        EJABBERD_ORIG_CERT)
+
+    for listen_port in conf['listen']:
+        if 'certfile' in listen_port and listen_port['certfile'] == cert_file:
+            listen_port['certfile'] = orig_cert_file
+
+    if conf['s2s_certfile'] == cert_file:
+        conf['s2s_certfile'] = orig_cert_file
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
+
+    action_utils.service_restart('ejabberd')
 
 
 def main():
