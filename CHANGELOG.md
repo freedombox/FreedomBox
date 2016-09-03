@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
   root is required, so that Plinth can run as non-root.
 - xmpp: Switched to using ruamel.yaml to modify ejabberd config.
 - Exit with error if any of the setup steps fail.
+- actions: Hush some unneeded output of systemd.
 
 ## [0.10.0] - 2016-08-12
 ### Added
