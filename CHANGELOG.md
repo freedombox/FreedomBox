@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   about enabled services.
 - Allow initial setup operation to happen without package
   installation.
+- networks: Add polkit rules for network management.
 
 ### Fixed
 - users: Fixed checking restricted usernames.

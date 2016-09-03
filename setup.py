@@ -213,6 +213,8 @@ setuptools.setup(
                  ['data/lib/systemd/system/plinth.service']),
                 ('/usr/share/plinth/actions',
                  glob.glob(os.path.join('actions', '*'))),
+                ('/usr/share/polkit-1/rules.d',
+                 ['data/usr/share/polkit-1/rules.d/50-plinth.rules']),
                 ('/usr/share/man/man1', ['doc/plinth.1']),
                 ('/etc/plinth', ['data/etc/plinth/plinth.config']),
                 ('/usr/share/augeas/lenses',
@@ -223,7 +225,10 @@ setuptools.setup(
                  glob.glob('data/usr/share/pam-configs/*-freedombox')),
                 ('/etc/plinth/modules-enabled',
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
-                                        '*')))],
+                                        '*'))),
+                ('/var/lib/polkit-1/localauthority/10-vendor.d',
+                 ['data/var/lib/polkit-1/localauthority/10-vendor.d/'
+                  'org.freedombox.NetworkManager.pkla'])],
     cmdclass={
         'build': CustomBuild,
         'clean': CustomClean,
