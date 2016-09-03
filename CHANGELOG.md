@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - Added loading icon for other busy operations.
 - Added basic front page with shortcuts to web apps, and information
   about enabled services.
+- Allow initial setup operation to happen without package
+  installation.
 
 ### Fixed
 - users: Fixed checking restricted usernames.
