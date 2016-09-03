@@ -21,7 +21,6 @@ import django.conf
 from django.contrib.messages import constants as message_constants
 import django.core.management
 import django.core.wsgi
-from django.utils import translation
 import importlib
 import logging
 import os
@@ -55,6 +54,9 @@ def parse_arguments():
     parser.add_argument(
         '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
+    parser.add_argument(
+        '--setup-no-install', default=False, nargs='*',
+        help='run setup tasks without installing packages and exit')
     parser.add_argument(
         '--diagnose', action='store_true', default=False,
         help='run diagnostic tests and exit')
@@ -249,14 +251,14 @@ def configure_django():
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
-def run_setup_and_exit(module_list):
+def run_setup_and_exit(module_list, allow_install=True):
     """Run setup on all essential modules and exit."""
     error_code = 0
     try:
         if not module_list:
-            setup.setup_modules(essential=True)
+            setup.setup_modules(essential=True, allow_install=allow_install)
         else:
-            setup.setup_modules(module_list)
+            setup.setup_modules(module_list, allow_install=allow_install)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         error_code = 1
@@ -302,6 +304,8 @@ def main():
     module_loader.load_modules()
     if arguments.setup is not False:
         run_setup_and_exit(arguments.setup)
+    if arguments.setup_no_install is not False:
+        run_setup_and_exit(arguments.setup, allow_install=False)
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
