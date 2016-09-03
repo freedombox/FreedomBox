@@ -33,7 +33,7 @@ is_essential = True
 
 depends = ['apps', 'names']
 
-managed_packages = ['letsencrypt']
+managed_packages = ['certbot']
 
 title = _('Certificates (Let\'s Encrypt)')
 

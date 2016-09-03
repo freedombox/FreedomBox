@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - xmpp: Switched to using ruamel.yaml to modify ejabberd config.
 - Exit with error if any of the setup steps fail.
 - actions: Hush some unneeded output of systemd.
+- letsencrypt: Depend on the new certbot package.
 
 ## [0.10.0] - 2016-08-12
 ### Added
