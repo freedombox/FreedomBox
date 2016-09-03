@@ -59,7 +59,8 @@ def service_is_running(servicename):
 def service_is_enabled(service_name):
     """Check if service is enabled in systemd."""
     try:
-        subprocess.check_output(['systemctl', 'is-enabled', service_name])
+        subprocess.run(['systemctl', 'is-enabled', service_name], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         return False
