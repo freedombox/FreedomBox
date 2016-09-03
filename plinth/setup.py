@@ -40,6 +40,7 @@ class Helper(object):
         self.current_operation = None
         self.is_finished = None
         self.exception = None
+        self.allow_install = True
 
     def run_in_thread(self):
         """Execute the setup process in a thread."""
@@ -98,6 +99,7 @@ class Helper(object):
             for package_name in package_names:
                 if not cache[package_name].is_installed:
                     raise PackageNotInstalledError(package_name)
+
             return
 
         logger.info('Running install for module - %s, packages - %s',
