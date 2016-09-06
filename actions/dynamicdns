@@ -311,7 +311,7 @@ doUpdate()
         if [ "${ignoreCertError}" = "enabled" ];then
             WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
         fi
-        local cmd="${WGET} ${WGETOPTIONS} ${updateurl}"
+        local cmd="${WGET} -O /dev/null ${WGETOPTIONS} ${updateurl}"
         $cmd
         # ToDo: check the returning text from WEB Server. User need to give expected string.
         if [ ${?} -eq 0 ];then
