@@ -21,10 +21,12 @@ Configuration helper for repro SIP proxy.
 """
 
 import argparse
+import augeas
 
 from plinth import action_utils
 
 CONFIG = '/etc/repro/repro.config'
+AUG_PATH = '/files' + CONFIG + '/.anon/'
 
 
 def parse_arguments():
@@ -39,24 +41,28 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Configure repro."""
-    with open(CONFIG, 'r') as conf:
-        lines = conf.readlines()
+    aug = load_augeas()
 
-    with open(CONFIG, 'w') as conf:
-        for line in lines:
-            if line.startswith('Database1Path'):
-                # workaround for Debian bug #803113
-                conf.write('Database1Path = /var/lib/repro\n')
-            elif line.startswith('TLSPort'):
-                conf.write('TLSPort = 5061\n')
-            elif line.startswith('DisableHttpAuth'):
-                # let apache handle authentication
-                conf.write('DisableHttpAuth = true\n')
-            else:
-                conf.write(line)
+    # workaround for Debian bug #803113
+    aug.set(AUG_PATH + 'Database1Path', '/var/lib/repro')
+    aug.set(AUG_PATH + 'TLSPort', '5061')
+    # let apache handle authentication
+    aug.set(AUG_PATH + 'DisableHttpAuth', 'true')
+    aug.save()
 
     action_utils.service_restart('repro')
     action_utils.webserver_enable('repro-plinth')
+
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG)
+    aug.load()
+    return aug
 
 
 def main():
