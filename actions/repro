@@ -20,6 +20,9 @@
 Configuration helper for repro SIP proxy.
 """
 
+import time
+from urllib import request, error
+
 import argparse
 import augeas
 
@@ -34,12 +37,20 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup', help='Configure repro')
+    setup = subparsers.add_parser('setup', help='Configure repro')
+    setup.add_argument('--domain', help='Domain name')
+
+    add_domain = subparsers.add_parser('add-domain', help='Add domain name')
+    add_domain.add_argument('--domain', help='Domain name')
+
+    remove_domain = subparsers.add_parser('remove-domain',
+                                          help='Remove domain name')
+    remove_domain.add_argument('--domain', help='Domain name')
 
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Configure repro."""
     aug = load_augeas()
 
@@ -53,6 +64,43 @@ def subcommand_setup(_):
     action_utils.service_restart('repro')
     action_utils.webserver_enable('repro-plinth')
 
+    if arguments.domain:
+        while 1:
+            tries = 0
+            try:
+                _add_domain(arguments.domain, restart=False)
+                break
+            except error.URLError:
+                tries += 1
+                if tries >= 30:
+                    return
+                time.sleep(2)
+
+    action_utils.service_restart('repro')
+
+
+def subcommand_add_domain(arguments):
+    """Add domain name."""
+    _add_domain(arguments.domain)
+
+
+def _add_domain(domain, restart=True):
+    """Add domain name."""
+    request.urlopen(
+        'http://localhost:5080/domains.html?domainUri=' + domain \
+        + '&action=Add')
+
+    if restart:
+        action_utils.service_restart('repro')
+
+
+def subcommand_remove_domain(arguments):
+    """Remove domain name."""
+    request.urlopen(
+        'http://localhost:5080/domains.html?action=Remove&remove.' \
+        + arguments.domain + '=on')
+
+    action_utils.service_restart('repro')
 
 
 def load_augeas():

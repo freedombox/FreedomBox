@@ -26,6 +26,8 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.modules.names import get_domain
+from plinth.signals import domainname_change
 from plinth.views import ServiceView
 
 version = 1
@@ -75,6 +77,8 @@ def init():
     if service.is_enabled():
         add_shortcut()
 
+    domainname_change.connect(on_domainname_change)
+
 
 class ReproServiceView(ServiceView):
     service_id = managed_services[0]
@@ -85,7 +89,9 @@ class ReproServiceView(ServiceView):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'repro', ['setup'])
+    domain = get_domain('domainname')
+    helper.call('post', actions.superuser_run, 'repro',
+                ['setup', '--domain', domain])
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -105,6 +111,17 @@ def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('repro')
+
+
+def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
+    """Update repro domain configuration."""
+    if old_domainname:
+        actions.superuser_run(
+            'repro', ['remove-domain', '--domain', old_domainname])
+
+    if new_domainname:
+        actions.superuser_run(
+            'repro', ['add-domain', '--domain', new_domainname])
 
 
 def diagnose():
