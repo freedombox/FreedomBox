@@ -27,7 +27,8 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.modules.names import get_domain
-from plinth.signals import domainname_change
+from plinth.signals import domainname_change, \
+    letsencrypt_cert_obtained, letsencrypt_cert_revoked
 from plinth.views import ServiceView
 
 version = 1
@@ -78,6 +79,8 @@ def init():
         add_shortcut()
 
     domainname_change.connect(on_domainname_change)
+    letsencrypt_cert_obtained.connect(on_letsencrypt_cert_obtained)
+    letsencrypt_cert_revoked.connect(on_letsencrypt_cert_revoked)
 
 
 class ReproServiceView(ServiceView):
@@ -122,6 +125,19 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     if new_domainname:
         actions.superuser_run(
             'repro', ['add-domain', '--domain', new_domainname])
+
+
+def on_letsencrypt_cert_obtained(sender, domain, **kwargs):
+    """Start using letsencrypt certificate if it matches configured domain."""
+    if get_domain('domainname') == domain:
+        actions.superuser_run(
+            'repro', ['add-letsencrypt', '--domain', domain])
+
+
+def on_letsencrypt_cert_revoked(sender, domain, **kwargs):
+    """Stop using letsencrypt certificate if it matches configured domain."""
+    actions.superuser_run(
+        'repro', ['drop-letsencrypt', '--domain', domain])
 
 
 def diagnose():

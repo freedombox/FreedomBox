@@ -31,3 +31,5 @@ domainname_change = Signal(providing_args=['old_domainname', 'new_domainname'])
 domain_added = Signal(providing_args=['domain_type', 'name', 'description',
                                       'services'])
 domain_removed = Signal(providing_args=['domain_type', 'name'])
+letsencrypt_cert_obtained = Signal(providing_args=['domain'])
+letsencrypt_cert_revoked = Signal(providing_args=['domain'])

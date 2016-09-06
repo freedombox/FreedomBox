@@ -20,6 +20,8 @@
 Configuration helper for repro SIP proxy.
 """
 
+import os
+import sys
 import time
 from urllib import request, error
 
@@ -30,6 +32,15 @@ from plinth import action_utils
 
 CONFIG = '/etc/repro/repro.config'
 AUG_PATH = '/files' + CONFIG + '/.anon/'
+CERT_DIR = '/etc/letsencrypt/live'
+
+
+class MissingCertificateError(Exception):
+    """
+    Exception raised when LetsEncrypt certificate for given domain could not
+    be found.
+    """
+    pass
 
 
 def parse_arguments():
@@ -46,6 +57,17 @@ def parse_arguments():
     remove_domain = subparsers.add_parser('remove-domain',
                                           help='Remove domain name')
     remove_domain.add_argument('--domain', help='Domain name')
+
+    add_letsencrypt = subparsers.add_parser(
+        'add-letsencrypt',
+        help='Start using LetsEncrypt certificate')
+    add_letsencrypt.add_argument('--domain', help='Domain name')
+
+    drop_letsencrypt = subparsers.add_parser(
+        'drop-letsencrypt',
+        help='Stop using LetsEncrypt certificate, if it matches configured '
+        'domain')
+    drop_letsencrypt.add_argument('--domain', help='Domain name')
 
     return parser.parse_args()
 
@@ -75,8 +97,12 @@ def subcommand_setup(arguments):
                 if tries >= 30:
                     return
                 time.sleep(2)
+        try:
+            _add_letsencrypt(arguments.domain, restart=False)
+        except MissingCertificateError:
+            pass
 
-    action_utils.service_restart('repro')
+        action_utils.service_restart('repro')
 
 
 def subcommand_add_domain(arguments):
@@ -101,6 +127,55 @@ def subcommand_remove_domain(arguments):
         + arguments.domain + '=on')
 
     action_utils.service_restart('repro')
+
+
+def subcommand_add_letsencrypt(arguments):
+    """Start using letsencrypt certificate."""
+    try:
+        _add_letsencrypt(arguments.domain)
+    except MissingCertificateError as err:
+        print(str(err), file=sys.stderr)
+        sys.exit(1)
+
+
+def _add_letsencrypt(domain, restart=True):
+    """Start using letsencrypt certificate."""
+    cert_file = os.path.join(CERT_DIR, domain, 'fullchain.pem')
+    key_file = os.path.join(CERT_DIR, domain, 'privkey.pem')
+
+    if os.path.isfile(cert_file) and os.path.isfile(key_file):
+        # XXX: Should use augeas here, but it doesn't always leave a
+        # space after the = separator, and repro doesn't like that.
+        with open('/etc/repro/repro.config', 'r') as conffile:
+            lines = conffile.readlines()
+        with open('/etc/repro/repro.config', 'w') as conffile:
+            for line in lines:
+                if line.startswith('TLSDomainName ='):
+                    conffile.write('TLSDomainName = {0}\n'.format(domain))
+                elif line.startswith('TLSCertificate ='):
+                    conffile.write('TLSCertificate = {0}\n'.format(cert_file))
+                elif line.startswith('TLSPrivateKey ='):
+                    conffile.write('TLSPrivateKey = {0}\n'.format(key_file))
+                else:
+                    conffile.write(line)
+
+        if restart:
+            action_utils.service_restart('repro')
+    else:
+        raise MissingCertificateError(
+            'Could not find certificate for domain:', domain)
+
+
+def subcommand_drop_letsencrypt(arguments):
+    """Stop using letsencrypt certificate, if it matches configured domain."""
+    aug = load_augeas()
+    if aug.get(AUG_PATH + 'TLSDomainName') == arguments.domain:
+        aug.set(AUG_PATH + 'TLSDomainName', None)
+        aug.set(AUG_PATH + 'TLSCertificate', None)
+        aug.set(AUG_PATH + 'TLSPrivateKey', None)
+        aug.save()
+
+        action_utils.service_restart('repro')
 
 
 def load_augeas():
