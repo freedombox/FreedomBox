@@ -1,0 +1,104 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for tinc.
+"""
+
+import os
+import subprocess
+
+import argparse
+import augeas
+
+from plinth import action_utils
+
+CONFIG_FILE = '/etc/tinc/freedombox/tinc.conf'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('is-setup', help='Return whether setup is complete')
+
+    setup = subparsers.add_parser('setup',
+                                  help='Perform initial configuration')
+    setup.add_argument('--name', help='Your hostname on the VPN')
+    setup.add_argument('--ip',
+                       help='Your new IP address on the VPN. It should begin '
+                       'with 10. or 198.162. or 17.16.')
+    setup.add_argument('--address', default=None,
+                       help='Optional, an IP address or domain name where '
+                       'your tinc can be accessed (over the public Internet)')
+
+    return parser.parse_args()
+
+
+def subcommand_is_setup(_):
+    """Return whether setup is complete."""
+    print('true' if os.path.isfile(CONFIG_FILE) else 'false')
+
+
+def subcommand_setup(arguments):
+    """Perform initial configuration."""
+    os.makedirs('/etc/tinc/freedombox/hosts', exist_ok=True)
+
+    aug = load_augeas()
+    aug.set('/files' + CONFIG_FILE + '/Name', arguments.name)
+    aug.save()
+
+    host_file = '/etc/tinc/freedombox/hosts/' + arguments.name
+    with open(host_file, 'w') as host:
+        host.write('Subnet = {0}/32\n'.format(arguments.ip))
+        if arguments.address:
+            host.write('Address = {0}\n'.format(arguments.address))
+
+    proc = subprocess.Popen(['tincd', '--net=freedombox', '--generate-keys'],
+                            stdin=subprocess.PIPE, shell=False)
+    proc.communicate(input=b'y\ny\n')
+
+    action_utils.service_enable('tinc@freedombox')
+    action_utils.service_start('tinc@freedombox')
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', CONFIG_FILE)
+
+    aug.load()
+    return aug
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
