@@ -74,10 +74,10 @@ def setup(request):
             _setup(form.cleaned_data)
             return redirect(reverse_lazy('tinc:index'))
     else:
-        name = get_domain('domainname') or socket.gethostname()
+        name = socket.gethostname()
         # suggest a more random name for common hostnames
         if name == 'freedombox' or name == 'debian':
-            name += '_' + ''.join(
+            name += ''.join(
                 random.choice(
                     string.ascii_letters + string.digits) for x in range(20))
         initial = {
@@ -145,7 +145,7 @@ def get_status():
 def _setup(data):
     """Setup a tinc VPN."""
     actions.superuser_run(
-        'tinc', ['setup', '--name', data['name'], '--ip', data['ip'],
+        'tinc', ['setup', '--name', data['name'], '--ip', data['ip_address'],
                  '--address', data['address']])
 
 

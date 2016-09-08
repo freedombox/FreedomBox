@@ -20,25 +20,40 @@ Forms for the tinc module.
 """
 
 from django import forms
+from django.core import validators
 from django.utils.translation import ugettext_lazy as _
+
+from plinth.modules.config.config import domain_label_validator
+
+NAME_REGEX = r'^[a-zA-Z0-9]{,63}$'
 
 
 class TincSetupForm(forms.Form):
     """Form to complete tinc setup."""
     name = forms.CharField(
         label=_('Name'),
-        help_text=_('Your hostname on the VPN'))
+        help_text=_('Your hostname on the VPN'),
+        validators=[
+            validators.RegexValidator(
+                NAME_REGEX,
+                _('Invalid name'))])
 
-    ip = forms.CharField(
+    ip_address = forms.CharField(
         label=_('IP Address'),
         help_text=_('Your new IP address on the VPN. It should begin with '
-                    '10. or 198.162. or 17.16.'))
+                    '10. or 198.162. or 17.16.'),
+        validators=[validators.validate_ipv46_address])
 
     address = forms.CharField(
         label=_('Address'),
         required=False,
         help_text=_('Optional, an IP address or domain name where your tinc '
-                    'can be accessed (over the public Internet)'))
+                    'can be accessed (over the public Internet)'),
+        validators=[
+            validators.RegexValidator(
+                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
+                _('Invalid address')),
+            domain_label_validator])
 
 
 class TincForm(forms.Form):
