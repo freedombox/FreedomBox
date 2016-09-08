@@ -41,6 +41,16 @@
              value="{% trans "Download package" %}"/>
   </form>
 
+  <br><p>
+    {% blocktrans trimmed %}
+      If you have received a package for an existing tinc VPN, you can load
+      it to join the VPN.
+    {% endblocktrans %}
+  <p>
+    <a class="btn btn-default" href="{% url 'tinc:load' %}">
+      {% trans "Load package &raquo;" %}</a>
+  </p>
+
 
   <h3>{% trans "Status" %}</h3>
 

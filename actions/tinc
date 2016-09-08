@@ -22,6 +22,7 @@ Configuration helper for tinc.
 """
 
 import os
+import shutil
 import subprocess
 
 import argparse
@@ -48,6 +49,10 @@ def parse_arguments():
     setup.add_argument('--address', default=None,
                        help='Optional, an IP address or domain name where '
                        'your tinc can be accessed (over the public Internet)')
+
+    load = subparsers.add_parser('load',
+                                 help='Load VPN configuration package')
+    load.add_argument('--package', help='Path to package archive file')
 
     return parser.parse_args()
 
@@ -77,6 +82,12 @@ def subcommand_setup(arguments):
 
     action_utils.service_enable('tinc@freedombox')
     action_utils.service_start('tinc@freedombox')
+
+
+def subcommand_load(arguments):
+    """Load VPN configuration package."""
+    shutil.unpack_archive(arguments.package, '/etc/tinc/freedombox')
+    action_utils.service_restart('tinc@freedombox')
 
 
 def load_augeas():

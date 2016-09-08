@@ -32,10 +32,12 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
-from .forms import TincForm, TincSetupForm
+from .forms import TincForm, TincSetupForm, TincLoadForm
 from plinth import actions
 from plinth.modules import tinc
 from plinth.modules.names import get_domain
+
+PACKAGE_ARCHIVE = 'freedombox-tinc-package.tar.gz'
 
 
 def index(request):
@@ -64,8 +66,6 @@ def index(request):
 
 def setup(request):
     """Serve initial configuration page."""
-    status = get_status()
-
     form = None
 
     if request.method == 'POST':
@@ -92,8 +92,6 @@ def setup(request):
 
     return TemplateResponse(request, 'tinc_setup.html',
                             {'title': tinc.title,
-                             'description': tinc.description,
-                             'status': status,
                              'form': form})
 
 
@@ -110,10 +108,31 @@ def package(request):
     response = HttpResponse(package_string,
                             content_type='application/gzip')
     response['Content-Encoding'] = 'gzip'
-    response['Content-Disposition'] = \
-        'attachment; filename=freedombox-tinc-package.tar.gz'
+    response['Content-Disposition'] = 'attachment; filename=' + PACKAGE_ARCHIVE
 
     return response
+
+
+def load(request):
+    """Load VPN configuration package."""
+    form = None
+
+    if request.method == 'POST':
+        form = TincLoadForm(request.POST, request.FILES, prefix='tinc')
+        if form.is_valid():
+            with open(PACKAGE_ARCHIVE, 'wb') as package_file:
+                for chunk in request.FILES['tinc-package'].chunks():
+                    package_file.write(chunk)
+
+            actions.superuser_run('tinc',
+                                  ['load', '--package', PACKAGE_ARCHIVE])
+            return redirect(reverse_lazy('tinc:index'))
+    else:
+        form = TincLoadForm(prefix='tinc')
+
+    return TemplateResponse(request, 'tinc_load.html',
+                            {'title': tinc.title,
+                             'form': form})
 
 
 def get_status():

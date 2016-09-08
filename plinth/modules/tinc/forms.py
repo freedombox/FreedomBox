@@ -46,3 +46,10 @@ class TincForm(forms.Form):
     enabled = forms.BooleanField(
         label=_('Enable tinc'),
         required=False)
+
+
+class TincLoadForm(forms.Form):
+    """Form to load VPN configuration package."""
+    package = forms.FileField(
+        label=_('Package'),
+        help_text=_('The package file is typically a .tar.gz archive.'))

@@ -1,3 +1,5 @@
+{% extends "simple_service.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,19 +16,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the tinc module.
-"""
-
-from django.conf.urls import url
-
-from . import views
+{% load bootstrap %}
+{% load i18n %}
 
 
-urlpatterns = [
-    url(r'^apps/tinc/$', views.index, name='index'),
-    url(r'^apps/tinc/setup/$', views.setup, name='setup'),
-    url(r'^apps/tinc/package/$', views.package, name='package'),
-    url(r'^apps/tinc/load/$', views.load, name='load'),
-]
+{% block configuration %}
+
+  <h3>{% trans "Load VPN Configuration Package" %}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      To join an existing tinc VPN, you will need to obtain a VPN
+      configuration package that contains information about other hosts in
+      the VPN.
+    {% endblocktrans %}
+  </p>
+
+  <form class="form" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Load package" %}"/>
+  </form>
+
+{% endblock %}
