@@ -80,6 +80,11 @@ def subcommand_setup(arguments):
                             stdin=subprocess.PIPE, shell=False)
     proc.communicate(input=b'y\ny\n')
 
+    with open('/etc/tinc/freedombox/tinc-up', 'w') as up_script:
+        up_script.write(
+            'ifconfig $INTERFACE ' + arguments.ip + ' netmask 255.255.0.0\n')
+    os.chmod('/etc/tinc/freedombox/tinc-up', 0o755)
+
     action_utils.service_enable('tinc@freedombox')
     action_utils.service_start('tinc@freedombox')
 
@@ -87,6 +92,19 @@ def subcommand_setup(arguments):
 def subcommand_load(arguments):
     """Load VPN configuration package."""
     shutil.unpack_archive(arguments.package, '/etc/tinc/freedombox')
+
+    # Try to connect to all configured hosts.
+    aug = load_augeas()
+    name = aug.get('/files' + CONFIG_FILE + '/Name')
+
+    aug.remove('/files' + CONFIG_FILE + '/ConnectTo')
+
+    for host in list(os.walk('/etc/tinc/freedombox/hosts'))[0][2]:
+        if host != name:
+            aug.set('/files' + CONFIG_FILE + '/ConnectTo[last() + 1]', host)
+
+    aug.save()
+
     action_utils.service_restart('tinc@freedombox')
 
 

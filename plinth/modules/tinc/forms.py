@@ -25,8 +25,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules.config.config import domain_label_validator
 
-NAME_REGEX = r'^[a-zA-Z0-9]{,63}$'
-
 
 class TincSetupForm(forms.Form):
     """Form to complete tinc setup."""
@@ -35,7 +33,7 @@ class TincSetupForm(forms.Form):
         help_text=_('Your hostname on the VPN'),
         validators=[
             validators.RegexValidator(
-                NAME_REGEX,
+                r'^[a-zA-Z0-9]{,63}$',
                 _('Invalid name'))])
 
     ip_address = forms.CharField(

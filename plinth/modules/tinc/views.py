@@ -82,8 +82,7 @@ def setup(request):
                     string.ascii_letters + string.digits) for x in range(20))
         initial = {
             'name': name,
-            'ip': '10.{0}.{1}.{2}'.format(
-                random.randint(0, 255),
+            'ip_address': '10.10.{0}.{1}'.format(
                 random.randint(0, 255),
                 random.randint(0, 255)),
             'address': get_domain('domainname'),
