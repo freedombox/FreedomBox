@@ -26,5 +26,6 @@ from . import views
 
 urlpatterns = [
     url(r'^apps/tinc/$', views.index, name='index'),
-    url(r'^apps/tinc/setup$', views.setup, name='setup'),
+    url(r'^apps/tinc/setup/$', views.setup, name='setup'),
+    url(r'^apps/tinc/package/$', views.package, name='package'),
 ]

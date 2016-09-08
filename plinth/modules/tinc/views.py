@@ -20,14 +20,17 @@ Views for the tinc module.
 """
 
 import random
+import shutil
 import socket
 import string
 
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST
 
 from .forms import TincForm, TincSetupForm
 from plinth import actions
@@ -92,6 +95,25 @@ def setup(request):
                              'description': tinc.description,
                              'status': status,
                              'form': form})
+
+
+@require_POST
+def package(request):
+    """Provide VPN configuration package for download."""
+    package_name = shutil.make_archive(
+        'freedombox-tinc-package', 'gztar',
+        '/etc/tinc/freedombox', 'hosts')
+
+    with open(package_name, 'rb') as package_file:
+        package_string = package_file.read()
+
+    response = HttpResponse(package_string,
+                            content_type='application/gzip')
+    response['Content-Encoding'] = 'gzip'
+    response['Content-Disposition'] = \
+        'attachment; filename=freedombox-tinc-package.tar.gz'
+
+    return response
 
 
 def get_status():

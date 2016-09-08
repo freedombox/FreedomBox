@@ -24,6 +24,24 @@
 
 {% block configuration %}
 
+  <h3>{% trans "VPN Configuration Package" %}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      To allow other tinc hosts to join your VPN, you need to download a
+      package containing the current VPN hosts information. This file should
+      be provided to the new host who will join the VPN.
+    {% endblocktrans %}
+  </p>
+
+  <form class="form" method="post" action="{% url 'tinc:package' %}">
+    {% csrf_token %}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Download package" %}"/>
+  </form>
+
+
   <h3>{% trans "Status" %}</h3>
 
   <p class="running-status-parent">
