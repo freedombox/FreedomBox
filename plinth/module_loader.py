@@ -45,7 +45,7 @@ def load_modules():
     pre_module_loading.send_robust(sender="module_loader")
     modules = {}
     for module_import_path in get_modules_to_load():
-        logger.info('Importing %s', module_import_path)
+        logger.debug('Importing %s', module_import_path)
         module_name = module_import_path.split('.')[-1]
         try:
             modules[module_name] = importlib.import_module(module_import_path)
@@ -71,7 +71,7 @@ def load_modules():
             logger.error('Unsatified dependency for module - %s',
                          module_name)
 
-    logger.debug('Module load order - %s', ordered_modules)
+    logger.info('Module load order - %s', ordered_modules)
 
     for module_name in ordered_modules:
         _initialize_module(module_name, modules[module_name])
