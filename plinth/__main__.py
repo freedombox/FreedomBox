@@ -243,9 +243,9 @@ def configure_django():
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
     django.setup(set_prefix=True)
 
-    logger.info('Configured Django with applications - %s', applications)
+    logger.debug('Configured Django with applications - %s', applications)
 
-    logger.info('Creating or adding new tables to data file')
+    logger.debug('Creating or adding new tables to data file')
     verbosity = 1 if cfg.debug else 0
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
