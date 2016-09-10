@@ -60,6 +60,9 @@ def parse_arguments():
     parser.add_argument(
         '--diagnose', action='store_true', default=False,
         help='run diagnostic tests and exit')
+    parser.add_argument(
+        '--list-dependencies', default=False, nargs='*',
+        help='list package dependencies for essential modules')
 
     global arguments
     arguments = parser.parse_args()
@@ -267,6 +270,21 @@ def run_setup_and_exit(module_list, allow_install=True):
     sys.exit(error_code)
 
 
+def list_dependencies(module_list):
+    """List dependencies for all essential modules and exit."""
+    error_code = 0
+    try:
+        if module_list:
+            setup.list_dependencies(module_list=module_list)
+        else:
+            setup.list_dependencies(essential=True)
+    except Exception as exception:
+        logger.error('Error listing dependencies - %s', exception)
+        error_code = 1
+
+    sys.exit(error_code)
+
+
 def run_diagnostics_and_exit():
     """Run diagostics on all modules and exit."""
     module = importlib.import_module('plinth.modules.diagnostics.diagnostics')
@@ -308,6 +326,9 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
+
+    if arguments.list_dependencies is not False:
+        list_dependencies(arguments.list_dependencies)
 
     if arguments.diagnose:
         run_diagnostics_and_exit()

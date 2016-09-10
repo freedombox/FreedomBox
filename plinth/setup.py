@@ -175,3 +175,17 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
             continue
 
         module.setup_helper.run(allow_install=allow_install)
+
+
+def list_dependencies(module_list=None, essential=False):
+    """Print list of packages required by selected or essential modules."""
+    for module_name, module in plinth.module_loader.loaded_modules.items():
+        if essential and not getattr(module, 'is_essential', False):
+            continue
+
+        if module_list and module_name not in module_list and \
+           '*' not in module_list:
+            continue
+
+        for package_name in getattr(module, 'managed_packages', []):
+            print(package_name)
