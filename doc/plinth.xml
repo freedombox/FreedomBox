@@ -48,6 +48,10 @@
         <option>--setup-no-repeat</option>
         <arg choice="opt" rep="repeat">application</arg>
       </arg>
+      <arg>
+        <option>--list-dependencies</option>
+        <arg choice="opt" rep="repeat">application</arg>
+      </arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -148,6 +152,24 @@
             packages are added as dependencies for the Debian package
             and then setup process is executed from post install
             script of the Debian package.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--list-dependencies</option></term>
+        <listitem>
+          <para>
+            For the list of provided applications, print the list of
+            packages needed by the applications.  If no application is
+            provided as additional argument, then print list of
+            packages needed by all essential applications.  If '*' is
+            provided in the list of the applications, then list of
+            packages needed by all applications will be printed.
+            Although, packages are installed when the application is
+            first accessed, this list will be useful for adding list
+            of dependencies to a Debian package and to get a list of
+            all interesting packages.  Other output may be printed on
+            stderr and should be ignored.
           </para>
         </listitem>
       </varlistentry>
