@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - networks: Add polkit rules for network management.
 - Update man page to add setup operations.
 - Add argument to list packages needed by apps.
+- networks: Add batctl as dependency.
 
 ### Fixed
 - users: Fixed checking restricted usernames.

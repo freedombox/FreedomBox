@@ -34,7 +34,7 @@ is_essential = True
 
 depends = ['system']
 
-managed_packages = ['network-manager']
+managed_packages = ['network-manager', 'batctl']
 
 title = _('Networks')
 
