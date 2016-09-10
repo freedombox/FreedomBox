@@ -246,8 +246,9 @@ def configure_django():
     logger.info('Configured Django with applications - %s', applications)
 
     logger.info('Creating or adding new tables to data file')
+    verbosity = 1 if cfg.debug else 0
     django.core.management.call_command('migrate', '--fake-initial',
-                                        interactive=False)
+                                        interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
