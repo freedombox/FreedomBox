@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-20 09:43+0530\n"
-"PO-Revision-Date: 2016-08-24 15:49+0000\n"
+"PO-Revision-Date: 2016-09-10 09:58+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch "
 "<https://hosted.weblate.org/projects/freedombox/plinth/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.8-dev\n"
+"X-Generator: Weblate 2.8\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -1090,7 +1090,7 @@ msgstr ""
 "a> kanaal via de webinterface van IRC."
 
 #: plinth/modules/help/templates/statuslog.html:26
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This is an internal error and not something you caused or can fix.  "
 #| "Please report the error on the <a href=\"https://github.com/freedombox/"
@@ -1101,10 +1101,10 @@ msgid ""
 "github.com/freedombox/Plinth/issues\">bugtracker</a> and attach this status "
 "log to the bug report."
 msgstr ""
-"Dit is een interne fout, en niet iets dat een gebruiker heeft veroorzaakt of "
-"kan verhelpen. Fouten zoals deze kunnen worden gemeld op de <a href="
-"\"https://github.com/freedombox/Plinth/issues\">bug tracker (Engelstalig)</"
-"a> zodat we deze kunnen verhelpen."
+"Dit zijn de laatste %(num_lines)s regels van het statuslogboek voor deze web "
+"interface. ALs je fouten wilt melden, gebruik dan de <a href=\""
+"https://github.com/freedombox/Plinth/issues\">bug tracker (Engelstalig)</a> "
+"en voeg dit log toe aan de foutmelding."
 
 #: plinth/modules/help/templates/statuslog.html:36
 msgid ""
@@ -1746,6 +1746,8 @@ msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr ""
+"Optionele waarde. Beperken van draadloos kanaal tot de geselecteerde "
+"frequentieband. Waarde leeg of 0 betekent automatische selectie."
 
 #: plinth/modules/networks/forms.py:218
 #| msgid "SSID"
@@ -1758,6 +1760,10 @@ msgid ""
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
+"Optionele waarde. Unieke id voor het toegangspunt. Wanneer verbonden wordt "
+"met een access point, alleen verbinding maken als de BSSID van het "
+"toegangspunt overeenkomt met degene die hier wordt ingevuld. Voorbeeld: "
+"00:11:22:aa:bb:cc."
 
 #: plinth/modules/networks/forms.py:226
 msgid "Authentication Mode"
@@ -2845,6 +2851,9 @@ msgid ""
 "to log in to console or via SSH. Console users may be able to access some "
 "services without further authorization."
 msgstr ""
+"Wanneer deze optie is ingeschakeld, kunnen alleen gebruikers in de groep \""
+"admin\" inloggen op de console of via SSH. Console gebruikers hebben "
+"mogelijk toegang tot sommige diensten zonder verdere toestemming."
 
 #: plinth/modules/security/views.py:63
 #, python-brace-format
@@ -2885,6 +2894,9 @@ msgid ""
 "used to roll back the system to a previously known good state in case of "
 "unwanted changes to the system."
 msgstr ""
+"Snapshots maakt het mogelijk om Snapshots te maken en beheren. Deze kunnen "
+"worden gebruikt om in geval van ongewenste wijzigingen aan het systeem terug "
+"te keren naar een voorheen goed werkende staat."
 
 #: plinth/modules/snapshot/__init__.py:41
 msgid ""
@@ -2895,6 +2907,13 @@ msgid ""
 "accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
 "are not a replacement for backups."
 msgstr ""
+"Automatische snapshots worden gemaakt op ieder uur, dag, maand en jaar. "
+"Oudere snapshots worden automatisch verwijderd, waarbij we 10 van elke soort "
+"en 50 in totaal bewaren. Hoewel snapshots efficiënt zijn en alleen de "
+"verschillen opslaan, kunnen zij worden verwijderd om ruimte terug te "
+"winnen.  Afzonderlijke bestanden uit oudere snapshots kunnen worden benaderd "
+"door een bezoek aan de \".snapshots\" map in het bestandssysteem. Snapshots "
+"zijn geen vervanging voor back-ups."
 
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
@@ -2954,6 +2973,9 @@ msgid ""
 "automatically created. You will be able to undo a rollback by reverting to "
 "the newly created snapshot."
 msgstr ""
+"Een nieuwe opname met de huidige toestand van het bestandssysteem wordt "
+"automatisch gemaakt. Het is mogelijk om een rollback ongedaan te maken door "
+"terug te keren naar het zojuist gemaakte snapshot."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:61
 #, python-format
@@ -3072,6 +3094,9 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Wanneer ingeschakeld, zal uw {box_name} een Tor server draaien en "
+"bandbreedte delen met het Tor-netwerk. Doe dit alleen als u meer dan 2 "
+"megabit/s upload- en download bandbreedte ter beschikking heeft."
 
 #: plinth/modules/tor/forms.py:43
 #| msgid "Tor Bridge Relay"
@@ -3084,6 +3109,10 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"Wanneer ingeschakeld, wordt relay informatie gepubliceerd in de Tor bridge "
+"database in plaats van de openbare Tor relay database waardoor het "
+"moeilijker om dit knooppunt te censureren. Dit helpt anderen censuur te "
+"omzeilen."
 
 #: plinth/modules/tor/forms.py:51
 msgid "Enable Tor Hidden Service"
@@ -3600,7 +3629,6 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:28
-#, fuzzy
 #| msgid ""
 #| "This is an internal error and not something you caused or can fix.  "
 #| "Please report the error on the <a href=\"https://github.com/freedombox/"
@@ -3612,9 +3640,10 @@ msgid ""
 "plinth/help/status-logs\">Status Log</a> to the bug report."
 msgstr ""
 "Dit is een interne fout, en niet iets dat een gebruiker heeft veroorzaakt of "
-"kan verhelpen. Fouten zoals deze kunnen worden gemeld op de <a href="
-"\"https://github.com/freedombox/Plinth/issues\">bug tracker (Engelstalig)</"
-"a> zodat we deze kunnen verhelpen."
+"kan verhelpen.  Fouten zoals deze kunnen worden gemeld op de <a href=\""
+"https://github.com/freedombox/Plinth/issues\">bug tracker (Engelstalig)</a> "
+"zodat we deze kunnen verhelpen. Voeg alstublieft het <a href=\"/plinth/help"
+"/status-logs\">Status Log</a> toe aan de bug-reportage."
 
 #: plinth/templates/base.html:49
 #, python-format
