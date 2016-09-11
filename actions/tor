@@ -62,6 +62,16 @@ def parse_arguments():
     configure.add_argument('--apt-transport-tor',
                            choices=['enable', 'disable'],
                            help='Configure package download over Tor')
+    configure.add_argument('--use-upstream-bridges',
+                           choices=['enable', 'disable'],
+                           help='Configure use of upstream bridges')
+
+    upstream = subparsers.add_parser(
+        'set-upstream-bridges', help='Set list of upstream bridges')
+    upstream.add_argument('--bridges',
+                          help='List of upstream bridges to use')
+
+    subparsers.add_parser('restart', help='Restart Tor')
 
     return parser.parse_args()
 
@@ -121,6 +131,11 @@ def subcommand_configure(arguments):
     if arguments.service == 'disable':
         _disable()
 
+    restart = arguments.service is None and \
+              arguments.hidden_service is None and \
+              arguments.relay is None and arguments.bridge_relay is None
+    _use_upstream_bridges(arguments.use_upstream_bridges, restart=restart)
+
     restart = arguments.service is None and arguments.hidden_service is None
     _enable_relay(arguments.relay, arguments.bridge_relay, restart=restart)
 
@@ -139,13 +154,48 @@ def subcommand_configure(arguments):
         _disable_apt_transport_tor()
 
 
+def subcommand_set_upstream_bridges(arguments):
+    """Set list of upstream bridges."""
+    aug = augeas_load()
+
+    aug.remove(TOR_CONFIG + '/Bridge')
+    if arguments.bridges:
+        bridges = arguments.bridges.split('\n')
+        for bridge in bridges:
+            if bridge.strip():
+                aug.set(TOR_CONFIG + '/Bridge[last() + 1]', bridge.strip())
+
+    aug.save()
+
+
+def subcommand_restart(_):
+    """Restart Tor."""
+    if is_enabled() and is_running():
+        action_utils.service_restart('tor')
+
+
 def get_status():
     """Return dict with Tor status."""
     aug = augeas_load()
-    return {'relay_enabled': _is_relay_enabled(aug),
+    return {'use_upstream_bridges': _are_upstream_bridges_enabled(aug),
+            'upstream_bridges': _get_upstream_bridges(aug),
+            'relay_enabled': _is_relay_enabled(aug),
             'bridge_relay_enabled': _is_bridge_relay_enabled(aug),
             'ports': _get_ports(),
             'hidden_service': _get_hidden_service(aug)}
+
+
+def _are_upstream_bridges_enabled(aug):
+    """Return whether upstream bridges are being used."""
+    use_bridges = aug.get(TOR_CONFIG + '/UseBridges')
+    return use_bridges == '1'
+
+
+def _get_upstream_bridges(aug):
+    """Return upstream bridges separated by newlines."""
+    matches = aug.match(TOR_CONFIG + '/Bridge')
+    bridges = [aug.get(match) for match in matches]
+    return '\n'.join(bridges)
 
 
 def _is_relay_enabled(aug):
@@ -244,6 +294,26 @@ def _disable():
     """Disable and stop the service."""
     _disable_apt_transport_tor()
     action_utils.service_disable('tor')
+
+
+def _use_upstream_bridges(use_upstream_bridges=None, restart=True, aug=None):
+    """Enable use of upstream bridges."""
+    if use_upstream_bridges is None:
+        return
+
+    if not aug:
+        aug = augeas_load()
+
+    if use_upstream_bridges == 'enable':
+        aug.set(TOR_CONFIG + '/UseBridges', '1')
+    elif use_upstream_bridges == 'disable':
+        aug.set(TOR_CONFIG + '/UseBridges', '0')
+
+    aug.save()
+
+    if restart:
+        if is_enabled() and is_running():
+            action_utils.service_restart('tor')
 
 
 def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
