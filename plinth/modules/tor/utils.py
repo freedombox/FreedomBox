@@ -64,6 +64,8 @@ def get_status():
 
     return {'enabled': is_enabled(),
             'is_running': is_running(),
+            'use_upstream_bridges': status['use_upstream_bridges'],
+            'upstream_bridges': status['upstream_bridges'],
             'relay_enabled': status['relay_enabled'],
             'bridge_relay_enabled': status['bridge_relay_enabled'],
             'ports': ports,

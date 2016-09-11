@@ -74,6 +74,15 @@ def __apply_changes(request, old_status, new_status):
         # Already running a configuration task
         return
 
+    needs_restart = False
+
+    if old_status['upstream_bridges'] != new_status['upstream_bridges']:
+        if new_status['enabled'] and new_status['use_upstream_bridges']:
+            actions.superuser_run(
+                'tor', ['set-upstream-bridges', '--bridges',
+                        new_status['upstream_bridges']])
+            needs_restart = True
+
     arguments = []
 
     if old_status['enabled'] != new_status['enabled']:
@@ -102,11 +111,22 @@ def __apply_changes(request, old_status, new_status):
             arg_value = 'enable'
         arguments.extend(['--apt-transport-tor', arg_value])
 
+    if old_status['use_upstream_bridges'] != \
+       new_status['use_upstream_bridges']:
+        arg_value = 'disable'
+        if new_status['enabled'] and new_status['use_upstream_bridges']:
+            arg_value = 'enable'
+        arguments.extend(['--use-upstream-bridges', arg_value])
+
     if arguments:
         config_process = actions.superuser_run(
             'tor', ['configure'] + arguments, async=True)
     else:
-        messages.info(request, _('Setting unchanged'))
+        if needs_restart:
+            config_process = actions.superuser_run(
+                'tor', ['restart'], async=True)
+        else:
+            messages.info(request, _('Setting unchanged'))
 
 
 def _collect_config_result(request):
