@@ -31,6 +31,12 @@ All notable changes to this project will be documented in this file.
 - Exit with error if any of the setup steps fail.
 - actions: Hush some unneeded output of systemd.
 - letsencrypt: Depend on the new certbot package.
+- Switch base template from container-fluid to container. This will
+  narrow the content area for larger displays.
+- Readjust the responsive widths of various tables.
+
+### Removed
+- Remove width management for forms.
 
 ## [0.10.0] - 2016-08-12
 ### Added
