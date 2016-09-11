@@ -1,0 +1,179 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for infinoted.
+"""
+
+import argparse
+import grp
+import os
+import pwd
+import shutil
+import subprocess
+
+from plinth import action_utils
+
+
+DATA_DIR = '/var/lib/infinoted'
+KEY_DIR = '/etc/infinoted'
+
+CONF_PATH = '/etc/xdg/infinoted.conf'
+CONF = '''
+[infinoted]
+
+# Possible values : no-tls, allow-tls, require-tls
+security-policy=require-tls
+
+# Absolute path of the certificate file.
+certificate-file=/etc/infinoted/infinoted-cert.pem
+
+# Absolute path of the private key file.
+key-file=/etc/infinoted/infinoted-key.pem
+
+# Setting this to 0 disables autosave.
+autosave-interval=60
+
+# Specify a path to use a root certificate instead of a certificate-key pair.
+#certificate-chain=
+
+#password=
+
+# If you want to regularly synchronize the saved documents.
+#sync-directory
+
+#sync-interval=
+'''
+
+DEFAULT_PATH = '/etc/default/infinoted'
+DEFAULT = '''
+# defaults file for infinoted
+
+# Should infinoted be started by the init script? (true/false)
+INFINOTED_ENABLED=true
+
+# The configuration file to be used.
+INFINOTED_CONFIG=/etc/xdg/infinoted.conf
+
+# The session autosave file to be updated periodically and loaded
+# upon startup.
+INFINOTED_SESSION_FILE=/var/lib/infinoted
+'''
+
+SYSTEMD_SERVICE_PATH = '/etc/systemd/system/infinoted.service'
+SYSTEMD_SERVICE = '''
+#
+# This file is managed and overwritten by Plinth.  If you wish to edit
+# it, disable infinoted in Plinth, remove this file and manage it manually.
+#
+
+[Unit]
+Description=collaborative text editor service
+Documentation=man:infinoted(1)
+After=network.target
+
+[Service]
+User=infinoted
+EnvironmentFile=-/etc/default/infinoted
+ExecStart=/usr/bin/infinoted ${OPTIONS}
+
+[Install]
+WantedBy=multi-user.target
+'''
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Configure infinoted after install')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Configure infinoted after install."""
+
+    if not os.path.isfile(CONF_PATH):
+        with open(CONF_PATH, 'w') as file_handle:
+            file_handle.write(CONF)
+
+    if not os.path.isfile(DEFAULT_PATH):
+        with open(DEFAULT_PATH, 'w') as file_handle:
+            file_handle.write(DEFAULT)
+
+    if not os.path.isfile(SYSTEMD_SERVICE_PATH):
+        with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+            file_handle.write(SYSTEMD_SERVICE)
+        subprocess.check_call(['systemctl', 'daemon-reload'])
+
+    # Create infinoted group if needed.
+    try:
+        grp.getgrnam('infinoted')
+    except KeyError:
+        subprocess.run(['addgroup', '--system', 'infinoted'], check=True)
+
+    # Create infinoted user is needed.
+    try:
+        pwd.getpwnam('infinoted')
+    except KeyError:
+        subprocess.run(['adduser', '--system', '--ingroup', 'infinoted',
+                        '--home', DATA_DIR,
+                        '--gecos', '"Infinoted collaborative editing server"',
+                        'infinoted'], check=True)
+
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR, mode=0o750)
+        shutil.chown(DATA_DIR, user='infinoted', group='infinoted')
+
+    if not os.path.exists(KEY_DIR):
+        os.makedirs(KEY_DIR, mode=0o750)
+        shutil.chown(KEY_DIR, user='infinoted', group='infinoted')
+
+    if not os.path.exists(KEY_DIR + '/infinoted-cert.pem'):
+        old_umask = os.umask(0o027)
+        try:
+            # infinoted doesn't have a "create key and exit" mode. Run as
+            # daemon so we can stop after.
+            subprocess.run(['infinoted', '--create-key',
+                            '--create-certificate', '--daemonize'], check=True)
+            subprocess.run(['infinoted', '--kill-daemon'], check=True)
+        finally:
+            os.umask(old_umask)
+
+        shutil.chown(KEY_DIR + '/infinoted-cert.pem',
+                     user='infinoted', group='infinoted')
+        shutil.chown(KEY_DIR + '/infinoted-key.pem',
+                     user='infinoted', group='infinoted')
+
+    action_utils.service_enable('infinoted')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
