@@ -80,6 +80,22 @@ class TorForm(forms.Form):  # pylint: disable=W0232
     enabled = forms.BooleanField(
         label=_('Enable Tor'),
         required=False)
+    use_upstream_bridges = forms.BooleanField(
+        label=_('Use upstream bridges to connect to Tor network'),
+        required=False,
+        help_text=_('When enabled, the bridges configured below will be used '
+                    'to connect to the Tor network. This will disable relay '
+                    'modes. Only use this option if you cannot connect to '
+                    'the Tor network directly.'))
+    upstream_bridges = TrimmedCharField(
+        widget=widgets.Textarea,
+        label=_('Upstream bridges'),
+        required=False,
+        help_text=_('If you need to use a bridge to connect to Tor network, '
+                    'you can get some bridges from '
+                    'https://bridges.torproject.org/ and paste the bridge '
+                    'information here.'),
+        validators=[bridges_validator])
     relay_enabled = forms.BooleanField(
         label=_('Enable Tor relay'),
         required=False,
@@ -111,19 +127,3 @@ class TorForm(forms.Form):  # pylint: disable=W0232
                     'network for installations and upgrades. This adds a '
                     'degree of privacy and security during software '
                     'downloads.'))
-    use_upstream_bridges = forms.BooleanField(
-        label=_('Use upstream bridges to connect to Tor network'),
-        required=False,
-        help_text=_('When enabled, the bridges configured below will be used '
-                    'to connect to the Tor network. This will disable relay '
-                    'modes. Use this option only if you cannot connect to '
-                    'the Tor network directly.'))
-    upstream_bridges = TrimmedCharField(
-        widget=widgets.Textarea,
-        label=_('Upstream bridges'),
-        required=False,
-        help_text=_('If you need to use a bridge to connect to Tor network, '
-                    'you can get some bridges from '
-                    'https://bridges.torproject.org/ and paste the bridge '
-                    'information here.'),
-        validators=[bridges_validator])
