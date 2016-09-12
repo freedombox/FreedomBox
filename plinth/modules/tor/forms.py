@@ -20,11 +20,59 @@ Forms for configuring Tor.
 """
 
 from django import forms
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_ipv46_address
 from django.forms import widgets
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 from plinth.utils import format_lazy
+
+
+BRIDGE_VALIDATION_ERROR_MESSAGE = _('Enter a valid bridge with this format: '
+                                    '[transport] IP:ORPort [fingerprint]')
+
+
+class TrimmedCharField(forms.CharField):
+    """Trim the contents of a CharField"""
+    def clean(self, value):
+        """Clean and validate the field value"""
+        if value:
+            value = value.strip()
+
+        return super(TrimmedCharField, self).clean(value)
+
+
+def bridges_validator(bridges):
+    """Validate upstream bridges entries."""
+    for bridge in bridges.split('\n'):
+        parts = bridge.split()
+
+        # IP:ORPort is required, transport and fingerprint are optional.
+        if len(parts) < 1 or len(parts) > 3:
+            raise ValidationError(
+                BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
+
+        # May start with transport or IP:ORPort.
+        try:
+            ip_info = parts[0].split(':')
+            validate_ipv46_address(ip_info[0])
+        except ValidationError:
+            try:
+                ip_info = parts[1].split(':')
+                validate_ipv46_address(ip_info[0])
+            except ValidationError:
+                raise ValidationError(
+                    BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
+
+        try:
+            port = int(ip_info[1])
+        except ValueError:
+            raise ValidationError(
+                BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
+        if port < 0 or port > 65535:
+            raise ValidationError(
+                BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
 
 
 class TorForm(forms.Form):  # pylint: disable=W0232
@@ -70,11 +118,12 @@ class TorForm(forms.Form):  # pylint: disable=W0232
                     'to connect to the Tor network. This will disable relay '
                     'modes. Use this option only if you cannot connect to '
                     'the Tor network directly.'))
-    upstream_bridges = forms.CharField(
+    upstream_bridges = TrimmedCharField(
         widget=widgets.Textarea,
         label=_('Upstream bridges'),
         required=False,
         help_text=_('If you need to use a bridge to connect to Tor network, '
                     'you can get some bridges from '
                     'https://bridges.torproject.org/ and paste the bridge '
-                    'information here.'))
+                    'information here.'),
+        validators=[bridges_validator])
