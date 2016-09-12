@@ -85,13 +85,10 @@ def __apply_changes(request, old_status, new_status):
 
     arguments = []
 
-    if old_status['enabled'] != new_status['enabled']:
-        arg_value = 'enable' if new_status['enabled'] else 'disable'
-        arguments.extend(['--service', arg_value])
-
     if old_status['relay_enabled'] != new_status['relay_enabled']:
         arg_value = 'enable' if new_status['relay_enabled'] else 'disable'
         arguments.extend(['--relay', arg_value])
+        needs_restart = True
 
     if old_status['bridge_relay_enabled'] != \
        new_status['bridge_relay_enabled']:
@@ -99,10 +96,12 @@ def __apply_changes(request, old_status, new_status):
         if not new_status['bridge_relay_enabled']:
             arg_value = 'disable'
         arguments.extend(['--bridge-relay', arg_value])
+        needs_restart = True
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
         arg_value = 'enable' if new_status['hs_enabled'] else 'disable'
         arguments.extend(['--hidden-service', arg_value])
+        needs_restart = True
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:
@@ -117,16 +116,20 @@ def __apply_changes(request, old_status, new_status):
         if new_status['enabled'] and new_status['use_upstream_bridges']:
             arg_value = 'enable'
         arguments.extend(['--use-upstream-bridges', arg_value])
+        needs_restart = True
+
+    if old_status['enabled'] != new_status['enabled']:
+        arg_value = 'enable' if new_status['enabled'] else 'disable'
+        arguments.extend(['--service', arg_value])
+        needs_restart = False
 
     if arguments:
-        config_process = actions.superuser_run(
-            'tor', ['configure'] + arguments, async=True)
+        actions.superuser_run('tor', ['configure'] + arguments)
+
+    if needs_restart and new_status['enabled']:
+        config_process = actions.superuser_run('tor', ['restart'], async=True)
     else:
-        if needs_restart:
-            config_process = actions.superuser_run(
-                'tor', ['restart'], async=True)
-        else:
-            messages.info(request, _('Setting unchanged'))
+        messages.info(request, _('Setting unchanged'))
 
 
 def _collect_config_result(request):

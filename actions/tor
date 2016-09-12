@@ -101,7 +101,7 @@ def subcommand_setup(_):
     aug.set(TOR_CONFIG + '/SocksPort[1]', '[::]:9050')
     aug.set(TOR_CONFIG + '/SocksPort[2]', '0.0.0.0:9050')
     aug.set(TOR_CONFIG + '/ControlPort', '9051')
-    _enable_relay(relay='enable', bridge='enable', restart=False, aug=aug)
+    _enable_relay(relay='enable', bridge='enable', aug=aug)
     aug.set(TOR_CONFIG + '/ExitPolicy[1]', 'reject *:*')
     aug.set(TOR_CONFIG + '/ExitPolicy[2]', 'reject6 *:*')
 
@@ -149,21 +149,14 @@ def subcommand_configure(arguments):
     if arguments.service == 'disable':
         _disable()
 
-    restart = arguments.service is None and \
-              arguments.hidden_service is None and \
-              arguments.relay is None and arguments.bridge_relay is None
-    _use_upstream_bridges(arguments.use_upstream_bridges, restart=restart,
-                          aug=aug)
+    _use_upstream_bridges(arguments.use_upstream_bridges, aug=aug)
 
-    restart = arguments.service is None and arguments.hidden_service is None
-    _enable_relay(arguments.relay, arguments.bridge_relay, restart=restart,
-                  aug=aug)
+    _enable_relay(arguments.relay, arguments.bridge_relay, aug=aug)
 
-    restart = arguments.service is None
     if arguments.hidden_service == 'enable':
-        _enable_hs(restart=restart, aug=aug)
+        _enable_hs(aug=aug)
     elif arguments.hidden_service == 'disable':
-        _disable_hs(restart=restart, aug=aug)
+        _disable_hs(aug=aug)
 
     if arguments.service == 'enable':
         _enable()
@@ -191,7 +184,17 @@ def subcommand_set_upstream_bridges(arguments):
 def subcommand_restart(_):
     """Restart Tor."""
     if is_enabled() and is_running():
-        action_utils.service_restart('tor')
+        action_utils.service_restart('tor@plinth')
+
+        aug = augeas_load()
+        if aug.get(TOR_CONFIG + '/HiddenServiceDir'):
+            # wait until hidden service information is available
+            tries = 0
+            while not _get_hidden_service()['enabled']:
+                tries += 1
+                if tries >= 12:
+                    return
+                time.sleep(10)
 
 
 def get_status():
@@ -316,7 +319,7 @@ def _disable():
     action_utils.service_disable('tor@plinth')
 
 
-def _use_upstream_bridges(use_upstream_bridges=None, restart=True, aug=None):
+def _use_upstream_bridges(use_upstream_bridges=None, aug=None):
     """Enable use of upstream bridges."""
     if use_upstream_bridges is None:
         return
@@ -331,12 +334,8 @@ def _use_upstream_bridges(use_upstream_bridges=None, restart=True, aug=None):
 
     aug.save()
 
-    if restart:
-        if is_enabled() and is_running():
-            action_utils.service_restart('tor')
 
-
-def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
+def _enable_relay(relay=None, bridge=None, aug=None):
     """Enable Tor bridge relay."""
     if relay is None and bridge is None:
         return
@@ -361,12 +360,8 @@ def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
 
     aug.save()
 
-    if restart:
-        if is_enabled() and is_running():
-            action_utils.service_restart('tor@plinth')
 
-
-def _enable_hs(restart=True, aug=None):
+def _enable_hs(aug=None):
     """Enable Tor hidden service"""
     if not aug:
         aug = augeas_load()
@@ -384,21 +379,8 @@ def _enable_hs(restart=True, aug=None):
             '443 127.0.0.1:443')
     aug.save()
 
-    if restart:
-        if is_enabled() and is_running():
-            action_utils.service_restart('tor@plinth')
 
-            # wait until hidden service information is available
-            tries = 0
-            while not _get_hidden_service()['enabled']:
-                tries += 1
-                if tries >= 12:
-                    return
-
-                time.sleep(10)
-
-
-def _disable_hs(restart=True, aug=None):
+def _disable_hs(aug=None):
     """Disable Tor hidden service"""
     if not aug:
         aug = augeas_load()
@@ -409,10 +391,6 @@ def _disable_hs(restart=True, aug=None):
     aug.remove(TOR_CONFIG + '/HiddenServiceDir')
     aug.remove(TOR_CONFIG + '/HiddenServicePort')
     aug.save()
-
-    if restart:
-        if is_enabled() and is_running():
-            action_utils.service_restart('tor@plinth')
 
 
 def _enable_apt_transport_tor():
