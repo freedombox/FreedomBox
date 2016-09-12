@@ -60,6 +60,9 @@ def parse_arguments():
     parser.add_argument(
         '--diagnose', action='store_true', default=False,
         help='run diagnostic tests and exit')
+    parser.add_argument(
+        '--list-dependencies', default=False, nargs='*',
+        help='list package dependencies for essential modules')
 
     global arguments
     arguments = parser.parse_args()
@@ -243,11 +246,12 @@ def configure_django():
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
     django.setup(set_prefix=True)
 
-    logger.info('Configured Django with applications - %s', applications)
+    logger.debug('Configured Django with applications - %s', applications)
 
-    logger.info('Creating or adding new tables to data file')
+    logger.debug('Creating or adding new tables to data file')
+    verbosity = 1 if cfg.debug else 0
     django.core.management.call_command('migrate', '--fake-initial',
-                                        interactive=False)
+                                        interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
@@ -261,6 +265,21 @@ def run_setup_and_exit(module_list, allow_install=True):
             setup.setup_modules(module_list, allow_install=allow_install)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
+        error_code = 1
+
+    sys.exit(error_code)
+
+
+def list_dependencies(module_list):
+    """List dependencies for all essential modules and exit."""
+    error_code = 0
+    try:
+        if module_list:
+            setup.list_dependencies(module_list=module_list)
+        else:
+            setup.list_dependencies(essential=True)
+    except Exception as exception:
+        logger.error('Error listing dependencies - %s', exception)
         error_code = 1
 
     sys.exit(error_code)
@@ -307,6 +326,9 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
+
+    if arguments.list_dependencies is not False:
+        list_dependencies(arguments.list_dependencies)
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
