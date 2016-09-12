@@ -158,10 +158,14 @@
                 $('label[for="id_tor-upstream_bridges"]').parent().show('slow');
                 $('#id_tor-relay_enabled').prop('checked', false);
                 $('#id_tor-bridge_relay_enabled').prop('checked', false);
+                $('#id_tor-relay_enabled').parent().parent().parent().parent().hide('slow');
+                $('#id_tor-bridge_relay_enabled').parent().parent().parent().parent().hide('slow');
             } else {
                 $('#id_tor-upstream_bridges').hide('slow');
                 $('label[for="id_tor-upstream_bridges"]').hide('slow');
                 $('label[for="id_tor-upstream_bridges"]').parent().hide('slow');
+                $('#id_tor-relay_enabled').parent().parent().parent().parent().show('slow');
+                $('#id_tor-bridge_relay_enabled').parent().parent().parent().parent().show('slow');
             }
         }).change();
     })(jQuery);
