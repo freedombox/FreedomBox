@@ -135,6 +135,9 @@ def subcommand_configure(arguments):
 
     _use_upstream_bridges(arguments.use_upstream_bridges, aug=aug)
 
+    if arguments.use_upstream_bridges == 'enable':
+        arguments.relay = 'disable'
+        arguments.bridge_relay = 'disable'
     _enable_relay(arguments.relay, arguments.bridge_relay, aug=aug)
 
     if arguments.hidden_service == 'enable':
@@ -327,12 +330,14 @@ def _enable_relay(relay=None, bridge=None, aug=None):
     if not aug:
         aug = augeas_load()
 
-    if relay == 'enable':
+    use_upstream_bridges = aug.get(TOR_CONFIG + '/UseBridges') == '1'
+
+    if relay == 'enable' and not use_upstream_bridges:
         aug.set(TOR_CONFIG + '/ORPort', 'auto')
     elif relay == 'disable':
         aug.remove(TOR_CONFIG + '/ORPort')
 
-    if bridge == 'enable':
+    if bridge == 'enable' and not use_upstream_bridges:
         aug.set(TOR_CONFIG + '/BridgeRelay', '1')
         aug.set(TOR_CONFIG + '/ServerTransportPlugin',
                 'obfs3,obfs4 exec /usr/bin/obfs4proxy')
