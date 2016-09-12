@@ -144,22 +144,26 @@ def subcommand_get_status(_):
 
 def subcommand_configure(arguments):
     """Configure Tor."""
+    aug = augeas_load()
+
     if arguments.service == 'disable':
         _disable()
 
     restart = arguments.service is None and \
               arguments.hidden_service is None and \
               arguments.relay is None and arguments.bridge_relay is None
-    _use_upstream_bridges(arguments.use_upstream_bridges, restart=restart)
+    _use_upstream_bridges(arguments.use_upstream_bridges, restart=restart,
+                          aug=aug)
 
     restart = arguments.service is None and arguments.hidden_service is None
-    _enable_relay(arguments.relay, arguments.bridge_relay, restart=restart)
+    _enable_relay(arguments.relay, arguments.bridge_relay, restart=restart,
+                  aug=aug)
 
     restart = arguments.service is None
     if arguments.hidden_service == 'enable':
-        _enable_hs(restart=restart)
+        _enable_hs(restart=restart, aug=aug)
     elif arguments.hidden_service == 'disable':
-        _disable_hs(restart=restart)
+        _disable_hs(restart=restart, aug=aug)
 
     if arguments.service == 'enable':
         _enable()
@@ -362,9 +366,10 @@ def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
             action_utils.service_restart('tor@plinth')
 
 
-def _enable_hs(restart=True):
+def _enable_hs(restart=True, aug=None):
     """Enable Tor hidden service"""
-    aug = augeas_load()
+    if not aug:
+        aug = augeas_load()
 
     if _get_hidden_service(aug)['enabled']:
         return
@@ -393,9 +398,10 @@ def _enable_hs(restart=True):
                 time.sleep(10)
 
 
-def _disable_hs(restart=True):
+def _disable_hs(restart=True, aug=None):
     """Disable Tor hidden service"""
-    aug = augeas_load()
+    if not aug:
+        aug = augeas_load()
 
     if not _get_hidden_service(aug)['enabled']:
         return
