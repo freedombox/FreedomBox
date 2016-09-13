@@ -181,6 +181,9 @@ def subcommand_set_upstream_bridges(arguments):
             if bridge.strip():
                 aug.set(TOR_CONFIG + '/Bridge[last() + 1]', bridge.strip())
 
+    aug.set(TOR_CONFIG + '/ClientTransportPlugin',
+            'obfs4 exec /usr/bin/obfs4proxy')
+
     aug.save()
 
 

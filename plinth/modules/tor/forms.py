@@ -49,7 +49,8 @@ def bridges_validator(bridges):
         parts = bridge.split()
 
         # IP:ORPort is required, transport and fingerprint are optional.
-        if len(parts) < 1 or len(parts) > 3:
+        # Transports may have additional options after the fingerprint.
+        if len(parts) < 1:
             raise ValidationError(
                 BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
 
@@ -94,7 +95,8 @@ class TorForm(forms.Form):  # pylint: disable=W0232
         help_text=_('If you need to use a bridge to connect to Tor network, '
                     'you can get some bridges from '
                     'https://bridges.torproject.org/ and paste the bridge '
-                    'information here.'),
+                    'information here. Note: If you need to use a pluggable '
+                    'transport, only obfs4 is supported currently.'),
         validators=[bridges_validator])
     relay_enabled = forms.BooleanField(
         label=_('Enable Tor relay'),
