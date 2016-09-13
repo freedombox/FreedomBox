@@ -62,7 +62,7 @@ def bridges_validator(bridges):
             try:
                 ip_info = parts[1].split(':')
                 validate_ipv46_address(ip_info[0])
-            except ValidationError:
+            except (ValidationError, IndexError):
                 raise ValidationError(
                     BRIDGE_VALIDATION_ERROR_MESSAGE, code='invalid')
 
