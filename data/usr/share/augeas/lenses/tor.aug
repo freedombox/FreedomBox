@@ -22,13 +22,17 @@ autoload xfm
 let eol = Util.eol
 
 let ws = /[ \t]/
-let kc = /[A-Za-z0-9_.,:*]/
-let vc = /[A-Za-z0-9_.,:*\/ ]/
-let keyname = kc+
-let val = /[[\/]*/ . kc . (vc* . /[]]*/ . vc* . kc . /[\/]*/)?
+let k = /[A-Za-z0-9_.,:*]+/
+let val = /[A-Za-z0-9_.,:*+-=\/]+/
 
-let entry = [ key keyname . del ws+ " " . store val . eol ]
+let bracket_val = "[" . val* . "]" . val*
+let multi_val = val . (" " . val)+
 
+let simple_entry = [ key k . del ws+ " " . store val . eol ]
+let bracket_entry = [ key k . del ws+ " " . store bracket_val . eol ]
+let multi_entry = [ key k . del ws+ " " . store multi_val . eol ]
+
+let entry = simple_entry|bracket_entry|multi_entry
 let lns = (entry|Util.comment|Util.empty_dos)*
 
 let filter = (incl "/etc/tor/torrc")
