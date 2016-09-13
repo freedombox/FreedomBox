@@ -74,6 +74,7 @@ def __apply_changes(request, old_status, new_status):
         # Already running a configuration task
         return
 
+    setting_changed = False
     needs_restart = False
 
     if old_status['upstream_bridges'] != new_status['upstream_bridges']:
@@ -81,6 +82,7 @@ def __apply_changes(request, old_status, new_status):
             actions.superuser_run(
                 'tor', ['set-upstream-bridges', '--bridges',
                         new_status['upstream_bridges']])
+            setting_changed = True
             needs_restart = True
 
     arguments = []
@@ -121,14 +123,20 @@ def __apply_changes(request, old_status, new_status):
     if old_status['enabled'] != new_status['enabled']:
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
-        needs_restart = False
+        config_process = actions.superuser_run(
+            'tor', ['configure'] + arguments, async=True)
+        return
 
     if arguments:
         actions.superuser_run('tor', ['configure'] + arguments)
+        setting_changed = True
+        if not needs_restart:
+            messages.success(request, _('Configuration updated.'))
 
     if needs_restart and new_status['enabled']:
         config_process = actions.superuser_run('tor', ['restart'], async=True)
-    else:
+
+    if not setting_changed:
         messages.info(request, _('Setting unchanged'))
 
 
