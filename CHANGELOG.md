@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Allow initial setup operation to happen without package
   installation.
 - networks: Add polkit rules for network management.
+- Update man page to add setup operations.
+- Add argument to list packages needed by apps.
 
 ### Fixed
 - users: Fixed checking restricted usernames.
@@ -34,6 +36,8 @@ All notable changes to this project will be documented in this file.
 - Switch base template from container-fluid to container. This will
   narrow the content area for larger displays.
 - Readjust the responsive widths of various tables.
+- Print django migrate messages only in debug.
+- Tune log message verbosity.
 
 ### Removed
 - Remove width management for forms.
