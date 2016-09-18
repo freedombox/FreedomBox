@@ -28,7 +28,6 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.views import ServiceView
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
@@ -95,18 +94,6 @@ def add_shortcut():
                            'glyphicon-comment')
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
                            description)
-
-
-class EjabberdServiceView(ServiceView):
-    service_id = managed_services[0]
-    template_name = "xmpp.html"
-    description = description
-    diagnostics_module_name = "xmpp"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = get_domainname()
-        return context
 
 
 def is_enabled():
