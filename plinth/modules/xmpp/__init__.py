@@ -19,6 +19,7 @@
 Plinth module to configure XMPP server
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
@@ -38,7 +39,7 @@ depends = ['apps']
 
 managed_services = ['ejabberd']
 
-managed_packages = ['jwchat', 'ejabberd']
+managed_packages = ['libjs-jsxc', 'ejabberd']
 
 title = _('Chat Server (XMPP)')
 
@@ -46,8 +47,7 @@ description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
 
-    _('To actually communicate, you can use the <a href=\'/jwchat\'>web '
-      'client</a> or any other '
+    _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
       '>XMPP client</a>.')
 ]
@@ -90,8 +90,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('jwchat', _('Chat Client (JWChat)'), '/jwchat',
-                           'glyphicon-comment')
+    frontpage.add_shortcut('jsxc', _('Chat Client (jsxc)'),
+                           reverse_lazy('xmpp:jsxc'), 'glyphicon-comment')
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
                            description)
 
@@ -117,7 +117,7 @@ def enable():
 def disable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['disable'])
-    frontpage.remove_shortcut('jwchat')
+    frontpage.remove_shortcut('jsxc')
     frontpage.remove_shortcut('xmpp')
 
 
@@ -135,9 +135,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
-    """
-    Update ejabberd and jwchat config after hostname is changed.
-    """
+    """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
 
@@ -149,9 +147,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """
-    Update ejabberd and jwchat config after domain name is changed.
-    """
+    """Update ejabberd config after domain name change."""
     del sender  # Unused
     del old_domainname  # Unused
     del kwargs  # Unused
@@ -172,6 +168,7 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all('http://{host}/jwchat'))
+    results.extend(
+        action_utils.diagnose_url_on_all('http://{host}/http-bind/'))
 
     return results
