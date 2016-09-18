@@ -39,6 +39,8 @@ All notable changes to this project will be documented in this file.
 - Readjust the responsive widths of various tables.
 - Print django migrate messages only in debug.
 - Tune log message verbosity.
+- Plinth no longer runs as root user.  Fix all applications that were
+  requiring root permission.
 
 ### Removed
 - Remove width management for forms.
