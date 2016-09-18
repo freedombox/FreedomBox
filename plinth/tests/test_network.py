@@ -40,6 +40,11 @@ ethernet_settings = {
         'dns': '',
         'second_dns': '',
     },
+    'ipv6': {
+        'method': 'auto',
+        'dns': '',
+        'second_dns': '',
+    },
 }
 
 wifi_settings = {
@@ -50,6 +55,11 @@ wifi_settings = {
         'zone': 'external',
     },
     'ipv4': {
+        'method': 'auto',
+        'dns': '',
+        'second_dns': '',
+    },
+    'ipv6': {
         'method': 'auto',
         'dns': '',
         'second_dns': '',
@@ -104,7 +114,8 @@ class TestNetwork(unittest.TestCase):
 
         self.assertTrue('plinth_test_eth' in [x['name'] for x in connections])
         self.assertTrue('plinth_test_wifi' in [x['name'] for x in connections])
-        self.assertTrue('plinth_test_pppoe' in [x['name'] for x in connections])
+        self.assertTrue('plinth_test_pppoe' in
+                        [x['name'] for x in connections])
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection(self):
@@ -231,6 +242,31 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(settings_ipv4.get_dns(1), '1.2.3.5')
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_ethernet_manual_ipv6_address(self):
+        """Check that we can manually set IPv6 address on ethernet."""
+        connection = network.get_connection(self.ethernet_uuid)
+        ethernet_settings2 = copy.deepcopy(ethernet_settings)
+        ethernet_settings2['ipv6']['method'] = 'manual'
+        ethernet_settings2['ipv6']['address'] = '::ffff:169.254.0.1'
+        ethernet_settings2['ipv6']['prefix'] = '63'
+        ethernet_settings2['ipv6']['gateway'] = '::ffff:169.254.0.254'
+        ethernet_settings2['ipv6']['dns'] = '::ffff:1.2.3.4'
+        ethernet_settings2['ipv6']['second_dns'] = '::ffff:1.2.3.5'
+        network.edit_connection(connection, ethernet_settings2)
+
+        connection = network.get_connection(self.ethernet_uuid)
+        settings_ipv6 = connection.get_setting_ip6_config()
+        self.assertEqual(settings_ipv6.get_method(), 'manual')
+
+        address = settings_ipv6.get_address(0)
+        self.assertEqual(address.get_address(), '::ffff:169.254.0.1')
+        self.assertEqual(address.get_prefix(), 63)
+        self.assertEqual(settings_ipv6.get_gateway(), '::ffff:169.254.0.254')
+        self.assertEqual(settings_ipv6.get_num_dns(), 2)
+        self.assertEqual(settings_ipv6.get_dns(0), '::ffff:1.2.3.4')
+        self.assertEqual(settings_ipv6.get_dns(1), '::ffff:1.2.3.5')
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_wifi_manual_ipv4_address(self):
         """Check that we can manually set IPv4 address on wifi."""
         connection = network.get_connection(self.wifi_uuid)
@@ -257,3 +293,31 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(settings_ipv4.get_num_dns(), 2)
         self.assertEqual(settings_ipv4.get_dns(0), '1.2.3.4')
         self.assertEqual(settings_ipv4.get_dns(1), '1.2.3.5')
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_wifi_manual_ipv6_address(self):
+        """Check that we can manually set IPv6 address on wifi."""
+        connection = network.get_connection(self.wifi_uuid)
+        wifi_settings2 = copy.deepcopy(wifi_settings)
+        wifi_settings2['ipv6']['method'] = 'manual'
+        wifi_settings2['ipv6']['address'] = '::ffff:169.254.0.2'
+        wifi_settings2['ipv6']['prefix'] = 63
+        wifi_settings2['ipv6']['gateway'] = '::ffff:169.254.0.254'
+        wifi_settings2['ipv6']['dns'] = '::ffff:1.2.3.4'
+        wifi_settings2['ipv6']['second_dns'] = '::ffff:1.2.3.5'
+        wifi_settings2['wireless']['ssid'] = 'plinthtestwifi'
+        wifi_settings2['wireless']['mode'] = 'adhoc'
+        wifi_settings2['wireless']['auth_mode'] = 'open'
+        network.edit_connection(connection, wifi_settings2)
+
+        connection = network.get_connection(self.wifi_uuid)
+        settings_ipv6 = connection.get_setting_ip6_config()
+        self.assertEqual(settings_ipv6.get_method(), 'manual')
+
+        address = settings_ipv6.get_address(0)
+        self.assertEqual(address.get_address(), '::ffff:169.254.0.2')
+        self.assertEqual(address.get_prefix(), 63)
+        self.assertEqual(settings_ipv6.get_gateway(), '::ffff:169.254.0.254')
+        self.assertEqual(settings_ipv6.get_num_dns(), 2)
+        self.assertEqual(settings_ipv6.get_dns(0), '::ffff:1.2.3.4')
+        self.assertEqual(settings_ipv6.get_dns(1), '::ffff:1.2.3.5')

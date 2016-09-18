@@ -39,43 +39,61 @@
   <script type="text/javascript">
     (function($) {
 
-        function ipv4_required(required, fields) {
+        function ip_required(required, ip_version, fields) {
+            var prefix = '#id_' + ip_version + '_';
             for (var i = 0; i < fields.length; i++) {
-                $('#id_ipv4_' + fields[i]).prop("required", required);
+                $(prefix + fields[i]).prop("required", required);
             }
         }
 
-        function ipv4_readonly(readonly, fields) {
+        function ip_readonly(readonly, ip_version, fields) {
+            var prefix = '#id_' + ip_version + '_';
             for (var i = 0; i < fields.length; i++) {
-                $('#id_ipv4_' + fields[i]).prop("readOnly", readonly);
+                $(prefix + fields[i]).prop("readOnly", readonly);
                 if (readonly) {
-                    $('#id_ipv4_' + fields[i]).val("");
-                    $('#id_ipv4_' + fields[i]).prop("required", false);
+                    $(prefix + fields[i]).val("");
+                    $(prefix + fields[i]).prop("required", false);
                 }
             }
         }
 
         function on_ipv4_method_change() {
             if ($("#id_ipv4_method").prop("value") == "manual") {
-                ipv4_required(true, ['address']);
-                ipv4_readonly(false, ['address', 'netmask', 'gateway', 'dns',
-                                      'second_dns']);
+                ip_required(true, 'ipv4', ['address']);
+                ip_readonly(false, 'ipv4', ['address', 'netmask', 'gateway',
+                                            'dns', 'second_dns']);
             } else if ($("#id_ipv4_method").prop("value") == "shared") {
-                ipv4_required(false, ['address']);
-                ipv4_readonly(false, ['address', 'netmask']);
-                ipv4_readonly(true, ['gateway', 'dns', 'second_dns']);
+                ip_required(false, 'ipv4', ['address']);
+                ip_readonly(false, 'ipv4', ['address', 'netmask']);
+                ip_readonly(true, 'ipv4', ['gateway', 'dns', 'second_dns']);
             } else if ($("#id_ipv4_method").prop("value") == "auto") {
-                ipv4_readonly(true, ['address', 'netmask', 'gateway']);
-                ipv4_readonly(false, ['dns', 'second_dns']);
+                ip_readonly(true, 'ipv4', ['address', 'netmask', 'gateway']);
+                ip_readonly(false, 'ipv4', ['dns', 'second_dns']);
             } else {
-                ipv4_readonly(true, ['address', 'netmask', 'gateway', 'dns',
-                                     'second_dns']);
+                ip_readonly(true, 'ipv4', ['address', 'netmask', 'gateway',
+                                           'dns', 'second_dns']);
+            }
+        }
+
+        function on_ipv6_method_change() {
+            if ($("#id_ipv6_method").prop("value") == "manual") {
+                ip_required(true, 'ipv6', ['address', 'prefix']);
+                ip_readonly(false, 'ipv6', ['address', 'prefix', 'gateway',
+                                            'dns', 'second_dns']);
+            } else if ($("#id_ipv6_method").prop("value") == "auto" ||
+                       $("#id_ipv6_method").prop("value") == "dhcp") {
+                ip_readonly(true, 'ipv6', ['address', 'prefix', 'gateway']);
+                ip_readonly(false, 'ipv6', ['dns', 'second_dns']);
+            } else {
+                ip_readonly(true, 'ipv6', ['address', 'prefix', 'gateway',
+                                           'dns', 'second_dns']);
             }
         }
 
         $("#id_name").focus();
 
         $("#id_ipv4_method").change(on_ipv4_method_change).change();
+        $("#id_ipv6_method").change(on_ipv6_method_change).change();
 
         $('#id_show_password').change(function() {
             // Changing type attribute from password to text is prevented by
