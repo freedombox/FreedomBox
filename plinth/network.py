@@ -325,6 +325,34 @@ def _update_ipv4_settings(connection, ipv4):
         settings.add_dns(ipv4['second_dns'])
 
 
+def _update_ipv6_settings(connection, ipv6):
+    """Edit IPv6 settings for network manager connections."""
+    settings = nm.SettingIP6Config.new()
+    connection.add_setting(settings)
+
+    settings.set_property(nm.SETTING_IP_CONFIG_METHOD, ipv6['method'])
+    if ipv6['method'] == nm.SETTING_IP6_CONFIG_METHOD_MANUAL and \
+       ipv6['address'] and ipv6['prefix']:
+        address = nm.IPAddress.new(socket.AF_INET6, ipv6['address'],
+                                   int(ipv6['prefix']))
+        settings.add_address(address)
+
+        if not ipv6['gateway']:
+            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY, '::')
+        else:
+            settings.set_property(nm.SETTING_IP_CONFIG_GATEWAY,
+                                  ipv6['gateway'])
+    else:
+        if ipv6['dns'] or ipv6['second_dns']:
+            settings.set_property(nm.SETTING_IP_CONFIG_IGNORE_AUTO_DNS, True)
+
+    if ipv6['dns']:
+        settings.add_dns(ipv6['dns'])
+
+    if ipv6['second_dns']:
+        settings.add_dns(ipv6['second_dns'])
+
+
 def _update_pppoe_settings(connection, pppoe):
     """Create/edit PPPoE settings for network manager connections."""
     # PPPoE
@@ -393,6 +421,9 @@ def _update_settings(connection, connection_uuid, settings):
                                          settings['common'])
     if 'ipv4' in settings and settings['ipv4']:
         _update_ipv4_settings(connection, settings['ipv4'])
+
+    if 'ipv6' in settings and settings['ipv6']:
+        _update_ipv6_settings(connection, settings['ipv6'])
 
     if 'pppoe' in settings and settings['pppoe']:
         _update_pppoe_settings(connection, settings['pppoe'])

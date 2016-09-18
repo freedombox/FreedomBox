@@ -89,6 +89,46 @@ available over this interfaces. Select Internal only for trusted networks.'),
                     'provided by a DHCP server will be ignored.'),
         validators=[validators.validate_ipv4_address],
         required=False)
+    ipv6_method = forms.ChoiceField(
+        label=_('IPv6 Addressing Method'),
+        help_text=format_lazy(
+            ugettext_lazy(
+                '"Automatic" methods will make {box_name} acquire '
+                'configuration from this network making it a client.'),
+            box_name=ugettext_lazy(cfg.box_name)),
+        choices=[('auto', _('Automatic')),
+                 ('dhcp', _('Automatic, DHCP only')),
+                 ('manual', _('Manual')),
+                 ('ignore', _('Ignore'))])
+    ipv6_address = forms.CharField(
+        label=_('Address'),
+        validators=[validators.validate_ipv6_address],
+        required=False)
+    ipv6_prefix = forms.IntegerField(
+        label=_('Prefix'),
+        help_text=_('Value between 1 and 128.'),
+        min_value=1,
+        max_value=128,
+        required=False)
+    ipv6_gateway = forms.CharField(
+        label=_('Gateway'),
+        help_text=_('Optional value.'),
+        validators=[validators.validate_ipv6_address],
+        required=False)
+    ipv6_dns = forms.CharField(
+        label=_('DNS Server'),
+        help_text=_('Optional value. If this value is given and IPv6 '
+                    'addressing method is "Automatic", the DNS Servers '
+                    'provided by a DHCP server will be ignored.'),
+        validators=[validators.validate_ipv6_address],
+        required=False)
+    ipv6_second_dns = forms.CharField(
+        label=_('Second DNS Server'),
+        help_text=_('Optional value. If this value is given and IPv6 '
+                    'Addressing Method is "Automatic", the DNS Servers '
+                    'provided by a DHCP server will be ignored.'),
+        validators=[validators.validate_ipv6_address],
+        required=False)
 
     @staticmethod
     def _get_interface_choices(device_type):
@@ -111,6 +151,7 @@ available over this interfaces. Select Internal only for trusted networks.'),
             'zone': self.cleaned_data['zone'],
         }
         settings['ipv4'] = self.get_ipv4_settings()
+        settings['ipv6'] = self.get_ipv6_settings()
         return settings
 
     def get_ipv4_settings(self):
@@ -124,6 +165,18 @@ available over this interfaces. Select Internal only for trusted networks.'),
             'second_dns': self.cleaned_data['ipv4_second_dns'],
         }
         return ipv4
+
+    def get_ipv6_settings(self):
+        """Return IPv6 dict from cleaned data."""
+        ipv6 = {
+            'method': self.cleaned_data['ipv6_method'],
+            'address': self.cleaned_data['ipv6_address'],
+            'prefix': self.cleaned_data['ipv6_prefix'],
+            'gateway': self.cleaned_data['ipv6_gateway'],
+            'dns': self.cleaned_data['ipv6_dns'],
+            'second_dns': self.cleaned_data['ipv6_second_dns'],
+        }
+        return ipv6
 
 
 class GenericForm(ConnectionForm):
@@ -164,6 +217,12 @@ class PPPoEForm(EthernetForm):
     ipv4_gateway = None
     ipv4_dns = None
     ipv4_second_dns = None
+    ipv6_method = None
+    ipv6_address = None
+    ipv6_prefix = None
+    ipv6_gateway = None
+    ipv6_dns = None
+    ipv6_second_dns = None
 
     username = forms.CharField(label=_('Username'))
     password = forms.CharField(label=_('Password'),
@@ -185,13 +244,19 @@ class PPPoEForm(EthernetForm):
         """Return IPv4 settings from cleaned data."""
         return None
 
+    def get_ipv6_settings(self):
+        """Return IPv6 settings from cleaned data."""
+        return None
+
 
 class WifiForm(ConnectionForm):
     """Form to create/edit a Wi-Fi connection."""
     field_order = ['name', 'interface', 'zone', 'ssid', 'mode', 'band',
                    'channel', 'bssid', 'auth_mode', 'passphrase',
                    'ipv4_method', 'ipv4_address', 'ipv4_netmask',
-                   'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns']
+                   'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns',
+                   'ipv6_method', 'ipv6_address', 'ipv6_prefix',
+                   'ipv6_gateway', 'ipv6_dns', 'ipv6_second_dns']
 
     ssid = forms.CharField(
         label=_('SSID'),

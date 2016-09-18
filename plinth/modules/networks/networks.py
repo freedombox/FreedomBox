@@ -160,6 +160,24 @@ def edit(request, uuid):
             if number_of_dns > 1:
                 form_data['ipv4_second_dns'] = settings_ipv4.get_dns(1)
 
+            settings_ipv6 = connection.get_setting_ip6_config()
+            form_data['ipv6_method'] = settings_ipv6.get_method()
+            if settings_ipv6.get_num_addresses():
+                address = settings_ipv6.get_address(0)
+                form_data['ipv6_address'] = address.get_address()
+                form_data['ipv6_prefix'] = address.get_prefix()
+
+            gateway = settings_ipv6.get_gateway()
+            if gateway:
+                form_data['ipv6_gateway'] = gateway
+
+            number_of_dns = settings_ipv6.get_num_dns()
+            if number_of_dns:
+                form_data['ipv6_dns'] = settings_ipv6.get_dns(0)
+
+            if number_of_dns > 1:
+                form_data['ipv6_second_dns'] = settings_ipv6.get_dns(1)
+
         if settings_connection.get_connection_type() == 'generic':
             form = GenericForm(form_data)
         elif settings_connection.get_connection_type() == '802-11-wireless':
