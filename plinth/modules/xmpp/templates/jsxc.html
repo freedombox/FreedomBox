@@ -1,0 +1,138 @@
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# This file based on example code from Javascript XMPP Client which is
+# licensed as follows.
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Klaus Herberth <klaus@jsxc.org>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+{% endcomment %}
+
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Jabber Chat (JSXC)</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/javascript/bootstrap/css/bootstrap.min.css" media="all"
+          rel="stylesheet" type="text/css" />
+    <link href="/javascript/jquery-ui/css/smoothness/jquery-ui.min.css"
+          media="all" rel="stylesheet" type="text/css" />
+    <link href="{% static 'xmpp/libjs-jsxc/jsxc.css' %}" media="all"
+          rel="stylesheet" type="text/css" />
+    <link href="{% static 'xmpp/jsxc-plinth.css' %}" media="all"
+          rel="stylesheet" type="text/css" />
+
+    <script src="/javascript/jquery/jquery.min.js"></script>
+    <script src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/javascript/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/javascript/jquery-fullscreen/jquery.fullscreen.js"></script>
+    <script src="/javascript/jquery-colorbox/jquery.colorbox-min.js"></script>
+    <script src="/javascript/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/javascript/jsxc/lib/jsxc.dep.js"></script>
+    <script src="/javascript/jsxc/jsxc.js"></script>
+
+    <script lang="text/javascript">
+      var plinth_settings = {
+          "domainname": "{{ domainname }}",
+          "jsxc_root": "{% static 'xmpp/libjs-jsxc' %}"
+      };
+    </script>
+    <script src="{% static 'xmpp/jsxc-plinth.js' %}"></script>
+  </head>
+
+  <body>
+    <div class="container" id="content" role="main">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+          <h1 class="page-header text-center">Jabber Chat</h1>
+
+          <div class="form form-horizontal">
+            <div class="form-group">
+              <label for="xmpp-domain" class="col-xs-4 control-label">
+                Domain:
+              </label>
+              <div class="col-xs-8">
+                <input type="text" id="xmpp-domain" name="xmpp-domain"
+                       class="form-control" />
+                <p id="server-flash"></p>
+              </div>
+            </div>
+
+            <form id="jsxc-login-form" class="form form-horizontal">
+              <fieldset>
+                <div class="form-group row">
+                  <label for="jsxc-username" class="col-xs-4 control-label">
+                    Username:
+                  </label>
+                  <div class="col-xs-8">
+                    <input type="text" id="jsxc-username"
+                           class="form-control" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="jsxc-password" class="col-xs-4 control-label">
+                    Password:
+                  </label>
+                  <div class="col-xs-8">
+                    <input type="password" id="jsxc-password"
+                           class="form-control" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-xs-offset-4 col-xs-8">
+                    <button type="submit" id="jsxc-submit"
+                            class="submit btn btn-primary"
+                            data-loading-text="Logging in...">Log in</button>
+                    <button class="logout btn btn-default">Log out</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
