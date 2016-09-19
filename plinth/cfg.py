@@ -42,6 +42,7 @@ server_dir = '/'
 danube_edition = False
 
 main_menu = Menu()
+apps_menu = Menu()
 
 config_file = None
 

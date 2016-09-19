@@ -38,6 +38,8 @@ managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
 
 title = _('News Feed Reader (Tiny Tiny RSS)')
 
+category = _('Publishing')
+
 description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
@@ -53,6 +55,12 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
 
     global service

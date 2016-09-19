@@ -39,6 +39,8 @@ managed_packages = ['transmission-daemon']
 
 title = _('BitTorrent (Transmission)')
 
+category = _('File Transfer')
+
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Transmission daemon handles Bitorrent file sharing.  Note that '
@@ -52,6 +54,12 @@ service = None
 def init():
     """Intialize the Transmission module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-save', 'transmission:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-save', 'transmission:index')
 
     global service

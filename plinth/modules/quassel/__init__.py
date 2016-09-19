@@ -41,6 +41,8 @@ managed_packages = ['quassel-core']
 
 title = _('IRC Client (Quassel)')
 
+category = _('Chat')
+
 description = [
     format_lazy(
         _('Quassel is an IRC application that is split into two parts, a '
@@ -62,6 +64,12 @@ description = [
 def init():
     """Initialize the quassel module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
 
     global service

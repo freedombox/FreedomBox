@@ -29,4 +29,6 @@ def init():
 
 def index(request):
     """Serve the apps index page"""
-    return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
+    return TemplateResponse(request, 'apps.html',
+                            {'title': _('Applications'),
+                             'apps_menu': cfg.apps_menu})

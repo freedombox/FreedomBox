@@ -20,7 +20,7 @@
 {% load i18n %}
 
 <ul class="nav nav-pills nav-stacked">
-  {% for item in menu.items %}
+  {% for item in menu.sorted_items %}
 
     {% if item.url in active_menu_urls %}
       <li class="active">

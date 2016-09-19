@@ -41,4 +41,15 @@
     {% endblocktrans %}
   </p>
 
+  {% for item in apps_menu.sorted_items %}
+    <div class="row-sm">
+      <div class="col-sm-4">
+          <h4>{{ item.label }}</h4>
+          {% if item.items %}
+            {% include "menu.html" with menu=item %}
+          {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+
 {% endblock %}

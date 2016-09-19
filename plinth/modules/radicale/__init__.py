@@ -41,6 +41,8 @@ managed_packages = ['radicale']
 
 title = _('Calendar and Addressbook (Radicale)')
 
+category = _('Organizer')
+
 description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
@@ -57,6 +59,12 @@ CONFIG_FILE = '/etc/radicale/config'
 def init():
     """Initialize the radicale module."""
     menu = cfg.main_menu.get('apps:index')
+    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
+
+    try:
+        menu = cfg.apps_menu.get_by_label(category)
+    except KeyError:
+        menu = cfg.apps_menu.add_item(category, '', '#')
     menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
 
     global service

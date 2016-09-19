@@ -56,6 +56,14 @@ class Menu(object):
 
         raise KeyError('Menu item not found')
 
+    def get_by_label(self, label):
+        """Return a menu item with given label."""
+        for item in self.items:
+            if item.label == label:
+                return item
+
+        raise KeyError('Menu item not found')
+
     def sorted_items(self):
         """Return menu items in sorted order according to current locale."""
         return sorted(self.items, key=lambda x: (x.order, x.label))
