@@ -21,6 +21,7 @@ Forms for configuring ikiwiki
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
 
 
 class IkiwikiCreateForm(forms.Form):
@@ -29,7 +30,8 @@ class IkiwikiCreateForm(forms.Form):
         label=_('Type'),
         choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
 
-    name = forms.CharField(label=_('Name'))
+    name = forms.CharField(label=_('Name'),
+                           validators=[RegexValidator(regex='^[a-zA-Z0-9]+$')])
 
     admin_name = forms.CharField(label=_('Admin Account Name'))
 
