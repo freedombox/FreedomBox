@@ -33,7 +33,7 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-version = 1
+version = 2
 
 depends = ['apps']
 

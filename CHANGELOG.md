@@ -41,6 +41,8 @@ All notable changes to this project will be documented in this file.
 - Tune log message verbosity.
 - Plinth no longer runs as root user.  Fix all applications that were
   requiring root permission.
+- xmpp: Replace jwchat with jsxc. Bump module version number so
+  current installs can be updated.
 
 ### Removed
 - Remove width management for forms.
