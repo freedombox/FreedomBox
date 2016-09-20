@@ -53,7 +53,7 @@
 
   {% if running %}
     <p class="running-status-parent">
-      <span class="running-status active"></span>
+      <span class="running-status loading"></span>
       {% trans "Publishing key to keyserver..." %}
 
       <form class="form" method="post"
@@ -67,7 +67,7 @@
   {% endif %}
 
   <div class="row">
-    <div class="col-sm-10">
+    <div class="col-lg-12">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -78,7 +78,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for key in status.keys.values %}
+          {% for key in status.keys.values|dictsort:"ssh_fingerprint" %}
             <tr>
               <td>
                 {% if key.service == 'ssh' %}
@@ -91,16 +91,20 @@
               </td>
               <td>
                 <ul>
-                  {% for domain in key.available_domains %}
+                  {% for domain in key.all_domains %}
                     <li>
-                      {% if domain in key.imported_domains %}
-                        <span class="label label-success"
-                          ><span class="glyphicon glyphicon-ok" aria-hidden="true"
-                          ></span></span>
-                      {% else %}
+                      {% if domain not in key.imported_domains %}
                         <span class="label label-default"
-                          ><span class="glyphicon glyphicon-remove" aria-hidden="true"
-                          ></span></span>
+                          ><span class="glyphicon glyphicon-remove"
+                                 aria-hidden="true"></span></span>
+                      {% elif domain not in key.available_domains %}
+                        <span class="label label-warning"
+                          ><span class="glyphicon glyphicon-warning-sign"
+                                 aria-hidden="true"></span></span>
+                      {% else %}
+                        <span class="label label-success"
+                          ><span class="glyphicon glyphicon-ok"
+                                 aria-hidden="true"></span></span>
                       {% endif %}
                       {{ domain }}
                     </li>
@@ -130,15 +134,15 @@
                   </form>
                 {% else %}
                   {% if not running %}
-                  <form class="form pull-right" method="post"
-                        action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
-                    {% csrf_token %}
+                    <form class="form pull-right" method="post"
+                          action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
+                      {% csrf_token %}
 
-                    <button type="submit" class="btn btn-warning btn-sm pull-right">
-                      {% trans "Publish Key" %}</button>
-                  </form>
+                      <button type="submit" class="btn btn-warning btn-sm pull-right">
+                        {% trans "Publish Key" %}</button>
+                    </form>
                   {% endif %}
-                  {% if key.imported_domains != key.available_domains %}
+                  {% if key.importable_domains %}
                     <form class="form pull-right" method="post"
                           action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                       {% csrf_token %}

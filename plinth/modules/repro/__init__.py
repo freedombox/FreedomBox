@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.views import ServiceView
 
@@ -69,7 +70,10 @@ def init():
     global service
     service = service_module.Service(
         managed_services[0], title, ports=['sip-plinth', 'sip-tls-plinth'],
-        is_external=True)
+        is_external=True, enable=enable, disable=disable)
+
+    if service.is_enabled():
+        add_shortcut()
 
 
 class ReproServiceView(ServiceView):
@@ -83,6 +87,24 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
+                           description)
+
+
+def enable():
+    """Enable the module."""
+    actions.superuser_run('service', ['enable', managed_services[0]])
+    add_shortcut()
+
+
+def disable():
+    """Disable the module."""
+    actions.superuser_run('service', ['disable', managed_services[0]])
+    frontpage.remove_shortcut('repro')
 
 
 def diagnose():

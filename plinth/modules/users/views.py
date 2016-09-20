@@ -19,7 +19,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
 from django.views.generic import ListView
@@ -88,8 +88,13 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def get_initial(self):
         """Return the data for initial form load."""
         initial = super(UserUpdate, self).get_initial()
-        initial['ssh_keys'] = actions.superuser_run(
-            'ssh', ['get-keys', '--username', self.object.username]).strip()
+        try:
+            ssh_keys = actions.superuser_run(
+                'ssh', ['get-keys', '--username', self.object.username])
+            initial['ssh_keys'] = ssh_keys.strip()
+        except ActionError:
+            pass
+
         return initial
 
     def get_success_url(self):

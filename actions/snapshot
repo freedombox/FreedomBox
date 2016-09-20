@@ -1,0 +1,161 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for filesystem snapshots.
+"""
+
+import augeas
+import argparse
+import json
+import os
+import subprocess
+
+FSTAB = '/etc/fstab'
+AUG_FSTAB = '/files/etc/fstab'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Configure snapper')
+    subparsers.add_parser('list', help='List snapshots')
+    subparsers.add_parser('create', help='Create snapshot')
+
+    subparser = subparsers.add_parser('delete', help='Delete snapshot')
+    subparser.add_argument('number', help='Number of snapshot to delete')
+
+    subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
+    subparser.add_argument('number', help='Number of snapshot to rollback to')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Configure snapper."""
+    # Check if root config exists.
+    command = ['snapper', 'list-configs']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    output = process.stdout.decode()
+
+    # Create root config if needed.
+    if 'root' not in output:
+        command = ['snapper', 'create-config', '/']
+        subprocess.run(command, check=True)
+
+    _add_fstab_entry('/')
+
+
+def _add_fstab_entry(mount_point):
+    """Add mountpoint for subvolumes."""
+    snapshots_mount_point = os.path.join(mount_point, '.snapshots')
+
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Fstab/lens', 'Fstab.lns')
+    aug.set('/augeas/load/Fstab/incl[last() + 1]', FSTAB)
+    aug.load()
+
+    spec = None
+    for entry in aug.match(AUG_FSTAB + '/*'):
+        entry_mount_point = aug.get(entry + '/file')
+        if entry_mount_point == snapshots_mount_point:
+            return
+
+        if entry_mount_point == mount_point and \
+           aug.get(entry + '/vfstype') == 'btrfs':
+            spec = aug.get(entry + '/spec')
+
+    if spec:
+        aug.set(AUG_FSTAB + '/01/spec', spec)
+        aug.set(AUG_FSTAB + '/01/file', snapshots_mount_point)
+        aug.set(AUG_FSTAB + '/01/vfstype', 'btrfs')
+        aug.set(AUG_FSTAB + '/01/opt', 'subvol')
+        aug.set(AUG_FSTAB + '/01/opt/value', '.snapshots')
+        aug.set(AUG_FSTAB + '/01/dump', '0')
+        aug.set(AUG_FSTAB + '/01/passno', '1')
+        aug.save()
+
+
+def subcommand_list(_):
+    """List snapshots."""
+    command = ['snapper', 'list']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    lines = process.stdout.decode().splitlines()
+    keys = ('type', 'number', 'pre_number', 'date', 'user', 'cleanup',
+            'description')
+    snapshots = []
+    for line in lines[2:]:
+        parts = [part.strip() for part in line.split('|')]
+        snapshots.append(dict(zip(keys, parts)))
+
+    default = _get_default_snapshot()
+    for snapshot in snapshots:
+        snapshot['is_default'] = (snapshot['number'] == default)
+
+    print(json.dumps(snapshots))
+
+
+def _get_default_snapshot():
+    """Return the default snapshot by looking at default subvolume."""
+    command = ['btrfs', 'subvolume', 'get-default', '/']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    output = process.stdout.decode()
+
+    output_parts = output.split()
+    if len(output_parts) >= 9:
+        path = output.split()[8]
+        path_parts = path.split('/')
+        if len(path_parts) == 3 and path_parts[0] == '.snapshots':
+            return path_parts[1]
+
+    return None
+
+
+def subcommand_create(_):
+    """Create snapshot."""
+    command = ['snapper', 'create', '--description', 'manually created']
+    subprocess.run(command, check=True)
+
+
+def subcommand_delete(arguments):
+    """Delete snapshot."""
+    command = ['snapper', 'delete', arguments.number]
+    subprocess.run(command, check=True)
+
+
+def subcommand_rollback(arguments):
+    """Rollback to snapshot."""
+    command = ['snapper', 'rollback', '--description', 'created by rollback',
+               arguments.number]
+    subprocess.run(command, check=True)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

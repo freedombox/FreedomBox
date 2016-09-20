@@ -147,7 +147,61 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.9.3 (2016-06-xx)</title>
+      <title>Version 0.10 (2016-08)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Updated Plinth to support Django 1.10. </para>
+        </listitem>
+        <listitem>
+          <para>Added a page to display recent status log from Plinth. It is accessible from the 500 error page. </para>
+        </listitem>
+        <listitem>
+          <para>Tor: Added options to toggle relay and bridge relay modes. </para>
+        </listitem>
+        <listitem>
+          <para>Radicale: Added access rights control. </para>
+        </listitem>
+        <listitem>
+          <para>Ikiwiki: Updated suggested packages. </para>
+        </listitem>
+        <listitem>
+          <para>Users and Groups: Fixed editing users without SSH keys. </para>
+        </listitem>
+        <listitem>
+          <para>Networks: Added basic support for configuring batman-adv mesh networking. </para>
+        </listitem>
+        <listitem>
+          <para>Networks: Fixed incorrect access for retrieving DNS entries. </para>
+        </listitem>
+        <listitem>
+          <para>New languages: </para>
+          <itemizedlist>
+            <listitem>
+              <para>Persian (50% translated) </para>
+            </listitem>
+            <listitem>
+              <para>Indonesian (not started, contributions needed) </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>New modules added to Plinth: </para>
+          <itemizedlist>
+            <listitem>
+              <para>Disks: Shows free space of mounted partitions, and allows expanding the root partition. </para>
+            </listitem>
+            <listitem>
+              <para>Security: Controls login restrictions. </para>
+            </listitem>
+            <listitem>
+              <para>Snapshots: Manages Btrfs snapshots. </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Version 0.9.4 (2016-06-24)</title>
       <itemizedlist>
         <listitem>
           <para>Added Polish translation. </para>
@@ -471,7 +525,10 @@
         <title>Downloading Images</title>
         <para>Recent images for supported targets are available here: </para>
         <itemizedlist>
-          <listitem override="none">
+          <listitem>
+            <para>Official Images: <ulink url="http://ftp.freedombox.org/pub/freedombox/"/> </para>
+          </listitem>
+          <listitem>
             <para>Official Images: <ulink url="http://ftp.skolelinux.org/pub/freedombox/"/> </para>
           </listitem>
         </itemizedlist>
@@ -482,11 +539,11 @@
         <itemizedlist>
           <listitem>
             <para>First open a terminal and import the public key of the FreedomBox developer who built the images: </para>
-            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys 0x36C361440C9BC971</screen>
+            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971</screen>
           </listitem>
           <listitem>
             <para>Next, verify the fingerprint of the public key: </para>
-            <screen format="linespecific">$ gpg --fingerprint 0x36C361440C9BC971
+            <screen format="linespecific">$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
 pub   4096R/0C9BC971 2011-11-12
       Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
 uid                  Sunil Mohan Adapa &lt;sunil@medhas.org&gt;
@@ -500,6 +557,17 @@ gpg: Good signature from "Sunil Mohan Adapa &lt;sunil@medhas.org&gt;"
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</screen>
+          </listitem>
+          <listitem>
+            <para>For version 0.9, some of the images are signed using the following key instead of the regular key: </para>
+            <screen format="linespecific">$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy &lt;jvalleroy@mailbox.org&gt;
+uid                  James Valleroy &lt;jvalleroy@freedombox.org&gt;
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22</screen>
           </listitem>
         </itemizedlist>
       </section>
@@ -592,24 +660,244 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
     </section>
     <section>
-      <title>Deluge</title>
-      <section>
-        <title>What is Deluge?</title>
-        <para>Your FreedomBox provides a Deluge application to enable. Deluge is a lightweight Bit Torrent client. Bit Torrent is a communications protocol using peer-to-peer (P2P) file sharing. P2P is a system that aims to interconnect end-user machines. Highly configurable, Deluge offers functionalities in the form of plugins.  </para>
-      </section>
-    </section>
-    <section>
-      <title>Transmission</title>
+      <title>Bit Torrent (Transmission)</title>
       <section>
         <title>What is Transmission ?</title>
         <para>In addition to Deluge Bit Torrent, your FreedomBox provides a Transmission application to enable. Transmission is a lightweight Bit Torrent client allowing end-user machine to share files (documents, pictures, sounds, videos and programs). Transmission is well known for its simplicity and a default configuration that "Just Works". </para>
       </section>
     </section>
     <section>
-      <title>Shaarli</title>
+      <title>Bit Torrent (Deluge)</title>
+      <section>
+        <title>What is Deluge?</title>
+        <para>Your FreedomBox provides a Deluge application to enable. Deluge is a lightweight Bit Torrent client. Bit Torrent is a communications protocol using peer-to-peer (P2P) file sharing. P2P is a system that aims to interconnect end-user machines. Highly configurable, Deluge offers functionalities in the form of plugins.  </para>
+      </section>
+    </section>
+    <section>
+      <title>Block Sandbox (Minetest)</title>
+      <para>Minetest is a multiplayer infinite-world block sandbox. This module enables the Minetest server to be run on this FreedomBox, on the default port (30000). To connect to the server, a <ulink url="http://www.minetest.net/downloads/">Minetest client</ulink> is needed. </para>
+    </section>
+    <section>
+      <title>GnuSocial</title>
+      <caution>
+        <para>
+          <emphasis role="strong">GnuSocial is currently not available</emphasis>
+        </para>
+        <para>GnuSocial is currently not available in the FreedomBox </para>
+      </caution>
+      <section>
+        <title>What is GNU social?</title>
+        <para>GNU social is a continuation of the <ulink url="https://wiki.debian.org/StatusNet#">StatusNet</ulink> project. It is social communication software for both public and private communications. It is widely supported and has a large userbase. It is already used by the Free Software Foundation, and Richard Stallman himself. Think of GNU Social as twitter and beyond. </para>
+      </section>
+      <section>
+        <title>Status of package</title>
+        <para>GNU Social is still getting packaged for debian and will be available soon for everyone to use. check the progress by tracking the bug <ulink url="https://bugs.debian.org/782812#">#782812</ulink>. </para>
+      </section>
+    </section>
+    <section>
+      <title>Bookmarks (Shaarli)</title>
+      <caution>
+        <para>
+          <emphasis role="strong">Currently not functional</emphasis>
+        </para>
+        <para>Shaarli is currently not available in Debian testing and the version in sid is said to be not functional. We are expecting this will soon be resolved and Shaarli will be again available in the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>. </para>
+      </caution>
       <section>
         <title>What is Shaarli?</title>
         <para>Shaarli is personal (single-user) bookmarking application to install on your FreedomBox. It can also be used for micro-blogging, pastebin, online notepad and snippet archive. Shaarli is designed as a no-database delicious clone. As such, it provides very fast services, easy backup and import/export links as desktop or mobile browser bookmarks. Links stored can be public or private. Shaarli delivers ATOM and RSS feeds from its minimalist interface. </para>
+      </section>
+    </section>
+    <section>
+      <title>Calendar and Addressbook (Radicale)</title>
+      <para>With Radicale you can synchronize your personal Calendars, ToDo-Lists and Addressbooks with your various computers, tables, smartphones etc. and share them with friends without letting third parties know your personal Schedule or Contacts. </para>
+      <section>
+        <title>Why running Radicale?</title>
+        <para>Using Radicale, you can get rid of centralized services like Google Calendar or Apple Calendar (iCloud) mining your events and social connections.  </para>
+      </section>
+      <section>
+        <title>How to setup Radicale?</title>
+        <para>First, the Radicale server needs to be activated on your box.  </para>
+        <itemizedlist>
+          <listitem>
+            <para>Within Plinth </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>select <emphasis>Applications</emphasis> </para>
+              </listitem>
+              <listitem>
+                <para>go to <emphasis>Calendar and Addressbook (Radicale)</emphasis> and  </para>
+              </listitem>
+              <listitem>
+                <para>install the application. After the installation is complete, make sure the application is marked "enabled" in the FreedomBox interface. Enabling the application launches the Radicale server CalDAV.  </para>
+              </listitem>
+              <listitem>
+                <para>define the access rights: </para>
+                <itemizedlist>
+                  <listitem>
+                    <para>Only the owner of a calendar/addressbook can view or make changes </para>
+                  </listitem>
+                  <listitem>
+                    <para>Any user can view any calendar/addressbook, but only the owner can make changes </para>
+                  </listitem>
+                  <listitem>
+                    <para>Any user can view or make changes to any calendar/addressbook </para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </orderedlist>
+          </listitem>
+        </itemizedlist>
+        <para>Note, that only users with a FreedomBox login can access Radicale. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/Radicale-Plinth.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>Radicale-Plinth.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <para>If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them. </para>
+        <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed.     </para>
+        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/user_documentation/#idstarting-the-client">tutorials to setup</ulink> a large selection of clients. Below are the steps for two examples: </para>
+        <itemizedlist>
+          <listitem>
+            <para>Example of setup with Evolution client:   </para>
+            <itemizedlist>
+              <listitem>
+                <para>Calendar </para>
+                <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+                  <listitem>
+                    <para>Create a new calendar </para>
+                  </listitem>
+                  <listitem>
+                    <para>For "Type," select "CalDAV" </para>
+                  </listitem>
+                  <listitem>
+                    <para>When "CalDAV" is selected, additional options will appear in the dialogue window. </para>
+                  </listitem>
+                  <listitem>
+                    <para>URL: <code>https://IP</code> <emphasis>address or domain for your server</emphasis>/radicale/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.ics/. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+                    <itemizedlist>
+                      <listitem>
+                        <para>note the trailing <code>/</code> in the path, it is important. </para>
+                      </listitem>
+                    </itemizedlist>
+                  </listitem>
+                  <listitem>
+                    <para>Select/check "Use a secure connection."     </para>
+                  </listitem>
+                  <listitem>
+                    <para>Name the calendar </para>
+                    <para>
+                      <inlinemediaobject>
+                        <imageobject>
+                          <imagedata fileref="images/Radicale-Evolution-Docu.png"/>
+                        </imageobject>
+                        <textobject>
+                          <phrase>Radicale-Evolution-Docu.png</phrase>
+                        </textobject>
+                      </inlinemediaobject>
+                    </para>
+                  </listitem>
+                </orderedlist>
+              </listitem>
+              <listitem>
+                <para>TODO/Tasks list: Adding a TODO/Tasks list is basically the same as a calendar. </para>
+              </listitem>
+              <listitem>
+                <para>Contacts </para>
+                <itemizedlist>
+                  <listitem>
+                    <para>Follow the same steps described above and replace CalDAV with WebDAV.  The extension of the address book will be .vcf. </para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Android </para>
+            <itemizedlist>
+              <listitem>
+                <para>There are various Apps that allow the integration of the *radicale* server. This example uses DAVdroid, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>. </para>
+              </listitem>
+              <listitem>
+                <para>If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
+              </listitem>
+              <listitem>
+                <para>Install DAVdroid </para>
+              </listitem>
+              <listitem>
+                <para>Create an accound DAVdroid with the same settings as described for Evolution </para>
+              </listitem>
+              <listitem>
+                <para>Click the newly created account and synchronize. </para>
+              </listitem>
+              <listitem>
+                <para>The settings, such as periodicity of synchronizsation, can be adjusted. </para>
+              </listitem>
+              <listitem>
+                <para>A contact or calendar file, that was created before appears.  </para>
+              </listitem>
+              <listitem>
+                <para>Enable it.  </para>
+              </listitem>
+              <listitem>
+                <para>It may take some minutes before e.g. the calendar is visible in your calendar app. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Advanced Users</title>
+        <section>
+          <title>Sharing ressources</title>
+          <para>Above was shown an easy way to create a resource for a group of people by creating a dedicated account for all. Here will be described an alternative method where two users <code>User1</code> and <code>User2</code> are granted access to a calendar. This requires SSH-access to the FreedomBox. </para>
+          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+            <listitem>
+              <para>create a file <code>/etc/radicale/rights</code> </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <screen format="linespecific">[friends_calendar]
+user: ^(User1|User2)$
+collection: ^.*/calendar_of_my_friends.ics$
+permission: rw
+
+# Give write access to owners
+[owner-write]
+user: .+
+collection: ^%(login)s/.+$
+permission: rw</screen>
+                </listitem>
+                <listitem>
+                  <para><code>[friends_calendar]</code> is just an identifier, can be any name. </para>
+                </listitem>
+                <listitem>
+                  <para>The <code>[owner-write]</code> section makes sure that owners have access to their own files </para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>edit file <code>/etc/radicale/config</code> and make the following changes in section <code>[rights)</code> </para>
+              <itemizedlist>
+                <listitem override="none">
+                  <screen format="linespecific">[rights]
+type = from_file
+file = /etc/radicale/rights</screen>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para>Restart the radicale server or the FreedbomBox </para>
+            </listitem>
+          </orderedlist>
+        </section>
+        <section>
+          <title>Importing files</title>
+          <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
+        </section>
       </section>
     </section>
     <section>
@@ -620,9 +908,9 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
       <section>
         <title>Setting the Domain Name</title>
-        <para>For XMPP to work, your FreedomBox needs to have a Domain Name that can be accessed over the public Internet. You can read more about obtaining a Domain Name in the Dynamic DNS section of this manual. </para>
-        <para>Once you have a Domain Name, you can tell your FreedomBox to use it by setting the Domain Name in the System Config. </para>
-        <para>Please note that Pagekite does not support the XMPP protocol at this time. </para>
+        <para>For XMPP to work, your FreedomBox needs to have a Domain Name that can be accessed over the public Internet. You can read more about obtaining a Domain Name in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/DynamicDNS#">Dynamic DNS section of this manual</ulink>. </para>
+        <para>Once you have a Domain Name, you can tell your FreedomBox to use it by setting the Domain Name in the System <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure#">Configuration</ulink>. </para>
+        <para>Please note that <ulink url="https://wiki.debian.org/Pagekite#">Pagekite</ulink> does not support the XMPP protocol at this time. </para>
       </section>
       <section>
         <title>Registering XMPP users through SSO</title>
@@ -630,137 +918,137 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
     </section>
     <section>
-      <title>Dynamic DNS</title>
-      <section>
-        <title>What is Dynamic DNS?</title>
-        <para>In order to reach a server on the Internet, the server needs to have permanent address also know as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
-        <para>Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server. </para>
-        <para>For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on FreedomBox, such as ownCloud, to the Internet. </para>
-      </section>
-      <section>
-        <title>GnuDIP vs. Update URL</title>
-        <para>There are two main mechanism to notify the Dynamic DNS server of your new IP address; using the <emphasis>GnuDIP</emphasis> protocol and using the <emphasis>Update URL</emphasis> mechanism. </para>
-        <para>If a service provided using update URL is not properly secured using HTTPS, your credentials may be visible to an adversary.  Once an adversary gains your credentials, they will be able to replay your request your server and hijack your domain. </para>
-        <para>On the other hand, the GnuDIP protocol will only transport a salted MD5 value of your password, in a way that is secure against replay attacks.  </para>
-      </section>
-      <section>
-        <title>Using the GnuDIP protocol</title>
-        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-          <listitem>
-            <para>Register an account with any Dynamic DNS service provider.  A free service provided by the FreedomBox community is available at <ulink url="https://gnudip.datasystems24.net"/> . </para>
-          </listitem>
-          <listitem>
-            <para>In FreedomBox UI, enable the Dynamic DNS Service. </para>
-          </listitem>
-          <listitem>
-            <para>Select <emphasis>GnuDIP</emphasis> as <emphasis>Service type</emphasis>, enter your Dynamic DNS service provider address (for example, gnudip.datasystems24.net) into <emphasis>GnuDIP Server Address</emphasis> field. </para>
-          </listitem>
-          <listitem>
-            <para>Fill <emphasis>Domain Name</emphasis>, <emphasis>Username</emphasis>, <emphasis>Password</emphasis> information given by your provider into the corresponding fields. </para>
-          </listitem>
-        </orderedlist>
-      </section>
-      <section>
-        <title>Using an Update URL</title>
-        <para>This feature is implemented because the most popular Dynamic DNS providers are using Update URLs mechanism. </para>
-        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-          <listitem>
-            <para>Register an account with a Dynamic DNS service provider providing their service using Update URL mechanism.  Some example providers are listed in the configuration page itself. </para>
-          </listitem>
-          <listitem>
-            <para>In FreedomBox UI, enable the Dynamic DNS service. </para>
-          </listitem>
-          <listitem>
-            <para>Select <emphasis>other Update URL</emphasis> as <emphasis>Service type</emphasis>, enter the update URL given by your provider into <emphasis>Update URL</emphasis> field. </para>
-          </listitem>
-          <listitem>
-            <para>If you browse the update URL with your Internet browser and a warning message about untrusted certificate appears, then enable <emphasis>accept all SSL certificates</emphasis>.  WARNING: your credentials may be readable here because man-in-the-middle attacks are possible!  Consider choosing a better service provider instead. </para>
-          </listitem>
-          <listitem>
-            <para>If you browse the update URL with your Internet browser and the username/password box appears, enable <emphasis>use HTTP basic authentication</emphasis> checkbox and provide the <emphasis>Username</emphasis> and <emphasis>Password</emphasis>.  </para>
-          </listitem>
-          <listitem>
-            <para>If the update URL contains your current IP address, replace the IP address with the string <emphasis>&lt;Ip&gt;</emphasis>. </para>
-          </listitem>
-        </orderedlist>
-      </section>
-      <section>
-        <title>Checking If It Works</title>
-        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-          <listitem>
-            <para>Make sure that external services you have enabled such as /jwchat, /roundcube and /ikiwiki are available on your domain address. </para>
-          </listitem>
-          <listitem>
-            <para>Go to the <emphasis>Status</emphasis> page, make sure that the NAT type is detected correctly. If your FreedomBox is behind a NAT device, this should be detected over there (Text: <emphasis>Behind NAT</emphasis>).  If your FreedomBox has a public IP address assigned, the text should be "Direct connection to the Internet". </para>
-          </listitem>
-          <listitem>
-            <para>Check that the last update status is not <emphasis>failed</emphasis>. </para>
-          </listitem>
-        </orderedlist>
-      </section>
-      <section>
-        <title>Recap: How to create a DNS name with GnuDIP</title>
-        <para>
-          <remark>to delete or to replace the old text</remark>
-        </para>
-        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-          <listitem>
-            <para>Access to <ulink url="https://gnudip.datasystems24.net">GnuIP login page</ulink> (answer Yes to all pop ups) </para>
-          </listitem>
-          <listitem>
-            <para>Click on "Self Register" </para>
-          </listitem>
-          <listitem>
-            <para>Fill the registration form (Username and domain will form the public IP address [username.domain]) </para>
-          </listitem>
-          <listitem>
-            <para>Take note of the username/hostname and password that will be used on the FreedomBox app. </para>
-          </listitem>
-          <listitem>
-            <para>Save and return to the GnuDIP login page to verify your username, domain and password (enter the datas, click login). </para>
-          </listitem>
-          <listitem>
-            <para>Login output should display your new domain name along with your current public IP address (this is a unique address provided by your router for all your local devices). </para>
-          </listitem>
-          <listitem>
-            <para>Leave the GnuDIP interface and open the Dynamic DNS Client app page in your FreedomBox. </para>
-          </listitem>
-          <listitem>
-            <para>Click on "Set Up" in the top menu. </para>
-          </listitem>
-          <listitem>
-            <para>Activate Dynamic DNS </para>
-          </listitem>
-          <listitem>
-            <para>Choose GnuDIP service. </para>
-          </listitem>
-          <listitem>
-            <para>Add server address (gnudip.datasystems24.net) </para>
-          </listitem>
-          <listitem>
-            <para>Add your fresh domain name (username.domain, ie [username].freedombox.rocks) </para>
-          </listitem>
-          <listitem>
-            <para>Add your fresh username (the one used in your new IP address) and password </para>
-          </listitem>
-          <listitem>
-            <para>Add your GnuDIP password </para>
-          </listitem>
-          <listitem>
-            <para>Fill the option with <ulink url="http://myip.datasystems24.de"/> (try this url in your browser, you will figure out immediatly) </para>
-          </listitem>
-        </orderedlist>
-      </section>
-    </section>
-    <section>
-      <title>Roundcube</title>
+      <title>Email Client (Roundcube)</title>
       <section>
         <title>What is Roundcube?</title>
         <para>RoundCube is a browser-based multilingual email client with an application-like user interface. RoundCube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching and spell checking. </para>
       </section>
     </section>
     <section>
+      <title>IRC Client (Quassel)</title>
+      <para><emphasis>Quassel</emphasis> is an IRC application that is split into two parts, a "core" and a "client". This allows the core to remain connected to IRC servers, and to continue receiving messages, even when the client is disconnected. FreedomBox can run the Quassel core service keeping you always online and one or more Quassel clients from a desktop or a mobile device can be used to connect and disconnect from it. </para>
+      <section>
+        <title>Why running Quassel?</title>
+        <para>Many discussions about FreedomBox are being done on the IRC-Channel <code>irc://irc.debian.org/freedombox</code>. If your FreedomBox is running <emphasis>Quassel</emphasis>, it will collect all discussions while you are away, such as responses to your questions. Remember, the FreedomBox project is a worldwide project with people from nearly every time zone. You use your <emphasis>client</emphasis> to connect to the <emphasis>Quassel</emphasis> core to read and respond whenever you have time and are available. </para>
+      </section>
+      <section>
+        <title>How to setup Quassel?</title>
+        <itemizedlist>
+          <listitem>
+            <para>Within Plinth </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>select <emphasis>Applications</emphasis> </para>
+              </listitem>
+              <listitem>
+                <para>go to <emphasis>IRC Client (Quassel)</emphasis> and  </para>
+              </listitem>
+              <listitem>
+                <para>install the application and make sure it is enabled </para>
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/Quassel_Installation.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Quassel_Installation.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+              <listitem>
+                <para>now your Quassel core is running </para>
+              </listitem>
+            </orderedlist>
+          </listitem>
+          <listitem>
+            <para>Configure in your router port forwarding for port <code>4242</code> </para>
+            <itemizedlist>
+              <listitem>
+                <para>on my device, this setting can be found in the section <emphasis>Network &gt; NAT &amp; Port rules &gt; Port Forwarding</emphasis> </para>
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/Quassel_PortForwarding.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Quassel_PortForwarding.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Clients</title>
+        <para>Clients to connect to Quassel from your <ulink url="http://quassel-irc.org/downloads">desktop</ulink> and <ulink url="http://quasseldroid.iskrembilen.com/">mobile</ulink> devices are available. </para>
+        <para>In a Debian system, you can e.g. use <ulink url="https://packages.debian.org/search?keywords=quassel-client">quassel-client</ulink> </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>With the first start you create a user-ID you want to use in your IRC channel </para>
+          </listitem>
+          <listitem>
+            <para>Configure the network connection, e.g. server <code>irc.debian.org/freedombox</code> </para>
+          </listitem>
+          <listitem>
+            <para>Communication takes place in a channel, e.g. <code>freedombox</code> </para>
+          </listitem>
+          <listitem>
+            <para>Add a core </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>Chose an account name </para>
+              </listitem>
+              <listitem>
+                <para>Computer name is the DNS name to access your FreedomBox </para>
+              </listitem>
+              <listitem>
+                <para>Port: 4242 </para>
+              </listitem>
+              <listitem>
+                <para>User and password </para>
+              </listitem>
+            </orderedlist>
+          </listitem>
+        </orderedlist>
+        <para>For Android devices you may use e.g. <emphasis>Quasseldroid</emphasis> from <ulink url="https://f-droid.org/repository/browse/?fdfilter=quassel&amp;fdid=com.iskrembilen.quasseldroid">F-Droid</ulink> </para>
+        <itemizedlist>
+          <listitem>
+            <para>enter core, username etc. as above </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/Quasseldroid.png"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Quasseldroid.png</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+        <para>By the way, the German verb <emphasis>quasseln</emphasis> means <emphasis>talking a lot</emphasis>, to <emphasis>jabber</emphasis>. </para>
+      </section>
+    </section>
+    <section>
+      <title>News Feed Reader (Tiny Tiny RSS)</title>
+      <para>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to allow reading news from any location, while feeling as close to a real desktop application as possible. </para>
+      <para>When enabled, Tiny Tiny RSS will be available from <emphasis>/tt-rss</emphasis> path on the web server. </para>
+    </section>
+    <section>
       <title>ownCloud</title>
+      <caution>
+        <para>
+          <emphasis role="strong">ownCloud was removed from Debian</emphasis>
+        </para>
+        <para>ownCloud was removed from Debian, so it is not available in the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> any more. Existing installations however are still working for time being. We are working on finding an adequate alternative. </para>
+      </caution>
       <section>
         <title>What is ownCloud?</title>
         <para>ownCloud is a self-hosted file sync and share server. It provides access to your data through a platform to view, sync and share across devices. Calendars and Contacts feature will help you keeping google at a nice distance. ownCloud's functionalities are native or available via plugins (Collaborative Editing, Play Music, Watch Movies, Store Passwords, Dashboard, Mozilla Sync...) via <ulink url="https://apps.owncloud.com/"/> </para>
@@ -794,74 +1082,161 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
       </section>
     </section>
     <section>
-      <title>PageKite</title>
+      <title>SIP Server (repro)</title>
       <section>
-        <title>What is PageKite?</title>
-        <para>PageKite makes local websites and services publicly accessible immediately without creating yourself a public IP address. PageKite provides "Kites" and "Services". Kites aims to make accessible in a second a web page (for instance foo.pagekite.me). Services can expose a file or a folder. Technically speaking, PageKite is free Software solution for tunneling HTTP, HTTPS and SSH servers through firewalls and NAT. </para>
-      </section>
-      <section>
-        <title>Use PageKite</title>
-        <para>See <ulink url="http://pagekite.net/downloads/">PageKite</ulink> website. </para>
+        <title>How to set up the SIP server</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Configure the domain at /repro/domains.html on the FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para>Add users at /repro/addUser.html. </para>
+          </listitem>
+          <listitem>
+            <para>Disable and re-enable the repro application in Plinth. </para>
+          </listitem>
+        </orderedlist>
       </section>
     </section>
     <section>
-      <title>Secure Shell</title>
+      <title>Virtual Private Network (OpenVPN)</title>
       <section>
-        <title>What is Secure Shell?</title>
-        <para>FreedomBox runs <code>openssh-server</code> server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell. </para>
+        <title>What is OpenVPN?</title>
+        <para>OpenVPN provides to your FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT. </para>
       </section>
       <section>
-        <title>Default User Account</title>
-        <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
-        <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
-        <para>1. Decompress the image file. </para>
-        <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
-        <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
-        <para>4. Copy the image file to SD card and boot device as normal. </para>
-        <para>The "fbx" user also has superuser privileges via sudo. </para>
+        <title>Setting up</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>In Plinth install <emphasis>Virtual Private Network (OpenVPN)</emphasis>  </para>
+            <para>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="images/plinth_openvpn.png"/>
+                </imageobject>
+                <textobject>
+                  <phrase>plinth_openvpn.png</phrase>
+                </textobject>
+              </inlinemediaobject>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Wait for the installation to finish. This could take a while. </para>
+          </listitem>
+          <listitem>
+            <para>Once the installation of the OpenVPN server is done you can download your profile. This will download a file called &lt;USER&gt;.ovpn, where &lt;USER&gt; is the name of a freedombox user. Each freedombox user will be able to download a different profile. </para>
+          </listitem>
+          <listitem>
+            <para>The ovpn file contains all the information a vpn client needs to connect to the server.  </para>
+          </listitem>
+          <listitem>
+            <para>If you are behind a modem, you may have to change the ip address (if not, you can skip this step). Open the ovpn file in any text editor. The second line shows the IP address or hostname the client will try to connect to.  This should be your WAN IP address or your hostname. This line also contains the port number, 1194 being the default. You may have to open this port on your modem and enable port forwarding.  </para>
+          </listitem>
+        </orderedlist>
+        <screen format="linespecific">client
+remote mybox.sds-ip.de 1194
+proto udp</screen>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Install an OpenVPN client for your system </para>
+          </listitem>
+          <listitem>
+            <para>Open the ovpn file with the OpenVPN client. </para>
+          </listitem>
+          <listitem>
+            <para>Try to ping the freedombox or other devices on the local network. </para>
+          </listitem>
+        </orderedlist>
       </section>
       <section>
-        <title>Logging In</title>
-        <para>To login via SSH, to your FreedomBox: </para>
-        <screen format="linespecific">$ ssh fbx@freedombox</screen>
-        <para>Replace <code>fbx</code> with the name of the user you wish to login as.  <code>freedombox</code> should be replaced with the hostname or IP address of you FreedomBox device as found in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/QuickStart#">Quick Start</ulink> process. </para>
-        <para><code>fbx</code> is the default user present on FreedomBox with superuser privileges.  Any other user created using Plinth and belonging to the group <code>admin</code> will be able to login.  The <code>root</code> account has no password set and will not be able to login.  Access will be denied to all other users. </para>
-        <para><code>fbx</code> and users in <code>admin</code> group will also be able to login on the terminal directly.  Other users will be denied access. </para>
-        <para>If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to <code>libpam-abl</code> package that FreedomBox installs by default.  To control this behavior consult <code>libpam-abl</code> documentation. </para>
-      </section>
-      <section>
-        <title>Becoming Superuser</title>
-        <para>After logging in, if you want to become the superuser for performing administrative activities: </para>
-        <screen format="linespecific">$ sudo su</screen>
-        <para>Make a habit of logging in as root <emphasis>only when you need to</emphasis>.  If you aren't logged in as root, you can't accidentally break everything. </para>
+        <title>External Links</title>
         <para>
-          <anchor id="changingpassword"/>
+          <ulink url="https://openvpn.net/index.php/open-source/overview.html"/>
         </para>
       </section>
-      <section>
-        <title>Changing Password</title>
-        <para>To change the password of a user managed by Plinth, use the change password page.  However, the <code>fbx</code> default user is not managed by Plinth and its password cannot be changed in the web interface. </para>
-        <para>To change password on the terminal, log in to your FreedomBox as the user whose password you want to change. Then, run the following command: </para>
-        <screen format="linespecific">$ passwd</screen>
-        <para>This will ask you for your current password before giving you the opportunity to set a new one. </para>
-      </section>
     </section>
     <section>
-      <title>Mumble</title>
+      <title>Voice Chat (Mumble)</title>
       <section>
         <title>What is Mumble?</title>
         <para>Mumble is a voice chat software. Primarily intended for use while gaming, it is suitable for simple talking with high audio quality, noise suppression, encrypted communication, public/private-key authentication by default, and "wizards" to configure your microphone for instance. A user can be marked as a "priority speaker" within a channel. </para>
       </section>
     </section>
     <section>
-      <title>Privoxy</title>
+      <title>Web Proxy (Privoxy)</title>
+      <para>A web proxy acts as a filter for incoming and outgoing internet traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
+      <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
       <section>
-        <title>What is Privoxy?</title>
-        <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). Learning about networking protocols like HTTP, about HTML, and "Regular Expressions" can help a lot using Privoxy. </para>
+        <title>Screencast</title>
+        <para>Watch the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy_Installation.webm">screencast</ulink> on how to setup and use Privoxy in FreedomBox. </para>
+      </section>
+      <section>
+        <title>Setting up</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>In Plinth install <emphasis>Web Proxy (Privoxy)</emphasis> </para>
+            <para>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="images/Privoxy-Installation.png"/>
+                </imageobject>
+                <textobject>
+                  <phrase>Privoxy-Installation.png</phrase>
+                </textobject>
+              </inlinemediaobject>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Adapt your browser proxy settings to your FreedomBox hostname (or IP address) with port 8118. Please note that Privoxy can only proxy HTTP and HTTPS traffic. It will not work with FTP or other protocols.  </para>
+            <para>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="images/Privoxy-BrowserSettings.png"/>
+                </imageobject>
+                <textobject>
+                  <phrase>Privoxy-BrowserSettings.png</phrase>
+                </textobject>
+              </inlinemediaobject>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Go to page <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. If Privoxy is installed properly, you will be able to configure it in detail; if not you will see an error message. </para>
+          </listitem>
+          <listitem>
+            <para>If you are using a laptop that occasionally has to connect through other routers than yours with the FreedomBox and Privoxy, you may want to install a proxy switch add-on that allows you to easily turn the proxy on or off.  </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Advanced Users</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises.  </para>
+          </listitem>
+          <listitem>
+            <para>While using Privoxy, you can see its configuration details and documentation at <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. </para>
+          </listitem>
+          <listitem>
+            <para>To enable changing these configurations, you first have to change the value of <code>enable-edit-actions</code> in <code>/etc/privoxy/config</code> to <code>1</code>. Before doing so, read carefully the manual, especially:    </para>
+            <itemizedlist>
+              <listitem override="none">
+                <para>
+                  <emphasis>Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.</emphasis>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Now you find an <code>EDIT</code> button on the configuration screen in <code>http://config.privoxy.org/</code>. </para>
+          </listitem>
+          <listitem>
+            <para>The <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
+          </listitem>
+        </orderedlist>
       </section>
     </section>
     <section>
-      <title>Wiki &amp; Blog (Ikiwiki)</title>
+      <title>Wiki and Blog (Ikiwiki)</title>
       <section>
         <title>What is Ikiwiki?</title>
         <para>Ikiwiki converts wiki pages into HTML pages suitable for publishing on a website. It provides particularly blogging, podcasting, calendars and a large selection of plugins. </para>
@@ -986,210 +1361,183 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
         <para>Finish the OAuth flow by authenticating with your password and authorizing access, then you should get redirected back to the Unhosted app, and be able to use it. All data of the Unhosted web app is now stored on your FreedomBox. </para>
       </section>
     </section>
-    <section>
-      <title>OpenVPN</title>
-      <section>
-        <title>What is OpenVPN?</title>
-        <para>OpenVPN provides to your FreedomBox a virtual private network service. You can use this software for remote access, site-to-site VPNs and Wi-Fi security. OpenVPN includes support for dynamic IP addresses and NAT. </para>
-      </section>
-    </section>
-    <section>
-      <title>GnuSocial</title>
-      <section>
-        <title>What is GNU social?</title>
-        <para>GNU social is a continuation of the <ulink url="https://wiki.debian.org/StatusNet#">StatusNet</ulink> project. It is social communication software for both public and private communications. It is widely supported and has a large userbase. It is already used by the Free Software Foundation, and Richard Stallman himself. Think of GNU Social as twitter and beyond. </para>
-      </section>
-      <section>
-        <title>Status of package</title>
-        <para>GNU Social is still getting packaged for debian and will be available soon for everyone to use. check the progress by tracking the bug <ulink url="https://bugs.debian.org/782812#">#782812</ulink>. </para>
-      </section>
-    </section>
-    <section>
-      <title>Radicale</title>
-      <section>
-        <title>What is Radicale?</title>
-        <para>Radicale is a CalDAV and CardDAV server. It allows synchronization and sharing of calendar and contact data. To use the application, a <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed. Radicale can be accessed by any user with a FreedomBox login. </para>
-      </section>
-      <section>
-        <title>Why running Radicale?</title>
-        <para>Using Radicale, you can get rid of centralized services like Google Calendar or Apple Calendar (iCloud) mining your events and social connections.  </para>
-      </section>
-      <section>
-        <title>How to setup Radicale?</title>
-        <para>First, the Radicale server needs to be activated on your box.  Then the mobile and computer clients need to be configured. </para>
-        <itemizedlist>
-          <listitem>
-            <para>From your FreedomBox interface, go to "Calendar and Addressbook (Radicale)" page and install the application. After the installation is complete, make sure the application is marked "enabled" in the FreedomBox interface.  Enabling the application launches the Radicale server CalDAV.  </para>
-          </listitem>
-          <listitem>
-            <para>Now open your clients to create new calendar and address books that will use your FreedomBox and Radicale server. Remember, your clients must be CalDAV and CardDAV compatible. The Radicale website provides <ulink url="http://radicale.org/user_documentation/#idstarting-the-client">tutorials to setup</ulink> a large selection of clients.  </para>
-          </listitem>
-          <listitem>
-            <para>Example of setup with Evolution client:   </para>
-            <itemizedlist>
-              <listitem>
-                <para>Contacts </para>
-                <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-                  <listitem>
-                    <para>Create new address book </para>
-                  </listitem>
-                  <listitem>
-                    <para>For "Type," select "WebDAV" </para>
-                  </listitem>
-                  <listitem>
-                    <para>When "WebDAV" is selected, additional options will appear in the dialogue window. </para>
-                  </listitem>
-                  <listitem>
-                    <para>URL: <code>https://IP</code> <emphasis>address or domain for your server</emphasis>/radicale/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf/.  In addition, if you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf.  Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
-                  </listitem>
-                  <listitem>
-                    <para>Select/check "Use a secure connection."     </para>
-                  </listitem>
-                  <listitem>
-                    <para>Name the address book </para>
-                  </listitem>
-                </orderedlist>
-              </listitem>
-              <listitem>
-                <para>Calendar </para>
-                <itemizedlist>
-                  <listitem>
-                    <para>Follow the same steps described above and replace WebDAV with CalDAV.  The extension of the calendar file will be .ics. </para>
-                  </listitem>
-                </itemizedlist>
-              </listitem>
-            </itemizedlist>
-          </listitem>
-        </itemizedlist>
-      </section>
-    </section>
-    <section>
-      <title>SIP Server (repro)</title>
-      <section>
-        <title>How to set up the SIP server</title>
-        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
-          <listitem>
-            <para>Configure the domain at /repro/domains.html on the FreedomBox. </para>
-          </listitem>
-          <listitem>
-            <para>Add users at /repro/addUser.html. </para>
-          </listitem>
-          <listitem>
-            <para>Disable and re-enable the repro application in Plinth. </para>
-          </listitem>
-        </orderedlist>
-      </section>
-    </section>
   </section>
   <section>
     <title>System</title>
     <section>
-      <title>Networks</title>
-      <para>This section describes how networking is setup by default in FreedomBox and how you can customize it.  See also the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink> section for more information on how firewall works. </para>
-      <section>
-        <title>Default setup</title>
-        <para>In a fresh image of FreedomBox, network is not configured at all. When the image is written to an SD card and the device boots, configuration is done.  During first boot, FreedomBox setup package detects the networks interfaces and tries to automatically configure them so that FreedomBox is available for further configuration via the web interface from another machine without the need to connect a monitor.  Automatic configuration also tries to make FreedomBox useful, out of the box, for the most important scenarios FreedomBox is used for. </para>
-        <para>There are two scenarios it handles: when is a single ethernet interface and when there are multiple ethernet interfaces. </para>
-        <section>
-          <title>Single ethernet interface</title>
-          <para>When there is only single ethernet interface available on the hardware device, there is not much scope for it to play the role of a router. In this case, the device is assumed to be just another machine in the network.  Accordingly, the only available interface is configured to be an <code>internal</code> interface in <code>automatic</code> configuration mode.  This means that it connects to the Internet using the configuration provided by a router in the network and also makes all (internal and external) of its services available to all the clients on this network. </para>
-        </section>
-        <section>
-          <title>Multiple ethernet interface</title>
-          <para>When there are multiple ethernet interfaces available on the hardware device, the device can act as a router.  The interfaces are then configured to perform this function. </para>
-          <para>The first network interface is configured to be an WAN or <code>external</code> interface in automatic configuration mode.  This means that it connects to the Internet using network configuration provided by the Internet Service Provider (ISP).  Only services that are meant to be provided across the entire Internet (external services) will be exposed on this interface.  You must plug your Internet connection into the port of this ethernet interface.  If you wish to continue to have your existing router manage the Internet connection for you, then plug a connection from your router to the port on this interface. </para>
-          <para>The remaining network interfaces are configured for the clients of a router.  They are configured as LAN or <code>internal</code> interfaces in <code>shared</code> configuration mode.  This means that all the services (both external and internal) services are provided to who ever connects on this interface.  Further, the <code>shared</code> mode means that clients will be able to receive details of automatic network connection on this interface.  Specifically, DHCP configuration and DNS servers are provided on this interface.  The Internet connection available to the device using the first network interface will be <code>shared</code> with clients using this interface.  This all means that you can connect your computers to this network interface and they will get automatically configured and will be able to access the Internet via the FreedomBox. </para>
-          <para>Currently, it is not very clear which interface will be come the WAN interface (and the remaining being LAN interfaces) although the assignment process is deterministic.  So, it take a bit of trail and error to figure out which one is which.  In future, for each device, this will be well documented. </para>
-        </section>
-        <section>
-          <title>Wi-Fi configuration</title>
-          <para>All Wi-Fi interfaces are configured to be LAN or <code>internal</code> interfaces in <code>shared</code> configuration mode.  They are also configured to become Wi-Fi access points with following details. </para>
-          <itemizedlist>
-            <listitem>
-              <para>Name of the access point will be <code>FreedomBox</code> plus the name of the interface (to handle the case where there are multiple of them). </para>
-            </listitem>
-            <listitem>
-              <para>Password for connecting to the interface will be <code>freedombox123</code>. </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-      </section>
-      <section>
-        <title>Internet Connection Sharing</title>
-        <para>Although the primary duty of FreedomBox is to provide decentralized services, it can also act like a home router.  Hence, in most cases, FreedomBox connects to the Internet and provides other machines in the network the ability to use that Internet connection.  FreedomBox can do this in two ways: using a <code>shared</code> mode connection or using an <code>internal</code> connection. </para>
-        <para>When an interface is set in <code>shared</code> mode, you may connect your machine directly to it.  This is either by plugging in an ethernet cable from this interface to your machine or by connecting to a Wi-Fi access point.  This case is the simplest to use, as FreedomBox automatically provides your machine with the necessary network configuration.  Your machine will automatically connect to FreedomBox provided network and will be able to connect to the Internet given that FreedomBox can itself connect to the Internet. </para>
-        <para>Sometimes the above setup may not be possible because the hardware device may have only one network interface or for other reasons.  Even in this case, your machine can still connect to the Internet via FreedomBox.  For this to work, make sure that the network interface that your machine is connecting to is in <code>internal</code> mode.  Then, connect your machine to network in which FreedomBox is present.  After this, in your machine's network configuration, set FreedomBox's IP address as the gateway.  FreedomBox will then accept your network traffic from your machine and send it over to the Internet.  This works because network interfaces in <code>internal</code> mode are configured to <code>masquerade</code> packets from local machines to the Internet and receive packets from Internet and forward them back to local machines. </para>
-      </section>
-      <section>
-        <title>Customization</title>
-        <para>The above default configuration may not be fit for your setup.  You can customize the configuration to suit your needs from the <code>Networks</code> area in the 'setup' section of the FreedomBox web interface. </para>
-        <section>
-          <title>PPPoE connections</title>
-          <para>If your ISP does not provide automatic network configuration via DHCP and requires you to connection via PPPoE.  To configure PPPoE, remove any network connection existing on an interface and add a PPPoE connection.  Here, optionally, provide the account username and password given by your ISP and activate the connection. </para>
-        </section>
-        <section>
-          <title>Connect to Internet via Wi-Fi</title>
-          <para>By default Wi-Fi devices attached during first boot will be configured as access points.  They can be configured as regular Wi-Fi devices instead to connection to a local network or an existing Wi-Fi router. To do this, click on the Wi-Fi connection to edit it.  Change the mode to <code>Infrastructure</code> instead of <code>Access Point</code> mode and <code>IPv4 Addressing Method</code> to <code>Automatic (DHCP)</code> instead of <code>Shared</code> mode. Then the SSID provided will mean the Wi-Fi network name you wish to connect to and passphrase will be the used to while making the connection. </para>
-        </section>
-        <section>
-          <title>Adding a new network device</title>
-          <para>When a new network device is added, network manager will automatically configure it.  In most cases this will not work to your liking. Delete the automatic configuration created on the interface and create a new network connection.  Select your newly added network interface in the add connection page. </para>
-          <itemizedlist>
-            <listitem>
-              <para>Then set firewall zone to <code>internal</code> and <code>external</code> appropriately. </para>
-            </listitem>
-            <listitem>
-              <para>You can configure the interface to connect to a network or provide network configuration to whatever machine connects to it. </para>
-            </listitem>
-            <listitem>
-              <para>Similarly, if it is a Wi-Fi interface, you can configure it to become a Wi-FI access point or to connect to an existing access points in the network. </para>
-            </listitem>
-          </itemizedlist>
-        </section>
-      </section>
-      <section>
-        <title>Manual Network Operation</title>
-        <para>FreedomBox automatically configures networks by default and provides a simplified interface to customize the configuration to specific needs.  In most cases, manual operation is not necessary.  The following steps describe how to manually operate network configuration in the event that a user finds FreedomBox interface to insufficient for task at hand or to diagnose a problem that FreedomBox does not identify. </para>
-        <para>On the command line interface: </para>
-        <para>To see the list of available network devices: </para>
-        <screen format="linespecific">nmcli device</screen>
-        <para>To see the list of configured connections: </para>
-        <screen format="linespecific">nmcli connection</screen>
-        <para>To see the current status of a connection: </para>
-        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;'</screen>
-        <para>To see the current firewall zone assigned to a network interface: </para>
-        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;' | grep zone</screen>
-        <para>or </para>
-        <screen format="linespecific">firewall-cmd --zone=internal --list=all
-firewall-cmd --zone=external --list=all</screen>
-        <para>To create a new network connection: </para>
-        <screen format="linespecific">nmcli con add con-name "&lt;connection_name&gt;" ifname "&lt;interface&gt;" type ethernet
-nmcli con modify "&lt;connection_name&gt;" connection.autoconnect TRUE
-nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
-        <para>To change the firewall zone for a connection: </para>
-        <screen format="linespecific">nmcli con modify "&lt;connection_name&gt;" connection.zone "&lt;internal|external&gt;"</screen>
-        <para>For more information on how to use <code>nmcli</code> command, see its man page. Also for a full list of configuration settings and type of connections accepted by Network Manager see: </para>
-        <para>
-          <ulink url="https://developer.gnome.org/NetworkManager/stable/ref-settings.html"/>
-        </para>
-        <para>To see the current status of the firewall and manually operate it, see the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink> section. </para>
-      </section>
+      <title>Configure</title>
+      <para>Configure covers a couple of general topics: </para>
+      <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+        <listitem>
+          <para> Hostname </para>
+          <para>Hostname is the local name by which other devices on the local network can reach your FreedomBox. Default is <emphasis>freedombox</emphasis>. </para>
+        </listitem>
+        <listitem>
+          <para>Domain Name </para>
+          <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox.   </para>
+        </listitem>
+        <listitem>
+          <para>Language Language for the web administration interface Plinth </para>
+        </listitem>
+      </orderedlist>
     </section>
     <section>
-      <title>Upgrades</title>
-      <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
-      <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
+      <title>Date &amp; Time</title>
+      <para>This network time server is a program that maintains the system time in synchronization with servers on the Internet. </para>
+      <para>You can select your time zone by picking a big city nearby (they are sorted by <emphasis>Continent/City</emphasis>) or select directly the zone with respect to GMT (Greenwich Mean Time). </para>
+    </section>
+    <section>
+      <title>Diagnostics</title>
+      <para>The system diagnostic test will run a number of checks on your system to confirm that applications and services are working as expected. </para>
+      <para>Just click <emphasis>Run Diagnostics</emphasis>. This may take some minutes. </para>
+    </section>
+    <section>
+      <title>Disks</title>
+      <para><emphasis>Disks</emphasis> shows free space of mounted partitions.    </para>
+      <para>If there is some free space left after the root partition, the option to expand the root partition is also available.    </para>
+      <para>In this example, a 32 GB micro-SD card is being used and the entire space is already allocated. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/Disks.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>Disks.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+    </section>
+    <section>
+      <title>Dynamic DNS Client</title>
       <section>
-        <title>Manual Upgrades</title>
-        <para>In the Plinth web interface, you can initiate a manual upgrade process from <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section.  Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
-        <para>Under some circumstances, automatic upgrades may fail and require you perform a manual upgrade action.  Even upgrades initiated from Plinth may not finish properly.  This may be because the upgrade process requires you to make a decision.  In these cases, manual upgrade on the terminal may be the only option. </para>
-        <para>In addition, while the upgrade task is running any application installations will wait until the upgrade task is finished. Depending on the hardware, the upgrade task may take a little time, therefore, giving the impression that the application installation stalled. </para>
-        <para>To perform manual upgrades on the terminal, login into FreedomBox on a terminal or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
-        <screen format="linespecific">$ sudo su -
-Password:
-# apt-get update
-# apt-get dist-upgrade</screen>
-        <para>This will ask you if it is alright to install/upgrade (or remove) some packages and use (or release) some disk space.  Say <emphasis>yes</emphasis> after review.  In some cases, during the upgrades process you will be asked questions about modified configuration files, answering with a default <emphasis>Keep current configuration</emphasis> is usually safe. </para>
+        <title>What is Dynamic DNS?</title>
+        <para>In order to reach a server on the Internet, the server needs to have permanent address also know as the static IP address.  Many Internet service providers don't provide home users with a static IP address or they charge more providing a static IP address.  Instead they provide the home user with an IP address that changes every time the user connects to the Internet.  Clients wishing to contact the server will have difficulty reaching the server. </para>
+        <para>Dynamic DNS service providers assist in working around a problem.  First they provide you with a domain name, such as 'myhost.example.org'.  Then they associate your IP address, whenever it changes, with this domain name.  Then anyone intending to reach the server will be to contact the server using the domain name 'myhost.example.org' which always points to the latest IP address of the server. </para>
+        <para>For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on FreedomBox, such as ownCloud, to the Internet. </para>
+      </section>
+      <section>
+        <title>GnuDIP vs. Update URL</title>
+        <para>There are two main mechanism to notify the Dynamic DNS server of your new IP address; using the <emphasis>GnuDIP</emphasis> protocol and using the <emphasis>Update URL</emphasis> mechanism. </para>
+        <para>If a service provided using update URL is not properly secured using HTTPS, your credentials may be visible to an adversary.  Once an adversary gains your credentials, they will be able to replay your request your server and hijack your domain. </para>
+        <para>On the other hand, the GnuDIP protocol will only transport a salted MD5 value of your password, in a way that is secure against replay attacks.  </para>
+      </section>
+      <section>
+        <title>Using the GnuDIP protocol</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Register an account with any Dynamic DNS service provider.  A free service provided by the FreedomBox community is available at <ulink url="https://gnudip.datasystems24.net"/> . </para>
+          </listitem>
+          <listitem>
+            <para>In FreedomBox UI, enable the Dynamic DNS Service. </para>
+          </listitem>
+          <listitem>
+            <para>Select <emphasis>GnuDIP</emphasis> as <emphasis>Service type</emphasis>, enter your Dynamic DNS service provider address (for example, gnudip.datasystems24.net) into <emphasis>GnuDIP Server Address</emphasis> field. </para>
+            <para>
+              <inlinemediaobject>
+                <imageobject>
+                  <imagedata fileref="images/DynamicDNS-Settings.png"/>
+                </imageobject>
+                <textobject>
+                  <phrase>DynamicDNS-Settings.png</phrase>
+                </textobject>
+              </inlinemediaobject>
+            </para>
+          </listitem>
+          <listitem>
+            <para>Fill <emphasis>Domain Name</emphasis>, <emphasis>Username</emphasis>, <emphasis>Password</emphasis> information given by your provider into the corresponding fields. </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Using an Update URL</title>
+        <para>This feature is implemented because the most popular Dynamic DNS providers are using Update URLs mechanism. </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Register an account with a Dynamic DNS service provider providing their service using Update URL mechanism.  Some example providers are listed in the configuration page itself. </para>
+          </listitem>
+          <listitem>
+            <para>In FreedomBox UI, enable the Dynamic DNS service. </para>
+          </listitem>
+          <listitem>
+            <para>Select <emphasis>other Update URL</emphasis> as <emphasis>Service type</emphasis>, enter the update URL given by your provider into <emphasis>Update URL</emphasis> field. </para>
+          </listitem>
+          <listitem>
+            <para>If you browse the update URL with your Internet browser and a warning message about untrusted certificate appears, then enable <emphasis>accept all SSL certificates</emphasis>.  WARNING: your credentials may be readable here because man-in-the-middle attacks are possible!  Consider choosing a better service provider instead. </para>
+          </listitem>
+          <listitem>
+            <para>If you browse the update URL with your Internet browser and the username/password box appears, enable <emphasis>use HTTP basic authentication</emphasis> checkbox and provide the <emphasis>Username</emphasis> and <emphasis>Password</emphasis>.  </para>
+          </listitem>
+          <listitem>
+            <para>If the update URL contains your current IP address, replace the IP address with the string <emphasis>&lt;Ip&gt;</emphasis>. </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Checking If It Works</title>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Make sure that external services you have enabled such as /jwchat, /roundcube and /ikiwiki are available on your domain address. </para>
+          </listitem>
+          <listitem>
+            <para>Go to the <emphasis>Status</emphasis> page, make sure that the NAT type is detected correctly. If your FreedomBox is behind a NAT device, this should be detected over there (Text: <emphasis>Behind NAT</emphasis>).  If your FreedomBox has a public IP address assigned, the text should be "Direct connection to the Internet". </para>
+          </listitem>
+          <listitem>
+            <para>Check that the last update status is not <emphasis>failed</emphasis>. </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Recap: How to create a DNS name with GnuDIP</title>
+        <para>
+          <remark>to delete or to replace the old text</remark>
+        </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>Access to <ulink url="https://gnudip.datasystems24.net">GnuIP login page</ulink> (answer Yes to all pop ups) </para>
+          </listitem>
+          <listitem>
+            <para>Click on "Self Register" </para>
+          </listitem>
+          <listitem>
+            <para>Fill the registration form (Username and domain will form the public IP address [username.domain]) </para>
+          </listitem>
+          <listitem>
+            <para>Take note of the username/hostname and password that will be used on the FreedomBox app. </para>
+          </listitem>
+          <listitem>
+            <para>Save and return to the GnuDIP login page to verify your username, domain and password (enter the datas, click login). </para>
+          </listitem>
+          <listitem>
+            <para>Login output should display your new domain name along with your current public IP address (this is a unique address provided by your router for all your local devices). </para>
+          </listitem>
+          <listitem>
+            <para>Leave the GnuDIP interface and open the Dynamic DNS Client app page in your FreedomBox. </para>
+          </listitem>
+          <listitem>
+            <para>Click on "Set Up" in the top menu. </para>
+          </listitem>
+          <listitem>
+            <para>Activate Dynamic DNS </para>
+          </listitem>
+          <listitem>
+            <para>Choose GnuDIP service. </para>
+          </listitem>
+          <listitem>
+            <para>Add server address (gnudip.datasystems24.net) </para>
+          </listitem>
+          <listitem>
+            <para>Add your fresh domain name (username.domain, ie [username].freedombox.rocks) </para>
+          </listitem>
+          <listitem>
+            <para>Add your fresh username (the one used in your new IP address) and password </para>
+          </listitem>
+          <listitem>
+            <para>Add your GnuDIP password </para>
+          </listitem>
+          <listitem>
+            <para>Fill the option with <ulink url="http://myip.datasystems24.de"/> (try this url in your browser, you will figure out immediatly) </para>
+          </listitem>
+        </orderedlist>
       </section>
     </section>
     <section>
@@ -2665,6 +3013,498 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
         </section>
       </section>
     </section>
+    <section>
+      <title>Monkeysphere</title>
+      <para>With Monkeysphere, an OpenPGP key can be generated for each configured domain serving SSH. The OpenPGP public key can then be uploaded to the OpenPGP keyservers. Users connecting to this machine through SSH can verify that they are connecting to the correct host. For users to trust the key, at least one person (usually the machine owner) must sign the key using the regular OpenPGP key signing process. See the <ulink url="http://web.monkeysphere.info/getting-started-ssh/">Monkeysphere SSH documentation</ulink> for more details. </para>
+      <para>Monkeysphere can also generate an OpenPGP key for each Secure Web Server (HTTPS) certificate installed on this machine. The OpenPGP public key can then be uploaded to the OpenPGP keyservers. Users accessing the web server through HTTPS can verify that they are connecting to the correct host. To validate the certificate, the user will need to install some software that is available on the <ulink url="https://web.monkeysphere.info/download/">Monkeysphere website</ulink>. </para>
+    </section>
+    <section>
+      <title>Name Services</title>
+      <para>Name Services provides an overview of the enabled and disabled services for the domain name, tor hidden services and Pagekite. </para>
+    </section>
+    <section>
+      <title>Networks</title>
+      <para>This section describes how networking is setup by default in FreedomBox and how you can customize it.  See also the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink> section for more information on how firewall works. </para>
+      <section>
+        <title>Default setup</title>
+        <para>In a fresh image of FreedomBox, network is not configured at all. When the image is written to an SD card and the device boots, configuration is done.  During first boot, FreedomBox setup package detects the networks interfaces and tries to automatically configure them so that FreedomBox is available for further configuration via the web interface from another machine without the need to connect a monitor.  Automatic configuration also tries to make FreedomBox useful, out of the box, for the most important scenarios FreedomBox is used for. </para>
+        <para>There are two scenarios it handles: when is a single ethernet interface and when there are multiple ethernet interfaces. </para>
+        <section>
+          <title>Single ethernet interface</title>
+          <para>When there is only single ethernet interface available on the hardware device, there is not much scope for it to play the role of a router. In this case, the device is assumed to be just another machine in the network.  Accordingly, the only available interface is configured to be an <code>internal</code> interface in <code>automatic</code> configuration mode.  This means that it connects to the Internet using the configuration provided by a router in the network and also makes all (internal and external) of its services available to all the clients on this network. </para>
+        </section>
+        <section>
+          <title>Multiple ethernet interface</title>
+          <para>When there are multiple ethernet interfaces available on the hardware device, the device can act as a router.  The interfaces are then configured to perform this function. </para>
+          <para>The first network interface is configured to be an WAN or <code>external</code> interface in automatic configuration mode.  This means that it connects to the Internet using network configuration provided by the Internet Service Provider (ISP).  Only services that are meant to be provided across the entire Internet (external services) will be exposed on this interface.  You must plug your Internet connection into the port of this ethernet interface.  If you wish to continue to have your existing router manage the Internet connection for you, then plug a connection from your router to the port on this interface. </para>
+          <para>The remaining network interfaces are configured for the clients of a router.  They are configured as LAN or <code>internal</code> interfaces in <code>shared</code> configuration mode.  This means that all the services (both external and internal) services are provided to who ever connects on this interface.  Further, the <code>shared</code> mode means that clients will be able to receive details of automatic network connection on this interface.  Specifically, DHCP configuration and DNS servers are provided on this interface.  The Internet connection available to the device using the first network interface will be <code>shared</code> with clients using this interface.  This all means that you can connect your computers to this network interface and they will get automatically configured and will be able to access the Internet via the FreedomBox. </para>
+          <para>Currently, it is not very clear which interface will be come the WAN interface (and the remaining being LAN interfaces) although the assignment process is deterministic.  So, it take a bit of trail and error to figure out which one is which.  In future, for each device, this will be well documented. </para>
+        </section>
+        <section>
+          <title>Wi-Fi configuration</title>
+          <para>All Wi-Fi interfaces are configured to be LAN or <code>internal</code> interfaces in <code>shared</code> configuration mode.  They are also configured to become Wi-Fi access points with following details. </para>
+          <itemizedlist>
+            <listitem>
+              <para>Name of the access point will be <code>FreedomBox</code> plus the name of the interface (to handle the case where there are multiple of them). </para>
+            </listitem>
+            <listitem>
+              <para>Password for connecting to the interface will be <code>freedombox123</code>. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+      <section>
+        <title>Internet Connection Sharing</title>
+        <para>Although the primary duty of FreedomBox is to provide decentralized services, it can also act like a home router.  Hence, in most cases, FreedomBox connects to the Internet and provides other machines in the network the ability to use that Internet connection.  FreedomBox can do this in two ways: using a <code>shared</code> mode connection or using an <code>internal</code> connection. </para>
+        <para>When an interface is set in <code>shared</code> mode, you may connect your machine directly to it.  This is either by plugging in an ethernet cable from this interface to your machine or by connecting to a Wi-Fi access point.  This case is the simplest to use, as FreedomBox automatically provides your machine with the necessary network configuration.  Your machine will automatically connect to FreedomBox provided network and will be able to connect to the Internet given that FreedomBox can itself connect to the Internet. </para>
+        <para>Sometimes the above setup may not be possible because the hardware device may have only one network interface or for other reasons.  Even in this case, your machine can still connect to the Internet via FreedomBox.  For this to work, make sure that the network interface that your machine is connecting to is in <code>internal</code> mode.  Then, connect your machine to network in which FreedomBox is present.  After this, in your machine's network configuration, set FreedomBox's IP address as the gateway.  FreedomBox will then accept your network traffic from your machine and send it over to the Internet.  This works because network interfaces in <code>internal</code> mode are configured to <code>masquerade</code> packets from local machines to the Internet and receive packets from Internet and forward them back to local machines. </para>
+      </section>
+      <section>
+        <title>Customization</title>
+        <para>The above default configuration may not be fit for your setup.  You can customize the configuration to suit your needs from the <code>Networks</code> area in the 'setup' section of the FreedomBox web interface. </para>
+        <section>
+          <title>PPPoE connections</title>
+          <para>If your ISP does not provide automatic network configuration via DHCP and requires you to connection via PPPoE.  To configure PPPoE, remove any network connection existing on an interface and add a PPPoE connection.  Here, optionally, provide the account username and password given by your ISP and activate the connection. </para>
+        </section>
+        <section>
+          <title>Connect to Internet via Wi-Fi</title>
+          <para>By default Wi-Fi devices attached during first boot will be configured as access points.  They can be configured as regular Wi-Fi devices instead to connection to a local network or an existing Wi-Fi router. To do this, click on the Wi-Fi connection to edit it.  Change the mode to <code>Infrastructure</code> instead of <code>Access Point</code> mode and <code>IPv4 Addressing Method</code> to <code>Automatic (DHCP)</code> instead of <code>Shared</code> mode. Then the SSID provided will mean the Wi-Fi network name you wish to connect to and passphrase will be the used to while making the connection. </para>
+        </section>
+        <section>
+          <title>Adding a new network device</title>
+          <para>When a new network device is added, network manager will automatically configure it.  In most cases this will not work to your liking. Delete the automatic configuration created on the interface and create a new network connection.  Select your newly added network interface in the add connection page. </para>
+          <itemizedlist>
+            <listitem>
+              <para>Then set firewall zone to <code>internal</code> and <code>external</code> appropriately. </para>
+            </listitem>
+            <listitem>
+              <para>You can configure the interface to connect to a network or provide network configuration to whatever machine connects to it. </para>
+            </listitem>
+            <listitem>
+              <para>Similarly, if it is a Wi-Fi interface, you can configure it to become a Wi-FI access point or to connect to an existing access points in the network. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Configuring a mesh network</title>
+          <para>FreedomBox has rudimentary support for participating in BATMAN-Adv based mesh networks.  It is possible to either join an existing network in your area or create a new mesh network and share your Internet connection with the rest of the nodes that join the network.  Currently, two connections have to be created and activated manually to join or create a mesh network. </para>
+          <section>
+            <title>Joining a mesh network</title>
+            <para>To join an existing mesh network in your area, first consult the organizers and get information about the mesh network. </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>Create a new connection, then select the connection type as <emphasis>Wi-Fi</emphasis>.  In the following dialog, provide the following values: </para>
+                <informaltable>
+                  <tgroup cols="3">
+                    <colspec colname="col_0"/>
+                    <colspec colname="col_1"/>
+                    <colspec colname="col_2"/>
+                    <tbody>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Field Name</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Example Value</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Explanation</emphasis>
+                          </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Connection Name</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Mesh Join - BATMAN </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> The name must end with 'BATMAN' (uppercase) </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Physical Interface</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> wlan0 </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> The Wi-Fi device you wish to use for joining the mesh network </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Firewall Zone</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> External </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Since you don't wish that participants in mesh network to use internal services of FreedomBox </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>SSID</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> ch1.freifunk.net </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> As provided to you by the operators of the mesh network.  You should see this as a network in <emphasis>Nearby Wi-Fi Networks</emphasis> </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Mode</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Ad-hoc </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Because this is a peer-to-peer network </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Frequency Band</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> 2.4Ghz </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> As provided to you by the operators of the mesh network </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Channel</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> 1 </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> As provided to you by the operators of the mesh network </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>BSSID</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> 12:CA:FF:EE:BA:BE </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> As provided to you by the operators of the mesh network </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Authentication</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Open </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Leave this as open, unless you know your mesh network needs it be otherwise </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Passphrase</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1"/>
+                        <entry colsep="1" rowsep="1">
+                          <para> Leave empty unless you know your mesh network requires one </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>IPv4 Addressing Method</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Disabled </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> We don't want to request IP configuration information yet </para>
+                        </entry>
+                      </row>
+                    </tbody>
+                  </tgroup>
+                </informaltable>
+                <para>Save the connection.  Join the mesh network by activating this newly created connection. </para>
+              </listitem>
+              <listitem>
+                <para>Create a second new connection, then select the connection type as <emphasis>Generic</emphasis>.  In the following dialog, provide this following values: </para>
+                <informaltable>
+                  <tgroup cols="3">
+                    <colspec colname="col_0"/>
+                    <colspec colname="col_1"/>
+                    <colspec colname="col_2"/>
+                    <tbody>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Field Name</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Example Value</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis role="strong">Explanation</emphasis>
+                          </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Connection Name</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Mesh Connect </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Any name to identify this connection </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Physical Interface</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> bat0 </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> This interface will only show up after you successfully activate the connection in first step </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>Firewall Zone</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> External </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Since you don't wish that participants in mesh network to use internal services of FreedomBox </para>
+                        </entry>
+                      </row>
+                      <row rowsep="1">
+                        <entry colsep="1" rowsep="1">
+                          <para>
+                            <emphasis>IPv4 Addressing Method</emphasis>
+                          </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Auto </para>
+                        </entry>
+                        <entry colsep="1" rowsep="1">
+                          <para> Mesh networks usually have a DHCP server somewhere that provide your machine with IP configuration. If not, consult the operator and configure IP address setting accordingly with <emphasis>Manual</emphasis> method </para>
+                        </entry>
+                      </row>
+                    </tbody>
+                  </tgroup>
+                </informaltable>
+                <para>Save the connection.  Configure your machine for participation in the network by activating this connection.  Currently, this connection has to be manually activated every time you need to join the network.  In future, FreedomBox will do this automatically. You will now be able reach other nodes in the network.  You will also be able to connect to the Internet via the mesh network if there is an Internet connection point somewhere in mesh as setup by the operators. </para>
+              </listitem>
+            </orderedlist>
+          </section>
+          <section>
+            <title>Creating a mesh network</title>
+            <para>To create your own mesh network and share your Internet connection with the rest of the nodes in the network: </para>
+            <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+              <listitem>
+                <para>Follow the instructions as provided above in step 1 of <emphasis>Joining a mesh network</emphasis> but choose and fix upon your own valid values for <emphasis>SSID</emphasis> (a name for you mesh network), <emphasis>Frequency Band</emphasis> (usually 2.4Ghz), <emphasis>Channel</emphasis> (1 to 11 in 2.4Ghz band) and <emphasis>BSSID</emphasis> (a hex value like 12:CA:DE:AD:BE:EF).  Create this connection and activate it. </para>
+              </listitem>
+              <listitem>
+                <para>Follow the instructions as provided above in step 2 of <emphasis>Joining a mesh network</emphasis> but select <emphasis>IPv4 Addressing Method</emphasis> as <emphasis>Shared</emphasis>.  This will provide automatic IP configuration to other nodes in the network as well as share the Internet connection on your machine (achieved using a second Wi-Fi interface, using Ethernet, etc.) with other nodes in the mesh network. </para>
+              </listitem>
+            </orderedlist>
+            <para>Spread the word about your mesh network to your neighbors and let them know the parameters you have provided when creating the network.  When other nodes connect to this mesh network, they have to follow steps in <emphasis>Joining a mesh network</emphasis> but use the values for <emphasis>SSID</emphasis>, <emphasis>Frequency Band</emphasis> and <emphasis>Channel</emphasis> that you have chosen when you created the mesh network. </para>
+          </section>
+        </section>
+      </section>
+      <section>
+        <title>Manual Network Operation</title>
+        <para>FreedomBox automatically configures networks by default and provides a simplified interface to customize the configuration to specific needs.  In most cases, manual operation is not necessary.  The following steps describe how to manually operate network configuration in the event that a user finds FreedomBox interface to insufficient for task at hand or to diagnose a problem that FreedomBox does not identify. </para>
+        <para>On the command line interface: </para>
+        <para>For text based user interface for configuring network connections: </para>
+        <screen format="linespecific">nmtui</screen>
+        <para>To see the list of available network devices: </para>
+        <screen format="linespecific">nmcli device</screen>
+        <para>To see the list of configured connections: </para>
+        <screen format="linespecific">nmcli connection</screen>
+        <para>To see the current status of a connection: </para>
+        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;'</screen>
+        <para>To see the current firewall zone assigned to a network interface: </para>
+        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;' | grep zone</screen>
+        <para>or </para>
+        <screen format="linespecific">firewall-cmd --zone=internal --list=all
+firewall-cmd --zone=external --list=all</screen>
+        <para>To create a new network connection: </para>
+        <screen format="linespecific">nmcli con add con-name "&lt;connection_name&gt;" ifname "&lt;interface&gt;" type ethernet
+nmcli con modify "&lt;connection_name&gt;" connection.autoconnect TRUE
+nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
+        <para>To change the firewall zone for a connection: </para>
+        <screen format="linespecific">nmcli con modify "&lt;connection_name&gt;" connection.zone "&lt;internal|external&gt;"</screen>
+        <para>For more information on how to use <code>nmcli</code> command, see its man page. Also for a full list of configuration settings and type of connections accepted by Network Manager see: </para>
+        <para>
+          <ulink url="https://developer.gnome.org/NetworkManager/stable/ref-settings.html"/>
+        </para>
+        <para>To see the current status of the firewall and manually operate it, see the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Firewall#">Firewall</ulink> section. </para>
+      </section>
+    </section>
+    <section>
+      <title>Power</title>
+      <para>Power provides an easy way to restart or shut down FreedomBox. </para>
+    </section>
+    <section>
+      <title>Public Visibility (PageKite)</title>
+      <section>
+        <title>What is PageKite?</title>
+        <para>PageKite makes local websites and services publicly accessible immediately without creating yourself a public IP address. PageKite provides "Kites" and "Services". Kites aims to make accessible in a second a web page (for instance foo.pagekite.me). Services can expose a file or a folder. Technically speaking, PageKite is free Software solution for tunneling HTTP, HTTPS and SSH servers through firewalls and NAT. </para>
+      </section>
+      <section>
+        <title>Use PageKite</title>
+        <para>See <ulink url="http://pagekite.net/downloads/">PageKite</ulink> website. </para>
+      </section>
+    </section>
+    <section>
+      <title>Secure Shell</title>
+      <section>
+        <title>What is Secure Shell?</title>
+        <para>FreedomBox runs <code>openssh-server</code> server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell. </para>
+      </section>
+      <section>
+        <title>Default User Account</title>
+        <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
+        <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
+        <para>1. Decompress the image file. </para>
+        <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
+        <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
+        <para>4. Copy the image file to SD card and boot device as normal. </para>
+        <para>The "fbx" user also has superuser privileges via sudo. </para>
+      </section>
+      <section>
+        <title>Logging In</title>
+        <para>To login via SSH, to your FreedomBox: </para>
+        <screen format="linespecific">$ ssh fbx@freedombox</screen>
+        <para>Replace <code>fbx</code> with the name of the user you wish to login as.  <code>freedombox</code> should be replaced with the hostname or IP address of you FreedomBox device as found in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/QuickStart#">Quick Start</ulink> process. </para>
+        <para><code>fbx</code> is the default user present on FreedomBox with superuser privileges.  Any other user created using Plinth and belonging to the group <code>admin</code> will be able to login.  The <code>root</code> account has no password set and will not be able to login.  Access will be denied to all other users. </para>
+        <para><code>fbx</code> and users in <code>admin</code> group will also be able to login on the terminal directly.  Other users will be denied access. </para>
+        <para>If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to <code>libpam-abl</code> package that FreedomBox installs by default.  To control this behavior consult <code>libpam-abl</code> documentation. </para>
+      </section>
+      <section>
+        <title>Becoming Superuser</title>
+        <para>After logging in, if you want to become the superuser for performing administrative activities: </para>
+        <screen format="linespecific">$ sudo su</screen>
+        <para>Make a habit of logging in as root <emphasis>only when you need to</emphasis>.  If you aren't logged in as root, you can't accidentally break everything. </para>
+        <para>
+          <anchor id="changingpassword"/>
+        </para>
+      </section>
+      <section>
+        <title>Changing Password</title>
+        <para>To change the password of a user managed by Plinth, use the change password page.  However, the <code>fbx</code> default user is not managed by Plinth and its password cannot be changed in the web interface. </para>
+        <para>To change password on the terminal, log in to your FreedomBox as the user whose password you want to change. Then, run the following command: </para>
+        <screen format="linespecific">$ passwd</screen>
+        <para>This will ask you for your current password before giving you the opportunity to set a new one. </para>
+      </section>
+    </section>
+    <section>
+      <title>Security</title>
+      <para>When this option is enabled, only users in the "admin" group will be able to log in to console or via SSH. Console users may be able to access some services without further authorization.  </para>
+      <para>You can define the group of the users in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Users#">Users</ulink> section. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/Security.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>Security.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+    </section>
+    <section>
+      <title>Service Discovery</title>
+      <para>Service discovery allows other devices on the network to discover your FreedomBox and services running on it.    </para>
+      <para>It also allows FreedomBox to discover other devices and services running on your local network.    </para>
+      <para>Service discovery is not essential and works only on internal networks. It may be disabled to improve security especially when connecting to a hostile local network. </para>
+    </section>
+    <section>
+      <title>Software Upgrades</title>
+      <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
+      <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
+      <section>
+        <title>Manual Upgrades</title>
+        <para>In the Plinth web interface, you can initiate a manual upgrade process from <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section.  Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
+        <para>Under some circumstances, automatic upgrades may fail and require you perform a manual upgrade action.  Even upgrades initiated from Plinth may not finish properly.  This may be because the upgrade process requires you to make a decision.  In these cases, manual upgrade on the terminal may be the only option. </para>
+        <para>In addition, while the upgrade task is running any application installations will wait until the upgrade task is finished. Depending on the hardware, the upgrade task may take a little time, therefore, giving the impression that the application installation stalled. </para>
+        <para>To perform manual upgrades on the terminal, login into FreedomBox on a terminal or using a remote secure shell (see <ulink url="https://wiki.debian.org/FreedomBox/Manual/SecureShell#">Secure Shell</ulink> section).  Then run the following commands: </para>
+        <screen format="linespecific">$ sudo su -
+Password:
+# apt-get update
+# apt-get dist-upgrade</screen>
+        <para>This will ask you if it is alright to install/upgrade (or remove) some packages and use (or release) some disk space.  Say <emphasis>yes</emphasis> after review.  In some cases, during the upgrades process you will be asked questions about modified configuration files, answering with a default <emphasis>Keep current configuration</emphasis> is usually safe. </para>
+      </section>
+    </section>
+    <section>
+      <title>Users and Groups</title>
+      <para>You can grant access to your FreedomBox for other users. Provide the Username with a password and assign a group to it. Currently the groups </para>
+      <itemizedlist>
+        <listitem>
+          <para>admin </para>
+        </listitem>
+        <listitem>
+          <para>wiki </para>
+        </listitem>
+      </itemizedlist>
+      <para>are supported.  </para>
+      <para>The user will be able to log in to services that support single sign-on through LDAP, if they are in the appropriate group. </para>
+      <para>Users in the admin group will be able to log in to all services. They can also log in to the system through SSH and have administrative privileges (sudo). </para>
+      <para>These characteristics can also be changed later-on.  </para>
+      <para>It is also possible to set an SSH public key which will allow this user to securely log in to the system without using a password. You may enter multiple keys, one on each line. Blank lines and lines starting with # will be ignored. </para>
+      <para>To temporarily disable user, he can be deactivated. </para>
+    </section>
   </section>
   <section>
     <title>Hardware</title>
@@ -3989,10 +4829,6 @@ $ sudo umount /tmp/vbox-root1
           <emphasis role="strong">Use a fresh Debian installation</emphasis>
         </para>
         <para>Installing FreedomBox changes your Debian system in many important ways.  This includes installing a firewall and regenerating server certificates.  It is hence recommended that you install FreedomBox on a fresh Debian installation instead of an existing setup. </para>
-        <para>
-          <emphasis role="strong">use "fbx" as the login name</emphasis>
-        </para>
-        <para> If you choose to create an initial user account, use "fbx" as the login name.  (Once the FreedomBox setup program completes, all user accounts except for the "fbx" account will be locked out via pam_access.  This also affects sudo access.) </para>
       </caution>
       <section>
         <title>Installing on Debian</title>

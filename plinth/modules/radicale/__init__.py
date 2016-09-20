@@ -19,15 +19,15 @@
 Plinth module for radicale.
 """
 
+import augeas
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
-
 
 version = 1
 
@@ -51,6 +51,8 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
+CONFIG_FILE = '/etc/radicale/config'
+
 
 def init():
     """Initialize the radicale module."""
@@ -62,11 +64,8 @@ def init():
         managed_services[0], title, ports=['http', 'https'], is_external=True,
         enable=enable, disable=disable)
 
-
-class RadicaleServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = 'radicale'
-    description = description
+    if service.is_enabled():
+        add_shortcut()
 
 
 def setup(helper, old_version=None):
@@ -74,16 +73,44 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'radicale', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
+                           description)
 
 
 def enable():
     """Enable the module."""
     actions.superuser_run('radicale', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('radicale', ['disable'])
+    frontpage.remove_shortcut('radicale')
+
+
+def load_augeas():
+    """Prepares the augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+
+    # INI file lens
+    aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
+    aug.set('/augeas/load/Puppet/incl[last() + 1]', CONFIG_FILE)
+
+    aug.load()
+    return aug
+
+
+def get_rights_value():
+    """Returns the current Rights value."""
+    aug = load_augeas()
+    value = aug.get('/files' + CONFIG_FILE + '/rights/type')
+    return value
 
 
 def diagnose():

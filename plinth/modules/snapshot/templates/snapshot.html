@@ -1,0 +1,89 @@
+{% extends "simple_service.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <th>{% trans "Number" %}</th>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Description" %}</th>
+          <th>{% trans "Rollback" %}</th>
+          <th>{% trans "Delete" %}</th>
+        </thead>
+        <tbody>
+          {% for snapshot in snapshots %}
+            {% if snapshot.description != "current" %}
+              <tr>
+                <td>
+                  {{ snapshot.number }}
+                  {% if snapshot.is_default %}
+                    <span class="label label-primary">
+                      {% trans "active" %}
+                    </span>
+                  {% endif %}
+                </td>
+                <td>{{ snapshot.date }}</td>
+                <td>{{ snapshot.description }}</td>
+                <td>
+                  <a href="{% url 'snapshot:rollback' snapshot.number %}"
+                     class="btn btn-default btn-sm" role="button"
+                     title="{% blocktrans trimmed with number=snapshot.number %}
+                              Rollback to snapshot #{{ number }}
+                            {% endblocktrans %}">
+                    <span class="glyphicon glyphicon-repeat"
+                          aria-hidden="true"></span>
+                  </a>
+                </td>
+                <td>
+                  {% if not snapshot.is_default %}
+                    <a href="{% url 'snapshot:delete' snapshot.number %}"
+                       class="btn btn-default btn-sm" role="button"
+                       title="{% blocktrans trimmed with number=snapshot.number %}
+                                Delete snapshot #{{ number }}
+                              {% endblocktrans %}">
+                      <span class="glyphicon glyphicon-trash"
+                            aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Create Snapshot" %}"/>
+    </form>
+  </p>
+
+{% endblock %}

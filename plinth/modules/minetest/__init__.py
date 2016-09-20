@@ -21,8 +21,10 @@ Plinth module for minetest.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
@@ -58,20 +60,41 @@ def init():
     global service
     service = service_module.Service(
         managed_services[0], title, ports=['minetest-plinth'],
-        is_external=True)
+        is_external=True, enable=enable, disable=disable)
+
+    if service.is_enabled():
+        add_shortcut()
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
+                           description)
+
+
+def enable():
+    """Enable the module."""
+    actions.superuser_run('service', ['enable', managed_services[0]])
+    add_shortcut()
+
+
+def disable():
+    """Disable the module."""
+    actions.superuser_run('service', ['disable', managed_services[0]])
+    frontpage.remove_shortcut('minetest')
 
 
 class MinetestServiceView(ServiceView):
     service_id = managed_services[0]
     diagnostics_module_name = "minetest"
     description = description
-    show_status_block = False
+    show_status_block = True
 
 
 def diagnose():

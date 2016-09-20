@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 
 
@@ -57,11 +58,19 @@ def init():
         'shaarli', title, ports=['http', 'https'], is_external=True,
         is_enabled=is_enabled, enable=enable, disable=disable)
 
+    if is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut('shaarli', title, '/shaarli', 'glyphicon-bookmark')
 
 
 def is_enabled():
@@ -72,8 +81,10 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('shaarli', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('shaarli', ['disable'])
+    frontpage.remove_shortcut('shaarli')

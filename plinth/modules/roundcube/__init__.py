@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 
 
@@ -70,12 +71,21 @@ def init():
         'roundcube', title, ports=['http', 'https'], is_external=True,
         is_enabled=is_enabled, enable=enable, disable=disable)
 
+    if is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
+    helper.call('post', add_shortcut)
+
+
+def add_shortcut():
+    frontpage.add_shortcut(
+        'roundcube', title, '/roundcube', 'glyphicon-envelope')
 
 
 def is_enabled():
@@ -86,11 +96,13 @@ def is_enabled():
 def enable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('roundcube', ['disable'])
+    frontpage.remove_shortcut('roundcube')
 
 
 def diagnose():

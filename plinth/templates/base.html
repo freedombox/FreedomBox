@@ -55,8 +55,9 @@
     </title>
   {% endblock %}
 
-  <!-- This is the traditional favicon. Size: 16x16 or 32x32, transparency is OK -->
-  <link rel="shortcut icon" href="{% static 'theme/img/favicon.ico' %}"/>
+  <!-- Favicon. Works with IE >= 11 and other GUI browsers -->
+  <link rel="icon" type="image/png"
+        href="{% static 'theme/img/freedombox-logo-32px.png' %}"/>
 
   <!-- The is the icon for iOS's Web Clip. Size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4
   - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
@@ -76,7 +77,7 @@
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
   <div class="navbar navbar-fixed-top navbar-default" role="navigation">
-    <div class="container-fluid">
+    <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse"
                 data-target=".navbar-collapse">
@@ -86,13 +87,17 @@
           <span class="icon-bar"></span>
         </button>
         {% block mainmenu_left %}
-          <span class="navbar-brand">
+          <a href="{% url 'index' %}"  class="navbar-brand"
+             title="{{ box_name }}">
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                  alt="{{ box_name }}" />
-          </span>
-          <a href="{% url 'index' %}" class="navbar-brand" title="{% trans "Applications" %}">
-            <span class="glyphicon glyphicon-th"></span>
           </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'apps:index' %}" class="navbar-brand"
+               title="{% trans "Applications" %}">
+              <span class="glyphicon glyphicon-th"></span>
+            </a>
+          {% endif %}
         {% endblock %}
       </div>
       <div class="collapse navbar-collapse">
@@ -152,7 +157,7 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       {% block content_row %}
         <div class="col-md-3">

@@ -20,9 +20,9 @@ Views for the monkeysphere module.
 """
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 import json
@@ -86,7 +86,8 @@ def cancel(request):
     """Cancel ongoing process."""
     global publish_process
     if publish_process:
-        publish_process.terminate()
+        actions.superuser_run(
+            'monkeysphere', ['host-cancel-publish', str(publish_process.pid)])
         publish_process = None
         messages.info(request, _('Cancelled key publishing.'))
 
@@ -109,14 +110,15 @@ def get_keys(fingerprint=None):
                for domains_of_a_type in names.domains.values()
                for domain in domains_of_a_type]
     for key in keys.values():
+        key['imported_domains'] = set(key.get('imported_domains', []))
+        key['available_domains'] = set(key.get('available_domains', []))
         if '*' in key['available_domains']:
             key['available_domains'] = set(domains)
-        else:
-            key['available_domains'] = set(key['available_domains'])
 
-        if 'imported_domains' in key:
-            key['imported_domains'] = set(key['imported_domains']) \
-                .intersection(key['available_domains'])
+        key['all_domains'] = sorted(
+            key['available_domains'].union(key['imported_domains']))
+        key['importable_domains'] = key['available_domains'] \
+            .difference(key['imported_domains'])
 
     return keys
 

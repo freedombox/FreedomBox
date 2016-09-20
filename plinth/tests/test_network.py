@@ -58,6 +58,9 @@ wifi_settings = {
         'ssid': 'plinthtestwifi',
         'mode': 'adhoc',
         'auth_mode': 'open',
+        'band': 'a',
+        'channel': 0,
+        'bssid': 'a0:86:c6:08:11:02',
     },
 }
 

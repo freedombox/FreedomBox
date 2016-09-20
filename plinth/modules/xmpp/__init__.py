@@ -19,6 +19,7 @@
 Plinth module to configure XMPP server
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
@@ -26,19 +27,19 @@ import socket
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
-from plinth.views import ServiceView
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-version = 1
+version = 2
 
 depends = ['apps']
 
 managed_services = ['ejabberd']
 
-managed_packages = ['jwchat', 'ejabberd']
+managed_packages = ['libjs-jsxc', 'ejabberd']
 
 title = _('Chat Server (XMPP)')
 
@@ -46,8 +47,7 @@ description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
 
-    _('To actually communicate, you can use the <a href=\'/jwchat\'>web '
-      'client</a> or any other '
+    _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
       '>XMPP client</a>.')
 ]
@@ -72,6 +72,9 @@ def init():
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
 
+    if is_enabled():
+        add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
@@ -83,18 +86,14 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
     helper.call('post', service.notify_enabled, None, True)
+    helper.call('post', add_shortcut)
 
 
-class EjabberdServiceView(ServiceView):
-    service_id = managed_services[0]
-    template_name = "xmpp.html"
-    description = description
-    diagnostics_module_name = "xmpp"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = get_domainname()
-        return context
+def add_shortcut():
+    frontpage.add_shortcut('jsxc', _('Chat Client (jsxc)'),
+                           reverse_lazy('xmpp:jsxc'), 'glyphicon-comment')
+    frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
+                           description)
 
 
 def is_enabled():
@@ -112,11 +111,14 @@ def get_domainname():
 def enable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['enable'])
+    add_shortcut()
 
 
 def disable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['disable'])
+    frontpage.remove_shortcut('jsxc')
+    frontpage.remove_shortcut('xmpp')
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
@@ -133,9 +135,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
-    """
-    Update ejabberd and jwchat config after hostname is changed.
-    """
+    """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
 
@@ -147,9 +147,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """
-    Update ejabberd and jwchat config after domain name is changed.
-    """
+    """Update ejabberd config after domain name change."""
     del sender  # Unused
     del old_domainname  # Unused
     del kwargs  # Unused
@@ -170,6 +168,7 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all('http://{host}/jwchat'))
+    results.extend(
+        action_utils.diagnose_url_on_all('http://{host}/http-bind/'))
 
     return results

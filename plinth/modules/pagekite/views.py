@@ -15,9 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView

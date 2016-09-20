@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <div class="row">
+    {% if shortcuts %}
+
+      {% for shortcut in shortcuts %}
+        <div class="col-sm-4">
+          <ul class="nav nav-pills nav-stacked">
+            {% if selected_id == shortcut.id %}
+              <li class="active">
+                <a href="{{ shortcut.url }}" class="active">
+            {% else %}
+              <li>
+                <a href="{{ shortcut.url }}">
+            {% endif %}
+                  <span class="{{ shortcut.icon }} glyphicon"></span>
+                  {{ shortcut.label }}
+                </a>
+              </li>
+          </ul>
+        </div>
+      {% endfor %}
+
+    {% else %}
+
+      <h4>
+        {% url 'apps:index' as apps_url %}
+        {% blocktrans trimmed %}
+          Enable some <a href="{{ apps_url }}">applications</a> to add
+          shortcuts to this page.
+        {% endblocktrans %}
+      </h4>
+
+    {% endif %}
+  </div>
+
+  <br>
+  {% if details %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ details_label }}</h3>
+      </div>
+
+      {% for paragraph in details %}
+        <div class="panel-body">
+          {{ paragraph|safe }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+  <h4>
+    {% blocktrans trimmed %}
+      Welcome to {{ box_name }}!
+    {% endblocktrans %}
+  </h4>
+
+  <p>
+    {% blocktrans trimmed %}
+      {{ box_name }}, a Debian pure blend, is a 100% free software
+      self-hosting web server to deploy social applications on small
+      machines. It provides online communication tools respecting your
+      privacy and data ownership.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      More info about {{ box_name }} is available on the
+      project <a href="https://freedombox.org">homepage</a>
+      and <a href="https://wiki.debian.org/FreedomBox">wiki</a>.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      This portal is a part of Plinth, the {{ box_name }} web
+      interface. Plinth is free software, distributed under the GNU
+      Affero General Public License, Version 3 or later.
+    {% endblocktrans %}
+  </p>
+
+{% endblock %}

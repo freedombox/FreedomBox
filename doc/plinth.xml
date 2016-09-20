@@ -40,6 +40,18 @@
       <arg><option>--server_dir</option><arg choice="req">SERVER_DIR</arg></arg>
       <arg><option>--debug</option></arg>
       <arg><option>--diagnose</option></arg>
+      <arg>
+        <option>--setup</option>
+        <arg choice="opt" rep="repeat">application</arg>
+      </arg>
+      <arg>
+        <option>--setup-no-install</option>
+        <arg choice="opt" rep="repeat">application</arg>
+      </arg>
+      <arg>
+        <option>--list-dependencies</option>
+        <arg choice="opt" rep="repeat">application</arg>
+      </arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -71,9 +83,9 @@
     <title>Options</title>
     <variablelist>
       <varlistentry>
-	<term><option>--server_dir SERVER_DIR</option></term>
-	<listitem>
-	  <para>
+        <term><option>--server_dir SERVER_DIR</option></term>
+        <listitem>
+          <para>
             This the URL fragment under which Plinth will provide its
             services.  By default the value from
             <filename>plinth.config</filename> is used.  Plinth is
@@ -85,30 +97,81 @@
             available, <filename>plinth.config</filename> from current
             directory is used.  In source directory, this has the
             default value of <filename>/</filename>.
-	  </para>
-	</listitem>
+          </para>
+        </listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--debug</option></term>
-	<listitem>
-	  <para>
-	    Enable debug mode.  Turn off Django security features.
-	    Print extra debug messages.  Monitor source files for
-	    changes and restart Plinth on modifications.  Turn on
-	    Django debug mode to show details on error pages.  Die if
-	    there is an error during module initialization.
-	  </para>
-	</listitem>
+        <term><option>--debug</option></term>
+        <listitem>
+          <para>
+            Enable debug mode.  Turn off Django security features.
+            Print extra debug messages.  Monitor source files for
+            changes and restart Plinth on modifications.  Turn on
+            Django debug mode to show details on error pages.  Die if
+            there is an error during module initialization.
+          </para>
+        </listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--diagnose</option></term>
-	<listitem>
-	  <para>
+        <term><option>--diagnose</option></term>
+        <listitem>
+          <para>
             If provided, Plinth loads modules, performs initialization
             but does start the web server.  Instead it runs diagnostic
             tests on each module and exits.
-	  </para>
-	</listitem>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--setup</option></term>
+        <listitem>
+          <para>
+            Perform application setup operations and exit.  Setting up
+            an application involves installing packages required for
+            that application and performing pre and post install
+            configuration setups.  If no application is provided,
+            setup all applications which describe themselves as
+            essential.  If a list of applications is provided, setup
+            only those applications.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--setup-no-install</option></term>
+        <listitem>
+          <para>
+            Same as <option>--setup</option> but no new Debian
+            packages are installed during setup.  When a package needs
+            to be installed, a check is done to make sure the package
+            is already installed.  If the package is already
+            installed, no upgrade is performed and setup skips this
+            step and proceeds to next operation.  If the package is
+            not installed an error is raised and setup process halts.
+            This is option is useful for running setup during post
+            installation script of a Debian package.  Essential
+            packages are added as dependencies for the Debian package
+            and then setup process is executed from post install
+            script of the Debian package.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--list-dependencies</option></term>
+        <listitem>
+          <para>
+            For the list of provided applications, print the list of
+            packages needed by the applications.  If no application is
+            provided as additional argument, then print list of
+            packages needed by all essential applications.  If '*' is
+            provided in the list of the applications, then list of
+            packages needed by all applications will be printed.
+            Although, packages are installed when the application is
+            first accessed, this list will be useful for adding list
+            of dependencies to a Debian package and to get a list of
+            all interesting packages.  Other output may be printed on
+            stderr and should be ignored.
+          </para>
+        </listitem>
       </varlistentry>
     </variablelist>
   </refsect1>
@@ -145,7 +208,7 @@
         under and set it to /plinth.
       </para>
     </example>
-</refsect1>
+  </refsect1>
 
   <refsect1>
     <title>Bugs</title>
@@ -160,8 +223,8 @@
     <title>Author</title>
     <para>
       <author>
-	<firstname>Plinth Developers</firstname>
-	<contrib>Original author</contrib>
+        <firstname>Plinth Developers</firstname>
+        <contrib>Original author</contrib>
       </author>
     </para>
   </refsect1>

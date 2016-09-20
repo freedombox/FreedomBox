@@ -36,41 +36,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser(
-        'pre-install',
-        help='Preseed debconf values before packages are installed')
     subparsers.add_parser('setup', help='Setup LDAP')
 
     return parser.parse_args()
-
-
-def subcommand_pre_install(_):
-    """Preseed debconf values before packages are installed."""
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'slapd slapd/domain string thisbox',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-uris string ldapi:///',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-base string dc=thisbox',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-auth-type select SASL',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'nslcd nslcd/ldap-sasl-mech select EXTERNAL',
-        check=True)
-    subprocess.run(
-        ['debconf-set-selections'],
-        input=b'libnss-ldapd libnss-ldapd/nsswitch multiselect '
-        b'group, passwd, shadow',
-        check=True)
 
 
 def subcommand_setup(_):
@@ -85,6 +53,14 @@ def subcommand_setup(_):
 
 def configure_slapd():
     """Configure LDAP authentication and basic structure."""
+    action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
+    action_utils.dpkg_reconfigure('nslcd', {'ldap-uris': 'ldapi:///',
+                                            'ldap-base': 'dc=thisbox',
+                                            'ldap-auth-type': 'SASL',
+                                            'ldap-sasl-mech': 'EXTERNAL'})
+    action_utils.dpkg_reconfigure('libnss-ldapd',
+                                  {'nsswitch': 'group, passwd, shadow'})
+
     was_running = action_utils.service_is_running('slapd')
     if not was_running:
         action_utils.service_start('slapd')

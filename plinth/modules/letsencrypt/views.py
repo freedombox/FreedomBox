@@ -20,9 +20,9 @@ Plinth module for using Let's Encrypt.
 """
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 import json
@@ -48,7 +48,7 @@ def index(request):
 
 @require_POST
 def revoke(request, domain):
-    """Revoke a certficate for a given domain."""
+    """Revoke a certificate for a given domain."""
     try:
         actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
         messages.success(
@@ -65,7 +65,7 @@ def revoke(request, domain):
 
 @require_POST
 def obtain(request, domain):
-    """Obtain and install a certficate for a given domain."""
+    """Obtain and install a certificate for a given domain."""
     try:
         actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
         messages.success(

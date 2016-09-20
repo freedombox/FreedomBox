@@ -22,7 +22,6 @@ Configuration helper for Radicale.
 
 import argparse
 import augeas
-import subprocess
 
 from plinth import action_utils
 
@@ -38,6 +37,10 @@ def parse_arguments():
     subparsers.add_parser('setup', help='Setup Radicale configuration')
     subparsers.add_parser('enable', help='Enable Radicale service')
     subparsers.add_parser('disable', help='Disable Radicale service')
+    configure = subparsers.add_parser('configure',
+                                      help='Configure various options')
+    configure.add_argument('--rights_type',
+                           help='Set the rights type for radicale')
 
     return parser.parse_args()
 
@@ -62,6 +65,15 @@ def subcommand_setup(_):
 
     action_utils.service_restart('radicale')
     action_utils.webserver_enable('radicale-plinth')
+
+
+def subcommand_configure(arguments):
+    """Sets the radicale rights type to a particular value"""
+    aug = load_augeas()
+    aug.set('/files' + CONFIG_FILE + '/rights/type', arguments.rights_type)
+    aug.save()
+
+    action_utils.service_restart('radicale')
 
 
 def subcommand_enable(_):

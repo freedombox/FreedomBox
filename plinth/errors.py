@@ -33,3 +33,8 @@ class ActionError(PlinthError):
 class DomainRegistrationError(PlinthError):
     """Domain registration failed"""
     pass
+
+
+class PackageNotInstalledError(PlinthError):
+    """Could not complete module setup due to missing package."""
+    pass

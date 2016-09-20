@@ -23,8 +23,10 @@ from django.utils.translation import ugettext as _
 import os
 import logging
 import psutil
+import shutil
 import socket
 import subprocess
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +59,8 @@ def service_is_running(servicename):
 def service_is_enabled(service_name):
     """Check if service is enabled in systemd."""
     try:
-        subprocess.check_output(['systemctl', 'is-enabled', service_name])
+        subprocess.run(['systemctl', 'is-enabled', service_name], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -120,6 +123,9 @@ def service_reload(service_name):
 
 def webserver_is_enabled(name, kind='config'):
     """Return whether a config/module/site is enabled in Apache."""
+    if not shutil.which('a2query'):
+        return False
+
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
     try:
         # Don't print anything on the terminal
@@ -413,3 +419,31 @@ def get_ip_addresses():
 def get_hostname():
     """Return the current hostname."""
     return subprocess.check_output(['hostname']).decode().strip()
+
+
+def dpkg_reconfigure(package, config):
+    """Reconfigure package using debconf database override."""
+    override_template = '''
+Name: {package}/{key}
+Template: {package}/{key}
+Value: {value}
+Owners: {package}
+'''
+    override_data = ''
+    for key, value in config.items():
+        override_data += override_template.format(
+            package=package, key=key, value=value)
+
+    with tempfile.NamedTemporaryFile(mode='w', delete=False) as override_file:
+        override_file.write(override_data)
+
+    env = os.environ.copy()
+    env['DEBCONF_DB_OVERRIDE'] = 'File{' + override_file.name + \
+                                 ' readonly:true}'
+    env['DEBIAN_FRONTEND'] = 'noninteractive'
+    subprocess.run(['dpkg-reconfigure', package], env=env)
+
+    try:
+        os.remove(override_file.name)
+    except OSError:
+        pass

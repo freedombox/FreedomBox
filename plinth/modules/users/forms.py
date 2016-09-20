@@ -15,14 +15,34 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import subprocess
+
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
+
+# Usernames used by optional services (that might not be installed yet).
+RESERVED_USERNAMES = [
+    'debian-deluged',
+    'Debian-minetest',
+    'debian-tor',
+    'debian-transmission',
+    'ejabberd',
+    'ez-ipupd',
+    'monkeysphere',
+    'mumble-server',
+    'node-restore',
+    'quasselcore',
+    'radicale',
+    'repro',
+    'privoxy',
+]
 
 GROUP_CHOICES = (
     ('admin', _('admin')),
@@ -30,7 +50,36 @@ GROUP_CHOICES = (
 )
 
 
-class CreateUserForm(UserCreationForm):
+class ValidNewUsernameCheckMixin(object):
+    """Mixin to check if a username is valid for created new user."""
+    def clean_username(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        if self.instance.username != username and \
+           not self.is_valid_new_username():
+            raise ValidationError(_('Username is taken or is reserved.'),
+                                  code='invalid')
+
+        return username
+
+    def is_valid_new_username(self):
+        """Check for username collisions with system users."""
+        username = self.cleaned_data['username']
+        try:
+            subprocess.run(['getent', 'passwd', username],
+                           stdout=subprocess.DEVNULL, check=True)
+            # Exit code 0 means that the username is already in use.
+            return False
+        except subprocess.CalledProcessError:
+            pass
+
+        if username in RESERVED_USERNAMES:
+            return False
+
+        return True
+
+
+class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
     """Custom user create form.
 
     Include options to add user to groups.
@@ -86,7 +135,7 @@ class CreateUserForm(UserCreationForm):
         return user
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
         label=ugettext_lazy('SSH Keys'),
@@ -158,9 +207,12 @@ class UserUpdateForm(forms.ModelForm):
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
 
-            actions.superuser_run(
-                'ssh', ['set-keys', '--username', user.get_username(),
-                        '--keys', self.cleaned_data['ssh_keys'].strip()])
+            try:
+                actions.superuser_run(
+                    'ssh', ['set-keys', '--username', user.get_username(),
+                            '--keys', self.cleaned_data['ssh_keys'].strip()])
+            except ActionError:
+                messages.error(self.request, _('Unable to set SSH keys.'))
 
         return user
 

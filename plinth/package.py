@@ -34,7 +34,7 @@ class PackageException(Exception):
     """A package operation has failed."""
 
     def __init__(self, error_string=None, error_details=None, *args, **kwargs):
-        """Store packagekit error string and details."""
+        """Store apt-get error string and details."""
         super(PackageException, self).__init__(*args, **kwargs)
 
         self.error_string = error_string
@@ -70,7 +70,7 @@ class Transaction(object):
         self.stderr = None
 
     def install(self):
-        """Run a PackageKit transaction to install given packages.
+        """Run an apt-get transaction to install given packages.
 
         Plinth needs to be running as root when calling this.
         Currently, this is meant to be only during first time setup

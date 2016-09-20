@@ -41,7 +41,8 @@ EMPTYSTRING="none"
 NOIP="0.0.0.0"
 # how often do we poll for IP changes if we are behind a NAT?
 UPDATEMINUTES=5
-# if we do not have a IP check URL, how often should we do a "blind" update
+# if we do not have a URL to look up public IP, how often should we do
+# a "blind" update
 UPDATEMINUTESUNKNOWN=3600
 TOOLNAME=ez-ipupdate
 UPDATE_TOOL=$(which ${TOOLNAME})
@@ -310,7 +311,7 @@ doUpdate()
         if [ "${ignoreCertError}" = "enabled" ];then
             WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
         fi
-        local cmd="${WGET} ${WGETOPTIONS} ${updateurl}"
+        local cmd="${WGET} -O /dev/null ${WGETOPTIONS} ${updateurl}"
         $cmd
         # ToDo: check the returning text from WEB Server. User need to give expected string.
         if [ ${?} -eq 0 ];then
@@ -321,6 +322,7 @@ doUpdate()
     fi
 }
 
+umask u=rw,g=,o=
 cmd=${1}
 shift
 # decide which config to use
@@ -439,7 +441,7 @@ case ${cmd} in
         echo "-u <user>               Account username"
         echo "-P <password>           Account password"
         echo "-p                      Read Account Password from stdin"
-        echo "-I <IP check URL>       A URL which returns the IP of the client who is requesting"
+        echo "-I <URL to look up public IP>       A URL which returns the IP of the client who is requesting"
         echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
         echo "-c <1|0>                disable SSL check on Update URL"
         echo "-b <1|0>                use HTTP basic auth on Update URL"

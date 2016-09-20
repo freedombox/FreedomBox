@@ -17,10 +17,9 @@
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse_lazy
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, FormView, TemplateView
 
@@ -67,10 +66,9 @@ def state10(request):
 
     connections = network.get_connection_list()
 
-    return render_to_response('firstboot_state10.html',
-                              {'title': _('Setup Complete'),
-                               'connections': connections},
-                              context_instance=RequestContext(request))
+    return render(request, 'firstboot_state10.html',
+                  {'title': _('Setup Complete'),
+                   'connections': connections})
 
 
 class State5View(FormView):

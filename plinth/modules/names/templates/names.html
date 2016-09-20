@@ -24,36 +24,36 @@
 {% block configuration %}
 
 <div class="row">
-  <div class="col-sm-5">
+  <div class="col-lg-8">
     <table class="table table-bordered table-condensed table-striped">
       <thead>
-	<tr>
-	  <td></td>
-	  {% for service in status.services %}
-	  <td>
-	    <div class="text-center">{{ service }}</div>
-	  </td>
-	  {% endfor %}
-	</tr>
+        <tr>
+          <td></td>
+          {% for service in status.services %}
+          <td>
+            <div class="text-center">{{ service }}</div>
+          </td>
+          {% endfor %}
+        </tr>
       </thead>
       <tbody>
-	{% for name_service in status.name_services %}
-	<tr>
-	  <td>
-	    <b>{{ name_service.type }}</b><br>
-	    <i>{{ name_service.name }}</i>
-	  </td>
-	  {% for service in name_service.services_enabled %}
-	  <td>
-	    {% if service %}
-	    <span class="label label-success">{% trans "Enabled" %}</span>
-	    {% else %}
-	    <span class="label label-warning">{% trans "Disabled" %}</span>
-	    {% endif %}
-	  </td>
-	  {% endfor %}
-	</tr>
-	{% endfor %}
+        {% for name_service in status.name_services %}
+        <tr>
+          <td>
+            <b>{{ name_service.type }}</b><br>
+            <i>{{ name_service.name }}</i>
+          </td>
+          {% for service in name_service.services_enabled %}
+          <td>
+            {% if service %}
+            <span class="label label-success">{% trans "Enabled" %}</span>
+            {% else %}
+            <span class="label label-warning">{% trans "Disabled" %}</span>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
