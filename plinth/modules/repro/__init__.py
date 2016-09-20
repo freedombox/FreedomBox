@@ -69,7 +69,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, ports=['sip-plinth', 'sip-tls-plinth'],
+        managed_services[0], title, ports=['sip', 'sips'],
         is_external=True, enable=enable, disable=disable)
 
     if service.is_enabled():
