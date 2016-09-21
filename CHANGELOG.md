@@ -43,6 +43,7 @@ All notable changes to this project will be documented in this file.
   requiring root permission.
 - xmpp: Replace jwchat with jsxc. Bump module version number so
   current installs can be updated.
+- ikiwiki: Allow only alphanumerics in wiki/blog name.
 
 ### Removed
 - Remove width management for forms.

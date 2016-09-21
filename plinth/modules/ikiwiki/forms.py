@@ -30,8 +30,10 @@ class IkiwikiCreateForm(forms.Form):
         label=_('Type'),
         choices=[('wiki', 'Wiki'), ('blog', 'Blog')])
 
-    name = forms.CharField(label=_('Name'),
-                           validators=[RegexValidator(regex='^[a-zA-Z0-9]+$')])
+    name = forms.CharField(
+        label=_('Name'),
+        help_text=_('Only alphanumeric characters are allowed.'),
+        validators=[RegexValidator(regex='^[a-zA-Z0-9]+$')])
 
     admin_name = forms.CharField(label=_('Admin Account Name'))
 
