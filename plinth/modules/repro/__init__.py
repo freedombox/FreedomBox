@@ -28,7 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.views import ServiceView
 
-version = 1
+version = 2
 
 depends = ['apps']
 
@@ -69,7 +69,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, ports=['sip', 'sips'],
+        managed_services[0], title, ports=['sip', 'sips', 'rtp-plinth'],
         is_external=True, enable=enable, disable=disable)
 
     if service.is_enabled():
