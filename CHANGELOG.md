@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.11.0] - 2016-09-21
 ### Added
 - Added loading icon for other busy operations.
 - Added basic front page with shortcuts to web apps, and information
@@ -130,7 +130,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.10.0...HEAD
+[0.11.0]: https://github.com/freedombox/Plinth/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/freedombox/Plinth/compare/v0.9.4...v0.10.0
 [0.9.4]: https://github.com/freedombox/Plinth/compare/v0.9.3...v0.9.4
 [0.9.3]: https://github.com/freedombox/Plinth/compare/v0.9.2...v0.9.3
