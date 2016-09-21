@@ -58,6 +58,10 @@ def subcommand_setup(_):
     action_utils.service_restart('repro')
     action_utils.webserver_enable('repro-plinth')
 
+    # We have introduced new firewalld service files and wish to use
+    # them.
+    action_utils.service_reload('firewalld')
+
 
 def main():
     """Parse arguments and perform all duties."""
