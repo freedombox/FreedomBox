@@ -36,7 +36,10 @@ echo "Done configuring Apache for Plinth."
 
 echo "Running Plinth setup..."
 
-# Run plinth setup to install various necessary program
-plinth --setup
+# Run plinth setup to configure various necessary program
+plinth --setup-no-install
+
+# Ensure that DB and log file permissions are correct
+chown -R plinth: /var/lib/plinth /var/log/plinth
 
 echo "Done running Plinth setup."
