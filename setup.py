@@ -192,6 +192,7 @@ setuptools.setup(
     tests_require=['coverage >= 3.7'],
     include_package_data=True,
     package_data={'plinth': ['templates/*',
+                             'modules/*/static/*',
                              'modules/*/templates/*',
                              'locale/*/LC_MESSAGES/*.[pm]o']},
     data_files=[('/usr/lib/firewalld/services/',
