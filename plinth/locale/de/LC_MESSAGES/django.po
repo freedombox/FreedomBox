@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-21 12:14-0400\n"
-"PO-Revision-Date: 2016-09-22 20:14+0000\n"
+"PO-Revision-Date: 2016-09-26 19:15+0000\n"
 "Last-Translator: Dietmar <ndcdhimdsa@gmx.de>\n"
 "Language-Team: German "
 "<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
@@ -210,7 +210,7 @@ msgstr "Fehler beim Setzen des Domain Namens: {exception}"
 
 #: plinth/modules/config/config.py:220
 msgid "Domain name set"
-msgstr "Domain Name nicht gesetzt"
+msgstr "Domain Name gesetzt"
 
 #: plinth/modules/config/config.py:228
 #, python-brace-format
@@ -231,7 +231,6 @@ msgid "Date & Time"
 msgstr "Datum und Uhrzeit"
 
 #: plinth/modules/datetime/__init__.py:42
-#, fuzzy
 #| msgid ""
 #| "Network time server is a program that maintians the system time in "
 #| "synchronization with servers on the Internet."
@@ -239,7 +238,7 @@ msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
 msgstr ""
-"Der Netzwerk-Zeitserver synchronisiert Ihre Systemzeit mit Servern im "
+"Der Netzwerk-Zeitserver hält Ihre Systemzeit synchron mit Servern im "
 "Internet."
 
 #: plinth/modules/datetime/__init__.py:83
@@ -255,7 +254,8 @@ msgid ""
 "Set your time zone to get accurate timestamps. This will set the systemwide "
 "time zone."
 msgstr ""
-"Stellen Sie hier Ihre Zeitzone ein. Dies wird die systemweite Uhrzeit setzen."
+"Legen Sie Ihre Zeitzone fest um korrekte Zeitstempel für Ihr System zu "
+"erhalten."
 
 #: plinth/modules/datetime/forms.py:45
 msgid "-- no time zone set --"
@@ -1096,13 +1096,12 @@ msgstr ""
 "#freedombox</a> Kanal des IRC Web-Interfaces."
 
 #: plinth/modules/help/templates/statuslog.html:25
-#, fuzzy
 #| msgid "Status"
 msgid "Status Log"
-msgstr "Status"
+msgstr "Statusprotokoll"
 
 #: plinth/modules/help/templates/statuslog.html:28
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This is the last %(num_lines)s lines of the status log for this web "
 #| "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -1114,9 +1113,10 @@ msgid ""
 "github.com/freedombox/Plinth/issues\">bug tracker</a> and attach this status "
 "log to the bug report."
 msgstr ""
-"Dies sind die letzten %(num_lines)s Zeilen der Statusausgabe des Web-"
-"Interfaces. Bitte melden Sie den Fehler auf dem <a href=\"https://github.com/"
-"freedombox/Plinth/issues\">Bugtracker</a> und fügen diese Ausgabe bei."
+"Dies sind die letzten %(num_lines)s Zeilen des Statusprotokolls dieses Web-"
+"Interfaces. Bitte melden Sie den Fehler auf dem <a href=\""
+"https://github.com/freedombox/Plinth/issues\">Bugtracker</a> und fügen diese "
+"Ausgabe bei."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1265,7 +1265,7 @@ msgid "Certificates (Let's Encrypt)"
 msgstr "Zertifikate (Let's Encrypt)"
 
 #: plinth/modules/letsencrypt/__init__.py:42
-#, fuzzy, python-brace-format
+#, python-brace-format
 #| msgid ""
 #| "A digital certficate allows users of a web service to verify the identity "
 #| "of the service and to securely communicate with it. {box_name} can "
@@ -1287,7 +1287,6 @@ msgstr ""
 "Inhaber einer Domain zu sein."
 
 #: plinth/modules/letsencrypt/__init__.py:49
-#, fuzzy
 #| msgid ""
 #| "Let's Encrypt is a free, automated, and open certificate authority, run "
 #| "for the public’s benefit by the Internet Security Research Group (ISRG).  "
@@ -1646,15 +1645,15 @@ msgid "IPv4 Addressing Method"
 msgstr "IPv4 Adressierungs-Methode"
 
 #: plinth/modules/networks/forms.py:54
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
 "network making it a client. \"Shared\" method will make {box_name} act as a "
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
-"Die \"Automatsch\" Methode lässt {box_name} die Konfiguration von diesem "
-"diesem Netzwerk holen und macht es zu einem Client. Die \"Shared\" Methode "
-"lässt {box_name} wie einen Router arbeiten, die Clients dieses Netzwerks "
+"Die \"Automatisch\" Methode lässt {box_name} die Konfiguration von diesem "
+"Netzwerk holen und macht es zu einem Client. Die \"Shared\" Methode lässt "
+"{box_name} wie einen Router arbeiten, die Clients dieses Netzwerks "
 "konfigurieren und die Internet-Verbindung teilen."
 
 #: plinth/modules/networks/forms.py:59
@@ -1745,7 +1744,6 @@ msgid "Access Point"
 msgstr "Zugangspunkt"
 
 #: plinth/modules/networks/forms.py:203
-#, fuzzy
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
@@ -1783,15 +1781,14 @@ msgid "BSSID"
 msgstr "BSSID"
 
 #: plinth/modules/networks/forms.py:219
-#, fuzzy
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
-"Optionaler Wert. Eindeutiger Wert für den Zugangspunkt. Verbindung mit einem "
-"Zugangspunkt ist nur zugelassen, wenn die BSSID des Zugangspunkts mit diesem "
-"Wert übereinstimmt. Beispiel: 00: 11: 22: aa: bb: cc."
+"Optionaler Wert. Eindeutige Kennzeichnung des Zugangspunkts. Verbindung mit "
+"einem Zugangspunkt ist nur zugelassen, wenn die BSSID des Zugangspunkts mit "
+"diesem Wert übereinstimmt. Beispiel: 00:11:22:aa:bb:cc."
 
 #: plinth/modules/networks/forms.py:226
 msgid "Authentication Mode"
@@ -2960,7 +2957,6 @@ msgid "Date"
 msgstr "Datum"
 
 #: plinth/modules/snapshot/templates/snapshot.html:33
-#, fuzzy
 msgid "Rollback"
 msgstr "Zurücksetzen"
 
@@ -3564,7 +3560,6 @@ msgstr ""
 "können Sie Ihren XMPP-Server, genannt ejabberd, starten und konfigurieren."
 
 #: plinth/modules/xmpp/__init__.py:50
-#, fuzzy
 #| msgid ""
 #| "To actually communicate, you can use the <a href='/jwchat'>web client</a> "
 #| "or any other <a href='http://xmpp.org/xmpp-software/clients/' "
@@ -3574,15 +3569,14 @@ msgid ""
 "href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP client</"
 "a>."
 msgstr ""
-"Zur Kommunikation können Sie den <a href='/jwchat'>Web client</a> oder jeden "
-"anderen <a href='http://xmpp.org/xmpp-software/clients/' "
-"target='_blank'>XMPP client</a> verwenden."
+"Zur Kommunikation können Sie den Web Client oder jeden anderen <a "
+"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP Client</a>"
+" verwenden."
 
 #: plinth/modules/xmpp/__init__.py:93
-#, fuzzy
 #| msgid "IRC Client (Quassel)"
 msgid "Chat Client (jsxc)"
-msgstr "IRC Client (Quassel)"
+msgstr "Chat Client (jsxc)"
 
 #: plinth/modules/xmpp/templates/xmpp.html:31
 #, python-format
@@ -3624,7 +3618,6 @@ msgid "downloading"
 msgstr "lade herunter"
 
 #: plinth/package.py:128
-#, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
 msgstr "Medienwechsel"
@@ -3671,7 +3664,7 @@ msgid "500"
 msgstr "500"
 
 #: plinth/templates/500.html:29
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "This is an internal error and not something you caused or can fix.  "
 #| "Please report the error on the <a href=\"https://github.com/freedombox/"
@@ -3684,10 +3677,10 @@ msgid ""
 "\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Dies ist ein interner Fehler und nicht etwas, das Sie verursacht haben oder "
-"beheben können. Bitte melden Sie den Fehler auf dem <a href=\"https://github."
-"com/freedombox/Plinth/issues\">Bugtracker</a>, so dass wir es beheben "
-"können. Fügen sie auch die <a href=\"/plinth/help/status-logs"
-"\">Statusausgabe</a> dem Fehlerbericht bei."
+"beheben können. Bitte melden Sie den Fehler auf dem <a href=\""
+"https://github.com/freedombox/Plinth/issues\">Bugtracker</a>, so dass wir "
+"ihn beheben können. Fügen sie auch das <a href=\"%(status_log_url)s\""
+">Statusprotokoll</a> dem Fehlerbericht bei."
 
 #: plinth/templates/base.html:49
 #, python-format
@@ -3721,21 +3714,25 @@ msgstr ""
 "zu dieser Seite hinzuzufügen."
 
 #: plinth/templates/index.html:80
-#, fuzzy, python-format
+#, python-format
 #| msgid "Delete %(name)s"
 msgid "Welcome to %(box_name)s!"
-msgstr "Lösche %(name)s"
+msgstr "Willkommen zur %(box_name)s!"
 
 #: plinth/templates/index.html:86
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
 "server to deploy social applications on small machines. It provides online "
 "communication tools respecting your privacy and data ownership."
 msgstr ""
+"%(box_name)s, ein reiner Debian blend, ist ein selbst gehosteter Web-Server "
+"basierend auf 100%% freie Software für soziale Anwendungen. Er bietet online-"
+"Kommunikationswerkzeuge die Ihre Privatsphäre und Ihr Eigentum an Ihren "
+"Daten respektieren."
 
 #: plinth/templates/index.html:95
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "For more information about the %(box_name)s project, see the <a href="
 #| "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
@@ -3744,8 +3741,9 @@ msgid ""
 "freedombox.org\">homepage</a> and <a href=\"https://wiki.debian.org/"
 "FreedomBox\">wiki</a>."
 msgstr ""
-"Mehr Informationen über das %(box_name)s Projekt finden Sie im <a href="
-"\"https://wiki.debian.org/de/FreedomBox\">%(box_name)s Wiki</a>."
+"Mehr Informationen über %(box_name)s finden Sie auf der <a href=\""
+"https://freedombox.org\">Homepage</a> des Projekts und im <a href=\""
+"https://wiki.debian.org/FreedomBox\">Wiki</a>."
 
 #: plinth/templates/index.html:103
 #, python-format
@@ -3754,6 +3752,9 @@ msgid ""
 "free software, distributed under the GNU Affero General Public License, "
 "Version 3 or later."
 msgstr ""
+"Dieses Portal ist Teil von Plinth, das Web-Interface der %(box_name)s. "
+"Plinth ist freie Software, verbreitet unter der \"GNU Affero General Public "
+"License\", Version 3 oder folgende."
 
 #: plinth/templates/login.html:35
 msgid "Login"
