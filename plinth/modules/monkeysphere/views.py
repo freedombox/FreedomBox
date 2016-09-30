@@ -48,7 +48,6 @@ def index(request):
         request, 'monkeysphere.html',
         {'title': monkeysphere.title,
          'description': monkeysphere.description,
-         'subsubmenu': subsubmenu,
          'status': status,
          'running': bool(publish_process)})
 
