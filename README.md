@@ -6,6 +6,10 @@
 [Plinth](https://wiki.debian.org/FreedomBox/Plinth) - a web front end
 for administering [FreedomBox](https://freedomboxfoundation.org/)
 
+<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=about.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=tor.png" width="425px" style="margin: 5px">
+
+<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=firewall.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=owncloud.png" width="425px" style="margin: 5px">
+
 # Description
 
 FreedomBox is a community project to develop, design and promote
