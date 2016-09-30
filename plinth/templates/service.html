@@ -40,10 +40,14 @@
       <p class="running-status-parent">
         {% if service.is_running %}
           <span class="running-status active"></span>
-          Service <i>{{ service.name }}</i> {% trans "is running" %}
+          {% blocktrans trimmed with service_name=service.name %}
+            Service <i>{{ service_name }}</i> is running
+          {% endblocktrans %}
         {% else %}
           <span class="running-status inactive"></span>
-          Service <i>{{ service.name }}</i> {% trans "is not running" %}
+          {% blocktrans trimmed with service_name=service.name %}
+            Service <i>{{ service_name }}</i> is not running
+          {% endblocktrans %}
         {% endif %}
       </p>
     {% endif %}
