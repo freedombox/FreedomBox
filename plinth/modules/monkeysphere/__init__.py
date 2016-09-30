@@ -22,12 +22,17 @@ Plinth module for monkeysphere.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
+from plinth import service as service_module
 
-version = 1
+version = 2
 
 depends = ['system']
 
-managed_packages = ['monkeysphere']
+service = None
+
+managed_services = ['msva-web-plinth']
+
+managed_packages = ['monkeysphere', 'msva-perl']
 
 title = _('Monkeysphere')
 
@@ -57,6 +62,10 @@ def init():
     menu = cfg.main_menu.get('system:index')
     menu.add_urlname(_('Monkeysphere'), 'glyphicon-certificate',
                      'monkeysphere:index')
+
+    global service
+    service = service_module.Service(
+        managed_services[0], title, ports=[], is_external=True)
 
 
 def setup(helper, old_version=None):

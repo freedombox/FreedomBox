@@ -33,4 +33,11 @@ urlpatterns = [
     url(r'^sys/monkeysphere/(?P<fingerprint>[0-9A-Fa-f]+)/publish/$',
         views.publish, name='publish'),
     url(r'^sys/monkeysphere/cancel/$', views.cancel, name='cancel'),
+    url(r'^sys/monkeysphere/authentication/$', views.authentication,
+        name='authentication'),
+    url(r'^sys/monkeysphere/authentication/remove/'
+        r'(?P<fingerprint>[0-9A-Fa-f]+)/publish/$',
+        views.authentication_remove, name='authentication_remove'),
+    url(r'^sys/monkeysphere/authentication/add/$',
+        views.authentication_add, name='authentication_add'),
 ]
