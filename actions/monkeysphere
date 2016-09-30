@@ -28,12 +28,41 @@ import psutil
 import re
 import signal
 import subprocess
+import sys
+
+from plinth import action_utils
+
+
+SYSTEMD_SERVICE_PATH = '/etc/systemd/system/msva-web-plinth.service'
 
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    auth_enable = subparsers.add_parser(
+        'auth-enable', help='Enable web authentication using monkeysphere')
+    auth_enable.add_argument(
+        'domains', nargs='+',
+        help='List of domains to enable web authentication for')
+    auth_disable = subparsers.add_parser(
+        'auth-disable', help='Disable web authentication using monkeysphere')
+    auth_disable.add_argument(
+        'domains', nargs='+',
+        help='List of domains to disable web authentication for')
+    subparsers.add_parser(
+        'auth-get-certifiers', help='Retrieve the list of certifiers')
+    auth_add_certifier = subparsers.add_parser(
+        'auth-add-certifier', help='Add a list of certifiers')
+    auth_add_certifier.add_argument(
+        'certifier_fingerprint',
+        help='Fingerprint of the key to add as certifier')
+    auth_remove_certifier = subparsers.add_parser(
+        'auth-remove-certifier', help='Remove a list of certifiers')
+    auth_remove_certifier.add_argument(
+        'certifier_fingerprint',
+        help='Fingerprint of the cetifier key to remove')
 
     host_show_keys = subparsers.add_parser(
         'host-show-keys', help='Show imported/importable keys')
@@ -57,6 +86,165 @@ def parse_arguments():
     host_cancel_publish.add_argument('pid', help='PID of the publish process')
 
     return parser.parse_args()
+
+
+def augeas_load():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
+    aug.set('/augeas/load/Httpd/incl[last() + 1]',
+            '/etc/apache2/sites-available/*.conf')
+    aug.load()
+
+    return aug
+
+
+def _create_msva_user():
+    """Create a system user for monkeysphere validation agent daemon."""
+    try:
+        subprocess.run(['getent', 'passwd', 'msva-www'],
+                       stdout=subprocess.DEVNULL, check=True)
+        return
+    except subprocess.CalledProcessError:
+        pass
+
+    subprocess.run(['adduser', '--system', '--group', '--quiet', '--home',
+                    '/var/lib/msva-www', '--disabled-login', 'msva-www'])
+
+
+def _update_apache_environment():
+    """Set the monkeysphere validation agent address in Apache."""
+    env_file = '/etc/apache2/envvars'
+    with open(env_file, 'r') as conffile:
+        lines = conffile.readlines()
+
+    for line in lines:
+        if 'MONKEYSPHERE_VALIDATION_AGENT_SOCKET' in line:
+            return
+
+    with open(env_file, 'a') as file_handle:
+        file_handle.write('export MONKEYSPHERE_VALIDATION_AGENT_SOCKET='
+                          'http://127.0.0.1:5808\n')
+
+
+def _update_client_verify(domains, enable):
+    """Enable/disable web server configuration for client verification."""
+    aug = augeas_load()
+
+    for domain in domains:
+        file_name = '/etc/apache2/sites-available/{domain}.conf'
+        file_name = file_name.format(domain=domain)
+        if not os.path.isfile(file_name):
+            print('No configuration for domain: ' + domain, file=sys.stderr)
+            continue
+
+        aug_path = '/files' + file_name + '//VirtualHost'
+        method_path = aug_path + '/directive[. = "GnuTLSClientVerifyMethod"]'
+        verify_path = aug_path + '/directive[. = "GnuTLSClientVerify"]'
+        if enable:
+            _enable_client_verify(aug, aug_path, method_path, verify_path)
+        else:
+            aug.remove(method_path)
+            aug.remove(verify_path)
+
+    aug.save()
+
+
+def _enable_client_verify(aug, aug_path, method_path, verify_path):
+    """Write client verify configuration for a domain."""
+    if not aug.get(method_path):
+        aug.set(aug_path + '/directive[last() + 1]',
+                'GnuTLSClientVerifyMethod')
+
+    if not aug.get(verify_path):
+        aug.set(aug_path + '/directive[last() + 1]', 'GnuTLSClientVerify')
+
+    aug.set(method_path + '/arg', 'msva')
+    aug.set(verify_path + '/arg', 'request')
+
+
+def subcommand_auth_enable(arguments):
+    """Enable web authentication using monkeysphere."""
+    _create_msva_user()
+    action_utils.service_enable('msva-web-plinth')
+
+    _update_apache_environment()
+    _update_client_verify(arguments.domains, enable=True)
+    action_utils.service_restart('apache2')
+
+
+def subcommand_auth_disable(arguments):
+    """Disable web authentication using monkeysphere."""
+    _update_client_verify(arguments.domains, enable=False)
+    action_utils.service_restart('apache2')
+    action_utils.service_disable('msva-web-plinth')
+
+
+def _run_gpg_command(command, input=None):
+    """Run a GPG command as msva user."""
+    if input:
+        input = input.encode()
+
+    process = subprocess.run(['su', '-c', command, 'msva-www'],
+                             input=input, stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode()
+
+
+def _assert_valid_fingerprint(fingerprint):
+    """Check that a given fingerprint is valid."""
+    if not re.match('^[A-Fa-f0-9]{40}$', fingerprint):
+        raise Exception('Invalid fingerprint')
+
+
+def subcommand_auth_get_certifiers(arguments):
+    """Print the list of certifiers."""
+    output = _run_gpg_command('gpg --list-keys --with-colon')
+    keys = []
+    context = None
+    for line in output.split('\n'):
+        fields = line.split(':')
+        if fields[0] == 'pub' and fields[1] == 'u':
+            context = 'pub'
+            keys.append({})
+        elif fields[0] == 'fpr' and context == 'pub':
+            keys[-1]['fingerprint'] = fields[9]
+        elif fields[0] == 'uid' and context == 'pub':
+            keys[-1].setdefault('uids', []).append(fields[9])
+        else:
+            context = None
+
+    print(json.dumps({'keys': keys}))
+
+
+def subcommand_auth_add_certifier(arguments):
+    """Add a certifier with ultimate trust for verifying auth keys."""
+    fingerprint = arguments.certifier_fingerprint
+    _assert_valid_fingerprint(fingerprint)
+
+    _run_gpg_command('gpg --recv-keys ' + fingerprint)
+
+    # Set 'ultimate' trust on the key
+    input = fingerprint + ':6:\n'
+    _run_gpg_command('gpg --import-ownertrust', input=input)
+    try:
+        _run_gpg_command('gpg --check-trustdb', input=input)
+    except subprocess.CalledProcessError:
+        pass
+
+
+def subcommand_auth_remove_certifier(arguments):
+    """Stop a certifier from verifying auth keys."""
+    fingerprint = arguments.certifier_fingerprint
+    _assert_valid_fingerprint(fingerprint)
+
+    # Set 'never' trust on the key
+    input = fingerprint + ':3:\n'
+    _run_gpg_command('gpg --import-ownertrust', input=input)
+    try:
+        _run_gpg_command('gpg --check-trustdb', input=input)
+    except subprocess.CalledProcessError:
+        pass
 
 
 def get_ssh_keys(fingerprint_hash):
