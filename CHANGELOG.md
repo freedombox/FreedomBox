@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Added screenshots to Readme.
+- repro: Open up RTP ports.
 
 ### Fixed
 - Upstream patch from Debian bug #837206 to fix DB and log file
   permissions. Also switch to new setup command.
 - Include module static files in build, required for Debian package build.
+
+### Changed
+- repro: Use firewalld provided SIP services.
 
 ## [0.11.0] - 2016-09-21
 ### Added
