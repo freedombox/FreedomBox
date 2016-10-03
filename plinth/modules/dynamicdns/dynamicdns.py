@@ -215,12 +215,12 @@ def configure(request):
 
 def statuspage(request):
     """Serve the status page."""
-    check_nat = actions.run('dynamicdns', ['get-nat'])
-    last_update = actions.run('dynamicdns', ['get-last-success'])
+    check_nat = _run(['get-nat'])
+    last_update = _run(['get-last-success'])
 
     no_nat = check_nat.strip() == 'no'
     nat_unchecked = check_nat.strip() == 'unknown'
-    timer = actions.run('dynamicdns', ['get-timer'])
+    timer = _run(['get-timer'])
 
     if no_nat:
         logger.info('Not behind a NAT')
@@ -241,7 +241,7 @@ def get_status():
     """Return the current status."""
     # TODO: use key/value instead of hard coded value list
     status = {}
-    output = actions.run('dynamicdns', ['status'])
+    output = _run(['status'])
     details = output.split()
     status['enabled'] = (output.split()[0] == 'enabled')
 
