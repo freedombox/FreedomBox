@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Upstream patch from Debian bug #837206 to fix DB and log file
   permissions. Also switch to new setup command.
 - Include module static files in build, required for Debian package build.
+- dynamicdns: Allow reading status as non-root.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
