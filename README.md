@@ -8,7 +8,7 @@ for administering [FreedomBox](https://freedomboxfoundation.org/)
 
 <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=about.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=tor.png" width="425px" style="margin: 5px">
 
-<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=firewall.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=owncloud.png" width="425px" style="margin: 5px">
+<img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=emailclient.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=newsfeed.png" width="425px" style="margin: 5px">
 
 # Description
 
