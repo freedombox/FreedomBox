@@ -25,7 +25,4 @@ Vagrant.configure(2) do |config|
     systemctl daemon-reload
     systemctl restart plinth
   SHELL
-#config.proxy.http ="http://proxy.iiit.ac.in:8080"
-#config.proxy.https = "http://proxy.iiit.ac.in:8080"
-
  end
