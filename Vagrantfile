@@ -25,10 +25,4 @@ Vagrant.configure(2) do |config|
     systemctl daemon-reload
     systemctl restart plinth
   SHELL
-  config.vm.post_up_message = "FreedomBox machine is ready for Plinth development.
-You can access it on https://localhost:4430/plinth/ (with an invalid
-SSL certificate). You can modify source code on the host machine and
-then test it by running:
-$ vagrant provision
-"
-end
+ end
