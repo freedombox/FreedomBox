@@ -22,6 +22,7 @@ URLs for the Users module
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
+from stronghold.decorators import public
 
 from . import views
 
@@ -40,4 +41,5 @@ urlpatterns = [
         {'template_name': 'login.html'}, name='login'),
     url(r'^accounts/logout/$', auth_views.logout,
         {'next_page': reverse_lazy('index')}, name='logout'),
+    url(r'^users/firstboot/$', public(views.State1View.as_view()), name='firstboot'),
 ]

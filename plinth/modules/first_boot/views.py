@@ -28,31 +28,13 @@ from plinth import kvstore
 from plinth import network
 from plinth.errors import DomainRegistrationError
 from .forms import State1Form, State5Form
+from .middleware import mark_step_done
 
 
 class State0View(TemplateView):
     """Show the welcome screen."""
+    kvstore.set('firstboot_state0', 'done')
     template_name = 'firstboot_state0.html'
-
-
-class State1View(CreateView):
-    """Create user account and log the user in."""
-    template_name = 'firstboot_state1.html'
-    form_class = State1Form
-    success_url = reverse_lazy('first_boot:state10')
-
-    def __init__(self, *args, **kwargs):
-        """Initialize the view object."""
-        if cfg.danube_edition:
-            self.success_url = reverse_lazy('first_boot:state5')
-
-        return super(State1View, self).__init__(*args, **kwargs)
-
-    def get_form_kwargs(self):
-        """Make request available to the form (to insert messages)"""
-        kwargs = super(State1View, self).get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
 
 
 def state10(request):
@@ -62,36 +44,10 @@ def state10(request):
     """
     # Make sure that a user exists before finishing firstboot
     if User.objects.all():
-        kvstore.set('firstboot_state', 10)
+        mark_step_done('firstboot_state')
 
     connections = network.get_connection_list()
 
     return render(request, 'firstboot_state10.html',
                   {'title': _('Setup Complete'),
                    'connections': connections})
-
-
-class State5View(FormView):
-    """State 5 is the (optional) setup of the Pagekite subdomain."""
-    template_name = 'firstboot_state5.html'
-    form_class = State5Form
-    success_url = reverse_lazy('first_boot:state10')
-
-    def get(self, *args, **kwargs):
-        """Respond to GET request."""
-        kvstore.set('firstboot_state', 5)
-        return super(State5View, self).get(*args, **kwargs)
-
-    def form_valid(self, form):
-        """Act on valid form submission."""
-        try:
-            form.register_domain()
-        except DomainRegistrationError as error:
-            messages.error(self.request, error)
-            return HttpResponseRedirect(reverse_lazy('first_boot:state5'))
-        else:
-            form.setup_pagekite()
-            message = _('Pagekite setup finished. The HTTP and HTTPS services '
-                        'are activated now.')
-            messages.success(self.request, message)
-            return super(State5View, self).form_valid(form)
