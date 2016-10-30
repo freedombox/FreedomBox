@@ -34,7 +34,11 @@ depends = ['system']
 
 managed_packages = ['ldapscripts', 'ldap-utils', 'libnss-ldapd',
                     'libpam-ldapd', 'nslcd', 'slapd']
-
+first_boot_steps = [{'id': 'users_firstboot',
+                     'url': 'users:firstboot',
+                     'order': 1
+                     },
+                    ]
 title = _('Users and Groups')
 
 
@@ -76,4 +80,4 @@ def _diagnose_ldap_entry(search_item):
         pass
 
     return [_('Check LDAP entry "{search_item}"')
-            .format(search_item=search_item), result]
+                .format(search_item=search_item), result]

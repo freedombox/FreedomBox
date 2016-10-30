@@ -22,13 +22,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.utils.translation import ugettext as _, ugettext_lazy
+from plinth import cfg
+from plinth import kvstore
 
-from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm
+from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, State1Form
+
 from plinth import actions
 from plinth.errors import ActionError
-
+from plinth.modules.first_boot.middleware import mark_step_done
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -38,6 +41,7 @@ subsubmenu = [{'url': reverse_lazy('users:index'),
 
 class ContextMixin(object):
     """Mixin to add 'subsubmenu' and 'title' to the context."""
+
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -163,3 +167,22 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         form.save()
         update_session_auth_hash(self.request, form.user)
         return super(UserChangePassword, self).form_valid(form)
+
+
+class State1View(CreateView):
+    """Create user account and log the user in."""
+    template_name = 'firstboot_state1.html'
+    form_class = State1Form
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the view object."""
+        if not cfg.danube_edition:
+            mark_step_done('pagekite_firstboot')
+        mark_step_done('users_firstboot')
+        return super(State1View, self).__init__(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        """Make request available to the form (to insert messages)"""
+        kwargs = super(State1View, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs

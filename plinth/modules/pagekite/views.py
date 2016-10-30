@@ -14,19 +14,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
+from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
+from plinth import kvstore
+from plinth.errors import DomainRegistrationError
 
 from . import utils
 from .forms import ConfigurationForm, StandardServiceForm, \
-    AddCustomServiceForm, DeleteCustomServiceForm
+    AddCustomServiceForm, DeleteCustomServiceForm, State5Form
 from plinth.modules import pagekite
-
+from plinth.modules.first_boot.middleware import mark_step_done
 
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
@@ -51,6 +53,7 @@ class ContextMixin(object):
 
     Also adds the requirement of all necessary packages to be installed
     """
+
     def get_context_data(self, **kwargs):
         """Use self.title and the module-level subsubmenu"""
         context = super(ContextMixin, self).get_context_data(**kwargs)
@@ -129,3 +132,28 @@ class ConfigurationView(ContextMixin, FormView):
     def form_valid(self, form):
         form.save(self.request)
         return super(ConfigurationView, self).form_valid(form)
+
+
+class State5View(FormView):
+    """State 5 is the (optional) setup of the Pagekite subdomain."""
+    template_name = 'firstboot_state5.html'
+    form_class = State5Form
+
+    def get(self, *args, **kwargs):
+        """Respond to GET request."""
+        mark_step_done('pagekite_firstboot')
+        return super(State5View, self).get(*args, **kwargs)
+
+    def form_valid(self, form):
+        """Act on valid form submission."""
+        try:
+            form.register_domain()
+        except DomainRegistrationError as error:
+            messages.error(self.request, error)
+            return HttpResponseRedirect(reverse_lazy('pagekite:firstboot'))
+        else:
+            form.setup_pagekite()
+            message = _('Pagekite setup finished. The HTTP and HTTPS services '
+                        'are activated now.')
+            messages.success(self.request, message)
+            return super(State5View, self).form_valid(form)
