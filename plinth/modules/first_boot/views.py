@@ -28,13 +28,20 @@ from plinth import kvstore
 from plinth import network
 from plinth.errors import DomainRegistrationError
 from .forms import State1Form, State5Form
-from .middleware import mark_step_done
+from .middleware import mark_step_done, next_step
 
 
 class State0View(TemplateView):
     """Show the welcome screen."""
-    kvstore.set('firstboot_state0', 'done')
+
     template_name = 'firstboot_state0.html'
+
+    def get_context_data(self, **kwargs):
+        """Returns the context data"""
+        context = super(State0View, self).get_context_data(**kwargs)
+        mark_step_done('firstboot_state0')
+        context['next_url'] = next_step()
+        return context
 
 
 def state10(request):

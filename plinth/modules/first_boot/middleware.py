@@ -22,6 +22,7 @@ yet.
 
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
 import logging
 from operator import itemgetter
 from plinth import kvstore, module_loader
@@ -38,11 +39,15 @@ class FirstBootMiddleware(object):
         """Handle a request as Django middleware request handler."""
         state = kvstore.get_default('firstboot_state', 0)
         user_requests_firstboot = is_firstboot(request.path)
-        if state == 1 and user_requests_firstboot:
-            return HttpResponseRedirect(reverse('index'))
-        elif state == 0 and not user_requests_firstboot:
-            url = next_step()
-            return HttpResponseRedirect(reverse(url))
+        user_requests_login = request.path.startswith(reverse(settings.LOGIN_URL))
+        help_index_url = reverse('help:index')
+        user_requests_help = request.path.startswith(help_index_url)
+        if not user_requests_login and not user_requests_help:
+            if state == 1 and user_requests_firstboot:
+                return HttpResponseRedirect(reverse('index'))
+            elif state == 0 and not user_requests_firstboot:
+                url = next_step()
+                return HttpResponseRedirect(reverse(url))
 
 
 def is_firstboot(path):
@@ -59,6 +64,7 @@ def is_firstboot(path):
 
 
 def get_firstboot_steps():
+    """Returns all firstboot steps"""
     steps = []
     modules = module_loader.loaded_modules
     for (module_name, module_object) in modules.items():

@@ -31,7 +31,7 @@ from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, State
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules.first_boot.middleware import mark_step_done
+from plinth.modules.first_boot.middleware import mark_step_done, next_step
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -173,12 +173,14 @@ class State1View(CreateView):
     """Create user account and log the user in."""
     template_name = 'firstboot_state1.html'
     form_class = State1Form
+    success_url = ''
 
     def __init__(self, *args, **kwargs):
         """Initialize the view object."""
         if not cfg.danube_edition:
             mark_step_done('pagekite_firstboot')
         mark_step_done('users_firstboot')
+        self.success_url = next_step()
         return super(State1View, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
