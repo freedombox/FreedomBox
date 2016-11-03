@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
   permissions. Also switch to new setup command.
 - Include module static files in build, required for Debian package build.
 - dynamicdns: Allow reading status as non-root.
+- config: Set current domainname again after hostname change.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
