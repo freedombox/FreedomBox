@@ -26,9 +26,10 @@ from django.conf import settings
 import logging
 from operator import itemgetter
 from plinth import kvstore, module_loader
-from django.shortcuts import render
 
 LOGGER = logging.getLogger(__name__)
+
+firstboot_steps = []
 
 
 class FirstBootMiddleware(object):
@@ -37,7 +38,11 @@ class FirstBootMiddleware(object):
     @staticmethod
     def process_request(request):
         """Handle a request as Django middleware request handler."""
-        state = kvstore.get_default('firstboot_state', 0)
+        old_state = kvstore.get_default('firstboot_state', 0)
+        state = kvstore.get_default('setup_state', 0)
+        if state == 0 and old_state == 10:
+            state = 1
+            kvstore.set('setup_state', 1)
         user_requests_firstboot = is_firstboot(request.path)
         user_requests_login = request.path.startswith(reverse(settings.LOGIN_URL))
         help_index_url = reverse('help:index')
@@ -77,8 +82,10 @@ def get_firstboot_steps():
 
 def next_step():
     """ Returns the next first boot step required to run """
-    steps = get_firstboot_steps()
-    for step in steps:
+    global firstboot_steps
+    if len(firstboot_steps) == 0:
+        firstboot_steps = get_firstboot_steps()
+    for step in firstboot_steps:
         done = kvstore.get_default(step.get('id'), 0)
         if done == 0:
             return step.get('url')
@@ -90,3 +97,14 @@ def mark_step_done(id):
     :param id: id of the firstboot step
     """
     kvstore.set(id, 1)
+    global firstboot_steps
+    if len(firstboot_steps) == 0:
+        firstboot_steps = get_firstboot_steps()
+    setup_done = True
+    for step in firstboot_steps:
+        done = kvstore.get_default(step.get('id'), 0)
+        if done == 0:
+            setup_done = False
+            break
+    if setup_done:
+        kvstore.set('setup_state', 1)

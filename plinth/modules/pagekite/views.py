@@ -21,7 +21,6 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView
-from plinth import kvstore
 from plinth.errors import DomainRegistrationError
 
 from . import utils
