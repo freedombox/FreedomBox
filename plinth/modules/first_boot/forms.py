@@ -22,7 +22,6 @@ Forms for first boot module.
 import json
 import logging
 import requests
-import subprocess
 
 from django import forms
 from django.contrib import auth
@@ -43,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     """Firstboot state 1: create a new user."""
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
@@ -101,22 +101,6 @@ class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
         else:
             message = _('User account created, you are now logged in')
             messages.success(self.request, message)
-
-
-class SubdomainWidget(forms.widgets.TextInput):
-    """Append the domain to the subdomain bootstrap input field"""
-    def __init__(self, domain, *args, **kwargs):
-        """Intialize the widget by storing the domain value."""
-        super().__init__(*args, **kwargs)
-        self.domain = domain
-
-    def render(self, *args, **kwargs):
-        """Return the HTML for the widget."""
-        inputfield = super().render(*args, **kwargs)
-        return """<div class="input-group">
-                  {0}
-                  <span class="input-group-addon">{1}</span>
-               </div>""".format(inputfield, self.domain)
 
 
 class State5Form(forms.Form):

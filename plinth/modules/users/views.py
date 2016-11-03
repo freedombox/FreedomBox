@@ -22,10 +22,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView as CV
 from django.utils.translation import ugettext as _, ugettext_lazy
 from plinth import cfg
-from plinth import kvstore
 
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, State1Form
 
@@ -169,7 +168,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return super(UserChangePassword, self).form_valid(form)
 
 
-class State1View(CreateView):
+class State1View(CV):
     """Create user account and log the user in."""
     template_name = 'firstboot_state1.html'
     form_class = State1Form

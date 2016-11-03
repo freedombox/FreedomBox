@@ -15,19 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, FormView, TemplateView
-
-from plinth import cfg
-from plinth import kvstore
 from plinth import network
-from plinth.errors import DomainRegistrationError
-from .forms import State1Form, State5Form
 from .middleware import mark_step_done, next_step
 
 
@@ -51,7 +43,7 @@ def state10(request):
     """
     # Make sure that a user exists before finishing firstboot
     if User.objects.all():
-        mark_step_done('firstboot_state')
+        mark_step_done('firstboot_state10')
 
     connections = network.get_connection_list()
 
