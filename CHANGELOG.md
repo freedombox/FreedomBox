@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 - dynamicdns: Allow reading status as non-root.
 - config: Set current domainname again after hostname change.
 - config: Handle clearing of domain name.
+- letsencrypt: When no domains are configured, show better message,
+  and hide diagnostics button.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
