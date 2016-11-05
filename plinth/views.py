@@ -21,9 +21,12 @@ Main Plinth views
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import Form
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 from stronghold.decorators import public
 import time
@@ -49,6 +52,31 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label})
+
+
+def uninstall(request, modulename):
+    """Show confirmation to uninstall module."""
+    form = None
+    module = plinth.module_loader.loaded_modules[modulename]
+
+    if request.method == 'POST':
+        module.disable()
+
+        transaction = plinth.package.Transaction(
+            modulename, module.managed_packages)
+        transaction.uninstall()
+
+        from plinth import models
+        models.Module.objects.filter(pk=modulename).delete()
+
+        return redirect(reverse('apps:index'))
+    else:
+        form = Form(prefix='uninstall')
+
+    return TemplateResponse(request, 'uninstall.html',
+                            {'title': _('Uninstall'),
+                             'packages': module.managed_packages,
+                             'form': form})
 
 
 class ServiceView(FormView):

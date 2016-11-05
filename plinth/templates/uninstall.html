@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,16 +16,37 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-Django URLconf file containing all urls
-"""
+{% load bootstrap %}
+{% load i18n %}
 
-from django.conf.urls import url
-from . import views
+{% block content %}
 
-urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^uninstall/(?P<modulename>\w+)/$', views.uninstall,
-        name='uninstall'),
-]
+  <h2>{{ title }}</h2>
+
+  <p>
+    {% trans "The following packages will be removed:" %}
+    <ul>
+      {% for package in packages %}
+        <li>{{ package }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Are you sure you want to uninstall?
+    {% endblocktrans %}
+  </p>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Uninstall" %}"/>
+  </form>
+
+{% endblock %}

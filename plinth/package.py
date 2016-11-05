@@ -84,6 +84,15 @@ class Transaction(object):
             logger.exception('Error installing package: %s', exception)
             raise
 
+    def uninstall(self):
+        """Run an apt-get transaction to remove given packages."""
+        try:
+            self._run_apt_command(['remove', self.module_name] +
+                                  self.package_names)
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Error removing package: %s', exception)
+            raise
+
     def _run_apt_command(self, arguments):
         """Run apt-get and update progress."""
         self._reset_status()

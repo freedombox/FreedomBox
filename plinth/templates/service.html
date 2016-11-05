@@ -68,4 +68,18 @@
     </form>
   {% endblock %}
 
+  {% block uninstall %}
+    {% if diagnostics_module_name and service.allow_uninstall %}
+      <br>
+      <p>
+        <a class="btn btn-default btn-md"
+           href="{% url 'uninstall' diagnostics_module_name %}">
+          <span class="glyphicon glyphicon-trash"
+                aria-hidden="true"></span>
+          {% trans "Uninstall &raquo;" %}
+        </a>
+      </p>
+    {% endif %}
+  {% endblock %}
+
 {% endblock %}
