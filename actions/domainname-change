@@ -18,8 +18,8 @@
 
 domainname="$1"
 hostname=$(hostname)
-	
-if [ -n "$domainname"] ; then			
+
+if [ -z "$domainname" ] ; then
 	if grep -q 127.0.1.1 /etc/hosts ; then
 	    sed -i "s/127.0.1.1.*/127.0.1.1       $hostname/" /etc/hosts
 	else
