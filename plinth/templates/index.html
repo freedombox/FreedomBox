@@ -26,21 +26,45 @@
     {% if shortcuts %}
 
       {% for shortcut in shortcuts %}
-        <div class="col-sm-4">
-          <ul class="nav nav-pills nav-stacked">
-            {% if selected_id == shortcut.id %}
-              <li class="active">
-                <a href="{{ shortcut.url }}" class="active">
-            {% else %}
-              <li>
-                <a href="{{ shortcut.url }}">
+        
+        {% if shortcut.login_required %}
+          
+            {% if user.is_authenticated %}
+              <div class="col-sm-4">
+                <ul class="nav nav-pills nav-stacked">
+                  {% if selected_id == shortcut.id %}
+                    <li class="active">
+                      <a href="{{ shortcut.url }}" class="active">
+                  {% else %}
+                    <li>
+                      <a href="{{ shortcut.url }}">
+                  {% endif %}
+                        <span class="{{ shortcut.icon }} glyphicon"></span>
+                        {{ shortcut.label }}
+                      </a>
+                    </li>
+                </ul>
+              </div>
             {% endif %}
-                  <span class="{{ shortcut.icon }} glyphicon"></span>
-                  {{ shortcut.label }}
-                </a>
-              </li>
-          </ul>
-        </div>
+
+        {% else %}    
+              <div class="col-sm-4">
+                <ul class="nav nav-pills nav-stacked">
+                  {% if selected_id == shortcut.id %}
+                    <li class="active">
+                      <a href="{{ shortcut.url }}" class="active">
+                  {% else %}
+                    <li>
+                      <a href="{{ shortcut.url }}">
+                  {% endif %}
+                        <span class="{{ shortcut.icon }} glyphicon"></span>
+                        {{ shortcut.label }}{{ shortcut.id }}
+                      </a>
+                    </li>
+                </ul>
+              </div> 
+        {% endif %}
+
       {% endfor %}
 
     {% else %}
