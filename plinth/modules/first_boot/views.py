@@ -18,7 +18,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
-from django.views.generic import CreateView, FormView, TemplateView
+from django.views.generic import TemplateView
 from plinth import network
 from .middleware import mark_step_done, next_step
 
@@ -29,7 +29,7 @@ class State0View(TemplateView):
     template_name = 'firstboot_state0.html'
 
     def get_context_data(self, **kwargs):
-        """Returns the context data"""
+        """Returns the context data for the template."""
         context = super(State0View, self).get_context_data(**kwargs)
         mark_step_done('firstboot_state0')
         context['next_url'] = next_step()

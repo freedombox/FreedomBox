@@ -27,11 +27,9 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
-
 from plinth.modules.security import set_restricted_access
 
 # Usernames used by optional services (that might not be installed yet).
-
 RESERVED_USERNAMES = [
     'debian-deluged',
     'Debian-minetest',
@@ -95,14 +93,14 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
         label=ugettext_lazy('Groups'),
         required=False,
         widget=forms.CheckboxSelectMultiple,
-        help_text= \
-            ugettext_lazy('Select which services should be available to the new '
-                          'user. The user will be able to log in to services that '
-                          'support single sign-on through LDAP, if they are in the '
-                          'appropriate group.<br /><br />Users in the admin group '
-                          'will be able to log in to all services. They can also '
-                          'log in to the system through SSH and have '
-                          'administrative privileges (sudo).'))
+        help_text=ugettext_lazy(
+            'Select which services should be available to the new '
+            'user. The user will be able to log in to services that '
+            'support single sign-on through LDAP, if they are in the '
+            'appropriate group.<br /><br />Users in the admin group '
+            'will be able to log in to all services. They can also '
+            'log in to the system through SSH and have '
+            'administrative privileges (sudo).'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -132,7 +130,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
                     messages.error(
                         self.request,
                         _('Failed to add new user to {group} group.')
-                            .format(group=group))
+                        .format(group=group))
 
                 group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)
@@ -146,12 +144,12 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
         label=ugettext_lazy('SSH Keys'),
         required=False,
         widget=forms.Textarea,
-        help_text= \
-            ugettext_lazy('Setting an SSH public key will allow this user to '
-                          'securely log in to the system without using a '
-                          'password. You may enter multiple keys, one on each '
-                          'line. Blank lines and lines starting with # will be '
-                          'ignored.'))
+        help_text=ugettext_lazy(
+            'Setting an SSH public key will allow this user to '
+            'securely log in to the system without using a '
+            'password. You may enter multiple keys, one on each '
+            'line. Blank lines and lines starting with # will be '
+            'ignored.'))
 
     class Meta:
         """Metadata to control automatic form building."""
