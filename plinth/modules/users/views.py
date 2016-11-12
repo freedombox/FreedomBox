@@ -26,7 +26,7 @@ import django.views.generic
 from django.utils.translation import ugettext as _, ugettext_lazy
 
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
-    State1Form
+    FirstBootForm
 from plinth import actions
 from plinth import cfg
 from plinth.errors import ActionError
@@ -168,10 +168,10 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return super(UserChangePassword, self).form_valid(form)
 
 
-class State1View(django.views.generic.CreateView):
+class FirstBootView(django.views.generic.CreateView):
     """Create user account and log the user in."""
-    template_name = 'firstboot_state1.html'
-    form_class = State1Form
+    template_name = 'users_firstboot.html'
+    form_class = FirstBootForm
     success_url = ''
 
     def __init__(self, *args, **kwargs):
@@ -181,10 +181,10 @@ class State1View(django.views.generic.CreateView):
 
         mark_step_done('users_firstboot')
         self.success_url = next_step()
-        return super(State1View, self).__init__(*args, **kwargs)
+        return super(FirstBootView, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
-        kwargs = super(State1View, self).get_form_kwargs()
+        kwargs = super(FirstBootView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs

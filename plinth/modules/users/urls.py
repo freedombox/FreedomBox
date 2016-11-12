@@ -41,5 +41,6 @@ urlpatterns = [
         {'template_name': 'login.html'}, name='login'),
     url(r'^accounts/logout/$', auth_views.logout,
         {'next_page': reverse_lazy('index')}, name='logout'),
-    url(r'^users/firstboot/$', public(views.State1View.as_view()), name='firstboot'),
+    url(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
+        name='firstboot'),
 ]

@@ -27,7 +27,7 @@
   <h2>{% trans "Setup a freedombox.me subdomain with your voucher" %}</h2>
 
   <p>
-    {% url 'first_boot:state10' as finish_firstboot_url %}
+    {% url 'first_boot:complete' as finish_firstboot_url %}
     {% blocktrans trimmed %}
       <a href="{{ finish_firstboot_url }}">Skip this step</a> if you
       do not have a voucher or want to configure PageKite later with a
@@ -54,7 +54,7 @@
              <button type="submit" class="btn btn-primary">
                {% trans "Register" %}
              </button>
-             <a href="{% url 'first_boot:state10' %}" class="btn btn-default"
+             <a href="{% url 'first_boot:complete' %}" class="btn btn-default"
                 role="button">
                {% trans "Skip Registration" %}
              </a>
