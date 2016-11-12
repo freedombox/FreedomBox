@@ -43,8 +43,10 @@ class FirstBootMiddleware(object):
         if state == 0 and old_state == 10:
             state = 1
             kvstore.set('setup_state', 1)
+
         user_requests_firstboot = is_firstboot(request.path)
-        user_requests_login = request.path.startswith(reverse(settings.LOGIN_URL))
+        user_requests_login = request.path.startswith(
+            reverse(settings.LOGIN_URL))
         help_index_url = reverse('help:index')
         user_requests_help = request.path.startswith(help_index_url)
         if not user_requests_login and not user_requests_help:
@@ -65,6 +67,7 @@ def is_firstboot(path):
     for step in steps:
         if reverse(step.get('url')) == path:
             return True
+
     return False
 
 
@@ -76,6 +79,7 @@ def get_firstboot_steps():
         if getattr(module_object, 'first_boot_steps', None):
             for step in module_object.first_boot_steps:
                 steps.append(step)
+
     steps = sorted(steps, key=itemgetter('order'))
     return steps
 
@@ -85,6 +89,7 @@ def next_step():
     global firstboot_steps
     if len(firstboot_steps) == 0:
         firstboot_steps = get_firstboot_steps()
+
     for step in firstboot_steps:
         done = kvstore.get_default(step.get('id'), 0)
         if done == 0:
@@ -100,11 +105,13 @@ def mark_step_done(id):
     global firstboot_steps
     if len(firstboot_steps) == 0:
         firstboot_steps = get_firstboot_steps()
+
     setup_done = True
     for step in firstboot_steps:
         done = kvstore.get_default(step.get('id'), 0)
         if done == 0:
             setup_done = False
             break
+
     if setup_done:
         kvstore.set('setup_state', 1)

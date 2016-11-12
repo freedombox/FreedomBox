@@ -25,12 +25,11 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 import json
 import logging
 
+from . import utils
 from plinth import cfg
 from plinth.errors import ActionError, DomainRegistrationError
 from plinth.modules.pagekite.utils import PREDEFINED_SERVICES, run
 from plinth.utils import format_lazy
-
-from . import utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -71,9 +70,9 @@ class ConfigurationForm(forms.Form):
 
     server_domain = forms.CharField(
         label=ugettext_lazy('Server domain'), required=False,
-        help_text= \
-            ugettext_lazy('Select your pagekite server. Set "pagekite.net" to use '
-                          'the default pagekite.net server.'),
+        help_text=ugettext_lazy(
+            'Select your pagekite server. Set "pagekite.net" to use '
+            'the default pagekite.net server.'),
         widget=forms.TextInput())
     server_port = forms.IntegerField(
         label=ugettext_lazy('Server port'), required=False,
@@ -87,9 +86,9 @@ class ConfigurationForm(forms.Form):
 
     kite_secret = TrimmedCharField(
         label=ugettext_lazy('Kite secret'),
-        help_text= \
-            ugettext_lazy('A secret associated with the kite or the default secret '
-                          'for your account if no secret is set on the kite.'))
+        help_text=ugettext_lazy(
+            'A secret associated with the kite or the default secret '
+            'for your account if no secret is set on the kite.'))
 
     def save(self, request):
         """Save the form on submission after validation."""
@@ -101,14 +100,14 @@ class ConfigurationForm(forms.Form):
             config_changed = False
 
             if old['kite_name'] != new['kite_name'] or \
-                            old['kite_secret'] != new['kite_secret']:
+               old['kite_secret'] != new['kite_secret']:
                 utils.run(['set-kite', '--kite-name', new['kite_name']],
                           input=new['kite_secret'].encode())
                 messages.success(request, _('Kite details set'))
                 config_changed = True
 
             if old['server_domain'] != new['server_domain'] or \
-                            old['server_port'] != new['server_port']:
+               old['server_port'] != new['server_port']:
                 server = "%s:%s" % (new['server_domain'], new['server_port'])
                 utils.run(['set-frontend', server])
                 messages.success(request, _('Pagekite server set'))
@@ -208,6 +207,8 @@ class BaseCustomServiceForm(forms.Form):
 
 
 class DeleteCustomServiceForm(BaseCustomServiceForm):
+    """Form to remove custom service."""
+
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         utils.run(['remove-service', '--service', json.dumps(service)])

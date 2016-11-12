@@ -22,12 +22,16 @@ Plinth module for first boot wizard
 version = 1
 
 is_essential = True
-first_boot_steps = [{'id': 'firstboot_state0',
-                     'url': 'first_boot:state0',
-                     'order': 0
-                     },
-                    {'id': 'firstboot_state10',
-                     'url': 'first_boot:state10',
-                     'order': 10
-                     }
-                    ]
+
+first_boot_steps = [
+    {
+        'id': 'firstboot_state0',
+        'url': 'first_boot:state0',
+        'order': 0
+    },
+    {
+        'id': 'firstboot_state10',
+        'url': 'first_boot:state10',
+        'order': 10
+    }
+]

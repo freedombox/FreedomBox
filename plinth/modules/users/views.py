@@ -22,13 +22,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
-from django.views.generic import ListView, CreateView as CV
+import django.views.generic
 from django.utils.translation import ugettext as _, ugettext_lazy
-from plinth import cfg
 
-from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, State1Form
-
+from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
+    State1Form
 from plinth import actions
+from plinth import cfg
 from plinth.errors import ActionError
 from plinth.modules.first_boot.middleware import mark_step_done, next_step
 
@@ -65,7 +65,7 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
         return kwargs
 
 
-class UserList(ContextMixin, ListView):
+class UserList(ContextMixin, django.views.generic.ListView):
     """View to list users."""
     model = User
     template_name = 'users_list.html'
@@ -168,7 +168,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return super(UserChangePassword, self).form_valid(form)
 
 
-class State1View(CV):
+class State1View(django.views.generic.CreateView):
     """Create user account and log the user in."""
     template_name = 'firstboot_state1.html'
     form_class = State1Form
@@ -178,6 +178,7 @@ class State1View(CV):
         """Initialize the view object."""
         if not cfg.danube_edition:
             mark_step_done('pagekite_firstboot')
+
         mark_step_done('users_firstboot')
         self.success_url = next_step()
         return super(State1View, self).__init__(*args, **kwargs)
