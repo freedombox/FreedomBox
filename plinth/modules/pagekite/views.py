@@ -25,7 +25,7 @@ from django.views.generic.edit import FormView
 
 from . import utils
 from .forms import ConfigurationForm, StandardServiceForm, \
-    AddCustomServiceForm, DeleteCustomServiceForm, State5Form
+    AddCustomServiceForm, DeleteCustomServiceForm, FirstBootForm
 from plinth.errors import DomainRegistrationError
 from plinth.modules import pagekite
 from plinth.modules.first_boot.middleware import mark_step_done
@@ -134,15 +134,15 @@ class ConfigurationView(ContextMixin, FormView):
         return super(ConfigurationView, self).form_valid(form)
 
 
-class State5View(FormView):
-    """State 5 is the (optional) setup of the Pagekite subdomain."""
-    template_name = 'firstboot_state5.html'
-    form_class = State5Form
+class FirstBootView(FormView):
+    """First boot (optional) setup of the Pagekite subdomain."""
+    template_name = 'pagekite_firstboot.html'
+    form_class = FirstBootForm
 
     def get(self, *args, **kwargs):
         """Respond to GET request."""
         mark_step_done('pagekite_firstboot')
-        return super(State5View, self).get(*args, **kwargs)
+        return super(FirstBootView, self).get(*args, **kwargs)
 
     def form_valid(self, form):
         """Act on valid form submission."""
@@ -156,4 +156,4 @@ class State5View(FormView):
             message = _('Pagekite setup finished. The HTTP and HTTPS services '
                         'are activated now.')
             messages.success(self.request, message)
-            return super(State5View, self).form_valid(form)
+            return super(FirstBootView, self).form_valid(form)

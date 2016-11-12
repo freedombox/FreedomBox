@@ -25,13 +25,13 @@ is_essential = True
 
 first_boot_steps = [
     {
-        'id': 'firstboot_state0',
-        'url': 'first_boot:state0',
+        'id': 'firstboot_welcome',
+        'url': 'first_boot:welcome',
         'order': 0
     },
     {
-        'id': 'firstboot_state10',
-        'url': 'first_boot:state10',
+        'id': 'firstboot_complete',
+        'url': 'first_boot:complete',
         'order': 10
     }
 ]

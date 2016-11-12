@@ -263,7 +263,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
                 raise
 
 
-class State5Form(forms.Form):
+class FirstBootForm(forms.Form):
     """Set up freedombox.me pagekite subdomain"""
     DOMAIN_APPENDIX = '.freedombox.me'
     # Webservice url for domain validation and registration

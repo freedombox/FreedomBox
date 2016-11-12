@@ -245,8 +245,8 @@ class UserChangePasswordForm(SetPasswordForm):
         return user
 
 
-class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
-    """Firstboot state 1: create a new user."""
+class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
+    """User module first boot step: create a new admin user."""
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')

@@ -23,30 +23,30 @@ from plinth import network
 from .middleware import mark_step_done, next_step
 
 
-class State0View(TemplateView):
+class WelcomeView(TemplateView):
     """Show the welcome screen."""
 
-    template_name = 'firstboot_state0.html'
+    template_name = 'firstboot_welcome.html'
 
     def get_context_data(self, **kwargs):
         """Returns the context data for the template."""
-        context = super(State0View, self).get_context_data(**kwargs)
-        mark_step_done('firstboot_state0')
+        context = super(WelcomeView, self).get_context_data(**kwargs)
+        mark_step_done('firstboot_welcome')
         context['next_url'] = next_step()
         return context
 
 
-def state10(request):
-    """State 10 is when all firstboot setup is done.
+def complete(request):
+    """Show summary after all firstboot setup is done.
 
     After viewing this page the firstboot module can't be accessed anymore.
     """
     # Make sure that a user exists before finishing firstboot
     if User.objects.all():
-        mark_step_done('firstboot_state10')
+        mark_step_done('firstboot_complete')
 
     connections = network.get_connection_list()
 
-    return render(request, 'firstboot_state10.html',
+    return render(request, 'firstboot_complete.html',
                   {'title': _('Setup Complete'),
                    'connections': connections})
