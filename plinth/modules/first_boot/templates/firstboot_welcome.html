@@ -36,10 +36,14 @@
          alt="{{ box_name }}" width="640"/>
   </p>
 
-  <p class="text-center">
-    <a href="{% url next_url %}"
-       class="btn btn-primary btn-lg">{% trans "Start Setup" %}</a>
-  </p>
+  <form class="form text-center" method="post">
+    {% csrf_token %}
+
+    <p>
+      <input type="submit" class="btn btn-lg btn-primary"
+             value="{% trans "Start Setup" %}"/>
+    </p>
+  </form>
 
   <p class="text-center" style="font-size: larger">
     {% blocktrans trimmed %}
