@@ -27,8 +27,9 @@ def get_shortcuts():
     return sorted(shortcuts.values(), key=lambda item: item['label'])
 
 
-def add_shortcut(id, label, url, icon, details=None):
+def add_shortcut(id, label, url, icon, details=None, login_required=False):
     """Add shortcut to front page."""
+
     if not url:
         url = '?selected={id}'.format(id=id)
 
@@ -37,6 +38,7 @@ def add_shortcut(id, label, url, icon, details=None):
         'label': label,
         'url': url,
         'icon': icon,
+        'login_required': login_required,
         'details': details,
     }
 
