@@ -15,12 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib.auth.models import User
-from django.shortcuts import render
+from django import http
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
+
 from plinth import network
-from .middleware import mark_step_done, next_step
+from plinth.modules import first_boot
 
 
 class WelcomeView(TemplateView):
@@ -28,25 +29,29 @@ class WelcomeView(TemplateView):
 
     template_name = 'firstboot_welcome.html'
 
-    def get_context_data(self, **kwargs):
-        """Returns the context data for the template."""
-        context = super(WelcomeView, self).get_context_data(**kwargs)
-        mark_step_done('firstboot_welcome')
-        context['next_url'] = next_step()
-        return context
+    def post(self, request, *args, **kwargs):
+        """On POST, mark this step as done and move to next step."""
+        first_boot.mark_step_done('firstboot_welcome')
+        return http.HttpResponseRedirect(reverse(first_boot.next_step()))
 
 
-def complete(request):
+class CompleteView(TemplateView):
     """Show summary after all firstboot setup is done.
 
     After viewing this page the firstboot module can't be accessed anymore.
     """
-    # Make sure that a user exists before finishing firstboot
-    if User.objects.all():
-        mark_step_done('firstboot_complete')
 
-    connections = network.get_connection_list()
+    template_name = 'firstboot_complete.html'
 
-    return render(request, 'firstboot_complete.html',
-                  {'title': _('Setup Complete'),
-                   'connections': connections})
+    def get(self, request, *args, **kwargs):
+        """Mark as done as soon as page is served."""
+        response = super().get(self, request, *args, **kwargs)
+        first_boot.mark_step_done('firstboot_complete')
+        return response
+
+    def get_context_data(self, **kwargs):
+        """Add network connections to context list."""
+        context = super().get_context_data(**kwargs)
+        context['connections'] = network.get_connection_list()
+        context['title'] = _('Setup Complete')
+        return context

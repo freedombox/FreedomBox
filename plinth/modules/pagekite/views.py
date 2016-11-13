@@ -16,7 +16,7 @@
 #
 
 from django.contrib import messages
-from django.http.response import HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -26,9 +26,10 @@ from django.views.generic.edit import FormView
 from . import utils
 from .forms import ConfigurationForm, StandardServiceForm, \
     AddCustomServiceForm, DeleteCustomServiceForm, FirstBootForm
+from plinth import cfg
 from plinth.errors import DomainRegistrationError
+from plinth.modules import first_boot
 from plinth.modules import pagekite
-from plinth.modules.first_boot.middleware import mark_step_done
 
 subsubmenu = [{'url': reverse_lazy('pagekite:index'),
                'text': _('About PageKite')},
@@ -139,10 +140,13 @@ class FirstBootView(FormView):
     template_name = 'pagekite_firstboot.html'
     form_class = FirstBootForm
 
-    def get(self, *args, **kwargs):
-        """Respond to GET request."""
-        mark_step_done('pagekite_firstboot')
-        return super(FirstBootView, self).get(*args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        """Skip if this first boot step if it is not relavent."""
+        if not cfg.danube_edition:
+            first_boot.mark_step_done('pagekite_firstboot')
+            return HttpResponseRedirect(reverse(first_boot.next_step()))
+
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         """Act on valid form submission."""
@@ -150,10 +154,17 @@ class FirstBootView(FormView):
             form.register_domain()
         except DomainRegistrationError as error:
             messages.error(self.request, error)
-            return HttpResponseRedirect(reverse_lazy('pagekite:firstboot'))
-        else:
-            form.setup_pagekite()
-            message = _('Pagekite setup finished. The HTTP and HTTPS services '
-                        'are activated now.')
-            messages.success(self.request, message)
-            return super(FirstBootView, self).form_valid(form)
+            return self.form_invalid(form)
+
+        form.setup_pagekite()
+        first_boot.mark_step_done('pagekite_firstboot')
+        message = _('Pagekite setup finished. The HTTP and HTTPS services '
+                    'are activated now.')
+        messages.success(self.request, message)
+        return HttpResponseRedirect(reverse(first_boot.next_step()))
+
+
+def first_boot_skip(request):
+    """Skip the first boot step."""
+    first_boot.mark_step_done('pagekite_firstboot')
+    return HttpResponseRedirect(reverse(first_boot.next_step()))

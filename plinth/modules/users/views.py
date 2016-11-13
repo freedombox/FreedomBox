@@ -28,9 +28,8 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
     FirstBootForm
 from plinth import actions
-from plinth import cfg
 from plinth.errors import ActionError
-from plinth.modules.first_boot.middleware import mark_step_done, next_step
+from plinth.modules import first_boot
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -171,20 +170,22 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
 class FirstBootView(django.views.generic.CreateView):
     """Create user account and log the user in."""
     template_name = 'users_firstboot.html'
+
     form_class = FirstBootForm
-    success_url = ''
-
-    def __init__(self, *args, **kwargs):
-        """Initialize the view object."""
-        if not cfg.danube_edition:
-            mark_step_done('pagekite_firstboot')
-
-        mark_step_done('users_firstboot')
-        self.success_url = next_step()
-        return super(FirstBootView, self).__init__(*args, **kwargs)
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
         kwargs = super(FirstBootView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+    def form_valid(self, form):
+        """Mark this first boot step as completed and save form."""
+        if User.objects.all():
+            first_boot.mark_step_done('users_firstboot')
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        """Return the next first boot step after valid form submission."""
+        return reverse(first_boot.next_step())
