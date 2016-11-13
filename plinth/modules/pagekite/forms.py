@@ -18,12 +18,12 @@
 import copy
 from django import forms
 from django.contrib import messages
-from django.contrib.sites import requests
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _, ugettext_lazy
 import json
 import logging
+import requests
 
 from . import utils
 from plinth import cfg
