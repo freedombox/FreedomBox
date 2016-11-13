@@ -27,10 +27,18 @@ def get_shortcuts():
     return sorted(shortcuts.values(), key=lambda item: item['label'])
 
 
-def add_shortcut(id, label, url, icon, details=None):
+def add_shortcut(id, label, url, icon, login_required, details=None):
     """Add shortcut to front page."""
+    apps_login_required = {'deluge', 'openvpn', 'quassel', 'radicale', 'repro',
+                           'roundcube', 'shaarli', 'transmission', 'ttrss',
+                           'xmpp', 'privoxy'}
+
     if not url:
         url = '?selected={id}'.format(id=id)
+    if id in apps_login_required:
+        login_required = True
+    else:
+        login_required = False
 
     shortcuts[id] = {
         'id': id,
@@ -38,6 +46,7 @@ def add_shortcut(id, label, url, icon, details=None):
         'url': url,
         'icon': icon,
         'details': details,
+        'login_required': login_required,
     }
 
 
