@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - repro: Use firewalld provided SIP services.
 - xmpp: Show more clearly if domain is not set.
+- frontpage: Don't show apps requiring login, unless logged in.
 
 ## [0.11.0] - 2016-09-21
 ### Added
