@@ -22,8 +22,7 @@ URLs for the PageKite module
 from django.conf.urls import url
 
 from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
-    DeleteServiceView, index
-
+    DeleteServiceView, index, State5View
 
 urlpatterns = [
     url(r'^sys/pagekite/$', index, name='index'),
@@ -35,4 +34,5 @@ urlpatterns = [
         name='custom-services'),
     url(r'^sys/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
         name='delete-custom-service'),
+    url(r'^sys/pagekite/firstboot/$', State5View.as_view(), name='firstboot'),
 ]

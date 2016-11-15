@@ -234,6 +234,7 @@ def _apply_changes(request, old_status, new_status):
 def set_hostname(hostname):
     """Sets machine hostname to hostname"""
     old_hostname = get_hostname()
+    domainname = get_domainname()
 
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert to ASCII.
@@ -249,6 +250,9 @@ def set_hostname(hostname):
     post_hostname_change.send_robust(sender='config',
                                      old_hostname=old_hostname,
                                      new_hostname=hostname)
+
+    LOGGER.info('Setting domain name after hostname change - %s', domainname)
+    actions.superuser_run('domainname-change', [domainname])
 
 
 def set_domainname(domainname):

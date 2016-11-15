@@ -18,6 +18,7 @@
 import subprocess
 
 from django import forms
+from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
@@ -27,7 +28,10 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from plinth import actions
 from plinth.errors import ActionError
 
+from plinth.modules.security import set_restricted_access
+
 # Usernames used by optional services (that might not be installed yet).
+
 RESERVED_USERNAMES = [
     'debian-deluged',
     'Debian-minetest',
@@ -52,11 +56,12 @@ GROUP_CHOICES = (
 
 class ValidNewUsernameCheckMixin(object):
     """Mixin to check if a username is valid for created new user."""
+
     def clean_username(self):
         """Check for username collisions with system users."""
         username = self.cleaned_data['username']
         if self.instance.username != username and \
-           not self.is_valid_new_username():
+                not self.is_valid_new_username():
             raise ValidationError(_('Username is taken or is reserved.'),
                                   code='invalid')
 
@@ -90,14 +95,14 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
         label=ugettext_lazy('Groups'),
         required=False,
         widget=forms.CheckboxSelectMultiple,
-        help_text=\
-        ugettext_lazy('Select which services should be available to the new '
-                      'user. The user will be able to log in to services that '
-                      'support single sign-on through LDAP, if they are in the '
-                      'appropriate group.<br /><br />Users in the admin group '
-                      'will be able to log in to all services. They can also '
-                      'log in to the system through SSH and have '
-                      'administrative privileges (sudo).'))
+        help_text= \
+            ugettext_lazy('Select which services should be available to the new '
+                          'user. The user will be able to log in to services that '
+                          'support single sign-on through LDAP, if they are in the '
+                          'appropriate group.<br /><br />Users in the admin group '
+                          'will be able to log in to all services. They can also '
+                          'log in to the system through SSH and have '
+                          'administrative privileges (sudo).'))
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
@@ -127,7 +132,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
                     messages.error(
                         self.request,
                         _('Failed to add new user to {group} group.')
-                        .format(group=group))
+                            .format(group=group))
 
                 group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)
@@ -141,12 +146,12 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
         label=ugettext_lazy('SSH Keys'),
         required=False,
         widget=forms.Textarea,
-        help_text=\
-        ugettext_lazy('Setting an SSH public key will allow this user to '
-                      'securely log in to the system without using a '
-                      'password. You may enter multiple keys, one on each '
-                      'line. Blank lines and lines starting with # will be '
-                      'ignored.'))
+        help_text= \
+            ugettext_lazy('Setting an SSH public key will allow this user to '
+                          'securely log in to the system without using a '
+                          'password. You may enter multiple keys, one on each '
+                          'line. Blank lines and lines starting with # will be '
+                          'ignored.'))
 
     class Meta:
         """Metadata to control automatic form building."""
@@ -240,3 +245,66 @@ class UserChangePasswordForm(SetPasswordForm):
                     _('Changing LDAP user password failed.'))
 
         return user
+
+
+class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
+    """Firstboot state 1: create a new user."""
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        """Create and log the user in."""
+        user = super().save(commit=commit)
+        if commit:
+            try:
+                actions.superuser_run(
+                    'ldap',
+                    ['create-user', user.get_username()],
+                    input=self.cleaned_data['password1'].encode())
+            except ActionError:
+                messages.error(self.request,
+                               _('Creating LDAP user failed.'))
+
+            try:
+                actions.superuser_run(
+                    'ldap',
+                    ['add-user-to-group', user.get_username(), 'admin'])
+            except ActionError:
+                messages.error(self.request,
+                               _('Failed to add new user to admin group.'))
+
+            # Create initial Django groups
+            for group_choice in GROUP_CHOICES:
+                auth.models.Group.objects.get_or_create(name=group_choice[0])
+
+            admin_group = auth.models.Group.objects.get(name='admin')
+            admin_group.user_set.add(user)
+
+            self.login_user(self.cleaned_data['username'],
+                            self.cleaned_data['password1'])
+
+            # Restrict console login to users in admin or sudo group
+            try:
+                set_restricted_access(True)
+                message = _('Console login access restricted to users in '
+                            '"admin" group. This can be configured in '
+                            'security settings.')
+                messages.success(self.request, message)
+            except Exception:
+                messages.error(self.request,
+                               _('Failed to restrict console access.'))
+
+        return user
+
+    def login_user(self, username, password):
+        """Try to login the user with the credentials provided"""
+        try:
+            user = auth.authenticate(username=username, password=password)
+            auth.login(self.request, user)
+        except Exception:
+            pass
+        else:
+            message = _('User account created, you are now logged in')
+            messages.success(self.request, message)

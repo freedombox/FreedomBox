@@ -22,12 +22,14 @@ yet.
 
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
 import logging
-
-from plinth import kvstore
-
+from operator import itemgetter
+from plinth import kvstore, module_loader
 
 LOGGER = logging.getLogger(__name__)
+
+firstboot_steps = []
 
 
 class FirstBootMiddleware(object):
@@ -36,20 +38,73 @@ class FirstBootMiddleware(object):
     @staticmethod
     def process_request(request):
         """Handle a request as Django middleware request handler."""
-        state = kvstore.get_default('firstboot_state', 0)
-
-        firstboot_index_url = reverse('first_boot:index')
-        user_requests_firstboot = request.path.startswith(firstboot_index_url)
-
+        old_state = kvstore.get_default('firstboot_state', 0)
+        state = kvstore.get_default('setup_state', 0)
+        if state == 0 and old_state == 10:
+            state = 1
+            kvstore.set('setup_state', 1)
+        user_requests_firstboot = is_firstboot(request.path)
+        user_requests_login = request.path.startswith(reverse(settings.LOGIN_URL))
         help_index_url = reverse('help:index')
         user_requests_help = request.path.startswith(help_index_url)
+        if not user_requests_login and not user_requests_help:
+            if state == 1 and user_requests_firstboot:
+                return HttpResponseRedirect(reverse('index'))
+            elif state == 0 and not user_requests_firstboot:
+                url = next_step()
+                return HttpResponseRedirect(reverse(url))
 
-        # Setup is complete: Forbid accessing firstboot
-        if state >= 10 and user_requests_firstboot:
-            return HttpResponseRedirect(reverse('index'))
 
-        # Setup is not complete: Forbid accessing anything but
-        # firstboot or help
-        if state < 10 and not user_requests_firstboot and \
-           not user_requests_help:
-            return HttpResponseRedirect(reverse('first_boot:state%d' % state))
+def is_firstboot(path):
+    """
+    Returns whether the path is a firstboot step url
+    :param path: path of current url
+    :return: true if its a first boot url false otherwise
+    """
+    steps = get_firstboot_steps()
+    for step in steps:
+        if reverse(step.get('url')) == path:
+            return True
+    return False
+
+
+def get_firstboot_steps():
+    """Returns all firstboot steps"""
+    steps = []
+    modules = module_loader.loaded_modules
+    for (module_name, module_object) in modules.items():
+        if getattr(module_object, 'first_boot_steps', None):
+            for step in module_object.first_boot_steps:
+                steps.append(step)
+    steps = sorted(steps, key=itemgetter('order'))
+    return steps
+
+
+def next_step():
+    """ Returns the next first boot step required to run """
+    global firstboot_steps
+    if len(firstboot_steps) == 0:
+        firstboot_steps = get_firstboot_steps()
+    for step in firstboot_steps:
+        done = kvstore.get_default(step.get('id'), 0)
+        if done == 0:
+            return step.get('url')
+
+
+def mark_step_done(id):
+    """
+    Marks the status of a first boot step is done
+    :param id: id of the firstboot step
+    """
+    kvstore.set(id, 1)
+    global firstboot_steps
+    if len(firstboot_steps) == 0:
+        firstboot_steps = get_firstboot_steps()
+    setup_done = True
+    for step in firstboot_steps:
+        done = kvstore.get_default(step.get('id'), 0)
+        if done == 0:
+            setup_done = False
+            break
+    if setup_done:
+        kvstore.set('setup_state', 1)

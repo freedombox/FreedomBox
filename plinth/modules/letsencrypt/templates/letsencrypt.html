@@ -34,72 +34,77 @@
 {% endblock %}
 
 {% block configuration %}
-
-  <div class="row">
-    <div class="col-lg-12">
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>{% trans "Domain" %}</th>
-            <th>{% trans "Certificate Status" %}</th>
-            <th>{% trans "Website Security" %}</th>
-            <th>{% trans "Actions" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for domain, domain_status in status.domains.items %}
+  {% if status.domains %}
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
             <tr>
-              <td>{{ domain }}</td>
-              <td>
-                {% if domain_status.certificate_available %}
-                  <span class="label label-success">
-                    {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
-                      Expires on {{ expiry_date }}
-                    {% endblocktrans %}
-                  </span>
-                {% else %}
-                  <span class="label label-warning">
-                    {% trans "No certificate" %}
-                  </span>
-                {% endif %}
-              </td>
-              <td>
-                {% if domain_status.web_enabled %}
-                  <span class="label label-success">{% trans "Enabled" %}</span>
-                {% else %}
-                  <span class="label label-warning">{% trans "Disabled" %}</span>
-                {% endif %}
-              </td>
-              <td>
-                {% if domain_status.certificate_available %}
-                  <form class="form form-inline" method="post"
-                        action="{% url 'letsencrypt:revoke' domain %}">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-default" type="submit">
-                      {% trans "Revoke" %}</button>
-                  </form>
-                  <form class="form form-inline" method="post"
-                        action="{% url 'letsencrypt:obtain' domain %}">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-default" type="submit">
-                      {% trans "Re-obtain" %}</button>
-                  </form>
-                {% else %}
-                  <form class="form form-inline" method="post"
-                        action="{% url 'letsencrypt:obtain' domain %}">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-primary" type="submit">
-                      {% trans "Obtain" %}</button>
-                  </form>
-                {% endif %}
-              </td>
+              <th>{% trans "Domain" %}</th>
+              <th>{% trans "Certificate Status" %}</th>
+              <th>{% trans "Website Security" %}</th>
+              <th>{% trans "Actions" %}</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for domain, domain_status in status.domains.items %}
+              <tr>
+                <td>{{ domain }}</td>
+                <td>
+                  {% if domain_status.certificate_available %}
+                    <span class="label label-success">
+                      {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
+                        Expires on {{ expiry_date }}
+                      {% endblocktrans %}
+                    </span>
+                  {% else %}
+                    <span class="label label-warning">
+                      {% trans "No certificate" %}
+                    </span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if domain_status.web_enabled %}
+                    <span class="label label-success">{% trans "Enabled" %}</span>
+                  {% else %}
+                    <span class="label label-warning">{% trans "Disabled" %}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if domain_status.certificate_available %}
+                    <form class="form form-inline" method="post"
+                          action="{% url 'letsencrypt:revoke' domain %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-default" type="submit">
+                        {% trans "Revoke" %}</button>
+                    </form>
+                    <form class="form form-inline" method="post"
+                          action="{% url 'letsencrypt:obtain' domain %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-default" type="submit">
+                        {% trans "Re-obtain" %}</button>
+                    </form>
+                  {% else %}
+                    <form class="form form-inline" method="post"
+                          action="{% url 'letsencrypt:obtain' domain %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-primary" type="submit">
+                        {% trans "Obtain" %}</button>
+                    </form>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  {% include "diagnostics_button.html" with module="letsencrypt" %}
-
+    {% include "diagnostics_button.html" with module="letsencrypt" %}
+  {% else %}
+    {% blocktrans trimmed %}
+      No domains have been configured. Configure domains to be able to
+      obtain certificates for them.
+    {% endblocktrans %}
+  {% endif %}
 {% endblock %}

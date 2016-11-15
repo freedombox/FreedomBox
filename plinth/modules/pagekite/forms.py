@@ -18,12 +18,18 @@
 import copy
 from django import forms
 from django.contrib import messages
+from django.contrib.sites import requests
 from django.core import validators
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _, ugettext_lazy
 import json
 import logging
 
-from plinth.errors import ActionError
+from plinth import cfg
+from plinth.errors import ActionError, DomainRegistrationError
+from plinth.modules.pagekite.utils import PREDEFINED_SERVICES, run
+from plinth.utils import format_lazy
+
 from . import utils
 
 LOGGER = logging.getLogger(__name__)
@@ -31,12 +37,30 @@ LOGGER = logging.getLogger(__name__)
 
 class TrimmedCharField(forms.CharField):
     """Trim the contents of a CharField"""
+
     def clean(self, value):
         """Clean and validate the field value"""
         if value:
             value = value.strip()
 
         return super(TrimmedCharField, self).clean(value)
+
+
+class SubdomainWidget(forms.widgets.TextInput):
+    """Append the domain to the subdomain bootstrap input field"""
+
+    def __init__(self, domain, *args, **kwargs):
+        """Intialize the widget by storing the domain value."""
+        super().__init__(*args, **kwargs)
+        self.domain = domain
+
+    def render(self, *args, **kwargs):
+        """Return the HTML for the widget."""
+        inputfield = super().render(*args, **kwargs)
+        return """<div class="input-group">
+                  {0}
+                  <span class="input-group-addon">{1}</span>
+               </div>""".format(inputfield, self.domain)
 
 
 class ConfigurationForm(forms.Form):
@@ -47,9 +71,9 @@ class ConfigurationForm(forms.Form):
 
     server_domain = forms.CharField(
         label=ugettext_lazy('Server domain'), required=False,
-        help_text=\
-        ugettext_lazy('Select your pagekite server. Set "pagekite.net" to use '
-                      'the default pagekite.net server.'),
+        help_text= \
+            ugettext_lazy('Select your pagekite server. Set "pagekite.net" to use '
+                          'the default pagekite.net server.'),
         widget=forms.TextInput())
     server_port = forms.IntegerField(
         label=ugettext_lazy('Server port'), required=False,
@@ -63,9 +87,9 @@ class ConfigurationForm(forms.Form):
 
     kite_secret = TrimmedCharField(
         label=ugettext_lazy('Kite secret'),
-        help_text=\
-        ugettext_lazy('A secret associated with the kite or the default secret '
-                      'for your account if no secret is set on the kite.'))
+        help_text= \
+            ugettext_lazy('A secret associated with the kite or the default secret '
+                          'for your account if no secret is set on the kite.'))
 
     def save(self, request):
         """Save the form on submission after validation."""
@@ -77,14 +101,14 @@ class ConfigurationForm(forms.Form):
             config_changed = False
 
             if old['kite_name'] != new['kite_name'] or \
-                    old['kite_secret'] != new['kite_secret']:
+                            old['kite_secret'] != new['kite_secret']:
                 utils.run(['set-kite', '--kite-name', new['kite_name']],
                           input=new['kite_secret'].encode())
                 messages.success(request, _('Kite details set'))
                 config_changed = True
 
             if old['server_domain'] != new['server_domain'] or \
-                    old['server_port'] != new['server_port']:
+                            old['server_port'] != new['server_port']:
                 server = "%s:%s" % (new['server_domain'], new['server_port'])
                 utils.run(['set-frontend', server])
                 messages.success(request, _('Pagekite server set'))
@@ -184,7 +208,6 @@ class BaseCustomServiceForm(forms.Form):
 
 
 class DeleteCustomServiceForm(BaseCustomServiceForm):
-
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         utils.run(['remove-service', '--service', json.dumps(service)])
@@ -237,3 +260,96 @@ class AddCustomServiceForm(BaseCustomServiceForm):
                 messages.error(request, _('This service already exists'))
             else:
                 raise
+
+
+class State5Form(forms.Form):
+    """Set up freedombox.me pagekite subdomain"""
+    DOMAIN_APPENDIX = '.freedombox.me'
+    # Webservice url for domain validation and registration
+    service_url = 'http://freedombox.me/cgi-bin/freedomkite.pl'
+
+    code_help_text = format_lazy(
+        ugettext_lazy('The voucher you received with your {box_name} Danube '
+                      'Edition'), box_name=ugettext_lazy(cfg.box_name))
+
+    code = forms.CharField(help_text=code_help_text)
+
+    domain = forms.SlugField(label=_('Subdomain'),
+                             widget=SubdomainWidget(domain=DOMAIN_APPENDIX),
+                             help_text=_('The subdomain you want to register'))
+
+    def clean_domain(self):
+        """Append the domain to the users' subdomain"""
+        return self.cleaned_data['domain'] + self.DOMAIN_APPENDIX
+
+    def clean(self):
+        """Validate user input (subdomain and code)"""
+        cleaned_data = super().clean()
+
+        # If the subdomain is wrong, don't look if the domain is
+        # available
+        if self.errors:
+            return cleaned_data
+
+        self.domain_already_registered = False
+        code = cleaned_data.get('code')
+        domain = cleaned_data.get('domain')
+
+        response = requests.get(self.service_url, params={'code': code}).json()
+
+        # 1. Code is invalid: {}
+        if 'domain' not in response:
+            raise ValidationError(_('This code is not valid'), code='invalid')
+        # 2. Code is valid, domain registered: {'domain': 'xx.freedombox.me'}
+        elif response['domain']:
+            if response['domain'] == domain:
+                self.domain_already_registered = True
+            else:
+                message = _('This code is bound to the domain {domain}.') \
+                    .format(domain=response['domain'])
+                raise ValidationError(message, code='invalid')
+        # 3. Code is valid, no domain registered: {'domain': None}
+        elif response['domain'] is None:
+            # Make sure that the desired domain is available
+            data = {'domain': domain}
+            domain_response = requests.get(self.service_url, params=data)
+            registered_domain = domain_response.json()['domain']
+            if registered_domain is not None:
+                message = _('The requested domain is already registered.')
+                raise ValidationError(message, code='invalid')
+
+        return cleaned_data
+
+    def register_domain(self):
+        """Register a domain (only if it's not already registered)"""
+        if self.domain_already_registered:
+            return
+
+        data = {'domain': self.cleaned_data['domain'],
+                'code': self.cleaned_data['code']}
+        response = requests.post(self.service_url, data)
+        if not response.ok:
+            message = _('Domain registration failed: {response}.').format(
+                response=response.text)
+            LOGGER.error(message)
+            raise DomainRegistrationError(message)
+
+    def setup_pagekite(self):
+        """Configure and enable PageKite service."""
+        # Set kite name and secret
+        run(['set-kite', '--kite-name', self.cleaned_data['domain']],
+            input=self.cleaned_data['code'].encode())
+
+        # Set frontend
+        run(['set-frontend', '%s:80' % self.cleaned_data['domain']])
+
+        # Enable PageKite HTTP + HTTPS service
+        for service_name in ['http', 'https']:
+            service = PREDEFINED_SERVICES[service_name]['params']
+            try:
+                run(['add-service', '--service', json.dumps(service)])
+            except ActionError as err:
+                if 'already exists' not in str(err):
+                    raise
+
+        run(['start-and-enable'])

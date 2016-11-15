@@ -5,15 +5,21 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Added screenshots to Readme.
 - repro: Open up RTP ports.
+- Allow modules to register steps for first_boot.
 
 ### Fixed
 - Upstream patch from Debian bug #837206 to fix DB and log file
   permissions. Also switch to new setup command.
 - Include module static files in build, required for Debian package build.
 - dynamicdns: Allow reading status as non-root.
+- config: Set current domainname again after hostname change.
+- config: Handle clearing of domain name.
+- letsencrypt: When no domains are configured, show better message,
+  and hide diagnostics button.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
+- xmpp: Show more clearly if domain is not set.
 
 ## [0.11.0] - 2016-09-21
 ### Added
