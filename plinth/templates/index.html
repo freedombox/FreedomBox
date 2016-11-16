@@ -26,21 +26,23 @@
     {% if shortcuts %}
 
       {% for shortcut in shortcuts %}
-        <div class="col-sm-4">
-          <ul class="nav nav-pills nav-stacked">
-            {% if selected_id == shortcut.id %}
-              <li class="active">
-                <a href="{{ shortcut.url }}" class="active">
-            {% else %}
-              <li>
-                <a href="{{ shortcut.url }}">
-            {% endif %}
-                  <span class="{{ shortcut.icon }} glyphicon"></span>
-                  {{ shortcut.label }}
-                </a>
-              </li>
-          </ul>
-        </div>
+        {% if user.is_authenticated or shortcut.login_required is False %}
+          <div class="col-sm-4">
+            <ul class="nav nav-pills nav-stacked">
+              {% if selected_id == shortcut.id %}
+                <li class="active">
+                  <a href="{{ shortcut.url }}" class="active">
+              {% else %}
+                <li>
+                  <a href="{{ shortcut.url }}">
+              {% endif %}
+                    <span class="{{ shortcut.icon }} glyphicon"></span>
+                    {{ shortcut.label }}
+                  </a>
+                </li>
+            </ul>
+          </div>
+        {% endif %}
       {% endfor %}
 
     {% else %}

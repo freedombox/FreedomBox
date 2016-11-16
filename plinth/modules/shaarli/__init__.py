@@ -70,7 +70,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', title, '/shaarli', 'glyphicon-bookmark')
+    frontpage.add_shortcut('shaarli', title, '/shaarli', 'glyphicon-bookmark',
+                           login_required=True)
 
 
 def is_enabled():

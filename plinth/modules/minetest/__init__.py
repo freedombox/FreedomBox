@@ -75,7 +75,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
-                           description)
+                           description, login_required=False)
 
 
 def enable():

@@ -73,7 +73,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('deluge', title, '/deluge', 'glyphicon-magnet')
+    frontpage.add_shortcut('deluge', title, '/deluge', 'glyphicon-magnet',
+                           login_required=True)
 
 
 def is_enabled():
