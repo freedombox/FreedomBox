@@ -92,7 +92,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description)
+                           description, login_required=True)
 
 
 def enable():

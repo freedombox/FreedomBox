@@ -84,7 +84,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
-                           description)
+                           description, login_required=True)
 
 
 def enable():

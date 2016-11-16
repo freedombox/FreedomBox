@@ -80,7 +80,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description)
+                           description, login_required=False)
 
 
 def enable():
