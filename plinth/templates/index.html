@@ -39,7 +39,7 @@
                     <span class="{{ shortcut.icon }} glyphicon"></span>
                     <b>{{ shortcut.label }}</b>
                   </a>
-                  {% if shortcut.configure_display == True %}
+                  {% if shortcut.configure_display == True and user.is_authenticated %}
                   <a href="apps/{{ shortcut.id }}">Configure</a><br><br>
                   {% endif %}
                 </li>
