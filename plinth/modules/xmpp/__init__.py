@@ -21,6 +21,7 @@ Plinth module to configure XMPP server
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
 import logging
 import socket
 
@@ -76,6 +77,7 @@ def init():
         add_shortcut()
 
 
+@login_required
 def setup(helper, old_version=None):
     """Install and configure the module."""
     domainname = get_domainname()
