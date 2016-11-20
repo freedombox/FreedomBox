@@ -51,6 +51,17 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+description_frontpage = [
+    format_lazy(
+        _('Minetest is a multiplayer infinite-world block sandbox. This '
+          'module enables the Minetest server to be run on this '
+          '{box_name}, on the default port (30000). To connect to the server, '
+          'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
+          'is needed.'), box_name=_(cfg.box_name)),
+
+    _('<a href=\"apps/minetest\">Configure</a>'),
+]
+
 
 def init():
     """Initialize the module."""
@@ -75,7 +86,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
-                           description, login_required=False)
+                           description_frontpage, login_required=False)
 
 
 def enable():

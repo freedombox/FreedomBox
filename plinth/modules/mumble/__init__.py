@@ -51,6 +51,18 @@ description = [
 ]
 
 
+description_frontpage = [
+    _('Mumble is an open source, low-latency, encrypted, high quality '
+      'voice chat software.'),
+
+    _('You can connect to your Mumble server on the regular Mumble port '
+      '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
+      'from your desktop and Android devices are available.'),
+
+    _('<a href=\"apps/mumble\">Configure</a>')
+]
+
+
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
@@ -80,7 +92,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description, login_required=False)
+                           description_frontpage, login_required=False)
 
 
 def enable():
