@@ -59,6 +59,29 @@ description = [
       'service and re-enable it.'),
 ]
 
+description_frontpage = [
+    _('repro provides various SIP services that a SIP softphone can utilize '
+      'to provide audio and video calls as well as presence and instant '
+      'messaging. repro provides a server and SIP user accounts that clients '
+      'can use to let their presence known.  It also acts as a proxy to '
+      'federate SIP communications to other servers on the Internet similar '
+      'to email.'),
+
+    _('To make SIP calls, a client application is needed. Available clients '
+      'include <a href="https://jitsi.org/">Jitsi</a> (for computers) and '
+      '<a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple"> '
+      'CSipSimple</a> (for Android phones).'),
+
+    _('<strong>Note:</strong>  Before using repro, domains and users will '
+      'need to be configured using the <a href="/repro/domains.html">'
+      'web-based configuration panel</a>. Users in the <em>admin</em> group '
+      'will be able to log in to the repro configuration panel. After setting '
+      'the domain, it is required to restart the repro service. Disable the '
+      'service and re-enable it.'),
+
+    _('<a href=\"apps/repro\">Configure</a>'),
+]
+
 service = None
 
 
@@ -92,7 +115,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description, login_required=True)
+                           description_frontpage, login_required=True)
 
 
 def enable():

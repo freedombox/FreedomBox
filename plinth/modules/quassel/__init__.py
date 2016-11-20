@@ -55,7 +55,26 @@ description = [
       '4242.  Clients to connect to Quassel from your '
       '<a href="http://quassel-irc.org/downloads">desktop</a> and '
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
-      'are available.')
+      'are available.'),
+]
+
+description_frontpage = [
+    format_lazy(
+        _('Quassel is an IRC application that is split into two parts, a '
+          '"core" and a "client". This allows the core to remain connected '
+          'to IRC servers, and to continue receiving messages, even when '
+          'the client is disconnected. {box_name} can run the Quassel '
+          'core service keeping you always online and one or more Quassel '
+          'clients from a desktop or a mobile can be used to connect and '
+          'disconnect from it.'), box_name=_(cfg.box_name)),
+
+    _('You can connect to your Quassel core on the default Quassel port '
+      '4242.  Clients to connect to Quassel from your '
+      '<a href="http://quassel-irc.org/downloads">desktop</a> and '
+      '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
+      'are available.'),
+
+    _('<a href=\"apps/quassel\">Configure</a>'),
 ]
 
 
@@ -88,7 +107,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, login_required=True)
+                           description_frontpage, login_required=True)
 
 
 def enable():
