@@ -59,20 +59,6 @@ description = [
 ]
 
 description_frontpage = [
-    _('Privoxy is a non-caching web proxy with advanced filtering '
-      'capabilities for enhancing privacy, modifying web page data and '
-      'HTTP headers, controlling access, and removing ads and other '
-      'obnoxious Internet junk. '),
-
-    format_lazy(
-        _('You can use Privoxy by modifying your browser proxy settings to '
-          'your {box_name} hostname (or IP address) with port 8118. '
-          'While using Privoxy, you can see its configuration details and '
-          'documentation at '
-          '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
-          'or <a href="http://p.p">http://p.p</a>.'),
-        box_name=_(cfg.box_name)),
-
     _('<a href=\"apps/privoxy\">Configure</a>'),
 ]
 
@@ -103,7 +89,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
-                           description_frontpage, login_required=True)
+                           description, description_frontpage,
+                           login_required=True)
 
 
 def enable():

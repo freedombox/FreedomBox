@@ -53,13 +53,6 @@ description = [
 ]
 
 description_frontpage = [
-    _('XMPP is an open and standardized communication protocol. Here '
-      'you can run and configure your XMPP server, called ejabberd.'),
-
-    _('To actually communicate, you can use the web client or any other '
-      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.'),
-
     _('<a href=\"apps/xmpp\">Configure</a>')
 ]
 
@@ -105,7 +98,8 @@ def add_shortcut():
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
                            login_required=True)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
-                           description_frontpage, login_required=True)
+                           description, description_frontpage,
+                           login_required=True)
 
 
 def is_enabled():

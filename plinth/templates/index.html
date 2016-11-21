@@ -70,6 +70,15 @@
           {{ paragraph|safe }}
         </div>
       {% endfor %}
+
+      {% if user.is_authenticated %}
+        {% for paragraph in configure_url %}
+          <div class="panel-body">
+            {{ paragraph|safe }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
     </div>
   {% endif %}
 
