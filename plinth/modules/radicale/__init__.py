@@ -51,6 +51,10 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
+description_frontpage = [
+    _('<a href=\"apps/radicale\">Configure</a>'),
+]
+
 CONFIG_FILE = '/etc/radicale/config'
 
 
@@ -78,7 +82,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
-                           description, login_required=True)
+                           description, description_frontpage,
+                           login_required=True)
 
 
 def enable():

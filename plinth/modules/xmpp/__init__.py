@@ -49,7 +49,11 @@ description = [
 
     _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.')
+      '>XMPP client</a>.'),
+]
+
+description_frontpage = [
+    _('<a href=\"apps/xmpp\">Configure</a>')
 ]
 
 service = None
@@ -94,7 +98,8 @@ def add_shortcut():
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
                            login_required=True)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
-                           description, login_required=True)
+                           description, description_frontpage,
+                           login_required=True)
 
 
 def is_enabled():
