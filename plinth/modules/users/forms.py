@@ -86,6 +86,7 @@ class ValidNewUsernameCheckMixin(object):
 
 class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
     """Custom user create form.
+
     Include options to add user to groups.
     """
 
@@ -257,9 +258,9 @@ class State1Form(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
         """Create and log the user in."""
         user = super().save(commit=commit)
         if commit:
-            'ldap',
             try:
                 actions.superuser_run(
+                    'ldap',
                     ['create-user', user.get_username()],
                     input=self.cleaned_data['password1'].encode())
             except ActionError:
