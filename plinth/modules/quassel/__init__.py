@@ -55,8 +55,10 @@ description = [
       '4242.  Clients to connect to Quassel from your '
       '<a href="http://quassel-irc.org/downloads">desktop</a> and '
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
-      'are available.')
+      'are available.'),
 ]
+
+configure_url = _('apps/quassel')
 
 
 def init():
@@ -88,7 +90,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, login_required=True)
+                           description, configure_url,
+                           login_required=True)
 
 
 def enable():

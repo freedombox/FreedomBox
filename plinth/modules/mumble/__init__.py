@@ -51,6 +51,9 @@ description = [
 ]
 
 
+configure_url = _('apps/mumble')
+
+
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
@@ -80,7 +83,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description, login_required=False)
+                           description, configure_url,
+                           login_required=False)
 
 
 def enable():
