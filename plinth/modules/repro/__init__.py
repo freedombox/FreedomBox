@@ -19,6 +19,7 @@
 Plinth module for repro.
 """
 
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -59,8 +60,6 @@ description = [
       'service and re-enable it.'),
 ]
 
-configure_url = _('apps/repro')
-
 service = None
 
 
@@ -94,7 +93,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description, configure_url,
+                           description, reverse('repro:index'),
                            login_required=True)
 
 

@@ -19,6 +19,7 @@
 Plinth module to configure Privoxy.
 """
 
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -58,8 +59,6 @@ description = [
         box_name=_(cfg.box_name)),
 ]
 
-configure_url = _('apps/privoxy')
-
 service = None
 
 
@@ -87,7 +86,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
-                           description, configure_url,
+                           description, reverse('privoxy:index'),
                            login_required=True)
 
 

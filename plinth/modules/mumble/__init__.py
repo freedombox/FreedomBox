@@ -19,6 +19,7 @@
 Plinth module to configure Mumble server
 """
 
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -51,9 +52,6 @@ description = [
 ]
 
 
-configure_url = _('apps/mumble')
-
-
 def init():
     """Intialize the Mumble module."""
     menu = cfg.main_menu.get('apps:index')
@@ -83,7 +81,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description, configure_url,
+                           description, reverse('mumble:index'),
                            login_required=False)
 
 

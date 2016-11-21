@@ -71,10 +71,10 @@
         </div>
       {% endfor %}
 
-      {% if user.is_authenticated %}
-          <div class="panel-body">
-            <a href="{{ configure_url }}">Configure</a>
-          </div>
+      {% if user.is_authenticated and configure_url %}
+        <a class="btn btn-default btn-sm"
+           href="{{ configure_url }}">
+            {% trans "Configure &raquo;" %}</a>
       {% endif %}
 
     </div>

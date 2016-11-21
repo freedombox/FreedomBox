@@ -19,6 +19,7 @@
 Plinth module for Quassel.
 """
 
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -58,8 +59,6 @@ description = [
       'are available.'),
 ]
 
-configure_url = _('apps/quassel')
-
 
 def init():
     """Initialize the quassel module."""
@@ -90,7 +89,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, configure_url,
+                           description, reverse('quassel:index'),
                            login_required=True)
 
 

@@ -19,7 +19,7 @@
 Plinth module to configure XMPP server
 """
 
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
@@ -51,8 +51,6 @@ description = [
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
       '>XMPP client</a>.'),
 ]
-
-configure_url = _('apps/xmpp')
 
 service = None
 
@@ -96,7 +94,7 @@ def add_shortcut():
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
                            None, login_required=True)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
-                           description, configure_url,
+                           description, reverse('xmpp:index'),
                            login_required=True)
 
 

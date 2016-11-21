@@ -20,6 +20,7 @@ Plinth module for radicale.
 """
 
 import augeas
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -51,8 +52,6 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
-configure_url = _('apps/radicale')
-
 CONFIG_FILE = '/etc/radicale/config'
 
 
@@ -80,7 +79,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
-                           description, configure_url,
+                           description, reverse('radicale:index'),
                            login_required=True)
 
 
