@@ -49,8 +49,10 @@ description = [
 
     _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.')
+      '>XMPP client</a>.'),
 ]
+
+configure_url = _('apps/xmpp')
 
 service = None
 
@@ -92,9 +94,10 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client (jsxc)'),
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
-                           login_required=True)
+                           None, login_required=True)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
-                           description, login_required=True)
+                           description, configure_url,
+                           login_required=True)
 
 
 def is_enabled():

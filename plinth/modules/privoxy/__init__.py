@@ -54,8 +54,11 @@ description = [
           'While using Privoxy, you can see its configuration details and '
           'documentation at '
           '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
-          'or <a href="http://p.p">http://p.p</a>.'), box_name=_(cfg.box_name))
+          'or <a href="http://p.p">http://p.p</a>.'),
+        box_name=_(cfg.box_name)),
 ]
+
+configure_url = _('apps/privoxy')
 
 service = None
 
@@ -84,7 +87,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
-                           description, login_required=True)
+                           description, configure_url,
+                           login_required=True)
 
 
 def enable():

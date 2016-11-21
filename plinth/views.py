@@ -38,17 +38,19 @@ def index(request):
     shortcuts = frontpage.get_shortcuts()
     selection = request.GET.get('selected')
 
-    details, details_label = None, None
+    details, details_label, configure_url = None, None, None
     if selection in frontpage.shortcuts:
         details = frontpage.shortcuts[selection]['details']
         details_label = frontpage.shortcuts[selection]['label']
+        configure_url = frontpage.shortcuts[selection]['configure_url']
 
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
                              'shortcuts': shortcuts,
                              'selected_id': selection,
                              'details': details,
-                             'details_label': details_label})
+                             'details_label': details_label,
+                             'configure_url': configure_url})
 
 
 class ServiceView(FormView):

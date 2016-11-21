@@ -51,6 +51,8 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+configure_url = _('apps/minetest')
+
 
 def init():
     """Initialize the module."""
@@ -75,7 +77,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
-                           description, login_required=False)
+                           description, configure_url,
+                           login_required=False)
 
 
 def enable():

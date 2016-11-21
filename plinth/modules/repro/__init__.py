@@ -59,6 +59,8 @@ description = [
       'service and re-enable it.'),
 ]
 
+configure_url = _('apps/repro')
+
 service = None
 
 
@@ -92,7 +94,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description, login_required=True)
+                           description, configure_url,
+                           login_required=True)
 
 
 def enable():
