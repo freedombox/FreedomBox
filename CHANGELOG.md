@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - xmpp: Show more clearly if domain is not set.
 - frontpage: Don't show apps requiring login, unless logged in.
 - ttrss: Show status block.
+- frontpage: Make app icons larger.
 
 ## [0.11.0] - 2016-09-21
 ### Added
