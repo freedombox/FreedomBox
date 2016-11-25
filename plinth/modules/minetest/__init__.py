@@ -39,7 +39,12 @@ service = None
 
 managed_services = ['minetest-server']
 
-managed_packages = ['minetest-server']
+managed_packages = ['minetest-server', 'minetest-mod-advspawning',
+                    'minetest-mod-animalmaterials', 'minetest-mod-animals',
+                    'minetest-mod-mesecons', 'minetest-mod-mobf-core',
+                    'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
+                    'minetest-mod-nether', 'minetest-mod-torches',
+                    ]
 
 title = _('Block Sandbox (Minetest)')
 
