@@ -31,7 +31,7 @@ from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
 
-version = 1
+version = 2
 
 depends = ['apps']
 

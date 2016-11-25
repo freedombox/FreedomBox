@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - repro: Open up RTP ports.
 - Allow modules to register steps for first_boot.
 - frontpage: Show Configure button in service details, when user is logged in.
+- minetest: Add mods packages to be installed with server.
 
 ### Fixed
 - Upstream patch from Debian bug #837206 to fix DB and log file
