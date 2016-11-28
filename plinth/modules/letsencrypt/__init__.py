@@ -29,7 +29,7 @@ from plinth.utils import format_lazy
 
 version = 1
 
-is_essential = True
+is_essential = False
 
 depends = ['apps', 'names']
 
