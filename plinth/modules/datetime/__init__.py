@@ -53,8 +53,7 @@ def init():
 
     global service
     service = service_module.Service(
-        managed_services[0], title, ports=['ntp'], is_external=False,
-        allow_uninstall=False)
+        managed_services[0], title, ports=['ntp'], is_external=False)
 
 
 def setup(helper, old_version=None):

@@ -69,7 +69,7 @@
   {% endblock %}
 
   {% block uninstall %}
-    {% if diagnostics_module_name and service.allow_uninstall %}
+    {% if diagnostics_module_name and not is_module_essential %}
       <br>
       <p>
         <a class="btn btn-default btn-md"

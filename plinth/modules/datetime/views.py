@@ -36,6 +36,7 @@ class DateTimeServiceView(ServiceView):
     form_class = DateTimeForm
     service_id = datetime.managed_services[0]
     diagnostics_module_name = "datetime"
+    is_module_essential = datetime.is_essential
 
     def get_initial(self):
         return {'is_enabled': self.service.is_enabled(),

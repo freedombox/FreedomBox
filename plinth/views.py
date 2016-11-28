@@ -92,6 +92,7 @@ class ServiceView(FormView):
     # This block uses information from service.is_running. This method is
     # optional, so allow not showing this block here.
     show_status_block = True
+    is_module_essential = False
 
     @property
     def success_url(self):
@@ -145,6 +146,7 @@ class ServiceView(FormView):
         if self.description:
             context['description'] = self.description
         context['show_status_block'] = self.show_status_block
+        context['is_module_essential'] = self.is_module_essential
         return context
 
 

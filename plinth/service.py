@@ -45,8 +45,7 @@ class Service(object):
     - is_running (optional): Boolean or a method returning Boolean
     """
     def __init__(self, service_id, name, ports=None, is_external=False,
-                 is_enabled=None, enable=None, disable=None, is_running=None,
-                 allow_uninstall=True):
+                 is_enabled=None, enable=None, disable=None, is_running=None):
         if ports is None:
             ports = []
 
@@ -61,7 +60,6 @@ class Service(object):
         self._enable = enable
         self._disable = disable
         self._is_running = is_running
-        self.allow_uninstall = allow_uninstall
 
         # Maintain a complete list of services
         assert(service_id not in services)
