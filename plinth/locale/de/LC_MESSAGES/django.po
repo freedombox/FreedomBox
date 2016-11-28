@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-21 12:14-0400\n"
-"PO-Revision-Date: 2016-11-27 21:18+0000\n"
+"PO-Revision-Date: 2016-11-28 00:59+0000\n"
 "Last-Translator: pascal heynmoeller <heynmoeller@gmx.net>\n"
 "Language-Team: German "
 "<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
@@ -93,9 +93,8 @@ msgid ""
 "of the application and choose to install it."
 msgstr ""
 "Sie können verschiedene Dienste und Anwendungen auf Ihrer %(box_name)s "
-"installieren und verwenden. Klicken Sie auf einen App-Link auf der linken "
-"Seite, um eine Beschreibung der Anwendung zu lesen und sie eventuell zu "
-"installieren."
+"installieren. Klicken Sie auf der linken Seite eine Anwendung an, um eine "
+"Beschreibung zu lesen und sie zur Installation aus zu wählen."
 
 #: plinth/modules/apps/templates/apps.html:36
 msgid ""
@@ -146,9 +145,10 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
-"Ein Hostname ist der lokale Name unter dem andere Geräte im lokalen Netzwerk "
-"Ihre {box_name} erreichen können. Er muss alphanumerisch sein, mit einem "
-"Buchstaben beginnen und enden und darf nicht länger als 63 Zeichen sein."
+"Der Hostname ist der lokale Name mit dem andere Geräte im lokalen Netzwerk "
+"Ihre {box_name} erreichen. Er muss alphanumerisch beginnen und enden und "
+"darf nicht länger als 63 Zeichen sein. ( Minus \"-\" ist als einziges "
+"Sonderzeichen zwischen drin erlaubt!)."
 
 #: plinth/modules/config/config.py:108
 msgid "Invalid hostname"
@@ -182,7 +182,7 @@ msgstr "Sprache"
 
 #: plinth/modules/config/config.py:130
 msgid "Language for this web administration interface"
-msgstr "Sprache dieses Web-Interfaces"
+msgstr "Die Sprache der Web-Administrations-Oberfläche"
 
 #: plinth/modules/config/config.py:150
 #: plinth/modules/dynamicdns/dynamicdns.py:37
@@ -346,11 +346,11 @@ msgstr "Ergebnis"
 
 #: plinth/modules/disks/__init__.py:35 plinth/modules/disks/views.py:39
 msgid "Disks"
-msgstr "Platten"
+msgstr "Speichermedium"
 
 #: plinth/modules/disks/templates/disks.html:35
 msgid "The following disks are in use:"
-msgstr "Die folgenden Platten werden verwendet:"
+msgstr "Die folgenden Speichermedien werden verwendet:"
 
 #: plinth/modules/disks/templates/disks.html:41
 #: plinth/modules/networks/templates/connection_show.html:84
@@ -387,7 +387,7 @@ msgstr ""
 #: plinth/modules/disks/templates/disks_expand.html:45
 #: plinth/modules/disks/views.py:56
 msgid "Expand Root Partition"
-msgstr "Erweitern der Root-Partition"
+msgstr "Erweitern des Wurzeldateisystems"
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -397,17 +397,17 @@ msgid ""
 "root partition."
 msgstr ""
 "Bitte die Daten vor dem Fortfahren sichern. Nach dieser Operation steht "
-"%(expandable_root_size)s zusätzlicher freier Speicher in der root Partition "
-"zur Verfügung."
+"%(expandable_root_size)s zusätzlicher freier Speicher in dem "
+"Wurzeldateisystem zur Verfügung."
 
 #: plinth/modules/disks/views.py:65
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr "Fehler beim Erweitern der Partition: {exception}"
+msgstr "Fehler beim Erweitern des Dateisystems: {exception}"
 
 #: plinth/modules/disks/views.py:68
 msgid "Partition expanded successfully."
-msgstr "Partition erfolgreich erweitert."
+msgstr "Dateisystem erfolgreich erweitert."
 
 #: plinth/modules/disks/views.py:77
 #, python-brace-format
@@ -776,9 +776,9 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
-"Der Betrieb der Firewall erfolgt automatisch. Wenn ein Dienst eingeschaltet "
-"wird, wird er auch in der Firewall zugelassen und wenn ein Dienst "
-"ausgeschaltet wird, wird er auch in der Firewall verboten."
+"Der Betrieb der Firewall erfolgt automatisch. Wenn Sie einen Dienst "
+"aktivieren, wird er in der Firewall ebenfalls aktiviert und wenn Sie einen "
+"Dienst deaktivieren, wird er ebenso in der Firewall deaktiviert."
 
 #: plinth/modules/first_boot/forms.py:61 plinth/modules/users/forms.py:119
 msgid "Creating LDAP user failed."
@@ -865,10 +865,9 @@ msgid ""
 "can be changed later. This user will be granted administrative privileges. "
 "Other users can be added later."
 msgstr ""
-"Wählen Sie einen Benutzernamen und Passwort um auf dieses Web-Interface "
-"zuzugreifen. Das Passwort kann später geändert werden. Dieser Benutzer "
-"erhält Administrator-Rechte. Weitere Benutzer können später hinzugefügt "
-"werden."
+"Wählen Sie einen Benutzernamen und Passwort um auf diese Web-Oberfläche zu "
+"zugreifen. Das Passwort kann später geändert werden. Dieser Benutzer erhält "
+"Administrator-Rechte. Weitere Benutzer können später hinzugefügt werden."
 
 #: plinth/modules/first_boot/templates/firstboot_state1.html:45
 msgid "Box it up!"
@@ -903,7 +902,7 @@ msgid ""
 "to change the default Wi-Fi passwords!"
 msgstr ""
 "Sie sollten die Netzwerkkonfiguration überprüfen und gegebenenfalls ändern. "
-"Vergessen Sie nicht, die standardmäßigen Wi-Fi-Passwörter zu ändern!"
+"Vergessen Sie nicht, die Standard Wlan-Passwörter zu ändern!"
 
 #: plinth/modules/first_boot/templates/firstboot_state10.html:57
 msgid "Go to Networks"
@@ -985,14 +984,14 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"%(box_name)s ist ein Gemeinschaftsprojekt zur Entwicklung, Gestaltung und "
-"Förderung persönlicher Server mit freier Software für die private, "
-"persönliche Kommunikation. Es ist als Netzwerkgerät so konzipiert, dass es "
-"eine Schnittstelle mit dem Internet darstellt bei Beibehaltung der "
-"geschützten Privatsphäre und Datensicherheit. Es beherbergt Anwendungen wie "
-"Blog, Wiki, Webseite, soziale Netzwerke, E-Mail, Web-Proxy und einen Tor-"
-"Server auf einem Gerät, das Wi-Fi-Router ersetzen kann, so dass Ihre Daten "
-"immer bei Ihnen bleiben."
+"%(box_name)s ist ein Gemeinschaftsprojekt für die Entwicklung, Gestaltung "
+"und Verbreitung von persönlichen Servern mit freier Software für die "
+"private, persönliche Kommunikation. Es ist als Netzwerkgerät so konzipiert, "
+"dass es eine Schnittstelle zum Internet bereitstellt während es die "
+"Privatsphäre schützt und die Datensicherheit gewährleistet. Es stellt "
+"Anwendungen wie Blog, Wiki, Webseite, soziales Netzwerk, E-Mail, Web-Proxy "
+"und Onion-Routing auf einem Gerät bereit, dass einen Wlan-Router ersetzen "
+"kann und Sie Ihre Daten nicht aus der Hand geben."
 
 #: plinth/modules/help/templates/help_about.html:43
 msgid ""
@@ -1086,9 +1085,9 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Viele %(box_name)s Mitwirkende und Benutzer sind auch im irc.oftc.net IRC "
-"Netzwerk erreichbar. Treten Sie ihm bei und bitten um Hilfe im <a href=\""
+"Netzwerk erreichbar. Treten Sie ihm bei und fragen um Hilfe im <a href=\""
 "https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
-"#freedombox</a> Kanal des IRC Web-Interfaces."
+"#freedombox</a> Kanal der IRC Web-Oberfläche."
 
 #: plinth/modules/help/templates/statuslog.html:25
 #| msgid "Status"
@@ -1097,21 +1096,16 @@ msgstr "Statusprotokoll"
 
 #: plinth/modules/help/templates/statuslog.html:28
 #, python-format
-#| msgid ""
-#| "This is the last %(num_lines)s lines of the status log for this web "
-#| "interface. If you want to report a bug, please use the <a href=\"https://"
-#| "github.com/freedombox/Plinth/issues\">bugtracker</a> and attach this "
-#| "status log to the bug report."
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
 "github.com/freedombox/Plinth/issues\">bug tracker</a> and attach this status "
 "log to the bug report."
 msgstr ""
-"Dies sind die letzten %(num_lines)s Zeilen des Statusprotokolls dieses Web-"
-"Interfaces. Bitte melden Sie den Fehler auf dem <a href=\""
-"https://github.com/freedombox/Plinth/issues\">Bugtracker</a> und fügen diese "
-"Ausgabe bei."
+"Dies sind die letzten %(num_lines)s Zeilen des Statusprotokolls der Web-"
+"Oberfläche. Bitte melden Sie den Fehler im <a href=\""
+"https://github.com/freedombox/Plinth/issues\">online Fehlerverfolger</a> und "
+"fügen diese Ausgabe bei."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1282,12 +1276,6 @@ msgstr ""
 "Inhaber einer Domain zu sein."
 
 #: plinth/modules/letsencrypt/__init__.py:49
-#| msgid ""
-#| "Let's Encrypt is a free, automated, and open certificate authority, run "
-#| "for the public’s benefit by the Internet Security Research Group (ISRG).  "
-#| "Please read and agree with the <a href=\"https://letsencrypt.org/"
-#| "repository/\">Let's Encrypt Subscriber Agreement</a> before using this "
-#| "service."
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -1298,7 +1286,7 @@ msgstr ""
 "Zertifizierungsstelle, zum Nutzen der Öffentlichkeit betrieben von der "
 "Internet Security Research Group (ISRG). Bitte lesen und akzeptieren Sie die "
 "<a href=\"https://letsencrypt.org/repository/\">Let's Encrypt "
-"Abonnentenvereinbarung</a> vor der Verwendung dieses Dienstes."
+"Vetragsvereinbarungen</a> vor der Verwendung dieses Dienstes."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:43
 msgid "Domain"
@@ -1607,7 +1595,7 @@ msgstr "Verbindungsname"
 
 #: plinth/modules/networks/forms.py:40
 msgid "Physical Interface"
-msgstr "Physikalisches Interface"
+msgstr "physische Schnittstelle"
 
 #: plinth/modules/networks/forms.py:42
 msgid "The network device that this connection should be bound to."
@@ -1622,7 +1610,7 @@ msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr ""
-"Die Firewall Zone steuert welche Dienste über diese Schnittstellen zur "
+"Die Firewall Zone entscheidet welche Dienste über diese Schnittstellen zur "
 "Verfügung stehen. Wählen Sie 'Intern' nur für vertrauenswürdige Netzwerke."
 
 #: plinth/modules/networks/forms.py:48
@@ -1816,7 +1804,7 @@ msgstr "Netzwerkverbindungen"
 #: plinth/modules/networks/networks.py:36
 #: plinth/modules/networks/networks.py:241
 msgid "Nearby Wi-Fi Networks"
-msgstr "Nahe Wi-Fi Netzwerke"
+msgstr "Wlans in der Nähe"
 
 #: plinth/modules/networks/networks.py:38
 #: plinth/modules/networks/networks.py:265
@@ -1848,7 +1836,7 @@ msgstr "Verbindung bearbeiten"
 #: plinth/modules/networks/networks.py:208
 #, python-brace-format
 msgid "Activated connection {name}."
-msgstr "Verbindung {name} eingeschaltet."
+msgstr "Verbindung {name} aktivieren."
 
 #: plinth/modules/networks/networks.py:211
 msgid "Failed to activate connection: Connection not found."
@@ -1884,7 +1872,7 @@ msgstr "Füge neue PPPoE Verbindung hinzu"
 
 #: plinth/modules/networks/networks.py:352
 msgid "Adding New Wi-Fi Connection"
-msgstr "Füge neue Wi-Fi Verbindung hinzu"
+msgstr "Neue Wlan-Verbindung hinzufügen"
 
 #: plinth/modules/networks/networks.py:366
 #, python-brace-format
@@ -1961,7 +1949,7 @@ msgstr "MAC Adresse"
 
 #: plinth/modules/networks/templates/connection_show.html:106
 msgid "Interface"
-msgstr "Interface"
+msgstr "Schnittstelle"
 
 #: plinth/modules/networks/templates/connection_show.html:110
 #: plinth/modules/snapshot/templates/snapshot.html:32
@@ -2035,7 +2023,7 @@ msgstr "IPv6"
 
 #: plinth/modules/networks/templates/connection_show.html:263
 msgid "This connection is not active."
-msgstr "Diese Verbindung ist nicht eingeschaltet."
+msgstr "Diese Verbindung ist nicht aktiv."
 
 #: plinth/modules/networks/templates/connection_show.html:266
 #: plinth/modules/security/__init__.py:34 plinth/modules/security/views.py:46
@@ -2054,10 +2042,10 @@ msgid ""
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
-"Diese Schnittstelle sollte an ein lokales Netzwerk / Gerät angeschlossen "
-"sein. Wenn Sie diese Schnittstelle mit einem öffentlichen Netzwerk "
-"verbinden, werden Dienste die nur intern zur Verfügung stehen sollten extern "
-"erreichbar sein. Dies ist ein Sicherheitsrisiko."
+"Diese Schnittstelle sollte an ein lokales Netzwerk/Rechner angeschlossen "
+"sein (LAN). Wenn Sie diese Schnittstelle mit einem öffentlichen Netzwerk "
+"(WAN) verbinden, werden Dienste die nur intern zur Verfügung stehen sollten "
+"extern erreichbar sein. Dies ist ein Sicherheitsrisiko."
 
 #: plinth/modules/networks/templates/connection_show.html:300
 msgid ""
@@ -2065,9 +2053,9 @@ msgid ""
 "a local network/machine, many services meant to available only internally "
 "will not be available."
 msgstr ""
-"Diese Schnittstelle sollte Ihre Internetverbindung empfangen. Wenn Sie es an "
-"ein lokales Netzwerk / Gerät anschließen, werden viele Dienste die nur "
-"intern zur Verfügung stehen sollten nicht verfügbar sein."
+"Diese Schnittstelle muss mit der Internetanbindung verbunden werden (WAN). "
+"Wenn Sie es an ein lokales Netzwerk/Rechner anschließen, werden viele "
+"Dienste die nur intern zur Verfügung stehen sollten nicht verfügbar sein."
 
 #: plinth/modules/networks/templates/connection_show.html:319
 #, python-format
@@ -2116,7 +2104,7 @@ msgstr "Ethernet"
 #: plinth/modules/networks/templates/connections_diagram.html:116
 #: plinth/network.py:38
 msgid "Wi-Fi"
-msgstr "Wi-Fi"
+msgstr "Wlan"
 
 #: plinth/modules/networks/templates/connections_diagram.html:89
 #, python-format
@@ -2273,13 +2261,13 @@ msgid ""
 "special permissions and is quick. ownCloud is extendable via a simple but "
 "powerful API for applications and plugins."
 msgstr ""
-"ownCloud gibt Ihnen universellen Zugang zu Ihren Dateien mit einem Web-"
-"Interface oder über WebDAV. Es bietet auch eine Plattform, um Kontakte, "
-"Kalender und Lesezeichen auf allen Ihren Geräten einfach anzuzeigen und zu "
-"synchronisieren und ermöglicht einfache  Bearbeitungsfunktionen direkt im "
-"Web. Die Installation hat minimale Server-Anforderungen, braucht keine "
-"speziellen Zugriffsrechte und geht schnell. ownCloud ist erweiterbar über "
-"eine einfache, aber leistungsfähige API für Anwendungen und Plug-ins."
+"ownCloud gibt Ihnen universellen Zugang zu Ihren Dateien über eine Web-"
+"Oberfläche oder WebDAV. Es bietet auch eine Plattform, um Kontakte, Kalender "
+"und Lesezeichen auf allen Ihren Geräten anzuzeigen und zu synchronisieren "
+"zusätzlich ermöglicht es die Bearbeitung direkt in der Web-Oberfläche. Die "
+"Installation geht schnell, hat minimale Server-Anforderungen und braucht "
+"keine speziellen Zugriffsrechte. ownCloud ist erweiterbar über eine "
+"einfache, aber leistungsfähige API für Anwendungen und Plug-ins."
 
 #: plinth/modules/owncloud/__init__.py:49
 msgid ""
@@ -2427,7 +2415,7 @@ msgstr "Pagekite Server eingerichtet"
 
 #: plinth/modules/pagekite/forms.py:96
 msgid "PageKite enabled"
-msgstr "PageKite eingeschaltet"
+msgstr "PageKite aktiviert"
 
 #: plinth/modules/pagekite/forms.py:99
 msgid "PageKite disabled"
@@ -2436,7 +2424,7 @@ msgstr "PageKite ausgeschaltet"
 #: plinth/modules/pagekite/forms.py:135
 #, python-brace-format
 msgid "Service enabled: {name}"
-msgstr "Dienst eingeschaltet: {name}"
+msgstr "Dienst {name}: aktiviert"
 
 #: plinth/modules/pagekite/forms.py:139
 #, python-brace-format
@@ -2613,9 +2601,9 @@ msgid ""
 "Are you sure you want to restart? You will not be able to access this web "
 "interface for a few minutes until the system is restarted."
 msgstr ""
-"Sind Sie sicher, dass Sie neu starten möchten? Sie werden auf dieses Web-"
-"Interface für einige Minuten nicht zugreifen können, bis das System neu "
-"gestartet wurde."
+"Sind Sie sicher, dass Sie neu starten möchten? Sie werden auf die Web-"
+"Administrations-Oberfläche für einige Minuten nicht zugreifen können, bis "
+"das System wieder hochgefahren ist."
 
 #: plinth/modules/power/templates/power_restart.html:42
 msgid "Restart Now"
@@ -2626,8 +2614,8 @@ msgid ""
 "Are you sure you want to shut down?  You will not be able to access this web "
 "interface after shut down."
 msgstr ""
-"Sind Sie sicher, dass Sie herunterfahren möchten? Sie werden auf dieses Web-"
-"Interface anschließend nicht zugreifen können."
+"Sind Sie sicher, dass Sie herunterfahren möchten? Sie werden auf die Web-"
+"Administrations-Oberfläche anschließend keinen Zugriff mehr haben!"
 
 #: plinth/modules/power/templates/power_shutdown.html:41
 msgid "Shut Down Now"
@@ -2793,7 +2781,7 @@ msgstr ""
 
 #: plinth/modules/restore/__init__.py:37
 msgid "Unhosted Storage (reStore)"
-msgstr "Unhosted Storage (reStore)"
+msgstr "Unhosted Speicher (reStore)"
 
 #: plinth/modules/restore/__init__.py:41
 #, python-brace-format
@@ -2806,17 +2794,18 @@ msgid ""
 msgstr ""
 "reStore ist ein Server für <a href='https://unhosted.org/'>unhosted</a> Web-"
 "Anwendungen. Die Idee ist, Web-Anwendungen von den Daten zu entkoppeln. "
-"Unabhängig davon von wo eine Web-Anwendung aus bedient wird, können die "
-"Daten auf einem unhosted Speicherserver der Wahl des Benutzers gespeichert "
-"werden. Mit reStore, wird Ihre {box_name} Ihr unhosted Speicherserver."
+"Unabhängig davon, wo eine Web-Anwendung die unhosted unterstützt "
+"bereitgestellt wird, können Ihre Daten auf einem unhosted Dienst Ihrer Wahl "
+"gespeichert werden. Mit reStore, wird Ihre {box_name} Ihr unhosted Speicher "
+"Dienst."
 
 #: plinth/modules/restore/__init__.py:48
 msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
 msgstr ""
-"Sie können Konten im <a href='/restore/'>reStore Web-Interface</a> anlegen "
-"und bearbeiten."
+"Sie können Benutzerkonten in der <a href='/restore/'>reStore Web-"
+"Oberfläche</a> anlegen und bearbeiten."
 
 #: plinth/modules/roundcube/__init__.py:37
 msgid "Email Client (Roundcube)"
@@ -2830,10 +2819,10 @@ msgid ""
 "manipulation, message searching and spell checking."
 msgstr ""
 "Roundcube webmail ist ein Browser basierter mehrsprachiger IMAP client mit "
-"einer Benutzeroberfläche ähnlich wie die eines Email Programmes. Es verfügt "
-"über die volle Funktionalität eines Email clients. So zum Beispiel MIME "
-"Unterstützung, Adressbuch, Ordnerverwaltung, Suchfunktion und "
-"Rechtschreibprüfung."
+"einer Benutzeroberfläche ähnlich wie die eines E-Mail Programms. Es verfügt "
+"über die volle Funktionalität, die Sie von einem E-Mail Programm erwarten, "
+"wie zum Beispiel MIME Unterstützung, Adressbuch, Ordnerverwaltung, Suche in "
+"den Nachrichten und Rechtschreibprüfung."
 
 #: plinth/modules/roundcube/__init__.py:46
 msgid ""
@@ -2876,9 +2865,9 @@ msgid ""
 "to log in to console or via SSH. Console users may be able to access some "
 "services without further authorization."
 msgstr ""
-"Wenn dies Option aktiviert ist, können sich nur Nutzer der \"admin\" Gruppe "
-"in die Konsole oder per SSH anmelden. Konsolen-Nutzer können auf Services "
-"ohne weitere Autorisation zugreifen."
+"Wenn diese Option aktiviert ist, können sich nur Nutzer der \"admin\" Gruppe "
+"in die Konsole oder per SSH anmelden. Anwender könnten möglicherweise über "
+"die Konsole auf manche Dienste ohne weitere Autorisierung zugreifen."
 
 #: plinth/modules/security/views.py:63
 #, python-brace-format
@@ -2909,7 +2898,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:34
 msgid "Snapshots"
-msgstr "Speicherauszüge"
+msgstr "Schnappschüsse"
 
 #: plinth/modules/snapshot/__init__.py:37
 msgid ""
@@ -2917,10 +2906,10 @@ msgid ""
 "used to roll back the system to a previously known good state in case of "
 "unwanted changes to the system."
 msgstr ""
-"Speicherauszüge erlaubt das Erstellen und Verwalten von Dateisystem-"
-"Speicherauszügen. Diese können verwendet werden um das System auf einen "
-"vorherigen Zustand zurückzusetzen, wenn unerwünschte Änderungen am System "
-"erfolgt sind."
+"Schnappschüsse erlaubt das Erstellen und Verwalten von Schnappschüssen des "
+"Dateisystems. Diese können verwendet werden um das System, bei unerwünschte "
+"Änderungen am System, in einen vorherigen Zustand zurück zu versetzen, von "
+"dem man weiß das er gut wahr."
 
 #: plinth/modules/snapshot/__init__.py:41
 msgid ""
@@ -2931,13 +2920,14 @@ msgid ""
 "accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
 "are not a replacement for backups."
 msgstr ""
-"Automatische Speicherauszüge werden stündlich, täglich, monatlich und "
-"jährlich gemacht. Ältere Speicherauszüge werden automatisch gelöscht; es "
-"werden 10 von jeder Art und 50 total gehalten. Obwohl Speicherauszüge "
+"Automatische Schnappschüsse des Dateisystems werden stündlich, täglich, "
+"monatlich und jährlich gemacht. Ältere Kopien werden automatisch gelöscht; "
+"es werden jeweils 10, insgesamt 50 Stück aufbewahrt. Obwohl diese sehr "
 "effizient sind und nur Änderungen speichern, können sie gelöscht werden um "
-"freien Platz zu schaffen. Einzelne Dateien von älteren Speicherauszügen "
-"können über das \".snapshots\" Verzeichnis besucht werden. Speicherauszüge "
-"sind kein Ersatz für Datensicherungen."
+"Speicherplatz frei zu machen. Zugriff auf einzelne Dateien von älteren "
+"Schnappschüssen können Sie über den versteckten Ordner \".snapshots\" im  "
+"Wurzel-Verzeichnis erhalten. Dateisystemschnappschüsse sind kein Ersatz für "
+"Datensicherungen (externe Backups!)."
 
 #: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
@@ -3043,7 +3033,7 @@ msgid ""
 "The options affect the {box_name} at its most general level, so be careful!"
 msgstr ""
 "Diese Optionen beeinflussen die Funktionen der {box_name} auf grundlegende "
-"Art und Weise, vorsichtig verwenden!"
+"Art und Weise, seien Sie sorgsam!"
 
 #: plinth/modules/tor/__init__.py:42
 msgid "Anonymity Network (Tor)"
@@ -3073,7 +3063,7 @@ msgstr "Tor Bridge Relay"
 
 #: plinth/modules/tor/__init__.py:92 plinth/modules/tor/__init__.py:119
 msgid "Tor Hidden Service"
-msgstr "Tor Hidden Dienst"
+msgstr "Tor versteckte Dienste"
 
 #: plinth/modules/tor/__init__.py:138
 msgid "Tor relay port available"
@@ -3112,9 +3102,10 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
-"Wenn aktiviert, {box_name} betreibt ein Tor Relay und schenkt Bandbreite an "
-"das Tor Netzwerk. Empfohlen, wenn Sie mehr als 2 MB/s upload und download "
-"Bandbreite zur Verfügung haben."
+"Bei der Aktivierung, wird {box_name} einen Tor Relay als Dienst starten und "
+"dem Tor Netzwerk Bandbreite zur Verfügung stellen. Wenn Sie mehr als 2 MB/s "
+"Upload Bandbreite zur Verfügung haben, sollten Sie diese Funktion "
+"aktivieren. (Es verbessert die Anonymisierung)."
 
 #: plinth/modules/tor/forms.py:43
 msgid "Enable Tor bridge relay"
@@ -3126,13 +3117,13 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
-"Wenn aktiviert, Relay-Informationen wird in der Tor Bridge Datenbank "
-"veröffentlicht, statt einer öffentlichen Tor Relay Datenbank, was das "
-"Zensieren dieses Knotens erschwert. Dies hilft anderen Zensur zum umgehen."
+"Bei der Aktivierung werden die Relay-Informationen in der Tor Bridge "
+"Datenbank veröffentlicht anstatt in einer öffentlichen Tor Relay Datenbank, "
+"was die Zensur des Knotens erschwert. Dies hilft anderen, Zensur zu umgehen."
 
 #: plinth/modules/tor/forms.py:51
 msgid "Enable Tor Hidden Service"
-msgstr "Tor Verborgenen Dienst einschalten"
+msgstr "von Tor verborgene Dienste einschalten"
 
 #: plinth/modules/tor/forms.py:54
 #, python-brace-format
@@ -3147,7 +3138,7 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:59
 msgid "Download software packages over Tor"
-msgstr "Software über Tor Netzwerk installieren"
+msgstr "Softwarepakete über das Tor Netzwerk herunterladen"
 
 #: plinth/modules/tor/forms.py:61
 msgid ""
@@ -3155,9 +3146,10 @@ msgid ""
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
 msgstr ""
-"Wenn aktiviert, wird Software für Installationen und Aktualisierungen über "
-"das Tor-Netzwerk heruntergeladen. Dies fügt einen Schritt zur Privatsphäre "
-"und Sicherheit während des Software-Downloads hinzu."
+"Wenn diese Option aktiviert wird werden zukünftige Softwarepakete für die "
+"Installation und den Aktualisierungen, über das Tor-Netzwerk "
+"heruntergeladen. Dies erhöht die Privatsphäre und Sicherheit während die "
+"Software herunter geladen wird."
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
@@ -3204,8 +3196,7 @@ msgstr "SOCKS"
 #: plinth/modules/tor/templates/tor.html:130
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr ""
-"Ein Tor SOCKS Port steht auf Ihrer %(box_name)s auf TCP port 9050 bereit."
+msgstr "Tor SOCKS Port steht auf Ihrer %(box_name)s auf TCP port 9050 bereit."
 
 #: plinth/modules/tor/views.py:66
 #, python-brace-format
@@ -3230,14 +3221,14 @@ msgid ""
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
 msgstr ""
 "BitTorrent ist ein peer-to-peer Protokoll zum Teilen von Dateien. Der "
-"Transmission daemon ist zuständig für das Teilen von Dateien. Es gilt zu "
-"beachten, dass BitTorrent nicht anonym funktioniert."
+"Transmission-Daemon verarbeitet BitTorrent Dateien. Es gilt zu beachten! "
+"BitTorrent ist nicht anonym!"
 
 #: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
-"Die Web-Oberfläche kann unter <a href=\"/transmission\">/transmission</a> "
+"Die Web-Oberfläche kann über <a href=\"/transmission\">/transmission</a> "
 "erreicht werden."
 
 #: plinth/modules/transmission/forms.py:31
@@ -3264,8 +3255,8 @@ msgid ""
 "hashed format.  To set a new password, enter the password in plain text."
 msgstr ""
 "Das Passwort zum Anmelden an der Web-Oberfläche. Das aktuelle Passwort wird "
-"als hash dargestellt. Um das neue Passwort zu setzen muss dieses im Klartext "
-"eingegeben werden."
+"in hashform dargestellt. Um das neue Passwort zu setzen muss dieses im "
+"Klartext eingegeben werden."
 
 #: plinth/modules/ttrss/__init__.py:39
 msgid "News Feed Reader (Tiny Tiny RSS)"
@@ -3285,8 +3276,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
 "rss</a> path on the web server."
 msgstr ""
-"Sobald eingeschaltet, steht Tiny Tiny RSS über <a href=\"/tt-rss\">/tt-rss</"
-"a> des Webservers zur Verfügung."
+"Nach Aktivierung, steht Tiny Tiny RSS über die URL <a href=\"/tt-rss\">/tt-"
+"rss</a> des Webservers zur Verfügung."
 
 #: plinth/modules/upgrades/__init__.py:37
 msgid "Software Upgrades"
@@ -3324,9 +3315,9 @@ msgid ""
 "unavailable and show an error.  Refresh the page to continue."
 msgstr ""
 "Abhängig von der Anzahl der zu installierenden Pakete, kann dies sehr lange "
-"dauern. Während Aktualisierungen im Gange sind, werden Sie nicht in der Lage "
-"sein, andere Pakete zu installieren. Während der Aktualisierung kann dieses "
-"Web-Interface vorübergehend nicht verfügbar sein und eine Fehlermeldung "
+"dauern. Während Aktualisierungen durchgeführt werden, sind Sie nicht in der "
+"Lage, andere Pakete zu installieren. Während der Aktualisierung kann die Web-"
+"Oberfläche vorübergehend nicht verfügbar sein und eine Fehlermeldung "
 "anzeigen. Aktualisieren Sie die Seite um fortzufahren."
 
 #: plinth/modules/upgrades/templates/upgrades.html:48
@@ -3356,7 +3347,7 @@ msgstr "Fehler beim Konfigurieren von automatischen Aktualisierungen: {error}"
 
 #: plinth/modules/upgrades/views.py:78
 msgid "Automatic upgrades enabled"
-msgstr "Automatische Aktualisierungen eingeschaltet"
+msgstr "Automatische Systemaktualisierung aktivieren"
 
 #: plinth/modules/upgrades/views.py:80
 msgid "Automatic upgrades disabled"
@@ -3630,7 +3621,7 @@ msgstr "Secure Shell (SSH) Server"
 #: plinth/service.py:123
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
-msgstr "{box_name} Webseitenbedienung (Plinth)"
+msgstr "{box_name} Web-Oberfläche (Plinth)"
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -3673,7 +3664,7 @@ msgstr ""
 #: plinth/templates/base.html:49
 #, python-format
 msgid "Plinth administrative interface for the %(box_name)s"
-msgstr "Plinth Verwaltungsoberfläche für %(box_name)s"
+msgstr "Plinth webbasierende Verwaltungsoberfläche für %(box_name)s"
 
 #: plinth/templates/base.html:84
 msgid "Toggle navigation"
