@@ -69,11 +69,11 @@
   {% endblock %}
 
   {% block uninstall %}
-    {% if diagnostics_module_name and not is_module_essential %}
+    {% if uninstall_url %}
       <br>
       <p>
         <a class="btn btn-default btn-md"
-           href="{% url 'uninstall' diagnostics_module_name %}">
+           href="{% url uninstall_url %}">
           <span class="glyphicon glyphicon-trash"
                 aria-hidden="true"></span>
           {% trans "Uninstall &raquo;" %}

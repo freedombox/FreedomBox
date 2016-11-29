@@ -22,6 +22,7 @@ URLs for the ikiwiki module
 from django.conf.urls import url
 
 from . import views
+from plinth.views import UninstallView
 
 
 urlpatterns = [
@@ -31,4 +32,6 @@ urlpatterns = [
     url(r'^apps/ikiwiki/(?P<name>[\w.@+-]+)/delete/$', views.delete,
         name='delete'),
     url(r'^apps/ikiwiki/create/$', views.create, name='create'),
+    url(r'^apps/ikiwiki/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

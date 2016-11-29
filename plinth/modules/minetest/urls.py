@@ -22,8 +22,11 @@ URLs for the minetest module.
 from django.conf.urls import url
 
 from plinth.modules.minetest import MinetestServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/minetest/$', MinetestServiceView.as_view(), name='index'),
+    url(r'^apps/minetest/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

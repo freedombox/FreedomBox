@@ -21,7 +21,7 @@ URLs for the Shaarli module.
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
+from plinth.views import ServiceView, UninstallView
 from plinth.modules import shaarli
 
 
@@ -31,4 +31,6 @@ urlpatterns = [
             description=shaarli.description,
             show_status_block=False,
         ), name='index'),
+    url(r'^apps/shaarli/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

@@ -22,8 +22,11 @@ URLs for the quassel module.
 from django.conf.urls import url
 
 from plinth.modules.quassel import QuasselServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/quassel/$', QuasselServiceView.as_view(), name='index'),
+    url(r'^apps/quassel/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

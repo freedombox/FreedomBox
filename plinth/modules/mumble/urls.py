@@ -22,8 +22,11 @@ URLs for the Mumble module
 from django.conf.urls import url
 
 from plinth.modules.mumble import MumbleServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/mumble/$', MumbleServiceView.as_view(), name='index'),
+    url(r'^apps/mumble/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

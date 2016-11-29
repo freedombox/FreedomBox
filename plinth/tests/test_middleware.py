@@ -109,7 +109,7 @@ class TestSetupMiddleware(TestCase):
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
         module.setup_helper.is_finished = True
-        module.setup_helper.collect_result.return_value = None
+        module.setup_helper.collect_result.return_value = ('setup', None)
         module.setup_helper.get_state.return_value = 'up-to-date'
         loaded_modules.__getitem__.return_value = module
 

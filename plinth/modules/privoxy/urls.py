@@ -22,8 +22,11 @@ URLs for the Privoxy module.
 from django.conf.urls import url
 
 from plinth.modules.privoxy import PrivoxyServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/privoxy/$', PrivoxyServiceView.as_view(), name='index'),
+    url(r'^apps/privoxy/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

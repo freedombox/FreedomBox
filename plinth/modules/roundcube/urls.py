@@ -21,7 +21,7 @@ URLs for the Roundcube module.
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
+from plinth.views import ServiceView, UninstallView
 from plinth.modules import roundcube
 
 
@@ -32,4 +32,6 @@ urlpatterns = [
             description=roundcube.description,
             show_status_block=False
         ), name='index'),
+    url(r'^apps/roundcube/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

@@ -22,7 +22,7 @@ URLs for the Deluge module.
 from django.conf.urls import url
 
 from plinth.modules import deluge
-from plinth.views import ServiceView
+from plinth.views import ServiceView, UninstallView
 
 
 urlpatterns = [
@@ -31,4 +31,6 @@ urlpatterns = [
             diagnostics_module_name="deluge",
             service_id=deluge.managed_services[0]
         ), name='index'),
+    url(r'^apps/deluge/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

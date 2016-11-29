@@ -19,14 +19,12 @@
 Main Plinth views
 """
 
+from django import urls
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
-from django.forms import Form
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.urls import reverse
 from django.utils.translation import ugettext as _
 from stronghold.decorators import public
 import time
@@ -52,31 +50,6 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label})
-
-
-def uninstall(request, modulename):
-    """Show confirmation to uninstall module."""
-    form = None
-    module = plinth.module_loader.loaded_modules[modulename]
-
-    if request.method == 'POST':
-        module.disable()
-
-        transaction = plinth.package.Transaction(
-            modulename, module.managed_packages)
-        transaction.uninstall()
-
-        from plinth import models
-        models.Module.objects.filter(pk=modulename).delete()
-
-        return redirect(reverse('apps:index'))
-    else:
-        form = Form(prefix='uninstall')
-
-    return TemplateResponse(request, 'uninstall.html',
-                            {'title': _('Uninstall'),
-                             'packages': module.managed_packages,
-                             'form': form})
 
 
 class ServiceView(FormView):
@@ -146,7 +119,9 @@ class ServiceView(FormView):
         if self.description:
             context['description'] = self.description
         context['show_status_block'] = self.show_status_block
-        context['is_module_essential'] = self.is_module_essential
+        if not self.is_module_essential:
+            context['uninstall_url'] = self.diagnostics_module_name \
+                                       + ':uninstall'
         return context
 
 
@@ -247,6 +222,38 @@ class SetupView(TemplateView):
         self.kwargs['setup_helper'].run_in_thread()
 
         # Give a moment for the setup process to start and show
+        # meaningful status.
+        time.sleep(1)
+
+        return self.render_to_response(self.get_context_data())
+
+
+class UninstallView(TemplateView):
+    """View to prompt and uninstall applications."""
+    template_name = 'uninstall.html'
+
+    def get_module(self):
+        resolver_match = urls.resolve(self.request.path_info)
+        module_name = resolver_match.namespaces[0]
+        return plinth.module_loader.loaded_modules[module_name]
+
+    def get_context_data(self, **kwargs):
+        """Return the context data rendering the template."""
+        context = super(UninstallView, self).get_context_data(**kwargs)
+        context['setup_helper'] = self.get_module().setup_helper
+        return context
+
+    def post(self, *args, **kwargs):
+        """Handle uninstall applications.
+
+        Start the application uninstall, and refresh the page every few
+        seconds to keep displaying the status.
+        """
+        module = self.get_module()
+        module.disable()
+        module.setup_helper.run_in_thread(process='uninstall')
+
+        # Give a moment for the uninstall process to start and show
         # meaningful status.
         time.sleep(1)
 

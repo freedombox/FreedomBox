@@ -37,29 +37,38 @@ class Helper(object):
         """Initialize the object."""
         self.module_name = module_name
         self.module = module
+        self.current_process = None
         self.current_operation = None
         self.is_finished = None
         self.exception = None
         self.allow_install = True
 
-    def run_in_thread(self):
-        """Execute the setup process in a thread."""
-        thread = threading.Thread(target=self._run)
-        thread.start()
+    def run_in_thread(self, process='setup'):
+        """Execute the process in a thread."""
+        if process == 'setup' or process == 'uninstall':
+            target = self._run
+            self.current_process = process
+            thread = threading.Thread(target=target)
+            thread.start()
 
     def _run(self):
         """Collect exceptions when running in a thread."""
         try:
-            self.run()
+            if self.current_process == 'setup':
+                self.run()
+            elif self.current_process == 'uninstall':
+                self.run_uninstall()
         except Exception as exception:
             self.exception = exception
 
     def collect_result(self):
-        """Return the exception if any."""
+        """Return the current process and exception if any."""
+        current_process = self.current_process
         exception = self.exception
         self.exception = None
         self.is_finished = None
-        return exception
+        self.current_process = None
+        return (current_process, exception)
 
     def run(self, allow_install=True):
         """Execute the setup process."""
@@ -91,6 +100,26 @@ class Helper(object):
             self.is_finished = True
             self.current_operation = None
 
+    def run_uninstall(self):
+        """Execute the uninstall process."""
+        # Uninstall for the module is already running
+        if self.current_operation:
+            return
+
+        self.exception = None
+        self.current_operation = None
+        self.is_finished = False
+        try:
+            self.uninstall(self.module.managed_packages)
+        except Exception as exception:
+            logger.exception('Error running uninstall - %s', exception)
+            raise exception
+        else:
+            self.remove_setup_version()
+        finally:
+            self.is_finished = True
+            self.current_operation = None
+
     def install(self, package_names):
         """Install a set of packages marking progress."""
         if self.allow_install is False:
@@ -111,6 +140,18 @@ class Helper(object):
             'transaction': transaction,
         }
         transaction.install()
+
+    def uninstall(self, package_names):
+        """Uninstall a set of packages marking progress."""
+        logger.info('Running uninstall for module - %s, packages - %s',
+                    self.module_name, package_names)
+
+        transaction = package.Transaction(self.module_name, package_names)
+        self.current_operation = {
+            'step': 'uninstall',
+            'transaction': transaction,
+        }
+        transaction.uninstall()
 
     def call(self, step, method, *args, **kwargs):
         """Call an arbitrary method during setup and note down its stage."""
@@ -155,6 +196,12 @@ class Helper(object):
 
         models.Module.objects.update_or_create(
             pk=self.module_name, defaults={'setup_version': version})
+
+    def remove_setup_version(self):
+        """Delete the setup version of a module."""
+        from . import models
+
+        models.Module.objects.filter(pk=self.module_name).delete()
 
 
 def init(module_name, module):

@@ -22,8 +22,11 @@ URLs for the repro module.
 from django.conf.urls import url
 
 from plinth.modules.repro import ReproServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/repro/$', ReproServiceView.as_view(), name='index'),
+    url(r'^apps/repro/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

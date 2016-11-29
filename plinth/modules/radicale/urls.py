@@ -22,8 +22,11 @@ URLs for the radicale module.
 from django.conf.urls import url
 
 from .views import RadicaleServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/radicale/$', RadicaleServiceView.as_view(), name='index'),
+    url(r'^apps/radicale/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

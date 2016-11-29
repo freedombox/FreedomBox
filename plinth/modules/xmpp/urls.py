@@ -22,9 +22,12 @@ URLs for the XMPP module
 from django.conf.urls import url
 
 from .views import EjabberdServiceView, JsxcView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/xmpp/$', EjabberdServiceView.as_view(), name='index'),
     url(r'^apps/xmpp/jsxc/$', JsxcView.as_view(), name='jsxc'),
+    url(r'^apps/xmpp/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

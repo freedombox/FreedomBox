@@ -22,9 +22,12 @@ URLs for the Transmission module.
 from django.conf.urls import url
 
 from .views import TransmissionServiceView
+from plinth.views import UninstallView
 
 
 urlpatterns = [
     url(r'^apps/transmission/$',
         TransmissionServiceView.as_view(), name='index'),
+    url(r'^apps/transmission/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

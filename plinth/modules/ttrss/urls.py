@@ -21,7 +21,7 @@ URLs for the Tiny Tiny RSS module.
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
+from plinth.views import ServiceView, UninstallView
 from plinth.modules import ttrss
 
 
@@ -32,4 +32,6 @@ urlpatterns = [
             description=ttrss.description,
             show_status_block=False
         ), name='index'),
+    url(r'^apps/ttrss/uninstall/$',
+        UninstallView.as_view(), name='uninstall'),
 ]

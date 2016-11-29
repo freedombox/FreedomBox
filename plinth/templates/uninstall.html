@@ -21,32 +21,63 @@
 {% load bootstrap %}
 {% load i18n %}
 
+{% block page_head %}
+
+  {% if setup_helper.current_operation %}
+    <meta http-equiv="refresh" content="3" />
+  {% endif %}
+
+{% endblock %}
+
+
 {% block content %}
 
-  <h2>{{ title }}</h2>
+  <h2>{% trans "Uninstall" %}: {{ setup_helper.module.title }}</h2>
 
-  <p>
-    {% trans "The following packages will be removed:" %}
-    <ul>
-      {% for package in packages %}
-        <li>{{ package }}</li>
-      {% endfor %}
-    </ul>
-  </p>
+  {% if not setup_helper.current_operation %}
+    <p>
+      {% trans "The following packages will be removed:" %}
+      <ul>
+        {% for package in setup_helper.module.managed_packages %}
+          <li>{{ package }}</li>
+        {% endfor %}
+      </ul>
+    </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      Are you sure you want to uninstall?
-    {% endblocktrans %}
-  </p>
+    <p>
+      {% blocktrans trimmed %}
+        Are you sure you want to uninstall?
+      {% endblocktrans %}
+    </p>
 
-  <form class="form" method="post">
-    {% csrf_token %}
+    <form action="" method="post">
+      {% csrf_token %}
 
-    {{ form|bootstrap }}
+      <input type="submit" class="btn btn-md btn-primary"
+             value="{% trans "Uninstall" %}" />
+    </form>
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Uninstall" %}"/>
-  </form>
+  {% else %}
+    {% with transaction=setup_helper.current_operation.transaction %}
+      <div>
+        {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
+          Uninstalling {{ package_names }}: {{ status }}
+        {% endblocktrans %}
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped active"
+             role="progressbar" aria-valuemin="0" aria-valuemax="100"
+             aria-valuenow="{{ transaction.percentage }}"
+             style="width: {{ transaction.percentage }}%">
+          <span class="sr-only">
+            {% blocktrans trimmed with percentage=transaction.percentage %}
+              {{ percentage }}% complete
+            {% endblocktrans %}
+          </span>
+        </div>
+      </div>
+    {% endwith %}
+
+  {% endif %}
 
 {% endblock %}

@@ -21,6 +21,7 @@ Django middleware to show pre-setup message and setup progress.
 
 from django import urls
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 import logging
 
@@ -54,22 +55,48 @@ class SetupMiddleware(object):
 
         # Collect errors from any previous operations and show them
         if module.setup_helper.is_finished:
-            exception = module.setup_helper.collect_result()
-            if not exception:
-                messages.success(request, _('Application installed.'))
-            else:
-                if isinstance(exception, PackageException):
-                    error_string = getattr(exception, 'error_string',
-                                           str(exception))
-                    error_details = getattr(exception, 'error_details', '')
-                    message = _('Error installing application: {string} '
-                                '{details}').format(
-                        string=error_string, details=error_details)
+            (current_process, exception) = module.setup_helper.collect_result()
+            if current_process == 'setup':
+                if not exception:
+                    messages.success(request, _('Application installed.'))
                 else:
-                    message = _('Error installing application: {error}') \
-                        .format(error=exception)
+                    if isinstance(exception, PackageException):
+                        error_string = getattr(exception, 'error_string',
+                                               str(exception))
+                        error_details = getattr(exception, 'error_details', '')
+                        message = _('Error installing application: {string} '
+                                    '{details}').format(
+                                        string=error_string,
+                                        details=error_details)
+                    else:
+                        message = _('Error installing application: {error}') \
+                                  .format(error=exception)
 
-                messages.error(request, message)
+                    messages.error(request, message)
+
+            elif current_process == 'uninstall':
+                if not exception:
+                    messages.success(request, _('Application uninstalled.'))
+                    redirect(urls.reverse('apps:index'))
+                else:
+                    if isinstance(exception, PackageException):
+                        error_string = getattr(exception, 'error_string',
+                                               str(exception))
+                        error_details = getattr(exception, 'error_details', '')
+                        message = _('Error uninstalling application: {string} '
+                                    '{details}').format(
+                                        string=error_string,
+                                        details=error_details)
+                    else:
+                        message = _('Error uninstalling application: {error}') \
+                                  .format(error=exception)
+
+                    messages.error(request, message)
+
+        # Check if uninstall process if running
+        if module.setup_helper.current_process == 'uninstall':
+            view = views.UninstallView.as_view()
+            return view(request)
 
         # Check if application is up-to-date
         if module.setup_helper.get_state() == 'up-to-date':
