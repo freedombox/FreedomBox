@@ -74,9 +74,10 @@
           {{ paragraph|safe }}
         </div>
       {% endfor %}
+      <br>
 
       {% if user.is_authenticated and configure_url %}
-        <a class="btn btn-default btn-sm"
+        <a class="btn btn-primary btn-sm" style="margin-left : 10px; margin-bottom : 5px"
            href="{{ configure_url }}">
             {% trans "Configure &raquo;" %}</a>
       {% endif %}
