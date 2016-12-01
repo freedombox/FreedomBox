@@ -179,13 +179,6 @@ class FirstBootView(django.views.generic.CreateView):
         kwargs['request'] = self.request
         return kwargs
 
-    def form_valid(self, form):
-        """Mark this first boot step as completed and save form."""
-        if User.objects.all():
-            first_boot.mark_step_done('users_firstboot')
-
-        return super().form_valid(form)
-
     def get_success_url(self):
         """Return the next first boot step after valid form submission."""
         return reverse(first_boot.next_step())

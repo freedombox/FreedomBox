@@ -27,6 +27,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
+from plinth.modules import first_boot
 from plinth.modules.security import set_restricted_access
 
 # Usernames used by optional services (that might not be installed yet).
@@ -256,6 +257,8 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
         """Create and log the user in."""
         user = super().save(commit=commit)
         if commit:
+            first_boot.mark_step_done('users_firstboot')
+
             try:
                 actions.superuser_run(
                     'ldap',
