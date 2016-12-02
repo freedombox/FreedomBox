@@ -160,7 +160,7 @@
   <div class="container">
     <div class="row">
       {% block content_row %}
-        <div class="col-md-3">
+        <div class="col-md-3 ">
           {% block submenu %}
             {% if submenu %}
               <div class="sidebar">
@@ -187,8 +187,21 @@
             {# main content goes here #}
           {% endblock %}
         </div><!--/col-->
-      {% endblock %}
+        <div class="col-md-12">
+        {% block icons %}
+          {# icons go here #}
+        {% endblock %}
+      </div>
     </div><!--/row-->
+    {% endblock %}
+
+      <div class="text-center">
+          {% block center-header %}
+            {# this center-header should contain help texts but no menus#}
+          {% endblock %}
+      </div>
+
+
 
     <hr>
 
