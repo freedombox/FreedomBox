@@ -67,9 +67,11 @@ def init():
     menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
 
     global service
-    service = service_module.Service(
-        'roundcube', title, ports=['http', 'https'], is_external=True,
-        is_enabled=is_enabled, enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            'roundcube', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
 
     if is_enabled():
         add_shortcut()
