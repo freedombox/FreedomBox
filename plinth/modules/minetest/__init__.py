@@ -64,9 +64,12 @@ def init():
     menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['minetest-plinth'],
-        is_external=True, enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title,
+            ports=['minetest-plinth'], is_external=True, enable=enable,
+            disable=disable)
 
     if service.is_enabled():
         add_shortcut()

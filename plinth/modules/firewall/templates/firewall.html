@@ -40,49 +40,54 @@
 
     <div class="row">
       <div class="col-lg-8">
-        <table class='table table-autowidth table-striped'>
+        <table class='table table-autowidth'>
           <thead>
+            <th>{% trans "View Ports" %}</th>
             <th>{% trans "Service/Port" %}</th>
             <th>{% trans "Status" %}</th>
           </thead>
 
           <tbody>
             {% for service in services|dictsort:"name" %}
-              {% if service.ports %}
-                <tr>
-                  <td><strong>{{ service.name }}</strong></td>
-                  <td>
-                    {% if service.is_enabled %}
-                      <span class='label label-success'>
-                        {% trans "Enabled" %}</span>
-                    {% else %}
-                      <span class='label label-warning'>
-                        {% trans "Disabled" %}</span>
-                    {% endif %}
-                  </td>
-                </tr>
-
-                {% for port in service.ports %}
+                {% if service.ports %}
                   <tr>
-                    <td class='cell-indented'><em>{{ port }}</em></td>
                     <td>
-                      {% if port in internal_enabled_services and port in external_enabled_services %}
+                      <button data-toggle="collapse" data-target=".{{service.service_id}}" class="btn btn-info btn-xs">+</button>
+                    </td>
+                    <td><strong>{{ service.name }}</strong></td>
+                    <td >
+                      {% if service.is_enabled %}
                         <span class='label label-success'>
-                          {% trans "Permitted" %}</span>
-                      {% elif port in internal_enabled_services %}
-                        <span class='label label-warning'>
-                          {% trans "Permitted (internal only)" %}</span>
-                      {% elif port in external_enabled_services %}
-                        <span class='label label-warning'>
-                          {% trans "Permitted (external only)" %}</span>
+                          {% trans "Enabled" %}</span>
                       {% else %}
-                        <span class='label label-danger'>
-                          {% trans "Blocked" %}</span>
+                        <span class='label label-warning'>
+                          {% trans "Disabled" %}</span>
                       {% endif %}
                     </td>
                   </tr>
-                {% endfor %}
-              {% endif %}
+                    {% for port in service.ports %}
+                        <tr  class="collapse out {{service.service_id}}" style="background-color: #f9f9f9" >
+                          <td class='cell-indented'><em>{{ port }}</em></td>
+                          <td>
+                            {% if port in internal_enabled_services and port in external_enabled_services %}
+                              <span class='label label-success'>
+                                {% trans "Permitted" %}</span>
+                            {% elif port in internal_enabled_services %}
+                              <span class='label label-warning'>
+                                {% trans "Permitted (internal only)" %}</span>
+                            {% elif port in external_enabled_services %}
+                              <span class='label label-warning'>
+                                {% trans "Permitted (external only)" %}</span>
+                            {% else %}
+                              <span class='label label-danger'>
+                                {% trans "Blocked" %}</span>
+                            {% endif %}
+                          </td>
+                          <td></td>
+                        </tr>
+                    {% endfor %}
+                  </div>
+                {% endif %}
             {% endfor %}
           </tbody>
         </table>
