@@ -49,6 +49,9 @@ description = [
 
 service = None
 
+icon_url = _('https://lh4.googleusercontent.com/-efbgLsablVo/AAAA\
+AAAAAAI/AAAAAAAAAAU/RpKv1T4pjf8/photo.jpg')
+
 
 def init():
     """Intialize the module."""
@@ -84,7 +87,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('ttrss', title, '/tt-rss', 'glyphicon-envelope',
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def is_enabled():

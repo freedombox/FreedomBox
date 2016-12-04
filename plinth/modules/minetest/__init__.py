@@ -57,6 +57,9 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+icon_url = _('https://raw.githubusercontent.com/linuxserver/beta-templates/\
+master/lsiodev/img/minetest-icon.png')
+
 
 def init():
     """Initialize the module."""
@@ -91,7 +94,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
                            description, reverse('minetest:index'),
-                           login_required=False)
+                           login_required=False, icon_url=icon_url)
 
 
 def enable():

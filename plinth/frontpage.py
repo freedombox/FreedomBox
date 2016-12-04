@@ -28,7 +28,7 @@ def get_shortcuts():
 
 
 def add_shortcut(id, label, url, icon, details=None, configure_url=None,
-                 login_required=False):
+                 icon_url=None, login_required=False):
     """Add shortcut to front page."""
 
     if not url:
@@ -42,6 +42,7 @@ def add_shortcut(id, label, url, icon, details=None, configure_url=None,
         'login_required': login_required,
         'details': details,
         'configure_url': configure_url,
+        'icon_url': icon_url,
     }
 
 

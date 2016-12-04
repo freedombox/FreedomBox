@@ -51,6 +51,9 @@ description = [
       'from your desktop and Android devices are available.')
 ]
 
+icon_url = _('https://upload.wikimedia.org/wikipedia/commons\
+/thumb/8/8f/Icons_mumble.svg/400px-Icons_mumble.svg.png')
+
 
 def init():
     """Intialize the Mumble module."""
@@ -91,7 +94,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
                            description, reverse('mumble:index'),
-                           login_required=False)
+                           login_required=False, icon_url=icon_url)
 
 
 def enable():

@@ -62,6 +62,9 @@ description = [
 
 service = None
 
+icon_url = _('https://svn.resiprocate.org/rep/resiprocate/branches/b\
+-dpocock-autotools/resip/stack/doc/reSIProcate-logo-big.gif')
+
 
 def init():
     """Initialize the repro module."""
@@ -103,7 +106,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
                            description, reverse('repro:index'),
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def enable():

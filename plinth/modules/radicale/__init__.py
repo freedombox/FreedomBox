@@ -54,6 +54,8 @@ description = [
 
 CONFIG_FILE = '/etc/radicale/config'
 
+icon_url = _('http://pragmageek.fr/images/2015/radicale-logo.png')
+
 
 def init():
     """Initialize the radicale module."""
@@ -89,7 +91,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
                            description, reverse('radicale:index'),
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def enable():

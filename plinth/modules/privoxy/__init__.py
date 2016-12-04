@@ -61,6 +61,9 @@ description = [
 
 service = None
 
+icon_url = _('https://upload.wikimedia.org/wikipedia/commons/a/a8\
+/Privoxy_Icon.png')
+
 
 def init():
     """Intialize the module."""
@@ -96,7 +99,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
                            description, reverse('privoxy:index'),
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def enable():
