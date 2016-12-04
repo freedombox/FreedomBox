@@ -69,7 +69,8 @@ def _get_steps():
     modules = module_loader.loaded_modules
     for module_object in modules.values():
         if getattr(module_object, 'first_boot_steps', None):
-            steps.extend(module_object.first_boot_steps)
+            if module_object.setup_helper.get_state() != 'needs-setup':
+                steps.extend(module_object.first_boot_steps)
 
     _all_first_boot_steps = sorted(steps, key=operator.itemgetter('order'))
     return _all_first_boot_steps
