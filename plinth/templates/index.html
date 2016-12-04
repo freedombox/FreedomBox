@@ -38,10 +38,10 @@
               {% endif %}
                     <center>
                       <span class="{{ shortcut.icon }} glyphicon"
-                          style="font-size: 450%"></span>
-                          <br>
-                    {{ shortcut.label }}
-                  </center>
+                            style="font-size: 300%"></span>
+                      <br>
+                      {{ shortcut.label }}
+                    </center>
                   </a>
                 </li>
             </ul>
@@ -77,9 +77,10 @@
       <br>
 
       {% if user.is_authenticated and configure_url %}
-        <a class="btn btn-primary btn-sm" style="margin-left : 10px; margin-bottom : 5px"
+        <a class="btn btn-primary btn-sm"
+           style="margin-left : 10px; margin-bottom : 5px"
            href="{{ configure_url }}">
-            {% trans "Configure &raquo;" %}</a>
+          {% trans "Configure &raquo;" %}</a>
       {% endif %}
 
     </div>
@@ -88,7 +89,7 @@
 {% endblock %}
 
 
-{% block center-header %}
+{% block center-info %}
 
   <h4>
     {% blocktrans trimmed %}

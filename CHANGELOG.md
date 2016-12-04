@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - config: Handle clearing of domain name.
 - letsencrypt: When no domains are configured, show better message,
   and hide diagnostics button.
+- frontpage: Fix shortcut spacing issue.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
@@ -25,6 +26,8 @@ All notable changes to this project will be documented in this file.
 - frontpage: Don't show apps requiring login, unless logged in.
 - ttrss: Show status block.
 - frontpage: Make app icons larger.
+- frontpage: Center shortcut text under icons.
+- frontpage: Move info to bottom and center.
 
 ## [0.11.0] - 2016-09-21
 ### Added
