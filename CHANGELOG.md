@@ -28,6 +28,8 @@ All notable changes to this project will be documented in this file.
 - frontpage: Make app icons larger.
 - frontpage: Center shortcut text under icons.
 - frontpage: Move info to bottom and center.
+- firewall: Only show services that have completed setup.
+- firewall: Collapse port lists so they are hidden by default.
 
 ## [0.11.0] - 2016-09-21
 ### Added
