@@ -71,6 +71,12 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['enable'])
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['http', 'https'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 

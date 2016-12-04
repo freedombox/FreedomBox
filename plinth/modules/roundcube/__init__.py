@@ -83,6 +83,11 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
     helper.call('post', add_shortcut)
+    global service
+    if service is None:
+        service = service_module.Service(
+            'roundcube', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def add_shortcut():

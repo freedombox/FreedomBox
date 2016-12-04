@@ -103,8 +103,24 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'tor', ['setup'])
     helper.call('post', actions.superuser_run, 'tor',
                 ['configure', '--apt-transport-tor', 'enable'])
+
+    global socks_service
+    if socks_service is None:
+        socks_service = service_module.Service(
+            'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
+            is_external=False, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
     helper.call('post', socks_service.notify_enabled, None, True)
+
+    global bridge_service
+    if bridge_service is None:
+        bridge_service = service_module.Service(
+            'tor-bridge', _('Tor Bridge Relay'),
+            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
+            is_external=True, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
     helper.call('post', bridge_service.notify_enabled, None, True)
+
     helper.call('post', update_hidden_service_domain)
 
 

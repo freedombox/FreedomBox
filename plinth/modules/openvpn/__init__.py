@@ -67,6 +67,10 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['openvpn'], is_external=True)
 
 
 def is_setup():

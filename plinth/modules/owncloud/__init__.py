@@ -77,6 +77,11 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'owncloud-setup', ['enable'])
+    global service
+    if service is None:
+        service = service_module.Service(
+            'owncloud', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=_enable, disable=_disable)
     helper.call('post', service.notify_enabled, None, True)
 
 
