@@ -19,7 +19,7 @@
 Plinth module for Quassel.
 """
 
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -96,7 +96,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, reverse('quassel:index'),
+                           description, reverse_lazy('quassel:index'),
                            login_required=True)
 
 

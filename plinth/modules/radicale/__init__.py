@@ -20,7 +20,7 @@ Plinth module for radicale.
 """
 
 import augeas
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -88,7 +88,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('radicale', title, None, 'glyphicon-calendar',
-                           description, reverse('radicale:index'),
+                           description, reverse_lazy('radicale:index'),
                            login_required=True)
 
 
