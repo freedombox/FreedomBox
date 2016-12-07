@@ -61,8 +61,8 @@ def init():
             'ikiwiki', title, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
-    if is_enabled():
-        add_shortcuts()
+        if is_enabled():
+            add_shortcuts()
 
 
 def setup(helper, old_version=None):

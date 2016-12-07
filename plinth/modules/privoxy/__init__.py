@@ -75,8 +75,8 @@ def init():
             is_external=False,
             enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 def setup(helper, old_version=None):

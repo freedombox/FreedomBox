@@ -70,13 +70,11 @@ def init():
             ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
-
+        if is_enabled():
+            add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
-
-    if is_enabled():
-        add_shortcut()
 
 
 def setup(helper, old_version=None):
