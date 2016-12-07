@@ -76,8 +76,8 @@ def init():
             ports=['sip', 'sips', 'rtp-plinth'],
             is_external=True, enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 class ReproServiceView(ServiceView):

@@ -72,8 +72,8 @@ def init():
             managed_services[0], title, ports=['quassel-plinth'],
             is_external=True, enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 class QuasselServiceView(ServiceView):

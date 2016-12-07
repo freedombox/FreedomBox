@@ -65,8 +65,8 @@ def init():
             is_external=True,
             enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 class MumbleServiceView(ServiceView):

@@ -60,8 +60,8 @@ def init():
             'shaarli', title, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
-    if is_enabled():
-        add_shortcut()
+        if is_enabled():
+            add_shortcut()
 
 
 def setup(helper, old_version=None):
