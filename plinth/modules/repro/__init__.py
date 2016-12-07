@@ -19,7 +19,7 @@
 Plinth module for repro.
 """
 
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -102,7 +102,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description, reverse('repro:index'),
+                           description, reverse_lazy('repro:index'),
                            login_required=True)
 
 
