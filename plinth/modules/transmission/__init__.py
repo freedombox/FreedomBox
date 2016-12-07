@@ -37,7 +37,7 @@ managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
-title = _('BitTorrent (Transmission)')
+title = ('BitTorrent \n (Transmission)')
 
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '

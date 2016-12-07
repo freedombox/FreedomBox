@@ -38,9 +38,9 @@
                   <a href="{{ shortcut.url }}">
               {% endif %}
                     <center>
-                      <img src="{% static 'theme/icons/' %}{{ shortcut.id }}.png" style="max-width: 100px; height: 100px"/>
+                      <img src="{% static 'theme/icons/' %}{{ shortcut.icon_url }}.png" style="max-width: 100px; height: 100px" />
                       <br>
-                      {{ shortcut.label }}
+                      {{ shortcut.label|linebreaks }}
                     </center>
                   </a>
                 </li>

@@ -40,7 +40,7 @@ managed_services = ['radicale']
 
 managed_packages = ['radicale']
 
-title = _('Calendar and Addressbook (Radicale)')
+title = ('Calendar and Addressbook \n (Radicale)')
 
 description = [
     format_lazy(
