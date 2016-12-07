@@ -39,7 +39,7 @@ depends = ['apps', 'names']
 managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
                     'apt-transport-tor']
 
-title = _('Anonymity Network (Tor)')
+title = ('Anonymity Network \n (Tor)')
 
 description = [
     _('Tor is an anonymous communication system. You can learn more '

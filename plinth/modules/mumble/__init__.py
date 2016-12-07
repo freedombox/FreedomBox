@@ -34,7 +34,7 @@ version = 1
 
 depends = ['apps']
 
-title = _('Voice Chat (Mumble)')
+title = ('Voice Chat \n (Mumble)')
 
 service = None
 

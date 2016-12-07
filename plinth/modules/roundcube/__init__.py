@@ -34,7 +34,7 @@ depends = ['apps']
 
 managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
 
-title = _('Email Client (Roundcube)')
+title = ('Email Client \n (Roundcube)')
 
 description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
