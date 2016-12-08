@@ -58,9 +58,6 @@ $(function() {
         checkFlash: false,
         rosterAppend: 'body',
         root: plinth_settings.jsxc_root,
-        displayRosterMinimized: function() {
-            return true;
-        },
         otr: {
             debug: true,
             SEND_WHITESPACE_TAG: true,
