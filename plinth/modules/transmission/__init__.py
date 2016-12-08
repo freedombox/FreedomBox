@@ -46,6 +46,8 @@ description = [
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
 
+icon_url = _('https://torrentfreak.com/images/transmission-2.jpg')
+
 service = None
 
 
@@ -89,7 +91,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut(
             'transmission', title, '/transmission', 'glyphicon-save',
-            login_required=True)
+            icon_url=icon_url, login_required=True)
 
 
 def is_enabled():

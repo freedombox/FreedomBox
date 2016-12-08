@@ -56,6 +56,9 @@ service = None
 
 logger = logging.getLogger(__name__)
 
+icon_url_jsxc = _('https://www.jsxc.org/images/jsxc.png')
+icon_url_xmpp = _('http://blog.spec-india.com/wp-content/uploads/xmpp-1.png')
+
 
 def init():
     """Initialize the XMPP module"""
@@ -100,10 +103,10 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client (jsxc)'),
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
-                           None, login_required=True)
+                           None, login_required=True, icon_url=icon_url_jsxc)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
                            description, reverse('xmpp:index'),
-                           login_required=True)
+                           login_required=True, icon_url=icon_url_xmpp)
 
 
 def is_enabled():

@@ -48,6 +48,8 @@ description = [
       'from <a href="/ikiwiki">/ikiwiki</a>.')
 ]
 
+icon_url = _('https://www.brandeps.com/logo-download/I/Ikiwiki-01.png')
+
 
 def init():
     """Initialize the ikiwiki module."""
@@ -84,7 +86,7 @@ def add_shortcuts():
     for site in sites:
         frontpage.add_shortcut(
             'ikiwiki_' + site, site, '/ikiwiki/' + site, 'glyphicon-edit',
-            login_required=False)
+            login_required=False, icon_url=icon_url)
 
 
 def is_enabled():

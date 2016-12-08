@@ -60,6 +60,9 @@ description = [
 
 service = None
 
+icon_url = _('https://lh4.ggpht.com/1Cg3rZY5fQkO9250VPz8_1lX8\
+iGZe6JU_6a104skpw99ojjvWBYWx6Sa4oY96Fqtww=w300')
+
 
 def init():
     """Intialize the module."""
@@ -93,7 +96,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut(
         'roundcube', title, '/roundcube', 'glyphicon-envelope',
-        login_required=True)
+        login_required=True, icon_url=icon_url)
 
 
 def is_enabled():

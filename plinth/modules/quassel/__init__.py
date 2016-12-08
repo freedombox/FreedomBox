@@ -59,6 +59,9 @@ description = [
       'are available.'),
 ]
 
+icon_url = _('http://icons.iconarchive.com/icons/oxygen-icons.\
+org/oxygen/256/Apps-quassel-icon.png')
+
 
 def init():
     """Initialize the quassel module."""
@@ -97,7 +100,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
                            description, reverse('quassel:index'),
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def enable():

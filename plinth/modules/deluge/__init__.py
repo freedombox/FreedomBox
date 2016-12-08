@@ -49,6 +49,9 @@ description = [
       'it immediately after enabling this service.')
 ]
 
+icon_url = _('https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/\
+Deluge-Logo.svg/2000px-Deluge-Logo.svg.png')
+
 
 def init():
     """Initialize the Deluge module."""
@@ -83,7 +86,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('deluge', title, '/deluge', 'glyphicon-magnet',
-                           login_required=True)
+                           login_required=True, icon_url=icon_url)
 
 
 def is_enabled():
