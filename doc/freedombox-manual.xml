@@ -48,17 +48,27 @@
       <para>FreedomBox runs in a physical computer and can route your traffic. It can sit between various devices at home such as mobiles, laptops and TVs and the Internet replacing a home wireless router.  By routing traffic, FreedomBox can remove tracking advertisements and malicious web bugs before they ever reach your devices.  FreedomBox can cloak your location and protect your anonymity by "onion routing" your traffic over Tor. FreedomBox provides a VPN server that you can use while you are away from home to keep your traffic secret on untrusted public wireless networks and to securely access various devices at home. It can also be carried along with your laptop and used to connect to public networks at work, school, or office to avail its services. It could be used in a village to make avaible digital communications throughout the village. In future, FreedomBox intends to deliver support for alternative ways of connecting to the Internet such as Mesh networks. </para>
     </section>
     <section>
-      <title>FreedomBox Interface Screenshot</title>
-      <para>
-        <inlinemediaobject>
-          <imageobject>
-            <imagedata fileref="images/freedombox2.png"/>
-          </imageobject>
-          <textobject>
-            <phrase>freedombox2.png</phrase>
-          </textobject>
-        </inlinemediaobject>
-      </para>
+      <title>FreedomBox Interface</title>
+      <section>
+        <title>Screenshot</title>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/freedombox2.png"/>
+            </imageobject>
+            <textobject>
+              <phrase>freedombox2.png</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+      <section>
+        <title>Screencast introduction</title>
+        <para>
+          <ulink url="https://wiki.debian.org/FreedomBox/Introduction?action=AttachFile&amp;do=get&amp;target=Plinth_Introduction.webm">Plinth_Introduction.webm</ulink>
+        </para>
+        <para>(36 MB, 13 Min.) </para>
+      </section>
     </section>
   </section>
   <section>
@@ -94,13 +104,21 @@
             <para>If your computer supports mDNS (GNU/Linux, Mac OSX and Windows with mDNS software installed), you can browse to: <ulink url="http://freedombox.local/"/> (or <ulink url="http://the-hostname-you-entered-during-install.local/"/>) </para>
           </listitem>
           <listitem>
-            <para>If neither of these methods are available, then you will need to figure out the IP address of your FreedomBox. You can use the "nmap" program to find its IP address: </para>
+            <para>If neither of these methods are available, then you will need to figure out the IP address of your FreedomBox. You can use the "nmap" program from your computer to find its IP address: </para>
             <screen format="linespecific">     nmap -p 80 --open -sV 192.168.0.0/24</screen>
             <para>Your FreedomBox will show up as an IP address with an open tcp port 80 using Apache httpd service on Debian, such as the example below which would make it accessible at <ulink url="http://192.168.0.165"/>: </para>
             <screen format="linespecific">     Nmap scan report for 192.168.0.165
      Host is up (0.00088s latency).
      PORT   STATE SERVICE VERSION
      80/tcp open  http    Apache httpd 2.4.17 ((Debian))</screen>
+            <para>If nmap does not find anything with the above command, you can try replacing 192.168.0.0/24 with 10.42.0.255/24. </para>
+            <screen format="linespecific">     nmap -n -sP 10.42.0.255/24</screen>
+            <para>The scan report will show something similar to the following: </para>
+            <screen format="linespecific">     Nmap scan report for 10.42.0.1
+     Host is up (0.00027s latency).
+     Nmap scan report for 10.42.0.50
+     Host is up (0.00044s latency).</screen>
+            <para>In this example, the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> is accessible at <ulink url="http://10.42.0.50"/>. (10.42.0.1 is my laptop.) </para>
           </listitem>
         </itemizedlist>
       </listitem>
@@ -111,7 +129,7 @@
         <para>On the intial access you will see a welcome page that asks you to provide some basic information for setting up your FreedomBox. </para>
       </listitem>
       <listitem>
-        <para>After completing the form, you will be logged in to Plinth and able to access apps and configuration through the interface. </para>
+        <para>After completing the form, you will be logged in to Plinth and able to access apps and configuration through the interface. Note that this first user has Admin privileges and can also <ulink url="https://wiki.debian.org/FreedomBox/Manual/SecureShell#">log in using ssh</ulink>.  </para>
       </listitem>
       <listitem>
         <para>If your computer is connected directly to the FreedomBox, your FreedomBox can act as a router, allowing you to access the Internet. </para>
@@ -147,7 +165,57 @@
     <title>Release Notes</title>
     <para>The following are the release notes for each FreedomBox version.  </para>
     <section>
-      <title>Version 0.11.0 (2016-09-xx)</title>
+      <title>Plinth v0.12.0 (2016-12-08)</title>
+      <itemizedlist>
+        <listitem>
+          <para>Open up RTP ports in the firewall for repro (SIP server). </para>
+        </listitem>
+        <listitem>
+          <para>Front page shortcuts for services show a Configure button in the details box for logged-in users. </para>
+        </listitem>
+        <listitem>
+          <para>Add mods packages to be installed with Minetest server. </para>
+        </listitem>
+        <listitem>
+          <para>Fix issue with reading Dynamic DNS status as non-root user. </para>
+        </listitem>
+        <listitem>
+          <para>After the hostname is changed, ensure the domain name is still set correctly. </para>
+        </listitem>
+        <listitem>
+          <para>Allow the domain name to be cleared, and properly set the configuration in this case. </para>
+        </listitem>
+        <listitem>
+          <para>On the Certificates (Let's Encrypt) page, show a more informative message when no domains are configured. </para>
+        </listitem>
+        <listitem>
+          <para>On the Chat Server (XMPP) page, show more clearly if domain is not set. </para>
+        </listitem>
+        <listitem>
+          <para>Apps that require login will not be shown on the front page, unless the user is logged in. </para>
+        </listitem>
+        <listitem>
+          <para>Show status block for News Feed Reader (Tiny Tiny RSS). </para>
+        </listitem>
+        <listitem>
+          <para>Change appearance of front page with larger icons and repositioned text. </para>
+        </listitem>
+        <listitem>
+          <para>Firewall page only lists services that have been setup. The port lists are collapsible under each service. </para>
+        </listitem>
+        <listitem>
+          <para>Support configuring IPv6 networks. </para>
+        </listitem>
+        <listitem>
+          <para>Make it less likely to accidentally delete the only Plinth user. </para>
+        </listitem>
+        <listitem>
+          <para>Updated to work with JSXC 3.0.0 (XMPP web client). </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Plinth v0.11.0 (2016-09-29)</title>
       <itemizedlist>
         <listitem>
           <para>Added loading icon for additional busy operations. </para>
@@ -210,7 +278,7 @@
       </itemizedlist>
     </section>
     <section>
-      <title>Version 0.10 (2016-08)</title>
+      <title>Plinth v0.10.0 (2016-08-21)</title>
       <itemizedlist>
         <listitem>
           <para>Updated Plinth to support Django 1.10. </para>
@@ -1111,6 +1179,7 @@ file = /etc/radicale/rights</screen>
           <emphasis role="strong">ownCloud was removed from Debian</emphasis>
         </para>
         <para>ownCloud was removed from Debian, so it is not available in the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> any more. Existing installations however are still working for time being. We are working on finding an adequate alternative. </para>
+        <para>Migrate to the official owncloud repository can be done in following this <ulink url="https://owncloud.org/blog/upgrading-owncloud-on-debian-stable-to-official-packages/">post</ulink>  </para>
       </caution>
       <section>
         <title>What is ownCloud?</title>
@@ -3477,23 +3546,50 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
         <para>FreedomBox runs <code>openssh-server</code> server by default allowing remote logins from all interfaces.  If your hardware device is connected to a monitor and a keyboard, you may login directly as well.  Regular operation of FreedomBox does not require you to use the shell.  However, some tasks or identifying a problem may require you to login to a shell. </para>
       </section>
       <section>
-        <title>Default User Account</title>
-        <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
-        <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
-        <para>1. Decompress the image file. </para>
-        <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
-        <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
-        <para>4. Copy the image file to SD card and boot device as normal. </para>
-        <para>The "fbx" user also has superuser privileges via sudo. </para>
+        <title>Setting Up A User Account</title>
+        <section>
+          <title>Plinth First Log In: Admin Account</title>
+          <para>When creating an account in Plinth for the first time, this user will automatically have administrator capabilities. <code>Admin</code> users are able to log in using ssh (see Logging In below) and have superuser privileges via sudo. </para>
+        </section>
+        <section>
+          <title>Default User Account</title>
+          <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
+          <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
+          <para>1. Decompress the image file. </para>
+          <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
+          <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
+          <para>4. Copy the image file to SD card and boot device as normal. </para>
+          <para>The "fbx" user also has superuser privileges via sudo. </para>
+        </section>
       </section>
       <section>
         <title>Logging In</title>
-        <para>To login via SSH, to your FreedomBox: </para>
-        <screen format="linespecific">$ ssh fbx@freedombox</screen>
-        <para>Replace <code>fbx</code> with the name of the user you wish to login as.  <code>freedombox</code> should be replaced with the hostname or IP address of you FreedomBox device as found in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/QuickStart#">Quick Start</ulink> process. </para>
-        <para><code>fbx</code> is the default user present on FreedomBox with superuser privileges.  Any other user created using Plinth and belonging to the group <code>admin</code> will be able to login.  The <code>root</code> account has no password set and will not be able to login.  Access will be denied to all other users. </para>
-        <para><code>fbx</code> and users in <code>admin</code> group will also be able to login on the terminal directly.  Other users will be denied access. </para>
-        <para>If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to <code>libpam-abl</code> package that FreedomBox installs by default.  To control this behavior consult <code>libpam-abl</code> documentation. </para>
+        <section>
+          <title>Local</title>
+          <para>To login via SSH, to your FreedomBox: </para>
+          <screen format="linespecific">$ ssh fbx@freedombox</screen>
+          <para>Replace <code>fbx</code> with the name of the user you wish to login as.  <code>freedombox</code> should be replaced with the hostname or IP address of you FreedomBox device as found in the <ulink url="https://wiki.debian.org/FreedomBox/Manual/QuickStart#">Quick Start</ulink> process. </para>
+          <para><code>fbx</code> is the default user present on FreedomBox with superuser privileges.  Any other user created using Plinth and belonging to the group <code>admin</code> will be able to login.  The <code>root</code> account has no password set and will not be able to login.  Access will be denied to all other users. </para>
+          <para><code>fbx</code> and users in <code>admin</code> group will also be able to login on the terminal directly.  Other users will be denied access. </para>
+          <para>If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to <code>libpam-abl</code> package that FreedomBox installs by default.  To control this behavior consult <code>libpam-abl</code> documentation. </para>
+        </section>
+        <section>
+          <title>SSH over Tor</title>
+          <para>If in Plinth you have enabled hidden services via Tor, you can access your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> using ssh over Tor. On a GNU/Linux computer, install netcat-openbsd. </para>
+          <screen format="linespecific">$ sudo apt-get install netcat-openbsd</screen>
+          <para>Edit ~/.ssh/config to enable connections over Tor. </para>
+          <screen format="linespecific">$ nano ~/.ssh/config</screen>
+          <para>Add the following: </para>
+          <screen format="linespecific">Host *.onion
+  user USERNAME
+  port 22
+  ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p</screen>
+          <para>Replace USERNAME with, e.g., an <code>admin</code> username (see above). </para>
+          <para>Note that in some cases you may need to replace 9050 with 9150. </para>
+          <para>Now to connect to the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>, open a terminal and type: </para>
+          <screen format="linespecific">$ ssh USERNAME@ADDRESS.onion</screen>
+          <para>Replace USERNAME with, e.g., an <code>admin</code> username, and ADDRESS with the hidden service address for your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>. </para>
+        </section>
       </section>
       <section>
         <title>Becoming Superuser</title>
@@ -3851,7 +3947,7 @@ Password:
             </textobject>
           </inlinemediaobject>
         </para>
-        <para><ulink url="http://projectdanube.org/freedombox/">FreedomBox Danube Edition</ulink> is a custom casing around Cubietruck coupled with an SSD. </para>
+        <para><ulink url="http://projectdanube.org">FreedomBox Danube Edition</ulink> is a custom casing around Cubietruck coupled with an SSD. </para>
       </section>
       <section>
         <title>Cubietruck / Cubieboard3</title>
@@ -3871,7 +3967,7 @@ Password:
         <para>FreedomBox Danube Edition </para>
         <itemizedlist>
           <listitem>
-            <para>A limited number of units are planned to be shipped along with the release of FreedomBox 1.0.  If you wish to get one, <ulink url="http://projectdanube.org/freedombox/">express your interest</ulink>. </para>
+            <para>A limited number of units are planned to be shipped along with the release of FreedomBox 1.0.  If you wish to get one, <ulink url="http://projectdanube.org">express your interest</ulink>. </para>
           </listitem>
         </itemizedlist>
         <para>Cubietruck / Cubieboard3 </para>
@@ -5302,7 +5398,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     </section>
     <section>
       <title>Development priorities</title>
-      <para>Upcoming priorities have been discussed end of October 2015 by several core developers and the Freedombox Foundation. You'll find on the mailing list archives a <ulink url="http://lists.alioth.debian.org/pipermail/freedombox-discuss/2015-November/006973.html">Medium Term Roadmap</ulink> for 2015 and 2016. We want to enjoy soon a version 1.0. We are targeting mid January for a 0.8 release. The main focus of the 0.8 release is going to be integrated in the PGP based SSL Client authentication work. We are planning on a 0.9 polish release for late February with general usability improvements.</para>
+      <para>Upcoming priorities are discussed on an regular basis. You find the progress of the webinterface Plinth with it's priorities here:<ulink url="https://github.com/freedombox/Plinth/projects/1">Project Progess</ulink>. We want to enjoy soon a version 1.0.</para>
       <para>Please check next <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>.  </para>
     </section>
     <section>
@@ -5404,10 +5500,10 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
             <para>FreedomBox <ulink url="https://freedomboxfoundation.org">website</ulink> and <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> </para>
           </listitem>
           <listitem>
-            <para>Individual applications that FreedomBox exposes to users such as ownCloud, JWChat etc. </para>
+            <para>Individual applications that FreedomBox exposes to users. </para>
           </listitem>
         </itemizedlist>
-        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes/ReleaseNotesDev#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://github.com/freedombox/Plinth/tree/master/locale">GitHub</ulink>. </para>
+        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes/ReleaseNotesDev#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://github.com/freedombox/Plinth/tree/master/plinth/locale">GitHub</ulink>. </para>
         <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
         <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
       </section>
@@ -5985,23 +6081,23 @@ Plinth module to configure Tiny Tiny RSS.
               </textobject>
             </inlinemediaobject>
           </ulink>
-          <ulink url="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=owncloud.png">
+          <ulink url="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=emailclient.png">
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/owncloud.png" width="150pt"/>
+                <imagedata fileref="images/emailclient.png" width="150pt"/>
               </imageobject>
               <textobject>
-                <phrase>Setting up ownCloud</phrase>
+                <phrase>Setting up Email Client</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
-          <ulink url="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=firewall.png">
+          <ulink url="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&amp;do=get&amp;target=newsfeed.png">
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/firewall.png" width="150pt"/>
+                <imagedata fileref="images/newsfeed.png" width="150pt"/>
               </imageobject>
               <textobject>
-                <phrase>Automatic Firewall Operation</phrase>
+                <phrase>Newsfeed from anywhere</phrase>
               </textobject>
             </inlinemediaobject>
           </ulink>
