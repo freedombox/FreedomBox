@@ -52,7 +52,8 @@ $(function() {
         loginForm: {
             form: '#jsxc-login-form',
             jid: '#jsxc-username',
-            pass: '#jsxc-password'
+            pass: '#jsxc-password',
+            onAuthFail: 'ask',
         },
         checkFlash: false,
         rosterAppend: 'body',
