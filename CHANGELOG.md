@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Allow modules to register steps for first_boot.
 - frontpage: Show Configure button in service details, when user is logged in.
 - minetest: Add mods packages to be installed with server.
+- networks: Support configuring IPv6 networks.
 
 ### Fixed
 - Upstream patch from Debian bug #837206 to fix DB and log file
@@ -19,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - letsencrypt: When no domains are configured, show better message,
   and hide diagnostics button.
 - frontpage: Fix shortcut spacing issue.
+- xmpp: Updated to work with JSXC 3.0.0.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
@@ -30,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - frontpage: Move info to bottom and center.
 - firewall: Only show services that have completed setup.
 - firewall: Collapse port lists so they are hidden by default.
+- users: Make it harder to accidentally delete the only Plinth user.
 
 ## [0.11.0] - 2016-09-21
 ### Added
