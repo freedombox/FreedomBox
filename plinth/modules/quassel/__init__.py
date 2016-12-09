@@ -40,7 +40,7 @@ managed_services = ['quasselcore']
 
 managed_packages = ['quassel-core']
 
-title = ('IRC Client \n (Quassel)')
+title = _('IRC Client \n (Quassel)')
 
 description = [
     format_lazy(
