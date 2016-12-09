@@ -38,7 +38,7 @@ managed_services = ['deluge-web']
 
 managed_packages = ['deluged', 'deluge-web']
 
-title = ('BitTorrent Web Client \n (Deluge)')
+title = _('BitTorrent Web Client \n (Deluge)')
 
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
