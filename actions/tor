@@ -36,7 +36,7 @@ from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
                                      APT_TOR_PREFIX
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
-TOR_CONFIG = '/files/etc/tor/torrc'
+TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
 TOR_STATE_FILE = '/var/lib/tor/state'
 TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
 
@@ -236,14 +236,14 @@ def _get_hidden_service(aug=None):
 
 def _enable():
     """Enable and start the service."""
-    action_utils.service_enable('tor')
+    action_utils.service_enable('tor@plinth')
     _update_ports()
 
 
 def _disable():
     """Disable and stop the service."""
     _disable_apt_transport_tor()
-    action_utils.service_disable('tor')
+    action_utils.service_disable('tor@plinth')
 
 
 def _enable_relay(relay=None, bridge=None, restart=True, aug=None):
