@@ -100,8 +100,8 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'tor@plinth', ['setup'])
-    helper.call('post', actions.superuser_run, 'tor@plinth',
+    helper.call('post', actions.superuser_run, 'tor', ['setup'])
+    helper.call('post', actions.superuser_run, 'tor',
                 ['configure', '--apt-transport-tor', 'enable'])
 
     global socks_service
