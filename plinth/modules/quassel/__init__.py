@@ -19,6 +19,7 @@
 Plinth module for Quassel.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -55,7 +56,7 @@ description = [
       '4242.  Clients to connect to Quassel from your '
       '<a href="http://quassel-irc.org/downloads">desktop</a> and '
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
-      'are available.')
+      'are available.'),
 ]
 
 
@@ -65,12 +66,14 @@ def init():
     menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['quassel-plinth'], is_external=True,
-        enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title, ports=['quassel-plinth'],
+            is_external=True, enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 class QuasselServiceView(ServiceView):
@@ -82,13 +85,19 @@ class QuasselServiceView(ServiceView):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['quassel-plinth'],
+            is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, login_required=True)
+                           description, reverse_lazy('quassel:index'),
+                           login_required=True)
 
 
 def enable():

@@ -27,9 +27,9 @@ from plinth.modules import ttrss
 
 urlpatterns = [
     url(r'^apps/ttrss/$', ServiceView.as_view(
-            service_id=ttrss.managed_services[0],
-            diagnostics_module_name="ttrss",
-            description=ttrss.description,
-            show_status_block=False
-        ), name='index'),
+        service_id=ttrss.managed_services[0],
+        diagnostics_module_name="ttrss",
+        description=ttrss.description,
+        show_status_block=True
+    ), name='index'),
 ]

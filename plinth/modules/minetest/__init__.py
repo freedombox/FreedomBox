@@ -19,6 +19,7 @@
 Plinth module for minetest.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -30,7 +31,7 @@ from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
 
-version = 1
+version = 2
 
 depends = ['apps']
 
@@ -38,7 +39,12 @@ service = None
 
 managed_services = ['minetest-server']
 
-managed_packages = ['minetest-server']
+managed_packages = ['minetest-server', 'minetest-mod-advspawning',
+                    'minetest-mod-animalmaterials', 'minetest-mod-animals',
+                    'minetest-mod-mesecons', 'minetest-mod-mobf-core',
+                    'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
+                    'minetest-mod-nether', 'minetest-mod-torches',
+                    ]
 
 title = _('Block Sandbox (Minetest)')
 
@@ -58,24 +64,34 @@ def init():
     menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['minetest-plinth'],
-        is_external=True, enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title,
+            ports=['minetest-plinth'], is_external=True, enable=enable,
+            disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title,
+            ports=['minetest-plinth'], is_external=True, enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
-                           description, login_required=False)
+                           description, reverse_lazy('minetest:index'),
+                           login_required=False)
 
 
 def enable():

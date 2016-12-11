@@ -49,7 +49,7 @@ description = [
 
     _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.')
+      '>XMPP client</a>.'),
 ]
 
 service = None
@@ -63,17 +63,18 @@ def init():
     menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
 
     global service
-    service = service_module.Service(
-        'ejabberd', title, ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-        is_external=True, is_enabled=is_enabled, enable=enable,
-        disable=disable)
-
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            'ejabberd', title,
+            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable)
+        if is_enabled():
+            add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
     post_hostname_change.connect(on_post_hostname_change)
     domainname_change.connect(on_domainname_change)
-
-    if is_enabled():
-        add_shortcut()
 
 
 def setup(helper, old_version=None):
@@ -85,6 +86,13 @@ def setup(helper, old_version=None):
                 ['pre-install', '--domainname', domainname])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
+    global service
+    if service is None:
+        service = service_module.Service(
+            'ejabberd', title,
+            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -92,9 +100,10 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client (jsxc)'),
                            reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
-                           login_required=True)
+                           None, login_required=True)
     frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
-                           description, login_required=True)
+                           description, reverse_lazy('xmpp:index'),
+                           login_required=True)
 
 
 def is_enabled():

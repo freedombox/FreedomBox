@@ -22,12 +22,13 @@ URLs for the First Boot module
 from django.conf.urls import url
 from stronghold.decorators import public
 
-from .views import State0View, state10
+from .views import WelcomeView, CompleteView
 
 
 urlpatterns = [
     # Take care of the firstboot middleware when changing URLs
-    url(r'^firstboot/$', public(State0View.as_view()), name='index'),
-    url(r'^firstboot/state0/$', public(State0View.as_view()), name='state0'),
-    url(r'^firstboot/state10/$', state10, name='state10'),
+    url(r'^firstboot/$', public(WelcomeView.as_view()), name='index'),
+    url(r'^firstboot/welcome/$', public(WelcomeView.as_view()),
+        name='welcome'),
+    url(r'^firstboot/complete/$', CompleteView.as_view(), name='complete'),
 ]

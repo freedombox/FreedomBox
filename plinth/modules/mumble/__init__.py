@@ -19,6 +19,7 @@
 Plinth module to configure Mumble server
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -57,12 +58,15 @@ def init():
     menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['mumble-plinth'], is_external=True,
-        enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title, ports=['mumble-plinth'],
+            is_external=True,
+            enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 class MumbleServiceView(ServiceView):
@@ -74,13 +78,20 @@ class MumbleServiceView(ServiceView):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['mumble-plinth'],
+            is_external=True,
+            enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description, login_required=False)
+                           description, reverse_lazy('mumble:index'),
+                           login_required=False)
 
 
 def enable():

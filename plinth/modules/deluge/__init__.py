@@ -56,18 +56,27 @@ def init():
     menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['http', 'https'], is_external=True,
-        is_enabled=is_enabled, enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title, ports=['http', 'https'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable)
 
-    if is_enabled():
-        add_shortcut()
+        if is_enabled():
+            add_shortcut()
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'deluge', ['enable'])
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['http', 'https'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 

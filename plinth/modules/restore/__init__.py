@@ -58,10 +58,18 @@ def init():
     menu.add_urlname(title, 'glyphicon-hdd', 'restore:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['http', 'https'], is_external=False)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title, ports=['http', 'https'],
+            is_external=False)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['http', 'https'],
+            is_external=False)

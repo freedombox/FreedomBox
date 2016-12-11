@@ -172,7 +172,7 @@
           {% block sidebar %}
             {# this sidebar should contain help texts but no menus #}
           {% endblock %}
-        </div>
+        </div><!--/col-->
 
         <div class="col-md-9">
           {% block subsubmenu %}
@@ -187,8 +187,21 @@
             {# main content goes here #}
           {% endblock %}
         </div><!--/col-->
+
+        <div class="col-md-12">
+          {% block icons %}
+            {# icons go here #}
+          {% endblock %}
+        </div><!--/col-->
+
       {% endblock %}
     </div><!--/row-->
+
+    <div class="text-center">
+      {% block center-info %}
+        {# this center-info should contain help texts but no menus #}
+      {% endblock %}
+    </div>
 
     <hr>
 

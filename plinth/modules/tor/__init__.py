@@ -59,38 +59,42 @@ def init():
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
 
-    global socks_service
-    socks_service = service_module.Service(
-        'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
-        is_external=False, is_enabled=utils.is_enabled,
-        is_running=utils.is_running)
+    setup_helper = globals()['setup_helper']
+    needs_setup = setup_helper.get_state() == 'needs-setup'
 
-    global bridge_service
-    bridge_service = service_module.Service(
-        'tor-bridge', _('Tor Bridge Relay'),
-        ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
-        is_external=True, is_enabled=utils.is_enabled,
-        is_running=utils.is_running)
+    if not needs_setup:
+        global socks_service
+        socks_service = service_module.Service(
+            'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
+            is_external=False, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
 
-    # Register hidden service name with Name Services module.
-    status = utils.get_status()
-    hostname = status['hs_hostname']
-    hs_virtports = [port['virtport'] for port in status['hs_ports']]
+        global bridge_service
+        bridge_service = service_module.Service(
+            'tor-bridge', _('Tor Bridge Relay'),
+            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
+            is_external=True, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
 
-    if status['enabled'] and status['is_running'] and \
-       status['hs_enabled'] and status['hs_hostname']:
-        hs_services = []
-        for service_type in SERVICES:
-            if str(service_type[2]) in hs_virtports:
-                hs_services.append(service_type[0])
-    else:
-        hostname = None
-        hs_services = None
+        # Register hidden service name with Name Services module.
+        status = utils.get_status()
+        hostname = status['hs_hostname']
+        hs_virtports = [port['virtport'] for port in status['hs_ports']]
 
-    domain_added.send_robust(
-        sender='tor', domain_type='hiddenservice',
-        name=hostname, description=_('Tor Hidden Service'),
-        services=hs_services)
+        if status['enabled'] and status['is_running'] and \
+           status['hs_enabled'] and status['hs_hostname']:
+            hs_services = []
+            for service_type in SERVICES:
+                if str(service_type[2]) in hs_virtports:
+                    hs_services.append(service_type[0])
+        else:
+            hostname = None
+            hs_services = None
+
+        domain_added.send_robust(
+            sender='tor', domain_type='hiddenservice',
+            name=hostname, description=_('Tor Hidden Service'),
+            services=hs_services)
 
 
 def setup(helper, old_version=None):
@@ -99,8 +103,24 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'tor', ['setup'])
     helper.call('post', actions.superuser_run, 'tor',
                 ['configure', '--apt-transport-tor', 'enable'])
+
+    global socks_service
+    if socks_service is None:
+        socks_service = service_module.Service(
+            'tor-socks', _('Tor Anonymity Network'), ports=['tor-socks'],
+            is_external=False, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
     helper.call('post', socks_service.notify_enabled, None, True)
+
+    global bridge_service
+    if bridge_service is None:
+        bridge_service = service_module.Service(
+            'tor-bridge', _('Tor Bridge Relay'),
+            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
+            is_external=True, is_enabled=utils.is_enabled,
+            is_running=utils.is_running)
     helper.call('post', bridge_service.notify_enabled, None, True)
+
     helper.call('post', update_hidden_service_domain)
 
 

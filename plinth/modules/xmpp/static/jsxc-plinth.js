@@ -52,14 +52,12 @@ $(function() {
         loginForm: {
             form: '#jsxc-login-form',
             jid: '#jsxc-username',
-            pass: '#jsxc-password'
+            pass: '#jsxc-password',
+            onAuthFail: 'ask',
         },
         checkFlash: false,
         rosterAppend: 'body',
         root: plinth_settings.jsxc_root,
-        displayRosterMinimized: function() {
-            return true;
-        },
         otr: {
             debug: true,
             SEND_WHITESPACE_TAG: true,

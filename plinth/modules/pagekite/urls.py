@@ -22,17 +22,20 @@ URLs for the PageKite module
 from django.conf.urls import url
 
 from .views import StandardServiceView, CustomServiceView, ConfigurationView, \
-    DeleteServiceView, index, State5View
+    DeleteServiceView, index, FirstBootView, first_boot_skip
 
 urlpatterns = [
     url(r'^sys/pagekite/$', index, name='index'),
     url(r'^sys/pagekite/configure/$', ConfigurationView.as_view(),
         name='configure'),
-    url(r'^sys/pagekite/services/standard$', StandardServiceView.as_view(),
+    url(r'^sys/pagekite/services/standard/$', StandardServiceView.as_view(),
         name='standard-services'),
-    url(r'^sys/pagekite/services/custom$', CustomServiceView.as_view(),
+    url(r'^sys/pagekite/services/custom/$', CustomServiceView.as_view(),
         name='custom-services'),
-    url(r'^sys/pagekite/services/custom/delete$', DeleteServiceView.as_view(),
+    url(r'^sys/pagekite/services/custom/delete/$', DeleteServiceView.as_view(),
         name='delete-custom-service'),
-    url(r'^sys/pagekite/firstboot/$', State5View.as_view(), name='firstboot'),
+    url(r'^sys/pagekite/firstboot/$', FirstBootView.as_view(),
+        name='firstboot'),
+    url(r'^sys/pagekite/firstboot/skip/$', first_boot_skip,
+        name='firstboot-skip'),
 ]

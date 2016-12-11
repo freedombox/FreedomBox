@@ -19,6 +19,7 @@
 Plinth module to configure Privoxy.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -54,7 +55,8 @@ description = [
           'While using Privoxy, you can see its configuration details and '
           'documentation at '
           '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
-          'or <a href="http://p.p">http://p.p</a>.'), box_name=_(cfg.box_name))
+          'or <a href="http://p.p">http://p.p</a>.'),
+        box_name=_(cfg.box_name)),
 ]
 
 service = None
@@ -66,25 +68,35 @@ def init():
     menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
 
     global service
-    service = service_module.Service(
-        managed_services[0], title, ports=['privoxy'], is_external=False,
-        enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    if setup_helper.get_state() != 'needs-setup':
+        service = service_module.Service(
+            managed_services[0], title, ports=['privoxy'],
+            is_external=False,
+            enable=enable, disable=disable)
 
-    if service.is_enabled():
-        add_shortcut()
+        if service.is_enabled():
+            add_shortcut()
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
     helper.install(managed_packages)
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], title, ports=['privoxy'],
+            is_external=False,
+            enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     frontpage.add_shortcut('privoxy', title, None, 'glyphicon-cloud-upload',
-                           description, login_required=True)
+                           description, reverse_lazy('privoxy:index'),
+                           login_required=True)
 
 
 def enable():

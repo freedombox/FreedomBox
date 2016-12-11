@@ -40,13 +40,15 @@
       <div class="list-group">
         {% for user in object_list %}
           <div class="list-group-item clearfix">
-            <a href="{% url 'users:delete' user.username %}"
-               class="btn btn-default btn-sm pull-right"
-               role="button"
-               title="{% blocktrans with username=user.username %}Delete user {{ username }}{% endblocktrans %}">
-              <span class="glyphicon glyphicon-trash"
-                    aria-hidden="true"></span>
-            </a>
+            {% if object_list|length != 1 %}
+              <a href="{% url 'users:delete' user.username %}"
+                class="btn btn-default btn-sm pull-right"
+                role="button"
+                title="{% blocktrans with username=user.username %}Delete user {{ username }}{% endblocktrans %}">
+                <span class="glyphicon glyphicon-trash"
+                      aria-hidden="true"></span>
+              </a>
+            {% endif %}
 
             <a class='user-edit-label'
                href="{% url 'users:edit' user.username %}"

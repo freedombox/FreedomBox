@@ -22,15 +22,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
-from django.views.generic import ListView, CreateView as CV
+import django.views.generic
 from django.utils.translation import ugettext as _, ugettext_lazy
-from plinth import cfg
 
-from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, State1Form
-
+from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
+    FirstBootForm
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules.first_boot.middleware import mark_step_done, next_step
+from plinth.modules import first_boot
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -65,7 +64,7 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
         return kwargs
 
 
-class UserList(ContextMixin, ListView):
+class UserList(ContextMixin, django.views.generic.ListView):
     """View to list users."""
     model = User
     template_name = 'users_list.html'
@@ -168,22 +167,18 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         return super(UserChangePassword, self).form_valid(form)
 
 
-class State1View(CV):
+class FirstBootView(django.views.generic.CreateView):
     """Create user account and log the user in."""
-    template_name = 'firstboot_state1.html'
-    form_class = State1Form
-    success_url = ''
+    template_name = 'users_firstboot.html'
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the view object."""
-        if not cfg.danube_edition:
-            mark_step_done('pagekite_firstboot')
-        mark_step_done('users_firstboot')
-        self.success_url = next_step()
-        return super(State1View, self).__init__(*args, **kwargs)
+    form_class = FirstBootForm
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
-        kwargs = super(State1View, self).get_form_kwargs()
+        kwargs = super(FirstBootView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+    def get_success_url(self):
+        """Return the next first boot step after valid form submission."""
+        return reverse(first_boot.next_step())

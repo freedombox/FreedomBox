@@ -22,29 +22,34 @@
 {% load i18n %}
 {% load static %}
 
-{% block page_head %}
-  <style type="text/css">
-   .navbar-brand {
-       display: none;
-   }
-  </style>
+{% block content_row %}
+  <div class="col-md-6 col-md-offset-3">
+    {% include 'messages.html' %}
+
+    <h2>{% trans "Administrator Account" %}</h2>
+
+    <p>
+      {% blocktrans trimmed %}
+        Choose a username and password to access this web interface.
+        The password can be changed later. This user will be granted
+        administrative privileges. Other users can be added later.
+      {% endblocktrans %}
+    </p>
+
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Create Account" %}"/>
+    </form>
+
+  </div>
 {% endblock %}
 
-{% block content_row %}
-  <p class="text-center">
-    <img src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
-         alt="{{ box_name }}" width="640"/>
-  </p>
-
-  <p class="text-center">
-    <a href="{% url next_url %}"
-       class="btn btn-primary btn-lg">{% trans "Start Setup" %}</a>
-  </p>
-
-  <p class="text-center" style="font-size: larger">
-    {% blocktrans trimmed %}
-      To complete the setup of your {{ box_name }}, please provide
-      some basic information.
-    {% endblocktrans %}
-  </p>
+{% block page_js %}
+  <script>
+    $('#id_username').focus();
+  </script>
 {% endblock %}

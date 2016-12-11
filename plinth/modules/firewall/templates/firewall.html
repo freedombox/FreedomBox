@@ -40,8 +40,9 @@
 
     <div class="row">
       <div class="col-lg-8">
-        <table class='table table-autowidth table-striped'>
+        <table class='table table-autowidth'>
           <thead>
+            <th><center>{% trans "Show Ports" %}</center></th>
             <th>{% trans "Service/Port" %}</th>
             <th>{% trans "Status" %}</th>
           </thead>
@@ -50,6 +51,13 @@
             {% for service in services|dictsort:"name" %}
               {% if service.ports %}
                 <tr>
+                  <td>
+                    <center>
+                      <button data-toggle="collapse"
+                              data-target=".{{service.service_id}}"
+                              class="btn btn-info btn-xs">+</button>
+                    </center>
+                  </td>
                   <td><strong>{{ service.name }}</strong></td>
                   <td>
                     {% if service.is_enabled %}
@@ -61,9 +69,10 @@
                     {% endif %}
                   </td>
                 </tr>
-
                 {% for port in service.ports %}
-                  <tr>
+                  <tr class="collapse out {{service.service_id}}"
+                      style="background-color: #f9f9f9" >
+                    <td></td>
                     <td class='cell-indented'><em>{{ port }}</em></td>
                     <td>
                       {% if port in internal_enabled_services and port in external_enabled_services %}

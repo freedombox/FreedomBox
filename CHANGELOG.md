@@ -1,11 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.12.0] - 2016-12-08
 ### Added
 - Added screenshots to Readme.
 - repro: Open up RTP ports.
 - Allow modules to register steps for first_boot.
+- frontpage: Show Configure button in service details, when user is logged in.
+- minetest: Add mods packages to be installed with server.
+- networks: Support configuring IPv6 networks.
 
 ### Fixed
 - Upstream patch from Debian bug #837206 to fix DB and log file
@@ -16,11 +19,20 @@ All notable changes to this project will be documented in this file.
 - config: Handle clearing of domain name.
 - letsencrypt: When no domains are configured, show better message,
   and hide diagnostics button.
+- frontpage: Fix shortcut spacing issue.
+- xmpp: Updated to work with JSXC 3.0.0.
 
 ### Changed
 - repro: Use firewalld provided SIP services.
 - xmpp: Show more clearly if domain is not set.
 - frontpage: Don't show apps requiring login, unless logged in.
+- ttrss: Show status block.
+- frontpage: Make app icons larger.
+- frontpage: Center shortcut text under icons.
+- frontpage: Move info to bottom and center.
+- firewall: Only show services that have completed setup.
+- firewall: Collapse port lists so they are hidden by default.
+- users: Make it harder to accidentally delete the only Plinth user.
 
 ## [0.11.0] - 2016-09-21
 ### Added
@@ -151,7 +163,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.11.0...HEAD
+[0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/freedombox/Plinth/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/freedombox/Plinth/compare/v0.9.4...v0.10.0
 [0.9.4]: https://github.com/freedombox/Plinth/compare/v0.9.3...v0.9.4
