@@ -46,7 +46,7 @@ def is_running():
 
 def get_status():
     """Return current Tor status."""
-    output = actions.superuser_run('tor@plinth', ['get-status'])
+    output = actions.superuser_run('tor', ['get-status'])
     status = json.loads(output)
 
     hs_info = status['hidden_service']

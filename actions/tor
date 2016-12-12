@@ -29,6 +29,7 @@ import os
 import re
 import socket
 import time
+import subprocess
 
 from plinth import action_utils
 from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
@@ -37,7 +38,7 @@ from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
-TOR_STATE_FILE = '/var/lib/tor/state'
+TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
 TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
 
 
@@ -68,6 +69,9 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup Tor configuration after installing it."""
+
+    subprocess.run(['tor-instance-create', 'plinth'])
+
     aug = augeas_load()
 
     aug.set(TOR_CONFIG + '/#comment[last() + 1]',
@@ -399,7 +403,7 @@ def augeas_load():
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Tor/lens', 'Tor.lns')
-    aug.set('/augeas/load/Tor/incl[last() + 1]', '/etc/tor/torrc')
+    aug.set('/augeas/load/Tor/incl[last() + 1]', '/etc/tor/instances/plinth/torrc')
     aug.load()
     return aug
 
