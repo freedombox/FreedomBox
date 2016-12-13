@@ -39,7 +39,7 @@ from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
 TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
-TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
+TOR_AUTH_COOKIE = '/var/run/tor-instances/plinth/control.authcookie'
 
 
 def parse_arguments():
@@ -70,7 +70,9 @@ def parse_arguments():
 def subcommand_setup(_):
     """Setup Tor configuration after installing it."""
 
-    subprocess.run(['tor-instance-create', 'plinth'])
+    _disable_apt_transport_tor()
+    action_utils.service_disable('tor')
+    subprocess.run(['tor-instance-create', 'plinth'], check=True)
 
     aug = augeas_load()
 
