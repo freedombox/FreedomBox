@@ -67,6 +67,10 @@ def parse_arguments():
         '--list-modules', default=False, nargs='*',
         help='list of enabled modules')
 
+    parser.add_argument(
+        '--list-modules-essential', default=False, nargs='*',
+        help='list of enabled modules which are essential')
+
     global arguments
     arguments = parser.parse_args()
     cfg.server_dir = arguments.server_dir
@@ -288,12 +292,15 @@ def list_dependencies(module_list):
     sys.exit(error_code)
 
 
-def list_modules(module_list) :
+def list_modules() :
     """List all enabled modules"""
-    if module_list :
-        print(module_list)
-    else
-        print("No modules configured")
+    for module_name, module in module_loader.loaded_modules.items():
+        print('{module_name}'.format(module_name=module_name))
+
+def list_modules_essential() :
+    for module_name, module in module_loader.loaded_modules.items(essential=True):
+        print('{module_name}'.format(module_name=module_name))
+
 
 
 def run_diagnostics_and_exit():
@@ -342,7 +349,10 @@ def main():
         list_dependencies(arguments.list_dependencies)
 
     if arguments.list_modules is not False:
-        list_modules(arguments.list_modules)
+        list_modules()
+
+    if arguments.list_modules_essential is not False:
+        list_modules_essential()
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
