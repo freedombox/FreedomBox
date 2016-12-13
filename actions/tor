@@ -39,7 +39,7 @@ from plinth.modules.tor.utils import get_real_apt_uri_path, iter_apt_uris, \
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
 TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
-TOR_AUTH_COOKIE = '/var/run/tor/control.authcookie'
+TOR_AUTH_COOKIE = '/var/run/tor-instances/plinth/control.authcookie'
 
 
 def parse_arguments():
@@ -70,7 +70,9 @@ def parse_arguments():
 def subcommand_setup(_):
     """Setup Tor configuration after installing it."""
 
-    subprocess.run(['tor-instance-create', 'plinth'])
+    _disable_apt_transport_tor()
+    action_utils.service_disable('tor')
+    subprocess.run(['tor-instance-create', 'plinth'], check=True)
 
     aug = augeas_load()
 
@@ -92,7 +94,7 @@ def subcommand_setup(_):
     aug.set(TOR_CONFIG + '/DNSPort[2]', '[::1]:9053')
 
     aug.set(TOR_CONFIG + '/HiddenServiceDir',
-            '/var/lib/tor/hidden_service')
+            '/var/lib/tor-instances/plinth/hidden_service')
     aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
             '22 127.0.0.1:22')
     aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
@@ -102,7 +104,7 @@ def subcommand_setup(_):
 
     aug.save()
 
-    action_utils.service_restart('tor')
+    action_utils.service_restart('tor@plinth')
     _update_ports()
 
     # wait until hidden service information is available
@@ -288,7 +290,7 @@ def _enable_hs(restart=True):
         return
 
     aug.set(TOR_CONFIG + '/HiddenServiceDir',
-            '/var/lib/tor/hidden_service')
+            '/var/lib/tor-instances/plinth/hidden_service')
     aug.set(TOR_CONFIG + '/HiddenServicePort[1]',
             '22 127.0.0.1:22')
     aug.set(TOR_CONFIG + '/HiddenServicePort[2]',
