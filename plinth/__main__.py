@@ -71,6 +71,10 @@ def parse_arguments():
         '--list-modules-essential', default=False, nargs='*',
         help='list of enabled modules which are essential')
 
+    parser.add_argument(
+        '--list-modules-optional', default=False, nargs='*',
+        help='list of enabled modules which are optional')
+
     global arguments
     arguments = parser.parse_args()
     cfg.server_dir = arguments.server_dir
@@ -292,16 +296,19 @@ def list_dependencies(module_list):
     sys.exit(error_code)
 
 
-def list_modules() :
+def list_modules(modules_type) :
     """List all enabled modules"""
     for module_name, module in module_loader.loaded_modules.items():
-        print('{module_name}'.format(module_name=module_name))
-
-def list_modules_essential() :
-    for module_name, module in module_loader.loaded_modules.items(essential=True):
-        print('{module_name}'.format(module_name=module_name))
-
-
+        if modules_type:
+            if modules_type is "essential" :
+                if getattr(module, 'is_essential', False) is True :
+                    print('{module_name}'.format(module_name=module_name))
+            else:
+                if getattr(module, 'is_essential', False) is False :
+                    print('{module_name}'.format(module_name=module_name))
+        else:
+            print('{module_name}'.format(module_name=module_name))
+    sys.exit()
 
 def run_diagnostics_and_exit():
     """Run diagostics on all modules and exit."""
@@ -349,10 +356,13 @@ def main():
         list_dependencies(arguments.list_dependencies)
 
     if arguments.list_modules is not False:
-        list_modules()
+        list_modules(None)
 
     if arguments.list_modules_essential is not False:
-        list_modules_essential()
+        list_modules("essential")
+
+    if arguments.list_modules_optional is not False:
+        list_modules("optional")
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
