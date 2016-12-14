@@ -37,7 +37,7 @@ managed_services = ['repro']
 
 managed_packages = ['repro']
 
-title = _('SIP Server (repro)')
+title = _('SIP Server \n (repro)')
 
 description = [
     _('repro provides various SIP services that a SIP softphone can utilize '

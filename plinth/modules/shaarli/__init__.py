@@ -34,7 +34,7 @@ depends = ['apps']
 
 managed_packages = ['shaarli']
 
-title = _('Bookmarks (Shaarli)')
+title = _('Bookmarks \n (Shaarli)')
 
 description = [
     _('Shaarli allows you to save and share bookmarks.'),

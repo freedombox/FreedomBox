@@ -46,7 +46,7 @@ managed_packages = ['minetest-server', 'minetest-mod-advspawning',
                     'minetest-mod-nether', 'minetest-mod-torches',
                     ]
 
-title = _('Block Sandbox (Minetest)')
+title = _('Block Sandbox \n (Minetest)')
 
 description = [
     format_lazy(

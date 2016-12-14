@@ -41,7 +41,7 @@ managed_services = ['privoxy']
 
 managed_packages = ['privoxy']
 
-title = _('Web Proxy (Privoxy)')
+title = _('Web Proxy \n (Privoxy)')
 
 description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
