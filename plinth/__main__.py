@@ -65,7 +65,7 @@ def parse_arguments():
         help='list package dependencies for essential modules')
     parser.add_argument(
         '--list-modules', default=False, nargs='*',
-        help='list of enabled modules')
+        help='list modules')
 
     global arguments
     arguments = parser.parse_args()
@@ -288,19 +288,17 @@ def list_dependencies(module_list):
     sys.exit(error_code)
 
 
-def list_modules(modules_type) :
-    """List all enabled modules"""
+def list_modules(modules_type):
+    """List all/essential/optional modules and exit."""
     for module_name, module in module_loader.loaded_modules.items():
-        if modules_type:
-            if 'essential' in modules_type :
-                if getattr(module, 'is_essential', False) is True :
-                    print('{module_name}'.format(module_name=module_name))
-            else:
-                if getattr(module, 'is_essential', False) is False :
-                    print('{module_name}'.format(module_name=module_name))
-        else:
-            print('{module_name}'.format(module_name=module_name))
+        module_is_essential = getattr(module, 'is_essential', False)
+        if 'essential' in modules_type and not module_is_essential:
+            continue
+        elif 'optional' in modules_type and module_is_essential:
+            continue
+        print('{module_name}'.format(module_name=module_name))
     sys.exit()
+
 
 def run_diagnostics_and_exit():
     """Run diagostics on all modules and exit."""
@@ -352,7 +350,6 @@ def main():
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
-
 
     setup_server()
 
