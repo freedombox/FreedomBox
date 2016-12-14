@@ -292,7 +292,7 @@ def list_modules(modules_type) :
     """List all enabled modules"""
     for module_name, module in module_loader.loaded_modules.items():
         if modules_type:
-            if modules_type is "essential" :
+            if 'essential' in modules_type :
                 if getattr(module, 'is_essential', False) is True :
                     print('{module_name}'.format(module_name=module_name))
             else:
