@@ -74,6 +74,13 @@ def subcommand_setup(_):
     action_utils.service_disable('tor')
     subprocess.run(['tor-instance-create', 'plinth'], check=True)
 
+    with open('/etc/tor/instances/plinth/torrc', 'r') as torrc:
+        torrc_lines = torrc.readlines()
+    with open('/etc/tor/instances/plinth/torrc', 'w') as torrc:
+        for line in torrc_lines:
+            if not line.startswith('+'):
+                torrc.write(line + '\n')
+
     aug = augeas_load()
 
     aug.set(TOR_CONFIG + '/#comment[last() + 1]',
