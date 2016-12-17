@@ -88,7 +88,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-            'transmission', title, '/transmission', 'glyphicon-save',
+            'transmission', title, '/transmission',
             login_required=True)
 
 

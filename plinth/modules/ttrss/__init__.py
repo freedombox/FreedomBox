@@ -83,7 +83,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, '/tt-rss', 'glyphicon-envelope',
+    frontpage.add_shortcut('ttrss', title, '/tt-rss',
                            login_required=True)
 
 
