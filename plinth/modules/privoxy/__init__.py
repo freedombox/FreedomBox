@@ -94,7 +94,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('privoxy', title, None,
+    frontpage.add_shortcut('privoxy', title,
                            description, reverse_lazy('privoxy:index'),
                            login_required=True)
 

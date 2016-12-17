@@ -83,7 +83,7 @@ def add_shortcuts():
     sites = [name for name in sites if name != '']
     for site in sites:
         frontpage.add_shortcut(
-            'ikiwiki_' + site, site, '/ikiwiki/' + site,
+            'ikiwiki_' + site, site, url='/ikiwiki/' + site,
             login_required=False, icon='ikiwiki')
 
 

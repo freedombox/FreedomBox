@@ -87,7 +87,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('radicale', title, None,
+    frontpage.add_shortcut('radicale', title,
                            description, reverse_lazy('radicale:index'),
                            login_required=True)
 
