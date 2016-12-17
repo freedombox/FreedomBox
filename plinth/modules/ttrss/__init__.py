@@ -83,7 +83,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, '/tt-rss',
+    frontpage.add_shortcut('ttrss', title, url='/tt-rss',
                            login_required=True)
 
 

@@ -82,7 +82,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('deluge', title, '/deluge',
+    frontpage.add_shortcut('deluge', title, url='/deluge',
                            login_required=True)
 
 

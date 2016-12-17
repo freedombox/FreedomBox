@@ -95,7 +95,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('quassel', title, None,
+    frontpage.add_shortcut('quassel', title,
                            description, reverse('quassel:index'),
                            login_required=True)
 
