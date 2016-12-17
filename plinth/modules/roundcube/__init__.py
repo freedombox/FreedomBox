@@ -92,7 +92,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-        'roundcube', title, '/roundcube', 'glyphicon-envelope',
+        'roundcube', title, '/roundcube',
         login_required=True)
 
 

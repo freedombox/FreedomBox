@@ -101,9 +101,9 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
-                           reverse_lazy('xmpp:jsxc'), 'glyphicon-comment',
+                           reverse_lazy('xmpp:jsxc'),
                            None, login_required=True)
-    frontpage.add_shortcut('xmpp', title, None, 'glyphicon-comment',
+    frontpage.add_shortcut('xmpp', title, None,
                            description, reverse('xmpp:index'),
                            login_required=True)
 

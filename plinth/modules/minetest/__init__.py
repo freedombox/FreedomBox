@@ -89,7 +89,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
+    frontpage.add_shortcut('minetest', title, None,
                            description, reverse('minetest:index'),
                            login_required=False)
 
