@@ -102,7 +102,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('repro', title,
-                           description, reverse_lazy('repro:index'),
+                           details=description,
+                           configure_url=reverse_lazy('repro:index'),
                            login_required=True)
 
 

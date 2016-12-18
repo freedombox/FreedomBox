@@ -77,7 +77,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', title, '/shaarli',
+    frontpage.add_shortcut('shaarli', title, url='/shaarli',
                            login_required=True)
 
 

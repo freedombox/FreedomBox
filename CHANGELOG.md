@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
   and exit. It can be followed by "essential" or "optional" to only
   list those modules.
 
+### Changed
+- frontpage: Show app logos instead of generic icons.
+
 ## [0.12.0] - 2016-12-08
 ### Added
 - Added screenshots to Readme.

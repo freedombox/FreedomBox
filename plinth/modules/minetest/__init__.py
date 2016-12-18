@@ -90,7 +90,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, url=None,
-                           description, reverse_lazy('minetest:index'),
+                           details=description,
+                           configure_url=reverse_lazy('minetest:index'),
                            login_required=False)
 
 

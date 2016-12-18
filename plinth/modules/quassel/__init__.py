@@ -96,7 +96,8 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title,
-                           description, reverse_lazy('quassel:index'),
+                           details=description,
+                           configure_url=reverse_lazy('quassel:index'),
                            login_required=True)
 
 
