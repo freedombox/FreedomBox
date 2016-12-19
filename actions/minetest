@@ -41,7 +41,7 @@ def parse_arguments():
                            help='Set creative mode true/false')
     configure.add_argument('--enable_pvp',choices=['true', 'false'],
                            help='Set player Vs player true/false')
-    configure.add_argument('--enable_damage',choices=['true', 'false']
+    configure.add_argument('--enable_damage',choices=['true', 'false'],
                            help='Set damage true/false')
 
     return parser.parse_args()
@@ -64,16 +64,16 @@ def set_max_players(max_players):
     aug.set(AUG_PATH + '/max_users', max_players)
 
     aug.save()
-    action_utils.service_restart('minetest')
+    action_utils.service_restart('minetest-server')
 
-    def enable_pvp(choice):
+def enable_pvp(choice):
     """Enables pvp"""
     aug = load_augeas()
 
     aug.set(AUG_PATH + '/enable_pvp', choice)
 
     aug.save()
-    action_utils.service_restart('minetest')
+    action_utils.service_restart('minetest-server')
 
 def set_creative_mode(choice):
     """Enables or disables creative mode"""
@@ -82,7 +82,7 @@ def set_creative_mode(choice):
     aug.set(AUG_PATH + '/creative_mode', choice)
 
     aug.save()
-    action_utils.service_restart('minetest')
+    action_utils.service_restart('minetest-server')
 
 def enable_damage(choice):
     """Enables damage"""
@@ -91,7 +91,7 @@ def enable_damage(choice):
     aug.set(AUG_PATH + '/enable_damage', choice)
 
     aug.save()
-    action_utils.service_restart('minetest')
+    action_utils.service_restart('minetest-server')
 
 def load_augeas():
     """Initialize Augeas."""
@@ -100,7 +100,7 @@ def load_augeas():
     aug.set('/augeas/load/Php/lens', 'Php.lns')
     aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
     aug.load()
-return aug
+    return aug
 
 def main():
     """Parse arguments and perform all duties"""
