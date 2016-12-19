@@ -30,6 +30,15 @@ from plinth import action_utils
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
 aug = load_augeas()
 
 def parse_arguments():
@@ -87,15 +96,6 @@ def enable_damage(choice):
     aug.set(AUG_PATH + '/enable_damage', choice)
 
     aug.save()
-
-def load_augeas():
-    """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Php/lens', 'Php.lns')
-    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
-    aug.load()
-    return aug
 
 def main():
     """Parse arguments and perform all duties"""
