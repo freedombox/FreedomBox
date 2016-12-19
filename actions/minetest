@@ -30,6 +30,8 @@ from plinth import action_utils
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
+aug = load_augeas()
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
@@ -56,42 +58,35 @@ def subcommand_configure(arguments):
         enable_pvp(arguments.enable_pvp)
     if arguments.enable_damage:
         enable_damage(arguments.enable_damage)
+    action_utils.service_restart('minetest-server')
 
 def set_max_players(max_players):
     """Sets the number of max players"""
-    aug = load_augeas()
 
     aug.set(AUG_PATH + '/max_users', max_players)
 
     aug.save()
-    action_utils.service_restart('minetest-server')
 
 def enable_pvp(choice):
     """Enables pvp"""
-    aug = load_augeas()
 
     aug.set(AUG_PATH + '/enable_pvp', choice)
 
     aug.save()
-    action_utils.service_restart('minetest-server')
 
 def set_creative_mode(choice):
     """Enables or disables creative mode"""
-    aug = load_augeas()
 
     aug.set(AUG_PATH + '/creative_mode', choice)
 
     aug.save()
-    action_utils.service_restart('minetest-server')
 
 def enable_damage(choice):
     """Enables damage"""
-    aug = load_augeas()
 
     aug.set(AUG_PATH + '/enable_damage', choice)
 
     aug.save()
-    action_utils.service_restart('minetest-server')
 
 def load_augeas():
     """Initialize Augeas."""
