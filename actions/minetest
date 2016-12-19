@@ -37,11 +37,11 @@ def parse_arguments():
 
     configure = subparsers.add_parser('configure', help='Configure Minetest')
     configure.add_argument('--max_players', help='Set maximum number of players')
-    configure.add_argument('--creative_mode',choices=['true', 'false'],
+    configure.add_argument('--creative_mode', choices=['true', 'false'],
                            help='Set creative mode true/false')
-    configure.add_argument('--enable_pvp',choices=['true', 'false'],
+    configure.add_argument('--enable_pvp', choices=['true', 'false'],
                            help='Set player Vs player true/false')
-    configure.add_argument('--enable_damage',choices=['true', 'false'],
+    configure.add_argument('--enable_damage', choices=['true', 'false'],
                            help='Set damage true/false')
 
     return parser.parse_args()
