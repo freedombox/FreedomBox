@@ -28,6 +28,7 @@ from plinth import action_utils
 
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
+AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -35,11 +36,13 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     configure = subparsers.add_parser('configure', help='Configure Minetest')
-    configure.add_argument('--max_players', help='Configure Minetest service')
+    configure.add_argument('--max_players', help='Set maximum number of players')
     configure.add_argument('--creative_mode',choices=['true', 'false'],
-                           help='Configure Minetest service')
-    configure.add_argument('--enable_pvp, help='Configure Minetest service')
-    configure.add_argument('--enable_damage', help='Configure Minetest service')
+                           help='Set creative mode true/false')
+    configure.add_argument('--enable_pvp',choices=['true', 'false'],
+                           help='Set player Vs player true/false')
+    configure.add_argument('--enable_damage',choices=['true', 'false']
+                           help='Set damage true/false')
 
     return parser.parse_args()
 
@@ -50,24 +53,63 @@ def subcommand_configure(arguments):
     if arguments.creative_mode:
         set_creative_mode(arguments.creative_mode)
     if arguments.enable_pvp:
-        enable_pvp()
-    if arguments.enable_damage()
-        enable_damage()
+        enable_pvp(arguments.enable_pvp)
+    if arguments.enable_damage:
+        enable_damage(arguments.enable_damage)
 
 def set_max_players(max_players):
     """Sets the number of max players"""
     aug = load_augeas()
 
-    aug.set('/files' + CONFIG_FILE + '/max_players', max_players)
+    aug.set(AUG_PATH + '/max_users', max_players)
+
+    aug.save()
+    action_utils.service_restart('minetest')
+
+    def enable_pvp(choice):
+    """Enables pvp"""
+    aug = load_augeas()
+
+    aug.set(AUG_PATH + '/enable_pvp', choice)
 
     aug.save()
     action_utils.service_restart('minetest')
 
 def set_creative_mode(choice):
     """Enables or disables creative mode"""
+    aug = load_augeas()
 
-def enable_pvp():
-    """Enables pvp"""
+    aug.set(AUG_PATH + '/creative_mode', choice)
 
-def enable_damage():
+    aug.save()
+    action_utils.service_restart('minetest')
+
+def enable_damage(choice):
     """Enables damage"""
+    aug = load_augeas()
+
+    aug.set(AUG_PATH + '/enable_damage', choice)
+
+    aug.save()
+    action_utils.service_restart('minetest')
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+return aug
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
