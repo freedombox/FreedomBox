@@ -1,0 +1,73 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Minetest server.
+"""
+
+import argparse
+import augeas
+
+from plinth import action_utils
+
+
+CONFIG_FILE = '/etc/minetest/minetest.conf'
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    configure = subparsers.add_parser('configure', help='Configure Minetest')
+    configure.add_argument('--max_players', help='Configure Minetest service')
+    configure.add_argument('--creative_mode',choices=['true', 'false'],
+                           help='Configure Minetest service')
+    configure.add_argument('--enable_pvp, help='Configure Minetest service')
+    configure.add_argument('--enable_damage', help='Configure Minetest service')
+
+    return parser.parse_args()
+
+def subcommand_configure(arguments):
+    """Configure Minetest."""
+    if arguments.max_players is not False:
+        set_max_players(arguments.max_players)
+    if arguments.creative_mode:
+        set_creative_mode(arguments.creative_mode)
+    if arguments.enable_pvp:
+        enable_pvp()
+    if arguments.enable_damage()
+        enable_damage()
+
+def set_max_players(max_players):
+    """Sets the number of max players"""
+    aug = load_augeas()
+
+    aug.set('/files' + CONFIG_FILE + '/max_players', max_players)
+
+    aug.save()
+    action_utils.service_restart('minetest')
+
+def set_creative_mode(choice):
+    """Enables or disables creative mode"""
+
+def enable_pvp():
+    """Enables pvp"""
+
+def enable_damage():
+    """Enables damage"""
