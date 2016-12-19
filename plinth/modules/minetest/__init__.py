@@ -19,6 +19,8 @@
 Plinth module for minetest.
 """
 
+import augeas
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,7 +30,6 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
 
 
 version = 2
@@ -56,6 +57,18 @@ description = [
           'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
+
+CONFIG_FILE = '/etc/minetest/minetest.conf'
+AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
 
 
 def init():
@@ -107,13 +120,6 @@ def disable():
     frontpage.remove_shortcut('minetest')
 
 
-class MinetestServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "minetest"
-    description = description
-    show_status_block = True
-
-
 def diagnose():
     """Run diagnostics and return the results."""
     results = []
@@ -121,3 +127,40 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(30000, 'udp4'))
 
     return results
+
+
+def get_max_players_value():
+    """Return the current Max Players value."""
+    aug = load_augeas()
+    value = aug.get(AUG_PATH + '/max_users')
+    if value:
+        return int(value)
+
+
+def get_creative_mode_value():
+    """Return the current Creative mode value."""
+    aug = load_augeas()
+    value = aug.get(AUG_PATH + '/creative_mode')
+    if value == "true":
+        return True
+    else:
+        return False
+
+
+def get_enable_pvp_value():
+    """Return the current Enable pvp value."""
+    aug = load_augeas()
+    value = aug.get(AUG_PATH + '/enable_pvp')
+    if value == "true":
+        return True
+    else:
+        return False
+
+def get_enable_damage_value():
+    """Return the current Enable damage value."""
+    aug = load_augeas()
+    value = aug.get(AUG_PATH + '/enable_damage')
+    if value == "true":
+        return True
+    else:
+        return False
