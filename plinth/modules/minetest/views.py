@@ -44,3 +44,38 @@ def get_initial(self):
     initial['enable_pvp'] = get_enable_pvp_value()
     initial['enable_damage'] = get_enable_damage_value()
     return initial
+
+def form_valid(self, form):
+    """Change the access control of Minetest service."""
+    data = form.cleaned_data
+    if get_max_players_value() != data['max_players']:
+        actions.superuser_run(
+            'minetest',
+            ['configure', '--max_players', data['max_players']])
+        messages.success(self.request,
+                         _('Maximum players configuration updated'))
+    return super().form_valid(form)
+
+    if get_creative_mode_value() != data['creative_mode']:
+        actions.superuser_run(
+            'minetest',
+            ['configure', '--creative_mode', data['creative_mode']])
+        messages.success(self.request,
+                         _('Creative mode configuration updated'))
+    return super().form_valid(form)
+
+    if get_enable_pvp_value() != data['enable_pvp']:
+        actions.superuser_run(
+            'minetest',
+            ['configure', '--enable_pvp', data['enable_pvp']])
+        messages.success(self.request,
+                         _('PvP configuration updated'))
+    return super().form_valid(form)
+
+    if get_enable_damage_value() != data['enable_damage']:
+        actions.superuser_run(
+            'minetest',
+            ['configure', '--enable_damage', data['enable_damage']])
+        messages.success(self.request,
+                         _('Damage configuration updated'))
+    return super().form_valid(form)
