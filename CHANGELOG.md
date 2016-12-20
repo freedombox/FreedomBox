@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Added command line argument --list-modules which will list modules
   and exit. It can be followed by "essential" or "optional" to only
   list those modules.
+- Added JS license web labels for LibreJS.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.
