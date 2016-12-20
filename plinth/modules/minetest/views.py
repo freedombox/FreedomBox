@@ -25,11 +25,13 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.views import ServiceView
 
-from . import description, managed_services, get_max_players_value, get_enable_pvp_value, get_creative_mode_value, get_enable_damage_value
+from . import description, managed_services, get_max_players_value,\
+              get_enable_pvp_value, get_creative_mode_value,\
+              get_enable_damage_value
 from .forms import MinetestForm
 
 
-class MinetestServiceView(ServiceView):
+class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     service_id = managed_services[0]
     diagnostics_module_name = "minetest"
@@ -55,7 +57,6 @@ class MinetestServiceView(ServiceView):
                 ['configure', '--max_players', data['max_players']])
             messages.success(self.request,
                              _('Maximum players configuration updated'))
-        return super().form_valid(form)
 
         if get_creative_mode_value() != data['creative_mode']:
             actions.superuser_run(
@@ -63,7 +64,6 @@ class MinetestServiceView(ServiceView):
                 ['configure', '--creative_mode', data['creative_mode']])
             messages.success(self.request,
                              _('Creative mode configuration updated'))
-        return super().form_valid(form)
 
         if get_enable_pvp_value() != data['enable_pvp']:
             actions.superuser_run(
@@ -71,7 +71,6 @@ class MinetestServiceView(ServiceView):
                 ['configure', '--enable_pvp', data['enable_pvp']])
             messages.success(self.request,
                              _('PvP configuration updated'))
-        return super().form_valid(form)
 
         if get_enable_damage_value() != data['enable_damage']:
             actions.superuser_run(
