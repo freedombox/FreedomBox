@@ -19,6 +19,8 @@
 Plinth module for minetest.
 """
 
+import augeas
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,7 +30,6 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
-from plinth.views import ServiceView
 
 
 version = 2
