@@ -29,19 +29,19 @@ class MinetestForm(ServiceForm):
     max_players = forms.IntegerField(
         label=_('Maximum number of players'),
         help_text=_('You can change the maximum number of players playing \
-        minetest at a single instance of time'))
+                    minetest at a single instance of time'))
 
     creative_mode = forms.BooleanField(
         label=_('Enable creative mode'),
         required=False,
         help_text=_('Creative Mode changes the rules of the game to make it\
-             more suitable for creative gameplay, rather than challenging\
-             “survival” gameplay.'))
+                    more suitable for creative gameplay, rather than challenging\
+                    “survival” gameplay.'))
 
     enable_pvp = forms.BooleanField(
         label=_('Enable pvp'),
         help_text=_('Enabling Player Vs Player will cause players to damage \
-        other players'))
+                    other players'))
 
     enable_damage = forms.BooleanField(
         label=_('Enable damage'))

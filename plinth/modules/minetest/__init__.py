@@ -57,6 +57,20 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+CONFIG_FILE = '/etc/minetest/minetest.conf'
+AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
+aug = load_augeas()
+
 
 def init():
     """Initialize the module."""
@@ -107,13 +121,6 @@ def disable():
     frontpage.remove_shortcut('minetest')
 
 
-class MinetestServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "minetest"
-    description = description
-    show_status_block = True
-
-
 def diagnose():
     """Run diagnostics and return the results."""
     results = []
@@ -121,3 +128,27 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(30000, 'udp4'))
 
     return results
+
+
+def get_max_players_value():
+    """Return the current Max Players value."""
+    value = aug.get(AUG_PATH + '/max_players')
+    return value
+
+
+def get_creative_mode_value():
+    """Return the current Creative mode value."""
+    value = aug.get(AUG_PATH + '/creative_mode')
+    return value
+
+
+def get_enable_pvp_value():
+    """Return the current Enable pvp value."""
+    value = aug.get(AUG_PATH + '/enable_pvp')
+    return value
+
+
+def get_enable_damage_value():
+    """Return the current Enable damage value."""
+    value = aug.get(AUG_PATH + '/enable_damage')
+    return value
