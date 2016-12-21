@@ -24,6 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.views import ServiceView
+from plinth import action_utils
+
 
 from . import description, managed_services, get_max_players_value,\
               get_enable_pvp_value, get_creative_mode_value,\
@@ -49,33 +51,54 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
         return initial
 
     def form_valid(self, form):
-        """Change the access control of Minetest service."""
+        """Change the configurations of Minetest service."""
         data = form.cleaned_data
-        if get_max_players_value() != data['max_players']:
+
+        if not data['max_players']:
+            data['max_players'] = get_max_players_value()
+        char_value = str(data['max_players'])
+        if get_max_players_value() != char_value and char_value:
             actions.superuser_run(
                 'minetest',
-                ['configure', '--max_players', data['max_players']])
+                ['configure', '--max_players', char_value])
             messages.success(self.request,
                              _('Maximum players configuration updated'))
+
+        if data['creative_mode'] is True:
+            value = "true"
+        else:
+            value = "false"
 
         if get_creative_mode_value() != data['creative_mode']:
             actions.superuser_run(
                 'minetest',
-                ['configure', '--creative_mode', data['creative_mode']])
+                ['configure', '--creative_mode', value])
             messages.success(self.request,
                              _('Creative mode configuration updated'))
+
+        if data['enable_pvp'] is True:
+            value = "true"
+        else:
+            value = "false"
 
         if get_enable_pvp_value() != data['enable_pvp']:
             actions.superuser_run(
                 'minetest',
-                ['configure', '--enable_pvp', data['enable_pvp']])
+                ['configure', '--enable_pvp', value])
             messages.success(self.request,
                              _('PvP configuration updated'))
+
+        if data['enable_damage'] is True:
+            value = "true"
+        else:
+            value = "false"
 
         if get_enable_damage_value() != data['enable_damage']:
             actions.superuser_run(
                 'minetest',
-                ['configure', '--enable_damage', data['enable_damage']])
+                ['configure', '--enable_damage', value])
             messages.success(self.request,
                              _('Damage configuration updated'))
+
+
         return super().form_valid(form)

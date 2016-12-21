@@ -70,8 +70,6 @@ def load_augeas():
     aug.load()
     return aug
 
-aug = load_augeas()
-
 
 def init():
     """Initialize the module."""
@@ -133,23 +131,35 @@ def diagnose():
 
 def get_max_players_value():
     """Return the current Max Players value."""
-    value = aug.get(AUG_PATH + '/max_players')
+    aug = load_augeas()
+    value = aug.get(AUG_PATH + '/max_users')
     return value
 
 
 def get_creative_mode_value():
     """Return the current Creative mode value."""
+    aug = load_augeas()
     value = aug.get(AUG_PATH + '/creative_mode')
-    return value
+    if value == "true":
+        return True
+    else:
+        return False
 
 
 def get_enable_pvp_value():
     """Return the current Enable pvp value."""
+    aug = load_augeas()
     value = aug.get(AUG_PATH + '/enable_pvp')
-    return value
-
+    if value == "true":
+        return True
+    else:
+        return False
 
 def get_enable_damage_value():
     """Return the current Enable damage value."""
+    aug = load_augeas()
     value = aug.get(AUG_PATH + '/enable_damage')
-    return value
+    if value == "true":
+        return True
+    else:
+        return False

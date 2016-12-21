@@ -26,8 +26,9 @@ from plinth.forms import ServiceForm
 
 class MinetestForm(ServiceForm):
     """Minetest configuration form"""
-    max_players = forms.IntegerField(
+    max_players = forms.CharField(
         label=_('Maximum number of players'),
+        required=True,
         help_text=_('You can change the maximum number of players playing \
                     minetest at a single instance of time'))
 
@@ -40,8 +41,10 @@ class MinetestForm(ServiceForm):
 
     enable_pvp = forms.BooleanField(
         label=_('Enable pvp'),
+        required=False,
         help_text=_('Enabling Player Vs Player will cause players to damage \
                     other players'))
 
     enable_damage = forms.BooleanField(
-        label=_('Enable damage'))
+        label=_('Enable damage'),
+        required=False)
