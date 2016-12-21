@@ -133,7 +133,7 @@ def get_max_players_value():
     """Return the current Max Players value."""
     aug = load_augeas()
     value = aug.get(AUG_PATH + '/max_users')
-    return value
+    return int(value)
 
 
 def get_creative_mode_value():

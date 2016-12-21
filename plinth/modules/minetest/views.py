@@ -45,9 +45,7 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
         """Return the values to fill in the form."""
         initial = super().get_initial()
 
-        value=get_max_players_value();
-        value = int(value)
-        initial['max_players'] = value
+        initial['max_players'] = get_max_players_value()
         initial['creative_mode'] = get_creative_mode_value()
         initial['enable_pvp'] = get_enable_pvp_value()
         initial['enable_damage'] = get_enable_damage_value()
@@ -56,14 +54,13 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
     def form_valid(self, form):
         """Change the configurations of Minetest service."""
         data = form.cleaned_data
-        char_value = str(data['max_players'])
 
-        if get_max_players_value() != char_value:
+        if get_max_players_value() != data['max_players'] and str(data['max_players']) != None:
             actions.superuser_run(
                 'minetest',
-                ['configure', '--max_players', char_value])
+                ['configure', '--max_players', str(data['max_players'])])
             messages.success(self.request,
-                             _('Maximum players configuration updated')+char_value)
+                             _('Maximum players configuration updated'))
 
         if data['creative_mode'] is True:
             value = "true"
