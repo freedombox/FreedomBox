@@ -37,7 +37,7 @@ managed_services = ['repro']
 
 managed_packages = ['repro']
 
-title = _('SIP Server (repro)')
+title = _('SIP Server \n (repro)')
 
 description = [
     _('repro provides various SIP services that a SIP softphone can utilize '
@@ -101,8 +101,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('repro', title, None, 'glyphicon-phone-alt',
-                           description, reverse_lazy('repro:index'),
+    frontpage.add_shortcut('repro', title,
+                           details=description,
+                           configure_url=reverse_lazy('repro:index'),
                            login_required=True)
 
 

@@ -38,7 +38,7 @@ managed_services = ['deluge-web']
 
 managed_packages = ['deluged', 'deluge-web']
 
-title = _('BitTorrent Web Client (Deluge)')
+title = _('BitTorrent Web Client \n (Deluge)')
 
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
@@ -82,7 +82,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('deluge', title, '/deluge', 'glyphicon-magnet',
+    frontpage.add_shortcut('deluge', title, url='/deluge',
                            login_required=True)
 
 

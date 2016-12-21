@@ -34,7 +34,7 @@ managed_services = ['node-restore']
 
 managed_packages = ['node-restore']
 
-title = _('Unhosted Storage (reStore)')
+title = _('Unhosted Storage \n (reStore)')
 
 description = [
     format_lazy(

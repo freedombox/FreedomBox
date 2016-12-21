@@ -37,7 +37,7 @@ managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
-title = _('BitTorrent (Transmission)')
+title = _('BitTorrent \n (Transmission)')
 
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -88,7 +88,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-            'transmission', title, '/transmission', 'glyphicon-save',
+            'transmission', title, url='/transmission',
             login_required=True)
 
 

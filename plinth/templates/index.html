@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load static %}
 
 {% block icons %}
 
@@ -37,10 +38,9 @@
                   <a href="{{ shortcut.url }}">
               {% endif %}
                     <center>
-                      <span class="{{ shortcut.icon }} glyphicon"
-                            style="font-size: 300%"></span>
+                      <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png" style="max-width: 100px; height: 100px" />
                       <br>
-                      {{ shortcut.label }}
+                      {{ shortcut.label|linebreaks }}
                     </center>
                   </a>
                 </li>

@@ -36,7 +36,7 @@ managed_services = ['tt-rss']
 
 managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
 
-title = _('News Feed Reader (Tiny Tiny RSS)')
+title = _('News Feed Reader \n (Tiny Tiny RSS)')
 
 description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
@@ -83,7 +83,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, '/tt-rss', 'glyphicon-envelope',
+    frontpage.add_shortcut('ttrss', title, url='/tt-rss',
                            login_required=True)
 
 

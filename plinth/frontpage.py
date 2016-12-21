@@ -27,15 +27,19 @@ def get_shortcuts():
     return sorted(shortcuts.values(), key=lambda item: item['label'])
 
 
-def add_shortcut(id, label, url, icon, details=None, configure_url=None,
-                 login_required=False):
+def add_shortcut(shortcut_id, label, login_required=False,
+                 icon=None, url=None,
+                 details=None, configure_url=None):
     """Add shortcut to front page."""
 
     if not url:
-        url = '?selected={id}'.format(id=id)
+        url = '?selected={id}'.format(id=shortcut_id)
 
-    shortcuts[id] = {
-        'id': id,
+    if not icon:
+        icon = shortcut_id
+
+    shortcuts[shortcut_id] = {
+        'id': shortcut_id,
         'label': label,
         'url': url,
         'icon': icon,
@@ -45,19 +49,19 @@ def add_shortcut(id, label, url, icon, details=None, configure_url=None,
     }
 
 
-def remove_shortcut(id):
+def remove_shortcut(shortcut_id):
     """
     Remove shortcut from front page.
 
-    If id ends with *, remove all shortcuts with that prefix.
+    If shortcut_id ends with *, remove all shortcuts with that prefix.
     """
     def match(item):
-        if id[-1] == '*':
-            return item['id'].startswith(id[:-1])
+        if shortcut_id[-1] == '*':
+            return item['id'].startswith(shortcut_id[:-1])
 
-        return item['id'] == id
+        return item['id'] == shortcut_id
 
     global shortcuts
-    shortcuts = {id: shortcut
-                 for id, shortcut in shortcuts.items()
+    shortcuts = {shortcut_id: shortcut
+                 for shortcut_id, shortcut in shortcuts.items()
                  if not match(shortcut)}

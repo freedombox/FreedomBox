@@ -40,7 +40,7 @@ managed_services = ['quasselcore']
 
 managed_packages = ['quassel-core']
 
-title = _('IRC Client (Quassel)')
+title = _('IRC Client \n (Quassel)')
 
 description = [
     format_lazy(
@@ -95,8 +95,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('quassel', title, None, 'glyphicon-retweet',
-                           description, reverse_lazy('quassel:index'),
+    frontpage.add_shortcut('quassel', title,
+                           details=description,
+                           configure_url=reverse_lazy('quassel:index'),
                            login_required=True)
 
 

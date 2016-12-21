@@ -34,7 +34,7 @@ version = 1
 
 depends = ['apps']
 
-title = _('Voice Chat (Mumble)')
+title = _('Voice Chat \n (Mumble)')
 
 service = None
 
@@ -89,8 +89,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('mumble', title, None, 'glyphicon-headphones',
-                           description, reverse_lazy('mumble:index'),
+    frontpage.add_shortcut('mumble', title,
+                           details=description,
+                           configure_url=reverse_lazy('mumble:index'),
                            login_required=False)
 
 

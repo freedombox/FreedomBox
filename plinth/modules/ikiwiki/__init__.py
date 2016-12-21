@@ -83,8 +83,8 @@ def add_shortcuts():
     sites = [name for name in sites if name != '']
     for site in sites:
         frontpage.add_shortcut(
-            'ikiwiki_' + site, site, '/ikiwiki/' + site, 'glyphicon-edit',
-            login_required=False)
+            'ikiwiki_' + site, site, url='/ikiwiki/' + site,
+            login_required=False, icon='ikiwiki')
 
 
 def is_enabled():

@@ -34,7 +34,7 @@ depends = ['apps']
 
 managed_packages = ['shaarli']
 
-title = _('Bookmarks (Shaarli)')
+title = _('Bookmarks \n (Shaarli)')
 
 description = [
     _('Shaarli allows you to save and share bookmarks.'),
@@ -77,7 +77,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', title, '/shaarli', 'glyphicon-bookmark',
+    frontpage.add_shortcut('shaarli', title, url='/shaarli',
                            login_required=True)
 
 

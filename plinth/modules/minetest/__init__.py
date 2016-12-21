@@ -46,7 +46,7 @@ managed_packages = ['minetest-server', 'minetest-mod-advspawning',
                     'minetest-mod-nether', 'minetest-mod-torches',
                     ]
 
-title = _('Block Sandbox (Minetest)')
+title = _('Block Sandbox \n (Minetest)')
 
 description = [
     format_lazy(
@@ -89,8 +89,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('minetest', title, None, 'glyphicon-th-large',
-                           description, reverse_lazy('minetest:index'),
+    frontpage.add_shortcut('minetest', title, url=None,
+                           details=description,
+                           configure_url=reverse_lazy('minetest:index'),
                            login_required=False)
 
 
