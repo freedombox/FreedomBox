@@ -26,7 +26,7 @@ from plinth.forms import ServiceForm
 
 class MinetestForm(ServiceForm):
     """Minetest configuration form"""
-    max_players = forms.CharField(
+    max_players = forms.IntegerField(
         label=_('Maximum number of players'),
         required=True,
         help_text=_('You can change the maximum number of players playing \
