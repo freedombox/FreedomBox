@@ -55,12 +55,12 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
         """Change the configurations of Minetest service."""
         data = form.cleaned_data
 
-        if get_max_players_value() != data['max_players'] and str(data['max_players']) != None:
-            actions.superuser_run(
-                'minetest',
-                ['configure', '--max_players', str(data['max_players'])])
-            messages.success(self.request,
-                             _('Maximum players configuration updated'))
+        if get_max_players_value() != data['max_players'] and data['max_players'] != None:
+                actions.superuser_run(
+                    'minetest',
+                    ['configure', '--max_players', str(data['max_players'])])
+                messages.success(self.request,
+                                 _('Maximum players configuration updated'))
 
         if data['creative_mode'] is True:
             value = "true"
@@ -72,7 +72,7 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
                 'minetest',
                 ['configure', '--creative_mode', value])
             messages.success(self.request,
-                             _('Creative mode configuration updated')+char_value)
+                             _('Creative mode configuration updated'))
 
         if data['enable_pvp'] is True:
             value = "true"
