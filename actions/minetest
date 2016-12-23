@@ -59,7 +59,7 @@ def parse_arguments():
 
 def subcommand_configure(arguments):
     """Configure Minetest."""
-    if arguments.max_players is not False:
+    if arguments.max_players:
         set_max_players(arguments.max_players)
     if arguments.creative_mode:
         set_creative_mode(arguments.creative_mode)
