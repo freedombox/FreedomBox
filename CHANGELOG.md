@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
   and exit. It can be followed by "essential" or "optional" to only
   list those modules.
 - Added JS license web labels for LibreJS.
+- Added basic configuration form for Minetest server.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.

@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module for minetest.
+Plinth module for Minetest server.
 """
 
 import augeas
@@ -44,8 +44,7 @@ managed_packages = ['minetest-server', 'minetest-mod-advspawning',
                     'minetest-mod-animalmaterials', 'minetest-mod-animals',
                     'minetest-mod-mesecons', 'minetest-mod-mobf-core',
                     'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
-                    'minetest-mod-nether', 'minetest-mod-torches',
-                    ]
+                    'minetest-mod-nether', 'minetest-mod-torches']
 
 title = _('Block Sandbox \n (Minetest)')
 
@@ -60,15 +59,6 @@ description = [
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
-
-def load_augeas():
-    """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Php/lens', 'Php.lns')
-    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
-    aug.load()
-    return aug
 
 
 def init():
@@ -129,38 +119,48 @@ def diagnose():
     return results
 
 
-def get_max_players_value():
-    """Return the current Max Players value."""
-    aug = load_augeas()
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Php/lens', 'Php.lns')
+    aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
+
+def get_max_players(aug):
+    """Return the maximum players allowed on the server at one time."""
     value = aug.get(AUG_PATH + '/max_users')
     if value:
         return int(value)
 
 
-def get_creative_mode_value():
-    """Return the current Creative mode value."""
-    aug = load_augeas()
+def is_creative_mode_enabled(aug):
+    """Return whether creative mode is enabled."""
     value = aug.get(AUG_PATH + '/creative_mode')
-    if value == "true":
-        return True
-    else:
-        return False
+    return value == 'true'
 
 
-def get_enable_pvp_value():
-    """Return the current Enable pvp value."""
-    aug = load_augeas()
+def is_pvp_enabled(aug):
+    """Return whether PVP is enabled."""
     value = aug.get(AUG_PATH + '/enable_pvp')
-    if value == "true":
-        return True
-    else:
-        return False
+    return value == 'true'
 
-def get_enable_damage_value():
-    """Return the current Enable damage value."""
-    aug = load_augeas()
+
+def is_damage_enabled(aug):
+    """Return whether damage is enabled."""
     value = aug.get(AUG_PATH + '/enable_damage')
-    if value == "true":
-        return True
-    else:
-        return False
+    return value == 'true'
+
+
+def get_configuration():
+    """Return the current configuration."""
+    aug = load_augeas()
+    conf = {
+        'max_players': get_max_players(aug),
+        'creative_mode': is_creative_mode_enabled(aug),
+        'enable_pvp': is_pvp_enabled(aug),
+        'enable_damage': is_damage_enabled(aug),
+    }
+    return conf

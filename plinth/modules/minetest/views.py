@@ -24,12 +24,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.views import ServiceView
-from plinth import action_utils
 
 
-from . import description, managed_services, get_max_players_value,\
-              get_enable_pvp_value, get_creative_mode_value,\
-              get_enable_damage_value
+from . import description, managed_services, get_configuration
 from .forms import MinetestForm
 
 
@@ -44,59 +41,44 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-
-        initial['max_players'] = get_max_players_value()
-        initial['creative_mode'] = get_creative_mode_value()
-        initial['enable_pvp'] = get_enable_pvp_value()
-        initial['enable_damage'] = get_enable_damage_value()
+        initial.update(get_configuration())
         return initial
 
     def form_valid(self, form):
         """Change the configurations of Minetest service."""
         data = form.cleaned_data
+        old_config = get_configuration()
 
-        if get_max_players_value() != data['max_players'] and data['max_players'] != None:
-                actions.superuser_run(
-                    'minetest',
-                    ['configure', '--max_players', str(data['max_players'])])
-                messages.success(self.request,
-                                 _('Maximum players configuration updated'))
+        if old_config['max_players'] != data['max_players'] \
+           and data['max_players'] != None:
+            actions.superuser_run(
+                'minetest',
+                ['configure', '--max_players', str(data['max_players'])])
+            messages.success(self.request,
+                             _('Maximum players configuration updated'))
 
-        if data['creative_mode'] is True:
-            value = "true"
-        else:
-            value = "false"
-
-        if get_creative_mode_value() != data['creative_mode']:
+        if old_config['creative_mode'] != data['creative_mode']:
+            value = 'true' if data['creative_mode'] else 'false'
             actions.superuser_run(
                 'minetest',
                 ['configure', '--creative_mode', value])
             messages.success(self.request,
                              _('Creative mode configuration updated'))
 
-        if data['enable_pvp'] is True:
-            value = "true"
-        else:
-            value = "false"
-
-        if get_enable_pvp_value() != data['enable_pvp']:
+        if old_config['enable_pvp'] != data['enable_pvp']:
+            value = 'true' if data['enable_pvp'] else 'false'
             actions.superuser_run(
                 'minetest',
                 ['configure', '--enable_pvp', value])
             messages.success(self.request,
-                             _('PvP configuration updated'))
+                             _('PVP configuration updated'))
 
-        if data['enable_damage'] is True:
-            value = "true"
-        else:
-            value = "false"
-
-        if get_enable_damage_value() != data['enable_damage']:
+        if old_config['enable_damage'] != data['enable_damage']:
+            value = 'true' if data['enable_damage'] else 'false'
             actions.superuser_run(
                 'minetest',
                 ['configure', '--enable_damage', value])
             messages.success(self.request,
                              _('Damage configuration updated'))
-
 
         return super().form_valid(form)
