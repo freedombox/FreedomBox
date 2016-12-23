@@ -53,10 +53,16 @@ description = [
       'systems are fully compliant with published DNS standards.')
 ]
 
+CONFIG_FILE = '/etc/bind/named.conf.options'
+
+value1 = 'acl goodclients { \n   localhost;\n};\n'
+value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
+value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
+
 
 def init():
     """Intialize the BIND module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = cfg.main_menu.get('system:index')
     menu.add_urlname(title, 'glyphicon-globe', 'bind:index')
 
     global service
@@ -65,10 +71,7 @@ def init():
         service = service_module.Service(
             managed_services[0], title, ports=['bind-plinth'],
             is_external=True,
-            enable=enable, disable=disable)
-
-        if service.is_enabled():
-            add_shortcut()
+            )
 
 
 class BindServiceView(ServiceView):
@@ -87,14 +90,7 @@ def setup(helper, old_version=None):
             is_external=True,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
-
-
-def add_shortcut():
-    frontpage.add_shortcut('bind', title,
-                           details=description,
-                           configure_url=reverse_lazy('bind:index'),
-                           login_required=False)
+    helper.call('post', default_config)
 
 
 def enable():
@@ -117,3 +113,29 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(53, 'udp6'))
 
     return results
+
+def default_config():
+    """Initialize config file for BIND"""
+    f = open(CONFIG_FILE, "r")
+    contents = f.readlines()
+    f.close()
+
+    contents.insert(0, value1)
+    contents.insert(4, value2)
+    contents.insert(15, value3)
+
+    f = open(CONFIG_FILE, "w")
+    contents = "".join(contents)
+    f.write(contents)
+    f.close()
+
+def get_default():
+    """Get initial value for forwarding"""
+    f = open(CONFIG_FILE, "r")
+    contents = f.readlines()
+    if '// forwarders {' in contents:
+        conf = {
+            'set_forwarding': False}
+    else:
+        conf = {
+            'set_forwarding': True}
