@@ -21,6 +21,7 @@ Django middleware to show pre-setup message and setup progress.
 
 from django import urls
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 import logging
 
@@ -75,5 +76,6 @@ class SetupMiddleware(object):
         if module.setup_helper.get_state() == 'up-to-date':
             return
 
-        view = views.SetupView.as_view()
+        # Only allow logged-in users to access any setup page
+        view = login_required(views.SetupView.as_view())
         return view(request, setup_helper=module.setup_helper)
