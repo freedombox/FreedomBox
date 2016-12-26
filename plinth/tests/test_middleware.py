@@ -21,6 +21,7 @@ Test module for Plinth's custom middleware.
 
 from unittest.mock import Mock, patch
 
+from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -86,18 +87,24 @@ class TestSetupMiddleware(TestCase):
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
     def test_module_view(self, resolve, loaded_modules, setup_view):
-        """Test that setup view is returned."""
+        """Test that only registered users can access the setup view."""
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
         module.setup_helper.is_finished = None
         loaded_modules.__getitem__.return_value = module
         view = Mock()
         setup_view.as_view.return_value = view
-
         request = RequestFactory().get('/plinth/mockapp')
-        self.middleware.process_view(request, **self.kwargs)
 
+        # Verify that anonymous users cannot access the setup page
+        request.user = AnonymousUser()
+        self.middleware.process_view(request, **self.kwargs)
         setup_view.as_view.assert_called_once_with()
+        view.assert_not_called()
+
+        # Verify that logged-in users can access the setup page
+        request.user = User(username='johndoe')
+        self.middleware.process_view(request, **self.kwargs)
         view.assert_called_once_with(request, setup_helper=module.setup_helper)
 
     @patch('django.contrib.messages.success')
