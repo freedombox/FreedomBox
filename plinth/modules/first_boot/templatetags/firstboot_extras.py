@@ -21,13 +21,13 @@ Template tags for first boot module.
 
 from django import template
 
+from plinth.modules import first_boot
 from plinth import kvstore
 
 register = template.Library()
 
 
 @register.simple_tag
-def firstboot_is_finished():
+def firstboot_is_completed():
     """Return whether firstboot process is completed."""
-    state = kvstore.get_default('setup_state', 0)
-    return state == 1
+    return first_boot.is_completed()

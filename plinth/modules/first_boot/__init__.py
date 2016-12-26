@@ -106,7 +106,7 @@ def mark_step_done(id):
 
     kvstore.set(id, 1)
     if not next_step_or_none():
-        kvstore.set('setup_state', 1)
+        set_completed()
 
 
 def is_completed():
@@ -115,9 +115,12 @@ def is_completed():
 
     global _is_completed
     if _is_completed is None:
+        # TODO
+        # Rename setup_state to 'firstboot_completed',
+        # taking care of the existing kvstore variable name.
         _is_completed = kvstore.get_default('setup_state', 0)
 
-    return _is_completed
+    return bool(_is_completed)
 
 
 def set_completed():
