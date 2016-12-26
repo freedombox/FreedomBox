@@ -26,8 +26,8 @@
 {# Adapt mainmenu-links during firstboot #}
 {% block mainmenu_left %}
 
-  {% firstboot_is_finished as firstboot_finished %}
-  {% if not firstboot_finished %}
+  {% firstboot_is_completed as firstboot_completed %}
+  {% if not firstboot_completed %}
 
     <span class="navbar-brand">
       <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
@@ -46,8 +46,8 @@
 
 {% block mainmenu_right %}
 
-  {% firstboot_is_finished as firstboot_finished %}
-  {% if not firstboot_finished %}
+  {% firstboot_is_completed as firstboot_completed %}
+  {% if not firstboot_completed %}
     {% include "firstboot_navbar.html" %}
   {% else %}
     {{ block.super }}
