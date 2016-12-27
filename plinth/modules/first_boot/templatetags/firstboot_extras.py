@@ -22,7 +22,6 @@ Template tags for first boot module.
 from django import template
 
 from plinth.modules import first_boot
-from plinth import kvstore
 
 register = template.Library()
 
