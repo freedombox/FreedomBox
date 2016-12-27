@@ -25,7 +25,6 @@ from django.urls import reverse
 from django.conf import settings
 import logging
 
-from plinth import kvstore
 from plinth.modules import first_boot
 
 LOGGER = logging.getLogger(__name__)
@@ -49,14 +48,6 @@ class FirstBootMiddleware(object):
             return
 
         firstboot_completed = first_boot.is_completed()
-
-        # Migrate from old settings variable
-        if not firstboot_completed:
-            old_state = kvstore.get_default('firstboot_state', 0)
-            if old_state == 10:
-                firstboot_completed = True
-                first_boot.set_completed()
-
         user_requests_firstboot = first_boot.is_firstboot_url(request.path)
 
         # Redirect to first boot if requesting normal page and first

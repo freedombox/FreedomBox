@@ -115,10 +115,7 @@ def is_completed():
 
     global _is_completed
     if _is_completed is None:
-        # TODO
-        # Rename setup_state to 'firstboot_completed',
-        # taking care of the existing kvstore variable name.
-        _is_completed = kvstore.get_default('setup_state', 0)
+        _is_completed = kvstore.get_default('firstboot_completed', 0)
 
     return bool(_is_completed)
 
@@ -129,4 +126,4 @@ def set_completed():
 
     global _is_completed
     _is_completed = True
-    kvstore.set('setup_state', 1)
+    kvstore.set('firstboot_completed', 1)
