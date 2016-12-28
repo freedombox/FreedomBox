@@ -31,7 +31,7 @@ from .forms import BindForm
 
 
 class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
-    """A specialized view for configuring minetest."""
+    """A specialized view for configuring Bind."""
     service_id = managed_services[0]
     diagnostics_module_name = "bind"
     description = description
@@ -45,7 +45,7 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
         return initial
 
     def form_valid(self, form):
-        """Change the configurations of Minetest service."""
+        """Change the configurations of Bind service."""
         data = form.cleaned_data
         old_config = get_default()
 
