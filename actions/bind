@@ -1,0 +1,103 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for BIND server.
+"""
+
+import argparse
+
+from plinth import action_utils
+
+
+CONFIG_FILE = '/etc/bind/named.conf.options'
+CONFIG_FILE_2 = '/etc/bind/named_temp.conf.options'
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    configure = subparsers.add_parser('configure', help='Configure Minetest')
+    configure.add_argument('--set-forwarding', choices=['true', 'false'],
+                           help='Set forwarding true/false')
+    configure.add_argument('--dnssec', choices=['true', 'false'],
+                           help='Set DNSSEC true/false')
+
+    return parser.parse_args()
+
+
+def subcommand_configure(arguments):
+    """Configure BIND."""
+
+    if arguments.set_forwarding:
+        set_forwarding(arguments.set_forwarding)
+
+    action_utils.service_restart('bind9')
+
+
+def set_forwarding(choice):
+    """Sets forwarding true/false"""
+    if choice == False:
+        flag = 0
+        f = open(CONFIG_FILE, 'r')
+        w = open(CONFIG_FILE_2, 'w+')
+        for line in f:
+            if 'forwarders {' in line and not '// forwarders {' in line:
+               flag = 1
+            if flag == 1:
+               line = '	//'+line
+               print(line)
+            if 'forward only' in line:
+                flag = 0
+            w.write(line)
+        f.close()
+        w.close()
+        os.rename('named.conf_temp.options', 'named.conf.options')
+
+    if choice == True:
+        flag = 0
+        f = open(CONFIG_FILE, 'r')
+        w = open(CONFIG_FILE_2, 'w+')
+        for line in f:
+            if '// forwarders {' in line:
+               print("yesy")
+               flag = 1
+            if flag == 1:
+               line = line[3:]
+               print(line)
+            if 'forward only' in line:
+                flag = 0
+            w.write(line)
+        f.close()
+        w.close()
+        os.rename('named.conf_temp.options', 'named.conf.options')
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
