@@ -30,7 +30,7 @@ from . import description, managed_services, get_default
 from .forms import BindForm
 
 
-class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
+class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     service_id = managed_services[0]
     diagnostics_module_name = "bind"

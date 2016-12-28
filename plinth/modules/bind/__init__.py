@@ -116,6 +116,7 @@ def diagnose():
 
 def default_config():
     """Initialize config file for BIND"""
+    actions.superuser_run('bind', ['setup'])
     f = open(CONFIG_FILE, "r")
     contents = f.readlines()
     f.close()
