@@ -113,22 +113,12 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(53, 'udp6'))
 
     return results
+    
 
 def default_config():
-    """Initialize config file for BIND"""
+    """Setp BIND configuration"""
     actions.superuser_run('bind', ['setup'])
-    f = open(CONFIG_FILE, "r")
-    contents = f.readlines()
-    f.close()
-
-    contents.insert(0, value1)
-    contents.insert(4, value2)
-    contents.insert(15, value3)
-
-    f = open(CONFIG_FILE, "w")
-    contents = "".join(contents)
-    f.write(contents)
-    f.close()
+    
 
 def get_default():
     """Get initial value for forwarding"""
