@@ -16,27 +16,27 @@
 #
 
 """
-Views for the XMPP module
+Views for the JSXC module
 """
 
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from stronghold.decorators import public
 
-from plinth.modules import xmpp
+from plinth.modules import jsxc
 from plinth.views import ServiceView
 
 
-class EjabberdServiceView(ServiceView):
+class JSXCServiceView(ServiceView):
     """Show ejabberd as a service."""
-    service_id = xmpp.managed_services[0]
-    template_name = 'xmpp.html'
-    description = xmpp.description
-    diagnostics_module_name = 'xmpp'
+    service_id = jsxc.managed_services[0]
+    template_name = 'jsxc.html'
+    description = jsxc.description
+    diagnostics_module_name = 'jsxc'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = xmpp.get_domainname()
+        context['domainname'] = jsxc.get_domainname()
         return context
 
 
@@ -52,5 +52,5 @@ class JsxcView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         """Add domain information to view context."""
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = xmpp.get_domainname()
+        context['domainname'] = jsxc.get_domainname()
         return context

@@ -16,15 +16,14 @@
 #
 
 """
-URLs for the XMPP module
+URLs for the JSXC module
 """
 
 from django.conf.urls import url
 
-from .views import EjabberdServiceView, JsxcView
+from .views import JSXCServiceView, JsxcView
 
 
 urlpatterns = [
-    url(r'^apps/xmpp/$', EjabberdServiceView.as_view(), name='index'),
-    url(r'^apps/xmpp/jsxc/$', JsxcView.as_view(), name='jsxc'),
+    url(r'^apps/jsxc/$', JsxcView.as_view(), name='jsxc'),
 ]
