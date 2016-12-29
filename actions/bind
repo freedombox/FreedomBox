@@ -32,6 +32,7 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser('setup', help='Setup for BIND')
 
     configure = subparsers.add_parser('configure', help='Configure Minetest')
     configure.add_argument('--set-forwarding', choices=['true', 'false'],
@@ -41,6 +42,22 @@ def parse_arguments():
 
     return parser.parse_args()
 
+
+def subcommand_setup(_):
+    """Setup BIND configuration."""
+    actions.superuser_run('bind', ['setup'])
+    f = open(CONFIG_FILE, "r")
+    contents = f.readlines()
+    f.close()
+
+    contents.insert(0, value1)
+    contents.insert(4, value2)
+    contents.insert(15, value3)
+
+    f = open(CONFIG_FILE, "w")
+    contents = "".join(contents)
+    f.write(contents)
+    f.close()
 
 def subcommand_configure(arguments):
     """Configure BIND."""
