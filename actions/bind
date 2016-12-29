@@ -45,7 +45,6 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup BIND configuration."""
-    actions.superuser_run('bind', ['setup'])
     f = open(CONFIG_FILE, "r")
     contents = f.readlines()
     f.close()

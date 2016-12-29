@@ -115,6 +115,11 @@ def diagnose():
     return results
     
 
+def default_config():
+    """Setp BIND configuration"""
+    actions.superuser_run('bind', ['setup'])
+    
+
 def get_default():
     """Get initial value for forwarding"""
     f = open(CONFIG_FILE, "r")
