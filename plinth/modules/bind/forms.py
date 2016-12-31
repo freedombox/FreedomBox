@@ -29,4 +29,5 @@ class BindForm(ServiceForm):
     """BIND configuration form"""
     set_forwarding = forms.BooleanField(
         label=_('Enable forwarding'),
-        required=False)
+        required=False,
+        help_text=_('Enable forwarding on your BIND server'))

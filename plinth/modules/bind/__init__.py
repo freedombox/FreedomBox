@@ -32,7 +32,7 @@ from plinth.views import ServiceView
 
 version = 1
 
-depends = ['apps']
+depends = ['system']
 
 title = _('Domain Name Server \n (BIND)')
 
@@ -54,10 +54,6 @@ description = [
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
-
-value1 = 'acl goodclients { \n   localhost;\n};\n'
-value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
-value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
 
 
 def init():
@@ -96,13 +92,11 @@ def setup(helper, old_version=None):
 def enable():
     """Enable the module."""
     actions.superuser_run('service', ['enable', managed_services[0]])
-    add_shortcut()
 
 
 def disable():
     """Disable the module."""
     actions.superuser_run('service', ['disable', managed_services[0]])
-    frontpage.remove_shortcut('bind')
 
 
 def diagnose():
@@ -113,20 +107,20 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(53, 'udp6'))
 
     return results
-    
+
 
 def default_config():
     """Setp BIND configuration"""
     actions.superuser_run('bind', ['setup'])
-    
+
 
 def get_default():
     """Get initial value for forwarding"""
-    f = open(CONFIG_FILE, "r")
-    contents = f.readlines()
-    if '// forwarders {' in contents:
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    if '// forwarders {' in data:
         conf = {
             'set_forwarding': False}
     else:
         conf = {
             'set_forwarding': True}
+    return conf
