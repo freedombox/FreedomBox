@@ -31,3 +31,8 @@ class BindForm(ServiceForm):
         label=_('Enable forwarding'),
         required=False,
         help_text=_('Enable forwarding on your BIND server'))
+
+    enable_dnssec = forms.BooleanField(
+        label=_('Enable DNSSEC'),
+        required=False,
+        help_text=_('Enable Domain Name System Security Extensions'))
