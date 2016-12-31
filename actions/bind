@@ -31,6 +31,7 @@ CONFIG_FILE = '/etc/bind/named.conf.options'
 value1 = 'acl goodclients { \n   localhost;\n};\n'
 value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
 value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
+value4 = '	//forward only;\n'
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -56,6 +57,7 @@ def subcommand_setup(_):
     contents.insert(0, value1)
     contents.insert(4, value2)
     contents.insert(15, value3)
+    contents.insert(18, value4)
 
     f = open(CONFIG_FILE, "w")
     contents = "".join(contents)
