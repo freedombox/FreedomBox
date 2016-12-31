@@ -53,7 +53,7 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
             value = 'true' if data['set_forwarding'] else 'false'
             actions.superuser_run(
                 'bind',
-                ['configure', '--set_forwarding', value])
+                ['configure', '--set-forwarding', value])
             messages.success(self.request,
                              _('Set forwarding configuration updated'))
 

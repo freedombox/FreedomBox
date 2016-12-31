@@ -28,6 +28,11 @@ from plinth import action_utils
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
 
+value1 = 'acl goodclients { \n   localhost;\n};\n'
+value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
+value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
+value4 = '	//forward only;\n'
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
@@ -52,11 +57,13 @@ def subcommand_setup(_):
     contents.insert(0, value1)
     contents.insert(4, value2)
     contents.insert(15, value3)
+    contents.insert(18, value4)
 
     f = open(CONFIG_FILE, "w")
     contents = "".join(contents)
     f.write(contents)
     f.close()
+    action_utils.service_restart('bind9')
 
 def subcommand_configure(arguments):
     """Configure BIND."""
@@ -68,7 +75,7 @@ def subcommand_configure(arguments):
 
 
 def set_forwarding(choice):
-    if choice == False:
+    if choice == "false":
         flag = 0
         data = [line.strip() for line in open(CONFIG_FILE, 'r')]
         if 'forwarders {' in data and not '// forwarders {' in data:
@@ -77,7 +84,7 @@ def set_forwarding(choice):
                 if 'forwarders {' in line and not '// forwarders {' in line:
                    flag = 1
                 if flag == 1:
-                   line = '	//'+line
+                   line = '	// '+line
                 if 'forward only' in line:
                     flag = 0
                 f.write(line+'\n')
@@ -85,7 +92,7 @@ def set_forwarding(choice):
 
 
 
-    if choice == True:
+    else:
         flag = 0
         data = [line.strip() for line in open(CONFIG_FILE, 'r')]
         if '// forwarders {' in data:
