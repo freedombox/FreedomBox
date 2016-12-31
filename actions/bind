@@ -32,6 +32,7 @@ value1 = 'acl goodclients { \n   localhost;\n};\n'
 value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
 value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
 value4 = '	//forward only;\n'
+value5 = '  //dnssec-enable yes;\n'
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary"""
@@ -42,7 +43,7 @@ def parse_arguments():
     configure = subparsers.add_parser('configure', help='Configure Minetest')
     configure.add_argument('--set-forwarding', choices=['true', 'false'],
                            help='Set forwarding true/false')
-    configure.add_argument('--dnssec', choices=['true', 'false'],
+    configure.add_argument('--enable-dnssec', choices=['true', 'false'],
                            help='Set DNSSEC true/false')
 
     return parser.parse_args()
@@ -58,6 +59,7 @@ def subcommand_setup(_):
     contents.insert(4, value2)
     contents.insert(15, value3)
     contents.insert(18, value4)
+    contents.insert(20, value5)
 
     f = open(CONFIG_FILE, "w")
     contents = "".join(contents)
@@ -71,13 +73,16 @@ def subcommand_configure(arguments):
     if arguments.set_forwarding:
         set_forwarding(arguments.set_forwarding)
 
+    if arguments.enable_dnssec:
+        enable_dnssec(arguments.enable_dnssec)
+
     action_utils.service_restart('bind9')
 
 
 def set_forwarding(choice):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    flag = 0
     if choice == "false":
-        flag = 0
-        data = [line.strip() for line in open(CONFIG_FILE, 'r')]
         if 'forwarders {' in data and not '// forwarders {' in data:
             f = open(CONFIG_FILE, 'w')
             for line in data:
@@ -93,8 +98,6 @@ def set_forwarding(choice):
 
 
     else:
-        flag = 0
-        data = [line.strip() for line in open(CONFIG_FILE, 'r')]
         if '// forwarders {' in data:
             f = open(CONFIG_FILE, 'w')
             for line in data:
@@ -104,6 +107,27 @@ def set_forwarding(choice):
                    line = line[2:]
                 if 'forward only' in line:
                     flag = 0
+                f.write(line+'\n')
+            f.close()
+
+
+def enable_dnssec(choice):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    if choice == "false":
+        if '//dnssec-enable yes;' not in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if 'dnssec-enable yes;' in line:
+                    line = '//' + line
+                f.write(line+'\n')
+            f.close()
+
+    else:
+        if '//dnssec-enable yes;' in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if '//dnssec-enable yes;' in line:
+                    line = line[2:]
                 f.write(line+'\n')
             f.close()
 

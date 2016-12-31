@@ -118,9 +118,15 @@ def get_default():
     """Get initial value for forwarding"""
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
     if '// forwarders {' in data:
-        conf = {
-            'set_forwarding': False}
+        set_forwarding = False
     else:
-        conf = {
-            'set_forwarding': True}
+        set_forwarding = True
+    if '//dnssec-enable yes;' in data:
+        enable_dnssec = False
+    else:
+        enable_dnssec = True
+    conf = {
+            'set_forwarding': set_forwarding,
+            'enable_dnssec': enable_dnssec
+            }
     return conf

@@ -57,4 +57,13 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
             messages.success(self.request,
                              _('Set forwarding configuration updated'))
 
+        if old_config['enable_dnssec'] != data['enable_dnssec']:
+            value = 'true' if data['enable_dnssec'] else 'false'
+            actions.superuser_run(
+                'bind',
+                ['configure', '--enable-dnssec', value])
+            messages.success(self.request,
+                             _('Enable DNSSEC configuration updated'))
+
+
         return super().form_valid(form)
