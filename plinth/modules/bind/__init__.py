@@ -66,7 +66,7 @@ def init():
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
             managed_services[0], title, ports=['bind-plinth'],
-            is_external=True,
+            is_external=False,
             )
 
 
@@ -82,7 +82,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['bind-plinth'],
+            managed_services[0], title, ports=['dns'],
             is_external=True,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -105,6 +105,8 @@ def diagnose():
 
     results.append(action_utils.diagnose_port_listening(53, 'tcp6'))
     results.append(action_utils.diagnose_port_listening(53, 'udp6'))
+    results.append(action_utils.diagnose_port_listening(53, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(53, 'udp4'))
 
     return results
 
