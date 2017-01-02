@@ -35,6 +35,7 @@ first_boot_steps = [
         'order': 0
     },
     {
+        # TODO: Rename this, or merge with 'firstboot_completed'.
         'id': 'firstboot_complete',
         'url': 'first_boot:complete',
         'order': 10

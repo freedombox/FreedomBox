@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - frontpage: Show app logos instead of generic icons.
 - Prevent anonymous users from accessing setup pages.
+- Firstboot, KVStore: merge old firstboot state fields.
 
 ## [0.12.0] - 2016-12-08
 ### Added
