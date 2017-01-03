@@ -28,7 +28,7 @@ from plinth import action_utils
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
 
-value1 = 'acl goodclients { \n   localhost;\n};\n'
+value1 = 'acl goodclients { \n   localnets;\n};\n'
 value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
 value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
 value4 = '	//forward first;\n'
@@ -45,6 +45,10 @@ def parse_arguments():
                            help='Set forwarding true/false')
     configure.add_argument('--enable-dnssec', choices=['true', 'false'],
                            help='Set DNSSEC true/false')
+
+    dns = subparsers.add_parser('dns', help='Add DNS')
+    dns.add_argument('--add', help='Add DNS server')
+    dns.add_argument('--remove', help="Remove a DNS server")
 
     return parser.parse_args()
 
@@ -68,6 +72,18 @@ def subcommand_setup(_):
     set_forwarding(True)
     enable_dnssec(True)
     action_utils.service_restart('bind9')
+
+def subcommand_dns(arguments):
+    """Adding DNS servers"""
+
+    if arguments.add:
+        add(arguments.add)
+
+    if arguments.remove:
+        remove(arguments.remove)
+
+    action_utils.service_restart('bind9')
+
 
 def subcommand_configure(arguments):
     """Configure BIND."""
@@ -97,8 +113,6 @@ def set_forwarding(choice):
                 if "0.0.0.0" not in line:
                     f.write(line+'\n')
             f.close()
-
-
 
     else:
         if '// forwarders {' in data:
@@ -134,6 +148,31 @@ def enable_dnssec(choice):
                     line = line[2:]
                 f.write(line+'\n')
             f.close()
+
+
+def add(DNS):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    f = open(CONFIG_FILE, 'w')
+    for line in data:
+        if 'forwarders {' in line :
+            f.write(line+'\n')
+            f.write(DNS+';\n')
+        else:
+            f.write(line+'\n')
+    f.close()
+
+
+def remove(DNS):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    flag = 0
+    f = open(CONFIG_FILE, 'w')
+    for line in data:
+        if DNS in line :
+            flag = 1
+        else:
+            f.write(line+'\n')
+    if flag == 0:
+        print("No such DNS exists")
 
 
 def main():

@@ -36,3 +36,13 @@ class BindForm(ServiceForm):
         label=_('Enable DNSSEC'),
         required=False,
         help_text=_('Enable Domain Name System Security Extensions'))
+
+    dns_add = forms.CharField(
+        label=_('Add DNS server'),
+        required=False,
+        help_text=_('Add a new DNS server'))
+
+    dns_remove = forms.CharField(
+        label=_('Remove DNS server'),
+        required=False,
+        help_text=_('Remove an existing server'))

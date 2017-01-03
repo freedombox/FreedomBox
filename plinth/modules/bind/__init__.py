@@ -65,7 +65,7 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['bind-plinth'],
+            managed_services[0], title, ports=['dns'],
             is_external=False,
             )
 
@@ -132,3 +132,13 @@ def get_default():
             'enable_dnssec': enable_dnssec
             }
     return conf
+
+def check_dns(DNS):
+    """Check if DNS exist or not"""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    value = str(DNS)+';'
+    if value in data:
+        check_dns = "True"
+    else:
+        check_dns = "False"
+    return check_dns
