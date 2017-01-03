@@ -127,18 +127,19 @@ def get_default():
         enable_dnssec = False
     else:
         enable_dnssec = True
+
+    flag = 0
+    for line in data:
+
+        if flag == 1:
+            dns_set = line[:len(line)-1]
+            flag = 0
+        if 'forwarders {' in line:
+            flag = 1
+
     conf = {
             'set_forwarding': set_forwarding,
-            'enable_dnssec': enable_dnssec
+            'enable_dnssec': enable_dnssec,
+            'dns_set': dns_set
             }
     return conf
-
-def check_dns(DNS):
-    """Check if DNS exist or not"""
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    value = str(DNS)+';'
-    if value in data:
-        check_dns = "True"
-    else:
-        check_dns = "False"
-    return check_dns

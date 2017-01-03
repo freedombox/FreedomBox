@@ -24,6 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.forms import ServiceForm
 
+from . import get_default
+
 
 class BindForm(ServiceForm):
     """BIND configuration form"""
@@ -37,12 +39,7 @@ class BindForm(ServiceForm):
         required=False,
         help_text=_('Enable Domain Name System Security Extensions'))
 
-    dns_add = forms.CharField(
-        label=_('Add DNS server'),
+    dns_set = forms.CharField(
+        label=_('Set DNS server'),
         required=False,
-        help_text=_('Add a new DNS server'))
-
-    dns_remove = forms.CharField(
-        label=_('Remove DNS server'),
-        required=False,
-        help_text=_('Remove an existing server'))
+        help_text=_('Set new DNS server'))

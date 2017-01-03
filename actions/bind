@@ -30,7 +30,7 @@ CONFIG_FILE = '/etc/bind/named.conf.options'
 
 value1 = 'acl goodclients { \n   localnets;\n};\n'
 value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
-value3 = '	// 	8.8.8.8;\n	// 	8.8.4.4;\n'
+value3 = '	// 	8.8.8.8 8.8.4.4;\n'
 value4 = '	//forward first;\n'
 value5 = '  //dnssec-enable yes;\n'
 
@@ -46,9 +46,8 @@ def parse_arguments():
     configure.add_argument('--enable-dnssec', choices=['true', 'false'],
                            help='Set DNSSEC true/false')
 
-    dns = subparsers.add_parser('dns', help='Add DNS')
-    dns.add_argument('--add', help='Add DNS server')
-    dns.add_argument('--remove', help="Remove a DNS server")
+    dns = subparsers.add_parser('dns', help='Set up DNS server')
+    dns.add_argument('--set', help='Set DNS server')
 
     return parser.parse_args()
 
@@ -74,13 +73,10 @@ def subcommand_setup(_):
     action_utils.service_restart('bind9')
 
 def subcommand_dns(arguments):
-    """Adding DNS servers"""
+    """Setting DNS servers"""
 
-    if arguments.add:
-        add(arguments.add)
-
-    if arguments.remove:
-        remove(arguments.remove)
+    if arguments.set:
+        set(arguments.set)
 
     action_utils.service_restart('bind9')
 
@@ -150,29 +146,20 @@ def enable_dnssec(choice):
             f.close()
 
 
-def add(DNS):
+def set(DNS):
+    flag = 0
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
     f = open(CONFIG_FILE, 'w')
     for line in data:
         if 'forwarders {' in line :
             f.write(line+'\n')
             f.write(DNS+';\n')
-        else:
+            flag = 1
+        elif '};' and flag == 1:
+            flag = 0
+        elif flag == 0:
             f.write(line+'\n')
     f.close()
-
-
-def remove(DNS):
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    flag = 0
-    f = open(CONFIG_FILE, 'w')
-    for line in data:
-        if DNS in line :
-            flag = 1
-        else:
-            f.write(line+'\n')
-    if flag == 0:
-        print("No such DNS exists")
 
 
 def main():
