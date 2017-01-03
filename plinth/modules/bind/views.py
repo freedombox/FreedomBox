@@ -65,5 +65,11 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
             messages.success(self.request,
                              _('Enable DNSSEC configuration updated'))
 
+        if old_config['dns_set'] != data['dns_set']:
+            actions.superuser_run(
+                'bind',
+                ['dns', '--set', data['dns_set']])
+            messages.success(self.request,
+                             _('DNS server configuration updated'))
 
         return super().form_valid(form)
