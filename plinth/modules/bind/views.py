@@ -26,7 +26,7 @@ from plinth import actions
 from plinth.views import ServiceView
 
 
-from . import description, managed_services, get_default
+from . import description, managed_services, get_default, validate
 from .forms import BindForm
 
 
@@ -65,11 +65,20 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
             messages.success(self.request,
                              _('Enable DNSSEC configuration updated'))
 
-        if old_config['dns_set'] != data['dns_set']:
-            actions.superuser_run(
-                'bind',
-                ['dns', '--set', data['dns_set']])
-            messages.success(self.request,
-                             _('DNS server configuration updated'))
+
+
+        if old_config['dns_set'] != data['dns_set'] and old_config['dns_set'] is not '':
+            if validate(data['dns_set']) is True:
+                actions.superuser_run(
+                    'bind',
+                    ['dns', '--set', data['dns_set']])
+                messages.success(self.request,
+                                 _('DNS server configuration updated'))
+            else:
+                messages.error(self.request,
+                                 _('Enter a valid IPv4 or IPv6 address.'))
+        elif old_config['dns_set'] is '' and old_config['dns_set'] != data['dns_set']:
+            messages.error(self.request,
+                             _('Enable forwarding to set forwarding DNS servers'))
 
         return super().form_valid(form)

@@ -30,7 +30,7 @@ CONFIG_FILE = '/etc/bind/named.conf.options'
 
 value1 = 'acl goodclients { \n   localnets;\n};\n'
 value2 = '        recursion yes;\n           allow-query { goodclients; };\n\n'
-value3 = '	// 	8.8.8.8 8.8.4.4;\n'
+value3 = '	// 	8.8.8.8; 8.8.4.4;\n'
 value4 = '	//forward first;\n'
 value5 = '  //dnssec-enable yes;\n'
 
@@ -104,7 +104,7 @@ def set_forwarding(choice):
                    flag = 1
                 if flag == 1:
                    line = '	// '+line
-                if 'forward only' in line:
+                if 'forward first' in line:
                     flag = 0
                 if "0.0.0.0" not in line:
                     f.write(line+'\n')
@@ -153,7 +153,9 @@ def set(DNS):
     for line in data:
         if 'forwarders {' in line :
             f.write(line+'\n')
-            f.write(DNS+';\n')
+            for dns in DNS.split():
+                f.write(dns+'; ')
+            f.write('\n')
             flag = 1
         elif '};' and flag == 1:
             flag = 0
