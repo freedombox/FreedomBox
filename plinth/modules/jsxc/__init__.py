@@ -39,7 +39,7 @@ depends = ['apps']
 
 managed_packages = ['libjs-jsxc']
 
-title = _('Chat Server \n (XMPP)')
+title = _('JSXC')
 
 description = [
 
@@ -66,9 +66,6 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
-    pre_hostname_change.connect(on_pre_hostname_change)
-    post_hostname_change.connect(on_post_hostname_change)
-    domainname_change.connect(on_domainname_change)
 
 
 def setup(helper, old_version=None):
@@ -83,10 +80,8 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            'ejabberd', title,
-            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+            'jsxc', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -99,8 +94,7 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('ejabberd') and
-            action_utils.webserver_is_enabled('jwchat-plinth'))
+    return action_utils.webserver_is_enabled('jwchat-plinth'))
 
 
 def get_domainname():
@@ -111,49 +105,11 @@ def get_domainname():
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('xmpp', ['enable'])
+    actions.superuser_run('jsxc', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('xmpp', ['disable'])
+    actions.superuser_run('jsxc', ['disable'])
     frontpage.remove_shortcut('jsxc')
-    frontpage.remove_shortcut('xmpp')
-
-
-def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
-    """
-    Backup ejabberd database before hostname is changed.
-    """
-    del sender  # Unused
-    del kwargs  # Unused
-
-    actions.superuser_run('xmpp',
-                          ['pre-change-hostname',
-                           '--old-hostname', old_hostname,
-                           '--new-hostname', new_hostname])
-
-
-def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
-    """Update ejabberd config after hostname change."""
-    del sender  # Unused
-    del kwargs  # Unused
-
-    actions.superuser_run('xmpp',
-                          ['change-hostname',
-                           '--old-hostname', old_hostname,
-                           '--new-hostname', new_hostname],
-                          async=True)
-
-
-def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
-    """Update ejabberd config after domain name change."""
-    del sender  # Unused
-    del old_domainname  # Unused
-    del kwargs  # Unused
-
-    actions.superuser_run('xmpp',
-                          ['change-domainname',
-                           '--domainname', new_domainname],
-                          async=True)
