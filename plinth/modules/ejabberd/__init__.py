@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure XMPP server
+Plinth module to configure ejabberd server
 """
 
 from django.urls import reverse_lazy
@@ -41,15 +41,15 @@ managed_services = ['ejabberd']
 
 managed_packages = ['ejabberd']
 
-title = _('Chat Server \n (XMPP)')
+title = _('Chat Server \n (ejabberd)')
 
 description = [
-    _('XMPP is an open and standardized communication protocol. Here '
-      'you can run and configure your XMPP server, called ejabberd.'),
+    _('ejabberd is an open and standardized communication protocol. Here '
+      'you can run and configure your ejabberd server, called ejabberd.'),
 
     _('To actually communicate, you can use the web client or any other '
-      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.'),
+      '<a href=\'http://xmpp.org/ejabberd-software/clients/\' target=\'_blank\''
+      '>ejabberd client</a>.'),
 ]
 
 service = None
@@ -58,9 +58,9 @@ logger = logging.getLogger(__name__)
 
 
 def init():
-    """Initialize the XMPP module"""
+    """Initialize the ejabberd module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'ejabberd:index')
 
     global service
     setup_helper = globals()['setup_helper']
@@ -80,12 +80,12 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     domainname = get_domainname()
-    logger.info('XMPP service domainname - %s', domainname)
+    logger.info('ejabberd service domainname - %s', domainname)
 
-    helper.call('pre', actions.superuser_run, 'xmpp',
+    helper.call('pre', actions.superuser_run, 'ejabberd',
                 ['pre-install', '--domainname', domainname])
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
+    helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
     global service
     if service is None:
         service = service_module.Service(
@@ -98,16 +98,15 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('xmpp', title,
+    frontpage.add_shortcut('ejabberd', title,
                            details=description,
-                           configure_url=reverse_lazy('xmpp:index'),
+                           configure_url=reverse_lazy('ejabberd:index'),
                            login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('ejabberd') and
-            action_utils.webserver_is_enabled('jwchat-plinth'))
+    return (action_utils.service_is_enabled('ejabberd'))
 
 
 def get_domainname():
@@ -118,14 +117,14 @@ def get_domainname():
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('xmpp', ['enable'])
+    actions.superuser_run('ejabberd', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('xmpp', ['disable'])
-    frontpage.remove_shortcut('xmpp')
+    actions.superuser_run('ejabberd', ['disable'])
+    frontpage.remove_shortcut('ejabberd')
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
@@ -135,7 +134,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     del sender  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('xmpp',
+    actions.superuser_run('ejabberd',
                           ['pre-change-hostname',
                            '--old-hostname', old_hostname,
                            '--new-hostname', new_hostname])
@@ -146,7 +145,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     del sender  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('xmpp',
+    actions.superuser_run('ejabberd',
                           ['change-hostname',
                            '--old-hostname', old_hostname,
                            '--new-hostname', new_hostname],
@@ -159,7 +158,7 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del old_domainname  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('xmpp',
+    actions.superuser_run('ejabberd',
                           ['change-domainname',
                            '--domainname', new_domainname],
                           async=True)

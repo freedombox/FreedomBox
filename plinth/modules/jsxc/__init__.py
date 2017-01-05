@@ -56,7 +56,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the XMPP module"""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-comment', 'xmpp:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index')
 
     global service
     setup_helper = globals()['setup_helper']
@@ -66,24 +66,6 @@ def init():
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    domainname = get_domainname()
-    logger.info('XMPP service domainname - %s', domainname)
-
-    helper.call('pre', actions.superuser_run, 'xmpp',
-                ['pre-install', '--domainname', domainname])
-    helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'xmpp', ['setup'])
-    global service
-    if service is None:
-        service = service_module.Service(
-            'jsxc', title, ports=['http', 'https'], is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
 
 
 def add_shortcut():
