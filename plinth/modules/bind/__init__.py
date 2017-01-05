@@ -19,6 +19,8 @@
 Plinth module to configure BIND server
 """
 
+import re
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import validate_ipv46_address
@@ -133,7 +135,10 @@ def get_default():
     for line in data:
 
         if flag == 1:
-            dns_set = line[:len(line)-1]
+            if '//' in line:
+                dns_set = ''
+            else:
+                dns_set = re.sub('[;]', '', line)
             flag = 0
         if 'forwarders {' in line:
             flag = 1
