@@ -67,17 +67,17 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
 
 
 
-        if old_config['dns_set'] != data['dns_set'] and old_config['dns_set'] is not '':
-            if validate(data['dns_set']) is True:
+        if old_config['forwarders'] != data['forwarders'] and old_config['forwarders'] is not '':
+            if validate(data['forwarders']) is True:
                 actions.superuser_run(
                     'bind',
-                    ['dns', '--set', data['dns_set']])
+                    ['dns', '--set', data['forwarders']])
                 messages.success(self.request,
                                  _('DNS server configuration updated'))
             else:
                 messages.error(self.request,
                                  _('Enter a valid IPv4 or IPv6 address.'))
-        elif old_config['dns_set'] is '' and old_config['dns_set'] != data['dns_set']:
+        elif old_config['forwarders'] is '' and old_config['forwarders'] != data['forwarders']:
             messages.error(self.request,
                              _('Enable forwarding to set forwarding DNS servers'))
 

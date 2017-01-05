@@ -136,9 +136,9 @@ def get_default():
 
         if flag == 1:
             if '//' in line:
-                dns_set = ''
+                forwarders = ''
             else:
-                dns_set = re.sub('[;]', '', line)
+                forwarders = re.sub('[;]', '', line)
             flag = 0
         if 'forwarders {' in line:
             flag = 1
@@ -146,7 +146,7 @@ def get_default():
     conf = {
             'set_forwarding': set_forwarding,
             'enable_dnssec': enable_dnssec,
-            'dns_set': dns_set
+            'forwarders': forwarders
             }
     return conf
 

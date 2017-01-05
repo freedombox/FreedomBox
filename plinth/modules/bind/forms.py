@@ -39,7 +39,6 @@ class BindForm(ServiceForm):
         required=False,
         help_text=_('Enable Domain Name System Security Extensions'))
 
-    dns_set = forms.CharField(
-        label=_('Set DNS server'),
+    forwarders = forms.CharField(
         required=False,
         help_text=_('Set new DNS server'))
