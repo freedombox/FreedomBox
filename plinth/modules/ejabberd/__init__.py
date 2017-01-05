@@ -39,7 +39,7 @@ depends = ['apps']
 
 managed_services = ['ejabberd']
 
-managed_packages = ['libjs-jsxc', 'ejabberd']
+managed_packages = ['ejabberd']
 
 title = _('Chat Server \n (XMPP)')
 
@@ -98,9 +98,6 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
-                           url=reverse_lazy('xmpp:jsxc'),
-                           login_required=True)
     frontpage.add_shortcut('xmpp', title,
                            details=description,
                            configure_url=reverse_lazy('xmpp:index'),
@@ -128,7 +125,6 @@ def enable():
 def disable():
     """Enable the module."""
     actions.superuser_run('xmpp', ['disable'])
-    frontpage.remove_shortcut('jsxc')
     frontpage.remove_shortcut('xmpp')
 
 
