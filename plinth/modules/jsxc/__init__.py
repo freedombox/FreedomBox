@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure XMPP server
+Plinth module to configure XMPP web client/jsxc
 """
 
 from django.urls import reverse_lazy
@@ -37,15 +37,11 @@ version = 2
 
 depends = ['apps']
 
-managed_services = ['ejabberd']
-
-managed_packages = ['libjs-jsxc', 'ejabberd']
+managed_packages = ['libjs-jsxc']
 
 title = _('Chat Server \n (XMPP)')
 
 description = [
-    _('XMPP is an open and standardized communication protocol. Here '
-      'you can run and configure your XMPP server, called ejabberd.'),
 
     _('To actually communicate, you can use the web client or any other '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
@@ -65,11 +61,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'ejabberd', title,
-            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service = service_module.Service(
+            'jsxc', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
@@ -100,10 +94,6 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
                            url=reverse_lazy('xmpp:jsxc'),
-                           login_required=True)
-    frontpage.add_shortcut('xmpp', title,
-                           details=description,
-                           configure_url=reverse_lazy('xmpp:index'),
                            login_required=True)
 
 
@@ -167,19 +157,3 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
                           ['change-domainname',
                            '--domainname', new_domainname],
                           async=True)
-
-
-def diagnose():
-    """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(5222, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5222, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5269, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
-    results.extend(
-        action_utils.diagnose_url_on_all('http://{host}/http-bind/'))
-
-    return results
