@@ -44,12 +44,12 @@ managed_packages = ['ejabberd']
 title = _('Chat Server \n (ejabberd)')
 
 description = [
-    _('ejabberd is an open and standardized communication protocol. Here '
-      'you can run and configure your ejabberd server, called ejabberd.'),
+    _('XMPP is an open and standardized communication protocol. Here '
+      'you can run and configure your XMPP server, called ejabberd.'),
 
     _('To actually communicate, you can use the web client or any other '
-      '<a href=\'http://xmpp.org/ejabberd-software/clients/\' target=\'_blank\''
-      '>ejabberd client</a>.'),
+      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
+      '>XMPP client</a>.'),
 ]
 
 service = None
