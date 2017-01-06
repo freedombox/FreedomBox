@@ -1,0 +1,193 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for BIND server.
+"""
+
+import argparse
+
+from plinth import action_utils
+
+
+CONFIG_FILE = '/etc/bind/named.conf.options'
+default_file = '\n'+\
+'acl goodclients {\n'+\
+'   localnets;\n'+\
+'};\n'+\
+'options {\n'+\
+'directory "/var/cache/bind";\n'+\
+'\n'+\
+'recursion yes;\n'+\
+'allow-query { goodclients; };\n'+\
+'\n'+\
+'// If there is a firewall between you and nameservers you want\n'+\
+'// to talk to, you may need to fix the firewall to allow multiple\n'+\
+'// ports to talk.  See http://www.kb.cert.org/vuls/id/800113\n'+\
+'\n'+\
+'// If your ISP provided one or more IP addresses for stable\n'+\
+'// nameservers, you probably want to use them as forwarders.\n'+\
+'// Uncomment the following block, and insert the addresses replacing\n'+\
+"// the all-0's placeholder.\n"+\
+'\n'+\
+'forwarders {\n'+\
+'8.8.8.8; 8.8.4.4;\n'+\
+'};\n'+\
+'forward first;\n'+\
+'\n'+\
+'dnssec-enable yes;\n'+\
+'//========================================================================\n'+\
+'// If BIND logs error messages about the root key being expired,\n'+\
+'// you will need to update your keys.  See https://www.isc.org/bind-keys\n'+\
+'//========================================================================\n'+\
+'dnssec-validation auto;\n'+\
+'\n'+\
+'auth-nxdomain no;    # conform to RFC1035\n'+\
+'listen-on-v6 { any; };\n'+\
+'};\n'+\
+'\n'
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser('setup', help='Setup for BIND')
+
+    configure = subparsers.add_parser('configure', help='Configure BIND')
+    configure.add_argument('--set-forwarding', choices=['true', 'false'],
+                           help='Set forwarding true/false')
+    configure.add_argument('--enable-dnssec', choices=['true', 'false'],
+                           help='Set DNSSEC true/false')
+
+    dns = subparsers.add_parser('dns', help='Set up DNS server')
+    dns.add_argument('--set', help='Set DNS server')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup BIND configuration."""
+    f = open(CONFIG_FILE, "w")
+    f.write(default_file)
+    f.close()
+    action_utils.service_restart('bind9')
+
+def subcommand_dns(arguments):
+    """Setting DNS servers"""
+
+    if arguments.set:
+        set(arguments.set)
+
+    action_utils.service_restart('bind9')
+
+
+def subcommand_configure(arguments):
+    """Configure BIND."""
+
+    if arguments.set_forwarding:
+        set_forwarding(arguments.set_forwarding)
+
+    if arguments.enable_dnssec:
+        enable_dnssec(arguments.enable_dnssec)
+
+    action_utils.service_restart('bind9')
+
+
+def set_forwarding(choice):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    flag = 0
+    if choice == "false":
+        if 'forwarders {' in data and not '// forwarders {' in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if 'forwarders {' in line and not '// forwarders {' in line:
+                   flag = 1
+                if flag == 1:
+                   line = '	// '+line
+                if 'forward first' in line:
+                    flag = 0
+                if "0.0.0.0" not in line:
+                    f.write(line+'\n')
+            f.close()
+
+    else:
+        if '// forwarders {' in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if '// forwarders {' in line:
+                   flag = 1
+                if flag == 1:
+                   line = line[2:]
+                if 'forward first' in line:
+                    flag = 0
+                if "0.0.0.0" not in line:
+                    f.write(line+'\n')
+            f.close()
+
+
+def enable_dnssec(choice):
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    if choice == "false":
+        if '//dnssec-enable yes;' not in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if 'dnssec-enable yes;' in line:
+                    line = '//' + line
+                f.write(line+'\n')
+            f.close()
+
+    else:
+        if '//dnssec-enable yes;' in data:
+            f = open(CONFIG_FILE, 'w')
+            for line in data:
+                if '//dnssec-enable yes;' in line:
+                    line = line[2:]
+                f.write(line+'\n')
+            f.close()
+
+
+def set(DNS):
+    flag = 0
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    f = open(CONFIG_FILE, 'w')
+    for line in data:
+        if 'forwarders {' in line :
+            f.write(line+'\n')
+            for dns in DNS.split():
+                f.write(dns+'; ')
+            f.write('\n')
+            flag = 1
+        elif '};' and flag == 1:
+            flag = 0
+        elif flag == 0:
+            f.write(line+'\n')
+    f.close()
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
