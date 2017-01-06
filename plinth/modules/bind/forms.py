@@ -24,8 +24,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.forms import ServiceForm
 
-from . import get_default
-
 
 class BindForm(ServiceForm):
     """BIND configuration form"""
@@ -41,4 +39,4 @@ class BindForm(ServiceForm):
 
     forwarders = forms.CharField(
         required=False,
-        help_text=_('Set new DNS server'))
+        help_text=_('A list of IP addresses, separated by space'))

@@ -65,9 +65,8 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
             messages.success(self.request,
                              _('Enable DNSSEC configuration updated'))
 
-
-
-        if old_config['forwarders'] != data['forwarders'] and old_config['forwarders'] is not '':
+        if old_config['forwarders'] != data['forwarders'] \
+           and old_config['forwarders'] is not '':
             if validate(data['forwarders']) is True:
                 actions.superuser_run(
                     'bind',
@@ -76,9 +75,11 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
                                  _('DNS server configuration updated'))
             else:
                 messages.error(self.request,
-                                 _('Enter a valid IPv4 or IPv6 address.'))
-        elif old_config['forwarders'] is '' and old_config['forwarders'] != data['forwarders']:
-            messages.error(self.request,
-                             _('Enable forwarding to set forwarding DNS servers'))
+                               _('Enter a valid IPv4 or IPv6 address.'))
+        elif old_config['forwarders'] is '' \
+             and old_config['forwarders'] != data['forwarders']:
+            messages.error(
+                self.request,
+                _('Enable forwarding to set forwarding DNS servers'))
 
         return super().form_valid(form)

@@ -21,16 +21,14 @@ Plinth module to configure BIND server
 
 import re
 
-from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv46_address
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
-from plinth.views import ServiceView
 
 
 version = 1
@@ -71,12 +69,6 @@ def init():
             managed_services[0], title, ports=['dns'],
             is_external=False,
             )
-
-
-class BindServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "bind"
-    description = description
 
 
 def setup(helper, old_version=None):
@@ -144,17 +136,18 @@ def get_default():
             flag = 1
 
     conf = {
-            'set_forwarding': set_forwarding,
-            'enable_dnssec': enable_dnssec,
-            'forwarders': forwarders
-            }
+        'set_forwarding': set_forwarding,
+        'enable_dnssec': enable_dnssec,
+        'forwarders': forwarders
+    }
     return conf
 
 
-def validate(IP):
-    for ip in IP.split():
-        try :
-            validate_ipv46_address(ip)
-        except:
+def validate(ips):
+    """Validate that ips is a list of IP addresses, separated by space."""
+    for ip_addr in ips.split():
+        try:
+            validate_ipv46_address(ip_addr)
+        except ValidationError:
             return False
     return True
