@@ -29,8 +29,6 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.signals import pre_hostname_change, post_hostname_change
-from plinth.signals import domainname_change
 
 
 version = 2
@@ -39,11 +37,11 @@ depends = ['apps']
 
 managed_packages = ['libjs-jsxc']
 
-title = _('JSXC')
+title = _('Chat Client \n (JSXC)')
 
 description = [
 
-    _('To actually communicate, you can use the web client or any other '
+    _('JSXC is a web client for XMPP. Typically it is used with an XMPP server running locally '
       '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
       '>XMPP client</a>.'),
 ]
@@ -54,7 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 def init():
-    """Initialize the XMPP module"""
+    """Initialize the JSXC module"""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index')
 
@@ -67,7 +65,14 @@ def init():
         if is_enabled():
             add_shortcut()
 
-
+def setup(helper, old_version=None):
+    """Install and configure the module."""
+    helper.install(managed_packages)
+    if setup_helper.get_state() != 'needs-setup':
+        service = service = service_module.Service(
+            'jsxc', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
+    helper.call('post', add_shortcut)
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
                            url=reverse_lazy('xmpp:jsxc'),
@@ -76,7 +81,10 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('jwchat-plinth'))
+    if setup_helper.get_state() != 'needs-setup':
+        service = service = service_module.Service(
+            'jsxc', title, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def get_domainname():
@@ -86,12 +94,8 @@ def get_domainname():
 
 
 def enable():
-    """Enable the module."""
-    actions.superuser_run('jsxc', ['enable'])
     add_shortcut()
 
 
 def disable():
-    """Enable the module."""
-    actions.superuser_run('jsxc', ['disable'])
     frontpage.remove_shortcut('jsxc')

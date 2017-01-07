@@ -29,10 +29,9 @@ from plinth.views import ServiceView
 
 class JSXCServiceView(ServiceView):
     """Show ejabberd as a service."""
-    service_id = jsxc.managed_services[0]
+    service_id = 'jsxc'
     template_name = 'jsxc.html'
     description = jsxc.description
-    diagnostics_module_name = 'jsxc'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

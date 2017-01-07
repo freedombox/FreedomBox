@@ -25,5 +25,5 @@ from .views import EjabberdServiceView
 
 
 urlpatterns = [
-    url(r'^apps/xmpp/ejabberd/$', EjabberdServiceView.as_view(), name='index')
+    url(r'^apps/ejabberd/$', EjabberdServiceView.as_view(), name='index')
 ]
