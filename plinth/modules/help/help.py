@@ -24,7 +24,7 @@ from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
 from stronghold.decorators import public
-
+from apt.cache import Cache
 from plinth import cfg, __version__
 
 
@@ -50,9 +50,12 @@ def index(request):
 @public
 def about(request):
     """Serve the about page"""
+    cache = Cache()
+    plinth = cache['Plinth']
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__
+        'new_version': plinth.candidate.is_installed
     }
     return TemplateResponse(request, 'help_about.html', context)
 
