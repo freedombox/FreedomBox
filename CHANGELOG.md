@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
   list those modules.
 - Added JS license web labels for LibreJS.
 - Added basic configuration form for Minetest server.
+- Added Domain Name Server (BIND) module.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.

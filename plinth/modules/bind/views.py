@@ -26,7 +26,7 @@ from plinth import actions
 from plinth.views import ServiceView
 
 
-from . import description, managed_services, get_default, validate
+from . import description, managed_services, get_default
 from .forms import BindForm
 
 
@@ -67,15 +67,11 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
 
         if old_config['forwarders'] != data['forwarders'] \
            and old_config['forwarders'] is not '':
-            if validate(data['forwarders']) is True:
-                actions.superuser_run(
-                    'bind',
-                    ['dns', '--set', data['forwarders']])
-                messages.success(self.request,
-                                 _('DNS server configuration updated'))
-            else:
-                messages.error(self.request,
-                               _('Enter a valid IPv4 or IPv6 address.'))
+            actions.superuser_run(
+                'bind',
+                ['dns', '--set', data['forwarders']])
+            messages.success(self.request,
+                             _('DNS server configuration updated'))
         elif old_config['forwarders'] is '' \
              and old_config['forwarders'] != data['forwarders']:
             messages.error(

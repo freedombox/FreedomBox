@@ -20,9 +20,16 @@ Forms for BIND module.
 """
 
 from django import forms
+from django.core.validators import validate_ipv46_address
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.forms import ServiceForm
+
+
+def validate_ips(ips):
+    """Validate that ips is a list of IP addresses, separated by space."""
+    for ip_addr in ips.split():
+        validate_ipv46_address(ip_addr)
 
 
 class BindForm(ServiceForm):
@@ -39,4 +46,5 @@ class BindForm(ServiceForm):
 
     forwarders = forms.CharField(
         required=False,
+        validators=[validate_ips],
         help_text=_('A list of IP addresses, separated by space'))
