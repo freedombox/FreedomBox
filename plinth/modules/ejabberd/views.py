@@ -16,41 +16,25 @@
 #
 
 """
-Views for the XMPP module
+Views for the Ejabberd module
 """
 
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from stronghold.decorators import public
 
-from plinth.modules import xmpp
+from plinth.modules import ejabberd
 from plinth.views import ServiceView
 
 
 class EjabberdServiceView(ServiceView):
     """Show ejabberd as a service."""
-    service_id = xmpp.managed_services[0]
-    template_name = 'xmpp.html'
-    description = xmpp.description
-    diagnostics_module_name = 'xmpp'
+    service_id = ejabberd.managed_services[0]
+    template_name = 'ejabberd.html'
+    description = ejabberd.description
+    diagnostics_module_name = 'ejabberd'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = xmpp.get_domainname()
-        return context
-
-
-class JsxcView(TemplateView):
-    """A simple page to embed Javascript XMPP Client library."""
-    template_name = 'jsxc.html'
-
-    @method_decorator(public)
-    def dispatch(self, *args, **kwargs):
-        """Dispatch a get, post etc. request."""
-        return super().dispatch(*args, **kwargs)
-
-    def get_context_data(self, *args, **kwargs):
-        """Add domain information to view context."""
-        context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = xmpp.get_domainname()
+        context['domainname'] = ejabberd.get_domainname()
         return context

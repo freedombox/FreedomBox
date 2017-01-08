@@ -16,15 +16,14 @@
 #
 
 """
-URLs for the XMPP module
+URL for the Ejabberd module
 """
 
 from django.conf.urls import url
 
-from .views import EjabberdServiceView, JsxcView
+from .views import EjabberdServiceView
 
 
 urlpatterns = [
-    url(r'^apps/xmpp/$', EjabberdServiceView.as_view(), name='index'),
-    url(r'^apps/xmpp/jsxc/$', JsxcView.as_view(), name='jsxc'),
+    url(r'^apps/ejabberd/$', EjabberdServiceView.as_view(), name='index')
 ]
