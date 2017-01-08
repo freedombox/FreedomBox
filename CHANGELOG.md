@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - frontpage: Show app logos instead of generic icons.
 - Prevent anonymous users from accessing setup pages.
 - Firstboot, KVStore: merge old firstboot state fields.
+- tor: Use Plinth-specific instance instead of default.
 
 ## [0.12.0] - 2016-12-08
 ### Added

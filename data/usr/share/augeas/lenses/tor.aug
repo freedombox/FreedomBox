@@ -22,8 +22,8 @@ autoload xfm
 let eol = Util.eol
 
 let ws = /[ \t]/
-let kc = /[A-Za-z0-9_.,:*+]/
-let vc = /[A-Za-z0-9_.,:*\/ ]/
+let kc = /[A-Za-z0-9_.,:*]/
+let vc = /[-A-Za-z0-9_.,:*\/ ]/
 let keyname = kc+
 let val = /[[\/]*/ . kc . (vc* . /[]]*/ . vc* . kc . /[\/]*/)?
 
