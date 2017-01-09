@@ -24,14 +24,12 @@ from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
 
-from plinth import actions
-from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 
 
-version = 2
+version = 1
 
 depends = ['apps']
 
@@ -41,9 +39,8 @@ title = _('Chat Client \n (JSXC)')
 
 description = [
 
-    _('JSXC is a web client for XMPP. Typically it is used with an XMPP server running locally '
-      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.'),
+    _('JSXC is a web client for XMPP. Typically it is used with an XMPP '
+      'server running locally.'),
 ]
 
 service = None
@@ -59,32 +56,36 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service = service_module.Service(
+        service = service_module.Service(
             'jsxc', title, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
 
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    if setup_helper.get_state() != 'needs-setup':
-        service = service = service_module.Service(
+
+    global service
+    if not service:
+        service = service_module.Service(
             'jsxc', title, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
+
     helper.call('post', add_shortcut)
+
+
 def add_shortcut():
     frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
-                           url=reverse_lazy('xmpp:jsxc'),
+                           url=reverse_lazy('jsxc:jsxc'),
                            login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    if setup_helper.get_state() != 'needs-setup':
-        service = service = service_module.Service(
-            'jsxc', title, ports=['http', 'https'], is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+    setup_helper = globals()['setup_helper']
+    return setup_helper.get_state() != 'needs-setup'
 
 
 def get_domainname():

@@ -33,7 +33,7 @@ from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
-version = 2
+version = 1
 
 depends = ['apps']
 
@@ -106,7 +106,7 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('ejabberd'))
+    return action_utils.service_is_enabled('ejabberd')
 
 
 def get_domainname():

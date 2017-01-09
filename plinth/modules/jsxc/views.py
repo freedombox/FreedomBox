@@ -32,16 +32,12 @@ class JSXCServiceView(ServiceView):
     service_id = 'jsxc'
     template_name = 'jsxc.html'
     description = jsxc.description
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['domainname'] = jsxc.get_domainname()
-        return context
+    show_status_block = False
 
 
 class JsxcView(TemplateView):
     """A simple page to embed Javascript XMPP Client library."""
-    template_name = 'jsxc.html'
+    template_name = 'jsxc_launch.html'
 
     @method_decorator(public)
     def dispatch(self, *args, **kwargs):

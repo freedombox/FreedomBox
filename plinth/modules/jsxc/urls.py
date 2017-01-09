@@ -25,6 +25,6 @@ from .views import JSXCServiceView, JsxcView
 
 
 urlpatterns = [
-    url(r'^apps/jsxc', JSXCServiceView(), name='index'),
-    url(r'^apps/jsxc/jsxc', JsxcView(), name='jsxc')
+    url(r'^apps/jsxc$', JSXCServiceView.as_view(), name='index'),
+    url(r'^apps/jsxc/jsxc$', JsxcView.as_view(), name='jsxc')
 ]
