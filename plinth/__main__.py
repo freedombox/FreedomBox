@@ -38,6 +38,14 @@ logger = logging.getLogger(__name__)
 
 arguments = None
 
+def apps_init():
+    """Initailize the apps module"""
+    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt',
+                              'apps:index')
+
+def sys_init():
+    """Initialize the system module"""
+    cfg.main_menu.add_urlname(title, 'glyphicon-cog', 'system:index')
 
 def parse_arguments():
     """Parse command line arguments"""
