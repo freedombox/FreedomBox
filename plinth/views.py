@@ -35,12 +35,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import cfg
 
 
-def apps_init():
-    """Initailize the apps module"""
-    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt',
-                              'apps:index')
-
-
 def apps_index(request):
     """Serve the apps index page"""
     return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
