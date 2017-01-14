@@ -34,11 +34,24 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 
+def apps_init():
+    """Initailize the apps module"""
+    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt',
+                              'apps:index')
+
+def sys_init():
+    """Initialize the system module"""
+    cfg.main_menu.add_urlname(title, 'glyphicon-cog', 'system:index')
 
 def apps_index(request):
     """Serve the apps index page"""
     return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
 
+def sys_index(request):
+    """Serve the system index page"""
+    return TemplateResponse(request, 'system.html',
+                            {'title': system.title,
+                             'description': system.description})
 @public
 def index(request):
     """Serve the main index page."""
@@ -59,11 +72,7 @@ def index(request):
                              'details_label': details_label,
                              'configure_url': configure_url })
 
-def sys_index(request):
-    """Serve the system index page"""
-    return TemplateResponse(request, 'system.html',
-                            {'title': system.title,
-                             'description': system.description})
+
 
 
 class ServiceView(FormView):
