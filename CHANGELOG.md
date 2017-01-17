@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added JS license web labels for LibreJS.
 - Added basic configuration form for Minetest server.
 - Added Domain Name Server (BIND) module.
+- help: Added indicator for new plinth version available.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.
