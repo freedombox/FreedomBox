@@ -47,33 +47,37 @@ certificate-file=/etc/infinoted/infinoted-cert.pem
 # Absolute path of the private key file.
 key-file=/etc/infinoted/infinoted-key.pem
 
-# Setting this to 0 disables autosave.
-autosave-interval=60
+# Enable plugins
+plugins=note-text;autosave;logging;directory-sync
 
 # Specify a path to use a root certificate instead of a certificate-key pair.
 #certificate-chain=
 
 #password=
 
-# If you want to regularly synchronize the saved documents.
-#sync-directory
+# Automatically save documents every few seconds
+[autosave]
 
-#sync-interval=
-'''
+# Setting this to 0 disables autosave.
+interval=60
 
-DEFAULT_PATH = '/etc/default/infinoted'
-DEFAULT = '''
-# defaults file for infinoted
+# Synchronize files to another directory in plain text format
+[directory-sync]
 
-# Should infinoted be started by the init script? (true/false)
-INFINOTED_ENABLED=true
+# Directory to sync plain text files
+directory=/var/lib/infinoted/sync
 
-# The configuration file to be used.
-INFINOTED_CONFIG=/etc/xdg/infinoted.conf
+# Synchronize seconds
+interval=60
 
-# The session autosave file to be updated periodically and loaded
-# upon startup.
-INFINOTED_SESSION_FILE=/var/lib/infinoted
+# Log additional events
+[logging]
+
+# Log when users connect or disconnect
+log-connections=true
+
+# Log errors with client connections such as a connection reset
+log-connection-errors=true
 '''
 
 SYSTEMD_SERVICE_PATH = '/etc/systemd/system/infinoted.service'
@@ -90,8 +94,8 @@ After=network.target
 
 [Service]
 User=infinoted
-EnvironmentFile=-/etc/default/infinoted
-ExecStart=/usr/bin/infinoted ${OPTIONS}
+Group=infinoted
+ExecStart=/usr/bin/infinoted
 
 [Install]
 WantedBy=multi-user.target
@@ -110,18 +114,14 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Configure infinoted after install."""
-
     if not os.path.isfile(CONF_PATH):
         with open(CONF_PATH, 'w') as file_handle:
             file_handle.write(CONF)
 
-    if not os.path.isfile(DEFAULT_PATH):
-        with open(DEFAULT_PATH, 'w') as file_handle:
-            file_handle.write(DEFAULT)
-
     if not os.path.isfile(SYSTEMD_SERVICE_PATH):
         with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
             file_handle.write(SYSTEMD_SERVICE)
+
         subprocess.check_call(['systemctl', 'daemon-reload'])
 
     # Create infinoted group if needed.
@@ -136,7 +136,7 @@ def subcommand_setup(_):
     except KeyError:
         subprocess.run(['adduser', '--system', '--ingroup', 'infinoted',
                         '--home', DATA_DIR,
-                        '--gecos', '"Infinoted collaborative editing server"',
+                        '--gecos', 'Infinoted collaborative editing server',
                         'infinoted'], check=True)
 
     if not os.path.exists(DATA_DIR):
