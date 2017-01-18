@@ -19,6 +19,7 @@
 Plinth module for infinoted.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -81,8 +82,10 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('infinoted', title, None, 'glyphicon-pencil',
-                           description)
+    frontpage.add_shortcut('infinoted', title, url=None,
+                           details=description,
+                           configure_url=reverse_lazy('infinoted:index'),
+                           login_required=False)
 
 
 def enable():
