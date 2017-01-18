@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
+
 version = 1
 
 depends = ['apps']
@@ -46,9 +47,9 @@ description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
 
     format_lazy(
-        _('To use it, <a href="https://gobby.github.io/">download Gobby</a> '
-          'and install it. Then start Gobby and select "Connect to Server" '
-          'and enter your {box_name}\'s domain name.'),
+        _('To use it, <a href="https://gobby.github.io/">download Gobby</a>, '
+          'desktop client and install it. Then start Gobby and select '
+          '"Connect to Server" and enter your {box_name}\'s domain name.'),
         box_name=_(cfg.box_name)),
 ]
 
