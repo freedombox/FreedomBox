@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Added basic configuration form for Minetest server.
 - Added Domain Name Server (BIND) module.
 - help: Added indicator for new plinth version available.
+- Added Gobby Server (infinoted) module.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.
@@ -17,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Firstboot, KVStore: merge old firstboot state fields.
 - tor: Use Plinth-specific instance instead of default.
 - xmpp: Split into ejabberd and jsxc modules.
+- users: Moved part of LDAP setup to first-run.
 
 ## [0.12.0] - 2016-12-08
 ### Added
