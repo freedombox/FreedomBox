@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Fixed
 - setup: Fixed an infinite redirect in a rare case.
+- setup.py: Install all first-run scripts for freedombox-setup.
 
 ## [0.13.0] - 2017-01-18
 ### Added
