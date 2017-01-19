@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- setup: Fixed an infinite redirect in a rare case.
+
 ## [0.13.0] - 2017-01-18
 ### Added
 - Added command line argument --list-modules which will list modules
@@ -182,6 +186,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.13.0...HEAD
 [0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/freedombox/Plinth/compare/v0.10.0...v0.11.0
