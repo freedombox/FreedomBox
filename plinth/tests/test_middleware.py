@@ -51,7 +51,8 @@ class TestSetupMiddleware(TestCase):
             'view_kwargs': {},
         }
 
-    def test_404_urls(self):
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_404_urls(self, reverse):
         """Test how middleware deals with 404 URLs."""
         request = RequestFactory().get('/plinth/non-existing-url')
 
@@ -59,7 +60,8 @@ class TestSetupMiddleware(TestCase):
 
         self.assertEqual(response, None)
 
-    def test_url_not_an_application(self):
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_url_not_an_application(self, reverse):
         """Test that none is returned for URLs that are not applications."""
         request = RequestFactory().get('/plinth/')
 
@@ -69,7 +71,8 @@ class TestSetupMiddleware(TestCase):
 
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
-    def test_module_is_up_to_date(self, resolve, loaded_modules):
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_module_is_up_to_date(self, reverse, resolve, loaded_modules):
         """Test that none is returned when module is up-to-date."""
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
@@ -86,7 +89,8 @@ class TestSetupMiddleware(TestCase):
     @patch('plinth.views.SetupView')
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
-    def test_module_view(self, resolve, loaded_modules, setup_view):
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_module_view(self, reverse, resolve, loaded_modules, setup_view):
         """Test that only registered users can access the setup view."""
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
@@ -110,7 +114,8 @@ class TestSetupMiddleware(TestCase):
     @patch('django.contrib.messages.success')
     @patch('plinth.module_loader.loaded_modules')
     @patch('django.urls.resolve')
-    def test_install_result_collection(self, resolve, loaded_modules,
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_install_result_collection(self, reverse, resolve, loaded_modules,
                                        messages_success):
         """Test that module installation result is collected properly."""
         resolve.return_value.namespaces = ['mockapp']

@@ -20,6 +20,7 @@ Django middleware to show pre-setup message and setup progress.
 """
 
 from django import urls
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
@@ -39,6 +40,12 @@ class SetupMiddleware(object):
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
         """Handle a request as Django middleware request handler."""
+        # Don't interfere with login page
+        user_requests_login = request.path.startswith(
+            urls.reverse(settings.LOGIN_URL))
+        if user_requests_login:
+            return
+
         # Perform a URL resolution. This is slightly inefficient as
         # Django will do this resolution again.
         try:
