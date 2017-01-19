@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 15:33-0500\n"
+"POT-Creation-Date: 2017-01-18 19:32-0500\n"
 "PO-Revision-Date: 2016-12-10 10:46+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
+"plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,16 +56,16 @@ msgstr "FreedomBox"
 msgid "Enable application"
 msgstr "Uygulamayı etkinleştir"
 
-#: plinth/middleware.py:59
+#: plinth/middleware.py:60
 msgid "Application installed."
 msgstr "Uygulama kuruldu."
 
-#: plinth/middleware.py:65
+#: plinth/middleware.py:66
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Uygulamanın kurulmasında hata: {string} {details}"
 
-#: plinth/middleware.py:69
+#: plinth/middleware.py:70
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Uygulamanın kurulmasında hata: {error}"
@@ -125,6 +125,73 @@ msgstr ""
 "de yarar. Servis keşfi mutlaka gerekli değildir ve sadece dahili şebekelerde "
 "çalışır. Özellikle düşman bir yerel ağa bağlanıldığında güvenliği arttırmak "
 "için devre dışı bırakılabilir."
+
+#: plinth/modules/bind/__init__.py:36
+msgid ""
+"Domain Name Server \n"
+" (BIND)"
+msgstr ""
+
+#: plinth/modules/bind/__init__.py:45
+msgid ""
+"BIND is open source software that enables you to publish your Domain Name "
+"System (DNS) information on the Internet, and to resolve DNS queries for "
+"your users."
+msgstr ""
+
+#: plinth/modules/bind/__init__.py:49
+msgid ""
+"BIND is by far the most widely used DNS software on the Internet, providing "
+"a robust and stable platform on top of which organizations can build "
+"distributed computing systems with the knowledge that those systems are "
+"fully compliant with published DNS standards."
+msgstr ""
+
+#: plinth/modules/bind/forms.py:38
+#, fuzzy
+#| msgid "Enable Tor"
+msgid "Enable forwarding"
+msgstr "Tor'u Etkinleştir"
+
+#: plinth/modules/bind/forms.py:40
+msgid "Enable forwarding on your BIND server"
+msgstr ""
+
+#: plinth/modules/bind/forms.py:43
+#, fuzzy
+#| msgid "Enable Dynamic DNS"
+msgid "Enable DNSSEC"
+msgstr "Dinamik DNS'i Etkinleştir"
+
+#: plinth/modules/bind/forms.py:45
+msgid "Enable Domain Name System Security Extensions"
+msgstr ""
+
+#: plinth/modules/bind/forms.py:50
+msgid "A list of IP addresses, separated by space"
+msgstr ""
+
+#: plinth/modules/bind/views.py:58
+#, fuzzy
+#| msgid "Access rights configuration updated"
+msgid "Set forwarding configuration updated"
+msgstr "Erişim izinleri yapılandırması güncellendi"
+
+#: plinth/modules/bind/views.py:66
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "Enable DNSSEC configuration updated"
+msgstr "Kurulum güncellendi"
+
+#: plinth/modules/bind/views.py:74
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "DNS server configuration updated"
+msgstr "Kurulum güncellendi"
+
+#: plinth/modules/bind/views.py:79
+msgid "Enable forwarding to set forwarding DNS servers"
+msgstr ""
 
 #: plinth/modules/config/config.py:87 plinth/modules/config/config.py:124
 #: plinth/modules/dynamicdns/dynamicdns.py:140
@@ -267,7 +334,11 @@ msgid "Time zone set"
 msgstr "Saat dilimi ayarlandı"
 
 #: plinth/modules/deluge/__init__.py:41
-msgid "BitTorrent Web Client (Deluge)"
+#, fuzzy
+#| msgid "BitTorrent Web Client (Deluge)"
+msgid ""
+"BitTorrent Web Client \n"
+" (Deluge)"
 msgstr "BitTorrent Web İstemcisi (Deluge)"
 
 #: plinth/modules/deluge/__init__.py:44
@@ -463,7 +534,7 @@ msgstr ""
 "sunucu DNS isminizi yeni IP adresi ile ilişkilendirecek ve İnternet'te "
 "birisi DNS isminizi sorguladığında güncel IP adresinizi elde edebilecektir."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:39
+#: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:40
 msgid "About"
 msgstr "Hakkında"
 
@@ -697,6 +768,49 @@ msgstr ""
 msgid "Last update"
 msgstr "Son güncelleme"
 
+#: plinth/modules/ejabberd/__init__.py:44
+#, fuzzy
+#| msgid "Chat Server (XMPP)"
+msgid ""
+"Chat Server \n"
+" (ejabberd)"
+msgstr "Sohbet Sunucusu (XMPP)"
+
+#: plinth/modules/ejabberd/__init__.py:47
+msgid ""
+"XMPP is an open and standardized communication protocol. Here you can run "
+"and configure your XMPP server, called ejabberd."
+msgstr ""
+"XMPP açık ve standardize edilmiş bir iletişim protokolüdür. Burada ejabberd "
+"isimli XMPP sunucusunu yapılandırıp çalıştırabilirsiniz."
+
+#: plinth/modules/ejabberd/__init__.py:50
+msgid ""
+"To actually communicate, you can use the web client or any other <a "
+"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP client</"
+"a>."
+msgstr ""
+"İletişim kurmak için ağ istemcisini ya da herhangi bir diğer <a href='http://"
+"xmpp.org/xmpp-software/clients/' target='_blank'>XMPP istemcisini</a> "
+"kullanabilirsiniz."
+
+#: plinth/modules/ejabberd/templates/ejabberd.html:32
+#, python-format
+msgid ""
+"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
+"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
+"<a href=\"%(index_url)s\">Configure</a> page."
+msgstr ""
+"XMPP sunucu alanınız <b>%(domainname)s</b> olarak ayarlanmıştır. Kullanıcı "
+"kimlikleri <i>username@%(domainname)s</i> şeklinde olacaktır. Alanınızı "
+"sistem <a href=\"%(index_url)s\">Yapılandırma</a> sayfasında "
+"ayarlayabilirsiniz."
+
+#: plinth/modules/ejabberd/templates/ejabberd.html:46
+#: plinth/modules/jsxc/templates/jsxc.html:32
+msgid "Launch web client"
+msgstr "Ağ istemcisini başlat"
+
 #: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
 msgstr "Güvenlik Duvarı"
@@ -836,29 +950,29 @@ msgstr ""
 msgid "Setup Complete"
 msgstr "Yapılandırma Tamamlandı"
 
-#: plinth/modules/help/help.py:33
+#: plinth/modules/help/help.py:34
 msgid "Documentation"
 msgstr "Belgelendirme"
 
-#: plinth/modules/help/help.py:35
+#: plinth/modules/help/help.py:36
 msgid "Where to Get Help"
 msgstr "Nerede Yardım Bulabilirim"
 
-#: plinth/modules/help/help.py:37 plinth/modules/networks/forms.py:61
+#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
 #: plinth/modules/networks/forms.py:101
 msgid "Manual"
 msgstr "El ile"
 
-#: plinth/modules/help/help.py:47
+#: plinth/modules/help/help.py:48
 msgid "Documentation and FAQ"
 msgstr "Belgelendirme ve SSS"
 
-#: plinth/modules/help/help.py:54
+#: plinth/modules/help/help.py:57
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "{box_name} hakkında"
 
-#: plinth/modules/help/help.py:72
+#: plinth/modules/help/help.py:76
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Kılavuzu"
@@ -926,6 +1040,10 @@ msgstr "Daha fazla bilgi edinin &raquo;"
 #, python-format
 msgid "You are running Plinth version %(version)s."
 msgstr "Plinth yazılımının %(version)s sürümünü kullanıyorsunuz."
+
+#: plinth/modules/help/templates/help_about.html:81
+msgid "There is a new version available."
+msgstr ""
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
@@ -1134,6 +1252,44 @@ msgstr "{name} silinemedi: {error}"
 msgid "Delete Wiki or Blog"
 msgstr "Viki ya da Blogu Sil"
 
+#: plinth/modules/infinoted/__init__.py:44
+msgid "Gobby Server (infinoted)"
+msgstr ""
+
+#: plinth/modules/infinoted/__init__.py:47
+msgid "infinoted is a server for Gobby, a collaborative text editor."
+msgstr ""
+
+#: plinth/modules/infinoted/__init__.py:50
+#, python-brace-format
+msgid ""
+"To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
+"client and install it. Then start Gobby and select \"Connect to Server\" and "
+"enter your {box_name}'s domain name."
+msgstr ""
+
+#: plinth/modules/jsxc/__init__.py:38
+#, fuzzy
+#| msgid "Chat Client (jsxc)"
+msgid ""
+"Chat Client \n"
+" (JSXC)"
+msgstr "Sohbet İstemcisi (jsxc)"
+
+#: plinth/modules/jsxc/__init__.py:42
+msgid ""
+"JSXC is a web client for XMPP. Typically it is used with an XMPP server "
+"running locally."
+msgstr ""
+
+#: plinth/modules/jsxc/__init__.py:80
+#, fuzzy
+#| msgid "Chat Client (jsxc)"
+msgid ""
+"Chat Client \n"
+" (jsxc)"
+msgstr "Sohbet İstemcisi (jsxc)"
+
 #: plinth/modules/letsencrypt/__init__.py:38
 #: plinth/modules/letsencrypt/__init__.py:63
 msgid "Certificates (Let's Encrypt)"
@@ -1235,7 +1391,11 @@ msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "{domain} alanı için sertifika edinilemedi: {error}"
 
 #: plinth/modules/minetest/__init__.py:49
-msgid "Block Sandbox (Minetest)"
+#, fuzzy
+#| msgid "Block Sandbox (Minetest)"
+msgid ""
+"Block Sandbox \n"
+" (Minetest)"
 msgstr "Blok Kum Havuzu (Minetest)"
 
 #: plinth/modules/minetest/__init__.py:53
@@ -1250,6 +1410,77 @@ msgstr ""
 "Minetest sunucusunu bu {box_name} kutusunda varsayılan portta (30000) "
 "etkinleştirir. Sunucuya bağlanmak için bir <a href=\"http://www.minetest.net/"
 "downloads/\"> Minetest istemcisi</a> gereklidir."
+
+#: plinth/modules/minetest/forms.py:31
+msgid "Maximum number of players"
+msgstr ""
+
+#: plinth/modules/minetest/forms.py:35
+msgid ""
+"You can change the maximum number of players playing                      "
+"minetest at a single instance of time"
+msgstr ""
+
+#: plinth/modules/minetest/forms.py:39
+#, fuzzy
+#| msgid "Enable reStore"
+msgid "Enable creative mode"
+msgstr "reStore'u Etkinleştir"
+
+#: plinth/modules/minetest/forms.py:41
+msgid ""
+"Creative mode changes the rules of the game to make it                      "
+"more suitable for creative gameplay, rather than                      "
+"challenging \"survival\" gameplay."
+msgstr ""
+
+#: plinth/modules/minetest/forms.py:46
+#, fuzzy
+#| msgid "Enable XMPP"
+msgid "Enable PVP"
+msgstr "XMPP'yi Etkinleştir"
+
+#: plinth/modules/minetest/forms.py:48
+msgid ""
+"Enabling Player Vs Player will allow players to damage                     "
+"other players"
+msgstr ""
+
+#: plinth/modules/minetest/forms.py:52
+#, fuzzy
+#| msgid "Enable PageKite"
+msgid "Enable damage"
+msgstr "PageKite'ı Etkinleştir"
+
+#: plinth/modules/minetest/forms.py:54
+msgid ""
+"When disabled, players cannot die or receive damage of                     "
+"any kind"
+msgstr ""
+
+#: plinth/modules/minetest/views.py:58
+#, fuzzy
+#| msgid "Access rights configuration updated"
+msgid "Maximum players configuration updated"
+msgstr "Erişim izinleri yapılandırması güncellendi"
+
+#: plinth/modules/minetest/views.py:66
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "Creative mode configuration updated"
+msgstr "Kurulum güncellendi"
+
+#: plinth/modules/minetest/views.py:74
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "PVP configuration updated"
+msgstr "Kurulum güncellendi"
+
+#: plinth/modules/minetest/views.py:82
+#, fuzzy
+#| msgid "Configuration updated"
+msgid "Damage configuration updated"
+msgstr "Kurulum güncellendi"
 
 #: plinth/modules/monkeysphere/__init__.py:32
 #: plinth/modules/monkeysphere/__init__.py:58
@@ -1421,7 +1652,11 @@ msgid "Error occurred while publishing key."
 msgstr "Anahtarın yayınlanmasında bir hata meydana geldi."
 
 #: plinth/modules/mumble/__init__.py:37
-msgid "Voice Chat (Mumble)"
+#, fuzzy
+#| msgid "Voice Chat (Mumble)"
+msgid ""
+"Voice Chat \n"
+" (Mumble)"
 msgstr "Ses ile Sohbet (Mumble)"
 
 #: plinth/modules/mumble/__init__.py:46
@@ -1623,8 +1858,8 @@ msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
-"Seçime dayalı değer. Eğer bu değer belirtildiyse ve IPv6 adresleme metodu \""
-"Otomatik\" ise, DHCP sunucusu tarafından sunulan DNS sunucuları görmezden "
+"Seçime dayalı değer. Eğer bu değer belirtildiyse ve IPv6 adresleme metodu "
+"\"Otomatik\" ise, DHCP sunucusu tarafından sunulan DNS sunucuları görmezden "
 "gelinecektir."
 
 #: plinth/modules/networks/forms.py:127
@@ -1632,8 +1867,8 @@ msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
-"Seçime dayalı değer. Eğer bu değer belirtildiyse ve IPv6 Adresleme Metodu \""
-"Otomatik\" ise, DHCP sunucusu tarafından sunulan DNS sunucuları görmezden "
+"Seçime dayalı değer. Eğer bu değer belirtildiyse ve IPv6 Adresleme Metodu "
+"\"Otomatik\" ise, DHCP sunucusu tarafından sunulan DNS sunucuları görmezden "
 "gelinecektir."
 
 #: plinth/modules/networks/forms.py:137
@@ -2616,7 +2851,11 @@ msgid "Shut Down Now"
 msgstr "Şimdi Kapat"
 
 #: plinth/modules/privoxy/__init__.py:44
-msgid "Web Proxy (Privoxy)"
+#, fuzzy
+#| msgid "Web Proxy (Privoxy)"
+msgid ""
+"Web Proxy \n"
+" (Privoxy)"
 msgstr "Ağ Vekil Sunucusu (Privoxy)"
 
 #: plinth/modules/privoxy/__init__.py:47
@@ -2646,13 +2885,17 @@ msgstr ""
 "org/</a>  veya <a href=\"http://p.p\">http://p.p</a> adresinde "
 "görebilirsiniz."
 
-#: plinth/modules/privoxy/__init__.py:142
+#: plinth/modules/privoxy/__init__.py:143
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "{url} konumuna {proxy} vekili vasıtasıyla tcp{kind} üzerinden eriş"
 
 #: plinth/modules/quassel/__init__.py:43
-msgid "IRC Client (Quassel)"
+#, fuzzy
+#| msgid "IRC Client (Quassel)"
+msgid ""
+"IRC Client \n"
+" (Quassel)"
 msgstr "IRC İstemcisi (Quassel)"
 
 #: plinth/modules/quassel/__init__.py:47
@@ -2685,7 +2928,11 @@ msgstr ""
 "\">mobil</a> cihaz istemcileri mevcuttur."
 
 #: plinth/modules/radicale/__init__.py:43
-msgid "Calendar and Addressbook (Radicale)"
+#, fuzzy
+#| msgid "Calendar and Addressbook (Radicale)"
+msgid ""
+"Calendar and Addressbook \n"
+" (Radicale)"
 msgstr "Takvim ve Adres Defteri (Radicale)"
 
 #: plinth/modules/radicale/__init__.py:47
@@ -2728,7 +2975,11 @@ msgid "Access rights configuration updated"
 msgstr "Erişim izinleri yapılandırması güncellendi"
 
 #: plinth/modules/repro/__init__.py:40
-msgid "SIP Server (repro)"
+#, fuzzy
+#| msgid "SIP Server (repro)"
+msgid ""
+"SIP Server \n"
+" (repro)"
 msgstr "SIP Sunucusu (repro)"
 
 #: plinth/modules/repro/__init__.py:43
@@ -2773,7 +3024,11 @@ msgstr ""
 "tekrar etkinleştirin."
 
 #: plinth/modules/restore/__init__.py:37
-msgid "Unhosted Storage (reStore)"
+#, fuzzy
+#| msgid "Unhosted Storage (reStore)"
+msgid ""
+"Unhosted Storage \n"
+" (reStore)"
 msgstr "Barındırılmayan Depolama (reStore)"
 
 #: plinth/modules/restore/__init__.py:41
@@ -2801,7 +3056,11 @@ msgstr ""
 "düzenleyebilirsiniz."
 
 #: plinth/modules/roundcube/__init__.py:37
-msgid "Email Client (Roundcube)"
+#, fuzzy
+#| msgid "Email Client (Roundcube)"
+msgid ""
+"Email Client \n"
+" (Roundcube)"
 msgstr "E-posta İstemcisi (Roundcube)"
 
 #: plinth/modules/roundcube/__init__.py:40
@@ -2871,7 +3130,11 @@ msgid "Updated security configuration"
 msgstr "Güvenlik yapılandırması güncellendi"
 
 #: plinth/modules/shaarli/__init__.py:37
-msgid "Bookmarks (Shaarli)"
+#, fuzzy
+#| msgid "Bookmarks (Shaarli)"
+msgid ""
+"Bookmarks \n"
+" (Shaarli)"
 msgstr "Yer İmleri (Shaarli)"
 
 #: plinth/modules/shaarli/__init__.py:40
@@ -3024,10 +3287,6 @@ msgid ""
 msgstr ""
 "Seçenekler {box_name} kutusunu en genel düzeyde etkiler, bu nedenle dikkatli "
 "olun!"
-
-#: plinth/modules/tor/__init__.py:42
-msgid "Anonymity Network (Tor)"
-msgstr "Anonimlik Ağı (Tor)"
 
 #: plinth/modules/tor/__init__.py:45
 msgid ""
@@ -3203,7 +3462,11 @@ msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
 #: plinth/modules/transmission/__init__.py:40
-msgid "BitTorrent (Transmission)"
+#, fuzzy
+#| msgid "BitTorrent (Transmission)"
+msgid ""
+"BitTorrent \n"
+" (Transmission)"
 msgstr "BitTorrent (Transmission)"
 
 #: plinth/modules/transmission/__init__.py:43
@@ -3250,7 +3513,11 @@ msgstr ""
 "girin."
 
 #: plinth/modules/ttrss/__init__.py:39
-msgid "News Feed Reader (Tiny Tiny RSS)"
+#, fuzzy
+#| msgid "News Feed Reader (Tiny Tiny RSS)"
+msgid ""
+"News Feed Reader \n"
+" (Tiny Tiny RSS)"
 msgstr "Haber Besleme Okuyucusu (Tiny Tiny RSS)"
 
 #: plinth/modules/ttrss/__init__.py:42
@@ -3563,48 +3830,6 @@ msgstr "Parolayı Değiştir"
 msgid "Password changed successfully."
 msgstr "Parola başarılı bir şekilde değiştirildi."
 
-#: plinth/modules/xmpp/__init__.py:44
-msgid "Chat Server (XMPP)"
-msgstr "Sohbet Sunucusu (XMPP)"
-
-#: plinth/modules/xmpp/__init__.py:47
-msgid ""
-"XMPP is an open and standardized communication protocol. Here you can run "
-"and configure your XMPP server, called ejabberd."
-msgstr ""
-"XMPP açık ve standardize edilmiş bir iletişim protokolüdür. Burada ejabberd "
-"isimli XMPP sunucusunu yapılandırıp çalıştırabilirsiniz."
-
-#: plinth/modules/xmpp/__init__.py:50
-msgid ""
-"To actually communicate, you can use the web client or any other <a "
-"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP client</"
-"a>."
-msgstr ""
-"İletişim kurmak için ağ istemcisini ya da herhangi bir diğer <a href='http://"
-"xmpp.org/xmpp-software/clients/' target='_blank'>XMPP istemcisini</a> "
-"kullanabilirsiniz."
-
-#: plinth/modules/xmpp/__init__.py:103
-msgid "Chat Client (jsxc)"
-msgstr "Sohbet İstemcisi (jsxc)"
-
-#: plinth/modules/xmpp/templates/xmpp.html:32
-#, python-format
-msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
-msgstr ""
-"XMPP sunucu alanınız <b>%(domainname)s</b> olarak ayarlanmıştır. Kullanıcı "
-"kimlikleri <i>username@%(domainname)s</i> şeklinde olacaktır. Alanınızı "
-"sistem <a href=\"%(index_url)s\">Yapılandırma</a> sayfasında "
-"ayarlayabilirsiniz."
-
-#: plinth/modules/xmpp/templates/xmpp.html:46
-msgid "Launch web client"
-msgstr "Ağ istemcisini başlat"
-
 #: plinth/network.py:39
 msgid "PPPoE"
 msgstr "PPPoE"
@@ -3815,6 +4040,9 @@ msgstr "Uygulama etkinleştirildi"
 msgid "Application disabled"
 msgstr "Uygulama devre dışı bırakıldı"
 
+#~ msgid "Anonymity Network (Tor)"
+#~ msgstr "Anonimlik Ağı (Tor)"
+
 #~ msgid "Box it up!"
 #~ msgstr "Kaydet ve FreedomBox'u başlat!"
 
@@ -4014,9 +4242,6 @@ msgstr "Uygulama devre dışı bırakıldı"
 #~ msgid "reStore"
 #~ msgstr "reStore"
 
-#~ msgid "Enable reStore"
-#~ msgstr "reStore'u Etkinleştir"
-
 #~ msgid "Enable Roundcube"
 #~ msgstr "Roundcube'u Etkinleştir"
 
@@ -4040,9 +4265,6 @@ msgstr "Uygulama devre dışı bırakıldı"
 
 #~ msgid "Package Upgrades"
 #~ msgstr "Paket Yükseltmeler"
-
-#~ msgid "Enable XMPP"
-#~ msgstr "XMPP'yi Etkinleştir"
 
 #~ msgid "Installed and configured packages successfully."
 #~ msgstr "Paketler başarılı bir şekilde kuruldu ve ayarlandı."
