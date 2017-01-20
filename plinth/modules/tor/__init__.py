@@ -32,7 +32,7 @@ from plinth.signals import domain_added, domain_removed
 from . import utils
 
 
-version = 1
+version = 2
 
 depends = ['apps', 'names']
 

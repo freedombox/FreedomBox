@@ -1,0 +1,185 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for BIND server.
+"""
+
+import argparse
+
+from plinth import action_utils
+
+
+CONFIG_FILE = '/etc/bind/named.conf.options'
+
+DEFAULT_CONFIG = '''
+acl goodclients {
+    localnets;
+};
+options {
+directory "/var/cache/bind";
+
+recursion yes;
+allow-query { goodclients; };
+
+forwarders {
+8.8.8.8; 8.8.4.4;
+};
+forward first;
+
+dnssec-enable yes;
+dnssec-validation auto;
+
+auth-nxdomain no;    # conform to RFC1035
+listen-on-v6 { any; };
+};
+'''
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser('setup', help='Setup for BIND')
+
+    configure = subparsers.add_parser('configure', help='Configure BIND')
+    configure.add_argument('--set-forwarding', choices=['true', 'false'],
+                           help='Set forwarding true/false')
+    configure.add_argument('--enable-dnssec', choices=['true', 'false'],
+                           help='Set DNSSEC true/false')
+
+    dns = subparsers.add_parser('dns', help='Set DNS forwarders')
+    dns.add_argument('--set', help='List of IP addresses, separated by space')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup BIND configuration."""
+    conf_file = open(CONFIG_FILE, "w")
+    conf_file.write(DEFAULT_CONFIG)
+    conf_file.close()
+    action_utils.service_restart('bind9')
+
+
+def subcommand_dns(arguments):
+    """Setting DNS servers"""
+    if arguments.set:
+        set_forwarders(arguments.set)
+
+    action_utils.service_restart('bind9')
+
+
+def subcommand_configure(arguments):
+    """Configure BIND."""
+    if arguments.set_forwarding:
+        set_forwarding(arguments.set_forwarding)
+
+    if arguments.enable_dnssec:
+        enable_dnssec(arguments.enable_dnssec)
+
+    action_utils.service_restart('bind9')
+
+
+def set_forwarding(choice):
+    """Enable or disable DNS forwarding."""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    flag = 0
+    if choice == "false":
+        if 'forwarders {' in data and not '// forwarders {' in data:
+            conf_file = open(CONFIG_FILE, 'w')
+            for line in data:
+                if 'forwarders {' in line and not '// forwarders {' in line:
+                    flag = 1
+                if flag == 1:
+                    line = '	// ' + line
+                if 'forward first' in line:
+                    flag = 0
+                if "0.0.0.0" not in line:
+                    conf_file.write(line + '\n')
+            conf_file.close()
+
+    else:
+        if '// forwarders {' in data:
+            conf_file = open(CONFIG_FILE, 'w')
+            for line in data:
+                if '// forwarders {' in line:
+                    flag = 1
+                if flag == 1:
+                    line = line[2:]
+                if 'forward first' in line:
+                    flag = 0
+                if "0.0.0.0" not in line:
+                    conf_file.write(line + '\n')
+            conf_file.close()
+
+
+def enable_dnssec(choice):
+    """Enable or disable DNSSEC."""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    if choice == "false":
+        if '//dnssec-enable yes;' not in data:
+            conf_file = open(CONFIG_FILE, 'w')
+            for line in data:
+                if 'dnssec-enable yes;' in line:
+                    line = '//' + line
+                conf_file.write(line+'\n')
+            conf_file.close()
+
+    else:
+        if '//dnssec-enable yes;' in data:
+            conf_file = open(CONFIG_FILE, 'w')
+            for line in data:
+                if '//dnssec-enable yes;' in line:
+                    line = line[2:]
+                conf_file.write(line + '\n')
+            conf_file.close()
+
+
+def set_forwarders(forwarders):
+    """Set DNS forwarders."""
+    flag = 0
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    conf_file = open(CONFIG_FILE, 'w')
+    for line in data:
+        if 'forwarders {' in line:
+            conf_file.write(line + '\n')
+            for dns in forwarders.split():
+                conf_file.write(dns + '; ')
+            conf_file.write('\n')
+            flag = 1
+        elif '};' in line and flag == 1:
+            conf_file.write(line + '\n')
+            flag = 0
+        elif flag == 0:
+            conf_file.write(line + '\n')
+    conf_file.close()
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

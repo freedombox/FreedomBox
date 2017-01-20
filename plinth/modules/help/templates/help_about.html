@@ -76,6 +76,12 @@
     {% blocktrans trimmed %}
       You are running Plinth version {{ version }}.
     {% endblocktrans %}
+
+    {% if new_version %}
+      {% blocktrans trimmed %}
+        There is a new version available.
+      {% endblocktrans %}
+    {% endif %}
   </p>
 
 {% endblock %}

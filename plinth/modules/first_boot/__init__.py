@@ -35,6 +35,7 @@ first_boot_steps = [
         'order': 0
     },
     {
+        # TODO: Rename this, or merge with 'firstboot_completed'.
         'id': 'firstboot_complete',
         'url': 'first_boot:complete',
         'order': 10
@@ -106,7 +107,7 @@ def mark_step_done(id):
 
     kvstore.set(id, 1)
     if not next_step_or_none():
-        kvstore.set('setup_state', 1)
+        set_completed()
 
 
 def is_completed():
@@ -115,9 +116,9 @@ def is_completed():
 
     global _is_completed
     if _is_completed is None:
-        _is_completed = kvstore.get_default('setup_state', 0)
+        _is_completed = kvstore.get_default('firstboot_completed', 0)
 
-    return _is_completed
+    return bool(_is_completed)
 
 
 def set_completed():
@@ -126,4 +127,4 @@ def set_completed():
 
     global _is_completed
     _is_completed = True
-    kvstore.set('setup_state', 1)
+    kvstore.set('firstboot_completed', 1)

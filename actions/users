@@ -37,6 +37,8 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup LDAP')
+    subparsers.add_parser('first-run',
+                          help='Additional setup performed after reboot')
 
     return parser.parse_args()
 
@@ -51,8 +53,13 @@ def subcommand_setup(_):
     configure_slapd()
 
 
+def subcommand_first_run(_):
+    """Additional setup performed after reboot."""
+    configure_ldap_structure()
+
+
 def configure_slapd():
-    """Configure LDAP authentication and basic structure."""
+    """Configure LDAP authentication."""
     action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
     action_utils.dpkg_reconfigure('nslcd', {'ldap-uris': 'ldapi:///',
                                             'ldap-base': 'dc=thisbox',
@@ -61,6 +68,9 @@ def configure_slapd():
     action_utils.dpkg_reconfigure('libnss-ldapd',
                                   {'nsswitch': 'group, passwd, shadow'})
 
+
+def configure_ldap_structure():
+    """Configure LDAP basic structure."""
     was_running = action_utils.service_is_running('slapd')
     if not was_running:
         action_utils.service_start('slapd')

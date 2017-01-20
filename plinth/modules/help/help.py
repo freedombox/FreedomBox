@@ -20,6 +20,7 @@ Help module for Plinth.
 """
 
 import os
+from apt.cache import Cache
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
@@ -50,9 +51,12 @@ def index(request):
 @public
 def about(request):
     """Serve the about page"""
+    cache = Cache()
+    plinth = cache['plinth']
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
-        'version': __version__
+        'version': __version__,
+        'new_version': not plinth.candidate.is_installed
     }
     return TemplateResponse(request, 'help_about.html', context)
 

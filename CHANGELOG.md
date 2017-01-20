@@ -2,14 +2,28 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Fixed
+- setup: Fixed an infinite redirect in a rare case.
+- setup.py: Install all first-run scripts for freedombox-setup.
+
+## [0.13.0] - 2017-01-18
 ### Added
 - Added command line argument --list-modules which will list modules
   and exit. It can be followed by "essential" or "optional" to only
   list those modules.
 - Added JS license web labels for LibreJS.
+- Added basic configuration form for Minetest server.
+- Added Domain Name Server (BIND) module.
+- help: Added indicator for new plinth version available.
+- Added Gobby Server (infinoted) module.
 
 ### Changed
 - frontpage: Show app logos instead of generic icons.
+- Prevent anonymous users from accessing setup pages.
+- Firstboot, KVStore: merge old firstboot state fields.
+- tor: Use Plinth-specific instance instead of default.
+- xmpp: Split into ejabberd and jsxc modules.
+- users: Moved part of LDAP setup to first-run.
 
 ## [0.12.0] - 2016-12-08
 ### Added
@@ -173,7 +187,8 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/freedombox/Plinth/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/freedombox/Plinth/compare/v0.9.4...v0.10.0

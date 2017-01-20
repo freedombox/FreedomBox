@@ -1,0 +1,48 @@
+{% extends "service.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block description %}
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  <p>
+    {% url 'config:index' as index_url %}
+    {% if domainname %}
+      {% blocktrans trimmed with domainname=domainname %}
+        Your XMPP server domain is set to <b>{{ domainname }}</b>. User
+        IDs will look like <i>username@{{ domainname }}</i>. You
+        can setup your domain on the system
+        <a href="{{ index_url }}">Configure</a> page.
+      {% endblocktrans %}
+    {% else %}
+      Your XMPP server domain is not set. You can setup your domain on
+      the system <a href="{{ index_url }}">Configure</a> page.
+    {% endif %}
+  </p>
+
+  <p>
+    <a href='{% url "jsxc:jsxc" %}' target='_blank' class='btn btn-primary'>
+      {% trans "Launch web client" %}</a>
+  </p>
+{% endblock %}

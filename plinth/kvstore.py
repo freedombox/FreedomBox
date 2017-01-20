@@ -40,3 +40,8 @@ def set(key, value):  # pylint: disable-msg=W0622
     """Store the value of a key"""
     store = KVStore(key=key, value=value)
     store.save()
+
+
+def delete(key):
+    """Delete a key"""
+    return KVStore.objects.get(key=key).delete()

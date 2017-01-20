@@ -25,7 +25,6 @@ from django.urls import reverse
 from django.conf import settings
 import logging
 
-from plinth import kvstore
 from plinth.modules import first_boot
 
 LOGGER = logging.getLogger(__name__)
@@ -48,20 +47,12 @@ class FirstBootMiddleware(object):
         if user_requests_help:
             return
 
-        state = first_boot.is_completed()
-
-        # Migrate from old settings variable
-        if state == 0:
-            old_state = kvstore.get_default('firstboot_state', 0)
-            if old_state == 10:
-                state = 1
-                first_boot.set_completed()
-
+        firstboot_completed = first_boot.is_completed()
         user_requests_firstboot = first_boot.is_firstboot_url(request.path)
 
         # Redirect to first boot if requesting normal page and first
         # boot is not complete.
-        if state == 0 and not user_requests_firstboot:
+        if not firstboot_completed and not user_requests_firstboot:
             next_step = first_boot.next_step_or_none()
             if next_step:
                 return HttpResponseRedirect(reverse(next_step))
@@ -71,5 +62,5 @@ class FirstBootMiddleware(object):
 
         # Redirect to index page if request firstboot after it is
         # finished.
-        if state == 1 and user_requests_firstboot:
+        if firstboot_completed and user_requests_firstboot:
             return HttpResponseRedirect(reverse('index'))

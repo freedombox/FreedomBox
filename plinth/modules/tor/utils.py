@@ -36,12 +36,12 @@ APT_TOR_PREFIX = 'tor+'
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.service_is_enabled('tor')
+    return action_utils.service_is_enabled('tor@plinth')
 
 
 def is_running():
     """Return whether the service is running."""
-    return action_utils.service_is_running('tor')
+    return action_utils.service_is_running('tor@plinth')
 
 
 def get_status():
