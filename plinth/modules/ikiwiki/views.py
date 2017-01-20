@@ -83,8 +83,9 @@ def create(request):
                              form.cleaned_data['admin_password'])
 
             site = form.cleaned_data['name'].replace(' ', '')
-            frontpage.add_shortcut('ikiwiki_' + site, site,
-                                   '/ikiwiki/' + site, 'glyphicon-edit')
+            frontpage.add_shortcut(
+                'ikiwiki_' + site, site, url='/ikiwiki/' + site,
+                login_required=False, icon='ikiwiki')
 
             return redirect(reverse_lazy('ikiwiki:manage'))
     else:
