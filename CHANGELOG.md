@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Fixed
 - setup: Fixed an infinite redirect in a rare case.
+- Fixed for URLs referencing jsxc JS and CSS files.
 - setup.py: Install all first-run scripts for freedombox-setup.
+- ikiwiki: Fixed showing icon for newly created wiki/blog.
 
 ## [0.13.0] - 2017-01-18
 ### Added
