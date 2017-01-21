@@ -22,7 +22,7 @@ Plinth setup file
 
 from distutils import log
 from distutils.command.build import build
-from distutils.dir_util import remove_tree,copy_tree
+from distutils.dir_util import remove_tree
 from distutils.command.clean import clean
 from distutils.command.install_data import install_data
 from distutils.core import Command
