@@ -22,6 +22,7 @@ Plinth setup file
 
 from distutils import log
 from distutils.command.build import build
+from distutils.dir_util import remove_tree
 from distutils.command.clean import clean
 from distutils.command.install_data import install_data
 from distutils.core import Command
@@ -112,6 +113,7 @@ class CustomClean(clean):
         """Execute clean command"""
         subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
         subprocess.check_call(['make', '-C', 'doc', 'clean'])
+        
         for dir_path, dir_names, file_names in os.walk('plinth/locale/'):
             for file_name in file_names:
                 if file_name.endswith('.mo'):
@@ -139,8 +141,11 @@ class CustomInstallData(install_data):
                 log.info("creating directory '%s'", directory)
                 os.makedirs(directory)
 
-        # Recursively copy directories
+        # Recursively overwrite directories
         for target, source in DIRECTORIES_TO_COPY:
+
+            remove_tree(target)
+            
             if self.root:
                 target = change_root(self.root, target)
 
