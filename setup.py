@@ -22,7 +22,7 @@ Plinth setup file
 
 from distutils import log
 from distutils.command.build import build
-from distutils.dir_util import remove_tree
+from distutils.dir_util import remove_tree,copy_tree
 from distutils.command.clean import clean
 from distutils.command.install_data import install_data
 from distutils.core import Command
@@ -44,8 +44,8 @@ DIRECTORIES_TO_CREATE = [
 ]
 
 DIRECTORIES_TO_COPY = [
-    ('/usr/share/plinth/static', 'static'),
     ('/usr/share/doc/plinth', 'doc'),
+    ('/usr/share/plinth/static', 'static'),
 ]
 
 LOCALE_PATHS = [
@@ -143,15 +143,16 @@ class CustomInstallData(install_data):
 
         # Recursively overwrite directories
         for target, source in DIRECTORIES_TO_COPY:
-
-            remove_tree(target)
             
             if self.root:
                 target = change_root(self.root, target)
 
-            if not os.path.exists(target):
-                log.info("recursive copy '%s' to '%s'", source, target)
-                shutil.copytree(source, target, symlinks=True)
+            
+            if os.path.exists(target):
+               remove_tree(target)
+
+            log.info("recursive copy '%s' to '%s'", source, target)
+            shutil.copytree(source, target,symlinks=True)
 
 
 find_packages = setuptools.PEP420PackageFinder.find
