@@ -1,10 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.13.1] - 2017-01-22
+### Added
+- Added new locale for Japanese (ja).
+
 ### Fixed
 - setup: Fixed an infinite redirect in a rare case.
-- Fixed for URLs referencing jsxc JS and CSS files.
+- Fixed URLs referencing jsxc JS and CSS files.
 - setup.py: Install all first-run scripts for freedombox-setup.
 - ikiwiki: Fixed showing icon for newly created wiki/blog.
 
@@ -189,7 +192,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.13.0...HEAD
+[0.13.1]: https://github.com/freedombox/Plinth/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/freedombox/Plinth/compare/v0.10.0...v0.11.0
