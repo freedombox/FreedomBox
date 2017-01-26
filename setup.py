@@ -113,7 +113,7 @@ class CustomClean(clean):
         """Execute clean command"""
         subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
         subprocess.check_call(['make', '-C', 'doc', 'clean'])
-        
+
         for dir_path, dir_names, file_names in os.walk('plinth/locale/'):
             for file_name in file_names:
                 if file_name.endswith('.mo'):
@@ -143,16 +143,14 @@ class CustomInstallData(install_data):
 
         # Recursively overwrite directories
         for target, source in DIRECTORIES_TO_COPY:
-            
             if self.root:
                 target = change_root(self.root, target)
 
-            
             if os.path.exists(target):
-               remove_tree(target)
+                remove_tree(target)
 
             log.info("recursive copy '%s' to '%s'", source, target)
-            shutil.copytree(source, target,symlinks=True)
+            shutil.copytree(source, target, symlinks=True)
 
 
 find_packages = setuptools.PEP420PackageFinder.find

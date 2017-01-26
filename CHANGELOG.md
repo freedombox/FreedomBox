@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- Added missing shaarli logo.
+- Overwrite existing doc and static folders when installing.
+- Added line break to infinoted title, used by front page shortcut.
+
 ## [0.13.1] - 2017-01-22
 ### Added
 - Added new locale for Japanese (ja).
@@ -192,6 +198,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.13.1...HEAD
 [0.13.1]: https://github.com/freedombox/Plinth/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
