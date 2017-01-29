@@ -66,11 +66,8 @@ def parse_arguments():
     configure.add_argument('--use-upstream-bridges',
                            choices=['enable', 'disable'],
                            help='Configure use of upstream bridges')
-
-    upstream = subparsers.add_parser(
-        'set-upstream-bridges', help='Set list of upstream bridges')
-    upstream.add_argument('--bridges',
-                          help='List of upstream bridges to use')
+    configure.add_argument('--upstream-bridges',
+                           help='Set list of upstream bridges to use')
 
     subparsers.add_parser('restart', help='Restart Tor')
 
@@ -154,6 +151,10 @@ def subcommand_configure(arguments):
     if arguments.use_upstream_bridges == 'enable':
         arguments.relay = 'disable'
         arguments.bridge_relay = 'disable'
+
+    if arguments.upstream_bridges:
+        _set_upstream_bridges(arguments.upstream_bridges, aug=aug)
+
     _enable_relay(arguments.relay, arguments.bridge_relay, aug=aug)
 
     if arguments.hidden_service == 'enable':
@@ -168,23 +169,6 @@ def subcommand_configure(arguments):
         _enable_apt_transport_tor()
     elif arguments.apt_transport_tor == 'disable':
         _disable_apt_transport_tor()
-
-
-def subcommand_set_upstream_bridges(arguments):
-    """Set list of upstream bridges."""
-    aug = augeas_load()
-
-    aug.remove(TOR_CONFIG + '/Bridge')
-    if arguments.bridges:
-        bridges = arguments.bridges.split('\n')
-        for bridge in bridges:
-            if bridge.strip():
-                aug.set(TOR_CONFIG + '/Bridge[last() + 1]', bridge.strip())
-
-    aug.set(TOR_CONFIG + '/ClientTransportPlugin',
-            'obfs4 exec /usr/bin/obfs4proxy')
-
-    aug.save()
 
 
 def subcommand_restart(_):
@@ -341,6 +325,29 @@ def _use_upstream_bridges(use_upstream_bridges=None, aug=None):
     aug.save()
 
 
+def _set_upstream_bridges(upstream_bridges=None, aug=None):
+    """Set list of upstream bridges."""
+    if upstream_bridges is None:
+        return
+
+    if not aug:
+        aug = augeas_load()
+
+    aug.remove(TOR_CONFIG + '/Bridge')
+    if upstream_bridges:
+        bridges = [bridge.strip() for bridge in upstream_bridges.split('\n')]
+        bridges = [bridge for bridge in bridges if bridge]
+        for bridge in bridges:
+            parts = [part for part in bridge.split() if part]
+            bridge = ' '.join(parts)
+            aug.set(TOR_CONFIG + '/Bridge[last() + 1]', bridge.strip())
+
+    aug.set(TOR_CONFIG + '/ClientTransportPlugin',
+            'obfs3,scramblesuit,obfs4 exec /usr/bin/obfs4proxy')
+
+    aug.save()
+
+
 def _enable_relay(relay=None, bridge=None, aug=None):
     """Enable Tor bridge relay."""
     if relay is None and bridge is None:
@@ -349,7 +356,7 @@ def _enable_relay(relay=None, bridge=None, aug=None):
     if not aug:
         aug = augeas_load()
 
-    use_upstream_bridges = aug.get(TOR_CONFIG + '/UseBridges') == '1'
+    use_upstream_bridges = _are_upstream_bridges_enabled(aug)
 
     if relay == 'enable' and not use_upstream_bridges:
         aug.set(TOR_CONFIG + '/ORPort', 'auto')
@@ -477,7 +484,8 @@ def augeas_load():
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Tor/lens', 'Tor.lns')
-    aug.set('/augeas/load/Tor/incl[last() + 1]', '/etc/tor/instances/plinth/torrc')
+    aug.set('/augeas/load/Tor/incl[last() + 1]',
+            '/etc/tor/instances/plinth/torrc')
     aug.load()
     return aug
 
