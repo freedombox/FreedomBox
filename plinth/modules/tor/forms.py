@@ -84,19 +84,21 @@ class TorForm(forms.Form):  # pylint: disable=W0232
     use_upstream_bridges = forms.BooleanField(
         label=_('Use upstream bridges to connect to Tor network'),
         required=False,
-        help_text=_('When enabled, the bridges configured below will be used '
-                    'to connect to the Tor network. This will disable relay '
-                    'modes. Only use this option if you cannot connect to '
-                    'the Tor network directly.'))
+        help_text=_(
+            'When enabled, the bridges configured below will be used to '
+            'connect to the Tor network. Use this option if your Internet '
+            'Service Provider (ISP) blocks or censors connections to the '
+            'Tor Network. This will disable relay modes.'))
     upstream_bridges = TrimmedCharField(
         widget=widgets.Textarea,
         label=_('Upstream bridges'),
         required=False,
-        help_text=_('If you need to use a bridge to connect to Tor network, '
-                    'you can get some bridges from '
-                    'https://bridges.torproject.org/ and paste the bridge '
-                    'information here. Note: If you need to use a pluggable '
-                    'transport, only obfs4 is supported currently.'),
+        help_text=_(
+            'You can get some bridges from <a '
+            'href="https://bridges.torproject.org/">'
+            'https://bridges.torproject.org/</a> and copy/paste the bridge '
+            'information here. Currently supported transports are none, '
+            'obfs3, obfs4 and scamblesuit.'),
         validators=[bridges_validator])
     relay_enabled = forms.BooleanField(
         label=_('Enable Tor relay'),
