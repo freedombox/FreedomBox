@@ -37,9 +37,9 @@ urlpatterns = [
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
         views.UserChangePassword.as_view(), name='change_password'),
     # Add Django's login/logout urls
-    url(r'^accounts/login/$', auth_views.login,
+    url(r'^accounts/login/$', public(auth_views.login),
         {'template_name': 'login.html'}, name='login'),
-    url(r'^accounts/logout/$', auth_views.logout,
+    url(r'^accounts/logout/$', public(auth_views.logout),
         {'next_page': reverse_lazy('index')}, name='logout'),
     url(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
         name='firstboot'),
