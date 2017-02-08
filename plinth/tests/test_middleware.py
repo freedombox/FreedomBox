@@ -22,12 +22,14 @@ Test module for Plinth's custom middleware.
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import AnonymousUser, User
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from stronghold.decorators import public
 
 from plinth import cfg
-from plinth.middleware import SetupMiddleware
+from plinth.middleware import SetupMiddleware, AdminMiddleware
 
 
 class TestSetupMiddleware(TestCase):
@@ -131,3 +133,93 @@ class TestSetupMiddleware(TestCase):
         self.assertIsNone(response)
         assert messages_success.called
         module.setup_helper.collect_result.assert_called_once_with()
+
+
+class TestAdminMiddleware(TestCase):
+    """Test cases for admin middleware."""
+    @classmethod
+    def setUpClass(cls):
+        """Setup all the test cases."""
+        super(TestAdminMiddleware, cls).setUpClass()
+
+        cfg.read()
+
+    def setUp(self):
+        """Setup each test case before execution."""
+        super(TestAdminMiddleware, self).setUp()
+
+        self.middleware = AdminMiddleware()
+
+    @patch('django.contrib.messages.success')
+    @patch('plinth.module_loader.loaded_modules')
+    @patch('django.urls.resolve')
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_that_admin_view_is_denied_for_usual_user(self, reverse, resolve, loaded_modules, messages_success):
+        """Test that normal user is denied for an admin view"""
+
+        self.kwargs = {
+            'view_func': HttpResponse,
+            'view_args': [],
+            'view_kwargs': {},
+        }
+
+        resolve.return_value.namespaces = ['mockapp']
+        loaded_modules.__getitem__.return_value = Mock()
+
+        request = RequestFactory().get('/plinth/mockapp')
+        request.user = Mock()
+        exists_fn = Mock()
+        exists_fn.exists = Mock(return_value=False)
+        request.user.groups.filter.return_value = exists_fn
+
+        self.assertRaises(PermissionDenied, self.middleware.process_view, request, **self.kwargs)
+
+    @patch('django.contrib.messages.success')
+    @patch('plinth.module_loader.loaded_modules')
+    @patch('django.urls.resolve')
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_that_admin_view_is_allowed_for_admin_user(self, reverse, resolve, loaded_modules, messages_success):
+        """Test that admin user is allowed for an admin view"""
+
+        self.kwargs = {
+            'view_func': HttpResponse,
+            'view_args': [],
+            'view_kwargs': {},
+        }
+
+        resolve.return_value.namespaces = ['mockapp']
+        loaded_modules.__getitem__.return_value = Mock()
+
+        request = RequestFactory().get('/plinth/mockapp')
+        request.user = Mock()
+        exists_fn = Mock()
+        exists_fn.exists = Mock(return_value=True)
+        request.user.groups.filter.return_value = exists_fn
+
+        response = self.middleware.process_view(request, **self.kwargs)
+        self.assertIsNone(response)
+
+    @patch('django.contrib.messages.success')
+    @patch('plinth.module_loader.loaded_modules')
+    @patch('django.urls.resolve')
+    @patch('django.urls.reverse', return_value='users:login')
+    def test_that_public_view_is_allowed_for_normal_user(self, reverse, resolve, loaded_modules, messages_success):
+        """Test that normal user is allowed for an public view"""
+
+        self.kwargs = {
+            'view_func': public(HttpResponse),
+            'view_args': [],
+            'view_kwargs': {},
+        }
+
+        resolve.return_value.namespaces = ['mockapp']
+        loaded_modules.__getitem__.return_value = Mock()
+
+        request = RequestFactory().get('/plinth/mockapp')
+        request.user = Mock()
+        exists_fn = Mock()
+        exists_fn.exists = Mock(return_value=False)
+        request.user.groups.filter.return_value = exists_fn
+
+        response = self.middleware.process_view(request, **self.kwargs)
+        self.assertIsNone(response)
