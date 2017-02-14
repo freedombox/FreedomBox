@@ -65,7 +65,6 @@ def init():
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
 
-        print(is_setup())
         if is_enabled() and is_setup():
             add_shortcut()
 
