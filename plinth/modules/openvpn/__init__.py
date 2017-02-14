@@ -18,12 +18,13 @@
 """
 Plinth module to configure OpenVPN server.
 """
-
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
 
@@ -53,7 +54,8 @@ description = [
 
 
 def init():
-    """Intialize the OpenVPN module."""
+    """Initialize the OpenVPN module."""
+
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index')
 
@@ -63,14 +65,34 @@ def init():
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
 
+        print(is_setup())
+        if is_enabled() and is_setup():
+            add_shortcut()
+
+
+def is_enabled():
+    return action_utils.service_is_enabled('openvpn')
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
+
     helper.install(managed_packages)
     global service
     if service is None:
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
+    add_shortcut()
+
+
+def add_shortcut():
+    frontpage.add_shortcut('openvpn', title,
+                           details=description + [
+                               '<a class="btn btn-primary btn-sm"'
+                               'href="/plinth/apps/openvpn/profile">Download Profile</a>'
+                           ],
+                           configure_url=reverse_lazy('openvpn:index'),
+                           login_required=True)
 
 
 def is_setup():
@@ -80,8 +102,4 @@ def is_setup():
 
 def diagnose():
     """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(1194, 'udp4'))
-
-    return results
+    return [action_utils.diagnose_port_listening(1194, 'udp4')]
