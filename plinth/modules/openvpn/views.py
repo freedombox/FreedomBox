@@ -75,7 +75,6 @@ def setup(request):
     return redirect('openvpn:index')
 
 
-@require_POST
 def profile(request):
     """Provide the user's profile for download."""
     username = request.user.username
@@ -97,14 +96,13 @@ def profile(request):
 
 def get_status():
     """Get the current settings from OpenVPN server."""
-    status = {'is_setup': openvpn.is_setup(),
-              'setup_running': False,
-              'enabled': openvpn.service.is_enabled(),
-              'is_running': openvpn.service.is_running()}
 
-    status['setup_running'] = bool(setup_process)
-
-    return status
+    return {
+        'is_setup': openvpn.is_setup(),
+        'setup_running': bool(setup_process),
+        'enabled': openvpn.service.is_enabled(),
+        'is_running': openvpn.service.is_running()
+    }
 
 
 def _collect_setup_result(request):
