@@ -50,7 +50,8 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label,
-                             'configure_url': configure_url })
+                             'configure_url': configure_url,
+                             'user_is_admin': request.user.groups.filter(name='admin').exists()})
 
 
 class ServiceView(FormView):
