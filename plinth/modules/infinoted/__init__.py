@@ -41,7 +41,7 @@ managed_services = ['infinoted']
 
 managed_packages = ['infinoted']
 
-title = _('Gobby Server (infinoted)')
+title = _('Gobby Server \n (infinoted)')
 
 description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),

@@ -74,15 +74,13 @@ def __apply_changes(request, old_status, new_status):
         # Already running a configuration task
         return
 
+    needs_restart = False
     arguments = []
-
-    if old_status['enabled'] != new_status['enabled']:
-        arg_value = 'enable' if new_status['enabled'] else 'disable'
-        arguments.extend(['--service', arg_value])
 
     if old_status['relay_enabled'] != new_status['relay_enabled']:
         arg_value = 'enable' if new_status['relay_enabled'] else 'disable'
         arguments.extend(['--relay', arg_value])
+        needs_restart = True
 
     if old_status['bridge_relay_enabled'] != \
        new_status['bridge_relay_enabled']:
@@ -90,10 +88,12 @@ def __apply_changes(request, old_status, new_status):
         if not new_status['bridge_relay_enabled']:
             arg_value = 'disable'
         arguments.extend(['--bridge-relay', arg_value])
+        needs_restart = True
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
         arg_value = 'enable' if new_status['hs_enabled'] else 'disable'
         arguments.extend(['--hidden-service', arg_value])
+        needs_restart = True
 
     if old_status['apt_transport_tor_enabled'] != \
        new_status['apt_transport_tor_enabled']:
@@ -102,10 +102,35 @@ def __apply_changes(request, old_status, new_status):
             arg_value = 'enable'
         arguments.extend(['--apt-transport-tor', arg_value])
 
-    if arguments:
+    if old_status['use_upstream_bridges'] != \
+       new_status['use_upstream_bridges']:
+        arg_value = 'disable'
+        if new_status['enabled'] and new_status['use_upstream_bridges']:
+            arg_value = 'enable'
+        arguments.extend(['--use-upstream-bridges', arg_value])
+        needs_restart = True
+
+    if old_status['upstream_bridges'] != new_status['upstream_bridges']:
+        arguments.extend(['--upstream-bridges',
+                          new_status['upstream_bridges']])
+        needs_restart = True
+
+    if old_status['enabled'] != new_status['enabled']:
+        arg_value = 'enable' if new_status['enabled'] else 'disable'
+        arguments.extend(['--service', arg_value])
         config_process = actions.superuser_run(
             'tor', ['configure'] + arguments, async=True)
-    else:
+        return
+
+    if arguments:
+        actions.superuser_run('tor', ['configure'] + arguments)
+        if not needs_restart:
+            messages.success(request, _('Configuration updated.'))
+
+    if needs_restart and new_status['enabled']:
+        config_process = actions.superuser_run('tor', ['restart'], async=True)
+
+    if not arguments:
         messages.info(request, _('Setting unchanged'))
 
 

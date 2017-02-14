@@ -151,6 +151,19 @@
                 $('#id_tor-bridge_relay_enabled').prop('checked', false);
             }
         }).change();
+
+        $('#id_tor-use_upstream_bridges').change(function() {
+            if ($('#id_tor-use_upstream_bridges').prop('checked')) {
+                $('#id_tor-upstream_bridges').parent().parent().show('slow');
+                $('#id_tor-relay_enabled').prop('checked', false)
+                                          .prop('disabled', true);
+                $('#id_tor-bridge_relay_enabled').prop('checked', false)
+                                                 .prop('disabled', true);
+            } else {
+                $('#id_tor-upstream_bridges').parent().parent().hide('slow');
+                $('#id_tor-relay_enabled').prop('disabled', false);
+            }
+        }).change();
     })(jQuery);
   // @license-end
   </script>
