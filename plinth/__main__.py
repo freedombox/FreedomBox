@@ -224,7 +224,7 @@ def configure_django():
         INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
-        LOGIN_REDIRECT_URL='apps:index',
+        LOGIN_REDIRECT_URL='index',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
@@ -234,6 +234,7 @@ def configure_django():
             'django.contrib.auth.middleware.AuthenticationMiddleware',
             'django.contrib.messages.middleware.MessageMiddleware',
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
+            'plinth.middleware.AdminMiddleware',
             'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',

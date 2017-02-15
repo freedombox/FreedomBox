@@ -28,6 +28,7 @@ from django.utils.translation import ugettext as _
 from stronghold.decorators import public
 import time
 
+from plinth.utils import is_user_admin
 from . import forms, frontpage
 import plinth
 
@@ -50,7 +51,8 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label,
-                             'configure_url': configure_url })
+                             'configure_url': configure_url,
+                             'user_is_admin': is_user_admin(request.user)})
 
 
 class ServiceView(FormView):

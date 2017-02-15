@@ -31,6 +31,8 @@ from plinth.modules import first_boot
 from plinth.modules.security import set_restricted_access
 
 # Usernames used by optional services (that might not be installed yet).
+from plinth.utils import is_user_admin
+
 RESERVED_USERNAMES = [
     'debian-deluged',
     'Debian-minetest',
@@ -167,7 +169,12 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
 
         self.request = request
         self.username = username
+
         super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+        if not is_user_admin(request.user):
+            self.fields["is_active"].widget = forms.HiddenInput()
+            self.fields["groups"].disabled = True
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
