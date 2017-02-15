@@ -18,7 +18,8 @@
 """
 Plinth module to configure OpenVPN server.
 """
-from django.urls import reverse_lazy
+
+from django.urls import resolve, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -65,31 +66,29 @@ def init():
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
 
-        if is_enabled() and is_setup():
+        if service.is_enabled() and is_setup():
             add_shortcut()
-
-
-def is_enabled():
-    return action_utils.service_is_enabled('openvpn')
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-
     helper.install(managed_packages)
     global service
     if service is None:
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
-    add_shortcut()
+
+    helper.call('post', add_shortcut)
 
 
 def add_shortcut():
+    """Add shortcut in frontpage."""
+    download_profile = \
+        format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
+                      'Download Profile</a>'),
+                    link=reverse_lazy('openvpn:profile'))
     frontpage.add_shortcut('openvpn', title,
-                           details=description + [
-                               '<a class="btn btn-primary btn-sm"'
-                               'href="/plinth/apps/openvpn/profile">Download Profile</a>'
-                           ],
+                           details=description + [download_profile],
                            configure_url=reverse_lazy('openvpn:index'),
                            login_required=True)
 
