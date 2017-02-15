@@ -19,7 +19,7 @@
 Plinth module to configure OpenVPN server.
 """
 
-from django.urls import resolve, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -76,9 +76,8 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['openvpn'], is_external=True)
-
-    helper.call('post', add_shortcut)
+            managed_services[0], title, ports=['openvpn'], is_external=True,
+            enable=enable, disable=disable)
 
 
 def add_shortcut():
@@ -96,6 +95,18 @@ def add_shortcut():
 def is_setup():
     """Return whether the service is running."""
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
+
+
+def enable():
+    """Enable the module."""
+    actions.superuser_run('service', ['enable', managed_services[0]])
+    add_shortcut()
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('service', ['disable', managed_services[0]])
+    frontpage.remove_shortcut('openvpn')
 
 
 def diagnose():

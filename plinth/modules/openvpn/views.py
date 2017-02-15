@@ -72,6 +72,8 @@ def setup(request):
     if not openvpn.is_setup() and not setup_process:
         setup_process = actions.superuser_run('openvpn', ['setup'], async=True)
 
+    openvpn.add_shortcut()
+
     return redirect('openvpn:index')
 
 
@@ -131,9 +133,10 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         if new_status['enabled']:
-            openvpn.service.enable()
+            openvpn.enable()
         else:
-            openvpn.service.disable()
+            openvpn.disable()
+
         modified = True
 
     if modified:
