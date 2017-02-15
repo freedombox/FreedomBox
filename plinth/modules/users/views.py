@@ -31,6 +31,7 @@ from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
+from plinth.utils import is_user_admin
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -84,7 +85,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not self.request.user.groups.filter(name='admin').exists():
+           and not is_user_admin(self.request.user):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
@@ -155,7 +156,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not self.request.user.groups.filter(name='admin').exists():
+           and not is_user_admin(self.request.user):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)

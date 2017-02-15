@@ -30,6 +30,7 @@ import time
 
 from . import forms, frontpage
 import plinth
+from plinth.utils import is_user_admin
 
 
 @public
@@ -44,7 +45,6 @@ def index(request):
         details_label = frontpage.shortcuts[selection]['label']
         configure_url = frontpage.shortcuts[selection]['configure_url']
 
-    user_is_admin = request.user.groups.filter(name='admin').exists()
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
                              'shortcuts': shortcuts,
@@ -52,7 +52,7 @@ def index(request):
                              'details': details,
                              'details_label': details_label,
                              'configure_url': configure_url,
-                             'user_is_admin': user_is_admin})
+                             'user_is_admin': is_user_admin(request.user)})
 
 
 class ServiceView(FormView):
