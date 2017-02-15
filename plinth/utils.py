@@ -51,3 +51,7 @@ def non_admin_view(func):
 
     setattr(func, "IS_NON_ADMIN", True)
     return func
+
+
+def is_user_admin(user):
+    return user.groups.filter(name='admin').exists()

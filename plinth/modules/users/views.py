@@ -26,6 +26,7 @@ from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
 import django.views.generic
 from django.utils.translation import ugettext as _, ugettext_lazy
 
+from plinth.utils import is_user_admin
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
     FirstBootForm
 from plinth import actions
@@ -83,7 +84,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.get_username() != self.kwargs['slug'] \
-                and not self.request.user.groups.filter(name='admin').exists():
+                and not is_user_admin(self.request.user):
             raise PermissionDenied
 
         return super(UserUpdate, self).dispatch(request, *args, **kwargs)
@@ -153,7 +154,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.get_username() != self.kwargs['slug'] \
-                and not self.request.user.groups.filter(name='admin').exists():
+                and not is_user_admin(self.request.user):
             raise PermissionDenied
 
         return super(UserChangePassword, self).dispatch(request, *args, **kwargs)

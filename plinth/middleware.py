@@ -31,6 +31,7 @@ from stronghold.utils import is_view_func_public
 
 import plinth
 from plinth.package import PackageException
+from plinth.utils import is_user_admin
 from . import views
 
 
@@ -103,5 +104,5 @@ class AdminMiddleware(object):
         if is_view_func_public(view_func) or hasattr(view_func, 'IS_NON_ADMIN'):
             return
 
-        if not request.user.groups.filter(name='admin').exists():
+        if not is_user_admin(request.user):
             raise PermissionDenied
