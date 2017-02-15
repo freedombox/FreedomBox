@@ -148,14 +148,6 @@ class TestAdminMiddleware(TestCase):
         """Setup each test case before execution."""
         super(TestAdminMiddleware, self).setUp()
 
-
-    @patch('django.contrib.messages.success')
-    @patch('plinth.module_loader.loaded_modules')
-    @patch('django.urls.resolve')
-    @patch('django.urls.reverse', return_value='users:login')
-    def test_that_admin_view_is_denied_for_usual_user(self, reverse, resolve, loaded_modules, messages_success):
-        """Test that normal user is denied for an admin view"""
-
         self.middleware = AdminRequiredMiddleware()
         self.kwargs = {
             'view_func': HttpResponse,
@@ -163,63 +155,28 @@ class TestAdminMiddleware(TestCase):
             'view_kwargs': {},
         }
 
-        resolve.return_value.namespaces = ['mockapp']
-        loaded_modules.__getitem__.return_value = Mock()
-
         request = RequestFactory().get('/plinth/mockapp')
         request.user = Mock()
-        exists_fn = Mock()
-        exists_fn.exists = Mock(return_value=False)
-        request.user.groups.filter.return_value = exists_fn
+        self.request = request
 
-        self.assertRaises(PermissionDenied, self.middleware.process_view, request, **self.kwargs)
+    def test_that_admin_view_is_denied_for_usual_user(self):
+        """Test that normal user is denied for an admin view"""
+        self.request.user.groups.filter().exists = Mock(return_value=False)
 
-    @patch('django.contrib.messages.success')
-    @patch('plinth.module_loader.loaded_modules')
-    @patch('django.urls.resolve')
-    @patch('django.urls.reverse', return_value='users:login')
-    def test_that_admin_view_is_allowed_for_admin_user(self, reverse, resolve, loaded_modules, messages_success):
+        self.assertRaises(PermissionDenied, self.middleware.process_view,
+                          self.request, **self.kwargs)
+
+    def test_that_admin_view_is_allowed_for_admin_user(self):
         """Test that admin user is allowed for an admin view"""
+        self.request.user.groups.filter().exists = Mock(return_value=True)
 
-        self.kwargs = {
-            'view_func': HttpResponse,
-            'view_args': [],
-            'view_kwargs': {},
-        }
-
-        resolve.return_value.namespaces = ['mockapp']
-        loaded_modules.__getitem__.return_value = Mock()
-
-        request = RequestFactory().get('/plinth/mockapp')
-        request.user = Mock()
-        exists_fn = Mock()
-        exists_fn.exists = Mock(return_value=True)
-        request.user.groups.filter.return_value = exists_fn
-
-        response = self.middleware.process_view(request, **self.kwargs)
+        response = self.middleware.process_view(self.request, **self.kwargs)
         self.assertIsNone(response)
 
-    @patch('django.contrib.messages.success')
-    @patch('plinth.module_loader.loaded_modules')
-    @patch('django.urls.resolve')
-    @patch('django.urls.reverse', return_value='users:login')
-    def test_that_public_view_is_allowed_for_normal_user(self, reverse, resolve, loaded_modules, messages_success):
+    def test_that_public_view_is_allowed_for_normal_user(self):
         """Test that normal user is allowed for an public view"""
+        kwargs = dict(self.kwargs)
+        kwargs['view_func'] = public(HttpResponse)
 
-        self.kwargs = {
-            'view_func': public(HttpResponse),
-            'view_args': [],
-            'view_kwargs': {},
-        }
-
-        resolve.return_value.namespaces = ['mockapp']
-        loaded_modules.__getitem__.return_value = Mock()
-
-        request = RequestFactory().get('/plinth/mockapp')
-        request.user = Mock()
-        exists_fn = Mock()
-        exists_fn.exists = Mock(return_value=False)
-        request.user.groups.filter.return_value = exists_fn
-
-        response = self.middleware.process_view(request, **self.kwargs)
+        response = self.middleware.process_view(self.request, **kwargs)
         self.assertIsNone(response)
