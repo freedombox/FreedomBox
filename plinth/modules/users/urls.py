@@ -31,12 +31,13 @@ from . import views
 urlpatterns = [
     url(r'^sys/users/$', views.UserList.as_view(), name='index'),
     url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
-    url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$', non_admin_view(views.UserUpdate.as_view()),
-        name='edit'),
+    url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$',
+        non_admin_view(views.UserUpdate.as_view()), name='edit'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/delete/$', views.UserDelete.as_view(),
         name='delete'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
-        non_admin_view(views.UserChangePassword.as_view()), name='change_password'),
+        non_admin_view(views.UserChangePassword.as_view()),
+        name='change_password'),
     # Add Django's login/logout urls
     url(r'^accounts/login/$', public(auth_views.login),
         {'template_name': 'login.html'}, name='login'),

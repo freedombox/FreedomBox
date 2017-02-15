@@ -82,11 +82,12 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     title = ugettext_lazy('Edit User')
 
     def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-                and not self.request.user.groups.filter(name='admin').exists():
+           and not self.request.user.groups.filter(name='admin').exists():
             raise PermissionDenied
 
-        return super(UserUpdate, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         """Make the requst object available to the form."""
@@ -152,11 +153,12 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     success_message = ugettext_lazy('Password changed successfully.')
 
     def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-                and not self.request.user.groups.filter(name='admin').exists():
+           and not self.request.user.groups.filter(name='admin').exists():
             raise PermissionDenied
 
-        return super(UserChangePassword, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         """Make the user object available to the form."""

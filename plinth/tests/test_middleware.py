@@ -29,7 +29,7 @@ from django.test.client import RequestFactory
 from stronghold.decorators import public
 
 from plinth import cfg
-from plinth.middleware import SetupMiddleware, AdminMiddleware
+from plinth.middleware import SetupMiddleware, AdminRequiredMiddleware
 
 
 class TestSetupMiddleware(TestCase):
@@ -148,7 +148,6 @@ class TestAdminMiddleware(TestCase):
         """Setup each test case before execution."""
         super(TestAdminMiddleware, self).setUp()
 
-        self.middleware = AdminMiddleware()
 
     @patch('django.contrib.messages.success')
     @patch('plinth.module_loader.loaded_modules')
@@ -157,6 +156,7 @@ class TestAdminMiddleware(TestCase):
     def test_that_admin_view_is_denied_for_usual_user(self, reverse, resolve, loaded_modules, messages_success):
         """Test that normal user is denied for an admin view"""
 
+        self.middleware = AdminRequiredMiddleware()
         self.kwargs = {
             'view_func': HttpResponse,
             'view_args': [],

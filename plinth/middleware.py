@@ -38,9 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class SetupMiddleware(object):
-    """
-    Django middleware to show pre-setup message and setup progress.
-    """
+    """Django middleware to show pre-setup message and setup progress."""
 
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
@@ -93,14 +91,14 @@ class SetupMiddleware(object):
         return view(request, setup_helper=module.setup_helper)
 
 
-class AdminMiddleware(object):
-    """
-    Django middleware for authenticating requests for admin areas
-    """
+class AdminRequiredMiddleware(object):
+    """Django middleware for authenticating requests for admin areas."""
 
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
-        if is_view_func_public(view_func) or hasattr(view_func, 'IS_NON_ADMIN'):
+        """Reject non-admin access to views that are private and not marked."""
+        if is_view_func_public(view_func) or \
+           hasattr(view_func, 'IS_NON_ADMIN'):
             return
 
         if not request.user.groups.filter(name='admin').exists():
