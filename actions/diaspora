@@ -18,10 +18,12 @@
 #
 
 """
-Configuration helper for diaspora* web client.
+Configuration helper for diaspora* pod.
 """
 
 import argparse
+import socket
+import subprocess
 
 from plinth import action_utils
 
@@ -30,6 +32,15 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    pre_install = subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed.')
+
+    # Preseed debconf values before packages are installed.
+
+   # pre_install.add_argument(
+    #     '--thirdpartyservices',
+    #     help='Third party services enabled: Facebook, Twitter, Tumblr, Wordpress')
 
     subparsers.add_parser('enable', help='Enable diaspora*')
     subparsers.add_parser('disable', help='Disable diaspora*')
@@ -37,14 +48,38 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_pre_install(arguments):
+    """Pre installation configuration for diaspora"""
+    presets= [
+        b'diaspora-common diaspora-common/url string http://localhost/diaspora',
+        b'diaspora-common diaspora-common/dbpass note ',
+        b'diaspora-common diaspora-common/enablessl boolean false',
+        b'diaspora-common diaspora-common/useletsencrypt string false',
+        b'diaspora-common diaspora-common/services multiselect ',
+        b'diaspora-common diaspora-common/ssl boolean false',
+        b'diaspora-common diaspora-common/pgsql/authmethod-admin string ident',
+        b'diaspora-common diaspora-common/letsencrypt boolean false',
+        b'diaspora-common diaspora-common/remote/host string localhost',
+        b'diaspora-common diaspora-common/database-type string pgsql',
+        b'diaspora-common diaspora-common/dbconfig-install boolean true'
+    ]
+
+    for preset in presets:
+        subprocess.check_output(['debconf-set-selections'], input=preset)
+
+    # hostname = arguments.hostname or socket.gethostname()
+    # subprocess.check_output(
+    #     ['debconf-set-selections'],
+    #     input=b'diaspora diaspora/url string ' + hostname.encode())
+
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    action_utils.webserver_enable('diaspora')
+    action_utils.webserver_enable('diaspora-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('diaspora')
+    action_utils.webserver_disable('diaspora-plinth')
 
 
 def main():
