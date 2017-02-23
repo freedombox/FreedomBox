@@ -34,10 +34,9 @@ managed_services = ['diaspora']
 managed_packages = ['diaspora']
 
 description = [
-    _('diaspora* is a decentralized social network where you can store and control your own data.'),
-
-    _('When enabled, the diaspora* pod will be available from '
-      '<a href="/diaspora">/diaspora</a> path on the web server.')
+    _('diaspora* is a decentralized social network where you can store and control your own data.'
+      ), _('When enabled, the diaspora* pod will be available from '
+           '<a href="/diaspora">/diaspora</a> path on the web server.')
 ]
 
 
@@ -50,8 +49,12 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
+            managed_services[0],
+            title,
+            ports=['http', 'https'],
+            is_external=True,
+            is_enabled=is_enabled,
+            enable=enable,
             disable=disable)
 
         if is_enabled():
@@ -60,21 +63,26 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
+    helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'diaspora', ['enable'])
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
+            managed_services[0],
+            title,
+            ports=['http', 'https'],
+            is_external=True,
+            is_enabled=is_enabled,
+            enable=enable,
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('diaspora', title, url='/diaspora',
-                           login_required=True)
+    frontpage.add_shortcut(
+        'diaspora', title, url='/diaspora', login_required=True)
 
 
 def is_enabled():
@@ -98,9 +106,11 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/diaspora', check_certificate=False))
+    # results.append(action_utils.service_is_enabled('diaspora'))
+    # results.append(action_utils.service_is_running('diaspora'))
+    # results.append(is_enabled())
+    results.extend(
+        action_utils.diagnose_url_on_all(
+            'https://{host}/diaspora', check_certificate=False))
 
     return results

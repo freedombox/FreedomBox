@@ -14,19 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Python action utility functions.
 """
 
-from django.utils.translation import ugettext as _
 import os
 import logging
-import psutil
 import shutil
 import socket
 import subprocess
 import tempfile
+import psutil
+
+from django.utils.translation import ugettext as _
 
 logger = logging.getLogger(__name__)
 
@@ -43,11 +43,15 @@ def service_is_running(servicename):
     """
     try:
         if is_systemd_running():
-            subprocess.run(['systemctl', 'status', servicename], check=True,
-                           stdout=subprocess.DEVNULL)
+            subprocess.run(
+                ['systemctl', 'status', servicename],
+                check=True,
+                stdout=subprocess.DEVNULL)
         else:
-            subprocess.run(['service', servicename, 'status'], check=True,
-                           stdout=subprocess.DEVNULL)
+            subprocess.run(
+                ['service', servicename, 'status'],
+                check=True,
+                stdout=subprocess.DEVNULL)
 
         return True
     except subprocess.CalledProcessError:
@@ -59,8 +63,11 @@ def service_is_running(servicename):
 def service_is_enabled(service_name):
     """Check if service is enabled in systemd."""
     try:
-        subprocess.run(['systemctl', 'is-enabled', service_name], check=True,
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(
+            ['systemctl', 'is-enabled', service_name],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -84,41 +91,41 @@ def service_disable(service_name):
 def service_start(service_name):
     """Start a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(['systemctl', 'start', service_name],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['systemctl', 'start', service_name], stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(['service', service_name, 'start'],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['service', service_name, 'start'], stdout=subprocess.DEVNULL)
 
 
 def service_stop(service_name):
     """Stop a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(['systemctl', 'stop', service_name],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['systemctl', 'stop', service_name], stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(['service', service_name, 'stop'],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['service', service_name, 'stop'], stdout=subprocess.DEVNULL)
 
 
 def service_restart(service_name):
     """Restart a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(['systemctl', 'restart', service_name],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['systemctl', 'restart', service_name], stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(['service', service_name, 'restart'],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['service', service_name, 'restart'], stdout=subprocess.DEVNULL)
 
 
 def service_reload(service_name):
     """Reload a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(['systemctl', 'reload', service_name],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['systemctl', 'reload', service_name], stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(['service', service_name, 'reload'],
-                       stdout=subprocess.DEVNULL)
+        subprocess.run(
+            ['service', service_name, 'reload'], stdout=subprocess.DEVNULL)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -129,8 +136,8 @@ def webserver_is_enabled(name, kind='config'):
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
     try:
         # Don't print anything on the terminal
-        subprocess.check_output(['a2query', option_map[kind], name],
-                                stderr=subprocess.STDOUT)
+        subprocess.check_output(
+            ['a2query', option_map[kind], name], stderr=subprocess.STDOUT)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -147,9 +154,11 @@ def webserver_enable(name, kind='config', apply_changes=True):
     if webserver_is_enabled(name, kind):
         return
 
-    command_map = {'config': 'a2enconf',
-                   'site': 'a2ensite',
-                   'module': 'a2enmod'}
+    command_map = {
+        'config': 'a2enconf',
+        'site': 'a2ensite',
+        'module': 'a2enmod'
+    }
     subprocess.check_output([command_map[kind], name])
 
     action_required = 'restart' if kind == 'module' else 'reload'
@@ -174,9 +183,11 @@ def webserver_disable(name, kind='config', apply_changes=True):
     if not webserver_is_enabled(name, kind):
         return
 
-    command_map = {'config': 'a2disconf',
-                   'site': 'a2dissite',
-                   'module': 'a2dismod'}
+    command_map = {
+        'config': 'a2disconf',
+        'site': 'a2dissite',
+        'module': 'a2dismod'
+    }
     subprocess.check_output([command_map[kind], name])
 
     action_required = 'restart' if kind == 'module' else 'reload'
@@ -293,8 +304,13 @@ def _check_port(port, kind='tcp', listen_address=None):
     return False
 
 
-def diagnose_url(url, kind=None, env=None, check_certificate=True,
-                 extra_options=None, wrapper=None, expected_output=None):
+def diagnose_url(url,
+                 kind=None,
+                 env=None,
+                 check_certificate=True,
+                 extra_options=None,
+                 wrapper=None,
+                 expected_output=None):
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
@@ -315,7 +331,10 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
 
     try:
         process = subprocess.run(
-            command, env=env, check=True, stdout=subprocess.PIPE,
+            command,
+            env=env,
+            check=True,
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
         result = 'passed'
         if expected_output and expected_output not in process.stdout.decode():
@@ -329,8 +348,10 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
         result = 'error'
 
     if kind:
-        return [_('Access URL {url} on tcp{kind}')
-                .format(url=url, kind=kind), result]
+        return [
+            _('Access URL {url} on tcp{kind}').format(url=url, kind=kind),
+            result
+        ]
     else:
         return [_('Access URL {url}').format(url=url), result]
 
@@ -340,8 +361,8 @@ def diagnose_url_on_all(url, **kwargs):
     results = []
     for address in get_addresses():
         current_url = url.format(host=address['url_address'])
-        results.append(diagnose_url(current_url, kind=address['kind'],
-                                    **kwargs))
+        results.append(
+            diagnose_url(current_url, kind=address['kind'], **kwargs))
 
     return results
 
@@ -350,8 +371,10 @@ def diagnose_netcat(host, port, input='', negate=False):
     """Run a diagnostic using netcat."""
     try:
         process = subprocess.Popen(
-            ['nc', host, str(port)], stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ['nc', host, str(port)],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         process.communicate(input=input.encode())
         if process.returncode != 0:
             result = 'failed'
@@ -373,12 +396,24 @@ def get_addresses():
     addresses = get_ip_addresses()
 
     hostname = get_hostname()
-    addresses.append({'kind': '4', 'address': 'localhost', 'numeric': False,
-                      'url_address': 'localhost'})
-    addresses.append({'kind': '6', 'address': 'localhost', 'numeric': False,
-                      'url_address': 'localhost'})
-    addresses.append({'kind': '4', 'address': hostname, 'numeric': False,
-                      'url_address': hostname})
+    addresses.append({
+        'kind': '4',
+        'address': 'localhost',
+        'numeric': False,
+        'url_address': 'localhost'
+    })
+    addresses.append({
+        'kind': '6',
+        'address': 'localhost',
+        'numeric': False,
+        'url_address': 'localhost'
+    })
+    addresses.append({
+        'kind': '4',
+        'address': hostname,
+        'numeric': False,
+        'url_address': hostname
+    })
 
     # XXX: When a hostname is resolved to IPv6 address, it may likely
     # be link-local address.  Link local IPv6 addresses are valid only
@@ -397,12 +432,14 @@ def get_ip_addresses():
     output = subprocess.check_output(['ip', '-o', 'addr'])
     for line in output.decode().splitlines():
         parts = line.split()
-        address = {'kind': '4' if parts[2] == 'inet' else '6',
-                   'address': parts[3].split('/')[0],
-                   'url_address': parts[3].split('/')[0],
-                   'numeric': True,
-                   'scope': parts[5],
-                   'interface': parts[1]}
+        address = {
+            'kind': '4' if parts[2] == 'inet' else '6',
+            'address': parts[3].split('/')[0],
+            'url_address': parts[3].split('/')[0],
+            'numeric': True,
+            'scope': parts[5],
+            'interface': parts[1]
+        }
 
         if address['kind'] == '6' and address['numeric']:
             if address['scope'] != 'link':
