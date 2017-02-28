@@ -205,13 +205,6 @@ def configure_django():
     if cfg.secure_proxy_ssl_header:
         secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
 
-    # XXX: We want use STRONGHOLD_PUBLIC_NAMED_URLS, however, due to a
-    # bug in stronghold, it compares request.path_info with reversed
-    # URLs.  This leads to a mismatch when script_prefix is set.
-    # Remove this hack once the bug is fixed.  See:
-    # https://github.com/mgrouchy/django-stronghold/issues/52
-    public_urls = ('/accounts/login/', '/accounts/logout/')
-
     django.conf.settings.configure(
         ALLOWED_HOSTS=['*'],
         CACHES={'default':
@@ -224,7 +217,7 @@ def configure_django():
         INSTALLED_APPS=applications,
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
-        LOGIN_REDIRECT_URL='apps:index',
+        LOGIN_REDIRECT_URL='index',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
             'django.contrib.sessions.middleware.SessionMiddleware',
@@ -235,6 +228,7 @@ def configure_django():
             'django.contrib.messages.middleware.MessageMiddleware',
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'stronghold.middleware.LoginRequiredMiddleware',
+            'plinth.middleware.AdminRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
         ),
@@ -243,7 +237,6 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
-        STRONGHOLD_PUBLIC_URLS=public_urls,
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)

@@ -16,7 +16,7 @@
 #
 
 """
-Miscelleneous utility method.
+Miscellaneous utility methods.
 """
 
 import importlib
@@ -44,3 +44,14 @@ def _format_lazy(string, *args, **kwargs):
 
 
 format_lazy = lazy(_format_lazy, str)
+
+
+def non_admin_view(func):
+    """Decorator to mark a view as accesible by non-admin users."""
+    setattr(func, 'IS_NON_ADMIN', True)
+    return func
+
+
+def is_user_admin(user):
+    """Return whether user is an administrator."""
+    return user.groups.filter(name='admin').exists()

@@ -19,6 +19,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, UpdateView,
                                        FormView)
@@ -30,6 +31,7 @@ from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
+from plinth.utils import is_user_admin
 
 subsubmenu = [{'url': reverse_lazy('users:index'),
                'text': ugettext_lazy('Users')},
@@ -79,6 +81,14 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     slug_field = 'username'
     success_message = ugettext_lazy('User %(username)s updated.')
     title = ugettext_lazy('Edit User')
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
+        if self.request.user.get_username() != self.kwargs['slug'] \
+           and not is_user_admin(self.request.user):
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         """Make the requst object available to the form."""
@@ -142,6 +152,14 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     form_class = UserChangePasswordForm
     title = ugettext_lazy('Change Password')
     success_message = ugettext_lazy('Password changed successfully.')
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
+        if self.request.user.get_username() != self.kwargs['slug'] \
+           and not is_user_admin(self.request.user):
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         """Make the user object available to the form."""

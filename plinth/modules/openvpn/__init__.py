@@ -19,11 +19,13 @@
 Plinth module to configure OpenVPN server.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
 
@@ -53,7 +55,8 @@ description = [
 
 
 def init():
-    """Intialize the OpenVPN module."""
+    """Initialize the OpenVPN module."""
+
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index')
 
@@ -63,6 +66,9 @@ def init():
         service = service_module.Service(
             managed_services[0], title, ports=['openvpn'], is_external=True)
 
+        if service.is_enabled() and is_setup():
+            add_shortcut()
+
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
@@ -70,7 +76,20 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['openvpn'], is_external=True)
+            managed_services[0], title, ports=['openvpn'], is_external=True,
+            enable=enable, disable=disable)
+
+
+def add_shortcut():
+    """Add shortcut in frontpage."""
+    download_profile = \
+        format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
+                      'Download Profile</a>'),
+                    link=reverse_lazy('openvpn:profile'))
+    frontpage.add_shortcut('openvpn', title,
+                           details=description + [download_profile],
+                           configure_url=reverse_lazy('openvpn:index'),
+                           login_required=True)
 
 
 def is_setup():
@@ -78,10 +97,18 @@ def is_setup():
     return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
 
 
+def enable():
+    """Enable the module."""
+    actions.superuser_run('service', ['enable', managed_services[0]])
+    add_shortcut()
+
+
+def disable():
+    """Enable the module."""
+    actions.superuser_run('service', ['disable', managed_services[0]])
+    frontpage.remove_shortcut('openvpn')
+
+
 def diagnose():
     """Run diagnostics and return the results."""
-    results = []
-
-    results.append(action_utils.diagnose_port_listening(1194, 'udp4'))
-
-    return results
+    return [action_utils.diagnose_port_listening(1194, 'udp4')]

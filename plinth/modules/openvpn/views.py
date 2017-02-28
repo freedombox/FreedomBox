@@ -72,10 +72,11 @@ def setup(request):
     if not openvpn.is_setup() and not setup_process:
         setup_process = actions.superuser_run('openvpn', ['setup'], async=True)
 
+    openvpn.add_shortcut()
+
     return redirect('openvpn:index')
 
 
-@require_POST
 def profile(request):
     """Provide the user's profile for download."""
     username = request.user.username
@@ -97,14 +98,13 @@ def profile(request):
 
 def get_status():
     """Get the current settings from OpenVPN server."""
-    status = {'is_setup': openvpn.is_setup(),
-              'setup_running': False,
-              'enabled': openvpn.service.is_enabled(),
-              'is_running': openvpn.service.is_running()}
 
-    status['setup_running'] = bool(setup_process)
-
-    return status
+    return {
+        'is_setup': openvpn.is_setup(),
+        'setup_running': bool(setup_process),
+        'enabled': openvpn.service.is_enabled(),
+        'is_running': openvpn.service.is_running()
+    }
 
 
 def _collect_setup_result(request):
@@ -133,9 +133,10 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['enabled'] != new_status['enabled']:
         if new_status['enabled']:
-            openvpn.service.enable()
+            openvpn.enable()
         else:
-            openvpn.service.disable()
+            openvpn.disable()
+
         modified = True
 
     if modified:

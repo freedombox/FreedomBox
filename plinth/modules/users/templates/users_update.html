@@ -29,32 +29,30 @@
   </style>
 {% endblock %}
 
-{% block content %}
+{% block content_row %}
+  <div class="col-md-6 col-md-offset-3">
+    {% include 'messages.html' %}
 
-  <h3>{{ object.username }}</h3>
+    <h3>{{ object.username }}</h3>
 
-  <p>
-    {% url 'users:change_password' object.username as change_password_url %}
+    <p>
+      {% url 'users:change_password' object.username as change_password_url %}
 
-    {% blocktrans trimmed %}
-      Use the <a href='{{ change_password_url }}'>change password form
-      </a> to change the password.
-    {% endblocktrans %}
-  </p>
+      {% blocktrans trimmed %}
+        Use the <a href='{{ change_password_url }}'>change password form
+        </a> to change the password.
+      {% endblocktrans %}
+    </p>
 
-  <div class="row">
-    <div class="col-sm-8">
-      <form class="form" method="post">
-        {% csrf_token %}
+    <form class="form" method="post">
+      {% csrf_token %}
 
-        {{ form|bootstrap }}
+      {{ form|bootstrap }}
 
-        <input type="submit" class="btn btn-primary"
-               value="{% trans "Save Changes" %}"/>
-      </form>
-    </div>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Save Changes" %}"/>
+    </form>
   </div>
-
 {% endblock %}
 
 {% block page_js %}

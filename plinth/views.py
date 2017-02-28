@@ -30,6 +30,7 @@ import time
 
 from . import forms, frontpage
 import plinth
+from plinth.utils import is_user_admin
 
 
 @public
@@ -38,7 +39,7 @@ def index(request):
     shortcuts = frontpage.get_shortcuts()
     selection = request.GET.get('selected')
 
-    details, details_label, configure_url= None, None, None
+    details, details_label, configure_url = None, None, None
     if selection in frontpage.shortcuts:
         details = frontpage.shortcuts[selection]['details']
         details_label = frontpage.shortcuts[selection]['label']
@@ -50,7 +51,8 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label,
-                             'configure_url': configure_url })
+                             'configure_url': configure_url,
+                             'user_is_admin': is_user_admin(request.user)})
 
 
 class ServiceView(FormView):

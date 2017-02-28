@@ -16,18 +16,22 @@
 #
 
 """
-Django middleware to show pre-setup message and setup progress.
+Common Django middleware.
 """
 
 from django import urls
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 import logging
 
+from stronghold.utils import is_view_func_public
+
 import plinth
 from plinth.package import PackageException
+from plinth.utils import is_user_admin
 from . import views
 
 
@@ -35,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class SetupMiddleware(object):
-    """Show setup page or progress if setup is neccessary or running."""
+    """Django middleware to show pre-setup message and setup progress."""
 
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):
@@ -86,3 +90,17 @@ class SetupMiddleware(object):
         # Only allow logged-in users to access any setup page
         view = login_required(views.SetupView.as_view())
         return view(request, setup_helper=module.setup_helper)
+
+
+class AdminRequiredMiddleware(object):
+    """Django middleware for authenticating requests for admin areas."""
+
+    @staticmethod
+    def process_view(request, view_func, view_args, view_kwargs):
+        """Reject non-admin access to views that are private and not marked."""
+        if is_view_func_public(view_func) or \
+           hasattr(view_func, 'IS_NON_ADMIN'):
+            return
+
+        if not is_user_admin(request.user):
+            raise PermissionDenied

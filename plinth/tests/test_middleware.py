@@ -22,12 +22,14 @@ Test module for Plinth's custom middleware.
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import AnonymousUser, User
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from stronghold.decorators import public
 
 from plinth import cfg
-from plinth.middleware import SetupMiddleware
+from plinth.middleware import SetupMiddleware, AdminRequiredMiddleware
 
 
 class TestSetupMiddleware(TestCase):
@@ -131,3 +133,50 @@ class TestSetupMiddleware(TestCase):
         self.assertIsNone(response)
         assert messages_success.called
         module.setup_helper.collect_result.assert_called_once_with()
+
+
+class TestAdminMiddleware(TestCase):
+    """Test cases for admin middleware."""
+    @classmethod
+    def setUpClass(cls):
+        """Setup all the test cases."""
+        super(TestAdminMiddleware, cls).setUpClass()
+
+        cfg.read()
+
+    def setUp(self):
+        """Setup each test case before execution."""
+        super(TestAdminMiddleware, self).setUp()
+
+        self.middleware = AdminRequiredMiddleware()
+        self.kwargs = {
+            'view_func': HttpResponse,
+            'view_args': [],
+            'view_kwargs': {},
+        }
+
+        request = RequestFactory().get('/plinth/mockapp')
+        request.user = Mock()
+        self.request = request
+
+    def test_that_admin_view_is_denied_for_usual_user(self):
+        """Test that normal user is denied for an admin view"""
+        self.request.user.groups.filter().exists = Mock(return_value=False)
+
+        self.assertRaises(PermissionDenied, self.middleware.process_view,
+                          self.request, **self.kwargs)
+
+    def test_that_admin_view_is_allowed_for_admin_user(self):
+        """Test that admin user is allowed for an admin view"""
+        self.request.user.groups.filter().exists = Mock(return_value=True)
+
+        response = self.middleware.process_view(self.request, **self.kwargs)
+        self.assertIsNone(response)
+
+    def test_that_public_view_is_allowed_for_normal_user(self):
+        """Test that normal user is allowed for an public view"""
+        kwargs = dict(self.kwargs)
+        kwargs['view_func'] = public(HttpResponse)
+
+        response = self.middleware.process_view(self.request, **kwargs)
+        self.assertIsNone(response)

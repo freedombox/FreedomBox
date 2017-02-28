@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -14,20 +16,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+{% endcomment %}
 
-"""
-URLs for the OpenVPN module.
-"""
+{% load i18n %}
 
-from django.conf.urls import url
+{% block submenu %}
+{% endblock %}
 
-from plinth.utils import non_admin_view
-from . import views
+{% block content %}
 
+  <h2>{% trans "403 Forbidden" %}</h2>
 
-urlpatterns = [
-    url(r'^apps/openvpn/$', views.index, name='index'),
-    url(r'^apps/openvpn/setup/$', views.setup, name='setup'),
-    url(r'^apps/openvpn/profile/$', non_admin_view(views.profile),
-        name='profile'),
-]
+  <p>
+    {% with request_path=request.path %}
+      {% blocktrans trimmed %}
+        You don't have permission to access {{ request_path }} on this server.
+      {% endblocktrans %}
+    {% endwith %}
+  </p>
+
+{% endblock %}
