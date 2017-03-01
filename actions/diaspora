@@ -36,16 +36,21 @@ def parse_arguments():
         'pre-install',
         help='Preseed debconf values before packages are installed.')
 
-    # Preseed debconf values before packages are installed.
-
-   # pre_install.add_argument(
-    #     '--thirdpartyservices',
-    #     help='Third party services enabled: Facebook, Twitter, Tumblr, Wordpress')
-
     subparsers.add_parser('enable', help='Enable diaspora*')
     subparsers.add_parser('disable', help='Disable diaspora*')
+    subparsers.add_parser('disable-ssl', help="Disable SSL on the diaspora* application server")
 
     return parser.parse_args()
+
+
+def subcommand_disable_ssl(_):
+    """
+    Disable ssl in the diaspora configuration
+    as the apache server takes care of ssl
+    """
+    subprocess.call(["sed", "-i",
+                     "s/#require_ssl: true/require_ssl: false/g",
+                     "/etc/diaspora/diaspora.yml"])
 
 
 def subcommand_pre_install(arguments):
