@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import subprocess
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions, action_utils, cfg, frontpage, service as service_module
@@ -65,6 +67,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
     helper.install(managed_packages)
+    helper.call('custom_config', actions.superuser_run, 'diaspora', ['disable-ssl'])
     helper.call('post', actions.superuser_run, 'diaspora', ['enable'])
     global service
     if service is None:
@@ -81,6 +84,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
+    """Add shortcut to diaspora on the Plinth homepage"""
     frontpage.add_shortcut(
         'diaspora', title, url='/diaspora', login_required=True)
 
