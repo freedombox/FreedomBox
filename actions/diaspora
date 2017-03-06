@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for diaspora* pod.
 """
@@ -24,8 +23,11 @@ Configuration helper for diaspora* pod.
 import argparse
 import socket
 import subprocess
+import ruamel.yaml
 
 from plinth import action_utils
+
+DIASPORA_CONFIG = "/etc/diaspora/diaspora.yml"
 
 
 def parse_arguments():
@@ -38,7 +40,8 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable diaspora*')
     subparsers.add_parser('disable', help='Disable diaspora*')
-    subparsers.add_parser('disable-ssl', help="Disable SSL on the diaspora* application server")
+    subparsers.add_parser(
+        'disable-ssl', help="Disable SSL on the diaspora* application server")
 
     return parser.parse_args()
 
@@ -48,14 +51,18 @@ def subcommand_disable_ssl(_):
     Disable ssl in the diaspora configuration
     as the apache server takes care of ssl
     """
-    subprocess.call(["sed", "-i",
-                     "s/#require_ssl: true/require_ssl: false/g",
-                     "/etc/diaspora/diaspora.yml"])
+    with open(DIASPORA_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+        if 'require_ssl' not in conf['configuration']['environment']:
+            conf['configuration']['environment']['require_ssl'] = False
+
+    with open(DIASPORA_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
 
 
 def subcommand_pre_install(arguments):
     """Pre installation configuration for diaspora"""
-    presets= [
+    presets = [
         b'diaspora-common diaspora-common/url string http://localhost/diaspora',
         b'diaspora-common diaspora-common/dbpass note ',
         b'diaspora-common diaspora-common/enablessl boolean false',
@@ -76,6 +83,7 @@ def subcommand_pre_install(arguments):
     # subprocess.check_output(
     #     ['debconf-set-selections'],
     #     input=b'diaspora diaspora/url string ' + hostname.encode())
+
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
@@ -98,4 +106,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
