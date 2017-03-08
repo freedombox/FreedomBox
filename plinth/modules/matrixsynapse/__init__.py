@@ -95,8 +95,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('matrix-synapse', title, details=description,
-                           configure_url=reverse_lazy('matrix-synapse:index'),
+    frontpage.add_shortcut('matrixsynapse', title, details=description,
+                           configure_url=reverse_lazy('matrixsynapse:index'),
                            login_required=True)
 
 
