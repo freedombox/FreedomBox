@@ -41,7 +41,7 @@
                       <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png" style="max-width: 100px; height: 100px" />
                       <br>
                       {{ shortcut.label|linebreaks }}
-                    </center>
+                   </center>
                   </a>
                 </li>
             </ul>
@@ -90,36 +90,49 @@
 
 
 {% block center-info %}
-
-  <h4>
+<div style="min-height: 200px;"></div>
+<a href="{% url 'index' %}" 
+             title="{{ box_name }}">
+            <img class="foot-logo" src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
+                 alt="{{ box_name }}" />
+</a>
+<div class="foot-columns">
     {% blocktrans trimmed %}
-      Welcome to {{ box_name }}!
+    <div class ="row">
+      <div class="col-md-4">
+      <a href="https://wiki.debian.org/FreedomBox/Manual">Manual</a>
+    </div>
+    <div class="col-md-4">
+      <a href="https://freedombox.org">Homepage</a>
+    </div>
+    <div class="col-md-4">
+      <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">IRC Chatroom</a>
+    </div>
     {% endblocktrans %}
-  </h4>
 
-  <p>
+</div>
+  </div>
+  <div class="foot-columns">
     {% blocktrans trimmed %}
-      {{ box_name }}, a Debian pure blend, is a 100% free software
-      self-hosting web server to deploy social applications on small
-      machines. It provides online communication tools respecting your
-      privacy and data ownership.
+    <div class ="row">
+      <div class="col-md-4">
+      <a href="https://wiki.debian.org/FreedomBox">Wiki</a>
+    </div>
+    <div class="col-md-4">
+         <a href="https://github.com/freedombox/">Source Code</a> 
+    </div>
+    <div class="col-md-4">
+     <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">Mailing list</a>  
+    </div>
     {% endblocktrans %}
-  </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      More info about {{ box_name }} is available on the
-      project <a href="https://freedombox.org">homepage</a>
-      and <a href="https://wiki.debian.org/FreedomBox">wiki</a>.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      This portal is a part of Plinth, the {{ box_name }} web
-      interface. Plinth is free software, distributed under the GNU
-      Affero General Public License, Version 3 or later.
-    {% endblocktrans %}
-  </p>
+</div>
+  </div>
+      <div class="foot-columns">
+       <a href="https://freedomboxfoundation.org/donate/">Donate</a>
+    </div>
+        <div class="foot-columns">
+      <a href="https://freedomboxfoundation.org/">FreedomBox Foundation</a>
+    </div>
 
 {% endblock %}
