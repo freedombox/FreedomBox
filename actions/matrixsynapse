@@ -21,7 +21,8 @@
 Configuration helper for Matrix-Synapse server.
 """
 import argparse
-import subprocess
+
+from ruamel.yaml import round_trip_dump, round_trip_load
 
 from plinth import action_utils
 
@@ -31,10 +32,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    # Preseed debconf values before packages are installed.
-    pre_install = subparsers.add_parser(
-        'pre-install',
-        help='Preseed debconf values before packages are installed.')
+    post_install = subparsers.add_parser(
+        'post-install',
+        help="Perform post install steps")
 
     subparsers.add_parser('enable', help='Enable matrix-synapse service')
     subparsers.add_parser('disable', help='Disable matrix-synapse service')
@@ -46,11 +46,19 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_pre_install(_):
-    subprocess.check_output(
-        ['debconf-set-selections'],
-        input=b'matrix-synapse matrix-synapse/report-stats boolean ' +
-              b'false')
+def subcommand_post_install(_):
+    file_path = "/etc/matrix-synapse/homeserver.yaml"
+
+    with open(file_path) as config_file:
+        config = round_trip_load(config_file)
+
+    config["no_tls"] = True
+    config["listeners"][1]["bind_address"] = "127.0.0.1"
+    config["max_upload_size"] = "100M"
+    config["enable_registration"] = True
+
+    with open(file_path, "w") as config_file:
+        round_trip_dump(config, config_file)
 
 
 def subcommand_setup(arguments):
