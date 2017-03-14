@@ -27,7 +27,6 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 
-
 version = 1
 
 depends = ['apps']
@@ -36,18 +35,22 @@ managed_packages = ['gnu-social']
 
 service = None
 
-title = _('GNU Social (gnusocial)')
+title = _('Federated Social Network (GNU Social)')
 
 description = [
-    _('gnusocial is a social networking website like twitter'
-      '<a href="/gnu-social">/gnusocial</a>.')
+    _('GNU Social is a is a free and open source microblogging server. '
+      'It seeks to provide the potential for open, inter-service and distributed communications between microblogging communities. '
+      'Enterprises and individuals can install and control their own services and data. '
+      'It offers functionality similar to Twitter. '
+      'Access your own GNU Social here, <a href="/gnu-social">/gnusocial</a>.')
 ]
+
 
 
 def init():
     """Initialize the gnu-social module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-edit', 'gnusocial:index')
+    menu.add_urlname(title, 'glyphicon-thumbs-up', 'gnusocial:index')
 
     global service
     setup_helper = globals()['setup_helper']
@@ -75,9 +78,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcuts():
-        frontpage.add_shortcut(
-            'gnusocial' ,title, url='/gnu-social/',
-            login_required=True, icon='gnu-social')
+    frontpage.add_shortcut(
+        'gnusocial', title, url='/gnu-social/',
+        login_required=True, icon='gnu-social')
 
 
 def is_enabled():
@@ -92,7 +95,7 @@ def enable():
 
 
 def disable():
-    """Enable the module."""
+    """Disable the module."""
     actions.superuser_run('gnu-social', ['disable'])
     frontpage.remove_shortcut('gnusocial*')
 
