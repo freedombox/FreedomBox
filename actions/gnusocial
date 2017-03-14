@@ -38,10 +38,10 @@ def parse_arguments():
     subparsers.add_parser('setup', help='Perform first time setup operations')
 
     # Enable gnusocial site
-    subparsers.add_parser('enable', help='Enable ikiwiki site')
+    subparsers.add_parser('enable', help='Enable gnusocial site')
 
     # Disable gnusocial site
-    subparsers.add_parser('disable', help='Disable ikiwiki site')
+    subparsers.add_parser('disable', help='Disable gnusocial site')
 
     pre_install = subparsers.add_parser(
         'pre-install',
@@ -55,47 +55,43 @@ def subcommand_pre_install(arguments):
     """Preseed debconf values before packages are installed."""
 
     config_params = [b'gnu-social gnu-social/server-ssl boolean false',
-                     b'gnu-social gnu-social/mysql/admin-pass password root',
-                     b'gnu-social gnu-social/mysql/password-confirm password root',
-                     b'gnu-social gnu-social/mysql/app-pass password root',
-                     b'gnu-social gnu-social/mysql/app-password-confirm password root',
-                     b'gnu-social gnu-social/admin-password password admin',
-                     b'gnu-social gnu-social/admin-password-again password admin',
-                     b'gnu-social gnu-social/mysql/admin-user string root',
-                     b'gnu-social gnu-social/internal/skip-preseed boolean false',
-                     b'gnu-social gnu-social/admin-email string root@localhost',
-                     b'gnu-social gnu-social/missing-db-package-error string abort',
-                     b'gnu-social gnu-social/db/dbname string gnusocial',
-                     b'gnu-social gnu-social/site-name string "GNU Social"',
-                     b'gnu-social gnu-social/dbconfig-remove boolean true',
                      b'gnu-social gnu-social/site-profile select Community',
-                     b'gnu-social gnu-social/mysql/method string "Unix socket"',
-                     b'gnu-social gnu-social/db/app-user string gnu-social@localhost',
-                     b'gnu-social gnu-social/internal/reconfiguring boolean false',
-                     b'gnu-social gnu-social/dbconfig-install boolean true',
-                     b'gnu-social gnu-social/upgrade-backup boolean true',
-                     b'gnu-social gnu-social/upgrade-error select abort',
-                     b'gnu-social gnu-social/dbconfig-upgrade boolean true',
-                     b'gnu-social gnu-social/remote/host string localhost',
                      b'gnu-social gnu-social/admin-nickname string admin',
-                     b'gnu-social gnu-social/dbconfig-reinstall boolean false',
-                     b'gnu-social gnu-social/install-error select abort',
-                     b'gnu-social gnu-social/remove-error select abort',
-                     b'gnu-social gnu-social/database-type string mysql',
-                     b'gnu-social gnu-social/purge boolean false',
-                     b'gnu-social gnu-social/mysql/admin-user string root'
+                     b'gnu-social gnu-social/admin-password password FreedomBox123',
+                     b'gnu-social gnu-social/admin-password-again password FreedomBox123',
                      ]
+
+                    # b'gnu-social gnu-social/internal/skip-preseed boolean false',
+                    # b'gnu-social gnu-social/admin-email string root@localhost',
+                    # b'gnu-social gnu-social/missing-db-package-error string abort',
+                    # b'gnu-social gnu-social/db/dbname string gnusocial',
+                    # b'gnu-social gnu-social/site-name string "GNU Social"',
+                    # b'gnu-social gnu-social/dbconfig-remove boolean true',
+                    #
+                    # b'gnu-social gnu-social/mysql/method string "Unix socket"',
+                    # b'gnu-social gnu-social/db/app-user string gnu-social@localhost',
+                    # b'gnu-social gnu-social/internal/reconfiguring boolean false',
+                    # b'gnu-social gnu-social/dbconfig-install boolean true',
+                    # b'gnu-social gnu-social/upgrade-backup boolean true',
+                    # b'gnu-social gnu-social/upgrade-error select abort',
+                    # b'gnu-social gnu-social/dbconfig-upgrade boolean true',
+                    # b'gnu-social gnu-social/remote/host string localhost',
+                    # b'gnu-social gnu-social/dbconfig-reinstall boolean false',
+                    # b'gnu-social gnu-social/install-error select abort',
+                    # b'gnu-social gnu-social/remove-error select abort',
+                    # b'gnu-social gnu-social/database-type string mysql',
+                    # b'gnu-social gnu-social/purge boolean false',
     for config_param in config_params:
         subprocess.check_output(['debconf-set-selections'], input=config_param)
 
 
 def subcommand_enable(_):
-    """Enable ikiwiki site."""
+    """Enable gnusocial site."""
     action_utils.webserver_enable('gnu-social')
 
 
 def subcommand_disable(_):
-    """Disable ikiwiki site."""
+    """Disable gnusocial site."""
     action_utils.webserver_disable('gnu-social')
 
 
