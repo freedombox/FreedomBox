@@ -80,8 +80,6 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'matrixsynapse',
-                ['pre-install'])
     helper.install(managed_packages)
     global service
     if service is None:
@@ -90,6 +88,8 @@ def setup(helper, old_version=None):
             ports=['matrix-synapse'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
+    helper.call('post', actions.superuser_run, 'matrixsynapse',
+                ['post-install'])
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
