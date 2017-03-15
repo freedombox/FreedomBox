@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/freedombox/Plinth.svg?branch=master)](https://travis-ci.org/freedombox/Plinth)
 [![Translation status](https://hosted.weblate.org/widgets/freedombox/-/shields-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
+[![CircleCI](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
 
 # Plinth
 
