@@ -3,6 +3,7 @@
 [![Debian Unstable](https://badges.debian.net/badges/debian/unstable/plinth/version.svg)](https://packages.debian.org/unstable/plinth)
 [![Debian Testing](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
 [![Debian Stable](https://badges.debian.net/badges/debian/stable/plinth/version.svg)](https://packages.debian.org/stable/plinth)
+
 # Plinth
 
 [Plinth](https://wiki.debian.org/FreedomBox/Plinth) - a web front end
