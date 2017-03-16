@@ -225,3 +225,30 @@ class SetupView(TemplateView):
         time.sleep(1)
 
         return self.render_to_response(self.get_context_data())
+from django.template.response import TemplateResponse
+from django.utils.translation import ugettext_lazy as _
+
+from plinth import cfg
+
+
+def init():
+    """Initailize the apps module"""
+    cfg.main_menu.add_urlname(_('Apps'), 'glyphicon-download-alt',
+                              'apps:index')
+
+
+def index(request):
+   """Serve the apps index page"""
+    return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
+from django.template.response import TemplateResponse
+
+from plinth.modules import system
+
+
+def index(request):
+    """Serve the index page"""
+    return TemplateResponse(request, 'system.html',
+                            {'title': system.title,
+                             'description': system.description})
+    """Serve the apps index page"""
+    return TemplateResponse(request, 'apps.html', {'title': _('Applications')})
