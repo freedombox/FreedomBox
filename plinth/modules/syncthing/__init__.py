@@ -18,6 +18,8 @@
 Plinth module to configure Syncthing.
 """
 
+import subprocess
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -93,7 +95,7 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('syncthing') and
+    return (action_utils.service_is_enabled('syncthing@plinth.service') and
             action_utils.webserver_is_enabled('syncthing-plinth'))
 
 
