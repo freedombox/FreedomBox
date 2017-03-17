@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for diaspora* pod.
 """
@@ -36,9 +35,11 @@ def parse_arguments():
         'pre-install',
         help='Preseed debconf values before packages are installed.')
 
-    subparsers.add_parser('enable', help='Enable diaspora*')
-    subparsers.add_parser('disable', help='Disable diaspora*')
-    subparsers.add_parser('disable-ssl', help="Disable SSL on the diaspora* application server")
+    subparsers.add_parser('enable', help='Enable diaspora* web server')
+    subparsers.add_parser('disable', help='Disable diaspora* web server')
+    subparsers.add_parser('enable-service', help='Start diaspora* service')
+    subparsers.add_parser(
+        'disable-ssl', help="Disable SSL on the diaspora* application server")
 
     return parser.parse_args()
 
@@ -48,14 +49,15 @@ def subcommand_disable_ssl(_):
     Disable ssl in the diaspora configuration
     as the apache server takes care of ssl
     """
-    subprocess.call(["sed", "-i",
-                     "s/#require_ssl: true/require_ssl: false/g",
-                     "/etc/diaspora/diaspora.yml"])
+    subprocess.call([
+        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g",
+        "/etc/diaspora/diaspora.yml"
+    ])
 
 
-def subcommand_pre_install(arguments):
+def subcommand_pre_install(_):
     """Pre installation configuration for diaspora"""
-    presets= [
+    presets = [
         b'diaspora-common diaspora-common/url string http://localhost/diaspora',
         b'diaspora-common diaspora-common/dbpass note ',
         b'diaspora-common diaspora-common/enablessl boolean false',
@@ -77,6 +79,7 @@ def subcommand_pre_install(arguments):
     #     ['debconf-set-selections'],
     #     input=b'diaspora diaspora/url string ' + hostname.encode())
 
+
 def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.webserver_enable('diaspora-plinth')
@@ -85,6 +88,11 @@ def subcommand_enable(_):
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('diaspora-plinth')
+
+
+def subcommand_enable_service(_):
+    """Start the diaspora service on freedombox"""
+    action_utils.service_start('diaspora')
 
 
 def main():
@@ -98,4 +106,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

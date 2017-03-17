@@ -68,6 +68,7 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
     helper.install(managed_packages)
     helper.call('custom_config', actions.superuser_run, 'diaspora', ['disable-ssl'])
+    helper.call('enable_service', actions.superuser_run, 'diaspora', ['enable-service'])
     helper.call('post', actions.superuser_run, 'diaspora', ['enable'])
     global service
     if service is None:
