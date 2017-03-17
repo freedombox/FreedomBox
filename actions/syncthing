@@ -21,7 +21,6 @@ Configuration helper for Syncthing.
 """
 
 import argparse
-import augeas
 import subprocess
 
 from plinth import action_utils
@@ -42,20 +41,32 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup Syncthing configuration."""
-    action_utils.service_restart('syncthing')
+    subprocess.check_call(
+        ['cp', '/lib/systemd/system/syncthing@.service', '/etc/systemd'])
+    service_enable()
     action_utils.webserver_enable('syncthing-plinth')
+
+
+def service_enable():
+    """Start the Syncthing service as plinth user"""
+    subprocess.check_call(['systemctl', 'start', 'syncthing@plinth.service'])
+
+
+def service_disable():
+    """Stop the Syncthing service as plinth user"""
+    subprocess.check_call(['systemctl', 'stop', 'syncthing@plinth.service'])
 
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    action_utils.service_enable('syncthing')
+    service_enable()
     action_utils.webserver_enable('syncthing-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('syncthing-plinth')
-    action_utils.service_disable('syncthing')
+    service_disable()
 
 
 def main():
