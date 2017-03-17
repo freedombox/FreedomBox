@@ -34,13 +34,13 @@ managed_services = ['syncthing']
 
 managed_packages = ['syncthing']
 
-title = _('Personal cloud service\n (Syncthing)')
+title = _('Personal Cloud (Syncthing)')
 
 description = [
-    _('Syncthing is a news feed (RSS/Atom) reader and aggregator, '
-      'designed to allow reading news from any location, while feeling as '
-      'close to a real desktop application as possible.'),
-    _('When enabled, Syncthing will be available from <a href="/syncthing">'
+    _('Syncthing is a file synchronization program that can sync files '
+      'between multiple devices. Syncthing enables this FreedomBox to be '
+      'used as a cloud server for storing and sharing files'),
+    _('When enabled, Syncthing will be available from <a href="/syncthing/">'
       '/syncthing</a> path on the web server.'),
 ]
 
@@ -50,7 +50,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname(title, 'glyphicon-envelope', 'syncthing:index')
+    menu.add_urlname(title, 'glyphicon-cloud', 'syncthing:index')
 
     global service
     setup_helper = globals()['setup_helper']
@@ -88,7 +88,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-        'syncthing', title, url='/syncthing', login_required=True)
+        'syncthing', title, url='/syncthing/', login_required=True)
 
 
 def is_enabled():
@@ -115,6 +115,6 @@ def diagnose():
 
     results.extend(
         action_utils.diagnose_url_on_all(
-            'https://{host}/syncthing', check_certificate=False))
+            'https://{host}/syncthing/', check_certificate=False))
 
     return results
