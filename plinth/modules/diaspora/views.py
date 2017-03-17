@@ -15,57 +15,57 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from .forms import DiasporaForm
+"""
+Views for the Matrix Synapse module
+"""
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import FormView
+
+from plinth import actions
 from plinth.modules import diaspora
-from plinth import actions, package
-
-from django.utils.translation import ugettext as _
-from django.template.response import TemplateResponse
-from django.contrib import messages
-
-def get_status():
-    """Get the current status"""
-    return {'enabled': diaspora.is_enabled()}
+from plinth.modules.diaspora.forms import DiasporaForm
+from plinth.views import ServiceView
 
 
-def _apply_changes(request, old_status, new_status):
-    """Apply the changes."""
-    modified = False
+class DiasporaSetupView(FormView):
+    """Show diaspora setup page."""
+    template_name = 'diaspora-pre-setup.html'
+    form_class = DiasporaForm
+    description = diaspora.description
+    title = diaspora.title
+    success_url = reverse_lazy('diaspora:index')
 
-    if old_status['enabled'] != new_status['enabled']:
-        sub_command = 'enable' if new_status['enabled'] else 'disable'
-        actions.superuser_run('diaspora', [sub_command])
-        modified = True
+    def form_valid(self, form):
+        domain_name = form.cleaned_data['domain_name']
+        actions.superuser_run('diaspora',
+                              ['setup', '--domain-name', domain_name])
 
-    if modified:
-        messages.success(request, 'Configuration updated')
-    else:
-        messages.info(request, 'Setting unchanged')
+        return super().form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['description'] = self.description
+        context['title'] = self.title
+        context['domain_names'] = diaspora.get_domain_names()
+
+        return context
 
 
-# TODO
-# If there are configuration tasks to be performed immediately before or after the package installation, Plinth provides hooks for it. The before_install= and
-# on_install= parameters to the @package.required decorator take a callback methods that are called before installation of packages and after installation of
-# packages respectively. See the reference section of this manual or the plinth.package module for details. Other modules in Plinth that use this feature provided
-# example usage.
-@package.required(['diaspora'])
-def index(request):
-    """Serve configuration page."""
-    status = get_status()
+class DiasporaServiceView(ServiceView):
+    """Show diaspora service page."""
+    service_id = diaspora.managed_services[0]
+    template_name = 'diaspora-post-setup.html'
+    diagnostics_module_name = 'diaspora'
 
-    form = None
+    def dispatch(self, request, *args, **kwargs):
+        if not diaspora.is_setup():
+            return redirect('diaspora:setup')
 
-    if request.method == 'POST':
-        form = DiasporaForm(request.POST, prefix='diaspora')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status()
-            form = DiasporaForm(initial=status, prefix='diaspora')
-    else:
-        form = DiasporaForm(initial=status, prefix='diaspora')
+        return super().dispatch(request, *args, **kwargs)
 
-    return TemplateResponse(request, 'diaspora.html',
-                            {'title': _(diaspora.title_en),
-                             'status': status,
-                             'form': form})
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['domain_name'] = diaspora.get_configured_domain_name()
 
+        return context
