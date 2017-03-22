@@ -32,7 +32,7 @@ version = 1
 
 depends = ['apps']
 
-managed_services = ['syncthing']
+managed_services = ['syncthing@syncthing.service']
 
 managed_packages = ['syncthing']
 
@@ -45,8 +45,6 @@ description = [
     _('When enabled, Syncthing will be available from <a href="/syncthing/">'
       '/syncthing</a> path on the web server.'),
 ]
-
-service = None
 
 
 def init():
@@ -96,7 +94,7 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('syncthing@plinth.service') and
+    return (action_utils.service_is_running('syncthing@syncthing.service') and
             action_utils.webserver_is_enabled('syncthing-plinth'))
 
 
