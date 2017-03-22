@@ -1,0 +1,89 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for Syncthing.
+"""
+
+import argparse
+import subprocess
+
+from plinth import action_utils
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('pre-setup', help='Perform pre-setup operations')
+    subparsers.add_parser('setup', help='Setup Syncthing configuration')
+    subparsers.add_parser('enable', help='Enable Syncthing site')
+    subparsers.add_parser('disable', help='Disable Syncthing site')
+
+    return parser.parse_args()
+
+
+def subcommand_pre_setup(_):
+    """Actions to be performed before installing Syncthing"""
+    subprocess.check_call(
+        ['adduser', '--system', '--disabled-login', 'syncthing'])
+
+
+def subcommand_setup(_):
+    """Setup Syncthing configuration."""
+    subprocess.check_call(
+        ['cp', '/lib/systemd/system/syncthing@.service', '/etc/systemd'])
+    service_enable()
+    action_utils.webserver_enable('syncthing-plinth')
+
+
+def service_enable():
+    """Start the Syncthing service as plinth user"""
+    subprocess.check_call(
+        ['systemctl', 'start', 'syncthing@syncthing.service'])
+
+
+def service_disable():
+    """Stop the Syncthing service as plinth user"""
+    subprocess.check_call(['systemctl', 'stop', 'syncthing@syncthing.service'])
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    service_enable()
+    action_utils.webserver_enable('syncthing-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('syncthing-plinth')
+    service_disable()
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
