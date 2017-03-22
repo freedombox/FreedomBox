@@ -39,6 +39,12 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_pre_setup(_):
+    """Actions to be performed before installing Syncthing"""
+    subprocess.check_call(
+        ['adduser', '--system', '--disabled-login', 'syncthing'])
+
+
 def subcommand_setup(_):
     """Setup Syncthing configuration."""
     subprocess.check_call(
@@ -49,12 +55,13 @@ def subcommand_setup(_):
 
 def service_enable():
     """Start the Syncthing service as plinth user"""
-    subprocess.check_call(['systemctl', 'start', 'syncthing@plinth.service'])
+    subprocess.check_call(
+        ['systemctl', 'start', 'syncthing@syncthing.service'])
 
 
 def service_disable():
     """Stop the Syncthing service as plinth user"""
-    subprocess.check_call(['systemctl', 'stop', 'syncthing@plinth.service'])
+    subprocess.check_call(['systemctl', 'stop', 'syncthing@syncthing.service'])
 
 
 def subcommand_enable(_):
