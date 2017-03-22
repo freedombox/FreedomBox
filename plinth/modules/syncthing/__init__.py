@@ -72,6 +72,7 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
+    helper.call('pre', actions.superuser_run, 'syncthing', ['pre-setup'])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
     global service
