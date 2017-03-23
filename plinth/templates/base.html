@@ -96,7 +96,7 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated and user_is_admin %}
             <li>
               <a href="{% url 'index' %}" title="{% trans "Home" %}">
                 {% trans "Home" %}
