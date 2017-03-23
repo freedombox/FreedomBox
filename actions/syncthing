@@ -21,6 +21,10 @@ Configuration helper for Syncthing.
 """
 
 import argparse
+import grp
+import os
+import pwd
+import shutil
 import subprocess
 
 from plinth import action_utils
@@ -31,49 +35,47 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('pre-setup', help='Perform pre-setup operations')
-    subparsers.add_parser('setup', help='Setup Syncthing configuration')
-    subparsers.add_parser('enable', help='Enable Syncthing site')
-    subparsers.add_parser('disable', help='Disable Syncthing site')
+    subparsers.add_parser('enable', help='Enable Syncthing')
+    subparsers.add_parser('disable', help='Disable Syncthing')
 
     return parser.parse_args()
 
 
-def subcommand_pre_setup(_):
+def setup():
     """Actions to be performed before installing Syncthing"""
-    subprocess.check_call(
-        ['adduser', '--system', '--disabled-login', 'syncthing'])
+    data_dir = '/var/lib/syncthing'
 
+    # Create syncthing group if needed.
+    try:
+        grp.getgrnam('syncthing')
+    except KeyError:
+        subprocess.run(['addgroup', '--system', 'syncthing'], check=True)
 
-def subcommand_setup(_):
-    """Setup Syncthing configuration."""
-    subprocess.check_call(
-        ['cp', '/lib/systemd/system/syncthing@.service', '/etc/systemd'])
-    service_enable()
-    action_utils.webserver_enable('syncthing-plinth')
+    # Create syncthing user is needed.
+    try:
+        pwd.getpwnam('syncthing')
+    except KeyError:
+        subprocess.run(['adduser', '--system', '--ingroup', 'syncthing',
+                        '--home', '/var/lib/syncthing',
+                        '--gecos', 'Syncthing file synchronization server',
+                        'syncthing'], check=True)
 
-
-def service_enable():
-    """Start the Syncthing service as plinth user"""
-    subprocess.check_call(
-        ['systemctl', 'start', 'syncthing@syncthing.service'])
-
-
-def service_disable():
-    """Stop the Syncthing service as plinth user"""
-    subprocess.check_call(['systemctl', 'stop', 'syncthing@syncthing.service'])
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, mode=0o750)
+        shutil.chown(data_dir, user='syncthing', group='syncthing')
 
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    service_enable()
+    setup()
+    action_utils.service_enable('syncthing@syncthing')
     action_utils.webserver_enable('syncthing-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('syncthing-plinth')
-    service_disable()
+    action_utils.service_disable('syncthing@syncthing')
 
 
 def main():
