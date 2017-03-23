@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^apps/syncthing/$',
         ServiceView.as_view(
             service_id=syncthing.managed_services[0],
-            diagnostics_module_name="syncthing",
+            diagnostics_module_name='syncthing',
             description=syncthing.description,
             show_status_block=True),
         name='index'),

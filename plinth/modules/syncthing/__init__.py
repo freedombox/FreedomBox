@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 """
 Plinth module to configure Syncthing.
 """
-
-import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -88,13 +87,14 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
+    """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut(
         'syncthing', title, url='/syncthing/', login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_running('syncthing@syncthing.service') and
+    return (action_utils.service_is_enabled('syncthing@syncthing') and
             action_utils.webserver_is_enabled('syncthing-plinth'))
 
 
