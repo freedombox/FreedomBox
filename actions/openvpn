@@ -164,7 +164,7 @@ def subcommand_get_profile(arguments):
     user_certificate = USER_CERTIFICATE_PATH.format(username=username)
     user_key = USER_KEY_PATH.format(username=username)
 
-    if not os.path.isfile(user_certificate) or not os.path.isfile(user_key):
+    if not _is_non_empty_file(user_certificate) or not os.path.isfile(user_key):
         subprocess.check_call(['/usr/share/easy-rsa/pkitool', username],
                               **COMMON_ARGS)
 
@@ -183,6 +183,11 @@ def _read_file(filename):
     """Return the entire contens of a file as string."""
     with open(filename, 'r') as file_handle:
         return ''.join(file_handle.readlines())
+
+
+def _is_non_empty_file(filepath):
+    return os.path.isfile(filepath) and os.path.getsize(filepath) > 0
+    pass
 
 
 def main():
