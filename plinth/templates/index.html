@@ -27,7 +27,7 @@
     {% if shortcuts %}
 
       {% for shortcut in shortcuts %}
-        {% if user.is_authenticated or shortcut.login_required is False %}
+        {% if shortcut.hidden is False and user.is_authenticated or shortcut.login_required is False %}
           <div class="col-sm-3">
             <ul class="nav nav-pills nav-stacked">
               {% if selected_id == shortcut.id %}
