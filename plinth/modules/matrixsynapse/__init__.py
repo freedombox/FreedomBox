@@ -85,7 +85,7 @@ def setup(helper, old_version=None):
     if service is None:
         service = service_module.Service(
             'matrix-synapse', title,
-            ports=['matrix-synapse'],
+            ports=['matrix-synapse-plinth'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
     helper.call('post', actions.superuser_run, 'matrixsynapse',
