@@ -18,7 +18,9 @@
 """
 Test module for Plinth's custom context processors.
 """
+from unittest.mock import Mock
 
+from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 
@@ -35,6 +37,8 @@ class ContextProcessorsTestCase(TestCase):
 
         request = HttpRequest()
         request.path = '/aaa/bbb/ccc/'
+        request.user = Mock()
+        request.user.groups.filter().exists = Mock(return_value=True)
         response = cp.common(request)
         self.assertIsNotNone(response)
 
@@ -55,6 +59,8 @@ class ContextProcessorsTestCase(TestCase):
         """Verify that the common() function works for border conditions."""
         request = HttpRequest()
         request.path = ''
+        request.user = Mock()
+        request.user.groups.filter().exists = Mock(return_value=True)
         response = cp.common(request)
         self.assertEqual([], response['active_menu_urls'])
 

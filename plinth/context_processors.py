@@ -23,6 +23,7 @@ from django.utils.translation import ugettext as _, ugettext_noop
 import re
 
 from plinth import cfg
+from plinth.utils import is_user_admin
 
 
 def common(request):
@@ -41,5 +42,6 @@ def common(request):
         'cfg': cfg,
         'submenu': cfg.main_menu.active_item(request),
         'active_menu_urls': active_menu_urls,
-        'box_name': _(cfg.box_name)
+        'box_name': _(cfg.box_name),
+        'user_is_admin': is_user_admin(request.user)
     }
