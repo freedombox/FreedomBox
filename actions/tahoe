@@ -107,7 +107,7 @@ def subcommand_create_storage_node(_):
                 conf_dict, Dumper=ruamel.yaml.RoundTripDumper)
             with open(
                     os.path.join(BASE_DIR, storage_node_name, 'private',
-                                 'introducers.furl'), 'w') as introducers_file:
+                                 'introducers.yaml'), 'w') as introducers_file:
                 introducers_file.write(conf_yaml)
 
     # Start only if not already started
