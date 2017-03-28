@@ -22,9 +22,26 @@ Common forms for use by modules.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import utils
+
 
 class ServiceForm(forms.Form):
     """Generic configuration form for a service."""
     is_enabled = forms.BooleanField(
         label=_('Enable application'),
         required=False)
+
+
+class DomainSelectionForm(forms.Form):
+    """Form for selecting a domain name to be used for
+    distributed federated applications
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['domain_name'].choices = utils.get_domain_names()
+
+    domain_name = forms.ChoiceField(
+        label=_('Select the domain name to be used for this application'),
+        choices=[]
+    )

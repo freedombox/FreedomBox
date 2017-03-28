@@ -98,7 +98,6 @@ import subprocess
 from plinth import cfg
 from plinth.errors import ActionError
 
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -118,7 +117,17 @@ def superuser_run(action, options=None, input=None, async=False):
     return _run(action, options, input, async, True)
 
 
-def _run(action, options=None, input=None, async=False, run_as_root=False):
+def run_as_user(action, options=None, input=None, async=False,
+                become_user=None):
+    """Run a command as a different user.
+
+    If become_user is None, run as current user.
+    """
+    return _run(action, options, input, async, False, become_user)
+
+
+def _run(action, options=None, input=None, async=False, run_as_root=False,
+         become_user=None):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
@@ -159,6 +168,8 @@ def _run(action, options=None, input=None, async=False, run_as_root=False):
     # Contract 1: commands can run via sudo.
     if run_as_root:
         cmd = ['sudo', '-n'] + cmd
+    elif become_user:
+        cmd = ['sudo', '-n', '-u', become_user] + cmd
 
     LOGGER.info('Executing command - %s', cmd)
 

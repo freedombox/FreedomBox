@@ -18,7 +18,6 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules import names
 from plinth.utils import format_lazy
 from plinth import actions, action_utils, frontpage, \
     service as service_module
@@ -66,7 +65,7 @@ description = [
         '<a href="https://diaspora.{host}">diaspora.{host}</a> path on the '
         'web server.'.format(host=get_configured_domain_name()) if is_setup()
         else 'Please register a domain name for your FreedomBox to be able to'
-        ' federate with other diaspora* pods.')
+             ' federate with other diaspora* pods.')
 ]
 
 
@@ -110,19 +109,6 @@ def setup(helper, old_version=None):
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-
-
-def get_domain_names():
-    """Return the domain name(s)"""
-    results = []
-
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-        for domain in domains:
-            results.append((domain, domain))
-
-    return results
 
 
 def add_shortcut():

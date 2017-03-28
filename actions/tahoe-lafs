@@ -1,0 +1,260 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for Tahoe-LAFS.
+"""
+
+import argparse
+import augeas
+import grp
+import json
+import pwd
+import shutil
+import subprocess
+
+import os
+import ruamel.yaml
+
+from plinth import action_utils
+from plinth.modules.tahoe import (
+    introducer_name,
+    introducers_file,
+    storage_node_name,
+    tahoe_home,
+    introducer_furl_file)
+from plinth.modules.tahoe.errors import TahoeConfigurationError
+from plinth.utils import YAMLFile
+
+
+domain_name_file = os.path.join(tahoe_home, 'domain_name')
+
+DEFAULT_FILE = '/etc/default/tahoe-lafs'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable Tahoe-LAFS')
+    subparsers.add_parser('disable', help='Disable Tahoe-LAFS')
+    setup = subparsers.add_parser('setup',
+                                  help='Set domain name for Tahoe-LAFS')
+    setup.add_argument('--domain-name',
+                       help='The domain name to be used by Tahoe-LAFS')
+    subparsers.add_parser('create-introducer',
+                          help='Create and start the introducer node')
+    subparsers.add_parser('create-storage-node',
+                          help='Create and start the storage node')
+    subparsers.add_parser('autostart',
+                          help="Automatically start all introducers and "
+                               "storage nodes on system startup")
+    intro_parser_add = subparsers.add_parser(
+        'add-introducer', help="Add an introducer to the storage node's list "
+                               "of introducers.")
+    intro_parser_add.add_argument(
+        '--introducer', help="Add an introducer to the storage node's list "
+                             "of introducers Param introducer must be a tuple "
+                             "of (pet_name, furl)")
+    intro_parser_remove = subparsers.add_parser(
+        'remove-introducer', help="Rename the introducer entry in the "
+                                  "introducers.yaml file specified by the "
+                                  "param")
+    intro_parser_remove.add_argument(
+        '--pet-name', help='The domain name that will be used by '
+                           'Tahoe-LAFS')
+    subparsers.add_parser('get-introducers',
+                          help="Return a dictionary of all introducers and "
+                               "their furls added to the storage node running "
+                               "on this FreedomBox.")
+    subparsers.add_parser('get-local-introducer',
+                          help="Return the name and furl of the introducer "
+                               "created on this FreedomBox")
+
+    return parser.parse_args()
+
+
+def subcommand_setup(arguments):
+    """Actions to be performed after installing Tahoe-LAFS."""
+    # Create tahoe group if needed.
+    try:
+        grp.getgrnam('tahoe-lafs')
+    except KeyError:
+        subprocess.run(['addgroup', 'tahoe-lafs'], check=True)
+
+    # Create tahoe user if needed.
+    try:
+        pwd.getpwnam('tahoe-lafs')
+    except KeyError:
+        subprocess.run(
+            [
+                'adduser', '--system', '--ingroup', 'tahoe-lafs',
+                '--home', '/var/lib/tahoe-lafs',
+                '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe-lafs'
+            ],
+            check=True)
+
+    if not os.path.exists(tahoe_home):
+        os.makedirs(tahoe_home, mode=0o755)
+
+    shutil.chown(tahoe_home, user='tahoe-lafs', group='tahoe-lafs')
+
+    if not os.path.exists(domain_name_file):
+        with open(domain_name_file, 'w') as dnf:
+            dnf.write(arguments.domain_name)
+
+
+def subcommand_autostart(_):
+    """Automatically start all introducers and storage nodes on system startup.
+    """
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+    aug.load()
+
+    aug.set('/files' + DEFAULT_FILE + '/AUTOSTART', 'all')
+    aug.save()
+
+
+def get_configured_domain_name():
+    """Extract and return the domain name from the domain name file.
+
+    Throws TahoeConfigurationError if the domain name file is not found.
+    """
+    if not os.path.exists(domain_name_file):
+        raise TahoeConfigurationError
+    else:
+        with open(domain_name_file) as dnf:
+            return dnf.read().rstrip()
+
+
+def subcommand_create_introducer(_):
+    """Create a Tahoe-LAFS introducer on this FreedomBox."""
+    os.chdir(tahoe_home)
+
+    if not os.path.exists(os.path.join(tahoe_home, introducer_name)):
+        subprocess.check_call([
+            'tahoe', 'create-introducer', '--port=3456',
+            '--location=tcp:{}:3456'.format(get_configured_domain_name()),
+            introducer_name
+        ])
+
+    subprocess.call(['tahoe', 'start', introducer_name])
+
+
+def subcommand_create_storage_node(_):
+    """Create a Tahoe-LAFS storage node on this FreedomBox."""
+    os.chdir(tahoe_home)
+
+    if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
+        subprocess.check_call([
+            'tahoe', 'create-node', '--nickname=\"storage_node\"',
+            '--webport=1234',
+            '--hostname={}'.format(get_configured_domain_name()),
+            storage_node_name
+        ])
+        with open(
+                os.path.join(tahoe_home, introducer_name, 'private',
+                             introducer_name + '.furl'), 'r') as furl_file:
+            furl = furl_file.read().rstrip()
+            conf_dict = {'introducers': {introducer_name: {'furl': furl}}}
+            conf_yaml = ruamel.yaml.dump(
+                conf_dict, Dumper=ruamel.yaml.RoundTripDumper)
+            with open(
+                    os.path.join(tahoe_home, storage_node_name, 'private',
+                                 'introducers.yaml'), 'w') as introducers_file:
+                introducers_file.write(conf_yaml)
+
+    subprocess.call(['tahoe', 'start', storage_node_name])
+
+
+def subcommand_add_introducer(arguments):
+    """Add an introducer to the storage node's list of introducers.
+
+    Param introducer must be a tuple of (pet_name, furl).
+    """
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
+        pet_name, furl = arguments.introducer.split(",")
+        conf['introducers'][pet_name] = {'furl': furl}
+
+
+def subcommand_remove_introducer(arguments):
+    """Rename the introducer entry in the introducers.yaml file specified
+    by the param pet_name
+    """
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
+        del conf['introducers'][arguments.pet_name]
+
+
+def subcommand_get_introducers(_):
+    """Return a dictionary of all introducers and their furls.
+
+    The ones added to the storage node running on this FreedomBox.
+    """
+    with open(introducers_file, 'r') as intro_conf:
+        conf = ruamel.yaml.round_trip_load(intro_conf)
+
+    introducers = []
+    for pet_name in conf['introducers'].keys():
+        introducers.append((pet_name, conf['introducers'][pet_name]['furl']))
+
+    print(json.dumps(introducers))
+
+
+def subcommand_get_local_introducer(_):
+    """Return the name and furl of the introducer created on this FreedomBox
+    """
+    with open(introducer_furl_file, 'r') as furl_file:
+        furl = furl_file.read().rstrip()
+
+    print(json.dumps((introducer_name, furl)))
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.service_enable('tahoe-lafs')
+    action_utils.webserver_enable('tahoe-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('tahoe-plinth')
+    action_utils.service_disable('tahoe-lafs')
+
+
+def restart_storage_node():
+    """Called after exiting context of editing introducers file."""
+    try:
+        subprocess.run(['tahoe', 'restart', 'storage_node'], check=True)
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart storage_node with new configuration: %s', err)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

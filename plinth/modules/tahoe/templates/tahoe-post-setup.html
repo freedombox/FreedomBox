@@ -1,0 +1,110 @@
+{% extends "service.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see
+<http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+{% load bootstrap %}
+
+{% block description %}
+
+{% for paragraph in description %}
+<p>{{ paragraph|safe }}</p>
+{% endfor %}
+
+<p>
+    {% url 'config:index' as index_url %}
+    {% blocktrans trimmed with domain_name=domain_name %}
+    The Tahoe-LAFS server domain is set to <b>{{ domain_name }}</b>.
+    Changing the FreedomBox domain name needs a reinstall of
+    Tahoe-LAFS and you WILL LOSE DATA. You can access Tahoe-LAFS at
+    <a href="https://{{domain_name}}:5678">https://{{domain_name}}:5678</a>.
+    {% endblocktrans %}
+</p>
+{% endblock %}
+
+{% block configuration %}
+  <h3>{% trans "Configuration" %}</h3>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
+  <br/>
+
+  <h4>{% trans "Local introducer" %}</h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>{% trans "Pet Name" %}</th>
+              <th> furl </th>
+          </tr>
+      </thead>
+      <tr>
+          <td> {{ local_introducer.0 }} </td>
+          <td> {{ local_introducer.1 }} </td>
+      </tr>
+  </table>
+
+  <form class="form" method="post" action="/plinth/apps/tahoe-lafs/add_introducer">
+      {% csrf_token %}
+      <h4>{% trans "Add new introducer" %}</h4>
+
+      <div class="form-group">
+          <label>{% trans "Pet Name" %}:</label>
+          <input type="text" class="form-control" name="pet_name">
+      </div>
+      <div class="form-group">
+          <label>furl:</label>
+          <textarea class="form-control" rows="5" name="furl"></textarea>
+      </div>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Add" %}"/>
+  </form>
+
+  <br/>
+
+ <h4>{% trans "Connected introducers" %}</h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>{% trans "Pet Name" %}</th>
+              <th> furl </th>
+          </tr>
+      </thead>
+      {% for introducer, furl in introducers %}
+      <tr>
+          <td> {{ introducer }} </td>
+          <td> {{ furl }} </td>
+          <form class="form" method="post"
+                action="/plinth/apps/tahoe-lafs/remove_introducer/{{introducer}}" id="introducer_list">
+                 {% csrf_token %}
+              <td><button type="submit" class="btn btn-danger">
+                  {% trans "Remove" %}
+              </button></td>
+          </form>
+      </tr>
+      {% endfor %}
+  </table>
+
+{% endblock %}
