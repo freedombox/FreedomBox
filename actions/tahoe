@@ -1,0 +1,140 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for Tahoe-LAFS.
+"""
+
+import argparse
+import grp
+import os
+import pwd
+import shutil
+import subprocess
+import ruamel.yaml
+
+from plinth import action_utils
+
+BASE_DIR = '/home/tahoe/'
+introducer_name = 'introducer'
+storage_node_name = 'storage_node'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable Tahoe-LAFS')
+    subparsers.add_parser('disable', help='Disable Tahoe-LAFS')
+    subparsers.add_parser(
+        'create-introducer', help='Create and start the introducer node')
+    subparsers.add_parser(
+        'create-storage-node', help='Create and start the storage node')
+
+    return parser.parse_args()
+
+
+def setup():
+    """Actions to be performed before installing Tahoe-LAFS"""
+    data_dir = '/home/tahoe'
+
+    # Create tahoe group if needed.
+    try:
+        grp.getgrnam('tahoe')
+    except KeyError:
+        subprocess.run(['addgroup', 'tahoe'], check=True)
+
+    # Create tahoe user is needed.
+    try:
+        pwd.getpwnam('tahoe')
+    except KeyError:
+        subprocess.run(
+            [
+                'adduser', '--ingroup', 'tahoe', '--home', '/home/tahoe',
+                '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe'
+            ],
+            check=True)
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, mode=0o750)
+        shutil.chown(data_dir, user='tahoe', group='tahoe')
+
+
+def subcommand_create_introducer(_):
+    """Create a Tahoe-LAFS introducer on this FreedomBox"""
+    os.chdir(BASE_DIR)
+
+    if not os.path.exists(os.path.join(BASE_DIR, introducer_name)):
+        subprocess.check_call([
+            'tahoe', 'create-introducer', '--port=3456',
+            '--location=tcp:127.0.0.1:3456', introducer_name
+        ])
+    # Start only if not already started
+    subprocess.call(['tahoe', 'start', introducer_name])
+
+
+def subcommand_create_storage_node(_):
+    """Create a Tahoe-LAFS storage node on this FreedomBox"""
+    os.chdir(BASE_DIR)
+
+    if not os.path.exists(os.path.join(BASE_DIR, storage_node_name)):
+        subprocess.check_call([
+            'tahoe', 'create-node', '--nickname=\"storage_node\"',
+            '--webport=1234', '--hostname=127.0.0.1', storage_node_name
+        ])
+        with open(
+                os.path.join(BASE_DIR, introducer_name, 'private',
+                             introducer_name + '.furl'), 'r') as furl_file:
+            furl = furl_file.read().rstrip()
+            conf_dict = {'introducers': {introducer_name: {'furl': furl}}}
+            conf_yaml = ruamel.yaml.dump(
+                conf_dict, Dumper=ruamel.yaml.RoundTripDumper)
+            with open(
+                    os.path.join(BASE_DIR, storage_node_name, 'private',
+                                 'introducers.furl'), 'w') as introducers_file:
+                introducers_file.write(conf_yaml)
+
+    # Start only if not already started
+    subprocess.call(['tahoe', 'start', storage_node_name])
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    setup()
+    action_utils.service_enable('tahoe@tahoe')
+    action_utils.webserver_enable('tahoe-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('tahoe-plinth')
+    action_utils.service_disable('tahoe@tahoe')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
