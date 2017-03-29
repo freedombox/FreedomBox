@@ -2,10 +2,30 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- tor: Added option to use upstream bridges.
+- openvpn: Added to front page.
+- openvpn: Non-admin users can download their own profiles.
+- Added Debian badges to README.
+- Added new locales for Hindi (hi) and Gujarati (gu).
+- Added syncthing module for file synchronization.
+
+### Removed
+- Removed use of stronghold whitelisting, no longer necessary.
+- Removed unused symlink to doc directory.
+
+### Changed
+- Require admin access for all system configuration pages.
+- Change appearance of topbar and footer.
+- Use common LDAP auth apache configuration in all modules.
+
 ### Fixed
 - Added missing shaarli logo.
 - Overwrite existing doc and static folders when installing.
 - Added line break to infinoted title, used by front page shortcut.
+- Fixed URL in INSTALL doc.
+- openvpn: Regenerate user key or certificate if empty.
+- openvpn: Prevent failures when regenerating user certificate.
 
 ## [0.13.1] - 2017-01-22
 ### Added
