@@ -91,25 +91,31 @@
              title="{{ box_name }}">
             <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
                  alt="{{ box_name }}" />
-                 {% if user.is_authenticated %}
-                <span class="navbar-logo-text">{% trans "Home" %}</span> 
-                {% endif %}
           </a>
-          {% if user.is_authenticated %}
-            <a href="{% url 'apps:index' %}" class="navbar-brand"
-               title="{% trans "Applications" %}">
-              <span class="glyphicon glyphicon-th"></span>
-              <span class="navbar-logo-text">{% trans "Apps" %}</span>
-            </a>
-           <a href="{% url 'system:index' %}" 
-           title="{% trans "System Configuration" %}" class="navbar-brand">
-              <span class="glyphicon-cog glyphicon nav-icon"></span>
-              <span class="navbar-logo-text">{% trans "Configuration" %}</span>
-          </a>
-          {% endif %}
         {% endblock %}
       </div>
       <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'index' %}" title="{% trans "Home" %}">
+                {% trans "Home" %}
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'apps:index' %}" title="{% trans "Apps" %}">
+                <span class="glyphicon glyphicon-th"></span>
+                {% trans "Apps" %}
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'system:index' %}" title="{% trans "Configuration" %}">
+                <span class="glyphicon glyphicon-cog nav-icon"></span>
+                {% trans "Configuration" %}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
         <ul class="nav navbar-nav navbar-right">
           {% block mainmenu_right %}
             <li>
@@ -119,14 +125,12 @@
             </li>
 
             {% if user.is_authenticated %}
-
-
               <li class="dropdown">
                 <a href="{% url 'users:edit' user.username %}"
                    class="dropdown-toggle" data-toggle="dropdown"
                    role="button" aria-expanded="false">
                   <i class="glyphicon glyphicon-user nav-icon"></i>
-                  <span class="navbar-logo-text">{{ user.username }}</span>
+                  {{ user.username }}
                   <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="{% url 'users:edit' user.username %}"
@@ -137,15 +141,15 @@
                 </ul>
               </li>
               <li>
-              <a href="{% url 'users:logout' %}" title="{% trans "Log out" %}">
-                <span class="glyphicon-off glyphicon nav-icon"></span>
-              </a>
-            </li>
+                <a href="{% url 'users:logout' %}" title="{% trans "Log out" %}">
+                  <span class="glyphicon glyphicon-off nav-icon"></span>
+                </a>
+              </li>
             {% else %}
               <li>
                   <a href="{% url 'users:login' %}" title="{% trans "Log in" %}">
                     <i class="glyphicon glyphicon-user nav-icon"></i>
-                    <span class="navbar-logo-text">{% trans "Log in" %}</span></a>
+                    {% trans "Log in" %}</a>
               </li>
             {% endif %}
 
