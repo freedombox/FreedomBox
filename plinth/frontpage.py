@@ -46,6 +46,7 @@ def add_shortcut(shortcut_id, label, login_required=False,
         'login_required': login_required,
         'details': details,
         'configure_url': configure_url,
+        'hidden': False
     }
 
 
@@ -65,3 +66,12 @@ def remove_shortcut(shortcut_id):
     shortcuts = {shortcut_id: shortcut
                  for shortcut_id, shortcut in shortcuts.items()
                  if not match(shortcut)}
+
+
+def hide_shortcut(shortcut_id):
+    """
+    Makes the shortcut hidden
+    """
+    global shortcuts
+    if shortcut_id in shortcuts.keys():
+        shortcuts[shortcut_id]['hidden'] = True
