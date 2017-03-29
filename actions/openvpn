@@ -147,7 +147,6 @@ def _create_certificates():
     except FileExistsError:
         pass
 
-    set_unique_subject('no')  # Set unique subject in ATTR_FILE to no
     subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
                           **COMMON_ARGS)
@@ -169,6 +168,7 @@ def subcommand_get_profile(arguments):
 
     if not _is_non_empty_file(user_certificate) or \
        not _is_non_empty_file(user_key):
+        set_unique_subject('no')  # Set unique subject in attribute file to no
         subprocess.check_call(['/usr/share/easy-rsa/pkitool', username],
                               **COMMON_ARGS)
 
@@ -204,7 +204,7 @@ def _is_non_empty_file(filepath):
 def load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                              augeas.Augeas.NO_MODL_AUTOLOAD)
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
