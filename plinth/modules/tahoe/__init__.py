@@ -19,6 +19,8 @@
 Plinth module to configure Tahoe-LAFS.
 """
 
+import os
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -27,6 +29,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
+from plinth.modules import names
 
 
 version = 1
@@ -47,6 +50,10 @@ description = [
 ]
 
 service = None
+
+domain_name = None
+
+domain_name_file = '/home/tahoe/domain_name'
 
 
 def init():
@@ -74,11 +81,6 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'tahoe', ['enable'])
-    helper.call('create-introducer', actions.run_as_user,
-                'tahoe', options=['create-introducer'], become_user='tahoe')
-    helper.call('create-storage-node', actions.run_as_user,
-                'tahoe', options=['create-storage-node'], become_user='tahoe')
 
     global service
     if service is None:
@@ -95,6 +97,39 @@ def setup(helper, old_version=None):
     helper.call('post', add_shortcut)
 
 
+def post_setup(configured_domain_name):
+    """
+    Actions to be performed after installing tahoe-lafs package
+    """
+    domain_name = configured_domain_name
+    actions.superuser_run('tahoe', ['setup', '--domain-name', domain_name])
+    actions.superuser_run('tahoe', ['enable'])
+    actions.run_as_user('tahoe', ['create-introducer'], become_user='tahoe')
+    actions.run_as_user('tahoe', ['create-storage-node'], become_user='tahoe')
+
+
+def get_domain_names():
+    """Return the domain name(s)"""
+    domain_names = []
+
+    for domain_type, domains in names.domains.items():
+        if domain_type == 'hiddenservice':
+            continue
+        for domain in domains:
+            domain_names.append((domain, domain))
+
+    return domain_names
+
+
+def get_configured_domain_name():
+    return domain_name
+
+
+def is_setup():
+    """Check whether Tahoe-LAFS is setup"""
+    return os.path.exists(domain_name_file)
+
+
 def add_shortcut():
     """Helper method to add a shortcut to the front page."""
     frontpage.add_shortcut(
@@ -104,12 +139,12 @@ def add_shortcut():
 def is_running():
     """Return whether the service is running."""
     # TODO check whether the nodes are running
-    return action_utils.service_is_running('tahoe-lafs')
+    return action_utils.service_is_running(managed_services[0])
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('tahoe-lafs') and
+    return (action_utils.service_is_enabled(managed_services[0]) and
             action_utils.webserver_is_enabled('tahoe-plinth'))
 
 

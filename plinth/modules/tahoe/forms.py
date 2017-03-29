@@ -14,20 +14,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 """
-URLs for the Tahoe-LAFS module.
+Form to configure Tahoe-LAFS.
 """
 
-from django.conf.urls import url
 
-from plinth.views import ServiceView
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from plinth.modules import tahoe
-from .views import TahoeSetupView, TahoeServiceView
 
 
-urlpatterns = [
-    url(r'^apps/tahoe/setup', TahoeSetupView.as_view(),
-        name='setup'),
-    url(r'^apps/tahoe/$', TahoeServiceView.as_view(),
-        name='index')
-]
+class TahoeLAFSForm(forms.Form):
+    """
+    Form for selecting a domain name to be used for Tahoe-LAFS
+    """
+    domain_name = forms.ChoiceField(
+        label=_('Select the domain name to be used for Tahoe-LAFS'),
+        choices=[]
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['domain_name'].choices = tahoe.get_domain_names()

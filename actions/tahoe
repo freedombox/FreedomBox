@@ -33,6 +33,7 @@ from plinth import action_utils
 BASE_DIR = '/home/tahoe/'
 introducer_name = 'introducer'
 storage_node_name = 'storage_node'
+domain_name_file = '/home/tahoe/domain_name'
 
 
 def parse_arguments():
@@ -42,15 +43,18 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable Tahoe-LAFS')
     subparsers.add_parser('disable', help='Disable Tahoe-LAFS')
+    setup = subparsers.add_parser(
+        'setup', help='Set domain name for Tahoe-LAFS')
+    setup.add_argument(
+        '--domain-name', help='The domain name to be used by Tahoe-LAFS')
     subparsers.add_parser(
         'create-introducer', help='Create and start the introducer node')
     subparsers.add_parser(
         'create-storage-node', help='Create and start the storage node')
-
     return parser.parse_args()
 
 
-def setup():
+def subcommand_setup(arguments):
     """Actions to be performed before installing Tahoe-LAFS"""
     data_dir = '/home/tahoe'
 
@@ -75,6 +79,22 @@ def setup():
         os.makedirs(data_dir, mode=0o750)
         shutil.chown(data_dir, user='tahoe', group='tahoe')
 
+    if not os.path.exists(domain_name_file):
+        with open(domain_name_file, 'w') as dnf:
+            dnf.write(arguments.domain_name)
+
+
+def get_configured_domain_name():
+    """
+    Extract and return the domain name from the domain name file.
+    Throws DomainNameNotSetupException if the domain name file is not found.
+    """
+    if not os.path.exists(domain_name_file):
+        raise DomainNameNotSetupException
+    else:
+        with open(domain_name_file) as dnf:
+            return dnf.read().rstrip()
+
 
 def subcommand_create_introducer(_):
     """Create a Tahoe-LAFS introducer on this FreedomBox"""
@@ -83,9 +103,9 @@ def subcommand_create_introducer(_):
     if not os.path.exists(os.path.join(BASE_DIR, introducer_name)):
         subprocess.check_call([
             'tahoe', 'create-introducer', '--port=3456',
-            '--location=tcp:127.0.0.1:3456', introducer_name
+            '--location=tcp:{}:3456'.format(get_configured_domain_name()), introducer_name
         ])
-    # Start only if not already started
+
     subprocess.call(['tahoe', 'start', introducer_name])
 
 
@@ -96,7 +116,8 @@ def subcommand_create_storage_node(_):
     if not os.path.exists(os.path.join(BASE_DIR, storage_node_name)):
         subprocess.check_call([
             'tahoe', 'create-node', '--nickname=\"storage_node\"',
-            '--webport=1234', '--hostname=127.0.0.1', storage_node_name
+            '--webport=1234', '--hostname={}'.format(get_configured_domain_name()),
+            storage_node_name
         ])
         with open(
                 os.path.join(BASE_DIR, introducer_name, 'private',
@@ -110,13 +131,11 @@ def subcommand_create_storage_node(_):
                                  'introducers.yaml'), 'w') as introducers_file:
                 introducers_file.write(conf_yaml)
 
-    # Start only if not already started
     subprocess.call(['tahoe', 'start', storage_node_name])
 
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    setup()
     action_utils.service_enable('tahoe@tahoe')
     action_utils.webserver_enable('tahoe-plinth')
 
@@ -138,3 +157,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+class DomainNameNotSetupException(Exception):
+    pass
