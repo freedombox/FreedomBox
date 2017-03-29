@@ -20,7 +20,6 @@ Test module for Plinth's custom context processors.
 """
 from unittest.mock import Mock
 
-from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 
@@ -54,6 +53,11 @@ class ContextProcessorsTestCase(TestCase):
         urls = response['active_menu_urls']
         self.assertIsNotNone(urls)
         self.assertEqual(['/', '/aaa/', '/aaa/bbb/', '/aaa/bbb/ccc/'], urls)
+
+        self.assertTrue(response['user_is_admin'])
+        request.user.groups.filter().exists = Mock(return_value=False)
+        response = cp.common(request)
+        self.assertFalse(response['user_is_admin'])
 
     def test_common_border_conditions(self):
         """Verify that the common() function works for border conditions."""

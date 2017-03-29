@@ -30,7 +30,6 @@ import time
 
 from . import forms, frontpage
 import plinth
-from plinth.utils import is_user_admin
 
 
 @public
@@ -51,8 +50,7 @@ def index(request):
                              'selected_id': selection,
                              'details': details,
                              'details_label': details_label,
-                             'configure_url': configure_url,
-                             'user_is_admin': is_user_admin(request.user)})
+                             'configure_url': configure_url})
 
 
 class ServiceView(FormView):
