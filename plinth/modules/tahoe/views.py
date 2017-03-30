@@ -74,7 +74,7 @@ class TahoeServiceView(ServiceView):
 
 def add_introducer(request):
     if request.method == 'POST':
-        tahoe.add_introducer(( request.POST['pet_name'], request.POST['furl']))
+        tahoe.add_introducer((request.POST['pet_name'], request.POST['furl']))
         return redirect('tahoe:index')
 
 def remove_introducer(request, introducer):

@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Tahoe-LAFS.
 """
@@ -33,7 +32,6 @@ from plinth import service as service_module
 from plinth.utils import format_lazy
 from plinth.modules import names
 
-
 version = 1
 
 depends = ['apps']
@@ -45,10 +43,14 @@ managed_packages = ['tahoe-lafs']
 title = _('Distributed File Storage (Tahoe-LAFS)')
 
 description = [
-    _('Tahoe-LAFS is a decentralized secure file storage system. It uses provider independent security to store files over a distributed network of storage nodes. Even if some of the nodes fail, your files can be retrieved from the remaining nodes.'),
+    _('Tahoe-LAFS is a decentralized secure file storage system. It uses provider independent security to store files over a distributed network of storage nodes. Even if some of the nodes fail, your files can be retrieved from the remaining nodes.'
+      ),
     format_lazy(
-        _('This {box_name} hosts a storage node and an introducer by default. Additional introducers can be added, which will introduce this node to the other storage nodes.'), box_name=_(cfg.box_name)),
-    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be available from <a href="/tahoe">/tahoe</a> '),
+        _('This {box_name} hosts a storage node and an introducer by default. Additional introducers can be added, which will introduce this node to the other storage nodes.'
+          ),
+        box_name=_(cfg.box_name)),
+    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be available from <a href="/tahoe">/tahoe</a> '
+      ),
 ]
 
 service = None
@@ -57,7 +59,9 @@ tahoe_home = '/home/tahoe'
 
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
-introducers_file = os.path.join(tahoe_home, 'storage_node/private/introducers.yaml')
+introducers_file = os.path.join(tahoe_home,
+                                'storage_node/private/introducers.yaml')
+
 
 def init():
     """Intialize the module."""
@@ -104,7 +108,8 @@ def post_setup(configured_domain_name):
     """
     Actions to be performed after installing tahoe-lafs package
     """
-    actions.superuser_run('tahoe', ['setup', '--domain-name', configured_domain_name])
+    actions.superuser_run('tahoe',
+                          ['setup', '--domain-name', configured_domain_name])
     actions.superuser_run('tahoe', ['enable'])
     actions.run_as_user('tahoe', ['create-introducer'], become_user='tahoe')
     actions.run_as_user('tahoe', ['create-storage-node'], become_user='tahoe')
@@ -142,8 +147,7 @@ def is_setup():
 
 def add_shortcut():
     """Helper method to add a shortcut to the front page."""
-    frontpage.add_shortcut(
-        'tahoe', title, url='/tahoe', login_required=True)
+    frontpage.add_shortcut('tahoe', title, url='/tahoe', login_required=True)
 
 
 def is_running():
@@ -187,24 +191,17 @@ def add_introducer(introducer):
     Add an introducer to the storage node's list of introducers.
     Param introducer must be a tuple of (pet_name, furl)
     """
-    with open(introducers_file, 'r') as intro_conf:
-        conf = ruamel.yaml.round_trip_load(intro_conf)
-
-    pet_name, furl = introducer
-    conf['introducers'][pet_name] = {'furl':furl}
-
-    with open(introducers_file, 'w') as intro_conf:
-        ruamel.yaml.round_trip_dump(conf, intro_conf)
-
-    _restart_storage_node()
+    with IntroducerUpdater() as conf:
+        pet_name, furl = introducer
+        conf['introducers'][pet_name] = {'furl': furl}
 
 
-def _restart_storage_node():
-    try:
-        os.chdir(tahoe_home)
-        subprocess.check_output(['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
-    except subprocess.CalledProcessError as err:
-        print('Failed to restart storage_node with new configuration: %s', err)
+def remove_introducer(pet_name):
+    """
+    Rename the introducer entry in the introducers.yaml file specified by the param pet_name
+    """
+    with IntroducerUpdater() as conf:
+        del conf['introducers'][pet_name]
 
 
 def get_introducers():
@@ -222,19 +219,30 @@ def get_introducers():
     return introducers
 
 
-def remove_introducer(pet_name):
+class IntroducerUpdater():
     """
-    Rename the introducer entry in the introducers.yaml file specified by the param pet_name
+    A context management class for updating the introducers.yaml file
     """
-    with open(introducers_file, 'r') as intro_conf:
-        conf = ruamel.yaml.round_trip_load(intro_conf)
 
-    del conf['introducers'][pet_name]
+    def __init__(self):
+        self.conf = None
 
-    with open(introducers_file, 'w') as intro_conf:
-        ruamel.yaml.round_trip_dump(conf, intro_conf)
+    def __enter__(self):
+        with open(introducers_file, 'r') as intro_conf:
+            self.conf = ruamel.yaml.round_trip_load(intro_conf)
+            return self.conf
 
-    _restart_storage_node()
+    def __exit__(self, typ, value, traceback):
+        with open(introducers_file, 'w') as intro_conf:
+            ruamel.yaml.round_trip_dump(self.conf, intro_conf)
+
+        try:
+            os.chdir(tahoe_home)
+            subprocess.check_output(
+                ['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
+        except subprocess.CalledProcessError as err:
+            print('Failed to restart storage_node with new configuration: %s',
+                  err)
 
 
 class DomainNameNotSetupException(Exception):
