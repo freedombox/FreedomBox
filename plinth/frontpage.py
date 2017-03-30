@@ -68,10 +68,7 @@ def remove_shortcut(shortcut_id):
                  if not match(shortcut)}
 
 
-def hide_shortcut(shortcut_id):
-    """
-    Makes the shortcut hidden
-    """
+def hide_shortcut(shortcut_id, hide=True):
+    """Mark a shortcut as hidden or not hidden."""
     global shortcuts
-    if shortcut_id in shortcuts.keys():
-        shortcuts[shortcut_id]['hidden'] = True
+    shortcuts[shortcut_id]['hidden'] = hide
