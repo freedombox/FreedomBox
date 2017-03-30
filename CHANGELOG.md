@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added Debian badges to README.
 - Added new locales for Hindi (hi) and Gujarati (gu).
 - Added syncthing module for file synchronization.
+- Added Matrix Synapse as chat server with groups, audio and video.
 
 ### Removed
 - Removed use of stronghold whitelisting, no longer necessary.
