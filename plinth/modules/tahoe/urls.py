@@ -18,6 +18,8 @@
 URLs for the Tahoe-LAFS module.
 """
 
+from . import views
+
 from django.conf.urls import url
 
 from plinth.views import ServiceView
@@ -26,8 +28,12 @@ from .views import TahoeSetupView, TahoeServiceView
 
 
 urlpatterns = [
-    url(r'^apps/tahoe/setup', TahoeSetupView.as_view(),
+    url(r'^apps/tahoe/setup$', TahoeSetupView.as_view(),
         name='setup'),
+    url(r'^apps/tahoe/add_introducer$', views.add_introducer,
+        name="add-introducer"),
+    url(r'^apps/tahoe/remove_introducer/(?P<introducer>[0-9a-zA-Z_]+)$', views.remove_introducer,
+        name="remove-introducer"),
     url(r'^apps/tahoe/$', TahoeServiceView.as_view(),
         name='index')
 ]

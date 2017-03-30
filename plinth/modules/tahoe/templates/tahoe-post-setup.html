@@ -20,6 +20,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load bootstrap %}
 
 {% block description %}
 
@@ -36,3 +37,61 @@
     {% endblocktrans %}
 </p>
 {% endblock %}
+
+{% block configuration %}
+  <h3>Configuration</h3>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
+  <br/>
+
+
+  <form class="form" method="post" action="/plinth/apps/tahoe/add_introducer">
+      {% csrf_token %}
+      <h4> Add new introducer </h4>
+
+      <div class="form-group">
+          <label>Pet Name:</label>
+          <input type="text" class="form-control" name="pet_name">
+      </div>
+      <div class="form-group">
+          <label>furl:</label>
+          <textarea class="form-control" rows="5" name="furl"></textarea>
+      </div>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Add" %}"/>
+  </form>
+
+  <br/>
+
+  <h4> Connected introducers </h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th> Pet Name </th>
+              <th> furl </th>
+          </tr>
+      </thead>
+      {% for introducer, furl in introducers %}
+      <tr>
+          <td> {{ introducer }} </td>
+          <td> {{furl}} </td>
+          <form class="form" method="post"
+                action="/plinth/apps/tahoe/remove_introducer/{{introducer}}" id="introducer_list">
+                 {% csrf_token %}
+              <td><button type="submit" class="btn btn-danger">
+                  Remove
+              </button></td>
+          </form>
+      </tr>
+      {% endfor %}
+  </table>
+
+{% endblock %}
+

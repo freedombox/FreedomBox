@@ -63,8 +63,21 @@ class TahoeServiceView(ServiceView):
 
         return super().dispatch(request, *args, **kwargs)
 
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = tahoe.get_configured_domain_name()
+        context['introducers'] = tahoe.get_introducers()
 
         return context
+
+
+def add_introducer(request):
+    if request.method == 'POST':
+        tahoe.add_introducer(( request.POST['pet_name'], request.POST['furl']))
+        return redirect('tahoe:index')
+
+def remove_introducer(request, introducer):
+    if request.method == 'POST':
+        tahoe.remove_introducer(introducer)
+        return redirect('tahoe:index')

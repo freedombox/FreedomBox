@@ -20,6 +20,8 @@ Plinth module to configure Tahoe-LAFS.
 """
 
 import os
+import ruamel.yaml
+import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,10 +53,11 @@ description = [
 
 service = None
 
-domain_name = None
+tahoe_home = '/home/tahoe'
 
-domain_name_file = '/home/tahoe/domain_name'
+domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
+introducers_file = os.path.join(tahoe_home, 'storage_node/private/introducers.yaml')
 
 def init():
     """Intialize the module."""
@@ -101,8 +104,7 @@ def post_setup(configured_domain_name):
     """
     Actions to be performed after installing tahoe-lafs package
     """
-    domain_name = configured_domain_name
-    actions.superuser_run('tahoe', ['setup', '--domain-name', domain_name])
+    actions.superuser_run('tahoe', ['setup', '--domain-name', configured_domain_name])
     actions.superuser_run('tahoe', ['enable'])
     actions.run_as_user('tahoe', ['create-introducer'], become_user='tahoe')
     actions.run_as_user('tahoe', ['create-storage-node'], become_user='tahoe')
@@ -122,7 +124,15 @@ def get_domain_names():
 
 
 def get_configured_domain_name():
-    return domain_name
+    """
+    Extract and return the domain name from the domain name file.
+    Throws DomainNameNotSetupException if the domain name file is not found.
+    """
+    if not os.path.exists(domain_name_file):
+        raise DomainNameNotSetupException
+    else:
+        with open(domain_name_file) as dnf:
+            return dnf.read().rstrip()
 
 
 def is_setup():
@@ -162,6 +172,7 @@ def disable():
 
 def diagnose():
     """Run diagnostics and return the results."""
+    # TODO May need url changes.
     results = []
 
     results.extend(
@@ -169,3 +180,62 @@ def diagnose():
             'https://{host}/tahoe', check_certificate=False))
 
     return results
+
+
+def add_introducer(introducer):
+    """
+    Add an introducer to the storage node's list of introducers.
+    Param introducer must be a tuple of (pet_name, furl)
+    """
+    with open(introducers_file, 'r') as intro_conf:
+        conf = ruamel.yaml.round_trip_load(intro_conf)
+
+    pet_name, furl = introducer
+    conf['introducers'][pet_name] = {'furl':furl}
+
+    with open(introducers_file, 'w') as intro_conf:
+        ruamel.yaml.round_trip_dump(conf, intro_conf)
+
+    _restart_storage_node()
+
+
+def _restart_storage_node():
+    try:
+        os.chdir(tahoe_home)
+        subprocess.check_output(['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart storage_node with new configuration: %s', err)
+
+
+def get_introducers():
+    """
+    Return a dictionary of all introducers and their furls
+    added to the storage node running on this FreedomBox.
+    """
+    with open(introducers_file, 'r') as intro_conf:
+        conf = ruamel.yaml.round_trip_load(intro_conf)
+
+    introducers = []
+    for pet_name in conf['introducers'].keys():
+        introducers.append((pet_name, conf['introducers'][pet_name]['furl']))
+
+    return introducers
+
+
+def remove_introducer(pet_name):
+    """
+    Rename the introducer entry in the introducers.yaml file specified by the param pet_name
+    """
+    with open(introducers_file, 'r') as intro_conf:
+        conf = ruamel.yaml.round_trip_load(intro_conf)
+
+    del conf['introducers'][pet_name]
+
+    with open(introducers_file, 'w') as intro_conf:
+        ruamel.yaml.round_trip_dump(conf, intro_conf)
+
+    _restart_storage_node()
+
+
+class DomainNameNotSetupException(Exception):
+    pass
