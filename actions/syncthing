@@ -1,0 +1,91 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for Syncthing.
+"""
+
+import argparse
+import grp
+import os
+import pwd
+import shutil
+import subprocess
+
+from plinth import action_utils
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable Syncthing')
+    subparsers.add_parser('disable', help='Disable Syncthing')
+
+    return parser.parse_args()
+
+
+def setup():
+    """Actions to be performed before installing Syncthing"""
+    data_dir = '/var/lib/syncthing'
+
+    # Create syncthing group if needed.
+    try:
+        grp.getgrnam('syncthing')
+    except KeyError:
+        subprocess.run(['addgroup', '--system', 'syncthing'], check=True)
+
+    # Create syncthing user is needed.
+    try:
+        pwd.getpwnam('syncthing')
+    except KeyError:
+        subprocess.run(['adduser', '--system', '--ingroup', 'syncthing',
+                        '--home', '/var/lib/syncthing',
+                        '--gecos', 'Syncthing file synchronization server',
+                        'syncthing'], check=True)
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, mode=0o750)
+        shutil.chown(data_dir, user='syncthing', group='syncthing')
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    setup()
+    action_utils.service_enable('syncthing@syncthing')
+    action_utils.webserver_enable('syncthing-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('syncthing-plinth')
+    action_utils.service_disable('syncthing@syncthing')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

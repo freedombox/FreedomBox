@@ -27,25 +27,27 @@
     {% if shortcuts %}
 
       {% for shortcut in shortcuts %}
-        {% if user.is_authenticated or shortcut.login_required is False %}
-          <div class="col-sm-3">
-            <ul class="nav nav-pills nav-stacked">
-              {% if selected_id == shortcut.id %}
-                <li class="active">
-                  <a href="{{ shortcut.url }}" class="active">
-              {% else %}
-                <li>
-                  <a href="{{ shortcut.url }}">
-              {% endif %}
-                    <center>
-                      <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png" style="max-width: 100px; height: 100px" />
-                      <br>
-                      {{ shortcut.label|linebreaks }}
-                    </center>
-                  </a>
-                </li>
-            </ul>
-          </div>
+        {% if not shortcut.hidden %}
+          {% if user.is_authenticated or not shortcut.login_required %}
+            <div class="col-sm-3">
+	      <ul class="nav nav-pills nav-stacked">
+		{% if selected_id == shortcut.id %}
+                  <li class="active">
+                    <a href="{{ shortcut.url }}" class="active">
+                {% else %}
+                  <li>
+                    <a href="{{ shortcut.url }}">
+                {% endif %}
+		      <center>
+		        <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png" style="max-width: 100px; height: 100px" />
+			<br>
+			{{ shortcut.label|linebreaks }}
+		      </center>
+                    </a>
+                  </li>
+              </ul>
+            </div>
+          {% endif %}
         {% endif %}
       {% endfor %}
 
@@ -89,13 +91,14 @@
 {% endblock %}
 
 
-{% block center-info %}
+{% block footer_block %}
 
-  <h4>
-    {% blocktrans trimmed %}
-      Welcome to {{ box_name }}!
-    {% endblocktrans %}
-  </h4>
+  <p>
+    <a href="{% url 'index' %}" title="{{ box_name }}">
+      <img class="footer-logo" src="{% static 'theme/img/FreedomBox-logo-standard.svg' %}"
+           alt="{{ box_name }}" />
+    </a>
+  </p>
 
   <p>
     {% blocktrans trimmed %}
@@ -108,18 +111,56 @@
 
   <p>
     {% blocktrans trimmed %}
-      More info about {{ box_name }} is available on the
-      project <a href="https://freedombox.org">homepage</a>
-      and <a href="https://wiki.debian.org/FreedomBox">wiki</a>.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
       This portal is a part of Plinth, the {{ box_name }} web
       interface. Plinth is free software, distributed under the GNU
       Affero General Public License, Version 3 or later.
     {% endblocktrans %}
+  </p>
+
+  <div class="row">
+    <div class="col-md-2 col-md-offset-3">
+      <p>
+        <a href="https://wiki.debian.org/FreedomBox/Manual">
+          {% trans "Manual" %}
+        </a>
+      </p>
+      <p>
+        <a href="https://wiki.debian.org/FreedomBox">{% trans "Wiki" %}</a>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <p>
+        <a href="https://freedombox.org">{% trans "Homepage" %}</a>
+      </p>
+      <p>
+        <a href="https://github.com/freedombox/">{% trans "Source Code" %}</a>
+      </p>
+      <p>
+        <a href="https://freedomboxfoundation.org/donate/">{% trans "Donate" %}</a>
+      </p>
+      <p>
+        <a href="https://freedomboxfoundation.org/">
+          {% trans "FreedomBox Foundation" %}
+        </a>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <p>
+        <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
+          {%trans "IRC Chatroom" %}
+        </a>
+      </p>
+      <p>
+        <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
+          {% trans "Mailing list" %}
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <p class="license-info">
+    <a href="{% static 'jslicense.html' %}" data-jslicense="1">
+      {% trans "JavaScript license information" %}</a>
   </p>
 
 {% endblock %}

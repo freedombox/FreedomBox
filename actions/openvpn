@@ -24,6 +24,7 @@ Configuration helper for OpenVPN server.
 import argparse
 import os
 import subprocess
+import augeas
 
 from plinth import action_utils
 
@@ -36,6 +37,7 @@ SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
 CA_CERTIFICATE_PATH = KEYS_DIRECTORY + '/ca.crt'
 USER_CERTIFICATE_PATH = KEYS_DIRECTORY + '/{username}.crt'
 USER_KEY_PATH = KEYS_DIRECTORY + '/{username}.key'
+ATTR_FILE = KEYS_DIRECTORY + '/index.txt.attr'
 
 SERVER_CONFIGURATION = '''
 port 1194
@@ -148,8 +150,8 @@ def _create_certificates():
     subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
                           **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server', 'server'],
-                          **COMMON_ARGS)
+    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server',
+                           'server'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
 
 
@@ -164,7 +166,9 @@ def subcommand_get_profile(arguments):
     user_certificate = USER_CERTIFICATE_PATH.format(username=username)
     user_key = USER_KEY_PATH.format(username=username)
 
-    if not os.path.isfile(user_certificate) or not os.path.isfile(user_key):
+    if not _is_non_empty_file(user_certificate) or \
+       not _is_non_empty_file(user_key):
+        set_unique_subject('no')  # Set unique subject in attribute file to no
         subprocess.check_call(['/usr/share/easy-rsa/pkitool', username],
                               **COMMON_ARGS)
 
@@ -179,10 +183,34 @@ def subcommand_get_profile(arguments):
     print(profile)
 
 
+def set_unique_subject(value):
+    """ Sets the unique_subject value to a particular value"""
+    aug = load_augeas()
+    aug.set('/files' + ATTR_FILE + '/unique_subject', value)
+    aug.save()
+
+
 def _read_file(filename):
-    """Return the entire contens of a file as string."""
+    """Return the entire contents of a file as string."""
     with open(filename, 'r') as file_handle:
         return ''.join(file_handle.readlines())
+
+
+def _is_non_empty_file(filepath):
+    """Return wheather a file exists and is not zero size."""
+    return os.path.isfile(filepath) and os.path.getsize(filepath) > 0
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+
+    # shell-script config file lens
+    aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
+    aug.set('/augeas/load/Simplevars/incl[last() + 1]', ATTR_FILE)
+    aug.load()
+    return aug
 
 
 def main():
