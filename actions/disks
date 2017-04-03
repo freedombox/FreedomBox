@@ -72,11 +72,20 @@ def _resize_partition(device, requested_partition, free_space):
     command = ['parted', '--align=optimal', '--script', device, 'unit', 'B',
                'resizepart', requested_partition['number'],
                str(free_space['end'])]
+    # XXX: Remove workaround after bug in parted is fixed:
+    # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=24215
+    fallback_command = ['parted', '--align=optimal', device,
+                        '---pretend-input-tty', 'unit', 'B', 'resizepart',
+                        requested_partition['number'], 'yes',
+                        str(free_space['end'])]
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError as exception:
-        print('Error expanding partition:', exception, file=sys.stderr)
-        sys.exit(5)
+        try:
+            subprocess.run(fallback_command, check=True)
+        except subprocess.CalledProcessError as exception:
+            print('Error expanding partition:', exception, file=sys.stderr)
+            sys.exit(5)
 
 
 def _resize_file_system(device, requested_partition, free_space):
