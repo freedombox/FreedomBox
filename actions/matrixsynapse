@@ -1,0 +1,92 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Matrix-Synapse server.
+"""
+import argparse
+
+from ruamel.yaml import round_trip_dump, round_trip_load
+
+from plinth import action_utils
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    post_install = subparsers.add_parser(
+        'post-install',
+        help="Perform post install steps")
+
+    subparsers.add_parser('enable', help='Enable matrix-synapse service')
+    subparsers.add_parser('disable', help='Disable matrix-synapse service')
+    setup = subparsers.add_parser('setup', help='Set Domain name for Matrix')
+    setup.add_argument(
+        '--domain-name',
+        help='The domain name that will be used by Matrix Synapse')
+
+    return parser.parse_args()
+
+
+def subcommand_post_install(_):
+    file_path = "/etc/matrix-synapse/homeserver.yaml"
+
+    with open(file_path) as config_file:
+        config = round_trip_load(config_file)
+
+    config["listeners"][0]["bind_address"] = "0.0.0.0"
+    config["listeners"][1]["bind_address"] = "127.0.0.1"
+    config["max_upload_size"] = "100M"
+    config["enable_registration"] = True
+
+    with open(file_path, "w") as config_file:
+        round_trip_dump(config, config_file)
+
+
+def subcommand_setup(arguments):
+    domain_name = arguments.domain_name
+    action_utils.dpkg_reconfigure('matrix-synapse',
+                                  {'server-name': domain_name})
+    action_utils.webserver_enable('matrixsynapse')
+
+
+def subcommand_enable(_):
+    """Enable service"""
+    action_utils.webserver_enable('matrixsynapse')
+    action_utils.service_enable('matrix-synapse')
+
+
+def subcommand_disable(_):
+    """Disable service"""
+    action_utils.service_disable('matrix-synapse')
+    action_utils.webserver_disable('matrixsynapse')
+
+
+def main():
+    arguments = parse_arguments()
+
+    sub_command = arguments.subcommand.replace('-', '_')
+    sub_command_method = globals()['subcommand_' + sub_command]
+    sub_command_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
