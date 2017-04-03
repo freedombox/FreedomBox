@@ -16,19 +16,16 @@
 #
 
 """
-URLs for the Diaspora module.
+URLs for the diaspora module
 """
 
 from django.conf.urls import url
 
-from plinth.modules import diaspora
-from plinth.views import ServiceView
-
+from .views import DiasporaSetupView, DiasporaServiceView
 
 urlpatterns = [
-    url(r'^apps/diaspora/$', ServiceView.as_view(
-            description=diaspora.description,
-            diagnostics_module_name="diaspora",
-            service_id=diaspora.managed_services[0]
-        ), name='index'),
+    url(r'^apps/diaspora/setup$', DiasporaSetupView.as_view(),
+        name='setup'),
+    url(r'^apps/diaspora/$', DiasporaServiceView.as_view(),
+        name='index')
 ]

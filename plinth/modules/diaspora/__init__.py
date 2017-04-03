@@ -16,10 +16,34 @@
 #
 
 import subprocess
+import os
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.modules import names
+from plinth.utils import format_lazy
 from plinth import actions, action_utils, cfg, frontpage, service as service_module
+
+domain_name_file = "/etc/diaspora/domain_name"
+lazy_domain_name = None  # To avoid repeatedly reading from file
+
+
+def is_setup():
+    return os.path.exists(domain_name_file)
+
+
+def get_configured_domain_name():
+    if lazy_domain_name:
+        return lazy_domain_name
+
+    if not is_setup():
+        return ""
+
+    with open(domain_name_file) as dnf:
+        global lazy_domain_name
+        lazy_domain_name =  dnf.read().rstrip()
+        return lazy_domain_name
+
 
 version = 1
 
@@ -37,8 +61,11 @@ managed_packages = ['diaspora']
 
 description = [
     _('diaspora* is a decentralized social network where you can store and control your own data.'
-      ), _('When enabled, the diaspora* pod will be available from '
-           '<a href="/diaspora">/diaspora</a> path on the web server.')
+      ),
+    format_lazy(
+        'When enabled, the diaspora* pod will be available from '
+        '<a href="https://diaspora.{host}">diaspora.{host}</a> path on the web server.'.
+        format(host=get_configured_domain_name()))
 ]
 
 
@@ -67,8 +94,8 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
     helper.install(managed_packages)
-    helper.call('custom_config', actions.superuser_run, 'diaspora', ['disable-ssl'])
-    helper.call('enable_service', actions.superuser_run, 'diaspora', ['enable-service'])
+    helper.call('custom_config', actions.superuser_run, 'diaspora',
+                ['disable-ssl'])
     helper.call('post', actions.superuser_run, 'diaspora', ['enable'])
     global service
     if service is None:
@@ -84,10 +111,26 @@ def setup(helper, old_version=None):
     helper.call('post', add_shortcut)
 
 
+def get_domain_names():
+    """Return the domain name(s)"""
+    results = []
+
+    for domain_type, domains in names.domains.items():
+        if domain_type == 'hiddenservice':
+            continue
+        for domain in domains:
+            results.append((domain, domain))
+
+    return results
+
+
 def add_shortcut():
     """Add shortcut to diaspora on the Plinth homepage"""
     frontpage.add_shortcut(
-        'diaspora', title, url='/diaspora', login_required=True)
+        'diaspora',
+        title,
+        url='https://diaspora.{}'.format(get_configured_domain_name()),
+        login_required=True)
 
 
 def is_enabled():
@@ -111,11 +154,16 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    # results.append(action_utils.service_is_enabled('diaspora'))
-    # results.append(action_utils.service_is_running('diaspora'))
-    # results.append(is_enabled())
-    results.extend(
-        action_utils.diagnose_url_on_all(
-            'https://{host}/diaspora', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'http://diaspora.localhost', kind='4', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'http://diaspora.localhost', kind='6', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'http://diaspora.{}'.format(get_configured_domain_name()),
+            kind='4',
+            check_certificate=False))
 
     return results
