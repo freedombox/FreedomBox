@@ -55,7 +55,7 @@ description = [
 
 service = None
 
-tahoe_home = '/home/tahoe'
+tahoe_home = '/var/lib/tahoe-lafs'
 
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
@@ -113,6 +113,7 @@ def post_setup(configured_domain_name):
     actions.superuser_run('tahoe', ['enable'])
     actions.run_as_user('tahoe', ['create-introducer'], become_user='tahoe')
     actions.run_as_user('tahoe', ['create-storage-node'], become_user='tahoe')
+    actions.superuser_run('tahoe', ['autostart'])
 
 
 def get_domain_names():
@@ -147,7 +148,7 @@ def is_setup():
 
 def add_shortcut():
     """Helper method to add a shortcut to the front page."""
-    frontpage.add_shortcut('tahoe', title, url='/tahoe', login_required=True)
+    frontpage.add_shortcut('tahoe-lafs', title, url='/tahoe-lafs', login_required=True)
 
 
 def is_running():

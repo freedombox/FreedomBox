@@ -30,10 +30,10 @@ import ruamel.yaml
 
 from plinth import action_utils
 
-BASE_DIR = '/home/tahoe/'
+data_dir = '/var/lib/tahoe-lafs'
 introducer_name = 'introducer'
 storage_node_name = 'storage_node'
-domain_name_file = '/home/tahoe/domain_name'
+domain_name_file = os.path.join(data_dir, 'domain_name')
 
 
 def parse_arguments():
@@ -51,12 +51,12 @@ def parse_arguments():
         'create-introducer', help='Create and start the introducer node')
     subparsers.add_parser(
         'create-storage-node', help='Create and start the storage node')
+    subparsers.add_parser('autostart', help="Automatically start all introducers and storage nodes on system startup")
     return parser.parse_args()
 
 
 def subcommand_setup(arguments):
     """Actions to be performed before installing Tahoe-LAFS"""
-    data_dir = '/home/tahoe'
 
     # Create tahoe group if needed.
     try:
@@ -70,7 +70,8 @@ def subcommand_setup(arguments):
     except KeyError:
         subprocess.run(
             [
-                'adduser', '--ingroup', 'tahoe', '--home', '/home/tahoe',
+                'adduser', '--system', '--ingroup', 'tahoe',
+                '--home', '/var/lib/tahoe-lafs',
                 '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe'
             ],
             check=True)
@@ -82,6 +83,14 @@ def subcommand_setup(arguments):
     if not os.path.exists(domain_name_file):
         with open(domain_name_file, 'w') as dnf:
             dnf.write(arguments.domain_name)
+
+
+def subcommand_autostart(_):
+    """
+    Automatically start all introducers and storage nodes on system startup
+    """
+    with open('/etc/default/tahoe-lafs', 'a') as autostart_conf:
+        autostart_conf.write('AUTOSTART="all"')
 
 
 def get_configured_domain_name():
@@ -136,14 +145,14 @@ def subcommand_create_storage_node(_):
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    action_utils.service_enable('tahoe@tahoe')
+    action_utils.service_enable('tahoe-lafs')
     action_utils.webserver_enable('tahoe-plinth')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('tahoe-plinth')
-    action_utils.service_disable('tahoe@tahoe')
+    action_utils.service_disable('tahoe-lafs')
 
 
 def main():
