@@ -323,7 +323,7 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     except subprocess.CalledProcessError as exception:
         result = 'failed'
         # Authorization failed is a success
-        if exception.stdout.decode().strip() == '401':
+        if exception.stdout.decode().strip() in ('401', '405'):
             result = 'passed'
     except FileNotFoundError:
         result = 'error'
