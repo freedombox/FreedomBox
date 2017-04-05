@@ -32,13 +32,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    post_install = subparsers.add_parser(
-        'post-install',
-        help="Perform post install steps")
-
+    subparsers.add_parser('post-install', help='Perform post install steps')
     subparsers.add_parser('enable', help='Enable matrix-synapse service')
     subparsers.add_parser('disable', help='Disable matrix-synapse service')
-    setup = subparsers.add_parser('setup', help='Set Domain name for Matrix')
+    setup = subparsers.add_parser('setup', help='Set domain name for Matrix')
     setup.add_argument(
         '--domain-name',
         help='The domain name that will be used by Matrix Synapse')
@@ -47,37 +44,39 @@ def parse_arguments():
 
 
 def subcommand_post_install(_):
-    file_path = "/etc/matrix-synapse/homeserver.yaml"
-
+    """Perform post installation configuration."""
+    file_path = '/etc/matrix-synapse/homeserver.yaml'
     with open(file_path) as config_file:
         config = round_trip_load(config_file)
 
-    config["listeners"][0]["bind_address"] = "0.0.0.0"
-    config["listeners"][1]["bind_address"] = "127.0.0.1"
-    config["max_upload_size"] = "100M"
-    config["enable_registration"] = True
+    config['max_upload_size'] = '100M'
+    config['enable_registration'] = True
+    for listener in config['listeners']:
+        if listener['port'] == 8448:
+            listener['bind_address'] = '0.0.0.0'
 
-    with open(file_path, "w") as config_file:
+    with open(file_path, 'w') as config_file:
         round_trip_dump(config, config_file)
 
 
 def subcommand_setup(arguments):
+    """Configure the domain name for matrix-synapse package."""
     domain_name = arguments.domain_name
     action_utils.dpkg_reconfigure('matrix-synapse',
                                   {'server-name': domain_name})
-    action_utils.webserver_enable('matrixsynapse')
+    subcommand_enable(arguments)
 
 
 def subcommand_enable(_):
-    """Enable service"""
-    action_utils.webserver_enable('matrixsynapse')
+    """Enable service."""
     action_utils.service_enable('matrix-synapse')
+    action_utils.webserver_enable('matrix-synapse-plinth')
 
 
 def subcommand_disable(_):
-    """Disable service"""
+    """Disable service."""
+    action_utils.webserver_disable('matrix-synapse-plinth')
     action_utils.service_disable('matrix-synapse')
-    action_utils.webserver_disable('matrixsynapse')
 
 
 def main():

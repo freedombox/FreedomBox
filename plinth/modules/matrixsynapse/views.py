@@ -16,27 +16,27 @@
 #
 
 """
-Views for the Matrix Synapse module
+Views for the Matrix Synapse module.
 """
+
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from plinth import actions
+from plinth import views
 from plinth.modules import matrixsynapse
 from plinth.modules.matrixsynapse.forms import MatrixSynapseForm
-from plinth.views import ServiceView
 
 
-class MatrixSynapseSetupView(FormView):
+class SetupView(FormView):
     """Show matrix-synapse setup page."""
-    template_name = 'matrix-pre-setup.html'
+    template_name = 'matrix-synapse-pre-setup.html'
     form_class = MatrixSynapseForm
-    description = matrixsynapse.description
-    title = matrixsynapse.title
     success_url = reverse_lazy('matrixsynapse:index')
 
     def form_valid(self, form):
+        """Handle valid form submission."""
         domain_name = form.cleaned_data['domain_name']
         actions.superuser_run('matrixsynapse',
                               ['setup', '--domain-name', domain_name])
@@ -44,28 +44,32 @@ class MatrixSynapseSetupView(FormView):
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
+        """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
-        context['description'] = self.description
-        context['title'] = self.title
+
+        context['title'] = matrixsynapse.title
+        context['description'] = matrixsynapse.description
         context['domain_names'] = matrixsynapse.get_domain_names()
 
         return context
 
 
-class MatrixSynapseServiceView(ServiceView):
+class ServiceView(views.ServiceView):
     """Show matrix-synapse service page."""
     service_id = matrixsynapse.managed_services[0]
-    template_name = 'matrix-post-setup.html'
+    template_name = 'matrix-synapse.html'
+    description = matrixsynapse.description
     diagnostics_module_name = 'matrixsynapse'
 
     def dispatch(self, request, *args, **kwargs):
+        """Redirect to setup page if setup is not done yet."""
         if not matrixsynapse.is_setup():
             return redirect('matrixsynapse:setup')
 
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
         context = super().get_context_data(**kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
-
         return context

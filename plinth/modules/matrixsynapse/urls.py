@@ -16,16 +16,14 @@
 #
 
 """
-URL for the matrix-synapse module
+URLs for the matrix-synapse module.
 """
 
 from django.conf.urls import url
 
-from .views import MatrixSynapseSetupView, MatrixSynapseServiceView
+from .views import SetupView, ServiceView
 
 urlpatterns = [
-    url(r'^apps/matrixsynapse/setup', MatrixSynapseSetupView.as_view(),
-        name='setup'),
-    url(r'^apps/matrixsynapse/$', MatrixSynapseServiceView.as_view(),
-        name='index')
+    url(r'^apps/matrixsynapse/setup/$', SetupView.as_view(), name='setup'),
+    url(r'^apps/matrixsynapse/$', ServiceView.as_view(), name='index'),
 ]

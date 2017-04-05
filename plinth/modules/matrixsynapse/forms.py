@@ -16,7 +16,7 @@
 #
 
 """
-Forms for configuring matrix-synapse
+Forms for configuring matrix-synapse.
 """
 
 from django import forms
@@ -26,12 +26,13 @@ from plinth.modules import matrixsynapse
 
 
 class MatrixSynapseForm(forms.Form):
-    """Form to do initial configuration of matrix-synapse"""
+    """Form to do initial configuration of matrix-synapse."""
     domain_name = forms.ChoiceField(
-        label=_('Select the domain name to be used for Matrix'),
+        label=_('Select the domain name'),
         choices=[]
     )
 
     def __init__(self, *args, **kwargs):
+        """Initialize the form object."""
         super().__init__(*args, **kwargs)
         self.fields['domain_name'].choices = matrixsynapse.get_domain_names()

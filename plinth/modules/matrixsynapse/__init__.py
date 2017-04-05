@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure matrix-synapse server
+Plinth module to configure matrix-synapse server.
 """
 
 import logging
@@ -41,17 +41,21 @@ managed_services = ['matrix-synapse']
 
 managed_packages = ['matrix-synapse']
 
-title = _('Federated IM, VoIP and Video server \n (matrix-synapse)')
+title = _('Chat Server \n (Matrix Synapse)')
 
 description = [
-    _('Matrix is an new ecosystem for open federated Instant Messaging '
-      'and VoIP. Synapse is a reference Matrix server implementation.'),
+    _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
+      'ecosystem for open, federated instant messaging and VoIP. Synapse is a '
+      'server implementing the Matrix protocol. It provides chat groups, '
+      'audio/video calls, end-to-end encryption, multiple device '
+      'synchronization and does not require phone numbers to work. Users on a '
+      'given Matrix server can converse with users on all other Matrix servers '
+      'via federation.'),
 
     _('To communicate, you can use the '
-      '<a href=\'https://riot.im/\' target=\'_blank\'>Riot</a> client.'),
-
-    _('Changing the FreedomBox domain name needs a reinstall of '
-      'Matrix-Synapse and you WILL LOSE DATA.')
+      '<a href="https://matrix.org/docs/projects/">available clients</a> '
+      'for mobile, desktop and the web. <a href="https://riot.im/">Riot</a> '
+      'client is recommended.')
 ]
 
 service = None
@@ -62,7 +66,7 @@ SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 
 
 def init():
-    """Initialize the matrix-synapse module"""
+    """Initialize the matrix-synapse module."""
     menu = cfg.main_menu.get('apps:index')
     menu.add_urlname(title, 'glyphicon-comment', 'matrixsynapse:index')
 
@@ -71,7 +75,7 @@ def init():
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
             'matrix-synapse', title,
-            ports=['matrix-synapse'],
+            ports=['matrix-synapse-plinth'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
         if is_enabled():
@@ -88,6 +92,7 @@ def setup(helper, old_version=None):
             ports=['matrix-synapse-plinth'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
+
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
     helper.call('post', service.notify_enabled, None, True)
@@ -95,41 +100,20 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
+    """Add a shortcut to the frontpage."""
     frontpage.add_shortcut('matrixsynapse', title, details=description,
                            configure_url=reverse_lazy('matrixsynapse:index'),
                            login_required=True)
 
 
 def is_setup():
+    """Return whether the Matrix Synapse server is setup."""
     return os.path.exists(SERVER_NAME_PATH)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
     return action_utils.service_is_enabled('matrix-synapse')
-
-
-def get_domain_names():
-    """Return the domain name(s)"""
-    results = []
-
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-        for domain in domains:
-            results.append((domain, domain))
-
-    return results
-
-
-def get_configured_domain_name():
-    if not is_setup():
-        return ""
-
-    with open(SERVER_NAME_PATH) as config_file:
-        config, _, _ = load_yaml_guess_indent(config_file)
-
-    return config["server_name"]
 
 
 def enable():
@@ -146,4 +130,36 @@ def disable():
 
 def diagnose():
     """Run diagnostics and return the results."""
-    return [action_utils.diagnose_port_listening(8008, 'tcp4')]
+    results = []
+
+    results.append(action_utils.diagnose_port_listening(8008, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(8448, 'tcp4'))
+    results.extend(action_utils.diagnose_url_on_all(
+        'https://{host}/_matrix', check_certificate=False))
+
+    return results
+
+
+def get_domain_names():
+    """Return the domain name(s)."""
+    results = []
+
+    for domain_type, domains in names.domains.items():
+        if domain_type == 'hiddenservice':
+            continue
+
+        for domain in domains:
+            results.append((domain, domain))
+
+    return results
+
+
+def get_configured_domain_name():
+    """Return the currently configured domain name."""
+    if not is_setup():
+        return None
+
+    with open(SERVER_NAME_PATH) as config_file:
+        config, _, _ = load_yaml_guess_indent(config_file)
+
+    return config['server_name']

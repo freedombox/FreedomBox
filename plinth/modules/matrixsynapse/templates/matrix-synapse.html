@@ -22,18 +22,16 @@
 {% load i18n %}
 
 {% block description %}
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
 
-{% for paragraph in description %}
-<p>{{ paragraph|safe }}</p>
-{% endfor %}
-
-<p>
-    {% url 'config:index' as index_url %}
-    {% blocktrans trimmed with domain_name=domain_name %}
-    The Matrix server domain is set to <b>{{ domain_name }}</b>. User
-    IDs will look like <i>@username:{{ domain_name }}</i>
-    Changing the FreedomBox domain name needs a reinstall of
-    Matrix-Synapse and you WILL LOSE DATA.
+  <p>
+    {% blocktrans trimmed %}
+      The Matrix server domain is set to <em>{{ domain_name }}</em>. User IDs
+      will look like <em>@username:{{ domain_name }}</em>. Changing the domain
+      name after the initial setup is currently not supported.
     {% endblocktrans %}
-</p>
+  </p>
+  <p>New users can be registered from any client.</p>
 {% endblock %}

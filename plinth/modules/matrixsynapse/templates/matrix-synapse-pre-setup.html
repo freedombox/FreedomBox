@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  <h3>{% trans "Configuration" %}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      Matrix service needs to be configured for a domain. Users on other Matrix
+      servers will be able to reach users on this server using this domain name.
+      Matrix user IDs will look like <em>@username:domainname</em>.
+    {% endblocktrans %}
+  </p>
+
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans %}
+      <strong>Warning!</strong> Changing the domain name after the initial
+      setup is currently not supported.
+    {% endblocktrans %}
+  </div>
+
+  {% if not domain_names %}
+    {% url 'config:index' as config_url %}
+    <p>
+      {% blocktrans trimmed %}
+        No domain(s) are available. <a href="{{ config_url }}">Configure</a>
+        at least one domain to be able to use Matrix Synapse.
+      {% endblocktrans %}
+    </p>
+  {% else %}
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Update setup" %}"/>
+    </form>
+  {% endif %}
+{% endblock %}
