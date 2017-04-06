@@ -20,6 +20,8 @@ Miscellaneous utility methods.
 """
 
 import importlib
+import os
+import ruamel.yaml
 from django.utils.functional import lazy
 
 
@@ -63,3 +65,37 @@ def is_user_admin(request, cached=False):
     user_is_admin = request.user.groups.filter(name='admin').exists()
     request.session['cache_user_is_admin'] = user_is_admin
     return user_is_admin
+
+
+class YAMLFile(object):
+    """
+    A context management class for updating YAML files
+    """
+
+    def __init__(self, yaml_file, post_exit=None):
+        """
+        Parameters:
+        yaml_file - the YAML file to update
+        post_exit - a function that will be called after updating the YAML file
+        """
+        self.yaml_file = yaml_file
+        self.post_exit = post_exit
+        self.conf = None
+
+    def __enter__(self):
+        with open(self.yaml_file, 'r') as intro_conf:
+            if not self.is_file_empty():
+                self.conf = ruamel.yaml.round_trip_load(intro_conf)
+            else:
+                self.conf = {}
+            return self.conf
+
+
+    def __exit__(self, typ, value, traceback):
+        with open(self.yaml_file, 'w') as intro_conf:
+            ruamel.yaml.round_trip_dump(self.conf, intro_conf)
+        if self.post_exit:
+            self.post_exit()
+
+    def is_file_empty(self):
+        return os.stat(self.yaml_file).st_size == 0

@@ -19,11 +19,14 @@
 Test module for Plinth's utilities.
 """
 
+import tempfile
+from unittest import TestCase
 from unittest.mock import Mock, MagicMock
 
-from django.test import TestCase
+import ruamel.yaml
 from django.test.client import RequestFactory
 
+from plinth.utils import YAMLFile
 from plinth.utils import is_user_admin
 
 
@@ -81,3 +84,44 @@ class TestIsAdminUser(TestCase):
         mock.assert_called_once_with()
         session_mock.__getitem__.assert_called_once_with(
             'cache_user_is_admin')
+
+
+class TestYAMLFileUtil(TestCase):
+    """Check updating YAML files"""
+
+    kv_pair = {'key': 'value'}
+
+    def test_update_empty_yaml_file(self):
+        """
+        Update an empty YAML file with content.
+        """
+        fp = tempfile.NamedTemporaryFile()
+        conf = {'property1': self.kv_pair}
+
+        with YAMLFile(fp.name) as file_conf:
+            for key in conf.keys():
+                file_conf[key] = conf[key]
+
+        with open(fp.name, 'r') as retrieved_conf:
+            assert retrieved_conf.read() == ruamel.yaml.round_trip_dump(conf)
+
+    def test_update_non_empty_yaml_file(self):
+        """
+        Update a non-empty YAML file with modifications
+        """
+        fp = tempfile.NamedTemporaryFile()
+
+        with open(fp.name, 'w') as conf_file:
+            conf_file.write(
+                ruamel.yaml.round_trip_dump({
+                    'property1': self.kv_pair
+                }))
+
+        with YAMLFile(fp.name) as file_conf:
+            file_conf['property2'] = self.kv_pair
+
+        with open(fp.name, 'r') as retrieved_conf:
+            file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
+            print(file_conf)
+            assert file_conf == {'property1': self.kv_pair,
+                                 'property2': self.kv_pair}

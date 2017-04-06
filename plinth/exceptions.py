@@ -1,0 +1,2 @@
+class DomainNameNotSetupException(Exception):
+    pass

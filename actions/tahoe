@@ -30,10 +30,10 @@ import ruamel.yaml
 
 from plinth import action_utils
 
-data_dir = '/var/lib/tahoe-lafs'
+tahoe_home = '/var/lib/tahoe-lafs'
 introducer_name = 'introducer'
 storage_node_name = 'storage_node'
-domain_name_file = os.path.join(data_dir, 'domain_name')
+domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
 
 def parse_arguments():
@@ -76,9 +76,9 @@ def subcommand_setup(arguments):
             ],
             check=True)
 
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir, mode=0o750)
-        shutil.chown(data_dir, user='tahoe', group='tahoe')
+    if not os.path.exists(tahoe_home):
+        os.makedirs(tahoe_home, mode=0o750)
+        shutil.chown(tahoe_home, user='tahoe', group='tahoe')
 
     if not os.path.exists(domain_name_file):
         with open(domain_name_file, 'w') as dnf:
@@ -107,9 +107,9 @@ def get_configured_domain_name():
 
 def subcommand_create_introducer(_):
     """Create a Tahoe-LAFS introducer on this FreedomBox"""
-    os.chdir(BASE_DIR)
+    os.chdir(tahoe_home)
 
-    if not os.path.exists(os.path.join(BASE_DIR, introducer_name)):
+    if not os.path.exists(os.path.join(tahoe_home, introducer_name)):
         subprocess.check_call([
             'tahoe', 'create-introducer', '--port=3456',
             '--location=tcp:{}:3456'.format(get_configured_domain_name()), introducer_name
@@ -120,23 +120,23 @@ def subcommand_create_introducer(_):
 
 def subcommand_create_storage_node(_):
     """Create a Tahoe-LAFS storage node on this FreedomBox"""
-    os.chdir(BASE_DIR)
+    os.chdir(tahoe_home)
 
-    if not os.path.exists(os.path.join(BASE_DIR, storage_node_name)):
+    if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
         subprocess.check_call([
             'tahoe', 'create-node', '--nickname=\"storage_node\"',
             '--webport=1234', '--hostname={}'.format(get_configured_domain_name()),
             storage_node_name
         ])
         with open(
-                os.path.join(BASE_DIR, introducer_name, 'private',
+                os.path.join(tahoe_home, introducer_name, 'private',
                              introducer_name + '.furl'), 'r') as furl_file:
             furl = furl_file.read().rstrip()
             conf_dict = {'introducers': {introducer_name: {'furl': furl}}}
             conf_yaml = ruamel.yaml.dump(
                 conf_dict, Dumper=ruamel.yaml.RoundTripDumper)
             with open(
-                    os.path.join(BASE_DIR, storage_node_name, 'private',
+                    os.path.join(tahoe_home, storage_node_name, 'private',
                                  'introducers.yaml'), 'w') as introducers_file:
                 introducers_file.write(conf_yaml)
 

@@ -31,6 +31,8 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.utils import format_lazy
 from plinth.modules import names
+from plinth.utils import YAMLFile
+from plinth.exceptions import DomainNameNotSetupException
 
 version = 1
 
@@ -43,14 +45,17 @@ managed_packages = ['tahoe-lafs']
 title = _('Distributed File Storage (Tahoe-LAFS)')
 
 description = [
-    _('Tahoe-LAFS is a decentralized secure file storage system. It uses provider independent security to store files over a distributed network of storage nodes. Even if some of the nodes fail, your files can be retrieved from the remaining nodes.'
-      ),
+    _('Tahoe-LAFS is a decentralized secure file storage system.'
+      'It uses provider independent security to store files over a distributed'
+      'network of storage nodes. Even if some of the nodes fail, your files'
+      'can be retrieved from the remaining nodes.'),
     format_lazy(
-        _('This {box_name} hosts a storage node and an introducer by default. Additional introducers can be added, which will introduce this node to the other storage nodes.'
-          ),
+        _('This {box_name} hosts a storage node and an introducer by default.'
+          'Additional introducers can be added, which will introduce this node'
+          'to the other storage nodes.'),
         box_name=_(cfg.box_name)),
-    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be available from <a href="/tahoe">/tahoe</a> '
-      ),
+    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be'
+      'available from <a href="/tahoe">/tahoe</a> '),
 ]
 
 service = None
@@ -148,7 +153,8 @@ def is_setup():
 
 def add_shortcut():
     """Helper method to add a shortcut to the front page."""
-    frontpage.add_shortcut('tahoe-lafs', title, url='/tahoe-lafs', login_required=True)
+    frontpage.add_shortcut(
+        'tahoe-lafs', title, url='/tahoe-lafs', login_required=True)
 
 
 def is_running():
@@ -192,7 +198,7 @@ def add_introducer(introducer):
     Add an introducer to the storage node's list of introducers.
     Param introducer must be a tuple of (pet_name, furl)
     """
-    with IntroducerUpdater() as conf:
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
         pet_name, furl = introducer
         conf['introducers'][pet_name] = {'furl': furl}
 
@@ -201,7 +207,7 @@ def remove_introducer(pet_name):
     """
     Rename the introducer entry in the introducers.yaml file specified by the param pet_name
     """
-    with IntroducerUpdater() as conf:
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
         del conf['introducers'][pet_name]
 
 
@@ -220,31 +226,10 @@ def get_introducers():
     return introducers
 
 
-class IntroducerUpdater():
-    """
-    A context management class for updating the introducers.yaml file
-    """
-
-    def __init__(self):
-        self.conf = None
-
-    def __enter__(self):
-        with open(introducers_file, 'r') as intro_conf:
-            self.conf = ruamel.yaml.round_trip_load(intro_conf)
-            return self.conf
-
-    def __exit__(self, typ, value, traceback):
-        with open(introducers_file, 'w') as intro_conf:
-            ruamel.yaml.round_trip_dump(self.conf, intro_conf)
-
-        try:
-            os.chdir(tahoe_home)
-            subprocess.check_output(
-                ['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
-        except subprocess.CalledProcessError as err:
-            print('Failed to restart storage_node with new configuration: %s',
-                  err)
-
-
-class DomainNameNotSetupException(Exception):
-    pass
+def restart_storage_node():
+    try:
+        os.chdir(tahoe_home)
+        subprocess.check_output(
+            ['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart storage_node with new configuration: %s', err)
