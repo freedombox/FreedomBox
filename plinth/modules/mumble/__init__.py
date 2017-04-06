@@ -24,15 +24,13 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.views import ServiceView
 
 
 version = 1
-
-depends = ['apps']
 
 title = _('Voice Chat \n (Mumble)')
 
@@ -54,7 +52,7 @@ description = [
 
 def init():
     """Intialize the Mumble module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
 
     global service

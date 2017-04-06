@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
@@ -31,8 +32,6 @@ from plinth.views import ServiceView
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_services = ['avahi-daemon']
 
@@ -56,7 +55,7 @@ service = None
 
 def init():
     """Intialize the service discovery module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-lamp', 'avahi:index')
 
     global service  # pylint: disable=W0603

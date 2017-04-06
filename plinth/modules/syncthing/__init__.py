@@ -26,12 +26,11 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 
 version = 1
-
-depends = ['apps']
 
 managed_services = ['syncthing']
 
@@ -61,7 +60,7 @@ service = None
 
 def init():
     """Intialize the module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-refresh', 'syncthing:index')
 
     global service

@@ -20,8 +20,15 @@ Django URLconf file containing all urls
 """
 
 from django.conf.urls import url
+from django.views.generic import TemplateView
+
 from . import views
 
+
 urlpatterns = [
-    url(r'^$', views.index, name='index')
+    url(r'^$', views.index, name='index'),
+    url(r'^apps/$', TemplateView.as_view(template_name='apps.html'),
+        name='apps'),
+    url(r'^sys/$', TemplateView.as_view(template_name='system.html'),
+        name='system'),
 ]

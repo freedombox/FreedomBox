@@ -24,14 +24,12 @@ from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
 
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 
 
 version = 1
-
-depends = ['apps']
 
 managed_packages = ['libjs-jsxc']
 
@@ -50,7 +48,7 @@ logger = logging.getLogger(__name__)
 
 def init():
     """Initialize the JSXC module"""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index')
 
     global service

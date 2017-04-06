@@ -23,14 +23,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 
 
 version = 1
-
-depends = ['apps']
 
 managed_packages = ['shaarli']
 
@@ -50,7 +48,7 @@ service = None
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
 
     global service

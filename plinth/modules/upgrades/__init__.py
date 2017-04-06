@@ -22,15 +22,13 @@ Plinth module for upgrades
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
 
 
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_packages = ['unattended-upgrades']
 
@@ -47,7 +45,7 @@ service = None
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-refresh', 'upgrades:index')
     global service
     service = service_module.Service(

@@ -25,13 +25,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
 
 
 version = 1
-
-depends = ['system']
 
 title = _('Domain Name Server \n (BIND)')
 
@@ -57,7 +55,7 @@ CONFIG_FILE = '/etc/bind/named.conf.options'
 
 def init():
     """Intialize the BIND module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-globe', 'bind:index')
 
     global service

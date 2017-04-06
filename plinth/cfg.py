@@ -19,8 +19,6 @@ import configparser
 import logging
 import os
 
-from plinth.menu import Menu
-
 logger = logging.getLogger(__name__)
 
 box_name = None
@@ -40,8 +38,6 @@ secure_proxy_ssl_header = None
 debug = False
 server_dir = '/'
 danube_edition = False
-
-main_menu = Menu()
 
 config_file = None
 

@@ -24,15 +24,15 @@ import logging
 
 from plinth import actions
 from plinth import cfg
+from plinth.menu import main_menu
 from plinth.signals import service_enabled
 import plinth.service as service_module
 from plinth.utils import format_lazy
 
+
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_packages = ['firewalld']
 
@@ -51,7 +51,7 @@ LOGGER = logging.getLogger(__name__)
 
 def init():
     """Initailze firewall module"""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-fire', 'firewall:index')
 
     service_enabled.connect(on_service_enabled)

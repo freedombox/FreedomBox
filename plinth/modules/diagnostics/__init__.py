@@ -22,7 +22,8 @@ Plinth module for system diagnostics
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils
-from plinth import cfg
+from plinth.menu import main_menu
+
 
 version = 1
 
@@ -36,12 +37,10 @@ description = [
       'expected.')
 ]
 
-depends = ['system']
-
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-screenshot', 'diagnostics:index')
 
 

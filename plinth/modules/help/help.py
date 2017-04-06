@@ -27,12 +27,13 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from stronghold.decorators import public
 
 from plinth import cfg, __version__
+from plinth.menu import main_menu
 
 
 def init():
     """Initialize the Help module"""
-    menu = cfg.main_menu.add_urlname(ugettext_lazy('Documentation'),
-                                     'glyphicon-book', 'help:index')
+    menu = main_menu.add_urlname(ugettext_lazy('Documentation'),
+                                 'glyphicon-book', 'help:index')
     menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
                      'help:index_explicit', 5)
     menu.add_urlname(ugettext_lazy('Manual'), 'glyphicon-info-sign',

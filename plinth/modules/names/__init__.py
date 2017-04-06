@@ -22,8 +22,9 @@ Plinth module to configure name services
 from django.utils.translation import ugettext_lazy as _
 import logging
 
-from plinth import cfg
+from plinth.menu import main_menu
 from plinth.signals import domain_added, domain_removed
+
 
 SERVICES = (
     ('http', _('HTTP'), 80),
@@ -35,8 +36,6 @@ version = 1
 
 is_essential = True
 
-depends = ['system']
-
 title = _('Name Services')
 
 domain_types = {}
@@ -47,7 +46,7 @@ logger = logging.getLogger(__name__)
 
 def init():
     """Initialize the names module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-tag', 'names:index')
 
     domain_added.connect(on_domain_added)

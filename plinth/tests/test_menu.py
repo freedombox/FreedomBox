@@ -24,6 +24,7 @@ from django.test import TestCase
 from django.urls import reverse
 import random
 
+from plinth import menu as menu_module
 from plinth.menu import Menu
 
 
@@ -61,6 +62,22 @@ def dump_menu(menu):
 
 class MenuTestCase(TestCase):
     """Verify the behavior of the Plinth Menu class."""
+
+    def test_init(self):
+        """Verify that main_menu and essential items are created."""
+        menu_module.init()
+        main_menu = menu_module.main_menu
+        self.assertIsInstance(main_menu, Menu)
+
+        apps_menu = main_menu.get('apps')
+        self.assertEqual(apps_menu.label, '')
+        self.assertEqual(apps_menu.icon, 'glyphicon-download-alt')
+        self.assertEqual(str(apps_menu.url), '/apps/')
+
+        system_menu = main_menu.get('system')
+        self.assertEqual(system_menu.label, '')
+        self.assertEqual(system_menu.icon, 'glyphicon-cog')
+        self.assertEqual(str(system_menu.url), '/sys/')
 
     def test_menu_creation_without_arguments(self):
         """Verify the Menu state without initialization parameters."""
