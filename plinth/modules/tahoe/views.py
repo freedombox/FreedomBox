@@ -21,16 +21,16 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
-from plinth import actions
 from plinth.modules import tahoe
-from plinth.modules.tahoe.forms import TahoeLAFSForm
 from plinth.views import ServiceView
+from plinth.domain_selection_form import DomainSelectionForm
+from plinth.utils import get_domain_names
 
 
 class TahoeSetupView(FormView):
     """Show tahoe-lafs setup page."""
     template_name = 'tahoe-pre-setup.html'
-    form_class = TahoeLAFSForm
+    form_class = DomainSelectionForm
     description = tahoe.description
     title = tahoe.title
     success_url = reverse_lazy('tahoe:index')
@@ -40,12 +40,11 @@ class TahoeSetupView(FormView):
         tahoe.post_setup(domain_name)
         return super().form_valid(form)
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['description'] = self.description
         context['title'] = self.title
-        context['domain_names'] = tahoe.get_domain_names()
+        context['domain_names'] = get_domain_names()
 
         return context
 
@@ -63,11 +62,11 @@ class TahoeServiceView(ServiceView):
 
         return super().dispatch(request, *args, **kwargs)
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = tahoe.get_configured_domain_name()
         context['introducers'] = tahoe.get_introducers()
+        context['local_introducer'] = tahoe.get_local_introducer()
 
         return context
 
@@ -76,6 +75,7 @@ def add_introducer(request):
     if request.method == 'POST':
         tahoe.add_introducer((request.POST['pet_name'], request.POST['furl']))
         return redirect('tahoe:index')
+
 
 def remove_introducer(request, introducer):
     if request.method == 'POST':

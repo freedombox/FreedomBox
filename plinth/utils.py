@@ -23,6 +23,7 @@ import importlib
 import os
 import ruamel.yaml
 from django.utils.functional import lazy
+from plinth.modules import names
 
 
 def import_from_gi(library, version):
@@ -67,6 +68,19 @@ def is_user_admin(request, cached=False):
     return user_is_admin
 
 
+def get_domain_names():
+    """Return the domain name(s)"""
+    domain_names = []
+
+    for domain_type, domains in names.domains.items():
+        if domain_type == 'hiddenservice':
+            continue
+        for domain in domains:
+            domain_names.append((domain, domain))
+
+    return domain_names
+
+
 class YAMLFile(object):
     """
     A context management class for updating YAML files
@@ -89,7 +103,6 @@ class YAMLFile(object):
             else:
                 self.conf = {}
             return self.conf
-
 
     def __exit__(self, typ, value, traceback):
         with open(self.yaml_file, 'w') as intro_conf:

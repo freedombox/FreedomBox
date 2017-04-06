@@ -15,26 +15,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-Form to configure Tahoe-LAFS.
-"""
 
-
+from plinth import utils
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules import tahoe
 
-
-class TahoeLAFSForm(forms.Form):
+class DomainSelectionForm(forms.Form):
     """
-    Form for selecting a domain name to be used for Tahoe-LAFS
+    Form for selecting a domain name to be used for
+    distributed federated applications
     """
-    domain_name = forms.ChoiceField(
-        label=_('Select the domain name to be used for Tahoe-LAFS'),
-        choices=[]
-    )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['domain_name'].choices = tahoe.get_domain_names()
+        self.fields['domain_name'].choices = utils.get_domain_names()
+
+    domain_name = forms.ChoiceField(
+        label=_('Select the domain name to be used for this application'),
+        choices=[]
+    )

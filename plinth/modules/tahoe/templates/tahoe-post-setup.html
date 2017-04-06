@@ -51,8 +51,21 @@
   </form>
   <br/>
 
+  <h4> Local introducer </h4>
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th> Pet Name </th>
+              <th> furl </th>
+          </tr>
+      </thead>
+      <tr>
+          <td> {{ local_introducer.0 }} </td>
+          <td> {{ local_introducer.1 }} </td>
+      </tr>
+  </table>
 
-  <form class="form" method="post" action="/plinth/apps/tahoe/add_introducer">
+  <form class="form" method="post" action="/plinth/apps/tahoe-lafs/add_introducer">
       {% csrf_token %}
       <h4> Add new introducer </h4>
 
@@ -70,7 +83,7 @@
 
   <br/>
 
-  <h4> Connected introducers </h4>
+ <h4> Connected introducers </h4>
   <table class="table table-bordered">
       <thead>
           <tr>
@@ -83,7 +96,7 @@
           <td> {{ introducer }} </td>
           <td> {{furl}} </td>
           <form class="form" method="post"
-                action="/plinth/apps/tahoe/remove_introducer/{{introducer}}" id="introducer_list">
+                action="/plinth/apps/tahoe-lafs/remove_introducer/{{introducer}}" id="introducer_list">
                  {% csrf_token %}
               <td><button type="submit" class="btn btn-danger">
                   Remove
