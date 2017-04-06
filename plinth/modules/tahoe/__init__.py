@@ -45,17 +45,17 @@ managed_packages = ['tahoe-lafs']
 title = _('Distributed File Storage (Tahoe-LAFS)')
 
 description = [
-    _('Tahoe-LAFS is a decentralized secure file storage system.'
-      'It uses provider independent security to store files over a distributed'
-      'network of storage nodes. Even if some of the nodes fail, your files'
+    _('Tahoe-LAFS is a decentralized secure file storage system. '
+      'It uses provider independent security to store files over a distributed '
+      'network of storage nodes. Even if some of the nodes fail, your files '
       'can be retrieved from the remaining nodes.'),
     format_lazy(
-        _('This {box_name} hosts a storage node and an introducer by default.'
-          'Additional introducers can be added, which will introduce this node'
+        _('This {box_name} hosts a storage node and an introducer by default. '
+          'Additional introducers can be added, which will introduce this node '
           'to the other storage nodes.'),
         box_name=_(cfg.box_name)),
-    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be'
-      'available from <a href="/tahoe">/tahoe</a> '),
+    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be '
+      'available from <a href="/tahoe-lafs">/tahoe-lafs</a> '),
 ]
 
 service = None
@@ -113,12 +113,12 @@ def post_setup(configured_domain_name):
     """
     Actions to be performed after installing tahoe-lafs package
     """
-    actions.superuser_run('tahoe',
+    actions.superuser_run('tahoe-lafs',
                           ['setup', '--domain-name', configured_domain_name])
-    actions.superuser_run('tahoe', ['enable'])
-    actions.run_as_user('tahoe', ['create-introducer'], become_user='tahoe')
-    actions.run_as_user('tahoe', ['create-storage-node'], become_user='tahoe')
-    actions.superuser_run('tahoe', ['autostart'])
+    actions.superuser_run('tahoe-lafs', ['enable'])
+    actions.run_as_user('tahoe-lafs', ['create-introducer'], become_user='tahoe-lafs')
+    actions.run_as_user('tahoe-lafs', ['create-storage-node'], become_user='tahoe-lafs')
+    actions.superuser_run('tahoe-lafs', ['autostart'])
 
 
 def get_domain_names():
@@ -171,14 +171,14 @@ def is_enabled():
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('tahoe', ['enable'])
+    actions.superuser_run('tahoe-lafs', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('tahoe', ['disable'])
-    frontpage.remove_shortcut('tahoe')
+    actions.superuser_run('tahoe-lafs', ['disable'])
+    frontpage.remove_shortcut('tahoe-lafs')
 
 
 def diagnose():
@@ -188,7 +188,7 @@ def diagnose():
 
     results.extend(
         action_utils.diagnose_url_on_all(
-            'https://{host}/tahoe', check_certificate=False))
+            'https://{host}/tahoe-lafs', check_certificate=False))
 
     return results
 
@@ -230,6 +230,6 @@ def restart_storage_node():
     try:
         os.chdir(tahoe_home)
         subprocess.check_output(
-            ['sudo', '-u', 'tahoe', 'tahoe', 'restart', 'storage_node'])
+            ['sudo', '-u', 'tahoe-lafs', 'tahoe', 'restart', 'storage_node'])
     except subprocess.CalledProcessError as err:
         print('Failed to restart storage_node with new configuration: %s', err)

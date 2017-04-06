@@ -51,7 +51,8 @@ def parse_arguments():
         'create-introducer', help='Create and start the introducer node')
     subparsers.add_parser(
         'create-storage-node', help='Create and start the storage node')
-    subparsers.add_parser('autostart', help="Automatically start all introducers and storage nodes on system startup")
+    subparsers.add_parser('autostart', help="Automatically start all "
+                          "introducers and storage nodes on system startup")
     return parser.parse_args()
 
 
@@ -60,25 +61,26 @@ def subcommand_setup(arguments):
 
     # Create tahoe group if needed.
     try:
-        grp.getgrnam('tahoe')
+        grp.getgrnam('tahoe-lafs')
     except KeyError:
-        subprocess.run(['addgroup', 'tahoe'], check=True)
+        subprocess.run(['addgroup', 'tahoe-lafs'], check=True)
 
     # Create tahoe user is needed.
     try:
-        pwd.getpwnam('tahoe')
+        pwd.getpwnam('tahoe-lafs')
     except KeyError:
         subprocess.run(
             [
-                'adduser', '--system', '--ingroup', 'tahoe',
+                'adduser', '--system', '--ingroup', 'tahoe-lafs',
                 '--home', '/var/lib/tahoe-lafs',
-                '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe'
+                '--gecos', 'Tahoe-LAFS distributed file system', 'tahoe-lafs'
             ],
             check=True)
 
     if not os.path.exists(tahoe_home):
         os.makedirs(tahoe_home, mode=0o750)
-        shutil.chown(tahoe_home, user='tahoe', group='tahoe')
+
+    shutil.chown(tahoe_home, user='tahoe-lafs', group='tahoe-lafs')
 
     if not os.path.exists(domain_name_file):
         with open(domain_name_file, 'w') as dnf:
@@ -112,7 +114,8 @@ def subcommand_create_introducer(_):
     if not os.path.exists(os.path.join(tahoe_home, introducer_name)):
         subprocess.check_call([
             'tahoe', 'create-introducer', '--port=3456',
-            '--location=tcp:{}:3456'.format(get_configured_domain_name()), introducer_name
+            '--location=tcp:{}:3456'.format(get_configured_domain_name()),
+            introducer_name
         ])
 
     subprocess.call(['tahoe', 'start', introducer_name])
@@ -125,7 +128,8 @@ def subcommand_create_storage_node(_):
     if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
         subprocess.check_call([
             'tahoe', 'create-node', '--nickname=\"storage_node\"',
-            '--webport=1234', '--hostname={}'.format(get_configured_domain_name()),
+            '--webport=1234',
+            '--hostname={}'.format(get_configured_domain_name()),
             storage_node_name
         ])
         with open(
