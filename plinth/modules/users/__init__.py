@@ -22,15 +22,14 @@ Plinth module to manage users
 from django.utils.translation import ugettext_lazy as _
 import subprocess
 
-from plinth import cfg
 from plinth import action_utils
 from plinth import actions
+from plinth.menu import main_menu
+
 
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_packages = ['ldapscripts', 'ldap-utils', 'libnss-ldapd',
                     'libpam-ldapd', 'nslcd', 'slapd']
@@ -48,7 +47,7 @@ title = _('Users and Groups')
 
 def init():
     """Intialize the user module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-user', 'users:index')
 
 

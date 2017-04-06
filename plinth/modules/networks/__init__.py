@@ -24,15 +24,13 @@ from logging import Logger
 import subprocess
 
 from plinth import action_utils
-from plinth import cfg
 from plinth import network
+from plinth.menu import main_menu
 
 
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_packages = ['network-manager', 'batctl']
 
@@ -43,7 +41,7 @@ logger = Logger(__name__)
 
 def init():
     """Initialize the Networks module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-signal', 'networks:index')
 
 

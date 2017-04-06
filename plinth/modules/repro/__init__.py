@@ -24,14 +24,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.views import ServiceView
 
 version = 2
-
-depends = ['apps']
 
 managed_services = ['repro']
 
@@ -67,7 +65,7 @@ service = None
 
 def init():
     """Initialize the repro module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
 
     global service

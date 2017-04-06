@@ -84,3 +84,12 @@ class Menu(object):
         for item in self.items:
             if request.path.startswith(str(item.url)):
                 return item
+
+
+main_menu = Menu()
+
+
+def init():
+    """Create main menu and other essential menus."""
+    main_menu.add_urlname('', 'glyphicon-download-alt', 'apps')
+    main_menu.add_urlname('', 'glyphicon-cog', 'system')

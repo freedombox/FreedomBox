@@ -21,11 +21,10 @@ Plinth module for monkeysphere.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
+from plinth.menu import main_menu
+
 
 version = 1
-
-depends = ['system']
 
 managed_packages = ['monkeysphere']
 
@@ -56,7 +55,7 @@ reserved_usernames = ['monkeysphere']
 
 def init():
     """Initialize the monkeysphere module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(_('Monkeysphere'), 'glyphicon-certificate',
                      'monkeysphere:index')
 

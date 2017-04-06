@@ -22,12 +22,10 @@ Plinth module to manage filesystem snapshots.
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth import cfg
+from plinth.menu import main_menu
 
 
 version = 1
-
-depends = ['system']
 
 managed_packages = ['snapper']
 
@@ -52,7 +50,7 @@ service = None
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-film', 'snapshot:index')
 
 

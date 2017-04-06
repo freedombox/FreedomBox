@@ -25,6 +25,12 @@ from django.test import TestCase
 
 from plinth import cfg
 from plinth import context_processors as cp
+from plinth import menu
+
+
+def setUpModule():  # noqa
+    """Setup all test cases by initializing menu module."""
+    menu.init()
 
 
 class ContextProcessorsTestCase(TestCase):

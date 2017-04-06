@@ -21,15 +21,13 @@ Plinth module for security configuration
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import cfg
 from plinth import actions
+from plinth.menu import main_menu
 
 
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 title = _('Security')
 
@@ -40,7 +38,7 @@ ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-lock', 'security:index')
 
 

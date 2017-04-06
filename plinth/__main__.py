@@ -30,6 +30,7 @@ import sys
 import cherrypy
 
 from plinth import cfg
+from plinth import menu
 from plinth import module_loader
 from plinth import service
 from plinth import setup
@@ -329,6 +330,8 @@ def main():
     logger.info('Script prefix - %s', cfg.server_dir)
 
     module_loader.include_urls()
+
+    menu.init()
 
     module_loader.load_modules()
     if arguments.setup is not False:

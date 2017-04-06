@@ -22,11 +22,11 @@ Plinth module to configure ez-ipupdate client
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
+from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-version = 1
 
-depends = ['system']
+version = 1
 
 managed_packages = ['ez-ipupdate']
 
@@ -54,7 +54,7 @@ reserved_usernames = ['ez-ipupd']
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
 
 

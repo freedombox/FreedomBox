@@ -24,8 +24,8 @@ import json
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
@@ -34,7 +34,7 @@ from . import utils
 
 version = 2
 
-depends = ['apps', 'names']
+depends = ['names']
 
 managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
                     'apt-transport-tor']
@@ -58,7 +58,7 @@ bridge_service = None
 
 def init():
     """Initialize the module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
 
     setup_helper = globals()['setup_helper']

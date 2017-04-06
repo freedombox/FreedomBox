@@ -35,6 +35,7 @@ import socket
 import plinth
 from plinth import actions
 from plinth import cfg
+from plinth.menu import main_menu
 from plinth.modules import firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import pre_hostname_change, post_hostname_change
@@ -146,7 +147,7 @@ class ConfigurationForm(forms.Form):
 
 def init():
     """Initialize the module"""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
                      'config:index')
 

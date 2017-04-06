@@ -27,12 +27,11 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
 version = 1
-
-depends = ['apps']
 
 service = None
 
@@ -64,7 +63,7 @@ reserved_usernames = ['quasselcore']
 
 def init():
     """Initialize the quassel module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
 
     global service
