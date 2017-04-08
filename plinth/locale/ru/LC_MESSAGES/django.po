@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 19:32-0500\n"
+"POT-Creation-Date: 2017-04-08 16:30-0400\n"
 "PO-Revision-Date: 2017-03-08 11:38+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/freedombox/plinth/ru/>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
+"plinth/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.12\n"
 
 #: plinth/action_utils.py:243
@@ -50,7 +50,7 @@ msgstr "Подключение к {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "Невозможно подключиться к {host}:{port}"
 
-#: plinth/context_processors.py:36 plinth/views.py:48
+#: plinth/context_processors.py:37 plinth/views.py:48
 msgid "FreedomBox"
 msgstr "FrеedomBox"
 
@@ -58,25 +58,26 @@ msgstr "FrеedomBox"
 msgid "Enable application"
 msgstr "Включить приложение"
 
-#: plinth/middleware.py:60
+#: plinth/middleware.py:71
 msgid "Application installed."
 msgstr "Приложение установлено."
 
-#: plinth/middleware.py:66
+#: plinth/middleware.py:77
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Ошибка при установке пакетов: {string}{details}"
 
-#: plinth/middleware.py:70
+#: plinth/middleware.py:81
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Ошибка при установке приложения: {error}"
 
-#: plinth/modules/apps/apps.py:26
+#: plinth/modules/apps/apps.py:26 plinth/templates/base.html:106
+#: plinth/templates/base.html:108
 msgid "Apps"
 msgstr "Приложения"
 
-#: plinth/modules/apps/apps.py:32 plinth/templates/base.html:97
+#: plinth/modules/apps/apps.py:32
 msgid "Applications"
 msgstr "Приложения"
 
@@ -540,7 +541,7 @@ msgstr "О службе"
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:67
 #: plinth/modules/tor/templates/tor.html:35
-#: plinth/modules/tor/templates/tor.html:65
+#: plinth/modules/tor/templates/tor.html:65 plinth/templates/service.html:39
 msgid "Status"
 msgstr "Статус"
 
@@ -684,7 +685,7 @@ msgid "Dynamic DNS Status"
 msgstr "Состояние динамического DNS"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:364
-#: plinth/modules/openvpn/views.py:142 plinth/modules/transmission/views.py:72
+#: plinth/modules/openvpn/views.py:143 plinth/modules/transmission/views.py:72
 msgid "Configuration updated"
 msgstr "Конфигурация обновлена"
 
@@ -724,10 +725,11 @@ msgstr ""
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
 #: plinth/modules/tor/templates/tor.html:93
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
-#: plinth/templates/service.html:67
+#: plinth/templates/service.html:73
 msgid "Update setup"
 msgstr "Установить обновления"
 
@@ -924,7 +926,7 @@ msgstr "Перейти к сетям"
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
-#: plinth/templates/base.html:107
+#: plinth/templates/base.html:122
 msgid "Help"
 msgstr "Справка"
 
@@ -954,7 +956,7 @@ msgid "Where to Get Help"
 msgstr "Где получить помощь"
 
 #: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
-#: plinth/modules/networks/forms.py:101
+#: plinth/modules/networks/forms.py:101 plinth/templates/index.html:124
 msgid "Manual"
 msgstr "Руководство"
 
@@ -1206,46 +1208,50 @@ msgstr "Создать"
 msgid "Manage Wikis and Blogs"
 msgstr "Управление Блогами и Вики"
 
-#: plinth/modules/ikiwiki/views.py:94
+#: plinth/modules/ikiwiki/views.py:95
 msgid "Create Wiki or Blog"
 msgstr "Создать Блог или Вики"
 
-#: plinth/modules/ikiwiki/views.py:107
+#: plinth/modules/ikiwiki/views.py:108
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Создать вики {name}."
 
-#: plinth/modules/ikiwiki/views.py:109
+#: plinth/modules/ikiwiki/views.py:110
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Не удалось создать вики: {error}"
 
-#: plinth/modules/ikiwiki/views.py:121
+#: plinth/modules/ikiwiki/views.py:122
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Созданный блог {name}."
 
-#: plinth/modules/ikiwiki/views.py:123
+#: plinth/modules/ikiwiki/views.py:124
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Не удалось создать блог: {error}"
 
-#: plinth/modules/ikiwiki/views.py:136
+#: plinth/modules/ikiwiki/views.py:137
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} удален."
 
-#: plinth/modules/ikiwiki/views.py:139
+#: plinth/modules/ikiwiki/views.py:140
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Не удалось удалить {name}: {error}"
 
-#: plinth/modules/ikiwiki/views.py:145
+#: plinth/modules/ikiwiki/views.py:146
 msgid "Delete Wiki or Blog"
 msgstr "Удаление блога или вики"
 
 #: plinth/modules/infinoted/__init__.py:44
-msgid "Gobby Server (infinoted)"
+#, fuzzy
+#| msgid "Gobby Server (infinoted)"
+msgid ""
+"Gobby Server \n"
+" (infinoted)"
 msgstr "Сервер Gobby (infinoted)"
 
 #: plinth/modules/infinoted/__init__.py:47
@@ -1259,9 +1265,9 @@ msgid ""
 "client and install it. Then start Gobby and select \"Connect to Server\" and "
 "enter your {box_name}'s domain name."
 msgstr ""
-"Чтобы использовать его, <a href=\"https://gobby.github.io/\">скачайте "
-"Gobby</a>, настольный клиент и установите его. Затем запустите Gobby и "
-"выберите «Подключиться к серверу» и введите доменное имя вашего {box_name}."
+"Чтобы использовать его, <a href=\"https://gobby.github.io/\">скачайте Gobby</"
+"a>, настольный клиент и установите его. Затем запустите Gobby и выберите "
+"«Подключиться к серверу» и введите доменное имя вашего {box_name}."
 
 #: plinth/modules/jsxc/__init__.py:38
 msgid ""
@@ -1382,6 +1388,86 @@ msgstr "Сертификат успешно получен для домена {
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Не удалось получить сертификат для домена {domain}: {error}"
+
+#: plinth/modules/matrixsynapse/__init__.py:44
+#, fuzzy
+#| msgid ""
+#| "Chat Server \n"
+#| " (ejabberd)"
+msgid ""
+"Chat Server \n"
+" (Matrix Synapse)"
+msgstr ""
+"Чат-сервер \n"
+" (ejabberd)"
+
+#: plinth/modules/matrixsynapse/__init__.py:47
+msgid ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
+"ecosystem for open, federated instant messaging and VoIP. Synapse is a "
+"server implementing the Matrix protocol. It provides chat groups, audio/"
+"video calls, end-to-end encryption, multiple device synchronization and does "
+"not require phone numbers to work. Users on a given Matrix server can "
+"converse with users on all other Matrix servers via federation."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/__init__.py:55
+msgid ""
+"To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
+"\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
+"riot.im/\">Riot</a> client is recommended."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:31
+#, fuzzy
+#| msgid "Invalid domain name"
+msgid "Select the domain name"
+msgstr "Недопустимое имя домена"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
+#: plinth/modules/openvpn/templates/openvpn.html:116
+#: plinth/modules/owncloud/templates/owncloud.html:39
+#: plinth/modules/tor/templates/tor.html:85 plinth/templates/base.html:112
+#: plinth/templates/base.html:114 plinth/templates/service.html:65
+msgid "Configuration"
+msgstr "Конфигурация"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
+msgid ""
+"Matrix service needs to be configured for a domain. Users on other Matrix "
+"servers will be able to reach users on this server using this domain name. "
+"Matrix user IDs will look like <em>@username:domainname</em>."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
+msgid ""
+"\n"
+"      <strong>Warning!</strong> Changing the domain name after the initial\n"
+"      setup is currently not supported.\n"
+"    "
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:51
+#, python-format
+msgid ""
+"No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
+"least one domain to be able to use Matrix Synapse."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
+"look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
+"the initial setup is currently not supported."
+msgstr ""
+"Ваш домен сервера XMPP имеет значение <b>%(domainname)s</b> Идентификаторы "
+"пользователей будет выглядеть как <i>username@%(domainname)s</i>. Вы можете "
+"настроить ваш домен на странице <a href=\"%(index_url)s\">Настройка</a>."
 
 #: plinth/modules/minetest/__init__.py:49
 msgid ""
@@ -2042,7 +2128,7 @@ msgid "Edit connection"
 msgstr "Редактирование подключения"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:128
+#: plinth/templates/base.html:137
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -2278,11 +2364,11 @@ msgstr "Активные"
 msgid "Inactive"
 msgstr "Неактивен"
 
-#: plinth/modules/openvpn/__init__.py:41
+#: plinth/modules/openvpn/__init__.py:43
 msgid "Virtual Private Network (OpenVPN)"
 msgstr "Виртуальная частная сеть (OpenVPN)"
 
-#: plinth/modules/openvpn/__init__.py:45
+#: plinth/modules/openvpn/__init__.py:47
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -2299,6 +2385,12 @@ msgstr ""
 "доступ к закрытым/внутренним службам, предоставляемые {box_name}. Вы можете "
 "также получить доступ к остальной части Интернет через {box_name} для "
 "дополнительной безопасности и анонимности."
+
+#: plinth/modules/openvpn/__init__.py:86
+#, python-brace-format
+msgid ""
+"<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
+msgstr ""
 
 #: plinth/modules/openvpn/forms.py:29
 msgid "Enable OpenVPN server"
@@ -2374,12 +2466,6 @@ msgstr "Сервер OpenVPN выполняется"
 msgid "OpenVPN server is not running"
 msgstr "OpenVPN сервер не выполняется"
 
-#: plinth/modules/openvpn/templates/openvpn.html:116
-#: plinth/modules/owncloud/templates/owncloud.html:39
-#: plinth/modules/tor/templates/tor.html:85
-msgid "Configuration"
-msgstr "Конфигурация"
-
 #: plinth/modules/openvpn/views.py:123
 msgid "Setup completed."
 msgstr "Установка завершена."
@@ -2388,7 +2474,7 @@ msgstr "Установка завершена."
 msgid "Setup failed."
 msgstr "Установка не удалась."
 
-#: plinth/modules/openvpn/views.py:144 plinth/modules/tor/views.py:109
+#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:134
 #: plinth/views.py:102 plinth/views.py:183
 msgid "Setting unchanged"
 msgstr "Настройки без изменений"
@@ -3241,7 +3327,36 @@ msgstr "Необходимо перезагрузить систему для з
 msgid "Rollback to Snapshot"
 msgstr "Откат к снимку"
 
-#: plinth/modules/system/__init__.py:32 plinth/templates/base.html:114
+#: plinth/modules/syncthing/__init__.py:40
+msgid "File Synchronization (Syncthing)"
+msgstr ""
+
+#: plinth/modules/syncthing/__init__.py:43
+msgid ""
+"Syncthing is an application that can synchronizes files across multiple "
+"devices.  Creation, modification and deletion of files on one device will "
+"automatically be replicated to other devices."
+msgstr ""
+
+#: plinth/modules/syncthing/__init__.py:47
+#, python-brace-format
+msgid ""
+"Running Synching on {box_name}, provides an extra synchronization point for "
+"your data that is available most of the time so that your devices "
+"synchronize more often.  On {box_name}, a single instance of Syncthing runs "
+"and may be used by many users.  Each user's set of devices many be "
+"synchronized with a distinct set of folders.  Web interface is only "
+"available for users belonging to the \"admin\" group."
+msgstr ""
+
+#: plinth/modules/syncthing/__init__.py:54
+msgid ""
+"When enabled, Syncthing will be available from <a href=\"/syncthing/\">/"
+"syncthing</a> web interface. Desktop and mobile clients are also <a href="
+"\"https://syncthing.net/\">available.</a>"
+msgstr ""
+
+#: plinth/modules/system/__init__.py:32
 msgid "System Configuration"
 msgstr "Конфигурация системы"
 
@@ -3305,15 +3420,42 @@ msgstr "Доступ к {url} по tcp{kind} через Tor"
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Подтверждение использования Tor в {url} по tcp {kind}"
 
-#: plinth/modules/tor/forms.py:32
+#: plinth/modules/tor/forms.py:47
+msgid ""
+"Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
+msgstr ""
+
+#: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
 msgstr "Включить Tor"
 
-#: plinth/modules/tor/forms.py:35
+#: plinth/modules/tor/forms.py:93
+msgid "Use upstream bridges to connect to Tor network"
+msgstr ""
+
+#: plinth/modules/tor/forms.py:96
+msgid ""
+"When enabled, the bridges configured below will be used to connect to the "
+"Tor network. Use this option if your Internet Service Provider (ISP) blocks "
+"or censors connections to the Tor Network. This will disable relay modes."
+msgstr ""
+
+#: plinth/modules/tor/forms.py:102
+msgid "Upstream bridges"
+msgstr ""
+
+#: plinth/modules/tor/forms.py:105
+msgid ""
+"You can get some bridges from <a href=\"https://bridges.torproject.org/"
+"\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
+"here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
+msgstr ""
+
+#: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
 msgstr "Включить ретранслятор Tor"
 
-#: plinth/modules/tor/forms.py:38
+#: plinth/modules/tor/forms.py:115
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -3324,11 +3466,11 @@ msgstr ""
 "часть пропускной способности сети Tor. Сделайте это, если у вас более ширина "
 "канала более 2Мбит/c."
 
-#: plinth/modules/tor/forms.py:43
+#: plinth/modules/tor/forms.py:120
 msgid "Enable Tor bridge relay"
 msgstr "Ретранслятор Tor типа мост"
 
-#: plinth/modules/tor/forms.py:46
+#: plinth/modules/tor/forms.py:123
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -3338,11 +3480,11 @@ msgstr ""
 "общественной базы данных ретрансляции Tor. Это помогает другим обойти "
 "цензуру."
 
-#: plinth/modules/tor/forms.py:51
+#: plinth/modules/tor/forms.py:128
 msgid "Enable Tor Hidden Service"
 msgstr "Включить скрытый сервис Tor"
 
-#: plinth/modules/tor/forms.py:54
+#: plinth/modules/tor/forms.py:131
 #, python-brace-format
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
@@ -3353,11 +3495,11 @@ msgstr ""
 "чат) не раскрывая его расположение. Не используйте это для повышения "
 "анонимности."
 
-#: plinth/modules/tor/forms.py:59
+#: plinth/modules/tor/forms.py:136
 msgid "Download software packages over Tor"
 msgstr "Скачать пакеты программного обеспечения через Tor"
 
-#: plinth/modules/tor/forms.py:61
+#: plinth/modules/tor/forms.py:138
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
@@ -3366,6 +3508,10 @@ msgstr ""
 "Когда включен, программное обеспечение будет загружено через сеть Tor для "
 "установки и обновления. Это добавляет определенную степень безопасности и "
 "конфиденциальности во время загрузки программного обеспечения."
+
+#: plinth/modules/tor/forms.py:151
+msgid "Specify at least one upstream bridge to use upstream bridges."
+msgstr ""
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
@@ -3419,11 +3565,11 @@ msgstr "Порт Tor SOCKS вашего %(box_name)s доступен по по�
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Ошибка действий: {0}[{1}][{2}]"
 
-#: plinth/modules/tor/views.py:131
+#: plinth/modules/tor/views.py:128 plinth/modules/tor/views.py:156
 msgid "Configuration updated."
 msgstr "Конфигурация обновлена."
 
-#: plinth/modules/tor/views.py:133
+#: plinth/modules/tor/views.py:158
 msgid "An error occurred during configuration."
 msgstr "Произошла ошибка во время настройки."
 
@@ -3594,23 +3740,23 @@ msgstr "Пользователи и группы"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Проверьте запись LDAP \"{search_item}\""
 
-#: plinth/modules/users/forms.py:51
+#: plinth/modules/users/forms.py:52
 msgid "admin"
 msgstr "admin"
 
-#: plinth/modules/users/forms.py:52
+#: plinth/modules/users/forms.py:53
 msgid "wiki"
 msgstr "Wiki"
 
-#: plinth/modules/users/forms.py:64
+#: plinth/modules/users/forms.py:65
 msgid "Username is taken or is reserved."
 msgstr "Имя пользователя уже занято."
 
-#: plinth/modules/users/forms.py:94
+#: plinth/modules/users/forms.py:95
 msgid "Groups"
 msgstr "Группы"
 
-#: plinth/modules/users/forms.py:98
+#: plinth/modules/users/forms.py:99
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -3624,20 +3770,20 @@ msgstr ""
 "Пользователи в группе администратора имеют доступ ко всем службам. Они также "
 "могут войти в систему через SSH и иметь административные привилегии (sudo)."
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:269
+#: plinth/modules/users/forms.py:124 plinth/modules/users/forms.py:275
 msgid "Creating LDAP user failed."
 msgstr "Создание пользователя LDAP не удалось."
 
-#: plinth/modules/users/forms.py:133
+#: plinth/modules/users/forms.py:134
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Не удалось добавить нового пользователя в группу {group}."
 
-#: plinth/modules/users/forms.py:145
+#: plinth/modules/users/forms.py:146
 msgid "SSH Keys"
 msgstr "SSH ключи"
 
-#: plinth/modules/users/forms.py:149
+#: plinth/modules/users/forms.py:150
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -3648,31 +3794,31 @@ msgstr ""
 "на каждой строке. Пустые строки и строки, начинающиеся с # будут "
 "игнорироваться."
 
-#: plinth/modules/users/forms.py:189
+#: plinth/modules/users/forms.py:195
 msgid "Renaming LDAP user failed."
 msgstr "Переименование пользователя LDAP не удалось."
 
-#: plinth/modules/users/forms.py:201
+#: plinth/modules/users/forms.py:207
 msgid "Failed to remove user from group."
 msgstr "Не удалось удалить пользователя из группы."
 
-#: plinth/modules/users/forms.py:212
+#: plinth/modules/users/forms.py:218
 msgid "Failed to add user to group."
 msgstr "Не удалось добавить пользователя в группу."
 
-#: plinth/modules/users/forms.py:219
+#: plinth/modules/users/forms.py:225
 msgid "Unable to set SSH keys."
 msgstr "Не удалось задать ключи SSH."
 
-#: plinth/modules/users/forms.py:244
+#: plinth/modules/users/forms.py:250
 msgid "Changing LDAP user password failed."
 msgstr "Изменение LDAP пароля пользователя не удалось."
 
-#: plinth/modules/users/forms.py:277
+#: plinth/modules/users/forms.py:283
 msgid "Failed to add new user to admin group."
 msgstr "Не удалось добавить нового пользователя в группу администратора."
 
-#: plinth/modules/users/forms.py:292
+#: plinth/modules/users/forms.py:298
 msgid ""
 "Console login access restricted to users in \"admin\" group. This can be "
 "configured in security settings."
@@ -3680,30 +3826,30 @@ msgstr ""
 "Консольный вход доступен только для пользователей группы \"admin\" Это можно "
 "настроить в настройках безопасности."
 
-#: plinth/modules/users/forms.py:298
+#: plinth/modules/users/forms.py:304
 msgid "Failed to restrict console access."
 msgstr "Не удалось ограничить доступ к консоли."
 
-#: plinth/modules/users/forms.py:310
+#: plinth/modules/users/forms.py:316
 msgid "User account created, you are now logged in"
 msgstr "Учетная запись пользователя создана, теперь вы вошли"
 
-#: plinth/modules/users/templates/users_change_password.html:27
+#: plinth/modules/users/templates/users_change_password.html:29
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
 msgstr "Изменение пароля для <em>%(username)s</em>"
 
-#: plinth/modules/users/templates/users_change_password.html:40
+#: plinth/modules/users/templates/users_change_password.html:39
 msgid "Save Password"
 msgstr "Сохранить пароль"
 
 #: plinth/modules/users/templates/users_create.html:40
-#: plinth/modules/users/views.py:37 plinth/modules/users/views.py:58
+#: plinth/modules/users/views.py:39 plinth/modules/users/views.py:60
 msgid "Create User"
 msgstr "Создать пользователя"
 
 #: plinth/modules/users/templates/users_delete.html:26
-#: plinth/modules/users/views.py:117
+#: plinth/modules/users/views.py:127
 msgid "Delete User"
 msgstr "Удаление пользователя"
 
@@ -3745,7 +3891,7 @@ msgstr "Удалить пользователя %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:39
+#: plinth/modules/users/templates/users_update.html:41
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -3758,38 +3904,38 @@ msgstr ""
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: plinth/modules/users/views.py:35 plinth/modules/users/views.py:71
+#: plinth/modules/users/views.py:37 plinth/modules/users/views.py:73
 msgid "Users"
 msgstr "Пользователи"
 
-#: plinth/modules/users/views.py:56
+#: plinth/modules/users/views.py:58
 #, python-format
 msgid "User %(username)s created."
 msgstr "Пользователь %(username)s создан."
 
-#: plinth/modules/users/views.py:80
+#: plinth/modules/users/views.py:82
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Пользователь %(username)s обновлен."
 
-#: plinth/modules/users/views.py:81
+#: plinth/modules/users/views.py:83
 msgid "Edit User"
 msgstr "Редактирование пользователя"
 
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:137
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Пользователь {user} удален."
 
-#: plinth/modules/users/views.py:134
+#: plinth/modules/users/views.py:144
 msgid "Deleting LDAP user failed."
 msgstr "Сбой при удалении LDAP пользователя."
 
-#: plinth/modules/users/views.py:143
+#: plinth/modules/users/views.py:153
 msgid "Change Password"
 msgstr "Смена пароля"
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:154
 msgid "Password changed successfully."
 msgstr "Пароль успешно изменен."
 
@@ -3834,6 +3980,15 @@ msgstr "Secure Shell (SSH) сервер"
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Веб-интерфейс (Plinth)"
+
+#: plinth/templates/403.html:28
+msgid "403 Forbidden"
+msgstr ""
+
+#: plinth/templates/403.html:32
+#, python-format
+msgid "You don't have permission to access %(request_path)s on this server."
+msgstr ""
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -3881,20 +4036,28 @@ msgstr "Административный интерфейс Plinth для %(box_
 msgid "Toggle navigation"
 msgstr "Отображение навигации"
 
-#: plinth/templates/base.html:130 plinth/templates/base.html:131
+#: plinth/templates/base.html:101 plinth/templates/base.html:102
+msgid "Home"
+msgstr ""
+
+#: plinth/templates/base.html:139 plinth/templates/base.html:140
 msgid "Change password"
 msgstr "Смена пароля"
 
-#: plinth/templates/base.html:134 plinth/templates/base.html:135
-#: plinth/templates/base.html:148 plinth/templates/base.html:150
+#: plinth/templates/base.html:144 plinth/templates/base.html:158
+#: plinth/templates/base.html:160
 msgid "Log out"
 msgstr "Выход"
 
-#: plinth/templates/base.html:140 plinth/templates/base.html:142
+#: plinth/templates/base.html:150 plinth/templates/base.html:152
 msgid "Log in"
 msgstr "Войти"
 
-#: plinth/templates/index.html:56
+#: plinth/templates/base.html:222 plinth/templates/index.html:163
+msgid "JavaScript license information"
+msgstr ""
+
+#: plinth/templates/index.html:58
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -3903,16 +4066,11 @@ msgstr ""
 "Включите <a href=\"%(apps_url)s\">приложения</a> чтобы добавить ярлыки на "
 "эту страницу."
 
-#: plinth/templates/index.html:83
+#: plinth/templates/index.html:85
 msgid "Configure &raquo;"
 msgstr "Настроить &raquo;"
 
-#: plinth/templates/index.html:95
-#, python-format
-msgid "Welcome to %(box_name)s!"
-msgstr "Добро пожаловать на %(box_name)s!"
-
-#: plinth/templates/index.html:101
+#: plinth/templates/index.html:104
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -3924,18 +4082,7 @@ msgstr ""
 "Он предоставляет онлайн инструменты онлайн-коммуникации, уважающих вашу "
 "приватность и владение данными."
 
-#: plinth/templates/index.html:110
-#, python-format
-msgid ""
-"More info about %(box_name)s is available on the project <a href=\"https://"
-"freedombox.org\">homepage</a> and <a href=\"https://wiki.debian.org/"
-"FreedomBox\">wiki</a>."
-msgstr ""
-"Дополнительные сведения о проекте %(box_name)s доступны на <a href=\"https://"
-"freedombox.org\">домашней странице</a> проекта и <a href=\"https://wiki."
-"debian.org/FreedomBox\">вики</a>."
-
-#: plinth/templates/index.html:118
+#: plinth/templates/index.html:113
 #, python-format
 msgid ""
 "This portal is a part of Plinth, the %(box_name)s web interface. Plinth is "
@@ -3946,17 +4093,51 @@ msgstr ""
 "программное обеспечение, выпускаемое под лицензией GNU Affero General Public "
 "License, Версии 3 или старше."
 
+#: plinth/templates/index.html:128
+msgid "Wiki"
+msgstr ""
+
+#: plinth/templates/index.html:133
+msgid "Homepage"
+msgstr ""
+
+#: plinth/templates/index.html:136
+msgid "Source Code"
+msgstr ""
+
+#: plinth/templates/index.html:139
+msgid "Donate"
+msgstr ""
+
+#: plinth/templates/index.html:143
+#, fuzzy
+#| msgid "FreedomBox"
+msgid "FreedomBox Foundation"
+msgstr "FrеedomBox"
+
+#: plinth/templates/index.html:150
+msgid "IRC Chatroom"
+msgstr ""
+
+#: plinth/templates/index.html:155
+msgid "Mailing list"
+msgstr ""
+
 #: plinth/templates/login.html:35
 msgid "Login"
 msgstr "Логин"
 
-#: plinth/templates/service.html:43
-msgid "is running"
-msgstr "запущен"
+#: plinth/templates/service.html:44
+#, fuzzy, python-format
+#| msgid "Service discovery server is running"
+msgid "Service <em>%(service_name)s</em> is running."
+msgstr "Выполняется служба обнаружения сервера"
 
-#: plinth/templates/service.html:46
-msgid "is not running"
-msgstr "не запущен"
+#: plinth/templates/service.html:49
+#, fuzzy, python-format
+#| msgid "Service discovery server is not running"
+msgid "Service <em>%(service_name)s</em> is not running."
+msgstr "Не запущена служба обнаружения сервера"
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
@@ -4004,6 +4185,24 @@ msgstr "Приложение включено"
 msgid "Application disabled"
 msgstr "Приложение отключено"
 
+#~ msgid "Welcome to %(box_name)s!"
+#~ msgstr "Добро пожаловать на %(box_name)s!"
+
+#~ msgid ""
+#~ "More info about %(box_name)s is available on the project <a href="
+#~ "\"https://freedombox.org\">homepage</a> and <a href=\"https://wiki.debian."
+#~ "org/FreedomBox\">wiki</a>."
+#~ msgstr ""
+#~ "Дополнительные сведения о проекте %(box_name)s доступны на <a href="
+#~ "\"https://freedombox.org\">домашней странице</a> проекта и <a href="
+#~ "\"https://wiki.debian.org/FreedomBox\">вики</a>."
+
+#~ msgid "is running"
+#~ msgstr "запущен"
+
+#~ msgid "is not running"
+#~ msgstr "не запущен"
+
 #~ msgid "Anonymity Network (Tor)"
 #~ msgstr "Анонимная Сеть (Tor)"
 
@@ -4015,12 +4214,6 @@ msgstr "Приложение отключено"
 
 #~ msgid "Bridge"
 #~ msgstr "Мост"
-
-#~ msgid "Service discovery server is running"
-#~ msgstr "Выполняется служба обнаружения сервера"
-
-#~ msgid "Service discovery server is not running"
-#~ msgstr "Не запущена служба обнаружения сервера"
 
 #~ msgid "Enable network time"
 #~ msgstr "Включить сетевое время"

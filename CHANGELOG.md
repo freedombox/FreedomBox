@@ -27,6 +27,8 @@ All notable changes to this project will be documented in this file.
 - Fixed URL in INSTALL doc.
 - openvpn: Regenerate user key or certificate if empty.
 - openvpn: Prevent failures when regenerating user certificate.
+- Fixed augeas error in travis build.
+- disks: Workaround issue in parted during resize.
 
 ## [0.13.1] - 2017-01-22
 ### Added
