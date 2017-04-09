@@ -30,6 +30,7 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.required = True
 
     subparser = subparsers.add_parser(
         'is-partition-expandable',
