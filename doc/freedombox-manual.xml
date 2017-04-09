@@ -102,7 +102,7 @@
           <para>Power on the FreedomBox. </para>
         </listitem>
         <listitem>
-          <para>On first boot, the FreedomBox will perform it's initial setup and then reboot. This may take several minutes. </para>
+          <para>On first boot, the FreedomBox will perform its initial setup and then reboot. This may take several minutes. </para>
         </listitem>
         <listitem>
           <para>After the FreedomBox has rebooted, you can access its web interface (called Plinth) through your web browser. </para>
@@ -352,16 +352,27 @@
         <para>It is important to verify the images you have downloaded to ensure that the file has not be corrupted during the transmission and that it is indeed the image built by FreedomBox developers.  </para>
         <itemizedlist>
           <listitem>
-            <para>First open a terminal and import the public key of the FreedomBox developer who built the images: </para>
-            <screen format="linespecific">$ gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971</screen>
+            <para>First open a terminal and import the public keys of the FreedomBox developers who built the images: </para>
+            <screen format="linespecific">$ gpg --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+
+$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808</screen>
           </listitem>
           <listitem>
-            <para>Next, verify the fingerprint of the public key: </para>
+            <para>Next, verify the fingerprint of the public keys: </para>
             <screen format="linespecific">$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
 pub   4096R/0C9BC971 2011-11-12
       Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
 uid                  Sunil Mohan Adapa &lt;sunil@medhas.org&gt;
-sub   4096R/4C1D4B57 2011-11-12</screen>
+sub   4096R/4C1D4B57 2011-11-12
+
+$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy &lt;jvalleroy@mailbox.org&gt;
+uid                  James Valleroy &lt;jvalleroy@freedombox.org&gt;
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22</screen>
           </listitem>
           <listitem>
             <para>Finally, verify your downloaded image with its signature file <code>.sig</code>. For example: </para>
@@ -371,17 +382,6 @@ gpg: Good signature from "Sunil Mohan Adapa &lt;sunil@medhas.org&gt;"
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</screen>
-          </listitem>
-          <listitem>
-            <para>For version 0.9, some of the images are signed using the following key instead of the regular key: </para>
-            <screen format="linespecific">$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
-pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
-      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
-uid                  James Valleroy &lt;jvalleroy@mailbox.org&gt;
-uid                  James Valleroy &lt;jvalleroy@freedombox.org&gt;
-sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
-sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
-sub   2048R/2A624357 2015-12-22</screen>
           </listitem>
         </itemizedlist>
       </section>
@@ -1284,6 +1284,26 @@ proto udp</screen>
         </orderedlist>
       </section>
     </section>
+    <section>
+      <title>Chat Server (Matrix Synapse)</title>
+      <section>
+        <title>What is the Matrix?</title>
+        <para>Unlike Morpheus, we can tell you what the Matrix is. <inlinemediaobject><imageobject><imagedata depth="8pt" fileref="images/smile.png" width="8pt"/></imageobject><textobject><phrase>:)</phrase></textobject></inlinemediaobject> <ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
+        <para><emphasis role="strong">Note:</emphasis> The Matrix Synapse is available in FreedomBox starting with Plinth version 0.14. </para>
+      </section>
+      <section>
+        <title>How to access the Matrix?</title>
+        <para>We recommend the <ulink url="https://riot.im">Riot</ulink> client to access the Matrix server. You can <ulink url="https://riot.im/desktop.html">download</ulink> Riot for desktops.  Mobile applications for Android and iOS are available from app stores. </para>
+      </section>
+      <section>
+        <title>Setting up your FreedomBox for Matrix</title>
+        <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
+      </section>
+      <section>
+        <title>Federating with other Matrix instances</title>
+        <para>You will be able to interact with any other person running another Matrix instance.  This is done by simply starting a conversation with them using their matrix ID which is of the format <code>@their-username:their-domain</code>.  You can also join rooms which are in another server and have audio/video calls with contacts on other server. </para>
+      </section>
+    </section>
   </section>
   <section>
     <title>System</title>
@@ -1321,6 +1341,16 @@ proto udp</screen>
       <title>Date &amp; Time</title>
       <para>This network time server is a program that maintains the system time in synchronization with servers on the Internet. </para>
       <para>You can select your time zone by picking a big city nearby (they are sorted by <emphasis>Continent/City</emphasis>) or select directly the zone with respect to GMT (Greenwich Mean Time). </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/DateTime.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>DateTime.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
     </section>
     <section>
       <title>Diagnostics</title>
@@ -1329,9 +1359,13 @@ proto udp</screen>
     </section>
     <section>
       <title>Disks</title>
-      <para><emphasis>Disks</emphasis> shows free space of mounted partitions.    </para>
-      <para>If there is some free space left after the root partition, the option to expand the root partition is also available.    </para>
-      <para>In this example, a 32 GB micro-SD card is being used and the entire space is already allocated. </para>
+      <para><emphasis>Disks</emphasis> shows free space of mounted partitions. </para>
+      <para>If there is some free space left after the root partition, the option to expand the root partition is also available. </para>
+      <itemizedlist>
+        <listitem>
+          <para>Note: The expand partition feature is <emphasis role="strong">not</emphasis> working in Plinth v0.13.1. A fix is planned for v0.14.0. </para>
+        </listitem>
+      </itemizedlist>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -1480,6 +1514,16 @@ proto udp</screen>
       <title>Firewall</title>
       <para>Firewall is a network security system that controls the incoming and outgoing network traffic. Keeping a firewall enabled and properly configured reduces risk of security threat from the Internet. </para>
       <para>The operation of the firewall in Plinth web interface of FreedomBox is automatic. When you enable a service it is automatically permitted in the firewall and when you disable a service it is automatically disabled in the firewall. For services which are enabled by default on FreedomBox, firewall ports are also enabled by default during the first run process. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/Firewall.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>Firewall.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
       <para>Firewall management in FreedomBox is done using <ulink url="https://fedoraproject.org/wiki/FirewallD">FirewallD</ulink>. </para>
       <section>
         <title>Interfaces</title>
@@ -3442,6 +3486,16 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
         <section>
           <title>Single ethernet interface</title>
           <para>When there is only single ethernet interface available on the hardware device, there is not much scope for it to play the role of a router. In this case, the device is assumed to be just another machine in the network.  Accordingly, the only available interface is configured to be an <code>internal</code> interface in <code>automatic</code> configuration mode.  This means that it connects to the Internet using the configuration provided by a router in the network and also makes all (internal and external) of its services available to all the clients on this network. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/network_single.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>network_single.png</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
         </section>
         <section>
           <title>Multiple ethernet interface</title>
@@ -3783,12 +3837,12 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
         <para>To see the list of configured connections: </para>
         <screen format="linespecific">nmcli connection</screen>
         <para>To see the current status of a connection: </para>
-        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;'</screen>
+        <screen format="linespecific">nmcli connection show '&lt;connection_name&gt;'</screen>
         <para>To see the current firewall zone assigned to a network interface: </para>
-        <screen format="linespecific">nmcli connection show '&lt;conneciton_name&gt;' | grep zone</screen>
+        <screen format="linespecific">nmcli connection show '&lt;connection_name&gt;' | grep zone</screen>
         <para>or </para>
-        <screen format="linespecific">firewall-cmd --zone=internal --list=all
-firewall-cmd --zone=external --list=all</screen>
+        <screen format="linespecific">firewall-cmd --zone=internal --list-all
+firewall-cmd --zone=external --list-all</screen>
         <para>To create a new network connection: </para>
         <screen format="linespecific">nmcli con add con-name "&lt;connection_name&gt;" ifname "&lt;interface&gt;" type ethernet
 nmcli con modify "&lt;connection_name&gt;" connection.autoconnect TRUE
@@ -3856,6 +3910,11 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
         </section>
         <section>
           <title>Default User Account</title>
+          <itemizedlist>
+            <listitem>
+              <para>Note: If you can access Plinth, then you don't need to do this. You can use the user account created in Plinth to connect to SSH. </para>
+            </listitem>
+          </itemizedlist>
           <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
           <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
           <para>1. Decompress the image file. </para>
@@ -3936,6 +3995,16 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
       <title>Software Upgrades</title>
       <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
       <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/upgrades.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>upgrades.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
       <section>
         <title>Manual Upgrades</title>
         <para>In the Plinth web interface, you can initiate a manual upgrade process from <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section.  Note that once the upgrades start, it may take a long time to complete and Plinth may seem to wait for the page to load. </para>
@@ -6216,6 +6285,41 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
       <section>
+        <title>Plinth v0.14.0 (2017-04)</title>
+        <itemizedlist>
+          <listitem>
+            <para>tor: Added option to use upstream bridges. </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Added shortcut to front page, shown only when logged-in. </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Non-admin users can download their own profiles. </para>
+          </listitem>
+          <listitem>
+            <para>Added new locales for Hindi (hi) and Gujarati (gu). </para>
+          </listitem>
+          <listitem>
+            <para>Added Syncthing module for file synchronization. </para>
+          </listitem>
+          <listitem>
+            <para>Added Matrix Synapse as chat server with groups, audio and video. </para>
+          </listitem>
+          <listitem>
+            <para>Require admin access for all system configuration pages. </para>
+          </listitem>
+          <listitem>
+            <para>Changed appearance of topbar and footer. </para>
+          </listitem>
+          <listitem>
+            <para>openvpn: Regenerate user key or certificate if empty. </para>
+          </listitem>
+          <listitem>
+            <para>disks: Workaround issue in parted during resize. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>Plinth v0.13.1 (2017-01-22)</title>
         <itemizedlist>
           <listitem>
@@ -6745,7 +6849,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     </section>
     <section>
       <title>Development priorities</title>
-      <para>Upcoming priorities are discussed on an regular basis. You find the progress of the webinterface Plinth with it's priorities here:<ulink url="https://github.com/freedombox/Plinth/projects/1">Project Progess</ulink>. We want to enjoy soon a version 1.0.</para>
+      <para>Upcoming priorities are discussed on an regular basis. You find the progress of the web interface Plinth with its priorities here:<ulink url="https://tree.taiga.io/project/freedombox-freedombox/">Project Progress</ulink>. We want to enjoy soon a version 1.0.</para>
       <para>Please check next <ulink url="https://wiki.debian.org/FreedomBox/ProgressCalls#">progess calls</ulink> to keep yourself on track and meet members of the release team. A <ulink url="https://wiki.debian.org/FreedomBox/TODO#">TODO page</ulink> aggregates the complete list of the items to work on for <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>.  </para>
     </section>
     <section>
@@ -6850,7 +6954,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
             <para>Individual applications that FreedomBox exposes to users. </para>
           </listitem>
         </itemizedlist>
-        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes/ReleaseNotesDev#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://github.com/freedombox/Plinth/tree/master/plinth/locale">GitHub</ulink>. </para>
+        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://github.com/freedombox/Plinth/tree/master/plinth/locale">GitHub</ulink>. </para>
         <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
         <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
       </section>
