@@ -66,6 +66,7 @@ def parse_arguments():
     delete = subparsers.add_parser('delete', help='Delete a wiki or blog.')
     delete.add_argument('--name', help='Name of wiki or blog to delete.')
 
+    subparsers.required = True
     return parser.parse_args()
 
 
