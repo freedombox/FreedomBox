@@ -45,6 +45,7 @@ def parse_arguments():
     subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
     subparser.add_argument('number', help='Number of snapshot to rollback to')
 
+    subparsers.required = True
     return parser.parse_args()
 
 

@@ -67,6 +67,7 @@ def parse_arguments():
     dns = subparsers.add_parser('dns', help='Set DNS forwarders')
     dns.add_argument('--set', help='List of IP addresses, separated by space')
 
+    subparsers.required = True
     return parser.parse_args()
 
 

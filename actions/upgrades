@@ -46,6 +46,7 @@ def parse_arguments():
                           help='Return whether package manager is busy')
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
+    subparsers.required = True
     return parser.parse_args()
 
 

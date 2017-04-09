@@ -56,6 +56,7 @@ def parse_arguments():
         'host-cancel-publish', help='Cancel a running publish operation')
     host_cancel_publish.add_argument('pid', help='PID of the publish process')
 
+    subparsers.required = True
     return parser.parse_args()
 
 
