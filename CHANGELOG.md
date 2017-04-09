@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.14.0] - 2017-04-09
 ### Added
 - tor: Added option to use upstream bridges.
 - openvpn: Added to front page.
@@ -221,7 +221,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
-[Unreleased]: https://github.com/freedombox/Plinth/compare/v0.13.1...HEAD
+[0.14.0]: https://github.com/freedombox/Plinth/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/freedombox/Plinth/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/freedombox/Plinth/compare/v0.11.0...v0.12.0
