@@ -171,7 +171,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
 
         super(UserUpdateForm, self).__init__(*args, **kwargs)
 
-        if not is_user_admin(request.user):
+        if not is_user_admin(request):
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['groups'].disabled = True
 

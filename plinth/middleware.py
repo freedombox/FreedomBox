@@ -102,5 +102,5 @@ class AdminRequiredMiddleware(object):
            hasattr(view_func, 'IS_NON_ADMIN'):
             return
 
-        if not is_user_admin(request.user):
+        if not is_user_admin(request):
             raise PermissionDenied

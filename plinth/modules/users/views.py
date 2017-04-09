@@ -85,7 +85,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not is_user_admin(self.request.user):
+           and not is_user_admin(self.request):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
@@ -156,7 +156,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not is_user_admin(self.request.user):
+           and not is_user_admin(self.request):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
