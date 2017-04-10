@@ -74,7 +74,7 @@
     </div>
   </div>
 
-  <h3>Partition expansion</h3>
+  <h3>{% trans "Partition Expansion" %}</h3>
   {% if expandable_root_size %}
     <p>
       {% blocktrans trimmed %}
@@ -85,7 +85,8 @@
       {% endblocktrans %}
     </p>
     <p>
-      <a class="btn btn-primary btn-md" href="{% url 'disks:expand' %}">
+      <a class="btn btn-primary btn-md" href="{% url 'disks:expand' %}"
+         role="button">
         {% trans "Expand Root Partition" %}</a>
     </p>
   {% else %}
@@ -96,7 +97,8 @@
       {% endblocktrans %}
     </p>
     <p>
-      <a class="btn btn-primary btn-md disabled" href="{% url 'disks:expand' %}">
+      <a class="btn btn-primary btn-md disabled"
+         href="{% url 'disks:expand' %}" role="button">
         {% trans "Expand Root Partition" %}</a>
     </p>
   {% endif %}
