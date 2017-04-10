@@ -54,8 +54,9 @@ def non_admin_view(func):
 
 def is_user_admin(request, cached=False):
     """Return whether user is an administrator."""
-    if cached and request.session['cache_user_is_admin']:
+    if cached and request.session['cache_user_is_admin'] is not None:
         return request.session['cache_user_is_admin']
+
     user_is_admin = request.user.groups.filter(name='admin').exists()
     request.session['cache_user_is_admin'] = user_is_admin
     return user_is_admin
