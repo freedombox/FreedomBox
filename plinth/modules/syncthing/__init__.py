@@ -37,7 +37,7 @@ managed_services = ['syncthing']
 
 managed_packages = ['syncthing']
 
-title = _('File Synchronization (Syncthing)')
+title = _('File Synchronization \n (Syncthing)')
 
 description = [
     _('Syncthing is an application that can synchronizes files across '
