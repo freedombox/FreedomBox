@@ -24,4 +24,27 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index')
+"""
+URLs for the System module
+"""
+
+from django.conf.urls import url
+
+from . import views
+
+
+urlpatterns = [
+    url(r'^sys/$', views.index, name='index'),
+]
+"""
+URLs for the Apps module
+"""
+
+from django.conf.urls import url
+
+from . import apps as views
+
+
+urlpatterns = [
+    url(r'^apps/$', views.index, name='index'),
 ]
