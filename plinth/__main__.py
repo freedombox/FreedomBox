@@ -169,12 +169,7 @@ def configure_django():
         'root': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG' if cfg.debug else 'INFO'
-            },
-        'loggers': {
-            'django.db.backends': {
-                'level': 'DEBUG'
-                }
-            }                
+            }
         }
 
     templates = [
