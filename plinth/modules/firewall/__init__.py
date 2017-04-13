@@ -65,7 +65,10 @@ def setup(helper, old_version=None):
 def get_enabled_status():
     """Return whether firewall is enabled"""
     output = _run(['get-status'], superuser=True)
-    return output.split()[0] == 'running'
+    if not output:
+        return False
+    else:
+        return output.split()[0] == 'running'
 
 
 def get_enabled_services(zone):
