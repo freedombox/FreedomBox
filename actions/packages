@@ -28,6 +28,8 @@ import sys
 
 from plinth import cfg
 
+LOCK_FILE = '/var/lib/dpkg/lock'
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -41,6 +43,8 @@ def parse_arguments():
         'module', help='name of module for which package is being installed')
     subparser.add_argument(
         'packages', nargs='+', help='list of packages to install')
+    subparsers.add_parser('is-package-manager-busy',
+                          help='Return whether package manager is busy')
 
     subparsers.required = True
     return parser.parse_args()
@@ -92,6 +96,14 @@ def _assert_managed_packages(module, packages):
     module = import_module(module_path)
     for package in packages:
         assert package in module.managed_packages
+
+
+def subcommand_is_package_manager_busy(_):
+    """Return whether package manager is busy."""
+    try:
+        subprocess.check_output(['lsof', LOCK_FILE])
+    except subprocess.CalledProcessError:
+        sys.exit(-1)
 
 
 def main():

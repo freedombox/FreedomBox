@@ -84,11 +84,10 @@ class UpgradesConfigurationView(FormView):
         return super().form_valid(form)
 
 
-
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
-        actions.superuser_run('upgrades', ['is-package-manager-busy'])
+        actions.superuser_run('packages', ['is-package-manager-busy'])
         return True
     except actions.ActionError:
         return False

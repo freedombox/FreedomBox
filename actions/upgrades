@@ -28,7 +28,6 @@ import sys
 
 CONF_FILE = '/etc/apt/apt.conf.d/50unattended-upgrades'
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
-LOCK_FILE = '/var/lib/dpkg/lock'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 
 
@@ -42,8 +41,6 @@ def parse_arguments():
                           help='Check if automatic upgrades are enabled')
     subparsers.add_parser('enable-auto', help='Enable automatic upgrades')
     subparsers.add_parser('disable-auto', help='Disable automatic upgrades.')
-    subparsers.add_parser('is-package-manager-busy',
-                          help='Return whether package manager is busy')
     subparsers.add_parser('get-log', help='Print the automatic upgrades log')
 
     subparsers.required = True
@@ -127,14 +124,6 @@ def setup():
             conffile.write(line)
             if re.match(r'\s*Unattended-Upgrade::Origins-Pattern\s+{', line):
                 conffile.write('        "origin=Debian";\n')
-
-
-def subcommand_is_package_manager_busy(_):
-    """Return whether package manager is busy."""
-    try:
-        subprocess.check_output(['lsof', LOCK_FILE])
-    except subprocess.CalledProcessError:
-        sys.exit(-1)
 
 
 def subcommand_get_log(_):
