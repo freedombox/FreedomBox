@@ -26,10 +26,8 @@ def is_dpkg_active():
         try:
             fcntl.lockf(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
             print("False")
-            return False
         except IOError:
             print("True")
-            return True
 
 if __name__ == "__main__":
     is_dpkg_active()

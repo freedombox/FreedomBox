@@ -42,6 +42,16 @@ class Helper(object):
         self.exception = None
         self.allow_install = True
 
+    def is_dpkg_active(self):
+        output = plinth.actions.superuser_run('is_dpkg_active')
+        output = output.rstrip()
+        if output == 'True':
+            return True
+        elif output == 'False':
+            return False
+        else:
+            raise ActionError("Unexpected output from is_dpkg_active")
+
     def run_in_thread(self):
         """Execute the setup process in a thread."""
         thread = threading.Thread(target=self._run)
@@ -67,6 +77,7 @@ class Helper(object):
         if self.current_operation:
             return
 
+#        self.dpkg_is_active = self.is_dpkg_active()
         current_version = self.get_setup_version()
         if current_version >= self.module.version:
             return
@@ -147,7 +158,7 @@ class Helper(object):
             module_entry = models.Module.objects.get(pk=self.module_name)
             return module_entry.setup_version
         except models.Module.DoesNotExist:
-            return 0
+           return 0
 
     def set_setup_version(self, version):
         """Set a module's setup version."""
@@ -189,3 +200,5 @@ def list_dependencies(module_list=None, essential=False):
 
         for package_name in getattr(module, 'managed_packages', []):
             print(package_name)
+
+
