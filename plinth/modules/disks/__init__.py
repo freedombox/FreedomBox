@@ -71,6 +71,24 @@ def get_disks():
 
     return disks
 
+def get_disks_new():
+    command = ['lsblk', '--json', '--bytes', '--output-all']
+    try:
+        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    except subprocess.CalledProcessError as exception:
+        logger.exception('Error getting disk information: %s', exception)
+        return []  # TODO: or raise an "Failed Action exception"?
+
+    output = process.stdout.decode()
+    outputDict = json.loads(output)
+    for devdict in outputDict['blockdevices']:
+        disks = devdict['name']
+    #print(type(disks))
+    #disks = output
+    return disks
+
+def recurseIntoBlockDevices():
+    pass
 
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
@@ -98,3 +116,10 @@ def is_expandable(device):
 def expand_partition(device):
     """Expand a partition."""
     actions.superuser_run('disks', ['expand-partition', device])
+
+
+if __name__ == '__main__':
+    print("Old output of get_disks():")
+    print(get_disks())
+    print("\nNew output of get_disks():")
+    print(get_disks_new())
