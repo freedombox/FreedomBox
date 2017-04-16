@@ -42,16 +42,6 @@ class Helper(object):
         self.exception = None
         self.allow_install = True
 
-    def is_dpkg_active(self):
-        output = plinth.actions.superuser_run('is_dpkg_active')
-        output = output.rstrip()
-        if output == 'True':
-            return True
-        elif output == 'False':
-            return False
-        else:
-            raise ActionError("Unexpected output from is_dpkg_active")
-
     def run_in_thread(self):
         """Execute the setup process in a thread."""
         thread = threading.Thread(target=self._run)

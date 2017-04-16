@@ -208,7 +208,18 @@ class SetupView(TemplateView):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
         context['setup_helper'] = self.kwargs['setup_helper']
+        context['dpkg_is_active'] = self.is_dpkg_active()
         return context
+
+    def is_dpkg_active(self):
+        output = plinth.actions.superuser_run('is_dpkg_active')
+        output = output.rstrip()
+        if output == 'True':
+            return True
+        elif output == 'False':
+            return False
+        else:
+            raise ActionError("Unexpected output from is_dpkg_active")
 
     def post(self, *args, **kwargs):
         """Handle installing/upgrading applications.
