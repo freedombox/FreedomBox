@@ -72,6 +72,7 @@ def get_disks():
     return disks
 
 def get_disks_new():
+    """Return the list of disks and free space available."""
     command = ['lsblk', '--json', '--bytes', '--output-all']
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
@@ -80,19 +81,44 @@ def get_disks_new():
         return []  # TODO: or raise an "Failed Action exception"?
 
     output = process.stdout.decode()
-    outputDict = json.loads(output)
-    for devdict in outputDict['blockdevices']:
-        disks = devdict['name']
-    #print(type(disks))
-    #disks = output
-    return disks
+    out_dict = json.loads(output)
+    dev_dicts = out_dict['blockdevices']
+    # The output dict may contain nested sub-dicts at 'children'.
+    # This hierarchy is flattened into a list (without sub-lists),
+    # containing parent devices p1, p2, ..., and their children ...
+    # TODO: more description
+    
+    # FIXME: Why/how does commenting in the next 2 lines impact the 3rd??
+#    dev_list = []
+#    dev_list.extend(_subdict_to_list(dev_dict) for dev_dict in dev_dicts)
+    dev_list = _subdict_to_list(dev_dicts[0])  # FIXME: fix above line
+    return dev_list
 
-def recurseIntoBlockDevices():
-    pass
+def _subdict_to_list(dev_json):
+    # do depth-first walk into device dict hierarchy, append children to list
+    if 'children' not in dev_json.keys():
+        children = None
+    else:
+        children = dev_json.pop('children')
+    if children is None:
+        return dev_json
+    else:  # recursively accumulate sub-dicts
+        out_list = []
+        out_list.append(dev_json)  # add parent, then follow children
+        out_list.extend(_subdict_to_list(sub_dict) for sub_dict in children)
+        return out_list
 
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     devices = [disk['device'] for disk in disks if disk['mount_point'] == '/']
+    try:
+        return devices[0]
+    except IndexError:
+        return None
+
+def get_root_device2(disks):
+    """Return the root partition's device from list of partitions."""
+    devices = [disk['name'] for disk in disks if disk['mountpoint'] == '/']
     try:
         return devices[0]
     except IndexError:
@@ -119,7 +145,14 @@ def expand_partition(device):
 
 
 if __name__ == '__main__':
-    print("Old output of get_disks():")
-    print(get_disks())
-    print("\nNew output of get_disks():")
-    print(get_disks_new())
+    disksOld = get_disks()
+    print("OLD output of get_disks():")
+    print(disksOld)
+    print("\nOLD output of get_root_device():")
+    print(get_root_device(disksOld))
+    
+    disksNew = get_disks_new()
+    print("\nNEW output of get_disks_new():")
+    print(disksNew)
+    print("\nNEW output of get_root_device2():")
+    print(get_root_device2(disksNew))
