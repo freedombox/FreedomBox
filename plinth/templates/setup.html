@@ -50,8 +50,19 @@
       <form action="" method="post">
         {% csrf_token %}
 
-        <input type="submit" class="btn btn-md btn-primary"
-               value="{% trans "Install" %}" />
+        {% if package_manager_is_busy %}
+          <div class="alert alert-warning" role="alert">
+            {% blocktrans trimmed %}
+              Another installation or upgrade is already running.
+              Please wait for a few moments before trying again.
+            {% endblocktrans %}
+          </div>
+          <input type="submit" class="btn btn-md btn-primary"
+                 disabled="disabled" value="{% trans "Install" %}" />
+        {% else %}
+          <input type="submit" class="btn btn-md btn-primary"
+                 value="{% trans "Install" %}" />
+        {% endif %}
       </form>
     {% elif setup_helper.get_state == 'needs-update' %}
       <p>
@@ -63,8 +74,19 @@
       <form action="" method="post">
         {% csrf_token %}
 
-        <input type="submit" class="btn btn-md btn-primary"
-               value="{% trans "Update" %}" />
+        {% if package_manager_is_busy %}
+          <div class="alert alert-warning" role="alert">
+            {% blocktrans trimmed %}
+              Another installation or upgrade is already running.
+              Please wait for a few moments before trying again.
+            {% endblocktrans %}
+          </div>
+          <input type="submit" class="btn btn-md btn-primary"
+                 disabled="disabled" value="{% trans "Install" %}" />
+        {% else %}
+          <input type="submit" class="btn btn-md btn-primary"
+                 value="{% trans "Update" %}" />
+        {% endif %}
       </form>
     {% endif %}
 
