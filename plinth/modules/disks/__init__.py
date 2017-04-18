@@ -87,24 +87,23 @@ def get_disks_new():
     # This hierarchy is flattened into a list (without sub-lists),
     # containing parent devices p1, p2, ..., and their children ...
     # TODO: more description
-    
-    # FIXME: Why/how does commenting in the next 2 lines impact the 3rd??
-#    dev_list = []
-#    dev_list.extend(_subdict_to_list(dev_dict) for dev_dict in dev_dicts)
-    dev_list = _subdict_to_list(dev_dicts[0])  # FIXME: fix above line
+    dev_list = []
+    dev_list.extend(_subdict_to_list(dev_dict) for dev_dict in dev_dicts)
+    # TODO: test if really needed in case of just one entry in dev_list:
+    dev_list = [item for sublist in dev_list for item in sublist]  # flatten list
     return dev_list
 
-def _subdict_to_list(dev_json):
-    # do depth-first walk into device dict hierarchy, append children to list
-    if 'children' not in dev_json.keys():
+def _subdict_to_list(dev_dict):
+    # walk into device dict hierarchy, to append potential children to list
+    if 'children' not in dev_dict.keys():
         children = None
     else:
-        children = dev_json.pop('children')
+        children = dev_dict.pop('children')
     if children is None:
-        return dev_json
+        return dev_dict
     else:  # recursively accumulate sub-dicts
         out_list = []
-        out_list.append(dev_json)  # add parent, then follow children
+        out_list.append(dev_dict)  # add parent, then follow children
         out_list.extend(_subdict_to_list(sub_dict) for sub_dict in children)
         return out_list
 
@@ -150,7 +149,7 @@ if __name__ == '__main__':
     print(disksOld)
     print("\nOLD output of get_root_device():")
     print(get_root_device(disksOld))
-    
+    print("\n----------------------------------")
     disksNew = get_disks_new()
     print("\nNEW output of get_disks_new():")
     print(disksNew)
