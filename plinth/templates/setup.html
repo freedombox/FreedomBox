@@ -50,10 +50,12 @@
       <form action="" method="post">
         {% csrf_token %}
 
-        {% if dpkg_is_active %}
+        {% if package_manager_is_busy %}
           <div class="alert alert-warning" role="alert">
-            Another installation or upgrade is already running.
-            Please wait for a few moments and refresh this page.
+            {% blocktrans trimmed %}
+              Another installation or upgrade is already running.
+              Please wait for a few moments before trying again.
+            {% endblocktrans %}
           </div>
           <input type="submit" class="btn btn-md btn-primary"
                  disabled="disabled" value="{% trans "Install" %}" />
@@ -72,10 +74,12 @@
       <form action="" method="post">
         {% csrf_token %}
 
-        {% if dpkg_is_active %}
+        {% if package_manager_is_busy %}
           <div class="alert alert-warning" role="alert">
-            Another installation or upgrade is already running.
-            Please wait for a few moments and refresh this page.
+            {% blocktrans trimmed %}
+              Another installation or upgrade is already running.
+              Please wait for a few moments before trying again.
+            {% endblocktrans %}
           </div>
           <input type="submit" class="btn btn-md btn-primary"
                  disabled="disabled" value="{% trans "Install" %}" />

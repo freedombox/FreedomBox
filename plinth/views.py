@@ -29,6 +29,7 @@ from stronghold.decorators import public
 import time
 
 from . import forms, frontpage
+from plinth import actions
 import plinth
 
 
@@ -208,18 +209,18 @@ class SetupView(TemplateView):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
         context['setup_helper'] = self.kwargs['setup_helper']
-        context['dpkg_is_active'] = self.is_dpkg_active()
+        context['package_manager_is_busy'] = self.is_package_manager_busy()
         return context
 
-    def is_dpkg_active(self):
-        output = plinth.actions.superuser_run('is_dpkg_active')
-        output = output.rstrip()
-        if output == 'True':
+
+    def is_package_manager_busy(self):
+        """Return whether a package manager is running."""
+        try:
+            actions.superuser_run('packages', ['is-package-manager-busy'])
             return True
-        elif output == 'False':
+        except actions.ActionError:
             return False
-        else:
-            raise ActionError("Unexpected output from is_dpkg_active")
+
 
     def post(self, *args, **kwargs):
         """Handle installing/upgrading applications.
