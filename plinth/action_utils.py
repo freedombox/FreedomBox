@@ -20,6 +20,7 @@ Python action utility functions.
 """
 
 from django.utils.translation import ugettext as _
+from distutils import spawn
 import os
 import logging
 import psutil
@@ -127,12 +128,15 @@ def webserver_is_enabled(name, kind='config'):
         return False
 
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
-    try:
-        # Don't print anything on the terminal
-        subprocess.check_output(['a2query', option_map[kind], name],
-                                stderr=subprocess.STDOUT)
-        return True
-    except subprocess.CalledProcessError:
+    if spawn.find_executable('a2query'):
+        try:
+            # Don't print anything on the terminal
+            subprocess.check_output(['a2query', option_map[kind], name],
+                                    stderr=subprocess.STDOUT)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+    else:
         return False
 
 
