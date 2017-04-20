@@ -38,7 +38,7 @@ first_boot_steps = [
     {
         'id': 'users_firstboot',
         'url': 'users:firstboot',
-        'order': 1
+        'order': 2
     },
 ]
 
