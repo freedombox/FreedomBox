@@ -16,16 +16,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Helper for security configuration
 """
 
 import argparse
-
+import os
+import subprocess
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+KEYS_DIRECTORY = '/etc/apache2/keys'
 
 
 def parse_arguments():
@@ -39,6 +40,9 @@ def parse_arguments():
     subparsers.add_parser(
         'disable-restricted-access',
         help='Don\'t restrict console login to users in admin or sudo group')
+    subparsers.add_parser(
+        'setup-sso',
+        help='Setup mod_auth_pubtkt to be used for single sign-on')
 
     subparsers.required = True
     return parser.parse_args()
@@ -66,6 +70,25 @@ def subcommand_disable_restricted_access(_):
         for line in lines:
             if ACCESS_CONF_SNIPPET != line.strip():
                 conffile.write(line)
+
+
+def subcommand_setup_sso(managed_packages):
+    """
+    Setup single sign-on using the apache module mod_auth_pubtkt.
+    Generate public/private key pair for signing the auth_pubtkt tickets.
+    """
+    if not os.path.exists(KEYS_DIRECTORY):
+        os.mkdir(KEYS_DIRECTORY)
+        os.chmod(KEYS_DIRECTORY, 700)
+        os.chdir(KEYS_DIRECTORY)
+        subprocess.check_call(
+            ['openssl', 'genrsa', '-out', 'privkey.pem', '1024'])
+        subprocess.check_call([
+            'openssl', 'rsa', '-in', 'privkey.pem', '-out', 'pubkey.pem',
+            '-pubout'
+        ])
+        os.chmod(os.path.join(KEYS_DIRECTORY, 'privkey.pem'), 700)
+        os.chmod(os.path.join(KEYS_DIRECTORY, 'pubkey.pem'), 700)
 
 
 def main():
