@@ -28,14 +28,13 @@ from ruamel.yaml.util import load_yaml_guess_indent
 
 from plinth import action_utils
 from plinth import actions
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.modules import names
 
-version = 1
 
-depends = ['apps']
+version = 1
 
 managed_services = ['matrix-synapse']
 
@@ -67,7 +66,7 @@ SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 
 def init():
     """Initialize the matrix-synapse module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-comment', 'matrixsynapse:index')
 
     global service

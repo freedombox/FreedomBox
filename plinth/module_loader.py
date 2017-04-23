@@ -37,6 +37,13 @@ loaded_modules = collections.OrderedDict()
 _modules_to_load = None
 
 
+def include_urls():
+    """Include the URLs of the modules into main Django project."""
+    for module_import_path in get_modules_to_load():
+        module_name = module_import_path.split('.')[-1]
+        _include_module_urls(module_import_path, module_name)
+
+
 def load_modules():
     """
     Read names of enabled modules in modules/enabled directory and
@@ -54,8 +61,6 @@ def load_modules():
                              exception)
             if cfg.debug:
                 raise
-
-        _include_module_urls(module_import_path, module_name)
 
     ordered_modules = []
     remaining_modules = dict(modules)  # Make a copy

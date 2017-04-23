@@ -46,14 +46,6 @@ class TestCfg(unittest.TestCase):
         """Cleanup after all tests are completed."""
         cfg.read()
 
-    def test_read_main_menu(self):
-        """Verify that the cfg.main_menu container is initially empty."""
-        # Menu should be empty before...
-        self.assertEqual(len(cfg.main_menu.items), 0)
-        cfg.read(self.test_config_file, self.test_config_dir)
-        # ...and after reading the config file
-        self.assertEqual(len(cfg.main_menu.items), 0)
-
     def test_read_default_config_file(self):
         """Verify that the default config file can be read correctly."""
         # Read the plinth.config file directly

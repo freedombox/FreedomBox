@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 
 class Menu(object):
@@ -51,7 +51,7 @@ class Menu(object):
         """Return a menu item with given URL name."""
         url = reverse(urlname, args=url_args, kwargs=url_kwargs)
         for item in self.items:
-            if item.url == url:
+            if str(item.url) == url:
                 return item
 
         raise KeyError('Menu item not found')
@@ -67,7 +67,7 @@ class Menu(object):
         url_args and url_kwargs will be passed on to Django reverse().
 
         """
-        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
+        url = reverse_lazy(urlname, args=url_args, kwargs=url_kwargs)
         return self.add_item(label, icon, url, order)
 
     def add_item(self, label, icon, url, order=50):
@@ -82,5 +82,14 @@ class Menu(object):
     def active_item(self, request):
         """Return the first active item (e.g. submenu) that is found."""
         for item in self.items:
-            if request.path.startswith(item.url):
+            if request.path.startswith(str(item.url)):
                 return item
+
+
+main_menu = Menu()
+
+
+def init():
+    """Create main menu and other essential menus."""
+    main_menu.add_urlname('', 'glyphicon-download-alt', 'apps')
+    main_menu.add_urlname('', 'glyphicon-cog', 'system')

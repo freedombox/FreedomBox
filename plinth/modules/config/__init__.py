@@ -28,4 +28,4 @@ version = 1
 
 is_essential = True
 
-depends = ['system', 'firewall', 'names']
+depends = ['firewall', 'names']

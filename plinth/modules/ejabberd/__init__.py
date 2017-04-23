@@ -26,16 +26,14 @@ import socket
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 
 
 version = 1
-
-depends = ['apps']
 
 managed_services = ['ejabberd']
 
@@ -59,7 +57,7 @@ logger = logging.getLogger(__name__)
 
 def init():
     """Initialize the ejabberd module"""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-comment', 'ejabberd:index')
 
     global service

@@ -22,15 +22,13 @@ Plinth module to configure system date and time
 from django.utils.translation import ugettext_lazy as _
 import subprocess
 
-from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
 
 
 version = 1
 
 is_essential = True
-
-depends = ['system']
 
 managed_services = ['ntp']
 
@@ -48,7 +46,7 @@ service = None
 
 def init():
     """Intialize the date/time module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-time', 'datetime:index')
 
     global service

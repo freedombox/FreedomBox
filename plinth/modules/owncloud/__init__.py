@@ -25,12 +25,11 @@ import os
 
 from plinth import actions
 from plinth import action_utils
-from plinth import cfg
 from plinth import service as service_module
+from plinth.menu import main_menu
+
 
 version = 1
-
-depends = ['apps']
 
 managed_packages = ['postgresql', 'php5-pgsql', 'owncloud', 'php-dropbox',
                     'php-google-api-php-client']
@@ -62,7 +61,7 @@ def init():
        not os.path.isfile('/etc/owncloud/autoconfig.php'):
         return
 
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-picture', 'owncloud:index')
 
     global service

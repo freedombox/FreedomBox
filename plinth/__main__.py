@@ -30,6 +30,7 @@ import sys
 import cherrypy
 
 from plinth import cfg
+from plinth import menu
 from plinth import module_loader
 from plinth import service
 from plinth import setup
@@ -328,6 +329,10 @@ def main():
     logger.info('Configuration loaded from file - %s', cfg.config_file)
     logger.info('Script prefix - %s', cfg.server_dir)
 
+    module_loader.include_urls()
+
+    menu.init()
+
     module_loader.load_modules()
     if arguments.setup is not False:
         run_setup_and_exit(arguments.setup)
@@ -348,6 +353,7 @@ def main():
 
     cherrypy.engine.start()
     cherrypy.engine.block()
+
 
 if __name__ == '__main__':
     main()

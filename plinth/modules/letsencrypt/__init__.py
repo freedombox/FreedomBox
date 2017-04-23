@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils
 from plinth import cfg
+from plinth.menu import main_menu
 from plinth.modules import names
 from plinth.utils import format_lazy
 
@@ -31,7 +32,7 @@ version = 1
 
 is_essential = False
 
-depends = ['apps', 'names']
+depends = ['names']
 
 managed_packages = ['certbot']
 
@@ -59,7 +60,7 @@ service = None
 
 def init():
     """Intialize the module."""
-    menu = cfg.main_menu.get('system:index')
+    menu = main_menu.get('system')
     menu.add_urlname(_('Certificates (Let\'s Encrypt)'),
                      'glyphicon-lock', 'letsencrypt:index')
 

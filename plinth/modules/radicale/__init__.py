@@ -28,11 +28,11 @@ from plinth import action_utils
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
+from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-version = 1
 
-depends = ['apps']
+version = 1
 
 service = None
 
@@ -57,7 +57,7 @@ CONFIG_FILE = '/etc/radicale/config'
 
 def init():
     """Initialize the radicale module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
 
     global service
