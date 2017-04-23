@@ -40,7 +40,7 @@ managed_services = ['openvpn@freedombox']
 
 managed_packages = ['openvpn', 'easy-rsa']
 
-title = _('Virtual Private Network (OpenVPN)')
+title = _('Virtual Private Network \n (OpenVPN)')
 
 description = [
     format_lazy(
