@@ -56,11 +56,11 @@ firewall-cmd --set-default-zone=external
 # following is then for essential services and services that are not
 # yet configurable from Plinth.
 
-# HTTP (JWChat, ownCloud)
+# HTTP (JWChat)
 firewall-cmd --zone=external --permanent --add-service=http
 firewall-cmd --zone=internal --permanent --add-service=http
 
-# HTTPS (Plinth, JWChat, ownCloud)
+# HTTPS (Plinth, JWChat)
 firewall-cmd --zone=external --permanent --add-service=https
 firewall-cmd --zone=internal --permanent --add-service=https
 
