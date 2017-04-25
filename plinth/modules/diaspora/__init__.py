@@ -1,4 +1,3 @@
-#
 # This file is part of Plinth.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,14 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import subprocess
 import os
 
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules import names
 from plinth.utils import format_lazy
-from plinth import actions, action_utils, cfg, frontpage, service as service_module
+from plinth import actions, action_utils, cfg, frontpage, \
+    service as service_module
+from plinth.errors import DomainNotRegisteredError
 
 domain_name_file = "/etc/diaspora/domain_name"
 lazy_domain_name = None  # To avoid repeatedly reading from file
@@ -33,15 +33,16 @@ def is_setup():
 
 
 def get_configured_domain_name():
+    global lazy_domain_name
     if lazy_domain_name:
         return lazy_domain_name
 
     if not is_setup():
-        return ""
+        raise DomainNotRegisteredError()
 
     with open(domain_name_file) as dnf:
         global lazy_domain_name
-        lazy_domain_name =  dnf.read().rstrip()
+        lazy_domain_name = dnf.read().rstrip()
         return lazy_domain_name
 
 
@@ -60,12 +61,14 @@ managed_services = ['diaspora']
 managed_packages = ['diaspora']
 
 description = [
-    _('diaspora* is a decentralized social network where you can store and control your own data.'
-      ),
+    _('diaspora* is a decentralized social network where you can store '
+      'and control your own data.'),
     format_lazy(
         'When enabled, the diaspora* pod will be available from '
-        '<a href="https://diaspora.{host}">diaspora.{host}</a> path on the web server.'.
-        format(host=get_configured_domain_name()))
+        '<a href="https://diaspora.{host}">diaspora.{host}</a> path on the '
+        'web server.'.format(host=get_configured_domain_name()) if is_setup()
+        else 'Please register a domain name for your FreedomBox to be able to'
+        ' federate with other diaspora* pods.')
 ]
 
 
@@ -126,11 +129,11 @@ def get_domain_names():
 
 def add_shortcut():
     """Add shortcut to diaspora on the Plinth homepage"""
-    frontpage.add_shortcut(
-        'diaspora',
-        title,
-        url='https://diaspora.{}'.format(get_configured_domain_name()),
-        login_required=True)
+    if is_setup():
+        frontpage.add_shortcut(
+            'diaspora', title,
+            url='https://diaspora.{}'.format(get_configured_domain_name()),
+            login_required=True)
 
 
 def is_enabled():

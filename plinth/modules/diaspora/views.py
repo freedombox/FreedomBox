@@ -40,6 +40,7 @@ class DiasporaSetupView(FormView):
         domain_name = form.cleaned_data['domain_name']
         actions.superuser_run('diaspora',
                               ['setup', '--domain-name', domain_name])
+        diaspora.add_shortcut()
 
         return super().form_valid(form)
 

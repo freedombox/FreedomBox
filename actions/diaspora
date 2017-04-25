@@ -21,7 +21,6 @@ Configuration helper for diaspora* pod.
 """
 
 import argparse
-import socket
 import subprocess
 
 from plinth import action_utils
@@ -31,7 +30,7 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    pre_install = subparsers.add_parser(
+    subparsers.add_parser(
         'pre-install',
         help='Preseed debconf values before packages are installed.')
 
@@ -87,6 +86,7 @@ def subcommand_disable_ssl(_):
     Disable ssl in the diaspora configuration
     as the apache server takes care of ssl
     """
+    # Using sed because ruamel.yaml has a bug for this kind of files
     subprocess.call([
         "sed", "-i", "s/#require_ssl: true/require_ssl: false/g",
         "/etc/diaspora/diaspora.yml"
