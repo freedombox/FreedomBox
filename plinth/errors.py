@@ -38,3 +38,11 @@ class DomainRegistrationError(PlinthError):
 class PackageNotInstalledError(PlinthError):
     """Could not complete module setup due to missing package."""
     pass
+
+
+class DomainNotRegisteredError(PlinthError):
+    """
+    An action couldn't be performed because this
+    FreedomBox doesn't have a registered domain
+    """
+    pass
