@@ -71,6 +71,7 @@ def get_disks():
 
     return disks
 
+
 def get_disks_new():
     """Return the list of disks and free space available."""
     command = ['lsblk', '--json', '--bytes', '--output-all']
@@ -78,7 +79,7 @@ def get_disks_new():
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as exception:
         logger.exception('Error getting disk information: %s', exception)
-        return []  # TODO: or raise an "Failed Action exception"?
+        return []
 
     output = process.stdout.decode()
     out_dict = json.loads(output)
@@ -90,8 +91,9 @@ def get_disks_new():
     dev_list = []
     dev_list.extend(_subdict_to_list(dev_dict) for dev_dict in dev_dicts)
     # TODO: test if really needed in case of just one entry in dev_list:
-    dev_list = [item for sublist in dev_list for item in sublist]  # flatten list
+    dev_list = [item for sublist in dev_list for item in sublist]  # flatten
     return dev_list
+
 
 def _subdict_to_list(dev_dict):
     # walk into device dict hierarchy, to append potential children to list
@@ -107,6 +109,7 @@ def _subdict_to_list(dev_dict):
         out_list.extend(_subdict_to_list(sub_dict) for sub_dict in children)
         return out_list
 
+
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
     devices = [disk['device'] for disk in disks if disk['mount_point'] == '/']
@@ -114,6 +117,7 @@ def get_root_device(disks):
         return devices[0]
     except IndexError:
         return None
+
 
 def get_root_device2(disks):
     """Return the root partition's device from list of partitions."""
