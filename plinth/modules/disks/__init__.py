@@ -48,12 +48,11 @@ def init():
 
 
 def get_disks():
-    """ FIXME """
+    """Returns list of disks by combining information from df and lsblk."""
     infos_df = _get_diskinfo_df()
     infos_lsblk = _get_diskinfo_lsblk()
-    # Combine both sources of info-dicts into one dict, based on mount point;
-    # note that this also discards disks without a (current) mount point,
-    # which includes the parent devices returned by lsblk.
+    # Combine both sources of info dicts into one dict, based on mount point;
+    # note this discards disks without a (current) mount point.
     combined_list = []
     for info_df in infos_df:
         for info_lsblk in infos_lsblk:
@@ -104,17 +103,8 @@ def _get_diskinfo_lsblk():
 
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
-    devices = [disk['device'] for disk in disks if disk['mount_point'] == '/']
-    try:
-        return devices[0]
-    except IndexError:
-        return None
-
-
-def get_root_device2(disks):
-    """Return the root partition's device from list of partitions."""
     devices = ['/dev/{0}'.format(disk['kname']) for disk in disks
-               if disk['mountpoint'] == '/']
+               if disk['mountpoint'] == '/' and disk['type'] == 'part']
     try:
         return devices[0]
     except IndexError:
@@ -138,20 +128,3 @@ def is_expandable(device):
 def expand_partition(device):
     """Expand a partition."""
     actions.superuser_run('disks', ['expand-partition', device])
-
-
-if __name__ == '__main__':
-    disksOld = _get_diskinfo_df()
-    print("Output of (old) _get_diskinfo_df():")
-    print(disksOld)
-    print("\nOLD output of get_root_device():")
-    print(get_root_device(disksOld))
-    print("\n----------------------------------")
-    disksNew = _get_diskinfo_lsblk()
-    print("\nOutput of (new) _get_diskinfo_lsblk():")
-    print(disksNew)
-    print("\nNEW output of get_root_device2():")
-    print(get_root_device2(disksNew))
-    print('\n----------------------------------')
-    print('New, combined output of get_disks():')
-    print(get_disks())
