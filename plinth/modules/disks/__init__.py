@@ -98,12 +98,14 @@ def _get_diskinfo_lsblk():
 
     output = process.stdout.decode()
     dev_dicts = json.loads(output)['blockdevices']
+    for ddict in dev_dicts:
+        ddict['dev_kname'] = '/dev/{0}'.format(ddict['kname'])
     return dev_dicts
 
 
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
-    devices = ['/dev/{0}'.format(disk['kname']) for disk in disks
+    devices = [disk['dev_kname'] for disk in disks
                if disk['mountpoint'] == '/' and disk['type'] == 'part']
     try:
         return devices[0]
