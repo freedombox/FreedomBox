@@ -48,6 +48,7 @@ def init():
 
 
 def get_disks():
+    """ FIXME """
     infos_df = _get_diskinfo_df()
     infos_lsblk = _get_diskinfo_lsblk()
     # Combine both sources of info-dicts into one dict, based on mount point;
@@ -59,7 +60,7 @@ def get_disks():
             if info_df['mount_point'] == info_lsblk['mountpoint']:
                 info_df.update(info_lsblk)
                 combined_list.append(info_df)
-        return combined_list
+    return combined_list
 
 
 def _get_diskinfo_df():
@@ -141,17 +142,16 @@ def expand_partition(device):
 
 if __name__ == '__main__':
     disksOld = _get_diskinfo_df()
-    print("OLD output of get_disks():")
+    print("Output of (old) _get_diskinfo_df():")
     print(disksOld)
     print("\nOLD output of get_root_device():")
     print(get_root_device(disksOld))
     print("\n----------------------------------")
     disksNew = _get_diskinfo_lsblk()
-    print("\nNEW output of get_disks_new():")
+    print("\nOutput of (new) _get_diskinfo_lsblk():")
     print(disksNew)
     print("\nNEW output of get_root_device2():")
     print(get_root_device2(disksNew))
-
-    print('----------------')
-    print('combined output of get_disks():')
+    print('\n----------------------------------')
+    print('New, combined output of get_disks():')
     print(get_disks())
