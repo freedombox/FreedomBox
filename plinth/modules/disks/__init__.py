@@ -48,6 +48,21 @@ def init():
 
 
 def get_disks():
+    infos_df = _get_diskinfo_df()
+    infos_lsblk = _get_diskinfo_lsblk()
+    # Combine both sources of info-dicts into one dict, based on mount point;
+    # note that this also discards disks without a (current) mount point,
+    # which includes the parent devices returned by lsblk.
+    combined_list = []
+    for info_df in infos_df:
+        for info_lsblk in infos_lsblk:
+            if info_df['mount_point'] == info_lsblk['mountpoint']:
+                info_df.update(info_lsblk)
+                combined_list.append(info_df)
+        return combined_list
+
+
+def _get_diskinfo_df():
     """Return the list of disks and free space available."""
     command = ['df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
                '--output=source,target,fstype,size,used,pcent',
@@ -72,9 +87,9 @@ def get_disks():
     return disks
 
 
-def get_disks_new():
+def _get_diskinfo_lsblk():
     """Return the list of disks and free space available."""
-    command = ['lsblk', '--json', '--bytes', '--output-all']
+    command = ['lsblk', '--json', '--output', 'kname,pkname,mountpoint,type']
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as exception:
@@ -82,32 +97,8 @@ def get_disks_new():
         return []
 
     output = process.stdout.decode()
-    out_dict = json.loads(output)
-    dev_dicts = out_dict['blockdevices']
-    # The output dict may contain nested sub-dicts at 'children'.
-    # This hierarchy is flattened into a list (without sub-lists),
-    # containing parent devices p1, p2, ..., and their children ...
-    # TODO: more description
-    dev_list = []
-    dev_list.extend(_subdict_to_list(dev_dict) for dev_dict in dev_dicts)
-    # TODO: test if really needed in case of just one entry in dev_list:
-    dev_list = [item for sublist in dev_list for item in sublist]  # flatten
-    return dev_list
-
-
-def _subdict_to_list(dev_dict):
-    # walk into device dict hierarchy, to append potential children to list
-    if 'children' not in dev_dict.keys():
-        children = None
-    else:
-        children = dev_dict.pop('children')
-    if children is None:
-        return dev_dict
-    else:  # recursively accumulate sub-dicts
-        out_list = []
-        out_list.append(dev_dict)  # add parent, then follow children
-        out_list.extend(_subdict_to_list(sub_dict) for sub_dict in children)
-        return out_list
+    dev_dicts = json.loads(output)['blockdevices']
+    return dev_dicts
 
 
 def get_root_device(disks):
@@ -121,7 +112,8 @@ def get_root_device(disks):
 
 def get_root_device2(disks):
     """Return the root partition's device from list of partitions."""
-    devices = [disk['name'] for disk in disks if disk['mountpoint'] == '/']
+    devices = ['/dev/{0}'.format(disk['kname']) for disk in disks
+               if disk['mountpoint'] == '/']
     try:
         return devices[0]
     except IndexError:
@@ -148,14 +140,18 @@ def expand_partition(device):
 
 
 if __name__ == '__main__':
-    disksOld = get_disks()
+    disksOld = _get_diskinfo_df()
     print("OLD output of get_disks():")
     print(disksOld)
     print("\nOLD output of get_root_device():")
     print(get_root_device(disksOld))
     print("\n----------------------------------")
-    disksNew = get_disks_new()
+    disksNew = _get_diskinfo_lsblk()
     print("\nNEW output of get_disks_new():")
     print(disksNew)
     print("\nNEW output of get_root_device2():")
     print(get_root_device2(disksNew))
+
+    print('----------------')
+    print('combined output of get_disks():')
+    print(get_disks())
