@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/python3
 #
 # This file is part of Plinth.
 #
@@ -16,15 +16,38 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-zonename="$1"
+"""
+Set time zones with timedatectl (requires root permission).
+"""
 
-tzpath="/usr/share/zoneinfo/$zonename"
+import argparse
+import subprocess
+import sys
 
-if [ -e "$tzpath" ] ; then
-    cp "$tzpath" /etc/localtime
-    echo "$zonename" > /etc/timezone
-    exit 0
-else
-    echo "Time zone not valid" 1>&2
-    exit 1
-fi
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'timezone', help='Time zone to set; see "timedatectl list-timezones".')
+    return parser.parse_args()
+
+
+def _set_timezone(arguments):
+    """Set time zone with timedatectl."""
+    try:
+        command = ['timedatectl', 'set-timezone', arguments.timezone]
+        subprocess.run(command, stdout=subprocess.DEVNULL, check=True)
+    except subprocess.CalledProcessError as exception:
+        print('Error setting timezone:', exception, file=sys.stderr)
+        sys.exit(1)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+    _set_timezone(arguments)
+
+
+if __name__ == '__main__':
+    main()
