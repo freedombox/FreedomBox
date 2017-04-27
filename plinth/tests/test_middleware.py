@@ -19,7 +19,7 @@
 Test module for Plinth's custom middleware.
 """
 
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, MagicMock, patch
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied
@@ -162,14 +162,14 @@ class TestAdminMiddleware(TestCase):
     def test_that_admin_view_is_denied_for_usual_user(self):
         """Test that normal user is denied for an admin view"""
         self.request.user.groups.filter().exists = Mock(return_value=False)
-
+        self.request.session = MagicMock()
         self.assertRaises(PermissionDenied, self.middleware.process_view,
                           self.request, **self.kwargs)
 
     def test_that_admin_view_is_allowed_for_admin_user(self):
         """Test that admin user is allowed for an admin view"""
         self.request.user.groups.filter().exists = Mock(return_value=True)
-
+        self.request.session = MagicMock()
         response = self.middleware.process_view(self.request, **self.kwargs)
         self.assertIsNone(response)
 
