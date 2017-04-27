@@ -18,7 +18,7 @@
 """
 Test module for Plinth's custom context processors.
 """
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 
 from django.http import HttpRequest
 from django.test import TestCase
@@ -38,6 +38,7 @@ class ContextProcessorsTestCase(TestCase):
         request.path = '/aaa/bbb/ccc/'
         request.user = Mock()
         request.user.groups.filter().exists = Mock(return_value=True)
+        request.session = MagicMock()
         response = cp.common(request)
         self.assertIsNotNone(response)
 
@@ -65,6 +66,7 @@ class ContextProcessorsTestCase(TestCase):
         request.path = ''
         request.user = Mock()
         request.user.groups.filter().exists = Mock(return_value=True)
+        request.session = MagicMock()
         response = cp.common(request)
         self.assertEqual([], response['active_menu_urls'])
 
