@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-08 16:30-0400\n"
-"PO-Revision-Date: 2017-04-29 00:47+0000\n"
-"Last-Translator: Igor <f2404@yandex.ru>\n"
+"PO-Revision-Date: 2017-04-29 05:51+0000\n"
+"Last-Translator: Алексей Докучаев <deathlike333@gmail.com>\n"
 "Language-Team: Russian "
 "<https://hosted.weblate.org/projects/freedombox/plinth/ru/>\n"
 "Language: ru\n"
@@ -1406,6 +1406,12 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> это новая "
+"экосистема для открытого, объединенного обмена сообщениями и VoIP. Синапс "
+"это сервер осуществляющий протокол Matrix. Он обеспечивает групповые чаты, "
+"аудио/видео звонки, end-to-end шифрование, синхронизацию между устройствами "
+"и не требует телефонного номера для работы. Пользователи на этом сервере "
+"Matrix могут общаться с пользователями на всех остальных серверах."
 
 #: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
@@ -1413,6 +1419,10 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
+"Для общения вы можете использоваьт <a href=\""
+"https://matrix.org/docs/projects/\">различные клиенты</a> для телефонов, "
+"десктопов или Веба. Рекомендуется использовать <a href=\"https://riot.im/\"> "
+"Riot</a>."
 
 #: plinth/modules/matrixsynapse/forms.py:31
 msgid "Select the domain name"
@@ -1432,6 +1442,10 @@ msgid ""
 "servers will be able to reach users on this server using this domain name. "
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
+"Служба Matrix должна быть настроена для домена. Пользователи других серверов "
+"Matrix смогут связаться с пользователем на этом сервере используя это "
+"доменное имя. Идентификаторы пользователя будет выглядеть как "
+"<em>@username:domainname</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 msgid ""
@@ -1440,6 +1454,11 @@ msgid ""
 "      setup is currently not supported.\n"
 "    "
 msgstr ""
+"\n"
+"      <strong>Предупреждение!</strong>Изменение имени домена после начальной "
+"\n"
+"      установки в настоящее время не поддерживается.\n"
+"    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:51
 #, python-format
@@ -1447,6 +1466,8 @@ msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
+"Нет доступных доменов. <a href=\"%(config_url)s\">Настройте</a>по крайней "
+"мере один домен, чтобы иметь возможность использовать Matrix."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
 #, python-format
@@ -3328,6 +3349,9 @@ msgid ""
 "devices.  Creation, modification and deletion of files on one device will "
 "automatically be replicated to other devices."
 msgstr ""
+"Syncthing это приложение, которое может синхронизировать файлы на нескольких "
+"устройствах.  Создание, изменение и удаление файлов на одном устройстве "
+"автоматически будет реплицироваться на другие устройства."
 
 #: plinth/modules/syncthing/__init__.py:47
 #, python-brace-format
@@ -3339,6 +3363,13 @@ msgid ""
 "synchronized with a distinct set of folders.  Web interface is only "
 "available for users belonging to the \"admin\" group."
 msgstr ""
+"Запуск Synching на {box_name} предоставляет точку дополнительной "
+"синхронизации для ваших данных, который доступен большую часть времени, так "
+"что ваши устройства могут синхронизироваться чаще. На {box_name} работает "
+"один экземпляр Syncthing и он может быть использован многими "
+"пользователями.  Устройства каждого пользователя будут синхронизированы в "
+"собственный набор папок.  Веб-интерфейс доступен только для пользователей, "
+"принадлежащих к группе «admin»."
 
 #: plinth/modules/syncthing/__init__.py:54
 msgid ""
@@ -3346,6 +3377,9 @@ msgid ""
 "syncthing</a> web interface. Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available.</a>"
 msgstr ""
+"Когда включен, Syncthing будет доступен через <a href=\"/syncthing/\"> / "
+"syncthing</a> Web-интерфейс. Настольные и мобильные клиенты также <a href=\""
+"https://syncthing.net/\"> доступны.</a>"
 
 #: plinth/modules/system/__init__.py:32
 msgid "System Configuration"
@@ -3415,6 +3449,8 @@ msgstr "Подтверждение использования Tor в {url} по 
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Введите действительный мост с этим форматом: [transport] IP:ORPort "
+"[fingerprint]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -3422,7 +3458,7 @@ msgstr "Включить Tor"
 
 #: plinth/modules/tor/forms.py:93
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Использовать upstream bridges для подключения к сети Tor"
 
 #: plinth/modules/tor/forms.py:96
 msgid ""
@@ -3430,10 +3466,13 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Когда включен, мосты, настроенные ниже будет использоваться для подключения "
+"к сети Tor. Используйте эту опцию, если ваш поставщик услуг Интернета (ISP) "
+"блокирует или цензурирует подключения к сети Tor. Это отключит режим relay."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Upstream мосты"
 
 #: plinth/modules/tor/forms.py:105
 msgid ""
@@ -3441,6 +3480,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Вы можете получить некторые мосты на <a href=\""
+"https://bridges.torproject.org/\">https://bridges.torproject.org/</a>и "
+"скопировать/вставить информацию сюда. В данное время поддерживаются \"none\""
+", \"obfs3\", \"obfs4\" and \"scamblesuit\"."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -3502,7 +3545,7 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:151
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr ""
+msgstr "Укажите по крайней мере один upstream bridge чтобы использовать их."
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
