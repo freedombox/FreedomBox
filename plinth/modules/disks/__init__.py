@@ -48,6 +48,21 @@ def init():
 
 
 def get_disks():
+    """Returns list of disks by combining information from df and lsblk."""
+    infos_df = _get_diskinfo_df()
+    infos_lsblk = _get_diskinfo_lsblk()
+    # Combine both sources of info dicts into one dict, based on mount point;
+    # note this discards disks without a (current) mount point.
+    combined_list = []
+    for info_df in infos_df:
+        for info_lsblk in infos_lsblk:
+            if info_df['mount_point'] == info_lsblk['mountpoint']:
+                info_df.update(info_lsblk)
+                combined_list.append(info_df)
+    return combined_list
+
+
+def _get_diskinfo_df():
     """Return the list of disks and free space available."""
     command = ['df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
                '--output=source,target,fstype,size,used,pcent',
@@ -72,9 +87,26 @@ def get_disks():
     return disks
 
 
+def _get_diskinfo_lsblk():
+    """Return the list of disks and free space available."""
+    command = ['lsblk', '--json', '--output', 'kname,pkname,mountpoint,type']
+    try:
+        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    except subprocess.CalledProcessError as exception:
+        logger.exception('Error getting disk information: %s', exception)
+        return []
+
+    output = process.stdout.decode()
+    dev_dicts = json.loads(output)['blockdevices']
+    for ddict in dev_dicts:
+        ddict['dev_kname'] = '/dev/{0}'.format(ddict['kname'])
+    return dev_dicts
+
+
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
-    devices = [disk['device'] for disk in disks if disk['mount_point'] == '/']
+    devices = [disk['dev_kname'] for disk in disks
+               if disk['mountpoint'] == '/' and disk['type'] == 'part']
     try:
         return devices[0]
     except IndexError:
