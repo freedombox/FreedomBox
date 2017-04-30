@@ -44,8 +44,11 @@ This will set the system-wide time zone.'))
         time_zone_options = [(zone, zone)
                              for zone in self.get_time_zones()]
         # Show not-set option only when time zone is not set
-        if self.initial.get('time_zone') == 'none':
+        current_time_zone = self.initial.get('time_zone')
+        if current_time_zone == 'none':
             time_zone_options.insert(0, ('none', _('-- no time zone set --')))
+        elif (current_time_zone, current_time_zone) not in time_zone_options:
+            time_zone_options.insert(0, (current_time_zone, current_time_zone))
 
         self.fields['time_zone'].choices = time_zone_options
 
