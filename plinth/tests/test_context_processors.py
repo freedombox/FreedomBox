@@ -56,9 +56,6 @@ class ContextProcessorsTestCase(TestCase):
         self.assertEqual(['/', '/aaa/', '/aaa/bbb/', '/aaa/bbb/ccc/'], urls)
 
         self.assertTrue(response['user_is_admin'])
-        request.user.groups.filter().exists = Mock(return_value=False)
-        response = cp.common(request)
-        self.assertFalse(response['user_is_admin'])
 
     def test_common_border_conditions(self):
         """Verify that the common() function works for border conditions."""
