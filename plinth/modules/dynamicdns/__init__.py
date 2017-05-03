@@ -50,6 +50,7 @@ description = [
       'name, they will get a response with your current IP address.')
 ]
 
+reserved_usernames = ['ez-ipupd']
 
 def init():
     """Initialize the module."""

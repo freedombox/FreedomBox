@@ -52,6 +52,8 @@ description = [
       '>XMPP client</a>.'),
 ]
 
+reserved_usernames = ['ejabberd']
+
 service = None
 
 logger = logging.getLogger(__name__)

@@ -50,6 +50,8 @@ description = [
       'Tor Browser</a>.')
 ]
 
+reserved_usernames = ['debian-tor']
+
 socks_service = None
 bridge_service = None
 

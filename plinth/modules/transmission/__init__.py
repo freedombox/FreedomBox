@@ -46,6 +46,8 @@ description = [
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
 
+reserved_usernames = ['debian-transmission']
+
 service = None
 
 

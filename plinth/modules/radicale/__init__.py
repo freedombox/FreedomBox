@@ -52,6 +52,8 @@ description = [
           'login.'), box_name=_(cfg.box_name)),
 ]
 
+reserved_usernames = ['radicale']
+
 CONFIG_FILE = '/etc/radicale/config'
 
 

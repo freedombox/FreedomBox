@@ -59,6 +59,8 @@ description = [
       'are available.'),
 ]
 
+reserved_usernames = ['quasselcore']
+
 
 def init():
     """Initialize the quassel module."""

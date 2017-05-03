@@ -51,6 +51,8 @@ description = [
       'website</a>.')
 ]
 
+reserved_usernames = ['monkeysphere']
+
 
 def init():
     """Initialize the monkeysphere module."""
