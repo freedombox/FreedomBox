@@ -59,6 +59,8 @@ description = [
         box_name=_(cfg.box_name)),
 ]
 
+reserved_usernames = ['privoxy']
+
 service = None
 
 

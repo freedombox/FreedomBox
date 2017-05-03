@@ -59,9 +59,10 @@ description = [
       'service and re-enable it.'),
 ]
 
+reserved_usernames = ['repro']
+
 service = None
 
-reserved_usernames = ['repro']
 
 def init():
     """Initialize the repro module."""

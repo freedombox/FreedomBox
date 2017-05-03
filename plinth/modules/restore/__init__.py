@@ -49,6 +49,8 @@ description = [
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
 
+reserved_usernames = ['node-restores']
+
 service = None
 
 

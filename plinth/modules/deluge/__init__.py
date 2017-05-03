@@ -49,6 +49,7 @@ description = [
       'it immediately after enabling this service.')
 ]
 
+reserved_usernames = ['debian-deluged']
 
 def init():
     """Initialize the Deluge module."""

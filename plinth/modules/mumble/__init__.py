@@ -51,6 +51,8 @@ description = [
       'from your desktop and Android devices are available.')
 ]
 
+reserved_usernames = ['mumble-server']
+
 
 def init():
     """Intialize the Mumble module."""

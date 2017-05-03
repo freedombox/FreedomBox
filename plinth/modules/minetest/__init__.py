@@ -57,6 +57,8 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
+reserved_usernames = ['Debian-minetest']
+
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
