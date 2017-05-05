@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.views import ServiceView
+
 version = 2
 
 depends = ['apps']
