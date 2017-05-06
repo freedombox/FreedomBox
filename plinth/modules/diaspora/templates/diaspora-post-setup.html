@@ -1,0 +1,40 @@
+{% extends "service.html" %}
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see
+<http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block description %}
+
+{% for paragraph in description %}
+<p>{{ paragraph|safe }}</p>
+{% endfor %}
+
+<p>
+    {% url 'config:index' as index_url %}
+    {% blocktrans trimmed with domain_name=domain_name %}
+    The diaspora* pod domain is set to <b>{{ domain_name }}</b>. User
+    IDs will look like <i>username@diaspora.{{ domain_name }}</i><br/>
+    If the FreedomBox domain name is changed, all data of the users
+    registered with the previous podname wouldn't be accessible. <br/>
+    You can access the diaspora* pod at <a href="https://diaspora.{{domain_name}}"> diaspora.{{domain_name}} </a>
+    {% endblocktrans %}
+</p>
+{% endblock %}

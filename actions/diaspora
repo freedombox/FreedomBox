@@ -1,0 +1,138 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for diaspora* pod.
+"""
+
+import argparse
+import subprocess
+
+from plinth import action_utils
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser(
+        'pre-install',
+        help='Preseed debconf values before packages are installed.')
+
+    subparsers.add_parser('enable', help='Enable diaspora* web server')
+    subparsers.add_parser('disable', help='Disable diaspora* web server')
+    subparsers.add_parser('start-diaspora', help='Start diaspora* service')
+    subparsers.add_parser(
+        'disable-ssl', help="Disable SSL on the diaspora* application server")
+    setup = subparsers.add_parser(
+        'setup', help='Set Domain name for diaspora*')
+    setup.add_argument(
+        '--domain-name', help='The domain name that will be used by diaspora*')
+
+    return parser.parse_args()
+
+
+def subcommand_setup(arguments):
+    """Set the domain_name in diaspora configuration files"""
+    domain_name = arguments.domain_name
+    with open('/etc/diaspora/domain_name', 'w') as dnf:
+        dnf.write(domain_name)
+    set_domain_name(domain_name)
+    action_utils.service_start('diaspora')
+    action_utils.webserver_enable('diaspora-plinth')
+
+
+def set_domain_name(domain_name):
+    """Write a new domain name to diaspora configuration files"""
+    # This did not set the domain_name
+    # action_utils.dpkg_reconfigure('diaspora-common',
+    #                               {'url': domain_name})
+
+    # Manually changing the domain name in the conf files.
+    conf_file = '/etc/diaspora.conf'
+    with open(conf_file, 'r') as conf:
+        env_vars = conf.read().splitlines()
+
+    for index, line in enumerate(env_vars):
+        if "SERVER_NAME" in line:
+            env_vars[index] = "export SERVER_NAME={}".format(domain_name)
+        if "ENVIRONMENT_URL" in line:
+            env_vars[index] = "export ENVIRONMENT_URL=http://{}:3000".format(
+                domain_name)
+
+    with open(conf_file, 'w') as conf:
+        conf.write("\n".join(env_vars))
+
+    action_utils.service_start('diaspora')
+
+
+def subcommand_disable_ssl(_):
+    """
+    Disable ssl in the diaspora configuration
+    as the apache server takes care of ssl
+    """
+    # Using sed because ruamel.yaml has a bug for this kind of files
+    subprocess.call([
+        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g",
+        "/etc/diaspora/diaspora.yml"
+    ])
+
+
+def subcommand_pre_install(_):
+    """Pre installation configuration for diaspora"""
+    presets = [
+        b'diaspora-common diaspora-common/url string dummy_domain_name',
+        b'diaspora-common diaspora-common/dbpass note ',
+        b'diaspora-common diaspora-common/enablessl boolean false',
+        b'diaspora-common diaspora-common/useletsencrypt string false',
+        b'diaspora-common diaspora-common/services multiselect ',
+        b'diaspora-common diaspora-common/ssl boolean false',
+        b'diaspora-common diaspora-common/pgsql/authmethod-admin string ident',
+        b'diaspora-common diaspora-common/letsencrypt boolean false',
+        b'diaspora-common diaspora-common/remote/host string localhost',
+        b'diaspora-common diaspora-common/database-type string pgsql',
+        b'diaspora-common diaspora-common/dbconfig-install boolean true'
+    ]
+
+    for preset in presets:
+        subprocess.check_output(['debconf-set-selections'], input=preset)
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.service_enable('diaspora')
+    action_utils.webserver_enable('diaspora-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('diaspora-plinth')
+    action_utils.service_disable('diaspora')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

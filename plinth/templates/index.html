@@ -29,9 +29,9 @@
       {% for shortcut in shortcuts %}
         {% if not shortcut.hidden %}
           {% if user.is_authenticated or not shortcut.login_required %}
-            <div class="col-sm-3">
-	      <ul class="nav nav-pills nav-stacked">
-		{% if selected_id == shortcut.id %}
+                <div class="col-sm-3">
+    	          <ul class="nav nav-pills nav-stacked">
+		            {% if selected_id == shortcut.id %}
                   <li class="active">
                     <a href="{{ shortcut.url }}" class="active">
                 {% else %}
