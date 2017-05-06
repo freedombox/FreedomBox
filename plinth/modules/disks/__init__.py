@@ -22,6 +22,7 @@ Plinth module to manage disks.
 from django.utils.translation import ugettext_lazy as _
 import logging
 import subprocess
+import json
 
 from plinth import actions
 from plinth.menu import main_menu
