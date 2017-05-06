@@ -20,9 +20,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules import names
 from plinth.utils import format_lazy
-from plinth import actions, action_utils, cfg, frontpage, \
+from plinth import actions, action_utils, frontpage, \
     service as service_module
 from plinth.errors import DomainNotRegisteredError
+from plinth.menu import main_menu
 
 domain_name_file = "/etc/diaspora/domain_name"
 lazy_domain_name = None  # To avoid repeatedly reading from file
@@ -41,7 +42,6 @@ def get_configured_domain_name():
         raise DomainNotRegisteredError()
 
     with open(domain_name_file) as dnf:
-        global lazy_domain_name
         lazy_domain_name = dnf.read().rstrip()
         return lazy_domain_name
 
@@ -74,7 +74,7 @@ description = [
 
 def init():
     """Initialize the Diaspora module."""
-    menu = cfg.main_menu.get('apps:index')
+    menu = main_menu.get('apps')
     menu.add_urlname(title, 'glyphicon-thumbs-up', 'diaspora:index')
 
     global service

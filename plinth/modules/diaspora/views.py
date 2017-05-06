@@ -16,7 +16,7 @@
 #
 
 """
-Views for the Matrix Synapse module
+Views for the diaspora module
 """
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
