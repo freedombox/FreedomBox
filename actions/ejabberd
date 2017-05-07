@@ -34,6 +34,7 @@ from plinth import action_utils
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
+EJABBERD_CONFIG_TEST = 'test.yml'
 
 
 def parse_arguments():
@@ -209,6 +210,29 @@ def subcommand_change_domainname(arguments):
     action_utils.service_start('ejabberd')
 
 
+def subcommand_change_XEP_0313_MAM(enable=True):
+    """
+    Enable/disable XEP-0313 Message Archive Management (MAM),
+    see https://docs.ejabberd.im/admin/configuration/#mod-mam.
+    """
+    with open(EJABBERD_CONFIG_TEST, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    conf['modules']['mod_mam'] = []
+    # print(conf['modules'])
+
+    with open(EJABBERD_CONFIG_TEST, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
+
+    # try:
+    #     subprocess.check_output(['ejabberdctl', 'restart'])
+    # except subprocess.CalledProcessError as err:
+    #     print('Failed to restart ejabberd with new configuration: %s', err)
+
+    # with action_utils.WebserverChange() as webserver_change:
+    #     webserver_change.enable('jwchat-plinth')
+
+
 def main():
     """Parse arguments and perform all duties"""
     arguments = parse_arguments()
@@ -219,4 +243,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    subcommand_change_XEP_0313_MAM()
+    # main()
