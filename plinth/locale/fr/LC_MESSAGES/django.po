@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-08 16:30-0400\n"
-"PO-Revision-Date: 2017-01-22 12:51+0000\n"
-"Last-Translator: pitchum <pitchum@gramaton.org>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
-"fr/>\n"
+"PO-Revision-Date: 2017-05-07 17:46+0000\n"
+"Last-Translator: Kyodev <kyodev@yandex.com>\n"
+"Language-Team: French "
+"<https://hosted.weblate.org/projects/freedombox/plinth/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.11-dev\n"
+"X-Generator: Weblate 2.14-dev\n"
 
 #: plinth/action_utils.py:243
 #, python-brace-format
@@ -1271,12 +1271,12 @@ msgid "Delete Wiki or Blog"
 msgstr "Supprimer le Wiki ou le Blogue"
 
 #: plinth/modules/infinoted/__init__.py:44
-#, fuzzy
-#| msgid "Gobby Server (infinoted)"
 msgid ""
 "Gobby Server \n"
 " (infinoted)"
-msgstr "Serveur Gobby (infinoted)"
+msgstr ""
+"Serveur Gobby\n"
+"(infinoted)"
 
 #: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
@@ -1418,16 +1418,12 @@ msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Échec de l'obtention du certificat pour le domaine {domain} : {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:44
-#, fuzzy
-#| msgid ""
-#| "Chat Server \n"
-#| " (ejabberd)"
 msgid ""
 "Chat Server \n"
 " (Matrix Synapse)"
 msgstr ""
 "Serveur de discussion\n"
-" (ejabberd)"
+" (Matrix Synapse)"
 
 #: plinth/modules/matrixsynapse/__init__.py:47
 msgid ""
@@ -1438,6 +1434,14 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\"> Matrix</a> est un "
+"nouvel écosystème pour la messagerie instantanée ouverte fédérée et la VoIP. "
+"SYNAPSE est un serveur implémentant le protocole Matrix. Il fournit des "
+"groupes de discussion, des appels audio/vidéo, chiffrage de bout à bout, "
+"synchronisation de plusieurs périphériques et ne nécessite pas de numéros de "
+"téléphone pour fonctionner. Les utilisateurs sur un serveur Matrix donné "
+"peuvent converser avec des utilisateurs sur tous les autres serveurs Matrix "
+"grâce la fédération."
 
 #: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
@@ -1445,12 +1449,14 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
+"Pour communiquer, vous pouvez utiliser le <a href=\""
+"https://matrix.org/docs/projects/\">les clients disponible</a> pour mobile, "
+"desktop et le web. Le client <a href=\"https://riot.im/\">Riot</a> est "
+"recommandé."
 
 #: plinth/modules/matrixsynapse/forms.py:31
-#, fuzzy
-#| msgid "Invalid domain name"
 msgid "Select the domain name"
-msgstr "Nom de domaine invalide"
+msgstr "Sélectionnez le nom de domaine"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
@@ -1466,6 +1472,10 @@ msgid ""
 "servers will be able to reach users on this server using this domain name. "
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
+"Le service Matrix doit être configuré pour un domaine. Les utilisateurs sur "
+"d’autres serveurs Matrix seront en mesure d’atteindre les utilisateurs de ce "
+"serveur grâce à ce nom de domaine. L'ID utilisateur Matrix ressemblera à "
+"<em>@nomUtilisateur:nomDeDomaine</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 msgid ""
@@ -1474,6 +1484,11 @@ msgid ""
 "      setup is currently not supported.\n"
 "    "
 msgstr ""
+"\n"
+"      <strong>Attention !</strong> Changer le nom de domaine après l’"
+"installation initiale\n"
+"      n’est actuellement pas pris en charge.\n"
+"    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:51
 #, python-format
@@ -1481,22 +1496,20 @@ msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
+"Aucun domaine disponible. <a href=\"%(config_url)s\"> Configurez</a> au "
+"moins un domaine pour pouvoir utiliser Matrix Synapse."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
 "look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
 "the initial setup is currently not supported."
 msgstr ""
-"Le domaine de votre serveur XMPP est réglé sur <b>%(domainname)s</b>. Les "
-"identités utilisateur ressembleront à ceci : <i>username@%(domainname)s</i>. "
-"Vous pouvez configurer le domaine de votre système sur la page <a href="
-"\"%(index_url)s\">Configurer</a>."
+"Le domaine de votre serveur Matrix est configuré sur <em>%(domain_name)s</em>"
+". Les identités utilisateur ressembleront à : <em>%(domain_name)s</em>. "
+"Changer le nom de domaine après la configuration initiale n'est actuellement "
+"pas prise en charge."
 
 #: plinth/modules/minetest/__init__.py:49
 msgid ""
@@ -2431,6 +2444,8 @@ msgstr ""
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
 msgstr ""
+"<a class=\"btn btn-primary btn-sm\" href=\"{link}\"> Télécharger le "
+"profil</a>"
 
 #: plinth/modules/openvpn/forms.py:29
 msgid "Enable OpenVPN server"
@@ -3389,7 +3404,7 @@ msgstr "Revenir à l'instantané"
 
 #: plinth/modules/syncthing/__init__.py:40
 msgid "File Synchronization (Syncthing)"
-msgstr ""
+msgstr "Synchronisation de fichiers (Syncthing)"
 
 #: plinth/modules/syncthing/__init__.py:43
 msgid ""
@@ -3397,6 +3412,9 @@ msgid ""
 "devices.  Creation, modification and deletion of files on one device will "
 "automatically be replicated to other devices."
 msgstr ""
+"Syncthing est une application qui peut synchronise les fichiers avec "
+"plusieurs périphériques.  Création, modification et suppression de fichiers "
+"sur un appareil seront automatiquement répliquées aux autres appareils."
 
 #: plinth/modules/syncthing/__init__.py:47
 #, python-brace-format
@@ -3408,6 +3426,13 @@ msgid ""
 "synchronized with a distinct set of folders.  Web interface is only "
 "available for users belonging to the \"admin\" group."
 msgstr ""
+"Exécuter Synching sur {box_name} fournit un point de synchronisation externe "
+"pour vos données, hautement disponible, si bien que vos appareils peuvent "
+"synchroniser souvent.  Sur {box_name}, une seule instance de Syncthing s’"
+"exécute et peut être utilisée par plusieurs utilisateurs.  Chaque ensemble "
+"de périphériques d'un utilisateur est synchronisé dans un groupe distinct de "
+"dossiers.  L'interface Web est seulement disponible pour les utilisateurs "
+"appartenant au groupe \"admin\"."
 
 #: plinth/modules/syncthing/__init__.py:54
 msgid ""
@@ -3415,6 +3440,9 @@ msgid ""
 "syncthing</a> web interface. Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available.</a>"
 msgstr ""
+"Quand activé, Syncthing sera disponible à partir d'une <a href=\"/syncthing/"
+"\">/syncthing</a> interface web. Des clients bureau et mobile sont aussi <a "
+"href=\"https://syncthing.net/\"> disponibles.</a>"
 
 #: plinth/modules/system/__init__.py:32
 msgid "System Configuration"
@@ -3487,6 +3515,7 @@ msgstr "Confirmez l'utilisation de Tor pour {url} sur tcp{kind}"
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Entrez un pont valide avec ce format : [transport] IP:ORPort [fingerprint]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -3494,7 +3523,7 @@ msgstr "Activer Tor"
 
 #: plinth/modules/tor/forms.py:93
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Utilisez des ponts upstream pour vous connecter au réseau Tor"
 
 #: plinth/modules/tor/forms.py:96
 msgid ""
@@ -3502,10 +3531,13 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Quand activé, les ponts configurés ci-dessous serviront à vous connecter au "
+"réseau Tor. Utilisez cette option si votre FAI bloque ou censure les "
+"connexions au réseau Tor. Cela désactivera les modes relais."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Ponts upstream"
 
 #: plinth/modules/tor/forms.py:105
 msgid ""
@@ -3513,6 +3545,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Vous pouvez obtenir quelques ponts à partir de <a href=\""
+"https://bridges.torproject.org/\">https://bridges.torproject.org/</a> et "
+"copier/coller les informations du pont ici. Les transports pris en charge "
+"actuellement sont aucun, obfs3, obfs4 et scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -3575,7 +3611,7 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:151
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr ""
+msgstr "Spécifiez au moins un pont upstream pour utiliser des ponts upstream."
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
@@ -4055,12 +4091,13 @@ msgstr "Interface web de {box_name} (Plinth)"
 
 #: plinth/templates/403.html:28
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Interdit"
 
 #: plinth/templates/403.html:32
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
 msgstr ""
+"Vous n'avez pas la permission d'accéder %(request_path)s sur ce serveur."
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -4110,7 +4147,7 @@ msgstr "Basculer Navigation"
 
 #: plinth/templates/base.html:101 plinth/templates/base.html:102
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: plinth/templates/base.html:139 plinth/templates/base.html:140
 msgid "Change password"
@@ -4127,7 +4164,7 @@ msgstr "S'identifier"
 
 #: plinth/templates/base.html:222 plinth/templates/index.html:163
 msgid "JavaScript license information"
-msgstr ""
+msgstr "Information de licence JavaScript"
 
 #: plinth/templates/index.html:58
 #, python-format
@@ -4167,49 +4204,45 @@ msgstr ""
 
 #: plinth/templates/index.html:128
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: plinth/templates/index.html:133
 msgid "Homepage"
-msgstr ""
+msgstr "Page d'accueil"
 
 #: plinth/templates/index.html:136
 msgid "Source Code"
-msgstr ""
+msgstr "Code source"
 
 #: plinth/templates/index.html:139
 msgid "Donate"
-msgstr ""
+msgstr "Faire un don"
 
 #: plinth/templates/index.html:143
-#, fuzzy
-#| msgid "FreedomBox Manual"
 msgid "FreedomBox Foundation"
-msgstr "Manuel FreedomBox"
+msgstr "Fondation FreedomBox"
 
 #: plinth/templates/index.html:150
 msgid "IRC Chatroom"
-msgstr ""
+msgstr "Chat IRC"
 
 #: plinth/templates/index.html:155
 msgid "Mailing list"
-msgstr ""
+msgstr "Liste de diffusion mail"
 
 #: plinth/templates/login.html:35
 msgid "Login"
 msgstr "S'identifier"
 
 #: plinth/templates/service.html:44
-#, fuzzy, python-format
-#| msgid "Service discovery server is running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is running."
-msgstr "Le serveur de découverte de services est actif"
+msgstr "Le service <em>%(service_name)s</em> est en fonctionnement."
 
 #: plinth/templates/service.html:49
-#, fuzzy, python-format
-#| msgid "Service discovery server is not running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "Le serveur de découverte de services n'est pas actif"
+msgstr "Le service <em>%(service_name)s</em> n'est pas en fonctionnement."
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
