@@ -78,7 +78,7 @@ def subcommand_setup(arguments):
             check=True)
 
     if not os.path.exists(tahoe_home):
-        os.makedirs(tahoe_home, mode=0o750)
+        os.makedirs(tahoe_home, mode=0o755)
 
     shutil.chown(tahoe_home, user='tahoe-lafs', group='tahoe-lafs')
 
