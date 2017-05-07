@@ -78,6 +78,13 @@ def parse_arguments():
         help='Update ejabberd with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
 
+    # Switch/check Message Archive Management (MAM) in ejabberd config
+    help_MAM = 'Switch or check Message Archive Management (MAM).'
+    mam = subparsers.add_parser('mam', help=help_MAM)
+    mam.add_argument('command',
+                     choices=('enable', 'disable', 'status'),
+                     help=help_MAM)
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -207,6 +214,52 @@ def subcommand_change_domainname(arguments):
         ruamel.yaml.round_trip_dump(conf, file_handle)
 
     action_utils.service_start('ejabberd')
+
+
+def subcommand_mam(argument):
+    """Enable, disable, or get status of Message Archive Management (MAM)."""
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    if 'modules' not in conf:
+        print('Found no "modules" entry in ejabberd configuration file.')
+        return
+
+    if argument.command == 'status':
+        if 'mod_mam' in conf['modules']:
+            print('enabled')
+            return
+        else:
+            print('disabled')
+            return
+
+    if argument.command == 'enable':
+        # Explicitly set the recommended / default settings for mod_mam,
+        # see https://docs.ejabberd.im/admin/configuration/#mod-mam.
+        settings_mod_mam = {'mod_mam': {
+            'iqdisc': 'one_queue',  # discipline, recommended 'one_queue'
+            'db_type': 'mnesia',  # default is 'mnesia' (w/o set default_db)
+            'default': 'never',  # policy, default 'never'
+            'request_activates_archiving': False,  # default False
+            'assume_mam_usage': False,  # for non-ack'd msgs, default False
+            'cache_size': 1000,  # default is 1000 items
+            'cache_life_time': 3600  # default is 3600 seconds = 1h
+        }}
+        conf['modules'].update(settings_mod_mam)
+    elif argument.command == 'disable':
+        # disable modules by erasing from config file
+        if 'mod_mam' in conf['modules']:
+            conf['modules'].pop('mod_mam')
+    else:
+        print("Unknown command: %s" % argument.command)
+        return
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
+
+    if action_utils.service_is_running('ejabberd'):
+        action_utils.service_restart('ejabberd')
 
 
 def main():
