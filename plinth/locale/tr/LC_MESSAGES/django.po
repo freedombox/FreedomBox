@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-08 16:30-0400\n"
-"PO-Revision-Date: 2017-02-18 14:55+0000\n"
+"PO-Revision-Date: 2017-05-08 12:10+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
-"plinth/tr/>\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.12-dev\n"
+"X-Generator: Weblate 2.14-dev\n"
 
 #: plinth/action_utils.py:243
 #, python-brace-format
@@ -1254,12 +1254,12 @@ msgid "Delete Wiki or Blog"
 msgstr "Viki ya da Blogu Sil"
 
 #: plinth/modules/infinoted/__init__.py:44
-#, fuzzy
-#| msgid "Gobby Server (infinoted)"
 msgid ""
 "Gobby Server \n"
 " (infinoted)"
-msgstr "Gobby sunucusu (infinoted)"
+msgstr ""
+"Gobby sunucusu\n"
+" (infinoted)"
 
 #: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
@@ -1403,16 +1403,12 @@ msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "{domain} alanı için sertifika edinilemedi: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:44
-#, fuzzy
-#| msgid ""
-#| "Chat Server \n"
-#| " (ejabberd)"
 msgid ""
 "Chat Server \n"
 " (Matrix Synapse)"
 msgstr ""
 "Sohbet Sunucusu\n"
-" (ejabberd)"
+" (Matrix Synapse)"
 
 #: plinth/modules/matrixsynapse/__init__.py:47
 msgid ""
@@ -1423,6 +1419,13 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a>, VoIP ve "
+"federe, açık anlık mesajlaşma için yeni bir ekosistemdir. Synapse, Matrix "
+"protokolünü uygulayan bir sunucudur. Sohbet grupları, ses ve görüntülü "
+"görüşmeler, uçtan uca şifreleme, çoklu cihaz eşleşmesi sunar ve çalışmak "
+"için telefon numaraları gerektirmez. Herhangi bir Matrix sunucusundaki "
+"kullanıcılar federasyon sayesinde tüm diğer Matrix sunucularındaki "
+"kullanıcılarla iletişimde bulunabilirler."
 
 #: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
@@ -1430,12 +1433,14 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
+"İletişimde bulunmak için, mobil, masaüstü ve web <a href=\""
+"https://matrix.org/docs/projects/\">mevcut istemcilerini</a> "
+"kullanabilirsiniz. <a href=\"https://riot.im/\">Riot</a> istemcisi tavsiye "
+"edilir."
 
 #: plinth/modules/matrixsynapse/forms.py:31
-#, fuzzy
-#| msgid "Invalid domain name"
 msgid "Select the domain name"
-msgstr "Geçersiz alan ismi"
+msgstr "Alan ismini seç"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
@@ -1451,6 +1456,10 @@ msgid ""
 "servers will be able to reach users on this server using this domain name. "
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
+"Matrix, bir alan için yapılandırılmayı gerektirir. Diğer Matrix "
+"sunucularındaki kullanıcılar, bu sunucudaki kullanıcılara ulaşmak için bu "
+"alan adını kullanacaklardır. Matrix kullanıcı kimlikleri "
+"<em>@kullanıcıismi:alanismi</em> şeklinde olacaktır."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 msgid ""
@@ -1459,6 +1468,11 @@ msgid ""
 "      setup is currently not supported.\n"
 "    "
 msgstr ""
+"\n"
+"      <strong>İkaz!</strong> Alan ismini ilk yapılandırmadan sonra "
+"değiştirmek güncel\n"
+"      olarak desteklenmemektedir.\n"
+"    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:51
 #, python-format
@@ -1466,22 +1480,19 @@ msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
+"Hiçbir alan mevcut değildir. En az bir alan <a href=\"%(config_url)s\""
+">yapılandırın</a> ki Matrix Synapse kullanılabilsin."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "The Matrix server domain is set to <em>%(domain_name)s</em>. User IDs will "
 "look like <em>@username:%(domain_name)s</em>. Changing the domain name after "
 "the initial setup is currently not supported."
 msgstr ""
-"XMPP sunucu alanınız <b>%(domainname)s</b> olarak ayarlanmıştır. Kullanıcı "
-"kimlikleri <i>username@%(domainname)s</i> şeklinde olacaktır. Alanınızı "
-"sistem <a href=\"%(index_url)s\">Yapılandırma</a> sayfasında "
-"ayarlayabilirsiniz."
+"Matrix alan ismi <em>%(domain_name)s</em> olarak ayarlanmıştır. Kullanıcı "
+"kimlikleri <em>@kullanıcıismi:%(domain_name)s</em> şeklinde olacaktır. Alan "
+"adını ilk yapılandırmadan sonra değiştirmek şimdilik desteklenmemektedir."
 
 #: plinth/modules/minetest/__init__.py:49
 msgid ""
@@ -2412,7 +2423,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
-msgstr ""
+msgstr "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Profil İndir</a>"
 
 #: plinth/modules/openvpn/forms.py:29
 msgid "Enable OpenVPN server"
@@ -3361,7 +3372,7 @@ msgstr "Anlığa Geri Al"
 
 #: plinth/modules/syncthing/__init__.py:40
 msgid "File Synchronization (Syncthing)"
-msgstr ""
+msgstr "Dosya eşleşmesi (Syncthing)"
 
 #: plinth/modules/syncthing/__init__.py:43
 msgid ""
@@ -3369,6 +3380,9 @@ msgid ""
 "devices.  Creation, modification and deletion of files on one device will "
 "automatically be replicated to other devices."
 msgstr ""
+"Syncthing, birçok cihaz üzerinde dosya eşleşmesi yapabilen bir uygulamadır. "
+"Herhangi bir cihaz üzerinde dosya oluşturulması, değiştirilmesi ya da "
+"silinmesi, otomatik olarak diğer cihazlarda da meydana gelecektir."
 
 #: plinth/modules/syncthing/__init__.py:47
 #, python-brace-format
@@ -3380,6 +3394,13 @@ msgid ""
 "synchronized with a distinct set of folders.  Web interface is only "
 "available for users belonging to the \"admin\" group."
 msgstr ""
+"{box_name} üzerinde Syncthing çalıştırılması, verilerinize cihazlarınızın "
+"daha sık eşleşme yapmaları için neredeyse her zaman kullanılabilir olacak ek "
+"bir eşleşme noktası sunar. {box_name} üzerinde tek bir Syncthing örneklemesi "
+"çalışacaktır ve birçok kullanıcı tarafından kullanılabilir. Her kullanıcının "
+"cihaz kümesi, farklı bir klasör grubu ile eşleştirilebilir. Ağ arayüzü "
+"sadece \"admin\" yani yönetici grubuna ait kullanıcılar tarafından "
+"kullanılabilir."
 
 #: plinth/modules/syncthing/__init__.py:54
 msgid ""
@@ -3387,6 +3408,9 @@ msgid ""
 "syncthing</a> web interface. Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available.</a>"
 msgstr ""
+"Etkinleştirildiğinde, Syncthing <a href=\"/syncthing/\">syncthing</a> ağ "
+"arayüzünden kullanılabilir. Masaüstü ve mobil istemciler de <a href=\""
+"https://syncthing.net/\">mevcuttur.</a>"
 
 #: plinth/modules/system/__init__.py:32
 msgid "System Configuration"
@@ -3456,7 +3480,7 @@ msgstr "tcp{kind} üzerinden {url} konumunda Tor kullanımını teyit et"
 #: plinth/modules/tor/forms.py:47
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
-msgstr ""
+msgstr "Şu biçemde geçerli bir köprü girin: [taşıma] IP:ORPort [parmakizi]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -3464,7 +3488,7 @@ msgstr "Tor'u Etkinleştir"
 
 #: plinth/modules/tor/forms.py:93
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Tor şebekesine bağlanmak için upstream köprüleri kullan"
 
 #: plinth/modules/tor/forms.py:96
 msgid ""
@@ -3472,10 +3496,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Etkinleştirildiğinde, aşağıda yapılandırılan köprüler Tor şebekesine "
+"bağlanmak için kullanılacaktır. Bu seçeneği İnternet Erişim Sağlayıcınız Tor "
+"ağına bağlantıları engelliyor ya da sansürlüyorsa kullanın. Bu, aktarım "
+"kiplerini devre dışı bırakacaktır."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Upstream köprüler"
 
 #: plinth/modules/tor/forms.py:105
 msgid ""
@@ -3483,6 +3511,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Bazı köprüleri <a href=\"https://bridges.torproject.org/\""
+">https://bridges.torproject.org/</a> adresinden elde edip köprü bilgilerini "
+"buraya yapıştırabilirsiniz. Güncel olarak desteklenen taşımalar şunlardır: "
+"hiçbiri, obfs3, obfs4 ve scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -3545,7 +3577,7 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:151
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr ""
+msgstr "Upstream köprüleri kullanmak için en az bir upstream köprü belirtiniz."
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
@@ -4022,12 +4054,12 @@ msgstr "{box_name} Ağ Arayüzü (Plinth)"
 
 #: plinth/templates/403.html:28
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Yasaklanmış"
 
 #: plinth/templates/403.html:32
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
-msgstr ""
+msgstr "Bu sunucuda %(request_path)s erişimi izniniz yoktur."
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -4076,7 +4108,7 @@ msgstr "Tarama Geçişi"
 
 #: plinth/templates/base.html:101 plinth/templates/base.html:102
 msgid "Home"
-msgstr ""
+msgstr "Ev"
 
 #: plinth/templates/base.html:139 plinth/templates/base.html:140
 msgid "Change password"
@@ -4093,7 +4125,7 @@ msgstr "Giriş yap"
 
 #: plinth/templates/base.html:222 plinth/templates/index.html:163
 msgid "JavaScript license information"
-msgstr ""
+msgstr "JavaScript lisans bilgileri"
 
 #: plinth/templates/index.html:58
 #, python-format
@@ -4133,49 +4165,45 @@ msgstr ""
 
 #: plinth/templates/index.html:128
 msgid "Wiki"
-msgstr ""
+msgstr "Viki"
 
 #: plinth/templates/index.html:133
 msgid "Homepage"
-msgstr ""
+msgstr "Ana sayfa"
 
 #: plinth/templates/index.html:136
 msgid "Source Code"
-msgstr ""
+msgstr "Kaynak kod"
 
 #: plinth/templates/index.html:139
 msgid "Donate"
-msgstr ""
+msgstr "Bağış"
 
 #: plinth/templates/index.html:143
-#, fuzzy
-#| msgid "FreedomBox Manual"
 msgid "FreedomBox Foundation"
-msgstr "FreedomBox Kullanım Kılavuzu"
+msgstr "FreedomBox Vakfı"
 
 #: plinth/templates/index.html:150
 msgid "IRC Chatroom"
-msgstr ""
+msgstr "IRC sohbet odası"
 
 #: plinth/templates/index.html:155
 msgid "Mailing list"
-msgstr ""
+msgstr "E-posta listesi"
 
 #: plinth/templates/login.html:35
 msgid "Login"
 msgstr "Giriş"
 
 #: plinth/templates/service.html:44
-#, fuzzy, python-format
-#| msgid "Service discovery server is running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is running."
-msgstr "Servis keşfi sunucusu çalışmaktadır"
+msgstr "<em>%(service_name)s</em> servisi çalışmaktadır."
 
 #: plinth/templates/service.html:49
-#, fuzzy, python-format
-#| msgid "Service discovery server is not running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "Servis keşfi sunucusu çalışmamaktadır"
+msgstr "<em>%(service_name)s</em> servisi çalışmamaktadır."
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
