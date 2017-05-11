@@ -14,14 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 """
 Plinth module to configure Single Sign On services.
 """
 
-import os
-
-from plinth.menu import main_menu
-
+from plinth import action_utils
 from django.utils.translation import ugettext_lazy as _
 
 version = 1
@@ -39,15 +37,11 @@ KEYS_DIRECTORY = '/etc/apache2/keys'
 
 def init():
     """Initialize the module"""
-    # menu = main_menu.get('system')
-    # menu.add_urlname(title, 'glyphicon-lock', 'security:index')
     from . import auth_pubtkt_util
     auth_pubtkt_util.create_key_pair(KEYS_DIRECTORY)
 
 
 def setup(helper, old_version=None):
+    """Install the required packages"""
     helper.install(managed_packages)
-
-
-def private_key_file():
-    return os.path.join(KEYS_DIRECTORY, 'privkey.pem')
+    action_utils.service_restart('apache2')
