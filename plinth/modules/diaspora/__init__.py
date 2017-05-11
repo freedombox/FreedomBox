@@ -52,8 +52,6 @@ title_en = 'Federated Social Network (diaspora*)'
 
 title = _(title_en)
 
-depends = ['apps']
-
 service = None
 
 managed_services = ['diaspora']
