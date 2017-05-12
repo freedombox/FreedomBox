@@ -24,7 +24,7 @@ import os
 import stat
 import base64
 import datetime
-from .constants import private_key_file_name, public_key_file_name
+from .constants import PRIVATE_KEY_FILE_NAME, PUBLIC_KEY_FILE_NAME
 
 from OpenSSL import crypto
 from django.utils import timezone
@@ -34,8 +34,8 @@ def create_key_pair(directory):
     """
     Create public/private key pair for signing the auth_pubtkt tickets.
     """
-    private_key_file = os.path.join(directory, private_key_file_name)
-    public_key_file = os.path.join(directory, public_key_file_name)
+    private_key_file = os.path.join(directory, PRIVATE_KEY_FILE_NAME)
+    public_key_file = os.path.join(directory, PUBLIC_KEY_FILE_NAME)
 
     os.mkdir(directory) if not os.path.exists(directory) else None
 
@@ -44,7 +44,7 @@ def create_key_pair(directory):
             for key_file in [public_key_file, private_key_file]
     ]):
         pkey = crypto.PKey()
-        pkey.generate_key(crypto.TYPE_RSA, 1024)
+        pkey.generate_key(crypto.TYPE_RSA, 2048)
 
         with open(private_key_file, 'w') as priv_key_file:
             priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,

@@ -15,5 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-private_key_file_name = 'privkey.pem'
-public_key_file_name = 'pubkey.pem'
+PRIVATE_KEY_FILE_NAME = 'privkey.pem'
+PUBLIC_KEY_FILE_NAME = 'pubkey.pem'
+SSO_COOKIE_NAME = 'auth_pubtkt'
+KEYS_DIRECTORY = '/etc/apache2/keys'

@@ -22,6 +22,8 @@ Plinth module to configure Single Sign On services.
 from plinth import action_utils
 from django.utils.translation import ugettext_lazy as _
 
+from .constants import KEYS_DIRECTORY
+
 version = 1
 
 is_essential = True
@@ -32,7 +34,7 @@ title = _('Single Sign On')
 
 managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
 
-KEYS_DIRECTORY = '/etc/apache2/keys'
+
 
 
 def init():

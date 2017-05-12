@@ -22,11 +22,12 @@ import os
 import urllib
 
 from django.http import HttpResponseRedirect
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (login as auth_login,
                                        logout as auth_logout)
 
-from .constants import private_key_file_name
+from .constants import PRIVATE_KEY_FILE_NAME, SSO_COOKIE_NAME, KEYS_DIRECTORY
 
 
 def set_ticket_cookie(username, response):
@@ -35,10 +36,10 @@ def set_ticket_cookie(username, response):
     """
     from .auth_pubtkt_util import generate_ticket
     ticket = generate_ticket(username,
-                             os.path.join('/etc/apache2/keys',
-                                          private_key_file_name), list())
+                             os.path.join(KEYS_DIRECTORY,
+                                          PRIVATE_KEY_FILE_NAME), list())
     ticket = urllib.parse.quote(ticket)
-    response.set_cookie('auth_pubtkt', ticket)
+    response.set_cookie(SSO_COOKIE_NAME, ticket)
     return response
 
 
@@ -58,7 +59,7 @@ def login(request):
 
 def logout(request, next_page):
     response = auth_logout(request, next_page=next_page)
-    response.delete_cookie('auth_pubtkt')
+    response.delete_cookie(SSO_COOKIE_NAME)
     return response
 
 
@@ -67,7 +68,7 @@ def refresh(request):
     """
     Simulate cookie refresh - redirect logged in user with a new cookie
     """
-    redirect_url = request.GET.get('next', '')
+    redirect_url = request.GET.get(REDIRECT_FIELD_NAME, '')
     response = HttpResponseRedirect(redirect_url)
-    response.delete_cookie('auth_pubtkt')
+    response.delete_cookie(SSO_COOKIE_NAME)
     return set_ticket_cookie(request.user.username, response)
