@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure FileTea.
 """
@@ -28,7 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-
+from plinth.modules.config.config import get_domainname
 
 version = 1
 
@@ -39,16 +38,20 @@ managed_packages = ['filetea']
 title = _('File Sharing \n (FileTea)')
 
 description = [
-    _('FileTea is an anonymous, volatile file sharing solution. '
-      'It is designed to be simple and easy to use, to run in (modern) browsers without additional plugins, and to avoid the hassle of user registration.'),
+    _('FileTea is an anonymous, volatile file sharing service. '
+      'Volatile means the shared file is available only as long '
+      'as the sender keeps FileTea open on their browser.'),
     format_lazy(
-        _('Running FileTea on {box_name} allows you to share files securely'
-           'with other users on the same FreedomBox'), box_name=_(cfg.box_name)),
+        _('Running FileTea on {box_name} allows you to share files securely '
+          'with other users of {box_name}. On a public FileTea service, '
+          'anyone with the link can download a shared file. But FileTea on '
+          'FreedomBox is password protected, so only registered users of that '
+          'FreedomBox can download shared files, not any snooping third '
+          'party.'),
+        box_name=_(cfg.box_name)),
     _('When enabled, FileTea\'s web interface will be available from '
-      '<a href="/filetea/">/filetea</a>.'),
+      '<a href=\"https://{}:8686\">filetea</a>.'.format(get_domainname())),
 ]
-
-service = None
 
 
 def init():
@@ -76,8 +79,8 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('configuration', actions.superuser_run,
-                'filetea', ['configure'])
+    helper.call('configuration', actions.superuser_run, 'filetea',
+                ['configure'])
     action_utils.service_restart('filetea')
     helper.call('post', actions.superuser_run, 'filetea', ['enable'])
     global service
@@ -98,7 +101,9 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut(
-        'filetea', title, url='/filetea/', login_required=True)
+        'filetea', title,
+        url='https://{}:8686'.format(get_domainname()),
+        login_required=True)
 
 
 def is_running():
@@ -128,8 +133,16 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.extend(
-        action_utils.diagnose_url_on_all(
-            'https://{host}/filetea/', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'http://localhost:8686', kind='4', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'http://localhost:8686', kind='6', check_certificate=False))
+    results.append(
+        action_utils.diagnose_url(
+            'https://{}:5678'.format(get_domainname()),
+            kind='4',
+            check_certificate=False))
 
     return results
