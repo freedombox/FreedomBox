@@ -48,8 +48,12 @@ def login(request):
     Sets a cookie which will be read by mod_auth_pubtkt.
     """
     response = auth_login(
-        request, template_name='login.html', redirect_authenticated_user=False)
-    return set_ticket_cookie(request.user.username, response)
+        request, template_name='login.html', redirect_authenticated_user=True)
+
+    if request.user.is_authenticated:
+        return set_ticket_cookie(request.user.username, response)
+    else:
+        return response
 
 
 def logout(request, next_page):
