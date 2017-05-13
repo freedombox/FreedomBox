@@ -39,21 +39,18 @@
         {% trans "Install Apps" %}</a>
     </div>
 
-    <h3>{% trans "Current Network Configuration" %}</h3>
-
     <p>
-      {% blocktrans trimmed %}
-        You should check the network setup and modify it if necessary.
-        Do not forget to change the default Wi-Fi passwords!
-      {% endblocktrans %}
+      <p>
+        {% blocktrans trimmed %}
+          You may want to check the network setup and modify it if necessary.
+        {% endblocktrans %}
+      </p>
+
+      <div class="text-center">
+        <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
+          {% trans "Go to Networks" %}</a>
+      </div>
     </p>
-
-    {% include "connections_diagram.html" %}
-
-    <div class="text-center">
-      <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
-        {% trans "Go to Networks" %}</a>
-    </div>
   </div>
 
 {% endblock %}
