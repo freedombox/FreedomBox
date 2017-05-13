@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^apps/filetea/$',
         ServiceView.as_view(
             service_id=filetea.managed_services[0],
-            diagnostics_module_name='syncthing',
+            diagnostics_module_name='filetea',
             description=filetea.description,
             show_status_block=True),
         name='index'),

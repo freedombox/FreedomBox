@@ -35,23 +35,25 @@ managed_services = ['filetea']
 
 managed_packages = ['filetea']
 
-title = _('File Sharing \n (FileTea)')
+title = _('Volatile File Sharing (FileTea)')
 
 description = [
-    _('FileTea is an anonymous, volatile file sharing service. '
+    _('FileTea is an anonymous, volatile file sharing service.\n'
       'Volatile means the shared file is available only as long '
       'as the sender keeps FileTea open on their browser.'),
     format_lazy(
         _('Running FileTea on {box_name} allows you to share files securely '
           'with other users of {box_name}. On a public FileTea service, '
           'anyone with the link can download a shared file. But FileTea on '
-          'FreedomBox is password protected, so only registered users of that '
-          'FreedomBox can download shared files, not any snooping third '
+          '{box_name} is password protected, so only registered users of '
+          '{box_name} can download shared files, not any snooping third '
           'party.'),
         box_name=_(cfg.box_name)),
     _('When enabled, FileTea\'s web interface will be available from '
       '<a href=\"https://{}:8686\">filetea</a>.'.format(get_domainname())),
 ]
+
+service = None
 
 
 def init():
@@ -141,7 +143,7 @@ def diagnose():
             'http://localhost:8686', kind='6', check_certificate=False))
     results.append(
         action_utils.diagnose_url(
-            'https://{}:5678'.format(get_domainname()),
+            'https://{}:8686'.format(get_domainname()),
             kind='4',
             check_certificate=False))
 
