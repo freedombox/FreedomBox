@@ -19,6 +19,7 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load bootstrap %}
 
 {% block description %}
 
@@ -45,4 +46,18 @@
     <a href='{% url "jsxc:jsxc" %}' target='_blank' class='btn btn-primary'>
       {% trans "Launch web client" %}</a>
   </p>
+{% endblock %}
+
+
+{% block configuration %}
+  <h3>{% trans "Configuration" %}</h3>
+
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
 {% endblock %}
