@@ -34,7 +34,6 @@ from plinth import action_utils
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
-EJABBERD_CONFIG_TEST = 'test.yml'
 
 
 def parse_arguments():
@@ -78,6 +77,11 @@ def parse_arguments():
         'change-domainname',
         help='Update ejabberd with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
+
+    # Enable/disable Message Archive Management (MAM) in ejabberd config
+    help_MAM = 'Enable or disable Message Archive Management (MAM).'
+    switch_MAM = subparsers.add_parser('switch_MAM', help=help_MAM)
+    switch_MAM.add_argument('new_state', choices=('on', 'off'), help=help_MAM)
 
     subparsers.required = True
     return parser.parse_args()
@@ -210,27 +214,37 @@ def subcommand_change_domainname(arguments):
     action_utils.service_start('ejabberd')
 
 
-def subcommand_change_XEP_0313_MAM(enable=True):
-    """
-    Enable/disable XEP-0313 Message Archive Management (MAM),
-    see https://docs.ejabberd.im/admin/configuration/#mod-mam.
-    """
-    with open(EJABBERD_CONFIG_TEST, 'r') as file_handle:
+def subcommand_switch_MAM(argument):
+    """Enable/disable XMPP Message Archive Management (MAM), XEP-0313."""
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
         conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
-    conf['modules']['mod_mam'] = []
-    # print(conf['modules'])
+    if 'modules' not in conf:
+        print('Found no "modules" entry in ejabberd configuration file.')
+        return
 
-    with open(EJABBERD_CONFIG_TEST, 'w') as file_handle:
+    if argument.new_state == 'on':
+        # Explicitly set the recommended / default settings for mod_mam,
+        # see https://docs.ejabberd.im/admin/configuration/#mod-mam.
+        settings_mod_mam = {'mod_mam': {
+            'iqdisc': 'one_queue',  # discipline, recommended 'one_queue'
+            'db_type': 'mnesia',  # default is 'mnesia' (w/o set default_db)
+            'default': 'never',  # policy, default 'never'
+            'request_activates_archiving': False,  # default False
+            'assume_mam_usage': False,  # for non-ack'd msgs, default False
+            'cache_size': 1000,  # default is 1000 items
+            'cache_life_time': 3600  # default is 3600 seconds = 1h
+        }}
+        conf['modules'].update(settings_mod_mam)
+    else:  # disable modules by erasing from config file
+        if 'mod_mam' in conf['modules']:
+            conf['modules'].pop('mod_mam')
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
 
-    # try:
-    #     subprocess.check_output(['ejabberdctl', 'restart'])
-    # except subprocess.CalledProcessError as err:
-    #     print('Failed to restart ejabberd with new configuration: %s', err)
-
-    # with action_utils.WebserverChange() as webserver_change:
-    #     webserver_change.enable('jwchat-plinth')
+    action_utils.service_restart('ejabberd')
 
 
 def main():
@@ -243,5 +257,4 @@ def main():
 
 
 if __name__ == '__main__':
-    subcommand_change_XEP_0313_MAM()
-    # main()
+    main()
