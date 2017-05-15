@@ -75,6 +75,7 @@
 </head>
 
 <body>
+<div id="wrapper">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
   <div class="navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container">
@@ -167,7 +168,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div id="container-wrapper" class="container">
     <div class="row">
       {% block content_row %}
         <div class="col-md-3">
@@ -226,8 +227,8 @@
         </div>
       {% endblock %}
     </div>
-  </footer>
-
+  </footer><!--/.footer-->
+</div><!--/#container-->
   <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
   <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
   <script type="text/javascript" src="{% static '/javascript/modernizr/modernizr.min.js' %}"></script>
