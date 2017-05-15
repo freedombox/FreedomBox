@@ -1,5 +1,6 @@
 body {
     padding-top: 70px;
+    position: relative;
 }
 
 .nav .glyphicon,
@@ -86,17 +87,28 @@ footer .license-info {
 
 html {
   position: relative;
-  min-height: 100%;
 }
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
+body, html {
+  height: 100%;
 }
+
+#wrapper{
+    min-height: 100%;
+    position: relative;
+}
+
+#container-wrapper{
+    /*covers for footer height */
+    padding-bottom: 150px;
+}
+
 footer {
   text-align: center;
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 150px;
 }
 
 footer license-info p{
