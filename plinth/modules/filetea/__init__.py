@@ -67,7 +67,7 @@ def init():
         service = service_module.Service(
             managed_services[0],
             title,
-            ports=['http', 'https'],
+            ports=['filetea-plinth'],
             is_external=True,
             is_enabled=is_enabled,
             enable=enable,
