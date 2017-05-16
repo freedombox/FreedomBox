@@ -41,15 +41,12 @@
 
     <p>
       <p>
+        {% url 'networks:index' as networks_url %}
         {% blocktrans trimmed %}
-          You may want to check the network setup and modify it if necessary.
+          You may want to check the <a href="{{ networks_url }}">network
+          setup</a> and modify it if necessary.
         {% endblocktrans %}
       </p>
-
-      <div class="text-center">
-        <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
-          {% trans "Go to Networks" %}</a>
-      </div>
     </p>
   </div>
 
