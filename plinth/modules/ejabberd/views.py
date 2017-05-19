@@ -47,6 +47,7 @@ class EjabberdServiceView(ServiceView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
+        context['domainname'] = ejabberd.get_domainname()
         return context
 
     def form_valid(self, form):
