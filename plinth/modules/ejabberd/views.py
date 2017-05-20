@@ -19,10 +19,6 @@
 Views for the Ejabberd module
 """
 
-from django.views.generic import TemplateView
-from django.utils.decorators import method_decorator
-from stronghold.decorators import public
-
 from plinth.modules import ejabberd
 from plinth.views import ServiceView
 from .forms import EjabberdForm
