@@ -48,7 +48,7 @@ def get_configured_domain_name():
 
 version = 1
 
-title_en = 'Federated Social Network (diaspora*)'
+title_en = 'Federated Social Network (diaspora*)\n'
 
 title = _(title_en)
 
