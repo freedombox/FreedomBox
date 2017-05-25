@@ -57,7 +57,8 @@ def about(request):
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
-        'new_version': not plinth.candidate.is_installed
+        'new_version': not plinth.candidate.is_installed,
+        'os_release': get_os_release()
     }
     return TemplateResponse(request, 'help_about.html', context)
 
@@ -90,3 +91,15 @@ def status_log(request):
         'data': data
     }
     return TemplateResponse(request, 'statuslog.html', context)
+
+
+def get_os_release():
+    """Returns the Debian release number and name"""
+    output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
+    with open('/etc/os-release', 'r') as release_file:
+        for line in release_file:
+            if 'PRETTY_NAME=' in line:
+                line = line.replace('"', '').strip()
+                line = line.split('=')
+                output = line[1]
+    return output
