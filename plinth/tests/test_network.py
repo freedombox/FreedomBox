@@ -23,7 +23,7 @@ import copy
 import os
 import time
 import unittest
-
+import time
 
 euid = os.geteuid()
 if euid == 0:
@@ -113,7 +113,8 @@ class TestNetwork(unittest.TestCase):
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_get_connection_list(self):
-        """Check that we can get a list of available connections."""
+        """Check that we can get a list of available connections."""     
+        time.sleep(0.001)
         connections = network.get_connection_list()
 
         self.assertTrue('plinth_test_eth' in [x['name'] for x in connections])
