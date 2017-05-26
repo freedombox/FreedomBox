@@ -40,7 +40,6 @@ def run_tests(pattern=None, return_to_caller=False):
         pattern_list = [
             'plinth/tests',
             'plinth/modules',
-            'plinth/modules/sso/tests'
         ]
     else:
         pattern_list = [pattern]
