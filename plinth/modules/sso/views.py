@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 """
 Views for the Single Sign On module of Plinth
 """
@@ -21,20 +22,24 @@ Views for the Single Sign On module of Plinth
 import os
 import urllib
 
+from plinth.modules.sso import generate_ticket
+
 from django.http import HttpResponseRedirect
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (login as auth_login,
                                        logout as auth_logout)
 
-from .constants import PRIVATE_KEY_FILE_NAME, SSO_COOKIE_NAME, KEYS_DIRECTORY
+
+PRIVATE_KEY_FILE_NAME = 'privkey.pem'
+SSO_COOKIE_NAME = 'auth_pubtkt'
+KEYS_DIRECTORY = '/usr/share/sso-keys'
 
 
 def set_ticket_cookie(username, response):
+    """Generate and set a mod_auth_pubtkt as a cookie in the provided
+    response.
     """
-    Generate and set a mod_auth_pubtkt as a cookie in the provided response.
-    """
-    from .auth_pubtkt_util import generate_ticket
     ticket = generate_ticket(username,
                              os.path.join(KEYS_DIRECTORY,
                                           PRIVATE_KEY_FILE_NAME), list())
@@ -44,9 +49,8 @@ def set_ticket_cookie(username, response):
 
 
 def login(request):
-    """
-    Single Sign On login.
-    Sets a cookie which will be read by mod_auth_pubtkt.
+    """Login to Plinth and set a auth_pubtkt cookie which will be
+    used to provide Single Sign On for some other applications
     """
     response = auth_login(
         request, template_name='login.html', redirect_authenticated_user=True)
@@ -58,6 +62,7 @@ def login(request):
 
 
 def logout(request, next_page):
+    """Log out of Plinth and remove auth_pubtkt cookie"""
     response = auth_logout(request, next_page=next_page)
     response.delete_cookie(SSO_COOKIE_NAME)
     return response
@@ -65,9 +70,7 @@ def logout(request, next_page):
 
 @login_required
 def refresh(request):
-    """
-    Simulate cookie refresh - redirect logged in user with a new cookie
-    """
+    """Simulate cookie refresh - redirect logged in user with a new cookie"""
     redirect_url = request.GET.get(REDIRECT_FIELD_NAME, '')
     response = HttpResponseRedirect(redirect_url)
     response.delete_cookie(SSO_COOKIE_NAME)

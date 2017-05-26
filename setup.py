@@ -230,6 +230,8 @@ setuptools.setup(
                  glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
                 ('/usr/share/pam-configs/',
                  glob.glob('data/usr/share/pam-configs/*-freedombox')),
+                ('/usr/share/sso-keys/',
+                 glob.glob('data/usr/share/sso-keys/*.pem')),
                 ('/etc/plinth/modules-enabled',
                  glob.glob(os.path.join('data/etc/plinth/modules-enabled',
                                         '*'))),

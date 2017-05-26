@@ -1,0 +1,89 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Module with utilities to generate a auth_pubtkt ticket and
+sign it with the FreedomBox server's private key.
+"""
+
+import os
+import pwd
+import grp
+import argparse
+
+from OpenSSL import crypto
+
+KEYS_DIRECTORY = '/usr/share/sso-keys'
+
+
+def parse_arguments():
+    """ Return parsed command line arguments as dictionary. """
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('create-key-pair',
+                          help='Create the files pubkey.pem and privkey.pem')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_create_key_pair(_):
+    """Create public/private key pair for signing the auth_pubtkt
+    tickets.
+    """
+    private_key_file = os.path.join(KEYS_DIRECTORY, 'privkey.pem')
+    public_key_file = os.path.join(KEYS_DIRECTORY, 'pubkey.pem')
+
+    os.path.exists(KEYS_DIRECTORY) or os.mkdir(KEYS_DIRECTORY)
+
+    if not all([
+            os.path.exists(key_file)
+            for key_file in [public_key_file, private_key_file]
+    ]):
+        pkey = crypto.PKey()
+        pkey.generate_key(crypto.TYPE_DSA, 1024)
+
+        with open(private_key_file, 'w') as priv_key_file:
+            priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,
+                                              pkey).decode()
+            priv_key_file.write(priv_key)
+
+        with open(public_key_file, 'w') as pub_key_file:
+            pub_key = crypto.dump_publickey(crypto.FILETYPE_PEM, pkey).decode()
+            pub_key_file.write(pub_key)
+
+        uid = pwd.getpwnam("plinth").pw_uid
+        gid = grp.getgrnam("plinth").gr_gid
+
+        for fil in [KEYS_DIRECTORY, public_key_file, private_key_file]:
+            os.chown(fil, uid, gid)
+            os.chmod(fil, 640)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
