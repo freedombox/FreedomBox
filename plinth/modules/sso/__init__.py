@@ -24,7 +24,6 @@ import datetime
 from plinth import action_utils
 from django.utils.translation import ugettext_lazy as _
 from plinth import actions
-from OpenSSL import crypto
 from django.utils import timezone
 
 version = 1
@@ -66,12 +65,14 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
 
 def sign(pkey, data):
     """Calculates and returns ticket's signature."""
+    from OpenSSL import crypto
     sig = crypto.sign(pkey, data, 'sha1')
     return base64.b64encode(sig).decode()
 
 
 def generate_ticket(uid, private_key_file, tokens):
     """Generate a mod_auth_pubtkt ticket using login credentials."""
+    from OpenSSL import crypto
     with open(private_key_file, 'r') as fil:
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
     valid_until = minutes_from_now(30)

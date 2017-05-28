@@ -24,6 +24,7 @@ sign it with the FreedomBox server's private key.
 import os
 import pwd
 import grp
+import stat
 import argparse
 
 from OpenSSL import crypto
@@ -73,7 +74,7 @@ def subcommand_create_key_pair(_):
 
         for fil in [KEYS_DIRECTORY, public_key_file, private_key_file]:
             os.chown(fil, uid, gid)
-            os.chmod(fil, 640)
+            os.chmod(fil, 0o440)
 
 
 def main():
