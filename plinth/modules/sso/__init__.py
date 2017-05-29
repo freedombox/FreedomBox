@@ -21,7 +21,6 @@ import base64
 import datetime
 
 
-from plinth import action_utils
 from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from django.utils import timezone
@@ -40,9 +39,8 @@ managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    helper.call('create-key-pair', actions.superuser_run,
-                'auth-pubtkt', ['create-key-pair'])
-    action_utils.service_restart('apache2')
+    helper.call('setup', actions.superuser_run,
+                'auth-pubtkt', ['setup'])
 
 
 def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,

@@ -25,6 +25,7 @@ import os
 import pwd
 import grp
 import argparse
+from plinth import action_utils
 
 from OpenSSL import crypto
 
@@ -36,14 +37,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('create-key-pair',
-                          help='Create the files pubkey.pem and privkey.pem')
+    subparsers.add_parser('setup',
+                          help='setup mod_auth_pubtkt module')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_create_key_pair(_):
+def subcommand_setup(_):
+    create_key_pair()
+    action_utils.service_restart('apache2')
+
+
+def create_key_pair():
     """Create public/private key pair for signing the auth_pubtkt
     tickets.
     """
