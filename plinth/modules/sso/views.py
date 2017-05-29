@@ -36,15 +36,15 @@ SSO_COOKIE_NAME = 'auth_pubtkt'
 KEYS_DIRECTORY = '/usr/share/sso-keys'
 
 
-def set_ticket_cookie(username, response):
+def set_ticket_cookie(user, response):
     """Generate and set a mod_auth_pubtkt as a cookie in the provided
     response.
     """
-    ticket = generate_ticket(username,
-                             os.path.join(KEYS_DIRECTORY,
-                                          PRIVATE_KEY_FILE_NAME), list())
-    ticket = urllib.parse.quote(ticket)
-    response.set_cookie(SSO_COOKIE_NAME, ticket)
+    tokens = list(map(lambda g: g.name, user.groups.all()))
+    private_key_file = os.path.join(KEYS_DIRECTORY, PRIVATE_KEY_FILE_NAME)
+    ticket = generate_ticket(user.username,
+                             private_key_file, tokens)
+    response.set_cookie(SSO_COOKIE_NAME, urllib.parse.quote(ticket))
     return response
 
 
@@ -54,11 +54,8 @@ def login(request):
     """
     response = auth_login(
         request, template_name='login.html', redirect_authenticated_user=True)
-
-    if request.user.is_authenticated:
-        return set_ticket_cookie(request.user.username, response)
-    else:
-        return response
+    return set_ticket_cookie(
+        request.user, response) if request.user.is_authenticated else response
 
 
 def logout(request, next_page):
@@ -74,4 +71,4 @@ def refresh(request):
     redirect_url = request.GET.get(REDIRECT_FIELD_NAME, '')
     response = HttpResponseRedirect(redirect_url)
     response.delete_cookie(SSO_COOKIE_NAME)
-    return set_ticket_cookie(request.user.username, response)
+    return set_ticket_cookie(request.user, response)
