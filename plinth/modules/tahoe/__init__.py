@@ -17,11 +17,10 @@
 """
 Plinth module to configure Tahoe-LAFS.
 """
-
-import os
+import json
 import subprocess
 
-import ruamel.yaml
+import os
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils
@@ -31,7 +30,6 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.exceptions import DomainNameNotSetupException
 from plinth.menu import main_menu
-from plinth.utils import YAMLFile
 from plinth.utils import format_lazy
 
 version = 1
@@ -60,8 +58,7 @@ def is_setup():
 
 
 def get_configured_domain_name():
-    """
-    Extract and return the domain name from the domain name file.
+    """Extract and return the domain name from the domain name file.
     Throws DomainNameNotSetupException if the domain name file is not found.
     """
     if not os.path.exists(domain_name_file):
@@ -83,7 +80,7 @@ description = [
         box_name=_(cfg.box_name)),
     _('When enabled, the Tahoe-LAFS storage node\'s web interface will be '
       'available from <a href=\"http://{}:5678\">/tahoe-lafs</a> '.format(
-          get_configured_domain_name()) if is_setup() else '')
+        get_configured_domain_name()) if is_setup() else '')
 ]
 
 
@@ -129,9 +126,7 @@ def setup(helper, old_version=None):
 
 
 def post_setup(configured_domain_name):
-    """
-    Actions to be performed after installing tahoe-lafs package
-    """
+    """Actions to be performed after installing tahoe-lafs package."""
     actions.superuser_run('tahoe-lafs',
                           ['setup', '--domain-name', configured_domain_name])
     actions.superuser_run('tahoe-lafs', ['enable'])
@@ -173,64 +168,53 @@ def disable():
 
 def diagnose():
     """Run diagnostics and return the results."""
-    results = []
-
-    results.append(
+    return [action_utils.diagnose_url(
+        'http://localhost:5678', kind='4', check_certificate=False),
         action_utils.diagnose_url(
-            'http://localhost:5678', kind='4', check_certificate=False))
-    results.append(
-        action_utils.diagnose_url(
-            'http://localhost:5678', kind='6', check_certificate=False))
-    results.append(
+            'http://localhost:5678', kind='6', check_certificate=False),
         action_utils.diagnose_url(
             'http://{}:5678'.format(get_configured_domain_name()),
             kind='4',
-            check_certificate=False))
-
-    return results
+            check_certificate=False)]
 
 
 def add_introducer(introducer):
-    """
-    Add an introducer to the storage node's list of introducers.
+    """Add an introducer to the storage node's list of introducers.
     Param introducer must be a tuple of (pet_name, furl)
     """
-    with YAMLFile(introducers_file, restart_storage_node) as conf:
-        pet_name, furl = introducer
-        conf['introducers'][pet_name] = {'furl': furl}
+    actions.run_as_user('tahoe-lafs',
+                        ['add-introducer',
+                         "--introducer",
+                         ",".join(introducer)],
+                        become_user='tahoe-lafs')
 
 
 def remove_introducer(pet_name):
+    """Rename the introducer entry in the introducers.yaml file specified by
+    the param pet_name.
     """
-    Rename the introducer entry in the introducers.yaml file
-    specified by the param pet_name
-    """
-    with YAMLFile(introducers_file, restart_storage_node) as conf:
-        del conf['introducers'][pet_name]
+    actions.run_as_user('tahoe-lafs',
+                        ['remove-introducer', '--pet-name', pet_name],
+                        become_user='tahoe-lafs')
 
 
 def get_introducers():
+    """Return a dictionary of all introducers and their furls added to the
+    storage node running on this FreedomBox.
     """
-    Return a dictionary of all introducers and their furls
-    added to the storage node running on this FreedomBox.
-    """
-    with open(introducers_file, 'r') as intro_conf:
-        conf = ruamel.yaml.round_trip_load(intro_conf)
+    introducers = actions.run_as_user('tahoe-lafs', ['get-introducers'],
+                                      become_user='tahoe-lafs')
 
-    introducers = []
-    for pet_name in conf['introducers'].keys():
-        introducers.append((pet_name, conf['introducers'][pet_name]['furl']))
-
-    return introducers
+    return json.loads(introducers)
 
 
 def get_local_introducer():
+    """Return the name and furl of the introducer created on this FreedomBox.
     """
-    Return the name and furl of the introducer created on this FreedomBox
-    """
-    with open(introducer_furl_file, 'r') as furl_file:
-        furl = furl_file.read().rstrip()
-    return (introducer_name, furl)
+    introducer = actions.run_as_user('tahoe-lafs', ['get-local-introducer'],
+                                     become_user='tahoe-lafs')
+
+    return json.loads(introducer)
 
 
 def restart_storage_node():

@@ -82,15 +82,13 @@ def get_domain_names():
 
 
 class YAMLFile(object):
-    """
-    A context management class for updating YAML files
-    """
-
+    """A context management class for updating YAML files"""
     def __init__(self, yaml_file, post_exit=None):
-        """
+        """Return a context object for the YAML file.
+
         Parameters:
-        yaml_file - the YAML file to update
-        post_exit - a function that will be called after updating the YAML file
+        yaml_file - the YAML file to update.
+        post_exit - a function that will be called after updating the YAML file.
         """
         self.yaml_file = yaml_file
         self.post_exit = post_exit
@@ -102,11 +100,13 @@ class YAMLFile(object):
                 self.conf = ruamel.yaml.round_trip_load(intro_conf)
             else:
                 self.conf = {}
+
             return self.conf
 
     def __exit__(self, typ, value, traceback):
         with open(self.yaml_file, 'w') as intro_conf:
             ruamel.yaml.round_trip_dump(self.conf, intro_conf)
+
         if self.post_exit:
             self.post_exit()
 

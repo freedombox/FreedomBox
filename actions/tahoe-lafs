@@ -22,17 +22,23 @@ Configuration helper for Tahoe-LAFS.
 
 import argparse
 import grp
-import os
+import json
 import pwd
 import shutil
 import subprocess
+
+import os
 import ruamel.yaml
 
 from plinth import action_utils
+from plinth.modules.tahoe import (
+    introducer_name,
+    introducers_file,
+    storage_node_name,
+    tahoe_home,
+    introducer_furl_file, restart_storage_node)
+from plinth.utils import YAMLFile
 
-tahoe_home = '/var/lib/tahoe-lafs'
-introducer_name = 'introducer'
-storage_node_name = 'storage_node'
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
 
 
@@ -43,22 +49,48 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable Tahoe-LAFS')
     subparsers.add_parser('disable', help='Disable Tahoe-LAFS')
-    setup = subparsers.add_parser(
-        'setup', help='Set domain name for Tahoe-LAFS')
-    setup.add_argument(
-        '--domain-name', help='The domain name to be used by Tahoe-LAFS')
-    subparsers.add_parser(
-        'create-introducer', help='Create and start the introducer node')
-    subparsers.add_parser(
-        'create-storage-node', help='Create and start the storage node')
-    subparsers.add_parser('autostart', help="Automatically start all "
-                          "introducers and storage nodes on system startup")
+    setup = subparsers.add_parser('setup',
+                                  help='Set domain name for Tahoe-LAFS')
+    setup.add_argument('--domain-name',
+                       help='The domain name to be used by Tahoe-LAFS')
+    subparsers.add_parser('create-introducer',
+                          help='Create and start the introducer node')
+    subparsers.add_parser('create-storage-node',
+                          help='Create and start the storage node')
+    subparsers.add_parser('autostart',
+                          help="Automatically start all introducers and "
+                               "storage nodes on system startup")
+    intro_parser_add = subparsers.add_parser('add-introducer',
+                                             help="Add an introducer to the "
+                                                  "storage node's "
+                                                  "list of introducers.")
+    intro_parser_add.add_argument('--introducer', help="Add an introducer to "
+                                                       "the storage node's "
+                                                       "list of introducers "
+                                                       "Param introducer must "
+                                                       "be a tuple of "
+                                                       "(pet_name, furl)")
+    intro_parser_remove = subparsers.add_parser('remove-introducer',
+                                                help="Rename the introducer "
+                                                     "entry in the "
+                                                     "introducers.yaml file "
+                                                     "specified by the param")
+    intro_parser_remove.add_argument(
+        '--pet-name', help='The domain name that will be used by '
+                           'Matrix Synapse')
+    subparsers.add_parser('get-introducers',
+                          help="Return a dictionary of all introducers and "
+                               "their furls added to the storage node running "
+                               "on this FreedomBox.")
+    subparsers.add_parser('get-local-introducer',
+                          help="Return the name and furl of the introducer "
+                               "created on this FreedomBox")
+
     return parser.parse_args()
 
 
 def subcommand_setup(arguments):
-    """Actions to be performed before installing Tahoe-LAFS"""
-
+    """Actions to be performed before installing Tahoe-LAFS."""
     # Create tahoe group if needed.
     try:
         grp.getgrnam('tahoe-lafs')
@@ -88,16 +120,15 @@ def subcommand_setup(arguments):
 
 
 def subcommand_autostart(_):
-    """
-    Automatically start all introducers and storage nodes on system startup
+    """Automatically start all introducers and storage nodes on system startup.
     """
     with open('/etc/default/tahoe-lafs', 'a') as autostart_conf:
         autostart_conf.write('AUTOSTART="all"')
 
 
 def get_configured_domain_name():
-    """
-    Extract and return the domain name from the domain name file.
+    """Extract and return the domain name from the domain name file.
+
     Throws DomainNameNotSetupException if the domain name file is not found.
     """
     if not os.path.exists(domain_name_file):
@@ -108,7 +139,7 @@ def get_configured_domain_name():
 
 
 def subcommand_create_introducer(_):
-    """Create a Tahoe-LAFS introducer on this FreedomBox"""
+    """Create a Tahoe-LAFS introducer on this FreedomBox."""
     os.chdir(tahoe_home)
 
     if not os.path.exists(os.path.join(tahoe_home, introducer_name)):
@@ -122,7 +153,7 @@ def subcommand_create_introducer(_):
 
 
 def subcommand_create_storage_node(_):
-    """Create a Tahoe-LAFS storage node on this FreedomBox"""
+    """Create a Tahoe-LAFS storage node on this FreedomBox."""
     os.chdir(tahoe_home)
 
     if not os.path.exists(os.path.join(tahoe_home, storage_node_name)):
@@ -145,6 +176,49 @@ def subcommand_create_storage_node(_):
                 introducers_file.write(conf_yaml)
 
     subprocess.call(['tahoe', 'start', storage_node_name])
+
+
+def subcommand_add_introducer(arguments):
+    """Add an introducer to the storage node's list of introducers.
+
+    Param introducer must be a tuple of (pet_name, furl).
+    """
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
+        pet_name, furl = arguments.introducer.split(",")
+        conf['introducers'][pet_name] = {'furl': furl}
+
+
+def subcommand_remove_introducer(arguments):
+    """Rename the introducer entry in the introducers.yaml file specified
+
+    by the param pet_name
+    """
+    with YAMLFile(introducers_file, restart_storage_node) as conf:
+        del conf['introducers'][arguments.pet_name]
+
+
+def subcommand_get_introducers(_):
+    """Return a dictionary of all introducers and their furls.
+
+    The ones added to the storage node running on this FreedomBox.
+    """
+    with open(introducers_file, 'r') as intro_conf:
+        conf = ruamel.yaml.round_trip_load(intro_conf)
+
+    introducers = []
+    for pet_name in conf['introducers'].keys():
+        introducers.append((pet_name, conf['introducers'][pet_name]['furl']))
+
+    print(json.dumps(introducers))
+
+
+def subcommand_get_local_introducer(_):
+    """Return the name and furl of the introducer created on this FreedomBox
+    """
+    with open(introducer_furl_file, 'r') as furl_file:
+        furl = furl_file.read().rstrip()
+
+    print(json.dumps((introducer_name, furl)))
 
 
 def subcommand_enable(_):
