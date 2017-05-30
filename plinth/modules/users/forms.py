@@ -281,10 +281,6 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             # Restrict console login to users in admin or sudo group
             try:
                 set_restricted_access(True)
-                message = _('Console login access restricted to users in '
-                            '"admin" group. This can be configured in '
-                            'security settings.')
-                messages.success(self.request, message)
             except Exception:
                 messages.error(self.request,
                                _('Failed to restrict console access.'))

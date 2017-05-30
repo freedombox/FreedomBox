@@ -1,5 +1,6 @@
 body {
     padding-top: 70px;
+    position: relative;
 }
 
 .nav .glyphicon,
@@ -74,14 +75,42 @@ body {
     width: 60px;
 }
 
-footer {
-    text-align: center;
-}
-
+/* Sticky footer styles
+-------------------------------------------------- */
 footer .license-info {
     opacity: 0.75;
 }
 
 .footer-logo {
     width: 140px;
+}
+
+html {
+  position: relative;
+}
+
+body, html {
+  height: 100%;
+}
+
+#wrapper{
+    min-height: 100%;
+    position: relative;
+}
+
+#container-wrapper{
+    /*covers for footer height */
+    padding-bottom: 150px;
+}
+
+footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 150px;
+}
+
+footer license-info p{
+    margin: 20px 0;
 }

@@ -74,12 +74,16 @@
 
   <p style='margin-top:30px'>
     {% blocktrans trimmed %}
-      You are running Plinth version {{ version }}.
+      You are running {{ os_release }} and Plinth version {{ version }}.
     {% endblocktrans %}
 
     {% if new_version %}
       {% blocktrans trimmed %}
-        There is a new version available.
+        There is a new Plinth version available.
+      {% endblocktrans %}
+    {% else %}
+      {% blocktrans trimmed %}
+        Plinth is up to date.
       {% endblocktrans %}
     {% endif %}
   </p>

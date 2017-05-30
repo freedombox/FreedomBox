@@ -30,32 +30,24 @@
 
     <p>
       {% blocktrans trimmed %}
-        {{ box_name }} setup is now complete.  To make your {{ box_name }}
-        functional, you need some applications.  They will be installed
-        the first time you access them.
+        Without any apps, your {{ box_name }} cannot do very much.
       {% endblocktrans %}
     </p>
 
     <div class="text-center">
       <a class="btn btn-lg btn-primary" href="{% url 'apps' %}">
-        {% trans "Go to Apps" %}</a>
+        {% trans "Install Apps" %}</a>
     </div>
-
-    <h3>{% trans "Current Network Configuration" %}</h3>
 
     <p>
-      {% blocktrans trimmed %}
-        You should check the network setup and modify it if necessary.
-        Do not forget to change the default Wi-Fi passwords!
-      {% endblocktrans %}
+      <p>
+        {% url 'networks:index' as networks_url %}
+        {% blocktrans trimmed %}
+          You may want to check the <a href="{{ networks_url }}">network
+          setup</a> and modify it if necessary.
+        {% endblocktrans %}
+      </p>
     </p>
-
-    {% include "connections_diagram.html" %}
-
-    <div class="text-center">
-      <a class="btn btn-lg btn-primary" href="{% url 'networks:index' %}">
-        {% trans "Go to Networks" %}</a>
-    </div>
   </div>
 
 {% endblock %}

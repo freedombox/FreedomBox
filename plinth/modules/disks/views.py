@@ -74,19 +74,19 @@ def _format_bytes(size):
         return size
 
     if size < 1024:
-        return _('{disk_size} bytes').format(disk_size=size)
+        return _('{disk_size:.1f} bytes').format(disk_size=size)
 
     if size < 1024 ** 2:
         size /= 1024
-        return _('{disk_size} KiB').format(disk_size=size)
+        return _('{disk_size:.1f} KiB').format(disk_size=size)
 
     if size < 1024 ** 3:
         size /= 1024 ** 2
-        return _('{disk_size} MiB').format(disk_size=size)
+        return _('{disk_size:.1f} MiB').format(disk_size=size)
 
     if size < 1024 ** 4:
         size /= 1024 ** 3
-        return _('{disk_size} GiB').format(disk_size=size)
+        return _('{disk_size:.1f} GiB').format(disk_size=size)
 
     size /= 1024 ** 4
-    return _('{disk_size} TiB').format(disk_size=size)
+    return _('{disk_size:.1f} TiB').format(disk_size=size)

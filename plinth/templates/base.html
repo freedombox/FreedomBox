@@ -69,12 +69,13 @@
   <!-- Bootstrap base CSS -->
   <link rel="stylesheet" href="{% static '/javascript/bootstrap/css/bootstrap.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
-
+  <link rel="stylesheet" href="{% static 'theme/css/responsive.css' %}"/>
   {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
   {% block page_head %}<!-- placeholder for page-specific head files -->{% endblock %}
 </head>
 
 <body>
+<div id="wrapper">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
   <div class="navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container">
@@ -167,7 +168,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div id="container-wrapper" class="container">
     <div class="row">
       {% block content_row %}
         <div class="col-md-3">
@@ -212,20 +213,22 @@
         {# this center-info should contain help texts but no menus #}
       {% endblock %}
     </div>
-
-    <hr>
-
-    <footer>
-      {% block footer_block %}
-        <p>
-          <a href="{% static 'jslicense.html' %}" data-jslicense="1" style="opacity: 0.75;">
-            {% trans "JavaScript license information" %}</a>
-        </p>
-      {% endblock %}
-    </footer>
-
   </div><!--/.fluid-container-->
 
+  <footer>
+    <hr>
+    <div class="container">
+      {% block footer_block %}
+        <div class="license-info">
+          <p>
+            <a href="{% static 'jslicense.html' %}" data-jslicense="1">
+              {% trans "JavaScript license information" %}</a>
+          </p>
+        </div>
+      {% endblock %}
+    </div>
+  </footer><!--/.footer-->
+</div><!--/#container-->
   <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
   <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
   <script type="text/javascript" src="{% static '/javascript/modernizr/modernizr.min.js' %}"></script>
