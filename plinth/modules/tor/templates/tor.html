@@ -53,7 +53,7 @@
       {% endif %}
     </p>
 
-    {% include "diagnostics_button.html" with module="tor" %}
+    {% include "diagnostics_button.html" with module="tor" enabled=status.is_running %}
 
     {% if status.hs_enabled %}
       <div class="row">

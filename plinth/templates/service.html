@@ -57,7 +57,7 @@
 
   {% block diagnostics %}
     {% if diagnostics_module_name %}
-      {% include "diagnostics_button.html" with module=diagnostics_module_name %}
+      {% include "diagnostics_button.html" with module=diagnostics_module_name enabled=service.is_running %}
     {% endif %}
   {% endblock %}
 
