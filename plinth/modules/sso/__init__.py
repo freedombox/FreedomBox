@@ -18,7 +18,7 @@
 Plinth module to configure Single Sign On services.
 """
 
-from plinth import action_utils
+from plinth import actions, action_utils
 from django.utils.translation import ugettext_lazy as _
 
 version = 1
@@ -43,4 +43,3 @@ first_boot_steps = [
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    action_utils.service_restart('apache2')

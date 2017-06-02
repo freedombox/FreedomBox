@@ -92,7 +92,7 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
         graceperiod and 'graceperiod={}'.format(graceperiod, type='d'),
         udata and 'udata={}'.format(udata),
         extra_fields and ';'.join(
-            ['{k}={v}'.format(k, v) for k, v in extra_fields])
+            ['{}={}'.format(k, v) for k, v in extra_fields])
     ]
     data = ';'.join(filter(None, fields))
     signature = 'sig={}'.format(sign(pkey, data))
@@ -101,14 +101,12 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
 
 def sign(pkey, data):
     """Calculates and returns ticket's signature."""
-    from OpenSSL import crypto
     sig = crypto.sign(pkey, data, 'sha1')
     return base64.b64encode(sig).decode()
 
 
 def subcommand_generate_ticket(arguments):
     """Generate a mod_auth_pubtkt ticket using login credentials."""
-    from OpenSSL import crypto
     uid = arguments.uid
     private_key_file = arguments.private_key_file
     tokens = arguments.tokens
@@ -122,7 +120,7 @@ def subcommand_generate_ticket(arguments):
 
 def minutes_from_now(minutes):
     """Return a timestamp at the given number of minutes from now."""
-    return (datetime.datetime.now() + datetime.timedelta(minutes=30)).timestamp()
+    return (datetime.datetime.now() + datetime.timedelta(minutes)).timestamp()
 
 
 def main():
