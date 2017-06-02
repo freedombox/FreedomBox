@@ -25,6 +25,7 @@ from django.views.generic import FormView
 from plinth import actions
 from plinth.modules import diaspora
 from plinth.modules.diaspora.forms import DiasporaForm
+from plinth.utils import get_domain_names
 from plinth.views import ServiceView
 
 
@@ -48,7 +49,7 @@ class DiasporaSetupView(FormView):
         context = super().get_context_data(**kwargs)
         context['description'] = self.description
         context['title'] = self.title
-        context['domain_names'] = diaspora.get_domain_names()
+        context['domain_names'] = get_domain_names()
 
         return context
 

@@ -22,7 +22,7 @@ Forms for configuring matrix-synapse.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules import matrixsynapse
+from plinth.utils import get_domain_names
 
 
 class MatrixSynapseForm(forms.Form):
@@ -35,4 +35,4 @@ class MatrixSynapseForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form object."""
         super().__init__(*args, **kwargs)
-        self.fields['domain_name'].choices = matrixsynapse.get_domain_names()
+        self.fields['domain_name'].choices = get_domain_names()

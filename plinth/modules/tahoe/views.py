@@ -21,10 +21,10 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
+from plinth.forms import DomainSelectionForm
 from plinth.modules import tahoe
-from plinth.views import ServiceView
-from plinth.domain_selection_form import DomainSelectionForm
 from plinth.utils import get_domain_names
+from plinth.views import ServiceView
 
 
 class TahoeSetupView(FormView):

@@ -39,7 +39,7 @@
 {% endblock %}
 
 {% block configuration %}
-  <h3>Configuration</h3>
+  <h3>{% trans "Configuration" %}</h3>
 
   <form class="form" method="post">
     {% csrf_token %}
@@ -51,11 +51,11 @@
   </form>
   <br/>
 
-  <h4> Local introducer </h4>
+  <h4>{% trans "Local introducer" %}</h4>
   <table class="table table-bordered">
       <thead>
           <tr>
-              <th> Pet Name </th>
+              <th>{% trans "Pet Name" %}</th>
               <th> furl </th>
           </tr>
       </thead>
@@ -67,10 +67,10 @@
 
   <form class="form" method="post" action="/plinth/apps/tahoe-lafs/add_introducer">
       {% csrf_token %}
-      <h4> Add new introducer </h4>
+      <h4>{% trans "Add new introducer" %}</h4>
 
       <div class="form-group">
-          <label>Pet Name:</label>
+          <label>{% trans "Pet Name" %}:</label>
           <input type="text" class="form-control" name="pet_name">
       </div>
       <div class="form-group">
@@ -83,23 +83,23 @@
 
   <br/>
 
- <h4> Connected introducers </h4>
+ <h4>{% trans "Connected introducers" %}</h4>
   <table class="table table-bordered">
       <thead>
           <tr>
-              <th> Pet Name </th>
+              <th>{% trans "Pet Name" %}</th>
               <th> furl </th>
           </tr>
       </thead>
       {% for introducer, furl in introducers %}
       <tr>
           <td> {{ introducer }} </td>
-          <td> {{furl}} </td>
+          <td> {{ furl }} </td>
           <form class="form" method="post"
                 action="/plinth/apps/tahoe-lafs/remove_introducer/{{introducer}}" id="introducer_list">
                  {% csrf_token %}
               <td><button type="submit" class="btn btn-danger">
-                  Remove
+                  {% trans "Remove" %}
               </button></td>
           </form>
       </tr>
@@ -107,4 +107,3 @@
   </table>
 
 {% endblock %}
-

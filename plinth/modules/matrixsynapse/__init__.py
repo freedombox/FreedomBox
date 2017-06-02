@@ -31,8 +31,6 @@ from plinth import actions
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.modules import names
-
 
 version = 1
 
@@ -135,20 +133,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(8448, 'tcp4'))
     results.extend(action_utils.diagnose_url_on_all(
         'https://{host}/_matrix', check_certificate=False))
-
-    return results
-
-
-def get_domain_names():
-    """Return the domain name(s)."""
-    results = []
-
-    for domain_type, domains in names.domains.items():
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            results.append((domain, domain))
 
     return results
 

@@ -46,3 +46,7 @@ class DomainNotRegisteredError(PlinthError):
     FreedomBox doesn't have a registered domain
     """
     pass
+
+
+class DomainNameNotSetupException(Exception):
+    pass

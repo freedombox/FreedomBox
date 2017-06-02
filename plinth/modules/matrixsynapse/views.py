@@ -27,6 +27,7 @@ from plinth import actions
 from plinth import views
 from plinth.modules import matrixsynapse
 from plinth.modules.matrixsynapse.forms import MatrixSynapseForm
+from plinth.utils import get_domain_names
 
 
 class SetupView(FormView):
@@ -49,7 +50,7 @@ class SetupView(FormView):
 
         context['title'] = matrixsynapse.title
         context['description'] = matrixsynapse.description
-        context['domain_names'] = matrixsynapse.get_domain_names()
+        context['domain_names'] = get_domain_names()
 
         return context
 

@@ -36,7 +36,7 @@
     {% url 'config:index' as index_url %}
     {% if domain_names|length == 0 %}
       No domain(s) are set. You can setup your domain on the system at
-      <a href="{{ index_url }}">Configure</a> page.
+      <a href="{{ index_url }}">{% trans "Configure" %}</a> page.
     {% endif %}
   </p>
 
@@ -48,7 +48,7 @@
 
   {% block configuration %}
     {% if domain_names|length > 0 %}
-      <h3>Configuration</h3>
+      <h3>{% trans Configuration %}</h3>
       <form class="form" method="post">
         {% csrf_token %}
 

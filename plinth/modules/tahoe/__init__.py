@@ -28,7 +28,7 @@ from plinth import actions
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.exceptions import DomainNameNotSetupException
+from plinth.errors import DomainNameNotSetupException
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
@@ -215,12 +215,3 @@ def get_local_introducer():
                                      become_user='tahoe-lafs')
 
     return json.loads(introducer)
-
-
-def restart_storage_node():
-    try:
-        os.chdir(tahoe_home)
-        subprocess.check_output(
-            ['sudo', '-u', 'tahoe-lafs', 'tahoe', 'restart', 'storage_node'])
-    except subprocess.CalledProcessError as err:
-        print('Failed to restart storage_node with new configuration: %s', err)

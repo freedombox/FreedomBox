@@ -31,12 +31,13 @@ import os
 import ruamel.yaml
 
 from plinth import action_utils
+from plinth.errors import DomainNameNotSetupException
 from plinth.modules.tahoe import (
     introducer_name,
     introducers_file,
     storage_node_name,
     tahoe_home,
-    introducer_furl_file, restart_storage_node)
+    introducer_furl_file)
 from plinth.utils import YAMLFile
 
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
@@ -60,24 +61,20 @@ def parse_arguments():
     subparsers.add_parser('autostart',
                           help="Automatically start all introducers and "
                                "storage nodes on system startup")
-    intro_parser_add = subparsers.add_parser('add-introducer',
-                                             help="Add an introducer to the "
-                                                  "storage node's "
-                                                  "list of introducers.")
-    intro_parser_add.add_argument('--introducer', help="Add an introducer to "
-                                                       "the storage node's "
-                                                       "list of introducers "
-                                                       "Param introducer must "
-                                                       "be a tuple of "
-                                                       "(pet_name, furl)")
-    intro_parser_remove = subparsers.add_parser('remove-introducer',
-                                                help="Rename the introducer "
-                                                     "entry in the "
-                                                     "introducers.yaml file "
-                                                     "specified by the param")
+    intro_parser_add = subparsers.add_parser(
+        'add-introducer', help="Add an introducer to the storage node's list "
+                               "of introducers.")
+    intro_parser_add.add_argument(
+        '--introducer', help="Add an introducer to the storage node's list "
+                             "of introducers Param introducer must be a tuple "
+                             "of (pet_name, furl)")
+    intro_parser_remove = subparsers.add_parser(
+        'remove-introducer', help="Rename the introducer entry in the "
+                                  "introducers.yaml file specified by the "
+                                  "param")
     intro_parser_remove.add_argument(
         '--pet-name', help='The domain name that will be used by '
-                           'Matrix Synapse')
+                           'Tahoe-LAFS')
     subparsers.add_parser('get-introducers',
                           help="Return a dictionary of all introducers and "
                                "their furls added to the storage node running "
@@ -90,14 +87,14 @@ def parse_arguments():
 
 
 def subcommand_setup(arguments):
-    """Actions to be performed before installing Tahoe-LAFS."""
+    """Actions to be performed after installing Tahoe-LAFS."""
     # Create tahoe group if needed.
     try:
         grp.getgrnam('tahoe-lafs')
     except KeyError:
         subprocess.run(['addgroup', 'tahoe-lafs'], check=True)
 
-    # Create tahoe user is needed.
+    # Create tahoe user if needed.
     try:
         pwd.getpwnam('tahoe-lafs')
     except KeyError:
@@ -233,6 +230,15 @@ def subcommand_disable(_):
     action_utils.service_disable('tahoe-lafs')
 
 
+def restart_storage_node():
+    try:
+        os.chdir(tahoe_home)
+        subprocess.check_output(
+            ['sudo', '-u', 'tahoe-lafs', 'tahoe', 'restart', 'storage_node'])
+    except subprocess.CalledProcessError as err:
+        print('Failed to restart storage_node with new configuration: %s', err)
+
+
 def main():
     """Parse arguments and perform all duties."""
     arguments = parse_arguments()
@@ -244,7 +250,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-class DomainNameNotSetupException(Exception):
-    pass
