@@ -21,7 +21,9 @@ Documentation=man:plinth(1)
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/plinth
+User=plinth
+Group=plinth
+ExecStart=/usr/local/bin/plinth
 Restart=on-failure
 ExecReload=/bin/kill -HUP $MAINPID
 User=plinth
