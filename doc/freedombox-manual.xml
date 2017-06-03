@@ -7299,7 +7299,7 @@ if __name__ == '__main__':
     return results</screen>
         <para>There are several helpers available to implement some of the common diagnostic tests.  For our application we wish to implement a test to check whether the <code>/ttrss</code> URL is accessible.  Since this is a commonly performed test, there is a helper method available and we have used it in the above code.  The <code>{host}</code> tag replaced with various IP addresses, hostnames and domain names by the helper to produce different kinds of URLs and they are all tested.  Results for all tests are returned which we then pass on to Plinth. </para>
         <para>The user can trigger the diagnostics test by going to <code>System -&gt; Diagnostics</code> page.  This runs diagnostics for all the applications.  If we want users to be able to run diagnostics specifically for this application, we can include a button for it in our template immediately after the application description. </para>
-        <screen format="linespecific">{% include "diagnostics_button.html" with module="ttrss" %}</screen>
+        <screen format="linespecific">{% include "diagnostics_button.html" with module="ttrss" enabled=True %}</screen>
       </section>
       <section>
         <title>Logging</title>

@@ -23,6 +23,11 @@
       action="{% url 'diagnostics:module' module %}">
   {% csrf_token %}
 
-  <input type="submit" class="btn btn-default"
-         value="{% trans "Run Diagnostics" %}"/>
+  {% if enabled %}
+    <input type="submit" class="btn btn-default"
+           value="{% trans "Run Diagnostics" %}"/>
+  {% else %}
+    <input type="submit" class="btn btn-default"
+           value="{% trans "Run Diagnostics" %}" disabled="disabled"/>
+  {% endif %}
 </form>
