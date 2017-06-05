@@ -17,10 +17,10 @@
 """
 Plinth module to configure Tahoe-LAFS.
 """
-import json
-import subprocess
 
+import json
 import os
+
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import action_utils
@@ -28,9 +28,10 @@ from plinth import actions
 from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.errors import DomainNameNotSetupException
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
+
+from .errors import TahoeConfigurationError
 
 version = 1
 
@@ -59,10 +60,10 @@ def is_setup():
 
 def get_configured_domain_name():
     """Extract and return the domain name from the domain name file.
-    Throws DomainNameNotSetupException if the domain name file is not found.
+    Throws TahoeConfigurationError if the domain name file is not found.
     """
     if not os.path.exists(domain_name_file):
-        raise DomainNameNotSetupException
+        raise TahoeConfigurationError
     else:
         with open(domain_name_file) as dnf:
             return dnf.read().rstrip()
@@ -78,9 +79,6 @@ description = [
           'Additional introducers can be added, which will introduce this '
           'node to the other storage nodes.'),
         box_name=_(cfg.box_name)),
-    _('When enabled, the Tahoe-LAFS storage node\'s web interface will be '
-      'available from <a href=\"http://{}:5678\">/tahoe-lafs</a> '.format(
-        get_configured_domain_name()) if is_setup() else '')
 ]
 
 
@@ -91,11 +89,11 @@ def init():
 
     global service
     setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
+    if setup_helper.get_state() != 'needs-setup' and is_setup():
         service = service_module.Service(
             managed_services[0],
             title,
-            ports=['http', 'https'],
+            ports=['tahoe-plinth'],
             is_external=True,
             is_enabled=is_enabled,
             enable=enable,
@@ -110,20 +108,6 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
 
-    global service
-    if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            title,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
-    helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
-
 
 def post_setup(configured_domain_name):
     """Actions to be performed after installing tahoe-lafs package."""
@@ -136,11 +120,28 @@ def post_setup(configured_domain_name):
                         become_user='tahoe-lafs')
     actions.superuser_run('tahoe-lafs', ['autostart'])
 
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0],
+            title,
+            ports=['tahoe-plinth'],
+            is_external=True,
+            is_enabled=is_enabled,
+            enable=enable,
+            disable=disable,
+            is_running=is_running)
+    service.notify_enabled(None, True)
+    add_shortcut()
+
 
 def add_shortcut():
     """Helper method to add a shortcut to the front page."""
+    # BUG: Current logo appears squashed on front page.
     frontpage.add_shortcut(
-        'tahoe-lafs', title, url='/tahoe-lafs', login_required=True)
+        'tahoe-lafs', title,
+        url='https://{}:5678'.format(get_configured_domain_name()),
+        login_required=True)
 
 
 def is_running():
@@ -170,12 +171,12 @@ def diagnose():
     """Run diagnostics and return the results."""
     return [action_utils.diagnose_url(
         'http://localhost:5678', kind='4', check_certificate=False),
-        action_utils.diagnose_url(
-            'http://localhost:5678', kind='6', check_certificate=False),
-        action_utils.diagnose_url(
-            'http://{}:5678'.format(get_configured_domain_name()),
-            kind='4',
-            check_certificate=False)]
+            action_utils.diagnose_url(
+                'http://localhost:5678', kind='6', check_certificate=False),
+            action_utils.diagnose_url(
+                'http://{}:5678'.format(get_configured_domain_name()),
+                kind='4',
+                check_certificate=False)]
 
 
 def add_introducer(introducer):

@@ -34,7 +34,6 @@ class ServiceForm(forms.Form):
 
 class DomainSelectionForm(forms.Form):
     """Form for selecting a domain name to be used for
-
     distributed federated applications
     """
 

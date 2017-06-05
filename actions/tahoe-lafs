@@ -21,6 +21,7 @@ Configuration helper for Tahoe-LAFS.
 """
 
 import argparse
+import augeas
 import grp
 import json
 import pwd
@@ -31,16 +32,19 @@ import os
 import ruamel.yaml
 
 from plinth import action_utils
-from plinth.errors import DomainNameNotSetupException
 from plinth.modules.tahoe import (
     introducer_name,
     introducers_file,
     storage_node_name,
     tahoe_home,
     introducer_furl_file)
+from plinth.modules.tahoe.errors import TahoeConfigurationError
 from plinth.utils import YAMLFile
 
+
 domain_name_file = os.path.join(tahoe_home, 'domain_name')
+
+DEFAULT_FILE = '/etc/default/tahoe-lafs'
 
 
 def parse_arguments():
@@ -119,17 +123,23 @@ def subcommand_setup(arguments):
 def subcommand_autostart(_):
     """Automatically start all introducers and storage nodes on system startup.
     """
-    with open('/etc/default/tahoe-lafs', 'a') as autostart_conf:
-        autostart_conf.write('AUTOSTART="all"')
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+    aug.load()
+
+    aug.set('/files' + DEFAULT_FILE + '/AUTOSTART', 'all')
+    aug.save()
 
 
 def get_configured_domain_name():
     """Extract and return the domain name from the domain name file.
 
-    Throws DomainNameNotSetupException if the domain name file is not found.
+    Throws TahoeConfigurationError if the domain name file is not found.
     """
     if not os.path.exists(domain_name_file):
-        raise DomainNameNotSetupException
+        raise TahoeConfigurationError
     else:
         with open(domain_name_file) as dnf:
             return dnf.read().rstrip()
@@ -187,7 +197,6 @@ def subcommand_add_introducer(arguments):
 
 def subcommand_remove_introducer(arguments):
     """Rename the introducer entry in the introducers.yaml file specified
-
     by the param pet_name
     """
     with YAMLFile(introducers_file, restart_storage_node) as conf:
@@ -231,10 +240,9 @@ def subcommand_disable(_):
 
 
 def restart_storage_node():
+    """Called after exiting context of editing introducers file."""
     try:
-        os.chdir(tahoe_home)
-        subprocess.check_output(
-            ['sudo', '-u', 'tahoe-lafs', 'tahoe', 'restart', 'storage_node'])
+        subprocess.run(['tahoe', 'restart', 'storage_node'], check=True)
     except subprocess.CalledProcessError as err:
         print('Failed to restart storage_node with new configuration: %s', err)
 
