@@ -24,7 +24,6 @@ from apt.cache import Cache
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _, ugettext_lazy
-from stronghold.decorators import public
 
 from plinth import cfg, __version__
 from plinth.menu import main_menu
@@ -42,14 +41,12 @@ def init():
                      100)
 
 
-@public
 def index(request):
     """Serve the index page"""
     return TemplateResponse(request, 'help_index.html',
                             {'title': _('Documentation and FAQ')})
 
 
-@public
 def about(request):
     """Serve the about page"""
     cache = Cache()
@@ -62,7 +59,6 @@ def about(request):
     return TemplateResponse(request, 'help_about.html', context)
 
 
-@public
 def manual(request):
     """Serve the manual page from the 'doc' directory"""
     try:

@@ -119,11 +119,13 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% block mainmenu_right %}
-            <li>
-              <a href="{% url 'help:index' %}" title="{% trans "Help" %}">
-                <span class="glyphicon-question-sign glyphicon nav-icon"></span>
-              </a>
-            </li>
+	    {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'help:index' %}" title="{% trans "Help" %}">
+                  <span class="glyphicon-question-sign glyphicon nav-icon"></span>
+                </a>
+              </li>
+	    {% endif %}
 
             {% if user.is_authenticated %}
               <li class="dropdown">
