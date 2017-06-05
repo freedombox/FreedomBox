@@ -1,0 +1,138 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Module with utilities to generate a auth_pubtkt ticket and
+sign it with the FreedomBox server's private key.
+"""
+
+import os
+import time
+import base64
+import datetime
+import argparse
+
+from OpenSSL import crypto
+
+KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
+
+
+def parse_arguments():
+    """ Return parsed command line arguments as dictionary. """
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser(
+        'create-key-pair',
+        help='create a key pair for the apache server '
+        'to sign auth_pubtkt tickets')
+    gen_tkt = subparsers.add_parser('generate-ticket',
+                                     help='generate auth_pubtkt ticket')
+    gen_tkt.add_argument('--uid', help='username of the user')
+    gen_tkt.add_argument('--private-key-file',
+                         help='path of the private key file of the server')
+    gen_tkt.add_argument('--tokens',
+                         help='tokens, usually containing the user groups')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_create_key_pair(_):
+    """Create public/private key pair for signing the auth_pubtkt
+    tickets.
+    """
+    private_key_file = os.path.join(KEYS_DIRECTORY, 'privkey.pem')
+    public_key_file = os.path.join(KEYS_DIRECTORY, 'pubkey.pem')
+
+    os.path.exists(KEYS_DIRECTORY) or os.mkdir(KEYS_DIRECTORY)
+
+    if not all([
+            os.path.exists(key_file)
+            for key_file in [public_key_file, private_key_file]
+    ]):
+        pkey = crypto.PKey()
+        # XXX: Use RSA when available in mod-auth-pubtkt.
+        pkey.generate_key(crypto.TYPE_DSA, 1024)
+
+        with open(private_key_file, 'w') as priv_key_file:
+            priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,
+                                              pkey).decode()
+            priv_key_file.write(priv_key)
+
+        with open(public_key_file, 'w') as pub_key_file:
+            pub_key = crypto.dump_publickey(crypto.FILETYPE_PEM, pkey).decode()
+            pub_key_file.write(pub_key)
+
+        for fil in [public_key_file, private_key_file]:
+            os.chmod(fil, 0o440)
+
+
+def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
+                  udata=None, graceperiod=None, extra_fields=None):
+    """Create and return a signed mod_auth_pubtkt ticket."""
+    fields = [
+        'uid={}'.format(uid),
+        'validuntil={}'.format(validuntil, type='d'),
+        ip and 'cip={}'.format(ip),
+        tokens and 'tokens={}'.format(tokens),
+        graceperiod and 'graceperiod={}'.format(graceperiod, type='d'),
+        udata and 'udata={}'.format(udata),
+        extra_fields and ';'.join(
+            ['{}={}'.format(k, v) for k, v in extra_fields])
+    ]
+    data = ';'.join(filter(None, fields))
+    signature = 'sig={}'.format(sign(pkey, data))
+    return ';'.join([data, signature])
+
+
+def sign(pkey, data):
+    """Calculates and returns ticket's signature."""
+    # XXX: Use SHA256 when available in mod-auth-pubtkt.
+    sig = crypto.sign(pkey, data, 'sha1')
+    return base64.b64encode(sig).decode()
+
+
+def subcommand_generate_ticket(arguments):
+    """Generate a mod_auth_pubtkt ticket using login credentials."""
+    uid = arguments.uid
+    private_key_file = arguments.private_key_file
+    tokens = arguments.tokens
+    with open(private_key_file, 'r') as fil:
+        pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
+    valid_until = minutes_from_now(30)
+    grace_period = minutes_from_now(25)
+    print(create_ticket(
+        pkey, uid, valid_until, tokens=tokens, graceperiod=grace_period))
+
+
+def minutes_from_now(minutes):
+    """Return a timestamp at the given number of minutes from now."""
+    return (datetime.datetime.now() + datetime.timedelta(minutes)).timestamp()
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

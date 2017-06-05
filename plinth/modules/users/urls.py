@@ -20,11 +20,14 @@ URLs for the Users module
 """
 
 from django.conf.urls import url
-from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from stronghold.decorators import public
 
 from plinth.utils import non_admin_view
+from plinth.modules.sso.views import (
+    login as sso_login,
+    logout as sso_logout
+)
 from . import views
 
 
@@ -39,9 +42,8 @@ urlpatterns = [
         non_admin_view(views.UserChangePassword.as_view()),
         name='change_password'),
     # Add Django's login/logout urls
-    url(r'^accounts/login/$', public(auth_views.login),
-        {'template_name': 'login.html'}, name='login'),
-    url(r'^accounts/logout/$', public(auth_views.logout),
+    url(r'^accounts/login/$', public(sso_login), name='login'),
+    url(r'^accounts/logout/$', public(sso_logout),
         {'next_page': reverse_lazy('index')}, name='logout'),
     url(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
         name='firstboot'),
