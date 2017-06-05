@@ -53,6 +53,9 @@ class Disk():
         directory = os.path.dirname(os.path.realpath(__file__))
         disk_file = os.path.join(directory, 'temp_disk.img')
 
+        if os.path.isfile(disk_file):
+            os.remove(disk_file)
+
         command = 'dd if=/dev/zero of={file} bs=1M count={size}' \
                   .format(size=self.size, file=disk_file)
         subprocess.run(command.split(), stderr=subprocess.DEVNULL, check=True)
