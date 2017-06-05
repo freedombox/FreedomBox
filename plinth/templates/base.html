@@ -132,19 +132,50 @@
                    role="button" aria-expanded="false">
                   <i class="glyphicon glyphicon-user nav-icon"></i>
                   {{ user.username }}
-                  <span class="caret"></span></a>
+                  <span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'users:edit' user.username %}"
-                         title="{% trans "Edit"%}">{% trans "Edit" %}</a></li>
-                  <li><a href="{% url 'users:change_password' user.username %}"
-                         title="{% trans "Change password" %}">
-                    {% trans "Change password" %}</a></li>
+                  <li>
+                    <a href="{% url 'users:edit' user.username %}"
+                       title="{% trans "Edit"%}">
+                      {% trans "Edit" %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'users:change_password' user.username %}"
+                       title="{% trans "Change password" %}">
+                      {% trans "Change password" %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'users:logout' %}"
+                       title="{% trans "Log out" %}">
+                      {% trans "Log out" %}
+                    </a>
+                  </li>
                 </ul>
               </li>
-              <li>
-                <a href="{% url 'users:logout' %}" title="{% trans "Log out" %}">
-                  <span class="glyphicon glyphicon-off nav-icon"></span>
+              <li class="dropdown">
+                <a href="{% url 'power:index' %}"
+                   class="dropdown-toggle" data-toggle="dropdown"
+                   role="button" aria-expanded="false">
+                  <i class="glyphicon glyphicon-off nav-icon"></i>
+                  <span class="caret"></span>
                 </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="{% url 'power:restart' %}"
+                       title="{% trans "Restart"%}">
+                      {% trans "Restart" %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'power:shutdown' %}"
+                       title="{% trans "Shut down" %}">
+                      {% trans "Shut down" %}
+                    </a>
+                  </li>
+                </ul>
               </li>
             {% else %}
               <li>
