@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-09 09:09+0530\n"
+"POT-Creation-Date: 2017-06-09 21:39-0400\n"
 "PO-Revision-Date: 2017-06-07 07:14+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/freedombox/plinth/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
+"cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -313,8 +313,8 @@ msgid ""
 "\">/deluge</a> path on the web server. The default password is 'deluge', but "
 "you should log in and change it immediately after enabling this service."
 msgstr ""
-"Když je zapnutý, webový klient Deluge bude k dispozici na <a href=\"/deluge\""
-">/deluge</a> umístění na webovém serveru. Výchozí heslo je „deluge“, ale "
+"Když je zapnutý, webový klient Deluge bude k dispozici na <a href=\"/deluge"
+"\">/deluge</a> umístění na webovém serveru. Výchozí heslo je „deluge“, ale "
 "hned po zapnutí této služby se okamžitě přihlaste a změňte ho."
 
 #: plinth/modules/diagnostics/__init__.py:32
@@ -334,7 +334,8 @@ msgid "Diagnostic Test"
 msgstr "Diagonstické testy"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:40
-#: plinth/modules/diagnostics/templates/diagnostics_button.html:27
+#: plinth/modules/diagnostics/templates/diagnostics_button.html:28
+#: plinth/modules/diagnostics/templates/diagnostics_button.html:31
 msgid "Run Diagnostics"
 msgstr "Spustit diagnostiku"
 
@@ -372,7 +373,7 @@ msgstr "Vyzkoušet"
 msgid "Result"
 msgstr "Výsledek"
 
-#: plinth/modules/diaspora/__init__.py:64
+#: plinth/modules/diaspora/__init__.py:62
 msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
@@ -399,14 +400,15 @@ msgid ""
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
 "Doména diaspora* podu je nastavena na <b>%(domain_name)s</b>. Identifikátory "
-"uživatelů budou vypadat jako "
-"<i>uzivatelske_jmeno@diaspora.%(domain_name)s</i><br/> Pokud se  název "
-"domény FreedomBox změní, veškerá data uživatelů, zaregistrovaných s "
-"předchozím názvem podu nebudou dostupná. <br/> Diaspora* pod je dostupný na <"
-"a href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
+"uživatelů budou vypadat jako <i>uzivatelske_jmeno@diaspora.%(domain_name)s</"
+"i><br/> Pokud se  název domény FreedomBox změní, veškerá data uživatelů, "
+"zaregistrovaných s předchozím názvem podu nebudou dostupná. <br/> Diaspora* "
+"pod je dostupný na <a href=\"https://diaspora.%(domain_name)s\"> diaspora."
+"%(domain_name)s </a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
+#: plinth/modules/ejabberd/templates/ejabberd.html:61
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
@@ -492,28 +494,33 @@ msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
 #: plinth/modules/disks/views.py:77
-#, python-brace-format
-msgid "{disk_size} bytes"
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} bytes"
+msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size} bajtů"
 
 #: plinth/modules/disks/views.py:81
-#, python-brace-format
-msgid "{disk_size} KiB"
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} KiB"
+msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size} KiB"
 
 #: plinth/modules/disks/views.py:85
-#, python-brace-format
-msgid "{disk_size} MiB"
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} MiB"
+msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size} MiB"
 
 #: plinth/modules/disks/views.py:89
-#, python-brace-format
-msgid "{disk_size} GiB"
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} GiB"
+msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size} GiB"
 
 #: plinth/modules/disks/views.py:92
-#, python-brace-format
-msgid "{disk_size} TiB"
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} TiB"
+msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:33
@@ -550,7 +557,7 @@ msgstr ""
 "pokudse někdo z Internetu zeptá na váš DNS název, dostane odpověď s vaší "
 "současnou IP adresou."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:41
+#: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:40
 msgid "About"
 msgstr "O systému"
 
@@ -624,8 +631,8 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: http://myip.datasystems24.de)."
 msgstr ""
-"Nemusí být zadáno. Pokud váš {box_name} není k Internetu připojen napřímo ("
-"tj. je připojen za NAT směrovačem) tato URL adresa slouží ke zjištění "
+"Nemusí být zadáno. Pokud váš {box_name} není k Internetu připojen napřímo "
+"(tj. je připojen za NAT směrovačem) tato URL adresa slouží ke zjištění "
 "skutečné IP address. Adresa by měla vrátit pouze IP ze které klient přichází "
 "(příklad: http://myip.datasystems24.de)."
 
@@ -718,10 +725,9 @@ msgid ""
 "freedns.afraid.org</a>."
 msgstr ""
 "Pokud hledáte bezplatný účet dynamické DNS, můžete použít bezplatnou službu "
-"GnuDIP <a href='http://gnudip.datasystems24.net' "
-"target='_blank'>gnudip.datasystems24.net</a> nebo můžete najít bezplatné na "
-"URL založené služby na <a href='http://freedns.afraid.org/' target='_blank'> "
-"freedns.afraid.org</a>."
+"GnuDIP <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
+"datasystems24.net</a> nebo můžete najít bezplatné na URL založené služby na "
+"<a href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:42
 #, python-format
@@ -800,10 +806,23 @@ msgid ""
 "a>."
 msgstr ""
 "Pro vlastní komunikaci, můžete použít webového klienta nebo jakéhokoli <a "
-"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP "
-"klienta</a>."
+"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP klienta</"
+"a>."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:32
+#: plinth/modules/ejabberd/forms.py:33
+msgid "Enable Message Archive Management"
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:36
+#, python-brace-format
+msgid ""
+"If enabled, your {box_name} will store chat message histories. This allows "
+"synchronization of conversations between multiple clients, and reading the "
+"history of a multi-user chat room. It depends on the client settings whether "
+"the histories are stored as plain text or encrypted."
+msgstr ""
+
+#: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
@@ -811,14 +830,43 @@ msgid ""
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
 "Doména vašeho XMPP serveru je nastavená na <b>%(domainname)s</b>. "
-"Identifikátory uživatelů budou mít podobu "
-"<i>uzivatelske_jmeno@%(domainname)s</i>. Doménu je možné nastavit na stránce "
-"<a href=\"%(index_url)s\">Nastavení</a> page."
+"Identifikátory uživatelů budou mít podobu <i>uzivatelske_jmeno@"
+"%(domainname)s</i>. Doménu je možné nastavit na stránce <a href="
+"\"%(index_url)s\">Nastavení</a> page."
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:46
+#: plinth/modules/ejabberd/templates/ejabberd.html:47
 #: plinth/modules/jsxc/templates/jsxc.html:32
 msgid "Launch web client"
 msgstr "Spustit webového klienta"
+
+#: plinth/modules/ejabberd/templates/ejabberd.html:53
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
+#: plinth/modules/openvpn/templates/openvpn.html:116
+#: plinth/modules/tor/templates/tor.html:85 plinth/templates/base.html:113
+#: plinth/templates/base.html:115 plinth/templates/service.html:65
+msgid "Configuration"
+msgstr "Nastavení"
+
+#: plinth/modules/ejabberd/views.py:60 plinth/modules/openvpn/views.py:145
+#: plinth/modules/tor/views.py:134 plinth/views.py:103
+msgid "Setting unchanged"
+msgstr "Nastavení se nezměnila"
+
+#: plinth/modules/ejabberd/views.py:64 plinth/views.py:107
+msgid "Application enabled"
+msgstr "Aplikace zapnuta"
+
+#: plinth/modules/ejabberd/views.py:67 plinth/views.py:110
+msgid "Application disabled"
+msgstr "Aplikace vypnuta"
+
+#: plinth/modules/ejabberd/views.py:74
+msgid "Message Archive Management enabled"
+msgstr ""
+
+#: plinth/modules/ejabberd/views.py:78
+msgid "Message Archive Management disabled"
+msgstr ""
 
 #: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
@@ -850,8 +898,8 @@ msgstr ""
 "Proces služby brána firewall není spuštěný. Je třeba to napravit. Brána "
 "firewall je na %(box_name)s ve výchozím stavu zapnutá. Na jakémkoli systému, "
 "založeném na distribuci Debian (jako je i %(box_name)s) jí můžete spustit "
-"příkazem „service firewalld start“ nebo v případě systému se systemd pomocí „"
-"systemctl start firewalld“."
+"příkazem „service firewalld start“ nebo v případě systému se systemd pomocí "
+"„systemctl start firewalld“."
 
 #: plinth/modules/firewall/templates/firewall.html:45
 msgid "Show Ports"
@@ -906,38 +954,25 @@ msgstr "Nastavení dokončeno!"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:32
 #, python-format
-msgid ""
-"%(box_name)s setup is now complete.  To make your %(box_name)s functional, "
-"you need some applications.  They will be installed the first time you "
-"access them."
+msgid "Without any apps, your %(box_name)s cannot do very much."
 msgstr ""
-"Nastavení %(box_name)s je nyní hotové.  Aby ale váš %(box_name)s poskytoval "
-"nějaké funkce, je třeba nějakých aplikací.  Ty budou nainstalovány v "
-"okamžiku jejich prvního použití."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:41
-msgid "Go to Apps"
-msgstr "Přejít k aplikacím"
+#: plinth/modules/first_boot/templates/firstboot_complete.html:39
+#, fuzzy
+#| msgid "Install"
+msgid "Install Apps"
+msgstr "Nainstalovat"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:44
-msgid "Current Network Configuration"
-msgstr "Stávající nastavení sítě"
-
-#: plinth/modules/first_boot/templates/firstboot_complete.html:47
+#: plinth/modules/first_boot/templates/firstboot_complete.html:45
+#, python-format
 msgid ""
-"You should check the network setup and modify it if necessary. Do not forget "
-"to change the default Wi-Fi passwords!"
+"You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
+"modify it if necessary."
 msgstr ""
-"Měli byste zkonrolovat nastavení sítě a v případě potřeby ho upravit. "
-"Nezapomeňte změnit výchozí hesla do Wi-Fi!"
-
-#: plinth/modules/first_boot/templates/firstboot_complete.html:57
-msgid "Go to Networks"
-msgstr "Přejít na Sítě"
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
-#: plinth/templates/base.html:122
+#: plinth/templates/base.html:125
 msgid "Help"
 msgstr "Nápověda"
 
@@ -957,29 +992,29 @@ msgstr ""
 msgid "Setup Complete"
 msgstr "Nastavení dokončena"
 
-#: plinth/modules/help/help.py:35
+#: plinth/modules/help/help.py:34
 msgid "Documentation"
 msgstr "Dokumentace"
 
-#: plinth/modules/help/help.py:37
+#: plinth/modules/help/help.py:36
 msgid "Where to Get Help"
 msgstr "Kde získat pomoc"
 
-#: plinth/modules/help/help.py:39 plinth/modules/networks/forms.py:61
+#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
 #: plinth/modules/networks/forms.py:101 plinth/templates/index.html:124
 msgid "Manual"
 msgstr "Příručka"
 
-#: plinth/modules/help/help.py:49
+#: plinth/modules/help/help.py:47
 msgid "Documentation and FAQ"
 msgstr "Dokumentace a často kladené dotazy"
 
-#: plinth/modules/help/help.py:58
+#: plinth/modules/help/help.py:55
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "O {box_name}"
 
-#: plinth/modules/help/help.py:77
+#: plinth/modules/help/help.py:74
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} příručka"
@@ -1036,21 +1071,28 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Více informací o projektu %(box_name)s navštivte <a href=\""
-"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+"Více informací o projektu %(box_name)s navštivte <a href=\"https://wiki."
+"debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:73
 msgid "Learn more &raquo;"
 msgstr "Dozvědět se víc &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:76
-#, python-format
-msgid "You are running Plinth version %(version)s."
+#, fuzzy, python-format
+#| msgid "You are running Plinth version %(version)s."
+msgid "You are running %(os_release)s and Plinth version %(version)s."
 msgstr "Provozujete Plinth verze %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:81
-msgid "There is a new version available."
+#, fuzzy
+#| msgid "There is a new version available."
+msgid "There is a new Plinth version available."
 msgstr "Je k dispozici nová verze."
+
+#: plinth/modules/help/templates/help_about.html:85
+msgid "Plinth is up to date."
+msgstr ""
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
@@ -1072,8 +1114,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"Další informace jsou uvedeny na <a href=\"http://wiki.debian.org/FreedomBox\""
-" target=\"_blank\"> wiki stránkách projektu %(box_name)s </a>."
+"Další informace jsou uvedeny na <a href=\"http://wiki.debian.org/FreedomBox"
+"\" target=\"_blank\"> wiki stránkách projektu %(box_name)s </a>."
 
 #: plinth/modules/help/templates/help_index.html:43
 #, python-format
@@ -1097,9 +1139,9 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Mnozí z přispěvatelů a uživatelů %(box_name)s jsou dosažitelní také na IRC "
-"síti irc.oftc.net. Přidejte se a požádejte o pomoc na <a href=\""
-"https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> "
-"#freedombox</a> kanálu pomocí webového rozhraní k IRC."
+"síti irc.oftc.net. Přidejte se a požádejte o pomoc na <a href=\"https://"
+"webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</"
+"a> kanálu pomocí webového rozhraní k IRC."
 
 #: plinth/modules/help/templates/statuslog.html:25
 msgid "Status Log"
@@ -1268,8 +1310,8 @@ msgid ""
 "enter your {box_name}'s domain name."
 msgstr ""
 "Pro použití si <a href=\"https://gobby.github.io/\">stáhněte Gobby</a>, "
-"desktopového klienta a nainstalujte ho. Poté spusťte Gobby a zvolte „"
-"Připojit k serveru“ a zadejte doménový název vašeho {box_name}."
+"desktopového klienta a nainstalujte ho. Poté spusťte Gobby a zvolte "
+"„Připojit k serveru“ a zadejte doménový název vašeho {box_name}."
 
 #: plinth/modules/jsxc/__init__.py:36
 msgid ""
@@ -1315,8 +1357,8 @@ msgid ""
 msgstr ""
 "Let's Encrypt je bezplatná, automatizovaná a otevřená certifikační autorita, "
 "provozovaná pro veřejné blah organizací Internet Security Research Group "
-"(ISRG). Před použitím služby si přečtěte <a href=\""
-"https://letsencrypt.org/repository/\">Podmínky používání Let's Encrypt</a>."
+"(ISRG). Před použitím služby si přečtěte <a href=\"https://letsencrypt.org/"
+"repository/\">Podmínky používání Let's Encrypt</a>."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:43
 msgid "Domain"
@@ -1414,20 +1456,13 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
-"Pro komunikaci jsou k dispozici <a href=\"https://matrix.org/docs/projects/\""
-">klienti</a> pro mobilní zařízení, osobní počítače a web. Doporučujeme "
+"Pro komunikaci jsou k dispozici <a href=\"https://matrix.org/docs/projects/"
+"\">klienti</a> pro mobilní zařízení, osobní počítače a web. Doporučujeme "
 "klienta<a href=\"https://riot.im/\">Riot</a>."
 
 #: plinth/modules/matrixsynapse/forms.py:31
 msgid "Select the domain name"
 msgstr "Vyberte název domény"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
-#: plinth/modules/openvpn/templates/openvpn.html:116
-#: plinth/modules/tor/templates/tor.html:85 plinth/templates/base.html:112
-#: plinth/templates/base.html:114 plinth/templates/service.html:65
-msgid "Configuration"
-msgstr "Nastavení"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
@@ -2095,7 +2130,7 @@ msgid "Edit connection"
 msgstr ""
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:137
+#: plinth/templates/base.html:138
 msgid "Edit"
 msgstr "Upravit"
 
@@ -2421,11 +2456,6 @@ msgstr "Nastavování dokončeno."
 msgid "Setup failed."
 msgstr "Nastavování se nezdařilo."
 
-#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:134
-#: plinth/views.py:103
-msgid "Setting unchanged"
-msgstr "Nastavení se nezměnila"
-
 #: plinth/modules/pagekite/__init__.py:44
 msgid "Public Visibility (PageKite)"
 msgstr "Veřejná viditelnost (PageKite)"
@@ -2586,8 +2616,8 @@ msgid ""
 "This service is available as a standard service. Please use the \"Standard "
 "Services\" page to enable it."
 msgstr ""
-"Tato služba je k dispozici jako standardní služba. Zapněte ji na stránce „"
-"Standardní služby“."
+"Tato služba je k dispozici jako standardní služba. Zapněte ji na stránce "
+"„Standardní služby“."
 
 #: plinth/modules/pagekite/forms.py:258
 msgid "Added custom service"
@@ -2709,7 +2739,8 @@ msgstr "<b>Varování:</b><br/>"
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:43
 msgid ""
 "Published services are accessible and attackable from the evil Internet."
-msgstr "Zveřejněné služby jsou dostupné a ohrozitelné z nehostinného Internetu."
+msgstr ""
+"Zveřejněné služby jsou dostupné a ohrozitelné z nehostinného Internetu."
 
 #: plinth/modules/pagekite/templates/pagekite_standard_services.html:58
 msgid "Save Services"
@@ -2742,8 +2773,8 @@ msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
 msgstr ""
-"Viz nastavení SSH klienta <a href=\""
-"https://pagekite.net/wiki/Howto/SshOverPageKite/\">instrukce</a>"
+"Viz nastavení SSH klienta <a href=\"https://pagekite.net/wiki/Howto/"
+"SshOverPageKite/\">instrukce</a>"
 
 #: plinth/modules/pagekite/utils.py:276
 msgid "Pagekite"
@@ -3150,6 +3181,14 @@ msgstr "Pro dokončení obnovy ze zálohy je třeba systém restartovat."
 msgid "Rollback to Snapshot"
 msgstr "Vrátit do podoby zachyceného stavu"
 
+#: plinth/modules/sso/__init__.py:30
+msgid "Single Sign On"
+msgstr ""
+
+#: plinth/modules/sso/templates/login.html:35
+msgid "Login"
+msgstr "Přihlášení"
+
 #: plinth/modules/syncthing/__init__.py:39
 msgid ""
 "File Synchronization \n"
@@ -3265,8 +3304,8 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"Nějaké mosty je možné získat ze <a href=\"https://bridges.torproject.org/\""
-">https://bridges.torproject.org/</a> a zkopírovat infomrace odtud. V "
+"Nějaké mosty je možné získat ze <a href=\"https://bridges.torproject.org/"
+"\">https://bridges.torproject.org/</a> a zkopírovat infomrace odtud. V "
 "současnosti podporované transporty jsou none, obfs3, obfs4 a scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
@@ -3447,8 +3486,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
 "rss</a> path on the web server."
 msgstr ""
-"Když je zapnutá, Tiny Tiny RSS čtečka bude dostupná v <a href=\"/tt-rss\""
-">/tt-rss</a> umístění na webovém serveru."
+"Když je zapnutá, Tiny Tiny RSS čtečka bude dostupná v <a href=\"/tt-rss\">/"
+"tt-rss</a> umístění na webovém serveru."
 
 #: plinth/modules/upgrades/__init__.py:35
 msgid "Software Upgrades"
@@ -3620,19 +3659,11 @@ msgstr "Změna hesla LDAP uživatele se nezdařila."
 msgid "Failed to add new user to admin group."
 msgstr "Přidání nového uživatele do skupiny správců se nezdařilo."
 
-#: plinth/modules/users/forms.py:284
-msgid ""
-"Console login access restricted to users in \"admin\" group. This can be "
-"configured in security settings."
-msgstr ""
-"Přihlášení na konzoli je omezeno na uživatele ze skupiny admin. Toto je "
-"možné přenastavit v natavení zabezpečení."
-
-#: plinth/modules/users/forms.py:290
+#: plinth/modules/users/forms.py:286
 msgid "Failed to restrict console access."
 msgstr "Omezení přístupu ke konzoli se nezdařilo."
 
-#: plinth/modules/users/forms.py:302
+#: plinth/modules/users/forms.py:298
 msgid "User account created, you are now logged in"
 msgstr "Uživatelský účet vytvořen, není jste jím přihlášeni"
 
@@ -3807,8 +3838,8 @@ msgid ""
 "Plinth project <a href=\"https://github.com/freedombox/Plinth/issues\">issue "
 "tracker</a>."
 msgstr ""
-"Pokud se domníváte, že by chybějící stránka měla existovat, nahlaste to do <"
-"a href=\"https://github.com/freedombox/Plinth/issues\">systému hlášení "
+"Pokud se domníváte, že by chybějící stránka měla existovat, nahlaste to do "
+"<a href=\"https://github.com/freedombox/Plinth/issues\">systému hlášení "
 "chyb</a> projektu Plinth."
 
 #: plinth/templates/500.html:25
@@ -3824,9 +3855,9 @@ msgid ""
 "\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Toto je vnitřní chyba a tedy ne něco, co jste způsobili nebo můžete opravit. "
-"Nahlaste to do <a href=\"https://github.com/freedombox/Plinth/issues\">"
-"systému hlášení chyb</a> abychom to mohli opravit. K hlášení také přiložte <"
-"a href=\"%(status_log_url)s\">záznam stavu</a>."
+"Nahlaste to do <a href=\"https://github.com/freedombox/Plinth/issues"
+"\">systému hlášení chyb</a> abychom to mohli opravit. K hlášení také "
+"přiložte <a href=\"%(status_log_url)s\">záznam stavu</a>."
 
 #: plinth/templates/apps.html:25
 msgid "Services and Applications"
@@ -3860,32 +3891,32 @@ msgstr ""
 msgid "Plinth administrative interface for the %(box_name)s"
 msgstr "Správní rozhraní Plinth %(box_name)s"
 
-#: plinth/templates/base.html:84
+#: plinth/templates/base.html:85
 msgid "Toggle navigation"
 msgstr "Přepnout navigaci"
 
-#: plinth/templates/base.html:101 plinth/templates/base.html:102
+#: plinth/templates/base.html:102 plinth/templates/base.html:103
 msgid "Home"
 msgstr "Domů"
 
-#: plinth/templates/base.html:106 plinth/templates/base.html:108
+#: plinth/templates/base.html:107 plinth/templates/base.html:109
 msgid "Apps"
 msgstr "Aplikace"
 
-#: plinth/templates/base.html:139 plinth/templates/base.html:140
+#: plinth/templates/base.html:140 plinth/templates/base.html:141
 msgid "Change password"
 msgstr ""
 
-#: plinth/templates/base.html:144 plinth/templates/base.html:158
-#: plinth/templates/base.html:160
+#: plinth/templates/base.html:145 plinth/templates/base.html:159
+#: plinth/templates/base.html:161
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: plinth/templates/base.html:150 plinth/templates/base.html:152
+#: plinth/templates/base.html:151 plinth/templates/base.html:153
 msgid "Log in"
 msgstr "Přihlásit"
 
-#: plinth/templates/base.html:222 plinth/templates/index.html:163
+#: plinth/templates/base.html:225 plinth/templates/index.html:164
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -3895,8 +3926,8 @@ msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
 "this page."
 msgstr ""
-"Odkazy na této stránce se objeví až po zapnutí nějakých <a href=\"%(apps_url)"
-"s\">aplikací</a>."
+"Odkazy na této stránce se objeví až po zapnutí nějakých <a href="
+"\"%(apps_url)s\">aplikací</a>."
 
 #: plinth/templates/index.html:85
 msgid "Configure &raquo;"
@@ -3952,10 +3983,6 @@ msgstr "Chatovací místnost na IRC"
 #: plinth/templates/index.html:155
 msgid "Mailing list"
 msgstr "Poštovní konference"
-
-#: plinth/templates/login.html:35
-msgid "Login"
-msgstr "Přihlášení"
 
 #: plinth/templates/service.html:44
 #, python-format
@@ -4031,10 +4058,34 @@ msgstr ""
 "Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
 "buďte opatrní!"
 
-#: plinth/views.py:107
-msgid "Application enabled"
-msgstr "Aplikace zapnuta"
+#~ msgid ""
+#~ "%(box_name)s setup is now complete.  To make your %(box_name)s "
+#~ "functional, you need some applications.  They will be installed the first "
+#~ "time you access them."
+#~ msgstr ""
+#~ "Nastavení %(box_name)s je nyní hotové.  Aby ale váš %(box_name)s "
+#~ "poskytoval nějaké funkce, je třeba nějakých aplikací.  Ty budou "
+#~ "nainstalovány v okamžiku jejich prvního použití."
 
-#: plinth/views.py:110
-msgid "Application disabled"
-msgstr "Aplikace vypnuta"
+#~ msgid "Go to Apps"
+#~ msgstr "Přejít k aplikacím"
+
+#~ msgid "Current Network Configuration"
+#~ msgstr "Stávající nastavení sítě"
+
+#~ msgid ""
+#~ "You should check the network setup and modify it if necessary. Do not "
+#~ "forget to change the default Wi-Fi passwords!"
+#~ msgstr ""
+#~ "Měli byste zkonrolovat nastavení sítě a v případě potřeby ho upravit. "
+#~ "Nezapomeňte změnit výchozí hesla do Wi-Fi!"
+
+#~ msgid "Go to Networks"
+#~ msgstr "Přejít na Sítě"
+
+#~ msgid ""
+#~ "Console login access restricted to users in \"admin\" group. This can be "
+#~ "configured in security settings."
+#~ msgstr ""
+#~ "Přihlášení na konzoli je omezeno na uživatele ze skupiny admin. Toto je "
+#~ "možné přenastavit v natavení zabezpečení."
