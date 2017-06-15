@@ -18,7 +18,7 @@
 Plinth module to configure Single Sign On services.
 """
 
-from plinth import actions, action_utils
+from plinth import actions
 from django.utils.translation import ugettext_lazy as _
 
 version = 1
@@ -31,15 +31,8 @@ title = _('Single Sign On')
 
 managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
 
-first_boot_steps = [
-    {
-        'id': 'sso_firstboot',
-        'url': 'sso:firstboot',
-        'order': 1
-    },
-]
-
 
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
+    actions.superuser_run('auth-pubtkt', ['create-key-pair'])
