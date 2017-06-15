@@ -22,11 +22,8 @@ import os
 import urllib
 
 from plinth import actions
-from plinth.modules import first_boot
 
-from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic.base import RedirectView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (login as auth_login, logout as
@@ -75,12 +72,3 @@ def refresh(request):
     response = HttpResponseRedirect(redirect_url)
     response.delete_cookie(SSO_COOKIE_NAME)
     return set_ticket_cookie(request.user, response)
-
-
-class FirstBootView(RedirectView):
-    """Create keys for Apache server during first boot"""
-
-    def get_redirect_url(self, *args, **kwargs):
-        actions.superuser_run('auth-pubtkt', ['create-key-pair'])
-        first_boot.mark_step_done('sso_firstboot')
-        return reverse(first_boot.next_step())
