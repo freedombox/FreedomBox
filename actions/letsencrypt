@@ -124,7 +124,7 @@ def subcommand_revoke(arguments):
     """Disable a domain and revoke the certificate."""
     domain = arguments.domain
 
-    command = ['letsencrypt', 'revoke', '--domain', domain, '--cert-path',
+    command = ['certbot', 'revoke', '--domain', domain, '--cert-path',
                os.path.join(LIVE_DIRECTORY, domain, 'cert.pem')]
     if TEST_MODE:
         command.append('--staging')
@@ -144,7 +144,7 @@ def subcommand_obtain(arguments):
     domain = arguments.domain
 
     command = [
-        'letsencrypt', 'certonly', '--text', '--agree-tos',
+        'certbot', 'certonly', '--text', '--agree-tos',
         '--register-unsafely-without-email', '--domain', arguments.domain,
         '--authenticator', 'webroot', '--webroot-path', '/var/www/html/',
         '--renew-by-default']
