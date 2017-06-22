@@ -260,13 +260,13 @@ def run_setup(module_list, allow_install=True):
             setup.setup_modules(module_list, allow_install=allow_install)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
-        error_code = 1
+        return 1
+    return 0
 
 
 def run_setup_and_exit(module_list, allow_install=True):
     """Run setup on all essential modules and exit."""
-    error_code = 0
-    run_setup(module_list, allow_install)
+    error_code = run_setup(module_list, allow_install)
     sys.exit(error_code)
 
 
