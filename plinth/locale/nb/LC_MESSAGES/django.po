@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-10 09:50-0400\n"
-"PO-Revision-Date: 2017-06-13 13:08+0000\n"
-"Last-Translator: Ingrid Yrvin <ingrid.yrvin@gmail.com>\n"
+"PO-Revision-Date: 2017-06-22 19:11+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål "
 "<https://hosted.weblate.org/projects/freedombox/plinth/nb/>\n"
 "Language: nb\n"
@@ -409,7 +409,7 @@ msgstr ""
 "diaspora*"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
 "look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
@@ -417,11 +417,11 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
-"Diaspora* pod-domene er satt til <b>%(domain_name)s</b>. Bruker-ID-er vil "
-"ligne <i>username@diaspora.%domain_name)s</i><br/> Hvis FreedomBox-"
-"domenenavnet endres, vil ikke alle data til brukerne bli registrert med det "
-"forrige podnavnet være tilgjengelig. <br/> Du får diaspora* pod på <a href=\""
-"https://diaspora.%(domain_name)s\"> diaspora.% (domenenavn)s</a>"
+"Diaspora* pod-domenet er satt til <b>%(domain_name)s</b>. Bruker-ID-er vil "
+"ligne <i>username@diaspora.%(domain_name)s</i><br/> Hvis FreedomBox-"
+"domenenavnet endres, vil alle data til brukerne bli registrert med det "
+"forrige podnavnet ikke være tilgjengelig. <br/> Du får diaspora* pod på <a "
+"href=\"https://diaspora.%(domain_name)s\">diaspora.% (domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -3354,9 +3354,8 @@ msgid "Rollback to Snapshot"
 msgstr "Rull tilbake til øyeblikksbilde"
 
 #: plinth/modules/sso/__init__.py:30
-#, fuzzy
 msgid "Single Sign On"
-msgstr "Enkelt påmelding (Single Sign On  (SSO)"
+msgstr "Engangspålogging"
 
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
@@ -3382,14 +3381,7 @@ msgstr ""
 "replikert (gjenskapt) til andre enheter."
 
 #: plinth/modules/syncthing/__init__.py:47
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Synching on {box_name}, provides an extra synchronization point "
-#| "for your data that is available most of the time so that your devices "
-#| "synchronize more often.  On {box_name}, a single instance of Syncthing "
-#| "runs and may be used by many users.  Each user's set of devices many be "
-#| "synchronized with a distinct set of folders.  Web interface is only "
-#| "available for users belonging to the \"admin\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -3398,27 +3390,22 @@ msgid ""
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
-"Å ta i bruk Synching på {box_name} gir et ekstra synkroniseringspunkt for "
+"Å ta i bruk Syncthing på {box_name} gir et ekstra synkroniseringspunkt for "
 "data som er tilgjengelig mesteparten av tiden, slik at enhetene "
-"synkroniserer oftere.  På {box_name} kjøres en enkelt Synching-instans som "
-"kan brukes av mange brukere.  Hver brukers sett med enheter kan  "
-"synkroniseres med sine egne sett med mapper. Nettgrensesnittet er bare "
-"tilgjengelig for brukere som hører til i «admin»-gruppen."
+"synkroniserer oftere.  {box_name} kjører en enkelt Syncthing-instans som kan "
+"brukes av mange brukere.  Hver brukers sett med enheter kan synkroniseres "
+"med sine egne sett med mapper. Webgrensesnittet er bare tilgjengelig for "
+"brukere som hører til i «admin»-gruppen."
 
 #: plinth/modules/syncthing/__init__.py:54
-#, fuzzy
-#| msgid ""
-#| "When enabled, Syncthing will be available from <a href=\"/syncthing/\">/"
-#| "syncthing</a> web interface. Desktop and mobile clients are also <a href="
-#| "\"https://syncthing.net/\">available.</a>"
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
-"Når aktivert, vil Syncthing være tilgjengelig fra <a href=\"/syncthing/\""
-">/syncthing</a> webgrensesnitt. Stasjonære og mobile klienter er også <a "
-"href=\"https://syncthing.net/\">-tilgjengelig (available).</a>"
+"Når aktivert, vil Syncthings webgrensesnitt være tilgjengelig fra <a href=\""
+"/syncthing/\">/syncthing</a>. Stasjonære og mobile klienter er også <a href="
+"\"https://syncthing.net/\">-tilgjengelig (available)</a>."
 
 #: plinth/modules/tahoe/__init__.py:42
 msgid "Distributed File Storage (Tahoe-LAFS)"
@@ -3437,7 +3424,7 @@ msgstr ""
 "hentes tilbake fra de gjenværende nodene."
 
 #: plinth/modules/tahoe/__init__.py:78
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "This {box_name} hosts a storage node and an introducer by default. "
 "Additional introducers can be added, which will introduce this node to the "
@@ -3448,7 +3435,7 @@ msgstr ""
 "noden for de andre lagringsnodene."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing the "
 "FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL LOSE "
@@ -3461,9 +3448,8 @@ msgstr ""
 "https://%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
-#, fuzzy
 msgid "Local introducer"
-msgstr "Lokal introduksjon"
+msgstr "Lokal introduserer"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:74
@@ -3472,9 +3458,8 @@ msgid "Pet Name"
 msgstr "Kjæledyrnavn"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:71
-#, fuzzy
 msgid "Add new introducer"
-msgstr "Legg til en ny introduksjon (introducer)"
+msgstr "Legg til en ny introduserer"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
 msgid "Add"
