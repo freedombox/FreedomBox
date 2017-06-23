@@ -21,7 +21,7 @@ Forms for configuring diaspora*
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules import diaspora
+from plinth import utils
 
 
 class DiasporaForm(forms.Form):
@@ -35,4 +35,4 @@ class DiasporaForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['domain_name'].choices = diaspora.get_domain_names()
+        self.fields['domain_name'].choices = utils.get_domain_names()
