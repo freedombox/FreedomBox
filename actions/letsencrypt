@@ -25,6 +25,7 @@ import json
 import os
 import subprocess
 import sys
+import re
 
 from plinth import action_utils
 
@@ -98,6 +99,22 @@ def get_certificate_expiry(domain):
     return output.decode().strip().split('=')[1]
 
 
+def get_validity_status(domain):
+    """Return validity status of a certificate, e.g. valid, revoked, expired."""
+    output = subprocess.check_output(['certbot', 'certificates', '-d', domain])
+    output = output.decode(sys.stdout.encoding)
+
+    match = re.search('INVALID: (.*)\)', output)
+    if match is not None:
+        validity = match.group(1).lower()
+    elif re.search('VALID', output) is not None:
+        validity = 'valid'
+    else:
+        validity = 'unknown'
+
+    return validity
+
+
 def subcommand_get_status(_):
     """Return a JSON dictionary of currently configured domains."""
     try:
@@ -114,7 +131,8 @@ def subcommand_get_status(_):
             'certificate_available': True,
             'expiry_date': get_certificate_expiry(domain),
             'web_enabled':
-            action_utils.webserver_is_enabled(domain, kind='site')
+            action_utils.webserver_is_enabled(domain, kind='site'),
+            'validity': get_validity_status(domain)
         }
 
     print(json.dumps({'domains': domain_status}))

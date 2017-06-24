@@ -52,7 +52,8 @@ def revoke(request, domain):
     try:
         actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
         messages.success(
-            request, _('Certificate successfully revoked for domain {domain}')
+            request, _('Certificate successfully revoked for domain {domain}.'
+                       'This may take a few moments to take effect.')
             .format(domain=domain))
     except ActionError as exception:
         messages.error(
