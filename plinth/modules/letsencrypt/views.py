@@ -81,6 +81,23 @@ def obtain(request, domain):
     return redirect(reverse_lazy('letsencrypt:index'))
 
 
+@require_POST
+def delete(request, domain):
+    """Delete a certificate for a given domain."""
+    try:
+        actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
+        messages.success(
+            request, _('Certificate successfully deleted for domain {domain}')
+            .format(domain=domain))
+    except ActionError as exception:
+        messages.error(
+            request,
+            _('Failed to delete certificate for domain {domain}: {error}')
+            .format(domain=domain, error=exception.args[2]))
+
+    return redirect(reverse_lazy('letsencrypt:index'))
+
+
 def get_status():
     """Get the current settings."""
     status = actions.superuser_run('letsencrypt', ['get-status'])

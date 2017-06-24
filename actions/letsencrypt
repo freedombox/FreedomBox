@@ -79,13 +79,17 @@ def parse_arguments():
     subparsers.add_parser(
         'get-status', help='Return the status of configured domains.')
     revoke_parser = subparsers.add_parser(
-        'revoke', help='Disable and domain and revoke its certificate.')
-    revoke_parser.add_argument(
-        '--domain', help='Domain name to revoke certificate for')
+        'revoke', help='Revoke certificate of a domain and disable website.')
+    revoke_parser.add_argument('--domain', required=True,
+                               help='Domain name to revoke certificate for')
     obtain_parser = subparsers.add_parser(
         'obtain', help='Obtain certificate for a domain and setup website.')
-    obtain_parser.add_argument(
-        '--domain', help='Domain name to obtain certificate for')
+    obtain_parser.add_argument('--domain', required=True,
+                               help='Domain name to obtain certificate for')
+    delete_parser = subparsers.add_parser(
+        'delete', help='Delete certificate for a domain and disable website.')
+    delete_parser.add_argument('--domain', required=True,
+                               help='Domain name to delete certificate of')
 
     subparsers.required = True
     return parser.parse_args()
@@ -179,6 +183,20 @@ def subcommand_obtain(arguments):
     setup_webserver_config(domain)
 
     action_utils.webserver_enable(domain, kind='site')
+
+
+def subcommand_delete(arguments):
+    """Disable a domain and delete the certificate."""
+    domain = arguments.domain
+    command = ['certbot', 'delete', '--cert-name', domain]
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode:
+        print(stderr.decode(), file=sys.stderr)
+        sys.exit(1)
+
+    action_utils.webserver_disable(domain, kind='site')
 
 
 def setup_webserver_config(domain):
