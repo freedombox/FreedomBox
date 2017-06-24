@@ -29,9 +29,9 @@ class TransmissionForm(ServiceForm):  # pylint: disable=W0232
     """Transmission configuration form"""
     download_dir = forms.CharField(
         label=_('Download directory'),
-        help_text=_('Directory where downloads are saved.  If you change the \
-default directory, ensure that the new directory exists and is writable by \
-"debian-transmission" user.'))
+        help_text=_('Directory where downloads are saved.  If you change the '
+                    'default directory, ensure that the new directory exists '
+                    'and is writable by "debian-transmission" user.'))
 
     rpc_username = forms.CharField(
         label=_('Username'),
@@ -39,6 +39,6 @@ default directory, ensure that the new directory exists and is writable by \
 
     rpc_password = forms.CharField(
         label=_('Password'),
-        help_text=_('Password to login to the web interface.  Current \
-password is shown in a hashed format.  To set a new password, enter the \
-password in plain text.'))
+        help_text=_('Password to login to the web interface.  Current '
+                    'password is shown in a hashed format.  To set a new '
+                    'password, enter the password in plain text.'))

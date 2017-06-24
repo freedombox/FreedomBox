@@ -34,8 +34,8 @@ class DateTimeForm(ServiceForm):
     """Date/time configuration form."""
     time_zone = forms.ChoiceField(
         label=_('Time Zone'),
-        help_text=_('Set your time zone to get accurate timestamps. \
-This will set the system-wide time zone.'))
+        help_text=_('Set your time zone to get accurate timestamps. '
+                    'This will set the system-wide time zone.'))
 
     def __init__(self, *args, **kwargs):
         """Initialize the date/time form."""
