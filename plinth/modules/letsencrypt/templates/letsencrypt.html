@@ -57,7 +57,7 @@
                         Valid, expires on {{ expiry_date }}
                       {% endblocktrans %}
                     </span>
-                  {% elif domain_status.certificate_available and domain_status.validity == "valid" %}
+                  {% elif domain_status.certificate_available and not domain_status.validity == "valid" %}
                     <span class="label label-warning">
                       {% if "revoked" in domain_status.validity %}
                         {% blocktrans trimmed %}
