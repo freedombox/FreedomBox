@@ -43,8 +43,9 @@ class ConnectionForm(forms.Form):
                     'to.'))
     zone = forms.ChoiceField(
         label=_('Firewall Zone'),
-        help_text=_('The firewall zone will control which services are \
-available over this interfaces. Select Internal only for trusted networks.'),
+        help_text=_('The firewall zone will control which services are '
+                    'available over this interfaces. Select Internal only '
+                    'for trusted networks.'),
         choices=[('external', _('External')),
                  ('internal', _('Internal'))])
     ipv4_method = forms.ChoiceField(
