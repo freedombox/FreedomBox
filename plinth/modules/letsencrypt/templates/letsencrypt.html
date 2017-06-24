@@ -98,6 +98,12 @@
                       <button class="btn btn-sm btn-default" type="submit">
                         {% trans "Re-obtain" %}</button>
                     </form>
+                    <form class="form form-inline" method="post"
+                          action="{% url 'letsencrypt:delete' domain %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-default" type="submit">
+                        {% trans "Delete" %}</button>
+                    </form>
                     {% if "revoked" not in domain_status.validity %}
                       <form class="form form-inline" method="post"
                             action="{% url 'letsencrypt:revoke' domain %}">
