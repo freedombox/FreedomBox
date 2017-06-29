@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-10 09:50-0400\n"
-"PO-Revision-Date: 2017-06-23 06:53+0000\n"
-"Last-Translator: Joseph Nuthalapati <joseph.kiran@evernym.us>\n"
+"PO-Revision-Date: 2017-06-29 09:37+0000\n"
+"Last-Translator: Kyodev <kyodev@yandex.com>\n"
 "Language-Team: French "
 "<https://hosted.weblate.org/projects/freedombox/plinth/fr/>\n"
 "Language: fr\n"
@@ -284,16 +284,12 @@ msgid "Time Zone"
 msgstr "Fuseau horaire"
 
 #: plinth/modules/datetime/forms.py:37
-#, fuzzy
-#| msgid ""
-#| "Set your time zone to get accurate timestamps. This will set the "
-#| "systemwide time zone."
 msgid ""
 "Set your time zone to get accurate timestamps. This will set the system-wide "
 "time zone."
 msgstr ""
-"Paramétrer votre fuseau horaire pour obtenir un horodatage précis pour tout "
-"le système."
+"Paramétrer votre fuseau horaire pour obtenir un horodatage précis. Cela "
+"définira TZ pour tout le système."
 
 #: plinth/modules/datetime/forms.py:49
 msgid "-- no time zone set --"
@@ -393,6 +389,8 @@ msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
 msgstr ""
+"diaspora* est un réseau social décentralisé où vous pouvez enregistrer et "
+"contrôler les donnés qui vous appartiennent."
 
 #: plinth/modules/diaspora/forms.py:30
 msgid "Select the domain name to be used for diaspora*"
@@ -402,6 +400,8 @@ msgstr "Sélectionnez le nom de domaine à utiliser pour diaspora"
 msgid ""
 "Warning! Do not change the FreedomBox domain name after setting up diaspora*"
 msgstr ""
+"Attention! Ne changez pas le nom de domaine de FreedomBox après avoir "
+"configuré diaspora*"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -412,6 +412,12 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
+"Le domaine du pod diaspora* (noeud) est défini sur <b>%(domain_name)s</b>. "
+"L'ID utilisateur ressemblera à <i>username@diaspora.%(domain_name)s</i><br/> "
+"Si le nom de domaine FreedomBox est modifié, toutes les données des "
+"utilisateurs enregistrés auprès du pod précédent seraient inaccessibles.<br/>"
+" Vous pouvez accéder au pod diaspora* à <a href=\""
+"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -456,7 +462,7 @@ msgstr "Utilisé"
 
 #: plinth/modules/disks/templates/disks.html:77
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Extension de la partition"
 
 #: plinth/modules/disks/templates/disks.html:80
 #, python-format
@@ -481,6 +487,8 @@ msgid ""
 "There is no unallocated space after your root partition. There is no need to "
 "expand it."
 msgstr ""
+"Il n’y a pas d’espace libre après votre partition racine. Il n’est pas "
+"possible de l'étendre."
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -503,34 +511,29 @@ msgid "Partition expanded successfully."
 msgstr "Partition étendue avec succès."
 
 #: plinth/modules/disks/views.py:77
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} bytes"
+#, python-brace-format
 msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size} octets"
+msgstr "{disk_size:.1f} octets"
 
 #: plinth/modules/disks/views.py:81
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} KiB"
+#, python-brace-format
 msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size} KiB"
+msgstr "{disk_size:.1f} Kio"
 
 #: plinth/modules/disks/views.py:85
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} MiB"
+#, python-brace-format
 msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size} MiB"
+msgstr "{disk_size:.1f} Mio"
 
 #: plinth/modules/disks/views.py:89
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} GiB"
+#, python-brace-format
 msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size} GiB"
+msgstr "{disk_size:.1f} Gio"
 
 #: plinth/modules/disks/views.py:92
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} TiB"
+#, python-brace-format
 msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size} TiB"
+msgstr "{disk_size:.1f} Tio"
 
 #: plinth/modules/dynamicdns/__init__.py:33
 msgid "Dynamic DNS Client"
@@ -829,7 +832,7 @@ msgstr ""
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
-msgstr ""
+msgstr "Activer la gestion des archives de messages"
 
 #: plinth/modules/ejabberd/forms.py:36
 #, python-brace-format
@@ -839,6 +842,11 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Si activé, votre {box_name} stockera historique des messages de chat. Cela "
+"permet la synchronisation des conversations entre plusieurs clients et lire "
+"l’historique d’un salon de chat multi-utilisateur. Cela dépend des "
+"paramètres du client si les historiques sont stockés en texte clair ou "
+"crypté."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -881,11 +889,11 @@ msgstr "Application désactivée"
 
 #: plinth/modules/ejabberd/views.py:74
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "Gestion des archives de messages activée"
 
 #: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "Gestion des archives de messages désactivée"
 
 #: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
@@ -975,7 +983,7 @@ msgstr "Configuration terminée !"
 #: plinth/modules/first_boot/templates/firstboot_complete.html:32
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "Sans applications, vos %(box_name)s ne peuvent faire beaucoup."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:39
 msgid "Install Apps"
@@ -987,6 +995,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"Vous pouvez vérifier la <a href=\"%(networks_url)s\">configuration du "
+"réseau</a> et le modifier si nécessaire."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
@@ -1111,7 +1121,7 @@ msgstr "Une nouvelle version de Plinth est disponible."
 
 #: plinth/modules/help/templates/help_about.html:85
 msgid "Plinth is up to date."
-msgstr ""
+msgstr "Plinth est à jour."
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
@@ -3400,7 +3410,7 @@ msgstr "Revenir à l'instantané"
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
-msgstr ""
+msgstr "Authentification unique"
 
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
@@ -3415,28 +3425,20 @@ msgstr ""
 "(Syncthing)"
 
 #: plinth/modules/syncthing/__init__.py:42
-#, fuzzy
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
-"Syncthing est une application qui peut synchroniser les fichiers entre "
-"plusieurs périphériques, par exemple votre ordinateur de bureau et votre "
-"téléphone mobile.  Création, modification ou suppression de fichiers sur un "
-"appareil seront automatiquement répliquées aux autres appareils qui "
-"utilisent Syncthing."
+"Syncthing est une application synchroniser des fichiers entre plusieurs "
+"périphériques, par exemple votre ordinateur de bureau et votre téléphone "
+"mobile.  Création, modification ou suppression de fichiers sur un appareil "
+"seront automatiquement répliquées aux autres appareils qui utilisent "
+"Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:47
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Running Synching on {box_name}, provides an extra synchronization point "
-#| "for your data that is available most of the time so that your devices "
-#| "synchronize more often.  On {box_name}, a single instance of Syncthing "
-#| "runs and may be used by many users.  Each user's set of devices many be "
-#| "synchronized with a distinct set of folders.  Web interface is only "
-#| "available for users belonging to the \"admin\" group."
+#, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
 "your data that is available most of the time, allowing your devices to "
@@ -3445,32 +3447,27 @@ msgid ""
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
-"Exécuter Synching sur {box_name} fournit un point de synchronisation externe "
-"pour vos données, hautement disponible, si bien que vos appareils peuvent se "
-"synchroniser plus souvent.  Sur {box_name}, une seule instance de Syncthing "
-"s’exécute et peut être utilisée par plusieurs utilisateurs.  Chaque ensemble "
-"de périphériques d'un utilisateur est synchronisé dans un groupe distinct de "
-"dossiers.  L'interface Web est seulement disponible pour les utilisateurs "
-"appartenant au groupe \"admin\"."
+"Exécuter Synctching sur {box_name} fournit un point de synchronisation "
+"externe pour vos données, hautement disponible, si bien que vos appareils "
+"peuvent se synchroniser plus souvent.  Sur {box_name}, une seule instance de "
+"Syncthing s’exécute et peut être utilisée par plusieurs utilisateurs.  "
+"Chaque ensemble de périphériques d'un utilisateur est synchronisé dans un "
+"groupe distinct de dossiers.  L'interface Web sur {box_name} est seulement "
+"disponible pour les utilisateurs appartenant au groupe \"admin\"."
 
 #: plinth/modules/syncthing/__init__.py:54
-#, fuzzy
-#| msgid ""
-#| "When enabled, Syncthing will be available from <a href=\"/syncthing/\">/"
-#| "syncthing</a> web interface. Desktop and mobile clients are also <a href="
-#| "\"https://syncthing.net/\">available.</a>"
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
-"Quand activé, Syncthing sera disponible à partir d'une <a href=\"/syncthing/"
-"\">/syncthing</a> interface web. Des clients bureau et mobile sont aussi <a "
-"href=\"https://syncthing.net/\"> disponibles.</a>"
+"Quand activé, l'interface web de Syncthing sera disponible à <a href=\""
+"/syncthing/\">/syncthing</a>. Des clients bureau et mobile sont aussi <a "
+"href=\"https://syncthing.net/\"> disponibles.</a>."
 
 #: plinth/modules/tahoe/__init__.py:42
 msgid "Distributed File Storage (Tahoe-LAFS)"
-msgstr ""
+msgstr "Stockage de fichiers distribués (Tahoe-LAFS)"
 
 #: plinth/modules/tahoe/__init__.py:73
 msgid ""
@@ -3479,6 +3476,10 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
+"Tahoe-LAFS est un système de stockage de fichiers décentralisé sécurisé. Il "
+"utilise une sécurité indépendante du fournisseur pour stocker des fichiers "
+"sur un réseau distribué de nœuds de stockage. Même si certains des nœuds "
+"échouent, vos fichiers peuvent être retrouvés depuis les nœuds restants."
 
 #: plinth/modules/tahoe/__init__.py:78
 #, python-brace-format
@@ -3487,6 +3488,9 @@ msgid ""
 "Additional introducers can be added, which will introduce this node to the "
 "other storage nodes."
 msgstr ""
+"Cette {box_name} héberge un nœud de stockage et un introducteur par défaut "
+"Des introducteurs peuvent être ajoutés, ce qui introduira ce nœud dans les "
+"autres nœuds de stockage."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
 #, python-format
@@ -3496,36 +3500,36 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
+"Le domaine du serveur Tahoe-LAFS est défini sur <b>%(domain_name)s</b>"
+".Changer le nom de domaine de FreedomBox nécessite la ré-installation de "
+"Tahoe-LAFS et vous PERDREZ DES DONNÉES. Vous pouvez accéder à Tahoe-LAFS à <"
+"a href=\"https://%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
-msgstr ""
+msgstr "Introducteur local"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:74
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:91
-#, fuzzy
-#| msgid "Name"
 msgid "Pet Name"
-msgstr "Nom"
+msgstr "Surnom"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:71
 msgid "Add new introducer"
-msgstr ""
+msgstr "Ajouter un nouvel introducteur"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
-#, fuzzy
-#| msgid "Address"
 msgid "Add"
 msgstr "Ajouter"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:87
 msgid "Connected introducers"
-msgstr ""
+msgstr "Introducteurs connectés"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:103
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: plinth/modules/tor/__init__.py:45
 msgid ""
@@ -4338,6 +4342,8 @@ msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
+"Une autre installation ou mise à niveau est déjà en cours d’exécution. "
+"Veuillez patienter quelques instants avant de réessayer."
 
 #: plinth/templates/setup.html:61 plinth/templates/setup.html:64
 #: plinth/templates/setup.html:85
