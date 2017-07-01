@@ -56,10 +56,10 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="images/plinth_frontpage.png"/>
+              <imagedata fileref="images/plinth_all_apps_full_page.png"/>
             </imageobject>
             <textobject>
-              <phrase>plinth_frontpage.png</phrase>
+              <phrase>plinth_all_apps_full_page.png</phrase>
             </textobject>
           </inlinemediaobject>
         </para>
@@ -70,6 +70,11 @@
           <ulink url="https://wiki.debian.org/FreedomBox/Introduction?action=AttachFile&amp;do=get&amp;target=Plinth_Introduction.webm">Plinth_Introduction.webm</ulink>
         </para>
         <para>(36 MB, 13 Min.) </para>
+      </section>
+      <section>
+        <title>More video resources</title>
+        <para>Eben Moglen's talk, <ulink url="https://www.youtube.com/watch?v=8vOF8VsUwbA">Eben Moglen - Freedom in the cloud</ulink>, delivered before the FreedomBox project was started gives insights into the philosophy behind FreedomBox. </para>
+        <para><ulink url="http://moglen.law.columbia.edu/sflc2015/04_freedombox.webm">First demonstration of FreedomBox at SFLC, University of Columbia</ulink> by Sunil Mohan Adapa. </para>
       </section>
     </section>
   </section>
@@ -1288,7 +1293,7 @@ proto udp</screen>
       <title>Chat Server (Matrix Synapse)</title>
       <section>
         <title>What is the Matrix?</title>
-        <para>Unlike Morpheus, we can tell you what the Matrix is. <inlinemediaobject><imageobject><imagedata depth="8pt" fileref="images/smile.png" width="8pt"/></imageobject><textobject><phrase>:)</phrase></textobject></inlinemediaobject> <ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
+        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
         <para><emphasis role="strong">Note:</emphasis> The Matrix Synapse is available in FreedomBox starting with Plinth version 0.14. </para>
       </section>
       <section>
@@ -6120,7 +6125,7 @@ $ sudo umount /tmp/vbox-root1
     <section>
       <title>Debian</title>
       <para>FreedomBox is a <ulink url="https://wiki.debian.org/DebianPureBlends#">pure blend</ulink> of Debian.  This means that all the work on FreedomBox is available in Debian as packages.  It also means that any machine running Debian can be turned into a FreedomBox. </para>
-      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox works in Debian Testing (Stretch) and Unstable (Sid). </para>
+      <para>This page describes the process of installing FreedomBox on a Debian system. Currently, FreedomBox works in Debian Stable (Stretch), Testing (Buster), and Unstable (Sid). </para>
       <caution>
         <para>
           <emphasis role="strong">Use a fresh Debian installation</emphasis>
@@ -6134,7 +6139,7 @@ $ sudo umount /tmp/vbox-root1
             <para>Check the Troubleshooting section below, for any tips or work-arounds that might help during the install. </para>
           </listitem>
           <listitem>
-            <para><ulink url="https://wiki.debian.org/InstallingDebianOn#">Install Debian</ulink> Testing (Stretch) or Unstable (Sid) on your hardware. </para>
+            <para><ulink url="https://wiki.debian.org/InstallingDebianOn#">Install Debian</ulink> Stable (Stretch), Testing (Buster), or Unstable (Sid) on your hardware. </para>
           </listitem>
           <listitem>
             <para>Update your package list. </para>
@@ -6587,6 +6592,73 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.15.0 (2017-07-01)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Added Tahoe-LAFS module for distributed file storage. </para>
+          </listitem>
+          <listitem>
+            <para>Added Diaspora* module for federated social networking. </para>
+          </listitem>
+          <listitem>
+            <para>New Locales for Czech (cs) and Tamil (ta). </para>
+          </listitem>
+          <listitem>
+            <para>Added SSO using auth_pubtkt for Syncthing, TT-RSS, and the Repro admin panel. </para>
+            <itemizedlist>
+              <listitem>
+                <para>If you are logged in to Plinth, you will be automatically logged in to these web apps. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Added option to enable/disable Message Archive Management. </para>
+          </listitem>
+          <listitem>
+            <para>help: Added Debian release name to about page. </para>
+          </listitem>
+          <listitem>
+            <para>firstboot: De-bloat first welcome screen. </para>
+          </listitem>
+          <listitem>
+            <para>Pinned footer to the bottom of the viewport. </para>
+          </listitem>
+          <listitem>
+            <para>disks: Restrict precision of reported available space on root partition. </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Disable button if app/service is not running. </para>
+          </listitem>
+          <listitem>
+            <para>help: Only show help pages if user is logged in. </para>
+          </listitem>
+          <listitem>
+            <para>navbar: Moved logout to user drop-down and added a new power drop-down. </para>
+          </listitem>
+          <listitem>
+            <para>disks: Show disabled partition resize option if no space is available. </para>
+          </listitem>
+          <listitem>
+            <para>Added line break to titles to fix frontpage layout. </para>
+          </listitem>
+          <listitem>
+            <para>syncthing: Fixed typos and clarity in description. </para>
+          </listitem>
+          <listitem>
+            <para>firewall: Fix 500 error when firewalld is not running. </para>
+          </listitem>
+          <listitem>
+            <para>setup: Disable install/upgrade when dpkg/apt is running. </para>
+          </listitem>
+          <listitem>
+            <para>disks: Use information from lsblk for more accuracy. </para>
+          </listitem>
+          <listitem>
+            <para>datetime: Show timezone properly when it not in expected list. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Plinth v0.14.0 (2017-04)</title>
         <itemizedlist>
