@@ -30,4 +30,6 @@ urlpatterns = [
         name='revoke'),
     url(r'^sys/letsencrypt/obtain/(?P<domain>[^/]+)/$', views.obtain,
         name='obtain'),
+    url(r'^sys/letsencrypt/toggle_renewal/(?P<domain>[^/]+)/$',
+        views.toggle_renewal, name='toggle_renewal'),
 ]
