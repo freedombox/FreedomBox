@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.15.1] - 2017-07-02
+### Fixed
+- Fixed python format string in translation.
+
 ## [0.15.0] - 2017-07-01
 ### Added
 - Added Tahoe-LAFS module for distributed file storage.
