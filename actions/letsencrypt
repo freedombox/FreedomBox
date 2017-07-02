@@ -105,7 +105,7 @@ def parse_arguments():
     run_pre_hooks_parser.add_argument('--domain', help=help_domain_arg)
     run_pre_hooks_parser.add_argument('--modules', help=help_module_arg)
 
-    help_renew_hooks = 'Maintenance script before a cert is renewed.'
+    help_renew_hooks = 'Maintenance script after a cert is actually renewed.'
     run_renew_hooks_parser = subparsers.add_parser('run_renew_hooks',
                                                    help=help_renew_hooks)
     run_renew_hooks_parser.add_argument('--domain', help=help_domain_arg)
