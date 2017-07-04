@@ -217,6 +217,9 @@ def subcommand_manage_hooks(arguments):
 
     cmd_is_enable = arguments.command == 'enable'
     current_domain = config.get_domainname()
+    if not arguments.domain:
+        arguments.domain = current_domain
+
     if cmd_is_enable:
         if not current_domain:
             print('Aborted: No current domain set.')
@@ -227,12 +230,11 @@ def subcommand_manage_hooks(arguments):
                   (arguments.domain, current_domain))
             sys.exit(3)
 
-    domain_status = get_status()
-    if arguments.domain not in domain_status:
-        msg, code = ('Aborted', 4) if cmd_is_enable else ('Disabled', 0)
-        print('%s: Domain (%s) has no LE certificate.' %
-              (msg, arguments.domain))
-        sys.exit(code)
+        domain_status = get_status()
+        if current_domain not in domain_status:
+            print('Aborted: Current domain (%s) has no LE certificate.' %
+                  current_domain)
+            sys.exit(4)
 
     config_path = RENEWAL_DIRECTORY + arguments.domain + '.conf'
     if not os.path.exists(config_path):
