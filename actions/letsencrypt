@@ -92,26 +92,28 @@ def parse_arguments():
     obtain_parser.add_argument(
         '--domain', help='Domain name to obtain certificate for')
 
-    help_hooks = 'Configure Plinth management of LE certs for current domain.'
+    help_hooks = 'Plinth management of certificates (for current domain).'
     manage_hook_parser = subparsers.add_parser('manage_hooks', help=help_hooks)
     manage_hook_parser.add_argument('command', help=help_hooks,
                                     choices=('enable', 'disable', 'status'))
+    manage_hook_parser.add_argument('--domain',
+                                    help='Domain for hook management command.')
 
     help_domain_arg = 'Domain name to run the hook scripts with.'
     help_module_arg = 'Include hooks from the provided module names.'
-    help_pre_hooks = 'Maintenance script before a cert is obtained or renewed.'
+    help_pre_hooks = 'Maintenance tasks before a cert is obtained or renewed.'
     run_pre_hooks_parser = subparsers.add_parser('run_pre_hooks',
                                                  help=help_pre_hooks)
     run_pre_hooks_parser.add_argument('--domain', help=help_domain_arg)
     run_pre_hooks_parser.add_argument('--modules', help=help_module_arg)
 
-    help_renew_hooks = 'Maintenance script after a cert is actually renewed.'
+    help_renew_hooks = 'Maintenance tasks after a cert is actually renewed.'
     run_renew_hooks_parser = subparsers.add_parser('run_renew_hooks',
                                                    help=help_renew_hooks)
     run_renew_hooks_parser.add_argument('--domain', help=help_domain_arg)
     run_renew_hooks_parser.add_argument('--modules', help=help_module_arg)
 
-    help_post_hooks = 'Maintenance script after a cert is obtained or renewed.'
+    help_post_hooks = 'Maintenance tasks after a cert is obtained or renewed.'
     run_post_hooks_parser = subparsers.add_parser('run_post_hooks',
                                                   help=help_post_hooks)
     run_post_hooks_parser.add_argument('--domain', help=help_domain_arg)
@@ -202,53 +204,67 @@ def subcommand_obtain(arguments):
     action_utils.webserver_enable(domain, kind='site')
 
 
-def subcommand_manage_hooks(argument):
+def subcommand_manage_hooks(arguments):
     """
-    Enable/disable/show status of certbot's pre-, renew-, and post-hooks,
-    for current domain. Enable edits $RENEWAL_DIRECTORY/$DOMAIN.config,
+    Enable/disable/show status of certbot's pre-, renew-, and post-hooks.
+    Command enable only edits current domain, RENEWAL_DIRECTORY/DOMAIN.config,
     and creates a backup beforehand that is restored if disable is called.
+    Commands disable and status work without error on any domain string.
     """
-    current_domain = config.get_domainname()
-    domain_status = get_status()
-
-    if not current_domain:
-        print('No current domain set. Aborting.')
+    if arguments.command not in ('enable', 'disable', 'status'):
+        print('Aborted: Unknown command "%s".' % arguments.command)
         sys.exit(1)
 
-    if not current_domain in domain_status:
-        print('Aborted: The current domain (%s) has no LE certificate.'
-              % current_domain)
-        sys.exit(2)
+    cmd_is_enable = arguments.command == 'enable'
+    current_domain = config.get_domainname()
+    if cmd_is_enable:
+        if not current_domain:
+            print('Aborted: No current domain set.')
+            sys.exit(2)
 
-    config_path = RENEWAL_DIRECTORY + current_domain + '.conf'
+        if not arguments.domain == current_domain:
+            print('Aborted: Passed domain (%s) is not current domain (%s).' %
+                  (arguments.domain, current_domain))
+            sys.exit(3)
+
+    domain_status = get_status()
+    if arguments.domain not in domain_status:
+        msg, code = ('Aborted', 4) if cmd_is_enable else ('Disabled', 0)
+        print('%s: Domain (%s) has no LE certificate.' %
+              (msg, arguments.domain))
+        sys.exit(code)
+
+    config_path = RENEWAL_DIRECTORY + arguments.domain + '.conf'
     if not os.path.exists(config_path):
-        print('Aborted: No certbot config file at %s.' % config_path)
-        sys.exit(3)
+        msg, code = ('Aborted', 5) if cmd_is_enable else ('Disabled', 0)
+        print('%s: No certbot config file at %s.' % (msg, config_path))
+        sys.exit(code)
 
     config_certbot = configobj.ConfigObj(config_path)
-    if not 'renewalparams' in config_certbot:
-        print('Aborted: No section [renewalparams] in config file at %s.'
-              % config_path)
-        sys.exit(4)
+    if 'renewalparams' not in config_certbot:
+        msg, code = ('Aborted', 6) if cmd_is_enable else ('Disabled', 0)
+        print('%s: No section [renewalparams] in config file at %s.'
+              % (msg, config_path))
+        sys.exit(code)
 
     script_path = os.path.realpath(__file__)
     config_backup_path = config_path + '_plinth_backup'
-    call_pre = script_path + ' run_pre_hooks --domain ' + current_domain
-    call_renew = script_path + ' run_renew_hooks --domain ' + current_domain
-    call_post = script_path + ' run_post_hooks --domain ' + current_domain
+    call_pre = script_path + ' run_pre_hooks --domain ' + arguments.domain
+    call_renew = script_path + ' run_renew_hooks --domain ' + arguments.domain
+    call_post = script_path + ' run_post_hooks --domain ' + arguments.domain
     config_plinth = {'renewalparams':
                      {'authenticator': AUTHENTICATOR,
                       'webroot_path': [WEB_ROOT_PATH],
-                      'webroot_map': {current_domain: WEB_ROOT_PATH},
+                      'webroot_map': {arguments.domain: WEB_ROOT_PATH},
                       'installer': 'None',
                       'pre_hook': call_pre,
                       'renew_hook': call_renew,
                       'post_hook': call_post}}
     comment_plinth = '# This file was edited by Plinth.'
     config_edited_by_plinth = any(['edited by plinth' in line.lower()
-                    for line in config_certbot.initial_comment])
+                                   for line in config_certbot.initial_comment])
 
-    if argument.command == 'status':
+    if arguments.command == 'status':
         config_checks = [(entry in config_certbot['renewalparams']) and
                          (str(config_plinth['renewalparams'][entry]) in
                           str(config_certbot['renewalparams'][entry]))
@@ -258,27 +274,25 @@ def subcommand_manage_hooks(argument):
         else:
             print('disabled')
 
-    elif argument.command == 'enable':
+    elif arguments.command == 'enable':
         if not config_edited_by_plinth:
             shutil.copy(config_path, config_backup_path)
             config_certbot.initial_comment.append(comment_plinth)
 
         config_certbot['renewalparams'].update(config_plinth['renewalparams'])
         config_certbot.write()
+        print('enabled successfully')
 
-    elif argument.command == 'disable':
+    elif arguments.command == 'disable':
         # if changed, restore from backup; refuse disabling if no backup exists
         if not config_edited_by_plinth:
-            pass
+            print('Disabled: Nothing to do, hook management was not enabled.')
         elif os.path.exists(config_backup_path):
             shutil.move(config_backup_path, config_path)
+            print('disabled successfully')
         else:
             print('Aborted: No backup config file at %s.' % config_backup_path)
-            sys.exit(5)
-
-    else:
-        print('Aborted: Unknown command "%s".' % argument.command)
-        sys.exit(-1)
+            sys.exit(7)
 
     sys.exit(0)
 
@@ -316,7 +330,7 @@ def subcommand_run_renew_hooks(arguments):
         sys.exit(1)
 
     current_domain = config.get_domainname()
-    if  not arguments.domain == current_domain:
+    if not arguments.domain == current_domain:
         print('Aborted: Current domain is %s, but called for %s.' %
               (current_domain, arguments.domain))
         sys.exit(2)

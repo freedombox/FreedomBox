@@ -69,7 +69,8 @@ def obtain(request, domain):
     """Obtain and install a certificate for a given domain."""
     try:
         actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
-        actions.superuser_run('letsencrypt', ['manage_hooks', 'enable'])
+        actions.superuser_run('letsencrypt', ['manage_hooks', 'enable',
+                                              '--domain', domain])
         messages.success(
             request, _('Certificate successfully obtained for domain {domain}')
             .format(domain=domain))
@@ -85,9 +86,10 @@ def obtain(request, domain):
 @require_POST
 def toggle_renewal(request, domain):
     """Toggle certificate renewal for the current domain."""
-    subcommand = 'disable' if _is_hook_management_enabled() else 'enable'
+    subcommand = 'disable' if _hook_manage_enabled(domain) else 'enable'
     try:
-        actions.superuser_run('letsencrypt', ['manage_hooks', subcommand])
+        actions.superuser_run('letsencrypt', ['manage_hooks', subcommand,
+                                              '--domain', domain])
         messages.success(
             request, _('Certificate management changed for domain {domain}')
             .format(domain=domain))
@@ -106,9 +108,9 @@ def get_status():
     status = json.loads(status)
     curr_dom = config.get_domainname()
     current_domain = {'name': curr_dom,
-                     'has_cert': curr_dom in status['domains'] and
-                     status['domains'][curr_dom]['certificate_available'],
-                     'manage_hooks_enabled': _is_hook_management_enabled()}
+                      'has_cert': curr_dom in status['domains'] and
+                      status['domains'][curr_dom]['certificate_available'],
+                      'manage_hooks_enabled': _hook_manage_enabled(curr_dom)}
     status['current_domain'] = current_domain
 
     for domain_type, domains in names.domains.items():
@@ -122,10 +124,12 @@ def get_status():
     return status
 
 
-def _is_hook_management_enabled():
+def _hook_manage_enabled(domain):
         """Return status of hook management for current domain."""
         try:
-            output = actions.superuser_run('letsencrypt', ['manage_hooks', 'status'])
+            output = actions.superuser_run('letsencrypt',
+                                           ['manage_hooks', 'status',
+                                            '--domain', domain])
         except ActionError:
             return False
         return output.strip() == 'enabled'
