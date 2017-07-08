@@ -225,7 +225,6 @@ def subcommand_obtain(arguments):
     action_utils.webserver_enable(domain, kind='site')
 
 
-<<<<<<< HEAD
 def subcommand_manage_hooks(arguments):
     """
     Enable/disable/show status of certbot's pre-, renew-, and post-hooks.
@@ -382,7 +381,8 @@ def subcommand_run_post_hooks(arguments):
               (current_domain, arguments.domain))
         sys.exit(2)
     sys.exit(0)
-=======
+
+
 def subcommand_delete(arguments):
     """Disable a domain and delete the certificate."""
     domain = arguments.domain
@@ -395,7 +395,6 @@ def subcommand_delete(arguments):
         sys.exit(1)
 
     action_utils.webserver_disable(domain, kind='site')
->>>>>>> bd3390089bfa9ec8a6653ae697450e039a27f67e
 
 
 def setup_webserver_config(domain):
