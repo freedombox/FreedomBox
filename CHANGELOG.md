@@ -1,6 +1,58 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.15.1] - 2017-07-02
+### Fixed
+- Fixed python format string in translation.
+
+## [0.15.0] - 2017-07-01
+### Added
+- Added Tahoe-LAFS module for distributed file storage.
+- Added Diaspora* module for federated social networking.
+- New Locales for Czech (cs) and Tamil (ta).
+- Cache whether user is admin in context_processor.
+- Introduced a new stylesheet to hold custom responsive css.
+- ejabberd: Added option to enable/disable Message Archive Management.
+- help: Added Debian release to about page.
+- Added SSO using auth_pubtkt for Syncthing, Repro, and TT-RSS.
+- SSO: Generate keys during plinth startup.
+
+### Removed
+- doc: Removed unused images.
+- owncloud: Removed module, since it is no longer in Debian.
+- apps, system: Removed modules, and merged into main.
+- firstboot: Erased network graph and warning on WiFi passwords.
+- Removed Power from config menu, since power drop-down was added.
+
+### Changed
+- datetime: Use timedatectl to get list of time zones.
+- datetime: Rewrote action timezone-change in Python.
+- Split reserved usernames list among modules.
+- module_loader: Split the URLs inclusion step.
+- menu: Lazily reverse menu item URLs.
+- firstboot: de-bloat first welcome screen.
+- Pinned footer to the bottom of the viewport.
+- disks: restrict precision of reported available space on root partition.
+- diagnostics: Disable button if app/service is not running.
+- help: only show help pages if user is logged in.
+- navbar: moved logout to user drop-down and added a new power drop-down.
+- letsencrypt: directly call certbot in action script.
+
+### Fixed
+- disks: Show disabled partition resize option if no space is available.
+- actions: Make subparsers mandatory, fixes calls without arguments.
+- networks: Fix failing network test.
+- Added line break to titles for frontpage shortcuts.
+- syncthing: Fixed typos and clarity in description.
+- firewall: Fix 500 error when firewalld is not running.
+- setup: Disable install/upgrade when dpkg/apt is running.
+- utils: Fix test case failures due to caching.
+- disks: Use information from lsblk for more accuracy.
+- datetime: Show timezone properly when it not in expected list.
+- disks: add missing import json.
+- licenses: correct info for ejabberd.
+- disks: delete existing test file, if necessary.
+
 ## [0.14.0] - 2017-04-09
 ### Added
 - tor: Added option to use upstream bridges.
@@ -221,6 +273,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[0.15.0]: https://github.com/freedombox/Plinth/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/freedombox/Plinth/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/freedombox/Plinth/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/freedombox/Plinth/compare/v0.12.0...v0.13.0

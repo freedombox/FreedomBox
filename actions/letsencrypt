@@ -25,9 +25,9 @@ import json
 import os
 import subprocess
 import sys
+import re
 import configobj
 import shutil
-
 from plinth import action_utils
 from plinth.modules.config import config
 
@@ -84,13 +84,17 @@ def parse_arguments():
     subparsers.add_parser(
         'get-status', help='Return the status of configured domains.')
     revoke_parser = subparsers.add_parser(
-        'revoke', help='Disable and domain and revoke its certificate.')
-    revoke_parser.add_argument(
-        '--domain', help='Domain name to revoke certificate for')
+        'revoke', help='Revoke certificate of a domain and disable website.')
+    revoke_parser.add_argument('--domain', required=True,
+                               help='Domain name to revoke certificate for')
     obtain_parser = subparsers.add_parser(
         'obtain', help='Obtain certificate for a domain and setup website.')
-    obtain_parser.add_argument(
-        '--domain', help='Domain name to obtain certificate for')
+    obtain_parser.add_argument('--domain', required=True,
+                               help='Domain name to obtain certificate for')
+    delete_parser = subparsers.add_parser(
+        'delete', help='Delete certificate for a domain and disable website.')
+    delete_parser.add_argument('--domain', required=True,
+                               help='Domain name to delete certificate of')
 
     help_hooks = 'Plinth management of certificates (for current domain).'
     manage_hook_parser = subparsers.add_parser('manage_hooks', help=help_hooks)
@@ -131,6 +135,22 @@ def get_certificate_expiry(domain):
     return output.decode().strip().split('=')[1]
 
 
+def get_validity_status(domain):
+    """Return validity status of a certificate, e.g. valid, revoked, expired"""
+    output = subprocess.check_output(['certbot', 'certificates', '-d', domain])
+    output = output.decode(sys.stdout.encoding)
+
+    match = re.search('INVALID: (.*)\)', output)
+    if match is not None:
+        validity = match.group(1).lower()
+    elif re.search('VALID', output) is not None:
+        validity = 'valid'
+    else:
+        validity = 'unknown'
+
+    return validity
+
+
 def get_status():
     """
     Return Python dictionary of currently configured domains.
@@ -150,7 +170,8 @@ def get_status():
             'certificate_available': True,
             'expiry_date': get_certificate_expiry(domain),
             'web_enabled':
-            action_utils.webserver_is_enabled(domain, kind='site')
+            action_utils.webserver_is_enabled(domain, kind='site'),
+            'validity': get_validity_status(domain)
         }
     return domain_status
 
@@ -204,6 +225,7 @@ def subcommand_obtain(arguments):
     action_utils.webserver_enable(domain, kind='site')
 
 
+<<<<<<< HEAD
 def subcommand_manage_hooks(arguments):
     """
     Enable/disable/show status of certbot's pre-, renew-, and post-hooks.
@@ -360,6 +382,20 @@ def subcommand_run_post_hooks(arguments):
               (current_domain, arguments.domain))
         sys.exit(2)
     sys.exit(0)
+=======
+def subcommand_delete(arguments):
+    """Disable a domain and delete the certificate."""
+    domain = arguments.domain
+    command = ['certbot', 'delete', '--cert-name', domain]
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode:
+        print(stderr.decode(), file=sys.stderr)
+        sys.exit(1)
+
+    action_utils.webserver_disable(domain, kind='site')
+>>>>>>> bd3390089bfa9ec8a6653ae697450e039a27f67e
 
 
 def setup_webserver_config(domain):

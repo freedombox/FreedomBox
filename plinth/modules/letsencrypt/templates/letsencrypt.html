@@ -57,11 +57,31 @@
                   {% endif %}
                 </td>
                 <td>
-                  {% if domain_status.certificate_available %}
+                  {% if domain_status.certificate_available and domain_status.validity == "valid" %}
                     <span class="label label-success">
                       {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
-                        Expires on {{ expiry_date }}
+                        Valid, expires on {{ expiry_date }}
                       {% endblocktrans %}
+                    </span>
+                  {% elif domain_status.certificate_available and not domain_status.validity == "valid" %}
+                    <span class="label label-warning">
+                      {% if "revoked" in domain_status.validity %}
+                        {% blocktrans trimmed %}
+                          Revoked
+                        {% endblocktrans %}
+                      {% elif "expired" in domain_status.validity %}
+                        {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
+                          Expired on {{ expiry_date }}
+                        {% endblocktrans %}
+                      {% elif "test" in domain_status.validity %}
+                        {% blocktrans trimmed %}
+                          Invalid test certificate
+                        {% endblocktrans %}
+                      {% else %}
+                        {% blocktrans trimmed with reason=domain_status.validity %}
+                          Invalid ({{ reason }})
+                        {% endblocktrans %}
+                      {% endif %}
                     </span>
                   {% else %}
                     <span class="label label-warning">
@@ -79,17 +99,25 @@
                 <td>
                   {% if domain_status.certificate_available %}
                     <form class="form form-inline" method="post"
-                          action="{% url 'letsencrypt:revoke' domain %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-default" type="submit">
-                        {% trans "Revoke" %}</button>
-                    </form>
-                    <form class="form form-inline" method="post"
                           action="{% url 'letsencrypt:obtain' domain %}">
                       {% csrf_token %}
                       <button class="btn btn-sm btn-default" type="submit">
                         {% trans "Re-obtain" %}</button>
                     </form>
+                    <form class="form form-inline" method="post"
+                          action="{% url 'letsencrypt:delete' domain %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-default" type="submit">
+                        {% trans "Delete" %}</button>
+                    </form>
+                    {% if "revoked" not in domain_status.validity %}
+                      <form class="form form-inline" method="post"
+                            action="{% url 'letsencrypt:revoke' domain %}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-default" type="submit">
+                          {% trans "Revoke" %}</button>
+                      </form>
+                    {% endif %}
                   {% else %}
                     <form class="form form-inline" method="post"
                           action="{% url 'letsencrypt:obtain' domain %}">
