@@ -32,13 +32,28 @@
     {% endblocktrans %}
   </p>
 
+  {% if pkg_manager_is_busy %}
+    <div class="alert alert-danger">
+    {% blocktrans trimmed %}
+      Currently an installation or upgrade is running.
+      Consider waiting until it's finished before shutting down.
+    {% endblocktrans %}
+    </div>
+  {% endif %}
+
   <form class="form" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Shut Down Now" %}"/>
+    {% if pkg_manager_is_busy %}
+      <input type="submit" class="btn btn-danger"
+             value="{% trans "Shut Down Now" %}"/>
+    {% else %}
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Shut Down Now" %}"/>
+    {% endif %}
+
   </form>
 
 

@@ -33,7 +33,8 @@ def index(request):
     """Serve power controls page."""
     return TemplateResponse(request, 'power.html',
                             {'title': power.title,
-                             'description': power.description})
+                             'description': power.description,
+                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
 
 
 def restart(request):
@@ -48,7 +49,8 @@ def restart(request):
 
     return TemplateResponse(request, 'power_restart.html',
                             {'title': _('Power'),
-                             'form': form})
+                             'form': form,
+                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
 
 
 def shutdown(request):
@@ -63,4 +65,14 @@ def shutdown(request):
 
     return TemplateResponse(request, 'power_shutdown.html',
                             {'title': _('Power'),
-                             'form': form})
+                             'form': form,
+                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
+
+
+def _is_pkg_manager_busy():
+    """Return whether a package manager is running."""
+    try:
+        actions.superuser_run('packages', ['is-package-manager-busy'])
+        return True
+    except actions.ActionError:
+        return False
