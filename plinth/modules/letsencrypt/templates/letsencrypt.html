@@ -135,12 +135,12 @@
     </div>
 
     <form class="form" method="post"
-          action="{% url 'letsencrypt:toggle_renewal' status.current_domain.name %}">
+          action="{% url 'letsencrypt:toggle_hooks' status.current_domain.name %}">
       {% csrf_token %}
       <div class="checkbox">
         <label>
           {% if status.current_domain.name and status.current_domain.has_cert %}
-            <input type="checkbox" name="toggle_renewal" id="id_toggle_renewal"
+            <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
                    {% if status.current_domain.manage_hooks_enabled %}checked{% endif %}
                    onchange="this.form.submit();">
             </input>
@@ -149,7 +149,7 @@
                 {% trans "Update config" %}</button>
             </noscript>
           {% else %}
-            <input type="checkbox" name="toggle_renewal" id="id_toggle_renewal"
+            <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
                    class="disabled"></input>
             <noscript>
               <button class="btn btn-sm btn-default disabled" type="submit">
