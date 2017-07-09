@@ -33,6 +33,15 @@
     {% endblocktrans %}
   </p>
 
+  {% if pkg_manager_is_busy %}
+    <div class="alert alert-warning" role="alert">
+    {% blocktrans trimmed %}
+      Currently an installation or upgrade is running.
+      Consider waiting until it's finished before restarting.
+    {% endblocktrans %}
+    </div>
+  {% endif %}
+
   <form class="form" method="post">
     {% csrf_token %}
 
