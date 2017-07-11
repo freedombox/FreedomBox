@@ -46,8 +46,14 @@
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Shut Down Now" %}"/>
+    {% if pkg_manager_is_busy %}
+      <input type="submit" class="btn btn-danger"
+             value="{% trans "Shut Down Now" %}"/>
+    {% else %}
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Shut Down Now" %}"/>
+    {% endif %}
+
   </form>
 
 

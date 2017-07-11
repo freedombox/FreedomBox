@@ -47,8 +47,14 @@
 
     {{ form|bootstrap }}
 
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Restart Now" %}"/>
+    {% if pkg_manager_is_busy %}
+      <input type="submit" class="btn btn-danger"
+             value="{% trans "Restart Now" %}"/>
+    {% else %}
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Restart Now" %}"/>
+    {% endif %}
+
   </form>
 
 {% endblock %}
