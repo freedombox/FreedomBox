@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-10 09:50-0400\n"
+"POT-Creation-Date: 2017-07-10 22:56-0400\n"
 "PO-Revision-Date: 2017-06-14 07:55+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/freedombox/plinth/ru/>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
+"plinth/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.15-dev\n"
 
 #: plinth/action_utils.py:254
@@ -662,17 +662,17 @@ msgid "Use HTTP basic authentication"
 msgstr "Использовать базовую аутентификацию HTTP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:143
-#: plinth/modules/networks/forms.py:227 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
 msgid "Username"
 msgstr "Имя пользователя"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:146
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
 msgid "Password"
 msgstr "Пароль"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:149
-#: plinth/modules/networks/forms.py:230
+#: plinth/modules/networks/forms.py:231
 msgid "Show password"
 msgstr "Показать пароль"
 
@@ -904,15 +904,15 @@ msgid "Service/Port"
 msgstr "Служба/Порт"
 
 #: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:68
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
 #: plinth/modules/names/templates/names.html:49
 msgid "Enabled"
 msgstr "Включено"
 
 #: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:70
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:90
 #: plinth/modules/names/templates/names.html:51
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:63
 msgid "Disabled"
 msgstr "Выключено"
 
@@ -993,8 +993,8 @@ msgstr "Документация"
 msgid "Where to Get Help"
 msgstr "Где получить помощь"
 
-#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
-#: plinth/modules/networks/forms.py:101 plinth/templates/index.html:124
+#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:124
 msgid "Manual"
 msgstr "Руководство"
 
@@ -1384,27 +1384,57 @@ msgid "Actions"
 msgstr "Действия"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
-#, python-format
-msgid "Expires on %(expiry_date)s"
+#, fuzzy, python-format
+#| msgid "Expires on %(expiry_date)s"
+msgid "Valid, expires on %(expiry_date)s"
 msgstr "Истекает %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:62
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:63
+#, fuzzy
+#| msgid "Revoke"
+msgid "Revoked"
+msgstr "Отменить"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:67
+#, fuzzy, python-format
+#| msgid "Expires on %(expiry_date)s"
+msgid "Expired on %(expiry_date)s"
+msgstr "Истекает %(expiry_date)s"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#, fuzzy
+#| msgid "Invalid kite name"
+msgid "Invalid test certificate"
+msgstr "Недопустимое имя kite"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:75
+#, python-format
+msgid "Invalid (%(reason)s)"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 msgid "No certificate"
 msgstr "Не сертификата"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:79
-msgid "Revoke"
-msgstr "Отменить"
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:85
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
 msgid "Re-obtain"
 msgstr "Получить повторно"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:92
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/snapshot/templates/snapshot.html:34
+msgid "Delete"
+msgstr "Удалить"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:112
+msgid "Revoke"
+msgstr "Отменить"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:120
 msgid "Obtain"
 msgstr "Получить"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:133
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1413,24 +1443,39 @@ msgstr ""
 "получить сертификаты для них."
 
 #: plinth/modules/letsencrypt/views.py:55
-#, python-brace-format
-msgid "Certificate successfully revoked for domain {domain}"
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully revoked for domain {domain}"
+msgid ""
+"Certificate successfully revoked for domain {domain}.This may take a few "
+"moments to take effect."
 msgstr "Сертификат успешно отменен для домена {domain}"
 
-#: plinth/modules/letsencrypt/views.py:60
+#: plinth/modules/letsencrypt/views.py:61
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "Не удалось отозвать сертификат для домена {domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:72
+#: plinth/modules/letsencrypt/views.py:73
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "Сертификат успешно получен для домена {domain}"
 
-#: plinth/modules/letsencrypt/views.py:77
+#: plinth/modules/letsencrypt/views.py:78
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Не удалось получить сертификат для домена {domain}: {error}"
+
+#: plinth/modules/letsencrypt/views.py:90
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully revoked for domain {domain}"
+msgid "Certificate successfully deleted for domain {domain}"
+msgstr "Сертификат успешно отменен для домена {domain}"
+
+#: plinth/modules/letsencrypt/views.py:95
+#, fuzzy, python-brace-format
+#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+msgid "Failed to delete certificate for domain {domain}: {error}"
+msgstr "Не удалось отозвать сертификат для домена {domain}: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:41
 msgid ""
@@ -1542,9 +1587,13 @@ msgid "Maximum number of players"
 msgstr "Максимальное количество игроков"
 
 #: plinth/modules/minetest/forms.py:35
+#, fuzzy
+#| msgid ""
+#| "You can change the maximum number of players playing                      "
+#| "minetest at a single instance of time"
 msgid ""
-"You can change the maximum number of players playing                      "
-"minetest at a single instance of time"
+"You can change the maximum number of players playing minetest at a single "
+"instance of time."
 msgstr ""
 "Можно изменить максимальное количество игроков, играющих "
 "в                      minetest одновременно"
@@ -1554,10 +1603,14 @@ msgid "Enable creative mode"
 msgstr "Включить творческий режим"
 
 #: plinth/modules/minetest/forms.py:41
+#, fuzzy
+#| msgid ""
+#| "Creative mode changes the rules of the game to make "
+#| "it                      more suitable for creative gameplay, rather "
+#| "than                      challenging \"survival\" gameplay."
 msgid ""
-"Creative mode changes the rules of the game to make it                      "
-"more suitable for creative gameplay, rather than                      "
-"challenging \"survival\" gameplay."
+"Creative mode changes the rules of the game to make it more suitable for "
+"creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
 "Творческий режим меняет правила игры, чтобы сделать его более подходящим для "
 "творческой игры, а не сложного режима «выживание»."
@@ -1567,9 +1620,11 @@ msgid "Enable PVP"
 msgstr "Включить PVP"
 
 #: plinth/modules/minetest/forms.py:48
-msgid ""
-"Enabling Player Vs Player will allow players to damage                     "
-"other players"
+#, fuzzy
+#| msgid ""
+#| "Enabling Player Vs Player will allow players to "
+#| "damage                     other players"
+msgid "Enabling Player Vs Player will allow players to damage other players."
 msgstr ""
 "Включение игрок против игрока позволит игрокам наносить "
 "урон                      другим игрокам"
@@ -1579,9 +1634,11 @@ msgid "Enable damage"
 msgstr "Включить урон"
 
 #: plinth/modules/minetest/forms.py:54
-msgid ""
-"When disabled, players cannot die or receive damage of                     "
-"any kind"
+#, fuzzy
+#| msgid ""
+#| "When disabled, players cannot die or receive damage "
+#| "of                     any kind"
+msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 "Когда выключено, игроки не могут умереть или получить "
 "урон                       любого рода"
@@ -1852,21 +1909,21 @@ msgstr ""
 "Зона брандмауэра будет контролировать службы, доступные через этот "
 "интерфейс. Выбирайте Внутренний только в доверенных сетях."
 
-#: plinth/modules/networks/forms.py:48
+#: plinth/modules/networks/forms.py:49
 #: plinth/modules/networks/templates/connections_diagram.html:78
 msgid "External"
 msgstr "Внешний"
 
-#: plinth/modules/networks/forms.py:49
+#: plinth/modules/networks/forms.py:50
 #: plinth/modules/networks/templates/connections_diagram.html:107
 msgid "Internal"
 msgstr "Внутренний"
 
-#: plinth/modules/networks/forms.py:51
+#: plinth/modules/networks/forms.py:52
 msgid "IPv4 Addressing Method"
 msgstr "Метод адресации IPv4"
 
-#: plinth/modules/networks/forms.py:54
+#: plinth/modules/networks/forms.py:55
 #, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -1877,23 +1934,23 @@ msgstr ""
 "сети в качестве клиента. \"Общий\" метод позволяет {box_name} выступать как "
 "роутер, настраивая клиентов в сети, разделяя подключение к интернету."
 
-#: plinth/modules/networks/forms.py:59
+#: plinth/modules/networks/forms.py:60
 msgid "Automatic (DHCP)"
 msgstr "Автоматически (DHCP)"
 
-#: plinth/modules/networks/forms.py:60
+#: plinth/modules/networks/forms.py:61
 msgid "Shared"
 msgstr "Общее"
 
-#: plinth/modules/networks/forms.py:64 plinth/modules/networks/forms.py:104
+#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:105
 msgid "Address"
 msgstr "Адрес"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:69
 msgid "Netmask"
 msgstr "Маска сети"
 
-#: plinth/modules/networks/forms.py:69
+#: plinth/modules/networks/forms.py:70
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -1901,21 +1958,21 @@ msgstr ""
 "Необязательное значение. Если оставить пустым, будет использоваться маска "
 "подсети по умолчанию, основанная на адресе."
 
-#: plinth/modules/networks/forms.py:74 plinth/modules/networks/forms.py:114
+#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
 msgid "Gateway"
 msgstr "Шлюз"
 
-#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
+#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:116
 msgid "Optional value."
 msgstr "Необязательное значение."
 
-#: plinth/modules/networks/forms.py:79 plinth/modules/networks/forms.py:119
+#: plinth/modules/networks/forms.py:80 plinth/modules/networks/forms.py:120
 msgid "DNS Server"
 msgstr "DNS-сервер"
 
-#: plinth/modules/networks/forms.py:80
+#: plinth/modules/networks/forms.py:81
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1923,11 +1980,11 @@ msgstr ""
 "Необязательное значение. Если задано это значение, и метод адресации IPv4 "
 "«Автомат», предоставляемые DHCP-сервером DNS-серверы будут игнорироваться."
 
-#: plinth/modules/networks/forms.py:86 plinth/modules/networks/forms.py:126
+#: plinth/modules/networks/forms.py:87 plinth/modules/networks/forms.py:127
 msgid "Second DNS Server"
 msgstr "Второй DNS-сервер"
 
-#: plinth/modules/networks/forms.py:87
+#: plinth/modules/networks/forms.py:88
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1935,11 +1992,11 @@ msgstr ""
 "Необязательное значение. Если задано это значение и метод адресации IPv4 "
 "«Автомат»,  предоставляемые DHCP-сервером DNS-серверы будут игнорироваться."
 
-#: plinth/modules/networks/forms.py:93
+#: plinth/modules/networks/forms.py:94
 msgid "IPv6 Addressing Method"
 msgstr "Метод адресации IPv6"
 
-#: plinth/modules/networks/forms.py:96
+#: plinth/modules/networks/forms.py:97
 #, python-brace-format
 msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
@@ -1948,27 +2005,27 @@ msgstr ""
 "Метод \"Автоматически\" позволит получить {box_name} конфигурацию этой сети, "
 "что сделает его клиентом."
 
-#: plinth/modules/networks/forms.py:99 plinth/modules/networks/forms.py:271
+#: plinth/modules/networks/forms.py:100 plinth/modules/networks/forms.py:272
 msgid "Automatic"
 msgstr "Автоматически"
 
-#: plinth/modules/networks/forms.py:100
+#: plinth/modules/networks/forms.py:101
 msgid "Automatic, DHCP only"
 msgstr "Автоматически, только DHCP"
 
-#: plinth/modules/networks/forms.py:102
+#: plinth/modules/networks/forms.py:103
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: plinth/modules/networks/forms.py:108
+#: plinth/modules/networks/forms.py:109
 msgid "Prefix"
 msgstr "Префикс"
 
-#: plinth/modules/networks/forms.py:109
+#: plinth/modules/networks/forms.py:110
 msgid "Value between 1 and 128."
 msgstr "Значение от 1 до 128."
 
-#: plinth/modules/networks/forms.py:120
+#: plinth/modules/networks/forms.py:121
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1977,7 +2034,7 @@ msgstr ""
 "«Автоматически», предоставляемые DHCP-сервером DNS-серверы будут "
 "игнорироваться."
 
-#: plinth/modules/networks/forms.py:127
+#: plinth/modules/networks/forms.py:128
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -1986,54 +2043,54 @@ msgstr ""
 "«Автоматически»,  предоставляемые DHCP-сервером DNS-серверы будут "
 "игнорироваться."
 
-#: plinth/modules/networks/forms.py:137
+#: plinth/modules/networks/forms.py:138
 msgid "-- select --"
 msgstr "-- Выберите --"
 
-#: plinth/modules/networks/forms.py:262
+#: plinth/modules/networks/forms.py:263
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:264
 msgid "The visible name of the network."
 msgstr "Отображаемое имя сети."
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:266
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "Режим"
 
-#: plinth/modules/networks/forms.py:266
+#: plinth/modules/networks/forms.py:267
 msgid "Infrastructure"
 msgstr "Инфраструктура"
 
-#: plinth/modules/networks/forms.py:267
+#: plinth/modules/networks/forms.py:268
 msgid "Access Point"
 msgstr "Точка доступа"
 
-#: plinth/modules/networks/forms.py:268
+#: plinth/modules/networks/forms.py:269
 msgid "Ad-hoc"
 msgstr "Беспроводная  Ad-hoc"
 
-#: plinth/modules/networks/forms.py:270
+#: plinth/modules/networks/forms.py:271
 msgid "Frequency Band"
 msgstr "Полоса частот"
 
-#: plinth/modules/networks/forms.py:272
+#: plinth/modules/networks/forms.py:273
 msgid "A (5 GHz)"
 msgstr "А (5 ГГц)"
 
-#: plinth/modules/networks/forms.py:273
+#: plinth/modules/networks/forms.py:274
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 ГГц)"
 
-#: plinth/modules/networks/forms.py:275
+#: plinth/modules/networks/forms.py:276
 #: plinth/modules/networks/templates/connection_show.html:173
 msgid "Channel"
 msgstr "Канал"
 
-#: plinth/modules/networks/forms.py:276
+#: plinth/modules/networks/forms.py:277
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -2041,11 +2098,11 @@ msgstr ""
 "Необязательное значение. Ограничение беспроводного канала в выбранном "
 "диапазоне частот. Оставьте пустым или укажите 0 для автоматического выбора."
 
-#: plinth/modules/networks/forms.py:283
+#: plinth/modules/networks/forms.py:284
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:284
+#: plinth/modules/networks/forms.py:285
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -2055,11 +2112,11 @@ msgstr ""
 "подключении к точке доступа, подключатся только по BSSID. Пример: 00:11:22:"
 "aa:bb:cc."
 
-#: plinth/modules/networks/forms.py:291
+#: plinth/modules/networks/forms.py:292
 msgid "Authentication Mode"
 msgstr "Режим проверки подлинности"
 
-#: plinth/modules/networks/forms.py:292
+#: plinth/modules/networks/forms.py:293
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -2067,15 +2124,15 @@ msgstr ""
 "Выберите WPA, если беспроводная сеть защищена и требует от клиентов пароль "
 "для подключения."
 
-#: plinth/modules/networks/forms.py:294
+#: plinth/modules/networks/forms.py:295
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:295
+#: plinth/modules/networks/forms.py:296
 msgid "Open"
 msgstr "Open"
 
-#: plinth/modules/networks/forms.py:297
+#: plinth/modules/networks/forms.py:298
 msgid "Passphrase"
 msgstr "Парольная фраза"
 
@@ -2175,7 +2232,7 @@ msgid "Edit connection"
 msgstr "Редактирование подключения"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:138
+#: plinth/templates/base.html:140 plinth/templates/base.html:141
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -2192,11 +2249,6 @@ msgstr "Включить"
 #: plinth/modules/networks/templates/connection_show.html:63
 msgid "Delete connection"
 msgstr "Удаление подключения"
-
-#: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:34
-msgid "Delete"
-msgstr "Удалить"
 
 #: plinth/modules/networks/templates/connection_show.html:66
 #: plinth/modules/networks/templates/connections_diagram.html:73
@@ -2871,12 +2923,12 @@ msgstr "Пользовательские службы"
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "Установка Pagekite завершена. Службы HTTP И HTTPS запущены."
 
-#: plinth/modules/power/__init__.py:30 plinth/modules/power/views.py:50
+#: plinth/modules/power/__init__.py:28 plinth/modules/power/views.py:50
 #: plinth/modules/power/views.py:65
 msgid "Power"
 msgstr "Pоwer"
 
-#: plinth/modules/power/__init__.py:33
+#: plinth/modules/power/__init__.py:31
 msgid "Restart or shut down the system."
 msgstr "Перезагрузка или завершение работы системы."
 
@@ -3387,9 +3439,9 @@ msgid ""
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
-"Когда включен, Web-интерфейс Syncthing будет доступен через <a href=\""
-"/syncthing/\">/syncthing</a>. Настольные и мобильные клиенты также <a href=\""
-"https://syncthing.net/\">доступны</a>."
+"Когда включен, Web-интерфейс Syncthing будет доступен через <a href=\"/"
+"syncthing/\">/syncthing</a>. Настольные и мобильные клиенты также <a href="
+"\"https://syncthing.net/\">доступны</a>."
 
 #: plinth/modules/tahoe/__init__.py:42
 msgid "Distributed File Storage (Tahoe-LAFS)"
@@ -4147,20 +4199,32 @@ msgstr "Домой"
 msgid "Apps"
 msgstr "Приложения"
 
-#: plinth/templates/base.html:140 plinth/templates/base.html:141
+#: plinth/templates/base.html:146 plinth/templates/base.html:147
 msgid "Change password"
 msgstr "Смена пароля"
 
-#: plinth/templates/base.html:145 plinth/templates/base.html:159
-#: plinth/templates/base.html:161
+#: plinth/templates/base.html:152 plinth/templates/base.html:153
+#: plinth/templates/base.html:190 plinth/templates/base.html:192
 msgid "Log out"
 msgstr "Выход"
 
-#: plinth/templates/base.html:151 plinth/templates/base.html:153
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#, fuzzy
+#| msgid "Restart Now"
+msgid "Restart"
+msgstr "Перезагрузить сейчас"
+
+#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#, fuzzy
+#| msgid "Shut Down Now"
+msgid "Shut down"
+msgstr "Завершить работу сейчас"
+
+#: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
 msgstr "Войти"
 
-#: plinth/templates/base.html:225 plinth/templates/index.html:164
+#: plinth/templates/base.html:256 plinth/templates/index.html:164
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-10 09:50-0400\n"
+"POT-Creation-Date: 2017-07-10 22:56-0400\n"
 "PO-Revision-Date: 2016-08-28 19:39+0000\n"
 "Last-Translator: Izharul Haq <atoz.chevara.2013@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -603,17 +603,17 @@ msgid "Use HTTP basic authentication"
 msgstr "Gunakan autentikasi dasar HTTP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:143
-#: plinth/modules/networks/forms.py:227 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
 msgid "Username"
 msgstr "Nama Pengguna"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:146
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
 msgid "Password"
 msgstr "Kata Sandi"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:149
-#: plinth/modules/networks/forms.py:230
+#: plinth/modules/networks/forms.py:231
 msgid "Show password"
 msgstr "Tampilkan kata sandi"
 
@@ -811,15 +811,15 @@ msgid "Service/Port"
 msgstr "Layanan/Port"
 
 #: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:68
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
 #: plinth/modules/names/templates/names.html:49
 msgid "Enabled"
 msgstr "Aktifkan"
 
 #: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:70
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:90
 #: plinth/modules/names/templates/names.html:51
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:63
 msgid "Disabled"
 msgstr "Non-Aktifkan"
 
@@ -895,8 +895,8 @@ msgstr ""
 msgid "Where to Get Help"
 msgstr "Dimana Memperoleh Bantuan"
 
-#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
-#: plinth/modules/networks/forms.py:101 plinth/templates/index.html:124
+#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:124
 msgid "Manual"
 msgstr "Panduan"
 
@@ -1228,28 +1228,54 @@ msgstr "Aksi"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
 #, python-format
-msgid "Expires on %(expiry_date)s"
+msgid "Valid, expires on %(expiry_date)s"
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:62
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:63
+msgid "Revoked"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:67
+#, python-format
+msgid "Expired on %(expiry_date)s"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#, fuzzy
+#| msgid "No certficate"
+msgid "Invalid test certificate"
+msgstr "Tidak ada Sertifikat"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:75
+#, python-format
+msgid "Invalid (%(reason)s)"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 #, fuzzy
 #| msgid "No certficate"
 msgid "No certificate"
 msgstr "Tidak ada Sertifikat"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:79
-msgid "Revoke"
-msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:85
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
 msgid "Re-obtain"
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:92
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/snapshot/templates/snapshot.html:34
+msgid "Delete"
+msgstr "Hapus"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:112
+msgid "Revoke"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:120
 msgid "Obtain"
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:133
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1257,22 +1283,34 @@ msgstr ""
 
 #: plinth/modules/letsencrypt/views.py:55
 #, python-brace-format
-msgid "Certificate successfully revoked for domain {domain}"
+msgid ""
+"Certificate successfully revoked for domain {domain}.This may take a few "
+"moments to take effect."
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:60
+#: plinth/modules/letsencrypt/views.py:61
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:72
+#: plinth/modules/letsencrypt/views.py:73
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:77
+#: plinth/modules/letsencrypt/views.py:78
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgstr ""
+
+#: plinth/modules/letsencrypt/views.py:90
+#, python-brace-format
+msgid "Certificate successfully deleted for domain {domain}"
+msgstr ""
+
+#: plinth/modules/letsencrypt/views.py:95
+#, python-brace-format
+msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr ""
 
 #: plinth/modules/matrixsynapse/__init__.py:41
@@ -1353,8 +1391,8 @@ msgstr ""
 
 #: plinth/modules/minetest/forms.py:35
 msgid ""
-"You can change the maximum number of players playing                      "
-"minetest at a single instance of time"
+"You can change the maximum number of players playing minetest at a single "
+"instance of time."
 msgstr ""
 
 #: plinth/modules/minetest/forms.py:39
@@ -1365,9 +1403,8 @@ msgstr "Aktifkan aplikasi"
 
 #: plinth/modules/minetest/forms.py:41
 msgid ""
-"Creative mode changes the rules of the game to make it                      "
-"more suitable for creative gameplay, rather than                      "
-"challenging \"survival\" gameplay."
+"Creative mode changes the rules of the game to make it more suitable for "
+"creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
 
 #: plinth/modules/minetest/forms.py:46
@@ -1377,9 +1414,7 @@ msgid "Enable PVP"
 msgstr "Aktifkan"
 
 #: plinth/modules/minetest/forms.py:48
-msgid ""
-"Enabling Player Vs Player will allow players to damage                     "
-"other players"
+msgid "Enabling Player Vs Player will allow players to damage other players."
 msgstr ""
 
 #: plinth/modules/minetest/forms.py:52
@@ -1389,9 +1424,7 @@ msgid "Enable damage"
 msgstr "Aktifkan PageKite"
 
 #: plinth/modules/minetest/forms.py:54
-msgid ""
-"When disabled, players cannot die or receive damage of                     "
-"any kind"
+msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 
 #: plinth/modules/minetest/views.py:58
@@ -1637,21 +1670,21 @@ msgid ""
 "interfaces. Select Internal only for trusted networks."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:48
+#: plinth/modules/networks/forms.py:49
 #: plinth/modules/networks/templates/connections_diagram.html:78
 msgid "External"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:49
+#: plinth/modules/networks/forms.py:50
 #: plinth/modules/networks/templates/connections_diagram.html:107
 msgid "Internal"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:51
+#: plinth/modules/networks/forms.py:52
 msgid "IPv4 Addressing Method"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:54
+#: plinth/modules/networks/forms.py:55
 #, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -1659,186 +1692,186 @@ msgid ""
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:59
+#: plinth/modules/networks/forms.py:60
 msgid "Automatic (DHCP)"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:60
+#: plinth/modules/networks/forms.py:61
 msgid "Shared"
 msgstr "Shared"
 
-#: plinth/modules/networks/forms.py:64 plinth/modules/networks/forms.py:104
+#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:105
 msgid "Address"
 msgstr "Address"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:69
 msgid "Netmask"
 msgstr "Netmask"
 
-#: plinth/modules/networks/forms.py:69
+#: plinth/modules/networks/forms.py:70
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:74 plinth/modules/networks/forms.py:114
+#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
 msgid "Gateway"
 msgstr "Gateway"
 
-#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
+#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:116
 msgid "Optional value."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:79 plinth/modules/networks/forms.py:119
+#: plinth/modules/networks/forms.py:80 plinth/modules/networks/forms.py:120
 msgid "DNS Server"
 msgstr "DNS Server"
 
-#: plinth/modules/networks/forms.py:80
+#: plinth/modules/networks/forms.py:81
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:86 plinth/modules/networks/forms.py:126
+#: plinth/modules/networks/forms.py:87 plinth/modules/networks/forms.py:127
 msgid "Second DNS Server"
 msgstr "Second DNS Server"
 
-#: plinth/modules/networks/forms.py:87
+#: plinth/modules/networks/forms.py:88
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:93
+#: plinth/modules/networks/forms.py:94
 msgid "IPv6 Addressing Method"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:96
+#: plinth/modules/networks/forms.py:97
 #, python-brace-format
 msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
 "network making it a client."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:99 plinth/modules/networks/forms.py:271
+#: plinth/modules/networks/forms.py:100 plinth/modules/networks/forms.py:272
 msgid "Automatic"
 msgstr "Automatic"
 
-#: plinth/modules/networks/forms.py:100
+#: plinth/modules/networks/forms.py:101
 #, fuzzy
 #| msgid "Automatic"
 msgid "Automatic, DHCP only"
 msgstr "Automatic"
 
-#: plinth/modules/networks/forms.py:102
+#: plinth/modules/networks/forms.py:103
 msgid "Ignore"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:108
+#: plinth/modules/networks/forms.py:109
 msgid "Prefix"
 msgstr ""
 
-#: plinth/modules/networks/forms.py:109
+#: plinth/modules/networks/forms.py:110
 msgid "Value between 1 and 128."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:120
+#: plinth/modules/networks/forms.py:121
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:127
+#: plinth/modules/networks/forms.py:128
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:137
+#: plinth/modules/networks/forms.py:138
 msgid "-- select --"
 msgstr "-- pilih --"
 
-#: plinth/modules/networks/forms.py:262
+#: plinth/modules/networks/forms.py:263
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:264
 msgid "The visible name of the network."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:266
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "Mode"
 
-#: plinth/modules/networks/forms.py:266
+#: plinth/modules/networks/forms.py:267
 msgid "Infrastructure"
 msgstr "Infrastructure"
 
-#: plinth/modules/networks/forms.py:267
+#: plinth/modules/networks/forms.py:268
 msgid "Access Point"
 msgstr "Access Point"
 
-#: plinth/modules/networks/forms.py:268
+#: plinth/modules/networks/forms.py:269
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: plinth/modules/networks/forms.py:270
+#: plinth/modules/networks/forms.py:271
 msgid "Frequency Band"
 msgstr "Frequency Band"
 
-#: plinth/modules/networks/forms.py:272
+#: plinth/modules/networks/forms.py:273
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: plinth/modules/networks/forms.py:273
+#: plinth/modules/networks/forms.py:274
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: plinth/modules/networks/forms.py:275
+#: plinth/modules/networks/forms.py:276
 #: plinth/modules/networks/templates/connection_show.html:173
 msgid "Channel"
 msgstr "Channel"
 
-#: plinth/modules/networks/forms.py:276
+#: plinth/modules/networks/forms.py:277
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:283
+#: plinth/modules/networks/forms.py:284
 msgid "BSSID"
 msgstr "BSSID"
 
-#: plinth/modules/networks/forms.py:284
+#: plinth/modules/networks/forms.py:285
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:291
+#: plinth/modules/networks/forms.py:292
 msgid "Authentication Mode"
 msgstr "Authentication Mode"
 
-#: plinth/modules/networks/forms.py:292
+#: plinth/modules/networks/forms.py:293
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr ""
 
-#: plinth/modules/networks/forms.py:294
+#: plinth/modules/networks/forms.py:295
 msgid "WPA"
 msgstr "WPA"
 
-#: plinth/modules/networks/forms.py:295
+#: plinth/modules/networks/forms.py:296
 msgid "Open"
 msgstr "Open"
 
-#: plinth/modules/networks/forms.py:297
+#: plinth/modules/networks/forms.py:298
 msgid "Passphrase"
 msgstr "Passphrase"
 
@@ -1938,7 +1971,7 @@ msgid "Edit connection"
 msgstr "Sunting Koneksi"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:138
+#: plinth/templates/base.html:140 plinth/templates/base.html:141
 msgid "Edit"
 msgstr "Sunting"
 
@@ -1955,11 +1988,6 @@ msgstr ""
 #: plinth/modules/networks/templates/connection_show.html:63
 msgid "Delete connection"
 msgstr "Hapus koneksi"
-
-#: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:34
-msgid "Delete"
-msgstr "Hapus"
 
 #: plinth/modules/networks/templates/connection_show.html:66
 #: plinth/modules/networks/templates/connections_diagram.html:73
@@ -2571,12 +2599,12 @@ msgstr "Kostumisasi Layanan"
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr ""
 
-#: plinth/modules/power/__init__.py:30 plinth/modules/power/views.py:50
+#: plinth/modules/power/__init__.py:28 plinth/modules/power/views.py:50
 #: plinth/modules/power/views.py:65
 msgid "Power"
 msgstr ""
 
-#: plinth/modules/power/__init__.py:33
+#: plinth/modules/power/__init__.py:31
 msgid "Restart or shut down the system."
 msgstr "Jalankan ulang atau matikan sistem."
 
@@ -3645,20 +3673,32 @@ msgstr ""
 msgid "Apps"
 msgstr "Apps"
 
-#: plinth/templates/base.html:140 plinth/templates/base.html:141
+#: plinth/templates/base.html:146 plinth/templates/base.html:147
 msgid "Change password"
 msgstr ""
 
-#: plinth/templates/base.html:145 plinth/templates/base.html:159
-#: plinth/templates/base.html:161
+#: plinth/templates/base.html:152 plinth/templates/base.html:153
+#: plinth/templates/base.html:190 plinth/templates/base.html:192
 msgid "Log out"
 msgstr ""
 
-#: plinth/templates/base.html:151 plinth/templates/base.html:153
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#, fuzzy
+#| msgid "Restart Now"
+msgid "Restart"
+msgstr "Jalankan ulang Sekarang"
+
+#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#, fuzzy
+#| msgid "Shut Down Now"
+msgid "Shut down"
+msgstr "Matikan Sekarang"
+
+#: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
 msgstr ""
 
-#: plinth/templates/base.html:225 plinth/templates/index.html:164
+#: plinth/templates/base.html:256 plinth/templates/index.html:164
 msgid "JavaScript license information"
 msgstr ""
 

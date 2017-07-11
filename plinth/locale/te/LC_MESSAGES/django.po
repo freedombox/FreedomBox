@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-10 09:50-0400\n"
+"POT-Creation-Date: 2017-07-10 22:56-0400\n"
 "PO-Revision-Date: 2017-03-30 17:59+0000\n"
 "Last-Translator: Joseph Nuthalapati <joseph.kiran@evernym.us>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -673,17 +673,17 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:143
-#: plinth/modules/networks/forms.py:227 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:146
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
 msgid "Password"
 msgstr "రహస్యపదం"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:149
-#: plinth/modules/networks/forms.py:230
+#: plinth/modules/networks/forms.py:231
 msgid "Show password"
 msgstr "రహస్యపదం కనబర్చు"
 
@@ -908,15 +908,15 @@ msgid "Service/Port"
 msgstr "సేవ / పోర్ట్"
 
 #: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:68
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
 #: plinth/modules/names/templates/names.html:49
 msgid "Enabled"
 msgstr "క్రియాశీలీ"
 
 #: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:70
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:90
 #: plinth/modules/names/templates/names.html:51
-#: plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:63
 msgid "Disabled"
 msgstr "నిరుపయోగ"
 
@@ -996,8 +996,8 @@ msgstr "పత్రరచన"
 msgid "Where to Get Help"
 msgstr "సహాయం ఎక్కడ పొందగలం"
 
-#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:61
-#: plinth/modules/networks/forms.py:101 plinth/templates/index.html:124
+#: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:124
 msgid "Manual"
 msgstr "కరదీపిక"
 
@@ -1381,29 +1381,58 @@ msgid "Actions"
 msgstr "చర్యలు"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
-#, python-format
-msgid "Expires on %(expiry_date)s"
+#, fuzzy, python-format
+#| msgid "Expires on %(expiry_date)s"
+msgid "Valid, expires on %(expiry_date)s"
 msgstr "%(expiry_date)s న కాలం చెల్లుతుంది"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:62
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:63
+#, fuzzy
+#| msgid "Revoke"
+msgid "Revoked"
+msgstr "ఉపసంహరించుకొను"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:67
+#, fuzzy, python-format
+#| msgid "Expires on %(expiry_date)s"
+msgid "Expired on %(expiry_date)s"
+msgstr "%(expiry_date)s న కాలం చెల్లుతుంది"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#, fuzzy
+msgid "Invalid test certificate"
+msgstr "చెల్లని గాలిపటం పేరు"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:75
+#, python-format
+msgid "Invalid (%(reason)s)"
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 #, fuzzy
 #| msgid "No certficate"
 msgid "No certificate"
 msgstr "యోగ్యతాపత్రం లేదు"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:79
-msgid "Revoke"
-msgstr "ఉపసంహరించుకొను"
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:85
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
 msgid "Re-obtain"
 msgstr "తిరిగి-పొందు"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:92
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/networks/templates/connection_show.html:63
+#: plinth/modules/snapshot/templates/snapshot.html:34
+msgid "Delete"
+msgstr "తొలగించు"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:112
+msgid "Revoke"
+msgstr "ఉపసంహరించుకొను"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:120
 msgid "Obtain"
 msgstr "పొందు"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:133
 #, fuzzy
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
@@ -1411,24 +1440,39 @@ msgid ""
 msgstr "తోబుట్టువుల డొమైన్లు కన్ఫిగర్ చేయబడ్డాయి. వారికి సర్టిఫికేట్లు పొందగలగటం డొమైన్ ఆకృతీకరించుము."
 
 #: plinth/modules/letsencrypt/views.py:55
-#, python-brace-format
-msgid "Certificate successfully revoked for domain {domain}"
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully revoked for domain {domain}"
+msgid ""
+"Certificate successfully revoked for domain {domain}.This may take a few "
+"moments to take effect."
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ ఉప్సంహరుంచుకొనబడింది"
 
-#: plinth/modules/letsencrypt/views.py:60
+#: plinth/modules/letsencrypt/views.py:61
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ ఉప్సంహరుంచుకొనడంలో విఫలం: {error}"
 
-#: plinth/modules/letsencrypt/views.py:72
+#: plinth/modules/letsencrypt/views.py:73
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ సంపాదింపబడింది"
 
-#: plinth/modules/letsencrypt/views.py:77
+#: plinth/modules/letsencrypt/views.py:78
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ సంపాదించుటలో విఫలం: {error}"
+
+#: plinth/modules/letsencrypt/views.py:90
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully revoked for domain {domain}"
+msgid "Certificate successfully deleted for domain {domain}"
+msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ ఉప్సంహరుంచుకొనబడింది"
+
+#: plinth/modules/letsencrypt/views.py:95
+#, fuzzy, python-brace-format
+#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+msgid "Failed to delete certificate for domain {domain}: {error}"
+msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ ఉప్సంహరుంచుకొనడంలో విఫలం: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:41
 #, fuzzy
@@ -1517,9 +1561,13 @@ msgid "Maximum number of players"
 msgstr "క్రీడాకారులు గరిష్టంగా సంఖ్యలో ఉన్నారు"
 
 #: plinth/modules/minetest/forms.py:35
+#, fuzzy
+#| msgid ""
+#| "You can change the maximum number of players playing                      "
+#| "minetest at a single instance of time"
 msgid ""
-"You can change the maximum number of players playing                      "
-"minetest at a single instance of time"
+"You can change the maximum number of players playing minetest at a single "
+"instance of time."
 msgstr "మీరు  minetest ఆడుతున్న క్రీడాకారులు గరిష్టంగా సంఖ్య మార్చవచ్చు ఒకే సమయం లో"
 
 #: plinth/modules/minetest/forms.py:39
@@ -1529,10 +1577,14 @@ msgid "Enable creative mode"
 msgstr "అనువర్తనాన్ని చేతనించు"
 
 #: plinth/modules/minetest/forms.py:41
+#, fuzzy
+#| msgid ""
+#| "Creative mode changes the rules of the game to make "
+#| "it                      more suitable for creative gameplay, rather "
+#| "than                      challenging \"survival\" gameplay."
 msgid ""
-"Creative mode changes the rules of the game to make it                      "
-"more suitable for creative gameplay, rather than                      "
-"challenging \"survival\" gameplay."
+"Creative mode changes the rules of the game to make it more suitable for "
+"creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
 "క్రియేటివ్ మోడ్ \"మనుగడ\" గేమ్ప్లే సవాలు కంటే, సృజనాత్మక గేమ్ప్లే అనువుగా ఆట నియమాలు మారుస్తుంది."
 
@@ -1544,9 +1596,7 @@ msgstr "క్రియాశీలీ"
 
 #: plinth/modules/minetest/forms.py:48
 #, fuzzy
-msgid ""
-"Enabling Player Vs Player will allow players to damage                     "
-"other players"
+msgid "Enabling Player Vs Player will allow players to damage other players."
 msgstr "ప్లేయర్ Vs ప్లేయర్ అనే ఆప్షన్ ని అనుమతిస్తే క్రీడాకారులు ఇతర క్రీడాకారులు దెబ్బతినేలా చూస్తుంది"
 
 #: plinth/modules/minetest/forms.py:52
@@ -1555,9 +1605,11 @@ msgid "Enable damage"
 msgstr "PageKite ప్రారంభించు"
 
 #: plinth/modules/minetest/forms.py:54
-msgid ""
-"When disabled, players cannot die or receive damage of                     "
-"any kind"
+#, fuzzy
+#| msgid ""
+#| "When disabled, players cannot die or receive damage "
+#| "of                     any kind"
+msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "డిసేబుల్ లో ఉన్నప్పుడు, క్రీడాకారులు చనిపోయే లేదా ఏ రకమైన నష్టం అందుకోలేరు"
 
 #: plinth/modules/minetest/views.py:58
@@ -1835,21 +1887,21 @@ msgstr ""
 "ఫైర్వాల్ జోన్ ఇది సేవలు ఇంటర్ఫేస్లు అందుబాటులో ఉన్నాయి నియంత్రిస్తాయి. నమ్మదగిన నెట్వర్కులలో మాత్రమే అంతర్గత "
 "ఎంచుకోండి."
 
-#: plinth/modules/networks/forms.py:48
+#: plinth/modules/networks/forms.py:49
 #: plinth/modules/networks/templates/connections_diagram.html:78
 msgid "External"
 msgstr "బహిర్గత"
 
-#: plinth/modules/networks/forms.py:49
+#: plinth/modules/networks/forms.py:50
 #: plinth/modules/networks/templates/connections_diagram.html:107
 msgid "Internal"
 msgstr "అంతర్గత"
 
-#: plinth/modules/networks/forms.py:51
+#: plinth/modules/networks/forms.py:52
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 చిరునామా ఇచ్చు పద్ధతి"
 
-#: plinth/modules/networks/forms.py:54
+#: plinth/modules/networks/forms.py:55
 #, fuzzy, python-brace-format
 msgid ""
 "\"Automatic\" method will make {box_name} acquire configuration from this "
@@ -1860,45 +1912,45 @@ msgstr ""
 "{box_name}. \"భాగస్వామ్యం\" పద్దతి ఈ నెట్వర్క్ ఖాతాదారులతో ఆకృతీకరించుటకు మరియు దాని ఇంటర్నెట్ "
 "కనెక్షన్ భాగస్వామ్యం, ఆపోర్టును చేస్తుంది {box_name} 2 చట్టం"
 
-#: plinth/modules/networks/forms.py:59
+#: plinth/modules/networks/forms.py:60
 msgid "Automatic (DHCP)"
 msgstr "స్వయం చాలకం (DHCP)"
 
-#: plinth/modules/networks/forms.py:60
+#: plinth/modules/networks/forms.py:61
 #, fuzzy
 msgid "Shared"
 msgstr "భాగస్వామ్య"
 
-#: plinth/modules/networks/forms.py:64 plinth/modules/networks/forms.py:104
+#: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:105
 msgid "Address"
 msgstr "చిరునామా"
 
-#: plinth/modules/networks/forms.py:68
+#: plinth/modules/networks/forms.py:69
 msgid "Netmask"
 msgstr "నెట్ మాస్క్"
 
-#: plinth/modules/networks/forms.py:69
+#: plinth/modules/networks/forms.py:70
 #, fuzzy
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr "ఐచ్ఛికము విలువ. ఖాళీగా ఉంటే, చిరునామాపై ఆధారపడి ఒక డిఫాల్ట్ నెట్మాస్క్ ఉపయోగించబడుతుంది."
 
-#: plinth/modules/networks/forms.py:74 plinth/modules/networks/forms.py:114
+#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
 #: plinth/modules/networks/templates/connection_show.html:202
 #: plinth/modules/networks/templates/connection_show.html:241
 msgid "Gateway"
 msgstr "గేట్వే"
 
-#: plinth/modules/networks/forms.py:75 plinth/modules/networks/forms.py:115
+#: plinth/modules/networks/forms.py:76 plinth/modules/networks/forms.py:116
 msgid "Optional value."
 msgstr "ఐచ్ఛిక విలువ."
 
-#: plinth/modules/networks/forms.py:79 plinth/modules/networks/forms.py:119
+#: plinth/modules/networks/forms.py:80 plinth/modules/networks/forms.py:120
 msgid "DNS Server"
 msgstr "DNS సేవకం"
 
-#: plinth/modules/networks/forms.py:80
+#: plinth/modules/networks/forms.py:81
 #, fuzzy
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
@@ -1907,11 +1959,11 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv4 ప్రసంగిస్తున్న పద్ధతి \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: plinth/modules/networks/forms.py:86 plinth/modules/networks/forms.py:126
+#: plinth/modules/networks/forms.py:87 plinth/modules/networks/forms.py:127
 msgid "Second DNS Server"
 msgstr "ద్వితీయ DNS సేవకం"
 
-#: plinth/modules/networks/forms.py:87
+#: plinth/modules/networks/forms.py:88
 #, fuzzy
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
@@ -1920,13 +1972,13 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv4 ప్రసంగిస్తూ విధానం \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: plinth/modules/networks/forms.py:93
+#: plinth/modules/networks/forms.py:94
 #, fuzzy
 #| msgid "IPv4 Addressing Method"
 msgid "IPv6 Addressing Method"
 msgstr "IPv4 చిరునామా ఇచ్చు పద్ధతి"
 
-#: plinth/modules/networks/forms.py:96
+#: plinth/modules/networks/forms.py:97
 #, fuzzy, python-brace-format
 msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
@@ -1935,31 +1987,31 @@ msgstr ""
 "\"ఆటోమేటిక్\" పద్ధతులు ఒక క్లయింట్ మేకింగ్ ఈ నెట్వర్క్ నుండి {box_name} 1 ఆర్జనకు ఆకృతీకరణ "
 "చేస్తుంది."
 
-#: plinth/modules/networks/forms.py:99 plinth/modules/networks/forms.py:271
+#: plinth/modules/networks/forms.py:100 plinth/modules/networks/forms.py:272
 #, fuzzy
 msgid "Automatic"
 msgstr "స్వయంచాలక"
 
-#: plinth/modules/networks/forms.py:100
+#: plinth/modules/networks/forms.py:101
 #, fuzzy
 #| msgid "Automatic (DHCP)"
 msgid "Automatic, DHCP only"
 msgstr "స్వయం చాలకం (DHCP)"
 
-#: plinth/modules/networks/forms.py:102
+#: plinth/modules/networks/forms.py:103
 msgid "Ignore"
 msgstr "పట్టించుకోకండి"
 
-#: plinth/modules/networks/forms.py:108
+#: plinth/modules/networks/forms.py:109
 #, fuzzy
 msgid "Prefix"
 msgstr "ఉపసర్గ"
 
-#: plinth/modules/networks/forms.py:109
+#: plinth/modules/networks/forms.py:110
 msgid "Value between 1 and 128."
 msgstr "1 మరియు 128 మధ్యగల విలువ."
 
-#: plinth/modules/networks/forms.py:120
+#: plinth/modules/networks/forms.py:121
 #, fuzzy
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
@@ -1968,7 +2020,7 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇవ్వబడుతుంది ఉంటే మరియు IPv6 ప్రసంగిస్తున్న పద్ధతి \"ఆటోమేటిక్\" ఉంది, "
 "DHCP సర్వర్ అందించిన DNS సర్వర్లు విస్మరించబడుతుంది"
 
-#: plinth/modules/networks/forms.py:127
+#: plinth/modules/networks/forms.py:128
 #, fuzzy
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
@@ -1977,56 +2029,56 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv6 ప్రసంగిస్తూ విధానం \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: plinth/modules/networks/forms.py:137
+#: plinth/modules/networks/forms.py:138
 msgid "-- select --"
 msgstr "--ఎంచుకోండి--"
 
-#: plinth/modules/networks/forms.py:262
+#: plinth/modules/networks/forms.py:263
 #: plinth/modules/networks/templates/connection_show.html:144
 msgid "SSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:263
+#: plinth/modules/networks/forms.py:264
 msgid "The visible name of the network."
 msgstr "అల్లిక యొక్క కనిపించే పేరు."
 
-#: plinth/modules/networks/forms.py:265
+#: plinth/modules/networks/forms.py:266
 #: plinth/modules/networks/templates/connection_show.html:157
 msgid "Mode"
 msgstr "విధం"
 
-#: plinth/modules/networks/forms.py:266
+#: plinth/modules/networks/forms.py:267
 msgid "Infrastructure"
 msgstr "ఇన్ఫ్రాస్ట్రక్చర్"
 
-#: plinth/modules/networks/forms.py:267
+#: plinth/modules/networks/forms.py:268
 msgid "Access Point"
 msgstr "ప్రాప్తి సూచి"
 
-#: plinth/modules/networks/forms.py:268
+#: plinth/modules/networks/forms.py:269
 #, fuzzy
 msgid "Ad-hoc"
 msgstr "తదర్థ"
 
-#: plinth/modules/networks/forms.py:270
+#: plinth/modules/networks/forms.py:271
 #, fuzzy
 msgid "Frequency Band"
 msgstr "ఫ్రీక్వెన్సీ బ్యాండ్"
 
-#: plinth/modules/networks/forms.py:272
+#: plinth/modules/networks/forms.py:273
 msgid "A (5 GHz)"
 msgstr "ఎ (5 GHz)"
 
-#: plinth/modules/networks/forms.py:273
+#: plinth/modules/networks/forms.py:274
 msgid "B/G (2.4 GHz)"
 msgstr "బి/జి(2.4GHz)"
 
-#: plinth/modules/networks/forms.py:275
+#: plinth/modules/networks/forms.py:276
 #: plinth/modules/networks/templates/connection_show.html:173
 msgid "Channel"
 msgstr "మార్గం"
 
-#: plinth/modules/networks/forms.py:276
+#: plinth/modules/networks/forms.py:277
 #, fuzzy
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
@@ -2035,13 +2087,13 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఎంపిక ఫ్రీక్వెన్సీ బ్యాండ్ వైర్లెస్ ఇన్ ఛానెల్కు నిరోధించండి. ఖాళీ లేదా 0 విలువ స్వయంచాలక "
 "ఎంపిక అర్థం."
 
-#: plinth/modules/networks/forms.py:283
+#: plinth/modules/networks/forms.py:284
 #, fuzzy
 #| msgid "SSID"
 msgid "BSSID"
 msgstr "SSID"
 
-#: plinth/modules/networks/forms.py:284
+#: plinth/modules/networks/forms.py:285
 #, fuzzy
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
@@ -2051,28 +2103,28 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ప్రవేశ బిందువు కోసం ప్రత్యేక ఐడెంటిఫైయర్. ఒక యాక్సెస్ పాయింట్ కనెక్ట్ చేసినప్పుడు, యాక్సెస్ "
 "పాయింట్ BSSID అందించిన మ్యాచ్లు మాత్రమే ఉంటే కనెక్ట్. ఉదాహరణ: 00: 11: 22: aa: BB: సిసి."
 
-#: plinth/modules/networks/forms.py:291
+#: plinth/modules/networks/forms.py:292
 msgid "Authentication Mode"
 msgstr "ప్రామాణీకరణ విధం"
 
-#: plinth/modules/networks/forms.py:292
+#: plinth/modules/networks/forms.py:293
 #, fuzzy
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "వైర్లెస్ నెట్వర్క్ భద్రతతో కనెక్ట్ పాస్వర్డ్ను ఖాతాదారులకు అవసరం ఉంటే WPA ఎంచుకోండి."
 
-#: plinth/modules/networks/forms.py:294
+#: plinth/modules/networks/forms.py:295
 msgid "WPA"
 msgstr "WPA (వైఫై రక్షిత యాక్సెస్)"
 
-#: plinth/modules/networks/forms.py:295
+#: plinth/modules/networks/forms.py:296
 #, fuzzy
 #| msgid "OpenVPN"
 msgid "Open"
 msgstr "తెరచినVPN"
 
-#: plinth/modules/networks/forms.py:297
+#: plinth/modules/networks/forms.py:298
 msgid "Passphrase"
 msgstr "రహస్య పదం"
 
@@ -2174,7 +2226,7 @@ msgid "Edit connection"
 msgstr "అనుసంధానాన్ని సవరించు"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:138
+#: plinth/templates/base.html:140 plinth/templates/base.html:141
 msgid "Edit"
 msgstr "సవరించు"
 
@@ -2191,11 +2243,6 @@ msgstr "క్రియాశీలించు"
 #: plinth/modules/networks/templates/connection_show.html:63
 msgid "Delete connection"
 msgstr "అనుసంధానం తొలగించండి"
-
-#: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:34
-msgid "Delete"
-msgstr "తొలగించు"
 
 #: plinth/modules/networks/templates/connection_show.html:66
 #: plinth/modules/networks/templates/connections_diagram.html:73
@@ -2885,12 +2932,12 @@ msgstr "కస్టమ్ సేవలు"
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "పేజెకైట్ ఏర్పాటు పూర్తి అయినది. ఏచ్.టి.టి.పి మరియు ఏచ్.టి.టి.పి.ఎస్ సేవలు క్రియాశీలకంగా చేయబడ్డాయి."
 
-#: plinth/modules/power/__init__.py:30 plinth/modules/power/views.py:50
+#: plinth/modules/power/__init__.py:28 plinth/modules/power/views.py:50
 #: plinth/modules/power/views.py:65
 msgid "Power"
 msgstr "శక్తి"
 
-#: plinth/modules/power/__init__.py:33
+#: plinth/modules/power/__init__.py:31
 msgid "Restart or shut down the system."
 msgstr "పునఃప్రారంభించండి  లేదా సిస్టమ్ మూసివేయండి."
 
@@ -3998,20 +4045,32 @@ msgstr ""
 msgid "Apps"
 msgstr "అనువర్తనాలు"
 
-#: plinth/templates/base.html:140 plinth/templates/base.html:141
+#: plinth/templates/base.html:146 plinth/templates/base.html:147
 msgid "Change password"
 msgstr ""
 
-#: plinth/templates/base.html:145 plinth/templates/base.html:159
-#: plinth/templates/base.html:161
+#: plinth/templates/base.html:152 plinth/templates/base.html:153
+#: plinth/templates/base.html:190 plinth/templates/base.html:192
 msgid "Log out"
 msgstr ""
 
-#: plinth/templates/base.html:151 plinth/templates/base.html:153
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#, fuzzy
+#| msgid "Restart Now"
+msgid "Restart"
+msgstr "మళ్ళీ పునఃప్రారంభించండి"
+
+#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#, fuzzy
+#| msgid "Shut Down Now"
+msgid "Shut down"
+msgstr "ఇపుడు మూసివేయండి"
+
+#: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
 msgstr "లోనికి ప్రవేశించండి"
 
-#: plinth/templates/base.html:225 plinth/templates/index.html:164
+#: plinth/templates/base.html:256 plinth/templates/index.html:164
 msgid "JavaScript license information"
 msgstr ""
 
