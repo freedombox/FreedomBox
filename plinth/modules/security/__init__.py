@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
+from plinth import action_utils
 
 
 version = 1
@@ -30,6 +31,7 @@ version = 1
 is_essential = True
 
 title = _('Security')
+managed_packages = ['fail2ban']
 
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
@@ -40,6 +42,18 @@ def init():
     """Initialize the module"""
     menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-lock', 'security:index')
+
+
+def setup(helper, old_version=None):
+    """Install the required packages"""
+    helper.install(managed_packages)
+    setup_fail2ban()
+
+
+def setup_fail2ban():
+    action_utils.service_unmask('fail2ban')
+    action_utils.service_enable('fail2ban')
+
 
 
 def get_restricted_access_enabled():

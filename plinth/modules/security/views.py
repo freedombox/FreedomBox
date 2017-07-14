@@ -25,6 +25,7 @@ from django.utils.translation import ugettext as _
 
 from .forms import SecurityForm
 from plinth.modules import security
+from plinth import action_utils
 
 
 def index(request):
@@ -49,7 +50,8 @@ def index(request):
 
 def get_status(request):
     """Return the current status"""
-    return {'restricted_access': security.get_restricted_access_enabled()}
+    return {'restricted_access': security.get_restricted_access_enabled(),
+            'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')}
 
 
 def _apply_changes(request, old_status, new_status):
@@ -64,3 +66,9 @@ def _apply_changes(request, old_status, new_status):
                 .format(exception=exception))
         else:
             messages.success(request, _('Updated security configuration'))
+
+    if old_status['fail2ban_enabled'] != new_status['fail2ban_enabled']:
+        if new_status['fail2ban_enabled']:
+            action_utils.service_enable('fail2ban')
+        else:
+            action_utils.service_disable('fail2ban')
