@@ -30,7 +30,7 @@ from plinth.utils import format_lazy
 
 version = 1
 
-is_essential = False
+is_essential = True
 
 depends = ['names']
 
