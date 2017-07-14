@@ -30,12 +30,12 @@ from distutils.util import change_root
 import glob
 import os
 import setuptools
+from setuptools.command.install import install
 import shutil
 import subprocess
 
 from plinth import __version__
 from plinth.tests.coverage import coverage
-
 
 DIRECTORIES_TO_CREATE = [
     '/var/lib/plinth',
@@ -46,6 +46,15 @@ DIRECTORIES_TO_CREATE = [
 DIRECTORIES_TO_COPY = [
     ('/usr/share/doc/plinth', 'doc'),
     ('/usr/share/plinth/static', 'static'),
+]
+
+ENABLED_APPS_PATH = "/etc/plinth/modules-enabled/"
+
+DISABLED_APPS_TO_REMOVE = [
+    'apps',
+    'system',
+    'xmpp',
+    'owncloud'
 ]
 
 LOCALE_PATHS = [
@@ -109,6 +118,7 @@ class CustomBuild(build):
 
 class CustomClean(clean):
     """Override clean command to clean doc, locales, and egg-info."""
+
     def run(self):
         """Execute clean command"""
         subprocess.check_call(['rm', '-rf', 'Plinth.egg-info/'])
@@ -122,6 +132,19 @@ class CustomClean(clean):
                     subprocess.check_call(['rm', '-f', file_path])
 
         clean.run(self)
+
+
+class CustomInstall(install):
+    """Override install command."""
+
+    def run(self):
+        log.info("Removing disabled apps")
+        for app in DISABLED_APPS_TO_REMOVE:
+            file_path = os.path.join(ENABLED_APPS_PATH, app)
+            log.info("removing '%s'", file_path)
+            subprocess.check_call(['rm', '-f', file_path])
+
+        install.run(self)
 
 
 class CustomInstallData(install_data):
@@ -237,6 +260,7 @@ setuptools.setup(
                  ['data/var/lib/polkit-1/localauthority/10-vendor.d/'
                   'org.freedombox.NetworkManager.pkla'])],
     cmdclass={
+        'install': CustomInstall,
         'build': CustomBuild,
         'clean': CustomClean,
         'compile_translations': CompileTranslations,
