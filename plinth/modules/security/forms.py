@@ -31,3 +31,9 @@ class SecurityForm(forms.Form):
                     'group will be able to log in to console or via SSH. '
                     'Console users may be able to access some services '
                     'without further authorization.'))
+    fail2ban_enabled = forms.BooleanField(
+        label=_('Fail2ban (recommended)'), required=False,
+        help_text=_('When this option is enabled, fail2ban will limit brute force '
+                    'break-in attempts to the SSH server and other password protected '
+                    'internet-services which are enabled.'
+                    ))

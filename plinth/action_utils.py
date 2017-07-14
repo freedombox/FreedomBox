@@ -88,6 +88,11 @@ def service_disable(service_name):
     subprocess.call(['systemctl', 'disable', service_name])
 
 
+def service_unmask(service_name):
+    """Unmask a service"""
+    subprocess.call(['systemctl', 'unmask', service_name])
+
+
 def service_start(service_name):
     """Start a service with systemd or sysvinit."""
     if is_systemd_running():
