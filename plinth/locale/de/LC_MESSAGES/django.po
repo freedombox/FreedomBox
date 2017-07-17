@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-10 22:56-0400\n"
-"PO-Revision-Date: 2017-06-14 12:39+0000\n"
+"PO-Revision-Date: 2017-07-17 08:41+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
-"de/>\n"
+"Language-Team: German "
+"<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.15-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 
 #: plinth/action_utils.py:254
 #, python-brace-format
@@ -1380,12 +1380,12 @@ msgid ""
 "domain.  It does so by proving itself to be the owner of a domain to Let's "
 "Encrypt, a certificate authority (CA)."
 msgstr ""
-"Ein digitales Zertifikat ermöglicht es Benutzern von einem Web-Service, die "
+"Ein digitales Zertifikat ermöglicht es Benutzern eines Web-Dienstes, die "
 "Identität des Dienstes zu überprüfen und sicher mit ihm zu kommunizieren. "
 "{box_name} kann automatisch digitale Zertifikate für jede verfügbare Domain "
-"beziehen und installieren. Es tut dies, indem es gegenüber Let's Encrypt, "
-"einer Zertifizierungsstelle (certificate authority, CA), nachweist der "
-"Inhaber einer Domain zu sein."
+"beziehen und installieren. Es tut dies, indem es gegenüber der "
+"Zertifizierungsstelle Let's Encrypt nachweist der Inhaber einer Domain zu "
+"sein."
 
 #: plinth/modules/letsencrypt/__init__.py:50
 msgid ""
@@ -1394,11 +1394,12 @@ msgid ""
 "read and agree with the <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
-"Let's Encrypt ist eine freie, automatisierte und offene "
-"Zertifizierungsstelle, zum Nutzen der Öffentlichkeit betrieben von der "
-"Internet Security Research Group (ISRG). Bitte lesen und akzeptieren Sie die "
-"<a href=\"https://letsencrypt.org/repository/\">Let's Encrypt "
-"Vetragsvereinbarungen</a> vor der Verwendung dieses Dienstes."
+"Let's Encrypt (englisch, „Lasst uns verschlüsseln“) ist eine freie, "
+"automatisierte und offene Zertifizierungsstelle, zum Nutzen der "
+"Öffentlichkeit betrieben von der Internet Security Research Group (ISRG, "
+"englisch „Internet-Sicherheits Forschungsgruppe“). Bitte lesen und "
+"akzeptieren Sie die <a href=\"https://letsencrypt.org/repository/\">Let's "
+"Encrypt Vetragsvereinbarungen</a> vor der Verwendung dieses Dienstes."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:43
 msgid "Domain"
@@ -1406,7 +1407,7 @@ msgstr "Domain"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Certificate Status"
-msgstr "Status des Zertifikats"
+msgstr "Zertifikat-Status"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:45
 msgid "Website Security"
@@ -1414,36 +1415,30 @@ msgstr "Webseiten-Sicherheit"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:46
 msgid "Actions"
-msgstr "Aktion"
+msgstr "Aktionen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
-#, fuzzy, python-format
-#| msgid "Expires on %(expiry_date)s"
+#, python-format
 msgid "Valid, expires on %(expiry_date)s"
-msgstr "Verfällt am %(expiry_date)s"
+msgstr "Gültig, verfällt am %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:63
-#, fuzzy
-#| msgid "Revoke"
 msgid "Revoked"
-msgstr "Zurückziehen"
+msgstr "Widerrufen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:67
-#, fuzzy, python-format
-#| msgid "Expires on %(expiry_date)s"
+#, python-format
 msgid "Expired on %(expiry_date)s"
-msgstr "Verfällt am %(expiry_date)s"
+msgstr "Verfallen am %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#, fuzzy
-#| msgid "Invalid kite name"
 msgid "Invalid test certificate"
-msgstr "Ungültiger kite Name"
+msgstr "Ungültiges Testzertifikat"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:75
 #, python-format
 msgid "Invalid (%(reason)s)"
-msgstr ""
+msgstr "Ungültig (%(reason)s)"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 msgid "No certificate"
@@ -1461,7 +1456,7 @@ msgstr "Löschen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:112
 msgid "Revoke"
-msgstr "Zurückziehen"
+msgstr "Widerrufen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:120
 msgid "Obtain"
@@ -1476,17 +1471,18 @@ msgstr ""
 "Domains konfiguriert werden."
 
 #: plinth/modules/letsencrypt/views.py:55
-#, fuzzy, python-brace-format
-#| msgid "Certificate successfully revoked for domain {domain}"
+#, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
 "moments to take effect."
-msgstr "Zertifikat erfolgreich zurückgezogen für Domain {domain}"
+msgstr ""
+"Zertifikat erfolgreich widerrufen für Domain {domain}. Es kann einige "
+"Momente dauern bis dies in Kraft tritt."
 
 #: plinth/modules/letsencrypt/views.py:61
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
-msgstr "Zurückziehen des Zertifikats für Domain {domain} gescheiter: {error}"
+msgstr "Fehler beim Widerrufen des Zertifikats für Domain {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:73
 #, python-brace-format
@@ -1496,19 +1492,17 @@ msgstr "Zertifikat erfolgreich bezogen für Domain {domain}"
 #: plinth/modules/letsencrypt/views.py:78
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
-msgstr "Beziehen des Zertifikats für Domain {domain} fehlgeschlagen: {error}"
+msgstr "Fehler beim Beziehen des Zertifikats für Domain {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:90
-#, fuzzy, python-brace-format
-#| msgid "Certificate successfully revoked for domain {domain}"
+#, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
-msgstr "Zertifikat erfolgreich zurückgezogen für Domain {domain}"
+msgstr "Zertifikat erfolgreich widerrufen für Domain {domain}"
 
 #: plinth/modules/letsencrypt/views.py:95
-#, fuzzy, python-brace-format
-#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
-msgstr "Zurückziehen des Zertifikats für Domain {domain} gescheiter: {error}"
+msgstr "Fehler beim Widerrufen des Zertifikats für Domain {domain}: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:41
 msgid ""
@@ -1529,13 +1523,12 @@ msgid ""
 msgstr ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> ist ein neues "
 "Software-Ökosystem für quell-offenen, föderierten Nachrichtensofortversand "
-"und IP-Telefonie.\n"
-"Es bietet Chatgruppen, Audio- und Videotelefonie mit Ende-zu-Ende "
-"Verschlüsselung, Synchronisation der Nachrichten zwischen verschiedenen "
-"Geräten, und benötigt keine Telefonnummer.\n"
-"Benutzer mit Nutzerkonto auf einem bestimmten Matrix Server können dank "
-"Föderation zwischen den Servern mit Nutzerkontos auf einem beliebigen "
-"anderen Server kommunizieren."
+"und IP-Telefonie. Es bietet Chatgruppen, Audio- und Videotelefonie mit Ende-"
+"zu-Ende Verschlüsselung, Synchronisation der Nachrichten zwischen "
+"verschiedenen Geräten, und benötigt keine Telefonnummer. Benutzer mit "
+"Nutzerkonto auf einem bestimmten Matrix Server können dank Föderation "
+"zwischen den Servern mit Nutzerkontos auf einem beliebigen anderen Server "
+"kommunizieren."
 
 #: plinth/modules/matrixsynapse/__init__.py:52
 msgid ""
@@ -1558,10 +1551,10 @@ msgid ""
 "servers will be able to reach users on this server using this domain name. "
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
-"Der Matrix Dienst benötigt eine Domain für die Konfiguration. Benutzer von "
-"anderen Matrix Servern können die Nutzer dieses Servers über diese Domain "
-"erreichen. Matrix Nutzer-IDs werden aussehen wie <em>@Nutzername:Domainname</"
-"em>."
+"Der Matrix-Dienst benötigt eine Domain für die Konfiguration. Benutzer von "
+"anderen Matrix-Servern können die Nutzer dieses Servers über diese Domain "
+"erreichen. Matrix Nutzer-IDs werden aussehen wie "
+"<em>@Nutzername:Domainname</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 msgid ""
@@ -1622,61 +1615,44 @@ msgid "Maximum number of players"
 msgstr "Maximale Spielerzahl"
 
 #: plinth/modules/minetest/forms.py:35
-#, fuzzy
-#| msgid ""
-#| "You can change the maximum number of players playing                      "
-#| "minetest at a single instance of time"
 msgid ""
 "You can change the maximum number of players playing minetest at a single "
 "instance of time."
 msgstr ""
-"Sie können die maximale Anzahl der Spieler ändern, die minetest gleichzeitig "
-"spielen können"
+"Sie können die maximale Anzahl der Spieler ändern, die Minetest gleichzeitig "
+"spielen können."
 
 #: plinth/modules/minetest/forms.py:39
 msgid "Enable creative mode"
 msgstr "Kreativ-Modus einschalten"
 
 #: plinth/modules/minetest/forms.py:41
-#, fuzzy
-#| msgid ""
-#| "Creative mode changes the rules of the game to make "
-#| "it                      more suitable for creative gameplay, rather "
-#| "than                      challenging \"survival\" gameplay."
 msgid ""
 "Creative mode changes the rules of the game to make it more suitable for "
 "creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
 "Creative-Modus ändert die Regeln des Spiels, um es besser geeignet für "
-"kreatives Spiel zu mache, anstatt anspruchsvolles \"Survival\" Spiel."
+"kreatives Spielen zu machen, anstatt anspruchsvolles \"Survival\"-Spielen."
 
 #: plinth/modules/minetest/forms.py:46
 msgid "Enable PVP"
-msgstr "PVP einschalten"
+msgstr "Spieler-gegen-Spieler einschalten"
 
 #: plinth/modules/minetest/forms.py:48
-#, fuzzy
-#| msgid ""
-#| "Enabling Player Vs Player will allow players to "
-#| "damage                     other players"
 msgid "Enabling Player Vs Player will allow players to damage other players."
 msgstr ""
-"Wenn Sie Spieler gegen Spieler aktivieren, können Spieler andere Spieler "
-"schaden"
+"Wenn Sie Spieler-gegen-Spieler aktivieren, können sich Spieler gegenseitig "
+"schaden."
 
 #: plinth/modules/minetest/forms.py:52
 msgid "Enable damage"
 msgstr "Schaden einschalten"
 
 #: plinth/modules/minetest/forms.py:54
-#, fuzzy
-#| msgid ""
-#| "When disabled, players cannot die or receive damage "
-#| "of                     any kind"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 "Wenn deaktiviert, können Spieler nicht sterben oder Schäden jeglicher Art "
-"erhalten"
+"erhalten."
 
 #: plinth/modules/minetest/views.py:58
 msgid "Maximum players configuration updated"
@@ -1688,7 +1664,7 @@ msgstr "Kreativ-Modus Konfiguration aktualisiert"
 
 #: plinth/modules/minetest/views.py:74
 msgid "PVP configuration updated"
-msgstr "PVP Konfiguration aktualisiert"
+msgstr "Spieler-gegen-Spieler Konfiguration aktualisiert"
 
 #: plinth/modules/minetest/views.py:82
 msgid "Damage configuration updated"
@@ -1752,7 +1728,7 @@ msgstr "Dienst"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:75
 msgid "Domains"
-msgstr "Domaines"
+msgstr "Domains"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:76
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:31
@@ -1778,7 +1754,7 @@ msgstr "Sonstiges"
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:117
 #, python-format
 msgid "Show details for key %(fingerprint)s"
-msgstr "Zeige Details von %(fingerprint)s Schlüssel"
+msgstr "Zeige Details von Schlüssel %(fingerprint)s"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:123
 msgid "-"
@@ -1794,7 +1770,7 @@ msgstr "Schlüssel veröffentlichen"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:151
 msgid "Add Domains"
-msgstr "Domaines hinzufügen"
+msgstr "Domains hinzufügen"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:35
 msgid "OpenPGP User IDs"
@@ -1802,7 +1778,7 @@ msgstr "OpenPGP Benutzer IDs"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:39
 msgid "Key Import Date"
-msgstr "Schlüssel Import Datum"
+msgstr "Schlüssel Import-Datum"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:43
 msgid "SSH Key Type"
@@ -1822,11 +1798,11 @@ msgstr "Schlüssel Datei"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:71
 msgid "Available Domains"
-msgstr "Verfügbare Domaines"
+msgstr "Verfügbare Domains"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
 msgid "Added Domains"
-msgstr "Domaines hinzugefügt"
+msgstr "Domains hinzugefügt"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:82
 msgid ""
@@ -1863,7 +1839,7 @@ msgstr "Veröffentlichte Schlüssel auf dem Server."
 
 #: plinth/modules/monkeysphere/views.py:147
 msgid "Error occurred while publishing key."
-msgstr "Ein Fehler ist beim Veröffentlichen des Schlüssels aufgetreten."
+msgstr "Fehler beim Veröffentlichen des Schlüssels."
 
 #: plinth/modules/mumble/__init__.py:35
 msgid ""
@@ -1888,7 +1864,7 @@ msgid ""
 "desktop and Android devices are available."
 msgstr ""
 "Sie können sich mit Ihrem Mumble Server auf dem regulären Mumble-Port 64738 "
-"verbinden. Auf <a href=\"http://mumble.info\">Mumble</a> finden Sie weitere "
+"verbinden. Auf <a href=\"http://mumble.info\">Mumble</a> finden Sie "
 "Anwendungen um sich vom Desktop oder Android-Gerät mit Mumble zu verbinden."
 
 #: plinth/modules/names/__init__.py:30
@@ -1930,7 +1906,7 @@ msgstr "Verbindungsname"
 
 #: plinth/modules/networks/forms.py:40
 msgid "Physical Interface"
-msgstr "physische Schnittstelle"
+msgstr "Physische Schnittstelle"
 
 #: plinth/modules/networks/forms.py:42
 msgid "The network device that this connection should be bound to."
@@ -1945,7 +1921,7 @@ msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr ""
-"Die Firewall Zone entscheidet welche Dienste über diese Schnittstellen zur "
+"Die Firewall-Zone entscheidet welche Dienste über diese Schnittstellen zur "
 "Verfügung stehen. Wählen Sie 'Intern' nur für vertrauenswürdige Netzwerke."
 
 #: plinth/modules/networks/forms.py:49
@@ -1969,9 +1945,9 @@ msgid ""
 "network making it a client. \"Shared\" method will make {box_name} act as a "
 "router, configure clients on this network and share its Internet connection."
 msgstr ""
-"Die \"Automatisch\" Methode lässt {box_name} die Konfiguration von diesem "
-"Netzwerk holen und macht es zu einem Client. Die \"Shared\" Methode lässt "
-"{box_name} wie einen Router arbeiten, die Clients dieses Netzwerks "
+"Die Methode \"Automatisch\" lässt {box_name} die Konfiguration von diesem "
+"Netzwerk holen und macht es zu einem Client. Die Methode \"Geteilt\" Methode "
+"lässt {box_name} wie einen Router arbeiten, die Clients dieses Netzwerks "
 "konfigurieren und die Internet-Verbindung teilen."
 
 #: plinth/modules/networks/forms.py:60
@@ -1980,7 +1956,7 @@ msgstr "Automatisch (DHCP)"
 
 #: plinth/modules/networks/forms.py:61
 msgid "Shared"
-msgstr "geteilt"
+msgstr "Geteilt"
 
 #: plinth/modules/networks/forms.py:65 plinth/modules/networks/forms.py:105
 msgid "Address"
@@ -2018,12 +1994,12 @@ msgid ""
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 "Optionaler Wert. Wenn dieser Wert eingetragen wird und die IPv4 Adressierung "
-"\"Automatic\" ist, werden die DNS Server die von einem DHCP Server "
+"\"Automatisch\" ist, werden die DNS Server die von einem DHCP Server "
 "bereitgestellt wurden, ignoriert."
 
 #: plinth/modules/networks/forms.py:87 plinth/modules/networks/forms.py:127
 msgid "Second DNS Server"
-msgstr "Zweiter DNS Server"
+msgstr "Zweiter DNS-Server"
 
 #: plinth/modules/networks/forms.py:88
 msgid ""
@@ -2031,7 +2007,7 @@ msgid ""
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 "Optionaler Wert. Wenn dieser Wert eingetragen wird und die IPv4 Adressierung "
-"\"Automatic\" ist, werden die DNS Server die von einem DHCP Server "
+"\"Automatisch\" ist, werden die DNS-Server die von einem DHCP-Server "
 "bereitgestellt wurden, ignoriert."
 
 #: plinth/modules/networks/forms.py:94
@@ -2044,7 +2020,7 @@ msgid ""
 "\"Automatic\" methods will make {box_name} acquire configuration from this "
 "network making it a client."
 msgstr ""
-"Die \"Automatisch\" Methode lässt {box_name} die Konfiguration von diesem "
+"Die Methode \"Automatisch\" lässt {box_name} die Konfiguration von diesem "
 "Netzwerk holen und macht es zu einem Client."
 
 #: plinth/modules/networks/forms.py:100 plinth/modules/networks/forms.py:272
@@ -2073,7 +2049,7 @@ msgid ""
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 "Optionaler Wert. Wenn dieser Wert eingetragen wird und die IPv6 Adressierung "
-"\"Automatic\" ist, werden die DNS Server die von einem DHCP Server "
+"\"Automatisch\" ist, werden die DNS-Server die von einem DHCP-Server "
 "bereitgestellt wurden, ignoriert."
 
 #: plinth/modules/networks/forms.py:128
@@ -2082,7 +2058,7 @@ msgid ""
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 "Optionaler Wert. Wenn dieser Wert eingetragen wird und die IPv6 Adressierung "
-"\"Automatic\" ist, werden die DNS Server die von einem DHCP Server "
+"\"Automatisch\" ist, werden die DNS Server die von einem DHCP-Server "
 "bereitgestellt wurden, ignoriert."
 
 #: plinth/modules/networks/forms.py:138
@@ -2117,7 +2093,7 @@ msgstr "Ad-hoc"
 
 #: plinth/modules/networks/forms.py:271
 msgid "Frequency Band"
-msgstr "Frequenz-Band"
+msgstr "Frequenzband"
 
 #: plinth/modules/networks/forms.py:273
 msgid "A (5 GHz)"
@@ -2137,7 +2113,7 @@ msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr ""
-"Optionaler Wert. Beschränkung auf den Wireless Kanal in dem ausgewählten "
+"Optionaler Wert. Beschränkung auf den WLAN-Kanal in dem ausgewählten "
 "Frequenzband. Leer oder 0 bedeutet automatische Auswahl."
 
 #: plinth/modules/networks/forms.py:284
@@ -2163,8 +2139,8 @@ msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr ""
-"Wählen Sie WPA, wenn das Wireless-Netzwerk gesichert ist und ein Passwort "
-"für die Benutzung erfordert."
+"Wählen Sie WPA, wenn das WLAN-Netzwerk gesichert ist und ein Passwort für "
+"die Benutzung erfordert."
 
 #: plinth/modules/networks/forms.py:295
 msgid "WPA"
@@ -2176,7 +2152,7 @@ msgstr "Offen"
 
 #: plinth/modules/networks/forms.py:298
 msgid "Passphrase"
-msgstr "Passphrase"
+msgstr "Passwort"
 
 #: plinth/modules/networks/networks.py:34
 #: plinth/modules/networks/networks.py:46
@@ -2186,7 +2162,7 @@ msgstr "Netzwerkverbindungen"
 #: plinth/modules/networks/networks.py:36
 #: plinth/modules/networks/networks.py:259
 msgid "Nearby Wi-Fi Networks"
-msgstr "Wlans in der Nähe"
+msgstr "WLANs in der Nähe"
 
 #: plinth/modules/networks/networks.py:38
 #: plinth/modules/networks/networks.py:283
@@ -2218,7 +2194,7 @@ msgstr "Verbindung bearbeiten"
 #: plinth/modules/networks/networks.py:226
 #, python-brace-format
 msgid "Activated connection {name}."
-msgstr "Verbindung {name} aktivieren."
+msgstr "Verbindung {name} aktiviert."
 
 #: plinth/modules/networks/networks.py:229
 msgid "Failed to activate connection: Connection not found."
@@ -2254,7 +2230,7 @@ msgstr "Füge neue PPPoE Verbindung hinzu"
 
 #: plinth/modules/networks/networks.py:370
 msgid "Adding New Wi-Fi Connection"
-msgstr "Neue Wlan-Verbindung hinzufügen"
+msgstr "Neue WLAN-Verbindung hinzufügen"
 
 #: plinth/modules/networks/networks.py:384
 #, python-brace-format
@@ -2387,7 +2363,7 @@ msgstr "IP Adresse"
 #: plinth/modules/networks/templates/connection_show.html:209
 #: plinth/modules/networks/templates/connection_show.html:248
 msgid "DNS server"
-msgstr "DNS Server"
+msgstr "DNS-Server"
 
 #: plinth/modules/networks/templates/connection_show.html:216
 #: plinth/modules/networks/templates/connection_show.html:255
@@ -2411,7 +2387,7 @@ msgstr "Sicherheit"
 #: plinth/modules/networks/templates/connection_show.html:291
 #: plinth/modules/networks/templates/connection_show.html:310
 msgid "Firewall zone"
-msgstr "Firewall Zone"
+msgstr "Firewall-Zone"
 
 #: plinth/modules/networks/templates/connection_show.html:280
 msgid ""
@@ -2442,7 +2418,7 @@ msgid ""
 "this interface.  It is recommended that you deactivate or delete this "
 "connection and re-configure it."
 msgstr ""
-"Diese Schnittstelle wird von %(box_name)s nicht gepflegt. Sein "
+"Diese Schnittstelle wird von %(box_name)s nicht verwaltet. Sein "
 "Sicherheitsstatus ist %(box_name)s unbekannt. Viele %(box_name)s Dienste "
 "sind möglicherweise nicht über diese Schnittstelle erreichbar. Es wird "
 "empfohlen diese Verbindung zu deaktivieren oder zu löschen und neu zu "
@@ -2481,7 +2457,7 @@ msgstr "Ethernet"
 #: plinth/modules/networks/templates/connections_diagram.html:116
 #: plinth/network.py:38
 msgid "Wi-Fi"
-msgstr "Wlan"
+msgstr "WLAN"
 
 #: plinth/modules/networks/templates/connections_diagram.html:89
 #, python-format
@@ -2528,12 +2504,12 @@ msgid ""
 "You can also access the rest of the Internet via {box_name} for added "
 "security and anonymity."
 msgstr ""
-"Virtuelle Private Netzwerke (VPN) ist ein Verfahren für die sichere "
-"Verbindung von zwei Geräten, um auf die Ressourcen eines privaten Netzwerks "
-"zuzugreifen. Wenn Sie nicht zu Hause sind, können Sie sich mit Ihrer "
-"{box_name} verbinden, um Ihrem Heimnetzwerk beizutreten und Zugang zu "
-"privaten/internen Diensten der {box_name} erlangen. Sie können auch auf das "
-"Internet via {box_name} für zusätzliche Sicherheit und Anonymität zugreifen."
+"Virtuelle Private Netzwerke (VPN) ist ein Verfahren um zwei Geräte sicher zu "
+"verbinden, um auf die Ressourcen eines privaten Netzwerks zuzugreifen. Wenn "
+"Sie nicht zu Hause sind, können Sie sich mit Ihrer {box_name} verbinden, um "
+"Ihrem Heimnetzwerk beizutreten und Zugang zu privaten/internen Diensten der "
+"{box_name} erlangen. Sie können auch auf das Internet via {box_name} für "
+"zusätzliche Sicherheit und Anonymität zugreifen."
 
 #: plinth/modules/openvpn/__init__.py:84
 #, python-brace-format
@@ -2544,7 +2520,7 @@ msgstr ""
 
 #: plinth/modules/openvpn/forms.py:29
 msgid "Enable OpenVPN server"
-msgstr "OpenVPN Server einschalten"
+msgstr "OpenVPN-Server einschalten"
 
 #: plinth/modules/openvpn/templates/openvpn.html:37
 msgid "Profile"
@@ -3543,7 +3519,6 @@ msgstr ""
 "%(domain_name)s:5678</a> erreichen."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
-#, fuzzy
 msgid "Local introducer"
 msgstr "Lokaler Vermittler"
 
@@ -3556,7 +3531,6 @@ msgid "Pet Name"
 msgstr "Pet-Name"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:71
-#, fuzzy
 msgid "Add new introducer"
 msgstr "Neuen Vermittler hinzufügen"
 
@@ -3565,7 +3539,6 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:87
-#, fuzzy
 msgid "Connected introducers"
 msgstr "Verbundene Vermittler"
 
@@ -4296,16 +4269,12 @@ msgid "Log out"
 msgstr "Abmelden"
 
 #: plinth/templates/base.html:168 plinth/templates/base.html:169
-#, fuzzy
-#| msgid "Restart Now"
 msgid "Restart"
-msgstr "Jetzt neu starten"
+msgstr "Neustarten"
 
 #: plinth/templates/base.html:174 plinth/templates/base.html:175
-#, fuzzy
-#| msgid "Shut Down Now"
 msgid "Shut down"
-msgstr "Jetzt herunterfahren"
+msgstr "Herunterfahren"
 
 #: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
