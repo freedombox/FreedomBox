@@ -78,9 +78,6 @@ def set_domain_name(domain_name):
             'http://{}:3000'.format(domain_name))
     aug.save()
 
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                       augeas.Augeas.NO_MODL_AUTOLOAD)
-
     # lens to edit apache2 config files
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
     aug.set('/augeas/load/Httpd/incl[last() + 1]',
