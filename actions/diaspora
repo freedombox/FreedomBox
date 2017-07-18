@@ -62,7 +62,6 @@ def set_domain_name(domain_name):
     # This did not set the domain_name
     # action_utils.dpkg_reconfigure('diaspora-common',
     #                               {'url': domain_name})
-
     # Manually changing the domain name in the conf files.
     conf_file = '/etc/diaspora.conf'
     with open(conf_file, 'r') as conf:
@@ -77,6 +76,21 @@ def set_domain_name(domain_name):
 
     with open(conf_file, 'w') as conf:
         conf.write("\n".join(env_vars))
+
+    """Couldn't get augeas to load the correct file"""
+    #aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+    #                    augeas.Augeas.NO_MODL_AUTOLOAD)
+    #aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
+    #aug.set('/augeas/load/Httpd/incl[last() + 1]',
+    #        '/etc/apache2/sites-available/*')
+    #aug.load()
+
+    #aug.set('/files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/arg', domain_name)
+    #aug.set("/files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/directive[1]/arg", domain_name)
+    #aug.save()
+
+    subprocess.call('augtool set /files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/arg {}'.format(domain_name).split())
+    subprocess.call('augtool set /files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/directive[1]/arg {}'.format(domain_name).split())
 
     action_utils.service_start('diaspora')
 
