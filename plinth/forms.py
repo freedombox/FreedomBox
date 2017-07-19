@@ -42,6 +42,9 @@ class DomainSelectionForm(forms.Form):
         self.fields['domain_name'].choices = utils.get_domain_names()
 
     domain_name = forms.ChoiceField(
-        label=_('Select the domain name to be used for this application'),
+        label=_('Select a domain name to be used with this application'),
+        help_text=_(
+            'Warning! The application may not work properly if domain name is changed later.'
+        ),
         choices=[]
     )

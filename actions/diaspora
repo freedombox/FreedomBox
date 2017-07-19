@@ -25,6 +25,8 @@ import subprocess
 
 from plinth import action_utils
 
+DIASPORA_YAML = "/etc/diaspora/diaspora.yml"
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -36,6 +38,10 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable diaspora* web server')
     subparsers.add_parser('disable', help='Disable diaspora* web server')
+    subparsers.add_parser('enable-user-registrations', help='Allow users to' \
+                          'sign up to this diaspora* pod without an invitation.')
+    subparsers.add_parser('disable-user-registrations', help='Allow only, ' \
+                          'users with an invitation to register to this diaspora* pod')
     subparsers.add_parser('start-diaspora', help='Start diaspora* service')
     subparsers.add_parser(
         'disable-ssl', help="Disable SSL on the diaspora* application server")
@@ -53,6 +59,7 @@ def subcommand_setup(arguments):
     with open('/etc/diaspora/domain_name', 'w') as dnf:
         dnf.write(domain_name)
     set_domain_name(domain_name)
+    uncomment_user_registrations()
     action_utils.service_start('diaspora')
     action_utils.webserver_enable('diaspora-plinth')
 
@@ -88,8 +95,33 @@ def subcommand_disable_ssl(_):
     """
     # Using sed because ruamel.yaml has a bug for this kind of files
     subprocess.call([
-        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g",
-        "/etc/diaspora/diaspora.yml"
+        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g", DIASPORA_YAML
+    ])
+
+
+def uncomment_user_registrations():
+    """Uncomment the enable_registrations line which is commented by default"""
+    subprocess.call([
+        "sed", "-i", "s/#enable_registrations/enable_registrations/g",
+        DIASPORA_YAML
+    ])
+
+
+def subcommand_enable_user_registrations(_):
+    """Enable new user registrations on the diaspora* pod """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: false/enable_registrations: true/g",
+        DIASPORA_YAML
+    ])
+
+
+def subcommand_disable_user_registrations(_):
+    """Disable new user registrations on the diaspora* pod """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: true/enable_registrations: false/g",
+        DIASPORA_YAML
     ])
 
 

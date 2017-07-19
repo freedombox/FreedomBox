@@ -137,6 +137,24 @@ def disable():
     frontpage.remove_shortcut('diaspora')
 
 
+def is_user_registrations_enabled():
+    """Return whether user registrations are enabled"""
+    with open('/etc/diaspora/diaspora.yml') as f:
+        for line in f.readlines():
+            if "enable_registrations" in line:
+                return line.split(":")[1].strip() == "true"
+
+
+def enable_user_registrations():
+    """Allow users to register without invitation"""
+    actions.superuser_run('diaspora', ['enable-user-registrations'])
+
+
+def disable_user_registrations():
+    """Disallow users from registering without invitation"""
+    actions.superuser_run('diaspora', ['disable-user-registrations'])
+
+
 def diagnose():
     """Run diagnostics and return the results."""
     results = []

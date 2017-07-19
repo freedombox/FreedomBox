@@ -22,17 +22,12 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import utils
+from plinth.forms import ServiceForm
 
 
-class DiasporaForm(forms.Form):
-    """Form to do initial configuration of diaspora"""
-    domain_name = forms.ChoiceField(
-        label=_('Select the domain name to be used for diaspora*'),
-        help_text=_(
-            'Warning! Do not change the FreedomBox domain name after setting up diaspora*'
-        ),
-        choices=[])
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['domain_name'].choices = utils.get_domain_names()
+class DiasporaServiceForm(ServiceForm):
+    """Service Form with additional fields for diaspora*"""
+    is_user_registrations_enabled = forms.BooleanField(
+        label=_('Enable new user registrations'),
+        required=False
+    )
