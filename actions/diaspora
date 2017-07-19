@@ -20,10 +20,13 @@
 Configuration helper for diaspora* pod.
 """
 
+import os
 import argparse
 import subprocess
 
 from plinth import action_utils
+
+GEMFILE = '/usr/share/diaspora/Gemfile'
 
 
 def parse_arguments():
@@ -49,12 +52,26 @@ def parse_arguments():
 
 def subcommand_setup(arguments):
     """Set the domain_name in diaspora configuration files"""
+    set_database_server()
     domain_name = arguments.domain_name
     with open('/etc/diaspora/domain_name', 'w') as dnf:
         dnf.write(domain_name)
     set_domain_name(domain_name)
     action_utils.service_start('diaspora')
     action_utils.webserver_enable('diaspora-plinth')
+
+
+def set_database_server():
+    """Set database to postgres"""
+    with open(GEMFILE, 'r') as f:
+        conf = f.read().splitlines()
+
+    for index, line in enumerate(conf):
+        if line.startswith("ENV[\"DB\"]"):
+            conf[index] = "ENV[\"DB\"] = \"postgres\""
+
+    with open(GEMFILE, 'w') as f:
+        f.write("\n".join(conf))
 
 
 def set_domain_name(domain_name):

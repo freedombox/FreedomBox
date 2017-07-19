@@ -14,13 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for the diaspora module
 """
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.utils.translation import ugettext as _
 
 from plinth import actions
 from plinth.modules import diaspora
@@ -39,10 +40,13 @@ class DiasporaSetupView(FormView):
 
     def form_valid(self, form):
         domain_name = form.cleaned_data['domain_name']
-        actions.superuser_run('diaspora',
-                              ['setup', '--domain-name', domain_name])
+        if diaspora.get_configured_domain_name() == domain_name:
+            if not self.request._messages._queued_messages:
+                messages.info(self.request, _('Setting unchanged'))
+        else:
+            actions.superuser_run('diaspora',
+                                  ['setup', '--domain-name', domain_name])
         diaspora.add_shortcut()
-
         return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
@@ -50,7 +54,6 @@ class DiasporaSetupView(FormView):
         context['description'] = self.description
         context['title'] = self.title
         context['domain_names'] = get_domain_names()
-
         return context
 
 
@@ -63,11 +66,9 @@ class DiasporaServiceView(ServiceView):
     def dispatch(self, request, *args, **kwargs):
         if not diaspora.is_setup():
             return redirect('diaspora:setup')
-
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = diaspora.get_configured_domain_name()
-
         return context
