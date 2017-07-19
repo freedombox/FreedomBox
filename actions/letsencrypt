@@ -26,11 +26,16 @@ import os
 import subprocess
 import sys
 import re
-
+import configobj
+import shutil
 from plinth import action_utils
+from plinth.modules.config import config
 
 TEST_MODE = False
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
+RENEWAL_DIRECTORY = '/etc/letsencrypt/renewal/'
+AUTHENTICATOR = 'webroot'
+WEB_ROOT_PATH = '/var/www/html'
 APACHE_PREFIX = '/etc/apache2/sites-available/'
 APACHE_CONFIGURATION = '''
 <IfModule mod_gnutls.c>
@@ -91,6 +96,33 @@ def parse_arguments():
     delete_parser.add_argument('--domain', required=True,
                                help='Domain name to delete certificate of')
 
+    help_hooks = 'Plinth management of certificates (for current domain).'
+    manage_hook_parser = subparsers.add_parser('manage_hooks', help=help_hooks)
+    manage_hook_parser.add_argument('command', help=help_hooks,
+                                    choices=('enable', 'disable', 'status'))
+    manage_hook_parser.add_argument('--domain',
+                                    help='Domain for hook management command.')
+
+    help_domain_arg = 'Domain name to run the hook scripts with.'
+    help_module_arg = 'Include hooks from the provided module names.'
+    help_pre_hooks = 'Maintenance tasks before a cert is obtained or renewed.'
+    run_pre_hooks_parser = subparsers.add_parser('run_pre_hooks',
+                                                 help=help_pre_hooks)
+    run_pre_hooks_parser.add_argument('--domain', help=help_domain_arg)
+    run_pre_hooks_parser.add_argument('--modules', help=help_module_arg)
+
+    help_renew_hooks = 'Maintenance tasks after a cert is actually renewed.'
+    run_renew_hooks_parser = subparsers.add_parser('run_renew_hooks',
+                                                   help=help_renew_hooks)
+    run_renew_hooks_parser.add_argument('--domain', help=help_domain_arg)
+    run_renew_hooks_parser.add_argument('--modules', help=help_module_arg)
+
+    help_post_hooks = 'Maintenance tasks after a cert is obtained or renewed.'
+    run_post_hooks_parser = subparsers.add_parser('run_post_hooks',
+                                                  help=help_post_hooks)
+    run_post_hooks_parser.add_argument('--domain', help=help_domain_arg)
+    run_post_hooks_parser.add_argument('--modules', help=help_module_arg)
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -104,7 +136,7 @@ def get_certificate_expiry(domain):
 
 
 def get_validity_status(domain):
-    """Return validity status of a certificate, e.g. valid, revoked, expired."""
+    """Return validity status of a certificate, e.g. valid, revoked, expired"""
     output = subprocess.check_output(['certbot', 'certificates', '-d', domain])
     output = output.decode(sys.stdout.encoding)
 
@@ -119,8 +151,11 @@ def get_validity_status(domain):
     return validity
 
 
-def subcommand_get_status(_):
-    """Return a JSON dictionary of currently configured domains."""
+def get_status():
+    """
+    Return Python dictionary of currently configured domains.
+    Should be run as root, otherwise might yield a wrong, empty answer.
+    """
     try:
         domains = os.listdir(LIVE_DIRECTORY)
     except OSError:
@@ -138,7 +173,12 @@ def subcommand_get_status(_):
             action_utils.webserver_is_enabled(domain, kind='site'),
             'validity': get_validity_status(domain)
         }
+    return domain_status
 
+
+def subcommand_get_status(_):
+    """Print a JSON dictionary of currently configured domains."""
+    domain_status = get_status()
     print(json.dumps({'domains': domain_status}))
 
 
@@ -168,7 +208,7 @@ def subcommand_obtain(arguments):
     command = [
         'certbot', 'certonly', '--text', '--agree-tos',
         '--register-unsafely-without-email', '--domain', arguments.domain,
-        '--authenticator', 'webroot', '--webroot-path', '/var/www/html/',
+        '--authenticator', AUTHENTICATOR, '--webroot-path', WEB_ROOT_PATH,
         '--renew-by-default']
     if TEST_MODE:
         command.append('--staging')
@@ -183,6 +223,164 @@ def subcommand_obtain(arguments):
     setup_webserver_config(domain)
 
     action_utils.webserver_enable(domain, kind='site')
+
+
+def subcommand_manage_hooks(arguments):
+    """
+    Enable/disable/show status of certbot's pre-, renew-, and post-hooks.
+    Command enable only edits current domain, RENEWAL_DIRECTORY/DOMAIN.config,
+    and creates a backup beforehand that is restored if disable is called.
+    Commands disable and status work without error on any domain string.
+    """
+    if arguments.command not in ('enable', 'disable', 'status'):
+        print('Aborted: Unknown command "%s".' % arguments.command)
+        sys.exit(1)
+
+    cmd_is_enable = arguments.command == 'enable'
+    current_domain = config.get_domainname()
+    if not arguments.domain:
+        arguments.domain = current_domain
+
+    if cmd_is_enable:
+        if not current_domain:
+            print('Aborted: No current domain set.')
+            sys.exit(2)
+
+        if not arguments.domain == current_domain:
+            print('Aborted: Passed domain (%s) is not current domain (%s).' %
+                  (arguments.domain, current_domain))
+            sys.exit(3)
+
+        domain_status = get_status()
+        if current_domain not in domain_status:
+            print('Aborted: Current domain (%s) has no LE certificate.' %
+                  current_domain)
+            sys.exit(4)
+
+    config_path = RENEWAL_DIRECTORY + arguments.domain + '.conf'
+    if not os.path.exists(config_path):
+        msg, code = ('Aborted', 5) if cmd_is_enable else ('Disabled', 0)
+        print('%s: No certbot config file at %s.' % (msg, config_path))
+        sys.exit(code)
+
+    config_certbot = configobj.ConfigObj(config_path)
+    if 'renewalparams' not in config_certbot:
+        msg, code = ('Aborted', 6) if cmd_is_enable else ('Disabled', 0)
+        print('%s: No section [renewalparams] in config file at %s.'
+              % (msg, config_path))
+        sys.exit(code)
+
+    script_path = os.path.realpath(__file__)
+    config_backup_path = config_path + '_plinth_backup'
+    call_pre = script_path + ' run_pre_hooks --domain ' + arguments.domain
+    call_renew = script_path + ' run_renew_hooks --domain ' + arguments.domain
+    call_post = script_path + ' run_post_hooks --domain ' + arguments.domain
+    config_plinth = {'renewalparams':
+                     {'authenticator': AUTHENTICATOR,
+                      'webroot_path': [WEB_ROOT_PATH],
+                      'webroot_map': {arguments.domain: WEB_ROOT_PATH},
+                      'installer': 'None',
+                      'pre_hook': call_pre,
+                      'renew_hook': call_renew,
+                      'post_hook': call_post}}
+    comment_plinth = '# This file was edited by Plinth.'
+    config_edited_by_plinth = any(['edited by plinth' in line.lower()
+                                   for line in config_certbot.initial_comment])
+
+    if arguments.command == 'status':
+        config_checks = [(entry in config_certbot['renewalparams']) and
+                         (str(config_plinth['renewalparams'][entry]) in
+                          str(config_certbot['renewalparams'][entry]))
+                         for entry in config_plinth['renewalparams'].keys()]
+        if all(config_checks):
+            print('enabled')
+        else:
+            print('disabled')
+
+    elif arguments.command == 'enable':
+        if not config_edited_by_plinth:
+            shutil.copy(config_path, config_backup_path)
+            config_certbot.initial_comment.append(comment_plinth)
+
+        config_certbot['renewalparams'].update(config_plinth['renewalparams'])
+        config_certbot.write()
+        print('enabled successfully')
+
+    elif arguments.command == 'disable':
+        # if changed, restore from backup; refuse disabling if no backup exists
+        if not config_edited_by_plinth:
+            print('Disabled: Nothing to do, hook management was not enabled.')
+        elif os.path.exists(config_backup_path):
+            shutil.move(config_backup_path, config_path)
+            print('disabled successfully')
+        else:
+            print('Aborted: No backup config file at %s.' % config_backup_path)
+            sys.exit(7)
+
+    sys.exit(0)
+
+
+def subcommand_run_pre_hooks(arguments):
+    """
+    Execute all needed maintenance tasks BEFORE a cert is obtained/renewed.
+    If registered as certbot's pre-hook, this script gets ALWAYS executed when
+    certbot attempts a renewal, irrespective of necessity/success (2x per day).
+    """
+    # Require current domain, to avoid confusion (e.g. call from old cron job).
+    if not arguments.domain:
+        print('Aborted: You must specify the current domain.')
+        sys.exit(1)
+
+    current_domain = config.get_domainname()
+    if not arguments.domain == current_domain:
+        print('Aborted: Current domain is %s, but called for %s.' %
+              (current_domain, arguments.domain))
+        sys.exit(2)
+    sys.exit(0)
+
+
+def subcommand_run_renew_hooks(arguments):
+    """
+    Execute all needed maintenance tasks when a cert is renewed.
+    If registered as certbot's renew-hook, this script gets ONLY executed when
+    certbot successfully renewed a certificate; with Debian default config,
+    this means it would run about once every 60 days (renewals get executed
+    if a cert is <30 days before expiry, and current default is 90 days).
+    """
+    # Require current domain, to avoid confusion (e.g. call from old cron job).
+    if not arguments.domain:
+        print('Aborted: You must specify the current domain.')
+        sys.exit(1)
+
+    current_domain = config.get_domainname()
+    if not arguments.domain == current_domain:
+        print('Aborted: Current domain is %s, but called for %s.' %
+              (current_domain, arguments.domain))
+        sys.exit(2)
+
+    if action_utils.service_is_running('apache2'):
+        action_utils.service_restart('apache2')
+
+    sys.exit(0)
+
+
+def subcommand_run_post_hooks(arguments):
+    """
+    Execute all needed maintenance tasks AFTER a cert is obtained/renewed.
+    If registered as certbot's post-hook, this script gets ALWAYS executed when
+    certbot attempts a renewal, irrespective of necessity/success (2x per day).
+    """
+    # Require current domain, to avoid confusion (e.g. call from old cron job).
+    if not arguments.domain:
+        print('Aborted: You must specify the current domain.')
+        sys.exit(1)
+
+    current_domain = config.get_domainname()
+    if not arguments.domain == current_domain:
+        print('Aborted: Current domain is %s, but called for %s.' %
+              (current_domain, arguments.domain))
+        sys.exit(2)
+    sys.exit(0)
 
 
 def subcommand_delete(arguments):
