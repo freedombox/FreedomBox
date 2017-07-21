@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-10 22:56-0400\n"
-"PO-Revision-Date: 2017-04-10 08:31+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
-"nl/>\n"
+"PO-Revision-Date: 2017-07-21 20:11+0000\n"
+"Last-Translator: Paul van der Vlis <paul@vandervlis.nl>\n"
+"Language-Team: Dutch "
+"<https://hosted.weblate.org/projects/freedombox/plinth/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 2.16-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -60,10 +60,8 @@ msgid "Enable application"
 msgstr "Toepassing inschakelen"
 
 #: plinth/forms.py:45
-#, fuzzy
-#| msgid "Select the domain name"
 msgid "Select the domain name to be used for this application"
-msgstr "Selecteer de domeinnaam"
+msgstr "Selecteer de domeinnaam voor deze applicatie"
 
 #: plinth/middleware.py:71
 msgid "Application installed."
@@ -287,15 +285,12 @@ msgid "Time Zone"
 msgstr "Tijdzone"
 
 #: plinth/modules/datetime/forms.py:37
-#, fuzzy
-#| msgid ""
-#| "Set your time zone to get accurate timestamps. This will set the "
-#| "systemwide time zone."
 msgid ""
 "Set your time zone to get accurate timestamps. This will set the system-wide "
 "time zone."
 msgstr ""
-"Stel tijdzone in om precieze tijd te gebruiken. Dit stelt de systeemklok in."
+"Stel de tijdzone in voor de juiste vermelding van de tijd. Dit stelt de "
+"tijdzone in voor het hele systeem."
 
 #: plinth/modules/datetime/forms.py:49
 msgid "-- no time zone set --"
@@ -393,17 +388,19 @@ msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
 msgstr ""
+"diaspora* is een decentraal sociaal netwerk waar je gegevens kunt opslaan en "
+"zelf onder controle houdt."
 
 #: plinth/modules/diaspora/forms.py:30
-#, fuzzy
-#| msgid "Select the domain name"
 msgid "Select the domain name to be used for diaspora*"
-msgstr "Selecteer de domeinnaam"
+msgstr "Selecteer de domeinnaam voor diaspora*"
 
 #: plinth/modules/diaspora/forms.py:32
 msgid ""
 "Warning! Do not change the FreedomBox domain name after setting up diaspora*"
 msgstr ""
+"Waarschuwing! Wijzig niet de FreedomBox domeinnaam na het installeren van "
+"diaspora*"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -414,6 +411,12 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
+"De diaspora* pod domeinnaam is ingesteld op <b>%(domain_name)s</b>. "
+"Gebruiker IDs zien er uit als <i>username@diaspora.%(domain_name)s</i><br/> "
+"Als de FreedomBox domeinnaam wordt gewijzigd, is alle data van de gebruikers "
+"die geregistreerd zijn met de vorige podnaam zijn niet meer toegankelijk. "
+"<br/> Je kunt de diaspora* pod bereiken op <a href=\""
+"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -458,7 +461,7 @@ msgstr "Gebruikt"
 
 #: plinth/modules/disks/templates/disks.html:77
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Partitie Vergroting"
 
 #: plinth/modules/disks/templates/disks.html:80
 #, python-format
@@ -484,6 +487,8 @@ msgid ""
 "There is no unallocated space after your root partition. There is no need to "
 "expand it."
 msgstr ""
+"Er is geen ruimte vrij na de root partitie. Er is geen noodzaak hem te "
+"vergroten."
 
 #: plinth/modules/disks/templates/disks_expand.html:35
 #, python-format
@@ -506,34 +511,29 @@ msgid "Partition expanded successfully."
 msgstr "Partitie succesvol uitgebreid."
 
 #: plinth/modules/disks/views.py:77
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} bytes"
+#, python-brace-format
 msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size} bytes"
+msgstr "{disk_size:.1f} bytes"
 
 #: plinth/modules/disks/views.py:81
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} KiB"
+#, python-brace-format
 msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size} KiB"
+msgstr "{disk_size:.1f} KiB"
 
 #: plinth/modules/disks/views.py:85
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} MiB"
+#, python-brace-format
 msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size} MiB"
+msgstr "{disk_size:.1f} MiB"
 
 #: plinth/modules/disks/views.py:89
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} GiB"
+#, python-brace-format
 msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size} GiB"
+msgstr "{disk_size:.1f} GiB"
 
 #: plinth/modules/disks/views.py:92
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} TiB"
+#, python-brace-format
 msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size} TiB"
+msgstr "{disk_size:.1f} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:33
 msgid "Dynamic DNS Client"
@@ -822,7 +822,7 @@ msgstr ""
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
-msgstr ""
+msgstr "Inschakelen Berichten Archief Management"
 
 #: plinth/modules/ejabberd/forms.py:36
 #, python-brace-format
@@ -832,6 +832,10 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Als geactiveerd,  zal je  {box_name} de chat berichten bewaren. Dit maakt "
+"synchronisatie van berichten tussen verschillende apparaten mogelijk, en het "
+"lezen van de berichten-geschiedenis met meerdere gebruikers. Het hangt van "
+"de instellingen op het apparaat af of dit al dan niet versleuteld gebeurd."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -873,11 +877,11 @@ msgstr "Toepassing uitgeschakeld"
 
 #: plinth/modules/ejabberd/views.py:74
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "Berichten Archief Management aangezet"
 
 #: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "Berichten Archief Management  uitgezet"
 
 #: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
@@ -965,13 +969,11 @@ msgstr "Instelling voltooid!"
 #: plinth/modules/first_boot/templates/firstboot_complete.html:32
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "Zonder toepassingen (apps) kan je %(box_name)s niet erg veel."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:39
-#, fuzzy
-#| msgid "Install"
 msgid "Install Apps"
-msgstr "Installeer"
+msgstr "Installeer Apps"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:45
 #, python-format
@@ -979,6 +981,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"Je wilt wellicht de <a href=\"%(networks_url)s\">netwerk instellingen</a> "
+"controleren, en wijzigen indien noodzakelijk."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
@@ -1093,20 +1097,17 @@ msgid "Learn more &raquo;"
 msgstr "Leer meer &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:76
-#, fuzzy, python-format
-#| msgid "You are running Plinth version %(version)s."
+#, python-format
 msgid "You are running %(os_release)s and Plinth version %(version)s."
-msgstr "Dit is Plinth versie %(version)s."
+msgstr "Dit is %(os_release)s, en Plinth versie %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:81
-#, fuzzy
-#| msgid "There is a new version available."
 msgid "There is a new Plinth version available."
-msgstr "Er is een nieuwe versie beschikbaar."
+msgstr "Er is een nieuwe Plinth versie beschikbaar."
 
 #: plinth/modules/help/templates/help_about.html:85
 msgid "Plinth is up to date."
-msgstr ""
+msgstr "De nieuwste versie van Plinth is geïnstalleerd."
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
@@ -1414,33 +1415,27 @@ msgid "Actions"
 msgstr "Acties"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
-#, fuzzy, python-format
-#| msgid "Expires on %(expiry_date)s"
+#, python-format
 msgid "Valid, expires on %(expiry_date)s"
-msgstr "Verloopt op %(expiry_date)s"
+msgstr "Geldig, verloopt op %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:63
-#, fuzzy
-#| msgid "Revoke"
 msgid "Revoked"
-msgstr "Intrekken"
+msgstr "Ingetrokken"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:67
-#, fuzzy, python-format
-#| msgid "Expires on %(expiry_date)s"
+#, python-format
 msgid "Expired on %(expiry_date)s"
-msgstr "Verloopt op %(expiry_date)s"
+msgstr "Verlopen op %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#, fuzzy
-#| msgid "Invalid kite name"
 msgid "Invalid test certificate"
-msgstr "Foute kite-naam"
+msgstr "Ongeldig test certificaat"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:75
 #, python-format
 msgid "Invalid (%(reason)s)"
-msgstr ""
+msgstr "Ongeldig (%(reason)s)"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 msgid "No certificate"
@@ -1473,12 +1468,13 @@ msgstr ""
 "ervoor te kunnen uitgeven."
 
 #: plinth/modules/letsencrypt/views.py:55
-#, fuzzy, python-brace-format
-#| msgid "Certificate successfully revoked for domain {domain}"
+#, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
 "moments to take effect."
-msgstr "Certificaat met succes ingetrokken voor domein {domain}"
+msgstr ""
+"Certificaat met succes ingetrokken voor domein {domain}. Het kan enige tijd "
+"duren voordat het effect heeft."
 
 #: plinth/modules/letsencrypt/views.py:61
 #, python-brace-format
@@ -1496,16 +1492,14 @@ msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Verkrijgen van certificaat voor domein {domain} is mislukt: {error}"
 
 #: plinth/modules/letsencrypt/views.py:90
-#, fuzzy, python-brace-format
-#| msgid "Certificate successfully revoked for domain {domain}"
+#, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
-msgstr "Certificaat met succes ingetrokken voor domein {domain}"
+msgstr "Certificaat met succes verwijderd voor domein {domain}"
 
 #: plinth/modules/letsencrypt/views.py:95
-#, fuzzy, python-brace-format
-#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
-msgstr "Intrekken certificaat voor domein {domain} mislukt: {error}"
+msgstr "Verwijderen certificaat voor domein {domain} mislukt: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:41
 msgid ""
