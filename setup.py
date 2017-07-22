@@ -184,6 +184,7 @@ setuptools.setup(
     setup_requires=['setuptools-git'],
     install_requires=[
         'cherrypy >= 3.0',
+        'configobj',
         'django >= 1.10.0',
         'django-bootstrap-form',
         'django-stronghold',
