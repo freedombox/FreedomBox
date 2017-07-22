@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-10 22:56-0400\n"
-"PO-Revision-Date: 2017-07-22 14:09+0000\n"
+"PO-Revision-Date: 2017-07-22 14:37+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@openmailbox.org>\n"
 "Language-Team: Spanish "
 "<https://hosted.weblate.org/projects/freedombox/plinth/es/>\n"
@@ -3422,6 +3422,13 @@ msgid ""
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
+"Ejecutar Syncthing en {box_name} proporciona una sincronización extra para "
+"sus datos permitiendo que sus dispositivos se sincronicen más a menudo. "
+"{box_name} ejecuta una instancia única de Syncthing que puede ser usada por "
+"varios usuarios. Cada conjunto de dispositivos de un usuario puede "
+"sincronizarse con un conjunto distinto de carpetas. La interfaz web en "
+"{box_name} solo está disponible para los usuarios que pertenezcan al grupo \""
+"admin\"."
 
 #: plinth/modules/syncthing/__init__.py:54
 msgid ""
@@ -3429,10 +3436,13 @@ msgid ""
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
+"Cuando se activa, la interfaz web de  Syncthing está accesible en <a href=\""
+"/syncthing/\">/syncthing</a>. También hay disponibles <a href=\""
+"https://syncthing.net/\">clientes de móvil y escritorio</a>."
 
 #: plinth/modules/tahoe/__init__.py:42
 msgid "Distributed File Storage (Tahoe-LAFS)"
-msgstr ""
+msgstr "Almacén de archivos distribuido (Tahoe-LAFS)"
 
 #: plinth/modules/tahoe/__init__.py:73
 msgid ""
@@ -3441,6 +3451,11 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
+"Tahoe-LAFS es un sistema seguro de almacén descentralizado de archivos. "
+"Utiliza seguridad independiente del proveedor para almacenar archivos a "
+"través de una red distribuida de nodos de almacenamiento. Incluso si algunos "
+"de los nodos fallara, sus archivos seguirían estando disponibles a través "
+"del resto de nodos."
 
 #: plinth/modules/tahoe/__init__.py:78
 #, python-brace-format
@@ -3449,6 +3464,9 @@ msgid ""
 "Additional introducers can be added, which will introduce this node to the "
 "other storage nodes."
 msgstr ""
+"Este {box_name} aloja un nodo de almacenamiento y un presentador por "
+"defecto. Se pueden añadir presentadores adicionales, los cuales presentarán "
+"este nodo a los otros nodos de almacenamiento."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
 #, python-format
@@ -3458,36 +3476,36 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
+"El dominio del servidor Tahoe-LAFS es <b>%(domain_name)s</b>. Cambiar el "
+"nombre de dominio de FreedomBox hará necesario reinstalar Tahoe-LAFS lo que "
+"implica que  PERDERÁ SUS DATOS. Puede acceder a Tahoe-LAFS en <a href=\""
+"https://%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
-msgstr ""
+msgstr "Presentador local"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:74
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:91
-#, fuzzy
-#| msgid "Name"
 msgid "Pet Name"
-msgstr "Nombre"
+msgstr "Nombre de alias"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:71
 msgid "Add new introducer"
-msgstr ""
+msgstr "Añadir nuevo presentador"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
-#, fuzzy
-#| msgid "Address"
 msgid "Add"
-msgstr "Dirección"
+msgstr "Añadir"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:87
 msgid "Connected introducers"
-msgstr ""
+msgstr "Presentadores conectados"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:103
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: plinth/modules/tor/__init__.py:45
 msgid ""
@@ -3541,6 +3559,8 @@ msgstr "Confirmar uso de Tor en {url} sobre tcp {kind}"
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Especifique un puente válido con este formato: [transport] IP:ORPort "
+"[fingerprint]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -3548,7 +3568,7 @@ msgstr "Activar Tor"
 
 #: plinth/modules/tor/forms.py:93
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Utilice puentes de subida para conectar a una red Tor"
 
 #: plinth/modules/tor/forms.py:96
 msgid ""
@@ -3556,10 +3576,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Cuando se activan, los puentes abajo configurados se usarán para conectar a "
+"la red Tor. Emplee esta opción si su proveedor de servicios de Internet (ISP)"
+" bloquea o censura las conexiones a la red Tor. Esto desactivará los modos "
+"de reenvío."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Puentes de subida"
 
 #: plinth/modules/tor/forms.py:105
 msgid ""
@@ -3567,6 +3591,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Puede obtener algunos puentes en <a href=\"https://bridges.torproject.org/\""
+">https://bridges.torproject.org/</a> y copiar/pegar la información aquí. Los "
+"tipos de transporte actualmente soportados son ninguno, obfs3, obfs4 y "
+"scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
@@ -3629,6 +3657,7 @@ msgstr ""
 #: plinth/modules/tor/forms.py:151
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
+"Especifique al menos un puente de subida para usar los puentes de subida."
 
 #: plinth/modules/tor/templates/tor.html:41
 msgid "Tor configuration is being updated"
@@ -4096,12 +4125,13 @@ msgstr "Interfaz web (Plinth) de {box_name}"
 
 #: plinth/templates/403.html:28
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Prohibido"
 
 #: plinth/templates/403.html:32
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
 msgstr ""
+"Usted no tiene permiso para acceder a %(request_path)s en este servidor."
 
 #: plinth/templates/404.html:25
 msgid "404"
@@ -4179,7 +4209,7 @@ msgstr "Cambiar modo de navegación"
 
 #: plinth/templates/base.html:102 plinth/templates/base.html:103
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: plinth/templates/base.html:107 plinth/templates/base.html:109
 msgid "Apps"
@@ -4195,16 +4225,12 @@ msgid "Log out"
 msgstr "Cerrar sesión"
 
 #: plinth/templates/base.html:168 plinth/templates/base.html:169
-#, fuzzy
-#| msgid "Restart Now"
 msgid "Restart"
-msgstr "Reiniciar ahora"
+msgstr "Reiniciar"
 
 #: plinth/templates/base.html:174 plinth/templates/base.html:175
-#, fuzzy
-#| msgid "Shut Down Now"
 msgid "Shut down"
-msgstr "Apagar ahora"
+msgstr "Apagar"
 
 #: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
@@ -4212,7 +4238,7 @@ msgstr "Iniciar sesión"
 
 #: plinth/templates/base.html:256 plinth/templates/index.html:164
 msgid "JavaScript license information"
-msgstr ""
+msgstr "Información de licencia de JavaScript"
 
 #: plinth/templates/index.html:58
 #, python-format
@@ -4252,45 +4278,41 @@ msgstr ""
 
 #: plinth/templates/index.html:128
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: plinth/templates/index.html:133
 msgid "Homepage"
-msgstr ""
+msgstr "Página inicio"
 
 #: plinth/templates/index.html:136
 msgid "Source Code"
-msgstr ""
+msgstr "Código fuente"
 
 #: plinth/templates/index.html:139
 msgid "Donate"
-msgstr ""
+msgstr "Donar"
 
 #: plinth/templates/index.html:143
-#, fuzzy
-#| msgid "FreedomBox"
 msgid "FreedomBox Foundation"
-msgstr "FreedomBox"
+msgstr "Fundación FreedomBox"
 
 #: plinth/templates/index.html:150
 msgid "IRC Chatroom"
-msgstr ""
+msgstr "Sala de chat IRC"
 
 #: plinth/templates/index.html:155
 msgid "Mailing list"
-msgstr ""
+msgstr "Lista de correo"
 
 #: plinth/templates/service.html:44
-#, fuzzy, python-format
-#| msgid "Service discovery server is running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is running."
-msgstr "El servidor de detección de servicios se está ejecutando"
+msgstr "El servidor <em>%(service_name)s</em> se está ejecutando."
 
 #: plinth/templates/service.html:49
-#, fuzzy, python-format
-#| msgid "Service discovery server is not running"
+#, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
-msgstr "El servidor de detección de servicios no se está ejecutando"
+msgstr "El servidor <em>%(service_name)s</em> no se está ejecutando."
 
 #: plinth/templates/setup.html:35
 msgid "Installation"
@@ -4305,6 +4327,8 @@ msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
+"Otra instalación o actualización está actualmente en ejecución. Por favor "
+"espere unos momentos antes de intentarlo de nuevo."
 
 #: plinth/templates/setup.html:61 plinth/templates/setup.html:64
 #: plinth/templates/setup.html:85
@@ -4342,21 +4366,17 @@ msgid "System Configuration"
 msgstr "Configuración del sistema"
 
 #: plinth/templates/system.html:28
-#, fuzzy, python-format
-#| msgid "Here you can administrate the underlying system of your {box_name}."
+#, python-format
 msgid "Here you can administrate the underlying system of your %(box_name)s."
-msgstr "Aquí puede administrar el sistema básico de su {box_name}."
+msgstr "Aquí puede administrar el sistema básico de su %(box_name)s."
 
 #: plinth/templates/system.html:34
-#, fuzzy, python-format
-#| msgid ""
-#| "The options affect the {box_name} at its most general level, so be "
-#| "careful!"
+#, python-format
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
-"Estas opciones afectan a su {box_name} en el nivel más general, así que "
-"¡vaya con cuidado!"
+"Estas opciones afectan a su %(box_name)s de forma general, así que ¡vaya con "
+"cuidado!"
 
 #~ msgid "Applications"
 #~ msgstr "Aplicaciones"
