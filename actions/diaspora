@@ -25,6 +25,7 @@ import augeas
 import subprocess
 
 from plinth import action_utils
+from plinth.modules import diaspora
 
 
 def parse_arguments():
@@ -68,7 +69,7 @@ def set_domain_name(domain_name):
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
 
-    # shell-script config file lens
+    # lens for shell-script config file
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', conf_file)
     aug.load()
@@ -78,15 +79,8 @@ def set_domain_name(domain_name):
             'http://{}:3000'.format(domain_name))
     aug.save()
 
-    # lens to edit apache2 config files
-    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    aug.set('/augeas/load/Httpd/incl[last() + 1]',
-           '/etc/apache2/conf-available/*')
-    aug.load()
-
-    aug.set('/files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/arg', domain_name)
-    aug.set("/files/etc/apache2/conf-available/diaspora-plinth.conf/VirtualHost/directive[1]/arg", domain_name)
-    aug.save()
+    diaspora.generate_apache_configuration('/etc/apache2/conf-available/diaspora-plinth.conf',
+                                           domain_name)
 
     action_utils.service_start('diaspora')
 
