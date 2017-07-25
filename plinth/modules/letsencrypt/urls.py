@@ -33,4 +33,6 @@ urlpatterns = [
         name='delete'),
     url(r'^sys/letsencrypt/toggle_hooks/(?P<domain>[^/]+)/$',
         views.toggle_hooks, name='toggle_hooks'),
+    url(r'^sys/letsencrypt/toggle_module/(?P<domain>[^/]+)/'
+        '(?P<module>[^/]+)/$', views.toggle_module, name='toggle_module'),
 ]

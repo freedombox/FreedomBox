@@ -41,11 +41,12 @@ logger = logging.getLogger(__name__)
 def index(request):
     """Serve configuration page."""
     status = get_status()
-
     return TemplateResponse(request, 'letsencrypt.html',
                             {'title': letsencrypt.name,
                              'description': letsencrypt.description,
-                             'status': status})
+                             'status': status,
+                             'installed_modules':
+                             letsencrypt.get_installed_modules()})
 
 
 @require_POST
@@ -102,8 +103,17 @@ def obtain(request, domain):
 @require_POST
 def toggle_hooks(request, domain):
     """Toggle pointing of certbot's hooks to Plinth, for the current domain."""
-    subcommand = 'disable' if _hooks_manage_enabled() else 'enable'
+    manage_hooks_status = letsencrypt.get_manage_hooks_status()
+    subcommand = 'disable' if 'enabled' in manage_hooks_status else 'enable'
+
     try:
+        if subcommand == 'disable':
+            enabled_modules = [module for module in
+                               letsencrypt.MODULES_WITH_HOOKS
+                               if module in manage_hooks_status]
+            for module in enabled_modules:
+                actions.superuser_run(module, ['letsencrypt', 'drop'],
+                                      async=True)
         actions.superuser_run('letsencrypt', ['manage_hooks', subcommand])
         if subcommand == 'enable':
             msg = _('Certificate renewal management enabled for {domain}.')\
@@ -123,9 +133,50 @@ def toggle_hooks(request, domain):
 
 
 @require_POST
+def toggle_module(request, domain, module):
+    """Toggle usage of LE cert for a module name, for the current domain."""
+    manage_hooks_status = letsencrypt.get_manage_hooks_status()
+    enabled_modules = [module for module in letsencrypt.MODULES_WITH_HOOKS
+                       if module in manage_hooks_status]
+
+    if module in enabled_modules:
+        mod_le_arg = 'drop'
+        enabled_modules.remove(module)
+    else:
+        mod_le_arg = 'add'
+        enabled_modules.append(module)
+
+    module_args = ['letsencrypt', mod_le_arg]
+    le_arguments = ['manage_hooks', 'enable']
+
+    if not enabled_modules == []:
+        le_arguments.extend(['--modules', ' '.join(enabled_modules)])
+
+    try:
+        actions.superuser_run(module, module_args)
+        actions.superuser_run('letsencrypt', le_arguments)
+        messages.success(
+            request, _('Switched use of certificate for app {module}')
+            .format(module=module))
+    except ActionError as exception:
+        messages.error(
+            request,
+            _('Failed to switch certificate use for app {module}: {error}')
+            .format(module=module, error=exception.args[2]))
+
+    return redirect(reverse_lazy('letsencrypt:index'))
+
+
+@require_POST
 def delete(request, domain):
-    """Delete a certificate for a given domain."""
-    try:  # also delete any potential left-over renewal config backup
+    """Delete a certificate for a given domain, and cleanup renewal config."""
+    manage_hooks_status = letsencrypt.get_manage_hooks_status()
+    enabled_modules = [module for module in letsencrypt.MODULES_WITH_HOOKS
+                       if module in manage_hooks_status]
+
+    try:
+        for module in enabled_modules:
+            actions.superuser_run(module, ['letsencrypt', 'drop'], async=True)
         actions.superuser_run('letsencrypt', ['manage_hooks', 'disable',
                                               '--domain', domain])
     except ActionError as exception:
@@ -158,7 +209,7 @@ def get_status():
         'name': curr_dom,
         'has_cert': (curr_dom in status['domains'] and
                      status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_enabled': _hooks_manage_enabled()
+        'manage_hooks_status': letsencrypt.get_manage_hooks_status()
     }
     status['current_domain'] = current_domain
 
@@ -171,13 +222,3 @@ def get_status():
             status['domains'].setdefault(domain, {})
 
     return status
-
-
-def _hooks_manage_enabled():
-    """Return status of hook management for current domain."""
-    try:
-        output = actions.superuser_run('letsencrypt',
-                                       ['manage_hooks', 'status'])
-    except ActionError:
-        return False
-    return output.strip() == 'enabled'

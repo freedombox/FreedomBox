@@ -23,10 +23,12 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth import action_utils
 from plinth import cfg
+from plinth.errors import ActionError
 from plinth.menu import main_menu
 from plinth.modules import names
 from plinth.utils import format_lazy
 from plinth.signals import domainname_change
+from plinth import module_loader
 
 
 version = 1
@@ -59,6 +61,9 @@ description = [
 
 
 service = None
+
+MODULES_WITH_HOOKS = ['ejabberd']
+LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 
 
 def init():
@@ -94,6 +99,29 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del new_domainname  # Unused
     del kwargs  # Unused
 
+    for module in MODULES_WITH_HOOKS:
+        actions.superuser_run(module, ['letsencrypt', 'drop',
+                                       '--domain', old_domainname], async=True)
     actions.superuser_run('letsencrypt', ['manage_hooks', 'disable',
                                           '--domain', old_domainname],
                           async=True)
+
+
+def get_manage_hooks_status():
+    """Return status of hook management for current domain."""
+    try:
+        output = actions.superuser_run('letsencrypt',
+                                       ['manage_hooks', 'status'])
+    except ActionError:
+        return False
+
+    return output.strip()
+
+
+def get_installed_modules():
+    installed_modules = [module_name for module_name, module in
+                         module_loader.loaded_modules.items()
+                         if module_name in MODULES_WITH_HOOKS
+                         and module.setup_helper.get_state() == 'up-to-date']
+
+    return installed_modules
