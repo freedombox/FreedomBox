@@ -25,15 +25,20 @@ import argparse
 import os
 import shutil
 import socket
+import stat
 import subprocess
+import sys
 import ruamel.yaml
 
 from plinth import action_utils
+from plinth.modules.config import config
+from plinth.modules.letsencrypt import LIVE_DIRECTORY as LE_LIVE_DIRECTORY
 
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
+EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
 
 
 def parse_arguments():
@@ -84,6 +89,11 @@ def parse_arguments():
     mam.add_argument('command',
                      choices=('enable', 'disable', 'status'),
                      help=help_MAM)
+
+    help_LE = "Add/drop Let's Encrypt certificate if configured domain matches"
+    letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
+    letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
+    letsencrypt.add_argument('--domain', help='Domain name to drop.')
 
     subparsers.required = True
     return parser.parse_args()
@@ -254,6 +264,90 @@ def subcommand_mam(argument):
     else:
         print("Unknown command: %s" % argument.command)
         return
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
+
+    if action_utils.service_is_running('ejabberd'):
+        action_utils.service_restart('ejabberd')
+
+
+def subcommand_letsencrypt(arguments):
+    """
+    Add/drop usage of Let's Encrypt cert. The command 'add' applies only to
+    current domain, will be called by action 'letsencrypt run_renew_hooks',
+    when certbot renews the cert (if ejabberd is selected for cert use).
+    Drop of a cert must be possible for any domain to respond to domain change.
+    """
+    current_domain = config.get_domainname()
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    if arguments.domain is not None and arguments.domain not in conf['hosts']:
+        print('Aborted: Current domain "%s" not configured for ejabberd.'
+              % arguments.domain)
+        sys.exit(1)
+
+    if arguments.command == 'add' and arguments.domain is not None \
+       and arguments.domain != current_domain:
+        print('Aborted: Only certificate of current domain "%s" can be added.'
+              % current_domain)
+        sys.exit(2)
+
+    if arguments.domain is None:
+        arguments.domain = current_domain
+
+    cert_folder = '/etc/ejabberd/letsencrypt/' + arguments.domain
+    cert_file = cert_folder + '/ejabberd.pem'
+
+    if arguments.command == 'add':
+        le_folder = os.path.join(LE_LIVE_DIRECTORY, current_domain)
+        le_privkey = os.path.join(le_folder, 'privkey.pem')
+        le_fullchain = os.path.join(le_folder, 'fullchain.pem')
+
+        if not os.path.exists(le_folder):
+            print('Aborted: No certificate directory at %s.' % le_folder)
+            sys.exit(3)
+
+        if not os.path.exists(cert_folder):
+            os.makedirs(cert_folder)
+            shutil.chown(cert_folder, 'ejabberd', 'ejabberd')
+
+        with open(cert_file, 'w') as outfile:
+            with open(le_privkey, 'r') as infile:
+                for line in infile:
+                    if line.strip():
+                        outfile.write(line)
+            with open(le_fullchain, 'r') as infile:
+                for line in infile:
+                    if line.strip():
+                        outfile.write(line)
+        shutil.chown(cert_file, 'ejabberd', 'ejabberd')
+        os.chmod(cert_file, stat.S_IRUSR | stat.S_IWUSR)
+
+        cert_file = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+            cert_file)
+        conf['s2s_certfile'] = cert_file
+
+        for listen_port in conf['listen']:
+            if 'certfile' in listen_port:
+                listen_port['certfile'] = cert_file
+
+    else:  # arguments.command == 'drop' (ensured by parser)
+        orig_cert_file = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+            EJABBERD_ORIG_CERT)
+
+        for listen_port in conf['listen']:
+            if 'certfile' in listen_port \
+               and listen_port['certfile'] == cert_file:
+                listen_port['certfile'] = orig_cert_file
+
+        if conf['s2s_certfile'] == cert_file:
+            conf['s2s_certfile'] = orig_cert_file
+
+        if os.path.exists(cert_folder):
+            shutil.rmtree(cert_folder)
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
