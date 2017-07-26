@@ -25,6 +25,7 @@ from django.utils.translation import ugettext as _
 
 from .forms import SecurityForm
 from plinth.modules import security
+from plinth import actions
 from plinth import action_utils
 
 
@@ -69,6 +70,6 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['fail2ban_enabled'] != new_status['fail2ban_enabled']:
         if new_status['fail2ban_enabled']:
-            action_utils.service_enable('fail2ban')
+            actions.superuser_run('service',['enable','fail2ban'])
         else:
-            action_utils.service_disable('fail2ban')
+            actions.superuser_run('service',['disable','fail2ban'])

@@ -36,6 +36,7 @@ def add_service_action(subparsers, action, help):
     parser = subparsers.add_parser(action, help=help)
     parser.add_argument('service', help='name of the service')
 
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
@@ -48,6 +49,7 @@ def parse_arguments():
     add_service_action(subparsers, 'reload', 'reload a service')
     add_service_action(subparsers, 'is-running', 'status of a service')
     add_service_action(subparsers, 'is-enabled', 'status a service')
+    add_service_action(subparsers, 'unmask', 'unmask a service')
 
     subparsers.add_parser('list', help='List of running system services')
 
@@ -73,6 +75,10 @@ def subcommand_disable(arguments):
 
 def subcommand_reload(arguments):
     action_utils.service_reload(arguments.service)
+
+
+def subcommand_unmask(arguments):
+    action_utils.service_unmask(arguments.service)
 
 
 def subcommand_is_enabled(arguments):

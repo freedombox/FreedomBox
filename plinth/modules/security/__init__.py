@@ -23,16 +23,17 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
-from plinth import action_utils
 
 
-version = 1
+version = 2
 
 is_essential = True
 
 title = _('Security')
+
 managed_packages = ['fail2ban']
 
+managed_services = ['fail2ban']
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
@@ -51,9 +52,8 @@ def setup(helper, old_version=None):
 
 
 def setup_fail2ban():
-    action_utils.service_unmask('fail2ban')
-    action_utils.service_enable('fail2ban')
-
+    actions.superuser_run('service', ['unmask', 'fail2ban'])
+    actions.superuser_run('service', ['enable', 'fail2ban'])
 
 
 def get_restricted_access_enabled():
