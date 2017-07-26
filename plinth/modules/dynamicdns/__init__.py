@@ -23,8 +23,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
 from plinth.menu import main_menu
+from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
+from . import dynamicdns
 
 version = 1
 
@@ -56,6 +58,11 @@ def init():
     """Initialize the module."""
     menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
+    current_status = dynamicdns.get_status()
+    if current_status['enabled']:
+        domain_added.send_robust(
+            sender='dynamicdns', domain_type='dynamicdnsservice',
+            name=current_status['dynamicdns_domain'], description=_('Dynamic DNS Service'))
 
 
 def setup(helper, old_version=None):

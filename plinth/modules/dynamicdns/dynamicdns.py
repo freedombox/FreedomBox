@@ -26,6 +26,7 @@ import logging
 from plinth import actions
 from plinth import cfg
 from plinth.modules import dynamicdns
+from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
@@ -356,9 +357,16 @@ def _apply_changes(request, old_status, new_status):
              input=new_status['dynamicdns_secret'].encode())
 
         if old_status['enabled']:
+            domain_removed.send_robust(
+                sender='dynamicdns', domain_type='dynamicdnsservice',
+                name = old_status['dynamicdns_domain']
+            )
             _run(['stop'])
 
         if new_status['enabled']:
+            domain_added.send_robust(
+                sender='dynamicdns', domain_type='dynamicdnsservice',
+                name=new_status['dynamicdns_domain'], description=_('Dynamic DNS Service'))
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))
