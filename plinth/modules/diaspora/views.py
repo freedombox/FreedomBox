@@ -88,14 +88,17 @@ class DiasporaServiceView(ServiceView):
 
     def form_valid(self, form):
         """Enable/disable user registrations"""
-        old_status = form.initial['is_user_registrations_enabled']
-        new_status = form.cleaned_data['is_user_registrations_enabled']
+        old_enabled = form.initial['is_enabled']
+        new_enabled = form.cleaned_data['is_enabled']
+        old_registration = form.initial['is_user_registrations_enabled']
+        new_registration = form.cleaned_data['is_user_registrations_enabled']
 
-        if old_status == new_status:
-            if not self.request._messages._queued_messages:
-                messages.info(self.request, _('Setting unchanged'))
+        if old_registration == new_registration:
+            if old_enabled == new_enabled:
+                if not self.request._messages._queued_messages:
+                    messages.info(self.request, _('Setting unchanged'))
         else:
-            if new_status:
+            if new_registration:
                 diaspora.enable_user_registrations()
                 messages.success(self.request, _('User registrations enabled'))
             else:
