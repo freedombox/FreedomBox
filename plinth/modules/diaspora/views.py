@@ -24,7 +24,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 
-from plinth import actions
 from plinth.forms import DomainSelectionForm
 from plinth.modules import diaspora
 from plinth.utils import get_domain_names
@@ -43,9 +42,7 @@ class DiasporaSetupView(FormView):
 
     def form_valid(self, form):
         domain_name = form.cleaned_data['domain_name']
-        actions.superuser_run('diaspora',
-                              ['setup', '--domain-name', domain_name])
-        diaspora.add_shortcut()
+        diaspora.setup_domain_name(domain_name)
 
         return super().form_valid(form)
 

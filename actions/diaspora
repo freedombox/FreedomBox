@@ -86,8 +86,8 @@ def set_domain_name(domain_name):
             'http://{}:3000'.format(domain_name))
     aug.save()
 
-    diaspora.generate_apache_configuration('/etc/apache2/conf-available/diaspora-plinth.conf',
-                                           domain_name)
+    diaspora.generate_apache_configuration(
+        '/etc/apache2/conf-available/diaspora-plinth.conf', domain_name)
 
     action_utils.service_start('diaspora')
 
