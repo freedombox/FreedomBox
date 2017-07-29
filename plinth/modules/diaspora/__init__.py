@@ -97,7 +97,11 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
-    helper.call('post', actions.superuser_run, 'diaspora', ['enable'])
+
+
+def setup_domain_name(domain_name):
+    actions.superuser_run('diaspora',
+                          ['setup', '--domain-name', domain_name])
     global service
     if service is None:
         service = service_module.Service(
@@ -108,8 +112,8 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled,
             enable=enable,
             disable=disable)
-    helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
+    service.notify_enabled(None, True)
+    add_shortcut()
 
 
 def add_shortcut():
