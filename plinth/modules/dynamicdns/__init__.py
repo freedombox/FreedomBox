@@ -62,7 +62,8 @@ def init():
     if current_status['enabled']:
         domain_added.send_robust(
             sender='dynamicdns', domain_type='dynamicdnsservice',
-            name=current_status['dynamicdns_domain'], description=_('Dynamic DNS Service'))
+            name=current_status['dynamicdns_domain'],
+            description=_('Dynamic DNS Service'))
 
 
 def setup(helper, old_version=None):

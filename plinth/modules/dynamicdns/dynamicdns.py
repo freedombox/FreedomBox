@@ -15,13 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+Forms and views for the dynamicsdns module.
+"""
+
+import logging
+
 from django import forms
 from django.contrib import messages
 from django.core import validators
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.template.response import TemplateResponse
-import logging
 
 from plinth import actions
 from plinth import cfg
@@ -359,14 +364,14 @@ def _apply_changes(request, old_status, new_status):
         if old_status['enabled']:
             domain_removed.send_robust(
                 sender='dynamicdns', domain_type='dynamicdnsservice',
-                name = old_status['dynamicdns_domain']
-            )
+                name=old_status['dynamicdns_domain'])
             _run(['stop'])
 
         if new_status['enabled']:
             domain_added.send_robust(
                 sender='dynamicdns', domain_type='dynamicdnsservice',
-                name=new_status['dynamicdns_domain'], description=_('Dynamic DNS Service'))
+                name=new_status['dynamicdns_domain'],
+                description=_('Dynamic DNS Service'))
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))
