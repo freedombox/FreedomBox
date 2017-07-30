@@ -22,6 +22,7 @@ Configuration helper for BIND server.
 """
 
 import argparse
+import subprocess
 
 from plinth import action_utils
 
@@ -63,6 +64,8 @@ def parse_arguments():
                            help='Set forwarding true/false')
     configure.add_argument('--enable-dnssec', choices=['true', 'false'],
                            help='Set DNSSEC true/false')
+    configure.add_argument('--enable-adblock', choices=['true', 'false'],
+                           help='Enable or disable ad blocking')
 
     dns = subparsers.add_parser('dns', help='Set DNS forwarders')
     dns.add_argument('--set', help='List of IP addresses, separated by space')
@@ -94,6 +97,9 @@ def subcommand_configure(arguments):
 
     if arguments.enable_dnssec:
         enable_dnssec(arguments.enable_dnssec)
+
+    if arguments.enable_adblock:
+        set_adblock(arguments.enable_adblock)
 
     action_utils.service_restart('bind9')
 
@@ -171,6 +177,37 @@ def set_forwarders(forwarders):
         elif flag == 0:
             conf_file.write(line + '\n')
     conf_file.close()
+
+
+def set_adblock(choice):
+    """Enable or disable ad blocking."""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    if choice == 'true':
+        # serve a single pixel gif for blocked domains
+        action_utils.webserver_enable('adblock-plinth')
+
+        # fetch ad server list
+        subprocess.run(
+            ['wget', '-O', '/etc/bind/ad-blacklist',
+             "https://pgl.yoyo.org/adservers/serverlist.php"
+             "?hostformat=bindconfig;showintro=0;"
+             "zonefilename=/etc/bind/null.zone.file;mimetype=plaintext"],
+            check=True)
+
+        # configure bind
+        conf_file = open(CONFIG_FILE, 'w')
+        conf_file.write('include "/etc/bind/ad-blacklist";\n')
+        for line in data:
+            conf_file.write(line + '\n')
+        conf_file.close()
+    else:
+        action_utils.webserver_disable('adblock-plinth')
+
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if 'include "/etc/bind/ad-blacklist"' not in line:
+                conf_file.write(line + '\n')
+        conf_file.close()
 
 
 def main():

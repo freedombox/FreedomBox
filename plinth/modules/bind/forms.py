@@ -48,3 +48,10 @@ class BindForm(ServiceForm):
         required=False,
         validators=[validate_ips],
         help_text=_('A list of IP addresses, separated by space'))
+
+    enable_adblock = forms.BooleanField(
+        label=_('Enable ad blocking'),
+        required=False,
+        help_text=_('Enable DNS-based blocking of advertising domains. If '
+                    'this option is enabled, a list of advertising servers '
+                    'will be downloaded from pgl.yoyo.org.'))

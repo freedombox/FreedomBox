@@ -29,7 +29,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 
 
-version = 1
+version = 2
 
 title = _('Domain Name Server \n (BIND)')
 
@@ -118,6 +118,10 @@ def get_default():
         enable_dnssec = False
     else:
         enable_dnssec = True
+    if 'include "/etc/bind/ad-blacklist";' in data:
+        enable_adblock = True
+    else:
+        enable_adblock = False
 
     flag = 0
     for line in data:
@@ -134,6 +138,7 @@ def get_default():
     conf = {
         'set_forwarding': set_forwarding,
         'enable_dnssec': enable_dnssec,
-        'forwarders': forwarders
+        'forwarders': forwarders,
+        'enable_adblock': enable_adblock,
     }
     return conf

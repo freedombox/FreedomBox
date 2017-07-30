@@ -78,4 +78,18 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
                 self.request,
                 _('Enable forwarding to set forwarding DNS servers'))
 
+        if old_config['enable_adblock'] != data['enable_adblock']:
+            if data['enable_adblock']:
+                actions.superuser_run(
+                'bind',
+                ['configure', '--enable-adblock', 'true'])
+                messages.success(self.request,
+                                 _('Enabled ad blocking'))
+            else:
+                actions.superuser_run(
+                'bind',
+                ['configure', '--enable-adblock', 'false'])
+                messages.success(self.request,
+                                 _('Disabled ad blocking'))
+
         return super().form_valid(form)
