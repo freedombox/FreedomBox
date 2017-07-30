@@ -46,10 +46,9 @@ description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
           'and sharing of scheduling and contact data. To use Radicale, a '
-          '<a href="http://radicale.org/user_documentation/'
-          '#idcaldav-and-carddav-clients"> supported client application</a> '
-          'is needed. Radicale can be accessed by any user with a {box_name} '
-          'login.'), box_name=_(cfg.box_name)),
+          '<a href="http://radicale.org/clients/">supported client '
+          'application</a> is needed. Radicale can be accessed by any user '
+          'with a {box_name} login.'), box_name=_(cfg.box_name)),
 ]
 
 reserved_usernames = ['radicale']
