@@ -60,10 +60,12 @@ def init():
     menu.add_urlname(title, 'glyphicon-refresh', 'dynamicdns:index')
     current_status = dynamicdns.get_status()
     if current_status['enabled']:
+        services = dynamicdns.get_enabled_services(current_status['dynamicdns_domain'])
         domain_added.send_robust(
             sender='dynamicdns', domain_type='dynamicdnsservice',
             name=current_status['dynamicdns_domain'],
-            description=_('Dynamic DNS Service'))
+            description=_('Dynamic DNS Service'),
+            services=services)
 
 
 def setup(helper, old_version=None):
