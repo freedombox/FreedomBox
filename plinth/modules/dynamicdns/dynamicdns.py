@@ -31,6 +31,8 @@ from django.template.response import TemplateResponse
 from plinth import actions
 from plinth import cfg
 from plinth.modules import dynamicdns
+from plinth.modules import firewall
+from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -368,10 +370,12 @@ def _apply_changes(request, old_status, new_status):
             _run(['stop'])
 
         if new_status['enabled']:
+            services = get_enabled_services(new_status['dynamicdns_domain'])
             domain_added.send_robust(
                 sender='dynamicdns', domain_type='dynamicdnsservice',
                 name=new_status['dynamicdns_domain'],
-                description=_('Dynamic DNS Service'))
+                description=_('Dynamic DNS Service'),
+                services=services)
             _run(['start'])
 
         messages.success(request, _('Configuration updated'))
@@ -382,3 +386,16 @@ def _apply_changes(request, old_status, new_status):
 def _run(arguments, input=None):
     """Run a given command and raise exception if there was an error."""
     return actions.superuser_run('dynamicdns', arguments, input=input)
+
+
+def get_enabled_services(domain_name):
+    """ Get enabled services for the domain name"""
+    if domain_name != None and domain_name != '':
+        try:
+            domainname_services = firewall.get_enabled_services(
+                zone='external')
+        except actions.ActionError:
+            domainname_services = [service[0] for service in SERVICES]
+    else:
+        domainname_services = None
+    return domainname_services
