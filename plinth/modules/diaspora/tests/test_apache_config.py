@@ -1,5 +1,3 @@
-{% extends "simple_service.html" %}
-{% comment %}
 #
 # This file is part of Plinth.
 #
@@ -16,28 +14,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-{% endcomment %}
+"""
+Test Apache configuration generation for diaspora*
+"""
 
-{% load bootstrap %}
-{% load i18n %}
+import os
+import unittest
+from plinth.modules import diaspora
 
-{% block configuration %}
 
-  {% if pkg_manager_is_busy %}
-    <div class="alert alert-danger">
-    {% blocktrans trimmed %}
-      Currently an installation or upgrade is running.
-      Consider waiting until it's finished before shutting down or restarting.
-    {% endblocktrans %}
-    </div>
-  {% endif %}
+class TestDiaspora(unittest.TestCase):
+    def test_generate_apache_configuration(self):
+        test_root = "/tmp/apache2/conf-available/"
+        conf_file = test_root + "diaspora-plinth.conf"
+        os.path.exists(test_root) or os.makedirs(test_root)
+        diaspora.generate_apache_configuration(conf_file, "freedombox.rocks")
 
-  <p>
-    <a class="btn btn-default btn-md" href="{% url 'power:restart' %}">
-      {% trans "Restart &raquo;" %}</a>
+        assert os.stat(conf_file).st_size != 0
 
-    <a class="btn btn-default btn-md" href="{% url 'power:shutdown' %}">
-      {% trans "Shut Down &raquo;" %}</a>
-  </p>
-
-{% endblock %}
+        with open(conf_file) as f:
+            contents = f.read()
+        assert all(w in contents
+                   for w in ['VirtualHost', 'Location', 'Directory', 'assets'])

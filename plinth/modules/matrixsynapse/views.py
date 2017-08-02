@@ -26,14 +26,14 @@ from django.views.generic import FormView
 from plinth import actions
 from plinth import views
 from plinth.modules import matrixsynapse
-from plinth.modules.matrixsynapse.forms import MatrixSynapseForm
+from plinth.forms import DomainSelectionForm
 from plinth.utils import get_domain_names
 
 
 class SetupView(FormView):
     """Show matrix-synapse setup page."""
     template_name = 'matrix-synapse-pre-setup.html'
-    form_class = MatrixSynapseForm
+    form_class = DomainSelectionForm
     success_url = reverse_lazy('matrixsynapse:index')
 
     def form_valid(self, form):

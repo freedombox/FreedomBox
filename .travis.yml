@@ -14,7 +14,7 @@ before_install:
 
 # Command to install dependencies
 install:
-  - virtualenv --python=python3 --system-site-packages _venv
+  - virtualenv --python=/usr/bin/python3 --system-site-packages _venv
   - source _venv/bin/activate
   - pip install Django$DJANGO_VERSION
   - pip install coverage==3.7

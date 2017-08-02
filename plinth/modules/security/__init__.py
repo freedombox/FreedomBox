@@ -25,12 +25,15 @@ from plinth import actions
 from plinth.menu import main_menu
 
 
-version = 1
+version = 2
 
 is_essential = True
 
 title = _('Security')
 
+managed_packages = ['fail2ban']
+
+managed_services = ['fail2ban']
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
@@ -40,6 +43,17 @@ def init():
     """Initialize the module"""
     menu = main_menu.get('system')
     menu.add_urlname(title, 'glyphicon-lock', 'security:index')
+
+
+def setup(helper, old_version=None):
+    """Install the required packages"""
+    helper.install(managed_packages)
+    setup_fail2ban()
+
+
+def setup_fail2ban():
+    actions.superuser_run('service', ['unmask', 'fail2ban'])
+    actions.superuser_run('service', ['enable', 'fail2ban'])
 
 
 def get_restricted_access_enabled():

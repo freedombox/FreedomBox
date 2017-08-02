@@ -21,9 +21,13 @@ Configuration helper for diaspora* pod.
 """
 
 import argparse
+import augeas
 import subprocess
 
 from plinth import action_utils
+from plinth.modules import diaspora
+
+DIASPORA_YAML = "/etc/diaspora/diaspora.yml"
 
 
 def parse_arguments():
@@ -36,6 +40,10 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable diaspora* web server')
     subparsers.add_parser('disable', help='Disable diaspora* web server')
+    subparsers.add_parser('enable-user-registrations', help='Allow users to' \
+                          'sign up to this diaspora* pod without an invitation.')
+    subparsers.add_parser('disable-user-registrations', help='Allow only, ' \
+                          'users with an invitation to register to this diaspora* pod')
     subparsers.add_parser('start-diaspora', help='Start diaspora* service')
     subparsers.add_parser(
         'disable-ssl', help="Disable SSL on the diaspora* application server")
@@ -53,6 +61,7 @@ def subcommand_setup(arguments):
     with open('/etc/diaspora/domain_name', 'w') as dnf:
         dnf.write(domain_name)
     set_domain_name(domain_name)
+    uncomment_user_registrations()
     action_utils.service_start('diaspora')
     action_utils.webserver_enable('diaspora-plinth')
 
@@ -62,21 +71,23 @@ def set_domain_name(domain_name):
     # This did not set the domain_name
     # action_utils.dpkg_reconfigure('diaspora-common',
     #                               {'url': domain_name})
-
     # Manually changing the domain name in the conf files.
     conf_file = '/etc/diaspora.conf'
-    with open(conf_file, 'r') as conf:
-        env_vars = conf.read().splitlines()
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
-    for index, line in enumerate(env_vars):
-        if "SERVER_NAME" in line:
-            env_vars[index] = "export SERVER_NAME={}".format(domain_name)
-        if "ENVIRONMENT_URL" in line:
-            env_vars[index] = "export ENVIRONMENT_URL=http://{}:3000".format(
-                domain_name)
+    # lens for shell-script config file
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', conf_file)
+    aug.load()
 
-    with open(conf_file, 'w') as conf:
-        conf.write("\n".join(env_vars))
+    aug.set('/files/etc/diaspora.conf/SERVERNAME', '"{}"'.format(domain_name))
+    aug.set('/files/etc/diaspora.conf/ENVIRONMENT_URL',
+            'http://{}:3000'.format(domain_name))
+    aug.save()
+
+    diaspora.generate_apache_configuration('/etc/apache2/conf-available/diaspora-plinth.conf',
+                                           domain_name)
 
     action_utils.service_start('diaspora')
 
@@ -88,8 +99,33 @@ def subcommand_disable_ssl(_):
     """
     # Using sed because ruamel.yaml has a bug for this kind of files
     subprocess.call([
-        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g",
-        "/etc/diaspora/diaspora.yml"
+        "sed", "-i", "s/#require_ssl: true/require_ssl: false/g", DIASPORA_YAML
+    ])
+
+
+def uncomment_user_registrations():
+    """Uncomment the enable_registrations line which is commented by default"""
+    subprocess.call([
+        "sed", "-i", "s/#enable_registrations/enable_registrations/g",
+        DIASPORA_YAML
+    ])
+
+
+def subcommand_enable_user_registrations(_):
+    """Enable new user registrations on the diaspora* pod """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: false/enable_registrations: true/g",
+        DIASPORA_YAML
+    ])
+
+
+def subcommand_disable_user_registrations(_):
+    """Disable new user registrations on the diaspora* pod """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: true/enable_registrations: false/g",
+        DIASPORA_YAML
     ])
 
 
