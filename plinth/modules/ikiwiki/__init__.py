@@ -20,9 +20,11 @@ Plinth module to configure ikiwiki
 """
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.utils import format_lazy
 
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
@@ -43,7 +45,14 @@ description = [
       'several lightweight markup languages, including Markdown, and '
       'common blogging functionality such as comments and RSS feeds. '
       'When enabled, the blogs and wikis will be available '
-      'from <a href="/ikiwiki">/ikiwiki</a>.')
+      'at <a href="/ikiwiki">/ikiwiki</a> (once created).'),
+
+    format_lazy(
+        _('Only {box_name} users in the <b>admin</b> group can <i>create</i> '
+          'and <i>manage</i> blogs and wikis, but any user in the <b>wiki</b> '
+          'group can <i>edit</i> existing ones. In the <a href="/plinth/sys/'
+          'users">User Configuration</a> you can change these '
+          'permissions or add new users.'), box_name=_(cfg.box_name))
 ]
 
 
