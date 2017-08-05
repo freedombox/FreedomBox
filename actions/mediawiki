@@ -23,6 +23,7 @@ Configuration helper for Mediawiki
 import argparse
 import grp
 import os
+import grp
 import pwd
 import shutil
 import subprocess
@@ -37,9 +38,20 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable mediawiki')
     subparsers.add_parser('disable', help='Disable mediawiki')
+    subparsers.add_parser('configure', help='Configure mediawiki')
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def subcommand_configure(_):
+    """Create data directory for mediawiki"""
+    data_dir = '/var/www/data/'
+    uid = pwd.getpwnam("www-data").pw_uid
+    gid = grp.getgrnam("www-data").gr_gid
+    os.mkdir(data_dir)
+    os.chown(data_dir, uid, gid)
+    os.chmod(data_dir, 0o755)
 
 
 def subcommand_enable(_):

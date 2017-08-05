@@ -28,12 +28,11 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-
 version = 1
 
 managed_services = ['mediawiki']
 
-managed_packages = ['mediawiki']
+managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
 # TODO Put more thought into title and description
 
@@ -45,6 +44,9 @@ description = [
  library-like document collections, and supports user uploads of \
  images/sounds, multilingual content, TOC autogeneration, ISBN links, \
  etc."),
+    _('When enabled, MediaWiki\'s web interface will be available from '
+      '<a href="/mediawiki">/mediawiki</a>.'),
+
 ]
 
 service = None
@@ -75,7 +77,8 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'mediawiki', ['enable'])
+    helper.call('configure', actions.superuser_run, 'mediawiki', ['configure'])
+    helper.call('enable', actions.superuser_run, 'mediawiki', ['enable'])
     global service
     if service is None:
         service = service_module.Service(
