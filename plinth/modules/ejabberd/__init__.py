@@ -21,11 +21,14 @@ Plinth module to configure ejabberd server
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from plinth.utils import format_lazy
+
 import logging
 import socket
 
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
@@ -45,9 +48,13 @@ description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
 
-    _('To actually communicate, you can use the web client or any other '
-      '<a href=\'http://xmpp.org/xmpp-software/clients/\' target=\'_blank\''
-      '>XMPP client</a>.'),
+    format_lazy(
+        _('To actually communicate, you can use the <a href="/plinth/apps/'
+          'jsxc">web client</a> or any other <a href=\'http://xmpp.org/xmpp-'
+          'software/clients/\' target=\'_blank\'>XMPP client</a>. '
+          'When enabled, ejabberd can be accessed by any <a href="/plinth/sys'
+          '/users">user with a {box_name} login</a>.'),
+        box_name=_(cfg.box_name))
 ]
 
 reserved_usernames = ['ejabberd']

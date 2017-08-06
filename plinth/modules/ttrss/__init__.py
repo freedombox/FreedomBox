@@ -20,9 +20,11 @@ Plinth module to configure Tiny Tiny RSS.
 """
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.utils import format_lazy
 
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
@@ -41,8 +43,11 @@ description = [
       'designed to allow reading news from any location, while feeling as '
       'close to a real desktop application as possible.'),
 
-    _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-rss">'
-      '/tt-rss</a> path on the web server.'),
+    format_lazy(
+        _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
+          'rss">/tt-rss</a> path on the web server. It can be accessed by '
+          'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
+        box_name=_(cfg.box_name))
 ]
 
 service = None
