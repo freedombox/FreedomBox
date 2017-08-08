@@ -26,6 +26,7 @@ import logging
 import os
 import stat
 import sys
+import warnings
 
 import cherrypy
 
@@ -81,6 +82,15 @@ def setup_logging():
 
     cherrypy.log.error_file = cfg.status_log_file
     cherrypy.log.access_file = cfg.access_log_file
+
+    # Capture all Python warnings such as deprecation warnings
+    logging.captureWarnings(True)
+
+    # Log all deprecation warnings when in debug mode
+    if cfg.debug:
+        warnings.filterwarnings('default', '', DeprecationWarning)
+        warnings.filterwarnings('default', '', PendingDeprecationWarning)
+        warnings.filterwarnings('default', '', ImportWarning)
 
 
 def setup_server():
