@@ -26,8 +26,7 @@ from plinth import actions
 from django.http import HttpResponseRedirect
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import (login as auth_login, logout as
-                                       auth_logout)
+from django.contrib.auth.views import LoginView, LogoutView
 
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
 SSO_COOKIE_NAME = 'auth_pubtkt'
@@ -48,21 +47,31 @@ def set_ticket_cookie(user, response):
     return response
 
 
-def login(request):
-    """Login to Plinth and set a auth_pubtkt cookie which will be
+class SSOLoginView(LoginView):
+    """View to login to Plinth and set a auth_pubtkt cookie which will be
     used to provide Single Sign On for some other applications
     """
-    response = auth_login(
-        request, template_name='login.html', redirect_authenticated_user=True)
-    return set_ticket_cookie(
-        request.user, response) if request.user.is_authenticated else response
+
+    redirect_authenticated_user = True
+    template_name = 'login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
+        return set_ticket_cookie(
+            request.user,
+            response) if request.user.is_authenticated else response
 
 
-def logout(request, next_page):
-    """Log out of Plinth and remove auth_pubtkt cookie"""
-    response = auth_logout(request, next_page=next_page)
-    response.delete_cookie(SSO_COOKIE_NAME)
-    return response
+class SSOLogoutView(LogoutView):
+    """View to log out of Plinth and remove the auth_pubtkt cookie"""
+
+    template_name = 'index.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(SSOLogoutView, self).dispatch(request, *args,
+                                                       **kwargs)
+        response.delete_cookie(SSO_COOKIE_NAME)
+        return response
 
 
 @login_required
