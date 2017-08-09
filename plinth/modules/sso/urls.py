@@ -20,10 +20,10 @@ URLs for the Single Sign On module.
 
 from django.conf.urls import url
 
-from .views import login, refresh
+from .views import SSOLoginView, refresh
 from stronghold.decorators import public
 
 urlpatterns = [
-    url(r'^accounts/sso/login/$', public(login), name='sso-login'),
+    url(r'^accounts/sso/login/$', public(SSOLoginView.as_view()), name='sso-login'),
     url(r'^accounts/sso/refresh/$', refresh, name='sso-refresh'),
 ]
