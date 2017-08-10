@@ -32,7 +32,9 @@ from plinth.views import ServiceView
 
 version = 1
 
-title = _('Voice Chat \n (Mumble)')
+name = _('Mumble')
+
+short_description = _('Voice Chat')
 
 service = None
 
@@ -55,13 +57,13 @@ reserved_usernames = ['mumble-server']
 def init():
     """Intialize the Mumble module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-headphones', 'mumble:index')
+    menu.add_urlname(name, 'glyphicon-headphones', 'mumble:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['mumble-plinth'],
+            managed_services[0], name, ports=['mumble-plinth'],
             is_external=True,
             enable=enable, disable=disable)
 
@@ -81,7 +83,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['mumble-plinth'],
+            managed_services[0], name, ports=['mumble-plinth'],
             is_external=True,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -89,7 +91,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('mumble', title,
+    frontpage.add_shortcut('mumble', name,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('mumble:index'),
                            login_required=False)

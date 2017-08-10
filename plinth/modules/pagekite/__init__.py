@@ -41,7 +41,9 @@ first_boot_steps = [
     },
 ]
 
-title = _('Public Visibility (PageKite)')
+name = _('PageKite')
+
+short_description = _('Public Visibility')
 
 description = [
     format_lazy(
@@ -80,7 +82,7 @@ description = [
 def init():
     """Intialize the PageKite module"""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-flag', 'pagekite:index')
+    menu.add_urlname(name, 'glyphicon-flag', 'pagekite:index', short_description)
 
     # Register kite name with Name Services module.
     utils.update_names_module(initial_registration=True)

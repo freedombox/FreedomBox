@@ -40,7 +40,9 @@ managed_services = ['infinoted']
 
 managed_packages = ['infinoted']
 
-title = _('Gobby Server \n (infinoted)')
+name = _('infinoted')
+
+short_description = _('Gobby Server')
 
 description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
@@ -56,13 +58,13 @@ description = [
 def init():
     """Initialize the infinoted module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-pencil', 'infinoted:index')
+    menu.add_urlname(name, 'glyphicon-pencil', 'infinoted:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['infinoted-plinth'],
+            managed_services[0], name, ports=['infinoted-plinth'],
             is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
@@ -82,7 +84,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['infinoted-plinth'],
+            managed_services[0], name, ports=['infinoted-plinth'],
             is_external=True, enable=enable, disable=disable)
 
     helper.call('post', service.notify_enabled, None, True)
@@ -90,7 +92,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('infinoted', title, url=None,
+    frontpage.add_shortcut('infinoted', name, url=None,
                            details=description,
                            configure_url=reverse_lazy('infinoted:index'),
                            login_required=False)

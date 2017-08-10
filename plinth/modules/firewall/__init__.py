@@ -36,7 +36,7 @@ is_essential = True
 
 managed_packages = ['firewalld']
 
-title = _('Firewall')
+name = _('Firewall')
 
 description = [
     format_lazy(
@@ -52,7 +52,7 @@ LOGGER = logging.getLogger(__name__)
 def init():
     """Initailze firewall module"""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-fire', 'firewall:index')
+    menu.add_urlname(name, 'glyphicon-fire', 'firewall:index')
 
     service_enabled.connect(on_service_enabled)
 

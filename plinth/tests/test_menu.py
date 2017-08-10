@@ -154,19 +154,20 @@ class MenuTestCase(TestCase):
 
     def test_add_urlname(self):
         """Verify that a named URL can be added to a menu correctly."""
-        expected_label = 'Label4'
+        expected_title = 'Label4'
+        expected_short_description = 'Description4'
         expected_icon = 'Icon4'
         expected_url = 'index'
         reversed_url = reverse(expected_url)
         expected_order = 4
         menu = Menu()
-        actual_item = menu.add_urlname(expected_label, expected_icon,
-                                       expected_url, expected_order)
+        actual_item = menu.add_urlname(expected_title, expected_icon,
+                                       expected_url, expected_short_description, expected_order)
 
         self.assertEqual(1, len(menu.items))
         self.assertIsNotNone(actual_item)
         self.assertEqual(actual_item, menu.items[0])
-        self.assertEqual(expected_label, actual_item.label)
+        self.assertEqual('Description4 (Label4)', actual_item.label)
         self.assertEqual(expected_icon, actual_item.icon)
         self.assertEqual(reversed_url, actual_item.url)
         self.assertEqual(expected_order, actual_item.order)

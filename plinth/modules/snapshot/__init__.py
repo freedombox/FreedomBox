@@ -29,7 +29,7 @@ version = 1
 
 managed_packages = ['snapper']
 
-title = _('Snapshots')
+name = _('Snapshots')
 
 description = [
     _('Snapshots allows creating and managing filesystem snapshots. These can '
@@ -51,7 +51,7 @@ service = None
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-film', 'snapshot:index')
+    menu.add_urlname(name, 'glyphicon-film', 'snapshot:index')
 
 
 def setup(helper, old_version=None):

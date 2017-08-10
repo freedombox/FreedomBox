@@ -32,7 +32,9 @@ version = 1
 
 managed_packages = ['shaarli']
 
-title = _('Bookmarks \n (Shaarli)')
+name = _('Shaarli')
+
+short_description = _('Bookmarks')
 
 description = [
     _('Shaarli allows you to save and share bookmarks.'),
@@ -49,13 +51,13 @@ service = None
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
+    menu.add_urlname(name, 'glyphicon-bookmark', 'shaarli:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            'shaarli', title, ports=['http', 'https'], is_external=True,
+            'shaarli', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
         if is_enabled():
@@ -68,14 +70,14 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            'shaarli', title, ports=['http', 'https'], is_external=True,
+            'shaarli', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', title, url='/shaarli',
+    frontpage.add_shortcut('shaarli', name, short_description=short_description, url='/shaarli',
                            login_required=True)
 
 

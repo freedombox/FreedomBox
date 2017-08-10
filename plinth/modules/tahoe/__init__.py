@@ -39,7 +39,9 @@ managed_services = ['tahoe-lafs']
 
 managed_packages = ['tahoe-lafs']
 
-title = _('Distributed File Storage (Tahoe-LAFS)')
+name = _('LAFS')
+
+short_description = _('Distributed File Storage')
 
 service = None
 
@@ -85,14 +87,14 @@ description = [
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-hdd', 'tahoe:index')
+    menu.add_urlname(name, 'glyphicon-hdd', 'tahoe:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and is_setup():
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['tahoe-plinth'],
             is_external=True,
             is_enabled=is_enabled,
@@ -124,7 +126,7 @@ def post_setup(configured_domain_name):
     if service is None:
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['tahoe-plinth'],
             is_external=True,
             is_enabled=is_enabled,
@@ -139,7 +141,7 @@ def add_shortcut():
     """Helper method to add a shortcut to the front page."""
     # BUG: Current logo appears squashed on front page.
     frontpage.add_shortcut(
-        'tahoe-lafs', title,
+        'tahoe-lafs', name, short_description=short_description,
         url='https://{}:5678'.format(get_configured_domain_name()),
         login_required=True)
 

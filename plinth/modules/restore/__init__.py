@@ -33,7 +33,9 @@ managed_services = ['node-restore']
 
 managed_packages = ['node-restore']
 
-title = _('Unhosted Storage \n (reStore)')
+name = _('reStore')
+
+short_description = _('Unhosted Storage')
 
 description = [
     format_lazy(
@@ -56,13 +58,13 @@ service = None
 def init():
     """Initialize the reStore module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-hdd', 'restore:index')
+    menu.add_urlname(name, 'glyphicon-hdd', 'restore:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=False)
 
 
@@ -72,5 +74,5 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=False)

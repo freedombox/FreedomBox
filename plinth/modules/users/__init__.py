@@ -42,13 +42,13 @@ first_boot_steps = [
     },
 ]
 
-title = _('Users and Groups')
+name = _('Users and Groups')
 
 
 def init():
     """Intialize the user module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-user', 'users:index')
+    menu.add_urlname(name, 'glyphicon-user', 'users:index')
 
 
 def setup(helper, old_version=None):

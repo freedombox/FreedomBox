@@ -37,7 +37,7 @@ class DiasporaSetupView(FormView):
     template_name = 'diaspora-pre-setup.html'
     form_class = DomainSelectionForm
     description = diaspora.description
-    title = diaspora.title
+    title = diaspora.name
     success_url = reverse_lazy('diaspora:index')
 
     def form_valid(self, form):

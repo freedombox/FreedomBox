@@ -40,7 +40,9 @@ managed_services = ['privoxy']
 
 managed_packages = ['privoxy']
 
-title = _('Web Proxy \n (Privoxy)')
+name = _('Privoxy')
+
+short_description = _('Web Proxy')
 
 description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
@@ -66,13 +68,13 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-cloud-upload', 'privoxy:index')
+    menu.add_urlname(name, 'glyphicon-cloud-upload', 'privoxy:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['privoxy'],
+            managed_services[0], name, ports=['privoxy'],
             is_external=False,
             enable=enable, disable=disable)
 
@@ -87,7 +89,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['privoxy'],
+            managed_services[0], name, ports=['privoxy'],
             is_external=False,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -95,7 +97,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('privoxy', title,
+    frontpage.add_shortcut('privoxy', name,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('privoxy:index'),
                            login_required=True)

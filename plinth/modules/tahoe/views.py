@@ -32,7 +32,7 @@ class TahoeSetupView(FormView):
     template_name = 'tahoe-pre-setup.html'
     form_class = DomainSelectionForm
     description = tahoe.description
-    title = tahoe.title
+    title = tahoe.name
     success_url = reverse_lazy('tahoe:index')
 
     def form_valid(self, form):

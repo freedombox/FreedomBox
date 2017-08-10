@@ -33,7 +33,9 @@ version = 1
 
 managed_packages = ['libjs-jsxc']
 
-title = _('Chat Client \n (JSXC)')
+name = _('JSXC')
+
+short_description = _('Chat Client')
 
 description = [
 
@@ -49,13 +51,13 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the JSXC module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index')
+    menu.add_urlname(name, 'glyphicon-comment', 'jsxc:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            'jsxc', title, ports=['http', 'https'], is_external=True,
+            'jsxc', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
@@ -68,7 +70,7 @@ def setup(helper, old_version=None):
     global service
     if not service:
         service = service_module.Service(
-            'jsxc', title, ports=['http', 'https'], is_external=True,
+            'jsxc', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
     helper.call('post', add_shortcut)

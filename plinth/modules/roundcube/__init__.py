@@ -32,7 +32,9 @@ version = 1
 
 managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
 
-title = _('Email Client \n (Roundcube)')
+name = _('Roundcube')
+
+short_description = _('Email Client')
 
 description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
@@ -62,13 +64,13 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-envelope', 'roundcube:index')
+    menu.add_urlname(name, 'glyphicon-envelope', 'roundcube:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            'roundcube', title, ports=['http', 'https'], is_external=True,
+            'roundcube', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
         if is_enabled():
@@ -84,13 +86,13 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            'roundcube', title, ports=['http', 'https'], is_external=True,
+            'roundcube', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
 
 def add_shortcut():
     frontpage.add_shortcut(
-        'roundcube', title, url='/roundcube',
+        'roundcube', name, short_description=short_description, url='/roundcube',
         login_required=True)
 
 

@@ -29,7 +29,7 @@ def index(request):
     """Serve introduction page"""
     if not firewall.get_enabled_status():
         return TemplateResponse(request, 'firewall.html',
-                                {'title': firewall.title,
+                                {'title': firewall.name,
                                  'description': firewall.description,
                                  'firewall_status': 'not_running'})
 
@@ -38,7 +38,7 @@ def index(request):
 
     return TemplateResponse(
         request, 'firewall.html',
-        {'title': firewall.title,
+        {'title': firewall.name,
          'description': firewall.description,
          'services': list(service_module.services.values()),
          'internal_enabled_services': internal_enabled_services,

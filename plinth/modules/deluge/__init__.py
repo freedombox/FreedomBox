@@ -36,7 +36,9 @@ managed_services = ['deluge-web']
 
 managed_packages = ['deluged', 'deluge-web']
 
-title = _('BitTorrent Web Client \n (Deluge)')
+name = _('Deluge')
+
+short_description = _('BitTorrent Web Client')
 
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
@@ -52,13 +54,13 @@ reserved_usernames = ['debian-deluged']
 def init():
     """Initialize the Deluge module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-magnet', 'deluge:index')
+    menu.add_urlname(name, 'glyphicon-magnet', 'deluge:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
 
@@ -73,7 +75,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True, is_enabled=is_enabled, enable=enable,
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -81,7 +83,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('deluge', title, url='/deluge',
+    frontpage.add_shortcut('deluge', name, short_description, url='/deluge',
                            login_required=True)
 
 

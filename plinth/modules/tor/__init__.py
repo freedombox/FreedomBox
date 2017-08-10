@@ -39,7 +39,9 @@ depends = ['names']
 managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
                     'apt-transport-tor']
 
-title = ('Anonymity Network \n (Tor)')
+name = _('Tor')
+
+short_description = _('Anonymity Network')
 
 description = [
     _('Tor is an anonymous communication system. You can learn more '
@@ -59,7 +61,7 @@ bridge_service = None
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-eye-close', 'tor:index')
+    menu.add_urlname(name, 'glyphicon-eye-close', 'tor:index', short_description)
 
     setup_helper = globals()['setup_helper']
     needs_setup = setup_helper.get_state() == 'needs-setup'

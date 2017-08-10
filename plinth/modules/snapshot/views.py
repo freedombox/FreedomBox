@@ -40,7 +40,7 @@ def index(request):
     snapshots = json.loads(output)
 
     return TemplateResponse(request, 'snapshot.html',
-                            {'title': snapshot_module.title,
+                            {'title': snapshot_module.name,
                              'description': snapshot_module.description,
                              'snapshots': snapshots})
 

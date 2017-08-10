@@ -50,7 +50,7 @@ subsubmenu = [{'url': reverse_lazy('dynamicdns:index'),
 def index(request):
     """Serve Dynamic DNS page."""
     return TemplateResponse(request, 'dynamicdns.html',
-                            {'title': dynamicdns.title,
+                            {'title': dynamicdns.name,
                              'description': dynamicdns.description,
                              'subsubmenu': subsubmenu})
 

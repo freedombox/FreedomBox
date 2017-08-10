@@ -30,7 +30,7 @@ from plinth.menu import main_menu
 
 version = 1
 
-title = _('Disks')
+name = _('Disks')
 
 description = []
 
@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-hdd', 'disks:index')
+    menu.add_urlname(name, 'glyphicon-hdd', 'disks:index')
 
 
 def get_disks():

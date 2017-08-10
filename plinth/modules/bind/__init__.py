@@ -31,7 +31,9 @@ from plinth.menu import main_menu
 
 version = 1
 
-title = _('Domain Name Server \n (BIND)')
+name = _('BIND')
+
+short_description = _('Domain Name Server')
 
 service = None
 
@@ -56,13 +58,13 @@ CONFIG_FILE = '/etc/bind/named.conf.options'
 def init():
     """Intialize the BIND module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-globe', 'bind:index')
+    menu.add_urlname(name, 'glyphicon-globe', 'bind:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['dns'],
+            managed_services[0], name, ports=['dns'],
             is_external=False,
             )
 
@@ -73,7 +75,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['dns'],
+            managed_services[0], name, ports=['dns'],
             is_external=True,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)

@@ -40,7 +40,7 @@ def index(request):
     status = get_status()
     return TemplateResponse(
         request, 'monkeysphere.html',
-        {'title': monkeysphere.title,
+        {'title': monkeysphere.name,
          'description': monkeysphere.description,
          'status': status,
          'running': bool(publish_process)})
@@ -66,7 +66,7 @@ def import_key(request, ssh_fingerprint):
 def details(request, fingerprint):
     """Get details for an OpenPGP key."""
     return TemplateResponse(request, 'monkeysphere_details.html',
-                            {'title': monkeysphere.title,
+                            {'title': monkeysphere.name,
                              'key': get_key(fingerprint)})
 
 

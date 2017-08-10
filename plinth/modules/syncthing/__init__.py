@@ -36,7 +36,9 @@ managed_services = ['syncthing']
 
 managed_packages = ['syncthing']
 
-title = _('File Synchronization \n (Syncthing)')
+name = _('Syncthing')
+
+short_description = _('File Synchronization')
 
 description = [
     _('Syncthing is an application to synchronize files across multiple '
@@ -62,14 +64,14 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-refresh', 'syncthing:index')
+    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled,
@@ -89,7 +91,7 @@ def setup(helper, old_version=None):
     if service is None:
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled,
@@ -103,7 +105,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut(
-        'syncthing', title, url='/syncthing/', login_required=True)
+        'syncthing', name, short_description=short_description, url='/syncthing/', login_required=True)
 
 
 def is_running():

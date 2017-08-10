@@ -32,7 +32,7 @@ is_essential = True
 
 managed_packages = ['unattended-upgrades']
 
-title = _('Software Upgrades')
+name = _('Software Upgrades')
 
 description = [
     _('Upgrades install the latest software and security updates. When '
@@ -46,10 +46,10 @@ service = None
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-refresh', 'upgrades:index')
+    menu.add_urlname(name, 'glyphicon-refresh', 'upgrades:index')
     global service
     service = service_module.Service(
-        'auto-upgrades', title, is_external=False, is_enabled=is_enabled,
+        'auto-upgrades', name, is_external=False, is_enabled=is_enabled,
         enable=enable, disable=disable)
 
 

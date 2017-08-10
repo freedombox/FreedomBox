@@ -35,7 +35,9 @@ managed_services = ['repro']
 
 managed_packages = ['repro']
 
-title = _('SIP Server \n (repro)')
+name = _('repro')
+
+short_description = _('SIP Server')
 
 description = [
     _('repro provides various SIP services that a SIP softphone can utilize '
@@ -66,13 +68,13 @@ service = None
 def init():
     """Initialize the repro module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-phone-alt', 'repro:index')
+    menu.add_urlname(name, 'glyphicon-phone-alt', 'repro:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title,
+            managed_services[0], name,
             ports=['sip', 'sips', 'rtp-plinth'],
             is_external=True, enable=enable, disable=disable)
 
@@ -93,7 +95,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title,
+            managed_services[0], name,
             ports=['sip', 'sips', 'rtp-plinth'],
             is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -101,7 +103,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('repro', title,
+    frontpage.add_shortcut('repro', name,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('repro:index'),
                            login_required=True)

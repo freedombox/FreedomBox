@@ -34,11 +34,11 @@ def init():
     menu = main_menu.add_urlname(ugettext_lazy('Documentation'),
                                  'glyphicon-book', 'help:index')
     menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
-                     'help:index_explicit', 5)
+                     'help:index_explicit', order=5)
     menu.add_urlname(ugettext_lazy('Manual'), 'glyphicon-info-sign',
-                     'help:manual', 10)
+                     'help:manual', order=10)
     menu.add_urlname(ugettext_lazy('About'), 'glyphicon-star', 'help:about',
-                     100)
+                     order=100)
 
 
 def index(request):
