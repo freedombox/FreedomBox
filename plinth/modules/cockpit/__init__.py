@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to configure Tiny Tiny RSS.
+Plinth module to configure Cockpit.
 """
 
 from django.utils.translation import ugettext_lazy as _
@@ -32,9 +32,9 @@ from plinth.menu import main_menu
 
 version = 1
 
-managed_services = ['tt-rss']
+managed_services = ['cockpit']
 
-managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
+managed_packages = ['cockpit', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
 
 title = _('News Feed Reader \n (Tiny Tiny RSS)')
 
