@@ -40,7 +40,9 @@ managed_services = ['infinoted']
 
 managed_packages = ['infinoted']
 
-title = _('Gobby Server \n (infinoted)')
+title = _('infinoted')
+
+short_description = _('Gobby Server')
 
 description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
@@ -56,7 +58,7 @@ description = [
 def init():
     """Initialize the infinoted module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-pencil', 'infinoted:index')
+    menu.add_urlname(title, 'glyphicon-pencil', 'infinoted:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

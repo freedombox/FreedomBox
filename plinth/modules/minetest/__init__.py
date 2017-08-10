@@ -45,7 +45,9 @@ managed_packages = ['minetest-server', 'minetest-mod-advspawning',
                     'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
                     'minetest-mod-nether', 'minetest-mod-torches']
 
-title = _('Block Sandbox \n (Minetest)')
+title = _('Minetest')
+
+short_description = _('Block Sandbox')
 
 description = [
     format_lazy(
@@ -65,7 +67,7 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index')
+    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -94,6 +96,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('minetest', title, url=None,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('minetest:index'),
                            login_required=False)

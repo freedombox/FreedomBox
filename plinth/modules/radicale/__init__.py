@@ -40,7 +40,9 @@ managed_services = ['radicale']
 
 managed_packages = ['radicale']
 
-title = _('Calendar and Addressbook \n (Radicale)')
+title = _('Radicale')
+
+short_description = _('Calendar and Addressbook')
 
 description = [
     format_lazy(
@@ -59,7 +61,7 @@ CONFIG_FILE = '/etc/radicale/config'
 def init():
     """Initialize the radicale module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index')
+    menu.add_urlname(title, 'glyphicon-calendar', 'radicale:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -89,6 +91,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('radicale', title,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('radicale:index'),
                            login_required=True)

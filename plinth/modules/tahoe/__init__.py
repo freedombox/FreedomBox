@@ -39,7 +39,9 @@ managed_services = ['tahoe-lafs']
 
 managed_packages = ['tahoe-lafs']
 
-title = _('Distributed File Storage (Tahoe-LAFS)')
+title = _('LAFS')
+
+short_description = _('Distributed File Storage')
 
 service = None
 
@@ -85,7 +87,7 @@ description = [
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-hdd', 'tahoe:index')
+    menu.add_urlname(title, 'glyphicon-hdd', 'tahoe:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -139,7 +141,7 @@ def add_shortcut():
     """Helper method to add a shortcut to the front page."""
     # BUG: Current logo appears squashed on front page.
     frontpage.add_shortcut(
-        'tahoe-lafs', title,
+        'tahoe-lafs', title, short_description=short_description,
         url='https://{}:5678'.format(get_configured_domain_name()),
         login_required=True)
 

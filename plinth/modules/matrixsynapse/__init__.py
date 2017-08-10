@@ -38,7 +38,9 @@ managed_services = ['matrix-synapse']
 
 managed_packages = ['matrix-synapse']
 
-title = _('Chat Server \n (Matrix Synapse)')
+title = _('Matrix Synapse')
+
+short_description = _('Chat Server')
 
 description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
@@ -65,7 +67,7 @@ SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 def init():
     """Initialize the matrix-synapse module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-comment', 'matrixsynapse:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'matrixsynapse:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -99,6 +101,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Add a shortcut to the frontpage."""
     frontpage.add_shortcut('matrixsynapse', title, details=description,
+                           short_description=short_description,
                            configure_url=reverse_lazy('matrixsynapse:index'),
                            login_required=True)
 

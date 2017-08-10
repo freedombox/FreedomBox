@@ -48,9 +48,9 @@ def get_configured_domain_name():
 
 version = 1
 
-title_en = 'Federated Social Network \n (diaspora*)'
+title = _('diaspora*')
 
-title = _(title_en)
+short_description = _('Federated Social Network')
 
 service = None
 
@@ -73,7 +73,7 @@ description = [
 def init():
     """Initialize the Diaspora module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-thumbs-up', 'diaspora:index')
+    menu.add_urlname(title, 'glyphicon-thumbs-up', 'diaspora:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -118,6 +118,7 @@ def add_shortcut():
         frontpage.add_shortcut(
             'diaspora',
             title,
+            short_description,
             url='https://diaspora.{}'.format(get_configured_domain_name()),
             login_required=True)
 

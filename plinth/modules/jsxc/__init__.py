@@ -33,7 +33,9 @@ version = 1
 
 managed_packages = ['libjs-jsxc']
 
-title = _('Chat Client \n (JSXC)')
+title = _('JSXC')
+
+short_description = _('Chat Client')
 
 description = [
 
@@ -49,7 +51,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the JSXC module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'jsxc:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

@@ -35,7 +35,9 @@ managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
-title = _('BitTorrent \n (Transmission)')
+title = _('Transmission')
+
+short_description = ('BitTorrent')
 
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -52,7 +54,7 @@ service = None
 def init():
     """Intialize the Transmission module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-save', 'transmission:index')
+    menu.add_urlname(title, 'glyphicon-save', 'transmission:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -88,7 +90,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-            'transmission', title, url='/transmission',
+            'transmission', title, short_description=short_description, url='/transmission',
             login_required=True)
 
 

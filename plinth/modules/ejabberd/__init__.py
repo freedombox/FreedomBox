@@ -42,7 +42,9 @@ managed_services = ['ejabberd']
 
 managed_packages = ['ejabberd']
 
-title = _('Chat Server \n (ejabberd)')
+title = _('ejabberd')
+
+short_description = _('Chat Server')
 
 description = [
     _('XMPP is an open and standardized communication protocol. Here '
@@ -67,7 +69,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the ejabberd module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-comment', 'ejabberd:index')
+    menu.add_urlname(title, 'glyphicon-comment', 'ejabberd:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -105,7 +107,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ejabberd', title,
+    frontpage.add_shortcut('ejabberd', name=title,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('ejabberd:index'),
                            login_required=True)

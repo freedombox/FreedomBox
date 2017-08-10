@@ -36,7 +36,9 @@ managed_services = ['tt-rss']
 
 managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
 
-title = _('News Feed Reader \n (Tiny Tiny RSS)')
+title = _('Tiny Tiny RSS')
+
+short_description = _('News Feed Reader')
 
 description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
@@ -56,7 +58,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
+    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -86,7 +88,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, url='/tt-rss',
+    frontpage.add_shortcut('ttrss', title, short_description=short_description, url='/tt-rss',
                            login_required=True)
 
 

@@ -38,7 +38,9 @@ managed_packages = ['ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
 
 service = None
 
-title = _('Wiki and Blog (ikiwiki)')
+title = _('ikiwiki')
+
+short_description = _('Wiki and Blog')
 
 description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
@@ -59,7 +61,7 @@ description = [
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index')
+    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

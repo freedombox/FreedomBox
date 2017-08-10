@@ -32,7 +32,9 @@ version = 1
 
 managed_packages = ['shaarli']
 
-title = _('Bookmarks \n (Shaarli)')
+title = _('Shaarli')
+
+short_description = _('Bookmarks')
 
 description = [
     _('Shaarli allows you to save and share bookmarks.'),
@@ -49,7 +51,7 @@ service = None
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index')
+    menu.add_urlname(title, 'glyphicon-bookmark', 'shaarli:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -75,7 +77,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', title, url='/shaarli',
+    frontpage.add_shortcut('shaarli', title, short_description=short_description, url='/shaarli',
                            login_required=True)
 
 

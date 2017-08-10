@@ -39,7 +39,9 @@ managed_services = ['quasselcore']
 
 managed_packages = ['quassel-core']
 
-title = _('IRC Client \n (Quassel)')
+title = _('Quassel')
+
+short_description = _('IRC Client')
 
 description = [
     format_lazy(
@@ -64,7 +66,7 @@ reserved_usernames = ['quasselcore']
 def init():
     """Initialize the quassel module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index')
+    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -97,6 +99,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('quassel', title,
+                           short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('quassel:index'),
                            login_required=True)
