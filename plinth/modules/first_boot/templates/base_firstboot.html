@@ -29,5 +29,7 @@
 {% endblock %}
 
 {% block mainmenu_right %}
-  {% include "firstboot_navbar.html" %}
+    {% if firstboot_complete %}
+        {% include "firstboot_navbar.html" %}
+    {% endif %}
 {% endblock %}
