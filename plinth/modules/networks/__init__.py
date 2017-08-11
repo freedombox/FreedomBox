@@ -34,7 +34,7 @@ is_essential = True
 
 managed_packages = ['network-manager', 'batctl']
 
-title = _('Networks')
+name = _('Networks')
 
 logger = Logger(__name__)
 
@@ -42,7 +42,7 @@ logger = Logger(__name__)
 def init():
     """Initialize the Networks module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-signal', 'networks:index')
+    menu.add_urlname(name, 'glyphicon-signal', 'networks:index')
 
 
 def setup(helper, old_version=None):

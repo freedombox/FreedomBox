@@ -37,7 +37,7 @@ depends = ['names']
 
 managed_packages = ['certbot']
 
-title = _('Let\'s Encrypt')
+name = _('Let\'s Encrypt')
 
 short_description = _('Certificates')
 
@@ -64,7 +64,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title,
+    menu.add_urlname(name,
                      'glyphicon-lock', 'letsencrypt:index', short_description)
     domainname_change.connect(on_domainname_change)
 

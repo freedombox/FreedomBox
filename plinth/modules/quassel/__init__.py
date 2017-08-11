@@ -39,7 +39,7 @@ managed_services = ['quasselcore']
 
 managed_packages = ['quassel-core']
 
-title = _('Quassel')
+name = _('Quassel')
 
 short_description = _('IRC Client')
 
@@ -66,13 +66,13 @@ reserved_usernames = ['quasselcore']
 def init():
     """Initialize the quassel module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-retweet', 'quassel:index', short_description)
+    menu.add_urlname(name, 'glyphicon-retweet', 'quassel:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['quassel-plinth'],
+            managed_services[0], name, ports=['quassel-plinth'],
             is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
@@ -91,14 +91,14 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['quassel-plinth'],
+            managed_services[0], name, ports=['quassel-plinth'],
             is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('quassel', title,
+    frontpage.add_shortcut('quassel', name,
                            short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('quassel:index'),

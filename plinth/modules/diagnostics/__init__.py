@@ -29,7 +29,7 @@ version = 1
 
 is_essential = True
 
-title = _('Diagnostics')
+name = _('Diagnostics')
 
 description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -41,7 +41,7 @@ description = [
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-screenshot', 'diagnostics:index')
+    menu.add_urlname(name, 'glyphicon-screenshot', 'diagnostics:index')
 
 
 def diagnose():

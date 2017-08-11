@@ -34,7 +34,7 @@ managed_services = ['ntp']
 
 managed_packages = ['ntp']
 
-title = _('Date & Time')
+name = _('Date & Time')
 
 description = [
     _('Network time server is a program that maintains the system time '
@@ -47,13 +47,13 @@ service = None
 def init():
     """Intialize the date/time module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-time', 'datetime:index')
+    menu.add_urlname(name, 'glyphicon-time', 'datetime:index')
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['ntp'], is_external=False)
+            managed_services[0], name, ports=['ntp'], is_external=False)
 
 
 def setup(helper, old_version=None):
@@ -62,7 +62,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['ntp'], is_external=False)
+            managed_services[0], name, ports=['ntp'], is_external=False)
     helper.call('post', service.notify_enabled, None, True)
 
 

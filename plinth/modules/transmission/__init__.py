@@ -35,9 +35,9 @@ managed_services = ['transmission-daemon']
 
 managed_packages = ['transmission-daemon']
 
-title = _('Transmission')
+name = _('Transmission')
 
-short_description = ('BitTorrent')
+short_description = _('BitTorrent')
 
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -54,13 +54,13 @@ service = None
 def init():
     """Intialize the Transmission module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-save', 'transmission:index', short_description)
+    menu.add_urlname(name, 'glyphicon-save', 'transmission:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True, is_enabled=is_enabled,
             enable=enable, disable=disable)
 
@@ -81,7 +81,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True, is_enabled=is_enabled,
             enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -90,7 +90,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut(
-            'transmission', title, short_description=short_description, url='/transmission',
+            'transmission', name, short_description=short_description, url='/transmission',
             login_required=True)
 
 

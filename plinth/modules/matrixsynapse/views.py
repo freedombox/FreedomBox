@@ -48,7 +48,7 @@ class SetupView(FormView):
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
 
-        context['title'] = matrixsynapse.title
+        context['title'] = matrixsynapse.name
         context['description'] = matrixsynapse.description
         context['domain_names'] = get_domain_names()
 

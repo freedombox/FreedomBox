@@ -47,7 +47,7 @@ class UpgradesConfigurationView(FormView):
         """Return the context data for rendering the template view."""
         context = super().get_context_data(*args, **kwargs)
         context['subsubmenu'] = subsubmenu
-        context['title'] = upgrades.title
+        context['title'] = upgrades.name
         context['description'] = upgrades.description
         return context
 
@@ -111,7 +111,7 @@ def upgrade(request):
             messages.error(request, _('Starting upgrade failed.'))
 
     return TemplateResponse(request, 'upgrades.html',
-                            {'title': upgrades.title,
+                            {'title': upgrades.name,
                              'description': upgrades.description,
                              'subsubmenu': subsubmenu,
                              'is_busy': is_busy,

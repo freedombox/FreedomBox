@@ -29,7 +29,7 @@ version = 2
 
 is_essential = True
 
-title = _('Security')
+name = _('Security')
 
 managed_packages = ['fail2ban']
 
@@ -42,7 +42,7 @@ ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-lock', 'security:index')
+    menu.add_urlname(name, 'glyphicon-lock', 'security:index')
 
 
 def setup(helper, old_version=None):

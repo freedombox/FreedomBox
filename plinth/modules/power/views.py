@@ -32,7 +32,7 @@ from plinth.modules import power
 def index(request):
     """Serve power controls page."""
     return TemplateResponse(request, 'power.html',
-                            {'title': power.title,
+                            {'title': power.name,
                              'description': power.description,
                              'pkg_manager_is_busy': _is_pkg_manager_busy()})
 

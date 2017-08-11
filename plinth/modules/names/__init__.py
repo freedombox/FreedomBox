@@ -36,7 +36,7 @@ version = 1
 
 is_essential = True
 
-title = _('Name Services')
+name = _('Name Services')
 
 domain_types = {}
 domains = {}
@@ -47,7 +47,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the names module."""
     menu = main_menu.get('system')
-    menu.add_urlname(title, 'glyphicon-tag', 'names:index')
+    menu.add_urlname(name, 'glyphicon-tag', 'names:index')
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)

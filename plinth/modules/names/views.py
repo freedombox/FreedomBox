@@ -32,7 +32,7 @@ def index(request):
     status = get_status()
 
     return TemplateResponse(request, 'names.html',
-                            {'title': names.title,
+                            {'title': names.name,
                              'status': status})
 
 

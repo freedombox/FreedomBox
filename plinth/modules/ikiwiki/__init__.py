@@ -38,7 +38,7 @@ managed_packages = ['ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
 
 service = None
 
-title = _('ikiwiki')
+name = _('ikiwiki')
 
 short_description = _('Wiki and Blog')
 
@@ -61,13 +61,13 @@ description = [
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-edit', 'ikiwiki:index', short_description)
+    menu.add_urlname(name, 'glyphicon-edit', 'ikiwiki:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            'ikiwiki', title, ports=['http', 'https'], is_external=True,
+            'ikiwiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
         if is_enabled():
@@ -81,7 +81,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            'ikiwiki', title, ports=['http', 'https'], is_external=True,
+            'ikiwiki', name, ports=['http', 'https'], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcuts)

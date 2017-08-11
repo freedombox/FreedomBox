@@ -28,7 +28,7 @@ version = 1
 
 managed_packages = ['monkeysphere']
 
-title = _('Monkeysphere')
+name = _('Monkeysphere')
 
 description = [
     _('With Monkeysphere, an OpenPGP key can be generated for each configured '

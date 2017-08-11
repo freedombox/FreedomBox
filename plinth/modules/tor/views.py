@@ -51,7 +51,7 @@ def index(request):
         form = TorForm(initial=status, prefix='tor')
 
     return TemplateResponse(request, 'tor.html',
-                            {'title': tor.title,
+                            {'title': tor.name,
                              'description': tor.description,
                              'status': status,
                              'config_running': bool(config_process),

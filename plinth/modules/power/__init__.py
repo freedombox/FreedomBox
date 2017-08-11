@@ -25,7 +25,7 @@ version = 1
 
 is_essential = True
 
-title = _('Power')
+name = _('Power')
 
 description = [
     _('Restart or shut down the system.')

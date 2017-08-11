@@ -44,7 +44,7 @@ subsubmenu = [{'url': reverse_lazy('pagekite:index'),
 def index(request):
     """Serve introduction page"""
     return TemplateResponse(request, 'pagekite_introduction.html',
-                            {'title': pagekite.title,
+                            {'title': pagekite.name,
                              'description': pagekite.description,
                              'subsubmenu': subsubmenu})
 

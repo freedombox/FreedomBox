@@ -45,7 +45,7 @@ managed_packages = ['minetest-server', 'minetest-mod-advspawning',
                     'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
                     'minetest-mod-nether', 'minetest-mod-torches']
 
-title = _('Minetest')
+name = _('Minetest')
 
 short_description = _('Block Sandbox')
 
@@ -67,13 +67,13 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-th-large', 'minetest:index', short_description)
+    menu.add_urlname(name, 'glyphicon-th-large', 'minetest:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title,
+            managed_services[0], name,
             ports=['minetest-plinth'], is_external=True, enable=enable,
             disable=disable)
 
@@ -87,7 +87,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title,
+            managed_services[0], name,
             ports=['minetest-plinth'], is_external=True, enable=enable,
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -95,7 +95,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('minetest', title, url=None,
+    frontpage.add_shortcut('minetest', name, url=None,
                            short_description=short_description,
                            details=description,
                            configure_url=reverse_lazy('minetest:index'),

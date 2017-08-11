@@ -36,7 +36,7 @@ managed_services = ['tt-rss']
 
 managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
 
-title = _('Tiny Tiny RSS')
+name = _('Tiny Tiny RSS')
 
 short_description = _('News Feed Reader')
 
@@ -58,13 +58,13 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index', short_description)
+    menu.add_urlname(name, 'glyphicon-envelope', 'ttrss:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
 
@@ -80,7 +80,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['http', 'https'],
+            managed_services[0], name, ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
@@ -88,7 +88,7 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, short_description=short_description, url='/tt-rss',
+    frontpage.add_shortcut('ttrss', name, short_description=short_description, url='/tt-rss',
                            login_required=True)
 
 

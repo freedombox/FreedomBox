@@ -39,7 +39,7 @@ managed_services = ['openvpn@freedombox']
 
 managed_packages = ['openvpn', 'easy-rsa']
 
-title = _('OpenVPN')
+name = _('OpenVPN')
 
 short_description = _('Virtual Private Network')
 
@@ -58,13 +58,13 @@ description = [
 def init():
     """Initialize the OpenVPN module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-lock', 'openvpn:index', short_description)
+    menu.add_urlname(name, 'glyphicon-lock', 'openvpn:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], title, ports=['openvpn'], is_external=True)
+            managed_services[0], name, ports=['openvpn'], is_external=True)
 
         if service.is_enabled() and is_setup():
             add_shortcut()
@@ -76,7 +76,7 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], title, ports=['openvpn'], is_external=True,
+            managed_services[0], name, ports=['openvpn'], is_external=True,
             enable=enable, disable=disable)
 
 
@@ -86,7 +86,7 @@ def add_shortcut():
         format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
                       'Download Profile</a>'),
                     link=reverse_lazy('openvpn:profile'))
-    frontpage.add_shortcut('openvpn', title,
+    frontpage.add_shortcut('openvpn', name,
                            short_description=short_description,
                            details=description + [download_profile],
                            configure_url=reverse_lazy('openvpn:index'),

@@ -57,7 +57,7 @@ def index(request):
         form = OpenVpnForm(initial=status, prefix='openvpn')
 
     return TemplateResponse(request, 'openvpn.html',
-                            {'title': openvpn.title,
+                            {'title': openvpn.name,
                              'description': openvpn.description,
                              'status': status,
                              'form': form})
