@@ -25,6 +25,7 @@ import argparse
 from ruamel.yaml import round_trip_dump, round_trip_load
 
 from plinth import action_utils
+from plinth.modules.matrixsynapse import CONFIG_FILE_PATH
 
 
 def parse_arguments():
@@ -35,6 +36,11 @@ def parse_arguments():
     subparsers.add_parser('post-install', help='Perform post install steps')
     subparsers.add_parser('enable', help='Enable matrix-synapse service')
     subparsers.add_parser('disable', help='Disable matrix-synapse service')
+    subparsers.add_parser('restart', help='Restart matrix-synapse service')
+    subparsers.add_parser('enable-registration',
+                          help='Turn on Public registrations')
+    subparsers.add_parser('disable-registration',
+                          help='Turn off Public registrations')
     setup = subparsers.add_parser('setup', help='Set domain name for Matrix')
     setup.add_argument(
         '--domain-name',
@@ -46,8 +52,7 @@ def parse_arguments():
 
 def subcommand_post_install(_):
     """Perform post installation configuration."""
-    file_path = '/etc/matrix-synapse/homeserver.yaml'
-    with open(file_path) as config_file:
+    with open(CONFIG_FILE_PATH) as config_file:
         config = round_trip_load(config_file)
 
     config['max_upload_size'] = '100M'
@@ -56,7 +61,7 @@ def subcommand_post_install(_):
         if listener['port'] == 8448:
             listener['bind_address'] = '0.0.0.0'
 
-    with open(file_path, 'w') as config_file:
+    with open(CONFIG_FILE_PATH, 'w') as config_file:
         round_trip_dump(config, config_file)
 
 
@@ -78,6 +83,30 @@ def subcommand_disable(_):
     """Disable service."""
     action_utils.webserver_disable('matrix-synapse-plinth')
     action_utils.service_disable('matrix-synapse')
+
+
+def subcommand_enable_registration(_):
+    """ Enable public registration"""
+    with open(CONFIG_FILE_PATH) as config_file:
+        config = round_trip_load(config_file)
+    config['enable_registration'] = True
+    with open(CONFIG_FILE_PATH, 'w') as config_file:
+        round_trip_dump(config, config_file)
+
+    if action_utils.is_service_running('matrix-synapse'):
+        action_utils.service_restart('matrix-synapse')
+
+
+def subcommand_disable_registration(_):
+    """ Disable public registration"""
+    with open(CONFIG_FILE_PATH) as config_file:
+        config = round_trip_load(config_file)
+    config['enable_registration'] = False
+    with open(CONFIG_FILE_PATH, 'w') as config_file:
+        round_trip_dump(config, config_file)
+
+    if action_utils.is_service_running('matrix-synapse'):
+        action_utils.service_restart('matrix-synapse')
 
 
 def main():
