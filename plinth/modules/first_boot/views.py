@@ -54,4 +54,5 @@ class CompleteView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['connections'] = network.get_connection_list()
         context['title'] = _('Setup Complete')
+        context['firstboot_complete'] = True
         return context
