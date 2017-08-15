@@ -16,20 +16,20 @@
 #
 
 """
-URLs for the Tiny Tiny RSS module.
+URLs for Cockpit module.
 """
 
 from django.conf.urls import url
 
 from plinth.views import ServiceView
-from plinth.modules import ttrss
+from plinth.modules import cockpit
 
 
 urlpatterns = [
-    url(r'^apps/ttrss/$', ServiceView.as_view(
-        service_id=ttrss.managed_services[0],
-        diagnostics_module_name="ttrss",
-        description=ttrss.description,
+    url(r'^apps/cockpit/$', ServiceView.as_view(
+        service_id=cockpit.managed_services[0],
+        diagnostics_module_name="cockpit",
+        description=cockpit.description,
         show_status_block=True
     ), name='index'),
 ]

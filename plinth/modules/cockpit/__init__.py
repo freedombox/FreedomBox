@@ -34,18 +34,18 @@ version = 1
 
 managed_services = ['cockpit']
 
-managed_packages = ['cockpit', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
+managed_packages = ['cockpit']
 
-title = _('News Feed Reader \n (Tiny Tiny RSS)')
+title = _('Dashboard of Servers \n (Cockpit)')
 
 description = [
-    _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
-      'designed to allow reading news from any location, while feeling as '
-      'close to a real desktop application as possible.'),
+    _('Cockpit is an interactive server admin interface. It is easy to use '
+      'and very light weight. Cockpit interacts directly with the operating '
+      'system from a real linux session in a browser'),
 
     format_lazy(
-        _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
-          'rss">/tt-rss</a> path on the web server. It can be accessed by '
+        _('When enabled, Cockpit will be available from <a href="/tt-'
+          'rss">/cockpit</a> path on the web server. It can be accessed by '
           'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
 ]
@@ -56,7 +56,7 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-envelope', 'ttrss:index')
+    menu.add_urlname(title, 'glyphicon-dashboard', 'cockpit:index')
 
     global service
     setup_helper = globals()['setup_helper']
@@ -72,9 +72,9 @@ def init():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
+    helper.call('pre', actions.superuser_run, 'cockpit', ['pre-setup'])
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
+    helper.call('post', actions.superuser_run, 'cockpit', ['setup'])
     global service
     if service is None:
         service = service_module.Service(
@@ -86,26 +86,26 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', title, url='/tt-rss',
+    frontpage.add_shortcut('cockpit', title, url='/cockpit',
                            login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('tt-rss') and
-            action_utils.webserver_is_enabled('tt-rss-plinth'))
+    return (action_utils.service_is_enabled('cockpit') and
+            action_utils.webserver_is_enabled('cockpit-plinth'))
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('ttrss', ['enable'])
+    actions.superuser_run('cokpit', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('ttrss', ['disable'])
-    frontpage.remove_shortcut('ttrss')
+    actions.superuser_run('cockpit', ['disable'])
+    frontpage.remove_shortcut('cockpit')
 
 
 def diagnose():
@@ -113,6 +113,6 @@ def diagnose():
     results = []
 
     results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/tt-rss', check_certificate=False))
+        'https://{host}/cockpit', check_certificate=False))
 
     return results
