@@ -14,12 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for using Let's Encrypt.
 """
 
-import json
 import logging
 
 from django.contrib import messages
@@ -31,16 +29,15 @@ from django.views.decorators.http import require_POST
 
 from plinth import actions
 from plinth.errors import ActionError
+from plinth.modules import config
 from plinth.modules import letsencrypt
-from plinth.modules import names
-from plinth.modules.config import config
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
     """Serve configuration page."""
-    status = get_status()
+    status = letsencrypt.get_status()
     return TemplateResponse(request, 'letsencrypt.html',
                             {'title': letsencrypt.name,
                              'description': letsencrypt.description,
@@ -53,11 +50,12 @@ def index(request):
 def revoke(request, domain):
     """Revoke a certificate for a given domain."""
     try:
-        actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+        letsencrypt.try_action(domain, 'revoke')
         messages.success(
-            request, _('Certificate successfully revoked for domain {domain}.'
-                       'This may take a few moments to take effect.')
-            .format(domain=domain))
+            request,
+            _('Certificate successfully revoked for domain {domain}.'
+              'This may take a few moments to take effect.').format(
+                  domain=domain))
     except ActionError as exception:
         messages.error(
             request,
@@ -71,19 +69,22 @@ def revoke(request, domain):
 def obtain(request, domain):
     """Obtain and install a certificate for a given domain."""
     try:
-        actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
+        letsencrypt.try_action(domain, 'obtain')
         messages.success(
-            request, _('Certificate successfully obtained for domain {domain}')
-            .format(domain=domain))
-        successful_obtain = True
+            request,
+            _('Certificate successfully obtained for domain {domain}').format(
+                domain=domain))
+        enable_renewal_management(request, domain)
     except ActionError as exception:
         messages.error(
             request,
             _('Failed to obtain certificate for domain {domain}: {error}')
             .format(domain=domain, error=exception.args[2]))
-        successful_obtain = False
+    return redirect(reverse_lazy('letsencrypt:index'))
 
-    if domain == config.get_domainname() and successful_obtain:
+
+def enable_renewal_management(request, domain):
+    if domain == config.get_domainname():
         try:
             actions.superuser_run('letsencrypt', ['manage_hooks', 'enable'])
             messages.success(
@@ -94,10 +95,8 @@ def obtain(request, domain):
             messages.error(
                 request,
                 _('Failed to enable certificate renewal management for '
-                  '{domain}: {error}')
-                .format(domain=domain, error=exception.args[2]))
-
-    return redirect(reverse_lazy('letsencrypt:index'))
+                  '{domain}: {error}').format(
+                      domain=domain, error=exception.args[2]))
 
 
 @require_POST
@@ -126,8 +125,7 @@ def toggle_hooks(request, domain):
         messages.error(
             request,
             _('Failed to switch certificate renewal management for {domain}: '
-              '{error}')
-            .format(domain=domain, error=exception.args[2]))
+              '{error}').format(domain=domain, error=exception.args[2]))
 
     return redirect(reverse_lazy('letsencrypt:index'))
 
@@ -183,14 +181,14 @@ def delete(request, domain):
         messages.error(
             request,
             _('Failed to disable certificate renewal management for {domain}: '
-              '{error}')
-            .format(domain=domain, error=exception.args[2]))
+              '{error}').format(domain=domain, error=exception.args[2]))
 
     try:
         actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
         messages.success(
-            request, _('Certificate successfully deleted for domain {domain}')
-            .format(domain=domain))
+            request,
+            _('Certificate successfully deleted for domain {domain}').format(
+                domain=domain))
     except ActionError as exception:
         messages.error(
             request,
@@ -198,27 +196,3 @@ def delete(request, domain):
             .format(domain=domain, error=exception.args[2]))
 
     return redirect(reverse_lazy('letsencrypt:index'))
-
-
-def get_status():
-    """Get the current settings."""
-    status = actions.superuser_run('letsencrypt', ['get-status'])
-    status = json.loads(status)
-    curr_dom = config.get_domainname()
-    current_domain = {
-        'name': curr_dom,
-        'has_cert': (curr_dom in status['domains'] and
-                     status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_status': letsencrypt.get_manage_hooks_status()
-    }
-    status['current_domain'] = current_domain
-
-    for domain_type, domains in names.domains.items():
-        # XXX: Remove when Let's Encrypt supports .onion addresses
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            status['domains'].setdefault(domain, {})
-
-    return status
