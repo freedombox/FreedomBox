@@ -52,9 +52,10 @@ ENABLED_APPS_PATH = "/etc/plinth/modules-enabled/"
 
 DISABLED_APPS_TO_REMOVE = [
     'apps',
+    'diaspora',
+    'owncloud',
     'system',
     'xmpp',
-    'owncloud'
 ]
 
 LOCALE_PATHS = [
