@@ -15,16 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for the Single Sign On module.
+Forms for the Single Sign On module of Plinth
 """
 
-from django.conf.urls import url
+from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm
+from captcha.fields import CaptchaField
 
 
-from .views import SSOLoginView, refresh
-from stronghold.decorators import public
-
-urlpatterns = [
-    url(r'^accounts/sso/login/$', public(SSOLoginView.as_view()), name='sso-login'),
-    url(r'^accounts/sso/refresh/$', refresh, name='sso-refresh'),
-]
+class AuthenticationForm(DjangoAuthenticationForm):
+    captcha = CaptchaField()

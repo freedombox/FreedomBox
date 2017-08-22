@@ -209,6 +209,7 @@ def configure_django():
     ]
 
     applications = ['bootstrapform',
+                    'captcha',
                     'django.contrib.auth',
                     'django.contrib.contenttypes',
                     'django.contrib.messages',
@@ -242,6 +243,7 @@ def configure_django():
         ],
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
+        CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
         DATABASES={'default':
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
@@ -271,6 +273,9 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
+        # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', ),
+        STRONGHOLD_PUBLIC_NAMED_URLS=('captcha-image', 'captcha-image-2x',
+                                      'captcha-audio', 'captcha-refresh', ),
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)

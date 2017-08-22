@@ -212,6 +212,7 @@ setuptools.setup(
         'configobj',
         'django >= 1.11.0',
         'django-bootstrap-form',
+        'django-simple-captcha',
         'django-stronghold',
         'psutil',
         'python-apt',
