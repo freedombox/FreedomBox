@@ -21,6 +21,8 @@ Views for the Single Sign On module of Plinth
 import os
 import urllib
 
+from .forms import AuthenticationForm
+
 from plinth import actions
 
 from django.http import HttpResponseRedirect
@@ -51,15 +53,21 @@ class SSOLoginView(LoginView):
     """View to login to Plinth and set a auth_pubtkt cookie which will be
     used to provide Single Sign On for some other applications
     """
-
     redirect_authenticated_user = True
     template_name = 'login.html'
 
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
-        return set_ticket_cookie(
-            request.user,
-            response) if request.user.is_authenticated else response
+        if request.POST:
+            if request.user.is_authenticated:
+                return set_ticket_cookie(request.user, response)
+            else: # Redirect user to captcha page
+                return HttpResponseRedirect('captcha')
+        return response
+
+
+class CaptchaLoginView(SSOLoginView):
+    form_class = AuthenticationForm
 
 
 class SSOLogoutView(LogoutView):

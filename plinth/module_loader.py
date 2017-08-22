@@ -27,7 +27,6 @@ import os
 import re
 
 from plinth import cfg
-from plinth import urls
 from plinth import setup
 from plinth.signals import pre_module_loading, post_module_loading
 
@@ -114,6 +113,7 @@ def _insert_modules(module_name, module, remaining_modules, ordered_modules):
 
 def _include_module_urls(module_import_path, module_name):
     """Include the module's URLs in global project URLs list"""
+    from plinth import urls
     url_module = module_import_path + '.urls'
     try:
         urls.urlpatterns += [
