@@ -244,6 +244,7 @@ def configure_django():
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
         CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
+        CAPTCHA_LENGTH=6,
         DATABASES={'default':
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
