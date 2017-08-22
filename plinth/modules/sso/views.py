@@ -62,7 +62,8 @@ class SSOLoginView(LoginView):
             if request.user.is_authenticated:
                 return set_ticket_cookie(request.user, response)
             else: # Redirect user to captcha page
-                return HttpResponseRedirect('captcha')
+                redirect = '' if request.path.rstrip('/').endswith('captcha') else 'captcha'
+                return HttpResponseRedirect(redirect)
         return response
 
 
