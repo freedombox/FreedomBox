@@ -29,7 +29,7 @@ depends = ['security', 'apache']
 
 name = _('Single Sign On')
 
-managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
+managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl', 'flite']
 
 
 def setup(helper, old_version=None):
