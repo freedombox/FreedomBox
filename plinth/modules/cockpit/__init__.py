@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.signals import domain_added, domain_removed, domainname_change
 
 
 version = 1
@@ -44,8 +45,8 @@ description = [
       'system from a real linux session in a browser'),
 
     format_lazy(
-        _('When enabled, Cockpit will be available from <a href="/tt-'
-          'rss">/cockpit</a> path on the web server. It can be accessed by '
+        _('When enabled, Cockpit will be available from <a href="/cockpit">'
+          '/cockpit</a> path on the web server. It can be accessed by '
           'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
 ]
@@ -92,19 +93,19 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('cockpit') and
+    return (action_utils.service_is_enabled('cockpit.socket') and
             action_utils.webserver_is_enabled('cockpit-plinth'))
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('cokpit', ['enable'])
+    actions.superuser_run('cockpit.socket', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Enable the module."""
-    actions.superuser_run('cockpit', ['disable'])
+    actions.superuser_run('cockpit.socket', ['disable'])
     frontpage.remove_shortcut('cockpit')
 
 
@@ -116,3 +117,12 @@ def diagnose():
         'https://{host}/cockpit', check_certificate=False))
 
     return results
+
+def on_domain_added():
+    pass
+
+def on_domain_removed():
+    pass
+
+def on_domainname_change():
+    pass
