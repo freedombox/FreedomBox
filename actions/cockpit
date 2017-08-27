@@ -28,8 +28,6 @@ import subprocess
 from plinth import action_utils
 
 CONFIG_FILE = '/etc/cockpit/cockpit.conf'
-DEFAULT_FILE = '/etc/default/cockpit'
-
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
@@ -51,8 +49,6 @@ def subcommand_pre_setup(_):
         ['debconf-set-selections'],
         input=b'cockpit tt-rss/database-type string pgsql')"""
     pass
-#    open(CONFIG_FILE,'a').close()
-
 
 def subcommand_setup(_):
     """Setup Cockpit configuration."""
@@ -60,18 +56,20 @@ def subcommand_setup(_):
     open(CONFIG_FILE,'a').close()
 
     aug = load_augeas()
-
-    aug.set(CONFIG_FILE+'/Origins',"'https://localhost:9090 https://localhost:4430'")
-
+    SECTON = CONFIG_FILE+'/WebService'
+    aug.set(SECTION)
+    aug.set(SECTON+'/Origins',"https://localhost:9090 https://localhost:4430")
     aug.save()
 
     action_utils.webserver_enable('proxy_wstunnel',kind='module')
+    action_utils.service_restart('cockpit')
     action_utils.service_restart('cockpit.socket')
     action_utils.webserver_enable('cockpit-plinth')
     action_utils.service_restart('apache2')
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
+    action_utils.service_enable('cockpit')
     action_utils.service_enable('cockpit.socket')
     action_utils.webserver_enable('cockpit-plinth')
 
@@ -80,16 +78,23 @@ def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('cockpit-plinth')
     action_utils.service_disable('cockpit.socket')
+    action_utils.service_disable('cockpit')
 
+def subcommand_add_domain(_):
+    aug = load_augeas()
+
+def subcommand_remove_domain(_):
+    aug = load_augeas()
+
+def subcommand_change_domain(_):
+    aug = load_augeas()
 
 def load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-#    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
-#    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
-#    aug.set('/augeas/load/Phpvars/lens', 'Phpvars.lns')
-#    aug.set('/augeas/load/Phpvars/incl[last() + 1]', CONFIG_FILE)
+    aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
+    aug.set('/augeas/load/inifile/incl[last() + 1]', CONFIG_FILE)
     aug.load()
     return aug
 

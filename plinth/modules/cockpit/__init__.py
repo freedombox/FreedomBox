@@ -93,19 +93,20 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('cockpit.socket') and
-            action_utils.webserver_is_enabled('cockpit-plinth'))
+    return (action_utils.service_is_enabled('cockpit') and
+            action_utils.webserver_is_enabled('cockpit-plinth') and
+            action_utils.service_is_running('cockpit'))
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('cockpit.socket', ['enable'])
+    actions.superuser_run('cockpit', ['enable'])
     add_shortcut()
 
 
 def disable():
-    """Enable the module."""
-    actions.superuser_run('cockpit.socket', ['disable'])
+    """Disable the module."""
+    actions.superuser_run('cockpit', ['disable'])
     frontpage.remove_shortcut('cockpit')
 
 
@@ -119,10 +120,15 @@ def diagnose():
     return results
 
 def on_domain_added():
-    pass
+    actions.superuser_run('cockpit',['add_domain'])
 
 def on_domain_removed():
-    pass
+    actions.superuser_run('cockpit',['remove_domain'])
 
-def on_domainname_change():
-    pass
+def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
+    del sender
+    del kwargs
+    actions.superuser_run('cockpit',
+                          ['change_domain',
+                          '--domainname', new_domainname],
+                          async=True)
