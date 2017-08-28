@@ -42,6 +42,8 @@ def add_shortcut(shortcut_id, name, short_description="", login_required=False,
 
     shortcuts[shortcut_id] = {
         'id': shortcut_id,
+        'name': name,
+        'short_description': short_description,
         'label': label,
         'url': url,
         'icon': icon,
