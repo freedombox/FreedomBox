@@ -66,8 +66,7 @@ def subcommand_create_key_pair(_):
             for key_file in [public_key_file, private_key_file]
     ]):
         pkey = crypto.PKey()
-        # XXX: Use RSA when available in mod-auth-pubtkt.
-        pkey.generate_key(crypto.TYPE_DSA, 1024)
+        pkey.generate_key(crypto.TYPE_RSA, 4096)
 
         with open(private_key_file, 'w') as priv_key_file:
             priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,
@@ -102,8 +101,7 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
 
 def sign(pkey, data):
     """Calculates and returns ticket's signature."""
-    # XXX: Use SHA256 when available in mod-auth-pubtkt.
-    sig = crypto.sign(pkey, data, 'sha1')
+    sig = crypto.sign(pkey, data, 'sha512')
     return base64.b64encode(sig).decode()
 
 
