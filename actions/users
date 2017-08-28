@@ -37,8 +37,6 @@ def parse_arguments():
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     subparsers.add_parser('setup', help='Setup LDAP')
-    subparsers.add_parser('first-run',
-                          help='Additional setup performed after reboot')
 
     subparsers.required = True
     return parser.parse_args()
@@ -53,9 +51,6 @@ def subcommand_setup(_):
 
     configure_slapd()
 
-
-def subcommand_first_run(_):
-    """Additional setup performed after reboot."""
     configure_ldap_structure()
 
 
@@ -72,17 +67,9 @@ def configure_slapd():
 
 def configure_ldap_structure():
     """Configure LDAP basic structure."""
-    was_running = action_utils.service_is_running('slapd')
-    if not was_running:
-        action_utils.service_start('slapd')
-
-    try:
-        setup_admin()
-        create_organizational_unit('users')
-        create_organizational_unit('groups')
-    finally:
-        if not was_running:
-            action_utils.service_stop('slapd')
+    setup_admin()
+    create_organizational_unit('users')
+    create_organizational_unit('groups')
 
 
 def create_organizational_unit(unit):
