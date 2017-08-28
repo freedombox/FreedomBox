@@ -122,6 +122,5 @@ class TestYAMLFileUtil(TestCase):
 
         with open(fp.name, 'r') as retrieved_conf:
             file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
-            print(file_conf)
             assert file_conf == {'property1': self.kv_pair,
                                  'property2': self.kv_pair}
