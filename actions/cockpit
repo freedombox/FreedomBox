@@ -56,9 +56,9 @@ def subcommand_setup(_):
     open(CONFIG_FILE,'a').close()
 
     aug = load_augeas()
-    SECTON = CONFIG_FILE+'/WebService'
-    aug.set(SECTION)
-    aug.set(SECTON+'/Origins',"https://localhost:9090 https://localhost:4430")
+    SECTION = CONFIG_FILE+'/WebService'
+    aug.set('/files'+SECTION,'')
+    aug.set('/files'+SECTION+'/Origins',"https://localhost:9090 https://localhost:4430")
     aug.save()
 
     action_utils.webserver_enable('proxy_wstunnel',kind='module')
