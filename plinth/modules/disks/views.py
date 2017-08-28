@@ -68,6 +68,56 @@ def expand_partition(request, device):
         messages.success(request, _('Partition expanded successfully.'))
 
 
+def warn_about_insufficient_root_space(request):
+    """Warn about insufficient space on root partition."""
+    disks = disks_module.get_disks()
+    list_root = [disk for disk in disks if disk['mountpoint'] == '/']
+    perc_used = list_root[0]['percentage_used'] if list_root else -1
+    size_str = list_root[0]['size'] if list_root else '-1'
+    size_Bytes = _interpret_size_string(size_str)
+    free_Bytes = size_Bytes * (100 - perc_used) / 100
+    free_GiB = free_Bytes / 1024 ** 3
+    free_str = _format_bytes(free_Bytes)
+
+    if perc_used < 0 or free_GiB < 0:
+        # FIXME: Log read error.
+        return
+
+    msg_str = _('Warning: Low disk space on root partition ({percent_used}%'
+                ' used, {free_space} free). FIXME: Link to disk module.').format(
+                    percent_used=perc_used, free_space=free_str)
+
+    # FIXME: Match with existing coloring in disk module.
+    if perc_used > 90 or free_GiB < 3:
+        messages.error(request, msg_str)
+
+    elif perc_used > 80 or free_GiB < 2:
+        messages.warning(request, msg_str)
+
+
+def _interpret_size_string(size_str):
+    """Convert size string to number of bytes."""
+    if size_str is None or not size_str:
+        return -1
+
+    if size_str[-1] in '-10123456789':
+        return float(size_str[:-1])
+
+    if size_str[-1] == 'K':
+        return float(size_str[:-1]) * 1024
+
+    if size_str[-1] == 'M':
+        return float(size_str[:-1]) * 1024 ** 2
+
+    if size_str[-1] == 'G':
+        return float(size_str[:-1]) * 1024 ** 3
+
+    if size_str[-1] == 'T':
+        return float(size_str[:-1]) * 1024 ** 4
+
+    return -1
+
+
 def _format_bytes(size):
     """Return human readable disk size from bytes."""
     if not size:
