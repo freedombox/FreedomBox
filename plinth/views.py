@@ -31,6 +31,7 @@ import time
 from . import forms, frontpage
 import plinth
 from plinth import actions
+from plinth.modules.disks import views as disk_views
 
 
 @public
@@ -44,6 +45,8 @@ def index(request):
         details = frontpage.shortcuts[selection]['details']
         details_label = frontpage.shortcuts[selection]['label']
         configure_url = frontpage.shortcuts[selection]['configure_url']
+
+    disk_views.warn_about_insufficient_root_space(request)
 
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
