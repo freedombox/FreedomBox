@@ -19,13 +19,17 @@
 Views for disks module.
 """
 
+import logging
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
 from plinth.modules import disks as disks_module
+from plinth.utils import format_lazy
+
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -34,6 +38,8 @@ def index(request):
     root_device = disks_module.get_root_device(disks)
     expandable_root_size = disks_module.is_expandable(root_device)
     expandable_root_size = _format_bytes(expandable_root_size)
+
+    warn_about_low_disk_space(request)
 
     return TemplateResponse(request, 'disks.html',
                             {'title': _('Disks'),
@@ -68,7 +74,7 @@ def expand_partition(request, device):
         messages.success(request, _('Partition expanded successfully.'))
 
 
-def warn_about_insufficient_root_space(request):
+def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
     disks = disks_module.get_disks()
     list_root = [disk for disk in disks if disk['mountpoint'] == '/']
@@ -80,18 +86,19 @@ def warn_about_insufficient_root_space(request):
     free_str = _format_bytes(free_Bytes)
 
     if perc_used < 0 or free_GiB < 0:
-        # FIXME: Log read error.
+        logger.exception('Error getting information about root partition.')
         return
 
-    msg_str = _('Warning: Low disk space on root partition ({percent_used}%'
-                ' used, {free_space} free). FIXME: Link to disk module.').format(
-                    percent_used=perc_used, free_space=free_str)
+    msg_str = format_lazy(
+        _('Warning: Low space on system partition ({percent_used}% used, '
+          '{free_space} free). Check the Disks Configuration to resolve '
+          'this problem.'),
+        percent_used=perc_used, free_space=free_str)
 
-    # FIXME: Match with existing coloring in disk module.
-    if perc_used > 90 or free_GiB < 3:
+    if perc_used > 90 or free_GiB < 1:
         messages.error(request, msg_str)
 
-    elif perc_used > 80 or free_GiB < 2:
+    elif perc_used > 75 or free_GiB < 2:
         messages.warning(request, msg_str)
 
 
