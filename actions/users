@@ -67,6 +67,10 @@ def configure_slapd():
 
 def configure_ldap_structure():
     """Configure LDAP basic structure."""
+    was_running = action_utils.service_is_running('slapd')
+    if not was_running:
+        action_utils.service_start('slapd')
+
     setup_admin()
     create_organizational_unit('users')
     create_organizational_unit('groups')
