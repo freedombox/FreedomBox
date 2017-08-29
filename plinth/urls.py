@@ -29,6 +29,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^apps/$', TemplateView.as_view(template_name='apps.html'),
         name='apps'),
-    url(r'^sys/$', TemplateView.as_view(template_name='system.html'),
-        name='system'),
+    url(r'^sys/$', views.system_index, name='system'),
 ]
