@@ -35,4 +35,5 @@ managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
+    actions.superuser_run('auth-pubtkt', ['enable-mod'])
     actions.superuser_run('auth-pubtkt', ['create-key-pair'])
