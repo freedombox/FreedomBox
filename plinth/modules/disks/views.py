@@ -26,7 +26,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from plinth.modules import disks as disks_module
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, is_user_admin
 
 
 logger = logging.getLogger(__name__)
@@ -76,6 +76,9 @@ def expand_partition(request, device):
 
 def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
+    if not is_user_admin(request, cached=False):
+        return
+
     disks = disks_module.get_disks()
     list_root = [disk for disk in disks if disk['mountpoint'] == '/']
     perc_used = list_root[0]['percentage_used'] if list_root else -1
