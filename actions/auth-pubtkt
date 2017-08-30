@@ -21,10 +21,10 @@ sign it with the FreedomBox server's private key.
 """
 
 import os
-import time
 import base64
 import datetime
 import argparse
+from plinth import action_utils
 
 from OpenSSL import crypto
 
@@ -40,16 +40,24 @@ def parse_arguments():
         'create-key-pair',
         help='create a key pair for the apache server '
         'to sign auth_pubtkt tickets')
-    gen_tkt = subparsers.add_parser('generate-ticket',
-                                     help='generate auth_pubtkt ticket')
+    subparsers.add_parser(
+        'enable-mod', help='enabled the Apache module auth_pubtkt')
+    gen_tkt = subparsers.add_parser(
+        'generate-ticket', help='generate auth_pubtkt ticket')
     gen_tkt.add_argument('--uid', help='username of the user')
-    gen_tkt.add_argument('--private-key-file',
-                         help='path of the private key file of the server')
-    gen_tkt.add_argument('--tokens',
-                         help='tokens, usually containing the user groups')
+    gen_tkt.add_argument(
+        '--private-key-file',
+        help='path of the private key file of the server')
+    gen_tkt.add_argument(
+        '--tokens', help='tokens, usually containing the user groups')
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def subcommand_enable_mod(_):
+    """Safety check to make sure auth_pubtkt is enabled"""
+    action_utils.webserver_enable('auth_pubtkt', kind='module')
 
 
 def subcommand_create_key_pair(_):
