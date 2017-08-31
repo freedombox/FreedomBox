@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # This file is part of Plinth.
 #
@@ -16,14 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-set -e
+"""
+Plinth module for Apache server.
+"""
 
-echo "Running Plinth setup..."
+from plinth import actions
 
-# Run plinth setup to configure various necessary program
-plinth --setup-no-install
+version = 1
 
-# Ensure that DB and log file permissions are correct
-chown -R plinth: /var/lib/plinth /var/log/plinth
+is_essential = True
 
-echo "Done running Plinth setup."
+managed_packages = ['apache2', 'libapache2-mod-gnutls', 'libapache2-mod-php']
+
+
+def setup(helper, old_version=False):
+    """Configure the module."""
+    helper.install(managed_packages)
+    actions.superuser_run('apache', ['setup'])

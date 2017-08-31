@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # This file is part of Plinth.
 #
@@ -16,14 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-set -e
+"""
+URLs for the Apache module.
+"""
 
-echo "Running Plinth setup..."
-
-# Run plinth setup to configure various necessary program
-plinth --setup-no-install
-
-# Ensure that DB and log file permissions are correct
-chown -R plinth: /var/lib/plinth /var/log/plinth
-
-echo "Done running Plinth setup."
+urlpatterns = [
+]
