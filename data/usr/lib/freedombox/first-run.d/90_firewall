@@ -50,56 +50,20 @@ set -x
 # and 'internal' zones are managed.
 firewall-cmd --set-default-zone=external
 
-# Setup firewall rules for all the services enabled by default.
-# Ideally all non-essential services are enabled from Plinth which
-# automatically takes care of enabling appropirate firewall ports. The
-# following is then for essential services and services that are not
-# yet configurable from Plinth.
+# Setup firewall rules for all the services enabled by default. Ideally all
+# essential services are enabled from Plinth which automatically takes care of
+# enabling appropirate firewall ports.
 
-# HTTP (JWChat)
+# HTTP
 firewall-cmd --zone=external --permanent --add-service=http
 firewall-cmd --zone=internal --permanent --add-service=http
 
-# HTTPS (Plinth, JWChat)
+# HTTPS
 firewall-cmd --zone=external --permanent --add-service=https
 firewall-cmd --zone=internal --permanent --add-service=https
-
-# Tor
-firewall-cmd --zone=internal --permanent --add-service=tor-socks
-
-# NTP
-firewall-cmd --zone=internal --permanent --add-service=ntp
 
 # DNS
 firewall-cmd --zone=internal --permanent --add-service=dns
 
-# mDNS
-firewall-cmd --zone=internal --permanent --add-service=mdns
-
 # DHCP
 firewall-cmd --zone=internal --permanent --add-service=dhcp
-
-# Bootp Server and Client (not enabled)
-#firewall-cmd --zone=internal --permanent --add-port=67/tcp
-#firewall-cmd --zone=internal --permanent --add-port=67/udp
-#firewall-cmd --zone=internal --permanent --add-port=68/tcp
-#firewall-cmd --zone=internal --permanent --add-port=68/udp
-
-# LDAP (not enabled)
-#firewall-cmd --zone=internal --permanent --add-service=ldap
-#firewall-cmd --zone=internal --permanent --add-service=ldaps
-
-# OpenVPN (not enabled)
-#firewall-cmd --zone=external --permanent --add-service=openvpn
-#firewall-cmd --zone=internal --permanent --add-service=openvpn
-
-# Privoxy
-firewall-cmd --zone=internal --permanent --add-service=privoxy
-
-# XMPP
-firewall-cmd --zone=external --permanent --add-service=xmpp-server
-firewall-cmd --zone=internal --permanent --add-service=xmpp-server
-firewall-cmd --zone=external --permanent --add-service=xmpp-client
-firewall-cmd --zone=internal --permanent --add-service=xmpp-client
-firewall-cmd --zone=external --permanent --add-service=xmpp-bosh
-firewall-cmd --zone=internal --permanent --add-service=xmpp-bosh
