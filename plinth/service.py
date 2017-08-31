@@ -113,12 +113,9 @@ class Service(object):
 
 def init():
     """Register some misc. services that don't fit elsewhere."""
-
     Service('http', _('Web Server'), ports=['http'], is_external=True,
             is_enabled=True)
     Service('https', _('Web Server over Secure Socket Layer'), ports=['https'],
-            is_external=True, is_enabled=True)
-    Service('ssh', _('Secure Shell (SSH) Server'), ports=['ssh'],
             is_external=True, is_enabled=True)
     Service('plinth', format_lazy(_('{box_name} Web Interface (Plinth)'),
                                   box_name=_(cfg.box_name)),
