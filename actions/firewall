@@ -30,6 +30,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    # Setup
+    subparsers.add_parser('setup', help='Perform basic firewall setup')
+
     # Get status
     subparsers.add_parser('get-status',
                           help='Get whether firewalld is running')
@@ -61,6 +64,18 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_setup(_):
+    """Perform basic firewalld setup."""
+    subprocess.call(['firewall-cmd', '--set-default-zone=external'])
+
+    add_service('external', 'http')
+    add_service('internal', 'http')
+    add_service('external', 'https')
+    add_service('internal', 'https')
+    add_service('internal', 'dns')
+    add_service('internal', 'dhcp')
+
+
 def subcommand_get_status(_):
     """Print status of the firewalld service"""
     subprocess.call(['firewall-cmd', '--state'])
@@ -73,11 +88,15 @@ def subcommand_get_enabled_services(arguments):
 
 
 def subcommand_add_service(arguments):
-    """Permit a service in the firewall"""
-    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--add-service',
-                     arguments.service])
-    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--permanent',
-                     '--add-service', arguments.service])
+    """Permit a service in the firewall."""
+    add_service(arguments.zone, arguments.service)
+
+
+def add_service(zone, service):
+    """Permit a service in the firewall."""
+    subprocess.call(['firewall-cmd', '--zone', zone, '--add-service', service])
+    subprocess.call(['firewall-cmd', '--zone', zone, '--permanent',
+                     '--add-service', service])
 
 
 def subcommand_remove_service(arguments):

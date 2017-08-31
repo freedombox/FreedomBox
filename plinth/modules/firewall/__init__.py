@@ -60,6 +60,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    _run(['setup'], superuser=True)
 
 
 def get_enabled_status():
