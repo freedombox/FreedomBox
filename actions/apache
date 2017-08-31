@@ -1,0 +1,101 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for Apache web server.
+"""
+
+import argparse
+import subprocess
+
+from plinth import action_utils
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser('setup', help='Setup for Apache')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Setup Apache configuration."""
+    # Regenerate the snakeoil self-signed SSL certificate. This is so that
+    # FreedomBox images don't all have the same certificate.
+    subprocess.run(['make-ssl-cert', 'generate-default-snakeoil',
+                    '--force-overwrite'], check=True)
+
+    with action_utils.WebserverChange() as webserver:
+        # set the prefork worker model
+        webserver.disable('mpm_event', kind='module')
+        webserver.disable('mpm_worker', kind='module')
+        webserver.enable('mpm_prefork', kind='module')
+
+        # enable miscellaneous modules.
+        webserver.enable('proxy', kind='module')
+        webserver.enable('proxy_http', kind='module')
+        webserver.enable('rewrite', kind='module')
+
+        # enable GnuTLS
+        webserver.disable('ssl', kind='module')
+        webserver.enable('gnutls', kind='module')
+
+        # enable mod_alias for RedirectMatch
+        webserver.enable('alias', kind='module')
+
+        # enable mod_headers for HSTS
+        webserver.enable('headers', kind='module')
+
+        # enable some critical modules to avoid restart while installing Plinth
+        # applications.
+        webserver.enable('php7.0', kind='module')
+        webserver.enable('cgi', kind='module')
+        webserver.enable('authnz_ldap', kind='module')
+
+        # enable users to share files uploaded to ~/public_html
+        webserver.enable('userdir', kind='module')
+
+        # setup freedombox site
+        webserver.enable('freedombox', kind='config')
+
+        # enable serving Debian javascript libraries
+        webserver.enable('javascript-common', kind='config')
+
+        # default sites
+        webserver.enable('000-default', kind='site')
+        webserver.disable('default-ssl', kind='site')
+        webserver.enable('default-tls', kind='site')
+        webserver.enable('plinth', kind='site')
+        webserver.enable('plinth-ssl', kind='site')
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
