@@ -76,41 +76,34 @@ def expand_partition(request, device):
 
 def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
-    if not is_user_admin(request, cached=False):
+    if not is_user_admin(request):
         return
 
     disks = disks_module.get_disks()
     list_root = [disk for disk in disks if disk['mountpoint'] == '/']
-    perc_used = list_root[0]['percentage_used'] if list_root else -1
-    size_str = list_root[0]['size'] if list_root else '-1'
-    size_Bytes = _interpret_size_string(size_str)
-    free_Bytes = size_Bytes * (100 - perc_used) / 100
-    free_GiB = free_Bytes / 1024 ** 3
-    free_str = _format_bytes(free_Bytes)
-
-    if perc_used < 0 or free_GiB < 0:
-        logger.exception('Error getting information about root partition.')
+    if not list_root:
+        logger.error('Error getting information about root partition.')
         return
 
-    msg_str = format_lazy(
+    perc_used = list_root[0]['percentage_used']
+    size_bytes = _interpret_size_string(list_root[0]['size'])
+    free_bytes = size_bytes * (100 - perc_used) / 100
+
+    message = format_lazy(
         _('Warning: Low space on system partition ({percent_used}% used, '
-          '{free_space} free). Check the Disks Configuration to resolve '
-          'this problem.'),
-        percent_used=perc_used, free_space=free_str)
+          '{free_space} free).'),
+        percent_used=perc_used, free_space=_format_bytes(free_bytes))
 
-    if perc_used > 90 or free_GiB < 1:
-        messages.error(request, msg_str)
-
-    elif perc_used > 75 or free_GiB < 2:
-        messages.warning(request, msg_str)
+    free_gib = free_bytes / (1024 ** 3)
+    if perc_used > 90 or free_gib < 1:
+        messages.error(request, message)
+    elif perc_used > 75 or free_gib < 2:
+        messages.warning(request, message)
 
 
 def _interpret_size_string(size_str):
     """Convert size string to number of bytes."""
-    if size_str is None or not size_str:
-        return -1
-
-    if size_str[-1] in '-10123456789':
+    if size_str[-1] in '0123456789':
         return float(size_str[:-1])
 
     if size_str[-1] == 'K':
