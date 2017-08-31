@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # This file is part of Plinth.
 #
@@ -16,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-set -e
+"""
+URLs for the Apache module.
+"""
 
-# Ensure that DB and log file permissions are correct
-chown -R plinth: /var/lib/plinth /var/log/plinth
+urlpatterns = [
+]
