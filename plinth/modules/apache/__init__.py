@@ -14,26 +14,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 """
-Plinth module to configure Single Sign On services.
+Plinth module for Apache server.
 """
 
 from plinth import actions
-from django.utils.translation import ugettext_lazy as _
 
 version = 1
 
 is_essential = True
 
-depends = ['security', 'apache']
-
-name = _('Single Sign On')
-
-managed_packages = ['libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl']
+managed_packages = ['apache2', 'libapache2-mod-gnutls', 'libapache2-mod-php']
 
 
-def setup(helper, old_version=None):
-    """Install the required packages"""
+def setup(helper, old_version=False):
+    """Configure the module."""
     helper.install(managed_packages)
-    actions.superuser_run('auth-pubtkt', ['enable-mod'])
-    actions.superuser_run('auth-pubtkt', ['create-key-pair'])
+    actions.superuser_run('apache', ['setup'])
