@@ -76,7 +76,7 @@ def expand_partition(request, device):
 
 def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
-    if not is_user_admin(request):
+    if not is_user_admin(request, cached=True):
         return
 
     disks = disks_module.get_disks()
