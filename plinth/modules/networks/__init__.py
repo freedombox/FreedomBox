@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from logging import Logger
 import subprocess
 
+from plinth import actions
 from plinth import action_utils
 from plinth import network
 from plinth.menu import main_menu
@@ -48,6 +49,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    actions.superuser_run('networks')
 
 
 def diagnose():
