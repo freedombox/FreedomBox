@@ -28,11 +28,15 @@ import stat
 import subprocess
 import sys
 
+from plinth import action_utils
+
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('setup', help='Setup SSH server')
 
     get_keys = subparsers.add_parser('get-keys',
                                      help='Get SSH authorized keys')
@@ -45,6 +49,11 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def subcommand_setup(arguments):
+    """Setup Open SSH server."""
+    action_utils.dpkg_reconfigure('openssh-server', {})
 
 
 def get_user_homedir(username):
