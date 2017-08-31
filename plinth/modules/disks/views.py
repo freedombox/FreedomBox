@@ -19,13 +19,17 @@
 Views for disks module.
 """
 
+import logging
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
 from plinth.modules import disks as disks_module
+from plinth.utils import format_lazy, is_user_admin
+
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -34,6 +38,8 @@ def index(request):
     root_device = disks_module.get_root_device(disks)
     expandable_root_size = disks_module.is_expandable(root_device)
     expandable_root_size = _format_bytes(expandable_root_size)
+
+    warn_about_low_disk_space(request)
 
     return TemplateResponse(request, 'disks.html',
                             {'title': _('Disks'),
@@ -66,6 +72,60 @@ def expand_partition(request, device):
                        .format(exception=exception))
     else:
         messages.success(request, _('Partition expanded successfully.'))
+
+
+def warn_about_low_disk_space(request):
+    """Warn about insufficient space on root partition."""
+    if not is_user_admin(request, cached=False):
+        return
+
+    disks = disks_module.get_disks()
+    list_root = [disk for disk in disks if disk['mountpoint'] == '/']
+    perc_used = list_root[0]['percentage_used'] if list_root else -1
+    size_str = list_root[0]['size'] if list_root else '-1'
+    size_Bytes = _interpret_size_string(size_str)
+    free_Bytes = size_Bytes * (100 - perc_used) / 100
+    free_GiB = free_Bytes / 1024 ** 3
+    free_str = _format_bytes(free_Bytes)
+
+    if perc_used < 0 or free_GiB < 0:
+        logger.exception('Error getting information about root partition.')
+        return
+
+    msg_str = format_lazy(
+        _('Warning: Low space on system partition ({percent_used}% used, '
+          '{free_space} free). Check the Disks Configuration to resolve '
+          'this problem.'),
+        percent_used=perc_used, free_space=free_str)
+
+    if perc_used > 90 or free_GiB < 1:
+        messages.error(request, msg_str)
+
+    elif perc_used > 75 or free_GiB < 2:
+        messages.warning(request, msg_str)
+
+
+def _interpret_size_string(size_str):
+    """Convert size string to number of bytes."""
+    if size_str is None or not size_str:
+        return -1
+
+    if size_str[-1] in '-10123456789':
+        return float(size_str[:-1])
+
+    if size_str[-1] == 'K':
+        return float(size_str[:-1]) * 1024
+
+    if size_str[-1] == 'M':
+        return float(size_str[:-1]) * 1024 ** 2
+
+    if size_str[-1] == 'G':
+        return float(size_str[:-1]) * 1024 ** 3
+
+    if size_str[-1] == 'T':
+        return float(size_str[:-1]) * 1024 ** 4
+
+    return -1
 
 
 def _format_bytes(size):

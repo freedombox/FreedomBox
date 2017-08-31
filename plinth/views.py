@@ -31,6 +31,7 @@ import time
 from . import forms, frontpage
 import plinth
 from plinth import actions
+from plinth.modules.disks import views as disk_views
 
 
 @public
@@ -45,6 +46,8 @@ def index(request):
         details_label = frontpage.shortcuts[selection]['label']
         configure_url = frontpage.shortcuts[selection]['configure_url']
 
+    disk_views.warn_about_low_disk_space(request)
+
     return TemplateResponse(request, 'index.html',
                             {'title': _('FreedomBox'),
                              'shortcuts': shortcuts,
@@ -52,6 +55,12 @@ def index(request):
                              'details': details,
                              'details_label': details_label,
                              'configure_url': configure_url})
+
+
+def system_index(request):
+    """Serve the system index page."""
+    disk_views.warn_about_low_disk_space(request)
+    return TemplateResponse(request, 'system.html')
 
 
 class ServiceView(FormView):
