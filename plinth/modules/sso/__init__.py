@@ -25,7 +25,7 @@ version = 1
 
 is_essential = True
 
-depends = ['security']
+depends = ['security', 'apache']
 
 name = _('Single Sign On')
 
