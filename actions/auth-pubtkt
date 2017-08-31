@@ -20,13 +20,13 @@ Module with utilities to generate a auth_pubtkt ticket and
 sign it with the FreedomBox server's private key.
 """
 
-import os
+import argparse
 import base64
 import datetime
-import argparse
-from plinth import action_utils
-
 from OpenSSL import crypto
+import os
+
+from plinth import action_utils
 
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
 
