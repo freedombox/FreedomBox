@@ -348,7 +348,8 @@ def main():
 
     module_loader.load_modules()
 
-    run_setup(arguments.setup)
+    if arguments.setup is not False:
+        run_setup_and_exit(arguments.setup, allow_install=True)
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
@@ -361,6 +362,10 @@ def main():
 
     if arguments.diagnose:
         run_diagnostics_and_exit()
+
+    # Run setup steps for essential modules
+    # Installation is not necessary as they are dependencies of Plinth
+    run_setup(None, allow_install=False)
 
     setup_server()
 
