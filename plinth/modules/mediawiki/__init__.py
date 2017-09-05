@@ -36,7 +36,9 @@ managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
 # TODO Put more thought into title and description
 
-title = _('Wiki Engine (MediaWiki)')
+name = 'MediaWiki'
+
+short_description = _('Wiki Engine')
 
 description = [
     _("MediaWiki is a wiki engine (a program for creating a collaboratively \
@@ -46,7 +48,6 @@ description = [
  etc."),
     _('When enabled, MediaWiki\'s web interface will be available from '
       '<a href="/mediawiki">/mediawiki</a>.'),
-
 ]
 
 service = None
@@ -55,14 +56,15 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(title, 'glyphicon-edit', 'mediawiki:index')
+    menu.add_urlname(name, 'glyphicon-edit', 'mediawiki:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled,
@@ -77,13 +79,13 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('configure', actions.superuser_run, 'mediawiki', ['configure'])
+    helper.call('setup', actions.superuser_run, 'mediawiki', ['setup'])
     helper.call('enable', actions.superuser_run, 'mediawiki', ['enable'])
     global service
     if service is None:
         service = service_module.Service(
             managed_services[0],
-            title,
+            name,
             ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled,
@@ -97,7 +99,8 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut(
-        'mediawiki', title, url='/mediawiki', login_required=True)
+        'mediawiki', name, short_description=short_description, url='/mediawiki',
+        login_required=True)
 
 
 def is_running():

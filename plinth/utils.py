@@ -20,6 +20,8 @@ Miscellaneous utility methods.
 
 import importlib
 import os
+import random
+import string
 
 from django.utils.functional import lazy
 
@@ -119,3 +121,9 @@ class YAMLFile(object):
 
 def yes_or_no(cond):
     return 'yes' if cond else 'no'
+
+
+def generate_password(size=12):
+    chars = (random.SystemRandom().choice(string.ascii_letters + string.digits)
+             for _ in range(size))
+    return ''.join(chars)

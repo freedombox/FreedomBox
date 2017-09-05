@@ -238,8 +238,6 @@ setuptools.setup(
                  glob.glob('data/etc/avahi/services/*.service')),
                 ('/etc/ikiwiki',
                  glob.glob('data/etc/ikiwiki/*.setup')),
-                # ('/etc/mediawiki',
-                #  glob.glob('data/etc/mediawiki/LocalSettings.php')),
                 ('/etc/NetworkManager/dispatcher.d/',
                  ['data/etc/NetworkManager/dispatcher.d/10-freedombox-batman']),
                 ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),

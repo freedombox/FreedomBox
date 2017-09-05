@@ -29,6 +29,7 @@ import shutil
 import subprocess
 
 from plinth import action_utils
+from plinth.utils import generate_password
 
 
 def parse_arguments():
@@ -38,20 +39,42 @@ def parse_arguments():
 
     subparsers.add_parser('enable', help='Enable mediawiki')
     subparsers.add_parser('disable', help='Disable mediawiki')
-    subparsers.add_parser('configure', help='Configure mediawiki')
+    subparsers.add_parser('setup', help='Setup mediawiki')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_configure(_):
-    """Create data directory for mediawiki"""
-    data_dir = '/var/www/data/'
+def subcommand_setup(_):
+    data_dir = '/var/lib/mediawiki-db/'
+    if not os.path.exists(data_dir):
+        os.mkdir(data_dir)
+        subprocess.check_call([
+            'php', '/usr/share/mediawiki/maintenance/install.php',
+            '--confpath=/etc/mediawiki', '--dbtype=sqlite',
+            '--dbpath=/var/lib/mediawiki-db/', '--scriptpath=/mediawiki',
+            '--pass',
+            generate_password(), 'Wiki', 'admin'
+        ])
     uid = pwd.getpwnam("www-data").pw_uid
     gid = grp.getgrnam("www-data").gr_gid
-    os.mkdir(data_dir)
     os.chown(data_dir, uid, gid)
-    os.chmod(data_dir, 0o755)
+    change_logo()
+
+
+def change_logo():
+    """Change the placeholder logo to mediawiki's official logo"""
+    conf_file = '/var/lib/mediawiki/LocalSettings.php'
+    with open(conf_file, 'r') as cf:
+        data = cf.readlines()
+
+    for linum, line in enumerate(data):
+        if line.lstrip().startswith('$wgLogo'):
+            data[linum] = line.replace('wiki', 'mediawiki')
+            break
+
+    with open(conf_file, 'w') as f:
+        f.writelines(data)
 
 
 def subcommand_enable(_):
