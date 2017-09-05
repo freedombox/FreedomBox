@@ -214,7 +214,8 @@ def configure_django():
                     'django.contrib.contenttypes',
                     'django.contrib.messages',
                     'stronghold',
-                    'plinth']
+                    'plinth',
+                    'axes']
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
 
