@@ -18,9 +18,10 @@
 Django URLconf file containing all urls
 """
 from captcha import views as cviews
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from plinth.modules.sso.views import CaptchaLoginView
 from stronghold.decorators import public
 
 from . import views
@@ -43,4 +44,5 @@ urlpatterns = [
         kwargs={'scale': 2}),
     url(r'audio/(?P<key>\w+)/$', public(cviews.captcha_audio), name='captcha-audio'),
     url(r'refresh/$', public(cviews.captcha_refresh), name='captcha-refresh'),
+    url(r'locked/$', public(CaptchaLoginView.as_view()), name='locked_out'),
 ]

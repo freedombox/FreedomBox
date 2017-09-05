@@ -30,6 +30,10 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
+from django.shortcuts import render_to_response
+
+from axes.utils import reset
+
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
 SSO_COOKIE_NAME = 'auth_pubtkt'
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
@@ -58,22 +62,37 @@ class SSOLoginView(LoginView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return set_ticket_cookie(request.user, response)
+        else:
+            return response
+
+
+class CaptchaLoginView(LoginView):
+    redirect_authenticated_user = True
+    template_name = 'login.html'
+    form_class = AuthenticationForm
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(CaptchaLoginView, self).dispatch(
+            request, *args, **kwargs)
         if request.POST:
             if request.user.is_authenticated:
+                ip = get_ip_address_from_request(request)
+                reset()  # TODO reset(ip=ip)
                 return set_ticket_cookie(request.user, response)
-            else: # Redirect user to captcha page
-                redirect = '' if request.path.rstrip('/').endswith('captcha') else 'captcha'
-                return HttpResponseRedirect(redirect)
+            else:
+                return response
         return response
 
 
-class CaptchaLoginView(SSOLoginView):
-    form_class = AuthenticationForm
+def get_ip_address_from_request(request):
+    # TODO Not sure if this is the right way to get the client ip
+    return request.META['HTTP_X_FORWARDED_FOR']
 
 
 class SSOLogoutView(LogoutView):
     """View to log out of Plinth and remove the auth_pubtkt cookie"""
-
     template_name = 'index.html'
 
     def dispatch(self, request, *args, **kwargs):
