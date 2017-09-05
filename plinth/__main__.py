@@ -243,6 +243,7 @@ def configure_django():
             },
         ],
         AXES_LOCKOUT_URL='locked',
+        AXES_BEHIND_REVERSE_PROXY=True,
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
         CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
