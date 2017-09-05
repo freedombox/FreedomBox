@@ -20,6 +20,7 @@ Views for the Single Sign On module of Plinth
 
 import os
 import urllib
+import logging
 
 from .forms import AuthenticationForm
 
@@ -37,6 +38,8 @@ from axes.utils import reset
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
 SSO_COOKIE_NAME = 'auth_pubtkt'
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
+
+logger = logging.getLogger(__name__)
 
 
 def set_ticket_cookie(user, response):
@@ -79,7 +82,7 @@ class CaptchaLoginView(LoginView):
         if request.POST:
             if request.user.is_authenticated:
                 ip = get_ip_address_from_request(request)
-                reset()  # TODO reset(ip=ip)
+                reset(ip=ip)
                 return set_ticket_cookie(request.user, response)
             else:
                 return response
@@ -87,8 +90,13 @@ class CaptchaLoginView(LoginView):
 
 
 def get_ip_address_from_request(request):
-    # TODO Not sure if this is the right way to get the client ip
-    return request.META['HTTP_X_FORWARDED_FOR']
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    logger.warning("IP address is " + ip)
+    return ip
 
 
 class SSOLogoutView(LogoutView):
