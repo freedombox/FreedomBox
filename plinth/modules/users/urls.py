@@ -23,7 +23,7 @@ from django.urls import reverse_lazy
 
 from stronghold.decorators import public
 from plinth.utils import non_admin_view
-from plinth.modules.sso.views import SSOLoginView, SSOLogoutView, CaptchaLoginView
+from plinth.modules.sso.views import SSOLoginView, SSOLogoutView
 from . import views
 
 from axes.decorators import watch_login
@@ -49,9 +49,6 @@ urlpatterns = [
         non_admin_view(SSOLogoutView.as_view()),
         {'next_page': reverse_lazy('index')},
         name='logout'),
-    url(r'^accounts/login/captcha/$',
-        public(CaptchaLoginView.as_view()),
-        name='captcha-login'),
     url(r'^users/firstboot/$',
         public(views.FirstBootView.as_view()),
         name='firstboot'),

@@ -242,6 +242,7 @@ def configure_django():
                 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
             },
         ],
+        AXES_LOCKOUT_URL='locked',
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
         CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
