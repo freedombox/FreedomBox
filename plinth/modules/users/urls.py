@@ -20,11 +20,13 @@ URLs for the Users module
 
 from django.conf.urls import url
 from django.urls import reverse_lazy
-from stronghold.decorators import public
 
+from stronghold.decorators import public
 from plinth.utils import non_admin_view
 from plinth.modules.sso.views import SSOLoginView, SSOLogoutView, CaptchaLoginView
 from . import views
+
+from axes.decorators import watch_login
 
 urlpatterns = [
     url(r'^sys/users/$', views.UserList.as_view(), name='index'),
@@ -38,8 +40,11 @@ urlpatterns = [
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
         non_admin_view(views.UserChangePassword.as_view()),
         name='change_password'),
-    # Add Django's login/logout urls
-    url(r'^accounts/login/$', public(SSOLoginView.as_view()), name='login'),
+
+    # Authnz is handled by SSO
+    url(r'^accounts/login/$',
+        public(watch_login(SSOLoginView.as_view())),
+        name='login'),
     url(r'^accounts/logout/$',
         non_admin_view(SSOLogoutView.as_view()),
         {'next_page': reverse_lazy('index')},
