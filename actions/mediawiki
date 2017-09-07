@@ -21,11 +21,7 @@ Configuration helper for Mediawiki
 """
 
 import argparse
-import grp
 import os
-import grp
-import pwd
-import shutil
 import subprocess
 
 from plinth import action_utils
@@ -56,9 +52,7 @@ def subcommand_setup(_):
             '--pass',
             generate_password(), 'Wiki', 'admin'
         ])
-    uid = pwd.getpwnam("www-data").pw_uid
-    gid = grp.getgrnam("www-data").gr_gid
-    os.chown(data_dir, uid, gid)
+    action_utils.set_ownership_recursively(data_dir, "www-data", "www-data")
     change_logo()
 
 
