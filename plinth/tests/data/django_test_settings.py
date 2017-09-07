@@ -30,11 +30,15 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'plinth',
-)
+INSTALLED_APPS = [
+        'captcha',
+        'bootstrapform',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.messages',
+        'stronghold',
+        'plinth',
+    ]
 
 # These are included here solely to suppress Django warnings
 # during testing setup

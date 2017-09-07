@@ -161,7 +161,7 @@ def on_server_stop():
 
 
 def configure_django():
-    """Setup Django configuration in the absense of .settings file"""
+    """Setup Django configuration in the absence of .settings file"""
     logging_configuration = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -208,14 +208,16 @@ def configure_django():
         },
     ]
 
-    applications = ['bootstrapform',
-                    'captcha',
-                    'django.contrib.auth',
-                    'django.contrib.contenttypes',
-                    'django.contrib.messages',
-                    'stronghold',
-                    'plinth',
-                    'axes']
+    applications = [
+        'axes',
+        'captcha',
+        'bootstrapform',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.messages',
+        'stronghold',
+        'plinth',
+    ]
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
 
