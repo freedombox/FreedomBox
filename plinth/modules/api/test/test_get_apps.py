@@ -35,7 +35,7 @@ class TestApi(unittest.TestCase):
     expected = [{
         'name': 'someName',
         'short_description': 'someDescription',
-        'icon_url': 'static/theme/icons/someIconURl.svg'
+        'icon': 'static/theme/icons/someIconURl.svg'
     }]
 
     def test_get_app_payload(self):

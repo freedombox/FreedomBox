@@ -34,19 +34,18 @@ def get_apps(request, **kwargs):
 
 
 def get_app_payload(enabled_apps):
-    service_apps = []
-    for app in enabled_apps:
-        app['icon_url'] = 'static/theme/icons/' + app['icon'] + '.svg'
-        app_required_fields = dict((key, app[key]) for key in ('name', 'short_description', 'icon_url'))
-        apps = {key: str(value) for key, value in app_required_fields.items()}
-        service_apps.append(apps)
+    def get_value(key, value):
+        return str(value) if key != 'icon' \
+            else 'static/theme/icons/{}.svg'.format(value)
 
-    return service_apps
+    def filter_app_data(app):
+        return {key: get_value(key, value) for key, value in app.items()
+                if key in ('name', 'short_description', 'icon')}
+
+    return list(map(filter_app_data, enabled_apps))
 
 
 def get_access_info(request, **kwargs):
-    domain_types = get_domain_types()
-    response = {}
-    for domain_type in domain_types:
-        response[domain_type] = get_domain(domain_type)
+    response = {domain_type: get_domain(domain_type) for domain_type in
+                get_domain_types()}
     return HttpResponse(json.dumps(response), content_type="application/json")
