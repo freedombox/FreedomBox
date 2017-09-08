@@ -44,7 +44,7 @@ class TestIsAdminUser(TestCase):
         """Test anonymous user is reported as non-admin."""
         super(TestIsAdminUser, self).setUp()
         self.request.user = Mock()
-        self.request.user.is_authenticated.return_value = False
+        self.request.user.is_authenticated = False
         self.assertFalse(is_user_admin(self.request))
         self.assertFalse(is_user_admin(self.request, cached=True))
 
