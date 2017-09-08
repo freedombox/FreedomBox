@@ -26,5 +26,5 @@ from plinth.modules.api.views import get_apps, get_access_info
 
 urlpatterns = [
     url(r'^api/(?P<version>[0-9]+)/services/?$', public(get_apps)),
-    url(r'^api/(?P<version>[0-9]+)/accessInfo/?$', public(get_access_info))
+    url(r'^api/(?P<version>[0-9]+)/access-info/?$', public(get_access_info))
 ]
