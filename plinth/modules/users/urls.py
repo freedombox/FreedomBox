@@ -40,7 +40,7 @@ urlpatterns = [
         name='change_password'),
     # Add Django's login/logout urls
     url(r'^accounts/login/$', public(SSOLoginView.as_view()), name='login'),
-    url(r'^accounts/logout/$', SSOLogoutView.as_view(),
+    url(r'^accounts/logout/$', public(SSOLogoutView.as_view()),
         {'next_page': reverse_lazy('index')}, name='logout'),
     url(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
         name='firstboot'),
