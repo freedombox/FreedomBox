@@ -39,7 +39,7 @@ managed_services = ['tahoe-lafs']
 
 managed_packages = ['tahoe-lafs']
 
-name = _('LAFS')
+name = _('Tahoe-LAFS')
 
 short_description = _('Distributed File Storage')
 
