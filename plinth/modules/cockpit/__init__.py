@@ -33,7 +33,7 @@ from plinth.signals import domain_added, domain_removed, domainname_change
 
 version = 1
 
-managed_services = ['cockpit']
+managed_services = ['cockpit.socket']
 
 managed_packages = ['cockpit']
 
@@ -93,20 +93,19 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('cockpit') and
-            action_utils.webserver_is_enabled('cockpit-plinth') and
-            action_utils.service_is_running('cockpit'))
+    return (action_utils.webserver_is_enabled('cockpit-plinth') and
+            action_utils.service_is_running('cockpit.socket'))
 
 
 def enable():
     """Enable the module."""
-    actions.superuser_run('cockpit', ['enable'])
+    actions.superuser_run('cockpit.socket', ['enable'])
     add_shortcut()
 
 
 def disable():
     """Disable the module."""
-    actions.superuser_run('cockpit', ['disable'])
+    actions.superuser_run('cockpit.socket', ['disable'])
     frontpage.remove_shortcut('cockpit')
 
 
@@ -120,15 +119,15 @@ def diagnose():
     return results
 
 def on_domain_added():
-    actions.superuser_run('cockpit',['add_domain'])
+    actions.superuser_run('cockpit.socket', ['add_domain'])
 
 def on_domain_removed():
-    actions.superuser_run('cockpit',['remove_domain'])
+    actions.superuser_run('cockpit.socket', ['remove_domain'])
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del sender
     del kwargs
-    actions.superuser_run('cockpit',
+    actions.superuser_run('cockpit.socket',
                           ['change_domain',
-                          '--domainname', new_domainname],
+                           '--domainname', new_domainname],
                           async=True)
