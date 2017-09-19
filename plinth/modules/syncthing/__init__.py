@@ -28,6 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
+from plinth.client import desktop_client, mobile_client
 
 
 version = 1
@@ -57,6 +58,15 @@ description = [
       '<a href="/syncthing/">/syncthing</a>.  Desktop and mobile clients are '
       'also <a href="https://syncthing.net/">available</a>.'),
 ]
+
+desktop_clients = [desktop_client(name='Syncthing',
+                                  url='https://syncthing.net/')]
+
+mobile_clients = [mobile_client(
+    name='Syncthing', fully_qualified_name='com.nutomic.syncthingandroid',
+    fdroid_url='https://f-droid.org/packages/com.nutomic.syncthingandroid/',
+    play_store_url='https://play.google.com/store/apps/details?id=com.nutomic'
+                    '.syncthingandroid')]
 
 service = None
 

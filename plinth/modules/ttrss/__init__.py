@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.client import web_client
 
 
 version = 1
@@ -51,6 +52,8 @@ description = [
           'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
 ]
+
+web_clients = [web_client(name='TT-RSS', url='/tt-rss')]
 
 service = None
 
