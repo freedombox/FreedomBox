@@ -28,6 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
+from plinth.client import desktop_client, mobile_client
 
 
 version = 1
@@ -50,6 +51,18 @@ description = [
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and Android devices are available.')
 ]
+
+desktop_clients = [
+    desktop_client(name='Mumble',url= 'https://wiki.mumble.info/wiki/Main_Page')]
+
+mobile_clients = [
+    mobile_client(name='Mumble',
+                  fully_qualified_name='com.morlunk.mumbleclient',
+                  fdroid_url='https://f-droid.org/packages/com.morlunk'
+                             '.mumbleclient/',
+                  play_store_url='https://play.google.com/store/apps/details'
+                                 '?id=com.morlunk.mumbleclient.free')]
+
 
 reserved_usernames = ['mumble-server']
 

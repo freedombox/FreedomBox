@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+from plinth.client import mobile_client, desktop_client
 
 version = 1
 
@@ -59,6 +60,16 @@ description = [
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
       'are available.'),
 ]
+
+desktop_clients = [
+    desktop_client(name='Quassel', url='http://quassel-irc.org/downloads')]
+
+mobile_clients = [
+    mobile_client(name='QuasselDroid',
+                  fully_qualified_name='com.iskrembilen.quasseldroid',
+                  fdroid_url=None,
+                  play_store_url='https://play.google.com/store/apps/details?'
+                                 'id=com.iskrembilen.quasseldroid')]
 
 reserved_usernames = ['quasselcore']
 

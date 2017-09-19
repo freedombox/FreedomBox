@@ -27,6 +27,7 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.client import web_client
 
 
 version = 1
@@ -45,6 +46,8 @@ description = [
       'BitTorrent is not anonymous.'),
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
+
+web_clients = [web_client(name='Transmission',url='/transmission')]
 
 reserved_usernames = ['debian-transmission']
 
