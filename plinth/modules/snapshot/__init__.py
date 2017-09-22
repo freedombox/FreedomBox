@@ -29,7 +29,7 @@ version = 1
 
 managed_packages = ['snapper']
 
-name = _('Snapshots')
+name = _('Storage Snapshots')
 
 description = [
     _('Snapshots allows creating and managing filesystem snapshots. These can '
