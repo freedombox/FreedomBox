@@ -16,7 +16,7 @@
 #
 
 """
-Plinth module to manage disks.
+Plinth module to manage storage.
 """
 
 from django.utils.translation import ugettext_lazy as _
@@ -30,7 +30,7 @@ from plinth.menu import main_menu
 
 version = 1
 
-name = _('Disks')
+name = _('Storage')
 
 description = []
 
@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-hdd', 'disks:index')
+    menu.add_urlname(name, 'glyphicon-hdd', 'storage:index')
 
 
 def get_disks():
