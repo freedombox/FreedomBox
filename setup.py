@@ -56,6 +56,7 @@ DISABLED_APPS_TO_REMOVE = [
     'owncloud',
     'system',
     'xmpp',
+    'disks',
 ]
 
 LOCALE_PATHS = [

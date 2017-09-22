@@ -16,7 +16,7 @@
 #
 
 """
-Views for disks module.
+Views for storage module.
 """
 
 import logging
@@ -25,7 +25,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-from plinth.modules import disks as disks_module
+from plinth.modules import storage as storage_module
 from plinth.utils import format_lazy, is_user_admin
 
 
@@ -34,31 +34,31 @@ logger = logging.getLogger(__name__)
 
 def index(request):
     """Show connection list."""
-    disks = disks_module.get_disks()
-    root_device = disks_module.get_root_device(disks)
-    expandable_root_size = disks_module.is_expandable(root_device)
+    disks = storage_module.get_disks()
+    root_device = storage_module.get_root_device(disks)
+    expandable_root_size = storage_module.is_expandable(root_device)
     expandable_root_size = _format_bytes(expandable_root_size)
 
     warn_about_low_disk_space(request)
 
-    return TemplateResponse(request, 'disks.html',
-                            {'title': _('Disks'),
+    return TemplateResponse(request, 'storage.html',
+                            {'title': _('Storage'),
                              'disks': disks,
                              'expandable_root_size': expandable_root_size})
 
 
 def expand(request):
     """Warn and expand the root partition."""
-    disks = disks_module.get_disks()
-    root_device = disks_module.get_root_device(disks)
+    disks = storage_module.get_disks()
+    root_device = storage_module.get_root_device(disks)
 
     if request.method == 'POST':
         expand_partition(request, root_device)
-        return redirect(reverse('disks:index'))
+        return redirect(reverse('storage:index'))
 
-    expandable_root_size = disks_module.is_expandable(root_device)
+    expandable_root_size = storage_module.is_expandable(root_device)
     expandable_root_size = _format_bytes(expandable_root_size)
-    return TemplateResponse(request, 'disks_expand.html',
+    return TemplateResponse(request, 'storage_expand.html',
                             {'title': _('Expand Root Partition'),
                              'expandable_root_size': expandable_root_size})
 
@@ -66,7 +66,7 @@ def expand(request):
 def expand_partition(request, device):
     """Expand the partition."""
     try:
-        disks_module.expand_partition(device)
+        storage_module.expand_partition(device)
     except Exception as exception:
         messages.error(request, _('Error expanding partition: {exception}')
                        .format(exception=exception))
@@ -79,7 +79,7 @@ def warn_about_low_disk_space(request):
     if not is_user_admin(request, cached=True):
         return
 
-    disks = disks_module.get_disks()
+    disks = storage_module.get_disks()
     list_root = [disk for disk in disks if disk['mountpoint'] == '/']
     if not list_root:
         logger.error('Error getting information about root partition.')
