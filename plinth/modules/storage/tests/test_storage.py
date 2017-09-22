@@ -16,7 +16,7 @@
 #
 
 """
-Test module for disks module operations.
+Test module for storage module operations.
 """
 
 import os
@@ -121,7 +121,7 @@ class Disk():
 
 
 class TestActions(unittest.TestCase):
-    """Test all actions related to disks."""
+    """Test all actions related to storage."""
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_simple_case(self):
         """Test a simple with no complications"""
@@ -199,14 +199,14 @@ class TestActions(unittest.TestCase):
     def assert_free_space(self, partition_number, space=True):
         """Verify that free is available/not available after a parition."""
         device = _get_partition_device(self.device, partition_number)
-        result = self.run_action(['disks', 'is-partition-expandable', device])
+        result = self.run_action(['storage', 'is-partition-expandable', device])
         self.assertEqual(result, space)
 
     def expand_partition(self, partition_number, success=True):
         """Expand a partition."""
         self.assert_aligned(partition_number)
         device = _get_partition_device(self.device, partition_number)
-        result = self.run_action(['disks', 'expand-partition', device])
+        result = self.run_action(['storage', 'expand-partition', device])
         self.assertEqual(result, success)
         self.assert_aligned(partition_number)
 

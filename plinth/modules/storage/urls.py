@@ -25,6 +25,6 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^sys/disks/$', views.index, name='index'),
-    url(r'^sys/disks/expand$', views.expand, name='expand'),
+    url(r'^sys/storage/$', views.index, name='index'),
+    url(r'^sys/storage/expand$', views.expand, name='expand'),
 ]
