@@ -440,6 +440,17 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
             <para>Copy the image to your card.  Double check to make sure you don't write to your computer's main storage (such as /dev/sda).  Also make sure that you don't run this step as root to avoid potentially overriding data on your hard drive due to a mistake in identifying the device or errors while typing the command.  USB disks and SD cards inserted into the system should typically be write accessible to normal users.  If you don't have permission to write to your SD card as a user, you may need to run this command as root.  In this case triple check everything before you run the command.  Another safety precaution is to unplug all external disks except the SD card before running the command. </para>
             <para>For example, if your SD card is <emphasis>/dev/sdg</emphasis> as noted in the first step above, then to copy the image, run: </para>
             <screen format="linespecific">$ dd bs=1M if=freedombox-unstable-free_2015-12-13_cubietruck-armhf.img of=/dev/sdg conv=fdatasync</screen>
+          </listitem>
+        </orderedlist>
+        <para>An alternative to copy to SD card command </para>
+        <itemizedlist>
+          <listitem override="none">
+            <screen format="linespecific">$ cat freedombox-unstable-free_2015-12-13_cubietruck-armhf.img &gt; /dev/sdg ; sync</screen>
+          </listitem>
+        </itemizedlist>
+        <para>On MS Windows you will need a tool like <emphasis>etcher</emphasis>. </para>
+        <itemizedlist>
+          <listitem override="none">
             <para>The above command is an example for the <emphasis>cubietruck</emphasis> image built on 2015-12-13.  Your image file name will be different. </para>
             <para>When picking a device, use the drive-letter destination, like <emphasis>/dev/sdg</emphasis>, not a numbered destination, like <emphasis>/dev/sdg1</emphasis>.  The device without a number refers to the entire device, while the device with a number refers to a specific partition.  We want to use the whole device.  Downloaded images contain complete information about how many partitions there should be, their sizes and types.  You don't have to format your SD card or create partitions.  All the data on the SD card will be wiped off during the write process. </para>
           </listitem>
@@ -449,7 +460,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
           <listitem>
             <para>Read (the rest of) the <ulink url="https://wiki.debian.org/FreedomBox/Manual#">Manual</ulink> for instructions on how to use applications in FreedomBox. </para>
           </listitem>
-        </orderedlist>
+        </itemizedlist>
       </section>
     </section>
   </section>
@@ -650,7 +661,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
         </para>
         <para>If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them. </para>
         <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed.     </para>
-        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/user_documentation/#idstarting-the-client">tutorials to setup</ulink> a large selection of clients. Below are the steps for two examples: </para>
+        <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/clients/">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
         <itemizedlist>
           <listitem>
             <para>Example of setup with Evolution client:   </para>
@@ -668,7 +679,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
                     <para>When "CalDAV" is selected, additional options will appear in the dialogue window. </para>
                   </listitem>
                   <listitem>
-                    <para>URL: <code>https://IP</code> <emphasis>address or domain for your server</emphasis>/radicale/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.ics/. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
+                    <para>URL: <code>https://</code><emphasis>IP-address-or-domain-for-your-server</emphasis><code>/radicale/</code><emphasis>user</emphasis><code>/</code><emphasis>contact-file-name</emphasis><code>.ics/</code>. Items in <emphasis>italics</emphasis> need to be changed to match your settings. </para>
                     <itemizedlist>
                       <listitem>
                         <para>note the trailing <code>/</code> in the path, it is important. </para>
@@ -676,7 +687,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
                     </itemizedlist>
                   </listitem>
                   <listitem>
-                    <para>Select/check "Use a secure connection."     </para>
+                    <para>Enable "Use a secure connection."     </para>
                   </listitem>
                   <listitem>
                     <para>Name the calendar </para>
@@ -6593,6 +6604,89 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
       <section>
+        <title>Plinth v0.15.2 (2017-09-24)</title>
+        <section>
+          <title>Added</title>
+          <itemizedlist>
+            <listitem>
+              <para>letsencrypt: Show more info on cert validity status. </para>
+            </listitem>
+            <listitem>
+              <para>letsencrypt: Add option to delete certificates. </para>
+            </listitem>
+            <listitem>
+              <para>letsencrypt: Add option to let Plinth manage certbot's renewal hooks. </para>
+            </listitem>
+            <listitem>
+              <para>power: Warn if a package manager is running before shutdown/restart. </para>
+            </listitem>
+            <listitem>
+              <para>security: Install and manage fail2ban. </para>
+            </listitem>
+            <listitem>
+              <para>names: Include domain and services from dynamicdns. </para>
+            </listitem>
+            <listitem>
+              <para>disks: Add low disk space warning to system and disks page. </para>
+            </listitem>
+            <listitem>
+              <para>ssh: New application to manage SSH server. </para>
+            </listitem>
+            <listitem>
+              <para>Add api module to get enabled services and access info. </para>
+            </listitem>
+            <listitem>
+              <para>Add Django password validators. </para>
+            </listitem>
+            <listitem>
+              <para>ejabberd, ikiwiki, ttrss: Add user login descriptions. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Removed</title>
+          <itemizedlist>
+            <listitem>
+              <para>diaspora: Disable for this release due to issues affecting package. </para>
+            </listitem>
+            <listitem>
+              <para>Remove help from navbar before firstboot complete. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Fixed</title>
+          <itemizedlist>
+            <listitem>
+              <para>i18n: Don't use backslash-newline for wrapping long lines. </para>
+            </listitem>
+            <listitem>
+              <para>radicale: Update link to documentation. </para>
+            </listitem>
+            <listitem>
+              <para>sso: Upgrade crypto to 4096-bit RSA and SHA-512. </para>
+            </listitem>
+            <listitem>
+              <para>Users: Allow non-admin users to log out. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Changed</title>
+          <itemizedlist>
+            <listitem>
+              <para>letsencrypt: Make Let's Encrypt an essential module. </para>
+            </listitem>
+            <listitem>
+              <para>UI: Make apps and configure pages responsive on small screens. </para>
+            </listitem>
+            <listitem>
+              <para>Make help accessible for logged-in non-admin users. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+      <section>
         <title>Plinth v0.15.0 (2017-07-01)</title>
         <itemizedlist>
           <listitem>
@@ -6600,6 +6694,11 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
           </listitem>
           <listitem>
             <para>Added Diaspora* module for federated social networking. </para>
+            <itemizedlist>
+              <listitem>
+                <para>Currently only available in "contrib" repository. </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para>New Locales for Czech (cs) and Tamil (ta). </para>
