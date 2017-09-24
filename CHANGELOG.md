@@ -1,6 +1,53 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.15.2] - 2017-09-24
+### Added
+- letsencrypt: Show more info on cert validity status.
+- letsencrypt: Add option to delete certificates.
+- letsencrypt: Add option to let Plinth manage certbot's renewal hooks.
+- power: Warn if a package manager is running before shutdown/restart.
+- security: Install and manage fail2ban.
+- names: Include domain and services from dynamicdns.
+- Add contributing guidelines.
+- disks: Add low disk space warning to system and disks page.
+- Capture and log all Python warnings.
+- ssh: New application to manage SSH server.
+- apache: New module to manage Apache configuration.
+- Add api module to get enabled services and access info.
+- Add Django password validators.
+- ejabberd, ikiwiki, ttrss: Add user login descriptions.
+
+### Removed
+- diaspora: Disable for this release due to issues affecting package.
+- Remove help from navbar before firstboot complete.
+- Remove print statement from tests.
+- firewall: Remove redundant setup steps.
+- first-run: Skip installation of essential modules from Plinth.
+
+### Fixed
+- i18n: Don't use backslash-newline for wrapping long lines.
+- radicale: Update link to documentation.
+- travis: Fix build errors due to change to non-system python.
+- sso: Add check to see if auth-pubtkt module is available.
+- sso: Upgrade crypto to 4096-bit RSA and SHA-512.
+- sso, repro: Add safety checks to make sure auth_pubtkt is enabled.
+- tahoe: Correct LAFS to Tahoe-LAFS in apps page.
+- Users: Allow non-admin users to log out.
+
+### Changed
+- letsencrypt: Make Let's Encrypt an essential module.
+- Update requirements list.
+- Remove disabled apps as part of install.
+- UI: Make apps and configure pages responsive on small screens.
+- Make help accessible for logged-in non-admin users.
+- sso: Use Login and Logout view classes instead of methods.
+- Separate out the short description and app name.
+- users: Move ldap structure config into normal setup.
+- Don't run Plinth setup as part of freedombox/setup.
+- firewall: Move remaining setup steps to Plinth.
+- Move CI notifications to new channel.
+
 ## [0.15.1] - 2017-07-02
 ### Fixed
 - Fixed python format string in translation.
@@ -273,6 +320,8 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[0.15.2]: https://github.com/freedombox/Plinth/compare/v0.15.1...v0.15.2
+[0.15.1]: https://github.com/freedombox/Plinth/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/freedombox/Plinth/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/freedombox/Plinth/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/freedombox/Plinth/compare/v0.13.0...v0.13.1
