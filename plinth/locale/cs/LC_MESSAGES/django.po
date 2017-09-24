@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 22:56-0400\n"
+"POT-Creation-Date: 2017-09-24 11:24-0400\n"
 "PO-Revision-Date: 2017-08-30 13:44+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/freedombox/plinth/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
+"cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,37 +19,37 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 2.17-dev\n"
 
-#: plinth/action_utils.py:254
+#: plinth/action_utils.py:259
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Očekávající spojení na {kind} portu {listen_address}:{port}"
 
-#: plinth/action_utils.py:257
+#: plinth/action_utils.py:262
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Očekávající spojení na {kind} portu {port}"
 
-#: plinth/action_utils.py:352
+#: plinth/action_utils.py:357
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Přístupová URL adresa {url} na tcp{kind}"
 
-#: plinth/action_utils.py:356
+#: plinth/action_utils.py:361
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Přístupová URL adresa {url}"
 
-#: plinth/action_utils.py:386
+#: plinth/action_utils.py:391
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Připojit k {host}:{port}"
 
-#: plinth/action_utils.py:389
+#: plinth/action_utils.py:394
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Připojit k {host}:{port}"
 
-#: plinth/context_processors.py:38 plinth/views.py:49
+#: plinth/context_processors.py:38 plinth/views.py:52
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -58,8 +58,16 @@ msgid "Enable application"
 msgstr "Zapnout aplikaci"
 
 #: plinth/forms.py:45
-msgid "Select the domain name to be used for this application"
+#, fuzzy
+#| msgid "Select the domain name to be used for this application"
+msgid "Select a domain name to be used with this application"
 msgstr "Vyberte doménový název který použít pro tuto aplikaci"
+
+#: plinth/forms.py:47
+msgid ""
+"Warning! The application may not work properly if domain name is changed "
+"later."
+msgstr ""
 
 #: plinth/middleware.py:71
 msgid "Application installed."
@@ -96,14 +104,20 @@ msgstr ""
 "zabezpečení hlavně v případě připojení do nepříliš přátelské místní sítě."
 
 #: plinth/modules/bind/__init__.py:34
-msgid ""
-"Domain Name Server \n"
-" (BIND)"
+msgid "BIND"
+msgstr ""
+
+#: plinth/modules/bind/__init__.py:36
+#, fuzzy
+#| msgid ""
+#| "Domain Name Server \n"
+#| " (BIND)"
+msgid "Domain Name Server"
 msgstr ""
 "Doménový jmenný server\n"
 " (BIND)"
 
-#: plinth/modules/bind/__init__.py:43
+#: plinth/modules/bind/__init__.py:45
 msgid ""
 "BIND is open source software that enables you to publish your Domain Name "
 "System (DNS) information on the Internet, and to resolve DNS queries for "
@@ -113,7 +127,7 @@ msgstr ""
 "doménového jmenného systému (DNS) na Internet a překládat DNS dotazy pro "
 "vaše uživatele."
 
-#: plinth/modules/bind/__init__.py:47
+#: plinth/modules/bind/__init__.py:49
 msgid ""
 "BIND is by far the most widely used DNS software on the Internet, providing "
 "a robust and stable platform on top of which organizations can build "
@@ -162,7 +176,7 @@ msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "Přeposílat na sadu přeposílajících DNS serverů"
 
 #: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
-#: plinth/modules/dynamicdns/dynamicdns.py:140
+#: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Neplatný název domény"
 
@@ -189,7 +203,7 @@ msgstr "Neplatný název stroje"
 
 #: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
 #: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:135
+#: plinth/modules/dynamicdns/dynamicdns.py:143
 msgid "Domain Name"
 msgstr "Název domény"
 
@@ -216,7 +230,7 @@ msgid "Language for this web administration interface"
 msgstr "Jazyk pro toto webové správní rozhraní"
 
 #: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:37
+#: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:37
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
@@ -300,19 +314,25 @@ msgid "Time zone set"
 msgstr "Nastavení časové zóny"
 
 #: plinth/modules/deluge/__init__.py:39
-msgid ""
-"BitTorrent Web Client \n"
-" (Deluge)"
+msgid "Deluge"
+msgstr ""
+
+#: plinth/modules/deluge/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "BitTorrent Web Client \n"
+#| " (Deluge)"
+msgid "BitTorrent Web Client"
 msgstr ""
 "Webový klient sítě BitTorrent \n"
 " (Deluge)"
 
-#: plinth/modules/deluge/__init__.py:42
+#: plinth/modules/deluge/__init__.py:44
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr ""
 "Deluge je BitTorrent klient který poskytuje webové uživatelské rozhraní."
 
-#: plinth/modules/deluge/__init__.py:44
+#: plinth/modules/deluge/__init__.py:46
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\">/deluge</a> path on the web server. The default password is 'deluge', but "
@@ -378,7 +398,15 @@ msgstr "Vyzkoušet"
 msgid "Result"
 msgstr "Výsledek"
 
-#: plinth/modules/diaspora/__init__.py:61
+#: plinth/modules/diaspora/__init__.py:51
+msgid "diaspora*"
+msgstr ""
+
+#: plinth/modules/diaspora/__init__.py:53
+msgid "Federated Social Network"
+msgstr ""
+
+#: plinth/modules/diaspora/__init__.py:62
 msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
@@ -386,14 +414,9 @@ msgstr ""
 "diaspora* je decentralizovaná společenská síť na které ukládáte a ovládáte "
 "svá vlastní data."
 
-#: plinth/modules/diaspora/forms.py:30
-msgid "Select the domain name to be used for diaspora*"
-msgstr "Vyberte doménový název který použít pro diaspora*"
-
-#: plinth/modules/diaspora/forms.py:32
-msgid ""
-"Warning! Do not change the FreedomBox domain name after setting up diaspora*"
-msgstr "Varování! Neměňte doménový název FreedomBox po nastavení diaspora*"
+#: plinth/modules/diaspora/forms.py:31
+msgid "Enable new user registrations"
+msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -425,7 +448,25 @@ msgstr ""
 msgid "Update setup"
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:39
+#: plinth/modules/diaspora/views.py:96 plinth/modules/ejabberd/views.py:60
+#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:134
+#: plinth/views.py:112
+msgid "Setting unchanged"
+msgstr "Nastavení se nezměnila"
+
+#: plinth/modules/diaspora/views.py:100
+#, fuzzy
+#| msgid "Application enabled"
+msgid "User registrations enabled"
+msgstr "Aplikace zapnuta"
+
+#: plinth/modules/diaspora/views.py:104
+#, fuzzy
+#| msgid "Application disabled"
+msgid "User registrations disabled"
+msgstr "Aplikace vypnuta"
+
+#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:45
 msgid "Disks"
 msgstr "Disky"
 
@@ -470,7 +511,7 @@ msgstr ""
 #: plinth/modules/disks/templates/disks.html:90
 #: plinth/modules/disks/templates/disks.html:102
 #: plinth/modules/disks/templates/disks_expand.html:45
-#: plinth/modules/disks/views.py:56
+#: plinth/modules/disks/views.py:62
 msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
 
@@ -491,45 +532,52 @@ msgstr ""
 "%(expandable_root_size)s dalšího prostoru bude k dispozici na kořenovém "
 "oddílu."
 
-#: plinth/modules/disks/views.py:65
+#: plinth/modules/disks/views.py:71
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Chyba při zvětšování oddílu: {exception}"
 
-#: plinth/modules/disks/views.py:68
+#: plinth/modules/disks/views.py:74
 msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
-#: plinth/modules/disks/views.py:77
+#: plinth/modules/disks/views.py:93
+#, python-format, python-brace-format
+msgid ""
+"Warning: Low space on system partition ({percent_used}% used, {free_space} "
+"free)."
+msgstr ""
+
+#: plinth/modules/disks/views.py:130
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajtů"
 
-#: plinth/modules/disks/views.py:81
+#: plinth/modules/disks/views.py:134
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/disks/views.py:85
+#: plinth/modules/disks/views.py:138
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/disks/views.py:89
+#: plinth/modules/disks/views.py:142
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/disks/views.py:92
+#: plinth/modules/disks/views.py:145
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/dynamicdns/__init__.py:33
+#: plinth/modules/dynamicdns/__init__.py:35
 msgid "Dynamic DNS Client"
 msgstr "Klient dynamické DNS"
 
-#: plinth/modules/dynamicdns/__init__.py:37
+#: plinth/modules/dynamicdns/__init__.py:39
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -541,7 +589,7 @@ msgstr ""
 "Internetu. Toto ostatním zabrání nalézt služby, které jsou poskytovány tímto "
 "{box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:43
+#: plinth/modules/dynamicdns/__init__.py:45
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -559,11 +607,18 @@ msgstr ""
 "pokudse někdo z Internetu zeptá na váš DNS název, dostane odpověď s vaší "
 "současnou IP adresou."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:35 plinth/modules/help/help.py:40
+#: plinth/modules/dynamicdns/__init__.py:67
+#: plinth/modules/dynamicdns/dynamicdns.py:377
+#, fuzzy
+#| msgid "Dynamic DNS Client"
+msgid "Dynamic DNS Service"
+msgstr "Klient dynamické DNS"
+
+#: plinth/modules/dynamicdns/dynamicdns.py:43 plinth/modules/help/help.py:40
 msgid "About"
 msgstr "O systému"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:39
+#: plinth/modules/dynamicdns/dynamicdns.py:47
 #: plinth/modules/firewall/templates/firewall.html:47
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:67
@@ -572,7 +627,7 @@ msgstr "O systému"
 msgid "Status"
 msgstr "Stav"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:63
+#: plinth/modules/dynamicdns/dynamicdns.py:71
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -582,7 +637,7 @@ msgstr ""
 "&lt;Ip&gt;, &lt;Domain&gt;. Další podrobnosti naleznete v šablonách "
 "aktualizace URL ukázkových poskytovatelů."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:67
+#: plinth/modules/dynamicdns/dynamicdns.py:75
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -592,7 +647,7 @@ msgstr ""
 "POkud nepodporuje GnuDIP nebo není na seznamu, můžete použít URL adresu, "
 "poskytnutou vaším poskytovatelem."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:72
+#: plinth/modules/dynamicdns/dynamicdns.py:80
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -600,20 +655,20 @@ msgstr ""
 "Nezadávejte zde URL adresu (jako třeba „https://example.com/“) ale pouze "
 "doménu, mířící na GnuDIP server (jako například „example.com“)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:76
+#: plinth/modules/dynamicdns/dynamicdns.py:84
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Veřejný doménový název který chcete používat pro dosažitelnost svého "
 "{box_name}."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:79
+#: plinth/modules/dynamicdns/dynamicdns.py:87
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Tuto předvolbu použijte pokud váš poskytovatel připojení používá samy sebou "
 "podepsané certifikáty."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:82
+#: plinth/modules/dynamicdns/dynamicdns.py:90
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -621,11 +676,11 @@ msgstr ""
 "Pokud je vybrána tato předvolba, uživatelské jméno a heslo budou použito pro "
 "základní HTTP ověření."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:85
+#: plinth/modules/dynamicdns/dynamicdns.py:93
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Pokud chcete zachovat stávající heslo, tuto kolonku nevyplňujte."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:88
+#: plinth/modules/dynamicdns/dynamicdns.py:96
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -638,82 +693,82 @@ msgstr ""
 "skutečné IP address. Adresa by měla vrátit pouze IP ze které klient přichází "
 "(příklad: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:96
+#: plinth/modules/dynamicdns/dynamicdns.py:104
 msgid "The username that was used when the account was created."
 msgstr "Uživatelské jméno které bylo použito pro vytvoření účtu."
 
-#: plinth/modules/dynamicdns/dynamicdns.py:107
+#: plinth/modules/dynamicdns/dynamicdns.py:115
 msgid "Enable Dynamic DNS"
 msgstr "Zapnout dynamické DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:110
+#: plinth/modules/dynamicdns/dynamicdns.py:118
 msgid "Service Type"
 msgstr "Typ služby"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:115
+#: plinth/modules/dynamicdns/dynamicdns.py:123
 msgid "GnuDIP Server Address"
 msgstr "Adresa GnuDIP serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:120
+#: plinth/modules/dynamicdns/dynamicdns.py:128
 msgid "Invalid server name"
 msgstr "Neplatný název serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:123
+#: plinth/modules/dynamicdns/dynamicdns.py:131
 msgid "Update URL"
 msgstr "Aktualizovat URL adresu"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:127
+#: plinth/modules/dynamicdns/dynamicdns.py:135
 msgid "Accept all SSL certificates"
 msgstr "Přijímat veškeré SSL certifikáty"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:131
+#: plinth/modules/dynamicdns/dynamicdns.py:139
 msgid "Use HTTP basic authentication"
 msgstr "Použít základní HTTP ověřování"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:143
+#: plinth/modules/dynamicdns/dynamicdns.py:151
 #: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:146
+#: plinth/modules/dynamicdns/dynamicdns.py:154
 #: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
 msgid "Password"
 msgstr "Heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:149
+#: plinth/modules/dynamicdns/dynamicdns.py:157
 #: plinth/modules/networks/forms.py:231
 msgid "Show password"
 msgstr "Zobrazit heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:153
+#: plinth/modules/dynamicdns/dynamicdns.py:161
 msgid "URL to look up public IP"
 msgstr "URL adresa na které hledat veřejnou IP adresu"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:179
+#: plinth/modules/dynamicdns/dynamicdns.py:187
 msgid "Please provide an update URL or a GnuDIP server address"
 msgstr "Zadejte URL adresu aktualizace nebo GNUDIP serveru"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:184
+#: plinth/modules/dynamicdns/dynamicdns.py:192
 msgid "Please provide a GnuDIP username"
 msgstr "Zadejte GnuDIP uživatelské jméno"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:188
+#: plinth/modules/dynamicdns/dynamicdns.py:196
 msgid "Please provide a GnuDIP domain name"
 msgstr "Zadejte název domény GnuDIP"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:193
+#: plinth/modules/dynamicdns/dynamicdns.py:201
 msgid "Please provide a password"
 msgstr "Zadejte heslo"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:211
+#: plinth/modules/dynamicdns/dynamicdns.py:219
 msgid "Configure Dynamic DNS"
 msgstr "Nastavit dynamickou DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:232
+#: plinth/modules/dynamicdns/dynamicdns.py:240
 msgid "Dynamic DNS Status"
 msgstr "Stav dynamické DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:364
+#: plinth/modules/dynamicdns/dynamicdns.py:381
 #: plinth/modules/openvpn/views.py:143 plinth/modules/transmission/views.py:72
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
@@ -785,15 +840,18 @@ msgstr ""
 msgid "Last update"
 msgstr "Minulá aktualizace"
 
-#: plinth/modules/ejabberd/__init__.py:42
-msgid ""
-"Chat Server \n"
-" (ejabberd)"
-msgstr ""
-"Chatovací server \n"
-" (ejabberd)"
-
 #: plinth/modules/ejabberd/__init__.py:45
+msgid "ejabberd"
+msgstr ""
+
+#: plinth/modules/ejabberd/__init__.py:47
+#: plinth/modules/matrixsynapse/__init__.py:43
+#, fuzzy
+#| msgid "Web Server"
+msgid "Chat Server"
+msgstr "Webový server"
+
+#: plinth/modules/ejabberd/__init__.py:50
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -801,11 +859,17 @@ msgstr ""
 "XMPP je otevřený a standardizovaný komunikační protokol. Zde je možné "
 "nastavit a spustit vlastní XMPP server, zvaný ejabberd."
 
-#: plinth/modules/ejabberd/__init__.py:48
+#: plinth/modules/ejabberd/__init__.py:54
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "To actually communicate, you can use the web client or any other <a "
+#| "href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP "
+#| "client</a>."
 msgid ""
-"To actually communicate, you can use the web client or any other <a "
-"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP client</"
-"a>."
+"To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
+"client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/' "
+"target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
+"any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
 "Pro vlastní komunikaci, můžete použít webového klienta nebo jakéhokoli <a "
 "href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP klienta</"
@@ -850,16 +914,11 @@ msgstr "Spustit webového klienta"
 msgid "Configuration"
 msgstr "Nastavení"
 
-#: plinth/modules/ejabberd/views.py:60 plinth/modules/openvpn/views.py:145
-#: plinth/modules/tor/views.py:134 plinth/views.py:103
-msgid "Setting unchanged"
-msgstr "Nastavení se nezměnila"
-
-#: plinth/modules/ejabberd/views.py:64 plinth/views.py:107
+#: plinth/modules/ejabberd/views.py:64 plinth/views.py:116
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
-#: plinth/modules/ejabberd/views.py:67 plinth/views.py:110
+#: plinth/modules/ejabberd/views.py:67 plinth/views.py:119
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 
@@ -913,13 +972,13 @@ msgid "Service/Port"
 msgstr "Služba/port"
 
 #: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:94
 #: plinth/modules/names/templates/names.html:49
 msgid "Enabled"
 msgstr "Zapnuto"
 
 #: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:90
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:96
 #: plinth/modules/names/templates/names.html:51
 #: plinth/modules/networks/forms.py:63
 msgid "Disabled"
@@ -970,8 +1029,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
-"Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</a>"
-" a případně pravit."
+"Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</"
+"a> a případně pravit."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
@@ -1168,16 +1227,33 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
-#: plinth/modules/ikiwiki/__init__.py:39
-msgid "Wiki and Blog (ikiwiki)"
-msgstr "Wiki a blog (ikiwiki)"
+#: plinth/modules/ikiwiki/__init__.py:41
+#, fuzzy
+#| msgid "wiki"
+msgid "ikiwiki"
+msgstr "wiki"
 
-#: plinth/modules/ikiwiki/__init__.py:42
+#: plinth/modules/ikiwiki/__init__.py:43
+#, fuzzy
+#| msgid "Manage Wikis and Blogs"
+msgid "Wiki and Blog"
+msgstr "Spravovat wiki a blogy"
+
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
-"wikis will be available from <a href=\"/ikiwiki\">/ikiwiki</a>."
+"wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
+msgstr ""
+
+#: plinth/modules/ikiwiki/__init__.py:53
+#, python-brace-format
+msgid ""
+"Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
+"<i>manage</i> blogs and wikis, but any user in the <b>wiki</b> group can "
+"<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
+"Configuration</a> you can change these permissions or add new users."
 msgstr ""
 
 #: plinth/modules/ikiwiki/forms.py:34
@@ -1291,18 +1367,20 @@ msgid "Delete Wiki or Blog"
 msgstr "Smazat wiki nebo blog"
 
 #: plinth/modules/infinoted/__init__.py:43
-msgid ""
-"Gobby Server \n"
-" (infinoted)"
+msgid "infinoted"
 msgstr ""
-"Gobby server \n"
-" (infinoted)"
 
-#: plinth/modules/infinoted/__init__.py:46
+#: plinth/modules/infinoted/__init__.py:45
+#, fuzzy
+#| msgid "Web Server"
+msgid "Gobby Server"
+msgstr "Webový server"
+
+#: plinth/modules/infinoted/__init__.py:48
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted je server pro Gobby – textový editor pro skupiny."
 
-#: plinth/modules/infinoted/__init__.py:49
+#: plinth/modules/infinoted/__init__.py:51
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -1314,14 +1392,20 @@ msgstr ""
 "„Připojit k serveru“ a zadejte doménový název vašeho {box_name}."
 
 #: plinth/modules/jsxc/__init__.py:36
-msgid ""
-"Chat Client \n"
-" (JSXC)"
+msgid "JSXC"
+msgstr ""
+
+#: plinth/modules/jsxc/__init__.py:38
+#, fuzzy
+#| msgid ""
+#| "Chat Client \n"
+#| " (JSXC)"
+msgid "Chat Client"
 msgstr ""
 "Chatovací klient\n"
 "(JSXC)"
 
-#: plinth/modules/jsxc/__init__.py:40
+#: plinth/modules/jsxc/__init__.py:42
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -1329,7 +1413,7 @@ msgstr ""
 "JSXC je webový klient pro XMPP. Typicky je používaný s lokálně provozovaným "
 "XMPP serverem."
 
-#: plinth/modules/jsxc/__init__.py:78
+#: plinth/modules/jsxc/__init__.py:80
 msgid ""
 "Chat Client \n"
 " (jsxc)"
@@ -1337,12 +1421,19 @@ msgstr ""
 "Chatovací klient\n"
 "(jsxc)"
 
-#: plinth/modules/letsencrypt/__init__.py:39
-#: plinth/modules/letsencrypt/__init__.py:64
-msgid "Certificates (Let's Encrypt)"
+#: plinth/modules/letsencrypt/__init__.py:40
+#, fuzzy
+#| msgid "Certificates (Let's Encrypt)"
+msgid "Let's Encrypt"
 msgstr "Certifikáty (Let's Encrypt)"
 
-#: plinth/modules/letsencrypt/__init__.py:43
+#: plinth/modules/letsencrypt/__init__.py:42
+#, fuzzy
+#| msgid "Certificate Status"
+msgid "Certificates"
+msgstr "Stav certifikátu"
+
+#: plinth/modules/letsencrypt/__init__.py:46
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -1352,7 +1443,7 @@ msgid ""
 "Encrypt, a certificate authority (CA)."
 msgstr ""
 
-#: plinth/modules/letsencrypt/__init__.py:50
+#: plinth/modules/letsencrypt/__init__.py:53
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -1380,52 +1471,102 @@ msgstr "Zabezpečení webové stránky"
 msgid "Actions"
 msgstr "Akce"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:56
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:62
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
 msgstr "Platné, končí %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:63
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
 msgid "Revoked"
 msgstr "Platnost odvolána"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:67
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:73
 #, python-format
 msgid "Expired on %(expiry_date)s"
 msgstr "Platnost končila %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:77
 msgid "Invalid test certificate"
 msgstr "Neplatný testovací certifikát"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:75
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:81
 #, python-format
 msgid "Invalid (%(reason)s)"
 msgstr "Neplatné (%(reason)s)"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:82
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
 msgid "No certificate"
 msgstr "Žádný certifikát"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
 msgid "Re-obtain"
 msgstr "Získat znovu"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:111
 #: plinth/modules/networks/templates/connection_show.html:63
 #: plinth/modules/snapshot/templates/snapshot.html:34
 msgid "Delete"
 msgstr "Smazat"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:112
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:118
 msgid "Revoke"
 msgstr "Odvolat platnost"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:120
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:126
 msgid "Obtain"
 msgstr "Získat"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:133
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:149
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:156
+#, fuzzy
+#| msgid "Update"
+msgid "Update config"
+msgstr "Aktualizovat"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:161
+#, python-format
+msgid ""
+"\n"
+"                Let Plinth manage certificate renewal of\n"
+"                <b>%(current_domain)s</b> (recommended)\n"
+"              "
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:166
+msgid ""
+"\n"
+"                Let Plinth manage certificate renewal of the current domain "
+"(recommended)\n"
+"              "
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:175
+#, python-format
+msgid ""
+"If %(box_name)s manages the certificate renewal for the current domain, it "
+"will ensure that all apps that use the certificate can use it, as soon as it "
+"gets renewed."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:181
+msgid ""
+"<b>No certificate available for the current domain.</b> First obtain a "
+"certificate to enable management of its renewal."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:186
+#, fuzzy
+#| msgid ""
+#| "No domains have been configured. Configure domains to be able to obtain "
+#| "certificates for them."
+msgid ""
+"<b>No current domain is configured.</b> First configure a domain to enable "
+"management of its certificates."
+msgstr ""
+"Nejsou nastavené žádné domény. Nastavte je, aby bylo možné pro ně získat "
+"certifikát."
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:195
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1433,7 +1574,7 @@ msgstr ""
 "Nejsou nastavené žádné domény. Nastavte je, aby bylo možné pro ně získat "
 "certifikát."
 
-#: plinth/modules/letsencrypt/views.py:55
+#: plinth/modules/letsencrypt/views.py:57
 #, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
@@ -1442,40 +1583,73 @@ msgstr ""
 "Platnost certifikátu pro doménu {domain} úspěšně odvolána. Může to chvíli "
 "trvat, než se změna projeví."
 
-#: plinth/modules/letsencrypt/views.py:61
+#: plinth/modules/letsencrypt/views.py:63
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "Nepodařilo se odvolat platnost certifikátu prodoménu {domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:73
+#: plinth/modules/letsencrypt/views.py:75
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "Úspěšně odbržen certifikát z domény {domain}"
 
-#: plinth/modules/letsencrypt/views.py:78
+#: plinth/modules/letsencrypt/views.py:81
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Nepodařilo se získat certifikát pro doménu {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:90
+#: plinth/modules/letsencrypt/views.py:109
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully deleted for domain {domain}"
+msgid "Certificate renewal management enabled for {domain}."
+msgstr "Certifikát pro doménu {domain} úspěšně smazán"
+
+#: plinth/modules/letsencrypt/views.py:95
+#, fuzzy, python-brace-format
+#| msgid "Failed to delete certificate for domain {domain}: {error}"
+msgid "Failed to enable certificate renewal management for {domain}: {error}"
+msgstr "Nepodařilo se smazat certifikát pro doménu {domain}: {error}"
+
+#: plinth/modules/letsencrypt/views.py:112
+#, fuzzy, python-brace-format
+#| msgid "Certificate successfully deleted for domain {domain}"
+msgid "Certificate renewal management disabled for {domain}."
+msgstr "Certifikát pro doménu {domain} úspěšně smazán"
+
+#: plinth/modules/letsencrypt/views.py:118
+#, fuzzy, python-brace-format
+#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgid "Failed to switch certificate renewal management for {domain}: {error}"
+msgstr "Nepodařilo se získat certifikát pro doménu {domain}: {error}"
+
+#: plinth/modules/letsencrypt/views.py:134
+#, fuzzy, python-brace-format
+#| msgid "Failed to delete certificate for domain {domain}: {error}"
+msgid "Failed to disable certificate renewal management for {domain}: {error}"
+msgstr "Nepodařilo se smazat certifikát pro doménu {domain}: {error}"
+
+#: plinth/modules/letsencrypt/views.py:141
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "Certifikát pro doménu {domain} úspěšně smazán"
 
-#: plinth/modules/letsencrypt/views.py:95
+#: plinth/modules/letsencrypt/views.py:146
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Nepodařilo se smazat certifikát pro doménu {domain}: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:41
-msgid ""
-"Chat Server \n"
-" (Matrix Synapse)"
+#, fuzzy
+#| msgid ""
+#| "Chat Server \n"
+#| " (Matrix Synapse)"
+msgid "Matrix Synapse"
 msgstr ""
 "Chat server \n"
 " (Matrix Synapse)"
 
-#: plinth/modules/matrixsynapse/__init__.py:44
+#: plinth/modules/matrixsynapse/__init__.py:46
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -1492,7 +1666,7 @@ msgstr ""
 "čísla. Díky federování mohou uživatelé na daném  Matrix serveru mohou "
 "komunikovat s uživateli všech ostatních Matrix serverů."
 
-#: plinth/modules/matrixsynapse/__init__.py:52
+#: plinth/modules/matrixsynapse/__init__.py:54
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -1501,10 +1675,6 @@ msgstr ""
 "Pro komunikaci jsou k dispozici <a href=\"https://matrix.org/docs/projects/"
 "\">klienti</a> pro mobilní zařízení, osobní počítače a web. Doporučujeme "
 "klienta<a href=\"https://riot.im/\">Riot</a>."
-
-#: plinth/modules/matrixsynapse/forms.py:31
-msgid "Select the domain name"
-msgstr "Vyberte název domény"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
@@ -1548,14 +1718,20 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/minetest/__init__.py:48
-msgid ""
-"Block Sandbox \n"
-" (Minetest)"
+msgid "Minetest"
+msgstr ""
+
+#: plinth/modules/minetest/__init__.py:50
+#, fuzzy
+#| msgid ""
+#| "Block Sandbox \n"
+#| " (Minetest)"
+msgid "Block Sandbox"
 msgstr ""
 "Pískoviště s kostkami \n"
 " (Minetest)"
 
-#: plinth/modules/minetest/__init__.py:52
+#: plinth/modules/minetest/__init__.py:54
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -1679,7 +1855,7 @@ msgstr "Zabezpečený shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:87
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
-#: plinth/service.py:117
+#: plinth/service.py:116
 msgid "Web Server"
 msgstr "Webový server"
 
@@ -1779,14 +1955,20 @@ msgid "Error occurred while publishing key."
 msgstr "Při zveřejňování klíče došlo k chybě."
 
 #: plinth/modules/mumble/__init__.py:35
-msgid ""
-"Voice Chat \n"
-" (Mumble)"
+msgid "Mumble"
+msgstr ""
+
+#: plinth/modules/mumble/__init__.py:37
+#, fuzzy
+#| msgid ""
+#| "Voice Chat \n"
+#| " (Mumble)"
+msgid "Voice Chat"
 msgstr ""
 "Hlasový chat \n"
 " (Mumble)"
 
-#: plinth/modules/mumble/__init__.py:44
+#: plinth/modules/mumble/__init__.py:46
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -1794,7 +1976,7 @@ msgstr ""
 "Mumble je open source, s nízkou prodlevou, šifrovaný, vysoce kvalitní "
 "hlasový komunikační software."
 
-#: plinth/modules/mumble/__init__.py:47
+#: plinth/modules/mumble/__init__.py:49
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -2307,7 +2489,7 @@ msgid "This connection is not active."
 msgstr "Toto připojení není aktivní."
 
 #: plinth/modules/networks/templates/connection_show.html:266
-#: plinth/modules/security/__init__.py:32 plinth/modules/security/views.py:46
+#: plinth/modules/security/__init__.py:32 plinth/modules/security/views.py:48
 msgid "Security"
 msgstr "Zabezpečení"
 
@@ -2403,14 +2585,22 @@ msgid "Inactive"
 msgstr "Neaktivní"
 
 #: plinth/modules/openvpn/__init__.py:42
-msgid ""
-"Virtual Private Network \n"
-" (OpenVPN)"
+#, fuzzy
+#| msgid "Open"
+msgid "OpenVPN"
+msgstr "Otevřené"
+
+#: plinth/modules/openvpn/__init__.py:44
+#, fuzzy
+#| msgid ""
+#| "Virtual Private Network \n"
+#| " (OpenVPN)"
+msgid "Virtual Private Network"
 msgstr ""
 "Virtuální soukromá síť \n"
 " (OpenVPN)"
 
-#: plinth/modules/openvpn/__init__.py:46
+#: plinth/modules/openvpn/__init__.py:48
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -2421,7 +2611,7 @@ msgid ""
 "security and anonymity."
 msgstr ""
 
-#: plinth/modules/openvpn/__init__.py:84
+#: plinth/modules/openvpn/__init__.py:86
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -2505,10 +2695,18 @@ msgid "Setup failed."
 msgstr "Nastavování se nezdařilo."
 
 #: plinth/modules/pagekite/__init__.py:44
-msgid "Public Visibility (PageKite)"
+#, fuzzy
+#| msgid "Pagekite"
+msgid "PageKite"
+msgstr "Pagekite"
+
+#: plinth/modules/pagekite/__init__.py:46
+#, fuzzy
+#| msgid "Public Visibility (PageKite)"
+msgid "Public Visibility"
 msgstr "Veřejná viditelnost (PageKite)"
 
-#: plinth/modules/pagekite/__init__.py:48
+#: plinth/modules/pagekite/__init__.py:50
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -2520,19 +2718,19 @@ msgstr ""
 "nejste připojení přímo. Potřebujete ho pouze když jsou služby služby vašeho "
 "{box_name} nedostupné z Internetu. To zahrnuje následující situace:"
 
-#: plinth/modules/pagekite/__init__.py:55
+#: plinth/modules/pagekite/__init__.py:57
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} se nachází za omezující bránou firewall."
 
-#: plinth/modules/pagekite/__init__.py:59
+#: plinth/modules/pagekite/__init__.py:61
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} je připojený k (bezdrátovému) směrovači, který není ve vaší "
 "správě."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:64
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -2540,7 +2738,7 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje vnější IP adresu a namísto toho "
 "poskytuje připojení prostřednictvím NAT překladu."
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:67
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes evertime you connect to Internet."
@@ -2548,11 +2746,11 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje pevnou IP adresu a ta se proto "
 "mění pokaždé, když se připojíte k Internetu."
 
-#: plinth/modules/pagekite/__init__.py:68
+#: plinth/modules/pagekite/__init__.py:70
 msgid "Your ISP limits incoming connections."
 msgstr "Váš poskytovatel připojení k Internetu omezuje příchozí spojení."
 
-#: plinth/modules/pagekite/__init__.py:71
+#: plinth/modules/pagekite/__init__.py:73
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP-address limitations by using a "
@@ -2844,8 +3042,8 @@ msgstr "Vlastní služby"
 msgid "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 msgstr "Nastavení Pagekite dokončeno. Služby HTTP a HTTPS jsou nyní zapnuty."
 
-#: plinth/modules/power/__init__.py:28 plinth/modules/power/views.py:50
-#: plinth/modules/power/views.py:65
+#: plinth/modules/power/__init__.py:28 plinth/modules/power/views.py:51
+#: plinth/modules/power/views.py:67
 msgid "Power"
 msgstr "Napájení"
 
@@ -2854,10 +3052,22 @@ msgid "Restart or shut down the system."
 msgstr "Restartovat nebo vypnout systém."
 
 #: plinth/modules/power/templates/power.html:28
+#, fuzzy
+#| msgid ""
+#| "Another installation or upgrade is already running. Please wait for a few "
+#| "moments before trying again."
+msgid ""
+"Currently an installation or upgrade is running. Consider waiting until it's "
+"finished before shutting down or restarting."
+msgstr ""
+"Už je spuštěná jiná instalace nebo přechod na novější verzi. Počkejte chvíli "
+"a zkuste to znovu."
+
+#: plinth/modules/power/templates/power.html:37
 msgid "Restart &raquo;"
 msgstr "Restartovat &raquo;"
 
-#: plinth/modules/power/templates/power.html:31
+#: plinth/modules/power/templates/power.html:40
 msgid "Shut Down &raquo;"
 msgstr "Vypnout &raquo;"
 
@@ -2869,7 +3079,20 @@ msgstr ""
 "Opravdu chcete restartovat? Mějte na paměti, že po dobu restartu webové "
 "rozhraní nebude několik minut dostupné."
 
-#: plinth/modules/power/templates/power_restart.html:42
+#: plinth/modules/power/templates/power_restart.html:38
+#, fuzzy
+#| msgid ""
+#| "Another installation or upgrade is already running. Please wait for a few "
+#| "moments before trying again."
+msgid ""
+"Currently an installation or upgrade is running. Consider waiting until it's "
+"finished before restarting."
+msgstr ""
+"Už je spuštěná jiná instalace nebo přechod na novější verzi. Počkejte chvíli "
+"a zkuste to znovu."
+
+#: plinth/modules/power/templates/power_restart.html:52
+#: plinth/modules/power/templates/power_restart.html:55
 msgid "Restart Now"
 msgstr "Restartovat nyní"
 
@@ -2879,19 +3102,38 @@ msgid ""
 "interface after shut down."
 msgstr "Opravdu vypnout? Po vypnutí toto webové rozhraní nebude dostupné."
 
-#: plinth/modules/power/templates/power_shutdown.html:41
+#: plinth/modules/power/templates/power_shutdown.html:37
+#, fuzzy
+#| msgid ""
+#| "Another installation or upgrade is already running. Please wait for a few "
+#| "moments before trying again."
+msgid ""
+"Currently an installation or upgrade is running. Consider waiting until it's "
+"finished before shutting down."
+msgstr ""
+"Už je spuštěná jiná instalace nebo přechod na novější verzi. Počkejte chvíli "
+"a zkuste to znovu."
+
+#: plinth/modules/power/templates/power_shutdown.html:51
+#: plinth/modules/power/templates/power_shutdown.html:54
 msgid "Shut Down Now"
 msgstr "Vypnout nyní"
 
 #: plinth/modules/privoxy/__init__.py:43
-msgid ""
-"Web Proxy \n"
-" (Privoxy)"
+msgid "Privoxy"
+msgstr ""
+
+#: plinth/modules/privoxy/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Web Proxy \n"
+#| " (Privoxy)"
+msgid "Web Proxy"
 msgstr ""
 "Webová proxy \n"
 " (Privoxy)"
 
-#: plinth/modules/privoxy/__init__.py:46
+#: plinth/modules/privoxy/__init__.py:48
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -2902,7 +3144,7 @@ msgstr ""
 "hlaviček, řídící přístup a odebírající reklamy a ostatní otravné Internetové "
 "smetí. "
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:54
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -2912,20 +3154,26 @@ msgid ""
 "\">http://p.p</a>."
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:144
+#: plinth/modules/privoxy/__init__.py:147
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Přistupte {url} s proxy {proxy} na tcp{kind}"
 
 #: plinth/modules/quassel/__init__.py:42
-msgid ""
-"IRC Client \n"
-" (Quassel)"
+msgid "Quassel"
+msgstr ""
+
+#: plinth/modules/quassel/__init__.py:44
+#, fuzzy
+#| msgid ""
+#| "IRC Client \n"
+#| " (Quassel)"
+msgid "IRC Client"
 msgstr ""
 "IRC klient \n"
 " (Quassel)"
 
-#: plinth/modules/quassel/__init__.py:46
+#: plinth/modules/quassel/__init__.py:48
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -2936,7 +3184,7 @@ msgid ""
 "connect and disconnect from it."
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:54
+#: plinth/modules/quassel/__init__.py:56
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -2945,21 +3193,26 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/radicale/__init__.py:43
-msgid ""
-"Calendar and Addressbook \n"
-" (Radicale)"
+msgid "Radicale"
+msgstr ""
+
+#: plinth/modules/radicale/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "Calendar and Addressbook \n"
+#| " (Radicale)"
+msgid "Calendar and Addressbook"
 msgstr ""
 "Kalendář a adresář kontaktů\n"
 " (Radicale)"
 
-#: plinth/modules/radicale/__init__.py:47
+#: plinth/modules/radicale/__init__.py:49
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"http://"
-"radicale.org/user_documentation/#idcaldav-and-carddav-clients\"> supported "
-"client application</a> is needed. Radicale can be accessed by any user with "
-"a {box_name} login."
+"radicale.org/clients/\">supported client application</a> is needed. Radicale "
+"can be accessed by any user with a {box_name} login."
 msgstr ""
 
 #: plinth/modules/radicale/forms.py:28
@@ -2987,14 +3240,16 @@ msgid "Access rights configuration updated"
 msgstr "Nastavení přístupových práv aktualizováno"
 
 #: plinth/modules/repro/__init__.py:38
-msgid ""
-"SIP Server \n"
-" (repro)"
+msgid "repro"
 msgstr ""
-"SIP server \n"
-" (repro)"
 
-#: plinth/modules/repro/__init__.py:41
+#: plinth/modules/repro/__init__.py:40
+#, fuzzy
+#| msgid "DNS Server"
+msgid "SIP Server"
+msgstr "DNS server"
+
+#: plinth/modules/repro/__init__.py:43
 msgid ""
 "repro provides various SIP services that a SIP softphone can utilize to "
 "provide audio and video calls as well as presence and instant messaging. "
@@ -3003,7 +3258,7 @@ msgid ""
 "communications to other servers on the Internet similar to email."
 msgstr ""
 
-#: plinth/modules/repro/__init__.py:48
+#: plinth/modules/repro/__init__.py:50
 msgid ""
 "To make SIP calls, a client application is needed. Available clients include "
 "<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
@@ -3011,7 +3266,7 @@ msgid ""
 "a> (for Android phones)."
 msgstr ""
 
-#: plinth/modules/repro/__init__.py:53
+#: plinth/modules/repro/__init__.py:55
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\">web-based "
@@ -3021,14 +3276,20 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/restore/__init__.py:36
-msgid ""
-"Unhosted Storage \n"
-" (reStore)"
+msgid "reStore"
+msgstr ""
+
+#: plinth/modules/restore/__init__.py:38
+#, fuzzy
+#| msgid ""
+#| "Unhosted Storage \n"
+#| " (reStore)"
+msgid "Unhosted Storage"
 msgstr ""
 "Unhosted úložiště \n"
 " (reStore)"
 
-#: plinth/modules/restore/__init__.py:40
+#: plinth/modules/restore/__init__.py:42
 #, python-brace-format
 msgid ""
 "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
@@ -3043,21 +3304,27 @@ msgstr ""
 "úložném serveru, který si uživatel vybere. Pomocí reStore, se váš {box_name} "
 "stane unhosted úložný server."
 
-#: plinth/modules/restore/__init__.py:47
+#: plinth/modules/restore/__init__.py:49
 msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
 msgstr ""
 
 #: plinth/modules/roundcube/__init__.py:35
-msgid ""
-"Email Client \n"
-" (Roundcube)"
+msgid "Roundcube"
+msgstr ""
+
+#: plinth/modules/roundcube/__init__.py:37
+#, fuzzy
+#| msgid ""
+#| "Email Client \n"
+#| " (Roundcube)"
+msgid "Email Client"
 msgstr ""
 "E-mailový klient \n"
 " (Roundcube)"
 
-#: plinth/modules/roundcube/__init__.py:38
+#: plinth/modules/roundcube/__init__.py:40
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -3070,7 +3337,7 @@ msgstr ""
 "klienta, včetně podpory MIME, adresáře kontaktů, manipulace se složkami, "
 "vyhledávání ve zprávách a kontrolou pravopisu."
 
-#: plinth/modules/roundcube/__init__.py:44
+#: plinth/modules/roundcube/__init__.py:46
 msgid ""
 "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
 "the username and password of the email account you wish to access followed "
@@ -3079,7 +3346,7 @@ msgid ""
 "server field like <code>imaps://imap.example.com</code>."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:51
+#: plinth/modules/roundcube/__init__.py:53
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -3100,28 +3367,45 @@ msgid ""
 "services without further authorization."
 msgstr ""
 
-#: plinth/modules/security/views.py:63
+#: plinth/modules/security/forms.py:35
+msgid "Fail2ban (recommended)"
+msgstr ""
+
+#: plinth/modules/security/forms.py:36
+msgid ""
+"When this option is enabled, fail2ban will limit brute force break-in "
+"attempts to the SSH server and other password protected internet-services "
+"which are enabled."
+msgstr ""
+
+#: plinth/modules/security/views.py:66
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "Chyba při nastavování omezeného přístupu: {exception}"
 
-#: plinth/modules/security/views.py:66
+#: plinth/modules/security/views.py:69
 msgid "Updated security configuration"
 msgstr "Nastavení zabezpečení aktualizováno"
 
 #: plinth/modules/shaarli/__init__.py:35
-msgid ""
-"Bookmarks \n"
-" (Shaarli)"
+msgid "Shaarli"
+msgstr ""
+
+#: plinth/modules/shaarli/__init__.py:37
+#, fuzzy
+#| msgid ""
+#| "Bookmarks \n"
+#| " (Shaarli)"
+msgid "Bookmarks"
 msgstr ""
 "Záložky \n"
 " (Shaarli)"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:40
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli umožňuje ukládat a sdílet záložky."
 
-#: plinth/modules/shaarli/__init__.py:40
+#: plinth/modules/shaarli/__init__.py:42
 msgid ""
 "When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
 "a> path on the web server. Note that Shaarli only supports a single user "
@@ -3234,6 +3518,18 @@ msgstr "Pro dokončení obnovy ze zálohy je třeba systém restartovat."
 msgid "Rollback to Snapshot"
 msgstr "Vrátit do podoby zachyceného stavu"
 
+#: plinth/modules/ssh/__init__.py:37
+msgid "Secure Shell (SSH) Server"
+msgstr "Server zabezpečeného shellu (SSH)"
+
+#: plinth/modules/ssh/__init__.py:40
+msgid ""
+"A Secure Shell server uses the secure shell protocol to accept connections "
+"from remote computers. An authorized remote computer can perform "
+"administration tasks, copy files or run other services using such "
+"connections."
+msgstr ""
+
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
 msgstr "Sdružené přihlášení (SSO)"
@@ -3243,14 +3539,20 @@ msgid "Login"
 msgstr "Přihlášení"
 
 #: plinth/modules/syncthing/__init__.py:39
-msgid ""
-"File Synchronization \n"
-" (Syncthing)"
+msgid "Syncthing"
+msgstr ""
+
+#: plinth/modules/syncthing/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "File Synchronization \n"
+#| " (Syncthing)"
+msgid "File Synchronization"
 msgstr ""
 "Synchronizace souborů \n"
 " (Syncthing)"
 
-#: plinth/modules/syncthing/__init__.py:42
+#: plinth/modules/syncthing/__init__.py:44
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -3262,7 +3564,7 @@ msgstr ""
 "smazání souborů na jednom zařízení bude automaticky replikováno na veškerá "
 "zařízení, na kterých také provozujete Syncthing."
 
-#: plinth/modules/syncthing/__init__.py:47
+#: plinth/modules/syncthing/__init__.py:49
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -3273,7 +3575,7 @@ msgid ""
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:54
+#: plinth/modules/syncthing/__init__.py:56
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
@@ -3281,10 +3583,16 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/tahoe/__init__.py:42
-msgid "Distributed File Storage (Tahoe-LAFS)"
+msgid "Tahoe-LAFS"
+msgstr ""
+
+#: plinth/modules/tahoe/__init__.py:44
+#, fuzzy
+#| msgid "Distributed File Storage (Tahoe-LAFS)"
+msgid "Distributed File Storage"
 msgstr "Distribuované souborové úložiště (Tahoe-LAFS)"
 
-#: plinth/modules/tahoe/__init__.py:73
+#: plinth/modules/tahoe/__init__.py:75
 msgid ""
 "Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
 "independent security to store files over a distributed network of storage "
@@ -3296,7 +3604,7 @@ msgstr ""
 "poskytovateli nezávislé zabezpečení. I když některé z uzlů přestanou "
 "fungovat, své soubory můžete získat ze zbývajících uzlů."
 
-#: plinth/modules/tahoe/__init__.py:78
+#: plinth/modules/tahoe/__init__.py:80
 #, python-brace-format
 msgid ""
 "This {box_name} hosts a storage node and an introducer by default. "
@@ -3339,7 +3647,17 @@ msgstr ""
 msgid "Remove"
 msgstr "Odebrat"
 
-#: plinth/modules/tor/__init__.py:45
+#: plinth/modules/tor/__init__.py:42
+msgid "Tor"
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:44
+#, fuzzy
+#| msgid "Tor Anonymity Network"
+msgid "Anonymity Network"
+msgstr "Anonymní síť Tor"
+
+#: plinth/modules/tor/__init__.py:47
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -3348,36 +3666,36 @@ msgid ""
 "\">Tor Browser</a>."
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:70 plinth/modules/tor/__init__.py:112
+#: plinth/modules/tor/__init__.py:72 plinth/modules/tor/__init__.py:114
 msgid "Tor Anonymity Network"
 msgstr "Anonymní síť Tor"
 
-#: plinth/modules/tor/__init__.py:76 plinth/modules/tor/__init__.py:120
+#: plinth/modules/tor/__init__.py:78 plinth/modules/tor/__init__.py:122
 msgid "Tor Bridge Relay"
 msgstr "Předávání Tor mostu"
 
-#: plinth/modules/tor/__init__.py:98 plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:100 plinth/modules/tor/__init__.py:143
 msgid "Tor Hidden Service"
 msgstr "Tor skrytá služba"
 
-#: plinth/modules/tor/__init__.py:160
+#: plinth/modules/tor/__init__.py:162
 msgid "Tor relay port available"
 msgstr "Předávací port pro Tor je k dispozici"
 
-#: plinth/modules/tor/__init__.py:168
+#: plinth/modules/tor/__init__.py:170
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:176
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport zaregistrován"
 
-#: plinth/modules/tor/__init__.py:211
+#: plinth/modules/tor/__init__.py:213
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Přistoupit k URL adrese {url} na tcp{kind} prostřednictvím Tor"
 
-#: plinth/modules/tor/__init__.py:222
+#: plinth/modules/tor/__init__.py:224
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Potvrdit použití Tor na {url} na tcp{kind}"
@@ -3531,14 +3849,20 @@ msgid "An error occurred during configuration."
 msgstr "Při nastavování se vyskytla chyba."
 
 #: plinth/modules/transmission/__init__.py:38
-msgid ""
-"BitTorrent \n"
-" (Transmission)"
+#, fuzzy
+#| msgid ""
+#| "BitTorrent \n"
+#| " (Transmission)"
+msgid "Transmission"
 msgstr ""
 "BitTorrent \n"
 " (Transmission)"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
+msgid "BitTorrent"
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -3547,7 +3871,7 @@ msgstr ""
 "Transmision obsluhuje sdílení souborů Bitorrent. Poznamenejme, že BitTorrent "
 "není anonymní."
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
@@ -3578,25 +3902,36 @@ msgstr ""
 "Heslo pro přihlášení do webového rozhraní. Stávající heslo je zobrazeno v "
 "podobě otisku. Pro nastavení nového hesla zadejte heslo v čitelném textu."
 
-#: plinth/modules/ttrss/__init__.py:37
-msgid ""
-"News Feed Reader \n"
-" (Tiny Tiny RSS)"
+#: plinth/modules/ttrss/__init__.py:39
+msgid "Tiny Tiny RSS"
+msgstr ""
+
+#: plinth/modules/ttrss/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "News Feed Reader \n"
+#| " (Tiny Tiny RSS)"
+msgid "News Feed Reader"
 msgstr ""
 "Čtečka novinek \n"
 " (Tiny Tiny RSS)"
 
-#: plinth/modules/ttrss/__init__.py:40
+#: plinth/modules/ttrss/__init__.py:44
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
 "desktop application as possible."
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:44
+#: plinth/modules/ttrss/__init__.py:49
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server."
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
-"rss</a> path on the web server."
+"rss</a> path on the web server. It can be accessed by any <a href=\"/plinth/"
+"sys/users\">user with a {box_name} login</a>."
 msgstr ""
 "Když je zapnutá, Tiny Tiny RSS čtečka bude dostupná v <a href=\"/tt-rss\">/"
 "tt-rss</a> umístění na webovém serveru."
@@ -3913,15 +4248,11 @@ msgstr "změna média"
 msgid "configuration file: {file}"
 msgstr "soubor s nastaveními: {file}"
 
-#: plinth/service.py:119
+#: plinth/service.py:118
 msgid "Web Server over Secure Socket Layer"
 msgstr "Webový server přes vrstvu zabezpečeného soketu"
 
-#: plinth/service.py:121
-msgid "Secure Shell (SSH) Server"
-msgstr "Server zabezpečeného shellu (SSH)"
-
-#: plinth/service.py:123
+#: plinth/service.py:120
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Webové rozhraní {box_name} (Plinth)"
@@ -3971,11 +4302,11 @@ msgstr ""
 "\">systému hlášení chyb</a> abychom to mohli opravit. K hlášení také "
 "přiložte <a href=\"%(status_log_url)s\">záznam stavu</a>."
 
-#: plinth/templates/apps.html:25
+#: plinth/templates/apps.html:33
 msgid "Services and Applications"
 msgstr "Služby a aplikace"
 
-#: plinth/templates/apps.html:28
+#: plinth/templates/apps.html:36
 #, python-format
 msgid ""
 "You can install and run various services and applications on your "
@@ -3986,7 +4317,7 @@ msgstr ""
 "aplikace. Klikněte na odkaz libovolné aplikace na levé straně a přečtěte si "
 "popis aplikace a případně ji nainstalujte."
 
-#: plinth/templates/apps.html:36
+#: plinth/templates/apps.html:44
 msgid ""
 "This box can be your photo sharing site, your instant messaging site, your "
 "social networking site, your news site.  Remember web portals?  We can be "
@@ -4161,22 +4492,57 @@ msgstr "Instalace %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
 
-#: plinth/templates/system.html:25
+#: plinth/templates/system.html:33
 msgid "System Configuration"
 msgstr "Nastavení systému"
 
-#: plinth/templates/system.html:28
+#: plinth/templates/system.html:36
 #, python-format
 msgid "Here you can administrate the underlying system of your %(box_name)s."
 msgstr "Zde je možné spravovat systém, pohánějící váš %(box_name)s."
 
-#: plinth/templates/system.html:34
+#: plinth/templates/system.html:42
 #, python-format
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
 "Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
 "buďte opatrní!"
+
+#~ msgid "Select the domain name to be used for diaspora*"
+#~ msgstr "Vyberte doménový název který použít pro diaspora*"
+
+#~ msgid ""
+#~ "Warning! Do not change the FreedomBox domain name after setting up "
+#~ "diaspora*"
+#~ msgstr "Varování! Neměňte doménový název FreedomBox po nastavení diaspora*"
+
+#~ msgid ""
+#~ "Chat Server \n"
+#~ " (ejabberd)"
+#~ msgstr ""
+#~ "Chatovací server \n"
+#~ " (ejabberd)"
+
+#~ msgid "Wiki and Blog (ikiwiki)"
+#~ msgstr "Wiki a blog (ikiwiki)"
+
+#~ msgid ""
+#~ "Gobby Server \n"
+#~ " (infinoted)"
+#~ msgstr ""
+#~ "Gobby server \n"
+#~ " (infinoted)"
+
+#~ msgid "Select the domain name"
+#~ msgstr "Vyberte název domény"
+
+#~ msgid ""
+#~ "SIP Server \n"
+#~ " (repro)"
+#~ msgstr ""
+#~ "SIP server \n"
+#~ " (repro)"
 
 #~ msgid ""
 #~ "%(box_name)s setup is now complete.  To make your %(box_name)s "
