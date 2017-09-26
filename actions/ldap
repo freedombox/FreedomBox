@@ -92,13 +92,29 @@ get_user_groups()
 }
 
 
+add_group()
+{
+    groupname="$1"
+
+    ldapaddgroup "${groupname}" > /dev/null 2>&1 || true
+}
+
+
+remove_group()
+{
+    groupname="$1"
+
+    ldapdeletegroup "${groupname}" > /dev/null 2>&1 || true
+}
+
+
 add_user_to_group()
 {
     username="$1"
     groupname="$2"
 
     # Try to create group and ignore failure if group already exists
-    ldapaddgroup $groupname > /dev/null 2>&1 || true
+    add_group "${groupname}"
 
     ldapaddusertogroup $username $groupname > /dev/null
 
@@ -148,6 +164,12 @@ case $command in
     ;;
     remove-user-from-group)
         remove_user_from_group "$@"
+    ;;
+    add-group)
+        add_group "$@"
+    ;;
+    remove-group)
+        remove_group "$@"
     ;;
     *)
         echo "Invalid sub-command"
