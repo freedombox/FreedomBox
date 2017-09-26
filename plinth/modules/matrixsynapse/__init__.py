@@ -26,6 +26,8 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
+
+from plinth.utils import YAMLFile
 from plinth import action_utils
 from plinth import actions
 from plinth import frontpage
@@ -149,3 +151,19 @@ def get_configured_domain_name():
         config, _, _ = load_yaml_guess_indent(config_file)
 
     return config['server_name']
+
+
+def is_user_registrations_enabled():
+    """Return whether user registrations are enabled"""
+    with YAMLFile('/etc/matrix-synapse/homeserver.yaml') as conf:
+        return conf["enable_registration"]
+
+
+def enable_user_registrations():
+    """Allow users to register without invitation"""
+    actions.superuser_run('matrixsynapse', ['enable-user-registrations'])
+
+
+def disable_user_registrations():
+    """Disallow users from registering without invitation"""
+    actions.superuser_run('matrixsynapse', ['disable-user-registrations'])

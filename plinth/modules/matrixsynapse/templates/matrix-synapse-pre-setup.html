@@ -45,6 +45,15 @@
     {% endblocktrans %}
   </div>
 
+  <form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Update setup" %}"/>
+  </form>
+
   {% if not domain_names %}
     {% url 'config:index' as config_url %}
     <p>
