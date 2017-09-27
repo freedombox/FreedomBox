@@ -61,7 +61,8 @@ description = [
 ]
 
 web_clients = [web_client(name='JSXC', url='/plinth/apps/jsxc'),
-               web_client(name='XMPP client', url='/plinth/apps/jsxc')]
+               web_client(name='XMPP client', url='http://xmpp.org/xmpp'
+                                                  '-software/clients')]
 
 reserved_usernames = ['ejabberd']
 

@@ -28,7 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from plinth.client import desktop_client, mobile_client
+from plinth.client import desktop_client, mobile_client, web_client
 
 
 version = 1
@@ -58,6 +58,8 @@ description = [
       '<a href="/syncthing/">/syncthing</a>.  Desktop and mobile clients are '
       'also <a href="https://syncthing.net/">available</a>.'),
 ]
+
+web_clients = [web_client(name='Syncthing', url='/syncthing')]
 
 desktop_clients = [desktop_client(name='Syncthing',
                                   url='https://syncthing.net/')]
