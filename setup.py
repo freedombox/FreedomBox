@@ -229,8 +229,6 @@ setuptools.setup(
                  glob.glob('data/usr/lib/firewalld/services/*.xml')),
                 ('/usr/lib/freedombox/setup.d/',
                  ['data/usr/lib/freedombox/setup.d/86_plinth']),
-                ('/usr/lib/freedombox/first-run.d',
-                 glob.glob('data/usr/lib/freedombox/first-run.d/*')),
                 ('/etc/apache2/conf-available',
                  glob.glob('data/etc/apache2/conf-available/*.conf')),
                 ('/etc/apache2/sites-available',
