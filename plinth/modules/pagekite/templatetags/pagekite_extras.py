@@ -21,7 +21,7 @@ from plinth.modules.pagekite import utils
 register = template.Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def create_pagekite_service_url(service, kite_name):
     """Create a URL out of a pagekite service
 
