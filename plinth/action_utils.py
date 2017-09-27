@@ -27,7 +27,6 @@ import tempfile
 import psutil
 
 from django.utils.translation import ugettext as _
-from plinth import actions
 
 logger = logging.getLogger(__name__)
 
@@ -490,11 +489,3 @@ Owners: {package}
         os.remove(override_file.name)
     except OSError:
         pass
-
-
-def add_group(group):
-    actions.run("ldap", options=["add-group", group])
-
-
-def remove_group(group):
-    actions.run("ldap", options=["remove-group", group])
