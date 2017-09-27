@@ -47,7 +47,7 @@ description = [
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
 
-web_clients = [web_client(name='Tranasmission',url='/transmission')]
+web_clients = [web_client(name='Transmission',url='/transmission')]
 
 reserved_usernames = ['debian-transmission']
 
