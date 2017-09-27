@@ -53,21 +53,20 @@
   <p class="heading">{% trans "Mobile Clients" %}:</p>
     <ul>
     {% for client in module.mobile_clients %}
-    <li class="col-md-12"><span>{{ client.name }}</span></li>
+    <li class="col-md-12 col-xs-12"><span>{{ client.name }}</span></li>
       <div class="row">
       {% if client.fdroid_url %}
       <div class="col-md-2 col-xs-4">
         <a href="{{ client.fdroid_url }}">
-          <img src="{% static 'theme/img/f-Droid.png' %}"
-               style="max-width: 100%; height: 100%"/>
+          <img class="store-icon" src="{% static 'theme/img/f-Droid.png' %}"/>
         </a>
       </div>
       {% endif %}
       {% if client.play_store_url %}
       <div class="col-md-2 col-xs-4">
           <a href="{{ client.play_store_url }}">
-            <img src="{% static 'theme/img/google-play.png' %}"
-                 style="max-width: 100%; height: 100%"/>
+            <img class="store-icon"
+                 src="{% static 'theme/img/google-play.png' %}"/>
           </a>
         </div>
       {% endif %}
