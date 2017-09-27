@@ -38,7 +38,8 @@ def add_shortcut(shortcut_id, name, short_description="", login_required=False,
     if not icon:
         icon = shortcut_id
 
-    label = '{0}\n({1})'.format(short_description, name)
+    label = '{0}\n({1})'.format(short_description, name) if short_description \
+        else name
 
     shortcuts[shortcut_id] = {
         'id': shortcut_id,

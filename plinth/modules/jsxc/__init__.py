@@ -77,7 +77,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('jsxc', _('Chat Client \n (jsxc)'),
+    frontpage.add_shortcut('jsxc', name=name,
+                           short_description=short_description,
                            url=reverse_lazy('jsxc:jsxc'),
                            login_required=True)
 

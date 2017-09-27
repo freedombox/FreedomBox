@@ -92,7 +92,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('infinoted', name, url=None,
+    frontpage.add_shortcut('infinoted', name,
+                           short_description=short_description, url=None,
                            details=description,
                            configure_url=reverse_lazy('infinoted:index'),
                            login_required=False)
