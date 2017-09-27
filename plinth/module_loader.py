@@ -118,7 +118,7 @@ def _include_module_urls(module_import_path, module_name):
     try:
         urls.urlpatterns += [
             django.conf.urls.url(
-                r'', django.conf.urls.include(url_module, module_name))]
+                r'', django.conf.urls.include((url_module, module_name)))]
     except ImportError:
         logger.debug('No URLs for %s', module_name)
         if cfg.debug:
