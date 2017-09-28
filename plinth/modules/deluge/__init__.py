@@ -26,9 +26,10 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.modules.users import add_group
 
 
-version = 1
+version = 2
 
 service = None
 
@@ -50,6 +51,7 @@ description = [
 ]
 
 reserved_usernames = ['debian-deluged']
+
 
 def init():
     """Initialize the Deluge module."""
@@ -80,6 +82,7 @@ def setup(helper, old_version=None):
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    add_group("bittorrent")
 
 
 def add_shortcut():
