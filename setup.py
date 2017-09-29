@@ -237,6 +237,8 @@ setuptools.setup(
                  glob.glob('data/etc/apache2/sites-available/*.conf')),
                 ('/etc/apache2/includes',
                  glob.glob('data/etc/apache2/includes/*.conf')),
+                ('/etc/avahi/services/',
+                 glob.glob('data/etc/avahi/services/*.service')),
                 ('/etc/ikiwiki',
                  glob.glob('data/etc/ikiwiki/*.setup')),
                 ('/etc/NetworkManager/dispatcher.d/',
