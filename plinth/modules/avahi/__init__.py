@@ -21,6 +21,7 @@ Plinth module for service discovery.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import actions
 from plinth import cfg
 from plinth import service as service_module
 from plinth.menu import main_menu
@@ -35,7 +36,7 @@ is_essential = True
 
 managed_services = ['avahi-daemon']
 
-managed_packages = ['avahi-daemon']
+managed_packages = ['avahi-daemon', 'avahi-utils']
 
 name = _('Service Discovery')
 
@@ -66,6 +67,11 @@ def init():
 def setup(helper, old_version=False):
     """Install and configure the module."""
     helper.install(managed_packages)
+    # Reload avahi-daemon now that first-run does not reboot. After performing
+    # Plinth package installation, new Avahi files will be available and
+    # require restart.
+    helper.call('post', actions.superuser_run, 'service',
+                ['reload', 'avahi-daemon'])
 
 
 class AvahiServiceView(ServiceView):

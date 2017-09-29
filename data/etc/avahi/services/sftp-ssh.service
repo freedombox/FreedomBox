@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+
+  <name replace-wildcards="yes">%h</name>
+
+  <service>
+    <type>_sftp-ssh._tcp</type>
+    <port>22</port>
+    <txt-record>path=/home/fbx</txt-record>
+    <txt-record>u=fbx</txt-record>
+  </service>
+
+</service-group>
