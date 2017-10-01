@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-24 11:24-0400\n"
+"POT-Creation-Date: 2017-10-01 10:31-0400\n"
 "PO-Revision-Date: 2017-04-19 16:01+0000\n"
 "Last-Translator: Chi-Hsun Tsai <chihsun.tsai@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -452,116 +452,6 @@ msgstr "应用程序已启用"
 #| msgid "Application disabled"
 msgid "User registrations disabled"
 msgstr "应用程序已禁用"
-
-#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:45
-msgid "Disks"
-msgstr "磁盘"
-
-#: plinth/modules/disks/templates/disks.html:35
-msgid "The following disks are in use:"
-msgstr "正在使用以下磁盘："
-
-#: plinth/modules/disks/templates/disks.html:41
-#: plinth/modules/networks/templates/connection_show.html:84
-msgid "Device"
-msgstr "设备"
-
-#: plinth/modules/disks/templates/disks.html:42
-msgid "Mount Point"
-msgstr "挂载点"
-
-#: plinth/modules/disks/templates/disks.html:43
-#: plinth/modules/ikiwiki/forms.py:30
-#: plinth/modules/networks/templates/connection_show.html:98
-msgid "Type"
-msgstr "类型"
-
-#: plinth/modules/disks/templates/disks.html:44
-msgid "Used"
-msgstr "已使用"
-
-#: plinth/modules/disks/templates/disks.html:77
-msgid "Partition Expansion"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:80
-#, python-format
-msgid ""
-"There is %(expandable_root_size)s of unallocated space available after your "
-"root partition.  Root partition can be expanded to use this space.  This "
-"will provide you additional free space to store your files."
-msgstr ""
-"这里有 %(expandable_root_size)s 未分配的空间可用在你的根分区。可以扩展根分区"
-"以使用这个空间。这可以让你有更多空间来存储文件。"
-
-#: plinth/modules/disks/templates/disks.html:90
-#: plinth/modules/disks/templates/disks.html:102
-#: plinth/modules/disks/templates/disks_expand.html:45
-#: plinth/modules/disks/views.py:62
-msgid "Expand Root Partition"
-msgstr "扩展根分区"
-
-#: plinth/modules/disks/templates/disks.html:94
-msgid ""
-"There is no unallocated space after your root partition. There is no need to "
-"expand it."
-msgstr ""
-
-#: plinth/modules/disks/templates/disks_expand.html:35
-#, python-format
-msgid ""
-"Please backup your data before proceeding.  After this operation, "
-"%(expandable_root_size)s of additional free space will be available in your "
-"root partition."
-msgstr ""
-"执行前请备份你的数据。这个操作以后，将会为你的根分区扩展出 "
-"%(expandable_root_size)s 空余空间。"
-
-#: plinth/modules/disks/views.py:71
-#, python-brace-format
-msgid "Error expanding partition: {exception}"
-msgstr "扩展分区错误：{exception}"
-
-#: plinth/modules/disks/views.py:74
-msgid "Partition expanded successfully."
-msgstr "已成功扩展分区。"
-
-#: plinth/modules/disks/views.py:93
-#, python-format, python-brace-format
-msgid ""
-"Warning: Low space on system partition ({percent_used}% used, {free_space} "
-"free)."
-msgstr ""
-
-#: plinth/modules/disks/views.py:130
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} bytes"
-msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size} bytes"
-
-#: plinth/modules/disks/views.py:134
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} KiB"
-msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size} KiB"
-
-#: plinth/modules/disks/views.py:138
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} MiB"
-msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size} MiB"
-
-#: plinth/modules/disks/views.py:142
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} GiB"
-msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size} GiB"
-
-#: plinth/modules/disks/views.py:145
-#, fuzzy, python-brace-format
-#| msgid "{disk_size} TiB"
-msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:35
 msgid "Dynamic DNS Client"
@@ -1224,6 +1114,12 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+
+#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/networks/templates/connection_show.html:98
+#: plinth/modules/storage/templates/storage.html:43
+msgid "Type"
+msgstr "类型"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -2363,6 +2259,11 @@ msgstr "主连接"
 msgid "yes"
 msgstr "是的"
 
+#: plinth/modules/networks/templates/connection_show.html:84
+#: plinth/modules/storage/templates/storage.html:41
+msgid "Device"
+msgstr "设备"
+
 #: plinth/modules/networks/templates/connection_show.html:88
 msgid "State"
 msgstr "状态"
@@ -3382,8 +3283,10 @@ msgstr ""
 "意，Shaarli 只支持单用户帐户，您在首次访问时安装程序。"
 
 #: plinth/modules/snapshot/__init__.py:32
-msgid "Snapshots"
-msgstr "快照"
+#, fuzzy
+#| msgid "Create Snapshot"
+msgid "Storage Snapshots"
+msgstr "创建快照"
 
 #: plinth/modules/snapshot/__init__.py:35
 msgid ""
@@ -3514,6 +3417,107 @@ msgstr ""
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
 msgstr "登录"
+
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:45
+#, fuzzy
+#| msgid "reStore"
+msgid "Storage"
+msgstr "reStore"
+
+#: plinth/modules/storage/templates/storage.html:35
+msgid "The following disks are in use:"
+msgstr "正在使用以下磁盘："
+
+#: plinth/modules/storage/templates/storage.html:42
+msgid "Mount Point"
+msgstr "挂载点"
+
+#: plinth/modules/storage/templates/storage.html:44
+msgid "Used"
+msgstr "已使用"
+
+#: plinth/modules/storage/templates/storage.html:77
+msgid "Partition Expansion"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:80
+#, python-format
+msgid ""
+"There is %(expandable_root_size)s of unallocated space available after your "
+"root partition.  Root partition can be expanded to use this space.  This "
+"will provide you additional free space to store your files."
+msgstr ""
+"这里有 %(expandable_root_size)s 未分配的空间可用在你的根分区。可以扩展根分区"
+"以使用这个空间。这可以让你有更多空间来存储文件。"
+
+#: plinth/modules/storage/templates/storage.html:90
+#: plinth/modules/storage/templates/storage.html:102
+#: plinth/modules/storage/templates/storage_expand.html:45
+#: plinth/modules/storage/views.py:62
+msgid "Expand Root Partition"
+msgstr "扩展根分区"
+
+#: plinth/modules/storage/templates/storage.html:94
+msgid ""
+"There is no unallocated space after your root partition. There is no need to "
+"expand it."
+msgstr ""
+
+#: plinth/modules/storage/templates/storage_expand.html:35
+#, python-format
+msgid ""
+"Please backup your data before proceeding.  After this operation, "
+"%(expandable_root_size)s of additional free space will be available in your "
+"root partition."
+msgstr ""
+"执行前请备份你的数据。这个操作以后，将会为你的根分区扩展出 "
+"%(expandable_root_size)s 空余空间。"
+
+#: plinth/modules/storage/views.py:71
+#, python-brace-format
+msgid "Error expanding partition: {exception}"
+msgstr "扩展分区错误：{exception}"
+
+#: plinth/modules/storage/views.py:74
+msgid "Partition expanded successfully."
+msgstr "已成功扩展分区。"
+
+#: plinth/modules/storage/views.py:93
+#, python-format, python-brace-format
+msgid ""
+"Warning: Low space on system partition ({percent_used}% used, {free_space} "
+"free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:130
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} bytes"
+msgid "{disk_size:.1f} bytes"
+msgstr "{disk_size} bytes"
+
+#: plinth/modules/storage/views.py:134
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} KiB"
+msgid "{disk_size:.1f} KiB"
+msgstr "{disk_size} KiB"
+
+#: plinth/modules/storage/views.py:138
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} MiB"
+msgid "{disk_size:.1f} MiB"
+msgstr "{disk_size} MiB"
+
+#: plinth/modules/storage/views.py:142
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} GiB"
+msgid "{disk_size:.1f} GiB"
+msgstr "{disk_size} GiB"
+
+#: plinth/modules/storage/views.py:145
+#, fuzzy, python-brace-format
+#| msgid "{disk_size} TiB"
+msgid "{disk_size:.1f} TiB"
+msgstr "{disk_size} TiB"
 
 #: plinth/modules/syncthing/__init__.py:39
 msgid "Syncthing"
@@ -4465,6 +4469,12 @@ msgstr "在这里您可以管理 {box_name} 的底层系统。"
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr "此选项会在通用层面影响 {box_name} 所以要小心！"
+
+#~ msgid "Disks"
+#~ msgstr "磁盘"
+
+#~ msgid "Snapshots"
+#~ msgstr "快照"
 
 #, fuzzy
 #~| msgid "Select the domain name"

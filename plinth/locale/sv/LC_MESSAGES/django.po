@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-24 11:24-0400\n"
+"POT-Creation-Date: 2017-10-01 10:31-0400\n"
 "PO-Revision-Date: 2016-07-23 19:30+0000\n"
 "Last-Translator: Caly <caly@aktivix.org>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -473,110 +473,6 @@ msgstr "Applikationer"
 #| msgid "Applications"
 msgid "User registrations disabled"
 msgstr "Applikationer"
-
-#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:45
-msgid "Disks"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:35
-#, fuzzy
-#| msgid "The following is the current status:"
-msgid "The following disks are in use:"
-msgstr "Aktuell status:"
-
-#: plinth/modules/disks/templates/disks.html:41
-#: plinth/modules/networks/templates/connection_show.html:84
-msgid "Device"
-msgstr "Enhet"
-
-#: plinth/modules/disks/templates/disks.html:42
-msgid "Mount Point"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:43
-#: plinth/modules/ikiwiki/forms.py:30
-#: plinth/modules/networks/templates/connection_show.html:98
-msgid "Type"
-msgstr "Typ"
-
-#: plinth/modules/disks/templates/disks.html:44
-msgid "Used"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:77
-msgid "Partition Expansion"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:80
-#, python-format
-msgid ""
-"There is %(expandable_root_size)s of unallocated space available after your "
-"root partition.  Root partition can be expanded to use this space.  This "
-"will provide you additional free space to store your files."
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:90
-#: plinth/modules/disks/templates/disks.html:102
-#: plinth/modules/disks/templates/disks_expand.html:45
-#: plinth/modules/disks/views.py:62
-msgid "Expand Root Partition"
-msgstr ""
-
-#: plinth/modules/disks/templates/disks.html:94
-msgid ""
-"There is no unallocated space after your root partition. There is no need to "
-"expand it."
-msgstr ""
-
-#: plinth/modules/disks/templates/disks_expand.html:35
-#, python-format
-msgid ""
-"Please backup your data before proceeding.  After this operation, "
-"%(expandable_root_size)s of additional free space will be available in your "
-"root partition."
-msgstr ""
-
-#: plinth/modules/disks/views.py:71
-#, fuzzy, python-brace-format
-#| msgid "Error setting time zone: {exception}"
-msgid "Error expanding partition: {exception}"
-msgstr "Fel i inställning av tidszon: {exception}"
-
-#: plinth/modules/disks/views.py:74
-msgid "Partition expanded successfully."
-msgstr ""
-
-#: plinth/modules/disks/views.py:93
-#, python-format, python-brace-format
-msgid ""
-"Warning: Low space on system partition ({percent_used}% used, {free_space} "
-"free)."
-msgstr ""
-
-#: plinth/modules/disks/views.py:130
-#, python-brace-format
-msgid "{disk_size:.1f} bytes"
-msgstr ""
-
-#: plinth/modules/disks/views.py:134
-#, python-brace-format
-msgid "{disk_size:.1f} KiB"
-msgstr ""
-
-#: plinth/modules/disks/views.py:138
-#, python-brace-format
-msgid "{disk_size:.1f} MiB"
-msgstr ""
-
-#: plinth/modules/disks/views.py:142
-#, python-brace-format
-msgid "{disk_size:.1f} GiB"
-msgstr ""
-
-#: plinth/modules/disks/views.py:145
-#, python-brace-format
-msgid "{disk_size:.1f} TiB"
-msgstr ""
 
 #: plinth/modules/dynamicdns/__init__.py:35
 msgid "Dynamic DNS Client"
@@ -1313,6 +1209,12 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+
+#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/networks/templates/connection_show.html:98
+#: plinth/modules/storage/templates/storage.html:43
+msgid "Type"
+msgstr "Typ"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -2492,6 +2394,11 @@ msgstr "Primär anslutning"
 msgid "yes"
 msgstr "Ja"
 
+#: plinth/modules/networks/templates/connection_show.html:84
+#: plinth/modules/storage/templates/storage.html:41
+msgid "Device"
+msgstr "Enhet"
+
 #: plinth/modules/networks/templates/connection_show.html:88
 msgid "State"
 msgstr ""
@@ -3394,8 +3301,10 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:32
-msgid "Snapshots"
-msgstr ""
+#, fuzzy
+#| msgid "Delete %(name)s"
+msgid "Storage Snapshots"
+msgstr "Ta bort %(name)s"
 
 #: plinth/modules/snapshot/__init__.py:35
 msgid ""
@@ -3523,6 +3432,99 @@ msgstr ""
 
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:45
+msgid "Storage"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:35
+#, fuzzy
+#| msgid "The following is the current status:"
+msgid "The following disks are in use:"
+msgstr "Aktuell status:"
+
+#: plinth/modules/storage/templates/storage.html:42
+msgid "Mount Point"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:44
+msgid "Used"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:77
+msgid "Partition Expansion"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:80
+#, python-format
+msgid ""
+"There is %(expandable_root_size)s of unallocated space available after your "
+"root partition.  Root partition can be expanded to use this space.  This "
+"will provide you additional free space to store your files."
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:90
+#: plinth/modules/storage/templates/storage.html:102
+#: plinth/modules/storage/templates/storage_expand.html:45
+#: plinth/modules/storage/views.py:62
+msgid "Expand Root Partition"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:94
+msgid ""
+"There is no unallocated space after your root partition. There is no need to "
+"expand it."
+msgstr ""
+
+#: plinth/modules/storage/templates/storage_expand.html:35
+#, python-format
+msgid ""
+"Please backup your data before proceeding.  After this operation, "
+"%(expandable_root_size)s of additional free space will be available in your "
+"root partition."
+msgstr ""
+
+#: plinth/modules/storage/views.py:71
+#, fuzzy, python-brace-format
+#| msgid "Error setting time zone: {exception}"
+msgid "Error expanding partition: {exception}"
+msgstr "Fel i inställning av tidszon: {exception}"
+
+#: plinth/modules/storage/views.py:74
+msgid "Partition expanded successfully."
+msgstr ""
+
+#: plinth/modules/storage/views.py:93
+#, python-format, python-brace-format
+msgid ""
+"Warning: Low space on system partition ({percent_used}% used, {free_space} "
+"free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:130
+#, python-brace-format
+msgid "{disk_size:.1f} bytes"
+msgstr ""
+
+#: plinth/modules/storage/views.py:134
+#, python-brace-format
+msgid "{disk_size:.1f} KiB"
+msgstr ""
+
+#: plinth/modules/storage/views.py:138
+#, python-brace-format
+msgid "{disk_size:.1f} MiB"
+msgstr ""
+
+#: plinth/modules/storage/views.py:142
+#, python-brace-format
+msgid "{disk_size:.1f} GiB"
+msgstr ""
+
+#: plinth/modules/storage/views.py:145
+#, python-brace-format
+msgid "{disk_size:.1f} TiB"
 msgstr ""
 
 #: plinth/modules/syncthing/__init__.py:39

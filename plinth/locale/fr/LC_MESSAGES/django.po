@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-24 11:24-0400\n"
+"POT-Creation-Date: 2017-10-01 10:31-0400\n"
 "PO-Revision-Date: 2017-07-17 20:11+0000\n"
 "Last-Translator: Kyodev <kyodev@yandex.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -473,115 +473,6 @@ msgstr "Application activée"
 #| msgid "Application disabled"
 msgid "User registrations disabled"
 msgstr "Application désactivée"
-
-#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:45
-msgid "Disks"
-msgstr "Disques"
-
-#: plinth/modules/disks/templates/disks.html:35
-msgid "The following disks are in use:"
-msgstr "Les disques suivants sont en cours d'utilisation :"
-
-#: plinth/modules/disks/templates/disks.html:41
-#: plinth/modules/networks/templates/connection_show.html:84
-msgid "Device"
-msgstr "Appareil"
-
-#: plinth/modules/disks/templates/disks.html:42
-msgid "Mount Point"
-msgstr "Point de montage"
-
-#: plinth/modules/disks/templates/disks.html:43
-#: plinth/modules/ikiwiki/forms.py:30
-#: plinth/modules/networks/templates/connection_show.html:98
-msgid "Type"
-msgstr "Type"
-
-#: plinth/modules/disks/templates/disks.html:44
-msgid "Used"
-msgstr "Utilisé"
-
-#: plinth/modules/disks/templates/disks.html:77
-msgid "Partition Expansion"
-msgstr "Extension de la partition"
-
-#: plinth/modules/disks/templates/disks.html:80
-#, python-format
-msgid ""
-"There is %(expandable_root_size)s of unallocated space available after your "
-"root partition.  Root partition can be expanded to use this space.  This "
-"will provide you additional free space to store your files."
-msgstr ""
-"Il y a %(expandable_root_size)s d'espace non alloué disponible après votre "
-"partition root. La partition root peut être étendue pour l'utiliser. Cela "
-"vous donnera de l'espace supplémentaire pour stocker vos fichiers."
-
-#: plinth/modules/disks/templates/disks.html:90
-#: plinth/modules/disks/templates/disks.html:102
-#: plinth/modules/disks/templates/disks_expand.html:45
-#: plinth/modules/disks/views.py:62
-msgid "Expand Root Partition"
-msgstr "Étendre la partition root"
-
-#: plinth/modules/disks/templates/disks.html:94
-msgid ""
-"There is no unallocated space after your root partition. There is no need to "
-"expand it."
-msgstr ""
-"Il n’y a pas d’espace libre après votre partition racine. Il n’est pas "
-"possible de l'étendre."
-
-#: plinth/modules/disks/templates/disks_expand.html:35
-#, python-format
-msgid ""
-"Please backup your data before proceeding.  After this operation, "
-"%(expandable_root_size)s of additional free space will be available in your "
-"root partition."
-msgstr ""
-"Veuillez sauvegarder vos données avant de continuer. Après cette opération, "
-"%(expandable_root_size)s d'espace en plus sera disponible pour votre "
-"partition root."
-
-#: plinth/modules/disks/views.py:71
-#, python-brace-format
-msgid "Error expanding partition: {exception}"
-msgstr "Erreur lors de l'expansion de la partition : {exception}"
-
-#: plinth/modules/disks/views.py:74
-msgid "Partition expanded successfully."
-msgstr "Partition étendue avec succès."
-
-#: plinth/modules/disks/views.py:93
-#, python-format, python-brace-format
-msgid ""
-"Warning: Low space on system partition ({percent_used}% used, {free_space} "
-"free)."
-msgstr ""
-
-#: plinth/modules/disks/views.py:130
-#, python-brace-format
-msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size:.1f} octets"
-
-#: plinth/modules/disks/views.py:134
-#, python-brace-format
-msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size:.1f} Kio"
-
-#: plinth/modules/disks/views.py:138
-#, python-brace-format
-msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size:.1f} Mio"
-
-#: plinth/modules/disks/views.py:142
-#, python-brace-format
-msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size:.1f} Gio"
-
-#: plinth/modules/disks/views.py:145
-#, python-brace-format
-msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size:.1f} Tio"
 
 #: plinth/modules/dynamicdns/__init__.py:35
 msgid "Dynamic DNS Client"
@@ -1300,6 +1191,12 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+
+#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/networks/templates/connection_show.html:98
+#: plinth/modules/storage/templates/storage.html:43
+msgid "Type"
+msgstr "Type"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -2491,6 +2388,11 @@ msgstr "Connexion primaire"
 msgid "yes"
 msgstr "oui"
 
+#: plinth/modules/networks/templates/connection_show.html:84
+#: plinth/modules/storage/templates/storage.html:41
+msgid "Device"
+msgstr "Appareil"
+
 #: plinth/modules/networks/templates/connection_show.html:88
 msgid "State"
 msgstr "État"
@@ -3610,8 +3512,10 @@ msgstr ""
 "visite."
 
 #: plinth/modules/snapshot/__init__.py:32
-msgid "Snapshots"
-msgstr "Instantanés"
+#, fuzzy
+#| msgid "Create Snapshot"
+msgid "Storage Snapshots"
+msgstr "Créer un instantané"
 
 #: plinth/modules/snapshot/__init__.py:35
 msgid ""
@@ -3748,6 +3652,106 @@ msgstr "Authentification unique"
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
 msgstr "S'identifier"
+
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:45
+#, fuzzy
+#| msgid "reStore"
+msgid "Storage"
+msgstr "reStore"
+
+#: plinth/modules/storage/templates/storage.html:35
+msgid "The following disks are in use:"
+msgstr "Les disques suivants sont en cours d'utilisation :"
+
+#: plinth/modules/storage/templates/storage.html:42
+msgid "Mount Point"
+msgstr "Point de montage"
+
+#: plinth/modules/storage/templates/storage.html:44
+msgid "Used"
+msgstr "Utilisé"
+
+#: plinth/modules/storage/templates/storage.html:77
+msgid "Partition Expansion"
+msgstr "Extension de la partition"
+
+#: plinth/modules/storage/templates/storage.html:80
+#, python-format
+msgid ""
+"There is %(expandable_root_size)s of unallocated space available after your "
+"root partition.  Root partition can be expanded to use this space.  This "
+"will provide you additional free space to store your files."
+msgstr ""
+"Il y a %(expandable_root_size)s d'espace non alloué disponible après votre "
+"partition root. La partition root peut être étendue pour l'utiliser. Cela "
+"vous donnera de l'espace supplémentaire pour stocker vos fichiers."
+
+#: plinth/modules/storage/templates/storage.html:90
+#: plinth/modules/storage/templates/storage.html:102
+#: plinth/modules/storage/templates/storage_expand.html:45
+#: plinth/modules/storage/views.py:62
+msgid "Expand Root Partition"
+msgstr "Étendre la partition root"
+
+#: plinth/modules/storage/templates/storage.html:94
+msgid ""
+"There is no unallocated space after your root partition. There is no need to "
+"expand it."
+msgstr ""
+"Il n’y a pas d’espace libre après votre partition racine. Il n’est pas "
+"possible de l'étendre."
+
+#: plinth/modules/storage/templates/storage_expand.html:35
+#, python-format
+msgid ""
+"Please backup your data before proceeding.  After this operation, "
+"%(expandable_root_size)s of additional free space will be available in your "
+"root partition."
+msgstr ""
+"Veuillez sauvegarder vos données avant de continuer. Après cette opération, "
+"%(expandable_root_size)s d'espace en plus sera disponible pour votre "
+"partition root."
+
+#: plinth/modules/storage/views.py:71
+#, python-brace-format
+msgid "Error expanding partition: {exception}"
+msgstr "Erreur lors de l'expansion de la partition : {exception}"
+
+#: plinth/modules/storage/views.py:74
+msgid "Partition expanded successfully."
+msgstr "Partition étendue avec succès."
+
+#: plinth/modules/storage/views.py:93
+#, python-format, python-brace-format
+msgid ""
+"Warning: Low space on system partition ({percent_used}% used, {free_space} "
+"free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:130
+#, python-brace-format
+msgid "{disk_size:.1f} bytes"
+msgstr "{disk_size:.1f} octets"
+
+#: plinth/modules/storage/views.py:134
+#, python-brace-format
+msgid "{disk_size:.1f} KiB"
+msgstr "{disk_size:.1f} Kio"
+
+#: plinth/modules/storage/views.py:138
+#, python-brace-format
+msgid "{disk_size:.1f} MiB"
+msgstr "{disk_size:.1f} Mio"
+
+#: plinth/modules/storage/views.py:142
+#, python-brace-format
+msgid "{disk_size:.1f} GiB"
+msgstr "{disk_size:.1f} Gio"
+
+#: plinth/modules/storage/views.py:145
+#, python-brace-format
+msgid "{disk_size:.1f} TiB"
+msgstr "{disk_size:.1f} Tio"
 
 #: plinth/modules/syncthing/__init__.py:39
 msgid "Syncthing"
@@ -4769,6 +4773,12 @@ msgid ""
 msgstr ""
 "Ces options affectent %(box_name)s à son niveau le plus général, faites "
 "attention !"
+
+#~ msgid "Disks"
+#~ msgstr "Disques"
+
+#~ msgid "Snapshots"
+#~ msgstr "Instantanés"
 
 #~ msgid "Select the domain name to be used for diaspora*"
 #~ msgstr "Sélectionnez le nom de domaine à utiliser pour diaspora"

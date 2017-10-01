@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-24 11:24-0400\n"
+"POT-Creation-Date: 2017-10-01 10:31-0400\n"
 "PO-Revision-Date: 2017-08-30 13:44+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -465,113 +465,6 @@ msgstr "Aplikace zapnuta"
 #| msgid "Application disabled"
 msgid "User registrations disabled"
 msgstr "Aplikace vypnuta"
-
-#: plinth/modules/disks/__init__.py:33 plinth/modules/disks/views.py:45
-msgid "Disks"
-msgstr "Disky"
-
-#: plinth/modules/disks/templates/disks.html:35
-msgid "The following disks are in use:"
-msgstr "Následující disky jsou v používání:"
-
-#: plinth/modules/disks/templates/disks.html:41
-#: plinth/modules/networks/templates/connection_show.html:84
-msgid "Device"
-msgstr "Zařízení"
-
-#: plinth/modules/disks/templates/disks.html:42
-msgid "Mount Point"
-msgstr "Přípojný bod"
-
-#: plinth/modules/disks/templates/disks.html:43
-#: plinth/modules/ikiwiki/forms.py:30
-#: plinth/modules/networks/templates/connection_show.html:98
-msgid "Type"
-msgstr "Typ"
-
-#: plinth/modules/disks/templates/disks.html:44
-msgid "Used"
-msgstr "Použito"
-
-#: plinth/modules/disks/templates/disks.html:77
-msgid "Partition Expansion"
-msgstr "Zvětšení oddílu"
-
-#: plinth/modules/disks/templates/disks.html:80
-#, python-format
-msgid ""
-"There is %(expandable_root_size)s of unallocated space available after your "
-"root partition.  Root partition can be expanded to use this space.  This "
-"will provide you additional free space to store your files."
-msgstr ""
-"Je zde %(expandable_root_size)s nevyužitého místa za kořenovým oddílem. "
-"Kořenový oddíl je možné zvětšit a místo tak využít. Poskytne vám to další "
-"prostor pro ukládání vašich souborů."
-
-#: plinth/modules/disks/templates/disks.html:90
-#: plinth/modules/disks/templates/disks.html:102
-#: plinth/modules/disks/templates/disks_expand.html:45
-#: plinth/modules/disks/views.py:62
-msgid "Expand Root Partition"
-msgstr "Zvětšit kořenový oddíl"
-
-#: plinth/modules/disks/templates/disks.html:94
-msgid ""
-"There is no unallocated space after your root partition. There is no need to "
-"expand it."
-msgstr "Na kořenovém oddílu není žádné nevyužité místo. Není možné ho zvětšit."
-
-#: plinth/modules/disks/templates/disks_expand.html:35
-#, python-format
-msgid ""
-"Please backup your data before proceeding.  After this operation, "
-"%(expandable_root_size)s of additional free space will be available in your "
-"root partition."
-msgstr ""
-"Než budete pokračovat, zazálohujte svá data. Po provedení této operace, "
-"%(expandable_root_size)s dalšího prostoru bude k dispozici na kořenovém "
-"oddílu."
-
-#: plinth/modules/disks/views.py:71
-#, python-brace-format
-msgid "Error expanding partition: {exception}"
-msgstr "Chyba při zvětšování oddílu: {exception}"
-
-#: plinth/modules/disks/views.py:74
-msgid "Partition expanded successfully."
-msgstr "Oddíl úspěšně zvětšen."
-
-#: plinth/modules/disks/views.py:93
-#, python-format, python-brace-format
-msgid ""
-"Warning: Low space on system partition ({percent_used}% used, {free_space} "
-"free)."
-msgstr ""
-
-#: plinth/modules/disks/views.py:130
-#, python-brace-format
-msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size:.1f} bajtů"
-
-#: plinth/modules/disks/views.py:134
-#, python-brace-format
-msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size:.1f} KiB"
-
-#: plinth/modules/disks/views.py:138
-#, python-brace-format
-msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size:.1f} MiB"
-
-#: plinth/modules/disks/views.py:142
-#, python-brace-format
-msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size:.1f} GiB"
-
-#: plinth/modules/disks/views.py:145
-#, python-brace-format
-msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size:.1f} TiB"
 
 #: plinth/modules/dynamicdns/__init__.py:35
 msgid "Dynamic DNS Client"
@@ -1255,6 +1148,12 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+
+#: plinth/modules/ikiwiki/forms.py:30
+#: plinth/modules/networks/templates/connection_show.html:98
+#: plinth/modules/storage/templates/storage.html:43
+msgid "Type"
+msgstr "Typ"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
@@ -2398,6 +2297,11 @@ msgstr "Hlavní připojení"
 msgid "yes"
 msgstr "ano"
 
+#: plinth/modules/networks/templates/connection_show.html:84
+#: plinth/modules/storage/templates/storage.html:41
+msgid "Device"
+msgstr "Zařízení"
+
 #: plinth/modules/networks/templates/connection_show.html:88
 msgid "State"
 msgstr "Stav"
@@ -3413,8 +3317,10 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:32
-msgid "Snapshots"
-msgstr "Zachycené stavy"
+#, fuzzy
+#| msgid "Create Snapshot"
+msgid "Storage Snapshots"
+msgstr "Pořídit zachycený stav"
 
 #: plinth/modules/snapshot/__init__.py:35
 msgid ""
@@ -3537,6 +3443,108 @@ msgstr "Sdružené přihlášení (SSO)"
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
 msgstr "Přihlášení"
+
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:45
+#, fuzzy
+#| msgid ""
+#| "Unhosted Storage \n"
+#| " (reStore)"
+msgid "Storage"
+msgstr ""
+"Unhosted úložiště \n"
+" (reStore)"
+
+#: plinth/modules/storage/templates/storage.html:35
+msgid "The following disks are in use:"
+msgstr "Následující disky jsou v používání:"
+
+#: plinth/modules/storage/templates/storage.html:42
+msgid "Mount Point"
+msgstr "Přípojný bod"
+
+#: plinth/modules/storage/templates/storage.html:44
+msgid "Used"
+msgstr "Použito"
+
+#: plinth/modules/storage/templates/storage.html:77
+msgid "Partition Expansion"
+msgstr "Zvětšení oddílu"
+
+#: plinth/modules/storage/templates/storage.html:80
+#, python-format
+msgid ""
+"There is %(expandable_root_size)s of unallocated space available after your "
+"root partition.  Root partition can be expanded to use this space.  This "
+"will provide you additional free space to store your files."
+msgstr ""
+"Je zde %(expandable_root_size)s nevyužitého místa za kořenovým oddílem. "
+"Kořenový oddíl je možné zvětšit a místo tak využít. Poskytne vám to další "
+"prostor pro ukládání vašich souborů."
+
+#: plinth/modules/storage/templates/storage.html:90
+#: plinth/modules/storage/templates/storage.html:102
+#: plinth/modules/storage/templates/storage_expand.html:45
+#: plinth/modules/storage/views.py:62
+msgid "Expand Root Partition"
+msgstr "Zvětšit kořenový oddíl"
+
+#: plinth/modules/storage/templates/storage.html:94
+msgid ""
+"There is no unallocated space after your root partition. There is no need to "
+"expand it."
+msgstr "Na kořenovém oddílu není žádné nevyužité místo. Není možné ho zvětšit."
+
+#: plinth/modules/storage/templates/storage_expand.html:35
+#, python-format
+msgid ""
+"Please backup your data before proceeding.  After this operation, "
+"%(expandable_root_size)s of additional free space will be available in your "
+"root partition."
+msgstr ""
+"Než budete pokračovat, zazálohujte svá data. Po provedení této operace, "
+"%(expandable_root_size)s dalšího prostoru bude k dispozici na kořenovém "
+"oddílu."
+
+#: plinth/modules/storage/views.py:71
+#, python-brace-format
+msgid "Error expanding partition: {exception}"
+msgstr "Chyba při zvětšování oddílu: {exception}"
+
+#: plinth/modules/storage/views.py:74
+msgid "Partition expanded successfully."
+msgstr "Oddíl úspěšně zvětšen."
+
+#: plinth/modules/storage/views.py:93
+#, python-format, python-brace-format
+msgid ""
+"Warning: Low space on system partition ({percent_used}% used, {free_space} "
+"free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:130
+#, python-brace-format
+msgid "{disk_size:.1f} bytes"
+msgstr "{disk_size:.1f} bajtů"
+
+#: plinth/modules/storage/views.py:134
+#, python-brace-format
+msgid "{disk_size:.1f} KiB"
+msgstr "{disk_size:.1f} KiB"
+
+#: plinth/modules/storage/views.py:138
+#, python-brace-format
+msgid "{disk_size:.1f} MiB"
+msgstr "{disk_size:.1f} MiB"
+
+#: plinth/modules/storage/views.py:142
+#, python-brace-format
+msgid "{disk_size:.1f} GiB"
+msgstr "{disk_size:.1f} GiB"
+
+#: plinth/modules/storage/views.py:145
+#, python-brace-format
+msgid "{disk_size:.1f} TiB"
+msgstr "{disk_size:.1f} TiB"
 
 #: plinth/modules/syncthing/__init__.py:39
 msgid "Syncthing"
@@ -4508,6 +4516,12 @@ msgid ""
 msgstr ""
 "Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
 "buďte opatrní!"
+
+#~ msgid "Disks"
+#~ msgstr "Disky"
+
+#~ msgid "Snapshots"
+#~ msgstr "Zachycené stavy"
 
 #~ msgid "Select the domain name to be used for diaspora*"
 #~ msgstr "Vyberte doménový název který použít pro diaspora*"
