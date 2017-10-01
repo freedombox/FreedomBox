@@ -90,6 +90,7 @@ def warn_about_low_disk_space(request):
     free_bytes = size_bytes * (100 - perc_used) / 100
 
     message = format_lazy(
+        # Translators: xgettext:no-python-format
         _('Warning: Low space on system partition ({percent_used}% used, '
           '{free_space} free).'),
         percent_used=perc_used, free_space=_format_bytes(free_bytes))
