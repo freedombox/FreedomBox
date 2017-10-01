@@ -21,10 +21,13 @@
 Configuration helper for Matrix-Synapse server.
 """
 import argparse
+import subprocess
 
 from ruamel.yaml import round_trip_dump, round_trip_load
 
 from plinth import action_utils
+
+MATRIXSYNAPSE_YAML = "/etc/matrix-synapse/homeserver.yaml"
 
 
 def parse_arguments():
@@ -35,6 +38,10 @@ def parse_arguments():
     subparsers.add_parser('post-install', help='Perform post install steps')
     subparsers.add_parser('enable', help='Enable matrix-synapse service')
     subparsers.add_parser('disable', help='Disable matrix-synapse service')
+    subparsers.add_parser('enable-user-registrations', help='Allow users to' \
+                                                            'sign up to this matrixsynapse* pod without an invitation.')
+    subparsers.add_parser('disable-user-registrations', help='Allow only, ' \
+                                                             'users with an invitation to register to this matrixsynapse* pod')
     setup = subparsers.add_parser('setup', help='Set domain name for Matrix')
     setup.add_argument(
         '--domain-name',
@@ -78,6 +85,24 @@ def subcommand_disable(_):
     """Disable service."""
     action_utils.webserver_disable('matrix-synapse-plinth')
     action_utils.service_disable('matrix-synapse')
+
+
+def subcommand_enable_user_registrations(_):
+    """Enable new user registrations on the matrixsynapse """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: false/enable_registrations: true/g",
+        MATRIXSYNAPSE_YAML
+    ])
+
+
+def subcommand_disable_user_registrations(_):
+    """Disable new user registrations on the matrixsynapse """
+    subprocess.call([
+        "sed", "-i",
+        "s/enable_registrations: true/enable_registrations: false/g",
+        MATRIXSYNAPSE_YAML
+    ])
 
 
 def main():
