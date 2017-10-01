@@ -19,8 +19,10 @@
 Views for the Matrix Synapse module.
 """
 
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from plinth import actions
@@ -29,6 +31,8 @@ from plinth.modules import matrixsynapse
 from plinth.forms import DomainSelectionForm
 from plinth.utils import get_domain_names
 
+from .forms import MatrixSynapseForm
+from . import get_public_registration_status
 
 class SetupView(FormView):
     """Show matrix-synapse setup page."""
@@ -61,6 +65,7 @@ class ServiceView(views.ServiceView):
     template_name = 'matrix-synapse.html'
     description = matrixsynapse.description
     diagnostics_module_name = 'matrixsynapse'
+    form_class = MatrixSynapseForm
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""
@@ -74,3 +79,29 @@ class ServiceView(views.ServiceView):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         return context
+
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial.update({
+            'enable_public_registration': get_public_registration_status()})
+        return initial
+
+    def form_valid(self, form):
+        """Handle valid form submission."""
+        old_config = self.get_initial()
+        new_config = form.cleaned_data
+        if old_config['enable_public_registration'] !=\
+                new_config['enable_public_registration']:
+            enable_registration = new_config['enable_public_registration']
+            if enable_registration:
+                actions.superuser_run('matrixsynapse', ['enable-registration'])
+                messages.success(self.request,
+                                 _('Public registration enabled'))
+            else:
+                actions.superuser_run('matrixsynapse', ['disable-registration'])
+                messages.success(self.request,
+                                 _('Public registration disabled'))
+            if new_config['is_enabled'] == True:
+                actions.superuser_run('matrixsynapse', ['restart'])
+        return super().form_valid(form)

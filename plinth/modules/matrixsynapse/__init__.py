@@ -62,7 +62,7 @@ service = None
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
-
+CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
 
 def init():
     """Initialize the matrix-synapse module."""
@@ -149,3 +149,14 @@ def get_configured_domain_name():
         config, _, _ = load_yaml_guess_indent(config_file)
 
     return config['server_name']
+
+
+def get_public_registration_status():
+    """ Return whether public registration is turned on"""
+    if not is_setup():
+        return None
+
+    with open(CONFIG_FILE_PATH) as config_file:
+        config, _, _ = load_yaml_guess_indent(config_file)
+
+    return config['enable_registration']
