@@ -21,9 +21,10 @@ URLs for the matrix-synapse module.
 
 from django.conf.urls import url
 
-from .views import SetupView, ServiceView
+from .views import SetupView, MatrixSynapseServiceView
 
 urlpatterns = [
     url(r'^apps/matrixsynapse/setup/$', SetupView.as_view(), name='setup'),
-    url(r'^apps/matrixsynapse/$', ServiceView.as_view(), name='index'),
+    url(r'^apps/matrixsynapse/$', MatrixSynapseServiceView.as_view(),
+        name='index'),
 ]

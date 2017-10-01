@@ -152,11 +152,8 @@ def get_configured_domain_name():
 
 
 def get_public_registration_status():
-    """ Return whether public registration is turned on"""
-    if not is_setup():
-        return None
+    """Return whether public registration is enabled."""
+    output = actions.superuser_run('matrixsynapse', ['public_registration',
+                                                     'status'])
+    return output.strip() == 'enabled'
 
-    with open(CONFIG_FILE_PATH) as config_file:
-        config, _, _ = load_yaml_guess_indent(config_file)
-
-    return config['enable_registration']

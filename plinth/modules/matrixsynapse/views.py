@@ -26,13 +26,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from plinth import actions
-from plinth import views
+from plinth.views import ServiceView
 from plinth.modules import matrixsynapse
 from plinth.forms import DomainSelectionForm
 from plinth.utils import get_domain_names
 
 from .forms import MatrixSynapseForm
 from . import get_public_registration_status
+
 
 class SetupView(FormView):
     """Show matrix-synapse setup page."""
@@ -59,7 +60,7 @@ class SetupView(FormView):
         return context
 
 
-class ServiceView(views.ServiceView):
+class MatrixSynapseServiceView(ServiceView):
     """Show matrix-synapse service page."""
     service_id = matrixsynapse.managed_services[0]
     template_name = 'matrix-synapse.html'
@@ -76,7 +77,7 @@ class ServiceView(views.ServiceView):
 
     def get_context_data(self, *args, **kwargs):
         """Add additional context data for template."""
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         return context
 
@@ -91,17 +92,34 @@ class ServiceView(views.ServiceView):
         """Handle valid form submission."""
         old_config = self.get_initial()
         new_config = form.cleaned_data
-        if old_config['enable_public_registration'] !=\
-                new_config['enable_public_registration']:
-            enable_registration = new_config['enable_public_registration']
-            if enable_registration:
-                actions.superuser_run('matrixsynapse', ['enable-registration'])
+        app_same = old_config['is_enabled'] == new_config['is_enabled']
+        pubreg_same = old_config['enable_public_registration'] == \
+                      new_config['enable_public_registration']
+
+        if app_same and pubreg_same:
+            # TODO: find a more reliable/official way to check whether the
+            # request has messages attached.
+            if not self.request._messages._queued_messages:
+                messages.info(self.request, _('Setting unchanged'))
+        elif not app_same:
+            if new_config['is_enabled']:
+                self.service.enable()
+                messages.success(self.request, _('Application enabled'))
+            else:
+                self.service.disable()
+                messages.success(self.request, _('Application disabled'))
+
+        if not pubreg_same:
+            # note action public_registration restarts, if running now
+            if new_config['enable_public_registration']:
+                actions.superuser_run('matrixsynapse', ['public_registration',
+                                                        'enable'])
                 messages.success(self.request,
                                  _('Public registration enabled'))
             else:
-                actions.superuser_run('matrixsynapse', ['disable-registration'])
+                actions.superuser_run('matrixsynapse', ['public_registration',
+                                                        'disable'])
                 messages.success(self.request,
                                  _('Public registration disabled'))
-            if new_config['is_enabled'] == True:
-                actions.superuser_run('matrixsynapse', ['restart'])
-        return super().form_valid(form)
+
+        return super(ServiceView, self).form_valid(form)

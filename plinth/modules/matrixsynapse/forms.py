@@ -21,7 +21,6 @@ Forms for the Matrix Synapse module.
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
 from plinth.forms import ServiceForm
 
 
@@ -30,7 +29,6 @@ class MatrixSynapseForm(ServiceForm):
         label=_('Enable Public Registration'),
         required=False,
         help_text=_(
-            'Enable or disable public registrations for matrix-synapse. '
-            'Enabling public registrations means that anyone on the internet '
-            'can register a new account on your Matrix server.Disable the '
-            'this if you only want existing users to be able to use it.'))
+            'Enabling public registration means that anyone on the Internet '
+            'can register a new account on your Matrix server. Disable this '
+            'if you only want existing users to be able to use it.'))
