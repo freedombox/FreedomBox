@@ -104,6 +104,7 @@ def warn_about_low_disk_space(request):
 
 def _interpret_size_string(size_str):
     """Convert size string to number of bytes."""
+    size_str = size_str.replace(',', '.')  # some locales use commas
     if size_str[-1] in '0123456789':
         return float(size_str[:-1])
 
