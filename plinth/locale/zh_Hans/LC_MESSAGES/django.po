@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-01 10:31-0400\n"
+"POT-Creation-Date: 2017-10-02 05:23-0400\n"
 "PO-Revision-Date: 2017-04-19 16:01+0000\n"
 "Last-Translator: Chi-Hsun Tsai <chihsun.tsai@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -436,6 +436,7 @@ msgid "Update setup"
 msgstr "更新安装程序"
 
 #: plinth/modules/diaspora/views.py:96 plinth/modules/ejabberd/views.py:60
+#: plinth/modules/matrixsynapse/views.py:103
 #: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:134
 #: plinth/views.py:112
 msgid "Setting unchanged"
@@ -765,6 +766,7 @@ msgid "Launch web client"
 msgstr "启动 web 客户端"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:53
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
@@ -773,11 +775,13 @@ msgstr "启动 web 客户端"
 msgid "Configuration"
 msgstr "配置"
 
-#: plinth/modules/ejabberd/views.py:64 plinth/views.py:116
+#: plinth/modules/ejabberd/views.py:64
+#: plinth/modules/matrixsynapse/views.py:107 plinth/views.py:116
 msgid "Application enabled"
 msgstr "应用程序已启用"
 
-#: plinth/modules/ejabberd/views.py:67 plinth/views.py:119
+#: plinth/modules/ejabberd/views.py:67
+#: plinth/modules/matrixsynapse/views.py:110 plinth/views.py:119
 msgid "Application disabled"
 msgstr "应用程序已禁用"
 
@@ -828,13 +832,13 @@ msgid "Service/Port"
 msgstr "服务/端口"
 
 #: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:94
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:97
 #: plinth/modules/names/templates/names.html:49
 msgid "Enabled"
 msgstr "启用"
 
 #: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:96
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
 #: plinth/modules/names/templates/names.html:51
 #: plinth/modules/networks/forms.py:63
 msgid "Disabled"
@@ -1282,19 +1286,19 @@ msgstr ""
 "聊天客户端\n"
 "（jsxc）"
 
-#: plinth/modules/letsencrypt/__init__.py:40
+#: plinth/modules/letsencrypt/__init__.py:42
 #, fuzzy
 #| msgid "Certificates (Let's Encrypt)"
 msgid "Let's Encrypt"
 msgstr "证书（Let's Encrypt）"
 
-#: plinth/modules/letsencrypt/__init__.py:42
+#: plinth/modules/letsencrypt/__init__.py:44
 #, fuzzy
 #| msgid "Certificate Status"
 msgid "Certificates"
 msgstr "证书状态"
 
-#: plinth/modules/letsencrypt/__init__.py:46
+#: plinth/modules/letsencrypt/__init__.py:48
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -1307,7 +1311,7 @@ msgstr ""
 "动获取和设置每个可用域名的数字证书。它通过向 Let's Encrypt 证明自己是一个域名"
 "的所有者。Let's Encrypt 是一个证书颁发机构（CA）。"
 
-#: plinth/modules/letsencrypt/__init__.py:53
+#: plinth/modules/letsencrypt/__init__.py:55
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -1318,112 +1322,129 @@ msgstr ""
 "（ISRG）为公众利益而设立。请在使用此服务之前阅读并同意 <a href=\"https://"
 "letsencrypt.org/repository/\">Let's Encypt 订阅者协议</a>。"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:43
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:46
 msgid "Domain"
 msgstr "域名"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:44
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:47
 msgid "Certificate Status"
 msgstr "证书状态"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:45
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:48
 msgid "Website Security"
 msgstr "网站安全"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:46
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:49
 msgid "Actions"
 msgstr "行动"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:62
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:65
 #, fuzzy, python-format
 #| msgid "Expires on %(expiry_date)s"
 msgid "Valid, expires on %(expiry_date)s"
 msgstr "到期日期 %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:72
 #, fuzzy
 #| msgid "Revoke"
 msgid "Revoked"
 msgstr "撤销"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:73
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:76
 #, fuzzy, python-format
 #| msgid "Expires on %(expiry_date)s"
 msgid "Expired on %(expiry_date)s"
 msgstr "到期日期 %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:77
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:80
 #, fuzzy
 #| msgid "Invalid kite name"
 msgid "Invalid test certificate"
 msgstr "无效的 Kite 名称"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:81
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:84
 #, python-format
 msgid "Invalid (%(reason)s)"
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:88
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:91
 msgid "No certificate"
 msgstr "没有证书"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:105
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:108
 msgid "Re-obtain"
 msgstr "重新获取"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:111
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
 #: plinth/modules/snapshot/templates/snapshot.html:34
 msgid "Delete"
 msgstr "删除"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:118
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:121
 msgid "Revoke"
 msgstr "撤销"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:126
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:129
 msgid "Obtain"
 msgstr "获取"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:149
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:156
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:142
+#, fuzzy
+#| msgid "Certificate successfully revoked for domain {domain}"
+msgid "Certificate renewal management and use by other modules"
+msgstr "成功为域名 {domain} 吊销证书"
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:144
+#, python-format
+msgid ""
+"If you have a Let's Encrypt certificate for your current domain, you may let "
+"%(box_name)s manage its renewal process. This also enables other apps to use "
+"that certificate, so most users would not prompted with security warnings "
+"when using them."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:166
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:173
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:224
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:231
 #, fuzzy
 #| msgid "Update"
 msgid "Update config"
 msgstr "更新"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:161
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:178
 #, python-format
 msgid ""
 "\n"
-"                Let Plinth manage certificate renewal of\n"
-"                <b>%(current_domain)s</b> (recommended)\n"
+"                Let %(box_name)s manage certificate renewal of\n"
+"                <b>%(current_domain)s</b>\n"
 "              "
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:166
-msgid ""
-"\n"
-"                Let Plinth manage certificate renewal of the current domain "
-"(recommended)\n"
-"              "
-msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:175
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
 msgid ""
-"If %(box_name)s manages the certificate renewal for the current domain, it "
-"will ensure that all apps that use the certificate can use it, as soon as it "
-"gets renewed."
+"\n"
+"                Let %(box_name)s manage certificate renewal of the current "
+"domain\n"
+"              "
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:181
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:192
+#, python-format
+msgid ""
+"If enabled, %(box_name)s can make sure that all apps can use the certificate "
+"as soon as it is renewed."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:197
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
-"certificate to enable management of its renewal."
+"certificate to enable its management."
 msgstr ""
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:186
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:202
 #, fuzzy
 #| msgid ""
 #| "No domains have been configured. Configure domains to be able to obtain "
@@ -1433,13 +1454,52 @@ msgid ""
 "management of its certificates."
 msgstr "没有配置域名。配置域名可以为它们获得相应的证书。"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:195
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
+#, python-format
+msgid ""
+"\n"
+"                Use certificate of %(current_domain)s for <b>ejabberd</b>\n"
+"              "
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:240
+msgid ""
+"\n"
+"                Use certificate of the current domain for <b>ejabberd</b>\n"
+"              "
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:250
+#, python-format
+msgid ""
+"If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
+"the Let's Encrypt certificate. This will reduce warnings about self-signed "
+"certificates in client applications, and enable more wide-spread federation "
+"with other XMPP servers in the Internet."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:257
+#, python-format
+msgid ""
+"This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> chat server app."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:262
+#, python-format
+msgid ""
+"To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> chat server app, you must first enable certificate renewal "
+"of the current domain."
+msgstr ""
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:270
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
 msgstr "没有配置域名。配置域名可以为它们获得相应的证书。"
 
-#: plinth/modules/letsencrypt/views.py:57
+#: plinth/modules/letsencrypt/views.py:58
 #, fuzzy, python-brace-format
 #| msgid "Certificate successfully revoked for domain {domain}"
 msgid ""
@@ -1447,59 +1507,70 @@ msgid ""
 "moments to take effect."
 msgstr "成功为域名 {domain} 吊销证书"
 
-#: plinth/modules/letsencrypt/views.py:63
+#: plinth/modules/letsencrypt/views.py:64
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "无法为 {domain} 撤销证书：{error}"
 
-#: plinth/modules/letsencrypt/views.py:75
+#: plinth/modules/letsencrypt/views.py:76
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "为域名 {domain} 成功获得证书"
 
-#: plinth/modules/letsencrypt/views.py:81
+#: plinth/modules/letsencrypt/views.py:82
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "未能为域名 {domain} 获取证书：{error}"
 
-#: plinth/modules/letsencrypt/views.py:90
-#: plinth/modules/letsencrypt/views.py:109
+#: plinth/modules/letsencrypt/views.py:91
+#: plinth/modules/letsencrypt/views.py:119
 #, fuzzy, python-brace-format
 #| msgid "Certificate successfully revoked for domain {domain}"
 msgid "Certificate renewal management enabled for {domain}."
 msgstr "成功为域名 {domain} 吊销证书"
 
-#: plinth/modules/letsencrypt/views.py:95
+#: plinth/modules/letsencrypt/views.py:96
 #, fuzzy, python-brace-format
 #| msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgid "Failed to enable certificate renewal management for {domain}: {error}"
 msgstr "无法为 {domain} 撤销证书：{error}"
 
-#: plinth/modules/letsencrypt/views.py:112
+#: plinth/modules/letsencrypt/views.py:122
 #, fuzzy, python-brace-format
 #| msgid "Certificate successfully revoked for domain {domain}"
 msgid "Certificate renewal management disabled for {domain}."
 msgstr "成功为域名 {domain} 吊销证书"
 
-#: plinth/modules/letsencrypt/views.py:118
+#: plinth/modules/letsencrypt/views.py:128
 #, fuzzy, python-brace-format
 #| msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgid "Failed to switch certificate renewal management for {domain}: {error}"
 msgstr "未能为域名 {domain} 获取证书：{error}"
 
-#: plinth/modules/letsencrypt/views.py:134
+#: plinth/modules/letsencrypt/views.py:159
+#, python-brace-format
+msgid "Switched use of certificate for app {module}"
+msgstr ""
+
+#: plinth/modules/letsencrypt/views.py:164
+#, fuzzy, python-brace-format
+#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgid "Failed to switch certificate use for app {module}: {error}"
+msgstr "未能为域名 {domain} 获取证书：{error}"
+
+#: plinth/modules/letsencrypt/views.py:185
 #, fuzzy, python-brace-format
 #| msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgid "Failed to disable certificate renewal management for {domain}: {error}"
 msgstr "无法为 {domain} 撤销证书：{error}"
 
-#: plinth/modules/letsencrypt/views.py:141
+#: plinth/modules/letsencrypt/views.py:192
 #, fuzzy, python-brace-format
 #| msgid "Certificate successfully revoked for domain {domain}"
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "成功为域名 {domain} 吊销证书"
 
-#: plinth/modules/letsencrypt/views.py:146
+#: plinth/modules/letsencrypt/views.py:197
 #, fuzzy, python-brace-format
 #| msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
@@ -1532,6 +1603,19 @@ msgid ""
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
 
+#: plinth/modules/matrixsynapse/forms.py:29
+#, fuzzy
+#| msgid "Enable application"
+msgid "Enable Public Registration"
+msgstr "启用应用程序"
+
+#: plinth/modules/matrixsynapse/forms.py:32
+msgid ""
+"Enabling public registration means that anyone on the Internet can register "
+"a new account on your Matrix server. Disable this if you only want existing "
+"users to be able to use it."
+msgstr ""
+
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
@@ -1554,7 +1638,7 @@ msgid ""
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:30
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
 #, fuzzy, python-format
 #| msgid ""
 #| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
@@ -1568,6 +1652,18 @@ msgstr ""
 "XMPP 服务器域名可以设置为 <b>%(domainname)s</b>。用户 ID 类似于 <i>username@"
 "%(domainname)s</i>。你可以在系统的<a href=\\\"%(index_url)s\\\">配置</a>中设"
 "置你的域名。"
+
+#: plinth/modules/matrixsynapse/views.py:118
+#, fuzzy
+#| msgid "Application enabled"
+msgid "Public registration enabled"
+msgstr "应用程序已启用"
+
+#: plinth/modules/matrixsynapse/views.py:123
+#, fuzzy
+#| msgid "Application disabled"
+msgid "Public registration disabled"
+msgstr "应用程序已禁用"
 
 #: plinth/modules/minetest/__init__.py:48
 msgid "Minetest"
@@ -3482,38 +3578,38 @@ msgstr "扩展分区错误：{exception}"
 msgid "Partition expanded successfully."
 msgstr "已成功扩展分区。"
 
-#: plinth/modules/storage/views.py:93
-#, python-format, python-brace-format
+#: plinth/modules/storage/views.py:94
+#, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
 
-#: plinth/modules/storage/views.py:130
+#: plinth/modules/storage/views.py:131
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} bytes"
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size} bytes"
 
-#: plinth/modules/storage/views.py:134
+#: plinth/modules/storage/views.py:135
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} KiB"
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size} KiB"
 
-#: plinth/modules/storage/views.py:138
+#: plinth/modules/storage/views.py:139
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} MiB"
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size} MiB"
 
-#: plinth/modules/storage/views.py:142
+#: plinth/modules/storage/views.py:143
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} GiB"
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size} GiB"
 
-#: plinth/modules/storage/views.py:145
+#: plinth/modules/storage/views.py:146
 #, fuzzy, python-brace-format
 #| msgid "{disk_size} TiB"
 msgid "{disk_size:.1f} TiB"
