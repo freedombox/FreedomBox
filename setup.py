@@ -227,8 +227,6 @@ setuptools.setup(
                              'locale/*/LC_MESSAGES/*.[pm]o']},
     data_files=[('/usr/lib/firewalld/services/',
                  glob.glob('data/usr/lib/firewalld/services/*.xml')),
-                ('/usr/lib/freedombox/setup.d/',
-                 ['data/usr/lib/freedombox/setup.d/86_plinth']),
                 ('/etc/apache2/conf-available',
                  glob.glob('data/etc/apache2/conf-available/*.conf')),
                 ('/etc/apache2/sites-available',
