@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.client import web_client
 
 
 version = 1
@@ -57,6 +58,7 @@ description = [
           'permissions or add new users.'), box_name=_(cfg.box_name))
 ]
 
+web_clients = [web_client(name='ikiwiki', url='/ikiwiki')]
 
 def init():
     """Initialize the ikiwiki module."""

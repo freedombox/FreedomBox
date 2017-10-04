@@ -1,0 +1,77 @@
+{% comment %}
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% if module.web_clients  %}
+<div class="clients-info">
+  <p class="heading">{% trans "Web Clients" %}:
+  <ul>
+    {% for client in module.web_clients %}
+    <li>
+      <span><a href="{{ client.url }}">{{ client.name}}</a></span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% if module.desktop_clients %}
+<div class="clients-info">
+  <p class="heading">{% trans "Desktop Clients" %}:
+    <ul>
+      {% for client in module.desktop_clients %}
+      <li>
+        <span>
+            <a href="{{ client.url }}">{{ client.name }}</a>
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if module.mobile_clients %}
+<div class="clients-info">
+  {% load static %}
+  <p class="heading">{% trans "Mobile Clients" %}:</p>
+    <ul>
+    {% for client in module.mobile_clients %}
+    <li class="col-md-12 col-xs-12"><span>{{ client.name }}</span></li>
+      <div class="row">
+      {% if client.fdroid_url %}
+      <div class="col-md-2 col-xs-4">
+        <a href="{{ client.fdroid_url }}">
+          <img class="store-icon" src="{% static 'theme/img/f-Droid.png' %}"/>
+        </a>
+      </div>
+      {% endif %}
+      {% if client.play_store_url %}
+      <div class="col-md-2 col-xs-4">
+          <a href="{{ client.play_store_url }}">
+            <img class="store-icon"
+                 src="{% static 'theme/img/google-play.png' %}"/>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
