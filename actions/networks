@@ -136,4 +136,6 @@ then
     # On a fresh disk image, this means the default network manager connections
     # will be ignored and newly created connections will be activated.
     systemctl restart network-manager
+else
+    echo "Not a FreedomBox disk image. Skipping network configuration."
 fi
