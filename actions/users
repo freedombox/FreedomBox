@@ -63,6 +63,7 @@ def configure_slapd():
                                             'ldap-sasl-mech': 'EXTERNAL'})
     action_utils.dpkg_reconfigure('libnss-ldapd',
                                   {'nsswitch': 'group, passwd, shadow'})
+    action_utils.service_restart('nscd')
 
 
 def configure_ldap_structure():
