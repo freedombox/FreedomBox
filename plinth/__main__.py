@@ -155,6 +155,11 @@ def setup_server():
     cherrypy.engine.signal_handler.subscribe()
 
 
+def on_server_stop():
+    """Stop all other threads since web server is trying to exit"""
+    setup.stop()
+
+
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
     logging_configuration = {
@@ -218,7 +223,7 @@ def configure_django():
 
     django.conf.settings.configure(
         ALLOWED_HOSTS=['*'],
-        AUTH_PASSWORD_VALIDATORS = [
+        AUTH_PASSWORD_VALIDATORS=[
             {
                 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
             },
@@ -259,6 +264,7 @@ def configure_django():
             'plinth.middleware.AdminRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
+            'plinth.middleware.FirstSetupMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
@@ -279,21 +285,14 @@ def configure_django():
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
 
 
-def run_setup(module_list, allow_install=True):
-    try:
-        if not module_list:
-            setup.setup_modules(essential=True, allow_install=allow_install)
-        else:
-            setup.setup_modules(module_list, allow_install=allow_install)
-    except Exception as exception:
-        logger.error('Error running setup - %s', exception)
-        return 1
-    return 0
-
-
 def run_setup_and_exit(module_list, allow_install=True):
     """Run setup on all essential modules and exit."""
-    error_code = run_setup(module_list, allow_install)
+    error_code = 0
+    try:
+        setup.run_setup_on_modules(module_list, allow_install)
+    except Exception as exception:
+        error_code = 1
+
     sys.exit(error_code)
 
 
@@ -380,13 +379,11 @@ def main():
     if arguments.diagnose:
         run_diagnostics_and_exit()
 
-    # Run setup steps for essential modules
-    # Installation is not necessary as they are dependencies of Plinth
-    run_setup(None, allow_install=False)
-
+    setup.run_setup_in_background()
     setup_server()
 
     cherrypy.engine.start()
+    cherrypy.engine.subscribe('stop', on_server_stop)
     cherrypy.engine.block()
 
 
