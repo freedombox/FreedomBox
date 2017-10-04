@@ -31,6 +31,7 @@ import time
 from . import forms, frontpage
 import plinth
 from plinth import actions
+from plinth import package
 from plinth.modules.storage import views as disk_views
 
 
@@ -140,16 +141,8 @@ class SetupView(TemplateView):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
         context['setup_helper'] = self.kwargs['setup_helper']
-        context['package_manager_is_busy'] = self.is_package_manager_busy()
+        context['package_manager_is_busy'] = package.is_package_manager_busy()
         return context
-
-    def is_package_manager_busy(self):
-        """Return whether a package manager is running."""
-        try:
-            actions.superuser_run('packages', ['is-package-manager-busy'])
-            return True
-        except actions.ActionError:
-            return False
 
     def post(self, *args, **kwargs):
         """Handle installing/upgrading applications.
