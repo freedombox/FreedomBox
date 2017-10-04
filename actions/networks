@@ -14,6 +14,11 @@ function get-interfaces {
     NO_OF_WIRELESS_IFACES=$(echo $WIRELESS_IFACES | wc -w)
 }
 
+function activate-connection {
+    connection_name="$1"
+    nohup nmcli con up "$connection_name" &>/dev/null &
+}
+
 function configure-regular-interface {
     local interface="$1"
     local zone="$2"
@@ -23,6 +28,7 @@ function configure-regular-interface {
     nmcli con add con-name "$connection_name" ifname "$interface" type ethernet
     nmcli con modify "$connection_name" connection.autoconnect TRUE
     nmcli con modify "$connection_name" connection.zone "$zone"
+    activate-connection "$connection_name"
 
     echo "Configured interface '$interface' for '$zone' use as '$connection_name'."
 }
@@ -44,6 +50,8 @@ function configure-shared-interface {
     #  - Add firewall rules for NATing from this interface
     nmcli con modify "$connection_name" ipv4.method shared
 
+    activate-connection "$connection_name"
+
     echo "Configured interface '$interface' for shared use as '$connection_name'."
 }
 
@@ -60,6 +68,7 @@ function configure-wireless-interface {
     nmcli con modify "$connection_name" wifi.mode ap
     nmcli con modify "$connection_name" wifi-sec.key-mgmt wpa-psk
     nmcli con modify "$connection_name" wifi-sec.psk "$secret"
+    activate-connection "$connection_name"
 
     echo "Configured interface '$interface' for shared use as '$connection_name'."
 }
@@ -132,10 +141,6 @@ function setup {
 if [ -f "/var/lib/freedombox/is-freedombox-disk-image" ]
 then
     setup
-    # Restart network-manager so that the connections created will be activated.
-    # On a fresh disk image, this means the default network manager connections
-    # will be ignored and newly created connections will be activated.
-    systemctl restart network-manager
 else
     echo "Not a FreedomBox disk image. Skipping network configuration."
 fi
