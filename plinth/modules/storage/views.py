@@ -104,6 +104,7 @@ def warn_about_low_disk_space(request):
 
 def _interpret_size_string(size_str):
     """Convert size string to number of bytes."""
+    # TODO: Drop --human-readable from df command (github issue #1043)
     size_str = size_str.replace(',', '.')  # some locales use commas
     size_str = size_str.replace('٫', '.')  # arabic decimal separator
     if size_str[-1] in '0123456789':
