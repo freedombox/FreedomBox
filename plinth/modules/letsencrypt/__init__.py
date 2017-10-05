@@ -98,32 +98,6 @@ def diagnose():
     return results
 
 
-def get_status():
-    """Get the current settings."""
-    status = actions.superuser_run('letsencrypt', ['get-status'])
-    status = json.loads(status)
-    curr_dom = config.get_domainname()
-    current_domain = {
-        'name':
-        curr_dom,
-        'has_cert': (curr_dom in status['domains']
-                     and status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_enabled':
-        _hooks_manage_enabled()
-    }
-    status['current_domain'] = current_domain
-
-    for domain_type, domains in names.domains.items():
-        # XXX: Remove when Let's Encrypt supports .onion addresses
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            status['domains'].setdefault(domain, {})
-
-    return status
-
-
 def try_action(domain, action):
     actions.superuser_run('letsencrypt', [action, '--domain', domain])
 
@@ -212,3 +186,27 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
             ('Failed to revoke certificate for domain {domain}: {error}')
             .format(domain=domain, error=exception.args[2]))
         return False
+
+
+def get_status():
+    """Get the current settings."""
+    status = actions.superuser_run('letsencrypt', ['get-status'])
+    status = json.loads(status)
+    curr_dom = config.get_domainname()
+    current_domain = {
+        'name': curr_dom,
+        'has_cert': (curr_dom in status['domains'] and
+                     status['domains'][curr_dom]['certificate_available']),
+        'manage_hooks_status': get_manage_hooks_status()
+    }
+    status['current_domain'] = current_domain
+
+    for domain_type, domains in names.domains.items():
+        # XXX: Remove when Let's Encrypt supports .onion addresses
+        if domain_type == 'hiddenservice':
+            continue
+
+        for domain in domains:
+            status['domains'].setdefault(domain, {})
+
+    return status

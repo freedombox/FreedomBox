@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 def index(request):
     """Serve configuration page."""
-    status = get_status()
+    status = letsencrypt.get_status()
     return TemplateResponse(request, 'letsencrypt.html',
                             {'title': letsencrypt.name,
                              'description': letsencrypt.description,
@@ -196,27 +196,3 @@ def delete(request, domain):
             .format(domain=domain, error=exception.args[2]))
 
     return redirect(reverse_lazy('letsencrypt:index'))
-
-
-def get_status():
-    """Get the current settings."""
-    status = actions.superuser_run('letsencrypt', ['get-status'])
-    status = json.loads(status)
-    curr_dom = config.get_domainname()
-    current_domain = {
-        'name': curr_dom,
-        'has_cert': (curr_dom in status['domains'] and
-                     status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_status': letsencrypt.get_manage_hooks_status()
-    }
-    status['current_domain'] = current_domain
-
-    for domain_type, domains in names.domains.items():
-        # XXX: Remove when Let's Encrypt supports .onion addresses
-        if domain_type == 'hiddenservice':
-            continue
-
-        for domain in domains:
-            status['domains'].setdefault(domain, {})
-
-    return status

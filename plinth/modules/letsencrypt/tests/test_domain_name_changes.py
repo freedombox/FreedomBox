@@ -36,7 +36,3 @@ class TestDomainNameChanges(unittest.TestCase):
 
     def test_remove_domain(self):
         self.assertTrue(on_domain_removed('test', '', 'somedomain.tld'))
-
-    def test_change_domain_name(self):
-        self.assertTrue(
-            on_domainname_change('test', 'oldname.tld', 'newname.tld'))
