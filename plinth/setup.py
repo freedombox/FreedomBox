@@ -31,8 +31,9 @@ from plinth import package
 
 logger = logging.getLogger(__name__)
 
-is_first_setup = False
+_is_first_setup = False
 is_first_setup_running = False
+_is_shutting_down = False
 
 
 class Helper(object):
@@ -168,6 +169,12 @@ def init(module_name, module):
         module.setup_helper = Helper(module_name, module)
 
 
+def stop():
+    """Set a flag to indicate that the setup process must stop."""
+    global _is_shutting_down
+    _is_shutting_down = True
+
+
 def setup_modules(module_list=None, essential=False, allow_install=True):
     """Run setup on selected or essential modules."""
     logger.info('Running setup for modules, essential - %s, '
@@ -198,7 +205,7 @@ def list_dependencies(module_list=None, essential=False):
 
 def run_setup_in_background():
     """Run setup in a background thread."""
-    global is_first_setup
+    global _is_first_setup
     _set_is_first_setup()
     threading.Thread(target=_run_setup).start()
 
@@ -208,14 +215,22 @@ def _run_setup():
     sleep_time = 10
     while True:
         try:
-            if is_first_setup:
-                return _run_first_setup()
+            if _is_first_setup:
+                logger.info('Running first setup.')
+                _run_first_setup()
+                break
             else:
-                return _run_regular_setup()
+                logger.info('Running regular setup.')
+                _run_regular_setup()
+                break
         except Exception as ex:
-            # logger.warning('Unable to complete setup:', ex) TODO throwing some error
+            logger.warning('Unable to complete setup: %s', ex)
             logger.info('Will try again in {} seconds'.format(sleep_time))
             time.sleep(sleep_time)
+            if _is_shutting_down:
+                break
+
+    logger.info('Setup thread finished.')
 
 
 def _run_first_setup():
@@ -269,9 +284,9 @@ def module_state_matches(module, state):
 
 def _set_is_first_setup():
     """Return whether all essential modules have been setup at least once."""
-    global is_first_setup
+    global _is_first_setup
     modules = plinth.module_loader.loaded_modules.values()
-    is_first_setup = any(
+    _is_first_setup = any(
         (module
          for module in modules
          if is_module_essential(module) and module_state_matches(module, 'needs-setup')))

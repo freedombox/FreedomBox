@@ -18,3 +18,28 @@
 #
 {% endcomment %}
 
+{% load bootstrap %}
+{% load i18n %}
+
+{% block page_head %}
+
+  {% if setup_helper.current_operation %}
+    <meta http-equiv="refresh" content="3" />
+  {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+  {% if is_first_setup_running %}
+    <div class="alert alert-warning" role="alert">
+      {% blocktrans trimmed %}
+        Please wait for {{ box_name }} to finish installation.
+        You can start using your {{ box_name }} once it is done.
+      {% endblocktrans %}
+    </div>
+  {% endif %}
+
+{% endblock %}
+

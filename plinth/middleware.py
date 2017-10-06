@@ -106,13 +106,13 @@ class AdminRequiredMiddleware(object):
             raise PermissionDenied
 
 
-def first_setup_middleware(get_response):
-    """Block all user interactions when first setup is pending."""
+class FirstSetupMiddleware(object):
 
-    def middleware(request):
+    @staticmethod
+    def process_view(request, view_func, view_args, view_kwargs):
+        """Block all user interactions when first setup is pending."""
         if not setup.is_first_setup_running:
-            return get_response(request)
+            return
 
-        return render(request, 'first_setup.html')
-
-    return middleware
+        context = {'is_first_setup_running': setup.is_first_setup_running}
+        return render(request, 'first_setup.html', context)

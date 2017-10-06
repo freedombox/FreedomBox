@@ -155,6 +155,11 @@ def setup_server():
     cherrypy.engine.signal_handler.subscribe()
 
 
+def on_server_stop():
+    """Stop all other threads since web server is trying to exit"""
+    setup.stop()
+
+
 def configure_django():
     """Setup Django configuration in the absense of .settings file"""
     logging_configuration = {
@@ -259,8 +264,8 @@ def configure_django():
             'plinth.middleware.AdminRequiredMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
+            'plinth.middleware.FirstSetupMiddleware',
         ),
-        MIDDLEWARE=('plinth.middleware.first_setup_middleware',),
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
         SESSION_ENGINE='django.contrib.sessions.backends.file',
@@ -378,6 +383,7 @@ def main():
     setup_server()
 
     cherrypy.engine.start()
+    cherrypy.engine.subscribe('stop', on_server_stop)
     cherrypy.engine.block()
 
 
