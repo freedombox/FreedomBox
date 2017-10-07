@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 05:23-0400\n"
-"PO-Revision-Date: 2017-10-05 16:56+0000\n"
-"Last-Translator: Karol Werner <weblate@ppkt.eu>\n"
+"PO-Revision-Date: 2017-10-07 23:21+0000\n"
+"Last-Translator: Karol Werner <karol@ppkt.eu>\n"
 "Language-Team: Polish "
 "<https://hosted.weblate.org/projects/freedombox/plinth/pl/>\n"
 "Language: pl\n"
@@ -416,6 +416,12 @@ msgid ""
 "podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
+"Domena podu diaspora* jest ustawiona na <b>%(domain_name)s</b>. "
+"Identyfikator użytkownika będzie miał format: "
+"<i>username@diaspora.%(domain_name)s</i><br/>. Jeśli domena FreedomBox "
+"zostanie zmieniona, żadne dane użytkowników zarejestrowanych pod poprzednią "
+"nazwą poda nie będą dostępne. <br/>Pod diaspora* jest dostępny pod adresem <"
+"a href=\"https://diaspora.%(domain_name)s\">diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -471,6 +477,13 @@ msgid ""
 "Internet asks for your DNS name, they will get a response with your current "
 "IP address."
 msgstr ""
+"Rozwiązaniem jest przypisanie nazwy DNS do twojego adresu IP i "
+"aktualizowanie go za każdym razem kiedy twój adres IP zostanie zmieniony "
+"przez dostawcę Internetu. Dynamiczny DNS pozwala wysłać aktualny publiczny "
+"adres IP do serwera<a href='http://gnudip2.sourceforge.net/' "
+"target='_blank'>GnuDIP</a>. Następnie serwer przypisze twoją nazwę DNS do "
+"nowego adresu IP i gdy ktoś zapyta o twoją nazwę DNS, otrzyma w odpowiedzi "
+"twój aktualny adres IP."
 
 #: plinth/modules/dynamicdns/__init__.py:67
 #: plinth/modules/dynamicdns/dynamicdns.py:377
@@ -690,6 +703,11 @@ msgid ""
 "for this, otherwise IP changes will not be detected). In case the WAN IP "
 "changes, it may take up to %(timer)s minutes until your DNS entry is updated."
 msgstr ""
+"Za NAT. Oznacza to że usługa dynamicznego DNS będzie okresowo sprawdzać \""
+"Adres URL sprawdzania IP\" w poszukiwaniu zmian (\"Adres URL sprawdzania IP\""
+" jest wymagany, w przeciwnym razie, zmiany nie będą wykrywane). W razie "
+"zmiany adresu IP WAN, może minąć do %(timer)s minut zanim wpis DNS zostanie "
+"zaktualizowany."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:49
 msgid "Last update"
@@ -709,6 +727,8 @@ msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
 msgstr ""
+"XMPP jest otwartym i ustandaryzowanym protokołem komunikacyjnym. Tu możesz "
+"uruchomić i skonfigurować własny serwer XMPP zwany ejabberd."
 
 #: plinth/modules/ejabberd/__init__.py:54
 #, python-brace-format
@@ -718,10 +738,15 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
+"W celu właściwej komunikacji możesz użyć <a href=\"/plinth/apps/jsxc\">"
+"klienta przeglądarkowego</a> lub dowolnego <a href='http://xmpp.org/xmpp-"
+"software/clients/' target='_blank'>klienta XMPP</a>. Gdy włączony, ejabberd "
+"jest dostępny dla każdego <a href=\"/plinth/sys/users\">użytkownika "
+"{box_name}</a>."
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
-msgstr ""
+msgstr "Włącz zarządzanie archiwum wiadomości"
 
 #: plinth/modules/ejabberd/forms.py:36
 #, python-brace-format
@@ -731,6 +756,10 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Jeśli włączony, twój {box_name} będzie przechowywał historię wiadomości. "
+"Pozwoli to na synchronizację rozmów pomiędzy wieloma klientami oraz historię "
+"kanałów wielu użytkowników. Od ustawień klienta zależy czy historie są "
+"przechowywane w formie zaszyfrowanej czy nie."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -739,10 +768,13 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
+"Domena twojego serwera XMPP jest ustawiona na <b>%(domainname)s</b>. "
+"Identyfikator użytkownika będzie miał format: <i>username@%(domainname)s</i>"
+". Możesz ustawić swoją domenę na stronie <a href=\"%(index_url)s\""
+">Konfiguruj</a>."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:47
 #: plinth/modules/jsxc/templates/jsxc.html:32
-#, fuzzy
 msgid "Launch web client"
 msgstr "Uruchom klienta przeglądarkowego"
 
@@ -768,11 +800,11 @@ msgstr "Aplikacja wyłączona"
 
 #: plinth/modules/ejabberd/views.py:74
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "Zarządzanie historią wiadomości włączone"
 
 #: plinth/modules/ejabberd/views.py:78
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "Zarządzanie historią wiadomości wyłączone"
 
 #: plinth/modules/firewall/__init__.py:39
 msgid "Firewall"
@@ -785,6 +817,9 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
+"Firewall to system zabezpieczeń który kontroluje przychodzący i wychodzący "
+"ruch sieciowy na twoim {box_name}. Włączony i poprawnie skonfigurowany "
+"firewall redukuje ryzyko zagrożeń z Internetu."
 
 #: plinth/modules/firewall/templates/firewall.html:25
 msgid "Current status:"
@@ -798,6 +833,10 @@ msgid ""
 "you may run it using the command 'service firewalld start' or in case of a "
 "system with systemd 'systemctl start firewalld'."
 msgstr ""
+"Proces firewalla nie jest uruchomiony. Proszę go włączyć. Firewall jest "
+"domyślnie włączony na %(box_name)s. Na każdym systemie bazującym na Debianie "
+"(jak %(box_name)s) możesz go włączyć używając komendy 'service firewalld "
+"start' lub, w przypadku systemu z systemd 'systemctl start firewalld'."
 
 #: plinth/modules/firewall/templates/firewall.html:45
 msgid "Show Ports"
@@ -842,6 +881,9 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
+"Działanie firewalla jest automatyczne. Gdy włączysz usługę, jest ona "
+"automatycznie przepuszczana przez firewall a gdy jest wyłączona, jest "
+"również blokowana przez firewall."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:29
 msgid "Setup Complete!"
@@ -862,6 +904,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"Możesz również sprawdzić <a href=\"%(networks_url)s\">ustawienia sieci</a> i "
+"zmodyfikować je, jeśli to potrzebne."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:25
@@ -924,6 +968,14 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
+"%(box_name)s jest społecznościowym projektem mającym na celu "
+"zaprojektowanie, rozwijanie oraz promowanie osobistych serwerów "
+"korzystających z wolnego oprogramowania do prywatnej i osobistej "
+"komunikacji. To urządzenie sieciowe zaprojektowane by komunikować się z "
+"resztą Internetu z zachowaniem prywatności i bezpieczeństwa danych. Pozwala "
+"również na hostowanie aplikacji takich jak blog, wiki, sieć społecznościowa, "
+"email, proxy, przekaźnik Tor na urządzeniu które może zastąpić twój router "
+"Wi-Fi aby twoje dane zawsze zostały z tobą."
 
 #: plinth/modules/help/templates/help_about.html:43
 msgid ""
