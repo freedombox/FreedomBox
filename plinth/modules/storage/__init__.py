@@ -120,7 +120,7 @@ def is_expandable(device):
 
     try:
         output = actions.superuser_run(
-            'disks', ['is-partition-expandable', device])
+            'storage', ['is-partition-expandable', device])
     except actions.ActionError:
         return False
 
@@ -129,4 +129,4 @@ def is_expandable(device):
 
 def expand_partition(device):
     """Expand a partition."""
-    actions.superuser_run('disks', ['expand-partition', device])
+    actions.superuser_run('storage', ['expand-partition', device])
