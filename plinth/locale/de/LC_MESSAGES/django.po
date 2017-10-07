@@ -10,10 +10,10 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 05:23-0400\n"
-"PO-Revision-Date: 2017-10-01 14:30+0000\n"
+"PO-Revision-Date: 2017-10-07 13:03+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
-"de/>\n"
+"Language-Team: German "
+"<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1419,10 +1419,8 @@ msgid "Obtain"
 msgstr "Beziehen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:142
-#, fuzzy
-#| msgid "Certificate renewal management disabled for {domain}."
 msgid "Certificate renewal management and use by other modules"
-msgstr "Zertifikat-Erneuerungs-Verwaltung für Domain {domain} deaktiviert."
+msgstr "Zertifikat Erneuerungs-Verwaltung und Nutzung durch andere Anwendungen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:144
 #, python-format
@@ -1432,6 +1430,10 @@ msgid ""
 "that certificate, so most users would not prompted with security warnings "
 "when using them."
 msgstr ""
+"Falls ein Let's Encrypt Zertifikat für die eingestellte Domain bezogen ist, "
+"kann %(box_name)s dessen Erneuerung verwalten. Dies erlaubt es auch weiteren "
+"Anwendungen dieses Zertifikat zu nutzen, sodass die meisten Benutzer dieser "
+"Anwendungen keine Sicherheitswarnungen sehen würden."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:166
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:173
@@ -1441,12 +1443,7 @@ msgid "Update config"
 msgstr "Konfiguration aktualisieren"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:178
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let Plinth manage certificate renewal of\n"
-#| "                <b>%(current_domain)s</b> (recommended)\n"
-#| "              "
+#, python-format
 msgid ""
 "\n"
 "                Let %(box_name)s manage certificate renewal of\n"
@@ -1454,17 +1451,12 @@ msgid ""
 "              "
 msgstr ""
 "\n"
-"                Die Zertifikats-Erneurung von <b>%(current_domain)s</b> "
-"durch Plinth verwalten lassen (empfohlen)\n"
+"                %(box_name)s soll die Zertifikat-Erneurung von "
+"<b>%(current_domain)s</b> verwalten\n"
 "              "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:183
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let Plinth manage certificate renewal of the current "
-#| "domain (recommended)\n"
-#| "              "
+#, python-format
 msgid ""
 "\n"
 "                Let %(box_name)s manage certificate renewal of the current "
@@ -1472,35 +1464,26 @@ msgid ""
 "              "
 msgstr ""
 "\n"
-"                Die Zertifikats-Erneurung von der derzeitigen Domain durch "
-"Plinth verwalten lassen (empfohlen)\n"
+"                %(box_name)s soll die Zertifikat-Erneurung von der "
+"derzeitigen Domain verwalten\n"
 "              "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:192
-#, fuzzy, python-format
-#| msgid ""
-#| "If %(box_name)s manages the certificate renewal for the current domain, "
-#| "it will ensure that all apps that use the certificate can use it, as soon "
-#| "as it gets renewed."
+#, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
 "as soon as it is renewed."
 msgstr ""
-"Wenn %(box_name)s die Zertifikats-Erneurung für die derzeitige Domain "
-"verwaltet, kann sichergestellt werden dass alle Anwendungen das Zertifikat "
-"nutzen können sobald es erneuert wird."
+"Falls aktiviert, kann %(box_name)s sicherstellen dass das Zertifikat von "
+"anderen Anwendungen nutzbar ist, sobald es erneuert wurde."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:197
-#, fuzzy
-#| msgid ""
-#| "<b>No certificate available for the current domain.</b> First obtain a "
-#| "certificate to enable management of its renewal."
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
 msgstr ""
-"<b>Kein Zertifikat vorhanden für die derzeitige Domain.</b> Beziehen Sie "
-"zuerst ein Zertifikat bevor Sie die Erneurungs-Verwaltung aktivieren können."
+"<b>Es ist kein Zertifikat für die derzeitige Domain vorhanden.</b> Beziehen "
+"Sie zuerst ein Zertifikat um dessen Verwaltung zu aktivieren."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:202
 msgid ""
@@ -1511,37 +1494,26 @@ msgstr ""
 "konfiguriert werden, um Zertifikate zu erstellen."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:236
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let Plinth manage certificate renewal of the current "
-#| "domain (recommended)\n"
-#| "              "
+#, python-format
 msgid ""
 "\n"
 "                Use certificate of %(current_domain)s for <b>ejabberd</b>\n"
 "              "
 msgstr ""
 "\n"
-"                Die Zertifikats-Erneurung von der derzeitigen Domain durch "
-"Plinth verwalten lassen (empfohlen)\n"
+"                Nutze das Zertifikat von %(current_domain)s für "
+"<b>ejabberd</b>\n"
 "              "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:240
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Let Plinth manage certificate renewal of the current "
-#| "domain (recommended)\n"
-#| "              "
 msgid ""
 "\n"
 "                Use certificate of the current domain for <b>ejabberd</b>\n"
 "              "
 msgstr ""
 "\n"
-"                Die Zertifikats-Erneurung von der derzeitigen Domain durch "
-"Plinth verwalten lassen (empfohlen)\n"
+"                Nutze das Zertifikat von der derzeitgen Domain für "
+"<b>ejabberd</b>\n"
 "              "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:250
@@ -1552,6 +1524,10 @@ msgid ""
 "certificates in client applications, and enable more wide-spread federation "
 "with other XMPP servers in the Internet."
 msgstr ""
+"Falls aktiviert, wird auch die Anwendung <a href=\"%(ejabberd_url)s\""
+">ejabberd</a> das Let's Encrypt Zertifikat nutzen. Dies wird Warnungen über "
+"selbstsignierte Zertifikate in Client-Anwendungen reduzieren, und erlaubt "
+"mehr Föderation mit anderen XMPP-Servern im Internet."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:257
 #, python-format
@@ -1559,6 +1535,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
+"Diese Option ist nur sinnvoll, wenn Sie den <a href=\"%(ejabberd_url)s\""
+">ejabberd</a> Chat-Server nutzen."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:262
 #, python-format
@@ -1567,6 +1545,9 @@ msgid ""
 "\">ejabberd</a> chat server app, you must first enable certificate renewal "
 "of the current domain."
 msgstr ""
+"Um ein Let's Encrypt Zertifikat für den <a href=\"%(ejabberd_url)s\""
+">ejabberd</a> Chat-Server nutzen zu können, muss erst die Zertifikat-"
+"Erneurungs-Verwaltung für die derzeitige Domain aktiviert sein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:270
 msgid ""
@@ -1628,16 +1609,13 @@ msgstr ""
 #: plinth/modules/letsencrypt/views.py:159
 #, python-brace-format
 msgid "Switched use of certificate for app {module}"
-msgstr ""
+msgstr "Geänderte Nutzung des Zertifikats für Anwendung {module}"
 
 #: plinth/modules/letsencrypt/views.py:164
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Failed to switch certificate renewal management for {domain}: {error}"
+#, python-brace-format
 msgid "Failed to switch certificate use for app {module}: {error}"
 msgstr ""
-"Fehler beim Ändern der Zertifikat-Erneuerungs-Verwaltung für Domain "
-"{domain}: {error}"
+"Fehler beim Ändern der Zertifikat-Nutzung für Anwendung {module}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:185
 #, python-brace-format
@@ -1690,10 +1668,8 @@ msgstr ""
 "empfohlen."
 
 #: plinth/modules/matrixsynapse/forms.py:29
-#, fuzzy
-#| msgid "Enable new user registrations"
 msgid "Enable Public Registration"
-msgstr "Aktiviere Registrierung neuer Nutzer"
+msgstr "Aktiviere öffentliche Registrierung"
 
 #: plinth/modules/matrixsynapse/forms.py:32
 msgid ""
@@ -1701,6 +1677,10 @@ msgid ""
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
+"Aktivieren von öffentlicher Registrierung bedeutet dass jeder im Internet "
+"ein neues Nutzerkonto auf ihrem Matrix-Server registrieren kann. "
+"Deaktivieren Sie diese Option wenn Sie ausschließlich bereits existierende "
+"Benutzer zulassen möchten."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
@@ -1747,16 +1727,12 @@ msgstr ""
 "Domain nach der ersten Konfiguation werden derzeit nicht unterstützt."
 
 #: plinth/modules/matrixsynapse/views.py:118
-#, fuzzy
-#| msgid "User registrations enabled"
 msgid "Public registration enabled"
-msgstr "Registrierung neuer Nutzer aktiviert"
+msgstr "Öffentliche Registrierung aktiviert"
 
 #: plinth/modules/matrixsynapse/views.py:123
-#, fuzzy
-#| msgid "User registrations disabled"
 msgid "Public registration disabled"
-msgstr "Registrierung neuer Nutzer deaktiviert"
+msgstr "Öffentliche Registrierung deaktiviert"
 
 #: plinth/modules/minetest/__init__.py:48
 msgid "Minetest"
@@ -3515,10 +3491,8 @@ msgstr ""
 "muss beim ersten Besuch der Seite eingerichtet werden."
 
 #: plinth/modules/snapshot/__init__.py:32
-#, fuzzy
-#| msgid "Create Snapshot"
 msgid "Storage Snapshots"
-msgstr "Speicherauszug anlegen"
+msgstr "Speicherauszüge"
 
 #: plinth/modules/snapshot/__init__.py:35
 msgid ""
@@ -3663,10 +3637,8 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:45
-#, fuzzy
-#| msgid "reStore"
 msgid "Storage"
-msgstr "reStore"
+msgstr "Speicher"
 
 #: plinth/modules/storage/templates/storage.html:35
 msgid "The following disks are in use:"
