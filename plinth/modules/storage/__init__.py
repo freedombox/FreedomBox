@@ -64,8 +64,8 @@ def get_disks():
 def _get_disks_from_df():
     """Return the list of disks and free space available using 'df'."""
     command = ['df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
-               '--output=source,target,fstype,size,used,pcent',
-               '--human-readable']
+               '--block-size=1',
+               '--output=source,target,fstype,size,used,avail,pcent']
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as exception:
@@ -78,9 +78,15 @@ def _get_disks_from_df():
     for line in output.splitlines()[1:]:
         parts = line.split()
         keys = ('device', 'mount_point', 'file_system_type', 'size', 'used',
-                'percentage_used')
+                'free', 'percent_used')
         disk = dict(zip(keys, parts))
-        disk['percentage_used'] = int(disk['percentage_used'].rstrip('%'))
+        disk['percent_used'] = int(disk['percent_used'].rstrip('%'))
+        disk['size'] = int(disk['size'])
+        disk['used'] = int(disk['used'])
+        disk['free'] = int(disk['free'])
+        disk['size_str'] = format_bytes(disk['size'])
+        disk['used_str'] = format_bytes(disk['used'])
+        disk['free_str'] = format_bytes(disk['free'])
         disks.append(disk)
 
     return disks
@@ -130,3 +136,27 @@ def is_expandable(device):
 def expand_partition(device):
     """Expand a partition."""
     actions.superuser_run('storage', ['expand-partition', device])
+
+
+def format_bytes(size):
+    """Return human readable disk size from bytes."""
+    if not size:
+        return size
+
+    if size < 1024:
+        return _('{disk_size:.1f} bytes').format(disk_size=size)
+
+    if size < 1024 ** 2:
+        size /= 1024
+        return _('{disk_size:.1f} KiB').format(disk_size=size)
+
+    if size < 1024 ** 3:
+        size /= 1024 ** 2
+        return _('{disk_size:.1f} MiB').format(disk_size=size)
+
+    if size < 1024 ** 4:
+        size /= 1024 ** 3
+        return _('{disk_size:.1f} GiB').format(disk_size=size)
+
+    size /= 1024 ** 4
+    return _('{disk_size:.1f} TiB').format(disk_size=size)

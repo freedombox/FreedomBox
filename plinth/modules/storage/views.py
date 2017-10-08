@@ -25,7 +25,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-from plinth.modules import storage as storage_module
+from plinth.modules import storage
 from plinth.utils import format_lazy, is_user_admin
 
 
@@ -34,10 +34,10 @@ logger = logging.getLogger(__name__)
 
 def index(request):
     """Show connection list."""
-    disks = storage_module.get_disks()
-    root_device = storage_module.get_root_device(disks)
-    expandable_root_size = storage_module.is_expandable(root_device)
-    expandable_root_size = _format_bytes(expandable_root_size)
+    disks = storage.get_disks()
+    root_device = storage.get_root_device(disks)
+    expandable_root_size = storage.is_expandable(root_device)
+    expandable_root_size = storage.format_bytes(expandable_root_size)
 
     warn_about_low_disk_space(request)
 
@@ -49,15 +49,15 @@ def index(request):
 
 def expand(request):
     """Warn and expand the root partition."""
-    disks = storage_module.get_disks()
-    root_device = storage_module.get_root_device(disks)
+    disks = storage.get_disks()
+    root_device = storage.get_root_device(disks)
 
     if request.method == 'POST':
         expand_partition(request, root_device)
         return redirect(reverse('storage:index'))
 
-    expandable_root_size = storage_module.is_expandable(root_device)
-    expandable_root_size = _format_bytes(expandable_root_size)
+    expandable_root_size = storage.is_expandable(root_device)
+    expandable_root_size = storage.format_bytes(expandable_root_size)
     return TemplateResponse(request, 'storage_expand.html',
                             {'title': _('Expand Root Partition'),
                              'expandable_root_size': expandable_root_size})
@@ -66,7 +66,7 @@ def expand(request):
 def expand_partition(request, device):
     """Expand the partition."""
     try:
-        storage_module.expand_partition(device)
+        storage.expand_partition(device)
     except Exception as exception:
         messages.error(request, _('Error expanding partition: {exception}')
                        .format(exception=exception))
@@ -79,71 +79,26 @@ def warn_about_low_disk_space(request):
     if not is_user_admin(request, cached=True):
         return
 
-    disks = storage_module.get_disks()
+    disks = storage.get_disks()
     list_root = [disk for disk in disks if disk['mountpoint'] == '/']
     if not list_root:
         logger.error('Error getting information about root partition.')
         return
 
-    perc_used = list_root[0]['percentage_used']
-    size_bytes = _interpret_size_string(list_root[0]['size'])
-    free_bytes = size_bytes * (100 - perc_used) / 100
+    percent_used = list_root[0]['percent_used']
+    size_bytes = list_root[0]['size']
+    free_bytes = list_root[0]['free']
+    free_gib = free_bytes / (1024 ** 3)
 
     message = format_lazy(
         # Translators: xgettext:no-python-format
         _('Warning: Low space on system partition ({percent_used}% used, '
           '{free_space} free).'),
-        percent_used=perc_used, free_space=_format_bytes(free_bytes))
+        percent_used=percent_used,
+        free_space=storage.format_bytes(free_bytes))
 
-    free_gib = free_bytes / (1024 ** 3)
-    if perc_used > 90 or free_gib < 1:
+    if percent_used > 90 or free_gib < 1:
         messages.error(request, message)
-    elif perc_used > 75 or free_gib < 2:
+    elif percent_used > 75 or free_gib < 2:
         messages.warning(request, message)
 
-
-def _interpret_size_string(size_str):
-    """Convert size string to number of bytes."""
-    # TODO: Drop --human-readable from df command (github issue #1043)
-    size_str = size_str.replace(',', '.')  # some locales use commas
-    size_str = size_str.replace('٫', '.')  # arabic decimal separator
-    if size_str[-1] in '0123456789':
-        return float(size_str[:-1])
-
-    if size_str[-1] == 'K':
-        return float(size_str[:-1]) * 1024
-
-    if size_str[-1] == 'M':
-        return float(size_str[:-1]) * 1024 ** 2
-
-    if size_str[-1] == 'G':
-        return float(size_str[:-1]) * 1024 ** 3
-
-    if size_str[-1] == 'T':
-        return float(size_str[:-1]) * 1024 ** 4
-
-    return -1
-
-
-def _format_bytes(size):
-    """Return human readable disk size from bytes."""
-    if not size:
-        return size
-
-    if size < 1024:
-        return _('{disk_size:.1f} bytes').format(disk_size=size)
-
-    if size < 1024 ** 2:
-        size /= 1024
-        return _('{disk_size:.1f} KiB').format(disk_size=size)
-
-    if size < 1024 ** 3:
-        size /= 1024 ** 2
-        return _('{disk_size:.1f} MiB').format(disk_size=size)
-
-    if size < 1024 ** 4:
-        size /= 1024 ** 3
-        return _('{disk_size:.1f} GiB').format(disk_size=size)
-
-    size /= 1024 ** 4
-    return _('{disk_size:.1f} TiB').format(disk_size=size)

@@ -52,20 +52,20 @@
               <td>{{ disk.file_system_type }}</td>
               <td>
                 <div class="progress">
-                  {% if disk.percentage_used < 75 %}
+                  {% if disk.percent_used < 75 %}
                     <div class="progress-bar progress-bar-striped progress-bar-success"
-                  {% elif disk.percentage_used < 90 %}
+                  {% elif disk.percent_used < 90 %}
                     <div class="progress-bar progress-bar-striped progress-bar-warning"
                   {% else %}
                     <div class="progress-bar progress-bar-striped progress-bar-danger"
                   {% endif %}
-                         role="progressbar" aria-valuenow="disk.percentage_used"
+                         role="progressbar" aria-valuenow="disk.percent_used"
                          aria-valuemin="0" aria-valuemax="100"
-                         style="width: {{ disk.percentage_used }}%;">
-                      {{ disk.percentage_used }}%
+                         style="width: {{ disk.percent_used }}%;">
+                      {{ disk.percent_used }}%
                     </div>
                 </div>
-                <div>{{ disk.used }} / {{ disk.size }}</div>
+                <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
               </td>
             </tr>
           {% endfor %}
