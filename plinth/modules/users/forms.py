@@ -102,7 +102,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
         if commit:
             try:
                 actions.superuser_run(
-                    'ldap',
+                    'users',
                     ['create-user', user.get_username()],
                     input=self.cleaned_data['password1'].encode())
             except ActionError:
@@ -112,7 +112,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
             for group in self.cleaned_data['groups']:
                 try:
                     actions.superuser_run(
-                        'ldap',
+                        'users',
                         ['add-user-to-group', user.get_username(), group])
                 except ActionError:
                     messages.error(
@@ -167,14 +167,14 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
 
         if commit:
             output = actions.superuser_run(
-                'ldap', ['get-user-groups', self.username])
+                'users', ['get-user-groups', self.username])
             old_groups = output.strip().split('\n')
             old_groups = [group for group in old_groups if group]
 
             if self.username != user.get_username():
                 try:
                     actions.superuser_run(
-                        'ldap',
+                        'users',
                         ['rename-user', self.username, user.get_username()])
                 except ActionError:
                     messages.error(self.request,
@@ -185,7 +185,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
                 if old_group not in new_groups:
                     try:
                         actions.superuser_run(
-                            'ldap',
+                            'users',
                             ['remove-user-from-group', user.get_username(),
                              old_group])
                     except ActionError:
@@ -196,7 +196,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
                 if new_group not in old_groups:
                     try:
                         actions.superuser_run(
-                            'ldap',
+                            'users',
                             ['add-user-to-group', user.get_username(),
                              new_group])
                     except ActionError:
@@ -227,7 +227,7 @@ class UserChangePasswordForm(SetPasswordForm):
         if commit:
             try:
                 actions.superuser_run(
-                    'ldap',
+                    'users',
                     ['set-user-password', user.get_username()],
                     input=self.cleaned_data['new_password1'].encode())
             except ActionError:
@@ -253,7 +253,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
 
             try:
                 actions.superuser_run(
-                    'ldap',
+                    'users',
                     ['create-user', user.get_username()],
                     input=self.cleaned_data['password1'].encode())
             except ActionError:
@@ -262,7 +262,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
 
             try:
                 actions.superuser_run(
-                    'ldap',
+                    'users',
                     ['add-user-to-group', user.get_username(), 'admin'])
             except ActionError:
                 messages.error(self.request,
