@@ -26,6 +26,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.client import web_client
+from .manifest import clients
 
 
 version = 1
@@ -50,6 +51,8 @@ description = [
     _('You can create and edit accounts in the '
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
+
+clients = clients
 
 web_clients = [web_client(name='reStore web-interface', url='/restore')]
 

@@ -29,6 +29,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
 from plinth.client import desktop_client, mobile_client
+from .manifest import clients
 
 version = 2
 
@@ -60,6 +61,8 @@ description = [
       'the domain, it is required to restart the repro service. Disable the '
       'service and re-enable it.'),
 ]
+
+clients = clients
 
 desktop_clients = [desktop_client(name='Jitsi',url='https://jitsi.org/')]
 

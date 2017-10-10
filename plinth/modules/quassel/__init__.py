@@ -31,6 +31,7 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 from plinth.client import mobile_client, desktop_client
+from .manifest import clients
 
 version = 1
 
@@ -60,6 +61,8 @@ description = [
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
       'are available.'),
 ]
+
+clients = clients
 
 desktop_clients = [
     desktop_client(name='Quassel', url='http://quassel-irc.org/downloads')]

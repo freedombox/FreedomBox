@@ -27,6 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client
+from .manifest import clients
 
 
 version = 1
@@ -58,6 +59,8 @@ description = [
       '(<a href="https://www.google.com/settings/security/lesssecureapps"'
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
+
+clients = clients
 
 web_clients = [web_client('Roundcube', '/roundcube')]
 

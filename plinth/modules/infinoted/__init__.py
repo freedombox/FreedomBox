@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+from .manifest import clients
 from plinth.client import desktop_client
 
 
@@ -56,6 +57,8 @@ description = [
 ]
 
 desktop_clients = [desktop_client(name='Gobby', url='https://gobby.github.io/')]
+
+clients = clients
 
 
 def init():
