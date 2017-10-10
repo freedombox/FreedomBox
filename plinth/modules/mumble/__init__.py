@@ -28,6 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
+from .manifest import clients
 
 
 version = 1
@@ -50,6 +51,8 @@ description = [
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and Android devices are available.')
 ]
+
+clients = clients
 
 reserved_usernames = ['mumble-server']
 

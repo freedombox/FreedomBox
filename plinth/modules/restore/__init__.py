@@ -25,6 +25,7 @@ from plinth import cfg
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
+from .manifest import clients
 
 
 version = 1
@@ -49,6 +50,8 @@ description = [
     _('You can create and edit accounts in the '
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
+
+clients = clients
 
 reserved_usernames = ['node-restore']
 

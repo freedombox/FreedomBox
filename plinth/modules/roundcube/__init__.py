@@ -26,6 +26,7 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from .manifest import clients
 
 
 version = 1
@@ -57,6 +58,8 @@ description = [
       '(<a href="https://www.google.com/settings/security/lesssecureapps"'
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
+
+clients = clients
 
 service = None
 

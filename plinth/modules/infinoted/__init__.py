@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+from .manifest import clients
 
 
 version = 1
@@ -53,6 +54,8 @@ description = [
           '"Connect to Server" and enter your {box_name}\'s domain name.'),
         box_name=_(cfg.box_name)),
 ]
+
+clients = clients
 
 
 def init():

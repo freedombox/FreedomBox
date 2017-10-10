@@ -26,6 +26,7 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from .manifest import clients
 
 
 version = 1
@@ -44,6 +45,8 @@ description = [
       'single user account, which you will need to setup on the initial '
       'visit.'),
 ]
+
+clients = clients
 
 service = None
 

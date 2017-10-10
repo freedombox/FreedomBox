@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from .manifest import clients
 
 
 version = 1
@@ -56,6 +57,8 @@ description = [
           'users">User Configuration</a> you can change these '
           'permissions or add new users.'), box_name=_(cfg.box_name))
 ]
+
+clients = clients
 
 
 def init():
