@@ -20,29 +20,37 @@ Plinth module for api for android app.
 """
 
 from django.http import HttpResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 from plinth.modules.names import get_domain, get_domain_types
 from plinth import frontpage
+from plinth import module_loader
 import json
 
 
 def get_apps(request, **kwargs):
     shortcuts = frontpage.get_shortcuts()
 
-    response = {'services': get_app_payload(shortcuts)}
-    return HttpResponse(json.dumps(response), content_type="application/json")
+    response = {'services': list(map(get_app_data, shortcuts)) }
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder),
+                        content_type="application/json")
 
 
-def get_app_payload(enabled_apps):
-    def get_value(key, value):
-        return str(value) if key != 'icon' \
-            else 'static/theme/icons/{}.svg'.format(value)
+def get_app_data(item):
+    item_id = item['id'].split('_')[0]
+    shortcut_module = module_loader.loaded_modules[item_id]
 
-    def filter_app_data(app):
-        return {key: get_value(key, value) for key, value in app.items()
-                if key in ('name', 'short_description', 'icon')}
+    def get_icon_url(icon):
+        return 'static/theme/icons/{}.svg'.format(icon) if icon else None
 
-    return list(map(filter_app_data, enabled_apps))
+    return {key: value for key, value in dict(name=shortcut_module.name,
+                                              short_description=getattr(shortcut_module,
+                                                                        'short_description', None),
+                                              icon_url=get_icon_url(getattr(shortcut_module, 'icon', None)),
+                                              description=getattr(shortcut_module, 'description', None),
+                                              usage=getattr(shortcut_module, 'usage', None),
+                                              manual_url=getattr(shortcut_module, 'manual_url', None),
+                                              clients=getattr(shortcut_module, 'clients', None)).items() if value }
 
 
 def get_access_info(request, **kwargs):
