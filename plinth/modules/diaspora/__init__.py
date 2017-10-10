@@ -24,6 +24,7 @@ from plinth import actions, action_utils, frontpage, \
     service as service_module
 from plinth.errors import DomainNotRegisteredError
 from plinth.menu import main_menu
+from .manifest import clients
 
 domain_name_file = "/etc/diaspora/domain_name"
 lazy_domain_name = None  # To avoid repeatedly reading from file
@@ -68,6 +69,8 @@ description = [
         else 'Please register a domain name for your FreedomBox to be able to'
         ' federate with other diaspora* pods.')
 ]
+
+clients = clients
 
 
 def init():

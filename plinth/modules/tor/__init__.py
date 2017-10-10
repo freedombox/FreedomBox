@@ -29,6 +29,7 @@ from plinth.menu import main_menu
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 from plinth.client import desktop_client, mobile_client
+from .manifest import clients
 
 from . import utils
 
@@ -52,6 +53,8 @@ description = [
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
       'Tor Browser</a>.')
 ]
+
+clients = clients
 
 desktop_clients = [
     desktop_client(name='Tor Browser',

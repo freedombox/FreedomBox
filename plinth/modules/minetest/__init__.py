@@ -32,6 +32,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.client import desktop_client, mobile_client
+from .manifest import clients
 
 
 version = 2
@@ -58,6 +59,8 @@ description = [
           'a <a href="http://www.minetest.net/downloads/">Minetest client</a> '
           'is needed.'), box_name=_(cfg.box_name)),
 ]
+
+clients = clients
 
 desktop_clients = [desktop_client(name='Minetest',
                                                 url= 'https://www.minetest.net/downloads/')]

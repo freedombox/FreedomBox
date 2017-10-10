@@ -32,6 +32,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.client import desktop_client, web_client, mobile_client
 from plinth.menu import main_menu
+from .manifest import clients
 
 version = 2
 
@@ -78,6 +79,8 @@ logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
+
+clients = clients
 
 
 def init():

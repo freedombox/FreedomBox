@@ -27,6 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client
+from .manifest import clients
 
 
 version = 1
@@ -45,6 +46,8 @@ description = [
       'single user account, which you will need to setup on the initial '
       'visit.'),
 ]
+
+clients = clients
 
 web_clients = [web_client(name='Shaarli', url='/shaarli')]
 

@@ -29,6 +29,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client, mobile_client
+from .manifest import clients
 
 
 version = 2
@@ -57,6 +58,8 @@ description = [
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
+
+clients = clients
 
 web_clients = [web_client(name='TT-RSS', url='/tt-rss')]
 

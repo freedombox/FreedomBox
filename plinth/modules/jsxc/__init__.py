@@ -27,6 +27,7 @@ import socket
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from .manifest import clients
 
 
 version = 1
@@ -42,6 +43,8 @@ description = [
     _('JSXC is a web client for XMPP. Typically it is used with an XMPP '
       'server running locally.'),
 ]
+
+clients = clients
 
 service = None
 
