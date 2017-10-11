@@ -49,7 +49,11 @@ description = [
         _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
           'rss">/tt-rss</a> path on the web server. It can be accessed by '
           'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
-        box_name=_(cfg.box_name))
+        box_name=_(cfg.box_name)),
+
+    format_lazy(
+        _('When using a mobile or desktop application for Tiny Tiny RSS, use '
+          'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
 
 service = None
@@ -58,7 +62,8 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-envelope', 'ttrss:index', short_description)
+    menu.add_urlname(name, 'glyphicon-envelope', 'ttrss:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -88,8 +93,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ttrss', name, short_description=short_description, url='/tt-rss',
-                           login_required=True)
+    """Add a shortcut to the front page."""
+    frontpage.add_shortcut('ttrss', name, short_description=short_description,
+                           url='/tt-rss', login_required=True)
 
 
 def is_enabled():
