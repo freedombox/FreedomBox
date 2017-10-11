@@ -21,7 +21,11 @@
 Configuration helper for Matrix-Synapse server.
 """
 import argparse
+
+import collections
+
 from ruamel.yaml import round_trip_dump, round_trip_load
+from ruamel.yaml.scalarstring import DoubleQuotedScalarString as __
 from plinth import action_utils
 from plinth.modules.matrixsynapse import CONFIG_FILE_PATH
 
@@ -58,6 +62,22 @@ def subcommand_post_install(_):
         if listener['port'] == 8448:
             listener['bind_address'] = '0.0.0.0'
 
+    # Setup ldap parameters
+    config.insert(0, 'password_providers', [{}])
+    config['password_providers'][0]['module'] = __(
+        'ldap_auth_provider.LdapAuthProvider')
+    ldap_config = {
+        'enabled': True,
+        'uri': __('ldap://localhost:389'),
+        'start_tls': False,
+        'base': __('ou=users,dc=thisbox'),
+        'attributes': {
+            'uid': __('uid'),
+            'name': __('uid'),
+            'mail': __('')
+        }
+    }
+    config['password_providers'][0]['config'] = ldap_config
     with open(CONFIG_FILE_PATH, 'w') as config_file:
         round_trip_dump(config, config_file)
 
