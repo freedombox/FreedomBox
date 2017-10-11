@@ -36,7 +36,7 @@ version = 1
 
 managed_services = ['matrix-synapse']
 
-managed_packages = ['matrix-synapse']
+managed_packages = ['matrix-synapse', 'matrix-synapse-ldap3']
 
 name = _('Matrix Synapse')
 
