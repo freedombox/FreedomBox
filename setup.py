@@ -210,7 +210,7 @@ setuptools.setup(
     install_requires=[
         'cherrypy >= 3.0',
         'configobj',
-        'django >= 1.10.0',
+        'django >= 1.11.0',
         'django-bootstrap-form',
         'django-stronghold',
         'psutil',
