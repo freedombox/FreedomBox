@@ -140,4 +140,3 @@ def is_package_manager_busy():
         return True
     except actions.ActionError:
         return False
-

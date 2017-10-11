@@ -107,6 +107,7 @@ class AdminRequiredMiddleware(object):
 
 
 class FirstSetupMiddleware(object):
+    """Django middleware to block all interactions before first setup."""
 
     @staticmethod
     def process_view(request, view_func, view_args, view_kwargs):

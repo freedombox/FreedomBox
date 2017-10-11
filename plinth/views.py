@@ -30,7 +30,6 @@ import time
 
 from . import forms, frontpage
 import plinth
-from plinth import actions
 from plinth import package
 from plinth.modules.storage import views as disk_views
 

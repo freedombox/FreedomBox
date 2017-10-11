@@ -26,8 +26,6 @@ import time
 from . import package
 from .errors import PackageNotInstalledError
 import plinth
-from plinth import actions
-from plinth import package
 
 logger = logging.getLogger(__name__)
 
@@ -180,7 +178,7 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
     logger.info('Running setup for modules, essential - %s, '
                 'selected modules - %s', essential, module_list)
     for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not is_module_essential(module):
+        if essential and not _is_module_essential(module):
             continue
 
         if module_list and module_name not in module_list:
@@ -192,7 +190,7 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
 def list_dependencies(module_list=None, essential=False):
     """Print list of packages required by selected or essential modules."""
     for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not is_module_essential(module):
+        if essential and not _is_module_essential(module):
             continue
 
         if module_list and module_name not in module_list and \
@@ -205,7 +203,6 @@ def list_dependencies(module_list=None, essential=False):
 
 def run_setup_in_background():
     """Run setup in a background thread."""
-    global _is_first_setup
     _set_is_first_setup()
     threading.Thread(target=_run_setup).start()
 
@@ -260,11 +257,11 @@ def _get_modules_for_regular_setup():
         1. essential modules that are not up-to-date
         2. non-essential modules that are installed and need updates
         """
-        if (is_module_essential(module) and
-            not module_state_matches(module, 'up-to-date')):
+        if _is_module_essential(module) and \
+           not _module_state_matches(module, 'up-to-date'):
             return True
 
-        if module_state_matches(module, 'needs-update'):
+        if _module_state_matches(module, 'needs-update'):
             return True
 
         return False
@@ -274,22 +271,25 @@ def _get_modules_for_regular_setup():
             if is_setup_required(module)]
 
 
-def is_module_essential(module):
+def _is_module_essential(module):
+    """Return if a module is an essential module."""
     return getattr(module, 'is_essential', False)
 
 
-def module_state_matches(module, state):
+def _module_state_matches(module, state):
+    """Return if the current setup state of a module matches given state."""
     return module.setup_helper.get_state() == state
 
 
 def _set_is_first_setup():
-    """Return whether all essential modules have been setup at least once."""
+    """Set whether all essential modules have been setup at least once."""
     global _is_first_setup
     modules = plinth.module_loader.loaded_modules.values()
     _is_first_setup = any(
         (module
          for module in modules
-         if is_module_essential(module) and module_state_matches(module, 'needs-setup')))
+         if _is_module_essential(module) and
+         _module_state_matches(module, 'needs-setup')))
 
 
 def run_setup_on_modules(module_list, allow_install=True):

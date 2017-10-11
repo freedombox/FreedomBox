@@ -156,7 +156,7 @@ def setup_server():
 
 
 def on_server_stop():
-    """Stop all other threads since web server is trying to exit"""
+    """Stop all other threads since web server is trying to exit."""
     setup.stop()
 
 
@@ -262,9 +262,9 @@ def configure_django():
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
             'stronghold.middleware.LoginRequiredMiddleware',
             'plinth.middleware.AdminRequiredMiddleware',
+            'plinth.middleware.FirstSetupMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
-            'plinth.middleware.FirstSetupMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
