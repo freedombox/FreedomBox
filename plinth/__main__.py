@@ -156,7 +156,7 @@ def setup_server():
 
 
 def configure_django():
-    """Setup Django configuration in the absense of .settings file"""
+    """Setup Django configuration in the absence of .settings file"""
     logging_configuration = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -203,12 +203,16 @@ def configure_django():
         },
     ]
 
-    applications = ['bootstrapform',
-                    'django.contrib.auth',
-                    'django.contrib.contenttypes',
-                    'django.contrib.messages',
-                    'stronghold',
-                    'plinth']
+    applications = [
+        'axes',
+        'captcha',
+        'bootstrapform',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.messages',
+        'stronghold',
+        'plinth',
+    ]
     applications += module_loader.get_modules_to_load()
     sessions_directory = os.path.join(cfg.data_dir, 'sessions')
 
@@ -235,8 +239,13 @@ def configure_django():
                 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
             },
         ],
+        AXES_LOCKOUT_URL='locked',
+        AXES_BEHIND_REVERSE_PROXY=True,
         CACHES={'default':
                 {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
+        CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
+        CAPTCHA_LENGTH=6,
+        CAPTCHA_FLITE_PATH='/usr/bin/flite',
         DATABASES={'default':
                    {'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': cfg.store_file}},
@@ -265,6 +274,9 @@ def configure_django():
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
+        # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', ),
+        STRONGHOLD_PUBLIC_NAMED_URLS=('captcha-image', 'captcha-image-2x',
+                                      'captcha-audio', 'captcha-refresh', ),
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)

@@ -57,7 +57,7 @@ def non_admin_view(func):
 
 def is_user_admin(request, cached=False):
     """Return whether user is an administrator."""
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return False
 
     if 'cache_user_is_admin' in request.session and cached:

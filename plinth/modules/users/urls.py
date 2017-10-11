@@ -14,34 +14,42 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Users module
 """
 
 from django.conf.urls import url
 from django.urls import reverse_lazy
-from stronghold.decorators import public
 
+from stronghold.decorators import public
 from plinth.utils import non_admin_view
 from plinth.modules.sso.views import SSOLoginView, SSOLogoutView
 from . import views
 
+from axes.decorators import watch_login
 
 urlpatterns = [
     url(r'^sys/users/$', views.UserList.as_view(), name='index'),
     url(r'^sys/users/create/$', views.UserCreate.as_view(), name='create'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/edit/$',
-        non_admin_view(views.UserUpdate.as_view()), name='edit'),
-    url(r'^sys/users/(?P<slug>[\w.@+-]+)/delete/$', views.UserDelete.as_view(),
+        non_admin_view(views.UserUpdate.as_view()),
+        name='edit'),
+    url(r'^sys/users/(?P<slug>[\w.@+-]+)/delete/$',
+        views.UserDelete.as_view(),
         name='delete'),
     url(r'^sys/users/(?P<slug>[\w.@+-]+)/change_password/$',
         non_admin_view(views.UserChangePassword.as_view()),
         name='change_password'),
-    # Add Django's login/logout urls
-    url(r'^accounts/login/$', public(SSOLoginView.as_view()), name='login'),
-    url(r'^accounts/logout/$', non_admin_view(SSOLogoutView.as_view()),
-        {'next_page': reverse_lazy('index')}, name='logout'),
-    url(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
+
+    # Authnz is handled by SSO
+    url(r'^accounts/login/$',
+        public(watch_login(SSOLoginView.as_view())),
+        name='login'),
+    url(r'^accounts/logout/$',
+        non_admin_view(SSOLogoutView.as_view()),
+        {'next_page': reverse_lazy('index')},
+        name='logout'),
+    url(r'^users/firstboot/$',
+        public(views.FirstBootView.as_view()),
         name='firstboot'),
 ]
