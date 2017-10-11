@@ -167,7 +167,7 @@ def on_domain_added(sender, domain_type='', name='', description='',
         # Obtaining certs during tests isn't expected to succeed
         if sender != 'test':
             try_action(name, 'obtain')
-            enable_renewal_management(domain)
+            enable_renewal_management(name)
         logger.info("Obtained a Let\'s Encrypt certificate for " + name)
         return True
     except ActionError as ex:
@@ -184,7 +184,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     except ActionError as exception:
         logger.warn(
             ('Failed to revoke certificate for domain {domain}: {error}')
-            .format(domain=domain, error=exception.args[2]))
+            .format(domain=name, error=exception.args[2]))
         return False
 
 
