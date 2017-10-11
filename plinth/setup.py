@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module with utilites for performing application setup operations.
 """
@@ -22,12 +21,19 @@ Plinth module with utilites for performing application setup operations.
 import apt
 import logging
 import threading
+import time
 
 from . import package
 from .errors import PackageNotInstalledError
 import plinth
+from plinth import actions
+from plinth import package
 
 logger = logging.getLogger(__name__)
+
+_is_first_setup = False
+is_first_setup_running = False
+_is_shutting_down = False
 
 
 class Helper(object):
@@ -163,12 +169,18 @@ def init(module_name, module):
         module.setup_helper = Helper(module_name, module)
 
 
+def stop():
+    """Set a flag to indicate that the setup process must stop."""
+    global _is_shutting_down
+    _is_shutting_down = True
+
+
 def setup_modules(module_list=None, essential=False, allow_install=True):
     """Run setup on selected or essential modules."""
     logger.info('Running setup for modules, essential - %s, '
                 'selected modules - %s', essential, module_list)
     for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not getattr(module, 'is_essential', False):
+        if essential and not is_module_essential(module):
             continue
 
         if module_list and module_name not in module_list:
@@ -180,7 +192,7 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
 def list_dependencies(module_list=None, essential=False):
     """Print list of packages required by selected or essential modules."""
     for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not getattr(module, 'is_essential', False):
+        if essential and not is_module_essential(module):
             continue
 
         if module_list and module_name not in module_list and \
@@ -189,3 +201,113 @@ def list_dependencies(module_list=None, essential=False):
 
         for package_name in getattr(module, 'managed_packages', []):
             print(package_name)
+
+
+def run_setup_in_background():
+    """Run setup in a background thread."""
+    global _is_first_setup
+    _set_is_first_setup()
+    threading.Thread(target=_run_setup).start()
+
+
+def _run_setup():
+    """Run setup with retry till it succeeds."""
+    sleep_time = 10
+    while True:
+        try:
+            if _is_first_setup:
+                logger.info('Running first setup.')
+                _run_first_setup()
+                break
+            else:
+                logger.info('Running regular setup.')
+                _run_regular_setup()
+                break
+        except Exception as ex:
+            logger.warning('Unable to complete setup: %s', ex)
+            logger.info('Will try again in {} seconds'.format(sleep_time))
+            time.sleep(sleep_time)
+            if _is_shutting_down:
+                break
+
+    logger.info('Setup thread finished.')
+
+
+def _run_first_setup():
+    """Run setup on essential modules on first setup."""
+    global is_first_setup_running
+    is_first_setup_running = True
+    # TODO When it errors out, show error in the UI
+    run_setup_on_modules(None, allow_install=False)
+    is_first_setup_running = False
+
+
+def _run_regular_setup():
+    """Run setup on all modules also installing required packages."""
+    # TODO show notification that upgrades are running
+    if package.is_package_manager_busy():
+        raise Exception('Package manager is busy.')
+
+    all_modules = _get_modules_for_regular_setup()
+    run_setup_on_modules(all_modules, allow_install=True)
+
+
+def _get_modules_for_regular_setup():
+    all_modules = plinth.module_loader.loaded_modules.items()
+
+    def is_setup_required(module):
+        """Setup is required for:
+        1. essential modules that are not up-to-date
+        2. non-essential modules that are installed and need updates
+        """
+        if (is_module_essential(module) and
+            not module_state_matches(module, 'up-to-date')):
+            return True
+
+        if module_state_matches(module, 'needs-update'):
+            return True
+
+        return False
+
+    return [name
+            for name, module in all_modules
+            if is_setup_required(module)]
+
+
+def is_module_essential(module):
+    return getattr(module, 'is_essential', False)
+
+
+def module_state_matches(module, state):
+    return module.setup_helper.get_state() == state
+
+
+def _set_is_first_setup():
+    """Return whether all essential modules have been setup at least once."""
+    global _is_first_setup
+    modules = plinth.module_loader.loaded_modules.values()
+    _is_first_setup = any(
+        (module
+         for module in modules
+         if is_module_essential(module) and module_state_matches(module, 'needs-setup')))
+
+
+def run_setup_on_modules(module_list, allow_install=True):
+    """Run setup on the given list of modules.
+
+    module_list is the list of modules to run setup on. If None is given, run
+    setup on all essential modules only.
+
+    allow_install with or without package installation. When setting up
+    essential modules, installing packages is not required as Plinth itself has
+    dependencies on all essential modules.
+
+    """
+    try:
+        if not module_list:
+            setup_modules(essential=True, allow_install=allow_install)
+        else:
+            setup_modules(module_list, allow_install=allow_install)
+    except Exception as exception:
+        logger.error('Error running setup - %s', exception)
+        raise

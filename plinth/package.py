@@ -131,3 +131,13 @@ class Transaction(object):
         }
         self.status_string = status_map.get(parts[0], '')
         self.percentage = int(float(parts[2]))
+
+
+def is_package_manager_busy():
+    """Return whether a package manager is running."""
+    try:
+        actions.superuser_run('packages', ['is-package-manager-busy'])
+        return True
+    except actions.ActionError:
+        return False
+

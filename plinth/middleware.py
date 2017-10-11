@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Common Django middleware.
 """
@@ -24,16 +23,17 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 import logging
 
 from stronghold.utils import is_view_func_public
 
 import plinth
+from plinth import setup
 from plinth.package import PackageException
 from plinth.utils import is_user_admin
 from . import views
-
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +76,7 @@ class SetupMiddleware(object):
                     error_details = getattr(exception, 'error_details', '')
                     message = _('Error installing application: {string} '
                                 '{details}').format(
-                        string=error_string, details=error_details)
+                                    string=error_string, details=error_details)
                 else:
                     message = _('Error installing application: {error}') \
                         .format(error=exception)
@@ -104,3 +104,15 @@ class AdminRequiredMiddleware(object):
 
         if not is_user_admin(request):
             raise PermissionDenied
+
+
+class FirstSetupMiddleware(object):
+
+    @staticmethod
+    def process_view(request, view_func, view_args, view_kwargs):
+        """Block all user interactions when first setup is pending."""
+        if not setup.is_first_setup_running:
+            return
+
+        context = {'is_first_setup_running': setup.is_first_setup_running}
+        return render(request, 'first_setup.html', context)
