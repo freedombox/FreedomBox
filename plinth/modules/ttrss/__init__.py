@@ -30,11 +30,12 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 
 
-version = 1
+version = 2
 
 managed_services = ['tt-rss']
 
-managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql']
+managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql',
+                    'php-pgsql', 'python3-psycopg2']
 
 name = _('Tiny Tiny RSS')
 
