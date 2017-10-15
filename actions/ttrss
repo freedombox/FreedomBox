@@ -29,6 +29,7 @@ from plinth import action_utils
 
 CONFIG_FILE = '/etc/tt-rss/config.php'
 DEFAULT_FILE = '/etc/default/tt-rss'
+DATABASE_FILE = '/etc/tt-rss/database.php'
 
 
 def parse_arguments():
@@ -68,6 +69,29 @@ def subcommand_setup(_):
 
     action_utils.service_restart('tt-rss')
     action_utils.webserver_enable('tt-rss-plinth')
+    enable_api_access()
+
+
+def enable_api_access():
+    """Enable API access so that tt-rss can be accessed through mobile app."""
+    import psycopg2  # Only available post installation
+
+    aug = load_augeas()
+    dbuser = aug.get('/files' + DATABASE_FILE + '/$dbuser').strip("'")
+    dbpass = aug.get('/files' + DATABASE_FILE + '/$dbpass').strip("'")
+    dbname = aug.get('/files' + DATABASE_FILE + '/$dbname').strip("'")
+    dbserver = aug.get('/files' + DATABASE_FILE + '/$dbserver').strip("'")
+
+    connection = psycopg2.connect(
+        database=dbname, user=dbuser, password=dbpass, host=dbserver)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "update ttrss_prefs set def_value=true \
+        where pref_name='ENABLE_API_ACCESS';")
+
+    connection.commit()
+    connection.close()
 
 
 def subcommand_enable(_):
@@ -90,6 +114,7 @@ def load_augeas():
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.set('/augeas/load/Phpvars/lens', 'Phpvars.lns')
     aug.set('/augeas/load/Phpvars/incl[last() + 1]', CONFIG_FILE)
+    aug.set('/augeas/load/Phpvars/incl[last() + 1]', DATABASE_FILE)
     aug.load()
     return aug
 
