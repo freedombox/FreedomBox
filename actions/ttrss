@@ -77,18 +77,23 @@ def enable_api_access():
     import psycopg2  # Only available post installation
 
     aug = load_augeas()
-    dbuser = aug.get('/files' + DATABASE_FILE + '/$dbuser').strip("'")
-    dbpass = aug.get('/files' + DATABASE_FILE + '/$dbpass').strip("'")
-    dbname = aug.get('/files' + DATABASE_FILE + '/$dbname').strip("'")
-    dbserver = aug.get('/files' + DATABASE_FILE + '/$dbserver').strip("'")
+
+    def get_value(variable_name):
+        """Return the value of a variable from database configuration file."""
+        return aug.get('/files' + DATABASE_FILE + '/$' + variable_name) \
+            .strip("'\"")
+
+    user = get_value('dbuser')
+    password = get_value('dbpass')
+    database = get_value('dbname')
+    host = get_value('dbserver')
 
     connection = psycopg2.connect(
-        database=dbname, user=dbuser, password=dbpass, host=dbserver)
+        database=database, user=user, password=password, host=host)
     cursor = connection.cursor()
 
-    cursor.execute(
-        "update ttrss_prefs set def_value=true \
-        where pref_name='ENABLE_API_ACCESS';")
+    cursor.execute("UPDATE ttrss_prefs SET def_value=true "
+                   "WHERE pref_name='ENABLE_API_ACCESS';")
 
     connection.commit()
     connection.close()
