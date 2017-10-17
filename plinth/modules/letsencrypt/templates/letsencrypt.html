@@ -149,123 +149,122 @@
       {% endblocktrans %}
     </p>
 
-    <form class="form" method="post"
-          action="{% url 'letsencrypt:toggle_hooks' status.current_domain.name %}">
-      {% csrf_token %}
-      <div class="checkbox">
-        <label>
-          {% if status.current_domain.name and status.current_domain.has_cert %}
-            <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
-                   {% if 'enabled' in status.current_domain.manage_hooks_status %}
-                     checked
-                   {% endif %}
-                   onchange="this.form.submit();">
-            </input>
-            <noscript>
-              <button class="btn btn-sm btn-default" type="submit">
-                {% trans "Update config" %}</button>
-            </noscript>
-          {% else %}
-            <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
-                   class="disabled"></input>
-            <noscript>
-              <button class="btn btn-sm btn-default disabled" type="submit">
-                {% trans "Update config" %}</button>
-            </noscript>
-          {% endif %}
-          <span>
-            {% if status.current_domain.name %}
+    {% if status.current_domain.name %}
+      <form class="form" method="post"
+            action="{% url 'letsencrypt:toggle_hooks' status.current_domain.name %}">
+        {% csrf_token %}
+        <div class="checkbox">
+          <label>
+            {% if status.current_domain.has_cert %}
+              <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
+                     {% if 'enabled' in status.current_domain.manage_hooks_status %}
+                       checked
+                     {% endif %}
+                     onchange="this.form.submit();">
+              </input>
+              <noscript>
+                <button class="btn btn-sm btn-default" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
+            {% else %}
+              <input type="checkbox" name="toggle_hooks" id="id_toggle_hooks"
+                     class="disabled"></input>
+              <noscript>
+                <button class="btn btn-sm btn-default disabled" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
+            {% endif %}
+            <span>
               {% blocktrans with current_domain=status.current_domain.name %}
                 Let {{ box_name }} manage certificate renewal of
                 <b>{{ current_domain }}</b>
               {% endblocktrans %}
-            {% else %}
-              {% blocktrans with current_domain=status.current_domain.name %}
-                Let {{ box_name }} manage certificate renewal of the current domain
-              {% endblocktrans %}
-            {% endif %}
-          </span>
-        </label>
-      </div>
-      <p class="help-block">
-        {% if status.current_domain.name and status.current_domain.has_cert %}
-          {% blocktrans trimmed %}
-            If enabled, {{ box_name }} can make sure that all apps can use the
-            certificate as soon as it is renewed.
-          {% endblocktrans %}
-        {% elif not status.current_domain.has_cert %}
-          {% blocktrans trimmed %}
-            <b>No certificate available for the current domain.</b>
-            First obtain a certificate to enable its management.
-          {% endblocktrans %}
-        {% else %}
-          {% blocktrans trimmed %}
-            <b>No current domain is configured.</b>
-            First configure a domain to enable management of its certificates.
-          {% endblocktrans %}
-        {% endif %}
-      </p>
-    </form>
-
-    <form class="form" method="post"
-          action="{% url 'letsencrypt:toggle_module' domain=status.current_domain.name module='ejabberd' %}">
-      {% csrf_token %}
-      <div class="checkbox">
-        <label>
-          {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
-            <input type="checkbox" name="ejabberd" id="ejabberd"
-                   {% if 'ejabberd' in status.current_domain.manage_hooks_status %}
-                     checked
-                   {% endif %}
-                   onchange="this.form.submit();">
-            </input>
-            <noscript>
-              <button class="btn btn-sm btn-default" type="submit">
-                {% trans "Update config" %}</button>
-            </noscript>
+            </span>
+          </label>
+        </div>
+        <p class="help-block">
+          {% if status.current_domain.has_cert %}
+            {% blocktrans trimmed %}
+              If enabled, {{ box_name }} can make sure that all apps can use the
+              certificate as soon as it is renewed.
+            {% endblocktrans %}
           {% else %}
-            <input type="checkbox" name="ejabberd" id="ejabberd"
-                   class="disabled"></input>
-            <noscript>
-              <button class="btn btn-sm btn-default disabled" type="submit">
-                {% trans "Update config" %}</button>
-            </noscript>
+            {% blocktrans trimmed %}
+              <b>No certificate available for the current domain.</b>
+              First obtain a certificate to enable its management.
+            {% endblocktrans %}
           {% endif %}
-            <span>
+        </p>
+      </form>
+
+      <form class="form" method="post"
+            action="{% url 'letsencrypt:toggle_module' domain=status.current_domain.name module='ejabberd' %}">
+        {% csrf_token %}
+        <div class="checkbox">
+          <label>
             {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
-              {% blocktrans with current_domain=status.current_domain.name %}
-                Use certificate of {{ current_domain }} for <b>ejabberd</b>
-              {% endblocktrans %}
+              <input type="checkbox" name="ejabberd" id="ejabberd"
+                     {% if 'ejabberd' in status.current_domain.manage_hooks_status %}
+                       checked
+                     {% endif %}
+                     onchange="this.form.submit();">
+              </input>
+              <noscript>
+                <button class="btn btn-sm btn-default" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
             {% else %}
-              {% blocktrans %}
-                Use certificate of the current domain for <b>ejabberd</b>
-              {% endblocktrans %}
+              <input type="checkbox" name="ejabberd" id="ejabberd"
+                     class="disabled"></input>
+              <noscript>
+                <button class="btn btn-sm btn-default disabled" type="submit">
+                  {% trans "Update config" %}</button>
+              </noscript>
             {% endif %}
-          </span>
-        </label>
-      </div>
-      <p class="help-block">
-        {% url 'ejabberd:index' as ejabberd_url %}
-        {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
-          {% blocktrans trimmed %}
-            If enabled, the app <a href="{{ ejabberd_url }}">ejabberd</a> will also use the
-            Let's Encrypt certificate.
-            This will reduce warnings about self-signed certificates in client applications,
-            and enable more wide-spread federation with other XMPP servers in the Internet.
-          {% endblocktrans %}
-        {% elif 'ejabberd' not in installed_modules %}
-          {% blocktrans trimmed %}
-            This feature only makes sense if you are using the
-            <a href="{{ ejabberd_url }}">ejabberd</a> chat server app.
-          {% endblocktrans %}
-        {% else %}
-          {% blocktrans trimmed %}
-            To use a Let's Encrypt certificate for <a href="{{ ejabberd_url }}">ejabberd</a>
-            chat server app, you must first enable certificate renewal of the current domain.
-          {% endblocktrans %}
-        {% endif %}
-      </p>
-    </form>
+            <span>
+	      {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
+                {% blocktrans with current_domain=status.current_domain.name %}
+                  Use certificate of {{ current_domain }} for <b>ejabberd</b>
+                {% endblocktrans %}
+              {% else %}
+                {% blocktrans %}
+                  Use certificate of the current domain for <b>ejabberd</b>
+                {% endblocktrans %}
+              {% endif %}
+            </span>
+          </label>
+        </div>
+        <p class="help-block">
+          {% url 'ejabberd:index' as ejabberd_url %}
+          {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
+            {% blocktrans trimmed %}
+              If enabled, the app <a href="{{ ejabberd_url }}">ejabberd</a>
+	      will also use the Let's Encrypt certificate.
+              This will reduce warnings about self-signed certificates in
+	      client applications, and enable more wide-spread federation with
+	      other XMPP servers in the Internet.
+            {% endblocktrans %}
+          {% elif 'ejabberd' not in installed_modules %}
+            {% blocktrans trimmed %}
+              This feature only makes sense if you are using the
+              <a href="{{ ejabberd_url }}">ejabberd</a> chat server app.
+            {% endblocktrans %}
+          {% else %}
+            {% blocktrans trimmed %}
+              To use a Let's Encrypt certificate for
+	      <a href="{{ ejabberd_url }}">ejabberd</a> chat server app, you
+	      must first enable certificate renewal of the current domain.
+            {% endblocktrans %}
+          {% endif %}
+        </p>
+      </form>
+    {% else %}
+      {% blocktrans trimmed %}
+        <b>No current domain is configured.</b>
+        First configure a domain to enable management of its certificates.
+      {% endblocktrans %}
+    {% endif %}
+
   {% else %}
     {% blocktrans trimmed %}
       No domains have been configured. Configure domains to be able to
