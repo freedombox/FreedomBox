@@ -20,7 +20,7 @@ Tests for letsencrypt module.
 
 import unittest
 
-from .. import on_domain_added, on_domainname_change, on_domain_removed
+from .. import on_domain_added, on_domain_removed
 
 
 class TestDomainNameChanges(unittest.TestCase):

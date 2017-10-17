@@ -177,7 +177,7 @@ def on_domain_added(sender, domain_type='', name='', description='',
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Revoke Let's Encrypt certificate for the removed domain"""
     try:
-        if sender != 'test':
+        if sender != 'test' and name:
             try_action(name, 'revoke')
         logger.info("Revoked the Let\'s Encrypt certificate for " + name)
         return True
