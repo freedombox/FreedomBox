@@ -42,7 +42,7 @@ def mark_active_menuitem(menu, path):
         if not path.startswith(str(urlitem['url'])):
             continue
 
-        match = os.path.commonprefix([urlitem['url'], path])
+        match = os.path.commonprefix([str(urlitem['url']), path])
         if len(match) > len(best_match):
             best_match = match
             best_match_item = urlitem
