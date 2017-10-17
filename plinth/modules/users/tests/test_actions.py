@@ -96,6 +96,7 @@ class TestActions(unittest.TestCase):
                 self.delete_user(user)
             except Exception:
                 pass
+
         for group in self.groups:
             self.delete_group(group)
 
@@ -137,7 +138,7 @@ class TestActions(unittest.TestCase):
         """Return the list of groups for a user."""
         process = self.call_action(
             ['get-user-groups', username], stdout=subprocess.PIPE)
-        return process.stdout.split()
+        return process.stdout.decode().split()
 
     def create_group(self, groupname=None):
         groupname = groupname or random_string()
@@ -192,10 +193,8 @@ class TestActions(unittest.TestCase):
 
         new_groups = self.get_user_groups(new_username)
         old_users_groups = self.get_user_groups(old_username)
-        self.assertFalse(len(old_users_groups))
+        self.assertFalse(old_users_groups)  # empty
         self.assertEqual(old_groups, new_groups)
-
-        self.assertFalse(self.get_user_groups(old_username))  # is empty
 
         with self.assertRaises(subprocess.CalledProcessError):
             self.rename_user(old_username)
@@ -214,8 +213,6 @@ class TestActions(unittest.TestCase):
     def test_delete_user(self):
         """Test to check whether LDAP users can be deleted"""
         username, password = self.create_user(groups=[random_string()])
-        groups_before = self.get_user_groups(username)
-        self.assertTrue(groups_before)
         self.delete_user(username)
         groups_after = self.get_user_groups(username)
         self.assertFalse(groups_after)  # User gets removed from all groups
@@ -256,6 +253,7 @@ class TestActions(unittest.TestCase):
     def test_user_group_interactions(self):
         group1 = random_string()
         user1, _ = self.create_user(groups=[group1])
+        self.assertEqual([group1], self.get_user_groups(user1))
 
         # add-user-to-group is not idempotent
         with self.assertRaises(subprocess.CalledProcessError):
@@ -273,8 +271,7 @@ class TestActions(unittest.TestCase):
 
         # The expected groups got created and the user is part of them.
         expected_groups = [group1, group2, group3]
-        actual_groups = [g.decode() for g in self.get_user_groups(user1)]
-        self.assertEqual(expected_groups, actual_groups)
+        self.assertEqual(expected_groups, self.get_user_groups(user1))
 
         # Remove user from group
         group_to_remove_from = random.choice(expected_groups)
@@ -283,8 +280,7 @@ class TestActions(unittest.TestCase):
 
         # User is no longer in the group that they're removed from
         expected_groups.remove(group_to_remove_from)
-        actual_groups = [g.decode() for g in self.get_user_groups(user1)]
-        self.assertEqual(expected_groups, actual_groups)
+        self.assertEqual(expected_groups, self.get_user_groups(user1))
 
         # User cannot be removed from a group that they're not part of
         random_group = random_string()

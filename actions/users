@@ -264,11 +264,12 @@ def subcommand_set_user_password(arguments):
 
 
 def get_user_groups(username):
-    """Returns only the supplementary groups of the given user and doesn't include
-    the 'users' primary group"""
+    """Returns only the supplementary groups of the given user.
+
+    Exclude the 'users' primary group from the returned list."""
     process = _run(
         ['ldapid', username], stdout=subprocess.PIPE, check=False)
-    output = process.stdout.decode('utf-8').strip()
+    output = process.stdout.decode().strip()
     if output:
         groups_part = output.split(' ')[2]
         groups = groups_part.split('=')[1]
@@ -276,13 +277,13 @@ def get_user_groups(username):
                        for user in re.findall('\(.*?\)', groups)]
         group_names.remove('users')
         return group_names
+
     return []
 
 
 def subcommand_get_user_groups(arguments):
     """Return list of a given user's groups."""
-    groups = [group
-              for group in get_user_groups(arguments.username)]
+    groups = get_user_groups(arguments.username)
     if groups:
         print(*groups, sep='\n')
 
@@ -327,8 +328,7 @@ def subcommand_add_user_to_group(arguments):
 
 def remove_user_from_group(username, groupname):
     """Remove an LDAP user from an LDAP group."""
-    _run(
-        ['ldapdeleteuserfromgroup', username, groupname])
+    _run(['ldapdeleteuserfromgroup', username, groupname])
 
 
 def subcommand_remove_user_from_group(arguments):

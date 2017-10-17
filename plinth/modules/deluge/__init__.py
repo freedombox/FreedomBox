@@ -82,7 +82,7 @@ def setup(helper, old_version=None):
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    add_group("bittorrent")
+    add_group('bittorrent')
 
 
 def add_shortcut():
