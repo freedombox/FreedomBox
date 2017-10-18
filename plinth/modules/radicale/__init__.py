@@ -30,6 +30,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
+from .manifest import clients
 
 
 version = 1
@@ -52,6 +53,8 @@ description = [
           'application</a> is needed. Radicale can be accessed by any user '
           'with a {box_name} login.'), box_name=_(cfg.box_name)),
 ]
+
+clients = clients
 
 reserved_usernames = ['radicale']
 

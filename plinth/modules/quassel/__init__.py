@@ -30,6 +30,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+from .manifest import clients
 
 version = 1
 
@@ -59,6 +60,8 @@ description = [
       '<a href="http://quasseldroid.iskrembilen.com/">mobile</a> devices '
       'are available.'),
 ]
+
+clients = clients
 
 reserved_usernames = ['quasselcore']
 

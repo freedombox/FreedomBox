@@ -27,6 +27,7 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from .manifest import clients
 
 
 version = 1
@@ -45,6 +46,8 @@ description = [
       'BitTorrent is not anonymous.'),
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
+
+clients = clients
 
 reserved_usernames = ['debian-transmission']
 

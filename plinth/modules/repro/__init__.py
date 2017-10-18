@@ -28,6 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
+from .manifest import clients
 
 version = 2
 
@@ -59,6 +60,8 @@ description = [
       'the domain, it is required to restart the repro service. Disable the '
       'service and re-enable it.'),
 ]
+
+clients = clients
 
 reserved_usernames = ['repro']
 

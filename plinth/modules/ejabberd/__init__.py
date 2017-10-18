@@ -34,6 +34,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
+from .manifest import clients
 
 
 version = 1
@@ -58,6 +59,8 @@ description = [
           '/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
 ]
+
+clients = clients
 
 reserved_usernames = ['ejabberd']
 
