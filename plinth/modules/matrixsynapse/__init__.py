@@ -32,7 +32,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 
-version = 1
+version = 2
 
 managed_services = ['matrix-synapse']
 
