@@ -21,6 +21,8 @@ Plinth module for power controls.
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.menu import main_menu
+
 version = 1
 
 is_essential = True
@@ -33,5 +35,5 @@ description = [
 
 
 def init():
-    """Initialize the power module."""
-    pass  # not in menu, see issue #834
+    menu = main_menu.get('system')
+    menu.add_urlname(name, 'glyphicon-off', 'power:index')
