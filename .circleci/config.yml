@@ -1,0 +1,72 @@
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# CircleCI 2.0 configuration file for Plinth
+
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+      - image: debian:unstable
+
+    working_directory: ~/Plinth
+
+    steps:
+      - checkout
+
+      - run:
+          name: install plinth dependencies
+          command: |
+            export DEBIAN_FRONTEND=noninteractive
+            apt update
+
+            # Dependencies of the plinth Debian package
+            apt-get install -y $(apt-cache depends plinth | grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ' | tr -d '<>')
+
+            # Fix plinth Debian package dependencies
+            apt remove -y gir1.2-networkmanager-1.0
+            apt install -y gir1.2-nm-1.0
+
+            # New dependencies not yet in the Debian package
+            # Remove dependencies from here after new deb package release
+            apt install -y python3-django-axes python3-django-captcha
+
+            # Build dependencies
+            apt install -y build-essential python3-setuptools
+
+            # Test dependencies
+            apt install -y python3-coverage sshpass parted
+
+            # Module dependencies
+            cd ~/Plinth
+            apt install -y `./run --list-dependencies`
+
+      - run:
+          name: run tests
+          command: |
+            adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
+            echo "tester:password" | chpasswd
+            cp -r ~/Plinth /home/tester
+            chown -R tester:tester /home/tester/Plinth
+            su -c "cd ~/Plinth; ./setup.py test" tester
+
+      # We'll generate test reports once Pytest is integrated
+      # - store_artifacts:
+      #     path: test-reports
+      #     destination: test-reports
