@@ -57,7 +57,7 @@ def subcommand_post_install(_):
         config = round_trip_load(config_file)
 
     config['max_upload_size'] = '100M'
-    config['enable_registration'] = True
+
     for listener in config['listeners']:
         if listener['port'] == 8448:
             listener['bind_address'] = '0.0.0.0'
