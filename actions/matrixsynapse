@@ -81,6 +81,9 @@ def subcommand_post_install(_):
     with open(CONFIG_FILE_PATH, 'w') as config_file:
         round_trip_dump(config, config_file)
 
+    if action_utils.service_is_running('matrix-synapse'):
+        action_utils.service_restart('matrix-synapse')
+
 
 def subcommand_setup(arguments):
     """Configure the domain name for matrix-synapse package."""
