@@ -94,7 +94,7 @@ class MatrixSynapseServiceView(ServiceView):
         new_config = form.cleaned_data
         app_same = old_config['is_enabled'] == new_config['is_enabled']
         pubreg_same = old_config['enable_public_registration'] == \
-                      new_config['enable_public_registration']
+            new_config['enable_public_registration']
 
         if app_same and pubreg_same:
             # TODO: find a more reliable/official way to check whether the
