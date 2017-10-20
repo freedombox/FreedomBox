@@ -1,6 +1,56 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.15.3] - 2017-10-20
+### Changed
+- Rename Disks to Storage.
+- Rename Snapshot to Storage Snapshots.
+- Update Django version to 1.11.
+- tt-rss: Enable API access by default.
+- users: Migrate ldap bash script into actions/users.
+- Allow access to plinth from outside the LAN.
+- matrixsynapse: Disable public registration by default.
+- power: Merge actions into the user dropdown.
+
+### Added
+- Add locales for Kannada (kn) and for Bengali (bn).
+- ejabberd: Use Let's Encrypt certificate, also across renewals.
+- matrix-synapse: Add enable/disable public registrations.
+- networks: Move initial connection setup to Plinth.
+- Move Avahi files from freedombox-setup.
+- apache: Move freedombox.conf configuration to Plinth.
+- Add generic framework for user group per application.
+- networks: Activate the newly created connections.
+- Add django-simple-captcha in the login page.
+- captcha: Add flite tts for accessibility.
+- sso: Add django-axes to project.
+- sso: Add captcha validation on 3 failed attempts.
+- matrixsynapse: Enable LDAP integration.
+- letsencrypt: Automatically obtain and revoke SSL certificates.
+- ci: Add circle-ci config to Plinth.
+
+### Removed
+- Remove creation of first-run.d directory.
+- setup: Remove freedombox-setup related scripts.
+
+### Fixed
+- i18n, msgfmt: Flag percent symbol in ugettext.
+- Fix front page label names.
+- Fix vertical alignment of shortcut icons.
+- Fix some Django deprecations.
+- storage: Fix issue with locales that use other decimal separators.
+- users: Restart nscd after setup.
+- networks: Make setup script idempotent.
+- ttrss: Make tt-rss api accessible using Apache basic auth.
+- setup: Fix Plinth startup issues.
+- storage: Simplified use of df to get disk information.
+- Use gir1.2-nm-1.0 instead of gir1.2-networkmanager-1.0.
+- Ensure url is a str for commonprefix.
+- users: Fix creating a group.
+- travis: Install configobj from Debian.
+- letsencrypt: Handle case where current domain is empty.
+- Handle both admin and non-admin user names in update user template.
+
 ## [0.15.2] - 2017-09-24
 ### Added
 - letsencrypt: Show more info on cert validity status.
@@ -320,6 +370,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[0.15.3]: https://github.com/freedombox/Plinth/compare/v0.15.2...v0.15.3
 [0.15.2]: https://github.com/freedombox/Plinth/compare/v0.15.1...v0.15.2
 [0.15.1]: https://github.com/freedombox/Plinth/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/freedombox/Plinth/compare/v0.14.0...v0.15.0
