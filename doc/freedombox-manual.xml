@@ -978,13 +978,150 @@ file = /etc/radicale/rights</screen>
     <section>
       <title>News Feed Reader (Tiny Tiny RSS)</title>
       <para>Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to allow reading news from any location, while feeling as close to a real desktop application as possible. </para>
-      <para>When enabled, Tiny Tiny RSS will be available from <emphasis>/tt-rss</emphasis> path on the web server. Any user created through Plinth will be able to login and use this app. </para>
+      <para>Any user created through FreedomBox web interface will be able to login and use this app.  Each user has their own feeds, state and preferences. </para>
       <section>
-        <title>Screenshot</title>
+        <title>Using the Web Interface</title>
+        <para>When enabled, Tiny Tiny RSS will be available from <emphasis>/tt-rss</emphasis> path on the web server. Any user created through Plinth will be able to login and use this app.  </para>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="images/ttrss.png" width="400pt"/>
+              <imagedata fileref="images/ttrss.png" width="500pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Tiny Tiny RSS</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+        <section>
+          <title>Adding a new feed</title>
+          <para>1. Go to the website you want the RSS feed for and copy the RSS/Atom feed link from it. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/Select-RSS-feed.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>Selecting feeds</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>2. Select "Subscribe to feed.." from the Actions dropdown. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/Subscribe-to-feed.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>Subscribe to feed</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>3. In the dialog box that appears, paste the URL for copied in step 1 and click the <emphasis role="strong">Subscribe</emphasis> button. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/Subscribe-dialog.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>Subscription dialog box</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>Give the application a minute to fetch the feeds after clicking Subscribe. </para>
+          <para>In some websites, the RSS feeds button isn't clearly visible. In that case, you can simply paste the website URL into the Subscribe dialog (step 3) and let TT-RSS automatically detect the RSS feeds on the page.  </para>
+          <para>You can try this now with the homepage of <ulink url="https://en.wikinews.org/wiki/Main_Page">WikiNews</ulink> </para>
+          <para>As you can see in the image below, TT-RSS detected and added the Atom feed of WikiNews to our list of feeds. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/WikiNews-feed.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>WikiNews feed added</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>If you don't want to keep this feed, right click on the feed shown in the above image, select <emphasis role="strong">Edit feed</emphasis> and click <emphasis role="strong">Unsubscribe</emphasis> in the dialog box that appears. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/Unsubscribe.png"/>
+              </imageobject>
+              <textobject>
+                <phrase>Unsubscribe from a feed</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </section>
+        <section>
+          <title>Importing your feeds from another feed reader</title>
+          <para>In your existing feed reader, find an option to <emphasis>Export</emphasis> your feeds to a file. Prefer the OPML file format if you have to choose between multiple formats. Let's say your exported feeds file is called Subscriptions.opml </para>
+          <para>Click on the <emphasis>Actions</emphasis> menu at the top left corner and select <emphasis>Preferences</emphasis>. You will be taken to another page. </para>
+          <para>Select the second tab called <emphasis>Feeds</emphasis> in the top header. Feeds has several sections. The second one is called <emphasis>OPML</emphasis>. Select it. </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/OPML.png" width="480pt"/>
+              </imageobject>
+              <textobject>
+                <phrase>OPML feeds page</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+          <para>To import your Subscriptions.opml file into TT-RSS, </para>
+          <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+            <listitem>
+              <para>Click <emphasis>Browse</emphasis> and select the file from your file system </para>
+            </listitem>
+            <listitem>
+              <para>Click <emphasis>Import my OPML</emphasis> </para>
+            </listitem>
+          </orderedlist>
+          <para>After importing, you'll be taken to the <emphasis role="strong">Feeds</emphasis> section that's above the OPML section in the page. You can see that the feeds from your earlier feed reader are now imported into Tiny Tiny RSS. You can now start using Tiny Tiny RSS as your primary feed reader.  </para>
+          <para>In the next section, we will discuss setting up the mobile app, which can let you read your feeds on the go. </para>
+        </section>
+      </section>
+      <section>
+        <title>Using the Mobile App</title>
+        <para>The official Android app from the Tiny Tiny RSS project works with FreedomBox's Tiny Tiny RSS Server. The older TTRSS-Reader application is known <emphasis role="strong">not</emphasis> to work.  </para>
+        <para>The official Android app is unfortunately only available on the Google Play Store and not on F-Droid. You can still obtain the source code and build the apk file yourself. </para>
+        <para>To configure, first install the application, then in the setting page, set URL as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/tt-rss-app/"/></emphasis>.  Set your user name and password in the Login details as well as HTTP Authentication details.  If your FreedomBox does not have a valid HTTPS certificate, then in settings request allowing any SSL certificate and any host. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/ttrssapp1.png" width="144pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Tiny Tiny RSS</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/ttrssapp2.png" width="144pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Tiny Tiny RSS</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/ttrssapp3.png" width="144pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Tiny Tiny RSS</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/ttrssapp4.png" width="144pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Tiny Tiny RSS</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/ttrssapp5.png" width="144pt"/>
             </imageobject>
             <textobject>
               <phrase>Tiny Tiny RSS</phrase>
@@ -4063,7 +4200,7 @@ Password:
   </section>
   <section>
     <title>Hardware</title>
-    <para>FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we plan to support/customize exiting hardware. </para>
+    <para>FreedomBox is designed to be the software for a consumer electronics device that is easy to setup, maintain and use.  The project does not aim to create a custom hardware device ourselves, but instead we plan to support/customize existing hardware. </para>
     <para>In addition to supporting various single board computers and other devices, FreedomBox also supports being installed in a virtual machine.  Also, any Debian machine can be turned into a FreedomBox by installing the <code>freedombox-setup</code> package.  See the <ulink url="https://wiki.debian.org/FreedomBox/Manual#">manual</ulink> for more details. </para>
     <section>
       <title>Supported Hardware</title>
@@ -6603,6 +6740,78 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.15.3 (2017-10-20)</title>
+        <section>
+          <title>Changed</title>
+          <itemizedlist>
+            <listitem>
+              <para>Rename Disks to Storage. </para>
+            </listitem>
+            <listitem>
+              <para>Rename Snapshot to Storage Snapshots. </para>
+            </listitem>
+            <listitem>
+              <para>tt-rss: Enable API access by default. </para>
+            </listitem>
+            <listitem>
+              <para>Allow access to Plinth from outside the LAN. </para>
+            </listitem>
+            <listitem>
+              <para>matrix-synapse: Disable public registration by default. </para>
+            </listitem>
+            <listitem>
+              <para>power: Merge actions into the user dropdown. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Added</title>
+          <itemizedlist>
+            <listitem>
+              <para>Add locales for Kannada (kn) and for Bengali (bn). </para>
+            </listitem>
+            <listitem>
+              <para>ejabberd: Use Let's Encrypt certificate, also across renewals. </para>
+            </listitem>
+            <listitem>
+              <para>matrix-synapse: Add enable/disable public registrations. </para>
+            </listitem>
+            <listitem>
+              <para>Add captcha validation on 3 failed attempts. </para>
+            </listitem>
+            <listitem>
+              <para>matrix-synapse: Enable LDAP integration. </para>
+            </listitem>
+            <listitem>
+              <para>letsencrypt: Automatically obtain and revoke SSL certificates. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Fixed</title>
+          <itemizedlist>
+            <listitem>
+              <para>Fix front page label names. </para>
+            </listitem>
+            <listitem>
+              <para>Fix vertical alignment of shortcut icons. </para>
+            </listitem>
+            <listitem>
+              <para>storage: Fix issue with locales that use other decimal separators. </para>
+            </listitem>
+            <listitem>
+              <para>Make tt-rss api accessible using Apache basic auth. </para>
+            </listitem>
+            <listitem>
+              <para>letsencrypt: Handle case where current domain is empty. </para>
+            </listitem>
+            <listitem>
+              <para>Handle both admin and non-admin user names in update user template. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
       <section>
         <title>Plinth v0.15.2 (2017-09-24)</title>
         <section>
