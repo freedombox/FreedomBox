@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 05:23-0400\n"
+"POT-Creation-Date: 2017-10-19 21:13-0400\n"
 "PO-Revision-Date: 2017-10-04 22:47+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/freedombox/plinth/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
+"plinth/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,11 +83,11 @@ msgstr "Error al instalar la aplicación: {string} {details}"
 msgid "Error installing application: {error}"
 msgstr "Error al instalar la aplicación: {error}"
 
-#: plinth/modules/avahi/__init__.py:40
+#: plinth/modules/avahi/__init__.py:41
 msgid "Service Discovery"
 msgstr "Detección de servicios"
 
-#: plinth/modules/avahi/__init__.py:44
+#: plinth/modules/avahi/__init__.py:45
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -312,19 +312,19 @@ msgstr "Error al definir zona horaria: {exception}"
 msgid "Time zone set"
 msgstr "Zona horaria asignada"
 
-#: plinth/modules/deluge/__init__.py:39
+#: plinth/modules/deluge/__init__.py:40
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/deluge/__init__.py:42
 msgid "BitTorrent Web Client"
 msgstr "Cliente web de BitTorrent"
 
-#: plinth/modules/deluge/__init__.py:44
+#: plinth/modules/deluge/__init__.py:45
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge es un cliente BitTorrent con interfaz web."
 
-#: plinth/modules/deluge/__init__.py:46
+#: plinth/modules/deluge/__init__.py:47
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\">/deluge</a> path on the web server. The default password is 'deluge', but "
@@ -947,7 +947,7 @@ msgid "Where to Get Help"
 msgstr "Dónde obtener ayuda"
 
 #: plinth/modules/help/help.py:38 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:124
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:126
 msgid "Manual"
 msgstr "Manual"
 
@@ -1307,23 +1307,15 @@ msgstr ""
 "JSXC es un cliente web para XMPP. Se usa habitualmente con un servidor XMPP "
 "local."
 
-#: plinth/modules/jsxc/__init__.py:80
-msgid ""
-"Chat Client \n"
-" (jsxc)"
-msgstr ""
-"Cliente de Chat \n"
-" (jsxc)"
-
-#: plinth/modules/letsencrypt/__init__.py:42
+#: plinth/modules/letsencrypt/__init__.py:45
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:44
+#: plinth/modules/letsencrypt/__init__.py:47
 msgid "Certificates"
 msgstr "Certificados"
 
-#: plinth/modules/letsencrypt/__init__.py:48
+#: plinth/modules/letsencrypt/__init__.py:51
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -1338,7 +1330,7 @@ msgstr ""
 "dominio disponible. Lo hace mostrándose a sí mismo como propietario de un "
 "dominio a Let's Encrypt, autoridad de certificación (CA)."
 
-#: plinth/modules/letsencrypt/__init__.py:55
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -1350,6 +1342,21 @@ msgstr ""
 "Security Research Group (ISRG). Por favor, lea y acepte el <a href=\"https://"
 "letsencrypt.org/repository/\">Acuerdo del suscriptor de Let's Encrypt</a> "
 "antes de usar este servicio."
+
+#: plinth/modules/letsencrypt/__init__.py:110
+#: plinth/modules/letsencrypt/views.py:92
+#: plinth/modules/letsencrypt/views.py:118
+#, python-brace-format
+msgid "Certificate renewal management enabled for {domain}."
+msgstr "Gestión de la renovación del certificado activada para {domain}."
+
+#: plinth/modules/letsencrypt/__init__.py:114
+#: plinth/modules/letsencrypt/views.py:97
+#, python-brace-format
+msgid "Failed to enable certificate renewal management for {domain}: {error}"
+msgstr ""
+"Falló la activación de la gestión de la renovación del certificado para el "
+"dominio {domain}: {error}"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:46
 msgid "Domain"
@@ -1429,10 +1436,10 @@ msgstr ""
 "otras aplicaciones usar el certificado de forma que los usuarios no "
 "recibirán avisos de seguridad cuando lo empleen."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:166
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:173
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:224
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:231
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:167
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:214
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:221
 msgid "Update config"
 msgstr "Actualizar configuración"
 
@@ -1449,20 +1456,7 @@ msgstr ""
 "                del certificado de <b>%(current_domain)s</b>\n"
 "              "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
-#, python-format
-msgid ""
-"\n"
-"                Let %(box_name)s manage certificate renewal of the current "
-"domain\n"
-"              "
-msgstr ""
-"\n"
-"                Permitir que %(box_name)s gestione la renovación del "
-"certificado del dominio actual\n"
-"              "
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:192
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:187
 #, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
@@ -1471,7 +1465,7 @@ msgstr ""
 "Si está activo, %(box_name)s comprobará que todas las aplicaciones puedan "
 "usar el certificado tan pronto como sea renovado."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:197
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:192
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
@@ -1479,37 +1473,40 @@ msgstr ""
 "<b>No hay certificado disponible para el dominio actual</b>. Debe obtener un "
 "certificado antes de activar su gestión."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:202
-msgid ""
-"<b>No current domain is configured.</b> First configure a domain to enable "
-"management of its certificates."
-msgstr ""
-"<b>No se ha configurado ningún dominio.</b> Primero debe configurar alguno "
-"para poder obtener un certificado."
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
-#, python-format
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Use certificate of %(current_domain)s for <b>ejabberd</"
+#| "b>\n"
+#| "              "
 msgid ""
 "\n"
-"                Use certificate of %(current_domain)s for <b>ejabberd</b>\n"
-"              "
+"                  Use certificate of %(current_domain)s for <b>ejabberd</b>\n"
+"                "
 msgstr ""
 "\n"
-"                Usar el certificado de %(current_domain)s para "
-"<b>ejabberd</b>\n"
+"                Usar el certificado de %(current_domain)s para <b>ejabberd</"
+"b>\n"
 "              "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:240
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:230
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                Use certificate of the current domain for <b>ejabberd</"
+#| "b>\n"
+#| "              "
 msgid ""
 "\n"
-"                Use certificate of the current domain for <b>ejabberd</b>\n"
-"              "
+"                  Use certificate of the current domain for <b>ejabberd</b>\n"
+"                "
 msgstr ""
 "\n"
 "                Usar el certificado del dominio actual para <b>ejabberd</b>\n"
 "              "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:250
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:240
 #, python-format
 msgid ""
 "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
@@ -1522,16 +1519,16 @@ msgstr ""
 "sobre certificados autofirmados en la aplicación cliente y se posibilita una "
 "federación más amplia con otros servidores XMPP en Internet."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:257
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:248
 #, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
-"Esta función solo es útil si está usando la aplicación de servidor de chat <"
-"a href=\"%(ejabberd_url)s\">ejabberd</a>."
+"Esta función solo es útil si está usando la aplicación de servidor de chat "
+"<a href=\"%(ejabberd_url)s\">ejabberd</a>."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:262
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:253
 #, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
@@ -1542,7 +1539,15 @@ msgstr ""
 "<a href=\"%(ejabberd_url)s\">ejabberd</a>, primero debe activar la "
 "renovación del certificado para el dominio actual."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:270
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:262
+msgid ""
+"<b>No current domain is configured.</b> First configure a domain to enable "
+"management of its certificates."
+msgstr ""
+"<b>No se ha configurado ningún dominio.</b> Primero debe configurar alguno "
+"para poder obtener un certificado."
+
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:269
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1550,7 +1555,7 @@ msgstr ""
 "No se ha configurado ningún dominio. Debe configurar alguno para poder "
 "obtener un certificado."
 
-#: plinth/modules/letsencrypt/views.py:58
+#: plinth/modules/letsencrypt/views.py:56
 #, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
@@ -1559,72 +1564,59 @@ msgstr ""
 "El certificado para el dominio {domain} ha sido revocado con éxito. "
 "Necesitará unos momentos para tener efecto."
 
-#: plinth/modules/letsencrypt/views.py:64
+#: plinth/modules/letsencrypt/views.py:62
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "Falló la revocación del certificado para el dominio {domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:76
+#: plinth/modules/letsencrypt/views.py:75
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "Se ha obtenido con éxito el certificado para el dominio {domain}"
 
-#: plinth/modules/letsencrypt/views.py:82
+#: plinth/modules/letsencrypt/views.py:81
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Falló la obtención del certificado para el dominio {domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:91
-#: plinth/modules/letsencrypt/views.py:119
-#, python-brace-format
-msgid "Certificate renewal management enabled for {domain}."
-msgstr "Gestión de la renovación del certificado activada para {domain}."
-
-#: plinth/modules/letsencrypt/views.py:96
-#, python-brace-format
-msgid "Failed to enable certificate renewal management for {domain}: {error}"
-msgstr ""
-"Falló la activación de la gestión de la renovación del certificado para el "
-"dominio {domain}: {error}"
-
-#: plinth/modules/letsencrypt/views.py:122
+#: plinth/modules/letsencrypt/views.py:121
 #, python-brace-format
 msgid "Certificate renewal management disabled for {domain}."
 msgstr ""
 "Se ha desactivado la gestión de la renovación del certificado para el "
 "dominio {domain}."
 
-#: plinth/modules/letsencrypt/views.py:128
+#: plinth/modules/letsencrypt/views.py:127
 #, python-brace-format
 msgid "Failed to switch certificate renewal management for {domain}: {error}"
 msgstr ""
 "Falló el cambio de estado de la renovación del certificado para el dominio "
 "{domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:159
+#: plinth/modules/letsencrypt/views.py:157
 #, python-brace-format
 msgid "Switched use of certificate for app {module}"
 msgstr "Cambiado el uso de certificado para la aplicación {module}"
 
-#: plinth/modules/letsencrypt/views.py:164
+#: plinth/modules/letsencrypt/views.py:162
 #, python-brace-format
 msgid "Failed to switch certificate use for app {module}: {error}"
 msgstr ""
 "Falló el cambio de estado del certificado para la aplicación {module}:{error}"
 
-#: plinth/modules/letsencrypt/views.py:185
+#: plinth/modules/letsencrypt/views.py:183
 #, python-brace-format
 msgid "Failed to disable certificate renewal management for {domain}: {error}"
 msgstr ""
 "Falló la desactivación de la gestión de la renovación del certificado para "
 "el dominio {domain}: {error}"
 
-#: plinth/modules/letsencrypt/views.py:192
+#: plinth/modules/letsencrypt/views.py:190
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "El certificado para el dominio {domain} ha sido eliminado con éxito"
 
-#: plinth/modules/letsencrypt/views.py:197
+#: plinth/modules/letsencrypt/views.py:195
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Falló la eliminación del certificado para el dominio {domain}: {error}"
@@ -2022,11 +2014,11 @@ msgstr "Servicios de nombres"
 msgid "Not Available"
 msgstr "No disponible"
 
-#: plinth/modules/networks/__init__.py:37
+#: plinth/modules/networks/__init__.py:38
 msgid "Networks"
 msgstr "Redes"
 
-#: plinth/modules/networks/__init__.py:124
+#: plinth/modules/networks/__init__.py:126
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "DNSSEC en uso sobre IPv{kind}"
@@ -3609,6 +3601,31 @@ msgstr "Inicio de sesión"
 msgid "Storage"
 msgstr "Almacén"
 
+#: plinth/modules/storage/__init__.py:147
+#, python-brace-format
+msgid "{disk_size:.1f} bytes"
+msgstr "{disk_size:.1f} bytes"
+
+#: plinth/modules/storage/__init__.py:151
+#, python-brace-format
+msgid "{disk_size:.1f} KiB"
+msgstr "{disk_size:.1f} KiB"
+
+#: plinth/modules/storage/__init__.py:155
+#, python-brace-format
+msgid "{disk_size:.1f} MiB"
+msgstr "{disk_size:.1f} MiB"
+
+#: plinth/modules/storage/__init__.py:159
+#, python-brace-format
+msgid "{disk_size:.1f} GiB"
+msgstr "{disk_size:.1f} GiB"
+
+#: plinth/modules/storage/__init__.py:162
+#, python-brace-format
+msgid "{disk_size:.1f} TiB"
+msgstr "{disk_size:.1f} TiB"
+
 #: plinth/modules/storage/templates/storage.html:35
 msgid "The following disks are in use:"
 msgstr "Se están usando los siguientes discos:"
@@ -3670,7 +3687,7 @@ msgstr "Error al ampliar partición: {exception}"
 msgid "Partition expanded successfully."
 msgstr "Partición ampliada con éxito."
 
-#: plinth/modules/storage/views.py:94
+#: plinth/modules/storage/views.py:95
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -3678,31 +3695,6 @@ msgid ""
 msgstr ""
 "Aviso: queda poco espacio libre en la partición del sistema ({percent_used}% "
 "usado, {free_space} libre)."
-
-#: plinth/modules/storage/views.py:131
-#, python-brace-format
-msgid "{disk_size:.1f} bytes"
-msgstr "{disk_size:.1f} bytes"
-
-#: plinth/modules/storage/views.py:135
-#, python-brace-format
-msgid "{disk_size:.1f} KiB"
-msgstr "{disk_size:.1f} KiB"
-
-#: plinth/modules/storage/views.py:139
-#, python-brace-format
-msgid "{disk_size:.1f} MiB"
-msgstr "{disk_size:.1f} MiB"
-
-#: plinth/modules/storage/views.py:143
-#, python-brace-format
-msgid "{disk_size:.1f} GiB"
-msgstr "{disk_size:.1f} GiB"
-
-#: plinth/modules/storage/views.py:146
-#, python-brace-format
-msgid "{disk_size:.1f} TiB"
-msgstr "{disk_size:.1f} TiB"
 
 #: plinth/modules/syncthing/__init__.py:39
 msgid "Syncthing"
@@ -4094,15 +4086,15 @@ msgstr ""
 "Clave para acceder a la interfaz web. La clave actual se muestra en formato "
 "hash. Para introducir una clave nueva escríbala como texto."
 
-#: plinth/modules/ttrss/__init__.py:39
+#: plinth/modules/ttrss/__init__.py:40
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:41
+#: plinth/modules/ttrss/__init__.py:42
 msgid "News Feed Reader"
 msgstr "Lector de noticias"
 
-#: plinth/modules/ttrss/__init__.py:44
+#: plinth/modules/ttrss/__init__.py:45
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -4112,7 +4104,7 @@ msgstr ""
 "permitir noticias desde cualquier lugar, mientras mantiene un aspecto de "
 "aplicación de escritorio en la medida de lo posible."
 
-#: plinth/modules/ttrss/__init__.py:49
+#: plinth/modules/ttrss/__init__.py:50
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
@@ -4123,6 +4115,12 @@ msgstr ""
 "\"/tt-rss\">/tt-rss</a> de su servidor web. Cualquier <a href=\"/plinth/sys/"
 "users\">usuario con cuenta de acceso en {box_name}</a> puede acceder a este "
 "servicio."
+
+#: plinth/modules/ttrss/__init__.py:56
+msgid ""
+"When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
+"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:35
 msgid "Software Upgrades"
@@ -4543,28 +4541,35 @@ msgstr "Aplicaciones"
 msgid "Change password"
 msgstr "Cambiar clave de acceso"
 
-#: plinth/templates/base.html:152 plinth/templates/base.html:153
-#: plinth/templates/base.html:190 plinth/templates/base.html:192
-msgid "Log out"
-msgstr "Cerrar sesión"
-
-#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#: plinth/templates/base.html:154 plinth/templates/base.html:155
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: plinth/templates/base.html:174 plinth/templates/base.html:175
+#: plinth/templates/base.html:160 plinth/templates/base.html:161
 msgid "Shut down"
 msgstr "Apagar"
 
-#: plinth/templates/base.html:182 plinth/templates/base.html:184
+#: plinth/templates/base.html:168 plinth/templates/base.html:169
+#: plinth/templates/base.html:184 plinth/templates/base.html:186
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: plinth/templates/base.html:176 plinth/templates/base.html:178
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: plinth/templates/base.html:256 plinth/templates/index.html:164
+#: plinth/templates/base.html:250 plinth/templates/index.html:166
 msgid "JavaScript license information"
 msgstr "Información de licencia de JavaScript"
 
-#: plinth/templates/index.html:58
+#: plinth/templates/first_setup.html:37
+#, python-format
+msgid ""
+"Please wait for %(box_name)s to finish installation. You can start using "
+"your %(box_name)s once it is done."
+msgstr ""
+
+#: plinth/templates/index.html:60
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -4573,11 +4578,11 @@ msgstr ""
 "Active algunas <a href=\"%(apps_url)s\">aplicaciones</a> para añadir enlaces "
 "a esta página."
 
-#: plinth/templates/index.html:85
+#: plinth/templates/index.html:87
 msgid "Configure &raquo;"
 msgstr "Configurar &raquo;"
 
-#: plinth/templates/index.html:104
+#: plinth/templates/index.html:106
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -4589,7 +4594,7 @@ msgstr ""
 "Proporciona herramientas de comunicación online que respetan su privacidad y "
 "la propiedad de sus datos."
 
-#: plinth/templates/index.html:113
+#: plinth/templates/index.html:115
 #, python-format
 msgid ""
 "This portal is a part of Plinth, the %(box_name)s web interface. Plinth is "
@@ -4600,31 +4605,31 @@ msgstr ""
 "software libre, distribuido bajo la Licencia Pública General de GNU Affero, "
 "versión 3 o posterior."
 
-#: plinth/templates/index.html:128
+#: plinth/templates/index.html:130
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/templates/index.html:133
+#: plinth/templates/index.html:135
 msgid "Homepage"
 msgstr "Página inicio"
 
-#: plinth/templates/index.html:136
+#: plinth/templates/index.html:138
 msgid "Source Code"
 msgstr "Código fuente"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:141
 msgid "Donate"
 msgstr "Donar"
 
-#: plinth/templates/index.html:143
+#: plinth/templates/index.html:145
 msgid "FreedomBox Foundation"
 msgstr "Fundación FreedomBox"
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:152
 msgid "IRC Chatroom"
 msgstr "Sala de chat IRC"
 
-#: plinth/templates/index.html:155
+#: plinth/templates/index.html:157
 msgid "Mailing list"
 msgstr "Lista de correo"
 
@@ -4701,6 +4706,24 @@ msgid ""
 msgstr ""
 "Estas opciones afectan a su %(box_name)s de forma general, así que ¡vaya con "
 "cuidado!"
+
+#~ msgid ""
+#~ "Chat Client \n"
+#~ " (jsxc)"
+#~ msgstr ""
+#~ "Cliente de Chat \n"
+#~ " (jsxc)"
+
+#~ msgid ""
+#~ "\n"
+#~ "                Let %(box_name)s manage certificate renewal of the "
+#~ "current domain\n"
+#~ "              "
+#~ msgstr ""
+#~ "\n"
+#~ "                Permitir que %(box_name)s gestione la renovación del "
+#~ "certificado del dominio actual\n"
+#~ "              "
 
 #~ msgid "Disks"
 #~ msgstr "Discos"
