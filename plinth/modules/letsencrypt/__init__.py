@@ -164,11 +164,11 @@ def on_domain_added(sender, domain_type='', name='', description='',
             return False
 
     try:
-        # Obtaining certs during tests isn't expected to succeed
-        if sender != 'test':
+        # Obtaining certs during tests or empty names isn't expected to succeed
+        if sender != 'test' and name:
+            logger.info("Obtaining a Let\'s Encrypt certificate for " + name)
             try_action(name, 'obtain')
             enable_renewal_management(name)
-        logger.info("Obtained a Let\'s Encrypt certificate for " + name)
         return True
     except ActionError as ex:
         return False
@@ -177,9 +177,10 @@ def on_domain_added(sender, domain_type='', name='', description='',
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Revoke Let's Encrypt certificate for the removed domain"""
     try:
+        # Revoking certs during tests or empty names isn't expected to succeed
         if sender != 'test' and name:
+            logger.info("Revoking the Let\'s Encrypt certificate for " + name)
             try_action(name, 'revoke')
-        logger.info("Revoked the Let\'s Encrypt certificate for " + name)
         return True
     except ActionError as exception:
         logger.warn(
