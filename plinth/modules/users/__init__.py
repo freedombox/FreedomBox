@@ -27,7 +27,7 @@ from plinth import actions
 from plinth.menu import main_menu
 
 
-version = 1
+version = 2
 
 is_essential = True
 
@@ -54,6 +54,8 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    if old_version is None:
+        helper.call('post', actions.superuser_run, 'users', ['first-setup'])
     helper.call('post', actions.superuser_run, 'users', ['setup'])
 
 
