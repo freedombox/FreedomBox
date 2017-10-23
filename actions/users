@@ -39,6 +39,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
+    subparsers.add_parser('first-setup', help='Perform initial setup of LDAP')
     subparsers.add_parser('setup', help='Setup LDAP')
 
     subparser = subparsers.add_parser('create-user',
@@ -90,6 +91,13 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def subcommand_first_setup(_):
+    """Perform initial setup of LDAP."""
+    # Avoid reconfiguration of slapd during module upgrades, because
+    # this will move the existing database.
+    action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
+
+
 def subcommand_setup(_):
     """Setup LDAP."""
     # Update pam configs for access and mkhomedir.
@@ -97,14 +105,13 @@ def subcommand_setup(_):
 
     configure_ldapscripts()
 
-    configure_slapd()
+    configure_ldap_authentication()
 
     configure_ldap_structure()
 
 
-def configure_slapd():
+def configure_ldap_authentication():
     """Configure LDAP authentication."""
-    action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
     action_utils.dpkg_reconfigure('nslcd', {
         'ldap-uris': 'ldapi:///',
         'ldap-base': 'dc=thisbox',
