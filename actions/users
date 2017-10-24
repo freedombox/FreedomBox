@@ -73,6 +73,9 @@ def parse_arguments():
         'username', help='LDAP user to retrieve the groups for')
 
     subparser = subparsers.add_parser(
+        'get-all-groups', help='Get a list of all the LDAP groups in the system')
+
+    subparser = subparsers.add_parser(
         'add-user-to-group', help='Add an LDAP user to an LDAP group')
     subparser.add_argument('username', help='LDAP user to add to group')
     subparser.add_argument('groupname', help='LDAP group to add the user to')
@@ -341,6 +344,17 @@ def subcommand_remove_user_from_group(arguments):
     """Remove an LDAP user from an LDAP group."""
     remove_user_from_group(arguments.username, arguments.groupname)
     flush_cache()
+
+
+def subcommand_get_all_groups(_):
+    """Get all user groups"""
+    get_groups = "getent group".split()
+    cut_names = "cut -d: -f1".split()
+    groups = subprocess.Popen(get_groups, stdout=subprocess.PIPE, shell=False)
+    trimmed_groups = subprocess.Popen(cut_names, stdin=groups.stdout,
+                                      stdout=subprocess.PIPE, shell=False)
+    groups.stdout.close()
+    print(trimmed_groups.communicate()[0].decode())
 
 
 def flush_cache():
