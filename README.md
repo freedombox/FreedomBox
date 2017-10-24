@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/freedombox/Plinth.svg?branch=master)](https://travis-ci.org/freedombox/Plinth)
-[![CircleCI](https://circleci.com/gh/freedombox/Plinth.svg?style=svg)](https://circleci.com/gh/freedombox/Plinth)
+[![Build Status](https://circleci.com/gh/freedombox/Plinth.svg?branch=master)](https://circleci.com/gh/freedombox/Plinth)
 [![Translation status](https://hosted.weblate.org/widgets/freedombox/-/shields-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
 [![Debian Unstable](https://badges.debian.net/badges/debian/unstable/plinth/version.svg)](https://packages.debian.org/unstable/plinth)
 [![Debian Testing](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
