@@ -18,21 +18,27 @@
 Tests for letsencrypt module.
 """
 
+import os
 import unittest
 
 from .. import on_domain_added, on_domain_removed
+
+euid = os.geteuid()
 
 
 class TestDomainNameChanges(unittest.TestCase):
     """Test for automatically obtaining and revoking Let's Encrypt certs"""
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_add_onion_domain(self):
         self.assertFalse(
             on_domain_added('test', 'hiddenservice', 'ddddd.onion'))
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_add_valid_domain(self):
         self.assertTrue(
             on_domain_added('test', 'domainname', 'subdomain.domain.tld'))
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_remove_domain(self):
         self.assertTrue(on_domain_removed('test', '', 'somedomain.tld'))
