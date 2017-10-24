@@ -28,6 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.modules.users import add_group
 from .manifest import clients
 
 
@@ -94,6 +95,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    add_group('newsfeed')
 
 
 def add_shortcut():

@@ -29,13 +29,22 @@ from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
 from plinth.modules.security import set_restricted_access
+from plinth.modules.users import get_all_groups
 from plinth.utils import is_user_admin
 from plinth import module_loader
 
-GROUP_CHOICES = (
-    ('admin', _('admin')),
-    ('wiki', _('wiki')),
-)
+PLINTH_APP_GROUPS = {
+    'admin',
+    'newsfeed',
+ }
+
+
+def get_group_choices():
+    groups = PLINTH_APP_GROUPS.intersection(get_all_groups())
+    return ((group, _(group)) for group in groups)
+
+
+GROUP_CHOICES = get_group_choices()
 
 
 class ValidNewUsernameCheckMixin(object):

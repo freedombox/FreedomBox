@@ -24,6 +24,7 @@ import subprocess
 
 from plinth import action_utils
 from plinth import actions
+from plinth.errors import ActionError
 from plinth.menu import main_menu
 
 
@@ -94,3 +95,12 @@ def add_group(group):
 def remove_group(group):
     """Remove an LDAP group."""
     actions.superuser_run('users', options=['remove-group', group])
+
+
+def get_all_groups():
+    """Retrieve the set of all LDAP groups in the system"""
+    try:
+        groups = actions.superuser_run('users', options=['get-all-groups'])
+        return set(groups.strip().split())
+    except ActionError:
+        return {}
