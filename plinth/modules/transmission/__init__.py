@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
-from plinth.modules.users import add_group
+from plinth.modules.users import create_group, register_group
 
 from .manifest import clients
 
@@ -37,7 +37,7 @@ managed_packages = ['transmission-daemon']
 
 name = _('Transmission')
 
-short_description = _('BitTorrent')
+short_description = _('BitTorrent Web Client')
 
 description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -49,6 +49,8 @@ description = [
 clients = clients
 
 reserved_usernames = ['debian-transmission']
+
+group = ('bit-torrent', _('Download files using BitTorrent applications'))
 
 service = None
 
@@ -69,6 +71,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -92,7 +95,7 @@ def setup(helper, old_version=None):
                                          disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    add_group('bit-torrent')
+    create_group(group[0])
 
 
 def add_shortcut():

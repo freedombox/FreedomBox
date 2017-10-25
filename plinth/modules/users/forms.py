@@ -28,23 +28,18 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
+from plinth.modules import users
 from plinth.modules.security import set_restricted_access
-from plinth.modules.users import get_all_groups
 from plinth.utils import is_user_admin
 from plinth import module_loader
 
-PLINTH_APP_GROUPS = {
-    'admin',
-    'newsfeed',
- }
-
 
 def get_group_choices():
-    groups = PLINTH_APP_GROUPS.intersection(get_all_groups())
-    return ((group, _(group)) for group in groups)
-
-
-GROUP_CHOICES = get_group_choices()
+    """Return localized group description and group name in one string."""
+    admin_group = ('admin', _('Access to all services and system settings'))
+    users.register_group(admin_group)
+    choices = {(g[0], ('{} ({})'.format(g[1], g[0]))) for g in users.groups}
+    return sorted(list(choices), key=lambda g: g[0])
 
 
 class ValidNewUsernameCheckMixin(object):
@@ -84,10 +79,9 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
 
     Include options to add user to groups.
     """
-
     groups = forms.MultipleChoiceField(
-        choices=GROUP_CHOICES,
-        label=ugettext_lazy('Groups'),
+        choices=get_group_choices(),
+        label=ugettext_lazy('Permissions'),
         required=False,
         widget=forms.CheckboxSelectMultiple,
         help_text=ugettext_lazy(
@@ -103,6 +97,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
         """Initialize the form with extra request argument."""
         self.request = request
         super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['groups'].choices = get_group_choices()
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
@@ -158,13 +153,20 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
 
     def __init__(self, request, username, *args, **kwargs):
         """Initialize the form with extra request argument."""
-        for group, group_name in GROUP_CHOICES:
+        group_choices = dict(get_group_choices())
+        for group in group_choices:
             Group.objects.get_or_create(name=group)
 
         self.request = request
         self.username = username
-
         super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+        choices = [  # Replace group names with descriptions
+            (c[0], group_choices[c[1]])
+            for c in sorted(self.fields['groups'].choices, key=lambda x: x[1])]
+
+        self.fields['groups'].label = 'Permissions'
+        self.fields['groups'].choices = choices
 
         if not is_user_admin(request):
             self.fields['is_active'].widget = forms.HiddenInput()
@@ -278,7 +280,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
                                _('Failed to add new user to admin group.'))
 
             # Create initial Django groups
-            for group_choice in GROUP_CHOICES:
+            for group_choice in get_group_choices():
                 auth.models.Group.objects.get_or_create(name=group_choice[0])
 
             admin_group = auth.models.Group.objects.get(name='admin')

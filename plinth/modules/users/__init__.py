@@ -45,6 +45,9 @@ first_boot_steps = [
 
 name = _('Users and Groups')
 
+# List of all Plinth user groups
+groups = set()
+
 
 def init():
     """Intialize the user module."""
@@ -87,7 +90,7 @@ def _diagnose_ldap_entry(search_item):
             .format(search_item=search_item), result]
 
 
-def add_group(group):
+def create_group(group):
     """Add an LDAP group."""
     actions.superuser_run('users', options=['create-group', group])
 
@@ -104,3 +107,7 @@ def get_all_groups():
         return set(groups.strip().split())
     except ActionError:
         return {}
+
+
+def register_group(group):
+    groups.add(group)

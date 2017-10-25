@@ -28,7 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.modules.users import add_group
+from plinth.modules.users import create_group, register_group
 from .manifest import clients
 
 
@@ -61,6 +61,8 @@ description = [
 
 clients = clients
 
+group = ('feed-reader', _('Read and subscribe to news feeds'))
+
 service = None
 
 
@@ -80,6 +82,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -95,7 +98,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    add_group('newsfeed')
+    create_group(group[0])
 
 
 def add_shortcut():
