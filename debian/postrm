@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+purge)
+	deluser --system --quiet plinth || true
+	rm -rf /var/log/plinth /var/lib/plinth
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0
