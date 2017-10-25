@@ -1,0 +1,22 @@
+Subject: Skip privileged actions test
+
+--- a/plinth/tests/test_actions.py
++++ b/plinth/tests/test_actions.py
+@@ -33,6 +33,7 @@
+ cfg.actions_dir = os.path.join(root_dir, 'actions')
+ 
+ 
++@unittest.skip('Skipping privileged actions tests')
+ class TestPrivileged(unittest.TestCase):
+     """Verify that privileged actions perform as expected.
+ 
+--- a/plinth/modules/letsencrypt/tests/test_domain_name_changes.py
++++ b/plinth/modules/letsencrypt/tests/test_domain_name_changes.py
+@@ -23,6 +23,7 @@
+ from .. import on_domain_added, on_domain_removed
+ 
+ 
++@unittest.skip('Skipping tests that require root privileges')
+ class TestDomainNameChanges(unittest.TestCase):
+     """Test for automatically obtaining and revoking Let's Encrypt certs"""
+ 
