@@ -29,6 +29,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client
+from plinth.modules.users import create_group, register_group
 
 
 version = 1
@@ -60,6 +61,9 @@ description = [
 
 web_clients = [web_client(name='ikiwiki', url='/ikiwiki')]
 
+group = ('wiki', _('View and edit wiki applications'))
+
+
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
@@ -74,6 +78,7 @@ def init():
 
         if is_enabled():
             add_shortcuts()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -87,6 +92,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcuts)
+    create_group(group[0])
 
 
 def add_shortcuts():
