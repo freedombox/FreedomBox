@@ -19,13 +19,16 @@ Tests for letsencrypt module.
 """
 
 import os
+import os.path
 import unittest
 
 from .. import on_domain_added, on_domain_removed
 
 euid = os.geteuid()
+sudo_available = os.path.isfile("/usr/bin/sudo")
 
 
+@unittest.skipUnless(sudo_available, 'Requires sudo')
 class TestDomainNameChanges(unittest.TestCase):
     """Test for automatically obtaining and revoking Let's Encrypt certs"""
 
