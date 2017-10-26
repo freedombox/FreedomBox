@@ -31,6 +31,10 @@ jobs:
       - checkout
 
       - run:
+          name: prepare artifact dirs
+          command: mkdir -p /tmp/artifacts/debs /tmp/artifacts/screenshots /tmp/artifacts/logs
+
+      - run:
           name: install plinth dependencies
           command: |
             export DEBIAN_FRONTEND=noninteractive
@@ -48,6 +52,7 @@ jobs:
 
             # Test dependencies
             apt-get install -y sshpass parted
+            apt-get install -y python3-selenium phantomjs python3-pytest
 
             # Module dependencies
             cd ~/Plinth
@@ -66,6 +71,29 @@ jobs:
             cp -r ~/Plinth /home/tester
             chown -R tester:tester /home/tester/Plinth
             su -c "cd ~/Plinth; ./setup.py test" tester
+
+      - run:
+          name: install package locally
+          command: |
+            #apt-get install -y devscripts
+            #DEBIAN_FRONTEND=noninteractive debi
+            DEBIAN_FRONTEND=noninteractive dpkg --force-all -i ../plinth*deb
+
+      - run:
+          name: run phantomjs tests
+          command: |
+            pytest-3 plinth/tests/integration/test_with_browser.py
+
+      - run:
+          name: collect artifacts
+          command: |
+            cp ../plinth*.deb /tmp/artifacts/debs/
+            cp ../plinth*.buildinfo /tmp/artifacts/logs/
+            cp ../plinth*.changes /tmp/artifacts/logs/
+            cp *.pdf /tmp/artifacts/
+
+      - store_artifacts:
+          path: /tmp/artifacts
 
       # We'll generate test reports once Pytest is integrated
       # - store_artifacts:
