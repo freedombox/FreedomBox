@@ -34,31 +34,32 @@ jobs:
           name: install plinth dependencies
           command: |
             export DEBIAN_FRONTEND=noninteractive
-            apt update
+            apt-get update
 
             # Dependencies of the plinth Debian package
-            apt-get install -y $(apt-cache depends plinth | grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ' | tr -d '<>')
-
-            # Fix plinth Debian package dependencies
-            apt remove -y gir1.2-networkmanager-1.0
-            apt install -y gir1.2-nm-1.0
+            apt-get build-dep -y .
 
             # New dependencies not yet in the Debian package
             # Remove dependencies from here after new deb package release
-            apt install -y python3-django-axes python3-django-captcha
+            # apt-get install -y 
 
             # Build dependencies
-            apt install -y build-essential python3-setuptools
+            apt-get install -y build-essential
 
             # Test dependencies
-            apt install -y python3-coverage sshpass parted
+            apt-get install -y sshpass parted
 
             # Module dependencies
             cd ~/Plinth
-            apt install -y `./run --list-dependencies`
+            apt-get install -y $(./run --list-dependencies)
 
       - run:
-          name: run tests
+          name: run Debian build
+          # FIXME: enable testing after flagging integration tests
+          command: DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -us -uc -b
+
+      - run:
+          name: run integration tests
           command: |
             adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
             echo "tester:password" | chpasswd
