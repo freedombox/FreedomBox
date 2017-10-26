@@ -10,6 +10,3 @@ override_dh_auto_install-indep:
 	dh_auto_install
 	./run --list-dependencies 2> /dev/null | sort | tr '\n' ', ' | \
 		sed -e 's/^/plinth:Depends=/' >> debian/plinth.substvars
-
-new-upstream:
-	gbp import-orig --uscan --verbose --pristine-tar --no-filter-pristine-tar
