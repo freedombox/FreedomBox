@@ -26,7 +26,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'org.yaxim.androidclient',
                 'url': 'https://play.google.com/store/apps/details?id=org'
                        '.yaxim.androidclient '
@@ -40,7 +40,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'org.yaxim.bruno',
                 'url': 'https://play.google.com/store/apps/details?id'
                        '=org.yaxim.bruno '
@@ -60,7 +60,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'iOS',
-                'store_type': 'apple_store',
+                'store_name': 'apple_store',
                 'url': 'https://itunes.apple.com/us/app/chatsecure'
                        '/id464200063 '
             }
@@ -72,7 +72,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'url': 'https://play.google.com/store/apps/details?id'
                        '=eu.siacs.conversations ',
                 'fully_qualified_name': 'eu.siacs.conversations'

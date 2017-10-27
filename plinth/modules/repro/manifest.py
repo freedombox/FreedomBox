@@ -32,7 +32,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'org.jitsi.meet',
                 'url': 'https://play.google.com/store/apps/details?id=org'
                        '.jitsi.meet '
@@ -40,7 +40,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'iOS',
-                'store_type': 'apple_store',
+                'store_name': 'apple_store',
                 'url': 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905'
             },
             {
@@ -79,7 +79,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'com.csipsimple',
                 'url': 'https://play.google.com/store/apps/details?id=com'
                        '.csipsimple '

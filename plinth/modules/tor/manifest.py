@@ -56,7 +56,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'url': 'https://play.google.com/store/apps/details?id=org'
                        '.torproject.android',
                 'fully_qualified_name': 'org.torproject.android'
@@ -64,7 +64,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'url': 'https://play.google.com/store/apps/details?id=org'
                        '.torproject.android',
                 'fully_qualified_name': 'org.torproject.android'

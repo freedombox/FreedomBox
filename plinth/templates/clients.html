@@ -40,12 +40,8 @@
   <p class="heading">{% trans "Desktop Clients" %}:
     <ul>
       {% for client in module.clients %}
-      <li class="col-md-12 col-xs-12">
-        <span>
-            {{ client.name }}
-        </span>
-      </li>
-      <div class ="row">
+        <li class="col-md-12 col-xs-12"> <span> {{ client.name }} </span> </li>
+        <div class ="row">
           {% for platform in client.platforms %}
             {% if platform.type == 'download' %}
           <div class="col-md-1 col-xs-2">
@@ -61,6 +57,7 @@
           </div>
             {% endif %}
           {% endfor %}
+        </div>
       {% endfor %}
     </ul>
 </div>
@@ -76,17 +73,16 @@
           {% if platform.type == 'store' and platform.os == 'Android' %}
             {% if platform.store_name == 'fdroid_store' %}
             <div class="col-md-2 col-xs-4">
-                <a href="{{ platform.url }}">
-                    <img class="store-icon" src="{% static 'theme/img/f-droid.png' %}"/>
-                </a>
+              <a href="{{ platform.url }}">
+                <img class="store-icon" src="{% static 'theme/img/f-droid.png' %}"/>
+              </a>
             </div>
             {% endif %}
             {% if platform.store_name == 'google_play_store' %}
             <div class="col-md-2 col-xs-4">
-                <a href="{{ platform.url }}">
-                    <img class="store-icon"
-                         src="{% static 'theme/img/google-play.png' %}"/>
-                </a>
+              <a href="{{ platform.url }}">
+                <img class="store-icon" src="{% static 'theme/img/google-play.png' %}"/>
+              </a>
             </div>
             {% endif %}
         {% endif %}

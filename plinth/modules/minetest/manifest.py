@@ -31,7 +31,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'net.minetest.minetest',
                 'url': 'https://play.google.com/store/apps/details?id=net'
                        '.minetest.minetest '
@@ -39,7 +39,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'fully_qualified_name': 'net.minetest.minetest',
                 'url': 'https://f-droid.org/packages/net.minetest.minetest/ '
             },

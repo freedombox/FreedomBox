@@ -40,7 +40,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'url': 'https://play.google.com/store/apps/details?id=com'
                        '.iskrembilen.quasseldroid',
                 'fully_qualified_name': 'com.iskrembilen.quasseldroid'
