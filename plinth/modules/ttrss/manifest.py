@@ -24,7 +24,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play-store',
+                'store_name': 'google_play-store',
                 'url': 'https://play.google.com/store/apps/details?id=org'
                        '.ttrssreader',
                 'fully_qualified_name': 'org.ttrssreader'
@@ -32,7 +32,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'url': 'https://f-droid.org/packages/org.ttrssreader/',
                 'fully_qualified_name': 'org.ttrssreader'
             },

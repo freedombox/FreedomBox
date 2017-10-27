@@ -30,7 +30,7 @@ clients = [
                 'type': 'store',
                 'os': 'Android',
                 'os_version': '>4.2.0',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'url': 'https://f-droid.org/repository/browse/?fdid=com'
                        '.github.dfa.diaspora_android ',
                 'fully_qualified_name': 'com.github.dfa.diaspora_android'

@@ -48,7 +48,7 @@ clients = [
                 'type': 'store',
                 'os': 'iOS',
                 'os_version': '>=8.0',
-                'store_type': 'apple_store',
+                'store_name': 'apple_store',
                 'url': 'https://itunes.apple.com/us/app/mumble/id443472808'
             }
         ]
@@ -59,7 +59,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'url': 'https://play.google.com/store/apps/details?id=com'
                        '.morlunk.mumbleclient.free ',
                 'fully_qualified_name': 'com.morlunk.mumbleclient'
@@ -67,7 +67,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'url': 'https://play.google.com/store/apps/details?id=com'
                        '.morlunk.mumbleclient.free ',
                 'fully_qualified_name': 'com.morlunk.mumbleclient'
@@ -81,7 +81,7 @@ clients = [
                 'type': 'store',
                 'os': 'iOS',
                 'os_version': '>=7.0',
-                'store_type': 'apple_store',
+                'store_name': 'apple_store',
                 'url': 'https://itunes.apple.com/dk/app/mumblefy/id858752232'
             }
         ]
