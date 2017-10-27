@@ -24,7 +24,7 @@ clients = [
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'im.vector.alpha',
                 'url': 'https://play.google.com/store/apps/details?id=im'
                        '.vector.alpha '
@@ -33,7 +33,7 @@ clients = [
                 'type': 'store',
                 'os': 'Android',
                 'os_version': '>=6.0',
-                'store_type': 'fdroid_store',
+                'store_name': 'fdroid_store',
                 'fully_qualified_name': 'im.vector.alpha',
                 'url': 'https://f-droid.org/packages/im.vector.alpha/'
             },
@@ -43,28 +43,19 @@ clients = [
             },
             {
                 'type': 'download',
+                'os': 'Debian',
+                'url': 'https://riot.im/desktop.html'
+            },
+            {
+                'type': 'download',
                 'os': 'macOS',
-                'url': 'https://riot.im/download/desktop/install/macos'
-                            '/Riot-0.12.4.dmg'
+                'url': 'https://riot.im/desktop.html'
             },
             {
                 'type': 'download',
-                'os': 'Windows(32 bit)',
+                'os': 'Windows',
                 'os_version': '>=7',
-                'url': 'https://riot.im/download/desktop/install/win32/ia32/'
-                       'Riot%20Setup%200.12.4-ia32.exe'
+                'url': 'https://riot.im/desktop.html'
             },
-            {
-                'type': 'download',
-                'os': 'Windows(64 bit)',
-                'os_version': '>=7',
-                'url': 'https://riot.im/download/desktop/install/win32/x64/Riot'
-                       '%20Setup%200.12.4.exe'
-            },
-            {
-                'type': 'download',
-                'os': 'Debian/Ubuntu',
-                'url': 'https://riot.im/packages/debian/'
-            }
         ]
     }]

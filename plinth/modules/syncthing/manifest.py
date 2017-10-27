@@ -22,30 +22,24 @@ clients = [
         'name': _('Syncthing'),
         'platforms': [
             {
-                'type': 'apt',
-                'os': 'Debian/Ubuntu',
-                'usage': _('For more usage information refer to <a '
-                           'href="https://apt.syncthing.net/>Syncthing</a>'),
-                'package_name': 'syncthing'
-            },
-            {
                 'type': 'download',
-                'os': 'Windows(64-bit)',
-                'url': 'https://github.com/syncthing/syncthing/releases'
-                       '/download/v0.14.38/syncthing-windows-amd64-v0.14.38'
-                       '.zip '
+                'os': 'Debian',
+                'url': 'https://apt.syncthing.net/',
             },
             {
                 'type': 'download',
                 'os': 'macOS',
                 'url': 'https://github.com/syncthing/syncthing/releases'
-                       '/download/v0.14.38/syncthing-macosx-amd64-v0.14.38'
-                       '.tar.gz '
+            },
+            {
+                'type': 'download',
+                'os': 'Windows',
+                'url': 'https://github.com/syncthing/syncthing/releases'
             },
             {
                 'type': 'store',
                 'os': 'Android',
-                'store_type': 'google_play_store',
+                'store_name': 'google_play_store',
                 'fully_qualified_name': 'com.nutomic.syncthingandroid',
                 'url': 'https://play.google.com/store/apps/details?id=com'
                        '.nutomic.syncthingandroid '
