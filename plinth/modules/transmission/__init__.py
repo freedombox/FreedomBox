@@ -23,9 +23,15 @@ import json
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
+<<<<<<< HEAD
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import add_group
+=======
+from plinth.client import web_client
+from plinth.menu import main_menu
+from .manifest import clients
+>>>>>>> Add client information for Matrix Synapse and Syncthing
 
 from .manifest import clients
 
@@ -48,6 +54,11 @@ description = [
 
 clients = clients
 
+<<<<<<< HEAD
+=======
+web_clients = [web_client(name='Transmission', url='/transmission')]
+
+>>>>>>> Add client information for Matrix Synapse and Syncthing
 reserved_usernames = ['debian-transmission']
 
 service = None

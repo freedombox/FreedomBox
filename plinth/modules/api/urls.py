@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the plinth api for android app.
 """
@@ -22,9 +21,9 @@ URLs for the plinth api for android app.
 from django.conf.urls import url
 from stronghold.decorators import public
 
-from plinth.modules.api.views import get_apps, get_access_info
+from plinth.modules.api.views import get_access_info, get_services
 
 urlpatterns = [
-    url(r'^api/(?P<version>[0-9]+)/services/?$', public(get_apps)),
-    url(r'^api/(?P<version>[0-9]+)/access-info/?$', public(get_access_info))
+    url(r'^api/(?P<version>[0-9]+)/services/?$', public(get_services)),
+    url(r'^api/(?P<version>[0-9]+)/access-info/?$', public(get_access_info)),
 ]
