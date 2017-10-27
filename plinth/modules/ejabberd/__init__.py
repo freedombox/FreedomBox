@@ -35,7 +35,6 @@ from plinth.menu import main_menu
 from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth.signals import domainname_change
 from .manifest import clients
-from plinth.client import web_client
 
 
 version = 1
@@ -60,10 +59,6 @@ description = [
           '/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
 ]
-
-web_clients = [web_client(name='JSXC', url='/plinth/apps/jsxc'),
-               web_client(name='XMPP client', url='http://xmpp.org/xmpp'
-                                                  '-software/clients')]
 
 clients = clients
 

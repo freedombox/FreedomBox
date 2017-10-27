@@ -26,7 +26,6 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.client import web_client
 from .manifest import clients
 
 
@@ -61,8 +60,6 @@ description = [
 ]
 
 clients = clients
-
-web_clients = [web_client('Roundcube', '/roundcube')]
 
 service = None
 

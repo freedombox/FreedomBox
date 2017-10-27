@@ -28,7 +28,6 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
-from plinth.client import desktop_client, mobile_client
 from .manifest import clients
 
 version = 2
@@ -63,14 +62,6 @@ description = [
 ]
 
 clients = clients
-
-desktop_clients = [desktop_client(name='Jitsi',url='https://jitsi.org/')]
-
-mobile_clients = [
-    mobile_client(name='Csip Simple',fully_qualified_name='com.csipsimple',
-                  fdroid_url=None,
-                  play_store_url='https://play.google.com/store/apps/details'
-                                  '?id=com.csipsimple')]
 
 reserved_usernames = ['repro']
 
