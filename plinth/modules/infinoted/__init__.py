@@ -31,7 +31,6 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 from .manifest import clients
-from plinth.client import desktop_client
 
 
 version = 1
@@ -56,7 +55,6 @@ description = [
         box_name=_(cfg.box_name)),
 ]
 
-desktop_clients = [desktop_client(name='Gobby', url='https://gobby.github.io/')]
 
 clients = clients
 

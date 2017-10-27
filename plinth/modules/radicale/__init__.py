@@ -30,7 +30,6 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from plinth.client import desktop_client, mobile_client
 from .manifest import clients
 
 
@@ -56,20 +55,6 @@ description = [
 ]
 
 clients = clients
-
-desktop_clients = [desktop_client(name='GNOME Calendar',
-                                  url='https://wiki.gnome.org/Apps/Calendar'),
-                   desktop_client(name='Contacts',
-                                  url='https://wiki.gnome.org/Apps/Contacts'),
-                   desktop_client(name='Evolution',
-                                  url='https://wiki.gnome.org/Apps/Evolution')]
-
-mobile_clients = [
-    mobile_client(name='DAVdroid',
-                  fully_qualified_name='at.bitfire.davdroid',
-                  fdroid_url=None,
-                  play_store_url='https://play.google.com/store/apps/details'
-                                 '?id=at.bitfire.davdroid')]
 
 reserved_usernames = ['radicale']
 

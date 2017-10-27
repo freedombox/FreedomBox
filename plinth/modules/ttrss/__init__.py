@@ -28,7 +28,6 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.client import web_client, mobile_client
 from .manifest import clients
 
 
@@ -60,15 +59,6 @@ description = [
 ]
 
 clients = clients
-
-web_clients = [web_client(name='TT-RSS', url='/tt-rss')]
-
-mobile_clients = [
-    mobile_client(name='TTRSS-Reader',
-                  fully_qualified_name='org.ttrssreader',
-                  play_store_url='https://play.google.com/store/apps/details'
-                                 '?id=org.ttrssreader',
-                  fdroid_url='https://f-droid.org/packages/org.ttrssreader/')]
 
 service = None
 
