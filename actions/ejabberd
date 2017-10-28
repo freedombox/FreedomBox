@@ -121,7 +121,8 @@ def subcommand_setup(_):
             listen_port['tls'] = False
 
     conf['auth_method'] = 'ldap'
-    conf['ldap_servers'] = ['localhost']
+    conf['ldap_servers'] = [ruamel.yaml.scalarstring.DoubleQuotedScalarString(
+        'localhost')]
     conf['ldap_base'] = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
         'ou=users,dc=thisbox')
 
