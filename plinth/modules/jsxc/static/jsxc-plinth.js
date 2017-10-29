@@ -44,7 +44,7 @@
 
 $(function() {
     var settings = {
-        url: '/http-bind/',
+        url: '/bosh/',
         domain: plinth_settings.domainname
     };
 

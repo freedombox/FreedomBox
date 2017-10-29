@@ -190,6 +190,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
     results.extend(
-        action_utils.diagnose_url_on_all('http://{host}/http-bind/'))
+        action_utils.diagnose_url_on_all('http://{host}/bosh/'))
 
     return results
