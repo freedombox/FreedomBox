@@ -26,13 +26,14 @@ import unittest
 from plinth.actions import superuser_run, run
 from plinth import cfg
 
-
+euid = os.geteuid()
 test_dir = os.path.split(__file__)[0]
 root_dir = os.path.abspath(os.path.join(test_dir, os.path.pardir +
                                         os.path.sep + os.path.pardir))
 cfg.actions_dir = os.path.join(root_dir, 'actions')
 
 
+@unittest.skipUnless(euid == 0, 'Needs to be root')
 class TestPrivileged(unittest.TestCase):
     """Verify that privileged actions perform as expected.
 
