@@ -19,18 +19,12 @@
 Test module for actions utilities that modify configuration.
 """
 
-import os
 import shutil
+import tempfile
 import unittest
 
 from plinth.actions import superuser_run, run
 from plinth import cfg
-
-
-test_dir = os.path.split(__file__)[0]
-root_dir = os.path.abspath(os.path.join(test_dir, os.path.pardir +
-                                        os.path.sep + os.path.pardir))
-cfg.actions_dir = os.path.join(root_dir, 'actions')
 
 
 class TestPrivileged(unittest.TestCase):
@@ -42,13 +36,17 @@ class TestPrivileged(unittest.TestCase):
     """
     @classmethod
     def setUpClass(cls):
+        """Initial setup for all the classes."""
+        cls.action_directory = tempfile.TemporaryDirectory()
+        cfg.actions_dir = cls.action_directory.name
+
         shutil.copy('/bin/echo', cfg.actions_dir)
         shutil.copy('/usr/bin/id', cfg.actions_dir)
 
     @classmethod
     def tearDownClass(cls):
-        os.remove(os.path.join(cfg.actions_dir, 'echo'))
-        os.remove(os.path.join(cfg.actions_dir, 'id'))
+        """Cleanup after all the tests are completed."""
+        cls.action_directory.cleanup()
 
     def notest_run_as_root(self):
         """1. Privileged actions run as root. """
