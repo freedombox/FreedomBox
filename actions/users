@@ -113,6 +113,12 @@ def configure_slapd():
                                   {'nsswitch': 'group, passwd, shadow'})
     action_utils.service_restart('nscd')
 
+    # XXX: Workaround for login issue
+    action_utils.service_enable('slapd')
+    action_utils.service_start('slapd')
+    action_utils.service_enable('nslcd')
+    action_utils.service_start('nslcd')
+
 
 def configure_ldap_structure():
     """Configure LDAP basic structure."""
