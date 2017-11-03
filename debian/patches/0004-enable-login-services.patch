@@ -1,0 +1,22 @@
+Subject: workaround for login issue
+
+When testing new image builds, I found users created through plinth
+could not login through console or SSH. The reason is that slapd and
+nslcd services were not enabled and not running. I don't know what is
+causing this situation, so this is just a workaround.
+
+--- a/actions/users
++++ b/actions/users
+@@ -113,6 +113,12 @@
+                                   {'nsswitch': 'group, passwd, shadow'})
+     action_utils.service_restart('nscd')
+ 
++    # XXX: Workaround for login issue
++    action_utils.service_enable('slapd')
++    action_utils.service_start('slapd')
++    action_utils.service_enable('nslcd')
++    action_utils.service_start('nslcd')
++
+ 
+ def configure_ldap_structure():
+     """Configure LDAP basic structure."""
