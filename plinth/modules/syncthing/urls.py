@@ -29,6 +29,7 @@ urlpatterns = [
             service_id=syncthing.managed_services[0],
             diagnostics_module_name='syncthing',
             description=syncthing.description,
+            clients=syncthing.clients,
             show_status_block=True),
         name='index'),
 ]

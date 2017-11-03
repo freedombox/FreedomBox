@@ -34,6 +34,8 @@
     {% endfor %}
   {% endblock %}
 
+  {% include "clients.html" with clients=clients %}
+
   {% block status %}
     {% if show_status_block %}
       <h3>{% trans "Status" %}</h3>
@@ -75,7 +77,3 @@
   {% endblock %}
 
 {% endblock %}
-
-<!-- TODO Must get a handle to the clients here somehow -->
-{% include "clients.html" with clients=service.clients %}
-

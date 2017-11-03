@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for minetest module.
 """
@@ -23,20 +22,21 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
+from plinth.modules import minetest
 from plinth.views import ServiceView
-
 
 from . import description, managed_services, get_configuration
 from .forms import MinetestForm
 
 
-class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
+class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring minetest."""
     service_id = managed_services[0]
     diagnostics_module_name = "minetest"
     description = description
     show_status_block = True
     form_class = MinetestForm
+    clients = minetest.clients
 
     def get_initial(self):
         """Return the values to fill in the form."""
@@ -51,34 +51,30 @@ class MinetestServiceView(ServiceView): # pylint: disable=too-many-ancestors
 
         if old_config['max_players'] != data['max_players'] \
            and data['max_players'] != None:
-            actions.superuser_run(
-                'minetest',
-                ['configure', '--max_players', str(data['max_players'])])
+            actions.superuser_run('minetest', [
+                'configure', '--max_players',
+                str(data['max_players'])
+            ])
             messages.success(self.request,
                              _('Maximum players configuration updated'))
 
         if old_config['creative_mode'] != data['creative_mode']:
             value = 'true' if data['creative_mode'] else 'false'
-            actions.superuser_run(
-                'minetest',
-                ['configure', '--creative_mode', value])
+            actions.superuser_run('minetest',
+                                  ['configure', '--creative_mode', value])
             messages.success(self.request,
                              _('Creative mode configuration updated'))
 
         if old_config['enable_pvp'] != data['enable_pvp']:
             value = 'true' if data['enable_pvp'] else 'false'
-            actions.superuser_run(
-                'minetest',
-                ['configure', '--enable_pvp', value])
-            messages.success(self.request,
-                             _('PVP configuration updated'))
+            actions.superuser_run('minetest',
+                                  ['configure', '--enable_pvp', value])
+            messages.success(self.request, _('PVP configuration updated'))
 
         if old_config['enable_damage'] != data['enable_damage']:
             value = 'true' if data['enable_damage'] else 'false'
-            actions.superuser_run(
-                'minetest',
-                ['configure', '--enable_damage', value])
-            messages.success(self.request,
-                             _('Damage configuration updated'))
+            actions.superuser_run('minetest',
+                                  ['configure', '--enable_damage', value])
+            messages.success(self.request, _('Damage configuration updated'))
 
         return super().form_valid(form)

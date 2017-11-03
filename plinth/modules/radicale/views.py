@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for radicale module.
 """
@@ -23,6 +22,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
+from plinth.modules import radicale
 from plinth.views import ServiceView
 
 from . import description, get_rights_value, managed_services
@@ -31,10 +31,11 @@ from .forms import RadicaleForm
 
 class RadicaleServiceView(ServiceView):
     """A specialized view for configuring radicale service."""
-    service_id = managed_services[0]
-    form_class = RadicaleForm
-    diagnostics_module_name = 'radicale'
+    clients = radicale.clients
     description = description
+    diagnostics_module_name = 'radicale'
+    form_class = RadicaleForm
+    service_id = managed_services[0]
 
     def get_initial(self):
         """Return the values to fill in the form."""
@@ -46,9 +47,9 @@ class RadicaleServiceView(ServiceView):
         """Change the access control of Radicale service."""
         data = form.cleaned_data
         if get_rights_value() != data['access_rights']:
-            actions.superuser_run(
-                'radicale',
-                ['configure', '--rights_type', data['access_rights']])
+            actions.superuser_run('radicale', [
+                'configure', '--rights_type', data['access_rights']
+            ])
             messages.success(self.request,
                              _('Access rights configuration updated'))
         return super().form_valid(form)

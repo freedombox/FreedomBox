@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for the Matrix Synapse module.
 """
@@ -79,13 +78,15 @@ class MatrixSynapseServiceView(ServiceView):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
+        context['clients'] = matrixsynapse.clients
         return context
 
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registration': get_public_registration_status()})
+            'enable_public_registration': get_public_registration_status()
+        })
         return initial
 
     def form_valid(self, form):
@@ -112,13 +113,13 @@ class MatrixSynapseServiceView(ServiceView):
         if not pubreg_same:
             # note action public_registration restarts, if running now
             if new_config['enable_public_registration']:
-                actions.superuser_run('matrixsynapse', ['public_registration',
-                                                        'enable'])
+                actions.superuser_run('matrixsynapse',
+                                      ['public_registration', 'enable'])
                 messages.success(self.request,
                                  _('Public registration enabled'))
             else:
-                actions.superuser_run('matrixsynapse', ['public_registration',
-                                                        'disable'])
+                actions.superuser_run('matrixsynapse',
+                                      ['public_registration', 'disable'])
                 messages.success(self.request,
                                  _('Public registration disabled'))
 

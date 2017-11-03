@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Deluge module.
 """
@@ -24,11 +23,12 @@ from django.conf.urls import url
 from plinth.modules import deluge
 from plinth.views import ServiceView
 
-
 urlpatterns = [
-    url(r'^apps/deluge/$', ServiceView.as_view(
+    url(r'^apps/deluge/$',
+        ServiceView.as_view(
             description=deluge.description,
             diagnostics_module_name="deluge",
-            service_id=deluge.managed_services[0]
-        ), name='index'),
+            clients=deluge.clients,
+            service_id=deluge.managed_services[0]),
+        name='index'),
 ]

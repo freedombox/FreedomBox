@@ -38,6 +38,8 @@
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
 
+  {% include "clients.html" with clients=setup_helper.module.clients %}
+
   {% if not setup_helper.current_operation %}
 
     {% if setup_helper.get_state == 'needs-setup' %}
@@ -119,6 +121,5 @@
     {% endif %}
 
   {% endif %}
-  {% include "clients.html" with module=setup_helper.module %}
 
 {% endblock %}

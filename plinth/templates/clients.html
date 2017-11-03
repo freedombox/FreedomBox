@@ -20,18 +20,20 @@
 {% load i18n %}
 {% load plinth_extras %}
 
-{% if module.clients  %}
-<button type="button" class="btn btn-primary collapsed"
-        data-toggle="collapse" data-target="#clients">
-    Client Apps
-</button>
+{% if clients  %}
+  <p>
+    <button type="button" class="btn btn-default collapsed"
+            data-toggle="collapse" data-target="#clients">
+        Client Apps
+    </button>
+  </p>
 
 <div id="clients" class="collapse">
-{% if module.clients|has_web_clients %}
+{% if clients|has_web_clients %}
 <div class="clients-info">
   <p class="heading">{% trans "Web Clients" %}:
   <ul>
-    {% for client in module.clients %}
+    {% for client in clients %}
       {% if client|has_web_clients %}
         {% for platform in client.platforms %}
           {% if platform.type == 'web' %}
@@ -46,12 +48,12 @@
 </div>
 {% endif %}
 
-{% if module.clients|has_desktop_clients %}
+{% if clients|has_desktop_clients %}
 <div class="clients-info">
   {% load static %}
   <p class="heading">{% trans "Desktop Clients" %}:
     <ul>
-      {% for client in module.clients %}
+      {% for client in clients %}
         {% if client|has_desktop_clients %}
         <li class="col-md-12 col-xs-12"> <span> {{ client.name }} </span> </li>
         <div class ="row">
@@ -77,12 +79,12 @@
 </div>
 {% endif %}
 
-{% if module.clients|has_mobile_clients %}
+{% if clients|has_mobile_clients %}
 <div class="clients-info">
   {% load static %}
   <p class="heading">{% trans "Mobile Clients" %}:</p>
     <ul>
-    {% for client in module.clients %}
+    {% for client in clients %}
       {% if client|has_mobile_clients %}
         <li class="col-md-12 col-xs-12"><span>{{ client.name }}</span></li>
         <div class="row">

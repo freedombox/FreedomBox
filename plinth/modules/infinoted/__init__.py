@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for infinoted.
 """
@@ -32,7 +31,6 @@ from plinth.utils import format_lazy
 from plinth.views import ServiceView
 from .manifest import clients
 
-
 version = 1
 
 service = None
@@ -47,7 +45,6 @@ short_description = _('Gobby Server')
 
 description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
-
     format_lazy(
         _('To use it, <a href="https://gobby.github.io/">download Gobby</a>, '
           'desktop client and install it. Then start Gobby and select '
@@ -55,21 +52,25 @@ description = [
         box_name=_(cfg.box_name)),
 ]
 
-
 clients = clients
 
 
 def init():
     """Initialize the infinoted module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-pencil', 'infinoted:index', short_description)
+    menu.add_urlname(name, 'glyphicon-pencil', 'infinoted:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], name, ports=['infinoted-plinth'],
-            is_external=True, enable=enable, disable=disable)
+            managed_services[0],
+            name,
+            ports=['infinoted-plinth'],
+            is_external=True,
+            enable=enable,
+            disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -79,6 +80,7 @@ class InfinotedServiceView(ServiceView):
     service_id = managed_services[0]
     diagnostics_module_name = "infinoted"
     description = description
+    clients = clients
 
 
 def setup(helper, old_version=None):
@@ -88,19 +90,26 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], name, ports=['infinoted-plinth'],
-            is_external=True, enable=enable, disable=disable)
+            managed_services[0],
+            name,
+            ports=['infinoted-plinth'],
+            is_external=True,
+            enable=enable,
+            disable=disable)
 
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('infinoted', name,
-                           short_description=short_description, url=None,
-                           details=description,
-                           configure_url=reverse_lazy('infinoted:index'),
-                           login_required=False)
+    frontpage.add_shortcut(
+        'infinoted',
+        name,
+        short_description=short_description,
+        url=None,
+        details=description,
+        configure_url=reverse_lazy('infinoted:index'),
+        login_required=False)
 
 
 def enable():
