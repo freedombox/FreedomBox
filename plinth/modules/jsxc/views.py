@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for the JSXC module
 """
@@ -33,6 +32,7 @@ class JSXCServiceView(ServiceView):
     template_name = 'jsxc.html'
     description = jsxc.description
     show_status_block = False
+    clients = jsxc.clients
 
 
 class JsxcView(TemplateView):

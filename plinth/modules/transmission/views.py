@@ -34,6 +34,7 @@ logger = logging.getLogger(__name__)
 
 class TransmissionServiceView(views.ServiceView):
     """Serve configuration page."""
+    clients = transmission.clients
     description = transmission.description
     diagnostics_module_name = 'transmission'
     form_class = TransmissionForm

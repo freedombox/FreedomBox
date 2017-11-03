@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for repro.
 """
@@ -47,12 +46,10 @@ description = [
       'can use to let their presence known.  It also acts as a proxy to '
       'federate SIP communications to other servers on the Internet similar '
       'to email.'),
-
     _('To make SIP calls, a client application is needed. Available clients '
       'include <a href="https://jitsi.org/">Jitsi</a> (for computers) and '
       '<a href="https://f-droid.org/repository/browse/?fdid=com.csipsimple"> '
       'CSipSimple</a> (for Android phones).'),
-
     _('<strong>Note:</strong>  Before using repro, domains and users will '
       'need to be configured using the <a href="/repro/domains.html">'
       'web-based configuration panel</a>. Users in the <em>admin</em> group '
@@ -71,24 +68,29 @@ service = None
 def init():
     """Initialize the repro module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-phone-alt', 'repro:index', short_description)
+    menu.add_urlname(name, 'glyphicon-phone-alt', 'repro:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], name,
+            managed_services[0],
+            name,
             ports=['sip', 'sips', 'rtp-plinth'],
-            is_external=True, enable=enable, disable=disable)
+            is_external=True,
+            enable=enable,
+            disable=disable)
 
         if service.is_enabled():
             add_shortcut()
 
 
 class ReproServiceView(ServiceView):
-    service_id = managed_services[0]
-    diagnostics_module_name = "repro"
+    clients = clients
     description = description
+    diagnostics_module_name = "repro"
+    service_id = managed_services[0]
 
 
 def setup(helper, old_version=None):
@@ -98,19 +100,24 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], name,
+            managed_services[0],
+            name,
             ports=['sip', 'sips', 'rtp-plinth'],
-            is_external=True, enable=enable, disable=disable)
+            is_external=True,
+            enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('repro', name,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('repro:index'),
-                           login_required=True)
+    frontpage.add_shortcut(
+        'repro',
+        name,
+        short_description=short_description,
+        details=description,
+        configure_url=reverse_lazy('repro:index'),
+        login_required=True)
 
 
 def enable():

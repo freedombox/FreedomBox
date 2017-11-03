@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for configuring Tor.
 """
@@ -27,7 +26,6 @@ from .forms import TorForm
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
-
 
 config_process = None
 
@@ -50,12 +48,14 @@ def index(request):
     else:
         form = TorForm(initial=status, prefix='tor')
 
-    return TemplateResponse(request, 'tor.html',
-                            {'title': tor.name,
-                             'description': tor.description,
-                             'status': status,
-                             'config_running': bool(config_process),
-                             'form': form})
+    return TemplateResponse(request, 'tor.html', {
+        'title': tor.name,
+        'description': tor.description,
+        'clients': tor.clients,
+        'status': status,
+        'config_running': bool(config_process),
+        'form': form
+    })
 
 
 def _apply_changes(request, old_status, new_status):
@@ -63,8 +63,10 @@ def _apply_changes(request, old_status, new_status):
     try:
         __apply_changes(request, old_status, new_status)
     except ActionError as exception:
-        messages.error(request, _('Action error: {0} [{1}] [{2}]').format(
-            exception.args[0], exception.args[1], exception.args[2]))
+        messages.error(request,
+                       _('Action error: {0} [{1}] [{2}]').format(
+                           exception.args[0], exception.args[1],
+                           exception.args[2]))
 
 
 def __apply_changes(request, old_status, new_status):
@@ -111,8 +113,8 @@ def __apply_changes(request, old_status, new_status):
         needs_restart = True
 
     if old_status['upstream_bridges'] != new_status['upstream_bridges']:
-        arguments.extend(['--upstream-bridges',
-                          new_status['upstream_bridges']])
+        arguments.extend(
+            ['--upstream-bridges', new_status['upstream_bridges']])
         needs_restart = True
 
     if old_status['enabled'] != new_status['enabled']:
