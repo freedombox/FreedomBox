@@ -58,3 +58,30 @@ def show_subsubmenu(context, menu):
     """Mark the active menu item and display the subsubmenu"""
     menu = mark_active_menuitem(menu, context['request'].path)
     return {'subsubmenu': menu}
+
+
+def __check(clients, cond):
+    """Check if any of a list of clients satisfies the given condition"""
+    clients = clients if isinstance(clients, list) else [clients]
+    return any(pf for client in clients for pf in client['platforms']
+               if cond(pf))
+
+
+@register.filter(name='has_web_clients')
+def has_web_clients(clients):
+    """Filter to find out whether an application has web clients"""
+    return __check(clients, lambda x: x['type'] == 'web')
+
+
+@register.filter(name='has_mobile_clients')
+def has_mobile_clients(clients):
+    """Filter to find out whether an application has mobile clients"""
+    return __check(clients, lambda x: x.get('os', '') == 'Android')
+
+
+@register.filter(name='has_desktop_clients')
+def has_desktop_clients(clients):
+    """Filter to find out whether an application has desktop clients"""
+    return __check(
+        clients,
+        lambda x: x.get('os', '') in ['Windows', 'macOS', 'GNU/Linux'])

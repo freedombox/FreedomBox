@@ -17,18 +17,17 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('Deluge'),
-        'description': _('Bittorrent client written in Python/PyGTK '),
-        'platforms': [
-            {
-                'type': 'web',
-                'relative_path': '/deluge'
-            },
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'deluge'
-            }]
+clients = [{
+    'name':
+        _('Deluge'),
+    'description':
+        _('Bittorrent client written in Python/PyGTK '),
+    'platforms': [{
+        'type': 'web',
+        'relative_path': '/deluge'
+    }, {
+        'type': 'package',
+        'format': 'deb',
+        'name': 'deluge',
     }]
+}]

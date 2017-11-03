@@ -17,37 +17,32 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('Minetest'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'Windows(64-bit)',
-                'os_version': 'XP, Vista, >=7',
-                'url': 'https://github.com/minetest/minetest/releases'
-                       '/download/0.4.16/minetest-0.4.16-win64.zip '
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'fully_qualified_name': 'net.minetest.minetest',
-                'url': 'https://play.google.com/store/apps/details?id=net'
-                       '.minetest.minetest '
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'fdroid_store',
-                'fully_qualified_name': 'net.minetest.minetest',
-                'url': 'https://f-droid.org/packages/net.minetest.minetest/ '
-            },
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'minetest'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('Minetest'),
+    'platforms': [{
+        'type': 'download',
+        'os': 'Windows',
+        'arch': 'amd64',
+        'os_version': 'XP, Vista, >=7',
+        'url': 'https://github.com/minetest/minetest/releases'
+               '/download/0.4.16/minetest-0.4.16-win64.zip '
+    }, {
+        'type': 'store',
+        'os': 'Android',
+        'store_name': 'google_play_store',
+        'fully_qualified_name': 'net.minetest.minetest',
+        'url': 'https://play.google.com/store/apps/details?id=net'
+               '.minetest.minetest '
+    }, {
+        'type': 'store',
+        'os': 'Android',
+        'store_name': 'fdroid_store',
+        'fully_qualified_name': 'net.minetest.minetest',
+        'url': 'https://f-droid.org/packages/net.minetest.minetest/ '
+    }, {
+        'type': 'package',
+        'format': 'deb',
+        'name': 'minetest'
+    }]
+}]

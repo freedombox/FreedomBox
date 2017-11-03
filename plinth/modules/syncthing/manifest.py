@@ -17,45 +17,79 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('Syncthing'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'Debian',
-                'url': 'https://apt.syncthing.net/',
-            },
-            {
-                'type': 'download',
-                'os': 'macOS',
-                'url': 'https://github.com/syncthing/syncthing/releases'
-            },
-            {
-                'type': 'download',
-                'os': 'Windows',
-                'url': 'https://github.com/syncthing/syncthing/releases'
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'fully_qualified_name': 'com.nutomic.syncthingandroid',
-                'url': 'https://play.google.com/store/apps/details?id=com'
-                       '.nutomic.syncthingandroid '
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'fdroid_store',
-                'fully_qualified_name': 'com.nutomic.syncthingandroid',
-                'url': 'https://f-droid.org/packages/com.nutomic'
-                       '.syncthingandroid/ '
-            },
-            {
-                'type': 'web',
-                'relative_url': '/syncthing'
-            }
-        ]
-    }
-]
+metadata = {
+    'syncthing': {
+        'version': '0.14.39',
+        'android-package-id': 'com.nutomic.syncthingandroid',
+    },
+}
+
+clients = [{
+    'name':
+        _('Syncthing'),
+    'platforms': [{
+        'type': 'package',
+        'format': 'deb',
+        'name': 'syncthing',
+    }, {
+        'type': 'package',
+        'format': 'homebrew',
+        'name': 'syncthing',
+    }, {
+        'type':
+            'download',
+        'os':
+            'all',
+        'url':
+            'https://github.com/syncthing/syncthing/releases/tag/v{}'
+            .format(metadata['syncthing']['version'])
+    }, {
+        'type': 'download',
+        'os': 'GNU/Linux',
+        'arch': 'amd64',
+        'url': 'https://github.com/syncthing/syncthing/releases/'
+               'download/v{0}/syncthing-linux-amd64-v{0}.tar.gz'
+               .format(metadata['syncthing']['version']),
+    }, {
+        'type': 'download',
+        'os': 'macOS',
+        'arch': 'amd64',
+        'url': 'https://github.com/syncthing/syncthing/releases/'
+               'download/v{0}/syncthing-macosx-amd64-v{0}.tar.gz'
+               .format(metadata['syncthing']['version']),
+    }, {
+        'type': 'download',
+        'os': 'Windows',
+        'arch': 'amd64',
+        'url': 'https://github.com/syncthing/syncthing/releases/'
+               'download/v{0}/syncthing-windows-amd64-v{0}.zip'
+               .format(metadata['syncthing']['version']),
+    }, {
+        'type':
+            'store',
+        'os':
+            'Android',
+        'store_name':
+            'google_play_store',
+        'fully_qualified_name':
+            'com.nutomic.syncthingandroid',
+        'url':
+            'https://play.google.com/store/apps/details?id={}'
+            .format(metadata['syncthing']['android-package-id'])
+    }, {
+        'type':
+            'store',
+        'os':
+            'Android',
+        'store_name':
+            'fdroid_store',
+        'fully_qualified_name':
+            'com.nutomic.syncthingandroid',
+        'url':
+            'https://f-droid.org/packages/{}'
+            .format(metadata['syncthing']['android-package-id'])
+    }, {
+        'type': 'web',
+        'relative_url': '/syncthing'
+    }]
+}]

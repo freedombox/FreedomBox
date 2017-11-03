@@ -18,28 +18,41 @@
 {% endcomment %}
 
 {% load i18n %}
+{% load plinth_extras %}
 
 {% if module.clients  %}
+<button type="button" class="btn btn-primary collapsed"
+        data-toggle="collapse" data-target="#clients">
+    Client Apps
+</button>
+
+<div id="clients" class="collapse">
+{% if module.clients|has_web_clients %}
 <div class="clients-info">
   <p class="heading">{% trans "Web Clients" %}:
   <ul>
     {% for client in module.clients %}
-      {% for platform in client.platforms %}
-        {% if platform.type == 'web' %}
-        <li>
-          <span><a href="{{ platform.relative_url }}">{{ client.name}}</a></span>
-        </li>
-        {% endif %}
-      {% endfor %}
+      {% if client|has_web_clients %}
+        {% for platform in client.platforms %}
+          {% if platform.type == 'web' %}
+          <li>
+            <span><a href="{{ platform.relative_url }}">{{ client.name}}</a></span>
+          </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     {% endfor %}
   </ul>
 </div>
+{% endif %}
 
+{% if module.clients|has_desktop_clients %}
 <div class="clients-info">
   {% load static %}
   <p class="heading">{% trans "Desktop Clients" %}:
     <ul>
       {% for client in module.clients %}
+        {% if client|has_desktop_clients %}
         <li class="col-md-12 col-xs-12"> <span> {{ client.name }} </span> </li>
         <div class ="row">
           {% for platform in client.platforms %}
@@ -47,26 +60,30 @@
           <div class="col-md-1 col-xs-2">
                 <a href="{{ platform.url }}">
               {% if platform.os == 'Windows' %}
-                  <img class="os-icon" src="{% static 'theme/img/windows.png' %}" />
+                  <img class="os-icon" src="{% static 'theme/icons/windows.png' %}" />
               {% elif platform.os == 'macOS' %}
-                  <img class="os-icon" src="{% static 'theme/img/apple.png' %}" />
-              {% elif platform.os == 'Debian' %}
-                  <img class="os-icon" src="{% static 'theme/img/debian.png' %}" />
+                  <img class="os-icon" src="{% static 'theme/icons/apple.png' %}" />
+              {% elif platform.os == 'GNU/Linux' %}
+                  <img class="os-icon" src="{% static 'theme/icons/gnu-linux.png' %}" />
               {% endif %}
                 </a>
           </div>
             {% endif %}
           {% endfor %}
         </div>
+        {% endif %}
       {% endfor %}
     </ul>
 </div>
+{% endif %}
 
+{% if module.clients|has_mobile_clients %}
 <div class="clients-info">
   {% load static %}
   <p class="heading">{% trans "Mobile Clients" %}:</p>
     <ul>
     {% for client in module.clients %}
+      {% if client|has_mobile_clients %}
         <li class="col-md-12 col-xs-12"><span>{{ client.name }}</span></li>
         <div class="row">
         {% for platform in client.platforms %}
@@ -74,21 +91,25 @@
             {% if platform.store_name == 'fdroid_store' %}
             <div class="col-md-2 col-xs-4">
               <a href="{{ platform.url }}">
-                <img class="store-icon" src="{% static 'theme/img/f-droid.png' %}"/>
+                <img class="store-icon" src="{% static 'theme/icons/f-droid.png' %}"/>
               </a>
             </div>
             {% endif %}
             {% if platform.store_name == 'google_play_store' %}
             <div class="col-md-2 col-xs-4">
               <a href="{{ platform.url }}">
-                <img class="store-icon" src="{% static 'theme/img/google-play.png' %}"/>
+                <img class="store-icon" src="{% static 'theme/icons/google-play.png' %}"/>
               </a>
             </div>
             {% endif %}
         {% endif %}
       {% endfor %}
       </div>
+      {% endif %}
     {% endfor %}
     </ul>
+</div>
+  {% endif %}
+
 </div>
 {% endif %}

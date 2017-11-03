@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Main Plinth views
 """
@@ -48,13 +47,14 @@ def index(request):
 
     disk_views.warn_about_low_disk_space(request)
 
-    return TemplateResponse(request, 'index.html',
-                            {'title': _('FreedomBox'),
-                             'shortcuts': shortcuts,
-                             'selected_id': selection,
-                             'details': details,
-                             'details_label': details_label,
-                             'configure_url': configure_url})
+    return TemplateResponse(request, 'index.html', {
+        'title': _('FreedomBox'),
+        'shortcuts': shortcuts,
+        'selected_id': selection,
+        'details': details,
+        'details_label': details_label,
+        'configure_url': configure_url
+    })
 
 
 def system_index(request):
@@ -97,8 +97,10 @@ class ServiceView(FormView):
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
-        return {'is_enabled': self.service.is_enabled(),
-                'is_running': self.service.is_running()}
+        return {
+            'is_enabled': self.service.is_enabled(),
+            'is_running': self.service.is_running()
+        }
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""
