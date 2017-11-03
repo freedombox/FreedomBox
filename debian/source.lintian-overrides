@@ -1,0 +1,10 @@
+# This is a consequnce of bug in jsxc
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=838183. While is is possible
+# to change the upstream Plinth code to remove the links and create during
+# installation, the jsxc module in Plinth will stop working in certain modes of
+# development. We belive the proper fix for the problem is to fix the above
+# issue.
+plinth source: source-contains-unsafe-symlink plinth/modules/jsxc/static/img
+plinth source: source-contains-unsafe-symlink plinth/modules/jsxc/static/libjs-jsxc/jsxc.css
+plinth source: source-contains-unsafe-symlink plinth/modules/jsxc/static/libjs-jsxc/lib
+plinth source: source-contains-unsafe-symlink plinth/modules/jsxc/static/libjs-jsxc/sound
