@@ -19,20 +19,26 @@ Test Apache configuration generation for diaspora*
 """
 
 import os
+import tempfile
 import unittest
+
 from plinth.modules import diaspora
 
 
 class TestDiaspora(unittest.TestCase):
+    """Test Apache configuration for Diaspora module."""
+
     def test_generate_apache_configuration(self):
-        test_root = "/tmp/apache2/conf-available/"
-        conf_file = test_root + "diaspora-plinth.conf"
-        os.path.exists(test_root) or os.makedirs(test_root)
-        diaspora.generate_apache_configuration(conf_file, "freedombox.rocks")
+        """Test that Apache configuration is created properly."""
+        with tempfile.NamedTemporaryFile() as conf_file:
+            diaspora.generate_apache_configuration(conf_file.name,
+                                                   'freedombox.rocks')
 
-        assert os.stat(conf_file).st_size != 0
+            assert os.stat(conf_file.name).st_size != 0
 
-        with open(conf_file) as f:
-            contents = f.read()
-        assert all(w in contents
-                   for w in ['VirtualHost', 'Location', 'Directory', 'assets'])
+            with open(conf_file.name) as file_handle:
+                contents = file_handle.read()
+
+            assert all(
+                word in contents
+                for word in ['VirtualHost', 'Location', 'Directory', 'assets'])
