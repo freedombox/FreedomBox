@@ -43,6 +43,7 @@
     program and run:
 
     $ sudo python3 setup.py install
+    $ sudo apt install -y $(plinth --list-dependencies)
 
 3. Run Plinth:
 

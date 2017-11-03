@@ -26,6 +26,13 @@ The entire setup is automatic and requires about 4.5 GB of disk space.
 
    $ vagrant provision
 
+## Installing Dependencies
+
+Apart from dependencies listing in INSTALL file, Plinth may have additional
+dependencies required by modules of Plinth.  To install these, run:
+
+    $ sudo apt install -y $(plinth --list-dependencies)
+
 ## Manually Setting Up for Development
 
 It is recommended that you use Vagrant to setup your development

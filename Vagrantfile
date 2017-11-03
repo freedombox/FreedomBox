@@ -22,6 +22,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     cd /vagrant/
     ./setup.py install
+    apt update
+    apt install -y $(plinth --list-dependencies)
     systemctl daemon-reload
     systemctl restart plinth
   SHELL
