@@ -262,6 +262,7 @@ def configure_django():
         LOGIN_REDIRECT_URL='index',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
         MIDDLEWARE_CLASSES=(
+            'django.middleware.security.SecurityMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.locale.LocaleMiddleware',
             'django.middleware.common.CommonMiddleware',
@@ -276,6 +277,8 @@ def configure_django():
             'plinth.middleware.SetupMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
+        SECURE_BROWSER_XSS_FILTER=True,
+        SECURE_CONTENT_TYPE_NOSNIFF=True,
         SECURE_PROXY_SSL_HEADER=secure_proxy_ssl_header,
         SESSION_ENGINE='django.contrib.sessions.backends.file',
         SESSION_FILE_PATH=sessions_directory,
