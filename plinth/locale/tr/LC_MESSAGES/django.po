@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 21:13-0400\n"
+"POT-Creation-Date: 2017-11-06 11:49-0500\n"
 "PO-Revision-Date: 2017-10-20 23:22+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
+"plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -169,6 +169,47 @@ msgstr "DNS sunucusu yapılandırması güncellendi"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "İletmeli DNS sunucuları kurmak için yönlendirmeyi etkinleştir"
 
+#: plinth/modules/cockpit/__init__.py:40
+msgid "Cockpit"
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:42
+#, fuzzy
+#| msgid "Server domain"
+msgid "Server Administration"
+msgstr "Sunucu alanı"
+
+#: plinth/modules/cockpit/__init__.py:46
+#, python-brace-format
+msgid ""
+"Cockpit is a server manager that makes it easy to administer GNU/Linux "
+"servers via a web browser. On a {box_name}, controls are available for many "
+"advanced functions that are not usually required. A web based terminal for "
+"console operations is also available."
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:52
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server. It can be accessed by any <a href=\"/"
+#| "plinth/sys/users\">user with a {box_name} login</a>."
+msgid ""
+"When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+"_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
+"plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
+"information and system altering abilities are limited to users belonging to "
+"admin group."
+msgstr ""
+"Etkinleştirildiğinde,Tiny Tiny RSS'e erişim ağ sunucusunda <a href=\"/tt-rss"
+"\">/tt-rss</a> yolundan mümkün olacaktır. Herhangi bir <a href=\"/plinth/sys/"
+"users\">{box_name} kullanıcısı, ki oturumu olmalıdır</a> tarafından "
+"kullanılabilir."
+
+#: plinth/modules/cockpit/__init__.py:58
+msgid "Currently only limited functionality is available."
+msgstr ""
+
 #: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
@@ -310,19 +351,19 @@ msgstr "Saat diliminin ayarlanmasında hata: {exception}"
 msgid "Time zone set"
 msgstr "Saat dilimi ayarlandı"
 
-#: plinth/modules/deluge/__init__.py:40
+#: plinth/modules/deluge/__init__.py:41
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:42
+#: plinth/modules/deluge/__init__.py:43
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Web İstemcisi"
 
-#: plinth/modules/deluge/__init__.py:45
+#: plinth/modules/deluge/__init__.py:46
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge, ağ arayüzü sunan bir BitTorrent istemcisidir."
 
-#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/deluge/__init__.py:48
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\">/deluge</a> path on the web server. The default password is 'deluge', but "
@@ -717,16 +758,16 @@ msgstr ""
 msgid "Last update"
 msgstr "Son güncelleme"
 
-#: plinth/modules/ejabberd/__init__.py:45
+#: plinth/modules/ejabberd/__init__.py:46
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:47
-#: plinth/modules/matrixsynapse/__init__.py:43
+#: plinth/modules/ejabberd/__init__.py:48
+#: plinth/modules/matrixsynapse/__init__.py:44
 msgid "Chat Server"
 msgstr "Sohbet Sunucusu"
 
-#: plinth/modules/ejabberd/__init__.py:50
+#: plinth/modules/ejabberd/__init__.py:51
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -734,7 +775,7 @@ msgstr ""
 "XMPP açık ve standardize edilmiş bir iletişim protokolüdür. Burada ejabberd "
 "isimli XMPP sunucusunu yapılandırıp çalıştırabilirsiniz."
 
-#: plinth/modules/ejabberd/__init__.py:54
+#: plinth/modules/ejabberd/__init__.py:55
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
@@ -1100,9 +1141,9 @@ msgid ""
 "log to the bug report."
 msgstr ""
 "Bunlar, bu ağ arayüzü için durum kütüğünün son %(num_lines)s satırıdır. Bir "
-"hata raporu göndermek istiyorsanız lütfen <a href=\""
-"https://github.com/freedombox/Plinth/issues\">hata izleyicisini</a> "
-"kullanınız ve bu durum kütüğünü ekleyiniz."
+"hata raporu göndermek istiyorsanız lütfen <a href=\"https://github.com/"
+"freedombox/Plinth/issues\">hata izleyicisini</a> kullanınız ve bu durum "
+"kütüğünü ekleyiniz."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1116,15 +1157,15 @@ msgstr ""
 "Hata raporunu göndermeden önce lütfen kütükten parolaları ve diğer kişisel "
 "verileri kaldırınız."
 
-#: plinth/modules/ikiwiki/__init__.py:41
+#: plinth/modules/ikiwiki/__init__.py:42
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:43
+#: plinth/modules/ikiwiki/__init__.py:44
 msgid "Wiki and Blog"
 msgstr "Viki ve Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:46
+#: plinth/modules/ikiwiki/__init__.py:47
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -1137,7 +1178,7 @@ msgstr ""
 "bloglar ve vikiler (oluşturulduklarında) <a href=\"/ikiwiki\">/ikiwiki</a> "
 "adresinde erişilebilir olacaklardır."
 
-#: plinth/modules/ikiwiki/__init__.py:53
+#: plinth/modules/ikiwiki/__init__.py:54
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -1268,21 +1309,21 @@ msgstr "{name} silinemedi: {error}"
 msgid "Delete Wiki or Blog"
 msgstr "Viki ya da Blogu Sil"
 
-#: plinth/modules/infinoted/__init__.py:43
+#: plinth/modules/infinoted/__init__.py:44
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:46
 msgid "Gobby Server"
 msgstr "Gobby Sunucusu"
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:49
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr ""
 "infinoted, işbirliğine izin veren bir metin düzenleyici olan Gobby için bir "
 "sunucudur."
 
-#: plinth/modules/infinoted/__init__.py:51
+#: plinth/modules/infinoted/__init__.py:52
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -1613,11 +1654,11 @@ msgstr "{domain} alanı için sertifika başarılı bir şekilde silindi"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "{domain} alanı için sertifikanın silinmesi başarısız oldu: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:42
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/__init__.py:46
+#: plinth/modules/matrixsynapse/__init__.py:47
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -1634,7 +1675,7 @@ msgstr ""
 "kullanıcılar federasyon sayesinde tüm diğer Matrix sunucularındaki "
 "kullanıcılarla iletişimde bulunabilirler."
 
-#: plinth/modules/matrixsynapse/__init__.py:54
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -1710,15 +1751,15 @@ msgstr "Herkese açık kayıt etkinleştirildi"
 msgid "Public registration disabled"
 msgstr "Herkese açık kayıt devre dışı bırakıldı"
 
-#: plinth/modules/minetest/__init__.py:48
+#: plinth/modules/minetest/__init__.py:49
 msgid "Minetest"
 msgstr "Minetest"
 
-#: plinth/modules/minetest/__init__.py:50
+#: plinth/modules/minetest/__init__.py:51
 msgid "Block Sandbox"
 msgstr "Blok Kum Havuzu"
 
-#: plinth/modules/minetest/__init__.py:54
+#: plinth/modules/minetest/__init__.py:55
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -1958,15 +1999,15 @@ msgstr "Anahtar, anahtar sunucusuna yayınlandı."
 msgid "Error occurred while publishing key."
 msgstr "Anahtarın yayınlanmasında bir hata meydana geldi."
 
-#: plinth/modules/mumble/__init__.py:35
+#: plinth/modules/mumble/__init__.py:36
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:37
+#: plinth/modules/mumble/__init__.py:38
 msgid "Voice Chat"
 msgstr "Ses ile Sohbet"
 
-#: plinth/modules/mumble/__init__.py:46
+#: plinth/modules/mumble/__init__.py:47
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -1974,7 +2015,7 @@ msgstr ""
 "Mumble, açık kaynak, düşük gecikmeli, şifreli, yüksek kaliteli sesle sohbet "
 "yazılımıdır."
 
-#: plinth/modules/mumble/__init__.py:49
+#: plinth/modules/mumble/__init__.py:50
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3180,15 +3221,15 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "{url} konumuna {proxy} vekili vasıtasıyla tcp{kind} üzerinden eriş"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:43
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:44
+#: plinth/modules/quassel/__init__.py:45
 msgid "IRC Client"
 msgstr "IRC İstemcisi"
 
-#: plinth/modules/quassel/__init__.py:48
+#: plinth/modules/quassel/__init__.py:49
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -3205,7 +3246,7 @@ msgstr ""
 "da daha fazla Quassel istemcileri masaüstünden ya da mobil telefondan ona "
 "bağlanmak ve ondan bağlantıyı kesmek için kullanılabilir."
 
-#: plinth/modules/quassel/__init__.py:56
+#: plinth/modules/quassel/__init__.py:57
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -3217,15 +3258,15 @@ msgstr ""
 "downloads\">masaüstü</a> ve <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobil</a> cihaz istemcileri mevcuttur."
 
-#: plinth/modules/radicale/__init__.py:43
+#: plinth/modules/radicale/__init__.py:44
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:46
 msgid "Calendar and Addressbook"
 msgstr "Takvim ve Adres Defteri"
 
-#: plinth/modules/radicale/__init__.py:49
+#: plinth/modules/radicale/__init__.py:50
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3263,15 +3304,15 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Erişim izinleri yapılandırması güncellendi"
 
-#: plinth/modules/repro/__init__.py:38
+#: plinth/modules/repro/__init__.py:39
 msgid "repro"
 msgstr "repro"
 
-#: plinth/modules/repro/__init__.py:40
+#: plinth/modules/repro/__init__.py:41
 msgid "SIP Server"
 msgstr "SIP Sunucusu"
 
-#: plinth/modules/repro/__init__.py:43
+#: plinth/modules/repro/__init__.py:44
 msgid ""
 "repro provides various SIP services that a SIP softphone can utilize to "
 "provide audio and video calls as well as presence and instant messaging. "
@@ -3285,7 +3326,7 @@ msgstr ""
 "hesapları sağlar. Aynı zamanda e-postaya benzer bir şekilde diğer sunucular "
 "ile SIP bağlantılarını federe edecek bir vekil sunucu görevi de yapar."
 
-#: plinth/modules/repro/__init__.py:50
+#: plinth/modules/repro/__init__.py:51
 msgid ""
 "To make SIP calls, a client application is needed. Available clients include "
 "<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
@@ -3297,7 +3338,7 @@ msgstr ""
 "için) ve <a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple"
 "\"> CSipSimple</a>'ı (Android telefonlar için) içerir."
 
-#: plinth/modules/repro/__init__.py:55
+#: plinth/modules/repro/__init__.py:56
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\">web-based "
@@ -3312,15 +3353,15 @@ msgstr ""
 "sonra repro servisini tekrar başlatmak gerekir. Servisi devre dışı bırakıp "
 "tekrar etkinleştirin."
 
-#: plinth/modules/restore/__init__.py:36
+#: plinth/modules/restore/__init__.py:37
 msgid "reStore"
 msgstr "reStore"
 
-#: plinth/modules/restore/__init__.py:38
+#: plinth/modules/restore/__init__.py:39
 msgid "Unhosted Storage"
 msgstr "Barındırılmayan Depolama"
 
-#: plinth/modules/restore/__init__.py:42
+#: plinth/modules/restore/__init__.py:43
 #, python-brace-format
 msgid ""
 "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
@@ -3336,7 +3377,7 @@ msgstr ""
 "sunucusunda depolanabilir. reStore ile {box_name} kutunuz barındırılmayan "
 "depolama sunucunuz haline gelir."
 
-#: plinth/modules/restore/__init__.py:49
+#: plinth/modules/restore/__init__.py:50
 msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
@@ -3344,15 +3385,15 @@ msgstr ""
 "<a href='/restore/'>reStore ağ arayüzünde</a> hesap oluşturabilir ve "
 "düzenleyebilirsiniz."
 
-#: plinth/modules/roundcube/__init__.py:35
+#: plinth/modules/roundcube/__init__.py:36
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:37
+#: plinth/modules/roundcube/__init__.py:38
 msgid "Email Client"
 msgstr "E-posta İstemcisi"
 
-#: plinth/modules/roundcube/__init__.py:40
+#: plinth/modules/roundcube/__init__.py:41
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -3364,7 +3405,7 @@ msgstr ""
 "istemcilerinden beklediğiniz tüm işlevleri sağlar ve buna MIME desteği, "
 "adres defteri, klasör düzenleme, mesaj arama ve imlâ kontrolü de dahildir."
 
-#: plinth/modules/roundcube/__init__.py:46
+#: plinth/modules/roundcube/__init__.py:47
 msgid ""
 "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
 "the username and password of the email account you wish to access followed "
@@ -3379,7 +3420,7 @@ msgstr ""
 "tavsiye edilir), sunucu alanını <code>imaps://imap.example.com</code> gibi "
 "doldurun."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:54
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -3432,19 +3473,19 @@ msgstr "Kısıtlı erişimin ayarlanmasında hata: {exception}"
 msgid "Updated security configuration"
 msgstr "Güvenlik yapılandırması güncellendi"
 
-#: plinth/modules/shaarli/__init__.py:35
+#: plinth/modules/shaarli/__init__.py:36
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:37
+#: plinth/modules/shaarli/__init__.py:38
 msgid "Bookmarks"
 msgstr "Yer İmleri"
 
-#: plinth/modules/shaarli/__init__.py:40
+#: plinth/modules/shaarli/__init__.py:41
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli, yer imlerinizi kaydetmenize ve paylaşmanıza imkân verir."
 
-#: plinth/modules/shaarli/__init__.py:42
+#: plinth/modules/shaarli/__init__.py:43
 msgid ""
 "When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
 "a> path on the web server. Note that Shaarli only supports a single user "
@@ -3699,15 +3740,15 @@ msgstr ""
 "İkaz: sistem disk bölümünde düşük alan (%{percent_used} kullanıldı, "
 "{free_space} boş)."
 
-#: plinth/modules/syncthing/__init__.py:39
+#: plinth/modules/syncthing/__init__.py:40
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:41
+#: plinth/modules/syncthing/__init__.py:42
 msgid "File Synchronization"
 msgstr "Dosya eşleşmesi"
 
-#: plinth/modules/syncthing/__init__.py:44
+#: plinth/modules/syncthing/__init__.py:45
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -3719,7 +3760,7 @@ msgstr ""
 "oluşturulması, değiştirilmesi ya da silinmesi, Syncthing çalıştıran diğer "
 "tüm cihazlarda da otomatik olarak meydana gelecektir."
 
-#: plinth/modules/syncthing/__init__.py:49
+#: plinth/modules/syncthing/__init__.py:50
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -3737,7 +3778,7 @@ msgstr ""
 "{box_name} üzerindeki ağ arayüzü sadece \"admin\" yani yönetici grubuna ait "
 "kullanıcılar tarafından kullanılabilir."
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:57
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
@@ -3817,15 +3858,15 @@ msgstr "Bağlı tanıtıcılar"
 msgid "Remove"
 msgstr "Kaldır"
 
-#: plinth/modules/tor/__init__.py:42
+#: plinth/modules/tor/__init__.py:43
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:44
+#: plinth/modules/tor/__init__.py:45
 msgid "Anonymity Network"
 msgstr "Anonimlik Ağı"
 
-#: plinth/modules/tor/__init__.py:47
+#: plinth/modules/tor/__init__.py:48
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -3839,36 +3880,36 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html\">Tor "
 "Tarayıcısını</a> kullanmanızı tavsiye eder."
 
-#: plinth/modules/tor/__init__.py:72 plinth/modules/tor/__init__.py:114
+#: plinth/modules/tor/__init__.py:84 plinth/modules/tor/__init__.py:126
 msgid "Tor Anonymity Network"
 msgstr "Tor Anonimlik Ağı"
 
-#: plinth/modules/tor/__init__.py:78 plinth/modules/tor/__init__.py:122
+#: plinth/modules/tor/__init__.py:90 plinth/modules/tor/__init__.py:134
 msgid "Tor Bridge Relay"
 msgstr "Tor Köprü Aktarması"
 
-#: plinth/modules/tor/__init__.py:100 plinth/modules/tor/__init__.py:143
+#: plinth/modules/tor/__init__.py:112 plinth/modules/tor/__init__.py:155
 msgid "Tor Hidden Service"
 msgstr "Tor Gizli Servisi"
 
-#: plinth/modules/tor/__init__.py:162
+#: plinth/modules/tor/__init__.py:174
 msgid "Tor relay port available"
 msgstr "Tor geçit portu mevcuttur"
 
-#: plinth/modules/tor/__init__.py:170
+#: plinth/modules/tor/__init__.py:182
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 taşıma kayıtlıdır"
 
-#: plinth/modules/tor/__init__.py:176
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 taşıma kayıtlıdır"
 
-#: plinth/modules/tor/__init__.py:213
+#: plinth/modules/tor/__init__.py:225
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "{url} bağlantısına tcp{kind} üzerinden Tor vasıtasıyla eriş"
 
-#: plinth/modules/tor/__init__.py:224
+#: plinth/modules/tor/__init__.py:236
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "tcp{kind} üzerinden {url} konumunda Tor kullanımını teyit et"
@@ -4037,15 +4078,15 @@ msgstr "Kurulum güncellendi."
 msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
-#: plinth/modules/transmission/__init__.py:38
+#: plinth/modules/transmission/__init__.py:39
 msgid "Transmission"
 msgstr "Transmission"
 
-#: plinth/modules/transmission/__init__.py:40
+#: plinth/modules/transmission/__init__.py:41
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4054,7 +4095,7 @@ msgstr ""
 "BitTorrent dosya paylaşımını idare eder. BitTorrent'ın anonim olmadığını "
 "unutmayın."
 
-#: plinth/modules/transmission/__init__.py:46
+#: plinth/modules/transmission/__init__.py:47
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
@@ -4088,15 +4129,15 @@ msgstr ""
 "gösterilmektedir. Yeni bir parola ayarlamak için parolayı düz metin olarak "
 "girin."
 
-#: plinth/modules/ttrss/__init__.py:40
+#: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:42
+#: plinth/modules/ttrss/__init__.py:43
 msgid "News Feed Reader"
 msgstr "Haber Besleme Okuyucusu"
 
-#: plinth/modules/ttrss/__init__.py:45
+#: plinth/modules/ttrss/__init__.py:46
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -4106,7 +4147,7 @@ msgstr ""
 "ve haber toplamaları herhangi bir yerden okumaya imkân sağlamak için "
 "tasarlanmış bir haber besleme (RSS/Atom) okuyucusu ve toplayıcısıdır."
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
@@ -4118,7 +4159,7 @@ msgstr ""
 "users\">{box_name} kullanıcısı, ki oturumu olmalıdır</a> tarafından "
 "kullanılabilir."
 
-#: plinth/modules/ttrss/__init__.py:56
+#: plinth/modules/ttrss/__init__.py:57
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -4561,6 +4602,24 @@ msgstr "Giriş yap"
 #: plinth/templates/base.html:250 plinth/templates/index.html:166
 msgid "JavaScript license information"
 msgstr "JavaScript lisans bilgileri"
+
+#: plinth/templates/clients.html:24
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Web Clients"
+msgstr "IRC İstemcisi"
+
+#: plinth/templates/clients.html:37
+#, fuzzy
+#| msgid "Chat Client"
+msgid "Desktop Clients"
+msgstr "Sohbet İstemcisi"
+
+#: plinth/templates/clients.html:53
+#, fuzzy
+#| msgid "Email Client"
+msgid "Mobile Clients"
+msgstr "E-posta İstemcisi"
 
 #: plinth/templates/first_setup.html:37
 #, python-format

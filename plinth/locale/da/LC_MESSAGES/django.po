@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 21:13-0400\n"
+"POT-Creation-Date: 2017-11-06 11:49-0500\n"
 "PO-Revision-Date: 2016-07-03 21:44+0000\n"
 "Last-Translator: Mikkel Kirkgaard Nielsen <memb_weblate@mikini.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -177,6 +177,44 @@ msgstr "Konfiguration opdateret"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr ""
 
+#: plinth/modules/cockpit/__init__.py:40
+msgid "Cockpit"
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:42
+#, fuzzy
+#| msgid "Server domain"
+msgid "Server Administration"
+msgstr "Serverdomæne"
+
+#: plinth/modules/cockpit/__init__.py:46
+#, python-brace-format
+msgid ""
+"Cockpit is a server manager that makes it easy to administer GNU/Linux "
+"servers via a web browser. On a {box_name}, controls are available for many "
+"advanced functions that are not usually required. A web based terminal for "
+"console operations is also available."
+msgstr ""
+
+#: plinth/modules/cockpit/__init__.py:52
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server."
+msgid ""
+"When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+"_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
+"plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
+"information and system altering abilities are limited to users belonging to "
+"admin group."
+msgstr ""
+"Når aktiveret, vil Tiny Tiny RSS være tilgængelige på stien <a href=\"/tt-rss"
+"\">/tt-rss</a> på webserveren."
+
+#: plinth/modules/cockpit/__init__.py:58
+msgid "Currently only limited functionality is available."
+msgstr ""
+
 #: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
@@ -325,23 +363,23 @@ msgstr "Kunne ikke sætte tidszone: {exception}"
 msgid "Time zone set"
 msgstr "Tidszone gemt"
 
-#: plinth/modules/deluge/__init__.py:40
+#: plinth/modules/deluge/__init__.py:41
 #, fuzzy
 #| msgid "Enable Deluge"
 msgid "Deluge"
 msgstr "Aktiver Deluge"
 
-#: plinth/modules/deluge/__init__.py:42
+#: plinth/modules/deluge/__init__.py:43
 #, fuzzy
 #| msgid "BitTorrent Web Client (Deluge)"
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Webklient (Deluge)"
 
-#: plinth/modules/deluge/__init__.py:45
+#: plinth/modules/deluge/__init__.py:46
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge er en BitTorrent-klient som har et webbaseret brugerinterface."
 
-#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/deluge/__init__.py:48
 msgid ""
 "When enabled, the Deluge web client will be available from <a href=\"/deluge"
 "\">/deluge</a> path on the web server. The default password is 'deluge', but "
@@ -734,18 +772,18 @@ msgstr ""
 msgid "Last update"
 msgstr "Seneste opdatering"
 
-#: plinth/modules/ejabberd/__init__.py:45
+#: plinth/modules/ejabberd/__init__.py:46
 msgid "ejabberd"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:47
-#: plinth/modules/matrixsynapse/__init__.py:43
+#: plinth/modules/ejabberd/__init__.py:48
+#: plinth/modules/matrixsynapse/__init__.py:44
 #, fuzzy
 #| msgid "Web Server"
 msgid "Chat Server"
 msgstr "Webserver"
 
-#: plinth/modules/ejabberd/__init__.py:50
+#: plinth/modules/ejabberd/__init__.py:51
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -753,7 +791,7 @@ msgstr ""
 "XMPP er en åben og standardiseret kommunikationsprotokol. Her kan du "
 "aktivere og konfigurere din XMPP-server, kaldet ejabberd."
 
-#: plinth/modules/ejabberd/__init__.py:54
+#: plinth/modules/ejabberd/__init__.py:55
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "To actually communicate, you can use the <a href='/jwchat'>web client</a> "
@@ -1134,19 +1172,19 @@ msgid ""
 "before submitting the bug report."
 msgstr ""
 
-#: plinth/modules/ikiwiki/__init__.py:41
+#: plinth/modules/ikiwiki/__init__.py:42
 #, fuzzy
 #| msgid "wiki"
 msgid "ikiwiki"
 msgstr "wiki"
 
-#: plinth/modules/ikiwiki/__init__.py:43
+#: plinth/modules/ikiwiki/__init__.py:44
 #, fuzzy
 #| msgid "Wiki & Blog"
 msgid "Wiki and Blog"
 msgstr "Wiki & Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:46
+#: plinth/modules/ikiwiki/__init__.py:47
 #, fuzzy
 #| msgid ""
 #| "ikiwiki is a simple wiki and blog application. It supports several "
@@ -1164,7 +1202,7 @@ msgstr ""
 "kommentarer og RSS-feeds. Når aktiveret, vil blogge og wikier være "
 "tilgængelige på <a href=\"/ikiwiki\">/ikiwiki</a>."
 
-#: plinth/modules/ikiwiki/__init__.py:53
+#: plinth/modules/ikiwiki/__init__.py:54
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -1289,21 +1327,21 @@ msgstr "Kunne ikke slette {name}: {error}"
 msgid "Delete Wiki or Blog"
 msgstr "Slet Wiki eller Blog"
 
-#: plinth/modules/infinoted/__init__.py:43
+#: plinth/modules/infinoted/__init__.py:44
 msgid "infinoted"
 msgstr ""
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:46
 #, fuzzy
 #| msgid "Web Server"
 msgid "Gobby Server"
 msgstr "Webserver"
 
-#: plinth/modules/infinoted/__init__.py:48
+#: plinth/modules/infinoted/__init__.py:49
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr ""
 
-#: plinth/modules/infinoted/__init__.py:51
+#: plinth/modules/infinoted/__init__.py:52
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -1628,13 +1666,13 @@ msgstr "Certifikatet for domænet {domain} blev trukket tilbage"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Fejl ved tilbagetrækning af certifikatet for domænet {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:41
+#: plinth/modules/matrixsynapse/__init__.py:42
 #, fuzzy
 #| msgid "Chat Server (XMPP)"
 msgid "Matrix Synapse"
 msgstr "Chat-server (XMPP)"
 
-#: plinth/modules/matrixsynapse/__init__.py:46
+#: plinth/modules/matrixsynapse/__init__.py:47
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -1644,7 +1682,7 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:54
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid ""
 "To communicate, you can use the <a href=\"https://matrix.org/docs/projects/"
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
@@ -1713,17 +1751,17 @@ msgstr "Applikation aktiveret"
 msgid "Public registration disabled"
 msgstr "Applikation deaktiveret"
 
-#: plinth/modules/minetest/__init__.py:48
+#: plinth/modules/minetest/__init__.py:49
 msgid "Minetest"
 msgstr ""
 
-#: plinth/modules/minetest/__init__.py:50
+#: plinth/modules/minetest/__init__.py:51
 #, fuzzy
 #| msgid "Block Sandbox (Minetest)"
 msgid "Block Sandbox"
 msgstr "Block Testområde (Minetest)"
 
-#: plinth/modules/minetest/__init__.py:54
+#: plinth/modules/minetest/__init__.py:55
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -1972,17 +2010,17 @@ msgstr "Nøgle distribueret til nøgleserver."
 msgid "Error occurred while publishing key."
 msgstr "Fejl under distribuering af nøgle."
 
-#: plinth/modules/mumble/__init__.py:35
+#: plinth/modules/mumble/__init__.py:36
 msgid "Mumble"
 msgstr ""
 
-#: plinth/modules/mumble/__init__.py:37
+#: plinth/modules/mumble/__init__.py:38
 #, fuzzy
 #| msgid "Voice Chat (Mumble)"
 msgid "Voice Chat"
 msgstr "Tale-tjeneste (Mumble)"
 
-#: plinth/modules/mumble/__init__.py:46
+#: plinth/modules/mumble/__init__.py:47
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -1990,7 +2028,7 @@ msgstr ""
 "Mumble er open source software der tilbyder en højkvalitets tale-tjeneste "
 "med lav forsinkelse og kryptering."
 
-#: plinth/modules/mumble/__init__.py:49
+#: plinth/modules/mumble/__init__.py:50
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3224,17 +3262,17 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgå {url} med proxy {proxy} ved brug af tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:42
+#: plinth/modules/quassel/__init__.py:43
 msgid "Quassel"
 msgstr ""
 
-#: plinth/modules/quassel/__init__.py:44
+#: plinth/modules/quassel/__init__.py:45
 #, fuzzy
 #| msgid "Quassel IRC Client"
 msgid "IRC Client"
 msgstr "Quassel IRC-klient"
 
-#: plinth/modules/quassel/__init__.py:48
+#: plinth/modules/quassel/__init__.py:49
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -3251,7 +3289,7 @@ msgstr ""
 "kontinuerligt online, og du vil kunne bruge en eller flere Quassel-klienter "
 "fra en computer eller en mobil til at forbinde til den."
 
-#: plinth/modules/quassel/__init__.py:56
+#: plinth/modules/quassel/__init__.py:57
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -3263,17 +3301,17 @@ msgstr ""
 "\">computer</a> og <a href=\"http://quasseldroid.iskrembilen.com/\">mobile</"
 "a> enhed er tilgængelige."
 
-#: plinth/modules/radicale/__init__.py:43
+#: plinth/modules/radicale/__init__.py:44
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:45
+#: plinth/modules/radicale/__init__.py:46
 #, fuzzy
 #| msgid "Calendar and Addressbook (Radicale)"
 msgid "Calendar and Addressbook"
 msgstr "Kalender og Adressebog (Radicale)"
 
-#: plinth/modules/radicale/__init__.py:49
+#: plinth/modules/radicale/__init__.py:50
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -3313,17 +3351,17 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Konfiguration opdateret"
 
-#: plinth/modules/repro/__init__.py:38
+#: plinth/modules/repro/__init__.py:39
 msgid "repro"
 msgstr ""
 
-#: plinth/modules/repro/__init__.py:40
+#: plinth/modules/repro/__init__.py:41
 #, fuzzy
 #| msgid "DNS Server"
 msgid "SIP Server"
 msgstr "DNS-server"
 
-#: plinth/modules/repro/__init__.py:43
+#: plinth/modules/repro/__init__.py:44
 msgid ""
 "repro provides various SIP services that a SIP softphone can utilize to "
 "provide audio and video calls as well as presence and instant messaging. "
@@ -3338,7 +3376,7 @@ msgstr ""
 "bindeled for at fordele SIP-kommunikation til andre servere på internettet, "
 "på samme måde som email."
 
-#: plinth/modules/repro/__init__.py:50
+#: plinth/modules/repro/__init__.py:51
 msgid ""
 "To make SIP calls, a client application is needed. Available clients include "
 "<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
@@ -3350,7 +3388,7 @@ msgstr ""
 "og <a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple"
 "\">CSipSimple</a> (til Android-enheder)."
 
-#: plinth/modules/repro/__init__.py:55
+#: plinth/modules/repro/__init__.py:56
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\">web-based "
@@ -3365,17 +3403,17 @@ msgstr ""
 "det nødvendigt at genstarte repo-servicen. Deaktiver servicen og genaktiver "
 "den for at gøre dette."
 
-#: plinth/modules/restore/__init__.py:36
+#: plinth/modules/restore/__init__.py:37
 msgid "reStore"
 msgstr "reStore"
 
-#: plinth/modules/restore/__init__.py:38
+#: plinth/modules/restore/__init__.py:39
 #, fuzzy
 #| msgid "Unhosted Storage (reStore)"
 msgid "Unhosted Storage"
 msgstr "Ikke-hostet Lagerplads (reStore)"
 
-#: plinth/modules/restore/__init__.py:42
+#: plinth/modules/restore/__init__.py:43
 #, python-brace-format
 msgid ""
 "reStore is a server for <a href='https://unhosted.org/'>unhosted</a> web "
@@ -3391,7 +3429,7 @@ msgstr ""
 "efter brugerens valg. Med reStore bliver din {box_name} dit unhosted "
 "datalager."
 
-#: plinth/modules/restore/__init__.py:49
+#: plinth/modules/restore/__init__.py:50
 msgid ""
 "You can create and edit accounts in the <a href='/restore/'>reStore web-"
 "interface</a>."
@@ -3399,19 +3437,19 @@ msgstr ""
 "Du kan oprette og redigere kontoer i <a href='/restore/'>reStores "
 "webbrugerflade</a>."
 
-#: plinth/modules/roundcube/__init__.py:35
+#: plinth/modules/roundcube/__init__.py:36
 #, fuzzy
 #| msgid "Enable Roundcube"
 msgid "Roundcube"
 msgstr "Aktiver Roundcube"
 
-#: plinth/modules/roundcube/__init__.py:37
+#: plinth/modules/roundcube/__init__.py:38
 #, fuzzy
 #| msgid "Email Client (Roundcube)"
 msgid "Email Client"
 msgstr "Emailklient (Roundcube)"
 
-#: plinth/modules/roundcube/__init__.py:40
+#: plinth/modules/roundcube/__init__.py:41
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -3423,7 +3461,7 @@ msgstr ""
 "du forventer af en emailklient, inklusiv MIME-understøttelse, lagring af "
 "kontaktpersoner, mappe-administration, beskedsøgning og stavekontrol."
 
-#: plinth/modules/roundcube/__init__.py:46
+#: plinth/modules/roundcube/__init__.py:47
 msgid ""
 "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. Provide "
 "the username and password of the email account you wish to access followed "
@@ -3437,7 +3475,7 @@ msgstr ""
 "example.com</code>. Vil du bruge IMAP over SSL (hvilket anbefales) skal du "
 "også angive protokollen således <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:54
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -3488,21 +3526,21 @@ msgstr "Kunne ikke sætte tidszone: {exception}"
 msgid "Updated security configuration"
 msgstr "Generel Konfiguration"
 
-#: plinth/modules/shaarli/__init__.py:35
+#: plinth/modules/shaarli/__init__.py:36
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:37
+#: plinth/modules/shaarli/__init__.py:38
 #, fuzzy
 #| msgid "Bookmarks (Shaarli)"
 msgid "Bookmarks"
 msgstr "Bogmærker (Shaarli)"
 
-#: plinth/modules/shaarli/__init__.py:40
+#: plinth/modules/shaarli/__init__.py:41
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli tillader dig at gemme og dele bogmærker."
 
-#: plinth/modules/shaarli/__init__.py:42
+#: plinth/modules/shaarli/__init__.py:43
 msgid ""
 "When enabled, Shaarli will be available from <a href=\"/shaarli\">/shaarli</"
 "a> path on the web server. Note that Shaarli only supports a single user "
@@ -3753,15 +3791,15 @@ msgid ""
 "free)."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:39
+#: plinth/modules/syncthing/__init__.py:40
 msgid "Syncthing"
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:41
+#: plinth/modules/syncthing/__init__.py:42
 msgid "File Synchronization"
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:44
+#: plinth/modules/syncthing/__init__.py:45
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -3769,7 +3807,7 @@ msgid ""
 "other devices that also run Syncthing."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:49
+#: plinth/modules/syncthing/__init__.py:50
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -3780,7 +3818,7 @@ msgid ""
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:56
+#: plinth/modules/syncthing/__init__.py:57
 msgid ""
 "When enabled, Syncthing's web interface will be available from <a href=\"/"
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
@@ -3850,17 +3888,17 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:42
+#: plinth/modules/tor/__init__.py:43
 msgid "Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:44
+#: plinth/modules/tor/__init__.py:45
 #, fuzzy
 #| msgid "Tor Anonymity Network"
 msgid "Anonymity Network"
 msgstr "Tor Anonymiseringstjeneste"
 
-#: plinth/modules/tor/__init__.py:47
+#: plinth/modules/tor/__init__.py:48
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -3874,37 +3912,37 @@ msgstr ""
 "du bruger <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor-browseren</a>."
 
-#: plinth/modules/tor/__init__.py:72 plinth/modules/tor/__init__.py:114
+#: plinth/modules/tor/__init__.py:84 plinth/modules/tor/__init__.py:126
 msgid "Tor Anonymity Network"
 msgstr "Tor Anonymiseringstjeneste"
 
-#: plinth/modules/tor/__init__.py:78 plinth/modules/tor/__init__.py:122
+#: plinth/modules/tor/__init__.py:90 plinth/modules/tor/__init__.py:134
 #, fuzzy
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: plinth/modules/tor/__init__.py:100 plinth/modules/tor/__init__.py:143
+#: plinth/modules/tor/__init__.py:112 plinth/modules/tor/__init__.py:155
 msgid "Tor Hidden Service"
 msgstr "Tor Skjult Tjeneste"
 
-#: plinth/modules/tor/__init__.py:162
+#: plinth/modules/tor/__init__.py:174
 msgid "Tor relay port available"
 msgstr "Tor videresendelsesport tilgængelig"
 
-#: plinth/modules/tor/__init__.py:170
+#: plinth/modules/tor/__init__.py:182
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport registreret"
 
-#: plinth/modules/tor/__init__.py:176
+#: plinth/modules/tor/__init__.py:188
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registreret"
 
-#: plinth/modules/tor/__init__.py:213
+#: plinth/modules/tor/__init__.py:225
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tilgå URL {url} ved brug af tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:224
+#: plinth/modules/tor/__init__.py:236
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekræft brug af Tor på {url} ved brug af tcp{kind}"
@@ -4067,19 +4105,19 @@ msgstr "Konfiguration opdateret."
 msgid "An error occurred during configuration."
 msgstr "Der opstod en fejl under konfigurationen."
 
-#: plinth/modules/transmission/__init__.py:38
+#: plinth/modules/transmission/__init__.py:39
 #, fuzzy
 #| msgid "Transmission BitTorrent"
 msgid "Transmission"
 msgstr "Transmission BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:40
+#: plinth/modules/transmission/__init__.py:41
 #, fuzzy
 #| msgid "Deluge BitTorrent"
 msgid "BitTorrent"
 msgstr "Deluge BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4088,7 +4126,7 @@ msgstr ""
 "Transmission håndterer BitTorrent fildeling. Bemærk at BitTorrent ikke "
 "anonymiserer trafik."
 
-#: plinth/modules/transmission/__init__.py:46
+#: plinth/modules/transmission/__init__.py:47
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr "Tilgå webbrugerfladen på <a href=\"/transmission\">/transmission</a>."
@@ -4120,17 +4158,17 @@ msgstr ""
 "forvansket hash-format. Indtast et password i ren tekst for at ændre "
 "kodeordet."
 
-#: plinth/modules/ttrss/__init__.py:40
+#: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:42
+#: plinth/modules/ttrss/__init__.py:43
 #, fuzzy
 #| msgid "News Feed Reader (Tiny Tiny RSS)"
 msgid "News Feed Reader"
 msgstr "Nyhedsstrømlæser (Tiny Tiny RSS)"
 
-#: plinth/modules/ttrss/__init__.py:45
+#: plinth/modules/ttrss/__init__.py:46
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -4140,7 +4178,7 @@ msgstr ""
 "er designet til at læse nyheder på farten, men samtidig føles så meget som "
 "en rigtig desktop-applikation som muligt."
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
@@ -4153,7 +4191,7 @@ msgstr ""
 "Når aktiveret, vil Tiny Tiny RSS være tilgængelige på stien <a href=\"/tt-rss"
 "\">/tt-rss</a> på webserveren."
 
-#: plinth/modules/ttrss/__init__.py:56
+#: plinth/modules/ttrss/__init__.py:57
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -4605,6 +4643,24 @@ msgstr "Log ind"
 #: plinth/templates/base.html:250 plinth/templates/index.html:166
 msgid "JavaScript license information"
 msgstr ""
+
+#: plinth/templates/clients.html:24
+#, fuzzy
+#| msgid "Quassel IRC Client"
+msgid "Web Clients"
+msgstr "Quassel IRC-klient"
+
+#: plinth/templates/clients.html:37
+#, fuzzy
+#| msgid "IRC Client (Quassel)"
+msgid "Desktop Clients"
+msgstr "IRC-klient (Quassel)"
+
+#: plinth/templates/clients.html:53
+#, fuzzy
+#| msgid "Email Client (Roundcube)"
+msgid "Mobile Clients"
+msgstr "Emailklient (Roundcube)"
 
 #: plinth/templates/first_setup.html:37
 #, python-format
