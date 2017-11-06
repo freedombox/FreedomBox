@@ -345,10 +345,10 @@
         <para>Recent images for supported targets are available here: </para>
         <itemizedlist>
           <listitem>
-            <para>Official Images: <ulink url="http://ftp.freedombox.org/pub/freedombox/"/> </para>
+            <para>Official Images: <ulink url="https://freedombox.org/download/"/> </para>
           </listitem>
           <listitem>
-            <para>Official Images: <ulink url="http://ftp.skolelinux.org/pub/freedombox/"/> </para>
+            <para>Official Images: <ulink url="https://ftp.freedombox.org/pub/freedombox/"/> </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -862,6 +862,26 @@ file = /etc/radicale/rights</screen>
         <title>Using Roundcube</title>
         <para>After Roundcube is installed, it can be accessed at <code>https://&lt;your freedombox&gt;/roundcube</code>. </para>
       </section>
+    </section>
+    <section>
+      <title>File Synchronization (Syncthing)</title>
+      <para>With <emphasis>Syncthing</emphasis> installed on your FreedomBox, you can synchronize content from other devices to your FreedomBox and vice-versa. For example, you can keep the photos taken on your mobile phone synchronized to your FreedomBox. </para>
+      <para><emphasis role="strong">Note:</emphasis> Syncthing is available in FreedomBox starting with Plinth version 0.14. </para>
+      <para>Users should keep in mind that Syncthing is a peer-to-peer synchronization solution, not a client-server one. This means that the FreedomBox isn't really the server and your other devices clients. They're all devices from Syncthing's perspective. You can use Syncthing to synchronize your files between any of your devices. The advantage that FreedomBox provides is that it is a server that's always running. Suppose you want your photos on your phone to be synchronized to your laptop, if you simply sync the photos to the FreedomBox, the laptop can get them from the FreedomBox whenever it comes online the next time. You don't have to be worried about your other devices being online for synchronization. If your FreedomBox is one of the devices set up with your Syncthing shared folder, you can rest assured that your other devices will eventually get the latest files once they come online. </para>
+      <para>After installation follow the instructions in the <ulink url="https://docs.syncthing.net/intro/getting-started.html">getting started of the Syncthing project</ulink>.  Syncthing allows individual folders to be selectively shared with other devices. Devices must be paired up before sharing by scanning QR codes or entering the device ids manually. Syncthing has a discovery service for easily identifying the other devices on the same network having Syncthing installed. </para>
+      <para>In order to access to the web client of the Syncthing instance running on your FreedomBox, use the path */syncthing*. This web client is currently only accessible to the users of the FreedomBox that have administrator privileges, though it might be accessible to all FreedomBox users in a future release. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/Syncthing_GUI.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>Syncthing_GUI.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para>Syncthing has android apps available on the <ulink url="https://f-droid.org/repository/browse/?fdid=com.nutomic.syncthingandroid">F-Droid</ulink> and <ulink url="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid">Google Play</ulink> app stores. Cross-platform desktop apps are also available. </para>
+      <para>To learn more about Syncthing, please visit their <ulink url="https://syncthing.net">official website</ulink> and <ulink url="https://docs.syncthing.net">documentation</ulink>.  </para>
     </section>
     <section>
       <title>IRC Client (Quassel)</title>
@@ -6740,6 +6760,37 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.16.0 (2017-11-06)</title>
+        <section>
+          <title>Added</title>
+          <itemizedlist>
+            <listitem>
+              <para>Add mobile, web and desktop client info for modules. </para>
+            </listitem>
+            <listitem>
+              <para>Enable django SecurityMiddleware to improve security ratings. </para>
+            </listitem>
+            <listitem>
+              <para>cockpit: New module for server administration and web terminal. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Fixed</title>
+          <itemizedlist>
+            <listitem>
+              <para>letsencrypt: Fix internal server error when obtaining a certificate. </para>
+            </listitem>
+            <listitem>
+              <para>ejabberd: Fix LDAP server entry in config file during setup. </para>
+            </listitem>
+            <listitem>
+              <para>jsxc: Fix outdated URLs for connecting to local ejabberd server. </para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
       <section>
         <title>Plinth v0.15.3 (2017-10-20)</title>
         <section>
