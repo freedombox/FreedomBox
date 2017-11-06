@@ -1,6 +1,32 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.16.0] - 2017-11-06
+## Added
+- Add mobile, web and desktop client info for modules.
+- users: After setup, enable and restart slapd and nslcd.
+- debian: Handle jsxc links creation in upstream.
+- Enable django SecurityMiddleware to improve security ratings.
+- cockpit: New module for server administration and web terminal.
+- vagrant: Install dependency packages during install/provisioning.
+
+## Changed
+- Switched from Travis CI to Circle CI.
+- Change localization platform details from Transifex to Weblate.
+- Converted docs to markdown.
+- debian: Switch to native package.
+- diaspora: Update tests for better temp directory creation.
+
+## Fixed
+- Fix formatting in LICENSES file.
+- letsencrypt: Log info about obtain/revoke only if actually attempted.
+- letsencrypt: Fix tests requiring sudo.
+- letsencrypt: Fix internal server error when obtaining a certificate.
+- ejabberd: Fix LDAP server entry in config file during setup.
+- ejabberd, jsxc, apache: Rename out-dated "http-bind" to "bosh".
+- letsencrypt: Disable test when sudo is not available.
+- tests: Use a temporary directory for testing actions.
+
 ## [0.15.3] - 2017-10-20
 ### Changed
 - Rename Disks to Storage.
@@ -370,6 +396,7 @@ All notable changes to this project will be documented in this file.
 - Fixed issue that could allow someone to start a module setup process
   without being logged in to Plinth.
 
+[0.16.0]: https://github.com/freedombox/Plinth/compare/v0.15.3...v0.16.0
 [0.15.3]: https://github.com/freedombox/Plinth/compare/v0.15.2...v0.15.3
 [0.15.2]: https://github.com/freedombox/Plinth/compare/v0.15.1...v0.15.2
 [0.15.1]: https://github.com/freedombox/Plinth/compare/v0.15.0...v0.15.1
