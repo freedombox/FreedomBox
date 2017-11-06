@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Syncthing.
 """
@@ -30,8 +29,7 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.client import desktop_client, mobile_client, web_client
 
-
-version = 1
+version = 2
 
 managed_services = ['syncthing']
 
@@ -53,7 +51,8 @@ description = [
           'instance of Syncthing that may be used by multiple users.  Each '
           'user\'s set of devices may be synchronized with a distinct set of '
           'folders.  The web interface on {box_name} is only available for '
-          'users belonging to the "admin" group.'), box_name=_(cfg.box_name)),
+          'users belonging to the "admin" group.'),
+        box_name=_(cfg.box_name)),
     _('When enabled, Syncthing\'s web interface will be available from '
       '<a href="/syncthing/">/syncthing</a>.  Desktop and mobile clients are '
       'also <a href="https://syncthing.net/">available</a>.'),
@@ -61,14 +60,18 @@ description = [
 
 web_clients = [web_client(name='Syncthing', url='/syncthing')]
 
-desktop_clients = [desktop_client(name='Syncthing',
-                                  url='https://syncthing.net/')]
+desktop_clients = [
+    desktop_client(name='Syncthing', url='https://syncthing.net/')
+]
 
-mobile_clients = [mobile_client(
-    name='Syncthing', fully_qualified_name='com.nutomic.syncthingandroid',
-    fdroid_url='https://f-droid.org/packages/com.nutomic.syncthingandroid/',
-    play_store_url='https://play.google.com/store/apps/details?id=com.nutomic'
-                    '.syncthingandroid')]
+mobile_clients = [
+    mobile_client(
+        name='Syncthing',
+        fully_qualified_name='com.nutomic.syncthingandroid',
+        fdroid_url='https://f-droid.org/packages/com.nutomic.syncthingandroid/',
+        play_store_url='https://play.google.com/store/apps/details?'
+        'id=com.nutomic.syncthingandroid')
+]
 
 service = None
 
@@ -76,7 +79,8 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index', short_description)
+    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -98,7 +102,11 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'syncthing', ['enable'])
+    helper.call('setup', actions.superuser_run, 'syncthing', ['setup'])
+
+    if not old_version:  # Do not enable if user disabled intentionally.
+        helper.call('post', actions.superuser_run, 'syncthing', ['enable'])
+
     global service
     if service is None:
         service = service_module.Service(
@@ -110,14 +118,20 @@ def setup(helper, old_version=None):
             enable=enable,
             disable=disable,
             is_running=is_running)
-    helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', add_shortcut)
+
+    if is_enabled():
+        helper.call('post', service.notify_enabled, None, True)
+        helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut(
-        'syncthing', name, short_description=short_description, url='/syncthing/', login_required=True)
+        'syncthing',
+        name,
+        short_description=short_description,
+        url='/syncthing/',
+        login_required=True)
 
 
 def is_running():
@@ -127,8 +141,8 @@ def is_running():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('syncthing@syncthing') and
-            action_utils.webserver_is_enabled('syncthing-plinth'))
+    return (action_utils.service_is_enabled('syncthing@syncthing')
+            and action_utils.webserver_is_enabled('syncthing-plinth'))
 
 
 def enable():
