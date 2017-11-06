@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for Cockpit module.
 """
@@ -24,12 +23,12 @@ from django.conf.urls import url
 from plinth.views import ServiceView
 from plinth.modules import cockpit
 
-
 urlpatterns = [
-    url(r'^apps/cockpit/$', ServiceView.as_view(
-        service_id=cockpit.managed_services[0],
-        diagnostics_module_name="cockpit",
-        description=cockpit.description,
-        show_status_block=True
-    ), name='index'),
+    url(r'^sys/cockpit/$',
+        ServiceView.as_view(
+            service_id=cockpit.managed_services[0],
+            diagnostics_module_name='cockpit',
+            description=cockpit.description,
+            show_status_block=True),
+        name='index'),
 ]
