@@ -1,0 +1,139 @@
+#!/usr/bin/python3
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for Cockpit.
+"""
+
+import argparse
+import augeas
+
+from plinth import action_utils
+
+CONFIG_FILE = '/etc/cockpit/cockpit.conf'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparser = subparsers.add_parser(
+        'setup', help='Setup Cockpit configuration')
+    subparser.add_argument(
+        'domain_names', nargs='*', help='Domain names to be allowed')
+    subparsers.add_parser('enable', help='Enable Cockpit')
+    subparsers.add_parser('disable', help='Disable Cockpit')
+    subparser = subparsers.add_parser(
+        'add-domain',
+        help='Allow a new domain to be origin for Cockpit\'s WebSocket')
+    subparser.add_argument('domain_name', help='Domain name to be allowed')
+    subparser = subparsers.add_parser(
+        'remove-domain',
+        help='Disallow a new domain from being origin for Cockpit\'s '
+        'WebSocket')
+    subparser.add_argument('domain_name', help='Domain name to be removed')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(arguments):
+    """Setup Cockpit configuration."""
+    aug = load_augeas()
+    origins = [
+        _get_origin_from_domain(domain) for domain in arguments.domain_names
+    ]
+    origins += ['https://localhost', 'https://localhost:4430']
+    _set_origin_domains(aug, origins)
+    aug.set('/files' + CONFIG_FILE + '/WebService/UrlRoot', '/_cockpit/')
+    aug.save()
+
+    with action_utils.WebserverChange() as webserver_change:
+        webserver_change.enable('proxy_wstunnel', kind='module')
+        webserver_change.enable('cockpit-freedombox')
+
+    action_utils.service_restart('cockpit.socket')
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.service_enable('cockpit.socket')
+    action_utils.webserver_enable('cockpit-freedombox')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('cockpit-freedombox')
+    action_utils.service_disable('cockpit.socket')
+
+
+def _get_origin_domains(aug):
+    """Return the list of allowed origin domains."""
+    origins = aug.get('/files' + CONFIG_FILE + '/WebService/Origins')
+    return set(origins.split())
+
+
+def _set_origin_domains(aug, origins):
+    """Set the list of allowed origin domains."""
+    aug.set('/files' + CONFIG_FILE + '/WebService/Origins', ' '.join(origins))
+
+
+def _get_origin_from_domain(domain):
+    """Return the origin that should be allowed for a domain."""
+    return 'https://{domain}'.format(domain=domain)
+
+
+def subcommand_add_domain(arguments):
+    """Allow a new domain to be origin for Cockpit's WebSocket."""
+    aug = load_augeas()
+    origins = _get_origin_domains(aug)
+    origins.add(_get_origin_from_domain(arguments.domain_name))
+    _set_origin_domains(aug, origins)
+    aug.save()
+
+
+def subcommand_remove_domain(arguments):
+    """Disallow a domain from being origin for Cockpit's WebSocket."""
+    aug = load_augeas()
+    origins = _get_origin_domains(aug)
+    origins.remove(_get_origin_from_domain(arguments.domain_name))
+    _set_origin_domains(aug, origins)
+    aug.save()
+
+
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
+    aug.set('/augeas/load/inifile/incl[last() + 1]', CONFIG_FILE)
+    aug.load()
+    return aug
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
