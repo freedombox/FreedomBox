@@ -34,11 +34,13 @@ urlpatterns = [
 
     # captcha urls are public
     url(r'image/(?P<key>\w+)/$',
-        public(cviews.captcha_image), name='captcha-image',
-        kwargs={'scale': 1}),
+        public(cviews.captcha_image), name='captcha-image', kwargs={
+            'scale': 1
+        }),
     url(r'image/(?P<key>\w+)@2/$',
-        public(cviews.captcha_image), name='captcha-image-2x',
-        kwargs={'scale': 2}),
+        public(cviews.captcha_image), name='captcha-image-2x', kwargs={
+            'scale': 2
+        }),
     url(r'audio/(?P<key>\w+)/$',
         public(cviews.captcha_audio), name='captcha-audio'),
     url(r'refresh/$', public(cviews.captcha_refresh), name='captcha-refresh'),
