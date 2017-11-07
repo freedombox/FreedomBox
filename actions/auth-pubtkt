@@ -89,18 +89,21 @@ def subcommand_create_key_pair(_):
             os.chmod(fil, 0o440)
 
 
-def create_ticket(pkey, uid, validuntil, ip=None, tokens=None,
-                  udata=None, graceperiod=None, extra_fields=None):
+def create_ticket(pkey,
+                  uid,
+                  validuntil,
+                  ip=None,
+                  tokens=None,
+                  udata=None,
+                  graceperiod=None,
+                  extra_fields=None):
     """Create and return a signed mod_auth_pubtkt ticket."""
     fields = [
-        'uid={}'.format(uid),
-        'validuntil={}'.format(validuntil, type='d'),
-        ip and 'cip={}'.format(ip),
-        tokens and 'tokens={}'.format(tokens),
-        graceperiod and 'graceperiod={}'.format(graceperiod, type='d'),
-        udata and 'udata={}'.format(udata),
-        extra_fields and ';'.join(
-            ['{}={}'.format(k, v) for k, v in extra_fields])
+        'uid={}'.format(uid), 'validuntil={}'.format(validuntil, type='d'), ip
+        and 'cip={}'.format(ip), tokens and 'tokens={}'.format(tokens),
+        graceperiod and 'graceperiod={}'.format(graceperiod, type='d'), udata
+        and 'udata={}'.format(udata), extra_fields
+        and ';'.join(['{}={}'.format(k, v) for k, v in extra_fields])
     ]
     data = ';'.join(filter(None, fields))
     signature = 'sig={}'.format(sign(pkey, data))
@@ -120,15 +123,22 @@ def subcommand_generate_ticket(arguments):
     tokens = arguments.tokens
     with open(private_key_file, 'r') as fil:
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
-    valid_until = minutes_from_now(30)
-    grace_period = minutes_from_now(25)
+    valid_until = seconds_from_now(30)
+    grace_period = seconds_from_now(25)
     print(create_ticket(
         pkey, uid, valid_until, tokens=tokens, graceperiod=grace_period))
 
 
-def minutes_from_now(minutes):
-    """Return a timestamp at the given number of minutes from now."""
-    return (datetime.datetime.now() + datetime.timedelta(minutes)).timestamp()
+# def minutes_from_now(minutes):
+#     """Return a timestamp at the given number of minutes from now."""
+#     return (datetime.datetime.now() + datetime.timedelta(
+#         0, minutes * 60)).timestamp()
+
+
+def seconds_from_now(seconds):
+    """Return a timestamp at the given number of seconds from now."""
+    return (
+        datetime.datetime.now() + datetime.timedelta(0, seconds)).timestamp()
 
 
 def main():

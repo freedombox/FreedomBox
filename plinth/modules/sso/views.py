@@ -23,7 +23,6 @@ import os
 import urllib
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 
@@ -112,10 +111,11 @@ class SSOLogoutView(LogoutView):
         return response
 
 
-@login_required
 def refresh(request):
     """Simulate cookie refresh - redirect logged in user with a new cookie"""
     redirect_url = request.GET.get(REDIRECT_FIELD_NAME, '')
     response = HttpResponseRedirect(redirect_url)
     response.delete_cookie(SSO_COOKIE_NAME)
+    # Redirect with cookie doesn't work with 300 series
+    response.status_code = 200
     return set_ticket_cookie(request.user, response)
