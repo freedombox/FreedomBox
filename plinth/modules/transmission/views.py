@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for configuring Transmission Server
 """
@@ -42,11 +41,15 @@ class TransmissionServiceView(views.ServiceView):
 
     def get_initial(self):
         """Get the current settings from Transmission server."""
-        configuration = actions.superuser_run(
-            'transmission', ['get-configuration'])
+        configuration = actions.superuser_run('transmission',
+                                              ['get-configuration'])
         status = json.loads(configuration)
-        status = {key.translate(str.maketrans({'-': '_'})): value
-                  for key, value in status.items()}
+        status = {
+            key.translate(str.maketrans({
+                '-': '_'
+            })): value
+            for key, value in status.items()
+        }
         status['is_enabled'] = self.service.is_enabled()
         status['is_running'] = self.service.is_running()
         status['hostname'] = socket.gethostname()
@@ -58,17 +61,14 @@ class TransmissionServiceView(views.ServiceView):
         old_status = form.initial
         new_status = form.cleaned_data
 
-        if old_status['download_dir'] != new_status['download_dir'] or \
-           old_status['rpc_username'] != new_status['rpc_username'] or \
-           old_status['rpc_password'] != new_status['rpc_password']:
+        if old_status['download_dir'] != new_status['download_dir']:
             new_configuration = {
                 'download-dir': new_status['download_dir'],
-                'rpc-username': new_status['rpc_username'],
-                'rpc-password': new_status['rpc_password'],
             }
 
-            actions.superuser_run('transmission', ['merge-configuration'],
-                                  input=json.dumps(new_configuration).encode())
+            actions.superuser_run(
+                'transmission', ['merge-configuration'],
+                input=json.dumps(new_configuration).encode())
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
