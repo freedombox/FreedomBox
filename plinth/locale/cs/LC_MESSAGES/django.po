@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-06 11:49-0500\n"
-"PO-Revision-Date: 2017-10-24 11:46+0000\n"
+"PO-Revision-Date: 2017-11-08 06:45+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
-"cs/>\n"
+"Language-Team: Czech "
+"<https://hosted.weblate.org/projects/freedombox/plinth/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2.17\n"
+"X-Generator: Weblate 2.18-dev\n"
 
 #: plinth/action_utils.py:259
 #, python-brace-format
@@ -169,13 +169,11 @@ msgstr "Přeposílat na sadu přeposílajících DNS serverů"
 
 #: plinth/modules/cockpit/__init__.py:40
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:42
-#, fuzzy
-#| msgid "Server domain"
 msgid "Server Administration"
-msgstr "Doména serveru"
+msgstr "Správa serveru"
 
 #: plinth/modules/cockpit/__init__.py:46
 #, python-brace-format
@@ -185,13 +183,13 @@ msgid ""
 "advanced functions that are not usually required. A web based terminal for "
 "console operations is also available."
 msgstr ""
+"Cockpit je rozhraní pro snadnou správu GNU/Linux serverů prostřednictvím "
+"webového prohlížeče. Na {box_name} jsou k dispozici ovládací prvky pro mnoho "
+"pokročilých funkcí, které nejsou obvykle potřeba. Je také k dispozici "
+"terminál pro příkazový řádek."
 
 #: plinth/modules/cockpit/__init__.py:52
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server. It can be accessed by any <a href=\"/"
-#| "plinth/sys/users\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
@@ -199,13 +197,15 @@ msgid ""
 "information and system altering abilities are limited to users belonging to "
 "admin group."
 msgstr ""
-"Pokud je zapnuto, Tiny Tiny RSS bude k dispozici v umístění <a href=\"/tt-rss"
-"\">/tt-rss</a> umístění na webovém serveru. Je přístupné pro libovolného <a "
-"href=\"/plinth/sys/users\">uživatele s účtem na {box_name}</a>."
+"Pokud je zapnuto, Cockpit bude k dispozici v umístění <a href=\"/cockpit\""
+">/cockpit</a> umístění na webovém serveru. Je přístupné pro libovolného <a "
+"href=\"/plinth/sys/users\">uživatele s účtem na {box_name}</a>. Citlivé "
+"informace a pozměňování systému jsou omezeny na uživatele, náležející do "
+"skupiny admin."
 
 #: plinth/modules/cockpit/__init__.py:58
 msgid "Currently only limited functionality is available."
-msgstr ""
+msgstr "Zatím je k dispozici pouze omezená funkčnost."
 
 #: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
 #: plinth/modules/dynamicdns/dynamicdns.py:148
@@ -756,7 +756,7 @@ msgstr "Minulá aktualizace"
 
 #: plinth/modules/ejabberd/__init__.py:46
 msgid "ejabberd"
-msgstr ""
+msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:48
 #: plinth/modules/matrixsynapse/__init__.py:44
@@ -772,11 +772,7 @@ msgstr ""
 "nastavit a spustit vlastní XMPP server, zvaný ejabberd."
 
 #: plinth/modules/ejabberd/__init__.py:55
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "To actually communicate, you can use the web client or any other <a "
-#| "href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP "
-#| "client</a>."
+#, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
 "client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/' "
@@ -784,8 +780,10 @@ msgid ""
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
 "Pro vlastní komunikaci, můžete použít webového klienta nebo jakéhokoli <a "
-"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP klienta</"
-"a>."
+"href=\"/plinth/apps/jsxc\">webového klienta</a> nebo libovolného dalšího <a "
+"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP "
+"klienta</a>. Když je zapnutý, ejabberd je přístupný libovolnému <a href=\""
+"/plinth/sys/users\">uživateli s účtem na {box_name}</a>."
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
@@ -799,6 +797,10 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"Když je zapnuto, váš {box_name} bude ukládat historii zpráv. To umožňuje "
+"synchronizaci konverzace mezi vícero klienty a čtení historie chatovací "
+"místnosti více uživatelů. Závisí na nastavení klienta, zda bude historie "
+"ukládána jako čitelný text nebo zašifrovaně."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -1161,6 +1163,10 @@ msgid ""
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
 "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
 msgstr ""
+"ikiwiki je jednoduchá wiki a blog. Podporuje několik zjednodušených "
+"značkovacích jazyků, včetně Markdown, běžné funkce blogu, jako například "
+"komentáře a RSS kanály. Když je zapnuté, blogy a wiki budou dostupné na <a "
+"href=\"/ikiwiki\">/ikiwiki</a> (po vytvoření)."
 
 #: plinth/modules/ikiwiki/__init__.py:54
 #, python-brace-format
@@ -1170,6 +1176,11 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+"Pouze uživatelé {box_name} ze skupiny <b>admin</b> mohou <i>vytvářet</i> a "
+"<i>spravovat</i> blogy a wiki, ale libovolný uživatel ze skupiny <b>wiki</b> "
+"může <i>upravovat</i> ty stávající. V <a href=\"/plinth/sys/users\">"
+"Nastavení uživatele</a> můžete tato oprávnění změnit nebo přidat nové "
+"uživatele."
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
@@ -1289,7 +1300,7 @@ msgstr "Smazat wiki nebo blog"
 
 #: plinth/modules/infinoted/__init__.py:44
 msgid "infinoted"
-msgstr ""
+msgstr "infinoted"
 
 #: plinth/modules/infinoted/__init__.py:46
 msgid "Gobby Server"
@@ -1312,7 +1323,7 @@ msgstr ""
 
 #: plinth/modules/jsxc/__init__.py:36
 msgid "JSXC"
-msgstr ""
+msgstr "JSXC"
 
 #: plinth/modules/jsxc/__init__.py:38
 msgid "Chat Client"
@@ -1343,6 +1354,11 @@ msgid ""
 "domain.  It does so by proving itself to be the owner of a domain to Let's "
 "Encrypt, a certificate authority (CA)."
 msgstr ""
+"Digitální certifikát umožňuje uživatelům webové služby ověřit identitu "
+"služby a zabezpečeně s ní komunikovat. {box_name} může automaticky získat a "
+"nastavit digitální certifikáty pro každou z dostupných domén. Činí tak "
+"dokázáním že je vlastníkem domény vůči Let's Encrypt, certifikační autoritě "
+"(CA)."
 
 #: plinth/modules/letsencrypt/__init__.py:58
 msgid ""
@@ -1443,7 +1459,11 @@ msgid ""
 "%(box_name)s manage its renewal process. This also enables other apps to use "
 "that certificate, so most users would not prompted with security warnings "
 "when using them."
-msgstr "%(box_name)s"
+msgstr ""
+"Pokud pro svou doménu máte certifikát od Let's Encryp, je možné ponechat "
+"proces obnovování na %(box_name)s. Toto také umožní používání certifikátu "
+"ostatními aplikacemi, takže jejim uživatelům by se pak neměla zobrazovat "
+"varování ohledně zabezpečení."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:167
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:174
@@ -1471,6 +1491,8 @@ msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
 "as soon as it is renewed."
 msgstr ""
+"Když je zapnuto, %(box_name)s může zajistit že všechny ostatní aplikace "
+"mohou použít certifikát jakmile je obnoven."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:192
 msgid ""
@@ -1479,38 +1501,25 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:226
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let %(box_name)s manage certificate renewal of\n"
-#| "                <b>%(current_domain)s</b>\n"
-#| "              "
+#, python-format
 msgid ""
 "\n"
 "                  Use certificate of %(current_domain)s for <b>ejabberd</b>\n"
 "                "
 msgstr ""
 "\n"
-"                Nechat správu obnovování certifikátu pro doménu\n"
-"                <b>%(current_domain)s</b> na %(box_name)s\n"
-"              "
+"                  Použít certifikát %(current_domain)s pro <b>ejabberd</b>\n"
+"                "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:230
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Let %(box_name)s manage certificate renewal of the "
-#| "current domain\n"
-#| "              "
 msgid ""
 "\n"
 "                  Use certificate of the current domain for <b>ejabberd</b>\n"
 "                "
 msgstr ""
 "\n"
-"                Nechat správu obnovování certifikátu pro stávající doménu na "
-"%(box_name)s\n"
-"              "
+"                  Použít certifikát stávající domény pro <b>ejabberd</b>\n"
+"                "
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:240
 #, python-format
@@ -4384,22 +4393,16 @@ msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
 #: plinth/templates/clients.html:24
-#, fuzzy
-#| msgid "IRC Client"
 msgid "Web Clients"
-msgstr "IRC klient"
+msgstr "Web klienti"
 
 #: plinth/templates/clients.html:37
-#, fuzzy
-#| msgid "Chat Client"
 msgid "Desktop Clients"
-msgstr "Chatovací klient"
+msgstr "Desktop klienti"
 
 #: plinth/templates/clients.html:53
-#, fuzzy
-#| msgid "Email Client"
 msgid "Mobile Clients"
-msgstr "E-mailový klient"
+msgstr "Klienti pro mobilní platformy"
 
 #: plinth/templates/first_setup.html:37
 #, python-format
