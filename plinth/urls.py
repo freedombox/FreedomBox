@@ -33,16 +33,17 @@ urlpatterns = [
     url(r'^sys/$', views.system_index, name='system'),
 
     # captcha urls are public
-    url(r'image/(?P<key>\w+)/$',
-        public(cviews.captcha_image), name='captcha-image', kwargs={
-            'scale': 1
-        }),
-    url(r'image/(?P<key>\w+)@2/$',
-        public(cviews.captcha_image), name='captcha-image-2x', kwargs={
-            'scale': 2
-        }),
-    url(r'audio/(?P<key>\w+)/$',
+    url(r'^captcha/image/(?P<key>\w+)/$',
+        public(cviews.captcha_image), name='captcha-image',
+        kwargs={'scale': 1}),
+    url(r'^captcha/image/(?P<key>\w+)@2/$',
+        public(cviews.captcha_image), name='captcha-image-2x',
+        kwargs={'scale': 2}),
+    url(r'^captcha/audio/(?P<key>\w+)/$',
         public(cviews.captcha_audio), name='captcha-audio'),
-    url(r'refresh/$', public(cviews.captcha_refresh), name='captcha-refresh'),
+    url(r'^captcha/refresh/$',
+        public(cviews.captcha_refresh), name='captcha-refresh'),
+
+    # locked url from django-axes
     url(r'locked/$', public(CaptchaLoginView.as_view()), name='locked_out'),
 ]
