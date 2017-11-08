@@ -26,9 +26,7 @@ from plinth.utils import non_admin_view
 
 urlpatterns = [
     url(r'^accounts/sso/login/$',
-        public(SSOLoginView.as_view()),
-        name='sso-login'),
-    url(r'^accounts/sso/refresh-pubtkt/$',
-        non_admin_view(refresh),
+        public(SSOLoginView.as_view()), name='sso-login'),
+    url(r'^accounts/sso/refresh/$', non_admin_view(refresh),
         name='sso-refresh'),
 ]
