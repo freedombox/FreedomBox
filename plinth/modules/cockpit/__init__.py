@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Cockpit.
 """
@@ -102,7 +101,9 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     """Add a shortcut the frontpage."""
-    frontpage.add_shortcut('cockpit', name, url='/_cockpit/',
+    frontpage.add_shortcut('cockpit', name,
+                           short_description=short_description,
+                           url='/_cockpit/',
                            login_required=True)
 
 
@@ -128,8 +129,9 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/_cockpit/', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/_cockpit/',
+                                         check_certificate=False))
 
     return results
 
