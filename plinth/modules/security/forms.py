@@ -33,6 +33,6 @@ class SecurityForm(forms.Form):
                     'without further authorization.'))
     fail2ban_enabled = forms.BooleanField(
         label=_('Fail2ban (recommended)'), required=False,
-        help_text=_('When this option is enabled, fail2ban will limit brute force '
+        help_text=_('When this option is enabled, Fail2ban will limit brute force '
                     'break-in attempts to the SSH server and other password protected '
                     'internet-services which are enabled.'))
