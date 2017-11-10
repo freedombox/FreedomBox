@@ -24,7 +24,7 @@ import unittest
 
 from plinth import __main__ as plinth_main
 
-from ..config import ConfigurationForm
+from ..forms import ConfigurationForm
 
 
 class TestConfig(unittest.TestCase):

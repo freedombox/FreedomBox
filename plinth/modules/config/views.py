@@ -16,35 +16,23 @@
 #
 
 """
-Plinth module for configuring hostname and domainname.
+Plinth views for basic system configuration
 """
-
-from django import forms
-from django.contrib import messages
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.conf import settings
-from django.template.response import TemplateResponse
 from django.utils import translation
-from django.utils.translation import ugettext as _, ugettext_lazy
-import logging
-import os
-import re
-import socket
+from django.utils.translation import ugettext as _
+from django.template.response import TemplateResponse
+from django.contrib import messages
 
-import plinth
+from plinth.modules import config
+from .forms import ConfigurationForm
+from plinth.signals import pre_hostname_change, post_hostname_change
 from plinth import actions
-from plinth import cfg
-from plinth.menu import main_menu
+from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.modules import firewall
 from plinth.modules.names import SERVICES
-from plinth.signals import pre_hostname_change, post_hostname_change
-from plinth.signals import domainname_change
-from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
 
-
-HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
+import logging
+import socket
 
 LOGGER = logging.getLogger(__name__)
 
@@ -52,12 +40,6 @@ LOGGER = logging.getLogger(__name__)
 def get_hostname():
     """Return the hostname"""
     return socket.gethostname()
-
-
-def get_domainname():
-    """Return the domainname"""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
 
 
 def get_language(request):
@@ -71,110 +53,9 @@ def get_language(request):
                                request.LANGUAGE_CODE)
 
 
-class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
-    def clean(self, value):
-        """Clean and validate the field value"""
-        if value:
-            value = value.strip()
-
-        return super(TrimmedCharField, self).clean(value)
-
-
-def domain_label_validator(domainname):
-    """Validate domain name labels."""
-    for label in domainname.split('.'):
-        if not re.match(HOSTNAME_REGEX, label):
-            raise ValidationError(_('Invalid domain name'))
-
-
-class ConfigurationForm(forms.Form):
-    """Main system configuration form"""
-    # See:
-    # https://tools.ietf.org/html/rfc952
-    # https://tools.ietf.org/html/rfc1035#section-2.3.1
-    # https://tools.ietf.org/html/rfc1123#section-2
-    # https://tools.ietf.org/html/rfc2181#section-11
-    hostname = TrimmedCharField(
-        label=ugettext_lazy('Hostname'),
-        help_text=format_lazy(ugettext_lazy(
-            'Hostname is the local name by which other devices on the local '
-            'network can reach your {box_name}.  It must start and end with '
-            'an alphabet or a digit and have as interior characters only '
-            'alphabets, digits and hyphens.  Total length must be 63 '
-            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
-        validators=[
-            validators.RegexValidator(
-                HOSTNAME_REGEX,
-                ugettext_lazy('Invalid hostname'))])
-
-    domainname = TrimmedCharField(
-        label=ugettext_lazy('Domain Name'),
-        help_text=format_lazy(ugettext_lazy(
-            'Domain name is the global name by which other devices on the '
-            'Internet can reach your {box_name}.  It must consist of labels '
-            'separated by dots.  Each label must start and end with an '
-            'alphabet or a digit and have as interior characters only '
-            'alphabets, digits and hyphens.  Length of each label must be 63 '
-            'characters or less.  Total length of domain name must be 253 '
-            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
-        required=False,
-        validators=[
-            validators.RegexValidator(
-                r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
-                ugettext_lazy('Invalid domain name')),
-            domain_label_validator])
-
-    language = forms.ChoiceField(
-        label=ugettext_lazy('Language'),
-        help_text=ugettext_lazy(
-            'Language for this web administration interface'),
-        required=False)
-
-    def __init__(self, *args, **kwargs):
-        """Set limited language choices."""
-        super().__init__(*args, **kwargs)
-        languages = []
-        for language_code, language_name in settings.LANGUAGES:
-            locale_code = translation.to_locale(language_code)
-            plinth_dir = os.path.dirname(plinth.__file__)
-            if language_code == 'en' or os.path.exists(
-                    os.path.join(plinth_dir, 'locale', locale_code)):
-                languages.append((language_code, language_name))
-
-        self.fields['language'].choices = languages
-
-
-def init():
-    """Initialize the module"""
-    menu = main_menu.get('system')
-    menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
-                     'config:index')
-
-    # Register domain with Name Services module.
-    domainname = get_domainname()
-    if domainname:
-        try:
-            domainname_services = firewall.get_enabled_services(
-                zone='external')
-        except actions.ActionError:
-            # This happens when firewalld is not installed.
-            # TODO: Are these services actually enabled?
-            domainname_services = [service[0] for service in SERVICES]
-    else:
-        domainname_services = None
-
-    domain_added.send_robust(sender='config', domain_type='domainname',
-                             name=domainname,
-                             description=ugettext_lazy('Domain Name'),
-                             services=domainname_services)
-
-
 def index(request):
     """Serve the configuration form"""
     status = get_status(request)
-
-    form = None
 
     if request.method == 'POST':
         form = ConfigurationForm(request.POST, initial=status,
@@ -196,7 +77,7 @@ def index(request):
 def get_status(request):
     """Return the current status"""
     return {'hostname': get_hostname(),
-            'domainname': get_domainname(),
+            'domainname': config.get_domainname(),
             'language': get_language(request)}
 
 
@@ -235,7 +116,7 @@ def _apply_changes(request, old_status, new_status):
 def set_hostname(hostname):
     """Sets machine hostname to hostname"""
     old_hostname = get_hostname()
-    domainname = get_domainname()
+    domainname = config.get_domainname()
 
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert to ASCII.
@@ -258,7 +139,7 @@ def set_hostname(hostname):
 
 def set_domainname(domainname):
     """Sets machine domain name to domainname"""
-    old_domainname = get_domainname()
+    old_domainname = config.get_domainname()
 
     # Domain name should be ASCII. If it's unicode, convert to ASCII.
     domainname = str(domainname)
