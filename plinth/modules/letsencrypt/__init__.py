@@ -29,7 +29,7 @@ from plinth import cfg
 from plinth.errors import ActionError
 from plinth.menu import main_menu
 from plinth.modules import names
-from plinth.modules.config import config
+from plinth.modules import config
 from plinth.utils import format_lazy
 from plinth import module_loader
 from plinth.signals import domainname_change, domain_added, domain_removed

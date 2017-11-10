@@ -29,7 +29,7 @@ from django.views.decorators.http import require_POST
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules.config import config
+from plinth.modules import config
 from plinth.modules import letsencrypt
 
 logger = logging.getLogger(__name__)

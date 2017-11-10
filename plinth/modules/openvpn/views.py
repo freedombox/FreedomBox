@@ -30,7 +30,7 @@ import logging
 from .forms import OpenVpnForm
 from plinth import actions
 from plinth.modules import openvpn
-from plinth.modules.config import config
+from plinth.modules import config
 
 logger = logging.getLogger(__name__)
 

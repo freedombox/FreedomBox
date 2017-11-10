@@ -19,13 +19,50 @@
 Plinth module for basic system configuration
 """
 
-from . import config
-from .config import init
+from django.utils.translation import ugettext_lazy
 
-__all__ = ['config', 'init']
+from plinth.menu import main_menu
+from plinth.modules import firewall
+from plinth import actions
+from plinth.signals import domain_added
+from plinth.modules.names import SERVICES
+
+import socket
+
 
 version = 1
 
 is_essential = True
 
 depends = ['firewall', 'names']
+
+
+def get_domainname():
+    """Return the domainname"""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
+
+
+def init():
+    """Initialize the module"""
+    menu = main_menu.get('system')
+    menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
+                     'config:index')
+
+    # Register domain with Name Services module.
+    domainname = get_domainname()
+    if domainname:
+        try:
+            domainname_services = firewall.get_enabled_services(
+                zone='external')
+        except actions.ActionError:
+            # This happens when firewalld is not installed.
+            # TODO: Are these services actually enabled?
+            domainname_services = [service[0] for service in SERVICES]
+    else:
+        domainname_services = None
+
+    domain_added.send_robust(sender='config', domain_type='domainname',
+                             name=domainname,
+                             description=ugettext_lazy('Domain Name'),
+                             services=domainname_services)

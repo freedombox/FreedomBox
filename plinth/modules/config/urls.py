@@ -21,8 +21,7 @@ URLs for the Configuration module
 
 from django.conf.urls import url
 
-from . import config as views
-
+from . import views
 
 urlpatterns = [
     url(r'^sys/config/$', views.index, name='index'),
