@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Transmission server
 """
@@ -28,7 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client
-
+from plinth.modules.users import add_group
 
 version = 1
 
@@ -47,7 +46,7 @@ description = [
     _('Access the web interface at <a href="/transmission">/transmission</a>.')
 ]
 
-web_clients = [web_client(name='Transmission',url='/transmission')]
+web_clients = [web_client(name='Transmission', url='/transmission')]
 
 reserved_usernames = ['debian-transmission']
 
@@ -57,15 +56,20 @@ service = None
 def init():
     """Intialize the Transmission module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-save', 'transmission:index', short_description)
+    menu.add_urlname(name, 'glyphicon-save', 'transmission:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
+            managed_services[0],
+            name,
+            ports=['http', 'https'],
+            is_external=True,
+            is_enabled=is_enabled,
+            enable=enable,
+            disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -75,32 +79,45 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
 
-    new_configuration = {'rpc-whitelist-enabled': False}
-    helper.call('post', actions.superuser_run, 'transmission',
-                ['merge-configuration'],
-                input=json.dumps(new_configuration).encode())
+    new_configuration = {
+        'rpc-whitelist-enabled': False,
+        'rpc-authentication-required': False
+    }
+    helper.call(
+        'post',
+        actions.superuser_run,
+        'transmission', ['merge-configuration'],
+        input=json.dumps(new_configuration).encode())
 
     helper.call('post', actions.superuser_run, 'transmission', ['enable'])
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
+            managed_services[0],
+            name,
+            ports=['http', 'https'],
+            is_external=True,
+            is_enabled=is_enabled,
+            enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    add_group('bit-torrent')
 
 
 def add_shortcut():
     frontpage.add_shortcut(
-            'transmission', name, short_description=short_description, url='/transmission',
-            login_required=True)
+        'transmission',
+        name,
+        short_description=short_description,
+        url='/transmission',
+        login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('transmission-daemon') and
-            action_utils.webserver_is_enabled('transmission-plinth'))
+    return (action_utils.service_is_enabled('transmission-daemon')
+            and action_utils.webserver_is_enabled('transmission-plinth'))
 
 
 def enable():
@@ -121,7 +138,8 @@ def diagnose():
 
     results.append(action_utils.diagnose_port_listening(9091, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(9091, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/transmission', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all(
+            'https://{host}/transmission', check_certificate=False))
 
     return results
