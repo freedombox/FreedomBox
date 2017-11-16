@@ -17,27 +17,27 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.templatetags.plinth_extras import Desktop_OS
 from plinth.utils import format_lazy
 from plinth import cfg
 
-clients = [
-    {
-        'name': _('Gobby'),
-        'description': _('Gobby is a collaborative text editor'),
-        'usage': format_lazy(_('start Gobby and select "Connect to Server" and '
-                               'enter your {box_name}\'s domain name.'),
-                             box_name=_(cfg.box_name)),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'Windows',
-                'url': 'http://releases.0x539.de/gobby/gobby-stable.exe'
-            },
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'gobby-infinote'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('Gobby'),
+    'description':
+        _('Gobby is a collaborative text editor'),
+    'usage':
+        format_lazy(
+            _('start Gobby and select "Connect to Server" and '
+              'enter your {box_name}\'s domain name.'),
+            box_name=_(cfg.box_name)),
+    'platforms': [{
+        'type': 'download',
+        'os': Desktop_OS.WINDOWS.value,
+        'url': 'http://releases.0x539.de/gobby/gobby-stable.exe'
+    }, {
+        'type': 'apt',
+        'os': 'Debian',
+        'package_name': 'gobby'
+    }]
+}]

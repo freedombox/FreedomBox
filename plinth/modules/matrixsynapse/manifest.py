@@ -16,46 +16,47 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('Riot'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'fully_qualified_name': 'im.vector.alpha',
-                'url': 'https://play.google.com/store/apps/details?id=im'
-                       '.vector.alpha '
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'os_version': '>=6.0',
-                'store_name': 'fdroid_store',
-                'fully_qualified_name': 'im.vector.alpha',
-                'url': 'https://f-droid.org/packages/im.vector.alpha/'
-            },
-            {
-                'type': 'web',
-                'url': 'https://riot.im/app/#/home'
-            },
-            {
-                'type': 'download',
-                'os': 'Debian',
-                'url': 'https://riot.im/desktop.html'
-            },
-            {
-                'type': 'download',
-                'os': 'macOS',
-                'url': 'https://riot.im/desktop.html'
-            },
-            {
-                'type': 'download',
-                'os': 'Windows',
-                'os_version': '>=7',
-                'url': 'https://riot.im/desktop.html'
-            },
-        ]
-    }]
+clients = [{
+    'name':
+        _('Riot'),
+    'platforms': [
+        {
+            'type': 'store',
+            'os': Mobile_OS.ANDROID.value,
+            'store_name': Store.GOOGLE_PLAY.value,
+            'fully_qualified_name': 'im.vector.alpha',
+            'url': 'https://play.google.com/store/apps/details?id=im'
+                   '.vector.alpha '
+        },
+        {
+            'type': 'store',
+            'os': Mobile_OS.ANDROID.value,
+            'os_version': '>=6.0',
+            'store_name': Store.F_DROID.value,
+            'fully_qualified_name': 'im.vector.alpha',
+            'url': 'https://f-droid.org/packages/im.vector.alpha/'
+        },
+        {
+            'type': 'web',
+            'url': 'https://riot.im/app/#/home'
+        },
+        {
+            'type': 'download',
+            'os': Desktop_OS.GNU_LINUX.value,
+            'url': 'https://riot.im/desktop.html'
+        },
+        {
+            'type': 'download',
+            'os': Desktop_OS.MAC_OS.value,
+            'url': 'https://riot.im/desktop.html'
+        },
+        {
+            'type': 'download',
+            'os': Desktop_OS.WINDOWS.value,
+            'os_version': '>=7',
+            'url': 'https://riot.im/desktop.html'
+        },
+    ]
+}]

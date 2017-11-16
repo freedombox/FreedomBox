@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for the Ejabberd module
 """
@@ -44,6 +43,7 @@ class EjabberdServiceView(ServiceView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context['domainname'] = ejabberd.get_domainname()
+        context['clients'] = ejabberd.clients
         return context
 
     def form_valid(self, form):

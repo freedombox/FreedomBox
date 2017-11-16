@@ -17,12 +17,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('ikiwiki'),
-        'platforms': [{
-            'type': 'web',
-            'relative_url': '/ikiwiki'
-        }]
-    }
-]
+clients = [{
+    'name': _('ikiwiki'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/ikiwiki'
+    }]
+}]

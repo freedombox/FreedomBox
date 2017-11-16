@@ -16,51 +16,48 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('DAVDroid'),
-        'usage': _('Enter the URL of the Radicale server (e.g. '
-                   'http://localhost:5232) and your user name. DAVdroid will '
-                   'show all existing calendars and address books and you can '
-                   'create new.'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'url': 'https://play.google.com/store/apps/details?id=at'
-                       '.bitfire.davdroid',
-                'fully_qualified_name': 'at.bitfire.davdroid'
-            }
-        ]
-    },
-    {
-        'name': _('GNOME Calendar'),
-        'platforms': [
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package-name': 'gnome-calendar'
-            }
-        ]
-    },
-    {
-        'name': _('Evolution'),
-        'description': _('Evolution is a personal information management '
-                         'application that provides integrated mail, '
-                         'calendaring and address book functionality.'),
-        'usage': _('In Evolution add a new calendar and address book '
-                   'respectively with WebDAV. Enter the URL of the Radicale '
-                   'server (e.g. http://localhost:5232) and your user name. '
-                   'Clicking on the search button will list the existing '
-                   'calendars and address books.'),
-        'platforms': [
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package-name': 'gnome-calendar'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('DAVDroid'),
+    'usage':
+        _('Enter the URL of the Radicale server (e.g. '
+          'http://localhost:5232) and your user name. DAVdroid will '
+          'show all existing calendars and address books and you can '
+          'create new.'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'url': 'https://play.google.com/store/apps/details?id=at'
+               '.bitfire.davdroid',
+        'fully_qualified_name': 'at.bitfire.davdroid'
+    }]
+}, {
+    'name':
+        _('GNOME Calendar'),
+    'platforms': [{
+        'type': 'apt',
+        'os': 'Debian',
+        'package-name': 'gnome-calendar'
+    }]
+}, {
+    'name':
+        _('Evolution'),
+    'description':
+        _('Evolution is a personal information management '
+          'application that provides integrated mail, '
+          'calendaring and address book functionality.'),
+    'usage':
+        _('In Evolution add a new calendar and address book '
+          'respectively with WebDAV. Enter the URL of the Radicale '
+          'server (e.g. http://localhost:5232) and your user name. '
+          'Clicking on the search button will list the existing '
+          'calendars and address books.'),
+    'platforms': [{
+        'type': 'apt',
+        'os': 'Debian',
+        'package-name': 'gnome-calendar'
+    }]
+}]

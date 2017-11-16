@@ -16,6 +16,7 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
 clients = [{
     'name':
@@ -31,8 +32,8 @@ clients = [{
           'and simulcasting.'),
     'platforms': [{
         'type': 'store',
-        'os': 'Android',
-        'store_name': 'google_play_store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
         'fully_qualified_name': 'org.jitsi.meet',
         'url': 'https://play.google.com/store/apps/details?id=org'
                '.jitsi.meet '
@@ -43,7 +44,7 @@ clients = [{
         'url': 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905'
     }, {
         'type': 'download',
-        'os': 'GNU/Linux',
+        'os': Desktop_OS.GNU_LINUX.value,
         'url': 'https://download.jitsi.org/jitsi/debian/'
     }, {
         'type': 'package',
@@ -51,12 +52,12 @@ clients = [{
         'name': 'jitsi'
     }, {
         'type': 'download',
-        'os': 'macOS',
+        'os': Desktop_OS.MAC_OS.value,
         'url': 'https://download.jitsi.org/jitsi/macosx/jitsi-latest'
                '.dmg '
     }, {
         'type': 'download',
-        'os': 'Windows',
+        'os': Desktop_OS.WINDOWS.value,
         'url': 'https://download.jitsi.org/jitsi/windows/jitsi-latest'
                '-x86.exe '
     }]
@@ -65,8 +66,8 @@ clients = [{
         _('CSipSimple'),
     'platforms': [{
         'type': 'store',
-        'os': 'Android',
-        'store_name': 'google_play_store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
         'fully_qualified_name': 'com.csipsimple',
         'url': 'https://play.google.com/store/apps/details?id=com'
                '.csipsimple '

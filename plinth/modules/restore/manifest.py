@@ -17,14 +17,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('reStore'),
-        'platforms': [
-            {
-                'type': 'web',
-                'relative_url': '/restore'
-            }
-        ]
-    }
-]
+clients = [{
+    'name': _('reStore'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/restore'
+    }]
+}]
