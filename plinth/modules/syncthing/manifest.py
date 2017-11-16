@@ -37,14 +37,6 @@ clients = [{
         'format': 'homebrew',
         'name': 'syncthing',
     }, {
-        'type':
-            'download',
-        'os':
-            'all',
-        'url':
-            'https://github.com/syncthing/syncthing/releases/tag/v{}'
-            .format(metadata['syncthing']['version'])
-    }, {
         'type': 'download',
         'os': Desktop_OS.GNU_LINUX.value,
         'arch': 'amd64',
@@ -73,7 +65,7 @@ clients = [{
         'store_name':
             Store.GOOGLE_PLAY.value,
         'fully_qualified_name':
-            'com.nutomic.syncthingandroid',
+            metadata['syncthing']['android-package-id'],
         'url':
             'https://play.google.com/store/apps/details?id={}'
             .format(metadata['syncthing']['android-package-id'])
@@ -85,7 +77,7 @@ clients = [{
         'store_name':
             Store.F_DROID.value,
         'fully_qualified_name':
-            'com.nutomic.syncthingandroid',
+            metadata['syncthing']['android-package-id'],
         'url':
             'https://f-droid.org/packages/{}'
             .format(metadata['syncthing']['android-package-id'])
