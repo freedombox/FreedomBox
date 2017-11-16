@@ -60,50 +60,39 @@
           {% for platform in client.platforms %}
             {% if platform.type == 'download' %}
           <div class="col-md-1 col-xs-2">
-                <a href="{{ platform.url }}">
-              {% if platform.os == 'Windows' %}
-                  <img class="os-icon" src="{% static 'theme/icons/windows.png' %}" />
-              {% elif platform.os == 'macOS' %}
-                  <img class="os-icon" src="{% static 'theme/icons/apple.png' %}" />
-              {% elif platform.os == 'GNU/Linux' %}
-                  <img class="os-icon" src="{% static 'theme/icons/gnu-linux.png' %}" />
-              {% endif %}
-                </a>
+              <a href="{{ platform.url }}">
+                  {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                    <img class="os-icon" src="{% static icon %}" />
+                  {% endwith %}
+              </a>
           </div>
-            {% endif %}
+          {% endif %}
           {% endfor %}
         </div>
         {% endif %}
-      {% endfor %}
+        {% endfor %}
     </ul>
 </div>
 {% endif %}
 
 {% if clients|has_mobile_clients %}
 <div class="clients-info">
-  {% load static %}
-  <p class="heading">{% trans "Mobile Clients" %}:</p>
+    {% load static %}
+    <p class="heading">{% trans "Mobile Clients" %}:</p>
     <ul>
-    {% for client in clients %}
-      {% if client|has_mobile_clients %}
+        {% for client in clients %}
+        {% if client|has_mobile_clients %}
         <li class="col-md-12 col-xs-12"><span>{{ client.name }}</span></li>
         <div class="row">
-        {% for platform in client.platforms %}
-          {% if platform.type == 'store' and platform.os == 'Android' %}
-            {% if platform.store_name == 'fdroid_store' %}
+            {% for platform in client.platforms %}
+            {% if platform.type == 'store' and platform.os == 'android' %}
             <div class="col-md-2 col-xs-4">
-              <a href="{{ platform.url }}">
-                <img class="store-icon" src="{% static 'theme/icons/f-droid.png' %}"/>
+                <a href="{{ platform.url }}">
+                  {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
+                    <img class="os-icon" src="{% static icon %}" />
+                  {% endwith %}
               </a>
             </div>
-            {% endif %}
-            {% if platform.store_name == 'google_play_store' %}
-            <div class="col-md-2 col-xs-4">
-              <a href="{{ platform.url }}">
-                <img class="store-icon" src="{% static 'theme/icons/google-play.png' %}"/>
-              </a>
-            </div>
-            {% endif %}
         {% endif %}
       {% endfor %}
       </div>

@@ -16,6 +16,7 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
 metadata = {
     'syncthing': {
@@ -45,21 +46,21 @@ clients = [{
             .format(metadata['syncthing']['version'])
     }, {
         'type': 'download',
-        'os': 'GNU/Linux',
+        'os': Desktop_OS.GNU_LINUX.value,
         'arch': 'amd64',
         'url': 'https://github.com/syncthing/syncthing/releases/'
                'download/v{0}/syncthing-linux-amd64-v{0}.tar.gz'
                .format(metadata['syncthing']['version']),
     }, {
         'type': 'download',
-        'os': 'macOS',
+        'os': Desktop_OS.MAC_OS.value,
         'arch': 'amd64',
         'url': 'https://github.com/syncthing/syncthing/releases/'
                'download/v{0}/syncthing-macosx-amd64-v{0}.tar.gz'
                .format(metadata['syncthing']['version']),
     }, {
         'type': 'download',
-        'os': 'Windows',
+        'os': Desktop_OS.WINDOWS.value,
         'arch': 'amd64',
         'url': 'https://github.com/syncthing/syncthing/releases/'
                'download/v{0}/syncthing-windows-amd64-v{0}.zip'
@@ -68,9 +69,9 @@ clients = [{
         'type':
             'store',
         'os':
-            'Android',
+            Mobile_OS.ANDROID.value,
         'store_name':
-            'google_play_store',
+            Store.GOOGLE_PLAY.value,
         'fully_qualified_name':
             'com.nutomic.syncthingandroid',
         'url':
@@ -80,9 +81,9 @@ clients = [{
         'type':
             'store',
         'os':
-            'Android',
+            Mobile_OS.ANDROID.value,
         'store_name':
-            'fdroid_store',
+            Store.F_DROID.value,
         'fully_qualified_name':
             'com.nutomic.syncthingandroid',
         'url':

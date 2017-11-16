@@ -17,8 +17,25 @@
 
 import os
 from django import template
+from enum import Enum
 
 register = template.Library()
+
+
+class Desktop_OS(Enum):
+    WINDOWS = 'windows'
+    MAC_OS = 'mac-os'
+    GNU_LINUX = 'gnu-linux'
+
+
+class Mobile_OS(Enum):
+    ANDROID = 'android'
+    IOS = 'ios'
+
+
+class Store(Enum):
+    GOOGLE_PLAY = 'google-play'
+    F_DROID = 'f-droid'
 
 
 def mark_active_menuitem(menu, path):
@@ -76,7 +93,8 @@ def has_web_clients(clients):
 @register.filter(name='has_mobile_clients')
 def has_mobile_clients(clients):
     """Filter to find out whether an application has mobile clients"""
-    return __check(clients, lambda x: x.get('os', '') == 'Android')
+    return __check(clients,
+                   lambda x: x.get('os', '') == Mobile_OS.ANDROID.value)
 
 
 @register.filter(name='has_desktop_clients')
@@ -84,4 +102,4 @@ def has_desktop_clients(clients):
     """Filter to find out whether an application has desktop clients"""
     return __check(
         clients,
-        lambda x: x.get('os', '') in ['Windows', 'macOS', 'GNU/Linux'])
+        lambda x: x.get('os', '') in [x.value for x in list(Desktop_OS)])
