@@ -29,7 +29,7 @@
     </button>
   </p>
 
-  <table id="clients" class="table table-bordered table-hover collapse">
+  <table id="clients" class="table table-hover collapse">
       {% if clients|has_web_clients %}
     {% for client in clients %}
       {% if client|has_web_clients %}
@@ -39,7 +39,7 @@
           <th> Web </th>
           <td> {{ client.name }} </td>
           <td>
-              <a href="{{ platform.relative_url }}">
+              <a href="{{ platform.url }}">
                   <button type="button" class="btn btn-success">Launch</button>
               </a>
           </td>
@@ -89,7 +89,7 @@
                   <div class="col-md-2 col-xs-4">
                       <a href="{{ platform.url }}">
                           {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                          <img class="os-icon" src="{% static icon %}" />
+                          <img class="store-icon" src="{% static icon %}" />
                           {% endwith %}
                       </a>
                   </div>

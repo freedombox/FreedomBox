@@ -83,6 +83,6 @@ clients = [{
             .format(metadata['syncthing']['android-package-id'])
     }, {
         'type': 'web',
-        'relative_url': '/syncthing'
+        'url': '/syncthing'
     }]
 }]

@@ -17,14 +17,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('Roundcube'),
-        'platforms': [
-            {
-                'type': 'web',
-                'relative_url': '/roundcube'
-            }
-        ]
-    }
-]
+clients = [{
+    'name': _('Roundcube'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/roundcube'
+    }]
+}]

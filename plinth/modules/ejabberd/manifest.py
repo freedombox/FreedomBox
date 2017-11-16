@@ -18,115 +18,101 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules.jsxc import manifest as jsxc_manifest
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('yaxim'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'fully_qualified_name': 'org.yaxim.androidclient',
-                'url': 'https://play.google.com/store/apps/details?id=org'
-                       '.yaxim.androidclient '
-            }]
-    },
-    {
-        'name': _('Bruno'),
-        'description': _('Bruno is a themed version of the open source '
-                         'yaxim app.'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'fully_qualified_name': 'org.yaxim.bruno',
-                'url': 'https://play.google.com/store/apps/details?id'
-                       '=org.yaxim.bruno '
-            }
-        ]
-    },
-    {
-        'name': _('Chat secure - Encrypted Messenger'),
-        'description': _('ChatSecure is a free and open source '
-                         'messaging app that features OTR encryption '
-                         'over XMPP. You can connect to an existing '
-                         'Google account, create new accounts on '
-                         'public XMPP servers (including via Tor), '
-                         'or even connect to your own server for '
-                         'extra security.'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'iOS',
-                'store_name': 'apple_store',
-                'url': 'https://itunes.apple.com/us/app/chatsecure'
-                       '/id464200063 '
-            }
-        ]
-    },
-    {
-        'name': _('Conversations'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'url': 'https://play.google.com/store/apps/details?id'
-                       '=eu.siacs.conversations ',
-                'fully_qualified_name': 'eu.siacs.conversations'
-            }
-        ]
-    },
-    {
-        'name': _('Dino'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'Debian',
-                'url': 'https://download.opensuse.org/repositories/network'
-                       ':/messaging:/xmpp:/dino/Debian_9.0/amd64/dino_0.0'
-                       '~git178.9d8e1e8_amd64.deb',
-            }
-        ]
-    },
-    {
-        'name': _('Gajim'),
-        'platforms': [
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'gajim'
-            },
-            {
-                'type': 'download',
-                'os': 'Windows',
-                'url': 'https://gajim.org/downloads/0.16/gajim-0.16.8-2.exe'
-            }
-        ]
-    },
-    {
-        'name': _('OneTeam'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'Windows',
-                'url': 'https://download.process-one.net/oneteam/release'
-                       '-installers/OneTeam.msi'
-            },
-            {
-                'type': 'download',
-                'os': 'macOS',
-                'url': 'https://download.process-one.net/oneteam/release'
-                       '-installers/OneTeam.dmg '
-            },
-            {
-                'type': 'download',
-                'os': 'Linux',
-                'url': 'https://download.process-one.net/oneteam/release'
-                       '-installers/oneteam.tar.bz2 '
-            }
-        ]
-    }
-].append(jsxc_manifest.clients)
+clients = [{
+    'name':
+        _('yaxim'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'fully_qualified_name': 'org.yaxim.androidclient',
+        'url': 'https://play.google.com/store/apps/details?id=org'
+               '.yaxim.androidclient '
+    }]
+}, {
+    'name':
+        _('Bruno'),
+    'description':
+        _('Bruno is a themed version of the open source '
+          'yaxim app.'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'fully_qualified_name': 'org.yaxim.bruno',
+        'url': 'https://play.google.com/store/apps/details?id'
+               '=org.yaxim.bruno '
+    }]
+}, {
+    'name':
+        _('Chat secure - Encrypted Messenger'),
+    'description':
+        _('ChatSecure is a free and open source '
+          'messaging app that features OTR encryption '
+          'over XMPP. You can connect to an existing '
+          'Google account, create new accounts on '
+          'public XMPP servers (including via Tor), '
+          'or even connect to your own server for '
+          'extra security.'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'iOS',
+        'store_name': 'apple_store',
+        'url': 'https://itunes.apple.com/us/app/chatsecure'
+               '/id464200063 '
+    }]
+}, {
+    'name':
+        _('Conversations'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'url': 'https://play.google.com/store/apps/details?id'
+               '=eu.siacs.conversations ',
+        'fully_qualified_name': 'eu.siacs.conversations'
+    }]
+}, {
+    'name':
+        _('Dino'),
+    'platforms': [{
+        'type': 'download',
+        'os': 'Debian',
+        'url': 'https://download.opensuse.org/repositories/network'
+               ':/messaging:/xmpp:/dino/Debian_9.0/amd64/dino_0.0'
+               '~git178.9d8e1e8_amd64.deb',
+    }]
+}, {
+    'name':
+        _('Gajim'),
+    'platforms': [{
+        'type': 'apt',
+        'os': 'Debian',
+        'package_name': 'gajim'
+    }, {
+        'type': 'download',
+        'os': Desktop_OS.WINDOWS.value,
+        'url': 'https://gajim.org/downloads/0.16/gajim-0.16.8-2.exe'
+    }]
+}, {
+    'name':
+        _('OneTeam'),
+    'platforms': [{
+        'type': 'download',
+        'os': Desktop_OS.WINDOWS.value,
+        'url': 'https://download.process-one.net/oneteam/release'
+               '-installers/OneTeam.msi'
+    }, {
+        'type': 'download',
+        'os': Desktop_OS.MAC_OS.value,
+        'url': 'https://download.process-one.net/oneteam/release'
+               '-installers/OneTeam.dmg '
+    }, {
+        'type': 'download',
+        'os': 'Linux',
+        'url': 'https://download.process-one.net/oneteam/release'
+               '-installers/oneteam.tar.bz2 '
+    }]
+}].append(jsxc_manifest.clients)

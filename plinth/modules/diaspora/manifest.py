@@ -19,32 +19,31 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.utils import format_lazy
 from . import get_configured_domain_name
+from plinth.templatetags.plinth_extras import Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('dandelion*'),
-        'description': _('It is an unofficial webview based client for the '
-                         'community-run, distributed social network diaspora*'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'os_version': '>4.2.0',
-                'store_name': 'fdroid_store',
-                'url': 'https://f-droid.org/repository/browse/?fdid=com'
-                       '.github.dfa.diaspora_android ',
-                'fully_qualified_name': 'com.github.dfa.diaspora_android'
-            }
-        ]
-    },
-    {
-        'name': _('diaspora*'),
-        'platforms': [
-            {
-                'type': 'web',
-                'url': format_lazy('https://diaspora.{host}',
-                                   host=get_configured_domain_name())
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('dandelion*'),
+    'description':
+        _('It is an unofficial webview based client for the '
+          'community-run, distributed social network diaspora*'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'os_version': '>4.2.0',
+        'store_name': Store.F_DROID.value,
+        'url': 'https://f-droid.org/repository/browse/?fdid=com'
+               '.github.dfa.diaspora_android ',
+        'fully_qualified_name': 'com.github.dfa.diaspora_android'
+    }]
+}, {
+    'name':
+        _('diaspora*'),
+    'platforms': [{
+        'type':
+            'web',
+        'url':
+            format_lazy('https://diaspora.{host}',
+                        host=get_configured_domain_name())
+    }]
+}]

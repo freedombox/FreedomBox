@@ -16,35 +16,30 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('Quassel'),
-        'platforms': [
-            {
-                'type': 'download',
-                'os': 'macOS',
-                'url': 'http://quassel-irc.org/pub/QuasselClient_MacOSX'
-                       '-x86_64_0.12.4.dmg '
-            },
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'quassel-client'
-            }
-        ]
-    },
-    {
-        'name': _('Quassseldroid'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play_store',
-                'url': 'https://play.google.com/store/apps/details?id=com'
-                       '.iskrembilen.quasseldroid',
-                'fully_qualified_name': 'com.iskrembilen.quasseldroid'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('Quassel'),
+    'platforms': [{
+        'type': 'download',
+        'os': Desktop_OS.MAC_OS.value,
+        'url': 'http://quassel-irc.org/pub/QuasselClient_MacOSX'
+               '-x86_64_0.12.4.dmg'
+    }, {
+        'type': 'apt',
+        'os': 'Debian',
+        'package_name': 'quassel-client'
+    }]
+}, {
+    'name':
+        _('Quassseldroid'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'url': 'https://play.google.com/store/apps/details?id=com'
+               '.iskrembilen.quasseldroid',
+        'fully_qualified_name': 'com.iskrembilen.quasseldroid'
+    }]
+}]

@@ -16,25 +16,20 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
 clients = [{
     'name':
         _('Mumble'),
     'platforms': [{
         'type': 'download',
-        'os': 'Windows',
-        'arch': 'i386',
-        'url': 'https://github.com/mumble-voip/mumble/releases'
-               '/download/1.2.19/mumble-1.2.19.msi '
-    }, {
-        'type': 'download',
-        'os': 'Windows(64-bit)',
+        'os': Desktop_OS.WINDOWS.value,
         'arch': 'amd64',
         'url': 'https://dl.mumble.info/mumble-1.3.0~2569~gd196a4b'
                '~snapshot.winx64.msi '
     }, {
         'type': 'download',
-        'os': 'macOS',
+        'os': Desktop_OS.MAC_OS.value,
         'url': 'https://github.com/mumble-voip/mumble/releases'
                '/download/1.2.19/Mumble-1.2.19.dmg '
     }, {
@@ -53,15 +48,15 @@ clients = [{
         _('Plumble'),
     'platforms': [{
         'type': 'store',
-        'os': 'Android',
-        'store_name': 'google_play_store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
         'url': 'https://play.google.com/store/apps/details?id=com'
                '.morlunk.mumbleclient.free ',
         'fully_qualified_name': 'com.morlunk.mumbleclient'
     }, {
         'type': 'store',
-        'os': 'Android',
-        'store_name': 'fdroid_store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.F_DROID.value,
         'url': 'https://play.google.com/store/apps/details?id=com'
                '.morlunk.mumbleclient.free ',
         'fully_qualified_name': 'com.morlunk.mumbleclient'

@@ -16,30 +16,26 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+from plinth.templatetags.plinth_extras import Mobile_OS, Store
 
-clients = [
-    {
-        'name': _('TT-RSS Reader'),
-        'platforms': [
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'google_play-store',
-                'url': 'https://play.google.com/store/apps/details?id=org'
-                       '.ttrssreader',
-                'fully_qualified_name': 'org.ttrssreader'
-            },
-            {
-                'type': 'store',
-                'os': 'Android',
-                'store_name': 'fdroid_store',
-                'url': 'https://f-droid.org/packages/org.ttrssreader/',
-                'fully_qualified_name': 'org.ttrssreader'
-            },
-            {
-                'type': 'web',
-                'relative_url': '/tt-rss'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('TT-RSS Reader'),
+    'platforms': [{
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'url': 'https://play.google.com/store/apps/details?id=org'
+               '.ttrssreader',
+        'fully_qualified_name': 'org.ttrssreader'
+    }, {
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.F_DROID.value,
+        'url': 'https://f-droid.org/packages/org.ttrssreader/',
+        'fully_qualified_name': 'org.ttrssreader'
+    }, {
+        'type': 'web',
+        'url': '/tt-rss'
+    }]
+}]
