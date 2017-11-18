@@ -16,6 +16,7 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+
 from plinth.templatetags.plinth_extras import Mobile_OS, Store
 
 clients = [{

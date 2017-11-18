@@ -17,9 +17,10 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.utils import format_lazy
-from . import get_configured_domain_name
 from plinth.templatetags.plinth_extras import Mobile_OS, Store
+from plinth.utils import format_lazy
+
+from . import get_configured_domain_name
 
 clients = [{
     'name':

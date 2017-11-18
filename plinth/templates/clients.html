@@ -85,7 +85,7 @@
           <td>
               <div class="row">
                   {% for platform in client.platforms %}
-                  {% if platform.type == 'store' and platform.os == 'android' %}
+                  {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
                   <div class="col-md-2 col-xs-4">
                       <a href="{{ platform.url }}">
                           {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
