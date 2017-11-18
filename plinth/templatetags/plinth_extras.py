@@ -108,3 +108,16 @@ def has_mobile_clients(clients):
 def has_web_clients(clients):
     """Filter to find out whether an application has web clients"""
     return __check(clients, lambda x: x['type'] == 'web')
+
+
+@register.filter(name='of_type')
+def of_type(clients, typ):
+    """Filter clients of a particular type"""
+    if typ == 'mobile':
+        return list(filter(has_mobile_clients, clients))
+    elif typ == 'desktop':
+        return list(filter(has_desktop_clients, clients))
+    elif typ == 'web':
+        return list(filter(has_web_clients, clients))
+    else:
+        return clients
