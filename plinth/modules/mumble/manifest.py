@@ -16,6 +16,7 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
 clients = [{
@@ -38,9 +39,9 @@ clients = [{
         'name': 'mumble'
     }, {
         'type': 'store',
-        'os': 'iOS',
+        'os': Mobile_OS.IOS.value,
         'os_version': '>=8.0',
-        'store_name': 'apple_store',
+        'store_name': Store.APP_STORE.value,
         'url': 'https://itunes.apple.com/us/app/mumble/id443472808'
     }]
 }, {
@@ -66,9 +67,9 @@ clients = [{
         _('Mumblefly'),
     'platforms': [{
         'type': 'store',
-        'os': 'iOS',
+        'os': Mobile_OS.IOS.value,
         'os_version': '>=7.0',
-        'store_name': 'apple_store',
+        'store_name': Store.APP_STORE.value,
         'url': 'https://itunes.apple.com/dk/app/mumblefy/id858752232'
     }]
 }]

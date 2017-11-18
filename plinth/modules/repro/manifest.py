@@ -16,6 +16,7 @@
 #
 
 from django.utils.translation import ugettext_lazy as _
+
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
 
 clients = [{
@@ -39,8 +40,8 @@ clients = [{
                '.jitsi.meet '
     }, {
         'type': 'store',
-        'os': 'iOS',
-        'store_name': 'apple_store',
+        'os': Mobile_OS.IOS.value,
+        'store_name': Store.APP_STORE.value,
         'url': 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905'
     }, {
         'type': 'download',

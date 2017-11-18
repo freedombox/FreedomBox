@@ -17,9 +17,9 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import cfg
 from plinth.templatetags.plinth_extras import Desktop_OS
 from plinth.utils import format_lazy
-from plinth import cfg
 
 clients = [{
     'name':

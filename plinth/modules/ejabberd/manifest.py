@@ -58,8 +58,8 @@ clients = [{
           'extra security.'),
     'platforms': [{
         'type': 'store',
-        'os': 'iOS',
-        'store_name': 'apple_store',
+        'os': Mobile_OS.IOS.value,
+        'store_name': Store.APP_STORE.value,
         'url': 'https://itunes.apple.com/us/app/chatsecure'
                '/id464200063 '
     }]
