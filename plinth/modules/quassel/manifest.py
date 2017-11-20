@@ -32,8 +32,8 @@ clients = [{
         'url': quassel_download_url,
     }, {
         'type': 'package',
-        'os': 'Debian',
-        'package_name': 'quassel-client',
+        'format': 'deb',
+        'name': 'quassel-client',
     }]
 }, {
     'name':

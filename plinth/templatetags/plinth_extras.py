@@ -110,12 +110,19 @@ def has_web_clients(clients):
     return __check(clients, lambda x: x['type'] == 'web')
 
 
+@register.filter(name='has_package_clients')
+def has_package_clients(clients):
+    """Filter to find out whether an application has web clients"""
+    return __check(clients, lambda x: x['type'] == 'package')
+
+
 @register.filter(name='of_type')
 def of_type(clients, typ):
     """Filter and get clients of a particular type"""
     filters = {
         'mobile': has_mobile_clients,
         'desktop': has_desktop_clients,
-        'web': has_web_clients
+        'web': has_web_clients,
+        'package': has_package_clients,
     }
     return list(filter(filters.get(typ, lambda x: x), clients))

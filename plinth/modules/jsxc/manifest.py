@@ -22,8 +22,8 @@ clients = [{
         _('JSXC'),
     'platforms': [{
         'type': 'package',
-        'os': 'Debian',
-        'package_name': 'libjs-jsxc'
+        'format': 'deb',
+        'name': 'libjs-jsxc'
     }, {
         'type': 'web',
         'url': '/jsxc'
