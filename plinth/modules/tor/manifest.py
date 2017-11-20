@@ -18,8 +18,10 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.utils import f_droid_url, play_store_url
 
-version = '7.0.6'
+orbot_package_id = 'org.torproject.android'
+tor_browser_download_url = 'https://www.torproject.org/download/download-easy.html'
 
 clients = [{
     'name':
@@ -27,20 +29,15 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'os_version': 'Windows XP, Vista, >=7',
-        'url': 'https://www.torproject.org/dist/torbrowser/{v}'
-               '/torbrowser-install-{v}_en-US.exe '.format(v=version)
+        'url': tor_browser_download_url,
     }, {
         'type': 'download',
         'os': Desktop_OS.GNU_LINUX.value,
-        'url': 'https://www.torproject.org/dist/torbrowser/{v}/tor'
-               '-browser-linux64-{v} _en-US.tar.xz'.format(v=version)
+        'url': tor_browser_download_url,
     }, {
         'type': 'download',
         'os': Desktop_OS.MAC_OS.value,
-        'arch': 'amd64',
-        'url': 'https://www.torproject.org/dist/torbrowser/{v}'
-               '/TorBrowser-{v}-osx64_en-US.dmg'.format(v=version)
+        'url': tor_browser_download_url,
     }]
 }, {
     'name':
@@ -49,15 +46,11 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'url': 'https://play.google.com/store/apps/details?id=org'
-               '.torproject.android',
-        'fully_qualified_name': 'org.torproject.android'
+        'url': play_store_url(orbot_package_id)
     }, {
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.F_DROID.value,
-        'url': 'https://play.google.com/store/apps/details?id=org'
-               '.torproject.android',
-        'fully_qualified_name': 'org.torproject.android'
+        'url': f_droid_url(orbot_package_id)
     }]
 }]

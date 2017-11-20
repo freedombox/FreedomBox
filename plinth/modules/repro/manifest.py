@@ -18,6 +18,12 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.utils import play_store_url
+
+jitsi_package_id = 'org.jitsi.meet'
+csipsimple_package_id = 'com.csipsimple'
+
+jitsi_download_url = 'https://download.jitsi.org/jitsi/'
 
 clients = [{
     'name':
@@ -35,9 +41,7 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'fully_qualified_name': 'org.jitsi.meet',
-        'url': 'https://play.google.com/store/apps/details?id=org'
-               '.jitsi.meet '
+        'url': play_store_url(jitsi_package_id)
     }, {
         'type': 'store',
         'os': Mobile_OS.IOS.value,
@@ -46,7 +50,7 @@ clients = [{
     }, {
         'type': 'download',
         'os': Desktop_OS.GNU_LINUX.value,
-        'url': 'https://download.jitsi.org/jitsi/debian/'
+        'url': jitsi_download_url
     }, {
         'type': 'package',
         'format': 'deb',
@@ -54,13 +58,11 @@ clients = [{
     }, {
         'type': 'download',
         'os': Desktop_OS.MAC_OS.value,
-        'url': 'https://download.jitsi.org/jitsi/macosx/jitsi-latest'
-               '.dmg '
+        'url': jitsi_download_url
     }, {
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'url': 'https://download.jitsi.org/jitsi/windows/jitsi-latest'
-               '-x86.exe '
+        'url': jitsi_download_url
     }]
 }, {
     'name':
@@ -69,8 +71,6 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'fully_qualified_name': 'com.csipsimple',
-        'url': 'https://play.google.com/store/apps/details?id=com'
-               '.csipsimple '
+        'url': play_store_url(csipsimple_package_id)
     }]
 }]

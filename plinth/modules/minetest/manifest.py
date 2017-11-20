@@ -25,22 +25,18 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'arch': 'amd64',
-        'os_version': 'XP, Vista, >=7',
         'url': 'https://github.com/minetest/minetest/releases'
                '/download/0.4.16/minetest-0.4.16-win64.zip '
     }, {
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'fully_qualified_name': 'net.minetest.minetest',
         'url': 'https://play.google.com/store/apps/details?id=net'
                '.minetest.minetest '
     }, {
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.F_DROID.value,
-        'fully_qualified_name': 'net.minetest.minetest',
         'url': 'https://f-droid.org/packages/net.minetest.minetest/ '
     }, {
         'type': 'package',

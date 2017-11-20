@@ -31,11 +31,9 @@ clients = [{
     'platforms': [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
-        'os_version': '>4.2.0',
         'store_name': Store.F_DROID.value,
         'url': 'https://f-droid.org/repository/browse/?fdid=com'
                '.github.dfa.diaspora_android ',
-        'fully_qualified_name': 'com.github.dfa.diaspora_android'
     }]
 }, {
     'name':

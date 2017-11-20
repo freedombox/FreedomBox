@@ -36,7 +36,7 @@ clients = [{
         'os': Desktop_OS.WINDOWS.value,
         'url': 'http://releases.0x539.de/gobby/gobby-stable.exe'
     }, {
-        'type': 'apt',
+        'type': 'package',
         'os': 'Debian',
         'package_name': 'gobby'
     }]
