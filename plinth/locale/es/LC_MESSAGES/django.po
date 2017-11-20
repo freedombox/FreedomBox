@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2017-10-04 22:47+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -171,17 +171,17 @@ msgstr "Configuración del servidor DNS actualizada"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "Activar reenvío para definir los servidores DNS de reenvío"
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 #, fuzzy
 #| msgid "Server domain"
 msgid "Server Administration"
 msgstr "Dominio del servidor"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -190,7 +190,7 @@ msgid ""
 "console operations is also available."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
@@ -208,20 +208,33 @@ msgstr ""
 "users\">usuario con cuenta de acceso en {box_name}</a> puede acceder a este "
 "servicio."
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "Configurar"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "Nombre de dominio"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Nombre de dominio no válido"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "Nombre de anfitrión"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -234,17 +247,11 @@ msgstr ""
 "número y solo puede contener letras, números y guiones. Su longitud puede "
 "ser de hasta 63 caracteres."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "Nombre de anfitrión no válido"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "Nombre de dominio"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -261,56 +268,49 @@ msgstr ""
 "La longitud de cada palabra puede ser de hasta 63 caracteres y la del nombre "
 "de dominio de hasta 253."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "Idioma"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "Idioma para la interfaz de administración web"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "Configurar"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "Configuración general"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Error al definir el nombre de anfitrión: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "Asignar nombre de anfitrión"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Error al establecer nombre de dominio: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "Asignar nombre de dominio"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "Error al establecer idioma: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "Idioma cambiado"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "Enviar"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "Configuración general"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Error al definir el nombre de anfitrión: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "Asignar nombre de anfitrión"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Error al establecer nombre de dominio: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "Asignar nombre de dominio"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "Error al establecer idioma: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "Idioma cambiado"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -644,12 +644,12 @@ msgid "Use HTTP basic authentication"
 msgstr "Usar autenticación básica de HTTP"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "Nombre de usuario"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "Clave de acceso"
 
@@ -3453,14 +3453,21 @@ msgstr ""
 "a ciertos servicios sin autenticación posterior."
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+#, fuzzy
+#| msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr "Fail2ban (recomendado)"
 
 #: plinth/modules/security/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "When this option is enabled, fail2ban will limit brute force break-in "
+#| "attempts to the SSH server and other password protected internet-services "
+#| "which are enabled."
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 "Cuando está activado fail2ban limita los intentos de ataque por fuerza bruta "
 "tanto al servidor SSH como a otros servicios de internet protegidos por "
@@ -4078,15 +4085,15 @@ msgstr "Configuración actualizada."
 msgid "An error occurred during configuration."
 msgstr "Ha habido un error en la configuración."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 msgid "Transmission"
 msgstr "Transmission"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4095,17 +4102,17 @@ msgstr ""
 "Transmission controla la compartición de archivos. Recuerde que BitTorrent "
 "no es anónimo."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
 "Acceder a la interfaz web en <a href=\"/transmission\">/transmission/</a>."
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr "Directorio de descarga"
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
@@ -4114,18 +4121,6 @@ msgstr ""
 "Directorio en el que se guardan las descargas. Si cambia el directorio por "
 "defecto asegúrese de que el nuevo directorio existe y tiene permiso de "
 "escritura para el usuario \"debian-transmission\"."
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "Nombre de usuario para acceder a la interfaz web."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
-"Clave para acceder a la interfaz web. La clave actual se muestra en formato "
-"hash. Para introducir una clave nueva escríbala como texto."
 
 #: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
@@ -4765,6 +4760,16 @@ msgid ""
 msgstr ""
 "Estas opciones afectan a su %(box_name)s de forma general, así que ¡vaya con "
 "cuidado!"
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "Nombre de usuario para acceder a la interfaz web."
+
+#~ msgid ""
+#~ "Password to login to the web interface.  Current password is shown in a "
+#~ "hashed format.  To set a new password, enter the password in plain text."
+#~ msgstr ""
+#~ "Clave para acceder a la interfaz web. La clave actual se muestra en "
+#~ "formato hash. Para introducir una clave nueva escríbala como texto."
 
 #~ msgid ""
 #~ "Chat Client \n"

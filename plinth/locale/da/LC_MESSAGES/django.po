@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2016-07-03 21:44+0000\n"
 "Last-Translator: Mikkel Kirkgaard Nielsen <memb_weblate@mikini.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -177,17 +177,17 @@ msgstr "Konfiguration opdateret"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 #, fuzzy
 #| msgid "Server domain"
 msgid "Server Administration"
 msgstr "Serverdomæne"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -196,7 +196,7 @@ msgid ""
 "console operations is also available."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
@@ -211,20 +211,33 @@ msgstr ""
 "Når aktiveret, vil Tiny Tiny RSS være tilgængelige på stien <a href=\"/tt-rss"
 "\">/tt-rss</a> på webserveren."
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "Konfigurer"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "Domænenavn"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Ugyldigt domænenavn"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "Værtsnavn"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -237,17 +250,11 @@ msgstr ""
 "derimellem må kun være bogstaver, tal og bindestreger. Den samlede længde "
 "skal være 63 tegn eller derunder."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "Ugyldigt værtsnavn"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "Domænenavn"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -263,56 +270,49 @@ msgstr ""
 "bogstaver, tal og bindestreger. Hvert ord skal være på 63 tegn eller "
 "derunder. Den samlede længde skal være 253 tegn eller derunder."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "Sprog"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "Sprog i dette administrationsværktøj"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "Konfigurer"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "Generel Konfiguration"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Kunne ikke sætte værtsnavn: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "Værtsnavn gemt"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Kunne ikke sætte domænenavn: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "Domænenavn gemt"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "Kunne ikke sætte sprog: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "Sprog ændret"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "Indsend"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "Generel Konfiguration"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Kunne ikke sætte værtsnavn: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "Værtsnavn gemt"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Kunne ikke sætte domænenavn: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "Domænenavn gemt"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "Kunne ikke sætte sprog: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "Sprog ændret"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -654,12 +654,12 @@ msgid "Use HTTP basic authentication"
 msgstr "Brug basal (\"basic\") HTTP-autentifikation"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "Brugernavn"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "Kodeord"
 
@@ -3504,14 +3504,14 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr ""
 
 #: plinth/modules/security/forms.py:36
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 
 #: plinth/modules/security/views.py:66
@@ -4105,19 +4105,19 @@ msgstr "Konfiguration opdateret."
 msgid "An error occurred during configuration."
 msgstr "Der opstod en fejl under konfigurationen."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 #, fuzzy
 #| msgid "Transmission BitTorrent"
 msgid "Transmission"
 msgstr "Transmission BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 #, fuzzy
 #| msgid "Deluge BitTorrent"
 msgid "BitTorrent"
 msgstr "Deluge BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4126,16 +4126,16 @@ msgstr ""
 "Transmission håndterer BitTorrent fildeling. Bemærk at BitTorrent ikke "
 "anonymiserer trafik."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr "Tilgå webbrugerfladen på <a href=\"/transmission\">/transmission</a>."
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr "Download-mappe"
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
@@ -4144,19 +4144,6 @@ msgstr ""
 "Mappe hvori downloadede filer gemmes. Hvis du ændrer standardindstillingen, "
 "skal du sikre dig at den nye mappe eksisterer og er skrivbar af brugeren "
 "\"debian-transmission\"."
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "Brugernavn til log ind på webbrugerfladen."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
-"Kodeord til log ind på webbrugerfladen. Det nuværende kodeord vises i et "
-"forvansket hash-format. Indtast et password i ren tekst for at ændre "
-"kodeordet."
 
 #: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
@@ -4805,6 +4792,17 @@ msgid ""
 msgstr ""
 "Disse muligheder påvirker {box_name} på det meste grundlæggende niveau, så "
 "vær forsigtig!"
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "Brugernavn til log ind på webbrugerfladen."
+
+#~ msgid ""
+#~ "Password to login to the web interface.  Current password is shown in a "
+#~ "hashed format.  To set a new password, enter the password in plain text."
+#~ msgstr ""
+#~ "Kodeord til log ind på webbrugerfladen. Det nuværende kodeord vises i et "
+#~ "forvansket hash-format. Indtast et password i ren tekst for at ændre "
+#~ "kodeordet."
 
 #, fuzzy
 #~| msgid "IRC Client (Quassel)"

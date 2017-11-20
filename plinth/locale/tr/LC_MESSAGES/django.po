@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2017-11-08 08:10+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/freedombox/plinth/tr/>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
+"plinth/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -169,15 +169,15 @@ msgstr "DNS sunucusu yapılandırması güncellendi"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "İletmeli DNS sunucuları kurmak için yönlendirmeyi etkinleştir"
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Sunucu Yönetimi"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -190,7 +190,7 @@ msgstr ""
 "genellikle gerekli olmayan birçok gelişmiş işlev için kontrol bulunur. "
 "Konsol işlemleri için ağ tabanlı bir terminal de mevcuttur."
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -199,26 +199,39 @@ msgid ""
 "information and system altering abilities are limited to users belonging to "
 "admin group."
 msgstr ""
-"Etkinleştirildiğinde, Cockpit'e erişim ağ sunucusunda <a href=\"/cockpit\""
-">/cockpit</a> yolundan mümkün olacaktır. <a href=\"/plinth/sys/users\">"
-"Herhangi bir {box_name} kullanıcısı, ki oturumu olmalıdır</a> tarafından "
-"kullanılabilir. Hassas bilgiler ve sistem değiştirme kabiliyeti, yönetici ("
-"yani admin) grubuna ait kullanıcılar ile sınırlıdır."
+"Etkinleştirildiğinde, Cockpit'e erişim ağ sunucusunda <a href=\"/cockpit\">/"
+"cockpit</a> yolundan mümkün olacaktır. <a href=\"/plinth/sys/users"
+"\">Herhangi bir {box_name} kullanıcısı, ki oturumu olmalıdır</a> tarafından "
+"kullanılabilir. Hassas bilgiler ve sistem değiştirme kabiliyeti, yönetici "
+"(yani admin) grubuna ait kullanıcılar ile sınırlıdır."
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "Güncel olarak sadece sınırlı işlevsellik mevcuttur."
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "Yapılandır"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "Alan Adı"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Geçersiz alan ismi"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "Makine ismi"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -231,17 +244,11 @@ msgstr ""
 "başlayıp sona ermesi gerekir ve sadece alfabe harfleri, sayılar ve tireler "
 "içerebilir. Toplam uzunluğun 63 karakter veya daha azı olması gerekmektedir."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "Geçersiz makine ismi"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "Alan Adı"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -258,56 +265,49 @@ msgstr ""
 "kalmalıdır. Her grubun uzunluğu 63 karakter ya da daha azı olmalıdır. Alan "
 "adının toplam uzunluğu 253 karakter ya da daha azı olmalıdır."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "Lisan"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "Bu web yönetim arayüzü için kullanılacak dil"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "Yapılandır"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "Genel Yapılandırma"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Makine isminin ayarlanmasında hata: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "Makine ismi ayarlandı"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Alan adının ayarlanmasında hata: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "Alan adı ayarlandı"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "Dilin ayarlanmasında hata: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "Dil değiştirildi"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "İbraz Et"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "Genel Yapılandırma"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Makine isminin ayarlanmasında hata: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "Makine ismi ayarlandı"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Alan adının ayarlanmasında hata: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "Alan adı ayarlandı"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "Dilin ayarlanmasında hata: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "Dil değiştirildi"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -643,12 +643,12 @@ msgid "Use HTTP basic authentication"
 msgstr "Temel HTTP kimlik doğrulamasını kullan"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "Kullanıcı ismi"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "Parola"
 
@@ -3450,14 +3450,21 @@ msgstr ""
 "olabilir."
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+#, fuzzy
+#| msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr "Fail2ban (tavsiye edilir)"
 
 #: plinth/modules/security/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "When this option is enabled, fail2ban will limit brute force break-in "
+#| "attempts to the SSH server and other password protected internet-services "
+#| "which are enabled."
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 "Bu şık etkinleştirildiğinde, fail2ban SSH sunucusuna ve diğer etkin parola "
 "ile korunmuş İnternet servislerine yapılan kaba kuvvetle parola bulma "
@@ -4077,15 +4084,15 @@ msgstr "Kurulum güncellendi."
 msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 msgid "Transmission"
 msgstr "Transmission"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4094,18 +4101,18 @@ msgstr ""
 "BitTorrent dosya paylaşımını idare eder. BitTorrent'ın anonim olmadığını "
 "unutmayın."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
 "Ağ arayüzüne <a href=\"/transmission\">/transmission</a> konumunda "
 "erişebilirsiniz."
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr "İndirme klasörü"
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
@@ -4114,19 +4121,6 @@ msgstr ""
 "İndirmelerin kaydedilecekleri klasör. Varsayılan klasörü değiştirirseniz, "
 "yeni klasörün var olduğundan ve \"debian-transmission\" kullanıcısı "
 "tarafından yazılabilir olduğundan emin olun."
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "Ağ arayüzüne giriş yapmak için kullanıcı ismi."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
-"Ağ arayüzüne giriş yapmak için parola. Güncel parola karma biçiminde "
-"gösterilmektedir. Yeni bir parola ayarlamak için parolayı düz metin olarak "
-"girin."
 
 #: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
@@ -4760,6 +4754,17 @@ msgid ""
 msgstr ""
 "Seçenekler %(box_name)s kutusunu en genel düzeyde etkiler, bu nedenle "
 "dikkatli olun!"
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "Ağ arayüzüne giriş yapmak için kullanıcı ismi."
+
+#~ msgid ""
+#~ "Password to login to the web interface.  Current password is shown in a "
+#~ "hashed format.  To set a new password, enter the password in plain text."
+#~ msgstr ""
+#~ "Ağ arayüzüne giriş yapmak için parola. Güncel parola karma biçiminde "
+#~ "gösterilmektedir. Yeni bir parola ayarlamak için parolayı düz metin "
+#~ "olarak girin."
 
 #~ msgid ""
 #~ "Chat Client \n"

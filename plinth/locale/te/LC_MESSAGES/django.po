@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2017-09-11 04:49+0000\n"
 "Last-Translator: BHARATH <bharath.pulluru@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -181,16 +181,16 @@ msgstr "డి.ఎన్.ఎస్. సేవిక ఆకృతీకరణ న
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "ఫొర్వర్దింగ్ డిఎన్ఎస్ సేవికను సరిగా ఏర్పాటు చేయుటకు ఫొర్వర్దింగ్ ను క్రియాశీలీకరించు"
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 #, fuzzy
 msgid "Server Administration"
 msgstr "సర్వర్ డొమైన్"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -199,7 +199,7 @@ msgid ""
 "console operations is also available."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -209,20 +209,33 @@ msgid ""
 "admin group."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "ఆకృతీకరణ"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "డొమైను పేరు"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "డొమైన్ పేరు చెల్లదు"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "అతిథ్యనామం"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -234,17 +247,11 @@ msgstr ""
 "ఇవ్వబడే పేరు. ఆది అక్షరంతో మొదలై అక్షారంతో ముగింపబడలి. ఆ మధ్యలో అంకెలు కానీ అక్షరాలు కానీ హైఫెన్(-) "
 "మాత్రమే ఉండాలి. మొత్తం 63 అక్షరాలు లేదా అంత కన్నా తక్కువ ఉండవలెను."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "ఆతిథ్యనామం చెల్లనిది"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "డొమైను పేరు"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -260,56 +267,49 @@ msgstr ""
 "అక్షరాలు లేదా అంత కన్నా తక్కువే కలిగి ఉండాలి. మొత్తం డోమైన్ పేరు పొడవు ౨౫౩ అక్షరాలు లేదా అంత అత కంటే "
 "తక్కువే ఉండాలి."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "భాష"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "జాల నిర్వాహక అంతరవర్తి కోసం భాష"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "ఆకృతీకరణ"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "సాధారణ ఆకృతీకరణ"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "ఆతిథ్యనామం అమర్చు"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "అధికారక్షేత్రం పేరు అమర్పు"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "భాషను అమర్చుటలో లోపం: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "భాష మార్చబడింది"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "సమర్పించు"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "సాధారణ ఆకృతీకరణ"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "ఆతిథ్యనామం అమర్చు"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "అధికారక్షేత్రం పేరు అమర్పు"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "భాషను అమర్చుటలో లోపం: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "భాష మార్చబడింది"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -645,12 +645,12 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "రహస్యపదం"
 
@@ -3367,14 +3367,14 @@ msgstr ""
 "చేయవచ్చు."
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr ""
 
 #: plinth/modules/security/forms.py:36
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 
 #: plinth/modules/security/views.py:66
@@ -3932,46 +3932,36 @@ msgstr "ఆకృతీకరణ నవీకరించబడింది."
 msgid "An error occurred during configuration."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 msgid "Transmission"
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 #, fuzzy
 #| msgid "Deluge BitTorrent"
 msgid "BitTorrent"
 msgstr "బిట్ టొర్రెంట్ ప్రళయం"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr ""
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
 "\" user."
-msgstr ""
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "అంతర్జాలిక సంవిదానికి లాగిన్ అవడానికి వాడుకరి పేరు."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
 msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:41
@@ -4565,6 +4555,9 @@ msgstr "ఇక్కడ మీరు అంతర్లీన వ్యవస్
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "అంతర్జాలిక సంవిదానికి లాగిన్ అవడానికి వాడుకరి పేరు."
 
 #, fuzzy
 #~ msgid ""

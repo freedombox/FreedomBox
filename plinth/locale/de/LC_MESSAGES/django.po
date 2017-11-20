@@ -9,11 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2017-11-16 20:46+0000\n"
 "Last-Translator: Dietmar <ndcdhimdsa@gmx.de>\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
+"de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -173,15 +173,15 @@ msgstr ""
 "Aktivieren Sie \"Weiterleitung\" zur Definition der weiterleitenden DNS-"
 "Server"
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Server Verwaltung"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -195,7 +195,7 @@ msgstr ""
 "Zusätzlich ist eine Kommandozeile im Webbrowser enthalten, um direkt Befehle "
 "einzugeben."
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -204,26 +204,39 @@ msgid ""
 "information and system altering abilities are limited to users belonging to "
 "admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
-">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"/plinth/sys/users\">"
-"jeder Nutzer</a> mit einem {box_name} Nutzerkonto. Vertrauliche "
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
+"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"/plinth/sys/users"
+"\">jeder Nutzer</a> mit einem {box_name} Nutzerkonto. Vertrauliche "
 "Informationen und Änderungen sind Nutzern in der Administratorgruppe "
 "vorbehalten."
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "Derzeit ist nur eine eingeschränkte Funktionalität möglich."
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "Konfigurieren"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "Domain-Name"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Ungültiger Domain-Name"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "Hostname"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -236,17 +249,11 @@ msgstr ""
 "darf als einziges Sonderzeichen das Minuszeichen enthalten. Insgesamt darf "
 "die Länge 63 Zeichen nicht überschreiten."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "Ungültiger Hostname"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "Domain-Name"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -262,56 +269,49 @@ msgstr ""
 "aus alphanumerischen Zeichen und Bindestrichen bestehen. Jede Kennung darf "
 "maximal 63 Zeichen lang sein, die Gesamtlänge des Domain-Names 253 Zeichen."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "Sprache"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "Die Sprache der Web-Administrations-Oberfläche"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "Konfigurieren"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "Allgemeine Konfiguration"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Fehler beim Setzen des Hostnamens: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "Hostname gesetzt"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Fehler beim Setzen des Domain-Namens: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "Domain Name gesetzt"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "Fehler beim Setzen der Sprache: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "Sprache geändert"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "Absenden"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "Allgemeine Konfiguration"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Fehler beim Setzen des Hostnamens: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "Hostname gesetzt"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Fehler beim Setzen des Domain-Namens: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "Domain Name gesetzt"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "Fehler beim Setzen der Sprache: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "Sprache geändert"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -650,12 +650,12 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP-Basisauthentifizierung verwenden"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "Benutzername"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "Passwort"
 
@@ -1684,10 +1684,10 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
-"Zur Kommunikation nutzen Sie eine der <a href=\""
-"https://matrix.org/docs/projects/\">verfügbaren Clientanwendungen</a> für "
-"ihr Handy, Desktop oder im Web. Die Clientanwendung <a href=\""
-"https://riot.im/\">Riot</a> wird empfohlen."
+"Zur Kommunikation nutzen Sie eine der <a href=\"https://matrix.org/docs/"
+"projects/\">verfügbaren Clientanwendungen</a> für ihr Handy, Desktop oder im "
+"Web. Die Clientanwendung <a href=\"https://riot.im/\">Riot</a> wird "
+"empfohlen."
 
 #: plinth/modules/matrixsynapse/forms.py:29
 msgid "Enable Public Registration"
@@ -3469,14 +3469,21 @@ msgstr ""
 "die Konsole auf manche Dienste ohne weitere Autorisierung zugreifen."
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+#, fuzzy
+#| msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr "Fail2ban (empfohlen)"
 
 #: plinth/modules/security/forms.py:36
+#, fuzzy
+#| msgid ""
+#| "When this option is enabled, fail2ban will limit brute force break-in "
+#| "attempts to the SSH server and other password protected internet-services "
+#| "which are enabled."
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 "Falls aktiviert, begrenzt Fail2ban automatisierbare Einbruchversuche in den "
 "SSH-Server und andere passwortgeschützte Anwendungen, die aktiviert sind."
@@ -4102,15 +4109,15 @@ msgstr "Konfiguration aktualisiert."
 msgid "An error occurred during configuration."
 msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 msgid "Transmission"
 msgstr "Transmission"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4119,18 +4126,18 @@ msgstr ""
 "Transmission-Daemon verarbeitet BitTorrent Dateien. Es gilt zu beachten! "
 "BitTorrent ist nicht anonym!"
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
 "Die Web-Oberfläche kann über <a href=\"/transmission\">/transmission</a> "
 "erreicht werden."
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr "Download Ordner"
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
@@ -4139,19 +4146,6 @@ msgstr ""
 "Der Ordner in dem die Downloads gespeichert werden. Wenn der Standard Ordner "
 "verändert wird, dann muss sicher gestellt sein, dass der Ordner existiert "
 "und der Benutzer \"debian-transmission\" Schreibrechte für diesen Ordner hat."
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "Benutzername um sich an der Web-Oberfläche anzumelden."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
-"Das Passwort zum Anmelden an der Web-Oberfläche. Das aktuelle Passwort wird "
-"in hashform dargestellt. Um das neue Passwort zu setzen muss dieses im "
-"Klartext eingegeben werden."
 
 #: plinth/modules/ttrss/__init__.py:41
 msgid "Tiny Tiny RSS"
@@ -4792,6 +4786,17 @@ msgid ""
 msgstr ""
 "Diese Optionen beeinflussen die Funktionen der %(box_name)s auf grundlegende "
 "Art und Weise, seien Sie sorgsam!"
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "Benutzername um sich an der Web-Oberfläche anzumelden."
+
+#~ msgid ""
+#~ "Password to login to the web interface.  Current password is shown in a "
+#~ "hashed format.  To set a new password, enter the password in plain text."
+#~ msgstr ""
+#~ "Das Passwort zum Anmelden an der Web-Oberfläche. Das aktuelle Passwort "
+#~ "wird in hashform dargestellt. Um das neue Passwort zu setzen muss dieses "
+#~ "im Klartext eingegeben werden."
 
 #~ msgid ""
 #~ "Chat Client \n"

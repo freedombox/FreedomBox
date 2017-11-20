@@ -15,11 +15,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 11:49-0500\n"
+"POT-Creation-Date: 2017-11-20 12:13-0500\n"
 "PO-Revision-Date: 2017-11-13 18:00+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
-"Language-Team: Norwegian Bokmål "
-"<https://hosted.weblate.org/projects/freedombox/plinth/nb/>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"freedombox/plinth/nb/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -177,15 +177,15 @@ msgstr "DNS-tjeneroppsett oppdatert"
 msgid "Enable forwarding to set forwarding DNS servers"
 msgstr "Aktiver videresending for å sette DNS-tjenere for videresending"
 
-#: plinth/modules/cockpit/__init__.py:40
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
 msgstr "Styrhus"
 
-#: plinth/modules/cockpit/__init__.py:42
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Tjeneradministrasjon"
 
-#: plinth/modules/cockpit/__init__.py:46
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -198,7 +198,7 @@ msgstr ""
 "mange avanserte funksjoner som ikke kreves normalt. En nettbasert terminal "
 "for konsolloperasjoner er også tilgjengelig."
 
-#: plinth/modules/cockpit/__init__.py:52
+#: plinth/modules/cockpit/__init__.py:51
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
@@ -213,20 +213,33 @@ msgstr ""
 "Når aktivert,  er Tiny Tiny RSS tilgjengelig fra <a href=\"/tt-rss\">/tt-"
 "rss</a>-banen på netttjeneren."
 
-#: plinth/modules/cockpit/__init__.py:58
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "Akkurat nå finnes det bare begrenset funksjonalitet."
 
-#: plinth/modules/config/config.py:88 plinth/modules/config/config.py:125
+#: plinth/modules/config/__init__.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:45
+#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
+msgid "Configure"
+msgstr "Sette opp"
+
+#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:166
+#: plinth/modules/dynamicdns/dynamicdns.py:143
+msgid "Domain Name"
+msgstr "Domenenavn"
+
+#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Ugyldig domenenavn"
 
-#: plinth/modules/config/config.py:99
+#: plinth/modules/config/forms.py:68
 msgid "Hostname"
 msgstr "Vertsnavn"
 
-#: plinth/modules/config/config.py:101
+#: plinth/modules/config/forms.py:70
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -239,17 +252,11 @@ msgstr ""
 "eller et tall, og inneholde bokstaver tall eller bindrestreker. Lengden må "
 "være 63 tegn eller mindre."
 
-#: plinth/modules/config/config.py:109
+#: plinth/modules/config/forms.py:78
 msgid "Invalid hostname"
 msgstr "Ugyldig vertsnavn"
 
-#: plinth/modules/config/config.py:112 plinth/modules/config/config.py:169
-#: plinth/modules/config/config.py:285
-#: plinth/modules/dynamicdns/dynamicdns.py:143
-msgid "Domain Name"
-msgstr "Domenenavn"
-
-#: plinth/modules/config/config.py:114
+#: plinth/modules/config/forms.py:83
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -265,56 +272,49 @@ msgstr ""
 "bare bokstaver, tall og bindestreker. Lengden på hver merkelapp må være 63 "
 "tegn, eller mindre. Lengden på domenenavnet må være 253 tegn, eller mindre."
 
-#: plinth/modules/config/config.py:129
+#: plinth/modules/config/forms.py:98
 msgid "Language"
 msgstr "Språk"
 
-#: plinth/modules/config/config.py:131
+#: plinth/modules/config/forms.py:100
 msgid "Language for this web administration interface"
 msgstr "Språk i dette nettadministrasjonsgrensesnittet"
-
-#: plinth/modules/config/config.py:151
-#: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
-msgid "Configure"
-msgstr "Sette opp"
-
-#: plinth/modules/config/config.py:192
-msgid "General Configuration"
-msgstr "Generelt oppsett"
-
-#: plinth/modules/config/config.py:209
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Feil ved setting av vertsnavn: {exception}"
-
-#: plinth/modules/config/config.py:212
-msgid "Hostname set"
-msgstr "Vertsnavn satt"
-
-#: plinth/modules/config/config.py:218
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
-
-#: plinth/modules/config/config.py:221
-msgid "Domain name set"
-msgstr "Domenenavn satt"
-
-#: plinth/modules/config/config.py:229
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "Språksettingsfeil: {exception}"
-
-#: plinth/modules/config/config.py:232
-msgid "Language changed"
-msgstr "Språk endret"
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "Send inn"
+
+#: plinth/modules/config/views.py:73
+msgid "General Configuration"
+msgstr "Generelt oppsett"
+
+#: plinth/modules/config/views.py:90
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Feil ved setting av vertsnavn: {exception}"
+
+#: plinth/modules/config/views.py:93
+msgid "Hostname set"
+msgstr "Vertsnavn satt"
+
+#: plinth/modules/config/views.py:99
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
+
+#: plinth/modules/config/views.py:102
+msgid "Domain name set"
+msgstr "Domenenavn satt"
+
+#: plinth/modules/config/views.py:110
+#, python-brace-format
+msgid "Error setting language: {exception}"
+msgstr "Språksettingsfeil: {exception}"
+
+#: plinth/modules/config/views.py:113
+msgid "Language changed"
+msgstr "Språk endret"
 
 #: plinth/modules/datetime/__init__.py:37
 msgid "Date & Time"
@@ -654,12 +654,12 @@ msgid "Use HTTP basic authentication"
 msgstr "Bruk HTTP-basisgodkjenning"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:151
-#: plinth/modules/networks/forms.py:228 plinth/modules/transmission/forms.py:37
+#: plinth/modules/networks/forms.py:228
 msgid "Username"
 msgstr "Brukernavn"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229 plinth/modules/transmission/forms.py:41
+#: plinth/modules/networks/forms.py:229
 msgid "Password"
 msgstr "Passord"
 
@@ -1207,8 +1207,8 @@ msgid ""
 msgstr ""
 "Kun {box_name}-brukere i <b>admin</b>-gruppen kan <i>opprette</i> og "
 "<i>håndtere</i> blogger og wiki-er, men enhver bruker i <b>wiki</b>-gruppen "
-"kan <i>redigere</i> de som finnes. I <a href=\"/plinth/sys/users\""
-">brukeroppsettet</a> kan du endre disse tilgangene eller legge til nye "
+"kan <i>redigere</i> de som finnes. I <a href=\"/plinth/sys/users"
+"\">brukeroppsettet</a> kan du endre disse tilgangene eller legge til nye "
 "brukere."
 
 #: plinth/modules/ikiwiki/forms.py:30
@@ -1589,8 +1589,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
-"Denne funksjonen gir bare mening om du bruker <a href=\"%(ejabberd_url)s\""
-">ejabbert</a> sludretjener-programmet."
+"Denne funksjonen gir bare mening om du bruker <a href=\"%(ejabberd_url)s"
+"\">ejabbert</a> sludretjener-programmet."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:253
 #, python-format
@@ -1599,9 +1599,9 @@ msgid ""
 "\">ejabberd</a> chat server app, you must first enable certificate renewal "
 "of the current domain."
 msgstr ""
-"For å bruke Let's Encrypt-sertifikatet for <a href=\"%(ejabberd_url)s\""
-">ejabberd</a> sludretjenerprogram, må du først skru på sertifikatsfornyelse "
-"av gjeldende domene."
+"For å bruke Let's Encrypt-sertifikatet for <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> sludretjenerprogram, må du først skru på "
+"sertifikatsfornyelse av gjeldende domene."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:262
 #, fuzzy
@@ -3565,15 +3565,17 @@ msgstr ""
 "være i stand til å koble seg til endel tjenester uten tilgangskontroll."
 
 #: plinth/modules/security/forms.py:35
-msgid "Fail2ban (recommended)"
+#, fuzzy
+#| msgid "Fail2ban (recommended)"
+msgid "Fail2Ban (recommended)"
 msgstr "Fail2ban (anbefalt)"
 
 #: plinth/modules/security/forms.py:36
 #, fuzzy
 msgid ""
-"When this option is enabled, fail2ban will limit brute force break-in "
-"attempts to the SSH server and other password protected internet-services "
-"which are enabled."
+"When this option is enabled, Fail2Ban will limit brute force break-in "
+"attempts to the SSH server and other enabled password protected internet-"
+"services."
 msgstr ""
 "Når dette valget er påskrudd, vil Fail2ban begrense maktveldeangrep til SSH-"
 "tjeneren og andre passordbeskyttede internettjenester som er påskrudd."
@@ -4215,7 +4217,7 @@ msgstr "Konfigurering oppdatert."
 msgid "An error occurred during configuration."
 msgstr "En feil oppsto under konfigureringen."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:38
 #, fuzzy
 #| msgid ""
 #| "BitTorrent \n"
@@ -4225,12 +4227,12 @@ msgstr ""
 "BitTorrent\n"
 "(Transmission)"
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:40
 #, fuzzy
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: plinth/modules/transmission/__init__.py:44
+#: plinth/modules/transmission/__init__.py:43
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
 "handles Bitorrent file sharing.  Note that BitTorrent is not anonymous."
@@ -4239,18 +4241,18 @@ msgstr ""
 "(overføringsdemon) håndterer BitTorrent-fildeling i bakgrunnen. Merk at "
 "BitTorrent ikke er anonym."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:46
 msgid ""
 "Access the web interface at <a href=\"/transmission\">/transmission</a>."
 msgstr ""
 "Tilgang til nettgrensesnittet fra <a href=\"/transmission\">/transmission</"
 "a>."
 
-#: plinth/modules/transmission/forms.py:31
+#: plinth/modules/transmission/forms.py:30
 msgid "Download directory"
 msgstr "Last ned katalog"
 
-#: plinth/modules/transmission/forms.py:32
+#: plinth/modules/transmission/forms.py:31
 msgid ""
 "Directory where downloads are saved.  If you change the default directory, "
 "ensure that the new directory exists and is writable by \"debian-transmission"
@@ -4259,19 +4261,6 @@ msgstr ""
 "Katalog der nedlastinger lagres. Hvis du endrer standardkatalogen, må du "
 "sikre at den nye katalogen eksisterer og er skrivbar av «debian-"
 "transmission»-brukeren."
-
-#: plinth/modules/transmission/forms.py:38
-msgid "Username to login to the web interface."
-msgstr "Brukernavn for å logge inn på nettgrensesnittet."
-
-#: plinth/modules/transmission/forms.py:42
-msgid ""
-"Password to login to the web interface.  Current password is shown in a "
-"hashed format.  To set a new password, enter the password in plain text."
-msgstr ""
-"Passord for å logge inn på nettgrensesnittet. Nåværende passord er vist i et "
-"kryptert format. Å sette et nytt passord, skriv inn passordet i klartekst "
-"(vanlig tekst)."
 
 #: plinth/modules/ttrss/__init__.py:41
 #, fuzzy
@@ -4934,6 +4923,17 @@ msgid ""
 msgstr ""
 "Valgene som berører %(box_name)s er på det mest grunnleggende nivået, så vær "
 "forsiktig!"
+
+#~ msgid "Username to login to the web interface."
+#~ msgstr "Brukernavn for å logge inn på nettgrensesnittet."
+
+#~ msgid ""
+#~ "Password to login to the web interface.  Current password is shown in a "
+#~ "hashed format.  To set a new password, enter the password in plain text."
+#~ msgstr ""
+#~ "Passord for å logge inn på nettgrensesnittet. Nåværende passord er vist i "
+#~ "et kryptert format. Å sette et nytt passord, skriv inn passordet i "
+#~ "klartekst (vanlig tekst)."
 
 #~ msgid ""
 #~ "Chat Client \n"
