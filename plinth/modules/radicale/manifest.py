@@ -18,6 +18,9 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.templatetags.plinth_extras import Mobile_OS, Store
+from plinth.utils import play_store_url
+
+davdroid_package_id = 'at.bitfire.davdroid'
 
 clients = [{
     'name':
@@ -31,15 +34,13 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'url': 'https://play.google.com/store/apps/details?id=at'
-               '.bitfire.davdroid',
-        'fully_qualified_name': 'at.bitfire.davdroid'
+        'url': play_store_url(davdroid_package_id),
     }]
 }, {
     'name':
         _('GNOME Calendar'),
     'platforms': [{
-        'type': 'apt',
+        'type': 'package',
         'os': 'Debian',
         'package-name': 'gnome-calendar'
     }]
@@ -57,7 +58,7 @@ clients = [{
           'Clicking on the search button will list the existing '
           'calendars and address books.'),
     'platforms': [{
-        'type': 'apt',
+        'type': 'package',
         'os': 'Debian',
         'package-name': 'gnome-calendar'
     }]

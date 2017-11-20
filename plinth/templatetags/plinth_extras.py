@@ -40,7 +40,7 @@ class Store(Enum):
     GOOGLE_PLAY = 'google-play'
 
 
-def string_values(enum):
+def enum_values(enum):
     return [x.value for x in list(enum)]
 
 
@@ -94,14 +94,14 @@ def __check(clients, cond):
 def has_desktop_clients(clients):
     """Filter to find out whether an application has desktop clients"""
     return __check(clients,
-                   lambda x: x.get('os', '') in string_values(Desktop_OS))
+                   lambda x: x.get('os', '') in enum_values(Desktop_OS))
 
 
 @register.filter(name='has_mobile_clients')
 def has_mobile_clients(clients):
     """Filter to find out whether an application has mobile clients"""
     return __check(clients,
-                   lambda x: x.get('os', '') in string_values(Mobile_OS))
+                   lambda x: x.get('os', '') in enum_values(Mobile_OS))
 
 
 @register.filter(name='has_web_clients')
@@ -112,12 +112,10 @@ def has_web_clients(clients):
 
 @register.filter(name='of_type')
 def of_type(clients, typ):
-    """Filter clients of a particular type"""
-    if typ == 'mobile':
-        return list(filter(has_mobile_clients, clients))
-    elif typ == 'desktop':
-        return list(filter(has_desktop_clients, clients))
-    elif typ == 'web':
-        return list(filter(has_web_clients, clients))
-    else:
-        return clients
+    """Filter and get clients of a particular type"""
+    filters = {
+        'mobile': has_mobile_clients,
+        'desktop': has_desktop_clients,
+        'web': has_web_clients
+    }
+    return list(filter(filters.get(typ, lambda x: x), clients))

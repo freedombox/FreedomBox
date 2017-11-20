@@ -19,17 +19,20 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules.jsxc import manifest as jsxc_manifest
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.utils import play_store_url
 
-clients = [{
+yaxim_package_id = 'org.yaxim.androidclient'
+bruno_package_id = 'org.yaxim.bruno'
+conversations_package_id = 'eu.siacs.conversations'
+
+_clients = [{
     'name':
         _('yaxim'),
     'platforms': [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'fully_qualified_name': 'org.yaxim.androidclient',
-        'url': 'https://play.google.com/store/apps/details?id=org'
-               '.yaxim.androidclient '
+        'url': play_store_url(yaxim_package_id),
     }]
 }, {
     'name':
@@ -41,9 +44,7 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'fully_qualified_name': 'org.yaxim.bruno',
-        'url': 'https://play.google.com/store/apps/details?id'
-               '=org.yaxim.bruno '
+        'url': play_store_url(bruno_package_id)
     }]
 }, {
     'name':
@@ -70,49 +71,30 @@ clients = [{
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.GOOGLE_PLAY.value,
-        'url': 'https://play.google.com/store/apps/details?id'
-               '=eu.siacs.conversations ',
-        'fully_qualified_name': 'eu.siacs.conversations'
+        'url': play_store_url(conversations_package_id)
     }]
 }, {
     'name':
         _('Dino'),
     'platforms': [{
         'type': 'download',
-        'os': 'Debian',
-        'url': 'https://download.opensuse.org/repositories/network'
-               ':/messaging:/xmpp:/dino/Debian_9.0/amd64/dino_0.0'
-               '~git178.9d8e1e8_amd64.deb',
+        'os': Desktop_OS.GNU_LINUX,
+        'url': 'https://github.com/dino/dino/wiki/Distribution-Packages',
     }]
 }, {
     'name':
         _('Gajim'),
     'platforms': [{
-        'type': 'apt',
+        'type': 'package',
         'os': 'Debian',
         'package_name': 'gajim'
     }, {
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'url': 'https://gajim.org/downloads/0.16/gajim-0.16.8-2.exe'
+        'url': 'https://gajim.org/downloads.php'
     }]
-}, {
-    'name':
-        _('OneTeam'),
-    'platforms': [{
-        'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
-        'url': 'https://download.process-one.net/oneteam/release'
-               '-installers/OneTeam.msi'
-    }, {
-        'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
-        'url': 'https://download.process-one.net/oneteam/release'
-               '-installers/OneTeam.dmg '
-    }, {
-        'type': 'download',
-        'os': 'Linux',
-        'url': 'https://download.process-one.net/oneteam/release'
-               '-installers/oneteam.tar.bz2 '
-    }]
-}].append(jsxc_manifest.clients)
+}]
+
+_clients.extend(jsxc_manifest.clients)
+
+clients = _clients

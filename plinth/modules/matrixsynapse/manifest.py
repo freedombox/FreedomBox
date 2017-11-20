@@ -18,6 +18,10 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.utils import f_droid_url, play_store_url
+
+android_package_id = 'im.vector.alpha'
+riot_desktop_download_url = 'https://riot.im/desktop.html'
 
 clients = [{
     'name':
@@ -27,17 +31,13 @@ clients = [{
             'type': 'store',
             'os': Mobile_OS.ANDROID.value,
             'store_name': Store.GOOGLE_PLAY.value,
-            'fully_qualified_name': 'im.vector.alpha',
-            'url': 'https://play.google.com/store/apps/details?id=im'
-                   '.vector.alpha '
+            'url': play_store_url(android_package_id)
         },
         {
             'type': 'store',
             'os': Mobile_OS.ANDROID.value,
-            'os_version': '>=6.0',
             'store_name': Store.F_DROID.value,
-            'fully_qualified_name': 'im.vector.alpha',
-            'url': 'https://f-droid.org/packages/im.vector.alpha/'
+            'url': f_droid_url(android_package_id)
         },
         {
             'type': 'web',
@@ -46,18 +46,17 @@ clients = [{
         {
             'type': 'download',
             'os': Desktop_OS.GNU_LINUX.value,
-            'url': 'https://riot.im/desktop.html'
+            'url': riot_desktop_download_url,
         },
         {
             'type': 'download',
             'os': Desktop_OS.MAC_OS.value,
-            'url': 'https://riot.im/desktop.html'
+            'url': riot_desktop_download_url,
         },
         {
             'type': 'download',
             'os': Desktop_OS.WINDOWS.value,
-            'os_version': '>=7',
-            'url': 'https://riot.im/desktop.html'
+            'url': riot_desktop_download_url,
         },
     ]
 }]

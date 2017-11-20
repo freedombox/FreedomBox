@@ -28,13 +28,11 @@ clients = [{
         'store_name': Store.GOOGLE_PLAY.value,
         'url': 'https://play.google.com/store/apps/details?id=org'
                '.ttrssreader',
-        'fully_qualified_name': 'org.ttrssreader'
     }, {
         'type': 'store',
         'os': Mobile_OS.ANDROID.value,
         'store_name': Store.F_DROID.value,
         'url': 'https://f-droid.org/packages/org.ttrssreader/',
-        'fully_qualified_name': 'org.ttrssreader'
     }, {
         'type': 'web',
         'url': '/tt-rss'

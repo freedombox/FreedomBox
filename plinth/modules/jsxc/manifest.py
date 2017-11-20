@@ -17,15 +17,15 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [
-    {
-        'name': _('JSXC'),
-        'platforms': [
-            {
-                'type': 'apt',
-                'os': 'Debian',
-                'package_name': 'libjs-jsxc'
-            }
-        ]
-    }
-]
+clients = [{
+    'name':
+        _('JSXC'),
+    'platforms': [{
+        'type': 'package',
+        'os': 'Debian',
+        'package_name': 'libjs-jsxc'
+    }, {
+        'type': 'web',
+        'url': '/jsxc'
+    }]
+}]

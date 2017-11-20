@@ -18,13 +18,10 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.utils import f_droid_url, play_store_url
 
-metadata = {
-    'syncthing': {
-        'version': '0.14.39',
-        'android-package-id': 'com.nutomic.syncthingandroid',
-    },
-}
+syncthing_package_id = 'com.nutomic.syncthingandroid'
+syncthing_download_url = 'https://syncthing.net/'
 
 clients = [{
     'name':
@@ -40,48 +37,25 @@ clients = [{
     }, {
         'type': 'download',
         'os': Desktop_OS.GNU_LINUX.value,
-        'arch': 'amd64',
-        'url': 'https://github.com/syncthing/syncthing/releases/'
-               'download/v{0}/syncthing-linux-amd64-v{0}.tar.gz'
-               .format(metadata['syncthing']['version']),
+        'url': syncthing_download_url,
     }, {
         'type': 'download',
         'os': Desktop_OS.MAC_OS.value,
-        'arch': 'amd64',
-        'url': 'https://github.com/syncthing/syncthing/releases/'
-               'download/v{0}/syncthing-macosx-amd64-v{0}.tar.gz'
-               .format(metadata['syncthing']['version']),
+        'url': syncthing_download_url,
     }, {
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'arch': 'amd64',
-        'url': 'https://github.com/syncthing/syncthing/releases/'
-               'download/v{0}/syncthing-windows-amd64-v{0}.zip'
-               .format(metadata['syncthing']['version']),
+        'url': syncthing_download_url,
     }, {
-        'type':
-            'store',
-        'os':
-            Mobile_OS.ANDROID.value,
-        'store_name':
-            Store.GOOGLE_PLAY.value,
-        'fully_qualified_name':
-            metadata['syncthing']['android-package-id'],
-        'url':
-            'https://play.google.com/store/apps/details?id={}'
-            .format(metadata['syncthing']['android-package-id'])
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.GOOGLE_PLAY.value,
+        'url': play_store_url(syncthing_package_id)
     }, {
-        'type':
-            'store',
-        'os':
-            Mobile_OS.ANDROID.value,
-        'store_name':
-            Store.F_DROID.value,
-        'fully_qualified_name':
-            metadata['syncthing']['android-package-id'],
-        'url':
-            'https://f-droid.org/packages/{}'
-            .format(metadata['syncthing']['android-package-id'])
+        'type': 'store',
+        'os': Mobile_OS.ANDROID.value,
+        'store_name': Store.F_DROID.value,
+        'url': f_droid_url(syncthing_package_id)
     }, {
         'type': 'web',
         'url': '/syncthing'
