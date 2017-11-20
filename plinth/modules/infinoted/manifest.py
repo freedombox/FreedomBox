@@ -37,7 +37,7 @@ clients = [{
         'url': 'http://releases.0x539.de/gobby/gobby-stable.exe'
     }, {
         'type': 'package',
-        'os': 'Debian',
-        'package_name': 'gobby'
+        'format': 'deb',
+        'name': 'gobby'
     }]
 }]

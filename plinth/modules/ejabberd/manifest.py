@@ -86,8 +86,8 @@ _clients = [{
         _('Gajim'),
     'platforms': [{
         'type': 'package',
-        'os': 'Debian',
-        'package_name': 'gajim'
+        'format': 'deb',
+        'name': 'gajim'
     }, {
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,

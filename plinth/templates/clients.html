@@ -22,141 +22,187 @@
 {% load static %}
 
 {% if clients  %}
-  <p>
-    <button id="collapsible-button" type="button" class="btn btn-default collapsed"
-            data-toggle="collapse" data-target="#clients">
-        Client Apps
-    </button>
-  </p>
+    <p>
+        <button id="collapsible-button" type="button" class="btn btn-default collapsed"
+                data-toggle="collapse" data-target="#clients">
+            Client Apps
+        </button>
+    </p>
 
-  <table id="clients" class="table table-hover collapse">
+    <table id="clients" class="table table-hover collapse">
 
-    {% if clients|has_web_clients %}
-     {% with clients|of_type:'web' as web_clients %}
-      <tr>
-          <th rowspan=" {{ web_clients|length }}"> Web </th>
-          {% with web_clients|first as client %}
-          {% for platform in client.platforms %}
-          {% if platform.type == 'web' %}
-          <td> {{ client.name }} </td>
-          <td>
-              <a href="{{ platform.url }}">
-                  <button type="button" class="btn btn-success">Launch</button>
-              </a>
-          </td>
-          {% endif %}
-          {% endfor %}
-          {% endwith %}
-      </tr>
-      {% for client in web_clients|slice:"1:" %}
-          {% for platform in client.platforms %}
-            {% if platform.type == 'web' %}
-       <tr>
-          <td> {{ client.name }} </td>
-          <td>
-              <a href="{{ platform.url }}">
-                  <button type="button" class="btn btn-success">Launch</button>
-              </a>
-          </td>
-       </tr>
-             {% endif %}
-           {% endfor %}
-       {% endfor %}
-       {% endwith %}
-     {% endif %}
+        {% if clients|has_web_clients %}
+            {% with clients|of_type:'web' as web_clients %}
+                <tr>
+                    <th rowspan=" {{ web_clients|length }}"> Web </th>
+                    {% with web_clients|first as client %}
+                        {% for platform in client.platforms %}
+                            {% if platform.type == 'web' %}
+                                <td> {{ client.name }} </td>
+                                <td>
+                                    <a href="{{ platform.url }}">
+                                        <button type="button" class="btn btn-success">Launch</button>
+                                    </a>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </tr>
+                {% for client in web_clients|slice:"1:" %}
+                    {% for platform in client.platforms %}
+                        {% if platform.type == 'web' %}
+                            <tr>
+                                <td> {{ client.name }} </td>
+                                <td>
+                                    <a href="{{ platform.url }}">
+                                        <button type="button" class="btn btn-success">Launch</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endwith %}
+        {% endif %}
 
-       {% if clients|has_desktop_clients %}
-       {% with clients|of_type:'desktop' as desktop_clients %}
-       <tr>
-           <th rowspan="{{ desktop_clients|length }}"> Desktop </th>
-           {% with desktop_clients|first as client %}
-           <td> {{ client.name }} </td>
-           <td>
-               <div class ="row">
-                   {% for platform in client.platforms %}
-                   {% if platform.type == 'download' %}
-                   <div class="col-md-2 col-xs-4">
-                       <a href="{{ platform.url }}">
-                           {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                           <img class="os-icon" src="{% static icon %}" />
-                           {% endwith %}
-                       </a>
-                   </div>
-                   {% endif %}
-                   {% endfor %}
-               </div>
-           </td>
-           {% endwith %}
-       </tr>
-       {% for client in desktop_clients|slice:"1:" %}
-       <tr>
-           <td> {{ client.name }} </td>
-           <td>
-               <div class ="row">
-                   {% for platform in client.platforms %}
-                   {% if platform.type == 'download' %}
-                   <div class="col-md-2 col-xs-4">
-                       <a href="{{ platform.url }}">
-                           {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                           <img class="os-icon" src="{% static icon %}" />
-                           {% endwith %}
-                       </a>
-                   </div>
-                   {% endif %}
-                   {% endfor %}
-               </div>
-           </td>
-       </tr>
-      {% endfor %}
-      {% endwith %}
-      {% endif %}
+        {% if clients|has_desktop_clients %}
+            {% with clients|of_type:'desktop' as desktop_clients %}
+                <tr>
+                    <th rowspan="{{ desktop_clients|length }}"> Desktop </th>
+                    {% with desktop_clients|first as client %}
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class ="row">
+                                {% for platform in client.platforms %}
+                                    {% if platform.type == 'download' %}
+                                        <div class="col-md-2 col-xs-4">
+                                            <a href="{{ platform.url }}">
+                                                {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                                                    <img class="os-icon" src="{% static icon %}" />
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                    {% endwith %}
+                </tr>
+                {% for client in desktop_clients|slice:"1:" %}
+                    <tr>
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class ="row">
+                                {% for platform in client.platforms %}
+                                    {% if platform.type == 'download' %}
+                                        <div class="col-md-2 col-xs-4">
+                                            <a href="{{ platform.url }}">
+                                                {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                                                    <img class="os-icon" src="{% static icon %}" />
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endwith %}
+        {% endif %}
 
-      {% if clients|has_mobile_clients %}
-      {% with clients|of_type:'mobile' as mobile_clients %}
-      <tr>
-          <th rowspan="{{ mobile_clients|length }}"> Mobile </th>
-          {% with mobile_clients|first as client %}
-          <td> {{ client.name }} </td>
-          <td>
-          <div class="row">
-              {% for platform in client.platforms %}
-              {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
-              <div class="col-md-2 col-xs-4">
-                  <a href="{{ platform.url }}">
-                      {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                      <img class="store-icon" src="{% static icon %}" />
-                      {% endwith %}
-                  </a>
-              </div>
-              {% endif %}
-              {% endfor %}
-          </div>
-          </td>
-          {% endwith %}
-      </tr>
-      {% for client in mobile_clients|slice:"1:" %}
-      <tr>
-          <td> {{ client.name }} </td>
-          <td>
-              <div class="row">
-                  {% for platform in client.platforms %}
-                  {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
-                  <div class="col-md-2 col-xs-4">
-                      <a href="{{ platform.url }}">
-                          {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                          <img class="store-icon" src="{% static icon %}" />
-                          {% endwith %}
-                      </a>
-                  </div>
-                  {% endif %}
-                  {% endfor %}
-              </div>
-          </td>
-      </tr>
-      {% endfor %}
-      {% endwith %}
-      {% endif %}
+        {% if clients|has_mobile_clients %}
+            {% with clients|of_type:'mobile' as mobile_clients %}
+                <tr>
+                    <th rowspan="{{ mobile_clients|length }}"> Mobile </th>
+                    {% with mobile_clients|first as client %}
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class="row">
+                                {% for platform in client.platforms %}
+                                    {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
+                                        <div class="col-md-2 col-xs-4">
+                                            <a href="{{ platform.url }}">
+                                                {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
+                                                    <img class="store-icon" src="{% static icon %}" />
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                    {% endwith %}
+                </tr>
+                {% for client in mobile_clients|slice:"1:" %}
+                    <tr>
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class="row">
+                                {% for platform in client.platforms %}
+                                    {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
+                                        <div class="col-md-2 col-xs-4">
+                                            <a href="{{ platform.url }}">
+                                                {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
+                                                    <img class="store-icon" src="{% static icon %}" />
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endwith %}
+        {% endif %}
 
-  </table>
+        {% if clients|has_package_clients %}
+            {% with clients|of_type:'package' as package_clients %}
+                <tr>
+                    <th rowspan="{{ package_clients|length }}"> Package </th>
+                    {% with package_clients|first as client %}
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class="row">
+                                <ul>
+                                    {% for platform in client.platforms %}
+                                        {% if platform.type == 'package' and platform.format == 'deb' %}
+                                            <li> <strong> Debian: </strong> {{ platform.name }} </li>
+                                        {% endif %}
+                                        {% if platform.type == 'package' and platform.format == 'homebrew' %}
+                                            <li> <strong> HomeBrew: </strong> {{ platform.name }} </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                    {% endwith %}
+                </tr>
+                {% for client in package_clients|slice:"1:" %}
+                    <tr>
+                        <td> {{ client.name }} </td>
+                        <td>
+                            <div class="row">
+                                <ul>
+                                {% for platform in client.platforms %}
+                                    {% if platform.type == 'package' %}
+                                        {% if platform.type == 'package' and platform.format == 'deb' %}
+                                            <li> <strong> Debian: </strong> {{ platform.name }} </li>
+                                        {% endif %}
+                                        {% if platform.type == 'package' and platform.format == 'homebrew' %}
+                                            <li> <strong> HomeBrew: </strong> {{ platform.name }} </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endwith %}
+        {% endif %}
+
+    </table>
 
 {% endif %}

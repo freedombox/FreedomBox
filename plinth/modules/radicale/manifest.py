@@ -41,8 +41,8 @@ clients = [{
         _('GNOME Calendar'),
     'platforms': [{
         'type': 'package',
-        'os': 'Debian',
-        'package-name': 'gnome-calendar'
+        'format': 'deb',
+        'name': 'gnome-calendar'
     }]
 }, {
     'name':
@@ -59,7 +59,7 @@ clients = [{
           'calendars and address books.'),
     'platforms': [{
         'type': 'package',
-        'os': 'Debian',
-        'package-name': 'gnome-calendar'
+        'format': 'deb',
+        'name': 'evolution'
     }]
 }]
