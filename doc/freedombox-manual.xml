@@ -4165,6 +4165,25 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
       <para>Service discovery is not essential and works only on internal networks. It may be disabled to improve security especially when connecting to a hostile local network. </para>
     </section>
     <section>
+      <title>Snapshots</title>
+      <para><emphasis>Snapshots</emphasis> allows you to create filesystem snapshots, and rollback the system to a previous snapshot. </para>
+      <itemizedlist>
+        <listitem>
+          <para>Note: This feature requires a Btrfs filesystem. All of the FreedomBox stable disk images use Btrfs. </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/snapshots.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>snapshots.png</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+    </section>
+    <section>
       <title>Software Upgrades</title>
       <para>FreedomBox can automatically install security upgrades.  On the <emphasis>Upgrades</emphasis> page of the <emphasis>Settings</emphasis> section in Plinth you can turn on automatic upgrades. For FreedomBox versions above 0.5, this feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your FreedomBox secure. </para>
       <para>Upgrades are performed every day at night.  If you wish to shutdown FreedomBox every day after use, keep it running at night once a week or so to let the automatic upgrades happen.  Alternatively, you can perform manual upgrades as described below. </para>
@@ -6760,6 +6779,20 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.17.0 (2017-11-20)</title>
+        <itemizedlist>
+          <listitem>
+            <para>transmission: Enable Single Sign On. </para>
+          </listitem>
+          <listitem>
+            <para>cockpit: Add short description to frontpage shortcut. </para>
+          </listitem>
+          <listitem>
+            <para>fail2ban: Fix spelling and sentence structure. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Plinth v0.16.0 (2017-11-06)</title>
         <section>
