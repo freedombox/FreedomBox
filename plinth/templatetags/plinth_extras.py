@@ -40,6 +40,12 @@ class Store(Enum):
     GOOGLE_PLAY = 'google-play'
 
 
+class Package(Enum):
+    DEB = 'deb'
+    HOMEBREW = 'brew'
+    RPM = 'rpm'
+
+
 def enum_values(enum):
     return [x.value for x in list(enum)]
 

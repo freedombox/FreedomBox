@@ -17,7 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 from plinth.utils import play_store_url
 
 jitsi_package_id = 'org.jitsi.meet'
@@ -53,7 +54,7 @@ clients = [{
         'url': jitsi_download_url
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'jitsi'
     }, {
         'type': 'download',

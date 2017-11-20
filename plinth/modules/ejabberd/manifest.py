@@ -18,7 +18,8 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules.jsxc import manifest as jsxc_manifest
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 from plinth.utils import play_store_url
 
 yaxim_package_id = 'org.yaxim.androidclient'
@@ -86,7 +87,7 @@ _clients = [{
         _('Gajim'),
     'platforms': [{
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'gajim'
     }, {
         'type': 'download',

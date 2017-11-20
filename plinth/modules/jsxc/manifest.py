@@ -17,12 +17,14 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.templatetags.plinth_extras import Package
+
 clients = [{
     'name':
         _('JSXC'),
     'platforms': [{
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'libjs-jsxc'
     }, {
         'type': 'web',

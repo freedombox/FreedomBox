@@ -17,7 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 from plinth.utils import play_store_url
 
 quasseldroid_package_id = 'com.iskrembilen.quasseldroid',
@@ -32,7 +33,7 @@ clients = [{
         'url': quassel_download_url,
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'quassel-client',
     }]
 }, {

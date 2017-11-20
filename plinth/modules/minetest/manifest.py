@@ -17,7 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 
 clients = [{
     'name':
@@ -40,7 +41,7 @@ clients = [{
         'url': 'https://f-droid.org/packages/net.minetest.minetest/ '
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'minetest'
     }]
 }]
