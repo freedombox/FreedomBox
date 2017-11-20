@@ -18,7 +18,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.templatetags.plinth_extras import Desktop_OS
+from plinth.templatetags.plinth_extras import Desktop_OS, Package
 from plinth.utils import format_lazy
 
 clients = [{
@@ -34,10 +34,10 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': Desktop_OS.WINDOWS.value,
-        'url': 'http://releases.0x539.de/gobby/gobby-stable.exe'
+        'url': 'https://github.com/gobby/gobby/wiki/Download'
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'gobby'
     }]
 }]

@@ -17,7 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 from plinth.utils import f_droid_url, play_store_url
 
 syncthing_package_id = 'com.nutomic.syncthingandroid'
@@ -28,11 +29,11 @@ clients = [{
         _('Syncthing'),
     'platforms': [{
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'syncthing',
     }, {
         'type': 'package',
-        'format': 'homebrew',
+        'format': Package.HOMEBREW.value,
         'name': 'syncthing',
     }, {
         'type': 'download',

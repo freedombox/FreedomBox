@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Mobile_OS, Store
+from plinth.templatetags.plinth_extras import Mobile_OS, Package, Store
 from plinth.utils import play_store_url
 
 davdroid_package_id = 'at.bitfire.davdroid'
@@ -41,7 +41,7 @@ clients = [{
         _('GNOME Calendar'),
     'platforms': [{
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'gnome-calendar'
     }]
 }, {
@@ -59,7 +59,7 @@ clients = [{
           'calendars and address books.'),
     'platforms': [{
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'evolution'
     }]
 }]

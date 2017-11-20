@@ -17,7 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
+from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
+                                               Store)
 from plinth.utils import f_droid_url, play_store_url
 
 plumble_package_id = 'com.morlunk.mumbleclient.free'
@@ -35,7 +36,7 @@ clients = [{
         'url': 'https://wiki.mumble.info/wiki/Main_Page'
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'mumble'
     }, {
         'type': 'store',

@@ -17,6 +17,8 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.templatetags.plinth_extras import Package
+
 clients = [{
     'name':
         _('Deluge'),
@@ -24,10 +26,10 @@ clients = [{
         _('Bittorrent client written in Python/PyGTK '),
     'platforms': [{
         'type': 'web',
-        'relative_path': '/deluge'
+        'url': '/deluge'
     }, {
         'type': 'package',
-        'format': 'deb',
+        'format': Package.DEB.value,
         'name': 'deluge',
     }]
 }]
