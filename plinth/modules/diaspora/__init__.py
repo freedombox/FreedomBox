@@ -15,16 +15,15 @@
 #
 
 import os
-import augeas
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.utils import format_lazy
-from plinth import actions, action_utils, frontpage, \
-    service as service_module
+import augeas
+from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.errors import DomainNotRegisteredError
 from plinth.menu import main_menu
-from .manifest import clients
+from plinth.utils import format_lazy
 
 domain_name_file = "/etc/diaspora/domain_name"
 lazy_domain_name = None  # To avoid repeatedly reading from file
@@ -70,25 +69,23 @@ description = [
         ' federate with other diaspora* pods.')
 ]
 
+from .manifest import clients  # isort:skip
 clients = clients
 
 
 def init():
     """Initialize the Diaspora module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-thumbs-up', 'diaspora:index', short_description)
+    menu.add_urlname(name, 'glyphicon-thumbs-up', 'diaspora:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -103,18 +100,13 @@ def setup(helper, old_version=None):
 
 
 def setup_domain_name(domain_name):
-    actions.superuser_run('diaspora',
-                          ['setup', '--domain-name', domain_name])
+    actions.superuser_run('diaspora', ['setup', '--domain-name', domain_name])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     service.notify_enabled(None, True)
     add_shortcut()
 
@@ -123,9 +115,7 @@ def add_shortcut():
     """Add shortcut to diaspora on the Plinth homepage"""
     if is_setup():
         frontpage.add_shortcut(
-            'diaspora',
-            name,
-            short_description,
+            'diaspora', name, short_description,
             url='https://diaspora.{}'.format(get_configured_domain_name()),
             login_required=True)
 
@@ -170,16 +160,14 @@ def diagnose():
     results = []
 
     results.append(
-        action_utils.diagnose_url(
-            'http://diaspora.localhost', kind='4', check_certificate=False))
+        action_utils.diagnose_url('http://diaspora.localhost', kind='4',
+                                  check_certificate=False))
     results.append(
-        action_utils.diagnose_url(
-            'http://diaspora.localhost', kind='6', check_certificate=False))
+        action_utils.diagnose_url('http://diaspora.localhost', kind='6',
+                                  check_certificate=False))
     results.append(
-        action_utils.diagnose_url(
-            'http://diaspora.{}'.format(get_configured_domain_name()),
-            kind='4',
-            check_certificate=False))
+        action_utils.diagnose_url('http://diaspora.{}'.format(
+            get_configured_domain_name()), kind='4', check_certificate=False))
 
     return results
 
@@ -197,8 +185,7 @@ def generate_apache_configuration(conf_file, domain_name):
     aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)
     aug.load()
 
-    aug.defvar('conf',
-               '/files' + conf_file)
+    aug.defvar('conf', '/files' + conf_file)
 
     aug.set('$conf/VirtualHost', None)
     aug.defvar('vh', '$conf/VirtualHost')
