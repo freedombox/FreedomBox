@@ -14,21 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for basic system configuration
 """
 
-from django.utils.translation import ugettext_lazy
-
-from plinth.menu import main_menu
-from plinth.modules import firewall
-from plinth import actions
-from plinth.signals import domain_added
-from plinth.modules.names import SERVICES
-
 import socket
 
+from django.utils.translation import ugettext_lazy
+
+from plinth import actions
+from plinth.menu import main_menu
+from plinth.modules import firewall
+from plinth.modules.names import SERVICES
+from plinth.signals import domain_added
 
 version = 1
 
@@ -46,8 +44,8 @@ def get_domainname():
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(ugettext_lazy('Configure'), 'glyphicon-cog',
-                     'config:index')
+    menu.add_urlname(
+        ugettext_lazy('Configure'), 'glyphicon-cog', 'config:index')
 
     # Register domain with Name Services module.
     domainname = get_domainname()
@@ -62,7 +60,8 @@ def init():
     else:
         domainname_services = None
 
-    domain_added.send_robust(sender='config', domain_type='domainname',
-                             name=domainname,
-                             description=ugettext_lazy('Domain Name'),
-                             services=domainname_services)
+    if domainname:
+        domain_added.send_robust(sender='config', domain_type='domainname',
+                                 name=domainname,
+                                 description=ugettext_lazy('Domain Name'),
+                                 services=domainname_services)

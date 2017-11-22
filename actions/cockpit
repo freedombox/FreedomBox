@@ -20,8 +20,8 @@ Configuration helper for Cockpit.
 """
 
 import argparse
-import augeas
 
+import augeas
 from plinth import action_utils
 
 CONFIG_FILE = '/etc/cockpit/cockpit.conf'
@@ -32,10 +32,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparser = subparsers.add_parser(
-        'setup', help='Setup Cockpit configuration')
-    subparser.add_argument(
-        'domain_names', nargs='*', help='Domain names to be allowed')
+    subparser = subparsers.add_parser('setup',
+                                      help='Setup Cockpit configuration')
+    subparser.add_argument('domain_names', nargs='*',
+                           help='Domain names to be allowed')
     subparsers.add_parser('enable', help='Enable Cockpit')
     subparsers.add_parser('disable', help='Disable Cockpit')
     subparser = subparsers.add_parser(
@@ -85,7 +85,7 @@ def subcommand_disable(_):
 def _get_origin_domains(aug):
     """Return the list of allowed origin domains."""
     origins = aug.get('/files' + CONFIG_FILE + '/WebService/Origins')
-    return set(origins.split())
+    return set(origins.split()) if origins else set()
 
 
 def _set_origin_domains(aug, origins):
