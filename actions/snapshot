@@ -15,16 +15,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for filesystem snapshots.
 """
 
-import augeas
 import argparse
 import json
 import os
 import subprocess
+
+import augeas
 
 FSTAB = '/etc/fstab'
 AUG_FSTAB = '/files/etc/fstab'
@@ -39,8 +39,12 @@ def parse_arguments():
     subparsers.add_parser('list', help='List snapshots')
     subparsers.add_parser('create', help='Create snapshot')
 
-    subparser = subparsers.add_parser('delete', help='Delete snapshot')
+    subparser = subparsers.add_parser('delete',
+                                      help='Delete a snapshot by number')
     subparser.add_argument('number', help='Number of snapshot to delete')
+
+    subparser = subparsers.add_parser('delete-all',
+                                      help='Delete all the snapshots')
 
     subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
     subparser.add_argument('number', help='Number of snapshot to rollback to')
@@ -68,8 +72,8 @@ def _add_fstab_entry(mount_point):
     """Add mountpoint for subvolumes."""
     snapshots_mount_point = os.path.join(mount_point, '.snapshots')
 
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Fstab/lens', 'Fstab.lns')
     aug.set('/augeas/load/Fstab/incl[last() + 1]', FSTAB)
     aug.load()
@@ -95,11 +99,15 @@ def _add_fstab_entry(mount_point):
         aug.save()
 
 
-def subcommand_list(_):
-    """List snapshots."""
+def _get_snapper_list():
     command = ['snapper', 'list']
     process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    lines = process.stdout.decode().splitlines()
+    return process.stdout.decode().splitlines()
+
+
+def subcommand_list(_):
+    """List snapshots."""
+    lines = _get_snapper_list()
     keys = ('type', 'number', 'pre_number', 'date', 'user', 'cleanup',
             'description')
     snapshots = []
@@ -137,15 +145,30 @@ def subcommand_create(_):
 
 
 def subcommand_delete(arguments):
-    """Delete snapshot."""
+    """Delete a snapshot by number."""
     command = ['snapper', 'delete', arguments.number]
     subprocess.run(command, check=True)
 
 
+def subcommand_delete_all(_):
+    """Delete all the snapshots."""
+    lines = _get_snapper_list()
+    rng = [line.split('|')[1].strip() for line in lines[3:]]
+    if rng:
+        if len(rng) == 1:
+            to_delete = rng[0]
+        else:
+            to_delete = '-'.join([rng[0], rng[-1]])
+        command = ['snapper', 'delete', to_delete]
+        subprocess.run(command, check=True)
+
+
 def subcommand_rollback(arguments):
     """Rollback to snapshot."""
-    command = ['snapper', 'rollback', '--description', 'created by rollback',
-               arguments.number]
+    command = [
+        'snapper', 'rollback', '--description', 'created by rollback',
+        arguments.number
+    ]
     subprocess.run(command, check=True)
 
 

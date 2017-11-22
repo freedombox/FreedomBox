@@ -22,6 +22,28 @@
 {% load i18n %}
 
 {% block configuration %}
+  <p>
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-xs-6 text-left">
+          <input type="submit" class="btn btn-primary"
+                 value="{% trans 'Create Snapshot' %}"/>
+        </div>
+
+        <div class="col-xs-6 text-right">
+          <a href="{% url 'snapshot:delete-all' %}"
+             title="{% trans 'Delete all the snapshots' %}">
+            <button type="button" class="btn btn-danger
+                          {% if snapshots|length == 1 %} disabled {% endif %}">
+              {% trans 'Delete All' %}
+            </button>
+          </a>
+        </div>
+      </div>
+    </form>
+  </p>
 
   <div class="row">
     <div class="col-lg-12">
@@ -76,14 +98,5 @@
       </table>
     </div>
   </div>
-
-  <p>
-    <form class="form" method="post">
-      {% csrf_token %}
-
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Create Snapshot" %}"/>
-    </form>
-  </p>
 
 {% endblock %}

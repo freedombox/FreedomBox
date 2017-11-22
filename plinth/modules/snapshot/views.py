@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for snapshot module.
 """
+
+import json
 
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-import json
 
 from plinth import actions
 from plinth.modules import snapshot as snapshot_module
@@ -39,40 +39,55 @@ def index(request):
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
 
-    return TemplateResponse(request, 'snapshot.html',
-                            {'title': snapshot_module.name,
-                             'description': snapshot_module.description,
-                             'snapshots': snapshots})
+    return TemplateResponse(request, 'snapshot.html', {
+        'title': snapshot_module.name,
+        'description': snapshot_module.description,
+        'snapshots': snapshots
+    })
 
 
 def delete(request, number):
     """Show confirmation to delete a snapshot."""
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['delete', number])
-        messages.success(
-            request, _('Deleted snapshot #{number}.').format(number=number))
+        messages.success(request,
+                         _('Deleted snapshot #{number}.').format(
+                             number=number))
+        return redirect(reverse('snapshot:index'))
+
+    output = actions.superuser_run('snapshot', ['list'])
+    snapshots = json.loads(output)
+    snapshot = next(s for s in snapshots if s['number'] == number)
+
+    return TemplateResponse(request, 'snapshot_delete.html', {
+        'title': _('Delete Snapshot'),
+        'snapshot': snapshot
+    })
+
+
+def delete_all(request):
+    """Show confirmation to delete all snapshots."""
+    if request.method == 'POST':
+        actions.superuser_run('snapshot', ['delete-all'])
+        messages.success(request, _('Deleted all snapshots.'))
         return redirect(reverse('snapshot:index'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
 
-    snapshot = None
-    for current_snapshot in snapshots:
-        if current_snapshot['number'] == number:
-            snapshot = current_snapshot
-
-    return TemplateResponse(request, 'snapshot_delete.html',
-                            {'title': _('Delete Snapshot'),
-                             'snapshot': snapshot})
+    return TemplateResponse(request, 'snapshot_delete_all.html', {
+        'title': _('Delete Snapshots'),
+        'snapshots': snapshots[1:]
+    })
 
 
 def rollback(request, number):
     """Show confirmation to rollback to a snapshot."""
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['rollback', number])
-        messages.success(
-            request,
-            _('Rolled back to snapshot #{number}.').format(number=number))
+        messages.success(request,
+                         _('Rolled back to snapshot #{number}.').format(
+                             number=number))
         messages.warning(
             request,
             _('The system must be restarted to complete the rollback.'))
@@ -86,6 +101,7 @@ def rollback(request, number):
         if current_snapshot['number'] == number:
             snapshot = current_snapshot
 
-    return TemplateResponse(request, 'snapshot_rollback.html',
-                            {'title': _('Rollback to Snapshot'),
-                             'snapshot': snapshot})
+    return TemplateResponse(request, 'snapshot_rollback.html', {
+        'title': _('Rollback to Snapshot'),
+        'snapshot': snapshot
+    })
