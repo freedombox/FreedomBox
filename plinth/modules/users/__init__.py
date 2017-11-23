@@ -14,26 +14,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to manage users
 """
 
-from django.utils.translation import ugettext_lazy as _
 import subprocess
 
-from plinth import action_utils
-from plinth import actions
-from plinth.errors import ActionError
-from plinth.menu import main_menu
+from django.utils.translation import ugettext_lazy as _
 
+from plinth import action_utils, actions
+from plinth.menu import main_menu
 
 version = 1
 
 is_essential = True
 
-managed_packages = ['ldapscripts', 'ldap-utils', 'libnss-ldapd',
-                    'libpam-ldapd', 'nslcd', 'slapd']
+managed_packages = [
+    'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nslcd',
+    'slapd'
+]
 
 first_boot_steps = [
     {
@@ -80,33 +79,27 @@ def _diagnose_ldap_entry(search_item):
     result = 'failed'
 
     try:
-        subprocess.check_output(['ldapsearch', '-x', '-b', 'dc=thisbox',
-                                 search_item])
+        subprocess.check_output(
+            ['ldapsearch', '-x', '-b', 'dc=thisbox', search_item])
         result = 'passed'
     except subprocess.CalledProcessError:
         pass
 
-    return [_('Check LDAP entry "{search_item}"')
-            .format(search_item=search_item), result]
+    return [
+        _('Check LDAP entry "{search_item}"').format(search_item=search_item),
+        result
+    ]
 
 
 def create_group(group):
     """Add an LDAP group."""
     actions.superuser_run('users', options=['create-group', group])
+    register_group(group)
 
 
 def remove_group(group):
     """Remove an LDAP group."""
     actions.superuser_run('users', options=['remove-group', group])
-
-
-def get_all_groups():
-    """Retrieve the set of all LDAP groups in the system"""
-    try:
-        groups = actions.superuser_run('users', options=['get-all-groups'])
-        return set(groups.strip().split())
-    except ActionError:
-        return {}
 
 
 def register_group(group):

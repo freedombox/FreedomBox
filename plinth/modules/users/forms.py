@@ -18,20 +18,18 @@
 import subprocess
 
 from django import forms
-from django.contrib import auth
-from django.contrib import messages
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from django.contrib import auth, messages
+from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
+from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
-from plinth import actions
+from plinth import actions, module_loader
 from plinth.errors import ActionError
-from plinth.modules import first_boot
-from plinth.modules import users
+from plinth.modules import first_boot, users
 from plinth.modules.security import set_restricted_access
 from plinth.utils import is_user_admin
-from plinth import module_loader
 
 
 def get_group_choices():
@@ -50,8 +48,8 @@ class ValidNewUsernameCheckMixin(object):
         username = self.cleaned_data['username']
         if self.instance.username != username and \
                 not self.is_valid_new_username():
-            raise ValidationError(_('Username is taken or is reserved.'),
-                                  code='invalid')
+            raise ValidationError(
+                _('Username is taken or is reserved.'), code='invalid')
 
         return username
 
@@ -80,11 +78,9 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
     Include options to add user to groups.
     """
     groups = forms.MultipleChoiceField(
-        choices=get_group_choices(),
-        label=ugettext_lazy('Permissions'),
+        choices=get_group_choices(), label=ugettext_lazy('Permissions'),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
-        help_text=ugettext_lazy(
+        widget=forms.CheckboxSelectMultiple, help_text=ugettext_lazy(
             'Select which services should be available to the new '
             'user. The user will be able to log in to services that '
             'support single sign-on through LDAP, if they are in the '
@@ -105,24 +101,23 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
 
         if commit:
             try:
-                actions.superuser_run(
-                    'users',
-                    ['create-user', user.get_username()],
-                    input=self.cleaned_data['password1'].encode())
+                actions.superuser_run('users', [
+                    'create-user', user.get_username()
+                ], input=self.cleaned_data['password1'].encode())
             except ActionError:
-                messages.error(self.request,
-                               _('Creating LDAP user failed.'))
+                messages.error(self.request, _('Creating LDAP user failed.'))
 
             for group in self.cleaned_data['groups']:
                 try:
-                    actions.superuser_run(
-                        'users',
-                        ['add-user-to-group', user.get_username(), group])
+                    actions.superuser_run('users', [
+                        'add-user-to-group',
+                        user.get_username(), group
+                    ])
                 except ActionError:
                     messages.error(
                         self.request,
-                        _('Failed to add new user to {group} group.')
-                        .format(group=group))
+                        _('Failed to add new user to {group} group.').format(
+                            group=group))
 
                 group_object, created = Group.objects.get_or_create(name=group)
                 group_object.user_set.add(user)
@@ -134,9 +129,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
         label=ugettext_lazy('SSH Keys'),
-        required=False,
-        widget=forms.Textarea,
-        help_text=ugettext_lazy(
+        required=False, widget=forms.Textarea, help_text=ugettext_lazy(
             'Setting an SSH public key will allow this user to '
             'securely log in to the system without using a '
             'password. You may enter multiple keys, one on each '
@@ -161,9 +154,14 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
 
-        choices = [  # Replace group names with descriptions
-            (c[0], group_choices[c[1]])
-            for c in sorted(self.fields['groups'].choices, key=lambda x: x[1])]
+        choices = []
+
+        for c in sorted(self.fields['groups'].choices, key=lambda x: x[1]):
+            # Handle case where groups exist in database for
+            # applications not installed yet.
+            if c[1] in group_choices:
+                # Replace group names with descriptions
+                choices.append((c[0], group_choices[c[1]]))
 
         self.fields['groups'].label = 'Permissions'
         self.fields['groups'].choices = choices
@@ -177,16 +175,17 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
         user = super(UserUpdateForm, self).save(commit)
 
         if commit:
-            output = actions.superuser_run(
-                'users', ['get-user-groups', self.username])
+            output = actions.superuser_run('users',
+                                           ['get-user-groups', self.username])
             old_groups = output.strip().split('\n')
             old_groups = [group for group in old_groups if group]
 
             if self.username != user.get_username():
                 try:
-                    actions.superuser_run(
-                        'users',
-                        ['rename-user', self.username, user.get_username()])
+                    actions.superuser_run('users', [
+                        'rename-user', self.username,
+                        user.get_username()
+                    ])
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
@@ -195,10 +194,10 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
             for old_group in old_groups:
                 if old_group not in new_groups:
                     try:
-                        actions.superuser_run(
-                            'users',
-                            ['remove-user-from-group', user.get_username(),
-                             old_group])
+                        actions.superuser_run('users', [
+                            'remove-user-from-group',
+                            user.get_username(), old_group
+                        ])
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to remove user from group.'))
@@ -206,18 +205,20 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
-                        actions.superuser_run(
-                            'users',
-                            ['add-user-to-group', user.get_username(),
-                             new_group])
+                        actions.superuser_run('users', [
+                            'add-user-to-group',
+                            user.get_username(), new_group
+                        ])
                     except ActionError:
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
 
             try:
-                actions.superuser_run(
-                    'ssh', ['set-keys', '--username', user.get_username(),
-                            '--keys', self.cleaned_data['ssh_keys'].strip()])
+                actions.superuser_run('ssh', [
+                    'set-keys', '--username',
+                    user.get_username(), '--keys',
+                    self.cleaned_data['ssh_keys'].strip()
+                ])
             except ActionError:
                 messages.error(self.request, _('Unable to set SSH keys.'))
 
@@ -237,14 +238,13 @@ class UserChangePasswordForm(SetPasswordForm):
         user = super(UserChangePasswordForm, self).save(commit)
         if commit:
             try:
-                actions.superuser_run(
-                    'users',
-                    ['set-user-password', user.get_username()],
-                    input=self.cleaned_data['new_password1'].encode())
+                actions.superuser_run('users', [
+                    'set-user-password',
+                    user.get_username()
+                ], input=self.cleaned_data['new_password1'].encode())
             except ActionError:
-                messages.error(
-                    self.request,
-                    _('Changing LDAP user password failed.'))
+                messages.error(self.request,
+                               _('Changing LDAP user password failed.'))
 
         return user
 
@@ -263,18 +263,17 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             first_boot.mark_step_done('users_firstboot')
 
             try:
-                actions.superuser_run(
-                    'users',
-                    ['create-user', user.get_username()],
-                    input=self.cleaned_data['password1'].encode())
+                actions.superuser_run('users', [
+                    'create-user', user.get_username()
+                ], input=self.cleaned_data['password1'].encode())
             except ActionError:
-                messages.error(self.request,
-                               _('Creating LDAP user failed.'))
+                messages.error(self.request, _('Creating LDAP user failed.'))
 
             try:
-                actions.superuser_run(
-                    'users',
-                    ['add-user-to-group', user.get_username(), 'admin'])
+                actions.superuser_run('users', [
+                    'add-user-to-group',
+                    user.get_username(), 'admin'
+                ])
             except ActionError:
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
