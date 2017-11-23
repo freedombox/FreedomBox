@@ -21,11 +21,11 @@ Configuration helper for the LDAP user directory
 """
 
 import argparse
-import augeas
 import re
 import subprocess
 import sys
 
+import augeas
 from plinth import action_utils
 
 ACCESS_CONF = '/etc/security/access.conf'
@@ -39,41 +39,41 @@ def parse_arguments():
 
     subparsers.add_parser('setup', help='Setup LDAP')
 
-    subparser = subparsers.add_parser(
-        'create-user', help='Create an LDAP user')
+    subparser = subparsers.add_parser('create-user',
+                                      help='Create an LDAP user')
     subparser.add_argument('username', help='Name of the LDAP user to create')
 
-    subparser = subparsers.add_parser(
-        'remove-user', help='Delete an LDAP user')
+    subparser = subparsers.add_parser('remove-user',
+                                      help='Delete an LDAP user')
     subparser.add_argument('username', help='Name of the LDAP user to delete')
 
-    subparser = subparsers.add_parser(
-        'rename-user', help='Rename an LDAP user')
+    subparser = subparsers.add_parser('rename-user',
+                                      help='Rename an LDAP user')
     subparser.add_argument('oldusername', help='Old name of the LDAP user')
     subparser.add_argument('newusername', help='New name of the LDAP user')
 
-    subparser = subparsers.add_parser(
-        'set-user-password', help='Set the password of an LDAP user')
+    subparser = subparsers.add_parser('set-user-password',
+                                      help='Set the password of an LDAP user')
     subparser.add_argument(
         'username', help='Name of the LDAP user to set the password for')
 
-    subparser = subparsers.add_parser(
-        'create-group', help='Create an LDAP group')
-    subparser.add_argument(
-        'groupname', help='Name of the LDAP group to create')
+    subparser = subparsers.add_parser('create-group',
+                                      help='Create an LDAP group')
+    subparser.add_argument('groupname',
+                           help='Name of the LDAP group to create')
 
-    subparser = subparsers.add_parser(
-        'remove-group', help='Delete an LDAP group')
-    subparser.add_argument(
-        'groupname', help='Name of the LDAP group to delete')
+    subparser = subparsers.add_parser('remove-group',
+                                      help='Delete an LDAP group')
+    subparser.add_argument('groupname',
+                           help='Name of the LDAP group to delete')
 
     subparser = subparsers.add_parser(
         'get-user-groups', help='Get all the LDAP groups for an LDAP user')
-    subparser.add_argument(
-        'username', help='LDAP user to retrieve the groups for')
+    subparser.add_argument('username',
+                           help='LDAP user to retrieve the groups for')
 
-    subparser = subparsers.add_parser(
-        'add-user-to-group', help='Add an LDAP user to an LDAP group')
+    subparser = subparsers.add_parser('add-user-to-group',
+                                      help='Add an LDAP user to an LDAP group')
     subparser.add_argument('username', help='LDAP user to add to group')
     subparser.add_argument('groupname', help='LDAP group to add the user to')
 
@@ -81,8 +81,8 @@ def parse_arguments():
         'remove-user-from-group',
         help='Remove an LDAP user from an LDAP group')
     subparser.add_argument('username', help='LDAP user to remove from group')
-    subparser.add_argument(
-        'groupname', help='LDAP group to remove the user from')
+    subparser.add_argument('groupname',
+                           help='LDAP group to remove the user from')
 
     subparsers.required = True
     return parser.parse_args()
@@ -135,13 +135,10 @@ def create_organizational_unit(unit):
     """Create an organizational unit in LDAP."""
     distinguished_name = 'ou={unit},dc=thisbox'.format(unit=unit)
     try:
-        subprocess.run(
-            [
-                'ldapsearch', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-s',
-                'base', '-b', distinguished_name, '(objectclass=*)'
-            ],
-            stdout=subprocess.DEVNULL,
-            check=True)
+        subprocess.run([
+            'ldapsearch', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-s',
+            'base', '-b', distinguished_name, '(objectclass=*)'
+        ], stdout=subprocess.DEVNULL, check=True)
         return  # Already exists
     except subprocess.CalledProcessError:
         input = '''
@@ -149,23 +146,18 @@ dn: ou={unit},dc=thisbox
 objectClass: top
 objectClass: organizationalUnit
 ou: {unit}'''.format(unit=unit)
-        subprocess.run(
-            ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            input=input.encode(),
-            stdout=subprocess.DEVNULL,
-            check=True)
+        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H',
+                        'ldapi:///'], input=input.encode(),
+                       stdout=subprocess.DEVNULL, check=True)
 
 
 def setup_admin():
     """Remove LDAP admin password and Allow root to modify the users."""
-    process = subprocess.run(
-        [
-            'ldapsearch', '-Q', '-L', '-L', '-L', '-Y', 'EXTERNAL', '-H',
-            'ldapi:///', '-s', 'base', '-b', 'olcDatabase={1}mdb,cn=config',
-            '(objectclass=*)', 'olcRootDN', 'olcRootPW'
-        ],
-        check=True,
-        stdout=subprocess.PIPE)
+    process = subprocess.run([
+        'ldapsearch', '-Q', '-L', '-L', '-L', '-Y', 'EXTERNAL', '-H',
+        'ldapi:///', '-s', 'base', '-b', 'olcDatabase={1}mdb,cn=config',
+        '(objectclass=*)', 'olcRootDN', 'olcRootPW'
+    ], check=True, stdout=subprocess.PIPE)
     ldap_object = {}
     for line in process.stdout.decode().splitlines():
         if line:
@@ -174,10 +166,8 @@ def setup_admin():
 
     if 'olcRootPW' in ldap_object:
         subprocess.run(
-            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            input=b'''
+            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H',
+             'ldapi:///'], check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 delete: olcRootPW''')
@@ -185,10 +175,8 @@ delete: olcRootPW''')
     root_dn = 'gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth'
     if ldap_object['olcRootDN'] != root_dn:
         subprocess.run(
-            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            input=b'''
+            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H',
+             'ldapi:///'], check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 replace: olcRootDN
@@ -258,8 +246,7 @@ def subcommand_rename_user(arguments):
 
 def set_user_password(username, password):
     """Set a user's password."""
-    process = _run(
-        ['slappasswd', '-s', password], stdout=subprocess.PIPE)
+    process = _run(['slappasswd', '-s', password], stdout=subprocess.PIPE)
     password = process.stdout.decode().strip()
     _run(['ldapsetpasswd', username, password])
 
@@ -273,14 +260,14 @@ def get_user_groups(username):
     """Returns only the supplementary groups of the given user.
 
     Exclude the 'users' primary group from the returned list."""
-    process = _run(
-        ['ldapid', username], stdout=subprocess.PIPE, check=False)
+    process = _run(['ldapid', username], stdout=subprocess.PIPE, check=False)
     output = process.stdout.decode().strip()
     if output:
         groups_part = output.split(' ')[2]
         groups = groups_part.split('=')[1]
-        group_names = [user.strip('()')
-                       for user in re.findall('\(.*?\)', groups)]
+        group_names = [
+            user.strip('()') for user in re.findall('\(.*?\)', groups)
+        ]
         group_names.remove('users')
         return group_names
 

@@ -27,7 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.client import web_client
 from plinth.menu import main_menu
-from plinth.modules.users import add_group
+from plinth.modules.users import create_group, register_group
 
 
 version = 2
@@ -51,6 +51,8 @@ description = [
       'it immediately after enabling this service.')
 ]
 
+group = ('bit-torrent', _('Download files using BitTorrent applications'))
+
 reserved_usernames = ['debian-deluged']
 
 web_clients = [web_client(name='Deluge', url='/deluge')]
@@ -72,6 +74,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -86,7 +89,7 @@ def setup(helper, old_version=None):
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    add_group('bittorrent')
+    create_group(group[0])
 
 
 def add_shortcut():

@@ -29,7 +29,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.client import web_client, mobile_client
-
+from plinth.modules.users import create_group, register_group
 
 version = 2
 
@@ -67,6 +67,8 @@ mobile_clients = [
                                  '?id=org.ttrssreader',
                   fdroid_url='https://f-droid.org/packages/org.ttrssreader/')]
 
+group = ('feed-reader', _('Read and subscribe to news feeds'))
+
 service = None
 
 
@@ -86,6 +88,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -101,6 +104,7 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    create_group(group[0])
 
 
 def add_shortcut():
