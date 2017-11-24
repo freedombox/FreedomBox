@@ -28,6 +28,7 @@ import subprocess
 import unittest
 
 from plinth import action_utils
+from plinth.modules import security
 
 euid = os.geteuid()
 
@@ -40,11 +41,8 @@ def random_string(length=8):
 
 def is_exit_zero(args):
     """Return whether a command gave exit code zero"""
-    process = subprocess.run(
-        args,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False)
+    process = subprocess.run(args, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL, check=False)
     return process.returncode == 0
 
 
@@ -55,8 +53,8 @@ def get_password_hash(username):
         '-b', 'ou=users,dc=thisbox', '-Q', '(cn={})'.format(username),
         'userPassword'
     ]
-    process = subprocess.run(
-        query, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True)
+    process = subprocess.run(query, stdout=subprocess.PIPE,
+                             stderr=subprocess.DEVNULL, check=True)
     return process.stdout.decode().strip().split()[-1]
 
 
@@ -71,11 +69,8 @@ def try_login_to_ssh(username, password, returncode=0):
         '-o', 'StrictHostKeyChecking=no', '-o', 'VerifyHostKeyDNS=no',
         username + '@127.0.0.1', '/bin/true'
     ]
-    process = subprocess.run(
-        command,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False)
+    process = subprocess.run(command, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL, check=False)
     return process.returncode == returncode
 
 
@@ -89,6 +84,7 @@ class TestActions(unittest.TestCase):
                                         '..', 'actions', 'users')
         self.users = set()
         self.groups = set()
+        security.set_restricted_access(False)
 
     def tearDown(self):
         for user in self.users:
@@ -99,6 +95,8 @@ class TestActions(unittest.TestCase):
 
         for group in self.groups:
             self.delete_group(group)
+
+        security.set_restricted_access(True)
 
     def call_action(self, arguments, **kwargs):
         """Call the action script."""
@@ -136,8 +134,8 @@ class TestActions(unittest.TestCase):
 
     def get_user_groups(self, username):
         """Return the list of groups for a user."""
-        process = self.call_action(
-            ['get-user-groups', username], stdout=subprocess.PIPE)
+        process = self.call_action(['get-user-groups', username],
+                                   stdout=subprocess.PIPE)
         return process.stdout.decode().split()
 
     def create_group(self, groupname=None):
@@ -163,8 +161,8 @@ class TestActions(unittest.TestCase):
         username, old_password = self.create_user()
         old_password_hash = get_password_hash(username)
         new_password = 'pass $123'
-        self.call_action(
-            ['set-user-password', username], input=new_password.encode())
+        self.call_action(['set-user-password', username],
+                         input=new_password.encode())
         new_password_hash = get_password_hash(username)
         self.assertNotEqual(old_password_hash, new_password_hash)
 
@@ -178,8 +176,8 @@ class TestActions(unittest.TestCase):
         non_existent_user = random_string()
         fake_password = random_string().encode()
         with self.assertRaises(subprocess.CalledProcessError):
-            self.call_action(
-                ['set-user-password', non_existent_user], input=fake_password)
+            self.call_action(['set-user-password', non_existent_user],
+                             input=fake_password)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_rename_user(self):
