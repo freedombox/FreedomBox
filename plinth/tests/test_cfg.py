@@ -14,17 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for configuration module.
 """
 
 import configparser
+import logging
 import os
 import unittest
 
 from plinth import cfg
-
 
 TEST_CONFIG_DIR = \
     os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
@@ -33,9 +32,12 @@ CONFIG_FILE_WITH_MISSING_OPTIONS = \
 CONFIG_FILE_WITH_MISSING_SECTIONS = \
     os.path.join(TEST_CONFIG_DIR, 'plinth.config.with_missing_sections')
 
+logging.disable(logging.CRITICAL)
+
 
 class TestCfg(unittest.TestCase):
     """Verify that the Plinth configuration module behaves as expected."""
+
     @classmethod
     def setUpClass(cls):
         """Locate and copy the official plinth.config file."""
@@ -104,15 +106,15 @@ class TestCfg(unittest.TestCase):
 
     def test_read_config_file_with_missing_sections(self):
         """Verify that missing configuration sections can be detected."""
-        self.assertRaises(
-            configparser.NoSectionError, cfg.read,
-            CONFIG_FILE_WITH_MISSING_SECTIONS, self.test_config_dir)
+        self.assertRaises(configparser.NoSectionError, cfg.read,
+                          CONFIG_FILE_WITH_MISSING_SECTIONS,
+                          self.test_config_dir)
 
     def test_read_config_file_with_missing_options(self):
         """Verify that missing configuration options can be detected."""
-        self.assertRaises(
-            configparser.NoOptionError, cfg.read,
-            CONFIG_FILE_WITH_MISSING_OPTIONS, self.test_config_dir)
+        self.assertRaises(configparser.NoOptionError, cfg.read,
+                          CONFIG_FILE_WITH_MISSING_OPTIONS,
+                          self.test_config_dir)
 
     def compare_configurations(self, parser):
         """Compare two sets of configuration values."""
@@ -124,23 +126,24 @@ class TestCfg(unittest.TestCase):
         self.assertEqual(parser.get('Path', 'config_dir'), cfg.config_dir)
         self.assertEqual(parser.get('Path', 'data_dir'), cfg.data_dir)
         self.assertEqual(parser.get('Path', 'store_file'), cfg.store_file)
-        self.assertEqual(parser.get('Path', 'actions_dir'),
-                         cfg.actions_dir)
+        self.assertEqual(parser.get('Path', 'actions_dir'), cfg.actions_dir)
         self.assertEqual(parser.get('Path', 'doc_dir'), cfg.doc_dir)
-        self.assertEqual(parser.get('Path', 'status_log_file'),
-                         cfg.status_log_file)
-        self.assertEqual(parser.get('Path', 'access_log_file'),
-                         cfg.access_log_file)
+        self.assertEqual(
+            parser.get('Path', 'status_log_file'), cfg.status_log_file)
+        self.assertEqual(
+            parser.get('Path', 'access_log_file'), cfg.access_log_file)
 
         self.assertEqual(5, len(parser.items('Network')))
         self.assertEqual(parser.get('Network', 'host'), cfg.host)
         self.assertEqual(int(parser.get('Network', 'port')), cfg.port)
-        self.assertEqual(parser.get('Network', 'secure_proxy_ssl_header'),
-                         cfg.secure_proxy_ssl_header)
+        self.assertEqual(
+            parser.get('Network', 'secure_proxy_ssl_header'),
+            cfg.secure_proxy_ssl_header)
         self.assertIsInstance(cfg.use_x_forwarded_host, bool)
-        self.assertEqual(parser.get('Network', 'use_x_forwarded_host'),
-                         str(cfg.use_x_forwarded_host))
+        self.assertEqual(
+            parser.get('Network', 'use_x_forwarded_host'),
+            str(cfg.use_x_forwarded_host))
         self.assertEqual(3, len(parser.items('Misc')))
-        self.assertEqual(parser.get('Misc', 'danube_edition'),
-                         str(cfg.danube_edition))
+        self.assertEqual(
+            parser.get('Misc', 'danube_edition'), str(cfg.danube_edition))
         self.assertEqual(parser.get('Misc', 'box_name'), cfg.box_name)
