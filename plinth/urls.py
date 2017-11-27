@@ -17,10 +17,10 @@
 """
 Django URLconf file containing all urls
 """
-from captcha import views as cviews
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from captcha import views as cviews
 from plinth.modules.sso.views import CaptchaLoginView
 from stronghold.decorators import public
 
@@ -29,20 +29,18 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^apps/$',
-        TemplateView.as_view(template_name='apps.html'),
-        name='apps'),
+        TemplateView.as_view(template_name='apps.html'), name='apps'),
     url(r'^sys/$', views.system_index, name='system'),
 
     # captcha urls are public
     url(r'image/(?P<key>\w+)/$',
-        public(cviews.captcha_image),
-        name='captcha-image',
+        public(cviews.captcha_image), name='captcha-image',
         kwargs={'scale': 1}),
     url(r'image/(?P<key>\w+)@2/$',
-        public(cviews.captcha_image),
-        name='captcha-image-2x',
+        public(cviews.captcha_image), name='captcha-image-2x',
         kwargs={'scale': 2}),
-    url(r'audio/(?P<key>\w+)/$', public(cviews.captcha_audio), name='captcha-audio'),
+    url(r'audio/(?P<key>\w+)/$',
+        public(cviews.captcha_audio), name='captcha-audio'),
     url(r'refresh/$', public(cviews.captcha_refresh), name='captcha-refresh'),
     url(r'locked/$', public(CaptchaLoginView.as_view()), name='locked_out'),
 ]

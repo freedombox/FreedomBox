@@ -17,10 +17,6 @@
 #
 
 import argparse
-import django.conf
-from django.contrib.messages import constants as message_constants
-import django.core.management
-import django.core.wsgi
 import importlib
 import logging
 import os
@@ -28,13 +24,16 @@ import stat
 import sys
 import warnings
 
-import cherrypy
+import django.conf
+import django.core.management
+import django.core.wsgi
+from django.contrib.messages import constants as message_constants
 
-from plinth import cfg
-from plinth import menu
-from plinth import module_loader
-from plinth import service
-from plinth import setup
+import axes
+import cherrypy
+from plinth import cfg, menu, module_loader, service, setup
+
+axes.default_app_config = "plinth.axes_app_config.AppConfig"
 
 logger = logging.getLogger(__name__)
 
@@ -47,27 +46,22 @@ def parse_arguments():
         description='Plinth web interface for FreedomBox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # TODO: server_dir is actually a url prefix; use a better variable name
-    parser.add_argument(
-        '--server_dir', default=cfg.server_dir,
-        help='web server path under which to serve')
-    parser.add_argument(
-        '--debug', action='store_true', default=cfg.debug,
-        help='enable debugging and run server *insecurely*')
+    parser.add_argument('--server_dir', default=cfg.server_dir,
+                        help='web server path under which to serve')
+    parser.add_argument('--debug', action='store_true', default=cfg.debug,
+                        help='enable debugging and run server *insecurely*')
     parser.add_argument(
         '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
     parser.add_argument(
         '--setup-no-install', default=False, nargs='*',
         help='run setup tasks without installing packages and exit')
-    parser.add_argument(
-        '--diagnose', action='store_true', default=False,
-        help='run diagnostic tests and exit')
-    parser.add_argument(
-        '--list-dependencies', default=False, nargs='*',
-        help='list package dependencies for essential modules')
-    parser.add_argument(
-        '--list-modules', default=False, nargs='*',
-        help='list modules')
+    parser.add_argument('--diagnose', action='store_true', default=False,
+                        help='run diagnostic tests and exit')
+    parser.add_argument('--list-dependencies', default=False, nargs='*',
+                        help='list package dependencies for essential modules')
+    parser.add_argument('--list-modules', default=False, nargs='*',
+                        help='list modules')
 
     global arguments
     arguments = parser.parse_args()
@@ -111,9 +105,12 @@ def setup_server():
 
     static_dir = os.path.join(cfg.file_root, 'static')
     config = {
-        '/': {'tools.staticdir.root': static_dir,
-              'tools.staticdir.on': True,
-              'tools.staticdir.dir': '.'}}
+        '/': {
+            'tools.staticdir.root': static_dir,
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': '.'
+        }
+    }
     cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
     logger.debug('Serving static directory %s on %s', static_dir,
                  django.conf.settings.STATIC_URL)
@@ -121,9 +118,12 @@ def setup_server():
     js_dir = '/usr/share/javascript'
     js_url = '/javascript'
     config = {
-        '/': {'tools.staticdir.root': js_dir,
-              'tools.staticdir.on': True,
-              'tools.staticdir.dir': '.'}}
+        '/': {
+            'tools.staticdir.root': js_dir,
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': '.'
+        }
+    }
     cherrypy.tree.mount(None, js_url, config)
     logger.debug('Serving javascript directory %s on %s', js_dir, js_url)
 
@@ -131,9 +131,12 @@ def setup_server():
     manual_url = '/'.join([cfg.server_dir, 'help/manual/images']) \
         .replace('//', '/')
     config = {
-        '/': {'tools.staticdir.root': manual_dir,
-              'tools.staticdir.on': True,
-              'tools.staticdir.dir': '.'}}
+        '/': {
+            'tools.staticdir.root': manual_dir,
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': '.'
+        }
+    }
     cherrypy.tree.mount(None, manual_url, config)
     logger.debug('Serving manual images %s on %s', manual_dir, manual_url)
 
@@ -144,9 +147,12 @@ def setup_server():
             continue
 
         config = {
-            '/': {'tools.staticdir.root': static_dir,
-                  'tools.staticdir.on': True,
-                  'tools.staticdir.dir': '.'}}
+            '/': {
+                'tools.staticdir.root': static_dir,
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': '.'
+            }
+        }
         urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
         cherrypy.tree.mount(None, urlprefix, config)
         logger.debug('Serving static directory %s on %s', static_dir,
@@ -168,25 +174,25 @@ def configure_django():
         'formatters': {
             'default': {
                 'format':
-                '[%(asctime)s] %(name)-14s %(levelname)-8s %(message)s',
-                }
-            },
+                    '[%(asctime)s] %(name)-14s %(levelname)-8s %(message)s',
+            }
+        },
         'handlers': {
             'file': {
                 'class': 'logging.FileHandler',
                 'filename': cfg.status_log_file,
                 'formatter': 'default'
-                },
+            },
             'console': {
                 'class': 'logging.StreamHandler',
                 'formatter': 'default'
-                }
-            },
+            }
+        },
         'root': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG' if cfg.debug else 'INFO'
-            }
         }
+    }
 
     templates = [
         {
@@ -225,35 +231,45 @@ def configure_django():
     if cfg.secure_proxy_ssl_header:
         secure_proxy_ssl_header = (cfg.secure_proxy_ssl_header, 'https')
 
+    pwd = 'django.contrib.auth.password_validation'
+
     django.conf.settings.configure(
         ALLOWED_HOSTS=['*'],
         AUTH_PASSWORD_VALIDATORS=[
             {
-                'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+                'NAME': '{}.UserAttributeSimilarityValidator'.format(pwd),
             },
             {
-                'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+                'NAME': '{}.MinimumLengthValidator'.format(pwd),
                 'OPTIONS': {
                     'min_length': 8,
                 }
             },
             {
-                'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+                'NAME': '{}.CommonPasswordValidator'.format(pwd),
             },
             {
-                'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+                'NAME': '{}.NumericPasswordValidator'.format(pwd),
             },
         ],
-        AXES_LOCKOUT_URL='locked',
+        AXES_LOCKOUT_URL='locked/',
         AXES_BEHIND_REVERSE_PROXY=True,
-        CACHES={'default':
-                {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}},
-        CAPTCHA_FONT_PATH=['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'],
+        CACHES={
+            'default': {
+                'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+            }
+        },
+        CAPTCHA_FONT_PATH=[
+            '/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf'
+        ],
         CAPTCHA_LENGTH=6,
         CAPTCHA_FLITE_PATH='/usr/bin/flite',
-        DATABASES={'default':
-                   {'ENGINE': 'django.db.backends.sqlite3',
-                    'NAME': cfg.store_file}},
+        DATABASES={
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': cfg.store_file
+            }
+        },
         DEBUG=cfg.debug,
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
@@ -274,8 +290,7 @@ def configure_django():
             'plinth.middleware.AdminRequiredMiddleware',
             'plinth.middleware.FirstSetupMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
-            'plinth.middleware.SetupMiddleware',
-        ),
+            'plinth.middleware.SetupMiddleware', ),
         ROOT_URLCONF='plinth.urls',
         SECURE_BROWSER_XSS_FILTER=True,
         SECURE_CONTENT_TYPE_NOSNIFF=True,
@@ -284,8 +299,11 @@ def configure_django():
         SESSION_FILE_PATH=sessions_directory,
         STATIC_URL='/'.join([cfg.server_dir, 'static/']).replace('//', '/'),
         # STRONGHOLD_PUBLIC_URLS=(r'^captcha/', ),
-        STRONGHOLD_PUBLIC_NAMED_URLS=('captcha-image', 'captcha-image-2x',
-                                      'captcha-audio', 'captcha-refresh', ),
+        STRONGHOLD_PUBLIC_NAMED_URLS=(
+            'captcha-image',
+            'captcha-image-2x',
+            'captcha-audio',
+            'captcha-refresh', ),
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
