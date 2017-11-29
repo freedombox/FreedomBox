@@ -57,5 +57,5 @@ class ShadowsocksForm(ServiceForm):
 
     method = forms.ChoiceField(
         label=_('Method'),
-        choices=[(x, x) for x in METHODS],
+        choices=[(method, method) for method in METHODS],
         help_text=_('Encryption method. Must match setting on server.'))

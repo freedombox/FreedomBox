@@ -61,10 +61,10 @@ class ShadowsocksServiceView(views.ServiceView):
         old_status = form.initial
         new_status = form.cleaned_data
 
-        if (old_status['server'] != new_status['server'] or
-            old_status['server_port'] != new_status['server_port'] or
-            old_status['password'] != new_status['password'] or
-            old_status['method'] != new_status['method']):
+        if old_status['server'] != new_status['server'] or \
+           old_status['server_port'] != new_status['server_port'] or \
+           old_status['password'] != new_status['password'] or \
+           old_status['method'] != new_status['method']:
             new_config = {
                 'local_address': '::0',
                 'local_port': 1080,
