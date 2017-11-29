@@ -46,6 +46,7 @@ def parse_arguments():
     add_service_action(subparsers, 'stop', 'stop a service')
     add_service_action(subparsers, 'enable', 'enable a service')
     add_service_action(subparsers, 'disable', 'disable a service')
+    add_service_action(subparsers, 'restart', 'restart a service')
     add_service_action(subparsers, 'reload', 'reload a service')
     add_service_action(subparsers, 'is-running', 'status of a service')
     add_service_action(subparsers, 'is-enabled', 'status a service')
@@ -71,6 +72,10 @@ def subcommand_enable(arguments):
 
 def subcommand_disable(arguments):
     action_utils.service_disable(arguments.service)
+
+
+def subcommand_restart(arguments):
+    action_utils.service_restart(arguments.service)
 
 
 def subcommand_reload(arguments):
