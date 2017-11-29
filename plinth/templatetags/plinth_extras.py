@@ -132,3 +132,16 @@ def of_type(clients, typ):
         'package': has_package_clients,
     }
     return list(filter(filters.get(typ, lambda x: x), clients))
+
+
+@register.filter(name='display_name')
+def display_name(string):
+    names = {
+        'gnu-linux': 'GNU/Linux',
+        'windows': 'Windows',
+        'mac-os': 'macOS',
+        'google-play': 'Play Store',
+        'f-droid': 'F-Droid',
+        'app-store': 'App Store'
+    }
+    return names.get(string, string)

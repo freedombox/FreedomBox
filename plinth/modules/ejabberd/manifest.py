@@ -49,7 +49,7 @@ _clients = [{
     }]
 }, {
     'name':
-        _('Chat secure - Encrypted Messenger'),
+        _('Chat secure'),
     'description':
         _('ChatSecure is a free and open source '
           'messaging app that features OTR encryption '
