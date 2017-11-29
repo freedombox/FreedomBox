@@ -22,6 +22,7 @@ Helper script for configuring Shadowsocks.
 
 import argparse
 import json
+import os
 import sys
 
 from plinth import action_utils
@@ -79,7 +80,11 @@ def subcommand_merge_config(arguments):
     new_config.update(config)
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
 
-    open(SHADOWSOCKS_CONFIG, 'w').write(new_config)
+    old_umask = os.umask(0o027)
+    try:
+        open(SHADOWSOCKS_CONFIG, 'w').write(new_config)
+    finally:
+        os.umask(old_umask)
 
     action_utils.service_reload(shadowsocks.managed_services[0])
 
