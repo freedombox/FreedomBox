@@ -26,9 +26,8 @@ from django.utils.translation import ugettext_lazy as _
 from .forms import ShadowsocksForm
 from plinth import actions
 from plinth import views
+from plinth.errors import ActionError
 from plinth.modules import shadowsocks
-
-SHADOWSOCKS_CONFIG = '/etc/shadowsocks-libev/freedombox.json'
 
 
 class ShadowsocksServiceView(views.ServiceView):
@@ -41,9 +40,10 @@ class ShadowsocksServiceView(views.ServiceView):
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""
         try:
-            configuration = open(SHADOWSOCKS_CONFIG, 'r').read()
+            configuration = actions.superuser_run('shadowsocks',
+                                                  ['get-config'])
             status = json.loads(configuration)
-        except (OSError, json.JSONDecodeError):
+        except ActionError:
             status = {
                 'server': '',
                 'server_port': 8388,

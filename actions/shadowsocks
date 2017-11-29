@@ -27,7 +27,8 @@ import sys
 
 from plinth import action_utils
 from plinth.modules import shadowsocks
-from plinth.modules.shadowsocks.views import SHADOWSOCKS_CONFIG
+
+SHADOWSOCKS_CONFIG = '/etc/shadowsocks-libev/freedombox.json'
 
 
 def parse_arguments():
@@ -37,10 +38,8 @@ def parse_arguments():
 
     subparsers.add_parser('setup',
                           help='Perform initial setup steps')
-    subparsers.add_parser('enable',
-                          help='Enable Shadowsocks client socks5 proxy')
-    subparsers.add_parser('disable',
-                          help='Disable Shadowsocks client socks5 proxy')
+    subparsers.add_parser(
+        'get-config', help='Read and print JSON config to stdout')
     subparsers.add_parser(
         'merge-config', help='Merge JSON config from stdin with existing')
 
@@ -55,14 +54,12 @@ def subcommand_setup(_):
     action_utils.service_disable('shadowsocks-libev')
 
 
-def subcommand_enable(_):
-    """Enable Shadowsocks client socks5 proxy."""
-    action_utils.service_enable(shadowsocks.managed_services[0])
-
-
-def subcommand_disable(_):
-    """Disable Shadowsocks client socks5 proxy."""
-    action_utils.service_disable(shadowsocks.managed_services[0])
+def subcommand_get_config(arguments):
+    """Read and print Shadowsocks configuration."""
+    try:
+        print(open(SHADOWSOCKS_CONFIG, 'r').read())
+    except Exception:
+        sys.exit(1)
 
 
 def subcommand_merge_config(arguments):

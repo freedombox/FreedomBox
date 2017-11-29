@@ -24,9 +24,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.utils import format_lazy
 
 
 version = 1
@@ -42,14 +44,17 @@ managed_services = ['shadowsocks-libev-local@freedombox']
 managed_packages = ['shadowsocks-libev']
 
 description = [
-    _('Shadowsocks is a lightweight and secure socks5 proxy, designed to '
+    _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
       'filtering and censorship.'),
-    _('Your FreedomBox can run a Shadowsocks client, that can connect '
-      'to a Shadowsocks server. The FreedomBox will also run a socks5 '
-      'server. Local devices can connect to the socks5 server, and '
-      'their data will be encrypted and proxied through the Shadowsocks '
-      'server.'),
+    format_lazy(
+        _('Your {box_name} can run a Shadowsocks client, that can connect to '
+          'a Shadowsocks server. It will also run a SOCKS5 proxy. Local '
+          'devices can connect to this proxy, and their data will be '
+          'encrypted and proxied through the Shadowsocks server.'),
+        box_name=_(cfg.box_name)),
+    _('To use Shadowsocks after setup, set the SOCKS5 proxy URL in your '
+      'device, browser or application to http://freedombox_address:1080/')
 ]
 
 
@@ -106,13 +111,13 @@ def is_running():
 
 def enable():
     """Enable service."""
-    actions.superuser_run('shadowsocks', ['enable'])
+    actions.superuser_run('service', ['enable', managed_services[0]])
     add_shortcut()
 
 
 def disable():
     """Disable service."""
-    actions.superuser_run('shadowsocks', ['disable'])
+    actions.superuser_run('service', ['disable', managed_services[0]])
     frontpage.remove_shortcut('shadowsocks')
 
 
