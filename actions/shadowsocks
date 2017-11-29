@@ -83,7 +83,7 @@ def subcommand_merge_config(arguments):
     finally:
         os.umask(old_umask)
 
-    action_utils.service_reload(shadowsocks.managed_services[0])
+    action_utils.service_restart(shadowsocks.managed_services[0])
 
 
 def main():
