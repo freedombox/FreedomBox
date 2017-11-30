@@ -156,7 +156,7 @@ def webserver_enable(name, kind='config', apply_changes=True):
     is required.  If changes have been applied, then performed action
     is returned.
     """
-    if webserver_is_enabled(name, kind):
+    if webserver_is_enabled(name, kind) and kind == 'module':
         return
 
     command_map = {
