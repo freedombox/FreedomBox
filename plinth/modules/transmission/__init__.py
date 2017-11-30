@@ -18,18 +18,17 @@
 Plinth module to configure Transmission server
 """
 
-from django.utils.translation import ugettext_lazy as _
 import json
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
+from django.utils.translation import ugettext_lazy as _
+
 from plinth import service as service_module
-from plinth.menu import main_menu
+from plinth import action_utils, actions, frontpage
 from plinth.client import web_client
+from plinth.menu import main_menu
 from plinth.modules.users import add_group
 
-version = 1
+version = 2
 
 managed_services = ['transmission-daemon']
 
