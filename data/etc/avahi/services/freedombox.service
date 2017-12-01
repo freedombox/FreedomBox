@@ -4,9 +4,10 @@
   <name replace-wildcards="yes">%h</name>
 
   <service>
-    <type>_freedombox._tcp</type>
+    <type>_http._tcp</type>
+    <subtype>_freedombox._sub._http._tcp</subtype>
     <port>80</port>
-    <host>%h</host>
+    <txt-record>path=/</txt-record>
   </service>
 
 </service-group>
