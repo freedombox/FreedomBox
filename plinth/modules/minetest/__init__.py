@@ -31,7 +31,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from plinth.client import desktop_client, mobile_client
+from .manifest import clients
 
 
 version = 2
@@ -59,15 +59,7 @@ description = [
           'is needed.'), box_name=_(cfg.box_name)),
 ]
 
-desktop_clients = [desktop_client(name='Minetest',
-                                                url= 'https://www.minetest.net/downloads/')]
-
-mobile_clients = [
-    mobile_client(name='Minetest',
-                                fully_qualified_name='net.minetest.mintest',
-                                fdroid_url='https://f-droid.org/packages/net.minetest.minetest/',
-                                play_store_url='https://play.google.com/store/apps/details?'
-                                 'id=net.minetest.minetest')]
+clients = clients
 
 reserved_usernames = ['Debian-minetest']
 

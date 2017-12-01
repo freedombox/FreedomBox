@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Main Plinth views
 """
@@ -48,13 +47,14 @@ def index(request):
 
     disk_views.warn_about_low_disk_space(request)
 
-    return TemplateResponse(request, 'index.html',
-                            {'title': _('FreedomBox'),
-                             'shortcuts': shortcuts,
-                             'selected_id': selection,
-                             'details': details,
-                             'details_label': details_label,
-                             'configure_url': configure_url})
+    return TemplateResponse(request, 'index.html', {
+        'title': _('FreedomBox'),
+        'shortcuts': shortcuts,
+        'selected_id': selection,
+        'details': details,
+        'details_label': details_label,
+        'configure_url': configure_url
+    })
 
 
 def system_index(request):
@@ -65,9 +65,7 @@ def system_index(request):
 
 class ServiceView(FormView):
     """A generic view for configuring simple services."""
-    service_id = None
-    form_class = forms.ServiceForm
-    template_name = 'service.html'
+    clients = []
     # Set diagnostics_module_name to the module name to show diagnostics button
     diagnostics_module_name = ""
     # List of paragraphs describing the service
@@ -75,7 +73,10 @@ class ServiceView(FormView):
     # Display the 'status' block of the service.html template
     # This block uses information from service.is_running. This method is
     # optional, so allow not showing this block here.
+    form_class = forms.ServiceForm
     show_status_block = True
+    service_id = None
+    template_name = 'service.html'
 
     @property
     def success_url(self):
@@ -97,8 +98,10 @@ class ServiceView(FormView):
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
-        return {'is_enabled': self.service.is_enabled(),
-                'is_running': self.service.is_running()}
+        return {
+            'is_enabled': self.service.is_enabled(),
+            'is_running': self.service.is_running()
+        }
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""
@@ -124,10 +127,9 @@ class ServiceView(FormView):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context['service'] = self.service
-        if self.diagnostics_module_name:
-            context['diagnostics_module_name'] = self.diagnostics_module_name
-        if self.description:
-            context['description'] = self.description
+        context['clients'] = self.clients
+        context['diagnostics_module_name'] = self.diagnostics_module_name
+        context['description'] = self.description
         context['show_status_block'] = self.show_status_block
         return context
 

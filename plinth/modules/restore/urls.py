@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the reStore module.
 """
@@ -24,10 +23,11 @@ from django.conf.urls import url
 from plinth.views import ServiceView
 from plinth.modules import restore
 
-
 urlpatterns = [
-    url(r'^apps/restore/$', ServiceView.as_view(
+    url(r'^apps/restore/$',
+        ServiceView.as_view(
             service_id=restore.managed_services[0],
-            description=restore.description
-        ), name='index'),
+            description=restore.description,
+            clients=restore.clients),
+        name='index'),
 ]

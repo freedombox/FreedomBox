@@ -14,38 +14,55 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for api for android app.
 """
 
 from django.http import HttpResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 from plinth.modules.names import get_domain, get_domain_types
 from plinth import frontpage
+from plinth import module_loader
 import json
 
 
-def get_apps(request, **kwargs):
-    shortcuts = frontpage.get_shortcuts()
-
-    response = {'services': get_app_payload(shortcuts)}
-    return HttpResponse(json.dumps(response), content_type="application/json")
-
-
-def get_app_payload(enabled_apps):
-    def get_value(key, value):
-        return str(value) if key != 'icon' \
-            else 'static/theme/icons/{}.svg'.format(value)
-
-    def filter_app_data(app):
-        return {key: get_value(key, value) for key, value in app.items()
-                if key in ('name', 'short_description', 'icon')}
-
-    return list(map(filter_app_data, enabled_apps))
-
-
 def get_access_info(request, **kwargs):
-    response = {domain_type: get_domain(domain_type) for domain_type in
-                get_domain_types()}
+    response = {
+        domain_type: get_domain(domain_type)
+        for domain_type in get_domain_types()
+    }
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+def get_services(request, **kwargs):
+    services = [shortcut['id'].split('_')[0]
+                for shortcut in frontpage.get_shortcuts()]
+    response = {'services': list(map(_get_service_data, services))}
+    return HttpResponse(
+        json.dumps(response, cls=DjangoJSONEncoder),
+        content_type="application/json")
+
+
+def _get_service_data(service):
+    module = module_loader.loaded_modules[service]
+
+    def _getattr(attr, not_found=None):
+        """A closure to get the enclosed module's attributes"""
+        return getattr(module, attr, not_found)
+
+    return {
+        key: value
+        for key, value in dict(
+            name=module.name,
+            short_description=_getattr('short_description'),
+            icon_url=_get_icon_url(_getattr('icon')),
+            description=_getattr('description'),
+            usage=_getattr('usage'),
+            manual_url=_getattr('manual_url'),
+            clients=_getattr('clients')).items()
+    }
+
+
+def _get_icon_url(icon):
+    return 'static/theme/icons/{}.svg'.format(icon) if icon else None

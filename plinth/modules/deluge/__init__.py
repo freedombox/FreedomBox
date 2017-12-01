@@ -25,9 +25,9 @@ from plinth import actions
 from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.client import web_client
 from plinth.menu import main_menu
 from plinth.modules.users import add_group
+from .manifest import clients
 
 
 version = 2
@@ -53,7 +53,7 @@ description = [
 
 reserved_usernames = ['debian-deluged']
 
-web_clients = [web_client(name='Deluge', url='/deluge')]
+clients = clients
 
 
 def init():

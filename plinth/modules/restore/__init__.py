@@ -25,7 +25,7 @@ from plinth import cfg
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from plinth.client import web_client
+from .manifest import clients
 
 
 version = 1
@@ -51,7 +51,7 @@ description = [
       '<a href=\'/restore/\'>reStore web-interface</a>.')
 ]
 
-web_clients = [web_client(name='reStore web-interface', url='/restore')]
+clients = clients
 
 reserved_usernames = ['node-restore']
 

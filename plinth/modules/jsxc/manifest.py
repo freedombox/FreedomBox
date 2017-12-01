@@ -15,16 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-Django models for the main application
-"""
+from django.utils.translation import ugettext_lazy as _
 
-from collections import namedtuple
+from plinth.templatetags.plinth_extras import Package
 
-web_client = namedtuple('Web_Client', ['name', 'url'])
-
-desktop_client = namedtuple('Desktop_clients', ['name', 'url'])
-
-mobile_client = namedtuple('Mobile_clients', ['name',
-                                              'fully_qualified_name',
-                                              'fdroid_url', 'play_store_url'])
+clients = [{
+    'name':
+        _('JSXC'),
+    'platforms': [{
+        'type': 'package',
+        'format': Package.DEB.value,
+        'name': 'libjs-jsxc'
+    }, {
+        'type': 'web',
+        'url': '/jsxc'
+    }]
+}]

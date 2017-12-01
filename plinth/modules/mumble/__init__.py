@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Mumble server
 """
@@ -28,8 +27,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.views import ServiceView
-from plinth.client import desktop_client, mobile_client
-
+from .manifest import clients
 
 version = 1
 
@@ -46,23 +44,12 @@ managed_packages = ['mumble-server']
 description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),
-
     _('You can connect to your Mumble server on the regular Mumble port '
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and Android devices are available.')
 ]
 
-desktop_clients = [
-    desktop_client(name='Mumble',url= 'https://wiki.mumble.info/wiki/Main_Page')]
-
-mobile_clients = [
-    mobile_client(name='Mumble',
-                  fully_qualified_name='com.morlunk.mumbleclient',
-                  fdroid_url='https://f-droid.org/packages/com.morlunk'
-                             '.mumbleclient/',
-                  play_store_url='https://play.google.com/store/apps/details'
-                                 '?id=com.morlunk.mumbleclient.free')]
-
+clients = clients
 
 reserved_usernames = ['mumble-server']
 
@@ -70,15 +57,19 @@ reserved_usernames = ['mumble-server']
 def init():
     """Intialize the Mumble module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-headphones', 'mumble:index', short_description)
+    menu.add_urlname(name, 'glyphicon-headphones', 'mumble:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], name, ports=['mumble-plinth'],
+            managed_services[0],
+            name,
+            ports=['mumble-plinth'],
             is_external=True,
-            enable=enable, disable=disable)
+            enable=enable,
+            disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -88,6 +79,7 @@ class MumbleServiceView(ServiceView):
     service_id = managed_services[0]
     diagnostics_module_name = "mumble"
     description = description
+    clients = clients
 
 
 def setup(helper, old_version=None):
@@ -96,19 +88,24 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0], name, ports=['mumble-plinth'],
+            managed_services[0],
+            name,
+            ports=['mumble-plinth'],
             is_external=True,
-            enable=enable, disable=disable)
+            enable=enable,
+            disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('mumble', name,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('mumble:index'),
-                           login_required=False)
+    frontpage.add_shortcut(
+        'mumble',
+        name,
+        short_description=short_description,
+        details=description,
+        configure_url=reverse_lazy('mumble:index'),
+        login_required=False)
 
 
 def enable():

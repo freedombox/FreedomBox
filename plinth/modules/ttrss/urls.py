@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Tiny Tiny RSS module.
 """
@@ -24,12 +23,13 @@ from django.conf.urls import url
 from plinth.views import ServiceView
 from plinth.modules import ttrss
 
-
 urlpatterns = [
-    url(r'^apps/ttrss/$', ServiceView.as_view(
-        service_id=ttrss.managed_services[0],
-        diagnostics_module_name="ttrss",
-        description=ttrss.description,
-        show_status_block=True
-    ), name='index'),
+    url(r'^apps/ttrss/$',
+        ServiceView.as_view(
+            service_id=ttrss.managed_services[0],
+            diagnostics_module_name="ttrss",
+            description=ttrss.description,
+            clients=ttrss.clients,
+            show_status_block=True),
+        name='index'),
 ]

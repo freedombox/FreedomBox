@@ -15,29 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-Test get apps for api module.
-"""
+from django.utils.translation import ugettext_lazy as _
 
-import unittest
-
-from plinth.modules.api.views import get_app_payload
-
-
-class TestApi(unittest.TestCase):
-    apps = [{
-        'name': 'someName',
-        'short_description': 'someDescription',
-        'icon': 'someIconURl',
-        'label': 'someLabel'
+clients = [{
+    'name': _('Transmission'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/transmission'
     }]
-
-    expected = [{
-        'name': 'someName',
-        'short_description': 'someDescription',
-        'icon': 'static/theme/icons/someIconURl.svg'
-    }]
-
-    def test_get_app_payload(self):
-        apps = get_app_payload(self.apps)
-        self.assertEquals(apps, self.expected)
+}]

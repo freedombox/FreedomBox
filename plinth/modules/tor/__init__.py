@@ -28,7 +28,7 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
-from plinth.client import desktop_client, mobile_client
+from .manifest import clients
 
 from . import utils
 
@@ -53,16 +53,7 @@ description = [
       'Tor Browser</a>.')
 ]
 
-desktop_clients = [
-    desktop_client(name='Tor Browser',
-                   url='https://www.torproject.org/download/download-easy'
-                       '.html.en')]
-
-mobile_clients = [
-    mobile_client(name='Orbot', fully_qualified_name='org.torproject.android',
-                  fdroid_url='https://guardianproject.info/fdroid/',
-                  play_store_url='https://play.google.com/store/apps/details'
-                                 '?id=org.torproject.android')]
+clients = clients
 
 reserved_usernames = ['debian-tor']
 

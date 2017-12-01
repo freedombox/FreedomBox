@@ -34,6 +34,8 @@
     {% endfor %}
   {% endblock %}
 
+  {% include "clients.html" with clients=clients %}
+
   {% block status %}
     {% if show_status_block %}
       <h3>{% trans "Status" %}</h3>

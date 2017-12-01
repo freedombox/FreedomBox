@@ -14,15 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Miscellaneous utility methods.
 """
 
 import importlib
 import os
-import ruamel.yaml
+
 from django.utils.functional import lazy
+
+import ruamel.yaml
 from plinth.modules import names
 
 
@@ -83,12 +84,14 @@ def get_domain_names():
 
 class YAMLFile(object):
     """A context management class for updating YAML files"""
+
     def __init__(self, yaml_file, post_exit=None):
         """Return a context object for the YAML file.
 
         Parameters:
         yaml_file - the YAML file to update.
-        post_exit - a function that will be called after updating the YAML file.
+        post_exit - a function that will be called after
+        updating the YAML file.
         """
         self.yaml_file = yaml_file
         self.post_exit = post_exit
@@ -112,3 +115,12 @@ class YAMLFile(object):
 
     def is_file_empty(self):
         return os.stat(self.yaml_file).st_size == 0
+
+
+def play_store_url(package_id):
+    return 'https://play.google.com/store/apps/details?id={}'.format(
+        package_id)
+
+
+def f_droid_url(package_id):
+    return 'https://f-droid.org/packages/{}'.format(package_id)

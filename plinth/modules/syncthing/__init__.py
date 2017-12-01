@@ -28,7 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from plinth.client import desktop_client, mobile_client, web_client
+from .manifest import clients
 
 
 version = 1
@@ -59,16 +59,7 @@ description = [
       'also <a href="https://syncthing.net/">available</a>.'),
 ]
 
-web_clients = [web_client(name='Syncthing', url='/syncthing')]
-
-desktop_clients = [desktop_client(name='Syncthing',
-                                  url='https://syncthing.net/')]
-
-mobile_clients = [mobile_client(
-    name='Syncthing', fully_qualified_name='com.nutomic.syncthingandroid',
-    fdroid_url='https://f-droid.org/packages/com.nutomic.syncthingandroid/',
-    play_store_url='https://play.google.com/store/apps/details?id=com.nutomic'
-                    '.syncthingandroid')]
+clients = clients
 
 service = None
 
@@ -76,7 +67,8 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index', short_description)
+    menu.add_urlname(name, 'glyphicon-refresh',
+                     'syncthing:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

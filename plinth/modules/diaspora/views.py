@@ -70,17 +70,18 @@ class DiasporaServiceView(ServiceView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['domain_name'] = diaspora.get_configured_domain_name()
+        context['clients'] = diaspora.clients
         return context
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
         return {
             'is_enabled':
-            self.service.is_enabled(),
+                self.service.is_enabled(),
             'is_user_registrations_enabled':
-            diaspora.is_user_registrations_enabled(),
+                diaspora.is_user_registrations_enabled(),
             'is_running':
-            self.service.is_running()
+                self.service.is_running()
         }
 
     def form_valid(self, form):

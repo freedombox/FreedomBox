@@ -30,8 +30,8 @@ from plinth import action_utils
 from plinth import actions
 from plinth import frontpage
 from plinth import service as service_module
-from plinth.client import desktop_client, web_client, mobile_client
 from plinth.menu import main_menu
+from .manifest import clients
 
 version = 2
 
@@ -58,26 +58,14 @@ description = [
       'client is recommended.')
 ]
 
-web_clients = [web_client(name='Riot', url='https://riot.im/app/#/home')]
-
-desktop_clients = [desktop_client(name='Riot',
-                                 url='https://riot.im/desktop.html'),
-                  desktop_client(name='WeeChat CLI',
-                                 url='https://weechat.org/')]
-
-mobile_clients = [mobile_client(name='Riot',
-                                fully_qualified_name='im.vector.alpha',
-                                play_store_url='https://play.google.com/store/apps/'
-                                           'details?id=im.vector.alpha',
-                                fdroid_url='https://f-droid.org/packages/'
-                                               'im.vector.alpha/')]
-
 service = None
 
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
+
+clients = clients
 
 
 def init():
