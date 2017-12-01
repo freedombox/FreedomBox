@@ -260,9 +260,7 @@ setuptools.setup(
                                         '*'))),
                 ('/var/lib/polkit-1/localauthority/10-vendor.d',
                  ['data/var/lib/polkit-1/localauthority/10-vendor.d/'
-                  'org.freedombox.NetworkManager.pkla']),
-                ('/etc/avahi/services/',
-                 glob.glob('data/etc/avahi/services/*.service'))],
+                  'org.freedombox.NetworkManager.pkla'])],
     cmdclass={
         'install': CustomInstall,
         'build': CustomBuild,
