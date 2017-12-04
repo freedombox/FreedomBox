@@ -270,7 +270,7 @@ def subcommand_mam(argument):
         ruamel.yaml.round_trip_dump(conf, file_handle)
 
     if action_utils.service_is_running('ejabberd'):
-        action_utils.service_restart('ejabberd')
+        subprocess.call(['ejabberdctl', 'reload_config'])
 
 
 def subcommand_letsencrypt(arguments):
