@@ -92,7 +92,13 @@ def download_manual(request):
         with gzip.open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
             content = f.read()
     except IOError:
-        raise Http404('File {} does not exist.'.format(manual_name))
+        try:
+            # pdf.gz doesn't exist. Try with .pdf
+            manual_name = manual_name.rpartition('.')[0]
+            with open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
+                content = f.read()
+        except IOError:
+            raise Http404('File {} does not exist.'.format(manual_name))
 
     return HttpResponse(
         ContentFile(content),
