@@ -15,11 +15,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-20 12:13-0500\n"
+"POT-Creation-Date: 2017-12-04 19:14-0500\n"
 "PO-Revision-Date: 2017-11-26 06:48+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Norwegian Bokmål "
-"<https://hosted.weblate.org/projects/freedombox/plinth/nb/>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"freedombox/plinth/nb/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr "Koble til {host}:{port}"
 msgid "Cannot connect to {host}:{port}"
 msgstr "Klarer ikke koble til {host}:{port}"
 
-#: plinth/context_processors.py:38 plinth/views.py:52
+#: plinth/context_processors.py:38 plinth/views.py:51
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -217,14 +217,14 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr "Akkurat nå finnes det bare begrenset funksjonalitet."
 
-#: plinth/modules/config/__init__.py:49
+#: plinth/modules/config/__init__.py:48
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:37
+#: plinth/modules/ikiwiki/views.py:36
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Sette opp"
 
-#: plinth/modules/config/__init__.py:67 plinth/modules/config/forms.py:81
+#: plinth/modules/config/__init__.py:66 plinth/modules/config/forms.py:81
 #: plinth/modules/config/views.py:166
 #: plinth/modules/dynamicdns/dynamicdns.py:143
 msgid "Domain Name"
@@ -357,7 +357,7 @@ msgstr "Feil ved setting av tidssone: {exception}"
 msgid "Time zone set"
 msgstr "Tidssone satt"
 
-#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/deluge/__init__.py:41 plinth/modules/deluge/manifest.py:24
 msgid "Deluge"
 msgstr "Deluge"
 
@@ -379,6 +379,10 @@ msgstr ""
 "\"/deluge\">/deluge</a> på netttjeneren. Standardpassordet er «deluge», men "
 "du bør logge inn og endre det umiddelbart etter at denne tjenesten er "
 "aktivert."
+
+#: plinth/modules/deluge/manifest.py:26
+msgid "Bittorrent client written in Python/PyGTK "
+msgstr ""
 
 #: plinth/modules/diagnostics/__init__.py:32
 msgid "Diagnostics"
@@ -437,6 +441,7 @@ msgid "Result"
 msgstr "Resultat"
 
 #: plinth/modules/diaspora/__init__.py:51
+#: plinth/modules/diaspora/manifest.py:40
 msgid "diaspora*"
 msgstr "diaspora*"
 
@@ -456,6 +461,16 @@ msgstr ""
 msgid "Enable new user registrations"
 msgstr "Skru på nye brukerregistreringer"
 
+#: plinth/modules/diaspora/manifest.py:28
+msgid "dandelion*"
+msgstr ""
+
+#: plinth/modules/diaspora/manifest.py:30
+msgid ""
+"It is an unofficial webview based client for the community-run, distributed "
+"social network diaspora*"
+msgstr ""
+
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
 msgid ""
@@ -473,30 +488,30 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:61
+#: plinth/modules/ejabberd/templates/ejabberd.html:64
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:93
+#: plinth/modules/tor/templates/tor.html:95
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
-#: plinth/templates/service.html:73
+#: plinth/templates/service.html:75
 msgid "Update setup"
 msgstr "Oppdater oppsett"
 
-#: plinth/modules/diaspora/views.py:96 plinth/modules/ejabberd/views.py:60
-#: plinth/modules/matrixsynapse/views.py:103
-#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:134
-#: plinth/views.py:112
+#: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:60
+#: plinth/modules/matrixsynapse/views.py:104
+#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:136
+#: plinth/views.py:115
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
-#: plinth/modules/diaspora/views.py:100
+#: plinth/modules/diaspora/views.py:101
 msgid "User registrations enabled"
 msgstr "Brukerregistreringer aktivert"
 
-#: plinth/modules/diaspora/views.py:104
+#: plinth/modules/diaspora/views.py:105
 msgid "User registrations disabled"
 msgstr "Brukerregistreringer deaktivert"
 
@@ -545,8 +560,8 @@ msgstr "Om"
 #: plinth/modules/firewall/templates/firewall.html:47
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:67
-#: plinth/modules/tor/templates/tor.html:35
-#: plinth/modules/tor/templates/tor.html:65 plinth/templates/service.html:39
+#: plinth/modules/tor/templates/tor.html:37
+#: plinth/modules/tor/templates/tor.html:67 plinth/templates/service.html:41
 msgid "Status"
 msgstr "Status"
 
@@ -653,7 +668,7 @@ msgid "Username"
 msgstr "Brukernavn"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:154
-#: plinth/modules/networks/forms.py:229
+#: plinth/modules/networks/forms.py:229 plinth/modules/shadowsocks/forms.py:71
 msgid "Password"
 msgstr "Passord"
 
@@ -691,7 +706,8 @@ msgid "Dynamic DNS Status"
 msgstr "Dynamisk DNS-status"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:381
-#: plinth/modules/openvpn/views.py:143 plinth/modules/transmission/views.py:72
+#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
+#: plinth/modules/transmission/views.py:73
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
 
@@ -813,6 +829,46 @@ msgstr ""
 "historien til et fler-bruker snakkerom. Det avhenger av klientinnstillingene "
 "om historiene er lagret som ren tekst eller kryptert."
 
+#: plinth/modules/ejabberd/manifest.py:31
+msgid "yaxim"
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:40
+msgid "Bruno"
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:42
+msgid "Bruno is a themed version of the open source yaxim app."
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:52
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Chat secure"
+msgstr "Sludre-tjener"
+
+#: plinth/modules/ejabberd/manifest.py:54
+msgid ""
+"ChatSecure is a free and open source messaging app that features OTR "
+"encryption over XMPP. You can connect to an existing Google account, create "
+"new accounts on public XMPP servers (including via Tor), or even connect to "
+"your own server for extra security."
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:70
+#, fuzzy
+#| msgid "Connection"
+msgid "Conversations"
+msgstr "Tilkobling"
+
+#: plinth/modules/ejabberd/manifest.py:79
+msgid "Dino"
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:87
+msgid "Gajim"
+msgstr ""
+
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
 msgid ""
@@ -829,23 +885,23 @@ msgstr ""
 msgid "Launch web client"
 msgstr "Sette i gang en web-klient"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:53
+#: plinth/modules/ejabberd/templates/ejabberd.html:56
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:85 plinth/templates/base.html:113
-#: plinth/templates/base.html:115 plinth/templates/service.html:65
+#: plinth/modules/tor/templates/tor.html:87 plinth/templates/base.html:113
+#: plinth/templates/base.html:115 plinth/templates/service.html:67
 msgid "Configuration"
 msgstr "Oppsett"
 
 #: plinth/modules/ejabberd/views.py:64
-#: plinth/modules/matrixsynapse/views.py:107 plinth/views.py:116
+#: plinth/modules/matrixsynapse/views.py:108 plinth/views.py:119
 msgid "Application enabled"
 msgstr "Programmet er aktivert"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:110 plinth/views.py:119
+#: plinth/modules/matrixsynapse/views.py:111 plinth/views.py:122
 msgid "Application disabled"
 msgstr "Programmet er deaktivert"
 
@@ -1159,7 +1215,7 @@ msgstr ""
 "Alle passord og annen personlig informasjon bør fjernes fra loggen før du "
 "sender inn feilrapporten."
 
-#: plinth/modules/ikiwiki/__init__.py:42
+#: plinth/modules/ikiwiki/__init__.py:42 plinth/modules/ikiwiki/manifest.py:21
 #, fuzzy
 #| msgid "wiki"
 msgid "ikiwiki"
@@ -1273,67 +1329,67 @@ msgstr "Gå til siden %(site)s"
 msgid "Manage"
 msgstr "Håndtere"
 
-#: plinth/modules/ikiwiki/views.py:41
+#: plinth/modules/ikiwiki/views.py:42
 msgid "Create"
 msgstr "Opprett"
 
-#: plinth/modules/ikiwiki/views.py:64
+#: plinth/modules/ikiwiki/views.py:67
 msgid "Manage Wikis and Blogs"
 msgstr "Vedlikehold Wiki og Blogg"
 
-#: plinth/modules/ikiwiki/views.py:95
+#: plinth/modules/ikiwiki/views.py:102
 msgid "Create Wiki or Blog"
 msgstr "Lage Wiki eller Blogg"
 
-#: plinth/modules/ikiwiki/views.py:108
+#: plinth/modules/ikiwiki/views.py:115
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "Opprettet wiki {name}."
 
-#: plinth/modules/ikiwiki/views.py:110
+#: plinth/modules/ikiwiki/views.py:118
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "Kunne ikke opprette wiki: {error}"
 
-#: plinth/modules/ikiwiki/views.py:122
+#: plinth/modules/ikiwiki/views.py:128
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "Opprettet blogg {name}."
 
-#: plinth/modules/ikiwiki/views.py:124
+#: plinth/modules/ikiwiki/views.py:131
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "Kunne ikke lage blogg: {error}"
 
-#: plinth/modules/ikiwiki/views.py:137
+#: plinth/modules/ikiwiki/views.py:143
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "Slettet {name}."
 
-#: plinth/modules/ikiwiki/views.py:140
+#: plinth/modules/ikiwiki/views.py:147
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
 
-#: plinth/modules/ikiwiki/views.py:146
+#: plinth/modules/ikiwiki/views.py:153
 msgid "Delete Wiki or Blog"
 msgstr "Slette wiki eller blogg"
 
-#: plinth/modules/infinoted/__init__.py:44
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:46
+#: plinth/modules/infinoted/__init__.py:44
 #, fuzzy
 #| msgid "Web Server"
 msgid "Gobby Server"
 msgstr "Nett-tjener"
 
-#: plinth/modules/infinoted/__init__.py:49
+#: plinth/modules/infinoted/__init__.py:47
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted er en tjener for Gobby, en samskrivende teksteditor."
 
-#: plinth/modules/infinoted/__init__.py:52
+#: plinth/modules/infinoted/__init__.py:49
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -1344,11 +1400,35 @@ msgstr ""
 "skrivebordsklient og installer den.  Deretter starter du Gobby og velger "
 "«Koble til tjener», og skriver inn domenenavnet til din {box_name} ."
 
-#: plinth/modules/jsxc/__init__.py:36
+#: plinth/modules/infinoted/manifest.py:26
+msgid "Gobby"
+msgstr ""
+
+#: plinth/modules/infinoted/manifest.py:28
+#, fuzzy
+#| msgid "infinoted is a server for Gobby, a collaborative text editor."
+msgid "Gobby is a collaborative text editor"
+msgstr "infinoted er en tjener for Gobby, en samskrivende teksteditor."
+
+#: plinth/modules/infinoted/manifest.py:31
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, "
+#| "desktop client and install it. Then start Gobby and select \"Connect to "
+#| "Server\" and enter your {box_name}'s domain name."
+msgid ""
+"start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
+"domain name."
+msgstr ""
+"For å bruke den, <a href=\"https://gobby.github.io/\">last ned Gobby</a>, "
+"skrivebordsklient og installer den.  Deretter starter du Gobby og velger "
+"«Koble til tjener», og skriver inn domenenavnet til din {box_name} ."
+
+#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:24
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:38
+#: plinth/modules/jsxc/__init__.py:39
 #, fuzzy
 #| msgid ""
 #| "Chat Client \n"
@@ -1358,7 +1438,7 @@ msgstr ""
 "Meldings-klient\n"
 "(JSXC)"
 
-#: plinth/modules/jsxc/__init__.py:42
+#: plinth/modules/jsxc/__init__.py:43
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -1730,6 +1810,10 @@ msgstr ""
 "en ny konto på din Matrix-tjener. Skru dette av hvis du vil at kun "
 "eksisterende brukere skal kunne bruke den."
 
+#: plinth/modules/matrixsynapse/manifest.py:28
+msgid "Riot"
+msgstr ""
+
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
@@ -1773,19 +1857,20 @@ msgstr ""
 "vil se slik ut <em>@username:%(domain_name)s</em>. Endring av domenenavnet "
 "etter det første oppsettet støttes ikke for øyeblikket."
 
-#: plinth/modules/matrixsynapse/views.py:118
+#: plinth/modules/matrixsynapse/views.py:119
 #, fuzzy
 #| msgid "Application enabled"
 msgid "Public registration enabled"
 msgstr "Programmet er aktivert"
 
-#: plinth/modules/matrixsynapse/views.py:123
+#: plinth/modules/matrixsynapse/views.py:124
 #, fuzzy
 #| msgid "Application disabled"
 msgid "Public registration disabled"
 msgstr "Programmet er deaktivert"
 
 #: plinth/modules/minetest/__init__.py:49
+#: plinth/modules/minetest/manifest.py:25
 #, fuzzy
 msgid "Minetest"
 msgstr "Minetest"
@@ -1854,7 +1939,7 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 "Når den ikke er aktiv, kan ikke spillere dø eller ta skade av noe slag."
 
-#: plinth/modules/minetest/views.py:58
+#: plinth/modules/minetest/views.py:59
 msgid "Maximum players configuration updated"
 msgstr "Oppsett av maks spillere oppdatert"
 
@@ -1862,11 +1947,11 @@ msgstr "Oppsett av maks spillere oppdatert"
 msgid "Creative mode configuration updated"
 msgstr "Oppsett av kreativ modus oppdatert"
 
-#: plinth/modules/minetest/views.py:74
+#: plinth/modules/minetest/views.py:72
 msgid "PVP configuration updated"
 msgstr "PVP-oppsett oppdatert"
 
-#: plinth/modules/minetest/views.py:82
+#: plinth/modules/minetest/views.py:78
 msgid "Damage configuration updated"
 msgstr "Skadeoppsett oppdatert"
 
@@ -1920,7 +2005,7 @@ msgstr "Legge ut nøkkel til nøkkeltjenere ..."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:74
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
-#: plinth/modules/tor/templates/tor.html:110
+#: plinth/modules/tor/templates/tor.html:112
 msgid "Service"
 msgstr "Tjeneste"
 
@@ -2039,12 +2124,12 @@ msgstr "Publisert nøkkel til nøkkeltjener."
 msgid "Error occurred while publishing key."
 msgstr "Feil oppstått under utlegging av nøkkel."
 
-#: plinth/modules/mumble/__init__.py:36
+#: plinth/modules/mumble/__init__.py:34 plinth/modules/mumble/manifest.py:28
 #, fuzzy
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:38
+#: plinth/modules/mumble/__init__.py:36
 #, fuzzy
 #| msgid ""
 #| "Voice Chat \n"
@@ -2054,7 +2139,7 @@ msgstr ""
 "Nettprat\n"
 "(Mumble)"
 
-#: plinth/modules/mumble/__init__.py:47
+#: plinth/modules/mumble/__init__.py:45
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -2062,7 +2147,7 @@ msgstr ""
 "Mumble er en åpen kildekode, rask, kryptert, høy kvalitets programvare for "
 "nettprat."
 
-#: plinth/modules/mumble/__init__.py:50
+#: plinth/modules/mumble/__init__.py:47
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -2071,6 +2156,16 @@ msgstr ""
 "Du kan koble til din Mumble-tjener på den vanlige Mumble-port 64738. <a href="
 "\"http://mumble.info\">Klienter</a> for å koble til Mumble når skrivebordet "
 "og/eller Android-enheter er tilgjengelige."
+
+#: plinth/modules/mumble/manifest.py:49
+#, fuzzy
+msgid "Plumble"
+msgstr "Mumble"
+
+#: plinth/modules/mumble/manifest.py:63
+#, fuzzy
+msgid "Mumblefly"
+msgstr "Mumble"
 
 #: plinth/modules/names/__init__.py:30
 msgid "HTTP"
@@ -2558,6 +2653,7 @@ msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:186
 #: plinth/modules/networks/templates/connection_show.html:227
+#: plinth/modules/shadowsocks/forms.py:76
 msgid "Method"
 msgstr "Metode"
 
@@ -2899,7 +2995,7 @@ msgstr ""
 "Velg din PageKite-tjener. Sett «pagekite.net» for å bruke den forvalgte "
 "pagekite.net-tjeneren."
 
-#: plinth/modules/pagekite/forms.py:78
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/shadowsocks/forms.py:65
 msgid "Server port"
 msgstr "Tjenerport"
 
@@ -3296,12 +3392,12 @@ msgstr ""
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgang {url} med mellomtjener {proxy} på tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:43
+#: plinth/modules/quassel/__init__.py:42 plinth/modules/quassel/manifest.py:29
 #, fuzzy
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:45
+#: plinth/modules/quassel/__init__.py:44
 #, fuzzy
 #| msgid ""
 #| "IRC Client \n"
@@ -3311,7 +3407,7 @@ msgstr ""
 "IRC-klient\n"
 "(Quassel)"
 
-#: plinth/modules/quassel/__init__.py:49
+#: plinth/modules/quassel/__init__.py:48
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -3328,7 +3424,7 @@ msgstr ""
 "skrivebordet kan en eller flere Quassel-klienter brukes til å koble til og "
 "fra."
 
-#: plinth/modules/quassel/__init__.py:57
+#: plinth/modules/quassel/__init__.py:56
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -3339,6 +3435,11 @@ msgstr ""
 "Klienter kan koble til Quassel fra din <a href=\"http://quassel-irc.org/"
 "downloads\"> desktop </a>, og <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobile</a> enheter er tilgjengelig."
+
+#: plinth/modules/quassel/manifest.py:41
+#, fuzzy
+msgid "Quassseldroid"
+msgstr "Quassel"
 
 #: plinth/modules/radicale/__init__.py:44
 #, fuzzy
@@ -3392,22 +3493,55 @@ msgid "Any user can view or make changes to any calendar/addressbook."
 msgstr ""
 "Enhver bruker kan se eller gjøre endringer i enhver kalender/adressebok."
 
-#: plinth/modules/radicale/views.py:53
+#: plinth/modules/radicale/manifest.py:27
+msgid "DAVDroid"
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:29
+msgid ""
+"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
+"user name. DAVdroid will show all existing calendars and address books and "
+"you can create new."
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:41
+msgid "GNOME Calendar"
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:49
+msgid "Evolution"
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:51
+msgid ""
+"Evolution is a personal information management application that provides "
+"integrated mail, calendaring and address book functionality."
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:55
+msgid ""
+"In Evolution add a new calendar and address book respectively with WebDAV. "
+"Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
+"user name. Clicking on the search button will list the existing calendars "
+"and address books."
+msgstr ""
+
+#: plinth/modules/radicale/views.py:54
 msgid "Access rights configuration updated"
 msgstr "Tilgangskontrolloppsett oppdatert"
 
-#: plinth/modules/repro/__init__.py:39
+#: plinth/modules/repro/__init__.py:38
 #, fuzzy
 msgid "repro"
 msgstr "repro"
 
-#: plinth/modules/repro/__init__.py:41
+#: plinth/modules/repro/__init__.py:40
 #, fuzzy
 #| msgid "DNS Server"
 msgid "SIP Server"
 msgstr "DNS-tjener"
 
-#: plinth/modules/repro/__init__.py:44
+#: plinth/modules/repro/__init__.py:43
 msgid ""
 "repro provides various SIP services that a SIP softphone can utilize to "
 "provide audio and video calls as well as presence and instant messaging. "
@@ -3421,7 +3555,7 @@ msgstr ""
 "Den fungerer også som en mellomtjener for å forene SIP-kommunikasjon til "
 "andre servere på Internett på samme måte som e-post."
 
-#: plinth/modules/repro/__init__.py:51
+#: plinth/modules/repro/__init__.py:49
 msgid ""
 "To make SIP calls, a client application is needed. Available clients include "
 "<a href=\"https://jitsi.org/\">Jitsi</a> (for computers) and <a href="
@@ -3433,7 +3567,7 @@ msgstr ""
 "\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\"> CSipSimple</"
 "a> (for Android telefoner)."
 
-#: plinth/modules/repro/__init__.py:56
+#: plinth/modules/repro/__init__.py:53
 msgid ""
 "<strong>Note:</strong>  Before using repro, domains and users will need to "
 "be configured using the <a href=\"/repro/domains.html\">web-based "
@@ -3447,7 +3581,24 @@ msgstr ""
 "oppsettpanel. Etter innstillingen av domenet, er det nødvendig å starte "
 "repro-tjenesten på nytt. Deaktiver tjenesten og reaktiver den."
 
-#: plinth/modules/restore/__init__.py:37
+#: plinth/modules/repro/manifest.py:31
+msgid "Jitsi Meet"
+msgstr ""
+
+#: plinth/modules/repro/manifest.py:33
+msgid ""
+"Jitsi is a set of open-source projects that allows you to easily build and "
+"deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
+"Videobridge and Jitsi Meet, which let you have conferences on the internet, "
+"while other projects in the community enable other features such as audio, "
+"dial-in, recording, and simulcasting."
+msgstr ""
+
+#: plinth/modules/repro/manifest.py:70
+msgid "CSipSimple"
+msgstr ""
+
+#: plinth/modules/restore/__init__.py:37 plinth/modules/restore/manifest.py:21
 #, fuzzy
 msgid "reStore"
 msgstr "reStore"
@@ -3486,6 +3637,7 @@ msgstr ""
 "interface</a> (ReStore webgrensesnitt)."
 
 #: plinth/modules/roundcube/__init__.py:36
+#: plinth/modules/roundcube/manifest.py:21
 #, fuzzy
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -3581,7 +3733,7 @@ msgstr "Feil ved oppsetting av begrenset tilgang: {exception}"
 msgid "Updated security configuration"
 msgstr "Oppdaterte sikkerhetsoppsett"
 
-#: plinth/modules/shaarli/__init__.py:36
+#: plinth/modules/shaarli/__init__.py:36 plinth/modules/shaarli/manifest.py:21
 #, fuzzy
 msgid "Shaarli"
 msgstr "Shaarli"
@@ -3609,6 +3761,67 @@ msgstr ""
 "Når aktivert, vil Shaarli være tilgjengelig fra stien <a href=\"/shaarli\">/"
 "shaarli</a> på nett-tjeneren. Merk at Shaarli kun støtter en enkelt "
 "brukerkonto, som du må sette opp ved det første besøket."
+
+#: plinth/modules/shadowsocks/__init__.py:36
+msgid "Shadowsocks"
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:38
+msgid "Socks5 Proxy"
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:47
+msgid ""
+"Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
+"your Internet traffic. It can be used to bypass Internet filtering and "
+"censorship."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:51
+#, python-brace-format
+msgid ""
+"Your {box_name} can run a Shadowsocks client, that can connect to a "
+"Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
+"connect to this proxy, and their data will be encrypted and proxied through "
+"the Shadowsocks server."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:56
+msgid ""
+"To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
+"browser or application to http://freedombox_address:1080/"
+msgstr ""
+
+#: plinth/modules/shadowsocks/forms.py:30
+#: plinth/modules/shadowsocks/forms.py:31
+#, fuzzy
+#| msgid "Fail2ban (recommended)"
+msgid "Recommended"
+msgstr "Fail2ban (anbefalt)"
+
+#: plinth/modules/shadowsocks/forms.py:61
+#, fuzzy
+#| msgid "Service"
+msgid "Server"
+msgstr "Tjeneste"
+
+#: plinth/modules/shadowsocks/forms.py:62
+msgid "Server hostname or IP address"
+msgstr ""
+
+#: plinth/modules/shadowsocks/forms.py:68
+#, fuzzy
+#| msgid "Server port"
+msgid "Server port number"
+msgstr "Tjenerport"
+
+#: plinth/modules/shadowsocks/forms.py:72
+msgid "Password used to encrypt data. Must match server password."
+msgstr ""
+
+#: plinth/modules/shadowsocks/forms.py:78
+msgid "Encryption method. Must match setting on server."
+msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:32
 #, fuzzy
@@ -3863,6 +4076,7 @@ msgstr ""
 "{free_space} ledig)."
 
 #: plinth/modules/syncthing/__init__.py:40
+#: plinth/modules/syncthing/manifest.py:29
 #, fuzzy
 msgid "Syncthing"
 msgstr "Syncthing"
@@ -4013,36 +4227,36 @@ msgstr ""
 "\"https://www.torproject.org/download/download-easy.html.en\">Tor Browser</"
 "a>."
 
-#: plinth/modules/tor/__init__.py:84 plinth/modules/tor/__init__.py:126
+#: plinth/modules/tor/__init__.py:75 plinth/modules/tor/__init__.py:117
 msgid "Tor Anonymity Network"
 msgstr "Tor anonymitetsnettverk"
 
-#: plinth/modules/tor/__init__.py:90 plinth/modules/tor/__init__.py:134
+#: plinth/modules/tor/__init__.py:81 plinth/modules/tor/__init__.py:125
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: plinth/modules/tor/__init__.py:112 plinth/modules/tor/__init__.py:155
+#: plinth/modules/tor/__init__.py:103 plinth/modules/tor/__init__.py:146
 msgid "Tor Hidden Service"
 msgstr "Skjult Tor-tjeneste"
 
-#: plinth/modules/tor/__init__.py:174
+#: plinth/modules/tor/__init__.py:165
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:182
+#: plinth/modules/tor/__init__.py:173
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:188
+#: plinth/modules/tor/__init__.py:179
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:225
+#: plinth/modules/tor/__init__.py:216
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Adgang til URL {url} på tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:236
+#: plinth/modules/tor/__init__.py:227
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
@@ -4149,31 +4363,39 @@ msgstr ""
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr "Angi minst én oppstrøms bro for å bruke oppstrøms broer."
 
-#: plinth/modules/tor/templates/tor.html:41
+#: plinth/modules/tor/manifest.py:28
+msgid "Tor Browser"
+msgstr ""
+
+#: plinth/modules/tor/manifest.py:44
+msgid "Orbot: Proxy with Tor"
+msgstr ""
+
+#: plinth/modules/tor/templates/tor.html:43
 msgid "Tor configuration is being updated"
 msgstr "Tor-konfigureringen blir oppdatert"
 
-#: plinth/modules/tor/templates/tor.html:49
+#: plinth/modules/tor/templates/tor.html:51
 msgid "Tor is running"
 msgstr "Tor kjører"
 
-#: plinth/modules/tor/templates/tor.html:52
+#: plinth/modules/tor/templates/tor.html:54
 msgid "Tor is not running"
 msgstr "Tor kjører ikke"
 
-#: plinth/modules/tor/templates/tor.html:64
+#: plinth/modules/tor/templates/tor.html:66
 msgid "Hidden Service"
 msgstr "Skjult tjeneste"
 
-#: plinth/modules/tor/templates/tor.html:66
+#: plinth/modules/tor/templates/tor.html:68
 msgid "Ports"
 msgstr "Porter"
 
-#: plinth/modules/tor/templates/tor.html:97
+#: plinth/modules/tor/templates/tor.html:99
 msgid "Relay"
 msgstr "Videresending"
 
-#: plinth/modules/tor/templates/tor.html:99
+#: plinth/modules/tor/templates/tor.html:101
 #, python-format
 msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
@@ -4182,34 +4404,35 @@ msgstr ""
 "Hvis din %(box_name)s er bak en ruter eller brannvegg, må du forsikre deg om "
 "at de følgende portene er åpne, og at portene er videresendt, om nødvendig:"
 
-#: plinth/modules/tor/templates/tor.html:111
+#: plinth/modules/tor/templates/tor.html:113
 msgid "Port"
 msgstr "Port"
 
-#: plinth/modules/tor/templates/tor.html:127
+#: plinth/modules/tor/templates/tor.html:129
 msgid "SOCKS"
 msgstr "SOCKS"
 
-#: plinth/modules/tor/templates/tor.html:130
+#: plinth/modules/tor/templates/tor.html:132
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 "En Tor SOCKS-port er tilgjengelig på din %(box_name)s på TCP port 9050."
 
-#: plinth/modules/tor/views.py:66
+#: plinth/modules/tor/views.py:67
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Handlingsfeil: {0} [{1}] [{2}]"
 
-#: plinth/modules/tor/views.py:128 plinth/modules/tor/views.py:156
+#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:158
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
 
-#: plinth/modules/tor/views.py:158
+#: plinth/modules/tor/views.py:160
 msgid "An error occurred during configuration."
 msgstr "En feil oppsto under konfigureringen."
 
 #: plinth/modules/transmission/__init__.py:38
+#: plinth/modules/transmission/manifest.py:21
 #, fuzzy
 #| msgid ""
 #| "BitTorrent \n"
@@ -4299,6 +4522,10 @@ msgid ""
 msgstr ""
 "Når du bruker et mobilbasert- eller skrivebords-program for Tiny Tiny RSS, "
 "bruk nettadressen <a href=\"/tt-rss-app/\">/tt-rss-app</a>for å koble til."
+
+#: plinth/modules/ttrss/manifest.py:24
+msgid "TT-RSS Reader"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:35
 msgid "Software Upgrades"
@@ -4738,36 +4965,6 @@ msgstr "Logg inn"
 msgid "JavaScript license information"
 msgstr "JavaScript lisensinformasjon"
 
-#: plinth/templates/clients.html:24
-#, fuzzy
-#| msgid ""
-#| "IRC Client \n"
-#| " (Quassel)"
-msgid "Web Clients"
-msgstr ""
-"IRC-klient\n"
-"(Quassel)"
-
-#: plinth/templates/clients.html:37
-#, fuzzy
-#| msgid ""
-#| "Chat Client \n"
-#| " (JSXC)"
-msgid "Desktop Clients"
-msgstr ""
-"Meldings-klient\n"
-"(JSXC)"
-
-#: plinth/templates/clients.html:53
-#, fuzzy
-#| msgid ""
-#| "Email Client \n"
-#| " (Roundcube)"
-msgid "Mobile Clients"
-msgstr ""
-"E-postklient\n"
-"(Roundcube)"
-
 #: plinth/templates/first_setup.html:37
 #, python-format
 msgid ""
@@ -4841,12 +5038,12 @@ msgstr "IRC-snakkerom"
 msgid "Mailing list"
 msgstr "Adresseliste"
 
-#: plinth/templates/service.html:44
+#: plinth/templates/service.html:46
 #, python-format
 msgid "Service <em>%(service_name)s</em> is running."
 msgstr "Tjenesten <em>%(service_name)s</em> kjører."
 
-#: plinth/templates/service.html:49
+#: plinth/templates/service.html:51
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjenesten <em>%(service_name)s</em> kjører ikke."
@@ -4855,11 +5052,11 @@ msgstr "Tjenesten <em>%(service_name)s</em> kjører ikke."
 msgid "Installation"
 msgstr "Installasjon"
 
-#: plinth/templates/setup.html:45
+#: plinth/templates/setup.html:47
 msgid "Install this application?"
 msgstr "Installere dette programmet?"
 
-#: plinth/templates/setup.html:55 plinth/templates/setup.html:79
+#: plinth/templates/setup.html:57 plinth/templates/setup.html:81
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
@@ -4867,33 +5064,33 @@ msgstr ""
 "En annen installasjon eller oppgradering kjører allerede. Vent litt før du "
 "prøver igjen."
 
-#: plinth/templates/setup.html:61 plinth/templates/setup.html:64
-#: plinth/templates/setup.html:85
+#: plinth/templates/setup.html:63 plinth/templates/setup.html:66
+#: plinth/templates/setup.html:87
 msgid "Install"
 msgstr "Installer"
 
-#: plinth/templates/setup.html:69
+#: plinth/templates/setup.html:71
 msgid "This application needs an update. Update now?"
 msgstr "Dette programmet trenger en oppdatering. Oppdatere nå?"
 
-#: plinth/templates/setup.html:88
+#: plinth/templates/setup.html:90
 msgid "Update"
 msgstr "Oppdater"
 
-#: plinth/templates/setup.html:96
+#: plinth/templates/setup.html:98
 msgid "Performing pre-install operation"
 msgstr "Utfører en forhåndsinstallasjon"
 
-#: plinth/templates/setup.html:98
+#: plinth/templates/setup.html:100
 msgid "Performing post-install operation"
 msgstr "Utfører en etterinstallasjon"
 
-#: plinth/templates/setup.html:102
+#: plinth/templates/setup.html:104
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "Installere %(package_names)s: %(status)s"
 
-#: plinth/templates/setup.html:112
+#: plinth/templates/setup.html:114
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% fullført"
@@ -4915,6 +5112,33 @@ msgid ""
 msgstr ""
 "Valgene som berører %(box_name)s er på det mest grunnleggende nivået, så vær "
 "forsiktig!"
+
+#, fuzzy
+#~| msgid ""
+#~| "IRC Client \n"
+#~| " (Quassel)"
+#~ msgid "Web Clients"
+#~ msgstr ""
+#~ "IRC-klient\n"
+#~ "(Quassel)"
+
+#, fuzzy
+#~| msgid ""
+#~| "Chat Client \n"
+#~| " (JSXC)"
+#~ msgid "Desktop Clients"
+#~ msgstr ""
+#~ "Meldings-klient\n"
+#~ "(JSXC)"
+
+#, fuzzy
+#~| msgid ""
+#~| "Email Client \n"
+#~| " (Roundcube)"
+#~ msgid "Mobile Clients"
+#~ msgstr ""
+#~ "E-postklient\n"
+#~ "(Roundcube)"
 
 #~ msgid "Username to login to the web interface."
 #~ msgstr "Brukernavn for å logge inn på nettgrensesnittet."
