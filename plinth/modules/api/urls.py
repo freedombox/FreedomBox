@@ -21,9 +21,9 @@ URLs for the plinth api for android app.
 from django.conf.urls import url
 from stronghold.decorators import public
 
-from plinth.modules.api.views import get_access_info, get_services
+from plinth.modules.api import views
 
 urlpatterns = [
-    url(r'^api/(?P<version>[0-9]+)/services/?$', public(get_services)),
-    url(r'^api/(?P<version>[0-9]+)/access-info/?$', public(get_access_info)),
+    url(r'^api/(?P<version>[0-9]+)/shortcuts/?$', public(views.shortcuts)),
+    url(r'^api/(?P<version>[0-9]+)/access-info/?$', public(views.access_info)),
 ]
