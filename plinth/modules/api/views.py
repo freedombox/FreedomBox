@@ -20,49 +20,53 @@ Plinth module for api for android app.
 
 from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
+from django.templatetags.static import static
 
-from plinth.modules.names import get_domain, get_domain_types
 from plinth import frontpage
 from plinth import module_loader
+from plinth.modules import names
 import json
 
 
-def get_access_info(request, **kwargs):
-    response = {
-        domain_type: get_domain(domain_type)
-        for domain_type in get_domain_types()
-    }
-    return HttpResponse(json.dumps(response), content_type="application/json")
+def access_info(request, **kwargs):
+    """API view to return a list of domains and types."""
+    domains = [{
+        'domain': domain,
+        'type': domain_type
+    } for domain_type, domains in names.domains.items() for domain in domains]
+    response = {'domains': domains}
+
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
-def get_services(request, **kwargs):
-    services = [shortcut['id'].split('_')[0]
-                for shortcut in frontpage.get_shortcuts()]
-    response = {'services': list(map(_get_service_data, services))}
+def shortcuts(request, **kwargs):
+    """API view to return the list of frontpage services."""
+    # XXX: Get the module (or module name) from shortcut properly.
+    shortcuts = [
+        _get_shortcut_data(shortcut['id'].split('_')[0], shortcut)
+        for shortcut in frontpage.get_shortcuts()
+    ]
+    response = {'shortcuts': shortcuts}
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
-        content_type="application/json")
+        content_type='application/json')
 
 
-def _get_service_data(service):
-    module = module_loader.loaded_modules[service]
-
-    def _getattr(attr, not_found=None):
-        """A closure to get the enclosed module's attributes"""
-        return getattr(module, attr, not_found)
-
+def _get_shortcut_data(module_name, shortcut):
+    """Return detailed information about a shortcut."""
+    module = module_loader.loaded_modules[module_name]
     return {
-        key: value
-        for key, value in dict(
-            name=module.name,
-            short_description=_getattr('short_description'),
-            icon_url=_get_icon_url(_getattr('icon')),
-            description=_getattr('description'),
-            usage=_getattr('usage'),
-            manual_url=_getattr('manual_url'),
-            clients=_getattr('clients')).items()
+        'name': shortcut['name'],
+        'short_description': shortcut['short_description'],
+        'description': shortcut['details'],
+        'icon_url': _get_icon_url(shortcut['icon']),
+        'clients': getattr(module, 'clients', None)
     }
 
 
-def _get_icon_url(icon):
-    return 'static/theme/icons/{}.svg'.format(icon) if icon else None
+def _get_icon_url(icon_name):
+    """Return icon path given icon name."""
+    if not icon_name:
+        return None
+
+    return static('static/theme/icons/{}.png'.format(icon_name))
