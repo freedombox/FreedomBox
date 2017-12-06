@@ -16,38 +16,12 @@
 #
 
 import os
-from enum import Enum
 
 from django import template
 
+from plinth import clients as clients_module
+
 register = template.Library()
-
-
-class Desktop_OS(Enum):
-    GNU_LINUX = 'gnu-linux'
-    MAC_OS = 'mac-os'
-    WINDOWS = 'windows'
-
-
-class Mobile_OS(Enum):
-    ANDROID = 'android'
-    IOS = 'ios'
-
-
-class Store(Enum):
-    APP_STORE = 'app-store'
-    F_DROID = 'f-droid'
-    GOOGLE_PLAY = 'google-play'
-
-
-class Package(Enum):
-    DEB = 'deb'
-    HOMEBREW = 'brew'
-    RPM = 'rpm'
-
-
-def enum_values(enum):
-    return [x.value for x in list(enum)]
 
 
 def mark_active_menuitem(menu, path):
@@ -89,59 +63,7 @@ def show_subsubmenu(context, menu):
     return {'subsubmenu': menu}
 
 
-def __check(clients, cond):
-    """Check if any of a list of clients satisfies the given condition"""
-    clients = clients if isinstance(clients, list) else [clients]
-    return any(pf for client in clients for pf in client['platforms']
-               if cond(pf))
-
-
-@register.filter(name='has_desktop_clients')
-def has_desktop_clients(clients):
-    """Filter to find out whether an application has desktop clients"""
-    return __check(clients,
-                   lambda x: x.get('os', '') in enum_values(Desktop_OS))
-
-
-@register.filter(name='has_mobile_clients')
-def has_mobile_clients(clients):
-    """Filter to find out whether an application has mobile clients"""
-    return __check(clients,
-                   lambda x: x.get('os', '') in enum_values(Mobile_OS))
-
-
-@register.filter(name='has_web_clients')
-def has_web_clients(clients):
-    """Filter to find out whether an application has web clients"""
-    return __check(clients, lambda x: x['type'] == 'web')
-
-
-@register.filter(name='has_package_clients')
-def has_package_clients(clients):
-    """Filter to find out whether an application has web clients"""
-    return __check(clients, lambda x: x['type'] == 'package')
-
-
-@register.filter(name='of_type')
-def of_type(clients, typ):
+@register.filter(name='clients_of_type')
+def clients_of_type(clients, client_type):
     """Filter and get clients of a particular type"""
-    filters = {
-        'mobile': has_mobile_clients,
-        'desktop': has_desktop_clients,
-        'web': has_web_clients,
-        'package': has_package_clients,
-    }
-    return list(filter(filters.get(typ, lambda x: x), clients))
-
-
-@register.filter(name='display_name')
-def display_name(string):
-    names = {
-        'gnu-linux': 'GNU/Linux',
-        'windows': 'Windows',
-        'mac-os': 'macOS',
-        'google-play': 'Play Store',
-        'f-droid': 'F-Droid',
-        'app-store': 'App Store'
-    }
-    return names.get(string, string)
+    return clients_module.of_type(clients, client_type)

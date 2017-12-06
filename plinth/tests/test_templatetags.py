@@ -20,10 +20,6 @@ Test module for custom Django template tags.
 
 import unittest
 
-from plinth.modules.syncthing.manifest import clients as syncthing_clients
-from plinth.modules.infinoted.manifest import clients as infinoted_clients
-from plinth.modules.deluge.manifest import clients as deluge_clients
-from plinth.modules.quassel.manifest import clients as quassel_clients
 from plinth.templatetags import plinth_extras
 
 
@@ -68,22 +64,3 @@ class TestShowSubSubMenu(unittest.TestCase):
             menu = plinth_extras.mark_active_menuitem(menu, check_path)
             self.assert_active_url(menu, expected_active_path)
             self.assertTrue(self._verify_active_menuitems(menu))
-
-    def test_has_web_clients(self):
-        """Test for a utility function that returns
-        whether an application has web clients"""
-        self.assertTrue(plinth_extras.has_web_clients(syncthing_clients))
-        self.assertFalse(plinth_extras.has_web_clients(quassel_clients))
-
-    def test_has_mobile_clients(self):
-        """Test for a utility function that returns
-        whether an application has mobile clients"""
-        self.assertTrue(plinth_extras.has_mobile_clients(syncthing_clients))
-        self.assertFalse(plinth_extras.has_mobile_clients(infinoted_clients))
-
-    def test_has_desktop_clients(self):
-        """Test for a utility function that returns
-        whether an application has desktop clients"""
-        self.assertTrue(
-            plinth_extras.has_desktop_clients(syncthing_clients[0]))
-        self.assertFalse(plinth_extras.has_desktop_clients(deluge_clients))

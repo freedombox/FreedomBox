@@ -115,12 +115,3 @@ class YAMLFile(object):
 
     def is_file_empty(self):
         return os.stat(self.yaml_file).st_size == 0
-
-
-def play_store_url(package_id):
-    return 'https://play.google.com/store/apps/details?id={}'.format(
-        package_id)
-
-
-def f_droid_url(package_id):
-    return 'https://f-droid.org/packages/{}'.format(package_id)
