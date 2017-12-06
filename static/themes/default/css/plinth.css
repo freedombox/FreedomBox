@@ -43,10 +43,8 @@ body {
 }
 
 .running-status.loading {
-    border: 4px solid #f3f3f3;
-    /* Light grey */
-    border-top: 4px solid #3498db;
-    /* Blue */
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
     border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -68,13 +66,11 @@ body {
 }
 
 /* Hide log out button if user dropdown is available */
-
 .js #logout-nojs {
     display: none;
 }
 
 /* Hide the dropdown icon when javascript is not available */
-
 .no-js .nav .dropdown .caret {
     display: none;
 }
@@ -85,7 +81,6 @@ body {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-
 footer .license-info {
     opacity: 0.75;
 }
@@ -125,25 +120,13 @@ footer license-info p {
     margin: 20px 0;
 }
 
-.clients-info {
-    padding-top: 15px;
+.shortcut-label {
+    min-height: 50px;
 }
 
-.heading {
-    font-weight: bold;
-    display: inline;
-}
-
-.clients-info li {
-    padding-left: 15px;
-    padding-bottom: 5px;
-}
-
-.clients-info li span {
-    position: relative;
-    left: -18px;
-}
-
+/*
+ * Clients information
+ */
 .client-icon {
     display: inline-block;
     width: 100%;
@@ -162,20 +145,17 @@ footer license-info p {
     line-height: 3.1em;
 }
 
-.shortcut-label {
-    min-height: 50px;
-}
-
-
 /* Icon when collapsible content is shown */
-#collapsible-button:after {
-    font-family: "Glyphicons Halflings";
-    content: "\e114";
+#clients-button .glyphicon {
     margin-left: 5px;
 }
 
-/* Icon when collapsible content is hidden */
-#collapsible-button.collapsed:after {
+#clients-button .glyphicon:before,
+.no-js #clients-button.collapsed .glyphicon:before {
+    content: "\e114";
+}
+
+#clients-button.collapsed .glyphicon:before {
     content: "\e080";
 }
 
@@ -183,14 +163,3 @@ footer license-info p {
 .no-js .collapse {
     display: block;
 }
-
-.no-js #collapsible-button:after {
-    font-family: "Glyphicons Halflings";
-    content: "\e114";
-    margin-left: 5px;
-}
-
-.no-js #collapsible-button.collapsed:after {
-    content: "\e114";
-}
-

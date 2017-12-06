@@ -23,113 +23,126 @@
 
 {% if clients  %}
   <p>
-    <button id="collapsible-button" type="button" class="btn btn-default collapsed"
+    <button id="clients-button" type="button" class="btn btn-default collapsed"
             data-toggle="collapse" data-target="#clients">
-      Client Apps
+      {% trans "Client Apps" %}
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     </button>
   </p>
 
-  <table id="clients" class="table table-hover collapse">
+  <div>
+  <table id="clients" class="table table-striped collapse" style="width: 100%">
 
-    {% if clients|has_web_clients %}
-      {% with clients|of_type:'web' as web_clients %}
-        {% for client in web_clients %}
-          <tr>
-            {% if forloop.counter == 1 %}
-              <th rowspan=" {{ web_clients|length }}"> Web </th>
+    {% with clients|clients_of_type:'web' as web_clients %}
+      {% for client in web_clients %}
+        <tr>
+          {% if forloop.counter == 1 %}
+            <th rowspan="{{ web_clients|length }}">{% trans "Web" %}</th>
+          {% endif %}
+          {% for platform in client.platforms %}
+            {% if platform.type == 'web' %}
+              <td>{{ client.name }}</td>
+              <td>
+                <a class="btn btn-success" href="{{ platform.url }}" role="button">
+                  {% trans "Launch" %}
+                  <span class="glyphicon glyphicon-new-window"></span>
+                </a>
+              </td>
             {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    {% endwith %}
+
+    {% with clients|clients_of_type:'desktop' as desktop_clients %}
+      {% for client in desktop_clients %}
+        <tr>
+          {% if forloop.counter == 1 %}
+            <th rowspan="{{ desktop_clients|length }}">{% trans "Desktop" %}</th>
+          {% endif %}
+          <td>{{ client.name }}</td>
+          <td>
             {% for platform in client.platforms %}
-              {% if platform.type == 'web' %}
-                <td> {{ client.name }} </td>
-                <td>
-                  <a class="btn btn-success" href="{{ platform.url }}" role="button">
-                    Launch  <span class="glyphicon glyphicon-new-window"></span>
-                  </a>
-                </td>
+              {% if platform.type == 'download' %}
+                <a class="btn btn-default" href="{{ platform.url }}" role="button">
+                  {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                    <img class="client-icon" src="{% static icon %}" />
+                    {% if platform.os == 'gnu-linux' %}
+                      {% trans 'Play Store' %}
+                    {% elif platform.os == 'windows' %}
+                      {% trans 'Windows' %}
+                    {% elif platform.os == 'macos' %}
+                      {% trans 'macOS' %}
+                    {% endif %}
+                  {% endwith %}
+                </a>
               {% endif %}
             {% endfor %}
-          </tr>
-        {% endfor %}
-      {% endwith %}
-    {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    {% endwith %}
 
-    {% if clients|has_desktop_clients %}
-      {% with clients|of_type:'desktop' as desktop_clients %}
-        {% for client in desktop_clients %}
-          <tr>
-            {% if forloop.counter == 1 %}
-              <th rowspan="{{ desktop_clients|length }}"> Desktop </th>
-            {% endif %}
-            <td> {{ client.name }} </td>
-            <td>
-              {% for platform in client.platforms %}
-                {% if platform.type == 'download' %}
-                  <a class="btn btn-default" href="{{ platform.url }}" role="button">
-                    {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                      <img class="client-icon" src="{% static icon %}" /> {{ platform.os|display_name }}
-                    {% endwith %}
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-        {% endfor %}
-      {% endwith %}
-    {% endif %}
-
-    {% if clients|has_mobile_clients %}
-      {% with clients|of_type:'mobile' as mobile_clients %}
-        {% for client in mobile_clients %}
-          <tr>
-            {% if forloop.counter == 1 %}
-              <th rowspan="{{ mobile_clients|length }}"> Mobile </th>
-            {% endif %}
-            <td> {{ client.name }} </td>
-            <td>
-              {% for platform in client.platforms %}
-                {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
-                  <a class="btn btn-default" href="{{ platform.url }}" role="button">
-                    {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                      <img class="client-icon" src="{% static icon %}" />  {{ platform.store_name|display_name }}
-                    {% endwith %}
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-        {% endfor %}
-      {% endwith %}
-    {% endif %}
-
-    {% if clients|has_package_clients %}
-      {% with clients|of_type:'package' as package_clients %}
-        {% for client in package_clients %}
-          <tr>
-            {% if forloop.counter == 1 %}
-              <th rowspan="{{ package_clients|length }}"> Package </th>
-            {% endif %}
-            <td> {{ client.name }} </td>
-            <td>
-              <div class="row">
-                <ul>
-                  {% for platform in client.platforms %}
-                    {% if platform.type == 'package' %}
-                      {% if platform.type == 'package' and platform.format == 'deb' %}
-                        <li> <strong> Debian: </strong> {{ platform.name }} </li>
-                      {% endif %}
-                      {% if platform.type == 'package' and platform.format == 'homebrew' %}
-                        <li> <strong> HomeBrew: </strong> {{ platform.name }} </li>
-                      {% endif %}
+    {% with clients|clients_of_type:'mobile' as mobile_clients %}
+      {% for client in mobile_clients %}
+        <tr>
+          {% if forloop.counter == 1 %}
+            <th rowspan="{{ mobile_clients|length }}">{% trans "Mobile" %}</th>
+          {% endif %}
+          <td>{{ client.name }}</td>
+          <td>
+            {% for platform in client.platforms %}
+              {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
+                <a class="btn btn-default" href="{{ platform.url }}" role="button">
+                  {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
+                    <img class="client-icon" src="{% static icon %}" />
+                    {% if platform.store_name == 'google-play' %}
+                      {% trans 'Play Store' %}
+                    {% elif platform.store_name == 'f-droid' %}
+                      {% trans 'F-Droid' %}
+                    {% elif platform.store_name == 'app-store' %}
+                      {% trans 'App Store' %}
                     {% endif %}
-                  {% endfor %}
-                </ul>
-              </div>
-            </td>
-          </tr>
-        {% endfor %}
-      {% endwith %}
-    {% endif %}
+                  {% endwith %}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    {% endwith %}
+
+    {% with clients|clients_of_type:'package' as package_clients %}
+      {% for client in package_clients %}
+        <tr>
+          {% if forloop.counter == 1 %}
+            <th rowspan="{{ package_clients|length }}">{% trans "Package" %}</th>
+          {% endif %}
+          <td>{{ client.name }}</td>
+          <td>
+            <div class="row">
+              <ul>
+                {% for platform in client.platforms %}
+                  {% if platform.type == 'package' %}
+                    {% if platform.format == 'deb' %}
+                      <li><strong>{% trans "Debian:" %}</strong> {{ platform.name }}</li>
+                    {% endif %}
+                    {% if platform.format == 'homebrew' %}
+                      <li><strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}</li>
+                    {% endif %}
+                    {% if platform.format == 'rpm' %}
+                      <li><strong>{% trans "RPM:" %}</strong> {{ platform.name }}</li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endwith %}
 
   </table>
+  </div>
 {% endif %}
 
