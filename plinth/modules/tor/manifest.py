@@ -17,40 +17,40 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
-from plinth.utils import f_droid_url, play_store_url
+from plinth.clients import store_url, validate
 
-orbot_package_id = 'org.torproject.android'
-tor_browser_download_url = 'https://www.torproject.org/download/download-easy.html'
+_orbot_package_id = 'org.torproject.android'
+_tor_browser_download_url = \
+    'https://www.torproject.org/download/download-easy.html'
 
-clients = [{
+clients = validate([{
     'name':
         _('Tor Browser'),
     'platforms': [{
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
-        'url': tor_browser_download_url,
+        'os': 'windows',
+        'url': _tor_browser_download_url,
     }, {
         'type': 'download',
-        'os': Desktop_OS.GNU_LINUX.value,
-        'url': tor_browser_download_url,
+        'os': 'gnu-linux',
+        'url': _tor_browser_download_url,
     }, {
         'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
-        'url': tor_browser_download_url,
+        'os': 'macos',
+        'url': _tor_browser_download_url,
     }]
 }, {
     'name':
         _('Orbot: Proxy with Tor'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(orbot_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _orbot_package_id)
     }, {
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.F_DROID.value,
-        'url': f_droid_url(orbot_package_id)
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _orbot_package_id)
     }]
-}]
+}])

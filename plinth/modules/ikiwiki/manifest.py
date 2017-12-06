@@ -17,10 +17,12 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-clients = [{
+from plinth.clients import validate
+
+clients = validate([{
     'name': _('ikiwiki'),
     'platforms': [{
         'type': 'web',
         'url': '/ikiwiki'
     }]
-}]
+}])

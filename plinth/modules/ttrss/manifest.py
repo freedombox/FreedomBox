@@ -17,24 +17,25 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Mobile_OS, Store
+from plinth.clients import store_url, validate
 
-clients = [{
+_package_id = 'org.ttrssreader'
+
+clients = validate([{
     'name':
         _('TT-RSS Reader'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': 'https://play.google.com/store/apps/details?id=org'
-               '.ttrssreader',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _package_id),
     }, {
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.F_DROID.value,
-        'url': 'https://f-droid.org/packages/org.ttrssreader/',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _package_id),
     }, {
         'type': 'web',
         'url': '/tt-rss'
     }]
-}]
+}])

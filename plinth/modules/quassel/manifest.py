@@ -17,32 +17,27 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
-                                               Store)
-from plinth.utils import play_store_url
+from plinth.clients import store_url, validate
 
-quasseldroid_package_id = 'com.iskrembilen.quasseldroid',
-quassel_download_url = 'http://quassel-irc.org/downloads'
-
-clients = [{
+clients = validate([{
     'name':
         _('Quassel'),
     'platforms': [{
         'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
-        'url': quassel_download_url,
+        'os': 'macos',
+        'url': 'http://quassel-irc.org/downloads'
     }, {
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'quassel-client',
     }]
 }, {
     'name':
-        _('Quassseldroid'),
+        _('Quasseldroid'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(quasseldroid_package_id),
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'com.iskrembilen.quasseldroid'),
     }]
-}]
+}])

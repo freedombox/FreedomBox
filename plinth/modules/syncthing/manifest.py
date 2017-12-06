@@ -17,48 +17,46 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
-                                               Store)
-from plinth.utils import f_droid_url, play_store_url
+from plinth.clients import store_url, validate
 
-syncthing_package_id = 'com.nutomic.syncthingandroid'
-syncthing_download_url = 'https://syncthing.net/'
+_package_id = 'com.nutomic.syncthingandroid'
+_download_url = 'https://syncthing.net/'
 
-clients = [{
+clients = validate([{
     'name':
         _('Syncthing'),
     'platforms': [{
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'syncthing',
     }, {
         'type': 'package',
-        'format': Package.HOMEBREW.value,
+        'format': 'brew',
         'name': 'syncthing',
     }, {
         'type': 'download',
-        'os': Desktop_OS.GNU_LINUX.value,
-        'url': syncthing_download_url,
+        'os': 'gnu-linux',
+        'url': _download_url,
     }, {
         'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
-        'url': syncthing_download_url,
+        'os': 'macos',
+        'url': _download_url,
     }, {
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
-        'url': syncthing_download_url,
+        'os': 'windows',
+        'url': _download_url,
     }, {
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(syncthing_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _package_id)
     }, {
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.F_DROID.value,
-        'url': f_droid_url(syncthing_package_id)
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _package_id)
     }, {
         'type': 'web',
         'url': '/syncthing'
     }]
-}]
+}])
