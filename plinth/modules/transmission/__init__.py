@@ -26,7 +26,6 @@ from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import create_group, register_group
-
 from .manifest import clients
 
 version = 2

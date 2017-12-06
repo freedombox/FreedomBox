@@ -58,14 +58,14 @@ description = [
       'client is recommended.')
 ]
 
+clients = clients
+
 service = None
 
 logger = logging.getLogger(__name__)
 
 SERVER_NAME_PATH = "/etc/matrix-synapse/conf.d/server_name.yaml"
 CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
-
-clients = clients
 
 
 def init():
