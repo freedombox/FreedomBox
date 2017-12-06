@@ -17,19 +17,19 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Package
+from plinth.clients import validate
 
-clients = [{
+clients = validate([{
     'name':
         _('Deluge'),
     'description':
-        _('Bittorrent client written in Python/PyGTK '),
+        _('Bittorrent client written in Python/PyGTK'),
     'platforms': [{
         'type': 'web',
         'url': '/deluge'
     }, {
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'deluge',
     }]
-}]
+}])

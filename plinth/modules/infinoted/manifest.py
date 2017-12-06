@@ -18,26 +18,26 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
-from plinth.templatetags.plinth_extras import Desktop_OS, Package
+from plinth.clients import validate
 from plinth.utils import format_lazy
 
-clients = [{
+clients = validate([{
     'name':
         _('Gobby'),
     'description':
         _('Gobby is a collaborative text editor'),
     'usage':
         format_lazy(
-            _('start Gobby and select "Connect to Server" and '
+            _('Start Gobby and select "Connect to Server" and '
               'enter your {box_name}\'s domain name.'),
             box_name=_(cfg.box_name)),
     'platforms': [{
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
+        'os': 'windows',
         'url': 'https://github.com/gobby/gobby/wiki/Download'
     }, {
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'gobby'
     }]
-}]
+}])

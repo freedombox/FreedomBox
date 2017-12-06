@@ -17,16 +17,14 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
-                                               Store)
-from plinth.utils import play_store_url
+from plinth.clients import store_url, validate
 
-jitsi_package_id = 'org.jitsi.meet'
-csipsimple_package_id = 'com.csipsimple'
+_jitsi_package_id = 'org.jitsi.meet'
+_csipsimple_package_id = 'com.csipsimple'
 
-jitsi_download_url = 'https://download.jitsi.org/jitsi/'
+_jitsi_download_url = 'https://download.jitsi.org/jitsi/'
 
-clients = [{
+clients = validate([{
     'name':
         _('Jitsi Meet'),
     'description':
@@ -40,38 +38,38 @@ clients = [{
           'and simulcasting.'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(jitsi_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _jitsi_package_id)
     }, {
         'type': 'store',
-        'os': Mobile_OS.IOS.value,
-        'store_name': Store.APP_STORE.value,
+        'os': 'ios',
+        'store_name': 'app-store',
         'url': 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905'
     }, {
         'type': 'download',
-        'os': Desktop_OS.GNU_LINUX.value,
-        'url': jitsi_download_url
+        'os': 'gnu-linux',
+        'url': _jitsi_download_url
     }, {
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'jitsi'
     }, {
         'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
-        'url': jitsi_download_url
+        'os': 'macos',
+        'url': _jitsi_download_url
     }, {
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
-        'url': jitsi_download_url
+        'os': 'windows',
+        'url': _jitsi_download_url
     }]
 }, {
     'name':
         _('CSipSimple'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(csipsimple_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _csipsimple_package_id)
     }]
-}]
+}])

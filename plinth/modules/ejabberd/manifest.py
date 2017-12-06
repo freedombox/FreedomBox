@@ -18,22 +18,16 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.modules.jsxc import manifest as jsxc_manifest
-from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
-                                               Store)
-from plinth.utils import play_store_url
+from plinth.clients import store_url, validate
 
-yaxim_package_id = 'org.yaxim.androidclient'
-bruno_package_id = 'org.yaxim.bruno'
-conversations_package_id = 'eu.siacs.conversations'
-
-_clients = [{
+_clients = validate([{
     'name':
         _('yaxim'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(yaxim_package_id),
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'org.yaxim.androidclient'),
     }]
 }, {
     'name':
@@ -43,9 +37,9 @@ _clients = [{
           'yaxim app.'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(bruno_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'org.yaxim.bruno')
     }]
 }, {
     'name':
@@ -60,8 +54,8 @@ _clients = [{
           'extra security.'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.IOS.value,
-        'store_name': Store.APP_STORE.value,
+        'os': 'ios',
+        'store_name': 'app-store',
         'url': 'https://itunes.apple.com/us/app/chatsecure'
                '/id464200063 '
     }]
@@ -70,16 +64,16 @@ _clients = [{
         _('Conversations'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(conversations_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'eu.siacs.conversations')
     }]
 }, {
     'name':
         _('Dino'),
     'platforms': [{
         'type': 'download',
-        'os': Desktop_OS.GNU_LINUX,
+        'os': 'gnu-linux',
         'url': 'https://github.com/dino/dino/wiki/Distribution-Packages',
     }]
 }, {
@@ -87,14 +81,14 @@ _clients = [{
         _('Gajim'),
     'platforms': [{
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'gajim'
     }, {
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
+        'os': 'windows',
         'url': 'https://gajim.org/downloads.php'
     }]
-}]
+}])
 
 _clients.extend(jsxc_manifest.clients)
 

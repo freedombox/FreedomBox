@@ -17,31 +17,29 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import (Desktop_OS, Mobile_OS, Package,
-                                               Store)
-from plinth.utils import f_droid_url, play_store_url
+from plinth.clients import store_url, validate
 
-plumble_package_id = 'com.morlunk.mumbleclient.free'
+_plumble_package_id = 'com.morlunk.mumbleclient.free'
 
-clients = [{
+clients = validate([{
     'name':
         _('Mumble'),
     'platforms': [{
         'type': 'download',
-        'os': Desktop_OS.WINDOWS.value,
+        'os': 'windows',
         'url': 'https://wiki.mumble.info/wiki/Main_Page'
     }, {
         'type': 'download',
-        'os': Desktop_OS.MAC_OS.value,
+        'os': 'macos',
         'url': 'https://wiki.mumble.info/wiki/Main_Page'
     }, {
         'type': 'package',
-        'format': Package.DEB.value,
+        'format': 'deb',
         'name': 'mumble'
     }, {
         'type': 'store',
-        'os': Mobile_OS.IOS.value,
-        'store_name': Store.APP_STORE.value,
+        'os': 'ios',
+        'store_name': 'app-store',
         'url': 'https://itunes.apple.com/us/app/mumble/id443472808'
     }]
 }, {
@@ -49,22 +47,22 @@ clients = [{
         _('Plumble'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.GOOGLE_PLAY.value,
-        'url': play_store_url(plumble_package_id)
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _plumble_package_id)
     }, {
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.F_DROID.value,
-        'url': f_droid_url(plumble_package_id)
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _plumble_package_id)
     }]
 }, {
     'name':
         _('Mumblefly'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.IOS.value,
-        'store_name': Store.APP_STORE.value,
+        'os': 'ios',
+        'store_name': 'app-store',
         'url': 'https://itunes.apple.com/dk/app/mumblefy/id858752232'
     }]
-}]
+}])

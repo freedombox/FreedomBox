@@ -17,46 +17,38 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.templatetags.plinth_extras import Desktop_OS, Mobile_OS, Store
-from plinth.utils import f_droid_url, play_store_url
+from plinth.clients import store_url, validate
 
-android_package_id = 'im.vector.alpha'
-riot_desktop_download_url = 'https://riot.im/desktop.html'
+_android_package_id = 'im.vector.alpha'
+_riot_desktop_download_url = 'https://riot.im/desktop.html'
 
-clients = [{
+clients = validate([{
     'name':
         _('Riot'),
-    'platforms': [
-        {
-            'type': 'store',
-            'os': Mobile_OS.ANDROID.value,
-            'store_name': Store.GOOGLE_PLAY.value,
-            'url': play_store_url(android_package_id)
-        },
-        {
-            'type': 'store',
-            'os': Mobile_OS.ANDROID.value,
-            'store_name': Store.F_DROID.value,
-            'url': f_droid_url(android_package_id)
-        },
-        {
-            'type': 'web',
-            'url': 'https://riot.im/app/#/home'
-        },
-        {
-            'type': 'download',
-            'os': Desktop_OS.GNU_LINUX.value,
-            'url': riot_desktop_download_url,
-        },
-        {
-            'type': 'download',
-            'os': Desktop_OS.MAC_OS.value,
-            'url': riot_desktop_download_url,
-        },
-        {
-            'type': 'download',
-            'os': Desktop_OS.WINDOWS.value,
-            'url': riot_desktop_download_url,
-        },
-    ]
-}]
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _android_package_id)
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _android_package_id)
+    }, {
+        'type': 'web',
+        'url': 'https://riot.im/app/#/home'
+    }, {
+        'type': 'download',
+        'os': 'gnu-linux',
+        'url': _riot_desktop_download_url,
+    }, {
+        'type': 'download',
+        'os': 'macos',
+        'url': _riot_desktop_download_url,
+    }, {
+        'type': 'download',
+        'os': 'windows',
+        'url': _riot_desktop_download_url,
+    }]
+}])

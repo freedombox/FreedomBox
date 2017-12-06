@@ -17,13 +17,11 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.clients import store_url, validate
 from plinth.modules import diaspora
-from plinth.templatetags.plinth_extras import Mobile_OS, Store
-from plinth.utils import f_droid_url, format_lazy
+from plinth.utils import format_lazy
 
-dandelion_package_id = 'com.github.dfa.diaspora_android'
-
-clients = [{
+clients = validate([{
     'name':
         _('dandelion*'),
     'description':
@@ -31,9 +29,9 @@ clients = [{
           'community-run, distributed social network diaspora*'),
     'platforms': [{
         'type': 'store',
-        'os': Mobile_OS.ANDROID.value,
-        'store_name': Store.F_DROID.value,
-        'url': f_droid_url(dandelion_package_id),
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'com.github.dfa.diaspora_android'),
     }]
 }, {
     'name':
@@ -46,4 +44,4 @@ clients = [{
                         host=diaspora.get_configured_domain_name() if
                         diaspora.is_setup() else "<please-setup-domain-name>")
     }]
-}]
+}])
