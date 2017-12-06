@@ -154,8 +154,8 @@ Pacthes can be submitted in either of the two ways:
 ## Coding Practices
 
 Plinth confirms to [PEP 8](http://www.python.org/dev/peps/pep-0008/) Python
-coding standard. You should check your code with *pep8* and *pylint* tools
-before placing a merge request.
+coding standard. Before placing a merge request, you should check your code
+for errors with *flake8* and indent your code with *yapf*.
 
 ## Internationalization
 
