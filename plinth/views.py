@@ -70,10 +70,10 @@ class ServiceView(FormView):
     diagnostics_module_name = ""
     # List of paragraphs describing the service
     description = ""
+    form_class = forms.ServiceForm
     # Display the 'status' block of the service.html template
     # This block uses information from service.is_running. This method is
     # optional, so allow not showing this block here.
-    form_class = forms.ServiceForm
     show_status_block = True
     service_id = None
     template_name = 'service.html'
