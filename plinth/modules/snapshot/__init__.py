@@ -23,6 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
+import json
 
 
 version = 1
@@ -58,3 +59,11 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
+
+
+def is_timeline_snapshots_enabled():
+    """Return whether timeline snapshots are enabled."""
+    output = actions.superuser_run('snapshot', ['get-config'])
+    output = json.loads(output)
+    return output['TIMELINE_CREATE'] == "yes"
+

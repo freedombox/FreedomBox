@@ -23,27 +23,32 @@
 
 {% block configuration %}
   <p>
-    <div class="row">
-      <form class="form" method="post">
-        {% csrf_token %}
+    <form class="form" method="post">
+      {% csrf_token %}
+      <h3>{% trans "Configuration" %}</h3>
+      {{ form|bootstrap }}
+      <input type="submit" class="btn btn-primary" name="update"
+             value="{% trans "Update setup" %}"/>
+      <hr>
+      <div class="row">
         <div class="col-xs-6 text-left">
-          <input type="submit" class="btn btn-primary"
+          <input type="submit" class="btn btn-primary" name="create"
                  value="{% trans 'Create Snapshot' %}"/>
         </div>
-      </form>
+    </form>
 
-      <div class="col-xs-6 text-right">
-        <a title="{% trans 'Delete all the snapshots' %}"
-           role="button" class="btn btn-danger"
-           {% if snapshots|length == 1 %}
-             disabled="disabled"
-           {% else %}
-             href="{% url 'snapshot:delete-all' %}"
-           {% endif %}>
-          {% trans 'Delete All' %}
-        </a>
-      </div>
+    <div class="col-xs-6 text-right">
+      <a title="{% trans 'Delete all the snapshots' %}"
+         role="button" class="btn btn-danger"
+         {% if snapshots|length == 1 %}
+         disabled="disabled"
+         {% else %}
+         href="{% url 'snapshot:delete-all' %}"
+         {% endif %}>
+        {% trans 'Delete All' %}
+      </a>
     </div>
+      </div>
   </p>
 
   <div class="row">

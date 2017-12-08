@@ -38,6 +38,7 @@ def parse_arguments():
     subparsers.add_parser('setup', help='Configure snapper')
     subparsers.add_parser('list', help='List snapshots')
     subparsers.add_parser('create', help='Create snapshot')
+    subparsers.add_parser('get-config', help='Configurations of snapshot')
 
     subparser = subparsers.add_parser('delete',
                                       help='Delete a snapshot by number')
@@ -45,6 +46,10 @@ def parse_arguments():
 
     subparser = subparsers.add_parser('delete-all',
                                       help='Delete all the snapshots')
+
+    subparser = subparsers.add_parser('configure',
+                                      help='Configure automatic snapshots')
+    subparser.add_argument('config')
 
     subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
     subparser.add_argument('number', help='Number of snapshot to rollback to')
@@ -161,6 +166,22 @@ def subcommand_delete_all(_):
             to_delete = '-'.join([snapshot_range[0], snapshot_range[-1]])
         command = ['snapper', 'delete', to_delete]
         subprocess.run(command, check=True)
+
+
+def subcommand_configure(arguments):
+    command = ['snapper', 'set-config', arguments.config]
+    subprocess.run(command, check=True)
+
+
+def subcommand_get_config(_):
+    command = ['snapper', 'get-config']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    lines = process.stdout.decode().splitlines()
+    config = {}
+    for line in lines[2:]:
+        parts = [part.strip() for part in line.split('|')]
+        config[parts[0]] = parts[1]
+    print(json.dumps(config))
 
 
 def subcommand_rollback(arguments):
