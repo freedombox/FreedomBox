@@ -26,15 +26,27 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 import json
 
+from plinth.errors import ActionError
+from .forms import SnapshotForm
 from plinth import actions
 from plinth.modules import snapshot as snapshot_module
+from . import is_timeline_snapshots_enabled
 
 
 def index(request):
     """Show snapshot list."""
+    status = get_status()
     if request.method == 'POST':
-        actions.superuser_run('snapshot', ['create'])
-        messages.success(request, _('Created snapshot.'))
+        form = SnapshotForm(request.POST, prefix='snapshot')
+        if 'create' in request.POST:
+            actions.superuser_run('snapshot', ['create'])
+            messages.success(request, _('Created snapshot.'))
+        if 'update' in request.POST and form.is_valid():
+            _apply_changes(request, status, form.cleaned_data)
+            status = get_status()
+            form = SnapshotForm(initial=status, prefix='snapshot')
+    else:
+        form = SnapshotForm(initial=status, prefix='snapshot')
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
@@ -42,7 +54,8 @@ def index(request):
     return TemplateResponse(request, 'snapshot.html',
                             {'title': snapshot_module.name,
                              'description': snapshot_module.description,
-                             'snapshots': snapshots})
+                             'snapshots': snapshots,
+                             'form': form})
 
 
 def delete(request, number):
@@ -89,3 +102,23 @@ def rollback(request, number):
     return TemplateResponse(request, 'snapshot_rollback.html',
                             {'title': _('Rollback to Snapshot'),
                              'snapshot': snapshot})
+
+
+def get_status():
+    return {'enable_timeline_snapshots': is_timeline_snapshots_enabled()}
+
+
+def _apply_changes(request, old_status, new_status):
+    """Try to apply changes and handle errors."""
+    try:
+        __apply_changes(request, old_status, new_status)
+    except ActionError as exception:
+        messages.error(request, _('Action error: {0} [{1}] [{2}]').format(
+          exception.args[0], exception.args[1], exception.args[2]))
+
+
+def __apply_changes(request, old_status, new_status):
+    if old_status['enable_timeline_snapshots'] != new_status['enable_timeline_snapshots']:
+        timeline_create = "TIMELINE_CREATE=yes" if new_status['enable_timeline_snapshots'] else "TIMELINE_CREATE=no"
+        actions.superuser_run('snapshot', ['configure', timeline_create])
+        messages.success(request, _('Timeline Snapshots configuration updated'))
