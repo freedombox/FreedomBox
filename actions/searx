@@ -1,0 +1,99 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for searx.
+"""
+
+import argparse
+import os
+
+from plinth import action_utils
+from plinth.utils import YAMLFile, gunzip
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable searx')
+    subparsers.add_parser('disable', help='Disable searx')
+    subparsers.add_parser(
+        'setup', help="Perform post-installation operations for Searx")
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def _copy_uwsgi_configuration():
+    """Copy the example uwsgi configuration shipped with Searx to the
+    appropriate uwsgi directory."""
+    example_config = ('/usr/share/doc/searx/examples/'
+                      'uwsgi/apps-available/searx.ini')
+    destination = '/etc/uwsgi/apps-enabled/searx.ini'
+
+    if not os.path.exists(destination):
+        os.symlink(example_config, destination)
+        action_utils.webserver_enable('uwsgi', kind='module')
+
+
+def _generate_secret_key():
+    """ Generate a secret key for the Searx installation."""
+    settings_file = '/etc/searx/settings.yml'
+
+    # Create settings file if not exists
+    if not os.path.exists(settings_file):
+        example_settings_file = '/usr/share/doc/searx/examples/settings.yml.gz'
+        gunzip(example_settings_file, settings_file)
+
+    # Generate and set a secret key
+    with YAMLFile(settings_file) as settings:
+        secret_key = os.urandom(16).hex()
+        settings['server']['secret_key'] = secret_key
+
+    action_utils.service_restart('uwsgi')
+
+
+def subcommand_setup(_):
+    """Post installation actions for Searx"""
+    _copy_uwsgi_configuration()
+    _generate_secret_key()
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.webserver_enable('searx-plinth')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('searx-plinth')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

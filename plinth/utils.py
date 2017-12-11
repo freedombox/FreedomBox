@@ -18,6 +18,7 @@
 Miscellaneous utility methods.
 """
 
+import gzip
 import importlib
 import os
 import random
@@ -136,3 +137,21 @@ def grep(pattern, file_name):
     return [
         line.rstrip() for line in open(file_name) if re.search(pattern, line)
     ]
+
+
+def gunzip(gzip_file, output_file):
+    """Utility to unzip a given gzip file and write it to an output file
+
+    gzip_file: string path to a gzip file
+    output_file: string path to the output file
+    mode: an octal number to specify file permissions
+    """
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, mode=0o755)
+
+    with gzip.open(gzip_file, 'rb') as f:
+        contents = f.read()
+    with open(output_file, 'wb') as f:
+        f.write(contents)
+    os.chmod(output_file, 0o644)
