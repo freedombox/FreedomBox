@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
     cd /vagrant/
     ./setup.py install
     apt update
-    apt install -y $(plinth --list-dependencies)
+    DEBIAN_FRONTEND=noninteractive apt install -y $(plinth --list-dependencies)
     systemctl daemon-reload
     systemctl restart plinth
   SHELL
