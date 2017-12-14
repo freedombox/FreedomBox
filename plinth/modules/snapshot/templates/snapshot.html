@@ -23,26 +23,25 @@
 
 {% block configuration %}
   <p>
-    <form class="form" method="post">
-      {% csrf_token %}
-
-      <div class="row">
+    <div class="row">
+      <form class="form" method="post">
+        {% csrf_token %}
         <div class="col-xs-6 text-left">
           <input type="submit" class="btn btn-primary"
                  value="{% trans 'Create Snapshot' %}"/>
         </div>
+      </form>
 
-        <div class="col-xs-6 text-right">
-          <a href="{% url 'snapshot:delete-all' %}"
-             title="{% trans 'Delete all the snapshots' %}">
-            <button type="button" class="btn btn-danger"
-                          {% if snapshots|length == 1 %} disabled {% endif %}>
-              {% trans 'Delete All' %}
-            </button>
-          </a>
-        </div>
+      <div class="col-xs-6 text-right">
+        <a href="{% url 'snapshot:delete-all' %}"
+           title="{% trans 'Delete all the snapshots' %}">
+          <button type="button" class="btn btn-danger"
+                  {% if snapshots|length == 1 %} disabled {% endif %}>
+            {% trans 'Delete All' %}
+          </button>
+        </a>
       </div>
-    </form>
+    </div>
   </p>
 
   <div class="row">
@@ -73,8 +72,8 @@
                   <a href="{% url 'snapshot:rollback' snapshot.number %}"
                      class="btn btn-default btn-sm" role="button"
                      title="{% blocktrans trimmed with number=snapshot.number %}
-                              Rollback to snapshot #{{ number }}
-                            {% endblocktrans %}">
+                           Rollback to snapshot #{{ number }}
+                     {% endblocktrans %}">
                     <span class="glyphicon glyphicon-repeat"
                           aria-hidden="true"></span>
                   </a>
@@ -84,8 +83,8 @@
                     <a href="{% url 'snapshot:delete' snapshot.number %}"
                        class="btn btn-default btn-sm" role="button"
                        title="{% blocktrans trimmed with number=snapshot.number %}
-                                Delete snapshot #{{ number }}
-                              {% endblocktrans %}">
+                             Delete snapshot #{{ number }}
+                       {% endblocktrans %}">
                       <span class="glyphicon glyphicon-trash"
                             aria-hidden="true"></span>
                     </a>
