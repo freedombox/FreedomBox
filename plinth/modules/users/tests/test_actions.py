@@ -84,7 +84,9 @@ class TestActions(unittest.TestCase):
                                         '..', 'actions', 'users')
         self.users = set()
         self.groups = set()
-        security.set_restricted_access(False)
+        self.restricted_access = security.get_restricted_access_enabled()
+        if self.restricted_access:
+            security.set_restricted_access(False)
 
     def tearDown(self):
         for user in self.users:
@@ -96,7 +98,7 @@ class TestActions(unittest.TestCase):
         for group in self.groups:
             self.delete_group(group)
 
-        security.set_restricted_access(True)
+        security.set_restricted_access(self.restricted_access)
 
     def call_action(self, arguments, **kwargs):
         """Call the action script."""
