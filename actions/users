@@ -95,6 +95,10 @@ def subcommand_first_setup(_):
     """Perform initial setup of LDAP."""
     # Avoid reconfiguration of slapd during module upgrades, because
     # this will move the existing database.
+    # XXX: Instead of a separate action that is conditionally called for a
+    # version number, we can check if the domain currently configured is what
+    # we want and then based on the value do a reconfiguration. This approach
+    # will work better when Plinth state is reset etc.
     action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
 
 
