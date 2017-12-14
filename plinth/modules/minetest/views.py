@@ -27,6 +27,7 @@ from plinth.views import ServiceView
 
 from . import description, managed_services, get_configuration
 from .forms import MinetestForm
+from plinth.modules import names
 
 
 class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
@@ -35,6 +36,7 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     diagnostics_module_name = "minetest"
     description = description
     show_status_block = True
+    template_name = 'minetest.html'
     form_class = MinetestForm
     clients = minetest.clients
 
@@ -43,6 +45,15 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
         initial = super().get_initial()
         initial.update(get_configuration())
         return initial
+
+    def get_context_data(self, *args, **kwargs):
+        """Add service to the context data."""
+        context = super().get_context_data(*args, **kwargs)
+        domains = [domain
+                   for domains in names.domains.values()
+                   for domain in domains]
+        context['domains'] = domains
+        return context
 
     def form_valid(self, form):
         """Change the configurations of Minetest service."""
