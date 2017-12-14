@@ -153,12 +153,12 @@ def subcommand_delete(arguments):
 def subcommand_delete_all(_):
     """Delete all the snapshots."""
     lines = _get_snapper_list()
-    rng = [line.split('|')[1].strip() for line in lines[3:]]
-    if rng:
-        if len(rng) == 1:
-            to_delete = rng[0]
+    snapshot_range = [line.split('|')[1].strip() for line in lines[3:]]
+    if snapshot_range:
+        if len(snapshot_range) == 1:
+            to_delete = snapshot_range[0]
         else:
-            to_delete = '-'.join([rng[0], rng[-1]])
+            to_delete = '-'.join([snapshot_range[0], snapshot_range[-1]])
         command = ['snapper', 'delete', to_delete]
         subprocess.run(command, check=True)
 
