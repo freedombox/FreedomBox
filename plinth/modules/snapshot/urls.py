@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the snapshot module.
 """
@@ -23,10 +22,10 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
     url(r'^sys/snapshot/$', views.index, name='index'),
     url(r'^sys/snapshot/(?P<number>\d+)/delete$', views.delete, name='delete'),
+    url(r'^sys/snapshot/all/delete$', views.delete_all, name='delete-all'),
     url(r'^sys/snapshot/(?P<number>\d+)/rollback$', views.rollback,
         name='rollback'),
 ]

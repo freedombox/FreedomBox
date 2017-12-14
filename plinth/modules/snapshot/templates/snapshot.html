@@ -22,6 +22,29 @@
 {% load i18n %}
 
 {% block configuration %}
+  <p>
+    <div class="row">
+      <form class="form" method="post">
+        {% csrf_token %}
+        <div class="col-xs-6 text-left">
+          <input type="submit" class="btn btn-primary"
+                 value="{% trans 'Create Snapshot' %}"/>
+        </div>
+      </form>
+
+      <div class="col-xs-6 text-right">
+        <a title="{% trans 'Delete all the snapshots' %}"
+           role="button" class="btn btn-danger"
+           {% if snapshots|length == 1 %}
+             disabled="disabled"
+           {% else %}
+             href="{% url 'snapshot:delete-all' %}"
+           {% endif %}>
+          {% trans 'Delete All' %}
+        </a>
+      </div>
+    </div>
+  </p>
 
   <div class="row">
     <div class="col-lg-12">
@@ -51,8 +74,8 @@
                   <a href="{% url 'snapshot:rollback' snapshot.number %}"
                      class="btn btn-default btn-sm" role="button"
                      title="{% blocktrans trimmed with number=snapshot.number %}
-                              Rollback to snapshot #{{ number }}
-                            {% endblocktrans %}">
+                           Rollback to snapshot #{{ number }}
+                     {% endblocktrans %}">
                     <span class="glyphicon glyphicon-repeat"
                           aria-hidden="true"></span>
                   </a>
@@ -62,8 +85,8 @@
                     <a href="{% url 'snapshot:delete' snapshot.number %}"
                        class="btn btn-default btn-sm" role="button"
                        title="{% blocktrans trimmed with number=snapshot.number %}
-                                Delete snapshot #{{ number }}
-                              {% endblocktrans %}">
+                             Delete snapshot #{{ number }}
+                       {% endblocktrans %}">
                       <span class="glyphicon glyphicon-trash"
                             aria-hidden="true"></span>
                     </a>
@@ -76,14 +99,5 @@
       </table>
     </div>
   </div>
-
-  <p>
-    <form class="form" method="post">
-      {% csrf_token %}
-
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Create Snapshot" %}"/>
-    </form>
-  </p>
 
 {% endblock %}
