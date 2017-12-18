@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Help module
 """
@@ -25,14 +24,16 @@ from plinth.utils import non_admin_view
 
 from . import help as views
 
-
 urlpatterns = [
     # having two urls for one page is a hack to help the current url/menu
     # system highlight the correct menu item. Every submenu-item with the same
     # url prefix as the main-menu is highlighted automatically.
     url(r'^help/$', non_admin_view(views.index), name='index'),
-    url(r'^help/index/$', non_admin_view(views.index), name='index_explicit'),
+    url(r'^help/index/$', non_admin_view(views.index), name='index-explicit'),
     url(r'^help/about/$', non_admin_view(views.about), name='about'),
     url(r'^help/manual/$', non_admin_view(views.manual), name='manual'),
-    url(r'^help/status-log/$', non_admin_view(views.status_log), name='status-log'),
+    url(r'^help/manual/download/$',
+        non_admin_view(views.download_manual), name='download-manual'),
+    url(r'^help/status-log/$',
+        non_admin_view(views.status_log), name='status-log'),
 ]

@@ -14,31 +14,40 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Help module for Plinth.
 """
 
+import gzip
+import mimetypes
 import os
-from apt.cache import Cache
-from django.http import Http404
-from django.template.response import TemplateResponse
-from django.utils.translation import ugettext as _, ugettext_lazy
 
-from plinth import cfg, __version__
+from apt.cache import Cache
+from django.core.files.base import ContentFile
+from django.http import Http404, HttpResponse
+from django.template.response import TemplateResponse
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
+
+from plinth import __version__, cfg
 from plinth.menu import main_menu
 
 
 def init():
     """Initialize the Help module"""
-    menu = main_menu.add_urlname(ugettext_lazy('Documentation'),
-                                 'glyphicon-book', 'help:index')
-    menu.add_urlname(ugettext_lazy('Where to Get Help'), 'glyphicon-search',
-                     'help:index_explicit', order=5)
-    menu.add_urlname(ugettext_lazy('Manual'), 'glyphicon-info-sign',
-                     'help:manual', order=10)
-    menu.add_urlname(ugettext_lazy('About'), 'glyphicon-star', 'help:about',
-                     order=100)
+    menu = main_menu.add_urlname(
+        ugettext_lazy('Documentation'), 'glyphicon-book', 'help:index')
+    menu.add_urlname(
+        ugettext_lazy('Where to Get Help'), 'glyphicon-search',
+        'help:index-explicit', order=5)
+    menu.add_urlname(
+        ugettext_lazy('Manual'), 'glyphicon-info-sign', 'help:manual',
+        order=10)
+    menu.add_urlname(
+        ugettext_lazy('Download Manual'), 'glyphicon-download-alt',
+        'help:download-manual', order=15)
+    menu.add_urlname(
+        ugettext_lazy('About'), 'glyphicon-star', 'help:about', order=100)
 
 
 def index(request):
@@ -63,16 +72,37 @@ def about(request):
 def manual(request):
     """Serve the manual page from the 'doc' directory"""
     try:
-        with open(os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'),
-                  'r', encoding='utf-8') as input_file:
+        with open(
+                os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'), 'r',
+                encoding='utf-8') as input_file:
             content = input_file.read()
     except IOError:
         raise Http404
 
-    return TemplateResponse(
-        request, 'help_manual.html',
-        {'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
-         'content': content})
+    return TemplateResponse(request, 'help_manual.html', {
+        'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
+        'content': content
+    })
+
+
+def download_manual(request):
+    """Serve the PDF version of the manual from the 'doc' directory"""
+    manual_name = 'freedombox-manual.pdf.gz'
+    try:
+        with gzip.open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
+            content = f.read()
+    except IOError:
+        try:
+            # pdf.gz doesn't exist. Try with .pdf
+            manual_name = manual_name.rpartition('.')[0]
+            with open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
+                content = f.read()
+        except IOError:
+            raise Http404('File {} does not exist.'.format(manual_name))
+
+    return HttpResponse(
+        ContentFile(content),
+        content_type=mimetypes.guess_type(manual_name)[0])
 
 
 def status_log(request):
@@ -82,10 +112,7 @@ def status_log(request):
         data = log_file.readlines()
 
     data = ''.join(data[-num_lines:])
-    context = {
-        'num_lines': num_lines,
-        'data': data
-    }
+    context = {'num_lines': num_lines, 'data': data}
     return TemplateResponse(request, 'statuslog.html', context)
 
 
