@@ -115,3 +115,7 @@ class YAMLFile(object):
 
     def is_file_empty(self):
         return os.stat(self.yaml_file).st_size == 0
+
+
+def yes_or_no(cond):
+    return 'yes' if cond else 'no'

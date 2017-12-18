@@ -14,17 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to manage filesystem snapshots.
 """
+
+import json
 
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
-import json
-
 
 version = 1
 
@@ -36,7 +35,6 @@ description = [
     _('Snapshots allows creating and managing filesystem snapshots. These can '
       'be used to roll back the system to a previously known good state in '
       'case of unwanted changes to the system.'),
-
     _('Automatic snapshots are taken every hour, day, month and year. Older '
       'snapshots are automatically deleted keeping 10 of each kind and 50 in '
       'total. Although snapshots are efficient and only store the '
@@ -65,5 +63,4 @@ def is_timeline_snapshots_enabled():
     """Return whether timeline snapshots are enabled."""
     output = actions.superuser_run('snapshot', ['get-config'])
     output = json.loads(output)
-    return output['TIMELINE_CREATE'] == "yes"
-
+    return output['TIMELINE_CREATE'] == 'yes'
