@@ -18,12 +18,11 @@
 Help module for Plinth.
 """
 
-import gzip
 import mimetypes
 import os
 
 from apt.cache import Cache
-from django.core.files.base import ContentFile
+from django.core.files.base import File
 from django.http import Http404, HttpResponse
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
@@ -87,22 +86,22 @@ def manual(request):
 
 def download_manual(request):
     """Serve the PDF version of the manual from the 'doc' directory"""
-    manual_name = 'freedombox-manual.pdf.gz'
-    try:
-        with gzip.open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
-            content = f.read()
-    except IOError:
-        try:
-            # pdf.gz doesn't exist. Try with .pdf
-            manual_name = manual_name.rpartition('.')[0]
-            with open(os.path.join(cfg.doc_dir, manual_name), 'rb') as f:
-                content = f.read()
-        except IOError:
-            raise Http404('File {} does not exist.'.format(manual_name))
+    files = [
+        os.path.join(cfg.doc_dir, file_name)
+        for file_name in ['freedombox-manual.pdf.gz', 'freedombox-manual.pdf']
+        if os.path.isfile(os.path.join(cfg.doc_dir, file_name))
+    ]
 
-    return HttpResponse(
-        ContentFile(content),
-        content_type=mimetypes.guess_type(manual_name)[0])
+    if not files:
+        raise Http404
+
+    (content_type, encoding) = mimetypes.guess_type(files[0])
+    with open(files[0], 'rb') as file_handle:
+        response = HttpResponse(File(file_handle), content_type=content_type)
+        if encoding:
+            response['Content-Encoding'] = encoding
+
+        return response
 
 
 def status_log(request):
