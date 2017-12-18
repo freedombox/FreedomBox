@@ -43,7 +43,22 @@ name = _('Deluge')
 short_description = _('BitTorrent Web Client')
 
 description = [
+    _('BitTorrent is a hyper distribution communications protocol '
+      'for peer-to-peer file sharing ("P2P") which is used '
+      'to distribute data and electronic files over the Internet. '
+      'It is one of the most common protocols for transferring large files.'),
+
     _('Deluge is a BitTorrent client that features a Web UI.'),
+
+    _('Deluge contains the common features to BitTorrent clients '
+      'such as Protocol Encryption, DHT, Local Peer Discovery (LSD), '
+      'Peer Exchange (PEX), UPnP, NAT-PMP, Proxy support, Web seeds, '
+      'global and per-torrent speed limits.'),
+
+    _('Deluge uses libtorrent library, check the list of '
+      '<a href="http://libtorrent.org/features.html"> features </a>'
+      'available.'
+      ),
 
     _('When enabled, the Deluge web client will be available from '
       '<a href="/deluge">/deluge</a> path on the web server. The '
