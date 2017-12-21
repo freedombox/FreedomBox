@@ -1,0 +1,102 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+"""
+Configuration helper for the sharing module
+"""
+
+import argparse
+import os
+
+import augeas
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(help='Sub command')
+
+    subparsers.add_parser('add', help='Add a new share')
+    subparsers.add_parser('remove', help='Remove an existing share')
+    subparsers.add_parser('list', help='Remove an existing share')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def load_augeas(conf_file):
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                              augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
+    aug.set('/augeas/load/Httpd/incl[last() + 1]', conf_file)
+    aug.load()
+
+    return aug
+
+
+# TODO: Handle the error case scenarios
+def subcommand_add(arguments):
+    share_url = arguments.url
+    share_path = arguments.path
+    share_user = arguments.user
+
+    aug = load_augeas('/etc/apache2/sites-available/sharing.conf')
+    aug.defvar('conf', '/files/etc/apache2/sites-available/sharing.conf')
+
+    if os.path.exists(share_path):
+        try:
+            aug.set('$conf/directive[last() + 1]', 'Alias')
+            aug.set('$conf/directive[last()]/arg[last() + 1]', share_url)
+            aug.set('$conf/directive[last()]/arg[last() + 1]', share_path)
+
+            aug.set('$conf/Directory[last() + 1]')
+            aug.set('$conf/Directory[last()]/arg', share_path)
+            aug.set('$conf/Directory[last()]/directive[last() + 1]', 'Include')
+            aug.set('$conf/Directory[last()]/directive[last()]/arg', 'includes/freedombox-sharing.conf')
+            aug.set('$conf/Directory[last()]/directive[last() + 1]', 'Require')
+            aug.set('$conf/Directory[last()]/directive[last()]/arg', share_user)
+        except Exception:
+            pass
+
+
+def subcommand_list():
+    aug = load_augeas('/etc/apache2/sites-available/sharing.conf')
+    aug.defvar('conf', '/files/etc/apache2/sites-available/sharing.conf')
+
+    path = '/files/etc/apache2/conf-available/sharing.conf/Directory'
+    list_of_shares = []
+    for match in aug.match(path):
+        path = aug.get(match + '/arg')
+        for directive_name in aug.match(match + '/directive'):
+            if directive_name == 'Require':
+                user = aug.get(directive_name + '/arg')
+    list_of_shares.append(dict(path=path, user_group=user))
+    return list_of_shares
+
+
+def main():
+    """Parse arguments and perform all duties"""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
