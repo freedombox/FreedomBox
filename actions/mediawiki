@@ -25,7 +25,10 @@ import os
 import subprocess
 
 from plinth import action_utils
-from plinth.utils import generate_password
+from plinth.utils import generate_password, grep
+
+MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
+CONF_FILE = '/var/lib/mediawiki/LocalSettings.php'
 
 
 def parse_arguments():
@@ -36,6 +39,12 @@ def parse_arguments():
     subparsers.add_parser('enable', help='Enable mediawiki')
     subparsers.add_parser('disable', help='Disable mediawiki')
     subparsers.add_parser('setup', help='Setup mediawiki')
+    change_password = subparsers.add_parser('change-password',
+                                            help='Change user password')
+    change_password.add_argument('--username', default='admin',
+                                 help='name of the mediawiki user')
+    change_password.add_argument('--password',
+                                 help='new password for the mediawiki user')
 
     subparsers.required = True
     return parser.parse_args()
@@ -45,30 +54,55 @@ def subcommand_setup(_):
     data_dir = '/var/lib/mediawiki-db/'
     if not os.path.exists(data_dir):
         os.mkdir(data_dir)
+        install_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'install.php')
         subprocess.check_call([
-            'php', '/usr/share/mediawiki/maintenance/install.php',
-            '--confpath=/etc/mediawiki', '--dbtype=sqlite',
-            '--dbpath=/var/lib/mediawiki-db/', '--scriptpath=/mediawiki',
-            '--pass',
+            'php', install_script, '--confpath=/etc/mediawiki',
+            '--dbtype=sqlite', '--dbpath=/var/lib/mediawiki-db/',
+            '--scriptpath=/mediawiki', '--pass',
             generate_password(), 'Wiki', 'admin'
         ])
     action_utils.set_ownership_recursively(data_dir, "www-data", "www-data")
+    disable_public_registrations()
+    disable_anonymous_editing()
     change_logo()
+
+
+def disable_public_registrations():
+    if not grep('createaccount', CONF_FILE):
+        with open(CONF_FILE, 'a') as f:
+            f.write("$wgGroupPermissions['*']['createaccount'] = false;\n")
+
+
+def disable_anonymous_editing():
+    if not grep('edit', CONF_FILE):
+        with open(CONF_FILE, 'a') as f:
+            f.write("$wgGroupPermissions['*']['edit'] = false;\n")
 
 
 def change_logo():
     """Change the placeholder logo to mediawiki's official logo"""
-    conf_file = '/var/lib/mediawiki/LocalSettings.php'
-    with open(conf_file, 'r') as cf:
+    with open(CONF_FILE, 'r') as cf:
         data = cf.readlines()
 
     for linum, line in enumerate(data):
         if line.lstrip().startswith('$wgLogo'):
-            data[linum] = line.replace('wiki', 'mediawiki')
+            data[linum] = line.replace('assets/wiki.png',
+                                       'assets/mediawiki.png')
             break
 
-    with open(conf_file, 'w') as f:
+    with open(CONF_FILE, 'w') as f:
         f.writelines(data)
+
+
+def subcommand_change_password(arguments):
+    """Change the password for a given user"""
+    change_password_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
+                                          'changePassword.php')
+
+    subprocess.check_call([
+        'php', change_password_script, '--user', arguments.username,
+        '--password', arguments.password
+    ])
 
 
 def subcommand_enable(_):

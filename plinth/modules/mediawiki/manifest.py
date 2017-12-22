@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""
-URLs for the mediawiki module.
-"""
 
-from django.conf.urls import url
+from django.utils.translation import ugettext_lazy as _
 
-from .views import MediawikiServiceView
+from plinth.clients import validate
 
-urlpatterns = [
-    url(r'^apps/mediawiki/$', MediawikiServiceView.as_view(), name='index'),
-]
+clients = validate([{
+    'name': _('Mediawiki'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/mediawiki'
+    }]
+}])

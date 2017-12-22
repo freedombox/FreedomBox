@@ -20,13 +20,11 @@ Plinth module to configure mediawiki.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
-from plinth.utils import format_lazy
+
+from .manifest import clients
 
 version = 1
 
@@ -34,23 +32,27 @@ managed_services = ['mediawiki']
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
-# TODO Put more thought into title and description
-
 name = 'MediaWiki'
 
 short_description = _('Wiki Engine')
 
 description = [
-    _("MediaWiki is a wiki engine (a program for creating a collaboratively \
- edited website). It is designed to handle heavy websites containing \
- library-like document collections, and supports user uploads of \
- images/sounds, multilingual content, TOC autogeneration, ISBN links, \
- etc."),
-    _('When enabled, MediaWiki\'s web interface will be available from '
-      '<a href="/mediawiki">/mediawiki</a>.'),
+    _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia \
+    projects. A wiki engine is a program for creating a collaboratively \
+    edited website. You can use MediaWiki to host a wiki-like website, take \
+    notes or collaborate with friends on projects.'),
+    _('This MediaWiki instance comes with a randomly generated administrator \
+    password. You can set a new password in the Configuration section and  \
+    login using the "admin" account. You can then create more user accounts \
+    from MediaWiki itself by going to the <a href="/mediawiki/index.php/\
+    Special:CreateAccount">Special:CreateAccount</a> page'),
+    _('Anyone with access this Wiki can read it. Only users that are logged in \
+    can make changes to the content.')
 ]
 
 service = None
+
+clients = clients
 
 
 def init():
@@ -62,15 +64,11 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
 
         if is_enabled():
             add_shortcut()
@@ -86,21 +84,22 @@ def setup(helper, old_version=None):
         service = service_module.Service(
             managed_services[0],
             name,
-            ports=['http', 'https'],
             is_external=True,
             is_enabled=is_enabled,
             enable=enable,
             disable=disable,
-            is_running=is_running)
+            is_running=is_running,
+            ports=['http', 'https'],
+        )
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'mediawiki', name, short_description=short_description, url='/mediawiki',
-        login_required=True)
+    frontpage.add_shortcut('mediawiki', name,
+                           short_description=short_description,
+                           url='/mediawiki', login_required=True)
 
 
 def is_running():
@@ -130,7 +129,7 @@ def diagnose():
     results = []
 
     results.extend(
-        action_utils.diagnose_url_on_all(
-            'https://{host}/mediawiki', check_certificate=False))
+        action_utils.diagnose_url_on_all('https://{host}/mediawiki',
+                                         check_certificate=False))
 
     return results
