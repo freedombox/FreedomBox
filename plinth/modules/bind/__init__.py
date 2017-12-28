@@ -37,16 +37,12 @@ service = None
 
 managed_services = ['bind9']
 
-managed_packages = ['bind9', 'bind9utils', 'bind9-doc']
+managed_packages = ['bind9']
 
 description = [
-    _('BIND is open source software that enables you to publish your Domain '
-      'Name System (DNS) information on the Internet, and to resolve '
-      'DNS queries for your users.'),
-    _('BIND is by far the most widely used DNS software on the Internet, '
-      'providing a robust and stable platform on top of which organizations'
-      ' can build distributed computing systems with the knowledge that those '
-      'systems are fully compliant with published DNS standards.')
+    _('BIND enables you to publish your Domain Name System (DNS) information '
+      'on the Internet, and to resolve DNS queries for your user devices on '
+      'your network.')
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
@@ -96,7 +92,7 @@ def setup(helper, old_version=None):
                                          ports=['dns'], is_external=True,
                                          enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', default_config)
+    helper.call('post', actions.superuser_run, 'bind', ['setup'])
 
 
 def enable():
@@ -121,38 +117,27 @@ def diagnose():
     return results
 
 
-def default_config():
-    """Setp BIND configuration"""
-    actions.superuser_run('bind', ['setup'])
-
-
 def get_config():
-    """Get initial value for forwarding"""
+    """Get current configuration"""
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    if '// forwarders {' in data:
-        set_forwarding = False
-    else:
-        set_forwarding = True
-    if '// dnssec-enable yes;' in data or '//dnssec-enable yes;' in data:
-        enable_dnssec = False
-    else:
-        enable_dnssec = True
 
-    flag = 0
+    forwarding_enabled = False
+    dnssec_enabled = False
+    forwarders = ''
+    flag = False
     for line in data:
-
-        if flag == 1:
-            if '//' in line:
-                forwarders = ''
-            else:
-                forwarders = re.sub('[;]', '', line)
-            flag = 0
-        if 'forwarders {' in line:
-            flag = 1
+        if re.match(r'^\s*forwarders\s+{', line):
+            forwarding_enabled = True
+            flag = True
+        elif re.match(r'^\s*dnssec-enable\s+yes;', line):
+            dnssec_enabled = True
+        elif flag and '//' not in line:
+            forwarders = re.sub('[;]', '', line)
+            flag = False
 
     conf = {
-        'set_forwarding': set_forwarding,
-        'enable_dnssec': enable_dnssec,
+        'set_forwarding': forwarding_enabled,
+        'enable_dnssec': dnssec_enabled,
         'forwarders': forwarders
     }
     return conf
@@ -163,54 +148,48 @@ def set_forwarding(choice):
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
     flag = 0
     if choice == "false":
-        if 'forwarders {' in data and '// forwarders {' not in data:
-            conf_file = open(CONFIG_FILE, 'w')
-            for line in data:
-                if 'forwarders {' in line and '// forwarders {' not in line:
-                    flag = 1
-                if flag == 1:
-                    line = '	// ' + line
-                if 'forward first' in line:
-                    flag = 0
-                if "0.0.0.0" not in line:
-                    conf_file.write(line + '\n')
-            conf_file.close()
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'^\s*forwarders\s+{', line):
+                flag = 1
+            if flag == 1:
+                line = '// ' + line
+            if re.match(r'forward\s+first', line):
+                flag = 0
+            conf_file.write(line + '\n')
+        conf_file.close()
 
     else:
-        if '// forwarders {' in data:
-            conf_file = open(CONFIG_FILE, 'w')
-            for line in data:
-                if '// forwarders {' in line:
-                    flag = 1
-                if flag == 1:
-                    line = line[2:]
-                if 'forward first' in line:
-                    flag = 0
-                if "0.0.0.0" not in line:
-                    conf_file.write(line + '\n')
-            conf_file.close()
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'//\s*forwarders\s+{', line):
+                flag = 1
+            if flag == 1:
+                line = line.lstrip('/')
+            if re.match(r'forward\s+first', line):
+                flag = 0
+            conf_file.write(line + '\n')
+        conf_file.close()
 
 
 def enable_dnssec(choice):
     """Enable or disable DNSSEC."""
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
     if choice == "false":
-        if '//dnssec-enable yes;' not in data:
-            conf_file = open(CONFIG_FILE, 'w')
-            for line in data:
-                if 'dnssec-enable yes;' in line:
-                    line = '//' + line
-                conf_file.write(line + '\n')
-            conf_file.close()
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'^\s*dnssec-enable\s+yes;', line):
+                line = '//' + line
+            conf_file.write(line + '\n')
+        conf_file.close()
 
     else:
-        if '//dnssec-enable yes;' in data:
-            conf_file = open(CONFIG_FILE, 'w')
-            for line in data:
-                if '//dnssec-enable yes;' in line:
-                    line = line[2:]
-                conf_file.write(line + '\n')
-            conf_file.close()
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'//\s*dnssec-enable\s+yes;', line):
+                line = line.lstrip('/')
+            conf_file.write(line + '\n')
+        conf_file.close()
 
 
 def set_forwarders(forwarders):
@@ -219,7 +198,7 @@ def set_forwarders(forwarders):
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
     conf_file = open(CONFIG_FILE, 'w')
     for line in data:
-        if 'forwarders {' in line:
+        if re.match(r'^\s*forwarders\s+{', line):
             conf_file.write(line + '\n')
             for dns in forwarders.split():
                 conf_file.write(dns + '; ')
