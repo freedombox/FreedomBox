@@ -58,7 +58,7 @@ recursion yes;
 allow-query { goodclients; };
 
 forwarders {
-8.8.8.8; 8.8.4.4;
+
 };
 forward first;
 
