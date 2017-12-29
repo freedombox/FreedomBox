@@ -24,7 +24,7 @@ import argparse
 
 from plinth import action_utils
 from plinth.modules.bind import CONFIG_FILE, DEFAULT_CONFIG
-from plinth.modules.bind import set_forwarding, enable_dnssec, set_forwarders
+from plinth.modules.bind import set_forwarders, set_dnssec
 
 
 def parse_arguments():
@@ -34,13 +34,10 @@ def parse_arguments():
     subparsers.add_parser('setup', help='Setup for BIND')
 
     configure = subparsers.add_parser('configure', help='Configure BIND')
-    configure.add_argument('--set-forwarding', choices=['true', 'false'],
-                           help='Set forwarding true/false')
-    configure.add_argument('--enable-dnssec', choices=['true', 'false'],
-                           help='Set DNSSEC true/false')
-
-    dns = subparsers.add_parser('dns', help='Set DNS forwarders')
-    dns.add_argument('--set', help='List of IP addresses, separated by space')
+    configure.add_argument('--forwarders',
+                           help='List of IP addresses, separated by space')
+    configure.add_argument('--dnssec', choices=['enable', 'disable'],
+                           help='Enable or disable DNSSEC')
 
     subparsers.required = True
     return parser.parse_args()
@@ -54,22 +51,10 @@ def subcommand_setup(_):
     action_utils.service_restart('bind9')
 
 
-def subcommand_dns(arguments):
-    """Setting DNS servers"""
-    if arguments.set:
-        set_forwarders(arguments.set)
-
-    action_utils.service_restart('bind9')
-
-
 def subcommand_configure(arguments):
     """Configure BIND."""
-    if arguments.set_forwarding:
-        set_forwarding(arguments.set_forwarding)
-
-    if arguments.enable_dnssec:
-        enable_dnssec(arguments.enable_dnssec)
-
+    set_forwarders(arguments.forwarders)
+    set_dnssec(arguments.dnssec)
     action_utils.service_restart('bind9')
 
 

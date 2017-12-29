@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for BIND module.
 """
@@ -34,17 +33,11 @@ def validate_ips(ips):
 
 class BindForm(ServiceForm):
     """BIND configuration form"""
-    set_forwarding = forms.BooleanField(
-        label=_('Enable forwarding'),
-        required=False,
-        help_text=_('Enable forwarding on your BIND server'))
+    forwarders = forms.CharField(
+        required=False, validators=[validate_ips], help_text=_(
+            'A list DNS servers, separated by space, to which '
+            'requests will be forwarded'))
 
     enable_dnssec = forms.BooleanField(
-        label=_('Enable DNSSEC'),
-        required=False,
+        label=_('Enable DNSSEC'), required=False,
         help_text=_('Enable Domain Name System Security Extensions'))
-
-    forwarders = forms.CharField(
-        required=False,
-        validators=[validate_ips],
-        help_text=_('A list of IP addresses, separated by space'))

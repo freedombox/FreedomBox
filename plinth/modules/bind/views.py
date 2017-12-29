@@ -47,29 +47,13 @@ class BindServiceView(ServiceView):  # pylint: disable=too-many-ancestors
         data = form.cleaned_data
         old_config = get_config()
 
-        if old_config['set_forwarding'] != data['set_forwarding']:
-            value = 'true' if data['set_forwarding'] else 'false'
-            actions.superuser_run('bind',
-                                  ['configure', '--set-forwarding', value])
-            messages.success(self.request,
-                             _('Set forwarding configuration updated'))
-
-        if old_config['enable_dnssec'] != data['enable_dnssec']:
-            value = 'true' if data['enable_dnssec'] else 'false'
-            actions.superuser_run('bind',
-                                  ['configure', '--enable-dnssec', value])
-            messages.success(self.request,
-                             _('Enable DNSSEC configuration updated'))
-
         if old_config['forwarders'] != data['forwarders'] \
-           and old_config['forwarders'] is not '':
-            actions.superuser_run('bind', ['dns', '--set', data['forwarders']])
-            messages.success(self.request,
-                             _('DNS server configuration updated'))
-        elif old_config['forwarders'] is '' \
-             and old_config['forwarders'] != data['forwarders']:
-            messages.error(
-                self.request,
-                _('Enable forwarding to set forwarding DNS servers'))
+           or old_config['enable_dnssec'] != data['enable_dnssec']:
+            dnssec_setting = 'enable' if data['enable_dnssec'] else 'disable'
+            actions.superuser_run('bind', [
+                'configure', '--forwarders', data['forwarders'], '--dnssec',
+                dnssec_setting
+            ])
+            messages.success(self.request, _('BIND configuration updated'))
 
         return super().form_valid(form)
