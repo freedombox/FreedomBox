@@ -34,24 +34,6 @@ class TestBind(unittest.TestCase):
 
         bind.CONFIG_FILE = self.conf_file.name
 
-    def test_set_forwarding(self):
-        bind.set_forwarding("true")
-        conf = bind.get_config()
-        self.assertEqual(conf['set_forwarding'], True)
-
-        bind.set_forwarding("false")
-        conf = bind.get_config()
-        self.assertEqual(conf['set_forwarding'], False)
-
-    def test_enable_dnssec(self):
-        bind.enable_dnssec("true")
-        conf = bind.get_config()
-        self.assertEqual(conf['enable_dnssec'], True)
-
-        bind.enable_dnssec("false")
-        conf = bind.get_config()
-        self.assertEqual(conf['enable_dnssec'], False)
-
     def test_set_forwarders(self):
         bind.set_forwarders('8.8.8.8 8.8.4.4')
         conf = bind.get_config()
@@ -60,3 +42,12 @@ class TestBind(unittest.TestCase):
         bind.set_forwarders('')
         conf = bind.get_config()
         self.assertEqual(conf['forwarders'], '')
+
+    def test_enable_dnssec(self):
+        bind.set_dnssec('enable')
+        conf = bind.get_config()
+        self.assertEqual(conf['enable_dnssec'], True)
+
+        bind.set_dnssec('disable')
+        conf = bind.get_config()
+        self.assertEqual(conf['enable_dnssec'], False)

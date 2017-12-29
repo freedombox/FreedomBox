@@ -121,13 +121,11 @@ def get_config():
     """Get current configuration"""
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
 
-    forwarding_enabled = False
-    dnssec_enabled = False
     forwarders = ''
+    dnssec_enabled = False
     flag = False
     for line in data:
         if re.match(r'^\s*forwarders\s+{', line):
-            forwarding_enabled = True
             flag = True
         elif re.match(r'^\s*dnssec-enable\s+yes;', line):
             dnssec_enabled = True
@@ -136,60 +134,10 @@ def get_config():
             flag = False
 
     conf = {
-        'set_forwarding': forwarding_enabled,
+        'forwarders': forwarders,
         'enable_dnssec': dnssec_enabled,
-        'forwarders': forwarders
     }
     return conf
-
-
-def set_forwarding(choice):
-    """Enable or disable DNS forwarding."""
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    flag = 0
-    if choice == "false":
-        conf_file = open(CONFIG_FILE, 'w')
-        for line in data:
-            if re.match(r'^\s*forwarders\s+{', line):
-                flag = 1
-            if flag == 1:
-                line = '// ' + line
-            if re.match(r'forward\s+first', line):
-                flag = 0
-            conf_file.write(line + '\n')
-        conf_file.close()
-
-    else:
-        conf_file = open(CONFIG_FILE, 'w')
-        for line in data:
-            if re.match(r'//\s*forwarders\s+{', line):
-                flag = 1
-            if flag == 1:
-                line = line.lstrip('/')
-            if re.match(r'forward\s+first', line):
-                flag = 0
-            conf_file.write(line + '\n')
-        conf_file.close()
-
-
-def enable_dnssec(choice):
-    """Enable or disable DNSSEC."""
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    if choice == "false":
-        conf_file = open(CONFIG_FILE, 'w')
-        for line in data:
-            if re.match(r'^\s*dnssec-enable\s+yes;', line):
-                line = '//' + line
-            conf_file.write(line + '\n')
-        conf_file.close()
-
-    else:
-        conf_file = open(CONFIG_FILE, 'w')
-        for line in data:
-            if re.match(r'//\s*dnssec-enable\s+yes;', line):
-                line = line.lstrip('/')
-            conf_file.write(line + '\n')
-        conf_file.close()
 
 
 def set_forwarders(forwarders):
@@ -210,3 +158,24 @@ def set_forwarders(forwarders):
         elif flag == 0:
             conf_file.write(line + '\n')
     conf_file.close()
+
+
+def set_dnssec(choice):
+    """Enable or disable DNSSEC."""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+
+    if choice == 'enable':
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'//\s*dnssec-enable\s+yes;', line):
+                line = line.lstrip('/')
+            conf_file.write(line + '\n')
+        conf_file.close()
+
+    if choice == 'disable':
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'^\s*dnssec-enable\s+yes;', line):
+                line = '//' + line
+            conf_file.write(line + '\n')
+        conf_file.close()
