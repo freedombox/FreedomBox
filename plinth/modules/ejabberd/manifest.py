@@ -43,7 +43,7 @@ _clients = validate([{
     }]
 }, {
     'name':
-        _('Chat secure'),
+        _('ChatSecure'),
     'description':
         _('ChatSecure is a free and open source '
           'messaging app that features OTR encryption '
@@ -57,7 +57,7 @@ _clients = validate([{
         'os': 'ios',
         'store_name': 'app-store',
         'url': 'https://itunes.apple.com/us/app/chatsecure'
-               '/id464200063 '
+               '/id464200063'
     }]
 }, {
     'name':
