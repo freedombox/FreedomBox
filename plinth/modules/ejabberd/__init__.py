@@ -53,8 +53,8 @@ description = [
 
     format_lazy(
         _('To actually communicate, you can use the <a href="/plinth/apps/'
-          'jsxc">web client</a> or any other <a href=\'http://xmpp.org/xmpp-'
-          'software/clients/\' target=\'_blank\'>XMPP client</a>. '
+          'jsxc">web client</a> or any other <a href=\'https://xmpp.org/'
+          'software/clients\' target=\'_blank\'>XMPP client</a>. '
           'When enabled, ejabberd can be accessed by any <a href="/plinth/sys'
           '/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name))
