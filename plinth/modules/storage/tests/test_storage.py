@@ -22,6 +22,7 @@ Test module for storage module operations.
 import os
 import re
 import subprocess
+import tempfile
 import unittest
 
 
@@ -50,21 +51,18 @@ class Disk():
 
     def _create_disk_file(self):
         """Create a temporary file to act as a disk."""
-        directory = os.path.dirname(os.path.realpath(__file__))
-        disk_file = os.path.join(directory, 'temp_disk.img')
-
-        if os.path.isfile(disk_file):
-            os.remove(disk_file)
+        disk_file = tempfile.NamedTemporaryFile()
 
         command = 'dd if=/dev/zero of={file} bs=1M count={size}' \
-                  .format(size=self.size, file=disk_file)
+                  .format(size=self.size, file=disk_file.name)
         subprocess.run(command.split(), stderr=subprocess.DEVNULL, check=True)
 
         self.disk_file = disk_file
 
     def _setup_loopback(self):
         """Setup loop back on the create disk file."""
-        command = 'losetup --show --find {file}'.format(file=self.disk_file)
+        command = 'losetup --show --find {file}'.format(
+            file=self.disk_file.name)
         process = subprocess.run(command.split(), stdout=subprocess.PIPE,
                                  check=True)
         device = process.stdout.decode().strip()
@@ -77,7 +75,9 @@ class Disk():
     def _create_partitions(self):
         """Create partitions as specified in disk_info."""
         steps = [step.split() for step in self.disk_info]
-        command = ['parted', '--align=optimal', '--script', self.disk_file]
+        command = [
+            'parted', '--align=optimal', '--script', self.disk_file.name
+        ]
         for step in steps:
             command += step
 
@@ -104,7 +104,7 @@ class Disk():
 
     def _remove_disk_file(self):
         """Delete the disk_file."""
-        os.remove(self.disk_file)
+        self.disk_file.close()
         self.disk_file = None
 
     def __enter__(self):
