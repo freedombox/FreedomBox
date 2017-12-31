@@ -14,16 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
-URLs for the BIND module
+URLs for the BIND module.
 """
 
 from django.conf.urls import url
 
 from plinth.modules.bind.views import BindServiceView
 
-
-urlpatterns = [
-    url(r'^sys/bind/$', BindServiceView.as_view(), name='index'),
-]
+urlpatterns = [url(r'^sys/bind/$', BindServiceView.as_view(), name='index'), ]

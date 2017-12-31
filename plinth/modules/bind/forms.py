@@ -34,9 +34,9 @@ def validate_ips(ips):
 class BindForm(ServiceForm):
     """BIND configuration form"""
     forwarders = forms.CharField(
-        required=False, validators=[validate_ips], help_text=_(
-            'A list DNS servers, separated by space, to which '
-            'requests will be forwarded'))
+        label=_('Forwarders'), required=False, validators=[validate_ips],
+        help_text=_('A list DNS servers, separated by space, to which '
+                    'requests will be forwarded'))
 
     enable_dnssec = forms.BooleanField(
         label=_('Enable DNSSEC'), required=False,

@@ -54,6 +54,6 @@ class BindServiceView(ServiceView):  # pylint: disable=too-many-ancestors
                 'configure', '--forwarders', data['forwarders'], '--dnssec',
                 dnssec_setting
             ])
-            messages.success(self.request, _('BIND configuration updated'))
+            messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
