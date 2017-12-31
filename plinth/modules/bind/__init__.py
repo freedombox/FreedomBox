@@ -24,8 +24,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth import action_utils
+from plinth import cfg
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.utils import format_lazy
 
 version = 1
 
@@ -42,7 +44,12 @@ managed_packages = ['bind9']
 description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
-      'your network.')
+      'your network.'),
+    format_lazy(
+        _('Currently, on {box_name}, BIND is only used to resolve DNS queries '
+          'for other machines on local network. It is also incompatible with '
+          'sharing Internet connection from {box_name}.'),
+        box_name=_(cfg.box_name)),
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
