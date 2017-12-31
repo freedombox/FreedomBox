@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for storage module operations.
 """
@@ -24,7 +23,6 @@ import re
 import subprocess
 import tempfile
 import unittest
-
 
 euid = os.geteuid()
 
@@ -39,6 +37,7 @@ def _get_partition_device(device, partition_number):
 
 class Disk():
     """Context manager to create/destroy a disk."""
+
     def __init__(self, test_case, size, disk_info, file_system_info=None):
         """Initialize the context manager object."""
         self.size = size
@@ -122,13 +121,14 @@ class Disk():
 
 class TestActions(unittest.TestCase):
     """Test all actions related to storage."""
+
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_simple_case(self):
         """Test a simple with no complications"""
-        disk_info = ['mktable msdos',
-                     'mkpart primary btrfs 1 8',
-                     'mkpart primary btrfs 9 16',
-                     'mkpart primary btrfs 20 200']
+        disk_info = [
+            'mktable msdos', 'mkpart primary btrfs 1 8',
+            'mkpart primary btrfs 9 16', 'mkpart primary btrfs 20 200'
+        ]
         with Disk(self, 256, disk_info, [(3, 'btrfs')]):
             # No free space
             self.assert_free_space(1, space=False)
@@ -144,10 +144,10 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_extended_partition_free_space(self):
         """Test that free space does not show up when outside extended."""
-        disk_info = ['mktable msdos',
-                     'mkpart primary 1 8',
-                     'mkpart extended 8 32',
-                     'mkpart logical 9 16']
+        disk_info = [
+            'mktable msdos', 'mkpart primary 1 8', 'mkpart extended 8 32',
+            'mkpart logical 9 16'
+        ]
         with Disk(self, 64, disk_info):
             self.assert_free_space(5, space=False)
             self.expand_partition(5, success=False)
@@ -156,12 +156,11 @@ class TestActions(unittest.TestCase):
     def test_gpt_partition_free_space(self):
         """Test that GPT partitions can be expanded."""
         # Specifically check for partition number > 4
-        disk_info = ['mktable gpt',
-                     'mkpart primary 1 4',
-                     'mkpart extended 4 8',
-                     'mkpart extended 8 12',
-                     'mkpart extended 12 16',
-                     'mkpart extended 16 160']
+        disk_info = [
+            'mktable gpt', 'mkpart primary 1 4', 'mkpart extended 4 8',
+            'mkpart extended 8 12', 'mkpart extended 12 16',
+            'mkpart extended 16 160'
+        ]
         with Disk(self, 256, disk_info, [(5, 'btrfs')]):
             self.assert_free_space(5, space=True)
             self.expand_partition(5, success=True)
@@ -170,8 +169,7 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_unsupported_file_system(self):
         """Test that free space after unknown file system does not count."""
-        disk_info = ['mktable msdos',
-                     'mkpart primary 1 8']
+        disk_info = ['mktable msdos', 'mkpart primary 1 8']
         with Disk(self, 32, disk_info):
             self.assert_free_space(1, space=False)
             self.expand_partition(1, success=False)
@@ -179,8 +177,7 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_btrfs_expansion(self):
         """Test that btrfs file system can be expanded."""
-        disk_info = ['mktable msdos',
-                     'mkpart primary btrfs 1 200']
+        disk_info = ['mktable msdos', 'mkpart primary btrfs 1 200']
         with Disk(self, 256, disk_info, [(1, 'btrfs')]):
             self.expand_partition(1, success=True)
             self.expand_partition(1, success=False)
@@ -189,8 +186,7 @@ class TestActions(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_ext4_expansion(self):
         """Test that ext4 file system can be expanded."""
-        disk_info = ['mktable msdos',
-                     'mkpart primary ext4 1 64']
+        disk_info = ['mktable msdos', 'mkpart primary ext4 1 64']
         with Disk(self, 128, disk_info, [(1, 'ext4')]):
             self.expand_partition(1, success=True)
             self.expand_partition(1, success=False)
@@ -199,7 +195,8 @@ class TestActions(unittest.TestCase):
     def assert_free_space(self, partition_number, space=True):
         """Verify that free is available/not available after a parition."""
         device = _get_partition_device(self.device, partition_number)
-        result = self.run_action(['storage', 'is-partition-expandable', device])
+        result = self.run_action(
+            ['storage', 'is-partition-expandable', device])
         self.assertEqual(result, space)
 
     def expand_partition(self, partition_number, success=True):
@@ -225,8 +222,10 @@ class TestActions(unittest.TestCase):
 
     def assert_aligned(self, partition_number):
         """Test that partition is optimally aligned."""
-        subprocess.run(['parted', '--script', self.device, 'align-check',
-                        'opti', str(partition_number)])
+        subprocess.run([
+            'parted', '--script', self.device, 'align-check', 'opti',
+            str(partition_number)
+        ])
 
     def assert_btrfs_file_system_healthy(self, partition_number):
         """Perform a successful ext4 file system check."""
