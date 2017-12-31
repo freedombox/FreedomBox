@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for BIND module.
 """
@@ -25,12 +24,11 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.views import ServiceView
 
-
-from . import description, managed_services, get_default
+from . import description, managed_services, get_config
 from .forms import BindForm
 
 
-class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
+class BindServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
     service_id = managed_services[0]
     diagnostics_module_name = "bind"
@@ -41,41 +39,21 @@ class BindServiceView(ServiceView): # pylint: disable=too-many-ancestors
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial.update(get_default())
+        initial.update(get_config())
         return initial
 
     def form_valid(self, form):
         """Change the configurations of Bind service."""
         data = form.cleaned_data
-        old_config = get_default()
-
-        if old_config['set_forwarding'] != data['set_forwarding']:
-            value = 'true' if data['set_forwarding'] else 'false'
-            actions.superuser_run(
-                'bind',
-                ['configure', '--set-forwarding', value])
-            messages.success(self.request,
-                             _('Set forwarding configuration updated'))
-
-        if old_config['enable_dnssec'] != data['enable_dnssec']:
-            value = 'true' if data['enable_dnssec'] else 'false'
-            actions.superuser_run(
-                'bind',
-                ['configure', '--enable-dnssec', value])
-            messages.success(self.request,
-                             _('Enable DNSSEC configuration updated'))
+        old_config = get_config()
 
         if old_config['forwarders'] != data['forwarders'] \
-           and old_config['forwarders'] is not '':
-            actions.superuser_run(
-                'bind',
-                ['dns', '--set', data['forwarders']])
-            messages.success(self.request,
-                             _('DNS server configuration updated'))
-        elif old_config['forwarders'] is '' \
-             and old_config['forwarders'] != data['forwarders']:
-            messages.error(
-                self.request,
-                _('Enable forwarding to set forwarding DNS servers'))
+           or old_config['enable_dnssec'] != data['enable_dnssec']:
+            dnssec_setting = 'enable' if data['enable_dnssec'] else 'disable'
+            actions.superuser_run('bind', [
+                'configure', '--forwarders', data['forwarders'], '--dnssec',
+                dnssec_setting
+            ])
+            messages.success(self.request, _('BIND configuration updated'))
 
         return super().form_valid(form)

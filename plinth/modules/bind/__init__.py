@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure BIND server
 """
@@ -28,7 +27,6 @@ from plinth import action_utils
 from plinth import service as service_module
 from plinth.menu import main_menu
 
-
 version = 1
 
 name = _('BIND')
@@ -39,20 +37,38 @@ service = None
 
 managed_services = ['bind9']
 
-managed_packages = ['bind9', 'bind9utils', 'bind9-doc']
+managed_packages = ['bind9']
 
 description = [
-    _('BIND is open source software that enables you to publish your Domain '
-      'Name System (DNS) information on the Internet, and to resolve '
-      'DNS queries for your users.'),
-
-    _('BIND is by far the most widely used DNS software on the Internet, '
-      'providing a robust and stable platform on top of which organizations'
-      ' can build distributed computing systems with the knowledge that those '
-      'systems are fully compliant with published DNS standards.')
+    _('BIND enables you to publish your Domain Name System (DNS) information '
+      'on the Internet, and to resolve DNS queries for your user devices on '
+      'your network.')
 ]
 
 CONFIG_FILE = '/etc/bind/named.conf.options'
+
+DEFAULT_CONFIG = '''
+acl goodclients {
+    localnets;
+};
+options {
+directory "/var/cache/bind";
+
+recursion yes;
+allow-query { goodclients; };
+
+forwarders {
+
+};
+forward first;
+
+dnssec-enable yes;
+dnssec-validation auto;
+
+auth-nxdomain no;    # conform to RFC1035
+listen-on-v6 { any; };
+};
+'''
 
 
 def init():
@@ -63,10 +79,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['dns'],
-            is_external=False,
-            )
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['dns'], is_external=False)
 
 
 def setup(helper, old_version=None):
@@ -74,12 +88,11 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['dns'],
-            is_external=True,
-            enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['dns'], is_external=True,
+                                         enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
-    helper.call('post', default_config)
+    helper.call('post', actions.superuser_run, 'bind', ['setup'])
 
 
 def enable():
@@ -104,38 +117,65 @@ def diagnose():
     return results
 
 
-def default_config():
-    """Setp BIND configuration"""
-    actions.superuser_run('bind', ['setup'])
-
-
-def get_default():
-    """Get initial value for forwarding"""
+def get_config():
+    """Get current configuration"""
     data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    if '// forwarders {' in data:
-        set_forwarding = False
-    else:
-        set_forwarding = True
-    if '// dnssec-enable yes;' in data or '//dnssec-enable yes;' in data:
-        enable_dnssec = False
-    else:
-        enable_dnssec = True
 
-    flag = 0
+    forwarders = ''
+    dnssec_enabled = False
+    flag = False
     for line in data:
-
-        if flag == 1:
-            if '//' in line:
-                forwarders = ''
-            else:
-                forwarders = re.sub('[;]', '', line)
-            flag = 0
-        if 'forwarders {' in line:
-            flag = 1
+        if re.match(r'^\s*forwarders\s+{', line):
+            flag = True
+        elif re.match(r'^\s*dnssec-enable\s+yes;', line):
+            dnssec_enabled = True
+        elif flag and '//' not in line:
+            forwarders = re.sub('[;]', '', line)
+            flag = False
 
     conf = {
-        'set_forwarding': set_forwarding,
-        'enable_dnssec': enable_dnssec,
-        'forwarders': forwarders
+        'forwarders': forwarders,
+        'enable_dnssec': dnssec_enabled,
     }
     return conf
+
+
+def set_forwarders(forwarders):
+    """Set DNS forwarders."""
+    flag = 0
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    conf_file = open(CONFIG_FILE, 'w')
+    for line in data:
+        if re.match(r'^\s*forwarders\s+{', line):
+            conf_file.write(line + '\n')
+            for dns in forwarders.split():
+                conf_file.write(dns + '; ')
+            conf_file.write('\n')
+            flag = 1
+        elif '};' in line and flag == 1:
+            conf_file.write(line + '\n')
+            flag = 0
+        elif flag == 0:
+            conf_file.write(line + '\n')
+    conf_file.close()
+
+
+def set_dnssec(choice):
+    """Enable or disable DNSSEC."""
+    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+
+    if choice == 'enable':
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'//\s*dnssec-enable\s+yes;', line):
+                line = line.lstrip('/')
+            conf_file.write(line + '\n')
+        conf_file.close()
+
+    if choice == 'disable':
+        conf_file = open(CONFIG_FILE, 'w')
+        for line in data:
+            if re.match(r'^\s*dnssec-enable\s+yes;', line):
+                line = '//' + line
+            conf_file.write(line + '\n')
+        conf_file.close()
