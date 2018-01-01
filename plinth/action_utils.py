@@ -24,8 +24,8 @@ import shutil
 import socket
 import subprocess
 import tempfile
-import psutil
 
+import psutil
 from django.utils.translation import ugettext as _
 
 logger = logging.getLogger(__name__)
@@ -43,15 +43,11 @@ def service_is_running(servicename):
     """
     try:
         if is_systemd_running():
-            subprocess.run(
-                ['systemctl', 'status', servicename],
-                check=True,
-                stdout=subprocess.DEVNULL)
+            subprocess.run(['systemctl', 'status', servicename], check=True,
+                           stdout=subprocess.DEVNULL)
         else:
-            subprocess.run(
-                ['service', servicename, 'status'],
-                check=True,
-                stdout=subprocess.DEVNULL)
+            subprocess.run(['service', servicename, 'status'], check=True,
+                           stdout=subprocess.DEVNULL)
 
         return True
     except subprocess.CalledProcessError:
@@ -63,11 +59,8 @@ def service_is_running(servicename):
 def service_is_enabled(service_name):
     """Check if service is enabled in systemd."""
     try:
-        subprocess.run(
-            ['systemctl', 'is-enabled', service_name],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL)
+        subprocess.run(['systemctl', 'is-enabled', service_name], check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -96,41 +89,41 @@ def service_unmask(service_name):
 def service_start(service_name):
     """Start a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(
-            ['systemctl', 'start', service_name], stdout=subprocess.DEVNULL)
+        subprocess.run(['systemctl', 'start', service_name],
+                       stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(
-            ['service', service_name, 'start'], stdout=subprocess.DEVNULL)
+        subprocess.run(['service', service_name, 'start'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_stop(service_name):
     """Stop a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(
-            ['systemctl', 'stop', service_name], stdout=subprocess.DEVNULL)
+        subprocess.run(['systemctl', 'stop', service_name],
+                       stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(
-            ['service', service_name, 'stop'], stdout=subprocess.DEVNULL)
+        subprocess.run(['service', service_name, 'stop'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_restart(service_name):
     """Restart a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(
-            ['systemctl', 'restart', service_name], stdout=subprocess.DEVNULL)
+        subprocess.run(['systemctl', 'restart', service_name],
+                       stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(
-            ['service', service_name, 'restart'], stdout=subprocess.DEVNULL)
+        subprocess.run(['service', service_name, 'restart'],
+                       stdout=subprocess.DEVNULL)
 
 
 def service_reload(service_name):
     """Reload a service with systemd or sysvinit."""
     if is_systemd_running():
-        subprocess.run(
-            ['systemctl', 'reload', service_name], stdout=subprocess.DEVNULL)
+        subprocess.run(['systemctl', 'reload', service_name],
+                       stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(
-            ['service', service_name, 'reload'], stdout=subprocess.DEVNULL)
+        subprocess.run(['service', service_name, 'reload'],
+                       stdout=subprocess.DEVNULL)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -141,8 +134,8 @@ def webserver_is_enabled(name, kind='config'):
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
     try:
         # Don't print anything on the terminal
-        subprocess.check_output(
-            ['a2query', option_map[kind], name], stderr=subprocess.STDOUT)
+        subprocess.check_output(['a2query', option_map[kind], name],
+                                stderr=subprocess.STDOUT)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -309,13 +302,8 @@ def _check_port(port, kind='tcp', listen_address=None):
     return False
 
 
-def diagnose_url(url,
-                 kind=None,
-                 env=None,
-                 check_certificate=True,
-                 extra_options=None,
-                 wrapper=None,
-                 expected_output=None):
+def diagnose_url(url, kind=None, env=None, check_certificate=True,
+                 extra_options=None, wrapper=None, expected_output=None):
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
@@ -335,12 +323,9 @@ def diagnose_url(url,
         command.append({'4': '-4', '6': '-6'}[kind])
 
     try:
-        process = subprocess.run(
-            command,
-            env=env,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+        process = subprocess.run(command, env=env, check=True,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
         result = 'passed'
         if expected_output and expected_output not in process.stdout.decode():
             result = 'failed'
@@ -376,10 +361,8 @@ def diagnose_netcat(host, port, input='', negate=False):
     """Run a diagnostic using netcat."""
     try:
         process = subprocess.Popen(
-            ['nc', host, str(port)],
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+            ['nc', host, str(port)], stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         process.communicate(input=input.encode())
         if process.returncode != 0:
             result = 'failed'
@@ -473,8 +456,8 @@ Owners: {package}
 '''
     override_data = ''
     for key, value in config.items():
-        override_data += override_template.format(
-            package=package, key=key, value=value)
+        override_data += override_template.format(package=package, key=key,
+                                                  value=value)
 
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as override_file:
         override_file.write(override_data)

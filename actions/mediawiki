@@ -1,0 +1,143 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of Plinth.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for MediaWiki.
+"""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+import tempfile
+
+from plinth import action_utils
+from plinth.utils import generate_password, grep
+
+MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
+CONF_FILE = '/var/lib/mediawiki/LocalSettings.php'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('enable', help='Enable MediaWiki')
+    subparsers.add_parser('disable', help='Disable MediaWiki')
+    subparsers.add_parser('setup', help='Setup MediaWiki')
+    change_password = subparsers.add_parser('change-password',
+                                            help='Change user password')
+    change_password.add_argument('--username', default='admin',
+                                 help='name of the MediaWiki user')
+    change_password.add_argument('--password',
+                                 help='new password for the MediaWiki user')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Run the installer script to create database and configuration file."""
+    data_dir = '/var/lib/mediawiki-db/'
+    if not os.path.exists(data_dir):
+        os.mkdir(data_dir)
+
+    if not os.path.exists(os.path.join(data_dir, 'my_wiki.sqlite')):
+        install_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'install.php')
+        password = generate_password()
+        with tempfile.NamedTemporaryFile() as password_file_handle:
+            password_file_handle.write(password.encode())
+            subprocess.check_call([
+                'php', install_script, '--confpath=/etc/mediawiki',
+                '--dbtype=sqlite', '--dbpath=' + data_dir,
+                '--scriptpath=/mediawiki', '--passfile',
+                password_file_handle.name, 'Wiki', 'admin'
+            ])
+    subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
+    subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
+    _disable_public_registrations()
+    _disable_anonymous_editing()
+    _change_logo()
+
+
+def _disable_public_registrations():
+    """Edit MediaWiki configuration to disable public registrations."""
+    if not grep(r'\$wgGroupPermissions.*createaccount', CONF_FILE):
+        with open(CONF_FILE, 'a') as file_handle:
+            file_handle.write(
+                "$wgGroupPermissions['*']['createaccount'] = false;\n")
+
+
+def _disable_anonymous_editing():
+    """Edit MediaWiki configuration to allow anonymous users from editing.
+
+    MediaWiki instances get a lot of spam bot typically.
+    """
+    if not grep(r'\$wgGroupPermissions.*edit', CONF_FILE):
+        with open(CONF_FILE, 'a') as file_handle:
+            file_handle.write("$wgGroupPermissions['*']['edit'] = false;\n")
+
+
+def _change_logo():
+    """Change the placeholder logo to MediaWiki's official logo"""
+    lines = open(CONF_FILE, 'r').readlines()
+    with open(CONF_FILE, 'w') as file_handle:
+        for line in lines:
+            if re.match('^\s*\$wgLogo', line):
+                line = line.replace('assets/wiki.png', 'assets/mediawiki.png')
+
+            file_handle.write(line)
+
+
+def subcommand_change_password(arguments):
+    """Change the password for a given user"""
+    new_password = ''.join(sys.stdin)
+    change_password_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
+                                          'changePassword.php')
+
+    subprocess.check_call([
+        'php', change_password_script, '--user', arguments.username,
+        '--password', new_password
+    ])
+
+
+def subcommand_enable(_):
+    """Enable web configuration and reload."""
+    action_utils.service_enable('mediawiki-jobrunner')
+    action_utils.webserver_enable('mediawiki')
+
+
+def subcommand_disable(_):
+    """Disable web configuration and reload."""
+    action_utils.webserver_disable('mediawiki')
+    action_utils.service_disable('mediawiki-jobrunner')
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
