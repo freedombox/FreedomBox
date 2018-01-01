@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 16:33-0500\n"
+"POT-Creation-Date: 2018-01-01 13:36-0500\n"
 "PO-Revision-Date: 2017-10-04 22:47+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -19,32 +19,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.17-dev\n"
 
-#: plinth/action_utils.py:259
+#: plinth/action_utils.py:252
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Escuchando en el puerto {kind} {listen_address}:{port}"
 
-#: plinth/action_utils.py:262
+#: plinth/action_utils.py:255
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Escuchando en el puerto {port} {kind}"
 
-#: plinth/action_utils.py:357
+#: plinth/action_utils.py:342
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Acceso a {url} en tcp{kind}"
 
-#: plinth/action_utils.py:361
+#: plinth/action_utils.py:346
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Acceso a {url}"
 
-#: plinth/action_utils.py:391
+#: plinth/action_utils.py:374
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Conectar a {host}:{port}"
 
-#: plinth/action_utils.py:394
+#: plinth/action_utils.py:377
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "No se pudo conectar a {host}:{port}"
@@ -113,63 +113,49 @@ msgid "Domain Name Server"
 msgstr "Servidor de Nombres de Dominio"
 
 #: plinth/modules/bind/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "BIND is open source software that enables you to publish your Domain Name "
+#| "System (DNS) information on the Internet, and to resolve DNS queries for "
+#| "your users."
 msgid ""
-"BIND is open source software that enables you to publish your Domain Name "
-"System (DNS) information on the Internet, and to resolve DNS queries for "
-"your users."
+"BIND enables you to publish your Domain Name System (DNS) information on the "
+"Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
 "BIND es un software libre que le permite publicar en Internet la información "
 "de su Sistema de Nombres de Dominio (DNS), y también resolver las búsquedas "
 "DNS de sus usuarios."
 
 #: plinth/modules/bind/__init__.py:49
+#, python-brace-format
 msgid ""
-"BIND is by far the most widely used DNS software on the Internet, providing "
-"a robust and stable platform on top of which organizations can build "
-"distributed computing systems with the knowledge that those systems are "
-"fully compliant with published DNS standards."
+"Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
+"machines on local network. It is also incompatible with sharing Internet "
+"connection from {box_name}."
 msgstr ""
-"BIND es con diferencia el software para DNS más usado en Internet. "
-"Proporciona una plataforma estable y robusta sobre la que otras "
-"organizaciones pueden construir sistemas de computación distribuida a "
-"sabiendas de que dichos sistemas se ajustan completamente a los estándares "
-"DNS publicados."
+
+#: plinth/modules/bind/forms.py:37
+msgid "Forwarders"
+msgstr ""
 
 #: plinth/modules/bind/forms.py:38
-msgid "Enable forwarding"
-msgstr "Activar reenvío"
+msgid ""
+"A list DNS servers, separated by space, to which requests will be forwarded"
+msgstr ""
 
-#: plinth/modules/bind/forms.py:40
-msgid "Enable forwarding on your BIND server"
-msgstr "Activar reenvío en su servidor BIND"
-
-#: plinth/modules/bind/forms.py:43
+#: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
 msgstr "Activar DNSSEC"
 
-#: plinth/modules/bind/forms.py:45
+#: plinth/modules/bind/forms.py:43
 msgid "Enable Domain Name System Security Extensions"
 msgstr "Activar Extensiones de Seguridad del Sistema de Nombre de Dominios"
 
-#: plinth/modules/bind/forms.py:50
-msgid "A list of IP addresses, separated by space"
-msgstr "Lista de direcciones IP, separadas por espacios"
-
-#: plinth/modules/bind/views.py:58
-msgid "Set forwarding configuration updated"
-msgstr "Configuración de reenvío actualizada"
-
-#: plinth/modules/bind/views.py:66
-msgid "Enable DNSSEC configuration updated"
-msgstr "Configuración de activación DNSSEC actualizada"
-
-#: plinth/modules/bind/views.py:74
-msgid "DNS server configuration updated"
-msgstr "Configuración del servidor DNS actualizada"
-
-#: plinth/modules/bind/views.py:79
-msgid "Enable forwarding to set forwarding DNS servers"
-msgstr "Activar reenvío para definir los servidores DNS de reenvío"
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:381
+#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
+#: plinth/modules/transmission/views.py:73
+msgid "Configuration updated"
+msgstr "Configuración actualizada"
 
 #: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
@@ -491,7 +477,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:64
+#: plinth/modules/ejabberd/templates/ejabberd.html:62
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
@@ -710,12 +696,6 @@ msgstr "Configurar DNS dinámico"
 msgid "Dynamic DNS Status"
 msgstr "Estado del DNS dinámico"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:381
-#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
-#: plinth/modules/transmission/views.py:73
-msgid "Configuration updated"
-msgstr "Configuración actualizada"
-
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:31
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
@@ -802,10 +782,16 @@ msgstr ""
 "configurar su servidor XMPP (ejabberd) aquí."
 
 #: plinth/modules/ejabberd/__init__.py:55
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc"
+#| "\">web client</a> or any other <a href='http://xmpp.org/xmpp-software/"
+#| "clients/' target='_blank'>XMPP client</a>. When enabled, ejabberd can be "
+#| "accessed by any <a href=\"/plinth/sys/users\">user with a {box_name} "
+#| "login</a>."
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
-"client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/' "
+"client</a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
@@ -848,7 +834,7 @@ msgstr ""
 #: plinth/modules/ejabberd/manifest.py:46
 #, fuzzy
 #| msgid "Chat Server"
-msgid "Chat secure"
+msgid "ChatSecure"
 msgstr "Servidor de Chat"
 
 #: plinth/modules/ejabberd/manifest.py:48
@@ -889,7 +875,7 @@ msgstr ""
 msgid "Launch web client"
 msgstr "Lanzar cliente web"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:56
+#: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
@@ -1863,6 +1849,58 @@ msgstr "Registro público activado"
 #: plinth/modules/matrixsynapse/views.py:124
 msgid "Public registration disabled"
 msgstr "Registro público desactivado"
+
+#: plinth/modules/mediawiki/__init__.py:33
+#: plinth/modules/mediawiki/manifest.py:23
+#, fuzzy
+#| msgid "Wiki"
+msgid "MediaWiki"
+msgstr "Wiki"
+
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:130
+msgid "Wiki"
+msgstr "Wiki"
+
+#: plinth/modules/mediawiki/__init__.py:38
+msgid ""
+"MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
+"projects. A wiki engine is a program for creating a collaboratively edited "
+"website. You can use MediaWiki to host a wiki-like website, take notes or "
+"collaborate with friends on projects."
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:42
+msgid ""
+"This MediaWiki instance comes with a randomly generated administrator "
+"password. You can set a new password in the Configuration section and login "
+"using the \"admin\" account. You can then create more user accounts from "
+"MediaWiki itself by going to the <a href=\"/mediawiki/index.php/Special:"
+"CreateAccount\">Special:CreateAccount</a> page"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:48
+msgid ""
+"Anyone with a link to this Wiki can read it. Only users that are logged in "
+"can make changes to the content."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:29
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Administrator Password"
+msgstr "Cuenta de Administrador"
+
+#: plinth/modules/mediawiki/forms.py:30
+msgid ""
+"Set a new password for MediaWiki's administrator account (admin). Leave this "
+"field blank to keep the current password."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:50
+#, fuzzy
+#| msgid "Password"
+msgid "Password updated"
+msgstr "Clave de acceso"
 
 #: plinth/modules/minetest/__init__.py:49
 #: plinth/modules/minetest/manifest.py:24
@@ -5012,10 +5050,6 @@ msgstr ""
 "software libre, distribuido bajo la Licencia Pública General de GNU Affero, "
 "versión 3 o posterior."
 
-#: plinth/templates/index.html:130
-msgid "Wiki"
-msgstr "Wiki"
-
 #: plinth/templates/index.html:135
 msgid "Homepage"
 msgstr "Página inicio"
@@ -5113,6 +5147,39 @@ msgid ""
 msgstr ""
 "Estas opciones afectan a su %(box_name)s de forma general, así que ¡vaya con "
 "cuidado!"
+
+#~ msgid ""
+#~ "BIND is by far the most widely used DNS software on the Internet, "
+#~ "providing a robust and stable platform on top of which organizations can "
+#~ "build distributed computing systems with the knowledge that those systems "
+#~ "are fully compliant with published DNS standards."
+#~ msgstr ""
+#~ "BIND es con diferencia el software para DNS más usado en Internet. "
+#~ "Proporciona una plataforma estable y robusta sobre la que otras "
+#~ "organizaciones pueden construir sistemas de computación distribuida a "
+#~ "sabiendas de que dichos sistemas se ajustan completamente a los "
+#~ "estándares DNS publicados."
+
+#~ msgid "Enable forwarding"
+#~ msgstr "Activar reenvío"
+
+#~ msgid "Enable forwarding on your BIND server"
+#~ msgstr "Activar reenvío en su servidor BIND"
+
+#~ msgid "A list of IP addresses, separated by space"
+#~ msgstr "Lista de direcciones IP, separadas por espacios"
+
+#~ msgid "Set forwarding configuration updated"
+#~ msgstr "Configuración de reenvío actualizada"
+
+#~ msgid "Enable DNSSEC configuration updated"
+#~ msgstr "Configuración de activación DNSSEC actualizada"
+
+#~ msgid "DNS server configuration updated"
+#~ msgstr "Configuración del servidor DNS actualizada"
+
+#~ msgid "Enable forwarding to set forwarding DNS servers"
+#~ msgstr "Activar reenvío para definir los servidores DNS de reenvío"
 
 #~ msgid "BitTorrent"
 #~ msgstr "BitTorrent"

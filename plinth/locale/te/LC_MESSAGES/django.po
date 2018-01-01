@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 16:33-0500\n"
+"POT-Creation-Date: 2018-01-01 13:36-0500\n"
 "PO-Revision-Date: 2017-09-11 04:49+0000\n"
 "Last-Translator: BHARATH <bharath.pulluru@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -21,32 +21,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.17-dev\n"
 
-#: plinth/action_utils.py:259
+#: plinth/action_utils.py:252
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "పోర్ట్{listen_address}:{port} పై వింటూ {kind}"
 
-#: plinth/action_utils.py:262
+#: plinth/action_utils.py:255
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "పోర్ట్ {port} పై ఆలకించమండి {kind}"
 
-#: plinth/action_utils.py:357
+#: plinth/action_utils.py:342
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "tcp పై  {kind}  URL {url} యాక్సెస్ చేయండి"
 
-#: plinth/action_utils.py:361
+#: plinth/action_utils.py:346
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "URL {url} ప్రవేశము"
 
-#: plinth/action_utils.py:391
+#: plinth/action_utils.py:374
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "అనుసంధానించండి {host}:{port}"
 
-#: plinth/action_utils.py:394
+#: plinth/action_utils.py:377
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "అనుసంధానించండం సాధ్యంకాదు {host}:{port}"
@@ -119,67 +119,48 @@ msgstr ""
 " (బైండ్)"
 
 #: plinth/modules/bind/__init__.py:45
+#, fuzzy
+#| msgid ""
+#| "BIND is open source software that enables you to publish your Domain Name "
+#| "System (DNS) information on the Internet, and to resolve DNS queries for "
+#| "your users."
 msgid ""
-"BIND is open source software that enables you to publish your Domain Name "
-"System (DNS) information on the Internet, and to resolve DNS queries for "
-"your users."
+"BIND enables you to publish your Domain Name System (DNS) information on the "
+"Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
 "BIND అనే  ఓపెన్ సోర్స్ సాఫ్ట్వేర్ ని మీ ఇంటర్నెట్ లో మీ డొమైన్ నేమ్ సిస్టం (DNS) అనేది సమాచారాన్ని "
 "ప్రచురించడానికి  అనుమతిస్తుంది, మరియు మీ వినియోగదారులు DNS విచారణలను  పరిష్కరించడానికి ."
 
 #: plinth/modules/bind/__init__.py:49
-#, fuzzy
+#, python-brace-format
 msgid ""
-"BIND is by far the most widely used DNS software on the Internet, providing "
-"a robust and stable platform on top of which organizations can build "
-"distributed computing systems with the knowledge that those systems are "
-"fully compliant with published DNS standards."
+"Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
+"machines on local network. It is also incompatible with sharing Internet "
+"connection from {box_name}."
 msgstr ""
-"BIND అనేది  ఇంటర్నెట్లో అత్యధికంగా ఉపయోగించబడే DNS సాఫ్ట్వేర్ , సంస్థలకు బలమైన మరియు స్థిరమైన వేదికను "
-"అందించడం వలన సంస్థలు ప్రచురించిన DNS ప్రామాణిక అనుగునంగా పంపిణీ కంప్యూటింగ్ వ్యవస్థను "
-"నిర్మించుకోగలరు"
+
+#: plinth/modules/bind/forms.py:37
+msgid "Forwarders"
+msgstr ""
 
 #: plinth/modules/bind/forms.py:38
-#, fuzzy
-msgid "Enable forwarding"
-msgstr "సబ్డొమైన్లు ప్రారంభించు"
+msgid ""
+"A list DNS servers, separated by space, to which requests will be forwarded"
+msgstr ""
 
-#: plinth/modules/bind/forms.py:40
-msgid "Enable forwarding on your BIND server"
-msgstr "మీ BIND సర్వర్లో ఫార్వార్డింగ్ ను  ప్రారంభించండి"
-
-#: plinth/modules/bind/forms.py:43
+#: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
 msgstr "DNSSEC అమలుచెయ్యి"
 
-#: plinth/modules/bind/forms.py:45
+#: plinth/modules/bind/forms.py:43
 msgid "Enable Domain Name System Security Extensions"
 msgstr "డొమైన్ నేమ్ సిస్టం భద్రతా పొడిగింపు ని ప్రారంభించండి"
 
-#: plinth/modules/bind/forms.py:50
-msgid "A list of IP addresses, separated by space"
-msgstr "IP చిరునామాల జాబితా, స్పేస్ ద్వారా వేరుచేయటమయినది"
-
-#: plinth/modules/bind/views.py:58
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Set forwarding configuration updated"
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:381
+#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
+#: plinth/modules/transmission/views.py:73
+msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/bind/views.py:66
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Enable DNSSEC configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/bind/views.py:74
-msgid "DNS server configuration updated"
-msgstr "డి.ఎన్.ఎస్. సేవిక ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/bind/views.py:79
-#, fuzzy
-msgid "Enable forwarding to set forwarding DNS servers"
-msgstr "ఫొర్వర్దింగ్ డిఎన్ఎస్ సేవికను సరిగా ఏర్పాటు చేయుటకు ఫొర్వర్దింగ్ ను క్రియాశీలీకరించు"
 
 #: plinth/modules/cockpit/__init__.py:39
 msgid "Cockpit"
@@ -491,7 +472,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:64
+#: plinth/modules/ejabberd/templates/ejabberd.html:62
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
@@ -709,12 +690,6 @@ msgstr "చురుకైనDNS ఆకృతీకరించు"
 msgid "Dynamic DNS Status"
 msgstr "చలనశీల డి.ఎన్.ఎస్ స్థితి"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:381
-#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
-#: plinth/modules/transmission/views.py:73
-msgid "Configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:31
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
@@ -808,7 +783,7 @@ msgstr ""
 #| "client</a>."
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
-"client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/' "
+"client</a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
@@ -843,7 +818,7 @@ msgstr ""
 #: plinth/modules/ejabberd/manifest.py:46
 #, fuzzy
 #| msgid "Web Server"
-msgid "Chat secure"
+msgid "ChatSecure"
 msgstr "జాల సేవకం"
 
 #: plinth/modules/ejabberd/manifest.py:48
@@ -881,7 +856,7 @@ msgstr ""
 msgid "Launch web client"
 msgstr "వెబ్ క్లయింట్ ని ప్రారంభించండి"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:56
+#: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
@@ -1784,6 +1759,56 @@ msgstr "అనువర్తనం ఆమోదింపబడింది"
 #| msgid "Application disabled"
 msgid "Public registration disabled"
 msgstr "అనువర్తనం ఆమోదింపబడలేదు"
+
+#: plinth/modules/mediawiki/__init__.py:33
+#: plinth/modules/mediawiki/manifest.py:23
+msgid "MediaWiki"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:130
+msgid "Wiki"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:38
+msgid ""
+"MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
+"projects. A wiki engine is a program for creating a collaboratively edited "
+"website. You can use MediaWiki to host a wiki-like website, take notes or "
+"collaborate with friends on projects."
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:42
+msgid ""
+"This MediaWiki instance comes with a randomly generated administrator "
+"password. You can set a new password in the Configuration section and login "
+"using the \"admin\" account. You can then create more user accounts from "
+"MediaWiki itself by going to the <a href=\"/mediawiki/index.php/Special:"
+"CreateAccount\">Special:CreateAccount</a> page"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:48
+msgid ""
+"Anyone with a link to this Wiki can read it. Only users that are logged in "
+"can make changes to the content."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:29
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Administrator Password"
+msgstr "నిర్వాహక ఖాతా"
+
+#: plinth/modules/mediawiki/forms.py:30
+msgid ""
+"Set a new password for MediaWiki's administrator account (admin). Leave this "
+"field blank to keep the current password."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:50
+#, fuzzy
+#| msgid "Password"
+msgid "Password updated"
+msgstr "రహస్యపదం"
 
 #: plinth/modules/minetest/__init__.py:49
 #: plinth/modules/minetest/manifest.py:24
@@ -4780,10 +4805,6 @@ msgid ""
 "Version 3 or later."
 msgstr ""
 
-#: plinth/templates/index.html:130
-msgid "Wiki"
-msgstr ""
-
 #: plinth/templates/index.html:135
 msgid "Homepage"
 msgstr ""
@@ -4882,6 +4903,44 @@ msgstr "ఇక్కడ మీరు అంతర్లీన వ్యవస్
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "BIND is by far the most widely used DNS software on the Internet, "
+#~ "providing a robust and stable platform on top of which organizations can "
+#~ "build distributed computing systems with the knowledge that those systems "
+#~ "are fully compliant with published DNS standards."
+#~ msgstr ""
+#~ "BIND అనేది  ఇంటర్నెట్లో అత్యధికంగా ఉపయోగించబడే DNS సాఫ్ట్వేర్ , సంస్థలకు బలమైన మరియు స్థిరమైన "
+#~ "వేదికను అందించడం వలన సంస్థలు ప్రచురించిన DNS ప్రామాణిక అనుగునంగా పంపిణీ కంప్యూటింగ్ "
+#~ "వ్యవస్థను నిర్మించుకోగలరు"
+
+#, fuzzy
+#~ msgid "Enable forwarding"
+#~ msgstr "సబ్డొమైన్లు ప్రారంభించు"
+
+#~ msgid "Enable forwarding on your BIND server"
+#~ msgstr "మీ BIND సర్వర్లో ఫార్వార్డింగ్ ను  ప్రారంభించండి"
+
+#~ msgid "A list of IP addresses, separated by space"
+#~ msgstr "IP చిరునామాల జాబితా, స్పేస్ ద్వారా వేరుచేయటమయినది"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Set forwarding configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Enable DNSSEC configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#~ msgid "DNS server configuration updated"
+#~ msgstr "డి.ఎన్.ఎస్. సేవిక ఆకృతీకరణ నవీకరించబడింది"
+
+#, fuzzy
+#~ msgid "Enable forwarding to set forwarding DNS servers"
+#~ msgstr "ఫొర్వర్దింగ్ డిఎన్ఎస్ సేవికను సరిగా ఏర్పాటు చేయుటకు ఫొర్వర్దింగ్ ను క్రియాశీలీకరించు"
 
 #, fuzzy
 #~| msgid "Deluge BitTorrent"

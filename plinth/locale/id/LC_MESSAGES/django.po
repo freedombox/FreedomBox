@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 16:33-0500\n"
+"POT-Creation-Date: 2018-01-01 13:36-0500\n"
 "PO-Revision-Date: 2016-08-28 19:39+0000\n"
 "Last-Translator: Izharul Haq <atoz.chevara.2013@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -14,32 +14,32 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.10-dev\n"
 
-#: plinth/action_utils.py:259
+#: plinth/action_utils.py:252
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr ""
 
-#: plinth/action_utils.py:262
+#: plinth/action_utils.py:255
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr ""
 
-#: plinth/action_utils.py:357
+#: plinth/action_utils.py:342
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Akses URL {url} pada tcp{kind}"
 
-#: plinth/action_utils.py:361
+#: plinth/action_utils.py:346
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Akses URL {url}"
 
-#: plinth/action_utils.py:391
+#: plinth/action_utils.py:374
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Terhubung ke {host}:{port}"
 
-#: plinth/action_utils.py:394
+#: plinth/action_utils.py:377
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Tidak dapat terhubung ke {host}:{port}"
@@ -103,61 +103,41 @@ msgstr "Nama Layanan"
 
 #: plinth/modules/bind/__init__.py:45
 msgid ""
-"BIND is open source software that enables you to publish your Domain Name "
-"System (DNS) information on the Internet, and to resolve DNS queries for "
-"your users."
+"BIND enables you to publish your Domain Name System (DNS) information on the "
+"Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
 
 #: plinth/modules/bind/__init__.py:49
+#, python-brace-format
 msgid ""
-"BIND is by far the most widely used DNS software on the Internet, providing "
-"a robust and stable platform on top of which organizations can build "
-"distributed computing systems with the knowledge that those systems are "
-"fully compliant with published DNS standards."
+"Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
+"machines on local network. It is also incompatible with sharing Internet "
+"connection from {box_name}."
+msgstr ""
+
+#: plinth/modules/bind/forms.py:37
+msgid "Forwarders"
 msgstr ""
 
 #: plinth/modules/bind/forms.py:38
-#, fuzzy
-#| msgid "Enable Tor"
-msgid "Enable forwarding"
-msgstr "Aktifkan Tor"
-
-#: plinth/modules/bind/forms.py:40
-msgid "Enable forwarding on your BIND server"
+msgid ""
+"A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
 
-#: plinth/modules/bind/forms.py:43
+#: plinth/modules/bind/forms.py:42
 #, fuzzy
 #| msgid "Enable Dynamic DNS"
 msgid "Enable DNSSEC"
 msgstr "Aktifkan Dynamic DNS"
 
-#: plinth/modules/bind/forms.py:45
+#: plinth/modules/bind/forms.py:43
 msgid "Enable Domain Name System Security Extensions"
 msgstr ""
 
-#: plinth/modules/bind/forms.py:50
-msgid "A list of IP addresses, separated by space"
-msgstr ""
-
-#: plinth/modules/bind/views.py:58
-msgid "Set forwarding configuration updated"
-msgstr ""
-
-#: plinth/modules/bind/views.py:66
-#, fuzzy
-#| msgid "General Configuration"
-msgid "Enable DNSSEC configuration updated"
-msgstr "Konfigurasi Umum"
-
-#: plinth/modules/bind/views.py:74
-#, fuzzy
-#| msgid "System Configuration"
-msgid "DNS server configuration updated"
-msgstr "Pengaturan Sistem"
-
-#: plinth/modules/bind/views.py:79
-msgid "Enable forwarding to set forwarding DNS servers"
+#: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:381
+#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
+#: plinth/modules/transmission/views.py:73
+msgid "Configuration updated"
 msgstr ""
 
 #: plinth/modules/cockpit/__init__.py:39
@@ -444,7 +424,7 @@ msgstr ""
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
-#: plinth/modules/ejabberd/templates/ejabberd.html:64
+#: plinth/modules/ejabberd/templates/ejabberd.html:62
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:124
@@ -638,12 +618,6 @@ msgstr ""
 msgid "Dynamic DNS Status"
 msgstr "Status Dynamic DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:381
-#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:80
-#: plinth/modules/transmission/views.py:73
-msgid "Configuration updated"
-msgstr ""
-
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:31
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
@@ -715,7 +689,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
-"client</a> or any other <a href='http://xmpp.org/xmpp-software/clients/' "
+"client</a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
@@ -748,7 +722,7 @@ msgstr ""
 #: plinth/modules/ejabberd/manifest.py:46
 #, fuzzy
 #| msgid "Web Server"
-msgid "Chat secure"
+msgid "ChatSecure"
 msgstr "Server Web"
 
 #: plinth/modules/ejabberd/manifest.py:48
@@ -786,7 +760,7 @@ msgstr ""
 msgid "Launch web client"
 msgstr ""
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:56
+#: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:116
@@ -1612,6 +1586,56 @@ msgstr ""
 #| msgid "Application installed."
 msgid "Public registration disabled"
 msgstr "Aplikasi telah terpasang."
+
+#: plinth/modules/mediawiki/__init__.py:33
+#: plinth/modules/mediawiki/manifest.py:23
+msgid "MediaWiki"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:130
+msgid "Wiki"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:38
+msgid ""
+"MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
+"projects. A wiki engine is a program for creating a collaboratively edited "
+"website. You can use MediaWiki to host a wiki-like website, take notes or "
+"collaborate with friends on projects."
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:42
+msgid ""
+"This MediaWiki instance comes with a randomly generated administrator "
+"password. You can set a new password in the Configuration section and login "
+"using the \"admin\" account. You can then create more user accounts from "
+"MediaWiki itself by going to the <a href=\"/mediawiki/index.php/Special:"
+"CreateAccount\">Special:CreateAccount</a> page"
+msgstr ""
+
+#: plinth/modules/mediawiki/__init__.py:48
+msgid ""
+"Anyone with a link to this Wiki can read it. Only users that are logged in "
+"can make changes to the content."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:29
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Administrator Password"
+msgstr "Akun Administrator"
+
+#: plinth/modules/mediawiki/forms.py:30
+msgid ""
+"Set a new password for MediaWiki's administrator account (admin). Leave this "
+"field blank to keep the current password."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:50
+#, fuzzy
+#| msgid "Password"
+msgid "Password updated"
+msgstr "Kata Sandi"
 
 #: plinth/modules/minetest/__init__.py:49
 #: plinth/modules/minetest/manifest.py:24
@@ -4399,10 +4423,6 @@ msgid ""
 "Version 3 or later."
 msgstr ""
 
-#: plinth/templates/index.html:130
-msgid "Wiki"
-msgstr ""
-
 #: plinth/templates/index.html:135
 msgid "Homepage"
 msgstr ""
@@ -4498,6 +4518,21 @@ msgstr ""
 msgid ""
 "The options affect the %(box_name)s at its most general level, so be careful!"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Enable Tor"
+#~ msgid "Enable forwarding"
+#~ msgstr "Aktifkan Tor"
+
+#, fuzzy
+#~| msgid "General Configuration"
+#~ msgid "Enable DNSSEC configuration updated"
+#~ msgstr "Konfigurasi Umum"
+
+#, fuzzy
+#~| msgid "System Configuration"
+#~ msgid "DNS server configuration updated"
+#~ msgstr "Pengaturan Sistem"
 
 #~ msgid "wiki"
 #~ msgstr "wiki"
