@@ -18,10 +18,8 @@
 Python action utility functions.
 """
 
-import grp
 import logging
 import os
-import pwd
 import shutil
 import socket
 import subprocess
@@ -474,15 +472,3 @@ Owners: {package}
         os.remove(override_file.name)
     except OSError:
         pass
-
-
-def set_ownership_recursively(path, user, group):
-    """Make a given user and group owner of the given path recursively"""
-    uid = pwd.getpwnam(user).pw_uid
-    gid = grp.getgrnam(group).gr_gid
-    for root, dirs, files in os.walk(path):
-        os.chown(root, uid, gid)
-        for d in dirs:
-            os.chown(os.path.join(root, d), uid, gid)
-        for f in files:
-            os.chown(os.path.join(root, f), uid, gid)

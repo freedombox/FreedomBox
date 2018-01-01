@@ -20,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.clients import validate
 
 clients = validate([{
-    'name': _('Mediawiki'),
+    'name': _('MediaWiki'),
     'platforms': [{
         'type': 'web',
         'url': '/mediawiki'

@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring Transmission.
+Plinth module for configuring MediaWiki.
 """
 
 from django import forms
@@ -24,8 +24,9 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.forms import ServiceForm
 
 
-class MediawikiForm(ServiceForm):  # pylint: disable=W0232
-    """Mediawiki configuration form"""
+class MediaWikiForm(ServiceForm):  # pylint: disable=W0232
+    """MediaWiki configuration form."""
     password = forms.CharField(label=_('Administrator Password'), help_text=_(
-        'Set a new password for Mediawiki\'s administrator account (admin)'),
-                               widget=forms.PasswordInput)
+        'Set a new password for MediaWiki\'s administrator account (admin). '
+        'Leave this field blank to keep the current password.'),
+                               required=False, widget=forms.PasswordInput)

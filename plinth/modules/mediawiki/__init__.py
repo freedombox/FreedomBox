@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure mediawiki.
+Plinth module to configure MediaWiki.
 """
 
 from django.utils.translation import ugettext_lazy as _
@@ -28,26 +28,25 @@ from .manifest import clients
 
 version = 1
 
-managed_services = ['mediawiki']
-
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
-name = 'MediaWiki'
+name = _('MediaWiki')
 
-short_description = _('Wiki Engine')
+short_description = _('Wiki')
 
 description = [
-    _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia \
-    projects. A wiki engine is a program for creating a collaboratively \
-    edited website. You can use MediaWiki to host a wiki-like website, take \
-    notes or collaborate with friends on projects.'),
-    _('This MediaWiki instance comes with a randomly generated administrator \
-    password. You can set a new password in the Configuration section and  \
-    login using the "admin" account. You can then create more user accounts \
-    from MediaWiki itself by going to the <a href="/mediawiki/index.php/\
-    Special:CreateAccount">Special:CreateAccount</a> page'),
-    _('Anyone with access this Wiki can read it. Only users that are logged in \
-    can make changes to the content.')
+    _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
+      'projects. A wiki engine is a program for creating a collaboratively '
+      'edited website. You can use MediaWiki to host a wiki-like website, '
+      'take notes or collaborate with friends on projects.'),
+    _('This MediaWiki instance comes with a randomly generated administrator '
+      'password. You can set a new password in the Configuration section and '
+      'login using the "admin" account. You can then create more user '
+      'accounts from MediaWiki itself by going to the <a '
+      'href="/mediawiki/index.php/Special:CreateAccount">'
+      'Special:CreateAccount</a> page'),
+    _('Anyone with a link to this Wiki can read it. Only users that are '
+      'logged in can make changes to the content.')
 ]
 
 service = None
@@ -64,11 +63,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(managed_services[0], name, ports=[
-            'http', 'https'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable,
-                                         is_running=is_running)
+        service = service_module.Service(
+            'mediawiki', name, ports=['http', 'https'], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -82,15 +79,13 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0],
+            'mediawiki',
             name,
             is_external=True,
             is_enabled=is_enabled,
             enable=enable,
             disable=disable,
-            is_running=is_running,
-            ports=['http', 'https'],
-        )
+            ports=['http', 'https'], )
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -102,14 +97,9 @@ def add_shortcut():
                            url='/mediawiki', login_required=True)
 
 
-def is_running():
-    """Return whether the service is running."""
-    return action_utils.webserver_is_enabled('mediawiki')
-
-
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('mediawiki'))
+    return action_utils.webserver_is_enabled('mediawiki')
 
 
 def enable():

@@ -20,8 +20,8 @@ URLs for the mediawiki module.
 
 from django.conf.urls import url
 
-from .views import MediawikiServiceView
+from .views import MediaWikiServiceView
 
 urlpatterns = [
-    url(r'^apps/mediawiki/$', MediawikiServiceView.as_view(), name='index'),
+    url(r'^apps/mediawiki/$', MediaWikiServiceView.as_view(), name='index'),
 ]

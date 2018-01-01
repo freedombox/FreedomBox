@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring Transmission Server
+Plinth module for configuring MediaWiki.
 """
 
 import logging
@@ -26,26 +26,27 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from .forms import MediawikiForm
+from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
 
 
-class MediawikiServiceView(views.ServiceView):
+class MediaWikiServiceView(views.ServiceView):
     """Serve configuration page."""
     clients = mediawiki.clients
     description = mediawiki.description
     diagnostics_module_name = 'mediawiki'
-    form_class = MediawikiForm
-    service_id = mediawiki.managed_services[0]
+    service_id = 'mediawiki'
+    form_class = MediaWikiForm
+    show_status_block = False
 
     def form_valid(self, form):
         """Apply the changes submitted in the form."""
         form_data = form.cleaned_data
 
-        actions.superuser_run(
-            'mediawiki',
-            ['change-password', '--password', form_data['password']])
-        messages.success(self.request, _('Password Updated'))
+        if form_data['password']:
+            actions.superuser_run('mediawiki', ['change-password'],
+                                  input=form_data['password'].encode())
+            messages.success(self.request, _('Password updated'))
 
         return super().form_valid(form)
