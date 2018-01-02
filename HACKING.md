@@ -28,7 +28,7 @@ The entire setup is automatic and requires about 4.5 GB of disk space.
 
 ## Installing Dependencies
 
-Apart from dependencies listing in INSTALL file, Plinth may have additional
+Apart from dependencies listing in INSTALL.md file, Plinth may have additional
 dependencies required by modules of Plinth.  To install these, run:
 
     $ sudo apt install -y $(plinth --list-dependencies)
