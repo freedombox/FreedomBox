@@ -109,6 +109,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
 
             for group in self.cleaned_data['groups']:
                 try:
+                    users.create_group(group)
                     actions.superuser_run('users', [
                         'add-user-to-group',
                         user.get_username(), group
@@ -205,6 +206,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
+                        users.create_group(new_group)
                         actions.superuser_run('users', [
                             'add-user-to-group',
                             user.get_username(), new_group
