@@ -26,7 +26,7 @@ from plinth import action_utils
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.modules.users import create_group, register_group
+from plinth.modules.users import register_group
 from .manifest import clients
 
 
@@ -63,6 +63,7 @@ def init():
     menu = main_menu.get('apps')
     menu.add_urlname(name, 'glyphicon-magnet',
                      'deluge:index', short_description)
+    register_group(group)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -74,7 +75,6 @@ def init():
 
         if is_enabled():
             add_shortcut()
-            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -89,7 +89,6 @@ def setup(helper, old_version=None):
             disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
-    create_group(group[0])
 
 
 def add_shortcut():
