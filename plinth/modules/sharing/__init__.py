@@ -98,7 +98,7 @@ class AddShareForm(forms.Form):
 
     user_group = forms.ChoiceField(
         required=False,
-        choices=groups(),
+        choices=groups,
         label=_('User-group'),
         initial=None)
 
