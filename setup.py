@@ -190,7 +190,7 @@ setuptools.setup(
                            exclude=['*.templates']),
     scripts=['bin/plinth'],
     test_suite='plinth.tests.runtests.run_tests',
-    license='COPYING',
+    license='COPYING.md',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',

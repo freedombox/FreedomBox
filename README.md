@@ -39,7 +39,7 @@ the [FreedomBox Wiki](https://wiki.debian.org/FreedomBox/) and the
 
 # Getting Started
 
-See the INSTALL file for additional details and dependencies. To install run:
+See the INSTALL.md file for additional details and dependencies. To install run:
 
     $ sudo python3 setup.py install
 

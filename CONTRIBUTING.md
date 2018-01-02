@@ -3,7 +3,7 @@ The goal is a readable log of code changes, to enhance transparency of their
 purpose and simplify debugging. Consider these guidelines as best practices, not
 as absolute rules - we're all learning by doing, and imperfect changes and
 commits are much better than none at all. For an introduction how to edit and
-test the code, have look into the HACKING file. Note that you need some basic
+test the code, have look into the HACKING.md file. Note that you need some basic
 understanding of Git to contribute; there are many tutorials in the Internet
 that we cannot repeat here.
 
