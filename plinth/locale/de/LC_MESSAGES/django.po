@@ -10,10 +10,10 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-01 13:36-0500\n"
-"PO-Revision-Date: 2017-12-31 04:50+0000\n"
+"PO-Revision-Date: 2018-01-05 07:37+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
-"de/>\n"
+"Language-Team: German "
+"<https://hosted.weblate.org/projects/freedombox/plinth/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -114,18 +114,13 @@ msgid "Domain Name Server"
 msgstr "Domain Name Server"
 
 #: plinth/modules/bind/__init__.py:45
-#, fuzzy
-#| msgid ""
-#| "BIND is open source software that enables you to publish your Domain Name "
-#| "System (DNS) information on the Internet, and to resolve DNS queries for "
-#| "your users."
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
-"BIND ist eine Open-Source-Software mit der Sie Ihre Domain Name System (DNS) "
-"Informationen im Internet für DNS-Abfragen Ihrer Nutzer veröffentlichen "
-"können."
+"Mit BIND können Sie Ihre Informationen im Domain Name System (DNS) im "
+"Internet veröffentlichen, und DNS-Abfragen Ihrer Geräte im Heimnetz "
+"beantworten."
 
 #: plinth/modules/bind/__init__.py:49
 #, python-brace-format
@@ -134,15 +129,20 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"Derzeitig wird BIND auf {box_name} nur genutzt um DNS Abfragen anderer "
+"Geräte im lokalen Netzwerk zu beantworten. Dies ist außerdem inkompatibel "
+"mit dem Teilen der Internetverbindung durch die {box_name}."
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
-msgstr ""
+msgstr "Weiterleiter"
 
 #: plinth/modules/bind/forms.py:38
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
+"Eine Liste von DNS-Servern, getrennt durch Leerzeichen, an welche die "
+"Anfragen weitergeleitet werden"
 
 #: plinth/modules/bind/forms.py:42
 msgid "Enable DNSSEC"
@@ -787,22 +787,16 @@ msgstr ""
 "können Sie Ihren XMPP-Server, genannt ejabberd, starten und konfigurieren."
 
 #: plinth/modules/ejabberd/__init__.py:55
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc"
-#| "\">web client</a> or any other <a href='http://xmpp.org/xmpp-software/"
-#| "clients/' target='_blank'>XMPP client</a>. When enabled, ejabberd can be "
-#| "accessed by any <a href=\"/plinth/sys/users\">user with a {box_name} "
-#| "login</a>."
+#, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
 "client</a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
 msgstr ""
-"Zur eigentlichen Kommunikation können Sie den <a href=\"/plinth/apps/jsxc"
-"\">Web Client</a> oder jeden anderen <a href='http://xmpp.org/xmpp-software/"
-"clients/' target='_blank'>XMPP Client</a> verwenden. Wenn aktiviert, kann "
+"Zur eigentlichen Kommunikation können Sie den <a href=\"/plinth/apps/jsxc\">"
+"Web Client</a> oder jeden anderen <a href='https://xmpp.org/software/"
+"clients' target='_blank'>XMPP Client</a> verwenden. Wenn aktiviert, kann "
 "ejabberd von jedem <a href=\"/plinth/sys/users\">Nutzer mit einem {box_name} "
 "Account</a> genutzt werden."
 
@@ -837,8 +831,6 @@ msgid "Bruno is a themed version of the open source yaxim app."
 msgstr "Bruno ist eine umgestaltete Version der quelloffenen yaxim Anwendung."
 
 #: plinth/modules/ejabberd/manifest.py:46
-#, fuzzy
-#| msgid "Chat secure"
 msgid "ChatSecure"
 msgstr "ChatSecure"
 
@@ -1841,10 +1833,8 @@ msgstr "Öffentliche Registrierung deaktiviert"
 
 #: plinth/modules/mediawiki/__init__.py:33
 #: plinth/modules/mediawiki/manifest.py:23
-#, fuzzy
-#| msgid "Wiki"
 msgid "MediaWiki"
-msgstr "Wiki"
+msgstr "MediaWiki"
 
 #: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:130
 msgid "Wiki"
@@ -1857,6 +1847,11 @@ msgid ""
 "website. You can use MediaWiki to host a wiki-like website, take notes or "
 "collaborate with friends on projects."
 msgstr ""
+"MediaWiki ist die Wiki-Software mit der Wikipedia und andere WikiMedia-"
+"Projekte betrieben werden. Eine Wiki-Software ist ein Programm um eine "
+"gemeinschaftlich bearbeitete Webseite zu erstellen. Sie können MediaWiki "
+"nutzen um eine Wiki-Webseite anzubieten, um Notizen zu schreiben, oder um "
+"mit Freunden an einem Projekt zusammen zu arbeiten."
 
 #: plinth/modules/mediawiki/__init__.py:42
 msgid ""
@@ -1866,30 +1861,36 @@ msgid ""
 "MediaWiki itself by going to the <a href=\"/mediawiki/index.php/Special:"
 "CreateAccount\">Special:CreateAccount</a> page"
 msgstr ""
+"Diese MediaWiki-Instanz hat zunächst ein zufällig generiertes "
+"Administratorpasswort. Sie können ein neues Passwort in der Konfiguration "
+"erstellen und sich mit dem \"admin\"-Nutzer anmelden. Dann können Sie "
+"weitere Nutzerkonten direkt in MediaWiki anlegen indem Sie die <a href=\""
+"/mediawiki/index.php/Special:CreateAccount\">spezielle Konto-Erstellen</a> "
+"Seite nutzen"
 
 #: plinth/modules/mediawiki/__init__.py:48
 msgid ""
 "Anyone with a link to this Wiki can read it. Only users that are logged in "
 "can make changes to the content."
 msgstr ""
+"Alle mit einem Link zu diesem Wiki können es lesen. Ausschließlich "
+"angemeldete Nutzer können den Inhalt verändern."
 
 #: plinth/modules/mediawiki/forms.py:29
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Administrator Password"
-msgstr "Administrator Konto"
+msgstr "Administrator Passwort"
 
 #: plinth/modules/mediawiki/forms.py:30
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
 msgstr ""
+"Geben Sie ein neues Passwort für den MediaWiki-Administrator ein (admin). "
+"Lassen Sie das Feld leer, bleibt das derzeitige Passwort bestehen."
 
 #: plinth/modules/mediawiki/views.py:50
-#, fuzzy
-#| msgid "Password"
 msgid "Password updated"
-msgstr "Passwort"
+msgstr "Passwort geändert"
 
 #: plinth/modules/minetest/__init__.py:49
 #: plinth/modules/minetest/manifest.py:24
