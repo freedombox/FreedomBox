@@ -40,12 +40,12 @@ description = [
       'edited website. You can use MediaWiki to host a wiki-like website, '
       'take notes or collaborate with friends on projects.'),
     _('This MediaWiki instance comes with a randomly generated administrator '
-      'password. You can set a new password in the Configuration section and '
-      'login using the "admin" account. You can then create more user '
+      'password. You can set a new password in the "Configuration" section '
+      'and log in using the "admin" account. You can then create more user '
       'accounts from MediaWiki itself by going to the <a '
       'href="/mediawiki/index.php/Special:CreateAccount">'
-      'Special:CreateAccount</a> page'),
-    _('Anyone with a link to this Wiki can read it. Only users that are '
+      'Special:CreateAccount</a> page.'),
+    _('Anyone with a link to this wiki can read it. Only users that are '
       'logged in can make changes to the content.')
 ]
 
@@ -85,7 +85,8 @@ def setup(helper, old_version=None):
             is_enabled=is_enabled,
             enable=enable,
             disable=disable,
-            ports=['http', 'https'], )
+            ports=['http', 'https'],
+        )
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
