@@ -28,6 +28,7 @@ from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
+from plinth.modules.users import register_group, create_group
 from .manifest import clients
 
 
@@ -40,6 +41,8 @@ managed_packages = ['syncthing']
 name = _('Syncthing')
 
 short_description = _('File Synchronization')
+
+group = ('syncthing', _('Share files using Syncthing applications'))
 
 description = [
     _('Syncthing is an application to synchronize files across multiple '
@@ -85,6 +88,7 @@ def init():
 
         if is_enabled():
             add_shortcut()
+            register_group(group)
 
 
 def setup(helper, old_version=None):
@@ -104,6 +108,7 @@ def setup(helper, old_version=None):
             is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
+    create_group(group[0])
 
 
 def add_shortcut():
