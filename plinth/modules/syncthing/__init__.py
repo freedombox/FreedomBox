@@ -27,6 +27,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
+from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 from .manifest import clients
 
@@ -61,6 +62,8 @@ description = [
 
 clients = clients
 
+group = ('syncthing', _('Administer Syncthing application'))
+
 service = None
 
 
@@ -69,6 +72,7 @@ def init():
     menu = main_menu.get('apps')
     menu.add_urlname(name, 'glyphicon-refresh',
                      'syncthing:index', short_description)
+    register_group(group)
 
     global service
     setup_helper = globals()['setup_helper']
