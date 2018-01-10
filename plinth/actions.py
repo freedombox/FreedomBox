@@ -109,12 +109,12 @@ def run(action, options=None, input=None, async=False):
     return _run(action, options, input, async, False)
 
 
-def superuser_run(action, options=None, input=None, async=False):
+def superuser_run(action, options=None, input=None, async=False, expecting_error=True):
     """Safely run a specific action as root.
 
     See actions._run for more information.
     """
-    return _run(action, options, input, async, True)
+    return _run(action, options, input, async, True, expecting_error=expecting_error)
 
 
 def run_as_user(action, options=None, input=None, async=False,
@@ -127,7 +127,7 @@ def run_as_user(action, options=None, input=None, async=False,
 
 
 def _run(action, options=None, input=None, async=False, run_as_root=False,
-         become_user=None):
+         become_user=None, expecting_error=True):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
@@ -186,8 +186,9 @@ def _run(action, options=None, input=None, async=False, run_as_root=False,
         output, error = proc.communicate(input=input)
         output, error = output.decode(), error.decode()
         if proc.returncode != 0:
-            LOGGER.error('Error executing command - %s, %s, %s', cmd, output,
-                         error)
+            if expecting_error:
+                LOGGER.error('Error executing command - %s, %s, %s', cmd, output,
+                             error)
             raise ActionError(action, output, error)
 
         return output

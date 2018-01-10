@@ -19,10 +19,13 @@
 Test module for actions utilities that modify configuration.
 """
 
+import apt_pkg
+import os
 import shutil
 import tempfile
 import unittest
 
+from plinth.errors import ActionError
 from plinth.actions import superuser_run, run
 from plinth import cfg
 
@@ -40,6 +43,7 @@ class TestPrivileged(unittest.TestCase):
         cls.action_directory = tempfile.TemporaryDirectory()
         cfg.actions_dir = cls.action_directory.name
 
+        shutil.copy(os.path.join(os.path.dirname(__file__), '..', '..', 'actions', 'packages'), cfg.actions_dir)
         shutil.copy('/bin/echo', cfg.actions_dir)
         shutil.copy('/usr/bin/id', cfg.actions_dir)
 
@@ -143,3 +147,15 @@ class TestPrivileged(unittest.TestCase):
         output = run('echo', tuple(options.split()))
         output = output.rstrip('\n')
         self.assertEqual(options, output)
+
+    def test_error_handling_for_superuser(self):
+        """Test that errors are raised only when expected."""
+        with apt_pkg.SystemLock():
+            with self.assertRaises(ActionError):
+                superuser_run('packages', ['is-package-manager-busy'],
+                              expecting_error=True)
+            with self.assertRaises(ActionError):
+                superuser_run('packages', ['is-package-manager-busy'],
+                              expecting_error=False)
+            with self.assertRaises(ActionError):
+                superuser_run('packages', ['is-package-manager-busy'])

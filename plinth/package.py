@@ -136,7 +136,7 @@ class Transaction(object):
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
-        actions.superuser_run('packages', ['is-package-manager-busy'])
+        actions.superuser_run('packages', ['is-package-manager-busy'], expecting_error=False)
         return True
     except actions.ActionError:
         return False
