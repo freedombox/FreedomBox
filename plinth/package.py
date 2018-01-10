@@ -92,9 +92,9 @@ class Transaction(object):
         process.stdin.close()
 
         stdout_thread = threading.Thread(target=self._read_stdout,
-                                         args=(process,))
+                                         args=(process, ))
         stderr_thread = threading.Thread(target=self._read_stderr,
-                                         args=(process,))
+                                         args=(process, ))
         stdout_thread.start()
         stderr_thread.start()
         stdout_thread.join()
@@ -123,11 +123,14 @@ class Transaction(object):
             return
 
         status_map = {
-            'pmstatus': _('installing'),
-            'dlstatus': _('downloading'),
-            'media-change': _('media change'),
-            'pmconffile': _('configuration file: {file}').format(
-                file=parts[1]),
+            'pmstatus':
+                _('installing'),
+            'dlstatus':
+                _('downloading'),
+            'media-change':
+                _('media change'),
+            'pmconffile':
+                _('configuration file: {file}').format(file=parts[1]),
         }
         self.status_string = status_map.get(parts[0], '')
         self.percentage = int(float(parts[2]))
@@ -136,7 +139,8 @@ class Transaction(object):
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
-        actions.superuser_run('packages', ['is-package-manager-busy'])
+        actions.superuser_run('packages', ['is-package-manager-busy'],
+                              log_error=False)
         return True
     except actions.ActionError:
         return False
