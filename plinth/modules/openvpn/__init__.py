@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure OpenVPN server.
 """
@@ -30,12 +29,11 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-
-version = 1
+version = 2
 
 service = None
 
-managed_services = ['openvpn@freedombox']
+managed_services = ['openvpn-server@freedombox']
 
 managed_packages = ['openvpn', 'easy-rsa']
 
@@ -58,13 +56,14 @@ description = [
 def init():
     """Initialize the OpenVPN module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-lock', 'openvpn:index', short_description)
+    menu.add_urlname(name, 'glyphicon-lock', 'openvpn:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['openvpn'], is_external=True)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['openvpn'], is_external=True)
 
         if service.is_enabled() and is_setup():
             add_shortcut()
@@ -73,11 +72,12 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    helper.call('post', actions.superuser_run, 'openvpn', ['upgrade'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['openvpn'], is_external=True,
-            enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['openvpn'], is_external=True,
+                                         enable=enable, disable=disable)
 
 
 def add_shortcut():
@@ -86,11 +86,10 @@ def add_shortcut():
         format_lazy(_('<a class="btn btn-primary btn-sm" href="{link}">'
                       'Download Profile</a>'),
                     link=reverse_lazy('openvpn:profile'))
-    frontpage.add_shortcut('openvpn', name,
-                           short_description=short_description,
-                           details=description + [download_profile],
-                           configure_url=reverse_lazy('openvpn:index'),
-                           login_required=True)
+    frontpage.add_shortcut(
+        'openvpn', name, short_description=short_description,
+        details=description + [download_profile],
+        configure_url=reverse_lazy('openvpn:index'), login_required=True)
 
 
 def is_setup():

@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for OpenVPN server.
 """
@@ -32,7 +31,11 @@ KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
 DH_KEY = '/etc/openvpn/freedombox-keys/dh4096.pem'
 
-SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
+OLD_SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
+SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
+
+OLD_SERVICE_NAME = 'openvpn@freedombox'
+SERVICE_NAME = 'openvpn-server@freedombox'
 
 CA_CERTIFICATE_PATH = KEYS_DIRECTORY + '/ca.crt'
 USER_CERTIFICATE_PATH = KEYS_DIRECTORY + '/{username}.crt'
@@ -88,8 +91,7 @@ CERTIFICATE_CONFIGURATION = {
     'KEY_NAME': 'FreedomBox'
 }
 
-COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION,
-               'cwd': KEYS_DIRECTORY}
+COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
 
 
 def parse_arguments():
@@ -99,6 +101,9 @@ def parse_arguments():
 
     subparsers.add_parser('is-setup', help='Return whether setup is completed')
     subparsers.add_parser('setup', help='Setup OpenVPN server configuration')
+    subparsers.add_parser(
+        'upgrade',
+        help='Upgrade OpenVPN server configuration from older configuration')
 
     get_profile = subparsers.add_parser(
         'get-profile', help='Return the OpenVPN profile of a user')
@@ -120,8 +125,21 @@ def subcommand_setup(_):
     _create_server_config()
     _create_certificates()
     _setup_firewall()
-    action_utils.service_enable('openvpn@freedombox')
-    action_utils.service_restart('openvpn@freedombox')
+    action_utils.service_enable(SERVICE_NAME)
+    action_utils.service_restart(SERVICE_NAME)
+
+
+def subcommand_upgrade(_):
+    """Upgrade from an older version if configured.
+
+    Otherwise do nothing.
+    """
+    if os.path.exists(OLD_SERVER_CONFIGURATION_PATH):
+        os.rename(OLD_SERVER_CONFIGURATION_PATH, SERVER_CONFIGURATION_PATH)
+
+    if action_utils.service_is_enabled(OLD_SERVICE_NAME):
+        action_utils.service_disable(OLD_SERVICE_NAME)
+        action_utils.service_enable(SERVICE_NAME)
 
 
 def _create_server_config():
@@ -135,10 +153,12 @@ def _create_server_config():
 
 def _setup_firewall():
     """Add TUN device to internal zone in firewalld."""
-    subprocess.call(['firewall-cmd', '--zone', 'internal',
-                     '--add-interface', 'tun+'])
-    subprocess.call(['firewall-cmd', '--permanent', '--zone', 'internal',
-                     '--add-interface', 'tun+'])
+    subprocess.call(
+        ['firewall-cmd', '--zone', 'internal', '--add-interface', 'tun+'])
+    subprocess.call([
+        'firewall-cmd', '--permanent', '--zone', 'internal', '--add-interface',
+        'tun+'
+    ])
 
 
 def _create_certificates():
@@ -151,8 +171,8 @@ def _create_certificates():
     subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
                           **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server',
-                           'server'], **COMMON_ARGS)
+    subprocess.check_call(
+        ['/usr/share/easy-rsa/pkitool', '--server', 'server'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
 
 
@@ -204,8 +224,8 @@ def _is_non_empty_file(filepath):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
