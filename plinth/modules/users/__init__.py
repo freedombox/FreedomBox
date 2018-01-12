@@ -96,7 +96,6 @@ def _diagnose_ldap_entry(search_item):
 def create_group(group):
     """Add an LDAP group."""
     actions.superuser_run('users', options=['create-group', group])
-    register_group(group)
 
 
 def remove_group(group):

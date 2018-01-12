@@ -39,7 +39,6 @@ def get_group_choices():
     choices = {(g[0], ('{} ({})'.format(g[1], g[0]))) for g in users.groups}
     return sorted(list(choices), key=lambda g: g[0])
 
-
 class ValidNewUsernameCheckMixin(object):
     """Mixin to check if a username is valid for created new user."""
 
@@ -109,6 +108,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm):
 
             for group in self.cleaned_data['groups']:
                 try:
+                    users.create_group(group)
                     actions.superuser_run('users', [
                         'add-user-to-group',
                         user.get_username(), group
@@ -205,6 +205,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm):
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
+                        users.create_group(new_group)
                         actions.superuser_run('users', [
                             'add-user-to-group',
                             user.get_username(), new_group
