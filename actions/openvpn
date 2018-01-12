@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for OpenVPN server.
 """
@@ -92,8 +91,7 @@ CERTIFICATE_CONFIGURATION = {
     'KEY_NAME': 'FreedomBox'
 }
 
-COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION,
-               'cwd': KEYS_DIRECTORY}
+COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
 
 
 def parse_arguments():
@@ -155,10 +153,12 @@ def _create_server_config():
 
 def _setup_firewall():
     """Add TUN device to internal zone in firewalld."""
-    subprocess.call(['firewall-cmd', '--zone', 'internal',
-                     '--add-interface', 'tun+'])
-    subprocess.call(['firewall-cmd', '--permanent', '--zone', 'internal',
-                     '--add-interface', 'tun+'])
+    subprocess.call(
+        ['firewall-cmd', '--zone', 'internal', '--add-interface', 'tun+'])
+    subprocess.call([
+        'firewall-cmd', '--permanent', '--zone', 'internal', '--add-interface',
+        'tun+'
+    ])
 
 
 def _create_certificates():
@@ -171,8 +171,8 @@ def _create_certificates():
     subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
                           **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--server',
-                           'server'], **COMMON_ARGS)
+    subprocess.check_call(
+        ['/usr/share/easy-rsa/pkitool', '--server', 'server'], **COMMON_ARGS)
     subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
 
 
@@ -224,8 +224,8 @@ def _is_non_empty_file(filepath):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
