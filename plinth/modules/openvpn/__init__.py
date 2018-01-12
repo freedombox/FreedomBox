@@ -30,12 +30,11 @@ from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-
-version = 1
+version = 2
 
 service = None
 
-managed_services = ['openvpn@freedombox']
+managed_services = ['openvpn-server@freedombox']
 
 managed_packages = ['openvpn', 'easy-rsa']
 
@@ -73,6 +72,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    helper.call('post', actions.superuser_run, 'openvpn', ['upgrade'])
     global service
     if service is None:
         service = service_module.Service(
