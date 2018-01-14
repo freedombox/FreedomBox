@@ -1,3 +1,4 @@
+# Contributing
 Here are some contributing guidelines for authors and reviewers of code changes.
 The goal is a readable log of code changes, to enhance transparency of their
 purpose and simplify debugging. Consider these guidelines as best practices, not
@@ -19,8 +20,11 @@ Naming conventions:
 
 # For authors of patches
 * If you would like to contribute, but are unsure what to do, just ask. There
-  are usually also issues tagged as "beginners", which might be a good starting
-  point.
+  are usually also issues tagged as 'beginner', which might be a good starting
+  point to work on and have a known solution.  Also, other developers are ready
+  to guide you on the implementation for such tasks.
+  Feel free to pickup a task from the issue by announcing it on the issue or by
+  creating a new issue for whatever task you are going to work on.
 * To get your changes included, you must open a pull request (PR), to get them
   reviewed. Briefly, fork the repository to your account, and edit, commit and
   push there. Then you can create a PR to the main repository.
