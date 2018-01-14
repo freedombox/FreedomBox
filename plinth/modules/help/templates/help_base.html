@@ -22,6 +22,13 @@
 {% load firstboot_extras %}
 {% load static %}
 
+{% block submenu %}
+  {% if submenu %}
+    <div class="sidebar">
+      {% include "submenu.html" with menu=submenu %}
+    </div>
+  {% endif %}
+{% endblock %}
 
 {# Adapt mainmenu-links during firstboot #}
 {% block mainmenu_left %}
