@@ -28,7 +28,7 @@ from plinth import cfg
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from plinth.modules.users import register_group
+from plinth.modules.users import register_group, create_group
 from .manifest import clients
 
 
@@ -42,6 +42,8 @@ managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql',
 name = _('Tiny Tiny RSS')
 
 short_description = _('News Feed Reader')
+
+group = ('news', _('Read and subscribe to news feeds'))
 
 description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
@@ -61,7 +63,6 @@ description = [
 
 clients = clients
 
-group = ('feed-reader', _('Read and subscribe to news feeds'))
 
 service = None
 
