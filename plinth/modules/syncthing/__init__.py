@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module to configure Syncthing.
 """
@@ -30,7 +29,6 @@ from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
 from .manifest import clients
-
 
 version = 1
 
@@ -70,22 +68,17 @@ service = None
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-refresh',
-                     'syncthing:index', short_description)
+    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index',
+                     short_description)
     register_group(group)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
+            managed_services[0], name, ports=['http', 'https'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
 
         if is_enabled():
             add_shortcut()
@@ -98,22 +91,18 @@ def setup(helper, old_version=None):
     global service
     if service is None:
         service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
+            managed_services[0], name, ports=['http', 'https'],
+            is_external=True, is_enabled=is_enabled, enable=enable,
+            disable=disable, is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut(
-        'syncthing', name, short_description=short_description, url='/syncthing/', login_required=True)
+    frontpage.add_shortcut('syncthing', name,
+                           short_description=short_description,
+                           url='/syncthing/', login_required=True)
 
 
 def is_running():
@@ -144,7 +133,7 @@ def diagnose():
     results = []
 
     results.extend(
-        action_utils.diagnose_url_on_all(
-            'https://{host}/syncthing/', check_certificate=False))
+        action_utils.diagnose_url_on_all('https://{host}/syncthing/',
+                                         check_certificate=False))
 
     return results
