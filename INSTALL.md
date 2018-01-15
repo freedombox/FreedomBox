@@ -9,6 +9,7 @@
    augeas-tools \
    dblatex \
    docbook-utils \
+   e2fsprogs \
    gettext \
    gir1.2-glib-2.0 \
    gir1.2-nm-1.0 \
