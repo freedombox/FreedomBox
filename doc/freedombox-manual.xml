@@ -660,7 +660,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971</scr
           </inlinemediaobject>
         </para>
         <para>If you want to share a calendar with only some users, the simplest approach is to create an additional user-name for these users and to share that user-name and password with them. </para>
-        <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/user_documentation/#idcaldav-and-carddav-clients">supported client application</ulink> is needed.     </para>
+        <para>Radicale does not have a user interface. An external <ulink url="http://radicale.org/clients/">supported client application</ulink> is needed.     </para>
         <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/clients/">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
         <itemizedlist>
           <listitem>
@@ -1475,6 +1475,36 @@ proto udp</screen>
       <section>
         <title>Federating with other Matrix instances</title>
         <para>You will be able to interact with any other person running another Matrix instance.  This is done by simply starting a conversation with them using their matrix ID which is of the format <code>@their-username:their-domain</code>.  You can also join rooms which are in another server and have audio/video calls with contacts on other server. </para>
+      </section>
+    </section>
+    <section>
+      <title>SOCKS5 proxy (Shadowsocks)</title>
+      <section>
+        <title>What is Shadowsocks?</title>
+        <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
+        <para><emphasis role="strong">Note:</emphasis> Shadowsocks is available in FreedomBox starting with Plinth version 0.18. </para>
+      </section>
+      <section>
+        <title>Using the Shadowsocks client?</title>
+        <para>The current implementation of Shadowsocks in <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> only supports configuring <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as a Shadowsocks client. The current use case for Shadowsocks is as follows: </para>
+        <itemizedlist>
+          <listitem>
+            <para>Shadowsocks client (<ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>) is in a region where some parts of the Internet are blocked or censored. </para>
+          </listitem>
+          <listitem>
+            <para>Shadowsocks server is in a different region, which doesn't have these blocks. </para>
+          </listitem>
+          <listitem>
+            <para>The <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection. </para>
+          </listitem>
+        </itemizedlist>
+        <para>At a future date it will be possible to configure <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as Shadowsocks server. </para>
+      </section>
+      <section>
+        <title>Configuring your FreedomBox for the Shadowsocks client</title>
+        <para>To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it.  </para>
+        <para>Server: the Shadowsocks server is not the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them. </para>
+        <para>To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to <ulink url="http://freedombox_address:1080/"/> </para>
       </section>
     </section>
   </section>
@@ -6783,6 +6813,29 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
       <section>
+        <title>Plinth v0.21.0 (2018-01-15)</title>
+        <itemizedlist>
+          <listitem>
+            <para>navigation bar: Change label from 'Configuration' to 'System'. </para>
+          </listitem>
+          <listitem>
+            <para>storage: Removed beta warning for expanding partition. </para>
+          </listitem>
+          <listitem>
+            <para>groups: Consistently show available user groups, even before applications are installed. </para>
+          </listitem>
+          <listitem>
+            <para>syncthing: Restrict administration to users in "syncthing" group. </para>
+          </listitem>
+          <listitem>
+            <para>help: Show menu on smaller screens also. </para>
+          </listitem>
+          <listitem>
+            <para>diagnostics: Enable the "Run Diagnostics" button when applications are enabled but not running. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>Plinth v0.20.0 (2018-01-01)</title>
         <itemizedlist>
           <listitem>
@@ -8338,7 +8391,7 @@ Plinth module to configure Tiny Tiny RSS.
         <screen format="linespecific">$ sudo apt-get install plinth</screen>
         <itemizedlist>
           <listitem>
-            <para>You can also get Plinth from its <ulink url="https://github.com/freedombox/Plinth">Git repository</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL">install from source</ulink>. </para>
+            <para>You can also get Plinth from its <ulink url="https://github.com/freedombox/Plinth">Git repository</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8414,7 +8467,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>The primary Git repository is hosted at <ulink url="https://github.com/freedombox/Plinth">FreedomBox GitHub Page</ulink>. </para>
           </listitem>
           <listitem>
-            <para>Instructions for <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL">installing from source</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/HACKING">hacking the source</ulink> are available. </para>
+            <para>Instructions for <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL.md">installing from source</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/HACKING.md">hacking the source</ulink> are available. </para>
           </listitem>
           <listitem>
             <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://github.com/freedombox/Plinth/issues">issue tracker</ulink>. </para>
