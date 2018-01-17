@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for first boot wizard
 """
 
-from django.urls import reverse
 import operator
+
+from django.urls import reverse
 
 from plinth import module_loader
 
@@ -70,8 +70,7 @@ def _get_steps():
     modules = module_loader.loaded_modules
     for module_object in modules.values():
         if getattr(module_object, 'first_boot_steps', None):
-            if module_object.setup_helper.get_state() != 'needs-setup':
-                steps.extend(module_object.first_boot_steps)
+            steps.extend(module_object.first_boot_steps)
 
     _all_first_boot_steps = sorted(steps, key=operator.itemgetter('order'))
     return _all_first_boot_steps
