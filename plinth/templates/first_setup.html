@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_firstboot.html" %}
 {% comment %}
 #
 # This file is part of Plinth.
@@ -20,13 +20,10 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
-
-  {% if setup_helper.current_operation %}
-    <meta http-equiv="refresh" content="3" />
-  {% endif %}
-
+  <meta http-equiv="refresh" content="3" />
 {% endblock %}
 
 
@@ -40,5 +37,10 @@
       {% endblocktrans %}
     </div>
   {% endif %}
+
+  <p class="text-center">
+    <img src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
+         alt="{{ box_name }}" width="640"/>
+  </p>
 
 {% endblock %}
