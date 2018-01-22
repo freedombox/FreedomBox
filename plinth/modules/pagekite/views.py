@@ -141,10 +141,9 @@ class FirstBootView(FormView):
     form_class = FirstBootForm
 
     def get(self, request, *args, **kwargs):
-        """Skip if this first boot step if it is not relavent."""
+        """Skip this first boot step if it is not relevant."""
         if not cfg.danube_edition:
-            first_boot.mark_step_done('pagekite_firstboot')
-            return HttpResponseRedirect(reverse(first_boot.next_step()))
+            return first_boot_skip(request)
 
         return super().get(request, *args, **kwargs)
 

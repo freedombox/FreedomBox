@@ -18,14 +18,17 @@
 Plinth module with utilites for performing application setup operations.
 """
 
-import apt
 import logging
 import threading
 import time
 
+import apt
+
+import plinth
+from plinth.signals import post_setup
+
 from . import package
 from .errors import PackageNotInstalledError
-import plinth
 
 logger = logging.getLogger(__name__)
 
@@ -91,6 +94,8 @@ class Helper(object):
             raise exception
         else:
             self.set_setup_version(self.module.version)
+            post_setup.send_robust(sender=self.__class__,
+                                   module_name=self.module_name)
         finally:
             self.is_finished = True
             self.current_operation = None

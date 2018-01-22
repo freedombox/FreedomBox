@@ -14,15 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth module for first boot wizard
 """
 
-from django.urls import reverse
 import operator
 
+from django.urls import reverse
+
 from plinth import module_loader
+from plinth.signals import post_setup
 
 version = 1
 
@@ -45,6 +46,17 @@ first_boot_steps = [
 _all_first_boot_steps = None
 
 _is_completed = None
+
+
+def init():
+    """Initialize the first boot module."""
+    post_setup.connect(_clear_first_boot_steps)
+
+
+def _clear_first_boot_steps(sender, module_name, **kwargs):
+    """Flush the cache of first boot steps so it is recreated."""
+    global _all_first_boot_steps
+    _all_first_boot_steps = None
 
 
 def is_firstboot_url(path):
