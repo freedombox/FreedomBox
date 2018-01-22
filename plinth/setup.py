@@ -162,8 +162,9 @@ class Helper(object):
         """Set a module's setup version."""
         from . import models
 
-        models.Module.objects.update_or_create(
-            pk=self.module_name, defaults={'setup_version': version})
+        models.Module.objects.update_or_create(pk=self.module_name, defaults={
+            'setup_version': version
+        })
 
 
 def init(module_name, module):
@@ -271,9 +272,7 @@ def _get_modules_for_regular_setup():
 
         return False
 
-    return [name
-            for name, module in all_modules
-            if is_setup_required(module)]
+    return [name for name, module in all_modules if is_setup_required(module)]
 
 
 def _is_module_essential(module):
@@ -290,11 +289,9 @@ def _set_is_first_setup():
     """Set whether all essential modules have been setup at least once."""
     global _is_first_setup
     modules = plinth.module_loader.loaded_modules.values()
-    _is_first_setup = any(
-        (module
-         for module in modules
-         if _is_module_essential(module) and
-         _module_state_matches(module, 'needs-setup')))
+    _is_first_setup = any((module for module in modules
+                           if _is_module_essential(module)
+                           and _module_state_matches(module, 'needs-setup')))
 
 
 def run_setup_on_modules(module_list, allow_install=True):

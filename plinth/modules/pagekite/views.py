@@ -20,33 +20,40 @@ from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import View, TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
 
-from . import utils
-from .forms import ConfigurationForm, StandardServiceForm, \
-    AddCustomServiceForm, DeleteCustomServiceForm, FirstBootForm
 from plinth import cfg
 from plinth.errors import DomainRegistrationError
-from plinth.modules import first_boot
-from plinth.modules import pagekite
+from plinth.modules import first_boot, pagekite
 
-subsubmenu = [{'url': reverse_lazy('pagekite:index'),
-               'text': _('About PageKite')},
-              {'url': reverse_lazy('pagekite:configure'),
-               'text': _('Configure PageKite')},
-              {'url': reverse_lazy('pagekite:standard-services'),
-               'text': _('Standard Services')},
-              {'url': reverse_lazy('pagekite:custom-services'),
-               'text': _('Custom Services')}]
+from . import utils
+from .forms import (AddCustomServiceForm, ConfigurationForm,
+                    DeleteCustomServiceForm, FirstBootForm,
+                    StandardServiceForm)
+
+subsubmenu = [{
+    'url': reverse_lazy('pagekite:index'),
+    'text': _('About PageKite')
+}, {
+    'url': reverse_lazy('pagekite:configure'),
+    'text': _('Configure PageKite')
+}, {
+    'url': reverse_lazy('pagekite:standard-services'),
+    'text': _('Standard Services')
+}, {
+    'url': reverse_lazy('pagekite:custom-services'),
+    'text': _('Custom Services')
+}]
 
 
 def index(request):
     """Serve introduction page"""
-    return TemplateResponse(request, 'pagekite_introduction.html',
-                            {'title': pagekite.name,
-                             'description': pagekite.description,
-                             'subsubmenu': subsubmenu})
+    return TemplateResponse(request, 'pagekite_introduction.html', {
+        'title': pagekite.name,
+        'description': pagekite.description,
+        'subsubmenu': subsubmenu
+    })
 
 
 class ContextMixin(object):
@@ -78,14 +85,15 @@ class CustomServiceView(ContextMixin, TemplateView):
     template_name = 'pagekite_custom_services.html'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(CustomServiceView, self).get_context_data(*args,
-                                                                  **kwargs)
+        context = super(CustomServiceView, self).get_context_data(
+            *args, **kwargs)
         unused, custom_services = utils.get_pagekite_services()
         for service in custom_services:
             service['form'] = AddCustomServiceForm(initial=service)
         context['custom_services'] = [
             utils.prepare_service_for_display(service)
-            for service in custom_services]
+            for service in custom_services
+        ]
         context.update(utils.get_kite_details())
         return context
 

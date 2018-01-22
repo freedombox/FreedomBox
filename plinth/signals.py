@@ -14,13 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth signals
 """
 
 from django.dispatch import Signal
-
 
 service_enabled = Signal(providing_args=['service_id', 'enabled'])
 pre_module_loading = Signal()
@@ -29,6 +27,6 @@ post_setup = Signal(providing_args=['module_name'])
 pre_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
 post_hostname_change = Signal(providing_args=['old_hostname', 'new_hostname'])
 domainname_change = Signal(providing_args=['old_domainname', 'new_domainname'])
-domain_added = Signal(providing_args=['domain_type', 'name', 'description',
-                                      'services'])
+domain_added = Signal(
+    providing_args=['domain_type', 'name', 'description', 'services'])
 domain_removed = Signal(providing_args=['domain_type', 'name'])
