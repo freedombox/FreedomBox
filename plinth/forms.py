@@ -20,9 +20,14 @@ Common forms for use by modules.
 """
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _, get_language_info
 
+import plinth
 from plinth import utils
+
+import os
 
 
 class ServiceForm(forms.Form):
@@ -48,3 +53,21 @@ class DomainSelectionForm(forms.Form):
         ),
         choices=[]
     )
+
+
+class LanguageSelectionForm(forms.Form):
+    """Form for selecting the user's preferred language """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        supported_languages = []
+        for language_code, language_name in settings.LANGUAGES:
+            locale_code = translation.to_locale(language_code)
+            plinth_dir = os.path.dirname(plinth.__file__)
+            if language_code == 'en' or os.path.exists(
+                    os.path.join(plinth_dir, 'locale', locale_code)):
+                supported_languages.append((language_code, get_language_info(language_code)['name_local']))
+
+        self.fields['language'].choices = supported_languages
+
+    language = forms.ChoiceField(label='Language', choices=[])

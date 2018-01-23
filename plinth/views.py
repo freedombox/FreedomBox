@@ -23,6 +23,11 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
+from django.http import HttpResponseRedirect
+from django.conf import settings
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils import translation
 from django.utils.translation import ugettext as _
 from stronghold.decorators import public
 import time
@@ -61,6 +66,30 @@ def system_index(request):
     """Serve the system index page."""
     disk_views.warn_about_low_disk_space(request)
     return TemplateResponse(request, 'system.html')
+
+
+class LanguageSelectionView(FormView):
+    """View for language selection"""
+    form_class = forms.LanguageSelectionForm
+    template_name = 'language-selection.html'
+
+    def get(self, request, *args, **kwargs):
+        current_values = {'language': translation.get_language()}
+        form = self.form_class(initial=current_values)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            selected_language = form.cleaned_data['language']
+            translation.activate(selected_language)
+            # set selected language in session
+            request.session[translation.LANGUAGE_SESSION_KEY] = selected_language
+            response = HttpResponseRedirect(reverse('language-selection'))
+            # send a cookie for selected language
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, selected_language)
+            return response
+        return render(request, self.template_name, {'form': form})
 
 
 class ServiceView(FormView):
