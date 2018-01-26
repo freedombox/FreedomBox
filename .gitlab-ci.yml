@@ -1,0 +1,34 @@
+image: debian:unstable
+
+before_script:
+  - export DEBIAN_FRONTEND=noninteractive
+  - apt-get update
+  - apt-get build-dep -y .  # Dependencies of the plinth Debian package
+  - apt-get install -y build-essential  # Build dependencies
+  - apt-get install -y sshpass parted  # Test dependencies
+  - apt-get install -y sudo
+  - apt-get install -y $(./run --list-dependencies)  # Module dependencies
+
+stages:
+  - test
+  - package
+
+run-unit-tests:
+  stage: test
+  script:
+    - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
+    - echo "tester:password" | chpasswd
+    - cp -r . /home/tester/plinth
+    - chown -R tester:tester /home/tester/plinth
+    - su -c "cd ~/plinth; python3 setup.py test" tester
+
+build-debian-package:
+  stage: package
+  script:
+    - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -us -uc -b
+    - mkdir debian-package
+    - mv ../plinth*.deb debian-package
+
+  artifacts:
+    paths:
+      - debian-package/*
