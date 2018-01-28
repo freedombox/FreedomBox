@@ -99,41 +99,36 @@ def service_unmask(service_name):
 
 def service_start(service_name):
     """Start a service with systemd or sysvinit."""
-    if is_systemd_running():
-        subprocess.run(['systemctl', 'start', service_name],
-                       stdout=subprocess.DEVNULL)
-    else:
-        subprocess.run(['service', service_name, 'start'],
-                       stdout=subprocess.DEVNULL)
+    service_action(service_name, 'start')
 
 
 def service_stop(service_name):
     """Stop a service with systemd or sysvinit."""
-    if is_systemd_running():
-        subprocess.run(['systemctl', 'stop', service_name],
-                       stdout=subprocess.DEVNULL)
-    else:
-        subprocess.run(['service', service_name, 'stop'],
-                       stdout=subprocess.DEVNULL)
+    service_action(service_name, 'stop')
 
 
 def service_restart(service_name):
     """Restart a service with systemd or sysvinit."""
-    if is_systemd_running():
-        subprocess.run(['systemctl', 'restart', service_name],
-                       stdout=subprocess.DEVNULL)
-    else:
-        subprocess.run(['service', service_name, 'restart'],
-                       stdout=subprocess.DEVNULL)
+    service_action(service_name, 'restart')
+
+
+def service_try_restart(service_name):
+    """Try to restart a service with systemd or sysvinit."""
+    service_action(service_name, 'try-restart')
 
 
 def service_reload(service_name):
     """Reload a service with systemd or sysvinit."""
+    service_action(service_name, 'reload')
+
+
+def service_action(service_name, action):
+    """Preform the given action on the service_name."""
     if is_systemd_running():
-        subprocess.run(['systemctl', 'reload', service_name],
+        subprocess.run(['systemctl', action, service_name],
                        stdout=subprocess.DEVNULL)
     else:
-        subprocess.run(['service', service_name, 'reload'],
+        subprocess.run(['service', service_name, action],
                        stdout=subprocess.DEVNULL)
 
 
