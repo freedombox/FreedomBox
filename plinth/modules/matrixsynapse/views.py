@@ -25,13 +25,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from plinth import actions
-from plinth.views import ServiceView
-from plinth.modules import matrixsynapse
 from plinth.forms import DomainSelectionForm
+from plinth.modules import matrixsynapse
 from plinth.utils import get_domain_names
+from plinth.views import ServiceView
 
-from .forms import MatrixSynapseForm
 from . import get_public_registration_status
+from .forms import MatrixSynapseForm
 
 
 class SetupView(FormView):
@@ -111,15 +111,15 @@ class MatrixSynapseServiceView(ServiceView):
                 messages.success(self.request, _('Application disabled'))
 
         if not pubreg_same:
-            # note action public_registration restarts, if running now
+            # note action public-registration restarts, if running now
             if new_config['enable_public_registration']:
                 actions.superuser_run('matrixsynapse',
-                                      ['public_registration', 'enable'])
+                                      ['public-registration', 'enable'])
                 messages.success(self.request,
                                  _('Public registration enabled'))
             else:
                 actions.superuser_run('matrixsynapse',
-                                      ['public_registration', 'disable'])
+                                      ['public-registration', 'disable'])
                 messages.success(self.request,
                                  _('Public registration disabled'))
 

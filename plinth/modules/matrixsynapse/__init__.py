@@ -158,6 +158,6 @@ def get_configured_domain_name():
 
 def get_public_registration_status():
     """Return whether public registration is enabled."""
-    output = actions.superuser_run('matrixsynapse', ['public_registration',
-                                                     'status'])
+    output = actions.superuser_run('matrixsynapse',
+                                   ['public-registration', 'status'])
     return output.strip() == 'enabled'
