@@ -1,4 +1,4 @@
-[![Build Status](https://circleci.com/gh/freedombox/Plinth.svg?style=svg&branch=master)](https://circleci.com/gh/freedombox/Plinth)
+[![pipeline status](https://salsa.debian.org/freedombox-team/plinth/badges/master/pipeline.svg)](https://salsa.debian.org/freedombox-team/plinth/commits/master)
 [![Translation status](https://hosted.weblate.org/widgets/freedombox/-/shields-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
 [![Debian Unstable](https://badges.debian.net/badges/debian/unstable/plinth/version.svg)](https://packages.debian.org/unstable/plinth)
 [![Debian Testing](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
