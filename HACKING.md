@@ -152,12 +152,13 @@ $ make -C doc
 
 ## Repository
 
-Plinth is available from [GitHub](https://github.com/freedombox/plinth).
+Plinth is available from
+[salsa.debian.org](https://salsa.debian.org/freedombox-team/plinth).
 
 ## Bugs & TODO
 
 You can report bugs on Plinth's [issue
-tracker](https://github.com/freedombox/Plinth/issues).
+tracker](https://salsa.debian.org/freedombox-team/plinth/issues).
 
 See CONTRIBUTING.md for information how to best contribute code.
 

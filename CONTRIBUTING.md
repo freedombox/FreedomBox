@@ -96,7 +96,7 @@ Naming conventions:
 
 
 ## Use of GPG
-* Sign all commits with GPG. This means avoiding GitHub's fancy merge and rebase
+* Sign all commits with GPG. This means avoiding GitLab's fancy merge and rebase
   buttons and doing it locally, where your private key is.
 * In case a contributor signed with GPG, rebasing will strip it away. To
   compensate, put your GPG signature on the rebased commits. Given that we have
