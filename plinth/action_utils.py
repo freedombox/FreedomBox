@@ -56,12 +56,23 @@ def service_is_running(servicename):
         return False
 
 
-def service_is_enabled(service_name):
-    """Check if service is enabled in systemd."""
+def service_is_enabled(service_name, strict_check=False):
+    """Check if service is enabled in systemd.
+
+    In some cases, after disabling a service, systemd puts it into a state
+    called 'enabled-runtime' and returns a positive response to 'is-enabled'
+    query. Until we understand better, a conservative work around is to pass
+    strict=True to services effected by this behavior.
+
+    """
     try:
-        subprocess.run(['systemctl', 'is-enabled', service_name], check=True,
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return True
+        process = subprocess.run(['systemctl', 'is-enabled', service_name],
+                                 check=True, stdout=subprocess.PIPE,
+                                 stderr=subprocess.DEVNULL)
+        if not strict_check:
+            return True
+
+        return process.stdout.decode().strip() == 'enabled'
     except subprocess.CalledProcessError:
         return False
 
