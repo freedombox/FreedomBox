@@ -67,9 +67,14 @@ def subcommand_setup(_):
 
         # enable some critical modules to avoid restart while installing Plinth
         # applications.
-        webserver.enable('php7.0', kind='module')
         webserver.enable('cgi', kind='module')
         webserver.enable('authnz_ldap', kind='module')
+
+        # Don't explicitly enable module php7.0. Rely on the package
+        # libapache2-mod-php installing the current version of the package and
+        # enabling. This ensures that when PHP version changes, the code is not
+        # broken.
+        # webserver.enable('php7.0', kind='module')
 
         # enable users to share files uploaded to ~/public_html
         webserver.enable('userdir', kind='module')
