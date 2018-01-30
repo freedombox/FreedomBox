@@ -23,11 +23,16 @@
 {% load static %}
 
 {% block page_head %}
+  <style type="text/css">
+   a.navbar-brand {
+       display: none;
+   }
+  </style>
   <meta http-equiv="refresh" content="3" />
 {% endblock %}
 
 
-{% block content %}
+{% block content_row %}
 
   {% if is_first_setup_running %}
     <div class="alert alert-warning" role="alert">
