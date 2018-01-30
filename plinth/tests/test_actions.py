@@ -28,6 +28,8 @@ from plinth import cfg
 from plinth.actions import run, superuser_run
 from plinth.errors import ActionError
 
+euid = os.geteuid()
+
 
 class TestActions(unittest.TestCase):
     """Verify that privileged actions perform as expected.
@@ -148,6 +150,7 @@ class TestActions(unittest.TestCase):
         output = output.rstrip('\n')
         self.assertEqual(options, output)
 
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_is_package_manager_busy(self):
         """Test the behavior of `is-package-manager-busy` in both locked and
         unlocked states of the dpkg lock file."""
