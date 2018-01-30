@@ -20,6 +20,7 @@ Django models for the main application
 """
 
 from django.db import models
+from django.contrib.auth.models import User
 import json
 
 
@@ -43,3 +44,9 @@ class Module(models.Model):
     """Model to store current setup versions of a module."""
     name = models.TextField(primary_key=True)
     setup_version = models.IntegerField()
+
+
+class UserProfile(models.Model):
+    """Model that stores User details that are not related to authentication"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    preferred_language = models.CharField(max_length=10, null=True, default=None)

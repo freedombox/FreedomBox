@@ -82,9 +82,12 @@ class LanguageSelectionView(FormView):
         form = self.form_class(request.POST)
         if form.is_valid():
             selected_language = form.cleaned_data['language']
+            if not selected_language:
+                response = HttpResponseRedirect(reverse('language-selection'))
+                response.delete_cookie(settings.LANGUAGE_COOKIE_NAME)
+                return response
+
             translation.activate(selected_language)
-            # set selected language in session
-            request.session[translation.LANGUAGE_SESSION_KEY] = selected_language
             response = HttpResponseRedirect(reverse('language-selection'))
             # send a cookie for selected language
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, selected_language)

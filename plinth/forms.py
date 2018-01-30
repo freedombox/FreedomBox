@@ -60,7 +60,7 @@ class LanguageSelectionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        supported_languages = []
+        supported_languages = [(None, '-----------')]
         for language_code, language_name in settings.LANGUAGES:
             locale_code = translation.to_locale(language_code)
             plinth_dir = os.path.dirname(plinth.__file__)
@@ -70,4 +70,4 @@ class LanguageSelectionForm(forms.Form):
 
         self.fields['language'].choices = supported_languages
 
-    language = forms.ChoiceField(label='Language', choices=[])
+    language = forms.ChoiceField(label='Language', choices=[], required=False)

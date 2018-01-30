@@ -104,6 +104,8 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
             ssh_keys = actions.superuser_run(
                 'ssh', ['get-keys', '--username', self.object.username])
             initial['ssh_keys'] = ssh_keys.strip()
+            user_being_edited = User.objects.get(username=self.kwargs['slug'])
+            initial['language'] = user_being_edited.userprofile.preferred_language
         except ActionError:
             pass
 
