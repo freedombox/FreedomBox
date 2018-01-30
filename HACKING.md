@@ -97,10 +97,25 @@ However, for some reason, you wish setup manually, the following tips will help:
 
 ## Running Tests
 
-To run tests:
+To run all the tests:
 
-```
+```bash
 $ python3 setup.py test
+```
+
+To run a specific test function, test class or test module, use the `-s` option with the fully qualified name.
+
+**Examples:**
+
+```bash
+# Run tests of a test module
+$ python3 setup.py test -s plinth.tests.test_actions
+
+# Run tests of one class in test module
+$ python3 setup.py test -s plinth.tests.test_actions.TestActions
+
+# Run one test in a class or module
+$ python3 setup.py test -s plinth.tests.test_actions.TestActions.test_is_package_manager_busy
 ```
 
 ## Running the Test Coverage Analysis
