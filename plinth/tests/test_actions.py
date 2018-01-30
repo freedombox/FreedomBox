@@ -14,36 +14,39 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Test module for actions utilities that modify configuration.
 """
 
-import apt_pkg
 import os
 import shutil
 import tempfile
 import unittest
 
-from plinth.errors import ActionError
-from plinth.actions import superuser_run, run
+import apt_pkg
 from plinth import cfg
+from plinth.actions import run, superuser_run
+from plinth.errors import ActionError
 
 
-class TestPrivileged(unittest.TestCase):
+class TestActions(unittest.TestCase):
     """Verify that privileged actions perform as expected.
 
     See actions.py for a full description of the expectations.
 
     Symlink to ``echo`` and ``id`` during testing.
     """
+
     @classmethod
     def setUpClass(cls):
         """Initial setup for all the classes."""
         cls.action_directory = tempfile.TemporaryDirectory()
         cfg.actions_dir = cls.action_directory.name
 
-        shutil.copy(os.path.join(os.path.dirname(__file__), '..', '..', 'actions', 'packages'), cfg.actions_dir)
+        shutil.copy(
+            os.path.join(
+                os.path.dirname(__file__), '..', '..', 'actions', 'packages'),
+            cfg.actions_dir)
         shutil.copy('/bin/echo', cfg.actions_dir)
         shutil.copy('/usr/bin/id', cfg.actions_dir)
 
@@ -86,8 +89,7 @@ class TestPrivileged(unittest.TestCase):
         If multiple actions are specified, bail out.
         """
         # Counting is safer than actual badness.
-        actions = ('echo ""; echo $((1+1))',
-                   'echo "" && echo $((1+1))',
+        actions = ('echo ""; echo $((1+1))', 'echo "" && echo $((1+1))',
                    'echo "" || echo $((1+1))')
         options = ('good', '')
 
@@ -101,12 +103,8 @@ class TestPrivileged(unittest.TestCase):
 
         Verify that shell control characters aren't interpreted.
         """
-        options = ('; echo hello',
-                   '&& echo hello',
-                   '|| echo hello',
-                   '& echo hello',
-                   r'\; echo hello',
-                   '| echo hello',
+        options = ('; echo hello', '&& echo hello', '|| echo hello',
+                   '& echo hello', r'\; echo hello', '| echo hello',
                    r':;!&\/$%@`"~#*(){}[]|+=')
         for option in options:
             output = run('echo', [option])
@@ -119,14 +117,16 @@ class TestPrivileged(unittest.TestCase):
         Verify that shell control characters aren't interpreted in
         option lists.
         """
-        option_lists = ((';', 'echo', 'hello'),
-                        ('&&', 'echo', 'hello'),
-                        ('||', 'echo', 'hello'),
-                        ('&', 'echo', 'hello'),
-                        (r'\;', 'echo' 'hello'),
-                        ('|', 'echo', 'hello'),
-                        ('', 'echo', '', 'hello'),  # Empty option argument
-                        tuple(r':;!&\/$%@`"~#*(){}[]|+='))
+        option_lists = (
+            (';', 'echo', 'hello'),
+            ('&&', 'echo', 'hello'),
+            ('||', 'echo', 'hello'),
+            ('&', 'echo', 'hello'),
+            (r'\;', 'echo'
+             'hello'),
+            ('|', 'echo', 'hello'),
+            ('', 'echo', '', 'hello'),  # Empty option argument
+            tuple(r':;!&\/$%@`"~#*(){}[]|+='))
         for options in option_lists:
             output = run('echo', options)
             output = output.rstrip('\n')
@@ -148,14 +148,18 @@ class TestPrivileged(unittest.TestCase):
         output = output.rstrip('\n')
         self.assertEqual(options, output)
 
-    def test_error_handling_for_superuser(self):
-        """Test that errors are raised only when expected."""
+    def test_is_package_manager_busy(self):
+        """Test the behavior of `is-package-manager-busy` in both locked and
+        unlocked states of the dpkg lock file."""
+
+        apt_pkg.init()  # initialize apt_pkg module
+
+        # In the locked state, the lsof command returns 0.
+        # Hence no error is thrown.
         with apt_pkg.SystemLock():
-            with self.assertRaises(ActionError):
-                superuser_run('packages', ['is-package-manager-busy'],
-                              log_error=True)
-            with self.assertRaises(ActionError):
-                superuser_run('packages', ['is-package-manager-busy'],
-                              log_error=False)
-            with self.assertRaises(ActionError):
-                superuser_run('packages', ['is-package-manager-busy'])
+            superuser_run('packages', ['is-package-manager-busy'])
+
+        # In the unlocked state, the lsof command returns 1.
+        # An ActionError is raised in this case.
+        with self.assertRaises(ActionError):
+            superuser_run('packages', ['is-package-manager-busy'])

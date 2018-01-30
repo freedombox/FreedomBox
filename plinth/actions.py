@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """Run specified actions.
 
 Actions run commands with this contract (version 1.1):
@@ -109,7 +108,8 @@ def run(action, options=None, input=None, async=False):
     return _run(action, options, input, async, False)
 
 
-def superuser_run(action, options=None, input=None, async=False, log_error=True):
+def superuser_run(action, options=None, input=None, async=False,
+                  log_error=True):
     """Safely run a specific action as root.
 
     See actions._run for more information.
@@ -175,20 +175,16 @@ def _run(action, options=None, input=None, async=False, run_as_root=False,
 
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
-    proc = subprocess.Popen(
-        cmd,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        shell=False)
+    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, shell=False)
 
     if not async:
         output, error = proc.communicate(input=input)
         output, error = output.decode(), error.decode()
         if proc.returncode != 0:
             if log_error:
-                LOGGER.error('Error executing command - %s, %s, %s', cmd, output,
-                             error)
+                LOGGER.error('Error executing command - %s, %s, %s', cmd,
+                             output, error)
             raise ActionError(action, output, error)
 
         return output
