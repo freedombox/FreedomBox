@@ -1371,6 +1371,56 @@ proto udp</screen>
       </section>
     </section>
     <section>
+      <title>Wiki (MediaWiki)</title>
+      <section>
+        <title>About MediaWiki</title>
+        <para><ulink url="https://wiki.debian.org/MediaWiki#">MediaWiki</ulink> is the software that powers the Wikimedia suite of wikis.  </para>
+        <para>Read more about MediaWiki on <ulink url="https://en.wikipedia.org/wiki/MediaWiki">Wikipedia</ulink> </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.20.0 </para>
+      </section>
+      <section>
+        <title>MediaWiki on FreedomBox</title>
+        <para>MediaWiki on FreedomBox is configured to be publicly readable and privately editable. Only logged in users can make edits to the wiki. This configuration prevents spam and vandalism on the wiki. </para>
+        <section>
+          <title>User management</title>
+          <para>Users can be created by the MediaWiki administrator (user "admin") only. The "admin" user can also be used to reset passwords of MediaWiki users. The administrator password, if forgotten can be reset anytime from the <ulink url="https://wiki.debian.org/MediaWiki#">MediaWiki</ulink> page in the Plinth UI. </para>
+        </section>
+        <section>
+          <title>Use cases</title>
+          <para><ulink url="https://wiki.debian.org/MediaWiki#">MediaWiki</ulink> is quite versatile and can be put to many creative uses. It also comes with a lot of plugins and themes and is highly customizable. </para>
+          <section>
+            <title>Personal Knowledge Repository</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para>MediaWiki on FreedomBox can be your own personal knowledge repository. Since MediaWiki has good multimedia support, you can write notes, store images, create checklists, store references and bookmarks etc. in an organized manner. You can store the knowledge of a lifetime in your MediaWiki instance. </para>
+              </listitem>
+            </itemizedlist>
+          </section>
+          <section>
+            <title>Community Wiki</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para>A community of users can use MediaWiki as their common repository of knowledge and reference material. It can used as a college notice board, documentation server for a small company, common notebook for study groups or as a fan wiki like wikia. </para>
+              </listitem>
+            </itemizedlist>
+          </section>
+          <section>
+            <title>Personal Wiki-based Website</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para><ulink url="https://www.mediawiki.org/wiki/Sites_using_MediaWiki/en">Several websites</ulink> on the internet are simply MediaWiki instances. MediaWiki on FreedomBox is read-only to visitors. Hence, it can be adapted to serve as your personal website and/or blog. MediaWiki content is easy to export and can be later moved to use another blog engine.  </para>
+              </listitem>
+            </itemizedlist>
+          </section>
+        </section>
+        <section>
+          <title>Editing Wiki Content</title>
+          <para>MediWiki's new Visual Editor gives a WYSIWYG user interface to creating wiki pages. Unfortunately, it is not yet available in the current version of MediaWiki on Debian.  </para>
+          <para>You don't have to necessarily learn the MediaWiki formatting language. You can write in your favorite format (Markdown, Org-mode, LaTeX etc.) and convert it to the MediaWiki format using <ulink url="https://pandoc.org/try/">Pandoc</ulink>. </para>
+        </section>
+      </section>
+    </section>
+    <section>
       <title>Wiki and Blog (Ikiwiki)</title>
       <section>
         <title>What is Ikiwiki?</title>
@@ -4121,7 +4171,7 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
           <para>The pre-built FreedomBox images have a default user account called "fbx". However the password is not set for this account, so it will not be possible to log in with this account by default. </para>
           <para>There is a script included in the freedom-maker program, that will allow you to set the password for this account, if it is needed. To set a password for the "fbx" user: </para>
           <para>1. Decompress the image file. </para>
-          <para>2. Get a copy of freedom-maker from <ulink url="https://github.com/freedombox/freedom-maker"/>. </para>
+          <para>2. Get a copy of freedom-maker from <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/"/>. </para>
           <para>3. Run <code>sudo ./bin/passwd-in-image &lt;image-file&gt; fbx</code>. </para>
           <para>4. Copy the image file to SD card and boot device as normal. </para>
           <para>The "fbx" user also has superuser privileges via sudo. </para>
@@ -6312,7 +6362,7 @@ Password:
           <title>Finding out the IP address of the virtual machine</title>
           <para>This depends on the network configuration you chose. With a <emphasis>bridged adapter</emphasis>, your virtual machine gets its IP address from the DHCP server of your network, most likely of your Router. You can try the first couple of IP addresses or check your router web interface for a list of connected devices. </para>
           <para>If you chose <emphasis>host-only adapter</emphasis>, the IP address is assigned by the DHCP server of your VirtualBox network. In the VirtualBox Manager, go to File -&gt; Preferences -&gt; Network -&gt; Host-only Networks. You can see and edit the DHCP address range there, typically you get assigned addresses close to the <emphasis>Lower Address Bound</emphasis>. </para>
-          <para>Another possibility of finding the IP address is to login via the Virtualbox Manager (or similar software). The FreedomBox images do not have any default user accounts, so you need to set an initial user and password using the <ulink url="https://github.com/freedombox/freedom-maker/blob/master/bin/passwd-in-image">passwd-in-image script</ulink>. </para>
+          <para>Another possibility of finding the IP address is to login via the Virtualbox Manager (or similar software). The FreedomBox images do not have any default user accounts, so you need to set an initial user and password using the <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/bin/passwd-in-image">passwd-in-image script</ulink>. </para>
           <para>See also <ulink url="https://wiki.debian.org/FreedomBox/Manual/QuickStart#">QuickStart</ulink> for instructions on how to scan your network to discover the IP of the VM. </para>
         </section>
         <section>
@@ -6812,6 +6862,32 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.22.0 (2018-01-30)</title>
+        <itemizedlist>
+          <listitem>
+            <para>matrix-synapse: Make sure configuration file does not get corrupted. </para>
+          </listitem>
+          <listitem>
+            <para>tor: Show enabled status properly. </para>
+          </listitem>
+          <listitem>
+            <para>first_setup: Fix not showing admin user creation step. </para>
+          </listitem>
+          <listitem>
+            <para>Migrate from GitHub to Salsa </para>
+          </listitem>
+          <listitem>
+            <para>Migrate from CirceCI to GitLab CI on Salsa. </para>
+          </listitem>
+          <listitem>
+            <para>Translation updates for Czech, Dutch, Gujarati, Hindi, Russian and Telugu. </para>
+          </listitem>
+          <listitem>
+            <para>Started new translation for Ukrainian. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Plinth v0.21.0 (2018-01-15)</title>
         <itemizedlist>
@@ -7777,7 +7853,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
               <para>Web design for <ulink url="https://freedomboxfoundation.org">freedomboxfoundation.org</ulink> and FreedomBox <ulink url="https://wiki.debian.org/FreedomBox#">wiki</ulink> pages </para>
             </listitem>
             <listitem>
-              <para>Logo and branding (we currently have <ulink url="https://github.com/freedombox/Plinth/tree/master/static/themes/default/">an identity manual and logos</ulink>) </para>
+              <para>Logo and branding (we currently have <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/static/themes/default">an identity manual and logos</ulink>) </para>
             </listitem>
             <listitem>
               <para>Possible designs for custom FreedomBox cases on single board computers </para>
@@ -7840,7 +7916,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
             <para>Individual applications that FreedomBox exposes to users. </para>
           </listitem>
         </itemizedlist>
-        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://github.com/freedombox/Plinth/tree/master/plinth/locale">GitHub</ulink>. </para>
+        <para>The primary user interface (Plinth) was internationalized in the <ulink url="https://wiki.debian.org/FreedomBox/ReleaseNotes#Version_0.7_.282015-12-13.29">0.7 release</ulink>. You can contribute to the localization effort using the web-based tool at <ulink url="https://hosted.weblate.org/projects/freedombox/">Weblate</ulink> or directly to the source tree via <ulink url="https://salsa.debian.org/freedombox-team/plinth/tree/master/plinth/locale">Salsa</ulink>. </para>
         <para>If you wish to see FreedomBox available for one of your languages, please start a discussion on the FreedomBox discuss <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">mailing list</ulink> or on the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC</ulink> channel to avoid double translations. </para>
         <para>For more information, please visit the FreedomBox <ulink url="https://wiki.debian.org/FreedomBox/Translate#">translation landing page</ulink>. </para>
       </section>
@@ -8391,7 +8467,7 @@ Plinth module to configure Tiny Tiny RSS.
         <screen format="linespecific">$ sudo apt-get install plinth</screen>
         <itemizedlist>
           <listitem>
-            <para>You can also get Plinth from its <ulink url="https://github.com/freedombox/Plinth">Git repository</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
+            <para>You can also get Plinth from its <ulink url="https://salsa.debian.org/freedombox-team/plinth/">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">install from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8464,13 +8540,13 @@ Plinth module to configure Tiny Tiny RSS.
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>The primary Git repository is hosted at <ulink url="https://github.com/freedombox/Plinth">FreedomBox GitHub Page</ulink>. </para>
+            <para>The primary Git repository is hosted at <ulink url="https://salsa.debian.org/freedombox-team/plinth/">FreedomBox Salsa Page</ulink>. </para>
           </listitem>
           <listitem>
-            <para>Instructions for <ulink url="https://github.com/freedombox/Plinth/blob/master/INSTALL.md">installing from source</ulink> and <ulink url="https://github.com/freedombox/Plinth/blob/master/HACKING.md">hacking the source</ulink> are available. </para>
+            <para>Instructions for <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/INSTALL.md">installing from source</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/plinth/blob/master/HACKING.md">hacking the source</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://github.com/freedombox/Plinth/issues">issue tracker</ulink>. </para>
+            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/plinth/issues">issue tracker</ulink>. </para>
           </listitem>
           <listitem>
             <para>Before contributing to Plinth code, you need understand <ulink url="https://www.python.org/">Python</ulink> and <ulink url="https://www.djangoproject.com/">Django</ulink> on top which it is built. </para>
@@ -8483,10 +8559,7 @@ Plinth module to configure Tiny Tiny RSS.
           <title>Debian Package</title>
           <itemizedlist>
             <listitem>
-              <para>Plinth is <ulink url="https://packages.debian.org/plinth#">packaged</ulink> for Debian. </para>
-            </listitem>
-            <listitem>
-              <para>Packaging project is on <ulink url="https://alioth.debian.org/projects/freedombox#">Alioth</ulink> along with <ulink url="https://anonscm.debian.org/cgit/freedombox/plinth.git#">sources</ulink>. </para>
+              <para>Plinth is <ulink url="https://packages.debian.org/plinth#">packaged</ulink> for Debian. Plinth is a native package and packaging source code is part of the main package source code. </para>
             </listitem>
             <listitem>
               <para>Issues related to packaging are listed on <ulink url="https://bugs.debian.org/plinth#">Debian BTS</ulink>. </para>
@@ -8510,7 +8583,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>If you are on a Debian box, you may install FreedomBox Setup from Debian package archive.  This essentially turns your Debian installation into a FreedomBox!  Currently, only Sid (unstable) is supported.  To install FreedomBox Setup, see <ulink url="https://wiki.debian.org/FreedomBox/Hardware/Debian#">instructions</ulink> on setting up FreedomBox on a Debian machine. </para>
           </listitem>
           <listitem>
-            <para>You can also get FreedomBox Setup from its <ulink url="https://anonscm.debian.org/cgit/freedombox/freedombox-setup.git">Git repository</ulink> and <ulink url="https://anonscm.debian.org/cgit/freedombox/freedombox-setup.git/tree/README">build Debian package from source</ulink>. </para>
+            <para>You can also get FreedomBox Setup from its <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup">Git repository</ulink> and <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup/blob/master/README">build Debian package from source</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8538,7 +8611,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>FreedomBox Setup is part of the <ulink url="https://alioth.debian.org/projects/freedombox/">FreedomBox Alioth Project</ulink>. </para>
+            <para>FreedomBox Setup is part of the <ulink url="https://salsa.debian.org/freedombox-team/freedombox-setup">FreedomBox Salsa Project</ulink>. </para>
           </listitem>
           <listitem>
             <para>List of bugs, TODO items, packages issues and feature requests are available on the <ulink url="https://bugs.debian.org/cgi-bin/pkgreport.cgi?src=freedombox-setup">issue tracker</ulink>. </para>
@@ -8574,12 +8647,12 @@ Plinth module to configure Tiny Tiny RSS.
         </listitem>
         <listitem>
           <para>
-            <ulink url="https://en.wikipedia.org/wiki/BeagleBoard#BeagleBone">BeagleBone</ulink>
+            <ulink url="https://en.wikipedia.org/wiki/Banana_Pro">Banana Pro</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="https://en.wikipedia.org/wiki/Cubieboard#Cubietruck_.28Cubieboard3.29">Cubietruck</ulink>
+            <ulink url="https://en.wikipedia.org/wiki/BeagleBoard#BeagleBone">BeagleBone</ulink>
           </para>
         </listitem>
         <listitem>
@@ -8589,7 +8662,17 @@ Plinth module to configure Tiny Tiny RSS.
         </listitem>
         <listitem>
           <para>
+            <ulink url="https://en.wikipedia.org/wiki/Cubieboard#Cubietruck_.28Cubieboard3.29">Cubietruck</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
             <ulink url="https://en.wikipedia.org/wiki/DreamPlug">DreamPlug</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="http://www.linksprite.com/linksprite-pcduino3/">pcDuino3</ulink>
           </para>
         </listitem>
         <listitem>
@@ -8599,7 +8682,12 @@ Plinth module to configure Tiny Tiny RSS.
         </listitem>
         <listitem>
           <para>
-            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 2 (also works on 3)</ulink>
+            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 2</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="https://en.wikipedia.org/wiki/Raspberry_Pi">Raspberry Pi 3</ulink>
           </para>
         </listitem>
         <listitem>
@@ -8613,7 +8701,7 @@ Plinth module to configure Tiny Tiny RSS.
           </para>
         </listitem>
         <listitem>
-          <para>Other virtual machines (using raw disk images) </para>
+          <para><ulink url="https://en.wikipedia.org/wiki/X86-64#AMD64">AMD64 (x86-64) Machines</ulink>, <ulink url="https://en.wikipedia.org/wiki/X86">X86 Machines</ulink> and other virtual machines (using raw disk images) </para>
         </listitem>
       </itemizedlist>
       <para>It relies on the <ulink url="http://liw.fi/vmdebootstrap/">vmdebootstrap</ulink> project actually create images.  If a hardware platform is capable of running Debian, it should not be too much effort adopt Freedom Maker to create <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> images for the platform. </para>
@@ -8622,7 +8710,7 @@ Plinth module to configure Tiny Tiny RSS.
         <title>Building FreedomBox Images</title>
         <itemizedlist>
           <listitem>
-            <para>You can get Freedom Maker from its <ulink url="https://alioth.debian.org/anonscm/git/freedombox/freedom-maker.git">Git repository</ulink> and follow the instructions in the README to <ulink url="https://alioth.debian.org/plugins/scmgit/cgi-bin/gitweb.cgi?p=freedombox/freedom-maker.git;a=blob;f=README">build a FreedomBox image</ulink>. </para>
+            <para>You can get Freedom Maker from its <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker.git">Git repository</ulink> and follow the instructions in the README to <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/blob/master/README.md">build a FreedomBox image</ulink>. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -8650,10 +8738,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>Instructions on how to <ulink url="https://wiki.debian.org/FreedomBox/Contribute/Code#">contribute code</ulink> are available. </para>
           </listitem>
           <listitem>
-            <para>Freedom Maker is hosted on <ulink url="https://alioth.debian.org/projects/freedombox/">FreedomBox Alioth Portal</ulink>. The primary Git repository is hosted <ulink url="https://alioth.debian.org/anonscm/git/freedombox/freedom-maker.git">there</ulink>. </para>
-          </listitem>
-          <listitem>
-            <para>Freedom Maker is also hosted on <ulink url="https://github.com/freedombox/freedom-maker">FreedomBox GitHub Page</ulink>.  Pull requests are accepted there. </para>
+            <para>Freedom Maker is hosted at <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker">FreedomBox Salsa Project</ulink>. The primary Git repository is hosted <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker.git">there</ulink>. </para>
           </listitem>
           <listitem>
             <para>You can contribute to FreedomBox by adding support for more hardware platforms.  Freedom Maker can be easily adopted to newer platforms if they already support running Debian. </para>
@@ -8662,7 +8747,7 @@ Plinth module to configure Tiny Tiny RSS.
             <para>You can create and test images with Freedom Maker regularly to test for new features and check for regressions. </para>
           </listitem>
           <listitem>
-            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://github.com/freedombox/freedom-maker/issues">issue tracker</ulink>. </para>
+            <para>List of bugs, TODO items and feature requests are available on the <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues">issue tracker</ulink>. </para>
           </listitem>
           <listitem>
             <para>You can request for development assistance on <ulink url="http://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">the mailing list</ulink> or the <ulink url="irc://irc.debian.org/freedombox">#freedombox IRC channel</ulink>. </para>
