@@ -24,6 +24,6 @@ clients = validate([{
         _('JSXC'),
     'platforms': [{
         'type': 'web',
-        'url': '/jsxc'
+        'url': '/plinth/apps/jsxc/jsxc/'
     }]
 }])

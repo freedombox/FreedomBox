@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the JSXC module
 """
@@ -23,8 +22,7 @@ from django.conf.urls import url
 
 from .views import JSXCServiceView, JsxcView
 
-
 urlpatterns = [
-    url(r'^apps/jsxc$', JSXCServiceView.as_view(), name='index'),
-    url(r'^apps/jsxc/jsxc$', JsxcView.as_view(), name='jsxc')
+    url(r'^apps/jsxc/$', JSXCServiceView.as_view(), name='index'),
+    url(r'^apps/jsxc/jsxc/$', JsxcView.as_view(), name='jsxc')
 ]
