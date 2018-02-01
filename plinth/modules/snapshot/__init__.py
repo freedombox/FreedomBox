@@ -59,8 +59,14 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
 
 
-def is_timeline_snapshots_enabled():
-    """Return whether timeline snapshots are enabled."""
+def get_configuration():
     output = actions.superuser_run('snapshot', ['get-config'])
     output = json.loads(output)
-    return output['TIMELINE_CREATE'] == 'yes'
+    return {'enable_timeline_snapshots': output['TIMELINE_CREATE'] == 'yes',
+            'hourly_limit': output['TIMELINE_LIMIT_HOURLY'],
+            'daily_limit': output['TIMELINE_LIMIT_DAILY'],
+            'weekly_limit': output['TIMELINE_LIMIT_WEEKLY'],
+            'yearly_limit': output['TIMELINE_LIMIT_YEARLY'],
+            'monthly_limit': output['TIMELINE_LIMIT_MONTHLY'],
+            'number_min_age': round(int(output['NUMBER_MIN_AGE']) / 86400),
+            'timeline_min_age': round(int(output['TIMELINE_MIN_AGE']) / 86400)}

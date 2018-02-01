@@ -27,3 +27,9 @@ class SnapshotForm(forms.Form):
         label=_('Enable Timeline Snapshots'), required=False, help_text=_(
             'Uncheck this to disable timeline snapshots '
             '(hourly, daily, monthly and yearly).'))
+    hourly_limit = forms.IntegerField(label=_('Hourly Snapshots Limit'),required=False, min_value=0)
+    daily_limit = forms.IntegerField(label=_('Daily Snapshots Limit'),required=False, min_value=0)
+    weekly_limit = forms.IntegerField(label=_('Weekly Snapshots Limit'),required=False, min_value=0)
+    monthly_limit = forms.IntegerField(label=_('Monthly Snapshots Limit'),required=False, min_value=0)
+    yearly_limit = forms.IntegerField(label=_('Yearly Snapshots Limit'),required=False, min_value=0)
+    number_min_age = forms.IntegerField(label=_('Software Snapshots Minimum Age (days)'), required=False, min_value=0)

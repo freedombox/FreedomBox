@@ -31,13 +31,13 @@ from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
 from plinth.utils import yes_or_no
 
-from . import is_timeline_snapshots_enabled
+from . import get_configuration
 from .forms import SnapshotForm
 
 
 def index(request):
     """Show snapshot list."""
-    status = get_status()
+    status = get_configuration()
     if request.method == 'POST':
         form = SnapshotForm(request.POST)
         if 'create' in request.POST:
@@ -45,7 +45,7 @@ def index(request):
             messages.success(request, _('Created snapshot.'))
         if 'update' in request.POST and form.is_valid():
             update_configuration(request, status, form.cleaned_data)
-            status = get_status()
+            status = get_configuration()
             form = SnapshotForm(initial=status)
     else:
         form = SnapshotForm(initial=status)
@@ -65,17 +65,31 @@ def index(request):
     })
 
 
+def update_key_configuration(key, old_status, new_status, stamp,threshold):
+    if old_status[key] != new_status[key]:
+        actions.superuser_run(
+            'snapshot',
+            ['configure', stamp.format(threshold)])
+
+
 def update_configuration(request, old_status, new_status):
     """Update configuration of snapshots."""
     try:
-        key = 'enable_timeline_snapshots'
-        if old_status[key] != new_status[key]:
-            enable_timeline = yes_or_no(
-                new_status['enable_timeline_snapshots'])
-            actions.superuser_run(
-                'snapshot',
-                ['configure', 'TIMELINE_CREATE={}'.format(enable_timeline)])
-            messages.success(request,
+        update_key_configuration('enable_timeline_snapshots', old_status, new_status, 'TIMELINE_CREATE={}', yes_or_no(new_status['enable_timeline_snapshots']))
+        update_key_configuration('hourly_limit',old_status,new_status,'TIMELINE_LIMIT_HOURLY={}', new_status['hourly_limit'])
+        update_key_configuration('daily_limit', old_status, new_status, 'TIMELINE_LIMIT_DAILY={}', new_status['daily_limit'])
+        update_key_configuration('weekly_limit', old_status, new_status, 'TIMELINE_LIMIT_WEEKLY={}', new_status['weekly_limit'])
+        update_key_configuration('monthly_limit', old_status, new_status, 'TIMELINE_LIMIT_MONTHLY={}', new_status['monthly_limit'])
+        update_key_configuration('yearly_limit', old_status, new_status, 'TIMELINE_LIMIT_YEARLY={}', new_status['yearly_limit'])
+        update_key_configuration('number_min_age', old_status, new_status, 'NUMBER_MIN_AGE={}', int(new_status['number_min_age'])*86400)
+
+        actions.superuser_run(
+            'snapshot',
+            ['configure', 'NUMBER_LIMIT=0-0'])
+        actions.superuser_run(
+            'snapshot',
+            ['configure', 'NUMBER_LIMIT_IMPORTANT=4-10'])
+        messages.success(request,
                              _('Timeline Snapshots configuration updated'))
     except ActionError as exception:
         messages.error(request,
@@ -142,8 +156,3 @@ def rollback(request, number):
         'title': _('Rollback to Snapshot'),
         'snapshot': snapshot
     })
-
-
-def get_status():
-    """Get current status of snapshot configuration."""
-    return {'enable_timeline_snapshots': is_timeline_snapshots_enabled()}

@@ -23,20 +23,19 @@
 
 {% block configuration %}
   <p>
-    <form class="form" method="post">
+   <form class="form" method="post">
       {% csrf_token %}
       <h3>{% trans "Configuration" %}</h3>
-      {{ form|bootstrap }}
+    {{ form|bootstrap }}
       <input type="submit" class="btn btn-primary" name="update"
              value="{% trans "Update setup" %}"/>
-      <hr>
+    <hr>
       <div class="row">
         <div class="col-xs-6 text-left">
           <input type="submit" class="btn btn-primary" name="create"
                  value="{% trans 'Create Snapshot' %}"/>
         </div>
     </form>
-
     <div class="col-xs-6 text-right">
       <a title="{% trans 'Delete all the snapshots' %}"
          role="button" class="btn btn-danger"
