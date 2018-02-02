@@ -23,9 +23,9 @@ sign it with the FreedomBox server's private key.
 import argparse
 import base64
 import datetime
-from OpenSSL import crypto
 import os
 
+from OpenSSL import crypto
 from plinth import action_utils
 
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
@@ -36,20 +36,18 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser(
-        'create-key-pair',
-        help='create a key pair for the apache server '
-        'to sign auth_pubtkt tickets')
-    subparsers.add_parser(
-        'enable-mod', help='enabled the Apache module auth_pubtkt')
-    gen_tkt = subparsers.add_parser(
-        'generate-ticket', help='generate auth_pubtkt ticket')
+    subparsers.add_parser('create-key-pair',
+                          help='create a key pair for the apache server '
+                          'to sign auth_pubtkt tickets')
+    subparsers.add_parser('enable-mod',
+                          help='enabled the Apache module auth_pubtkt')
+    gen_tkt = subparsers.add_parser('generate-ticket',
+                                    help='generate auth_pubtkt ticket')
     gen_tkt.add_argument('--uid', help='username of the user')
-    gen_tkt.add_argument(
-        '--private-key-file',
-        help='path of the private key file of the server')
-    gen_tkt.add_argument(
-        '--tokens', help='tokens, usually containing the user groups')
+    gen_tkt.add_argument('--private-key-file',
+                         help='path of the private key file of the server')
+    gen_tkt.add_argument('--tokens',
+                         help='tokens, usually containing the user groups')
 
     subparsers.required = True
     return parser.parse_args()
@@ -89,14 +87,8 @@ def subcommand_create_key_pair(_):
             os.chmod(fil, 0o440)
 
 
-def create_ticket(pkey,
-                  uid,
-                  validuntil,
-                  ip=None,
-                  tokens=None,
-                  udata=None,
-                  graceperiod=None,
-                  extra_fields=None):
+def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
+                  graceperiod=None, extra_fields=None):
     """Create and return a signed mod_auth_pubtkt ticket."""
     fields = [
         'uid={}'.format(uid), 'validuntil={}'.format(validuntil, type='d'), ip
