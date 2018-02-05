@@ -18,14 +18,14 @@
 FreedomBox app for api for android app.
 """
 
-from django.http import HttpResponse
+import json
+
 from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponse
 from django.templatetags.static import static
 
-from plinth import frontpage
-from plinth import module_loader
+from plinth import frontpage, module_loader
 from plinth.modules import names
-import json
 
 
 def access_info(request, **kwargs):
@@ -69,4 +69,4 @@ def _get_icon_url(icon_name):
     if not icon_name:
         return None
 
-    return static('static/theme/icons/{}.png'.format(icon_name))
+    return static('theme/icons/{}.png'.format(icon_name))
