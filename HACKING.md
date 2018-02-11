@@ -2,12 +2,12 @@
 
 ## Setting Up Development Environment Using Vagrant
 
-Vagrant is a free software command line utility for managing the life
-cycle of virtual machines.  The FreedomBox project provides ready-made
-virtual machines (VMs) for use with Vagrant.  These images make setting up
-an environment for Plinth development rather simple:  You can edit the Plinth
-source code on your host and immediately see the effects in the running VM.
-The entire setup is automatic and requires about 4.5 GB of disk space.
+Vagrant is a free software command line utility for managing the life cycle of
+virtual machines. The FreedomBox project provides ready-made virtual machines
+(VMs) for use with Vagrant. These images make setting up an environment for
+FreedomBox development rather simple: You can edit the source code on your host
+and immediately see the effects in the running VM. The entire setup is automatic
+and requires about 4.5 GB of disk space.
 
 1. Install Vagrant and VirtualBox:
 
@@ -15,18 +15,21 @@ The entire setup is automatic and requires about 4.5 GB of disk space.
    $ sudo apt-get install virtualbox vagrant
    ```
 
-2. To download, setup, run, and configure a VM for Plinth development
-   using Vagrant, simply execute in your Plinth development folder:
+2. To download, setup, run, and configure a VM for FreedomBox development using
+   Vagrant, simply execute in your FreedomBox Service (Plinth) development
+   folder:
 
    ```
    $ vagrant up
    ```
 
-3. To access Plinth (from host), visit https://localhost:4430/plinth/
+3. To access FreedomBox web interface (from host), visit
+   https://localhost:4430/plinth/
 
-4. Edit the source code in your host machine's Plinth development folder.
-   By default, this folder is shared within the VM, at `/vagrant/`.
-   To actually reflect the changes in the running VM, run on your host:
+4. Edit the source code in your host machine's FreedomBox Service (Plinth)
+   development folder. By default, this folder is shared within the VM, at
+   `/vagrant/`. To actually reflect the changes in the running VM, run on your
+   host:
 
    ```
    $ vagrant provision
@@ -34,8 +37,8 @@ The entire setup is automatic and requires about 4.5 GB of disk space.
 
 ## Installing Dependencies
 
-Apart from dependencies listing in INSTALL.md file, Plinth may have additional
-dependencies required by modules of Plinth.  To install these, run:
+Apart from dependencies listing in INSTALL.md file, there may be additional
+dependencies required by apps of FreedomBox. To install these, run:
 
 ```
 $ sudo apt install -y $(plinth --list-dependencies)
@@ -61,17 +64,17 @@ However, for some reason, you wish setup manually, the following tips will help:
    the server as soon as a file is modified.  Hence it is usually sufficient
    to modify the source and refresh the browser page to see the changes.
 
-2. Plinth also support running without installing (as much as possible).
-   Simply run it as:
+2. FreedomBox Service (Plinth) also supports running without installing (as much
+   as possible). Simply run it as:
 
    ```
    $ sudo ./run --debug
    ```
 
-   In this mode, Plinth runs in working directory without need for
-   installation.  It uses the `plinth.conf` config file in the working
-   directory if no regular config file (`/etc/plinth/plinth.conf`) is found.
-   It creates all that data and runtime files in `data/var/*`.
+   In this mode, FreedomBox Service (Plinth) runs in working directory without
+   need for installation. It uses the `plinth.conf` config file in the working
+   directory if no regular config file (`/etc/plinth/plinth.conf`) is found. It
+   creates all that data and runtime files in `data/var/*`.
 
    *Note:* This mode is supported only in a limited manner.  The following are
    the unknown issues with it:
@@ -92,8 +95,8 @@ However, for some reason, you wish setup manually, the following tips will help:
 3. Run `setup.py develop` or `setup.py install` as described above on guest
    machine.
 
-4. Access the guest machine's Plinth web UI from host after setting bridging or
-   NATing for guest virtual machine.
+4. Access the guest machine's FreedomBox web UI from host after setting bridging
+   or NATing for guest virtual machine.
 
 ## Running Tests
 
@@ -103,7 +106,8 @@ To run all the tests:
 $ python3 setup.py test
 ```
 
-To run a specific test function, test class or test module, use the `-s` option with the fully qualified name.
+To run a specific test function, test class or test module, use the `-s` option
+with the fully qualified name.
 
 **Examples:**
 
@@ -140,9 +144,9 @@ and which statements or branches were not executed (red).
 
 ## Building the Documentation Separately
 
-Plinth man page is built from DocBook source in the `doc/` directory.
-FreedomBox manual is downloaded from the wiki is also available there.
-Both these are build during the installation process.
+FreedomBox Service (Plinth) man page is built from DocBook source in the `doc/`
+directory. FreedomBox manual is downloaded from the wiki is also available
+there. Both these are build during the installation process.
 
 To build the documentation separately, run:
 
@@ -152,21 +156,21 @@ $ make -C doc
 
 ## Repository
 
-Plinth is available from
+FreedomBox Service (Plinth) is available from
 [salsa.debian.org](https://salsa.debian.org/freedombox-team/plinth).
 
 ## Bugs & TODO
 
-You can report bugs on Plinth's [issue
+You can report bugs on FreedomBox Service's (Plinth's) [issue
 tracker](https://salsa.debian.org/freedombox-team/plinth/issues).
 
 See CONTRIBUTING.md for information how to best contribute code.
 
 ## Internationalization
 
-To mark text for translation, Plinth uses Django's translation strings.
-A module should e.g. `from django.utils.translation import ugettext as _`
-and wrap user-facing text with `_()`.  Use it like this:
+To mark text for translation, FreedomBox Service (Plinth) uses Django's
+translation strings. A module should e.g. `from django.utils.translation import
+ugettext as _` and wrap user-facing text with `_()`. Use it like this:
 
 ```python
 message = _('Application successfully installed and configured.')

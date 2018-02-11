@@ -4,10 +4,10 @@
 [![Debian Testing](https://badges.debian.net/badges/debian/testing/plinth/version.svg)](https://packages.debian.org/testing/plinth)
 [![Debian Stable](https://badges.debian.net/badges/debian/stable/plinth/version.svg)](https://packages.debian.org/stable/plinth)
 
-# Plinth
+# FreedomBox Service (Plinth)
 
-[Plinth](https://wiki.debian.org/FreedomBox/Plinth) - a web front end
-for administering [FreedomBox](https://freedomboxfoundation.org/)
+The core functionality and web front-end of
+[FreedomBox](https://freedombox.org/).
 
 <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=aboutfreedombox.png" width="425px" style="margin: 5px"> <img src="https://wiki.debian.org/FreedomBox/Plinth?action=AttachFile&do=get&target=tor1.png" width="425px" style="margin: 5px">
 
@@ -24,15 +24,15 @@ blog, wiki, website, social network, email, web proxy and a Tor relay,
 on a device that can replace your Wi-Fi router, so that your data
 stays with you.
 
-Plinth is a web interface to administer the functions of the
-FreedomBox.  It is extensible and provides various applications of
-FreedomBox as modules.  Each module or application provides simplified
-user interface to control the underlying functionality.  As FreedomBox
-can act as a wireless router, it is possible to configure networking
-from Plinth.  Plinth also allows configuration of basic system
+This module, called FreedomBox Service and also know as Plinth, is the core
+functionality and web interface to the functions of the FreedomBox. It is
+extensible and provides various applications of FreedomBox as modules. Each
+module or application provides simplified user interface to control the
+underlying functionality. As FreedomBox can act as a wireless router, it is
+possible to configure networking. It also allows configuration of basic system
 parameters such as time zone, hostname and automatic upgrades.
 
-You can find more information about Plinth on the
+You can find more information about FreedomBox Service (Plinth) on the
 [Plinth Wiki](https://wiki.debian.org/FreedomBox/Plinth) page,
 the [FreedomBox Wiki](https://wiki.debian.org/FreedomBox/) and the
 [FreedomBox Manual](https://wiki.debian.org/FreedomBox/Manual).
@@ -43,13 +43,13 @@ See the INSTALL.md file for additional details and dependencies. To install run:
 
     $ sudo python3 setup.py install
 
-Run Plinth on the local system with:
+Run FreedomBox Service (Plinth) on the local system with:
 
     $ sudo plinth
 
 # Contributing
 
-See the HACKING file for contributing to Plinth.
+See the HACKING file for contributing to FreedomBox Service (Plinth).
 
 # Localization
 

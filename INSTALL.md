@@ -1,4 +1,4 @@
-# Installing Plinth
+# Installing FreedomBox Service (Plinth)
 
 1. Install the dependencies:
 
@@ -41,7 +41,7 @@
    xmlto
    ```
 
-2. Install Plinth:
+2. Install FreedomBox Service (Plinth):
 
    Unzip the source into a directory.  Change to the directory containing the
    program and run:
@@ -51,19 +51,20 @@
    $ sudo apt install -y $(plinth --list-dependencies)
    ```
 
-3. Run Plinth:
+3. Run FreedomBox Service (Plinth):
 
    ```
    $ sudo plinth
    ```
 
-4. Access Plinth UI:
+4. Access FreedomBox UI:
 
-   Plinth UI should be accessible at http://localhost:8000/plinth
+   UI should be accessible at http://localhost:8000/plinth
 
 # Note on Django version:
 
-Django 1.11 is required to run Plinth. You can check the version by running:
+Django 1.11 is required to run FreedomBox Service (Plinth). You can check the
+version by running:
 
 ```
 $ django-admin --version
