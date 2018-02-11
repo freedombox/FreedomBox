@@ -184,7 +184,7 @@ setuptools.setup(
     description='A web front end for administering FreedomBox',
     author='FreedomBox Authors',
     author_email='freedombox-discuss@lists.alioth.debian.org',
-    url='http://freedomboxfoundation.org',
+    url='https://freedombox.org',
     packages=find_packages(include=['plinth', 'plinth.*'],
                            exclude=['*.templates']),
     scripts=['bin/plinth'],
