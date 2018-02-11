@@ -23,7 +23,6 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.generic.edit import FormView
-import subprocess
 
 from .forms import ConfigureForm
 from plinth import actions
