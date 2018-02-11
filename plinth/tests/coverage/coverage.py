@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- mode: python; mode: auto-fill; fill-column: 80 -*-
 #
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # Derived from code sample at:
 # http://jeetworks.org/adding-test-code-coverage-analysis-to-a-python-projects-setup-command/
