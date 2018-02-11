@@ -90,7 +90,7 @@ class CoverageCommand(setuptools.Command):
         cov.stop()
 
         # Generate an HTML report
-        html_report_title = 'FreedomBox:Plinth -- Test Coverage as of ' + \
+        html_report_title = 'FreedomBox -- Test Coverage as of ' + \
                             time.strftime('%x %X %Z')
         cov.html_report(directory=COVERAGE_REPORT_DIR, omit=FILES_TO_OMIT,
                         title=html_report_title)

@@ -99,13 +99,14 @@ def parse_arguments():
     delete_parser.add_argument('--domain', required=True,
                                help='Domain name to delete certificate of')
 
-    help_hooks = 'Plinth management of certificates (for current domain).'
+    help_hooks = 'FreedomBox management of certificates (for current domain).'
     manage_hook_parser = subparsers.add_parser('manage_hooks', help=help_hooks)
     manage_hook_parser.add_argument('command', help=help_hooks,
                                     choices=('enable', 'disable', 'status'))
     manage_hook_parser.add_argument('--domain',
                                     help='Domain for hook management command.')
-    help_module_arg = 'For enable: Also use LE cert with other Plinth modules.'
+    help_module_arg = 'For enable: Also use LE cert with other FreedomBox ' \
+                      'apps.'
     manage_hook_parser.add_argument('--modules', help=help_module_arg,
                                     nargs='+', default=[],
                                     choices=le.MODULES_WITH_HOOKS)

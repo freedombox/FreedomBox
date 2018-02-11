@@ -43,7 +43,7 @@ arguments = None
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Plinth web interface for FreedomBox',
+        description='Core functionality and web interface for FreedomBox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument('--server_dir', default=cfg.server_dir,
