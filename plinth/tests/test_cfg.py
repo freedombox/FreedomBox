@@ -36,7 +36,7 @@ logging.disable(logging.CRITICAL)
 
 
 class TestCfg(unittest.TestCase):
-    """Verify that the Plinth configuration module behaves as expected."""
+    """Verify that the configuration module behaves as expected."""
 
     @classmethod
     def setUpClass(cls):

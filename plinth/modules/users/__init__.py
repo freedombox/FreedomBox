@@ -44,7 +44,7 @@ first_boot_steps = [
 
 name = _('Users and Groups')
 
-# List of all Plinth user groups
+# List of all FreedomBox user groups
 groups = set()
 
 

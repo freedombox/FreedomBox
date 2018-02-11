@@ -144,14 +144,14 @@ function setup {
 }
 
 #
-# For a user who installed using freedombox-setup Debian package, when Plinth is
-# run for the first time, don't run network setup. This is ensured by checking
-# for the file /var/lib/freedombox/is-freedombox-disk-image which will not
-# exist.
+# For a user who installed using freedombox-setup Debian package, when
+# FreedomBox Service (Plinth) is run for the first time, don't run network
+# setup. This is ensured by checking for the file
+# /var/lib/freedombox/is-freedombox-disk-image which will not exist.
 #
-# For a user who installed using FreedomBox disk image, when Plinth runs for the
-# first time, setup process executes and triggers the script due networks module
-# being an essential module.
+# For a user who installed using FreedomBox disk image, when FreedomBox Service
+# (Plinth) runs for the first time, setup process executes and triggers the
+# script due networks module being an essential module.
 #
 if [ -f "/var/lib/freedombox/is-freedombox-disk-image" ]
 then

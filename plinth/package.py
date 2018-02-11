@@ -72,9 +72,10 @@ class Transaction(object):
     def install(self):
         """Run an apt-get transaction to install given packages.
 
-        Plinth needs to be running as root when calling this.
-        Currently, this is meant to be only during first time setup
-        when --setup is argument is passed.
+        FreedomBox Service (Plinth) needs to be running as root when calling
+        this. Currently, this is meant to be only during first time setup when
+        --setup is argument is passed.
+
         """
         try:
             self._run_apt_command(['update'])

@@ -21,7 +21,7 @@ Project specific errors
 
 
 class PlinthError(Exception):
-    """Base class for all Plinth specific errors."""
+    """Base class for all FreedomBox specific errors."""
     pass
 
 

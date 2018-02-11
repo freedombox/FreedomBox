@@ -20,7 +20,7 @@
 #
 
 """
-Initial Django migration for Plinth to create database tables.
+Initial Django migration for FreedomBox to create database tables.
 """
 
 from __future__ import unicode_literals
@@ -29,7 +29,7 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    """Initial migration schema for Plinth models."""
+    """Initial migration schema for FreedomBox models."""
 
     initial = True
 

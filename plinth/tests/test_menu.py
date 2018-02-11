@@ -61,7 +61,7 @@ def dump_menu(menu):
 
 
 class MenuTestCase(TestCase):
-    """Verify the behavior of the Plinth Menu class."""
+    """Verify the behavior of the Menu class."""
 
     def test_init(self):
         """Verify that main_menu and essential items are created."""

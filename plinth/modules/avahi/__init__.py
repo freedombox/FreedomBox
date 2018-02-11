@@ -67,8 +67,8 @@ def setup(helper, old_version=False):
     """Install and configure the module."""
     helper.install(managed_packages)
     # Reload avahi-daemon now that first-run does not reboot. After performing
-    # Plinth package installation, new Avahi files will be available and
-    # require restart.
+    # FreedomBox Service (Plinth) package installation, new Avahi files will be
+    # available and require restart.
     helper.call('post', actions.superuser_run, 'service',
                 ['reload', 'avahi-daemon'])
 

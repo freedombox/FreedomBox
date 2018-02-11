@@ -301,8 +301,8 @@ def run_setup_on_modules(module_list, allow_install=True):
     setup on all essential modules only.
 
     allow_install with or without package installation. When setting up
-    essential modules, installing packages is not required as Plinth itself has
-    dependencies on all essential modules.
+    essential modules, installing packages is not required as FreedomBox
+    (Plinth) itself has dependencies on all essential modules.
 
     """
     try:
