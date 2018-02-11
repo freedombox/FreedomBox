@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring ikiwiki
+FreedomBox app for configuring ikiwiki.
 """
 
 from django.contrib import messages

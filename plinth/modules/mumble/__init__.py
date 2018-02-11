@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Mumble server
+FreedomBox app to configure Mumble server.
 """
 
 from django.urls import reverse_lazy

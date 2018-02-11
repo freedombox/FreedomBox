@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Single Sign On services.
+FreedomBox app to configure Single Sign On services.
 """
 
 from plinth import actions

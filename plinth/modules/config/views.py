@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth views for basic system configuration
+FreedomBox views for basic system configuration.
 """
 
 import logging

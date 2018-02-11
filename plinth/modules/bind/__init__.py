@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure BIND server.
+FreedomBox app to configure BIND server.
 """
 
 import re

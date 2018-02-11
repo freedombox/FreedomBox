@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
-Plinth module to configure Shadowsocks.
+FreedomBox app to configure Shadowsocks.
 """
 
 from django.urls import reverse_lazy

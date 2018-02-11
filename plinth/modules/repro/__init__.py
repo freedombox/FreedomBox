@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for repro.
+FreedomBox app for repro.
 """
 
 from django.urls import reverse_lazy

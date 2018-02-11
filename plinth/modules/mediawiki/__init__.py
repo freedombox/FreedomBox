@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure MediaWiki.
+FreedomBox app to configure MediaWiki.
 """
 
 from django.utils.translation import ugettext_lazy as _

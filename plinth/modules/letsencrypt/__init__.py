@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for using Let's Encrypt.
+FreedomBox app for using Let's Encrypt.
 """
 
 import json

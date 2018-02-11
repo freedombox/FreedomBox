@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Tahoe-LAFS.
+FreedomBox app to configure Tahoe-LAFS.
 """
 
 import json

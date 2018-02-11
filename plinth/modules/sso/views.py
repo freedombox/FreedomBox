@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Views for the Single Sign On module of Plinth
+Views for the Single Sign On app of FreedomBox.
 """
 
 import logging
@@ -54,8 +54,10 @@ def set_ticket_cookie(user, response):
 
 
 class SSOLoginView(LoginView):
-    """View to login to Plinth and set a auth_pubtkt cookie which will be
-    used to provide Single Sign On for some other applications
+    """View to login to FreedomBox and set a auth_pubtkt cookie.
+
+    Cookie will be used to provide Single Sign On for some other applications.
+
     """
     redirect_authenticated_user = True
     template_name = 'login.html'
@@ -101,7 +103,7 @@ def get_ip_address_from_request(request):
 
 
 class SSOLogoutView(LogoutView):
-    """View to log out of Plinth and remove the auth_pubtkt cookie"""
+    """View to log out of FreedomBox and remove the auth_pubtkt cookie."""
     template_name = 'index.html'
 
     def dispatch(self, request, *args, **kwargs):

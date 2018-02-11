@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Forms for the Single Sign On module of Plinth
+Forms for the Single Sign On app of FreedomBox.
 """
 
 from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm

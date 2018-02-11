@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to manage filesystem snapshots.
+FreedomBox app to manage filesystem snapshots.
 """
 
 import json

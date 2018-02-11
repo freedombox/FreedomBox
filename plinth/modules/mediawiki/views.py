@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring MediaWiki.
+FreedomBox app for configuring MediaWiki.
 """
 
 import logging

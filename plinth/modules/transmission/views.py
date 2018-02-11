@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring Transmission Server
+FreedomBox app for configuring Transmission Server.
 """
 
 from django.contrib import messages

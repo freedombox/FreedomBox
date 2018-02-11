@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
-Plinth module to configure Roundcube.
+FreedomBox app to configure Roundcube.
 """
 
 from django.utils.translation import ugettext_lazy as _

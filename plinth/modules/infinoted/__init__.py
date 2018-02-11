@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for infinoted.
+FreedomBox app for infinoted.
 """
 
 from django.urls import reverse_lazy

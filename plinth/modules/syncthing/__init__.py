@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Syncthing.
+FreedomBox app to configure Syncthing.
 """
 
 from django.utils.translation import ugettext_lazy as _

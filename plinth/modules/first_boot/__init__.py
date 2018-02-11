@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for first boot wizard
+FreedomBox app for first boot wizard.
 """
 
 import operator

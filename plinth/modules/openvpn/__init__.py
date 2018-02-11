@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure OpenVPN server.
+FreedomBox app to configure OpenVPN server.
 """
 
 from django.urls import reverse_lazy

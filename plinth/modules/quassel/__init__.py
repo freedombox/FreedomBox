@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for Quassel.
+FreedomBox app for Quassel.
 """
 
 from django.urls import reverse_lazy

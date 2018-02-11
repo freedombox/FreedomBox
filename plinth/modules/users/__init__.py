@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to manage users
+FreedomBox app to manage users.
 """
 
 import subprocess

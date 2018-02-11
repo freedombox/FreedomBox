@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for using Let's Encrypt.
+FreedomBox app for using Let's Encrypt.
 """
 
 import logging
@@ -101,7 +101,11 @@ def enable_renewal_management(request, domain):
 
 @require_POST
 def toggle_hooks(request, domain):
-    """Toggle pointing of certbot's hooks to Plinth, for the current domain."""
+    """Toggle pointing of certbot's hooks to FreedomBox.
+
+    For the current domain.
+
+    """
     manage_hooks_status = letsencrypt.get_manage_hooks_status()
     subcommand = 'disable' if 'enabled' in manage_hooks_status else 'enable'
 

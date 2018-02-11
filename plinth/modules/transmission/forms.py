@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring Transmission.
+FreedomBox app for configuring Transmission.
 """
 
 from django import forms

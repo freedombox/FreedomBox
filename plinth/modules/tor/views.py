@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for configuring Tor.
+FreedomBox app for configuring Tor.
 """
 from django.contrib import messages
 from django.template.response import TemplateResponse

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Help module for Plinth.
+Help app for FreedomBox.
 """
 
 import mimetypes

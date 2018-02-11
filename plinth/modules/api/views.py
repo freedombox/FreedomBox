@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for api for android app.
+FreedomBox app for api for android app.
 """
 
 from django.http import HttpResponse

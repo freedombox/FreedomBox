@@ -112,7 +112,7 @@ def setup_domain_name(domain_name):
 
 
 def add_shortcut():
-    """Add shortcut to diaspora on the Plinth homepage"""
+    """Add shortcut to diaspora on the homepage."""
     if is_setup():
         frontpage.add_shortcut(
             'diaspora', name, short_description,

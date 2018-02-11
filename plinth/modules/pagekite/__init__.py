@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure PageKite
+FreedomBox app to configure PageKite.
 """
 
 from django.utils.translation import ugettext_lazy as _

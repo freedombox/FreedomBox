@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Transmission server
+FreedomBox app to configure Transmission server.
 """
 
 import json

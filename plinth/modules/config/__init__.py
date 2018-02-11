@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module for basic system configuration
+FreedomBox app for basic system configuration.
 """
 
 import socket
