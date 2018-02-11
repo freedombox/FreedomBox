@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module with utilites for performing application setup operations.
+Utilities for performing application setup operations.
 """
 
 import logging

@@ -15,9 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
-Module initializer for Plinth test cases containing test suite
+Module initializer for FreedomBox test cases containing test suite.
 """
 
 import unittest

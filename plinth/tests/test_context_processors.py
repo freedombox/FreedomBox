@@ -16,7 +16,7 @@
 #
 
 """
-Test module for Plinth's custom context processors.
+Test module for custom context processors.
 """
 from unittest.mock import Mock, MagicMock
 

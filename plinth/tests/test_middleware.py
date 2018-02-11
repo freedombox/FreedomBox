@@ -16,7 +16,7 @@
 #
 
 """
-Test module for Plinth's custom middleware.
+Test module for custom middleware.
 """
 
 from unittest.mock import Mock, MagicMock, patch

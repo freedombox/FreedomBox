@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth signals
+Django signals emitted within FreedomBox.
 """
 
 from django.dispatch import Signal
