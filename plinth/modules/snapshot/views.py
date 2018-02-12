@@ -52,11 +52,15 @@ def index(request):
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
+    has_deletable_snapshots = any(
+        [snapshot for snapshot in snapshots[1:]
+         if not snapshot['is_default']])
 
     return TemplateResponse(request, 'snapshot.html', {
         'title': snapshot_module.name,
         'description': snapshot_module.description,
         'snapshots': snapshots,
+        'has_deletable_snapshots': has_deletable_snapshots,
         'form': form
     })
 

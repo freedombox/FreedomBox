@@ -40,11 +40,11 @@
     <div class="col-xs-6 text-right">
       <a title="{% trans 'Delete all the snapshots' %}"
          role="button" class="btn btn-danger"
-         {% if snapshots|length == 1 %}
-         disabled="disabled"
-         {% else %}
-         href="{% url 'snapshot:delete-all' %}"
-         {% endif %}>
+        {% if not has_deletable_snapshots %}
+          disabled="disabled"
+        {% else %}
+          href="{% url 'snapshot:delete-all' %}"
+        {% endif %}>
         {% trans 'Delete All' %}
       </a>
     </div>
