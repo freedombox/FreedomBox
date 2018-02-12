@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 1
+version = 2
 
 managed_packages = ['snapper']
 
