@@ -14,32 +14,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Plinth views for basic system configuration
 """
-from django.utils import translation
-from django.utils.translation import ugettext as _
-from django.template.response import TemplateResponse
-from django.contrib import messages
-
-from plinth.modules import config
-from .forms import ConfigurationForm
-from plinth.signals import pre_hostname_change, post_hostname_change
-from plinth import actions
-from plinth.signals import domain_added, domain_removed, domainname_change
-from plinth.modules import firewall
-from plinth.modules.names import SERVICES
 
 import logging
-import socket
+
+from django.contrib import messages
+from django.template.response import TemplateResponse
+from django.utils import translation
+from django.utils.translation import ugettext as _
+
+from plinth import actions
+from plinth.modules import config, firewall
+from plinth.modules.names import SERVICES
+from plinth.signals import (domain_added, domain_removed, domainname_change,
+                            post_hostname_change, pre_hostname_change)
+
+from .forms import ConfigurationForm
 
 LOGGER = logging.getLogger(__name__)
-
-
-def get_hostname():
-    """Return the hostname"""
-    return socket.gethostname()
 
 
 def get_language(request):
@@ -64,21 +58,23 @@ def index(request):
         if form.is_valid():
             _apply_changes(request, status, form.cleaned_data)
             status = get_status(request)
-            form = ConfigurationForm(initial=status,
-                                     prefix='configuration')
+            form = ConfigurationForm(initial=status, prefix='configuration')
     else:
         form = ConfigurationForm(initial=status, prefix='configuration')
 
-    return TemplateResponse(request, 'config.html',
-                            {'title': _('General Configuration'),
-                             'form': form})
+    return TemplateResponse(request, 'config.html', {
+        'title': _('General Configuration'),
+        'form': form
+    })
 
 
 def get_status(request):
     """Return the current status"""
-    return {'hostname': get_hostname(),
-            'domainname': config.get_domainname(),
-            'language': get_language(request)}
+    return {
+        'hostname': config.get_hostname(),
+        'domainname': config.get_domainname(),
+        'language': get_language(request)
+    }
 
 
 def _apply_changes(request, old_status, new_status):
@@ -87,7 +83,8 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_hostname(new_status['hostname'])
         except Exception as exception:
-            messages.error(request, _('Error setting hostname: {exception}')
+            messages.error(request,
+                           _('Error setting hostname: {exception}')
                            .format(exception=exception))
         else:
             messages.success(request, _('Hostname set'))
@@ -96,7 +93,8 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_domainname(new_status['domainname'])
         except Exception as exception:
-            messages.error(request, _('Error setting domain name: {exception}')
+            messages.error(request,
+                           _('Error setting domain name: {exception}')
                            .format(exception=exception))
         else:
             messages.success(request, _('Domain name set'))
@@ -107,7 +105,8 @@ def _apply_changes(request, old_status, new_status):
             translation.activate(language)
             request.session[translation.LANGUAGE_SESSION_KEY] = language
         except Exception as exception:
-            messages.error(request, _('Error setting language: {exception}')
+            messages.error(request,
+                           _('Error setting language: {exception}')
                            .format(exception=exception))
         else:
             messages.success(request, _('Language changed'))
@@ -115,23 +114,21 @@ def _apply_changes(request, old_status, new_status):
 
 def set_hostname(hostname):
     """Sets machine hostname to hostname"""
-    old_hostname = get_hostname()
+    old_hostname = config.get_hostname()
     domainname = config.get_domainname()
 
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert to ASCII.
     hostname = str(hostname)
 
-    pre_hostname_change.send_robust(sender='config',
-                                    old_hostname=old_hostname,
+    pre_hostname_change.send_robust(sender='config', old_hostname=old_hostname,
                                     new_hostname=hostname)
 
     LOGGER.info('Changing hostname to - %s', hostname)
     actions.superuser_run('hostname-change', [hostname])
 
-    post_hostname_change.send_robust(sender='config',
-                                     old_hostname=old_hostname,
-                                     new_hostname=hostname)
+    post_hostname_change.send_robust(
+        sender='config', old_hostname=old_hostname, new_hostname=hostname)
 
     LOGGER.info('Setting domain name after hostname change - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])

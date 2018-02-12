@@ -41,6 +41,11 @@ def get_domainname():
     return '.'.join(fqdn.split('.')[1:])
 
 
+def get_hostname():
+    """Return the hostname"""
+    return socket.gethostname()
+
+
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
