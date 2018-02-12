@@ -27,9 +27,30 @@ class SnapshotForm(forms.Form):
         label=_('Enable Timeline Snapshots'), required=False, help_text=_(
             'Uncheck this to disable timeline snapshots '
             '(hourly, daily, monthly and yearly).'))
-    hourly_limit = forms.IntegerField(label=_('Hourly Snapshots Limit'),required=False, min_value=0)
-    daily_limit = forms.IntegerField(label=_('Daily Snapshots Limit'),required=False, min_value=0)
-    weekly_limit = forms.IntegerField(label=_('Weekly Snapshots Limit'),required=False, min_value=0)
-    monthly_limit = forms.IntegerField(label=_('Monthly Snapshots Limit'),required=False, min_value=0)
-    yearly_limit = forms.IntegerField(label=_('Yearly Snapshots Limit'),required=False, min_value=0)
-    number_min_age = forms.IntegerField(label=_('Software Snapshots Minimum Age (days)'), required=False, min_value=0)
+
+    hourly_limit = forms.IntegerField(
+        label=_('Hourly Snapshots Limit'), min_value=0,
+        help_text=('Snapper will only keep this number of hourly snapshots.'))
+
+    daily_limit = forms.IntegerField(
+        label=_('Daily Snapshots Limit'), min_value=0,
+        help_text=('Snapper will only keep this number of daily snapshots.'))
+
+    weekly_limit = forms.IntegerField(
+        label=_('Weekly Snapshots Limit'), min_value=0,
+        help_text=('Snapper will only keep this number of weekly snapshots.'))
+
+    monthly_limit = forms.IntegerField(
+        label=_('Monthly Snapshots Limit'), min_value=0,
+        help_text=('Snapper will only keep this number of monthly snapshots.'))
+
+    yearly_limit = forms.IntegerField(
+        label=_('Yearly Snapshots Limit'), min_value=0,
+        help_text=('Snapper will only keep this number of yearly snapshots. '
+                   'The default is 0 (disabled).'))
+
+    number_min_age = forms.IntegerField(
+        label=_('Delete Software Snapshots older than (days)'), min_value=0,
+        help_text=_(
+            'Software snapshots older than this will be deleted. '
+            'This does not limit the number of software snapshots created.'))

@@ -35,11 +35,10 @@ description = [
     _('Snapshots allows creating and managing filesystem snapshots. These can '
       'be used to roll back the system to a previously known good state in '
       'case of unwanted changes to the system.'),
-    _('Automatic snapshots are taken every hour, day, month and year. Older '
-      'snapshots are automatically deleted keeping 10 of each kind and 50 in '
-      'total. Although snapshots are efficient and only store the '
+    _('Automatic snapshots are taken every hour, day, month and year. '
+      'Although snapshots are efficient and only store the '
       'differences, they may be deleted to reclaim free space.  Individual '
-      'files from older snapshots can be accessed by visiting ".snapshots" '
+      'files from older snapshots can be accessed by visiting "/.snapshots" '
       'directory in the filesystem. Snapshots are not a replacement for '
       'backups.')
 ]
@@ -62,11 +61,12 @@ def setup(helper, old_version=None):
 def get_configuration():
     output = actions.superuser_run('snapshot', ['get-config'])
     output = json.loads(output)
-    return {'enable_timeline_snapshots': output['TIMELINE_CREATE'] == 'yes',
-            'hourly_limit': output['TIMELINE_LIMIT_HOURLY'],
-            'daily_limit': output['TIMELINE_LIMIT_DAILY'],
-            'weekly_limit': output['TIMELINE_LIMIT_WEEKLY'],
-            'yearly_limit': output['TIMELINE_LIMIT_YEARLY'],
-            'monthly_limit': output['TIMELINE_LIMIT_MONTHLY'],
-            'number_min_age': round(int(output['NUMBER_MIN_AGE']) / 86400),
-            'timeline_min_age': round(int(output['TIMELINE_MIN_AGE']) / 86400)}
+    return {
+        'enable_timeline_snapshots': output['TIMELINE_CREATE'] == 'yes',
+        'hourly_limit': output['TIMELINE_LIMIT_HOURLY'],
+        'daily_limit': output['TIMELINE_LIMIT_DAILY'],
+        'weekly_limit': output['TIMELINE_LIMIT_WEEKLY'],
+        'yearly_limit': output['TIMELINE_LIMIT_YEARLY'],
+        'monthly_limit': output['TIMELINE_LIMIT_MONTHLY'],
+        'number_min_age': round(int(output['NUMBER_MIN_AGE']) / 86400),
+    }

@@ -53,44 +53,47 @@ def index(request):
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
     has_deletable_snapshots = any(
-        [snapshot for snapshot in snapshots[1:]
-         if not snapshot['is_default']])
+        [snapshot for snapshot in snapshots[1:] if not snapshot['is_default']])
 
-    return TemplateResponse(request, 'snapshot.html', {
-        'title': snapshot_module.name,
-        'description': snapshot_module.description,
-        'snapshots': snapshots,
-        'has_deletable_snapshots': has_deletable_snapshots,
-        'form': form
-    })
-
-
-def update_key_configuration(key, old_status, new_status, stamp,threshold):
-    if old_status[key] != new_status[key]:
-        actions.superuser_run(
-            'snapshot',
-            ['configure', stamp.format(threshold)])
+    return TemplateResponse(
+        request, 'snapshot.html', {
+            'title': snapshot_module.name,
+            'description': snapshot_module.description,
+            'snapshots': snapshots,
+            'has_deletable_snapshots': has_deletable_snapshots,
+            'form': form
+        })
 
 
 def update_configuration(request, old_status, new_status):
     """Update configuration of snapshots."""
-    try:
-        update_key_configuration('enable_timeline_snapshots', old_status, new_status, 'TIMELINE_CREATE={}', yes_or_no(new_status['enable_timeline_snapshots']))
-        update_key_configuration('hourly_limit',old_status,new_status,'TIMELINE_LIMIT_HOURLY={}', new_status['hourly_limit'])
-        update_key_configuration('daily_limit', old_status, new_status, 'TIMELINE_LIMIT_DAILY={}', new_status['daily_limit'])
-        update_key_configuration('weekly_limit', old_status, new_status, 'TIMELINE_LIMIT_WEEKLY={}', new_status['weekly_limit'])
-        update_key_configuration('monthly_limit', old_status, new_status, 'TIMELINE_LIMIT_MONTHLY={}', new_status['monthly_limit'])
-        update_key_configuration('yearly_limit', old_status, new_status, 'TIMELINE_LIMIT_YEARLY={}', new_status['yearly_limit'])
-        update_key_configuration('number_min_age', old_status, new_status, 'NUMBER_MIN_AGE={}', int(new_status['number_min_age'])*86400)
 
-        actions.superuser_run(
-            'snapshot',
-            ['configure', 'NUMBER_LIMIT=0-0'])
-        actions.superuser_run(
-            'snapshot',
-            ['configure', 'NUMBER_LIMIT_IMPORTANT=4-10'])
-        messages.success(request,
-                             _('Timeline Snapshots configuration updated'))
+    def update_key_configuration(key, stamp, threshold):
+        if old_status[key] != new_status[key]:
+            actions.superuser_run(
+                'snapshot', ['configure', stamp.format(threshold)])
+
+    try:
+        update_key_configuration(
+            'enable_timeline_snapshots', 'TIMELINE_CREATE={}',
+            yes_or_no(new_status['enable_timeline_snapshots']))
+        update_key_configuration('hourly_limit', 'TIMELINE_LIMIT_HOURLY={}',
+                                 new_status['hourly_limit'])
+        update_key_configuration('daily_limit', 'TIMELINE_LIMIT_DAILY={}',
+                                 new_status['daily_limit'])
+        update_key_configuration('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}',
+                                 new_status['weekly_limit'])
+        update_key_configuration('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}',
+                                 new_status['monthly_limit'])
+        update_key_configuration('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}',
+                                 new_status['yearly_limit'])
+        update_key_configuration('number_min_age', 'NUMBER_MIN_AGE={}',
+                                 int(new_status['number_min_age']) * 86400)
+
+        actions.superuser_run('snapshot', ['configure', 'NUMBER_LIMIT=0'])
+        actions.superuser_run('snapshot',
+                              ['configure', 'NUMBER_LIMIT_IMPORTANT=4-10'])
+        messages.success(request, _('Storage snapshots configuration updated'))
     except ActionError as exception:
         messages.error(request,
                        _('Action error: {0} [{1}] [{2}]').format(
@@ -103,7 +106,8 @@ def delete(request, number):
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['delete', number])
         messages.success(
-            request, _('Deleted snapshot #{number}.').format(number=number))
+            request,
+            _('Deleted snapshot #{number}.').format(number=number))
         return redirect(reverse('snapshot:index'))
 
     output = actions.superuser_run('snapshot', ['list'])
