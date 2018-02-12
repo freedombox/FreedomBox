@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 14:38+0530\n"
+"POT-Creation-Date: 2018-02-12 18:01-0500\n"
 "PO-Revision-Date: 2017-10-04 22:47+0000\n"
 "Last-Translator: Luis A. Arizmendi <luis.arizmendi@mailfence.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -19,32 +19,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.17-dev\n"
 
-#: plinth/action_utils.py:252
+#: plinth/action_utils.py:263
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Escuchando en el puerto {kind} {listen_address}:{port}"
 
-#: plinth/action_utils.py:255
+#: plinth/action_utils.py:266
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Escuchando en el puerto {port} {kind}"
 
-#: plinth/action_utils.py:342
+#: plinth/action_utils.py:353
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Acceso a {url} en tcp{kind}"
 
-#: plinth/action_utils.py:346
+#: plinth/action_utils.py:357
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Acceso a {url}"
 
-#: plinth/action_utils.py:374
+#: plinth/action_utils.py:385
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Conectar a {host}:{port}"
 
-#: plinth/action_utils.py:377
+#: plinth/action_utils.py:388
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "No se pudo conectar a {host}:{port}"
@@ -198,15 +198,15 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:48
+#: plinth/modules/config/__init__.py:53
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:36
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Configurar"
 
-#: plinth/modules/config/__init__.py:66 plinth/modules/config/forms.py:81
-#: plinth/modules/config/views.py:166
+#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:163
 #: plinth/modules/dynamicdns/dynamicdns.py:143
 msgid "Domain Name"
 msgstr "Nombre de dominio"
@@ -267,34 +267,34 @@ msgstr "Idioma para la interfaz de administración web"
 msgid "Submit"
 msgstr "Enviar"
 
-#: plinth/modules/config/views.py:73
+#: plinth/modules/config/views.py:66
 msgid "General Configuration"
 msgstr "Configuración general"
 
-#: plinth/modules/config/views.py:90
+#: plinth/modules/config/views.py:87
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Error al definir el nombre de anfitrión: {exception}"
 
-#: plinth/modules/config/views.py:93
+#: plinth/modules/config/views.py:90
 msgid "Hostname set"
 msgstr "Asignar nombre de anfitrión"
 
-#: plinth/modules/config/views.py:99
+#: plinth/modules/config/views.py:97
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Error al establecer nombre de dominio: {exception}"
 
-#: plinth/modules/config/views.py:102
+#: plinth/modules/config/views.py:100
 msgid "Domain name set"
 msgstr "Asignar nombre de dominio"
 
-#: plinth/modules/config/views.py:110
+#: plinth/modules/config/views.py:109
 #, python-brace-format
 msgid "Error setting language: {exception}"
 msgstr "Error al establecer idioma: {exception}"
 
-#: plinth/modules/config/views.py:113
+#: plinth/modules/config/views.py:112
 msgid "Language changed"
 msgstr "Idioma cambiado"
 
@@ -1539,7 +1539,7 @@ msgstr "Volver a obtener"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:62
+#: plinth/modules/snapshot/templates/snapshot.html:61
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -2640,7 +2640,7 @@ msgid "Interface"
 msgstr "Interfaz"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot.html:60
+#: plinth/modules/snapshot/templates/snapshot.html:59
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
@@ -3805,12 +3805,19 @@ msgstr ""
 "cambios no deseados."
 
 #: plinth/modules/snapshot/__init__.py:38
+#, fuzzy
+#| msgid ""
+#| "Automatic snapshots are taken every hour, day, month and year. Older "
+#| "snapshots are automatically deleted keeping 10 of each kind and 50 in "
+#| "total. Although snapshots are efficient and only store the differences, "
+#| "they may be deleted to reclaim free space.  Individual files from older "
+#| "snapshots can be accessed by visiting \".snapshots\" directory in the "
+#| "filesystem. Snapshots are not a replacement for backups."
 msgid ""
-"Automatic snapshots are taken every hour, day, month and year. Older "
-"snapshots are automatically deleted keeping 10 of each kind and 50 in total. "
-"Although snapshots are efficient and only store the differences, they may be "
-"deleted to reclaim free space.  Individual files from older snapshots can be "
-"accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
+"Automatic snapshots are taken every hour, day, month and year. Although "
+"snapshots are efficient and only store the differences, they may be deleted "
+"to reclaim free space.  Individual files from older snapshots can be "
+"accessed by visiting \"/.snapshots\" directory in the filesystem. Snapshots "
 "are not a replacement for backups."
 msgstr ""
 "Se toman instantáneas automáticas cada hora, día, mes y año. Los más "
@@ -3832,50 +3839,88 @@ msgid ""
 "yearly)."
 msgstr ""
 
+#: plinth/modules/snapshot/forms.py:32
+#, fuzzy
+#| msgid "Storage Snapshots"
+msgid "Hourly Snapshots Limit"
+msgstr "Almacén de instantáneas"
+
+#: plinth/modules/snapshot/forms.py:36
+#, fuzzy
+#| msgid "Delete Snapshot"
+msgid "Daily Snapshots Limit"
+msgstr "Eliminar instantánea"
+
+#: plinth/modules/snapshot/forms.py:40
+#, fuzzy
+#| msgid "Delete Snapshot"
+msgid "Weekly Snapshots Limit"
+msgstr "Eliminar instantánea"
+
+#: plinth/modules/snapshot/forms.py:44
+msgid "Monthly Snapshots Limit"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:48
+#, fuzzy
+#| msgid "Delete Snapshot"
+msgid "Yearly Snapshots Limit"
+msgstr "Eliminar instantánea"
+
+#: plinth/modules/snapshot/forms.py:53
+msgid "Delete Software Snapshots older than (days)"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:55
+msgid ""
+"Software snapshots older than this will be deleted. This does not limit the "
+"number of software snapshots created."
+msgstr ""
+
 #: plinth/modules/snapshot/templates/snapshot.html:36
 msgid "Create Snapshot"
 msgstr "Crear instantánea"
 
-#: plinth/modules/snapshot/templates/snapshot.html:41
+#: plinth/modules/snapshot/templates/snapshot.html:40
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Delete all the snapshots"
 msgstr "Eliminar instantánea"
 
-#: plinth/modules/snapshot/templates/snapshot.html:48
+#: plinth/modules/snapshot/templates/snapshot.html:47
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete All"
 msgstr "Eliminar"
 
-#: plinth/modules/snapshot/templates/snapshot.html:58
+#: plinth/modules/snapshot/templates/snapshot.html:57
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr "Número"
 
-#: plinth/modules/snapshot/templates/snapshot.html:59
+#: plinth/modules/snapshot/templates/snapshot.html:58
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr "Fecha"
 
-#: plinth/modules/snapshot/templates/snapshot.html:61
+#: plinth/modules/snapshot/templates/snapshot.html:60
 msgid "Rollback"
 msgstr "Restaurar"
 
-#: plinth/modules/snapshot/templates/snapshot.html:72
+#: plinth/modules/snapshot/templates/snapshot.html:71
 msgid "active"
 msgstr "Activa"
 
-#: plinth/modules/snapshot/templates/snapshot.html:81
+#: plinth/modules/snapshot/templates/snapshot.html:80
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Restaurar a instantánea %(number)s"
 
-#: plinth/modules/snapshot/templates/snapshot.html:92
+#: plinth/modules/snapshot/templates/snapshot.html:91
 #, python-format
 msgid "Delete snapshot #%(number)s"
 msgstr "Eliminar instantánea %(number)s"
@@ -3895,8 +3940,8 @@ msgstr "Eliminar instantánea %(number)s"
 msgid "Delete the following snapshots permanently?"
 msgstr "¿Eliminar esta instantánea definitivamente?"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:55
-#: plinth/modules/snapshot/views.py:112
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
+#: plinth/modules/snapshot/views.py:134
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Delete Snapshots"
@@ -3924,42 +3969,42 @@ msgstr "Restaurar a instantánea %(number)s"
 msgid "Created snapshot."
 msgstr "Instantánea creada."
 
-#: plinth/modules/snapshot/views.py:75
+#: plinth/modules/snapshot/views.py:96
 #, fuzzy
 #| msgid "Access rights configuration updated"
-msgid "Timeline Snapshots configuration updated"
+msgid "Storage snapshots configuration updated"
 msgstr "Configuración de derechos de acceso actualizada"
 
-#: plinth/modules/snapshot/views.py:78 plinth/modules/tor/views.py:67
+#: plinth/modules/snapshot/views.py:99 plinth/modules/tor/views.py:67
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Acción de error: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:88
+#: plinth/modules/snapshot/views.py:110
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr "Borrar instantánea {number}."
 
-#: plinth/modules/snapshot/views.py:96
+#: plinth/modules/snapshot/views.py:118
 msgid "Delete Snapshot"
 msgstr "Eliminar instantánea"
 
-#: plinth/modules/snapshot/views.py:105
+#: plinth/modules/snapshot/views.py:127
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Deleted all snapshots."
 msgstr "Eliminar instantánea"
 
-#: plinth/modules/snapshot/views.py:123
+#: plinth/modules/snapshot/views.py:145
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Sistema restaurado a la instantánea {number}."
 
-#: plinth/modules/snapshot/views.py:126
+#: plinth/modules/snapshot/views.py:148
 msgid "The system must be restarted to complete the rollback."
 msgstr "Debe reiniciar el sistema para completar la restauración."
 
-#: plinth/modules/snapshot/views.py:138
+#: plinth/modules/snapshot/views.py:160
 msgid "Rollback to Snapshot"
 msgstr "Restaurar a instantánea"
 

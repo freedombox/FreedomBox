@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 14:38+0530\n"
+"POT-Creation-Date: 2018-02-12 18:01-0500\n"
 "PO-Revision-Date: 2018-01-22 05:28+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -21,32 +21,32 @@ msgstr ""
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
-#: plinth/action_utils.py:252
+#: plinth/action_utils.py:263
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Luistert op {kind} poort {listen_address}:{port}"
 
-#: plinth/action_utils.py:255
+#: plinth/action_utils.py:266
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Luistert op {kind} poort {port}"
 
-#: plinth/action_utils.py:342
+#: plinth/action_utils.py:353
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Gebruik URL {url} op tcp{kind}"
 
-#: plinth/action_utils.py:346
+#: plinth/action_utils.py:357
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "ToegangsURL {url}"
 
-#: plinth/action_utils.py:374
+#: plinth/action_utils.py:385
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Verbind met {host}:{port}"
 
-#: plinth/action_utils.py:377
+#: plinth/action_utils.py:388
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Kan niet verbinden met {host}:{port}"
@@ -197,15 +197,15 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:48
+#: plinth/modules/config/__init__.py:53
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:36
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Configureer"
 
-#: plinth/modules/config/__init__.py:66 plinth/modules/config/forms.py:81
-#: plinth/modules/config/views.py:166
+#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:81
+#: plinth/modules/config/views.py:163
 #: plinth/modules/dynamicdns/dynamicdns.py:143
 msgid "Domain Name"
 msgstr "Domeinnaam"
@@ -266,34 +266,34 @@ msgstr "Taalkeuze voor deze webadministratie-interface"
 msgid "Submit"
 msgstr "Invoeren"
 
-#: plinth/modules/config/views.py:73
+#: plinth/modules/config/views.py:66
 msgid "General Configuration"
 msgstr "Algemene Instellingen"
 
-#: plinth/modules/config/views.py:90
+#: plinth/modules/config/views.py:87
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Hostnaam instellen mislukt: {exception}"
 
-#: plinth/modules/config/views.py:93
+#: plinth/modules/config/views.py:90
 msgid "Hostname set"
 msgstr "Hostnaam ingesteld"
 
-#: plinth/modules/config/views.py:99
+#: plinth/modules/config/views.py:97
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Domeinnaam instellen mislukt: {exception}"
 
-#: plinth/modules/config/views.py:102
+#: plinth/modules/config/views.py:100
 msgid "Domain name set"
 msgstr "Domeinnaam ingesteld"
 
-#: plinth/modules/config/views.py:110
+#: plinth/modules/config/views.py:109
 #, python-brace-format
 msgid "Error setting language: {exception}"
 msgstr "Taal instellen mislukt: {exception}"
 
-#: plinth/modules/config/views.py:113
+#: plinth/modules/config/views.py:112
 msgid "Language changed"
 msgstr "Taal aangepast"
 
@@ -1515,7 +1515,7 @@ msgstr "Opnieuw verkrijgen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:62
+#: plinth/modules/snapshot/templates/snapshot.html:61
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -2560,7 +2560,7 @@ msgid "Interface"
 msgstr "Interface"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot.html:60
+#: plinth/modules/snapshot/templates/snapshot.html:59
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
@@ -3725,12 +3725,19 @@ msgstr ""
 "te keren naar een voorheen goed werkende staat."
 
 #: plinth/modules/snapshot/__init__.py:38
+#, fuzzy
+#| msgid ""
+#| "Automatic snapshots are taken every hour, day, month and year. Older "
+#| "snapshots are automatically deleted keeping 10 of each kind and 50 in "
+#| "total. Although snapshots are efficient and only store the differences, "
+#| "they may be deleted to reclaim free space.  Individual files from older "
+#| "snapshots can be accessed by visiting \".snapshots\" directory in the "
+#| "filesystem. Snapshots are not a replacement for backups."
 msgid ""
-"Automatic snapshots are taken every hour, day, month and year. Older "
-"snapshots are automatically deleted keeping 10 of each kind and 50 in total. "
-"Although snapshots are efficient and only store the differences, they may be "
-"deleted to reclaim free space.  Individual files from older snapshots can be "
-"accessed by visiting \".snapshots\" directory in the filesystem. Snapshots "
+"Automatic snapshots are taken every hour, day, month and year. Although "
+"snapshots are efficient and only store the differences, they may be deleted "
+"to reclaim free space.  Individual files from older snapshots can be "
+"accessed by visiting \"/.snapshots\" directory in the filesystem. Snapshots "
 "are not a replacement for backups."
 msgstr ""
 "Automatische snapshots worden gemaakt op ieder uur, dag, maand en jaar. "
@@ -3751,46 +3758,84 @@ msgid ""
 "yearly)."
 msgstr ""
 
+#: plinth/modules/snapshot/forms.py:32
+#, fuzzy
+#| msgid "Storage Snapshots"
+msgid "Hourly Snapshots Limit"
+msgstr "Opslag Snapshots"
+
+#: plinth/modules/snapshot/forms.py:36
+#, fuzzy
+#| msgid "Delete Snapshots"
+msgid "Daily Snapshots Limit"
+msgstr "Snapshots verwijderen"
+
+#: plinth/modules/snapshot/forms.py:40
+#, fuzzy
+#| msgid "Delete Snapshots"
+msgid "Weekly Snapshots Limit"
+msgstr "Snapshots verwijderen"
+
+#: plinth/modules/snapshot/forms.py:44
+msgid "Monthly Snapshots Limit"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:48
+#, fuzzy
+#| msgid "Delete Snapshots"
+msgid "Yearly Snapshots Limit"
+msgstr "Snapshots verwijderen"
+
+#: plinth/modules/snapshot/forms.py:53
+msgid "Delete Software Snapshots older than (days)"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:55
+msgid ""
+"Software snapshots older than this will be deleted. This does not limit the "
+"number of software snapshots created."
+msgstr ""
+
 #: plinth/modules/snapshot/templates/snapshot.html:36
 msgid "Create Snapshot"
 msgstr "Maak Snapshot"
 
-#: plinth/modules/snapshot/templates/snapshot.html:41
+#: plinth/modules/snapshot/templates/snapshot.html:40
 msgid "Delete all the snapshots"
 msgstr "Verwijder alle snapshots"
 
-#: plinth/modules/snapshot/templates/snapshot.html:48
+#: plinth/modules/snapshot/templates/snapshot.html:47
 msgid "Delete All"
 msgstr "Verwijder alles"
 
-#: plinth/modules/snapshot/templates/snapshot.html:58
+#: plinth/modules/snapshot/templates/snapshot.html:57
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr "Nummer"
 
-#: plinth/modules/snapshot/templates/snapshot.html:59
+#: plinth/modules/snapshot/templates/snapshot.html:58
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr "Datum"
 
-#: plinth/modules/snapshot/templates/snapshot.html:61
+#: plinth/modules/snapshot/templates/snapshot.html:60
 msgid "Rollback"
 msgstr "Terugdraaien"
 
-#: plinth/modules/snapshot/templates/snapshot.html:72
+#: plinth/modules/snapshot/templates/snapshot.html:71
 msgid "active"
 msgstr "actief"
 
-#: plinth/modules/snapshot/templates/snapshot.html:81
+#: plinth/modules/snapshot/templates/snapshot.html:80
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Terugdraaien tot snapshot #%(number)s"
 
-#: plinth/modules/snapshot/templates/snapshot.html:92
+#: plinth/modules/snapshot/templates/snapshot.html:91
 #, python-format
 msgid "Delete snapshot #%(number)s"
 msgstr "Snapshot #%(number)s verwijderen"
@@ -3808,8 +3853,8 @@ msgstr "Snapshot #%(number)s verwijderen"
 msgid "Delete the following snapshots permanently?"
 msgstr "De volgende snapshots permanent verwijderen?"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:55
-#: plinth/modules/snapshot/views.py:112
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
+#: plinth/modules/snapshot/views.py:134
 msgid "Delete Snapshots"
 msgstr "Snapshots verwijderen"
 
@@ -3836,39 +3881,41 @@ msgstr "Terugdraaien tot Snapshot #%(number)s"
 msgid "Created snapshot."
 msgstr "Gemaakte snapshot."
 
-#: plinth/modules/snapshot/views.py:75
-msgid "Timeline Snapshots configuration updated"
+#: plinth/modules/snapshot/views.py:96
+#, fuzzy
+#| msgid "Timeline Snapshots configuration updated"
+msgid "Storage snapshots configuration updated"
 msgstr "Timeline Snapshots configuratie is bijgewerkt"
 
-#: plinth/modules/snapshot/views.py:78 plinth/modules/tor/views.py:67
+#: plinth/modules/snapshot/views.py:99 plinth/modules/tor/views.py:67
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Actiefout: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:88
+#: plinth/modules/snapshot/views.py:110
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr "Snapshot #{number} verwijderd."
 
-#: plinth/modules/snapshot/views.py:96
+#: plinth/modules/snapshot/views.py:118
 msgid "Delete Snapshot"
 msgstr "Snapshot verwijderen"
 
-#: plinth/modules/snapshot/views.py:105
+#: plinth/modules/snapshot/views.py:127
 msgid "Deleted all snapshots."
 msgstr "Snapshots allemaal verwijderd."
 
-#: plinth/modules/snapshot/views.py:123
+#: plinth/modules/snapshot/views.py:145
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Teruggezet naar snapshot #{number}."
 
-#: plinth/modules/snapshot/views.py:126
+#: plinth/modules/snapshot/views.py:148
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 "Het systeem moet opnieuw worden opgestart om het terugdraaien te voltooien."
 
-#: plinth/modules/snapshot/views.py:138
+#: plinth/modules/snapshot/views.py:160
 msgid "Rollback to Snapshot"
 msgstr "Terugdraaien naar Snapshot"
 
