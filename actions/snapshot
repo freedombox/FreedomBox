@@ -156,16 +156,32 @@ def subcommand_delete(arguments):
 
 
 def subcommand_delete_all(_):
-    """Delete all the snapshots."""
+    """Delete all the snapshots (except the active one)."""
     lines = _get_snapper_list()
     snapshot_range = [line.split('|')[1].strip() for line in lines[3:]]
+    default_snapshot = _get_default_snapshot()
     if snapshot_range:
-        if len(snapshot_range) == 1:
-            to_delete = snapshot_range[0]
+        if default_snapshot:
+            index = snapshot_range.index(default_snapshot)
+            range_before = snapshot_range[:index]
+            range_after = snapshot_range[index + 1:]
+            to_delete = [range_before, range_after]
         else:
-            to_delete = '-'.join([snapshot_range[0], snapshot_range[-1]])
-        command = ['snapper', 'delete', to_delete]
-        subprocess.run(command, check=True)
+            to_delete = [snapshot_range]
+
+        delete_args = filter(None, map(_get_delete_arg, to_delete))
+        for arg in delete_args:
+            subprocess.run(['snapper', 'delete', arg], check=True)
+
+
+def _get_delete_arg(range_list):
+    """Return 'a-b' when given ['a', ..., 'b']."""
+    if not range_list:
+        return None
+    elif len(range_list) == 1:
+        return range_list[0]
+    else:
+        return range_list[0] + '-' + range_list[-1]
 
 
 def subcommand_configure(arguments):

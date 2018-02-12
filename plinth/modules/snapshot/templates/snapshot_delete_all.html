@@ -36,11 +36,13 @@
         </thead>
         <tbody>
           {% for snapshot in snapshots %}
-          <tr>
-            <td>{{ snapshot.number }}</td>
-            <td>{{ snapshot.date }}</td>
-            <td>{{ snapshot.description }}</td>
-          </tr>
+            {% if not snapshot.is_default %}
+              <tr>
+                <td>{{ snapshot.number }}</td>
+                <td>{{ snapshot.date }}</td>
+                <td>{{ snapshot.description }}</td>
+              </tr>
+            {% endif %}
           {% endfor %}
         </tbody>
       </table>
