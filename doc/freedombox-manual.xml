@@ -853,6 +853,26 @@ file = /etc/radicale/rights</screen>
       </section>
     </section>
     <section>
+      <title>Chat Server (Matrix Synapse)</title>
+      <section>
+        <title>What is the Matrix?</title>
+        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
+        <para><emphasis role="strong">Note:</emphasis> The Matrix Synapse is available in FreedomBox starting with Plinth version 0.14. </para>
+      </section>
+      <section>
+        <title>How to access the Matrix?</title>
+        <para>We recommend the <ulink url="https://riot.im">Riot</ulink> client to access the Matrix server. You can <ulink url="https://riot.im/desktop.html">download</ulink> Riot for desktops.  Mobile applications for Android and iOS are available from app stores. </para>
+      </section>
+      <section>
+        <title>Setting up your FreedomBox for Matrix</title>
+        <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
+      </section>
+      <section>
+        <title>Federating with other Matrix instances</title>
+        <para>You will be able to interact with any other person running another Matrix instance.  This is done by simply starting a conversation with them using their matrix ID which is of the format <code>@their-username:their-domain</code>.  You can also join rooms which are in another server and have audio/video calls with contacts on other server. </para>
+      </section>
+    </section>
+    <section>
       <title>Email Client (Roundcube)</title>
       <section>
         <title>What is Roundcube?</title>
@@ -861,6 +881,54 @@ file = /etc/radicale/rights</screen>
       <section>
         <title>Using Roundcube</title>
         <para>After Roundcube is installed, it can be accessed at <code>https://&lt;your freedombox&gt;/roundcube</code>. </para>
+      </section>
+    </section>
+    <section>
+      <title>File Sharing (Coquelicot)</title>
+      <section>
+        <title>About Coquelicot</title>
+        <para>Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy.  </para>
+        <para>Read more about Coquelicot at <ulink url="https://coquelicot.potager.org/README">the Coquelicot README</ulink> </para>
+        <para><emphasis role="strong">Available (planned):</emphasis>  version 0.24.0 </para>
+      </section>
+      <section>
+        <title>When to use Coquelicot</title>
+        <para>Coquelicot is best used to quickly share a single file.  If you want to share a folder,  </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para>for a single use, compress the folder and share it over Coquelicot </para>
+          </listitem>
+          <listitem>
+            <para>which must be kept synchronized between computers, use <ulink url="https://wiki.debian.org/FreedomBox/Manual/Syncthing#">Syncthing</ulink> instead </para>
+          </listitem>
+        </orderedlist>
+        <para>Coquelicot can only provide a reasonable degree of privacy. If anonymity is required, you should consider using the desktop application <ulink url="https://onionshare.org/">Onionshare</ulink> instead. </para>
+        <para>Since Coquelicot fully uploads the file to the server, your FreedomBox will incur both upload and download bandwidth costs. For very large files, consider sharing them using BitTorrent by creating a private torrent file. If anonymity is required, use Onionshare. It is P2P and doesn't require a server.  </para>
+      </section>
+      <section>
+        <title>Coquelicot on FreedomBox</title>
+        <para>With Coquelicot installed, you can upload files to your FreedomBox server and privately share them.  </para>
+        <para>Post installation, the Coquelicot page offers two settings. </para>
+        <orderedlist numeration="arabic" inheritnum="ignore" continuation="restarts">
+          <listitem>
+            <para><emphasis role="strong">Upload Password</emphasis>: Coquelicot on FreedomBox is currently configured to use simple password authentication for ease of use. Remember that it's one global password for this Coquelicot instance and not your user password for FreedomBox. You need not remember this password. You can set a new one from the Plinth interface anytime.  </para>
+          </listitem>
+          <listitem>
+            <para><emphasis role="strong">Maximum File Size</emphasis>: You can alter the maximum size of the file that can be transferred through Coquelicot using this setting. The size is in <ulink url="https://en.wikipedia.org/wiki/Mebibyte">Mebibytes</ulink>. The maximum file size is only limited by the disk size of your FreedomBox.  </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Privacy</title>
+        <para>Someone monitoring your network traffic might find out that some file is being transferred through your FreedomBox and also possibly its size, but will not know the file name. Coquelicot encrypts files on the server and also fills the file contents with 0s when deleting them. This eliminates the risk of file contents being revealed in the event of your FreedomBox being confiscated or stolen. The real risk to mitigate here is a third-party also downloading your file along with the intended recipient. </para>
+        <section>
+          <title>Sharing over instant messengers</title>
+          <para>Some instant messengers which have previews for websites might download your file in order to show a preview in the conversation. If you set the option of one-time download  on a file, you might notice that the one download will be used up by the instant messenger. If sharing over such messengers, please use a download password in combination with a one-time download option.  </para>
+        </section>
+        <section>
+          <title>Sharing download links privately</title>
+          <para>It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with <ulink url="https://wiki.debian.org/FreedomBox/Manual/Matrix#">Matrix Synapse</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/XMPP#">XMPP</ulink> (ejabberd server on FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using <ulink url="https://securityinabox.org/en/guide/thunderbird/linux/">Thunderbird</ulink>.  </para>
+        </section>
       </section>
     </section>
     <section>
@@ -1215,6 +1283,36 @@ file = /etc/radicale/rights</screen>
       </section>
     </section>
     <section>
+      <title>SOCKS5 proxy (Shadowsocks)</title>
+      <section>
+        <title>What is Shadowsocks?</title>
+        <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
+        <para><emphasis role="strong">Note:</emphasis> Shadowsocks is available in FreedomBox starting with Plinth version 0.18. </para>
+      </section>
+      <section>
+        <title>Using the Shadowsocks client?</title>
+        <para>The current implementation of Shadowsocks in <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> only supports configuring <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as a Shadowsocks client. The current use case for Shadowsocks is as follows: </para>
+        <itemizedlist>
+          <listitem>
+            <para>Shadowsocks client (<ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>) is in a region where some parts of the Internet are blocked or censored. </para>
+          </listitem>
+          <listitem>
+            <para>Shadowsocks server is in a different region, which doesn't have these blocks. </para>
+          </listitem>
+          <listitem>
+            <para>The <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection. </para>
+          </listitem>
+        </itemizedlist>
+        <para>At a future date it will be possible to configure <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as Shadowsocks server. </para>
+      </section>
+      <section>
+        <title>Configuring your FreedomBox for the Shadowsocks client</title>
+        <para>To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it.  </para>
+        <para>Server: the Shadowsocks server is not the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them. </para>
+        <para>To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to <ulink url="http://freedombox_address:1080/"/> </para>
+      </section>
+    </section>
+    <section>
       <title>Virtual Private Network (OpenVPN)</title>
       <section>
         <title>What is OpenVPN?</title>
@@ -1505,56 +1603,6 @@ proto udp</screen>
             <para>Login as the new admin user using "Login with HTTP auth". </para>
           </listitem>
         </orderedlist>
-      </section>
-    </section>
-    <section>
-      <title>Chat Server (Matrix Synapse)</title>
-      <section>
-        <title>What is the Matrix?</title>
-        <para><ulink url="https://matrix.org/">Matrix</ulink> is an open standard for interoperable, decentralized, real-time communication over IP. Synapse is the reference implementation of a Matrix server. It can be used to setup instant messaging on <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> to host large chat rooms, end to end encrypted communication and audio/video calls.  Each instance of a Matrix server federates with other instances such that all your contacts need not hold accounts on your server.  <ulink url="https://matrix.org/docs/guides/faq.html">See</ulink> more detailed info about Matrix. </para>
-        <para><emphasis role="strong">Note:</emphasis> The Matrix Synapse is available in FreedomBox starting with Plinth version 0.14. </para>
-      </section>
-      <section>
-        <title>How to access the Matrix?</title>
-        <para>We recommend the <ulink url="https://riot.im">Riot</ulink> client to access the Matrix server. You can <ulink url="https://riot.im/desktop.html">download</ulink> Riot for desktops.  Mobile applications for Android and iOS are available from app stores. </para>
-      </section>
-      <section>
-        <title>Setting up your FreedomBox for Matrix</title>
-        <para>To enable Matrix, first navigate to the Chat Server (Matrix Synapse) page and install it. Matrix needs a valid domain name to be configured.  After installation, you will be asked to configure it.  You will be able to select a domain from a drop down menu of available domains.  Domains are configured using System -&gt; Configure page.  After configuring a domain, you will see that the service is running. The service will be accessible on the configured <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> domain. All the registered users will have their Matrix IDs as <code>@username:domain</code>. Currently, you will not be able to change the domain once is it configured. </para>
-      </section>
-      <section>
-        <title>Federating with other Matrix instances</title>
-        <para>You will be able to interact with any other person running another Matrix instance.  This is done by simply starting a conversation with them using their matrix ID which is of the format <code>@their-username:their-domain</code>.  You can also join rooms which are in another server and have audio/video calls with contacts on other server. </para>
-      </section>
-    </section>
-    <section>
-      <title>SOCKS5 proxy (Shadowsocks)</title>
-      <section>
-        <title>What is Shadowsocks?</title>
-        <para><ulink url="https://shadowsocks.org/en/index.html">Shadowsocks</ulink> is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server. </para>
-        <para><emphasis role="strong">Note:</emphasis> Shadowsocks is available in FreedomBox starting with Plinth version 0.18. </para>
-      </section>
-      <section>
-        <title>Using the Shadowsocks client?</title>
-        <para>The current implementation of Shadowsocks in <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> only supports configuring <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as a Shadowsocks client. The current use case for Shadowsocks is as follows: </para>
-        <itemizedlist>
-          <listitem>
-            <para>Shadowsocks client (<ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink>) is in a region where some parts of the Internet are blocked or censored. </para>
-          </listitem>
-          <listitem>
-            <para>Shadowsocks server is in a different region, which doesn't have these blocks. </para>
-          </listitem>
-          <listitem>
-            <para>The <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection. </para>
-          </listitem>
-        </itemizedlist>
-        <para>At a future date it will be possible to configure <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> as Shadowsocks server. </para>
-      </section>
-      <section>
-        <title>Configuring your FreedomBox for the Shadowsocks client</title>
-        <para>To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it.  </para>
-        <para>Server: the Shadowsocks server is not the <ulink url="https://wiki.debian.org/FreedomBox#">FreedomBox</ulink> IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them. </para>
-        <para>To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to <ulink url="http://freedombox_address:1080/"/> </para>
       </section>
     </section>
   </section>
@@ -6863,6 +6911,29 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
       <section>
+        <title>Plinth v0.23.0 (2018-02-12)</title>
+        <itemizedlist>
+          <listitem>
+            <para>snapshots: Modify configurations to reduce disk usage. </para>
+          </listitem>
+          <listitem>
+            <para>snapshots: Skip currently active snapshot when deleting all snapshots. </para>
+          </listitem>
+          <listitem>
+            <para>jsxc: Use consistent url format. </para>
+          </listitem>
+          <listitem>
+            <para>sso: Increase timeout to 60 minutes. </para>
+          </listitem>
+          <listitem>
+            <para>theme: Change font from Helvetica to Lato. </para>
+          </listitem>
+          <listitem>
+            <para>Translation updates for Czech, German, Gujarati, and Telugu. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
         <title>Plinth v0.22.0 (2018-01-30)</title>
         <itemizedlist>
           <listitem>
@@ -8286,7 +8357,7 @@ def example_method():
         <title>Adding a License</title>
         <para>Plinth is licensed under the GNU Affero General Public License Version 3 or later.  FreedomBox UI applications, which run as modules under Plinth, also need to be under the same license or under a compatible license.  The license of our application needs to clear for our application to be accepted by users and other developers.  Let us add license headers to our application. </para>
         <screen format="linespecific">#
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -8305,7 +8376,7 @@ def example_method():
         <screen format="linespecific">{% extends "base.html" %}
 {% comment %}
 #
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -8351,7 +8422,7 @@ def init():
         <para>For readability and easy collaboration it is important to follow common coding standards.  Plinth uses the Python coding standards and uses the <code>pylint</code> and <code>flake8</code> tools to check if the there are any violations.  Run these tools on our application and fix any errors and warnings.  Better yet, integrate these tools into your favorite IDE for on-the-fly checking. </para>
         <para>For the most part, the code we have written so far, is already compliant with the coding standards.  This includes variable/method naming, indentation, document strings, comments, etc.  One thing we have to add are the module documentation strings.  Let us add those. In <code>__init__.py</code> add the top: </para>
         <screen format="linespecific">"""
-Plinth module to configure Tiny Tiny RSS.
+FreedomBox app to configure Tiny Tiny RSS.
 """</screen>
       </section>
     </section>
