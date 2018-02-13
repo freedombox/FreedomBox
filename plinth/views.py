@@ -23,11 +23,10 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.http import HttpResponseRedirect
 from django.conf import settings
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils import translation
+from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
 from stronghold.decorators import public
 import time
@@ -36,6 +35,8 @@ from . import forms, frontpage
 import plinth
 from plinth import package
 from plinth.modules.storage import views as disk_views
+
+REDIRECT_FIELD_NAME = 'next'
 
 
 @public
@@ -73,26 +74,32 @@ class LanguageSelectionView(FormView):
     form_class = forms.LanguageSelectionForm
     template_name = 'language-selection.html'
 
-    def get(self, request, *args, **kwargs):
-        current_values = {'language': translation.get_language()}
-        form = self.form_class(initial=current_values)
-        return render(request, self.template_name, {'form': form})
+    def get_initial(self):
+        """Return the initial values for the form."""
+        return {'language': translation.get_language()}
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            selected_language = form.cleaned_data['language']
-            if not selected_language:
-                response = HttpResponseRedirect(reverse('language-selection'))
-                response.delete_cookie(settings.LANGUAGE_COOKIE_NAME)
-                return response
-
+    def form_valid(self, form):
+        """Set or reset the current language."""
+        selected_language = form.cleaned_data['language']
+        response = super().form_valid(form)
+        if not selected_language:
+            response.delete_cookie(settings.LANGUAGE_COOKIE_NAME)
+        else:
             translation.activate(selected_language)
-            response = HttpResponseRedirect(reverse('language-selection'))
             # send a cookie for selected language
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, selected_language)
-            return response
-        return render(request, self.template_name, {'form': form})
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME,
+                                selected_language)
+
+        return response
+
+    def get_success_url(self):
+        """Return the URL in the next parameter or home page."""
+        redirect_to = self.request.GET.get(REDIRECT_FIELD_NAME, '')
+        redirect_to = self.request.POST.get(REDIRECT_FIELD_NAME, redirect_to)
+        if is_safe_url(url=redirect_to, host=self.request.get_host()):
+            return redirect_to
+
+        return reverse('index')
 
 
 class ServiceView(FormView):

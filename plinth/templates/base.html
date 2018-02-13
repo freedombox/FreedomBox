@@ -173,8 +173,9 @@
               </li>
             {% else %}
               <li>
-                <a href="{% url 'language-selection' %}" title="{% trans "Select Language" %}">
-                 <i class="glyphicon glyphicon-globe nav-icon"></i>
+                <a href="{% url 'language-selection' %}?next={{ request.path|iriencode }}"
+                   title="{% trans "Select language" %}">
+                  <i class="glyphicon glyphicon-globe nav-icon"></i>
                 </a>
               </li>
               <li>
