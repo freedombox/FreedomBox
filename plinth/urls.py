@@ -28,7 +28,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^language-selection', public(views.LanguageSelectionView.as_view()), name='language-selection'),
+    url(r'^language-selection/$',
+        public(views.LanguageSelectionView.as_view()),
+        name='language-selection'),
     url(r'^apps/$',
         TemplateView.as_view(template_name='apps.html'), name='apps'),
     url(r'^sys/$', views.system_index, name='system'),
