@@ -55,9 +55,17 @@ class DomainSelectionForm(forms.Form):
 class LanguageSelectionForm(forms.Form):
     """Form for selecting the user's preferred language """
 
+    language = forms.ChoiceField(
+        label=_('Language'),
+        help_text=_('Language to use for presenting this web interface'),
+        required=False)
+
     def __init__(self, *args, **kwargs):
+        """Initialize the form to fill language choice values."""
         super().__init__(*args, **kwargs)
-        supported_languages = [(None, '-----------')]
+        supported_languages = [
+            (None, _('Use the language preference set in the browser'))
+        ]
         for language_code, language_name in settings.LANGUAGES:
             locale_code = translation.to_locale(language_code)
             plinth_dir = os.path.dirname(plinth.__file__)
@@ -68,5 +76,3 @@ class LanguageSelectionForm(forms.Form):
                      get_language_info(language_code)['name_local']))
 
         self.fields['language'].choices = supported_languages
-
-    language = forms.ChoiceField(label='Language', choices=[], required=False)
