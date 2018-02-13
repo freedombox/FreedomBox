@@ -22,17 +22,15 @@
 
 {% load bootstrap %}
 
-{% block content%}
-
-    <h3> Choose your language </h3>
-
+{% block content_row %}
+  <div class="col-md-6 col-md-offset-3">
     <form method="post">
-          {% csrf_token %}
+      {% csrf_token %}
 
-          {{ form|bootstrap }}
+      {{ form|bootstrap }}
 
-          <input type="submit" class="btn btn-primary"
-                 value="{% trans "Save Changes" %}"/>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Save Changes" %}"/>
     </form>
-
+  </div>
 {% endblock %}
