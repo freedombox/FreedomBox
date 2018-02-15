@@ -95,7 +95,7 @@ def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut('mediawiki', name,
                            short_description=short_description,
-                           url='/mediawiki', login_required=True)
+                           url='/mediawiki', login_required=False)
 
 
 def is_enabled():
