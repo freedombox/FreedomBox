@@ -30,6 +30,11 @@ clients = validate([{
     'platforms': [{
         'type': 'store',
         'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'at.bitfire.davdroid'),
+    }, {
+        'type': 'store',
+        'os': 'android',
         'store_name': 'google-play',
         'url': store_url('google-play', 'at.bitfire.davdroid'),
     }]
@@ -40,6 +45,26 @@ clients = validate([{
         'type': 'package',
         'format': 'deb',
         'name': 'gnome-calendar'
+    }]
+}, {
+    'name':
+        _('Mozilla Thunderbird'),
+    'platforms': [{
+        'type': 'package',
+        'format': 'deb',
+        'name': 'thunderbird'
+    }, {
+        'type': 'download',
+        'os': 'gnu-linux',
+        'url': 'https://www.mozilla.org/thunderbird/'
+    }, {
+        'type': 'download',
+        'os': 'macos',
+        'url': 'https://www.mozilla.org/thunderbird/'
+    }, {
+        'type': 'download',
+        'os': 'windows',
+        'url': 'https://www.mozilla.org/thunderbird/'
     }]
 }, {
     'name':

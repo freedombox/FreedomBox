@@ -24,18 +24,26 @@ clients = validate([{
         _('Minetest'),
     'platforms': [{
         'type': 'download',
-        'os': 'windows',
-        'url': 'https://github.com/minetest/minetest/releases'
+        'os': 'gnu-linux',
+        'url': 'https://www.minetest.net/downloads/'
     }, {
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'google-play',
-        'url': store_url('google-play', 'net.minetest.minetest')
+        'type': 'download',
+        'os': 'macos',
+        'url': 'https://www.minetest.net/downloads/'
+    }, {
+        'type': 'download',
+        'os': 'windows',
+        'url': 'https://www.minetest.net/downloads/'
     }, {
         'type': 'store',
         'os': 'android',
         'store_name': 'f-droid',
         'url': store_url('f-droid', 'net.minetest.minetest')
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'net.minetest.minetest')
     }, {
         'type': 'package',
         'format': 'deb',

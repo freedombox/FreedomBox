@@ -68,7 +68,7 @@
                   {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
                     <img class="client-icon" src="{% static icon %}" />
                     {% if platform.os == 'gnu-linux' %}
-                      {% trans 'Play Store' %}
+                      {% trans 'GNU/Linux' %}
                     {% elif platform.os == 'windows' %}
                       {% trans 'Windows' %}
                     {% elif platform.os == 'macos' %}
@@ -127,7 +127,7 @@
                     {% if platform.format == 'deb' %}
                       <li><strong>{% trans "Debian:" %}</strong> {{ platform.name }}</li>
                     {% endif %}
-                    {% if platform.format == 'homebrew' %}
+                    {% if platform.format == 'brew' %}
                       <li><strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}</li>
                     {% endif %}
                     {% if platform.format == 'rpm' %}

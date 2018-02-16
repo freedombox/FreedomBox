@@ -19,18 +19,22 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
 
-_plumble_package_id = 'com.morlunk.mumbleclient.free'
+_plumble_package_id = 'com.morlunk.mumbleclient'
 
 clients = validate([{
     'name':
         _('Mumble'),
     'platforms': [{
         'type': 'download',
-        'os': 'windows',
+        'os': 'gnu-linux',
         'url': 'https://wiki.mumble.info/wiki/Main_Page'
     }, {
         'type': 'download',
         'os': 'macos',
+        'url': 'https://wiki.mumble.info/wiki/Main_Page'
+    }, {
+        'type': 'download',
+        'os': 'windows',
         'url': 'https://wiki.mumble.info/wiki/Main_Page'
     }, {
         'type': 'package',
@@ -48,13 +52,13 @@ clients = validate([{
     'platforms': [{
         'type': 'store',
         'os': 'android',
-        'store_name': 'google-play',
-        'url': store_url('google-play', _plumble_package_id)
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _plumble_package_id)
     }, {
         'type': 'store',
         'os': 'android',
-        'store_name': 'f-droid',
-        'url': store_url('f-droid', _plumble_package_id)
+        'store_name': 'google-play',
+        'url': store_url('google-play', _plumble_package_id)
     }]
 }, {
     'name':

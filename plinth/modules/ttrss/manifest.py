@@ -23,6 +23,18 @@ _package_id = 'org.ttrssreader'
 
 clients = validate([{
     'name':
+        _('Tiny Tiny RSS'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'org.fox.ttrss')
+    }, {
+        'type': 'web',
+        'url': '/tt-rss'
+    }]
+}, {
+    'name':
         _('TT-RSS Reader'),
     'platforms': [{
         'type': 'store',
@@ -34,8 +46,5 @@ clients = validate([{
         'os': 'android',
         'store_name': 'f-droid',
         'url': store_url('f-droid', _package_id),
-    }, {
-        'type': 'web',
-        'url': '/tt-rss'
     }]
 }])

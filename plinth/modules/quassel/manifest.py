@@ -24,17 +24,34 @@ clients = validate([{
         _('Quassel'),
     'platforms': [{
         'type': 'download',
+        'os': 'gnu-linux',
+        'url': 'http://quassel-irc.org/downloads'
+    }, {
+        'type': 'download',
         'os': 'macos',
+        'url': 'http://quassel-irc.org/downloads'
+    }, {
+        'type': 'download',
+        'os': 'windows',
         'url': 'http://quassel-irc.org/downloads'
     }, {
         'type': 'package',
         'format': 'deb',
+        'name': 'quassel-client',
+    }, {
+        'type': 'package',
+        'format': 'brew',
         'name': 'quassel-client',
     }]
 }, {
     'name':
         _('Quasseldroid'),
     'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'com.iskrembilen.quasseldroid'),
+    }, {
         'type': 'store',
         'os': 'android',
         'store_name': 'google-play',
