@@ -111,11 +111,6 @@ class SSOLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLogoutView, self).dispatch(request, *args,
                                                        **kwargs)
-        try:
-            del request.session[translation.LANGUAGE_SESSION_KEY]
-        except KeyError:
-            pass
-
         response.delete_cookie(SSO_COOKIE_NAME)
         return response
 
