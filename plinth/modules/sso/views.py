@@ -25,7 +25,6 @@ import urllib
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.utils import translation
 
 from axes.decorators import axes_form_invalid
 from axes.utils import reset
@@ -66,7 +65,6 @@ class SSOLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
-            request.session[translation.LANGUAGE_SESSION_KEY] = request.user.userprofile.preferred_language
             return set_ticket_cookie(request.user, response)
         else:
             return response

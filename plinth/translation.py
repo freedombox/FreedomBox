@@ -71,3 +71,9 @@ def set_language(request, response, language_code):
             path=settings.LANGUAGE_COOKIE_PATH,
             domain=settings.LANGUAGE_COOKIE_DOMAIN,
         )
+
+
+@receiver(user_logged_in)
+def _on_user_logged_in(sender, request, user, **kwargs):
+    """When the user logs in, set the current language."""
+    set_language(request, None, user.userprofile.language)
