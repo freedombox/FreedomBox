@@ -36,17 +36,6 @@ from .forms import ConfigurationForm
 LOGGER = logging.getLogger(__name__)
 
 
-def get_language(request):
-    """Return the current language setting"""
-    # TODO: Store the language per user in kvstore,
-    # taking care of setting language on login, and adapting kvstore when
-    # renaming/deleting users
-
-    # The information from the session is more accurate but not always present
-    return request.session.get(translation.LANGUAGE_SESSION_KEY,
-                               request.LANGUAGE_CODE)
-
-
 def index(request):
     """Serve the configuration form"""
     status = get_status(request)
@@ -73,7 +62,6 @@ def get_status(request):
     return {
         'hostname': config.get_hostname(),
         'domainname': config.get_domainname(),
-        'language': get_language(request)
     }
 
 
@@ -98,18 +86,6 @@ def _apply_changes(request, old_status, new_status):
                            .format(exception=exception))
         else:
             messages.success(request, _('Domain name set'))
-
-    if old_status['language'] != new_status['language']:
-        language = new_status['language']
-        try:
-            translation.activate(language)
-            request.session[translation.LANGUAGE_SESSION_KEY] = language
-        except Exception as exception:
-            messages.error(request,
-                           _('Error setting language: {exception}')
-                           .format(exception=exception))
-        else:
-            messages.success(request, _('Language changed'))
 
 
 def set_hostname(hostname):

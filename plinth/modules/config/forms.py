@@ -93,22 +93,3 @@ class ConfigurationForm(forms.Form):
                 r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
                 ugettext_lazy('Invalid domain name')),
             domain_label_validator])
-
-    language = forms.ChoiceField(
-        label=ugettext_lazy('Language'),
-        help_text=ugettext_lazy(
-            'Language for this web administration interface'),
-        required=False)
-
-    def __init__(self, *args, **kwargs):
-        """Set limited language choices."""
-        super().__init__(*args, **kwargs)
-        languages = []
-        for language_code, language_name in settings.LANGUAGES:
-            locale_code = translation.to_locale(language_code)
-            plinth_dir = os.path.dirname(plinth.__file__)
-            if language_code == 'en' or os.path.exists(
-                    os.path.join(plinth_dir, 'locale', locale_code)):
-                languages.append((language_code, language_name))
-
-        self.fields['language'].choices = languages
