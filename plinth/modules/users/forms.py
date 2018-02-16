@@ -31,6 +31,7 @@ from plinth import forms as plinthForms
 from plinth.errors import ActionError
 from plinth.modules import first_boot, users
 from plinth.modules.security import set_restricted_access
+from plinth.translation import set_language
 from plinth.utils import is_user_admin
 from plinth.models import UserProfile
 
@@ -186,7 +187,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm, plinthForms.La
 
         # If user is updating their own profile then only translate the pages
         if self.username == self.request.user.username:
-            self.request.session[translation.LANGUAGE_SESSION_KEY] = user.userprofile.preferred_language
+            set_language(self.request, None, user.userprofile.language)
 
         if commit:
             output = actions.superuser_run('users',

@@ -23,9 +23,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.conf import settings
 from django.urls import reverse
-from django.utils import translation
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
 from stronghold.decorators import public
@@ -35,6 +33,7 @@ from . import forms, frontpage
 import plinth
 from plinth import package
 from plinth.modules.storage import views as disk_views
+from plinth.translation import get_language_from_request, set_language
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -76,20 +75,12 @@ class LanguageSelectionView(FormView):
 
     def get_initial(self):
         """Return the initial values for the form."""
-        return {'language': translation.get_language()}
+        return {'language': get_language_from_request(self.request)}
 
     def form_valid(self, form):
         """Set or reset the current language."""
-        selected_language = form.cleaned_data['language']
         response = super().form_valid(form)
-        if not selected_language:
-            response.delete_cookie(settings.LANGUAGE_COOKIE_NAME)
-        else:
-            translation.activate(selected_language)
-            # send a cookie for selected language
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME,
-                                selected_language)
-
+        set_language(self.request, response, form.cleaned_data['language'])
         return response
 
     def get_success_url(self):
