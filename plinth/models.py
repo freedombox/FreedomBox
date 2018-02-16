@@ -23,6 +23,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import json
 
+from django.conf import settings
 
 class KVStore(models.Model):
     """Model to store retrieve key/value configuration"""
@@ -47,6 +48,8 @@ class Module(models.Model):
 
 
 class UserProfile(models.Model):
-    """Model that stores User details that are not related to authentication"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    preferred_language = models.CharField(max_length=10, null=True, default=None)
+    """Model to store user profile details that are not auth related."""
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+
+    language = models.CharField(max_length=32, null=True, default=None)

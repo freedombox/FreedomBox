@@ -10,11 +10,13 @@ from plinth.models import UserProfile
 
 
 def insert_users(apps, schema_editor):
+    """For each user, create their empty profiles."""
     for user in User.objects.all():
         UserProfile(user=user).save()
 
 
 def truncate_user_profile(apps, schema_editor):
+    """Delete all user profiles."""
     UserProfile.objects.all().delete()
 
 
@@ -28,13 +30,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('preferred_language', models.CharField(default=None, max_length=10, null=True)),
-                (
-                    'user',
-                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.RunPython(code=insert_users, reverse_code=truncate_user_profile),
-
+                ('id', models.AutoField(auto_created=True, primary_key=True,
+                                        serialize=False, verbose_name='ID')),
+                ('language', models.CharField(default=None, max_length=32,
+                                              null=True)),
+                ('user', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to=settings.AUTH_USER_MODEL)),
+            ], ),
+        migrations.RunPython(code=insert_users,
+                             reverse_code=truncate_user_profile),
     ]
