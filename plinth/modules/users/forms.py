@@ -22,12 +22,11 @@ from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
-from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
+import plinth.forms
 from plinth import actions, module_loader
-from plinth import forms as plinthForms
 from plinth.errors import ActionError
 from plinth.modules import first_boot, users
 from plinth.modules.security import set_restricted_access
@@ -76,7 +75,9 @@ class ValidNewUsernameCheckMixin(object):
         return True
 
 
-class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm, plinthForms.LanguageSelectionForm):
+class CreateUserForm(ValidNewUsernameCheckMixin,
+                     plinth.forms.LanguageSelectionFormMixin,
+                     UserCreationForm):
     """Custom user create form.
 
     Include options to add user to groups.
@@ -93,7 +94,10 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm, plinthForms.L
             'log in to the system through SSH and have '
             'administrative privileges (sudo).'))
 
+    language = plinth.forms.LanguageSelectionFormMixin.language
+
     class Meta(UserCreationForm.Meta):
+        """Metadata to control automatic form building."""
         fields = ('username', 'password1', 'password2', 'groups', 'language')
 
     def __init__(self, request, *args, **kwargs):
@@ -105,9 +109,11 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm, plinthForms.L
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
         user = super(CreateUserForm, self).save(commit)
-        UserProfile(user=user, preferred_language=self.cleaned_data['language']).save()
 
         if commit:
+            user.userprofile.language = self.cleaned_data['language']
+            user.userprofile.save()
+
             try:
                 actions.superuser_run('users', [
                     'create-user', user.get_username()
@@ -133,7 +139,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin, UserCreationForm, plinthForms.L
         return user
 
 
-class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm, plinthForms.LanguageSelectionForm):
+class UserUpdateForm(ValidNewUsernameCheckMixin,
+                     plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
         label=ugettext_lazy('SSH Keys'),
@@ -143,6 +150,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm, plinthForms.La
             'password. You may enter multiple keys, one on each '
             'line. Blank lines and lines starting with # will be '
             'ignored.'))
+
+    language = plinth.forms.LanguageSelectionFormMixin.language
 
     class Meta:
         """Metadata to control automatic form building."""
@@ -181,15 +190,16 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, forms.ModelForm, plinthForms.La
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
         user = super(UserUpdateForm, self).save(commit=False)
-        user.userprofile.preferred_language = self.cleaned_data['language']
-        user.userprofile.save()
-        user.save()
+        # Profile is auto saved with user object
+        user.userprofile.language = self.cleaned_data['language']
 
         # If user is updating their own profile then only translate the pages
         if self.username == self.request.user.username:
             set_language(self.request, None, user.userprofile.language)
 
         if commit:
+            user.save()
+
             output = actions.superuser_run('users',
                                            ['get-user-groups', self.username])
             old_groups = output.strip().split('\n')
@@ -274,7 +284,6 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     def save(self, commit=True):
         """Create and log the user in."""
         user = super().save(commit=commit)
-        UserProfile(user=user).save()
         if commit:
             first_boot.mark_step_done('users_firstboot')
 

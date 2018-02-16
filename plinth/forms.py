@@ -52,8 +52,8 @@ class DomainSelectionForm(forms.Form):
             'changed later.'), choices=[])
 
 
-class LanguageSelectionForm(forms.Form):
-    """Form for selecting the user's preferred language """
+class LanguageSelectionFormMixin:
+    """Form mixin for selecting the user's preferred language."""
 
     language = forms.ChoiceField(
         label=_('Language'),
@@ -76,3 +76,9 @@ class LanguageSelectionForm(forms.Form):
                      get_language_info(language_code)['name_local']))
 
         self.fields['language'].choices = supported_languages
+
+
+class LanguageSelectionForm(LanguageSelectionFormMixin, forms.Form):
+    """Language selection form."""
+
+    language = LanguageSelectionFormMixin.language
