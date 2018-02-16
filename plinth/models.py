@@ -14,16 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Django models for the main application
 """
 
-from django.db import models
-from django.contrib.auth.models import User
 import json
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
+from django.dispatch import receiver
+
 
 class KVStore(models.Model):
     """Model to store retrieve key/value configuration"""
@@ -53,3 +54,12 @@ class UserProfile(models.Model):
                                 on_delete=models.CASCADE)
 
     language = models.CharField(max_length=32, null=True, default=None)
+
+
+@receiver(models.signals.post_save, sender=User)
+def _on_user_post_save(sender, instance, **kwargs):
+    """When the user model is saved, user profile too."""
+    if hasattr(instance, 'userprofile'):
+        instance.userprofile.save()
+    else:
+        UserProfile.objects.update_or_create(user=instance)
