@@ -1,7 +1,7 @@
-{% extends "simple_service.html" %}
+{% extends "base.html" %}
 {% comment %}
 #
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -18,8 +18,26 @@
 #
 {% endcomment %}
 
+{% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
+{% block content %}
 
+  <h3>{{ title }}</h3>
+
+  <form class="form" method="post">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Submit" %}"/>
+  </form>
+
+{% endblock %}
+
+{% block page_js %}
+  <script>
+   $('#id_sharing-name').focus();
+  </script>
 {% endblock %}

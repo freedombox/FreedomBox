@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <h2>{{ title }}</h2>
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  <p>
+    <a title="{% trans 'Add new share' %}"
+       role="button" class="btn btn-primary"
+       href="{% url 'sharing:add' %}">
+      {% trans 'Add new share' %}
+    </a>
+  </p>
+
+  {% if not shares %}
+    <p>{% trans 'No shares currently configured.' %}</p>
+  {% else %}
+    <table class="table table-bordered table-condensed table-striped" id="shares-list">
+      <thead>
+        <tr>
+          <th>{% trans "Share Name" %}</th>
+          <th>{% trans "Disk Path" %}</th>
+          <th>{% trans "Shared Over" %}</th>
+          <th>{% trans "To Groups" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for share in shares %}
+          <tr id="share-{{ share.name }}" class="share">
+            <td class="share-name">{{ share.name }}</td>
+            <td class="share-path">{{ share.path }}</td>
+            <td class="share-url">
+              <a href="{{ share.url }}"
+                 title="{{ share.url}}">
+                {{ share.url }}
+              </a>
+            </td>
+            <td class="share-groups">{{ share.groups|join:", " }}</td>
+            <td class="share-operations">
+              <form class="form form-inline" method="post"
+                    action="{% url 'sharing:remove' share.name %}">
+                {% csrf_token %}
+                <button class="share-remove btn btn-sm btn-default glyphicon glyphicon-trash pull-right"
+                        type="submit"></button>
+              </form>
+              <a class="share-edit btn btn-sm btn-default pull-right"
+                 href="{% url 'sharing:edit' share.name %}">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}
