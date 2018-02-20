@@ -22,6 +22,8 @@ Configuration helper for searx.
 
 import argparse
 import os
+import secrets
+import shutil
 
 from plinth import action_utils
 from plinth.utils import YAMLFile, gunzip
@@ -42,14 +44,17 @@ def parse_arguments():
 
 
 def _copy_uwsgi_configuration():
-    """Copy the example uwsgi configuration shipped with Searx to the
-    appropriate uwsgi directory."""
+    """Copy example uwsgi configuration
+
+    Copy the example uwsgi configuration shipped with Searx documentation to
+    the appropriate uwsgi directory.
+    """
     example_config = ('/usr/share/doc/searx/examples/'
                       'uwsgi/apps-available/searx.ini')
-    destination = '/etc/uwsgi/apps-enabled/searx.ini'
+    destination = '/etc/uwsgi/apps-available/'
 
     if not os.path.exists(destination):
-        os.symlink(example_config, destination)
+        shutil.copy(example_config, destination)
         action_utils.webserver_enable('uwsgi', kind='module')
 
 
@@ -64,7 +69,7 @@ def _generate_secret_key():
 
     # Generate and set a secret key
     with YAMLFile(settings_file) as settings:
-        secret_key = os.urandom(16).hex()
+        secret_key = secrets.token_hex(32)
         settings['server']['secret_key'] = secret_key
 
     action_utils.service_restart('uwsgi')
@@ -78,12 +83,16 @@ def subcommand_setup(_):
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    action_utils.webserver_enable('searx-plinth')
+    # TODO Write action_utils functions for enable/disable uwsgi
+    os.symlink('/etc/uwsgi/apps-available/searx.ini',
+               '/etc/uwsgi/apps-enabled/')
+    action_utils.webserver_enable('searx-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
-    action_utils.webserver_disable('searx-plinth')
+    action_utils.webserver_disable('searx-freedombox')
+    os.unlink('/etc/uwsgi/apps-enabled/searx.ini')
 
 
 def main():

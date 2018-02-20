@@ -1,5 +1,5 @@
 #
-# This file is part of Plinth.
+# This file is part of FreedomBox.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -15,8 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth module to configure Searx
+FreedomBox module to configure Searx
 """
+
+import os
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -33,7 +35,7 @@ version = 1
 managed_services = ['searx']
 
 managed_packages = [
-    'searx', 'uwsgi', 'uwsgi-plugin-python3', 'libapache2-mod-uwsgi'
+    'searx', 'uwsgi', 'uwsgi-plugin-python3', 'libapache2-mod-proxy-uwsgi'
 ]
 
 name = _('Searx')
@@ -44,10 +46,7 @@ description = [
     _('Searx is a privacy-respecting internet metasearch engine. '
       'It aggregrates and displays results from multiple search engines.'),
     _('Searx can be used to avoid tracking and profiling by search engines. '
-      'It stores no cookies by default. Additionally, Searx can be used over '
-      'Tor for online anonymity.'),
-    _('When enabled, Searx\'s web interface will be available from '
-      '<a href="/searx">/searx</a>.'),
+      'It stores no cookies by default.')
 ]
 
 service = None
@@ -74,7 +73,7 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('setup', actions.superuser_run, 'searx', ['setup'])
+    helper.call('post', actions.superuser_run, 'searx', ['setup'])
     helper.call('post', actions.superuser_run, 'searx', ['enable'])
     global service
     if service is None:
@@ -93,7 +92,8 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return action_utils.webserver_is_enabled('searx-plinth')
+    return (action_utils.webserver_is_enabled('searx-freedombox')
+            and os.path.exists('/etc/uwsgi/apps-enabled/searx.ini'))
 
 
 def enable():

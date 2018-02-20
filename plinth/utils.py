@@ -150,8 +150,8 @@ def gunzip(gzip_file, output_file):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir, mode=0o755)
 
-    with gzip.open(gzip_file, 'rb') as f:
-        contents = f.read()
-    with open(output_file, 'wb') as f:
-        f.write(contents)
+    with gzip.open(gzip_file, 'rb') as file_handle:
+        contents = file_handle.read()
+    with open(output_file, 'wb') as file_handle:
+        file_handle.write(contents)
     os.chmod(output_file, 0o644)
