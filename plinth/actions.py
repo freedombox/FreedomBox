@@ -100,40 +100,42 @@ from plinth.errors import ActionError
 LOGGER = logging.getLogger(__name__)
 
 
-def run(action, options=None, input=None, async=False):
+def run(action, options=None, input=None, run_in_background=False):
     """Safely run a specific action as the current user.
 
     See actions._run for more information.
     """
-    return _run(action, options, input, async, False)
+    return _run(action, options, input, run_in_background, False)
 
 
-def superuser_run(action, options=None, input=None, async=False,
+def superuser_run(action, options=None, input=None, run_in_background=False,
                   log_error=True):
     """Safely run a specific action as root.
 
     See actions._run for more information.
     """
-    return _run(action, options, input, async, True, log_error=log_error)
+    return _run(action, options, input, run_in_background, True,
+                log_error=log_error)
 
 
-def run_as_user(action, options=None, input=None, async=False,
+def run_as_user(action, options=None, input=None, run_in_background=False,
                 become_user=None):
     """Run a command as a different user.
 
     If become_user is None, run as current user.
     """
-    return _run(action, options, input, async, False, become_user)
+    return _run(action, options, input, run_in_background, False, become_user)
 
 
-def _run(action, options=None, input=None, async=False, run_as_root=False,
-         become_user=None, log_error=True):
+def _run(action, options=None, input=None, run_in_background=False,
+         run_as_root=False, become_user=None, log_error=True):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
     - options are added to the action command.
     - input: data (as bytes) that will be sent to the action command's stdin.
-    - async: run asynchronously or wait for the command to complete.
+    - run_in_background: run asynchronously or wait for the command to
+      complete.
     - run_as_root: execute the command through sudo.
     """
     if options is None:
@@ -178,7 +180,7 @@ def _run(action, options=None, input=None, async=False, run_as_root=False,
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, shell=False)
 
-    if not async:
+    if not run_in_background:
         output, error = proc.communicate(input=input)
         output, error = output.decode(), error.decode()
         if proc.returncode != 0:

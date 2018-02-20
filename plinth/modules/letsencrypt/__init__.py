@@ -123,11 +123,12 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del kwargs  # Unused
 
     for module in MODULES_WITH_HOOKS:
-        actions.superuser_run(module, ['letsencrypt', 'drop',
-                                       '--domain', old_domainname], async=True)
-    actions.superuser_run('letsencrypt', ['manage_hooks', 'disable',
-                                          '--domain', old_domainname],
-                          async=True)
+        actions.superuser_run(
+            module, ['letsencrypt', 'drop', '--domain',
+                     old_domainname], run_in_background=True)
+    actions.superuser_run(
+        'letsencrypt', ['manage_hooks', 'disable', '--domain',
+                        old_domainname], run_in_background=True)
 
 
 def get_manage_hooks_status():

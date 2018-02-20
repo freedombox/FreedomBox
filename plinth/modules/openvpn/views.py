@@ -69,7 +69,8 @@ def setup(request):
 
     global setup_process
     if not openvpn.is_setup() and not setup_process:
-        setup_process = actions.superuser_run('openvpn', ['setup'], async=True)
+        setup_process = actions.superuser_run('openvpn', ['setup'],
+                                              run_in_background=True)
 
     openvpn.add_shortcut()
 

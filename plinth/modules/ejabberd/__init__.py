@@ -161,7 +161,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
                           ['change-hostname',
                            '--old-hostname', old_hostname,
                            '--new-hostname', new_hostname],
-                          async=True)
+                          run_in_background=True)
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
@@ -173,7 +173,7 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     actions.superuser_run('ejabberd',
                           ['change-domainname',
                            '--domainname', new_domainname],
-                          async=True)
+                          run_in_background=True)
 
 
 def diagnose():

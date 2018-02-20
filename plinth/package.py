@@ -89,7 +89,8 @@ class Transaction(object):
         """Run apt-get and update progress."""
         self._reset_status()
 
-        process = actions.superuser_run('packages', arguments, async=True)
+        process = actions.superuser_run('packages', arguments,
+                                        run_in_background=True)
         process.stdin.close()
 
         stdout_thread = threading.Thread(target=self._read_stdout,

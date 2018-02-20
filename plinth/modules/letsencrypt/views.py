@@ -116,7 +116,7 @@ def toggle_hooks(request, domain):
                                if module in manage_hooks_status]
             for module in enabled_modules:
                 actions.superuser_run(module, ['letsencrypt', 'drop'],
-                                      async=True)
+                                      run_in_background=True)
         actions.superuser_run('letsencrypt', ['manage_hooks', subcommand])
         if subcommand == 'enable':
             msg = _('Certificate renewal management enabled for {domain}.')\
@@ -178,9 +178,10 @@ def delete(request, domain):
 
     try:
         for module in enabled_modules:
-            actions.superuser_run(module, ['letsencrypt', 'drop'], async=True)
-        actions.superuser_run('letsencrypt', ['manage_hooks', 'disable',
-                                              '--domain', domain])
+            actions.superuser_run(module, ['letsencrypt', 'drop'],
+                                  run_in_background=True)
+        actions.superuser_run('letsencrypt',
+                              ['manage_hooks', 'disable', '--domain', domain])
     except ActionError as exception:
         messages.error(
             request,

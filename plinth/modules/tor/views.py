@@ -121,7 +121,7 @@ def __apply_changes(request, old_status, new_status):
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
         config_process = actions.superuser_run(
-            'tor', ['configure'] + arguments, async=True)
+            'tor', ['configure'] + arguments, run_in_background=True)
         return
 
     if arguments:
@@ -130,7 +130,8 @@ def __apply_changes(request, old_status, new_status):
             messages.success(request, _('Configuration updated.'))
 
     if needs_restart and new_status['enabled']:
-        config_process = actions.superuser_run('tor', ['restart'], async=True)
+        config_process = actions.superuser_run('tor', ['restart'],
+                                               run_in_background=True)
 
     if not arguments:
         messages.info(request, _('Setting unchanged'))

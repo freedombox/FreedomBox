@@ -41,7 +41,7 @@ def restart(request):
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['restart'], async=True)
+        actions.superuser_run('power', ['restart'], run_in_background=True)
         return redirect(reverse('apps'))
     else:
         form = Form(prefix='power')
@@ -57,7 +57,7 @@ def shutdown(request):
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['shutdown'], async=True)
+        actions.superuser_run('power', ['shutdown'], run_in_background=True)
         return redirect(reverse('apps'))
     else:
         form = Form(prefix='power')

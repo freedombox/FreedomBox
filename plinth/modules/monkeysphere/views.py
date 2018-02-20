@@ -76,7 +76,8 @@ def publish(request, fingerprint):
     global publish_process
     if not publish_process:
         publish_process = actions.superuser_run(
-            'monkeysphere', ['host-publish-key', fingerprint], async=True)
+            'monkeysphere', ['host-publish-key', fingerprint],
+            run_in_background=True)
 
     return redirect(reverse_lazy('monkeysphere:index'))
 
