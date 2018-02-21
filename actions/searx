@@ -53,7 +53,7 @@ def _copy_uwsgi_configuration():
                       'uwsgi/apps-available/searx.ini')
     destination = '/etc/uwsgi/apps-available/'
 
-    if not os.path.exists(destination):
+    if not os.path.exists(os.path.join(destination, 'searx.ini')):
         shutil.copy(example_config, destination)
         action_utils.webserver_enable('uwsgi', kind='module')
 
@@ -83,9 +83,9 @@ def subcommand_setup(_):
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    # TODO Write action_utils functions for enable/disable uwsgi
-    os.symlink('/etc/uwsgi/apps-available/searx.ini',
-               '/etc/uwsgi/apps-enabled/')
+    if not os.path.exists('/etc/uwsgi/apps-enabled/searx.ini'):
+        os.symlink('/etc/uwsgi/apps-available/searx.ini',
+                   '/etc/uwsgi/apps-enabled/searx.ini')
     action_utils.webserver_enable('searx-freedombox')
 
 
