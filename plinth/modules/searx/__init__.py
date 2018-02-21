@@ -25,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
+from plinth.modules.users import register_group
 
 from .manifest import clients
 
@@ -49,6 +50,8 @@ description = [
       'It stores no cookies by default.')
 ]
 
+group = ('web-search', _('Search the web'))
+
 service = None
 
 
@@ -57,6 +60,7 @@ def init():
     menu = main_menu.get('apps')
     menu.add_urlname(name, 'glyphicon-search', 'searx:index',
                      short_description)
+    register_group(group)
 
     global service
     setup_helper = globals()['setup_helper']
