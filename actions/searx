@@ -62,30 +62,21 @@ def _copy_uwsgi_configuration():
         action_utils.webserver_enable('proxy_uwsgi', kind='module')
 
 
-def _generate_secret_key():
-    """ Generate a secret key for the Searx installation."""
-
-    if not os.path.exists(SETTINGS_FILE):
-        example_settings_file = '/usr/share/doc/searx/examples/settings.yml.gz'
-        gunzip(example_settings_file, SETTINGS_FILE)
-
-    # Generate and set a secret key
-    settings = read_settings()
+def _generate_secret_key(settings):
+    """Generate a secret key for the Searx installation."""
     secret_key = secrets.token_hex(32)
     settings['server']['secret_key'] = secret_key
-    write_settings(settings)
-
-    action_utils.service_restart('uwsgi')
 
 
-def _set_title():
+def _set_title(settings):
     """Set the page title to '{box_name} Web Search'."""
-    settings = read_settings()
     title = 'FreedomBox Web Search'
     settings['general']['instance_name'] = title
-    write_settings(settings)
 
-    action_utils.service_restart('uwsgi')
+
+def _set_timeout(settings):
+    """Set timeout to 20 seconds."""
+    settings['outgoing']['request_timeout'] = 20.0
 
 
 def read_settings():
@@ -101,8 +92,17 @@ def write_settings(settings):
 def subcommand_setup(_):
     """Post installation actions for Searx"""
     _copy_uwsgi_configuration()
-    _generate_secret_key()
-    _set_title()
+
+    if not os.path.exists(SETTINGS_FILE):
+        example_settings_file = '/usr/share/doc/searx/examples/settings.yml.gz'
+        gunzip(example_settings_file, SETTINGS_FILE)
+
+    settings = read_settings()
+    _generate_secret_key(settings)
+    _set_title(settings)
+    _set_timeout(settings)
+
+    action_utils.service_restart('uwsgi')
 
 
 def subcommand_enable(_):
@@ -110,6 +110,8 @@ def subcommand_enable(_):
     if not os.path.exists('/etc/uwsgi/apps-enabled/searx.ini'):
         os.symlink('/etc/uwsgi/apps-available/searx.ini',
                    '/etc/uwsgi/apps-enabled/searx.ini')
+
+    action_utils.service_restart('uwsgi')
     action_utils.webserver_enable('searx-freedombox')
 
 
@@ -117,6 +119,7 @@ def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('searx-freedombox')
     os.unlink('/etc/uwsgi/apps-enabled/searx.ini')
+    action_utils.service_restart('uwsgi')
 
 
 def main():
