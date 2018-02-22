@@ -25,8 +25,10 @@ import os
 import secrets
 import shutil
 
-from plinth import action_utils, cfg
-from plinth.utils import YAMLFile, gunzip
+import yaml
+
+from plinth import action_utils
+from plinth.utils import gunzip
 
 SETTINGS_FILE = '/etc/searx/settings.yml'
 
@@ -57,7 +59,7 @@ def _copy_uwsgi_configuration():
 
     if not os.path.exists(os.path.join(destination, 'searx.ini')):
         shutil.copy(example_config, destination)
-        action_utils.webserver_enable('uwsgi', kind='module')
+        action_utils.webserver_enable('proxy_uwsgi', kind='module')
 
 
 def _generate_secret_key():
@@ -68,20 +70,32 @@ def _generate_secret_key():
         gunzip(example_settings_file, SETTINGS_FILE)
 
     # Generate and set a secret key
-    with YAMLFile(SETTINGS_FILE) as settings:
-        secret_key = secrets.token_hex(32)
-        settings['server']['secret_key'] = secret_key
+    settings = read_settings()
+    secret_key = secrets.token_hex(32)
+    settings['server']['secret_key'] = secret_key
+    write_settings(settings)
 
     action_utils.service_restart('uwsgi')
 
 
 def _set_title():
     """Set the page title to '{box_name} Web Search'."""
-    with YAMLFile(SETTINGS_FILE) as settings:
-        title = 'FreedomBox Web Search'
-        settings['general']['instance_name'] = title
+    settings = read_settings()
+    title = 'FreedomBox Web Search'
+    settings['general']['instance_name'] = title
+    write_settings(settings)
 
     action_utils.service_restart('uwsgi')
+
+
+def read_settings():
+    with open(SETTINGS_FILE, 'rb') as settings_file:
+        return yaml.load(settings_file)
+
+
+def write_settings(settings):
+    with open(SETTINGS_FILE, 'w') as settings_file:
+        yaml.dump(settings, settings_file)
 
 
 def subcommand_setup(_):
