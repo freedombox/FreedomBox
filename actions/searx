@@ -101,6 +101,7 @@ def subcommand_setup(_):
     _generate_secret_key(settings)
     _set_title(settings)
     _set_timeout(settings)
+    write_settings(settings)
 
     action_utils.service_restart('uwsgi')
 
