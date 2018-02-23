@@ -20,13 +20,8 @@ URLs for the Searx module.
 
 from django.conf.urls import url
 
-from plinth.modules import searx
-from plinth.views import ServiceView
+from .views import SearxServiceView
 
 urlpatterns = [
-    url(r'^apps/searx/$',
-        ServiceView.as_view(
-            service_id='searx', diagnostics_module_name='searx',
-            description=searx.description, clients=searx.clients,
-            show_status_block=False), name='index'),
+    url(r'^apps/searx/$', SearxServiceView.as_view(), name='index'),
 ]

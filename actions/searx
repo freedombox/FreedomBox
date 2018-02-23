@@ -43,6 +43,16 @@ def parse_arguments():
     subparsers.add_parser(
         'setup', help="Perform post-installation operations for Searx")
 
+    safe_search = subparsers.add_parser(
+        'set-safe-search',
+        help='Set the default filter for safe search on Searx')
+    safe_search.add_argument(
+        'filter', type=int,
+        help='Filter results. 0: None, 1: Moderate, 2: Strict')
+
+    subparsers.add_parser('get-safe-search',
+                          help='Print the value of the safe search setting.')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -77,6 +87,23 @@ def _set_title(settings):
 def _set_timeout(settings):
     """Set timeout to 20 seconds."""
     settings['outgoing']['request_timeout'] = 20.0
+
+
+def subcommand_set_safe_search(arguments):
+    """Set safe search filter for search results."""
+    value = arguments.filter
+    settings = read_settings()
+    settings['search']['safe_search'] = value
+    write_settings(settings)
+
+
+def subcommand_get_safe_search(_):
+    """Print the value of the safe search setting."""
+    if os.path.exists(SETTINGS_FILE):
+        settings = read_settings()
+        print(settings['search']['safe_search'])
+    else:
+        print(0)
 
 
 def read_settings():

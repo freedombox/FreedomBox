@@ -94,6 +94,12 @@ def add_shortcut():
                            url='/searx', login_required=True)
 
 
+def get_safe_search_setting():
+    """Get the current value of the safe search setting for Seax."""
+    value = actions.superuser_run('searx', ['get-safe-search'])
+    return int(value.strip())
+
+
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.webserver_is_enabled('searx-freedombox')
