@@ -152,6 +152,9 @@ def gunzip(gzip_file, output_file):
 
     with gzip.open(gzip_file, 'rb') as file_handle:
         contents = file_handle.read()
-    with open(output_file, 'wb') as file_handle:
+
+    def opener(path, flags):
+        return os.open(path, flags, mode=0o644)
+
+    with open(output_file, 'wb', opener=opener) as file_handle:
         file_handle.write(contents)
-    os.chmod(output_file, 0o644)
