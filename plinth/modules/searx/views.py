@@ -45,9 +45,10 @@ class SearxServiceView(views.ServiceView):
 
     def form_valid(self, form):
         """Apply the changes submitted in the form."""
+        old_data = form.initial
         form_data = form.cleaned_data
 
-        if form_data['safe_search']:
+        if str(old_data['safe_search']) != form_data['safe_search']:
             try:
                 actions.superuser_run(
                     'searx',
