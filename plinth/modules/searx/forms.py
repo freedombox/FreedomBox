@@ -26,7 +26,8 @@ from plinth.forms import ServiceForm
 
 class SearxForm(ServiceForm):
     """Searx configuration form."""
-    safe_search = forms.ChoiceField(label="Safe Search", help_text=_(
+    safe_search = forms.ChoiceField(label=_('Safe Search'), help_text=_(
         'Select the default family filter to apply to your search results.'),
-                                    choices=((0, 'None'), (1, 'Moderate'),
-                                             (2, 'Strict')))
+                                    choices=((0, _('None')),
+                                             (1, _('Moderate')),
+                                             (2, _('Strict'))))
