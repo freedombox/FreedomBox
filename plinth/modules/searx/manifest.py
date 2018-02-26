@@ -23,6 +23,6 @@ clients = validate([{
     'name': _('Searx'),
     'platforms': [{
         'type': 'web',
-        'url': '/searx'
+        'url': '/searx/'
     }]
 }])
