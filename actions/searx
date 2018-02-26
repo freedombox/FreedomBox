@@ -139,6 +139,7 @@ def subcommand_enable(_):
         os.symlink('/etc/uwsgi/apps-available/searx.ini',
                    '/etc/uwsgi/apps-enabled/searx.ini')
 
+    action_utils.service_enable('uwsgi')
     action_utils.service_restart('uwsgi')
     action_utils.webserver_enable('searx-freedombox')
 
