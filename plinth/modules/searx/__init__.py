@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-FreedomBox module to configure Searx
+FreedomBox app to configure Searx.
 """
 
 import os
@@ -44,7 +44,7 @@ name = _('Searx')
 short_description = _('Web Search')
 
 description = [
-    _('Searx is a privacy-respecting internet metasearch engine. '
+    _('Searx is a privacy-respecting Internet metasearch engine. '
       'It aggregrates and displays results from multiple search engines.'),
     _('Searx can be used to avoid tracking and profiling by search engines. '
       'It stores no cookies by default.')

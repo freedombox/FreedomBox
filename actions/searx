@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- mode: python -*-
 #
 # This file is part of Plinth.
 #
@@ -38,10 +37,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('enable', help='Enable searx')
-    subparsers.add_parser('disable', help='Disable searx')
+    subparsers.add_parser('enable', help='Enable Searx')
+    subparsers.add_parser('disable', help='Disable Searx')
     subparsers.add_parser(
-        'setup', help="Perform post-installation operations for Searx")
+        'setup', help='Perform post-installation operations for Searx')
 
     safe_search = subparsers.add_parser(
         'set-safe-search',
@@ -106,11 +105,13 @@ def subcommand_get_safe_search(_):
 
 
 def read_settings():
+    """Load settings as dictionary from YAML config file."""
     with open(SETTINGS_FILE, 'rb') as settings_file:
         return yaml.load(settings_file)
 
 
 def write_settings(settings):
+    """Write settings from dictionary to YAML config file."""
     with open(SETTINGS_FILE, 'w') as settings_file:
         yaml.dump(settings, settings_file)
 

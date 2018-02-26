@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth views for Searx.
+Django views for Searx.
 """
 
 from django.contrib import messages
@@ -51,13 +51,10 @@ class SearxServiceView(views.ServiceView):
         if str(old_data['safe_search']) != form_data['safe_search']:
             try:
                 actions.superuser_run(
-                    'searx',
-                    ['set-safe-search',
-                     str(form_data['safe_search'])])
-                messages.success(self.request,
-                                 _('Safe search setting updated'))
+                    'searx', ['set-safe-search', form_data['safe_search']])
+                messages.success(self.request, _('Configuration updated.'))
             except ActionError as e:
                 messages.error(self.request,
-                               _('Failed to update safe search setting'))
+                               _('An error occurred during configuration.'))
 
         return super().form_valid(form)

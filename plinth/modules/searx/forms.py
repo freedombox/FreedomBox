@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Plinth form for configuring Searx.
+Django form for configuring Searx.
 """
 
 from django import forms
