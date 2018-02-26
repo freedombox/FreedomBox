@@ -56,10 +56,10 @@
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="images/plinth_all_apps_full_page.png"/>
+              <imagedata fileref="images/freedombox-frontpage-2018-02-26.png"/>
             </imageobject>
             <textobject>
-              <phrase>plinth_all_apps_full_page.png</phrase>
+              <phrase>freedombox-frontpage-2018-02-26.png</phrase>
             </textobject>
           </inlinemediaobject>
         </para>
@@ -889,7 +889,7 @@ file = /etc/radicale/rights</screen>
         <title>About Coquelicot</title>
         <para>Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy.  </para>
         <para>Read more about Coquelicot at <ulink url="https://coquelicot.potager.org/README">the Coquelicot README</ulink> </para>
-        <para><emphasis role="strong">Available (planned):</emphasis>  version 0.24.0 </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
       </section>
       <section>
         <title>When to use Coquelicot</title>
@@ -1466,6 +1466,39 @@ proto udp</screen>
             <para>The <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
           </listitem>
         </orderedlist>
+      </section>
+    </section>
+    <section>
+      <title>Web Search (Searx)</title>
+      <section>
+        <title>About Searx</title>
+        <para>Searx is a <ulink url="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</ulink>. A metasearch engine aggregates the results from various search engines and presents them in a unified interface. </para>
+        <para>Read more about Searx on their <ulink url="https://asciimoo.github.io/searx/">official website</ulink>. </para>
+        <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
+      </section>
+      <section>
+        <title>Why use Searx?</title>
+        <section>
+          <title>Personalization and Filter Bubbles</title>
+          <para>Search engines have the ability to profile users and serve results most relevant to them, putting people into <ulink url="https://en.wikipedia.org/wiki/Filter_bubble">filter bubbles</ulink>, thus distorting people's view of the world. Search engines have a financial incentive to serve interesting advertisements to their users, increasing their chances of clicking on the advertisements. </para>
+          <para>A metasearch engine is a possible solution to this problem, as it aggregates results from multiple search engines thus bypassing personalization attempts by search engines.  </para>
+          <para>Searx avoids storing cookies from search engines as a means of preventing tracking and profiling by search engines. </para>
+        </section>
+        <section>
+          <title>Advertisement filtering</title>
+          <para>Searx filters out advertisements from the search results before serving the results, thus increasing relevance the of your search results and saving you from distractions. </para>
+        </section>
+        <section>
+          <title>Privacy</title>
+          <para>Searx uses HTTP POST instead of GET by default to send your search queries to the <ulink url="https://en.wikipedia.org/wiki/Web_search_engine">search engines</ulink>, so that anyone snooping your traffic wouldn't be able to read your queries. The search queries wouldn't stored in browser history either.  </para>
+          <para><emphasis role="strong">Note:</emphasis> Searx used from Chrome browser's omnibar would make GET requests instead of POST. </para>
+        </section>
+      </section>
+      <section>
+        <title>Searx on FreedomBox</title>
+        <para>Searx on FreedomBox uses Single Sign On. This means that you should be logged in into your FreedomBox in the browser that you're using Searx.  </para>
+        <para>Searx can be added as a search engine to the Firefox browser's search bar. See <ulink url="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">Firefox Help</ulink> on this topic. Once Searx is added, you can also set it as your default search engine. </para>
+        <para>Searx also offers search results in csv, json and rss formats, which can be used with scripts to automate some tasks. </para>
       </section>
     </section>
     <section>
@@ -6910,6 +6943,38 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Plinth v0.24.0 (2018-02-26)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Add file-sharing application Coquelicot. </para>
+          </listitem>
+          <listitem>
+            <para>Add metasearch engine application Searx. </para>
+          </listitem>
+          <listitem>
+            <para>Add locale for Hungarian (hu). </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Allow shortcut to be publicly visible on front page. </para>
+          </listitem>
+          <listitem>
+            <para>clients: Add and correct Client Apps. </para>
+          </listitem>
+          <listitem>
+            <para>locale: Preferred language can be set in each user's profile. </para>
+          </listitem>
+          <listitem>
+            <para>locale: Anonymous users can select preferred language. </para>
+          </listitem>
+          <listitem>
+            <para>config: Remove language selection from config page. </para>
+          </listitem>
+          <listitem>
+            <para>matrixsynapse: Fix mail attribute for ldap login. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Plinth v0.23.0 (2018-02-12)</title>
         <itemizedlist>
