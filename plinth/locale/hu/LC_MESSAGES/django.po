@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-19 11:06+0530\n"
+"POT-Creation-Date: 2018-02-26 17:58+0100\n"
 "PO-Revision-Date: 2018-02-26 16:57+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/freedombox/plinth/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
+"plinth/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,22 +49,36 @@ msgstr ""
 msgid "Cannot connect to {host}:{port}"
 msgstr ""
 
-#: plinth/context_processors.py:38 plinth/views.py:51
+#: plinth/context_processors.py:38 plinth/views.py:56
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/forms.py:31
+#: plinth/forms.py:35
 msgid "Enable application"
 msgstr "Alkalmazás engedélyezése"
 
-#: plinth/forms.py:45
+#: plinth/forms.py:49
 msgid "Select a domain name to be used with this application"
 msgstr ""
 
-#: plinth/forms.py:47
+#: plinth/forms.py:51
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
+msgstr ""
+
+#: plinth/forms.py:59
+msgid "Language"
+msgstr "Nyelv"
+
+#: plinth/forms.py:60
+#, fuzzy
+#| msgid "Language for this web administration interface"
+msgid "Language to use for presenting this web interface"
+msgstr "Ennek az adminisztrációs felületnek a nyelve"
+
+#: plinth/forms.py:67
+msgid "Use the language preference set in the browser"
 msgstr ""
 
 #: plinth/middleware.py:71
@@ -136,7 +150,7 @@ msgid "Enable Domain Name System Security Extensions"
 msgstr ""
 
 #: plinth/modules/bind/views.py:57 plinth/modules/dynamicdns/dynamicdns.py:381
-#: plinth/modules/openvpn/views.py:142 plinth/modules/shadowsocks/views.py:79
+#: plinth/modules/openvpn/views.py:143 plinth/modules/shadowsocks/views.py:79
 #: plinth/modules/transmission/views.py:73
 msgid "Configuration updated"
 msgstr "A beállítások frissültek"
@@ -180,7 +194,7 @@ msgid "Configure"
 msgstr ""
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:81
-#: plinth/modules/config/views.py:163
+#: plinth/modules/config/views.py:139
 #: plinth/modules/dynamicdns/dynamicdns.py:143
 msgid "Domain Name"
 msgstr "Domain név"
@@ -218,49 +232,32 @@ msgid ""
 "or less."
 msgstr ""
 
-#: plinth/modules/config/forms.py:98
-msgid "Language"
-msgstr "Nyelv"
-
-#: plinth/modules/config/forms.py:100
-msgid "Language for this web administration interface"
-msgstr "Ennek az adminisztrációs felületnek a nyelve"
-
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
 msgid "Submit"
 msgstr "Küldés"
 
-#: plinth/modules/config/views.py:66
+#: plinth/modules/config/views.py:55
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: plinth/modules/config/views.py:87
+#: plinth/modules/config/views.py:75
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr ""
 
-#: plinth/modules/config/views.py:90
+#: plinth/modules/config/views.py:78
 msgid "Hostname set"
 msgstr ""
 
-#: plinth/modules/config/views.py:97
+#: plinth/modules/config/views.py:85
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr ""
 
-#: plinth/modules/config/views.py:100
+#: plinth/modules/config/views.py:88
 msgid "Domain name set"
 msgstr ""
-
-#: plinth/modules/config/views.py:109
-#, python-brace-format
-msgid "Error setting language: {exception}"
-msgstr "A nyelv beállítása sikertelen: {exception}"
-
-#: plinth/modules/config/views.py:112
-msgid "Language changed"
-msgstr "A nyelv megváltozott"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -360,7 +357,7 @@ msgstr ""
 msgid "Time zone set"
 msgstr ""
 
-#: plinth/modules/deluge/__init__.py:40 plinth/modules/deluge/manifest.py:24
+#: plinth/modules/deluge/__init__.py:40 plinth/modules/deluge/manifest.py:23
 msgid "Deluge"
 msgstr ""
 
@@ -385,7 +382,7 @@ msgstr ""
 msgid "Download files using BitTorrent applications"
 msgstr ""
 
-#: plinth/modules/deluge/manifest.py:26
+#: plinth/modules/deluge/manifest.py:24
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr ""
 
@@ -484,11 +481,11 @@ msgid ""
 "href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
 msgstr ""
 "A diaspora* pod domain neve: <b>%(domain_name)s</b>. A felhasználói "
-"azonosítók formátuma a következő: "
-"<i>felhasználónév@diaspora.%(domain_name)s</i><br/> Ha a FreedomBox domain "
-"neve megváltozik, a korábbi podnév alatt regisztrált felhasználók adatai "
-"hozzáférhetetlenné válnak.<br/> A diaspora* pod a következő címen érhető el: "
-"<a href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s</a>"
+"azonosítók formátuma a következő: <i>felhasználónév@diaspora."
+"%(domain_name)s</i><br/> Ha a FreedomBox domain neve megváltozik, a korábbi "
+"podnév alatt regisztrált felhasználók adatai hozzáférhetetlenné válnak.<br/> "
+"A diaspora* pod a következő címen érhető el: <a href=\"https://diaspora."
+"%(domain_name)s\"> diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -507,8 +504,8 @@ msgstr "Beállítások frissítése"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:60
 #: plinth/modules/matrixsynapse/views.py:104
-#: plinth/modules/openvpn/views.py:144 plinth/modules/tor/views.py:136
-#: plinth/views.py:115
+#: plinth/modules/openvpn/views.py:145 plinth/modules/tor/views.py:137
+#: plinth/views.py:145
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
@@ -772,22 +769,28 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:25
-msgid "yaxim"
+msgid "Conversations"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:34
-msgid "Bruno"
+#: plinth/modules/ejabberd/manifest.py:39
+msgid "Xabber"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:36
-msgid "Bruno is a themed version of the open source yaxim app."
+#: plinth/modules/ejabberd/manifest.py:41
+msgid ""
+"Open source Jabber (XMPP) client with multi-account support and clean and "
+"simple interface. "
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:46
+#: plinth/modules/ejabberd/manifest.py:56
+msgid "Yaxim"
+msgstr ""
+
+#: plinth/modules/ejabberd/manifest.py:70
 msgid "ChatSecure"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:48
+#: plinth/modules/ejabberd/manifest.py:72
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -795,15 +798,11 @@ msgid ""
 "your own server for extra security."
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:64
-msgid "Conversations"
-msgstr ""
-
-#: plinth/modules/ejabberd/manifest.py:73
+#: plinth/modules/ejabberd/manifest.py:88
 msgid "Dino"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:81
+#: plinth/modules/ejabberd/manifest.py:100
 msgid "Gajim"
 msgstr ""
 
@@ -831,12 +830,12 @@ msgid "Configuration"
 msgstr ""
 
 #: plinth/modules/ejabberd/views.py:64
-#: plinth/modules/matrixsynapse/views.py:108 plinth/views.py:119
+#: plinth/modules/matrixsynapse/views.py:108 plinth/views.py:149
 msgid "Application enabled"
 msgstr ""
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:111 plinth/views.py:122
+#: plinth/modules/matrixsynapse/views.py:111 plinth/views.py:152
 msgid "Application disabled"
 msgstr ""
 
@@ -1532,17 +1531,17 @@ msgstr ""
 msgid "Failed to switch certificate use for app {module}: {error}"
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:187
+#: plinth/modules/letsencrypt/views.py:188
 #, python-brace-format
 msgid "Failed to disable certificate renewal management for {domain}: {error}"
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:194
+#: plinth/modules/letsencrypt/views.py:195
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr ""
 
-#: plinth/modules/letsencrypt/views.py:199
+#: plinth/modules/letsencrypt/views.py:200
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr ""
@@ -1886,15 +1885,15 @@ msgstr ""
 msgid "Imported key."
 msgstr ""
 
-#: plinth/modules/monkeysphere/views.py:92
+#: plinth/modules/monkeysphere/views.py:93
 msgid "Cancelled key publishing."
 msgstr ""
 
-#: plinth/modules/monkeysphere/views.py:145
+#: plinth/modules/monkeysphere/views.py:146
 msgid "Published key to keyserver."
 msgstr ""
 
-#: plinth/modules/monkeysphere/views.py:147
+#: plinth/modules/monkeysphere/views.py:148
 msgid "Error occurred while publishing key."
 msgstr ""
 
@@ -1919,11 +1918,11 @@ msgid ""
 "desktop and Android devices are available."
 msgstr ""
 
-#: plinth/modules/mumble/manifest.py:47
+#: plinth/modules/mumble/manifest.py:51
 msgid "Plumble"
 msgstr ""
 
-#: plinth/modules/mumble/manifest.py:61
+#: plinth/modules/mumble/manifest.py:65
 msgid "Mumblefly"
 msgstr ""
 
@@ -2591,11 +2590,11 @@ msgstr ""
 msgid "OpenVPN server is not running"
 msgstr ""
 
-#: plinth/modules/openvpn/views.py:122
+#: plinth/modules/openvpn/views.py:123
 msgid "Setup completed."
 msgstr ""
 
-#: plinth/modules/openvpn/views.py:124
+#: plinth/modules/openvpn/views.py:125
 msgid "Setup failed."
 msgstr ""
 
@@ -3032,7 +3031,7 @@ msgid ""
 "\">mobile</a> devices are available."
 msgstr ""
 
-#: plinth/modules/quassel/manifest.py:36
+#: plinth/modules/quassel/manifest.py:48
 msgid "Quasseldroid"
 msgstr ""
 
@@ -3078,21 +3077,25 @@ msgid ""
 "you can create new."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:38
+#: plinth/modules/radicale/manifest.py:43
 msgid "GNOME Calendar"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:46
+#: plinth/modules/radicale/manifest.py:51
+msgid "Mozilla Thunderbird"
+msgstr ""
+
+#: plinth/modules/radicale/manifest.py:71
 msgid "Evolution"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:48
+#: plinth/modules/radicale/manifest.py:73
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:52
+#: plinth/modules/radicale/manifest.py:77
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3213,6 +3216,59 @@ msgid ""
 "account settings (<a href=\"https://www.google.com/settings/security/"
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
+msgstr ""
+
+#: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
+msgid "Searx"
+msgstr ""
+
+#: plinth/modules/searx/__init__.py:44
+msgid "Web Search"
+msgstr ""
+
+#: plinth/modules/searx/__init__.py:47
+msgid ""
+"Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
+"displays results from multiple search engines."
+msgstr ""
+
+#: plinth/modules/searx/__init__.py:49
+msgid ""
+"Searx can be used to avoid tracking and profiling by search engines. It "
+"stores no cookies by default."
+msgstr ""
+
+#: plinth/modules/searx/__init__.py:53
+msgid "Search the web"
+msgstr ""
+
+#: plinth/modules/searx/forms.py:29
+msgid "Safe Search"
+msgstr ""
+
+#: plinth/modules/searx/forms.py:30
+msgid "Select the default family filter to apply to your search results."
+msgstr ""
+
+#: plinth/modules/searx/forms.py:31
+msgid "None"
+msgstr ""
+
+#: plinth/modules/searx/forms.py:32
+msgid "Moderate"
+msgstr ""
+
+#: plinth/modules/searx/forms.py:33
+msgid "Strict"
+msgstr ""
+
+#: plinth/modules/searx/views.py:55 plinth/modules/tor/views.py:130
+#: plinth/modules/tor/views.py:159
+msgid "Configuration updated."
+msgstr ""
+
+#: plinth/modules/searx/views.py:58 plinth/modules/tor/views.py:161
+msgid "An error occurred during configuration."
 msgstr ""
 
 #: plinth/modules/security/forms.py:29
@@ -3885,14 +3941,6 @@ msgstr ""
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
 
-#: plinth/modules/tor/views.py:130 plinth/modules/tor/views.py:158
-msgid "Configuration updated."
-msgstr ""
-
-#: plinth/modules/tor/views.py:160
-msgid "An error occurred during configuration."
-msgstr ""
-
 #: plinth/modules/transmission/__init__.py:37
 #: plinth/modules/transmission/manifest.py:23
 msgid "Transmission"
@@ -3920,7 +3968,7 @@ msgid ""
 "\" user."
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:41
+#: plinth/modules/ttrss/__init__.py:41 plinth/modules/ttrss/manifest.py:26
 msgid "Tiny Tiny RSS"
 msgstr ""
 
@@ -3953,7 +4001,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/ttrss/manifest.py:26
+#: plinth/modules/ttrss/manifest.py:38
 msgid "TT-RSS Reader"
 msgstr ""
 
@@ -4040,19 +4088,19 @@ msgstr "Felhasználók és csoportok"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr ""
 
-#: plinth/modules/users/forms.py:37
+#: plinth/modules/users/forms.py:40
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/forms.py:52
+#: plinth/modules/users/forms.py:55
 msgid "Username is taken or is reserved."
 msgstr "A felhasználói név (már) foglalt."
 
-#: plinth/modules/users/forms.py:81
+#: plinth/modules/users/forms.py:86
 msgid "Permissions"
 msgstr "Engedélyek"
 
-#: plinth/modules/users/forms.py:84
+#: plinth/modules/users/forms.py:89
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -4061,20 +4109,20 @@ msgid ""
 "SSH and have administrative privileges (sudo)."
 msgstr ""
 
-#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:270
+#: plinth/modules/users/forms.py:122 plinth/modules/users/forms.py:295
 msgid "Creating LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:119
+#: plinth/modules/users/forms.py:133
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:131
+#: plinth/modules/users/forms.py:146
 msgid "SSH Keys"
 msgstr "SSH kulcsok"
 
-#: plinth/modules/users/forms.py:133
+#: plinth/modules/users/forms.py:148
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -4084,35 +4132,35 @@ msgstr ""
 "jelszó nélkül jelentkezzen be. Több kulcs is megadható; soronként egy. Az "
 "üres, illetve # jellel kezdődő sorok nem számítanak."
 
-#: plinth/modules/users/forms.py:191
+#: plinth/modules/users/forms.py:216
 msgid "Renaming LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:203
+#: plinth/modules/users/forms.py:228
 msgid "Failed to remove user from group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:214
+#: plinth/modules/users/forms.py:239
 msgid "Failed to add user to group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:223
+#: plinth/modules/users/forms.py:248
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:247
+#: plinth/modules/users/forms.py:272
 msgid "Changing LDAP user password failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:279
+#: plinth/modules/users/forms.py:304
 msgid "Failed to add new user to admin group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:296
+#: plinth/modules/users/forms.py:321
 msgid "Failed to restrict console access."
 msgstr ""
 
-#: plinth/modules/users/forms.py:308
+#: plinth/modules/users/forms.py:333
 msgid "User account created, you are now logged in"
 msgstr ""
 
@@ -4131,7 +4179,7 @@ msgid "Create User"
 msgstr "Felhasználó létrehozása"
 
 #: plinth/modules/users/templates/users_delete.html:26
-#: plinth/modules/users/views.py:127
+#: plinth/modules/users/views.py:128
 msgid "Delete User"
 msgstr "Felhasználó törlése"
 
@@ -4178,6 +4226,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/users/templates/users_update.html:53
+#: plinth/templates/language-selection.html:33
 msgid "Save Changes"
 msgstr "Változtatások mentése"
 
@@ -4199,20 +4248,20 @@ msgstr "%(username)s nevű felhasználó frissítve."
 msgid "Edit User"
 msgstr "Felhasználó szerkesztése"
 
-#: plinth/modules/users/views.py:137
+#: plinth/modules/users/views.py:138
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "{user} nevű felhasználó törölve."
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:145
 msgid "Deleting LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/views.py:153
+#: plinth/modules/users/views.py:154
 msgid "Change Password"
 msgstr "Jelszó megváltoztatása"
 
-#: plinth/modules/users/views.py:154
+#: plinth/modules/users/views.py:155
 msgid "Password changed successfully."
 msgstr "A jelszó módosítása sikeres."
 
@@ -4224,23 +4273,23 @@ msgstr ""
 msgid "Generic"
 msgstr "Általános"
 
-#: plinth/package.py:106
+#: plinth/package.py:107
 msgid "Error during installation"
 msgstr "Hiba lépett fel a telepítés során"
 
-#: plinth/package.py:128
+#: plinth/package.py:129
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:130
+#: plinth/package.py:131
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:132
+#: plinth/package.py:133
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:134
+#: plinth/package.py:135
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
@@ -4346,15 +4395,21 @@ msgid "Shut down"
 msgstr "Leállítás"
 
 #: plinth/templates/base.html:168 plinth/templates/base.html:169
-#: plinth/templates/base.html:184 plinth/templates/base.html:186
+#: plinth/templates/base.html:190 plinth/templates/base.html:192
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: plinth/templates/base.html:176 plinth/templates/base.html:178
+#: plinth/templates/base.html:177
+#, fuzzy
+#| msgid "Language"
+msgid "Select language"
+msgstr "Nyelv"
+
+#: plinth/templates/base.html:182 plinth/templates/base.html:184
 msgid "Log in"
 msgstr "Bejelentkezés"
 
-#: plinth/templates/base.html:250 plinth/templates/index.html:166
+#: plinth/templates/base.html:256 plinth/templates/index.html:166
 msgid "JavaScript license information"
 msgstr ""
 
@@ -4374,9 +4429,9 @@ msgstr "Indítás"
 msgid "Desktop"
 msgstr "Asztali"
 
-#: plinth/templates/clients.html:71 plinth/templates/clients.html:100
-msgid "Play Store"
-msgstr "Play Áruház"
+#: plinth/templates/clients.html:71
+msgid "GNU/Linux"
+msgstr ""
 
 #: plinth/templates/clients.html:73
 msgid "Windows"
@@ -4389,6 +4444,10 @@ msgstr "macOS"
 #: plinth/templates/clients.html:90
 msgid "Mobile"
 msgstr "Mobil"
+
+#: plinth/templates/clients.html:100
+msgid "Play Store"
+msgstr "Play Áruház"
 
 #: plinth/templates/clients.html:102
 msgid "F-Droid"
@@ -4545,3 +4604,9 @@ msgid ""
 msgstr ""
 "Ajánlott figyelmesen eljárni - a változtatások a legáltalánosabb szinten "
 "lehetnek hatással a %(box_name)s működésére!"
+
+#~ msgid "Error setting language: {exception}"
+#~ msgstr "A nyelv beállítása sikertelen: {exception}"
+
+#~ msgid "Language changed"
+#~ msgstr "A nyelv megváltozott"
