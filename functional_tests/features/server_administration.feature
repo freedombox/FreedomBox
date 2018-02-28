@@ -26,7 +26,7 @@ Background:
 Scenario: Enable cockpit application
   Given the cockpit application is disabled
   When I enable the cockpit application
-  Then the cockpit site should be available 
+  Then the cockpit site should be available
 
 Scenario: Disable cockpit application
   Given the cockpit application is enabled

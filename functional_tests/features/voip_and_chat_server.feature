@@ -16,7 +16,7 @@
 #
 
 @apps @matrixsynapse
-Feature: VoIP and Chat Server 
+Feature: VoIP and Chat Server
   Run Matrix Synapse server
 
 Background:
