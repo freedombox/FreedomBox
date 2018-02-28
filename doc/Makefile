@@ -62,7 +62,7 @@ fetch:
 
 
 %.part.html: %.html
-	perl -pe 'BEGIN {undef $/} s/.*<body[^>]*>(.*)<\/body>.*/$1/s' $< > $@
+	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' $< > $@
 
 
 %.html: %.xml
