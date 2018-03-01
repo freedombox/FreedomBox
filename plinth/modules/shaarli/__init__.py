@@ -20,13 +20,11 @@ FreedomBox app to configure Shaarli.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
-from .manifest import clients
 
+from .manifest import clients
 
 version = 1
 
@@ -38,7 +36,6 @@ short_description = _('Bookmarks')
 
 description = [
     _('Shaarli allows you to save and share bookmarks.'),
-
     _('When enabled, Shaarli will be available from <a href="/shaarli">'
       '/shaarli</a> path on the web server. Note that Shaarli only supports a '
       'single user account, which you will need to setup on the initial '
@@ -49,11 +46,14 @@ clients = clients
 
 service = None
 
+manual_page = 'Shaarli'
+
 
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-bookmark', 'shaarli:index', short_description)
+    menu.add_urlname(name, 'glyphicon-bookmark', 'shaarli:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -79,7 +79,8 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut('shaarli', name, short_description=short_description, url='/shaarli',
+    frontpage.add_shortcut('shaarli', name,
+                           short_description=short_description, url='/shaarli',
                            login_required=True)
 
 

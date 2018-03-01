@@ -36,6 +36,7 @@ class RadicaleServiceView(ServiceView):
     diagnostics_module_name = 'radicale'
     form_class = RadicaleForm
     service_id = managed_services[0]
+    manual_page = radicale.manual_page
 
     def get_initial(self):
         """Return the values to fill in the form."""
@@ -47,9 +48,9 @@ class RadicaleServiceView(ServiceView):
         """Change the access control of Radicale service."""
         data = form.cleaned_data
         if get_rights_value() != data['access_rights']:
-            actions.superuser_run('radicale', [
-                'configure', '--rights_type', data['access_rights']
-            ])
+            actions.superuser_run(
+                'radicale',
+                ['configure', '--rights_type', data['access_rights']])
             messages.success(self.request,
                              _('Access rights configuration updated'))
         return super().form_valid(form)

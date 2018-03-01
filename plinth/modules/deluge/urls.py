@@ -26,9 +26,7 @@ from plinth.views import ServiceView
 urlpatterns = [
     url(r'^apps/deluge/$',
         ServiceView.as_view(
-            description=deluge.description,
-            diagnostics_module_name="deluge",
-            clients=deluge.clients,
-            service_id=deluge.managed_services[0]),
-        name='index'),
+            description=deluge.description, diagnostics_module_name="deluge",
+            clients=deluge.clients, service_id=deluge.managed_services[0],
+            manual_page=deluge.manual_page), name='index'),
 ]

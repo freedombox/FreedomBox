@@ -26,9 +26,9 @@ is_essential = True
 
 name = _('Power')
 
-description = [
-    _('Restart or shut down the system.')
-]
+description = [_('Restart or shut down the system.')]
+
+manual_page = 'Power'
 
 
 def init():

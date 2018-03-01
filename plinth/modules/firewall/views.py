@@ -20,25 +20,29 @@ FreedomBox app to configure a firewall.
 
 from django.template.response import TemplateResponse
 
-from plinth.modules import firewall
 import plinth.service as service_module
+from plinth.modules import firewall
 
 
 def index(request):
     """Serve introduction page"""
     if not firewall.get_enabled_status():
-        return TemplateResponse(request, 'firewall.html',
-                                {'title': firewall.name,
-                                 'description': firewall.description,
-                                 'firewall_status': 'not_running'})
+        return TemplateResponse(
+            request, 'firewall.html', {
+                'title': firewall.name,
+                'description': firewall.description,
+                'firewall_status': 'not_running'
+            })
 
     internal_enabled_services = firewall.get_enabled_services(zone='internal')
     external_enabled_services = firewall.get_enabled_services(zone='external')
 
     return TemplateResponse(
-        request, 'firewall.html',
-        {'title': firewall.name,
-         'description': firewall.description,
-         'services': list(service_module.services.values()),
-         'internal_enabled_services': internal_enabled_services,
-         'external_enabled_services': external_enabled_services})
+        request, 'firewall.html', {
+            'title': firewall.name,
+            'description': firewall.description,
+            'services': list(service_module.services.values()),
+            'manual_page': firewall.manual_page,
+            'internal_enabled_services': internal_enabled_services,
+            'external_enabled_services': external_enabled_services
+        })

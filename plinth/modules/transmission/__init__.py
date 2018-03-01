@@ -26,6 +26,7 @@ from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
+
 from .manifest import clients
 
 version = 2
@@ -52,6 +53,8 @@ reserved_usernames = ['debian-transmission']
 group = ('bit-torrent', _('Download files using BitTorrent applications'))
 
 service = None
+
+manual_page = 'Transmission'
 
 
 def init():
@@ -104,8 +107,8 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('transmission-daemon') and
-            action_utils.webserver_is_enabled('transmission-plinth'))
+    return (action_utils.service_is_enabled('transmission-daemon')
+            and action_utils.webserver_is_enabled('transmission-plinth'))
 
 
 def enable():

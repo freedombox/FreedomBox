@@ -29,8 +29,7 @@ from django.views.decorators.http import require_POST
 
 from plinth import actions
 from plinth.errors import ActionError
-from plinth.modules import config
-from plinth.modules import letsencrypt
+from plinth.modules import config, letsencrypt
 
 logger = logging.getLogger(__name__)
 
@@ -38,12 +37,14 @@ logger = logging.getLogger(__name__)
 def index(request):
     """Serve configuration page."""
     status = letsencrypt.get_status()
-    return TemplateResponse(request, 'letsencrypt.html',
-                            {'title': letsencrypt.name,
-                             'description': letsencrypt.description,
-                             'status': status,
-                             'installed_modules':
-                             letsencrypt.get_installed_modules()})
+    return TemplateResponse(
+        request, 'letsencrypt.html', {
+            'title': letsencrypt.name,
+            'description': letsencrypt.description,
+            'status': status,
+            'manual_page': letsencrypt.manual_page,
+            'installed_modules': letsencrypt.get_installed_modules()
+        })
 
 
 @require_POST
@@ -95,8 +96,8 @@ def enable_renewal_management(request, domain):
             messages.error(
                 request,
                 _('Failed to enable certificate renewal management for '
-                  '{domain}: {error}').format(
-                      domain=domain, error=exception.args[2]))
+                  '{domain}: {error}').format(domain=domain,
+                                              error=exception.args[2]))
 
 
 @require_POST
@@ -111,9 +112,10 @@ def toggle_hooks(request, domain):
 
     try:
         if subcommand == 'disable':
-            enabled_modules = [module for module in
-                               letsencrypt.MODULES_WITH_HOOKS
-                               if module in manage_hooks_status]
+            enabled_modules = [
+                module for module in letsencrypt.MODULES_WITH_HOOKS
+                if module in manage_hooks_status
+            ]
             for module in enabled_modules:
                 actions.superuser_run(module, ['letsencrypt', 'drop'],
                                       run_in_background=True)
@@ -138,8 +140,10 @@ def toggle_hooks(request, domain):
 def toggle_module(request, domain, module):
     """Toggle usage of LE cert for a module name, for the current domain."""
     manage_hooks_status = letsencrypt.get_manage_hooks_status()
-    enabled_modules = [module for module in letsencrypt.MODULES_WITH_HOOKS
-                       if module in manage_hooks_status]
+    enabled_modules = [
+        module for module in letsencrypt.MODULES_WITH_HOOKS
+        if module in manage_hooks_status
+    ]
 
     if module in enabled_modules:
         mod_le_arg = 'drop'
@@ -157,9 +161,9 @@ def toggle_module(request, domain, module):
     try:
         actions.superuser_run(module, module_args)
         actions.superuser_run('letsencrypt', le_arguments)
-        messages.success(
-            request, _('Switched use of certificate for app {module}')
-            .format(module=module))
+        messages.success(request,
+                         _('Switched use of certificate for app {module}')
+                         .format(module=module))
     except ActionError as exception:
         messages.error(
             request,
@@ -173,8 +177,10 @@ def toggle_module(request, domain, module):
 def delete(request, domain):
     """Delete a certificate for a given domain, and cleanup renewal config."""
     manage_hooks_status = letsencrypt.get_manage_hooks_status()
-    enabled_modules = [module for module in letsencrypt.MODULES_WITH_HOOKS
-                       if module in manage_hooks_status]
+    enabled_modules = [
+        module for module in letsencrypt.MODULES_WITH_HOOKS
+        if module in manage_hooks_status
+    ]
 
     try:
         for module in enabled_modules:

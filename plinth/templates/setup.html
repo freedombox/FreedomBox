@@ -20,6 +20,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
 
@@ -29,14 +30,21 @@
 
 {% endblock %}
 
-
 {% block content %}
 
-  <h2>{% trans "Installation" %}: {{ setup_helper.module.short_description }} ({{ setup_helper.module.name }})</h2>
+  <h2>{% trans "Installation" %}: {{ setup_helper.module.short_description }} ({{ setup_helper.module.name }}) </h2>
 
   {% for paragraph in setup_helper.module.description %}
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
+
+  {% if setup_helper.module.manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' setup_helper.module.manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
   {% include "clients.html" with clients=setup_helper.module.clients %}
 

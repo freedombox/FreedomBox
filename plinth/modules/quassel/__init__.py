@@ -21,14 +21,12 @@ FreedomBox app for Quassel.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
+
 from .manifest import clients
 
 version = 1
@@ -51,8 +49,7 @@ description = [
           'the client is disconnected. {box_name} can run the Quassel '
           'core service keeping you always online and one or more Quassel '
           'clients from a desktop or a mobile can be used to connect and '
-          'disconnect from it.'),
-        box_name=_(cfg.box_name)),
+          'disconnect from it.'), box_name=_(cfg.box_name)),
     _('You can connect to your Quassel core on the default Quassel port '
       '4242.  Clients to connect to Quassel from your '
       '<a href="http://quassel-irc.org/downloads">desktop</a> and '
@@ -64,6 +61,8 @@ clients = clients
 
 reserved_usernames = ['quasselcore']
 
+manual_page = 'Quassel'
+
 
 def init():
     """Initialize the quassel module."""
@@ -74,13 +73,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['quassel-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'quassel-plinth'
+        ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -91,6 +86,7 @@ class QuasselServiceView(ServiceView):
     diagnostics_module_name = "quassel"
     description = description
     clients = clients
+    manual_page = manual_page
 
 
 def setup(helper, old_version=None):
@@ -98,24 +94,17 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['quassel-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'quassel-plinth'
+        ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
     frontpage.add_shortcut(
-        'quassel',
-        name,
-        short_description=short_description,
-        details=description,
-        configure_url=reverse_lazy('quassel:index'),
+        'quassel', name, short_description=short_description,
+        details=description, configure_url=reverse_lazy('quassel:index'),
         login_required=True)
 
 

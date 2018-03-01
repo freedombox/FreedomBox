@@ -54,6 +54,8 @@ group = ('web-search', _('Search the web'))
 
 service = None
 
+manual_page = 'Searx'
+
 
 def init():
     """Intialize the module."""

@@ -18,22 +18,24 @@
 Main FreedomBox views.
 """
 
+import time
+
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.template.response import TemplateResponse
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
 from django.urls import reverse
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
 from stronghold.decorators import public
-import time
 
-from . import forms, frontpage
 import plinth
 from plinth import package
 from plinth.modules.storage import views as disk_views
 from plinth.translation import get_language_from_request, set_language
+
+from . import forms, frontpage
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -52,14 +54,15 @@ def index(request):
 
     disk_views.warn_about_low_disk_space(request)
 
-    return TemplateResponse(request, 'index.html', {
-        'title': _('FreedomBox'),
-        'shortcuts': shortcuts,
-        'selected_id': selection,
-        'details': details,
-        'details_label': details_label,
-        'configure_url': configure_url
-    })
+    return TemplateResponse(
+        request, 'index.html', {
+            'title': _('FreedomBox'),
+            'shortcuts': shortcuts,
+            'selected_id': selection,
+            'details': details,
+            'details_label': details_label,
+            'configure_url': configure_url
+        })
 
 
 def system_index(request):
@@ -107,6 +110,7 @@ class ServiceView(FormView):
     show_status_block = True
     service_id = None
     template_name = 'service.html'
+    manual_page = ""
 
     @property
     def success_url(self):
@@ -161,6 +165,7 @@ class ServiceView(FormView):
         context['diagnostics_module_name'] = self.diagnostics_module_name
         context['description'] = self.description
         context['show_status_block'] = self.show_status_block
+        context['manual_page'] = self.manual_page
         return context
 
 

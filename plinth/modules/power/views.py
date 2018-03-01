@@ -30,10 +30,13 @@ from plinth.modules import power
 
 def index(request):
     """Serve power controls page."""
-    return TemplateResponse(request, 'power.html',
-                            {'title': power.name,
-                             'description': power.description,
-                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
+    return TemplateResponse(
+        request, 'power.html', {
+            'title': power.name,
+            'description': power.description,
+            'manual_page': power.manual_page,
+            'pkg_manager_is_busy': _is_pkg_manager_busy()
+        })
 
 
 def restart(request):
@@ -46,10 +49,13 @@ def restart(request):
     else:
         form = Form(prefix='power')
 
-    return TemplateResponse(request, 'power_restart.html',
-                            {'title': _('Power'),
-                             'form': form,
-                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
+    return TemplateResponse(
+        request, 'power_restart.html', {
+            'title': _('Power'),
+            'form': form,
+            'manual_page': power.manual_page,
+            'pkg_manager_is_busy': _is_pkg_manager_busy()
+        })
 
 
 def shutdown(request):
@@ -62,10 +68,13 @@ def shutdown(request):
     else:
         form = Form(prefix='power')
 
-    return TemplateResponse(request, 'power_shutdown.html',
-                            {'title': _('Power'),
-                             'form': form,
-                             'pkg_manager_is_busy': _is_pkg_manager_busy()})
+    return TemplateResponse(
+        request, 'power_shutdown.html', {
+            'title': _('Power'),
+            'form': form,
+            'manual_page': power.manual_page,
+            'pkg_manager_is_busy': _is_pkg_manager_busy()
+        })
 
 
 def _is_pkg_manager_busy():

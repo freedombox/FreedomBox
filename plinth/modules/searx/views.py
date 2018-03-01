@@ -23,7 +23,8 @@ from django.utils.translation import ugettext as _
 
 from plinth import actions, views
 from plinth.errors import ActionError
-from plinth.modules.searx import clients, description, get_safe_search_setting
+from plinth.modules.searx import (clients, description,
+                                  get_safe_search_setting, manual_page)
 
 from .forms import SearxForm
 
@@ -36,6 +37,7 @@ class SearxServiceView(views.ServiceView):
     service_id = 'searx'
     form_class = SearxForm
     show_status_block = False
+    manual_page = manual_page
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""

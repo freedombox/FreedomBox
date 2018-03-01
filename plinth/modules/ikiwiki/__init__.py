@@ -19,23 +19,21 @@ FreedomBox app to configure ikiwiki.
 """
 
 from django.utils.translation import ugettext_lazy as _
-from plinth.utils import format_lazy
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
-from .manifest import clients
+from plinth.utils import format_lazy
 
+from .manifest import clients
 
 version = 1
 
-managed_packages = ['ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
-                    'xapian-omega', 'libsearch-xapian-perl',
-                    'libimage-magick-perl']
+managed_packages = [
+    'ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl', 'xapian-omega',
+    'libsearch-xapian-perl', 'libimage-magick-perl'
+]
 
 service = None
 
@@ -49,7 +47,6 @@ description = [
       'common blogging functionality such as comments and RSS feeds. '
       'When enabled, the blogs and wikis will be available '
       'at <a href="/ikiwiki">/ikiwiki</a> (once created).'),
-
     format_lazy(
         _('Only {box_name} users in the <b>admin</b> group can <i>create</i> '
           'and <i>manage</i> blogs and wikis, but any user in the <b>wiki</b> '
@@ -60,14 +57,16 @@ description = [
 
 clients = clients
 
-
 group = ('wiki', _('View and edit wiki applications'))
+
+manual_page = 'Ikiwiki'
 
 
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-edit', 'ikiwiki:index', short_description)
+    menu.add_urlname(name, 'glyphicon-edit', 'ikiwiki:index',
+                     short_description)
     register_group(group)
 
     global service
@@ -98,9 +97,8 @@ def add_shortcuts():
     sites = actions.run('ikiwiki', ['get-sites']).split('\n')
     sites = [name for name in sites if name != '']
     for site in sites:
-        frontpage.add_shortcut(
-            'ikiwiki_' + site, site, url='/ikiwiki/' + site,
-            login_required=False, icon='ikiwiki')
+        frontpage.add_shortcut('ikiwiki_' + site, site, url='/ikiwiki/' + site,
+                               login_required=False, icon='ikiwiki')
 
 
 def is_enabled():
@@ -124,7 +122,8 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/ikiwiki', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/ikiwiki',
+                                         check_certificate=False))
 
     return results

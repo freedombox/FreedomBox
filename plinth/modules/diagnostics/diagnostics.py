@@ -19,16 +19,16 @@ FreedomBox app for running diagnostics.
 """
 
 import collections
-from django.http import Http404
-from django.template.response import TemplateResponse
-from django.views.decorators.http import require_POST
-from django.utils.translation import ugettext_lazy as _
 import logging
 import threading
 
+from django.http import Http404
+from django.template.response import TemplateResponse
+from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.http import require_POST
+
 from plinth import module_loader
 from plinth.modules import diagnostics
-
 
 logger = logging.Logger(__name__)
 
@@ -42,11 +42,14 @@ def index(request):
     if request.method == 'POST' and not _running_task:
         _start_task()
 
-    return TemplateResponse(request, 'diagnostics.html',
-                            {'title': diagnostics.name,
-                             'description': diagnostics.description,
-                             'is_running': _running_task is not None,
-                             'results': current_results})
+    return TemplateResponse(
+        request, 'diagnostics.html', {
+            'title': diagnostics.name,
+            'description': diagnostics.description,
+            'is_running': _running_task is not None,
+            'manual_page': diagnostics.manual_page,
+            'results': current_results
+        })
 
 
 @require_POST
@@ -61,10 +64,12 @@ def module(request, module_name):
     if hasattr(module, 'diagnose'):
         results = module.diagnose()
 
-    return TemplateResponse(request, 'diagnostics_module.html',
-                            {'title': _('Diagnostic Test'),
-                             'module_name': module_name,
-                             'results': results})
+    return TemplateResponse(
+        request, 'diagnostics_module.html', {
+            'title': _('Diagnostic Test'),
+            'module_name': module_name,
+            'results': results
+        })
 
 
 def _start_task():
@@ -92,9 +97,11 @@ def _run_on_all_modules_wrapper():
 def run_on_all_modules():
     """Run diagnostics on all modules and store the result."""
     global current_results
-    current_results = {'modules': [],
-                       'results': collections.OrderedDict(),
-                       'progress_percentage': 0}
+    current_results = {
+        'modules': [],
+        'results': collections.OrderedDict(),
+        'progress_percentage': 0
+    }
 
     modules = []
     for module_name, module in module_loader.loaded_modules.items():

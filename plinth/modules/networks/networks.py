@@ -15,37 +15,47 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from logging import Logger
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.decorators.http import require_POST
-from logging import Logger
+
+from plinth import network
+from plinth.modules import networks
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     PPPoEForm, WifiForm)
-from plinth import network
-
 
 logger = Logger(__name__)
 
-subsubmenu = [{'url': reverse_lazy('networks:index'),
-               'text': ugettext_lazy('Network Connections')},
-              {'url': reverse_lazy('networks:scan'),
-               'text': ugettext_lazy('Nearby Wi-Fi Networks')},
-              {'url': reverse_lazy('networks:add'),
-               'text': ugettext_lazy('Add Connection')}]
+subsubmenu = [{
+    'url': reverse_lazy('networks:index'),
+    'text': ugettext_lazy('Network Connections')
+}, {
+    'url': reverse_lazy('networks:scan'),
+    'text': ugettext_lazy('Nearby Wi-Fi Networks')
+}, {
+    'url': reverse_lazy('networks:add'),
+    'text': ugettext_lazy('Add Connection')
+}]
 
 
 def index(request):
     """Show connection list."""
     connections = network.get_connection_list()
 
-    return TemplateResponse(request, 'connections_list.html',
-                            {'title': _('Network Connections'),
-                             'subsubmenu': subsubmenu,
-                             'connections': connections})
+    return TemplateResponse(
+        request, 'connections_list.html', {
+            'title': _('Network Connections'),
+            'manual_page': networks.manual_page,
+            'subsubmenu': subsubmenu,
+            'connections': connections
+        })
 
 
 def show(request, uuid):
@@ -53,8 +63,9 @@ def show(request, uuid):
     try:
         connection = network.get_connection(uuid)
     except network.ConnectionNotFound:
-        messages.error(request, _('Cannot show connection: '
-                                  'Connection not found.'))
+        messages.error(request,
+                       _('Cannot show connection: '
+                         'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
     # Connection status
@@ -86,13 +97,15 @@ def show(request, uuid):
         access_point_status = network.get_status_from_wifi_access_point(
             device, connection_status['wireless']['ssid'])
 
-    return TemplateResponse(request, 'connection_show.html',
-                            {'title': _('Connection Information'),
-                             'subsubmenu': subsubmenu,
-                             'connection': connection_status,
-                             'active_connection': active_connection_status,
-                             'device': device_status,
-                             'access_point': access_point_status})
+    return TemplateResponse(
+        request, 'connection_show.html', {
+            'title': _('Connection Information'),
+            'subsubmenu': subsubmenu,
+            'connection': connection_status,
+            'active_connection': active_connection_status,
+            'device': device_status,
+            'access_point': access_point_status
+        })
 
 
 def edit(request, uuid):
@@ -100,8 +113,9 @@ def edit(request, uuid):
     try:
         connection = network.get_connection(uuid)
     except network.ConnectionNotFound:
-        messages.error(request, _('Cannot edit connection: '
-                                  'Connection not found.'))
+        messages.error(request,
+                       _('Cannot edit connection: '
+                         'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
     if connection.get_connection_type() not in network.CONNECTION_TYPE_NAMES:
@@ -127,10 +141,12 @@ def edit(request, uuid):
 
             return redirect(reverse_lazy('networks:index'))
         else:
-            return TemplateResponse(request, 'connections_edit.html',
-                                    {'title': _('Edit Connection'),
-                                     'subsubmenu': subsubmenu,
-                                     'form': form})
+            return TemplateResponse(
+                request, 'connections_edit.html', {
+                    'title': _('Edit Connection'),
+                    'subsubmenu': subsubmenu,
+                    'form': form
+                })
     else:
         settings_connection = connection.get_setting_connection()
         form_data['interface'] = connection.get_interface_name()
@@ -211,10 +227,11 @@ def edit(request, uuid):
             form_data['password'] = secrets['pppoe']['password']
             form = PPPoEForm(form_data)
 
-        return TemplateResponse(request, 'connections_edit.html',
-                                {'title': _('Edit Connection'),
-                                 'subsubmenu': subsubmenu,
-                                 'form': form})
+        return TemplateResponse(request, 'connections_edit.html', {
+            'title': _('Edit Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 @require_POST
@@ -223,16 +240,17 @@ def activate(request, uuid):
     try:
         connection = network.activate_connection(uuid)
         name = connection.get_id()
-        messages.success(request, _('Activated connection {name}.')
-                         .format(name=name))
+        messages.success(request,
+                         _('Activated connection {name}.').format(name=name))
     except network.ConnectionNotFound:
-        messages.error(request, _('Failed to activate connection: '
-                                  'Connection not found.'))
+        messages.error(request,
+                       _('Failed to activate connection: '
+                         'Connection not found.'))
     except network.DeviceNotFound as exception:
         name = exception.args[0].get_id()
-        messages.error(request, _('Failed to activate connection {name}: '
-                                  'No suitable device is available.')
-                       .format(name=name))
+        messages.error(request,
+                       _('Failed to activate connection {name}: '
+                         'No suitable device is available.').format(name=name))
 
     return redirect(reverse_lazy('networks:index'))
 
@@ -243,11 +261,12 @@ def deactivate(request, uuid):
     try:
         active_connection = network.deactivate_connection(uuid)
         name = active_connection.get_id()
-        messages.success(request, _('Deactivated connection {name}.')
-                         .format(name=name))
+        messages.success(request,
+                         _('Deactivated connection {name}.').format(name=name))
     except network.ConnectionNotFound:
-        messages.error(request, _('Failed to de-activate connection: '
-                                  'Connection not found.'))
+        messages.error(request,
+                       _('Failed to de-activate connection: '
+                         'Connection not found.'))
 
     return redirect(reverse_lazy('networks:index'))
 
@@ -255,10 +274,12 @@ def deactivate(request, uuid):
 def scan(request):
     """Show a list of nearby visible Wi-Fi access points."""
     access_points = network.wifi_scan()
-    return TemplateResponse(request, 'wifi_scan.html',
-                            {'title': _('Nearby Wi-Fi Networks'),
-                             'subsubmenu': subsubmenu,
-                             'access_points': access_points})
+    return TemplateResponse(
+        request, 'wifi_scan.html', {
+            'title': _('Nearby Wi-Fi Networks'),
+            'subsubmenu': subsubmenu,
+            'access_points': access_points
+        })
 
 
 def add(request):
@@ -279,10 +300,11 @@ def add(request):
                 return redirect(reverse_lazy('networks:add_pppoe'))
     else:
         form = ConnectionTypeSelectForm()
-        return TemplateResponse(request, 'connections_type_select.html',
-                                {'title': _('Add Connection'),
-                                 'subsubmenu': subsubmenu,
-                                 'form': form})
+        return TemplateResponse(request, 'connections_type_select.html', {
+            'title': _('Add Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def add_generic(request):
@@ -297,10 +319,12 @@ def add_generic(request):
     else:
         form = GenericForm()
 
-    return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Adding New Generic Connection'),
-                             'subsubmenu': subsubmenu,
-                             'form': form})
+    return TemplateResponse(
+        request, 'connections_create.html', {
+            'title': _('Adding New Generic Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def add_ethernet(request):
@@ -315,10 +339,12 @@ def add_ethernet(request):
     else:
         form = EthernetForm()
 
-    return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Adding New Ethernet Connection'),
-                             'subsubmenu': subsubmenu,
-                             'form': form})
+    return TemplateResponse(
+        request, 'connections_create.html', {
+            'title': _('Adding New Ethernet Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def add_pppoe(request):
@@ -333,10 +359,12 @@ def add_pppoe(request):
     else:
         form = PPPoEForm()
 
-    return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Adding New PPPoE Connection'),
-                             'subsubmenu': subsubmenu,
-                             'form': form})
+    return TemplateResponse(
+        request, 'connections_create.html', {
+            'title': _('Adding New PPPoE Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def add_wifi(request, ssid=None, interface_name=None):
@@ -346,14 +374,16 @@ def add_wifi(request, ssid=None, interface_name=None):
 
     if ssid:
         device = network.get_device_by_interface_name(interface_name)
-        form_data = {'name': ssid,
-                     'interface': interface_name if device else None,
-                     'zone': 'external',
-                     'ssid': ssid,
-                     'mode': 'infrastructure',
-                     'band': 'auto',
-                     'auth_mode': 'wpa',
-                     'ipv4_method': 'auto'}
+        form_data = {
+            'name': ssid,
+            'interface': interface_name if device else None,
+            'zone': 'external',
+            'ssid': ssid,
+            'mode': 'infrastructure',
+            'band': 'auto',
+            'auth_mode': 'wpa',
+            'ipv4_method': 'auto'
+        }
 
     if request.method == 'POST':
         form = WifiForm(request.POST)
@@ -366,10 +396,12 @@ def add_wifi(request, ssid=None, interface_name=None):
         else:
             form = WifiForm()
 
-    return TemplateResponse(request, 'connections_create.html',
-                            {'title': _('Adding New Wi-Fi Connection'),
-                             'subsubmenu': subsubmenu,
-                             'form': form})
+    return TemplateResponse(
+        request, 'connections_create.html', {
+            'title': _('Adding New Wi-Fi Connection'),
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
 
 
 def delete(request, uuid):
@@ -381,11 +413,12 @@ def delete(request, uuid):
     if request.method == 'POST':
         try:
             name = network.delete_connection(uuid)
-            messages.success(request, _('Connection {name} deleted.')
-                             .format(name=name))
+            messages.success(request,
+                             _('Connection {name} deleted.').format(name=name))
         except network.ConnectionNotFound:
-            messages.error(request, _('Failed to delete connection: '
-                                      'Connection not found.'))
+            messages.error(request,
+                           _('Failed to delete connection: '
+                             'Connection not found.'))
 
         return redirect(reverse_lazy('networks:index'))
 
@@ -393,11 +426,13 @@ def delete(request, uuid):
         connection = network.get_connection(uuid)
         name = connection.get_id()
     except network.ConnectionNotFound:
-        messages.error(request, _('Failed to delete connection: '
-                                  'Connection not found.'))
+        messages.error(request,
+                       _('Failed to delete connection: '
+                         'Connection not found.'))
         return redirect(reverse_lazy('networks:index'))
 
-    return TemplateResponse(request, 'connections_delete.html',
-                            {'title': _('Delete Connection'),
-                             'subsubmenu': subsubmenu,
-                             'name': name})
+    return TemplateResponse(request, 'connections_delete.html', {
+        'title': _('Delete Connection'),
+        'subsubmenu': subsubmenu,
+        'name': name
+    })

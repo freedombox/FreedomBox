@@ -20,14 +20,12 @@ FreedomBox app to configure a Deluge web client.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
-from .manifest import clients
 
+from .manifest import clients
 
 version = 2
 
@@ -43,7 +41,6 @@ short_description = _('BitTorrent Web Client')
 
 description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
-
     _('When enabled, the Deluge web client will be available from '
       '<a href="/deluge">/deluge</a> path on the web server. The '
       'default password is \'deluge\', but you should log in and change '
@@ -56,21 +53,23 @@ reserved_usernames = ['debian-deluged']
 
 clients = clients
 
+manual_page = 'Deluge'
+
 
 def init():
     """Initialize the Deluge module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-magnet',
-                     'deluge:index', short_description)
+    menu.add_urlname(name, 'glyphicon-magnet', 'deluge:index',
+                     short_description)
     register_group(group)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -82,10 +81,10 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'deluge', ['enable'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -97,8 +96,8 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('deluge-plinth') and
-            action_utils.service_is_enabled('deluge-web'))
+    return (action_utils.webserver_is_enabled('deluge-plinth')
+            and action_utils.service_is_enabled('deluge-web'))
 
 
 def enable():
@@ -119,7 +118,8 @@ def diagnose():
 
     results.append(action_utils.diagnose_port_listening(8112, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8112, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/deluge', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/deluge',
+                                         check_certificate=False))
 
     return results

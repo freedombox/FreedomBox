@@ -15,10 +15,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 MANUAL_URL="https://wiki.debian.org/FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
 
-OUTPUTS=freedombox-manual.pdf freedombox-manual.html freedombox-manual.part.html plinth.1
+OUTPUTS=freedombox-manual.pdf plinth.1 manual-pages
 
 # In order to debug various problems with the documents especially
 # intermediate LaTeX state, run make as follows:
@@ -51,28 +50,39 @@ all: $(OUTPUTS)
 fetch:
 	wget --quiet -O - $(MANUAL_URL) | \
 	  xmllint --format --output freedombox-manual.raw.xml -
-	xsltproc --output freedombox-manual.xml fixes.xslt freedombox-manual.raw.xml
 	xsltproc fetch-images.xslt freedombox-manual.raw.xml | sort -u | \
 	  awk '{print "wget --quiet -O images/" $$1 " " $$2}' | sh
-	rm -f freedombox-manual.raw.xml
+	./fetch-manual-pages
 
+.PHONY: manual-pages
+manual-pages-list:=$(shell cat manual-pages.list) freedombox-manual
+manual-pages-part-html:=$(patsubst %, %.part.html, $(manual-pages-list))
+manual-pages-html:=$(patsubst %, %.html, $(manual-pages-list))
+manual-pages-xml:=$(patsubst %, %.xml, $(manual-pages-list))
+
+manual-pages: $(manual-pages-part-html)
 
 %.pdf: %.xml
 	xmlto $(XMLTO_DEBUG_FLAGS) --with-dblatex pdf $<
 
-
 %.part.html: %.html
 	perl -pe 'BEGIN {undef $$/} s/.*<body[^>]*>(.*)<\/body\s*>.*/$$1/si' $< > $@
 
+freedombox-manual.xml: freedombox-manual.raw.xml fixes.xslt
+	xsltproc --output $@ fixes.xslt $<
+
+%.xml: %.raw.xml manual-page-fixes.xslt
+	xsltproc --output $@ manual-page-fixes.xslt $<
+	./post-processor remove-footer $@
+	./post-processor fix-wiki-urls $@
 
 %.html: %.xml
 	docbook2html --nochunks $<
 
-
 %.1: %.xml
 	xmlto man $<
 
-
 .PHONY: clean
 clean:
+	rm -f $(manual-pages-html) $(manual-pages-part-html) $(manual-pages-xml)
 	rm -f $(OUTPUTS)

@@ -21,15 +21,11 @@ FreedomBox app to configure Privoxy.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
-
 
 version = 1
 
@@ -48,7 +44,6 @@ description = [
       'capabilities for enhancing privacy, modifying web page data and '
       'HTTP headers, controlling access, and removing ads and other '
       'obnoxious Internet junk. '),
-
     format_lazy(
         _('You can use Privoxy by modifying your browser proxy settings to '
           'your {box_name} hostname (or IP address) with port 8118. '
@@ -63,19 +58,21 @@ reserved_usernames = ['privoxy']
 
 service = None
 
+manual_page = 'Privoxy'
+
 
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-cloud-upload', 'privoxy:index', short_description)
+    menu.add_urlname(name, 'glyphicon-cloud-upload', 'privoxy:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['privoxy'],
-            is_external=False,
-            enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['privoxy'], is_external=False,
+                                         enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -87,20 +84,18 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['privoxy'],
-            is_external=False,
-            enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['privoxy'], is_external=False,
+                                         enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('privoxy', name,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('privoxy:index'),
-                           login_required=True)
+    frontpage.add_shortcut(
+        'privoxy', name, short_description=short_description,
+        details=description, configure_url=reverse_lazy('privoxy:index'),
+        login_required=True)
 
 
 def enable():
@@ -119,6 +114,7 @@ class PrivoxyServiceView(ServiceView):
     service_id = managed_services[0]
     diagnostics_module_name = 'privoxy'
     description = description
+    manual_page = manual_page
 
 
 def diagnose():

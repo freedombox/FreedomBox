@@ -82,6 +82,7 @@ def manage(request):
             'snapshots': snapshots,
             'has_deletable_snapshots': has_deletable_snapshots,
             'subsubmenu': subsubmenu,
+            'manual_page': snapshot_module.manual_page,
         })
 
 

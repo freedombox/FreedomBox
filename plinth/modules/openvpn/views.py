@@ -18,18 +18,19 @@
 FreedomBox app for configuring OpenVPN server.
 """
 
+import logging
+
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
-import logging
+
+from plinth import actions
+from plinth.modules import config, openvpn
 
 from .forms import OpenVpnForm
-from plinth import actions
-from plinth.modules import openvpn
-from plinth.modules import config
 
 logger = logging.getLogger(__name__)
 
@@ -55,11 +56,14 @@ def index(request):
     else:
         form = OpenVpnForm(initial=status, prefix='openvpn')
 
-    return TemplateResponse(request, 'openvpn.html',
-                            {'title': openvpn.name,
-                             'description': openvpn.description,
-                             'status': status,
-                             'form': form})
+    return TemplateResponse(
+        request, 'openvpn.html', {
+            'title': openvpn.name,
+            'description': openvpn.description,
+            'manual_page': openvpn.manual_page,
+            'status': status,
+            'form': form
+        })
 
 
 @require_POST

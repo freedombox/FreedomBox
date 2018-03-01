@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import re
+import urllib.request
+from subprocess import PIPE, Popen
+
+MANUAL_PAGE_URL = "https://wiki.debian.org/FreedomBox/Manual/{}?action=show&mimetype=text%2Fdocbook"
+
+MANUAL_INDEX_RAW_URL = "https://wiki.debian.org/FreedomBox/Manual?action=raw"
+
+manual_pages = []
+
+to_remove = ['QuickStart', 'GettingHelp', 'Developer']
+
+
+def write_manual_pages():
+    pattern = 'FreedomBox/Manual/\w+'
+    lst = list(urllib.request.urlopen(MANUAL_INDEX_RAW_URL))
+    global manual_pages
+    manual_pages = list(l[0].split('/')[-1] for l in filter(
+        None, map(lambda x: re.findall(pattern, x.decode()), lst)))
+    for entry in to_remove:
+        if entry in manual_pages:
+            manual_pages.remove(entry)
+    with open('manual-pages.list', 'w') as lst_file:
+        lst_file.write('\n'.join(manual_pages))
+
+
+def fetch_manual_pages_in_docbook_format():
+    for page in manual_pages:
+        url = MANUAL_PAGE_URL.format(page)
+        p1 = Popen(['wget', '--quiet', '-O', '-', url], stdout=PIPE)
+        p2 = Popen(['xmllint', '--format', '-'], stdin=p1.stdout, stdout=PIPE)
+        p1.stdout.close()
+        with open('{}.raw.xml'.format(page), 'w') as docbook:
+            p3 = Popen(
+                ['egrep', '-v', 'linkend|Category|Commons|HELP|Back to'],
+                stdin=p2.stdout, stdout=docbook)
+            p2.stdout.close()
+            p3.communicate()
+
+
+def main():
+    write_manual_pages()
+    fetch_manual_pages_in_docbook_format()
+
+
+if __name__ == '__main__':
+    main()

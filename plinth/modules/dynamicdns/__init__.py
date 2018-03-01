@@ -38,9 +38,7 @@ description = [
         _('If your Internet provider changes your IP address periodically '
           '(i.e. every 24h), it may be hard for others to find you on the '
           'Internet. This will prevent others from finding services which are '
-          'provided by this {box_name}.'),
-        box_name=_(cfg.box_name)),
-
+          'provided by this {box_name}.'), box_name=_(cfg.box_name)),
     _('The solution is to assign a DNS name to your IP address and '
       'update the DNS name every time your IP is changed by your '
       'Internet provider. Dynamic DNS allows you to push your current '
@@ -53,18 +51,21 @@ description = [
 
 reserved_usernames = ['ez-ipupd']
 
+manual_page = 'DynamicDNS'
+
+
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
     menu.add_urlname(name, 'glyphicon-refresh', 'dynamicdns:index')
     current_status = dynamicdns.get_status()
     if current_status['enabled']:
-        services = dynamicdns.get_enabled_services(current_status['dynamicdns_domain'])
+        services = dynamicdns.get_enabled_services(
+            current_status['dynamicdns_domain'])
         domain_added.send_robust(
             sender='dynamicdns', domain_type='dynamicdnsservice',
             name=current_status['dynamicdns_domain'],
-            description=_('Dynamic DNS Service'),
-            services=services)
+            description=_('Dynamic DNS Service'), services=services)
 
 
 def setup(helper, old_version=None):

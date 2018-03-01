@@ -21,12 +21,11 @@ FreedomBox app to configure Mumble server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.views import ServiceView
+
 from .manifest import clients
 
 version = 1
@@ -53,6 +52,8 @@ clients = clients
 
 reserved_usernames = ['mumble-server']
 
+manual_page = 'Mumble'
+
 
 def init():
     """Intialize the Mumble module."""
@@ -63,13 +64,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['mumble-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'mumble-plinth'
+        ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -80,6 +77,7 @@ class MumbleServiceView(ServiceView):
     diagnostics_module_name = "mumble"
     description = description
     clients = clients
+    manual_page = manual_page
 
 
 def setup(helper, old_version=None):
@@ -87,25 +85,18 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['mumble-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'mumble-plinth'
+        ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut(
-        'mumble',
-        name,
-        short_description=short_description,
-        details=description,
-        configure_url=reverse_lazy('mumble:index'),
-        login_required=False)
+    frontpage.add_shortcut('mumble', name, short_description=short_description,
+                           details=description,
+                           configure_url=reverse_lazy('mumble:index'),
+                           login_required=False)
 
 
 def enable():

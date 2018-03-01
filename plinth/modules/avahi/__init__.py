@@ -20,9 +20,8 @@ FreedomBox app for service discovery.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import cfg
 from plinth import service as service_module
+from plinth import actions, cfg
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
@@ -52,6 +51,8 @@ description = [
 
 service = None
 
+manual_page = 'ServiceDiscovery'
+
 
 def init():
     """Intialize the service discovery module."""
@@ -59,8 +60,8 @@ def init():
     menu.add_urlname(name, 'glyphicon-lamp', 'avahi:index')
 
     global service  # pylint: disable=W0603
-    service = service_module.Service(
-        managed_services[0], name, ports=['mdns'], is_external=False)
+    service = service_module.Service(managed_services[0], name, ports=['mdns'],
+                                     is_external=False)
 
 
 def setup(helper, old_version=False):
@@ -76,3 +77,4 @@ def setup(helper, old_version=False):
 class AvahiServiceView(ServiceView):
     service_id = managed_services[0]
     description = description
+    manual_page = manual_page

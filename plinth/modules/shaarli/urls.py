@@ -14,21 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Shaarli module.
 """
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
 from plinth.modules import shaarli
-
+from plinth.views import ServiceView
 
 urlpatterns = [
-    url(r'^apps/shaarli/$', ServiceView.as_view(
-            service_id="shaarli",
-            description=shaarli.description,
-            show_status_block=False,
-        ), name='index'),
+    url(r'^apps/shaarli/$',
+        ServiceView.as_view(
+            service_id="shaarli", description=shaarli.description,
+            show_status_block=False, manual_page=shaarli.manual_page),
+        name='index'),
 ]

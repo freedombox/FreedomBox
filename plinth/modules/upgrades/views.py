@@ -21,18 +21,23 @@ FreedomBox app for upgrades.
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.generic.edit import FormView
 
-from .forms import ConfigureForm
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import upgrades
 
-subsubmenu = [{'url': reverse_lazy('upgrades:index'),
-               'text': ugettext_lazy('Automatic Upgrades')},
-              {'url': reverse_lazy('upgrades:upgrade'),
-               'text': ugettext_lazy('Upgrade Packages')}]
+from .forms import ConfigureForm
+
+subsubmenu = [{
+    'url': reverse_lazy('upgrades:index'),
+    'text': ugettext_lazy('Automatic Upgrades')
+}, {
+    'url': reverse_lazy('upgrades:upgrade'),
+    'text': ugettext_lazy('Upgrade Packages')
+}]
 
 
 class UpgradesConfigurationView(FormView):
@@ -47,6 +52,7 @@ class UpgradesConfigurationView(FormView):
         context['subsubmenu'] = subsubmenu
         context['title'] = upgrades.name
         context['description'] = upgrades.description
+        context['manual_page'] = upgrades.manual_page
         return context
 
     def get_initial(self):
@@ -75,7 +81,8 @@ class UpgradesConfigurationView(FormView):
             if new_status['auto_upgrades_enabled']:
                 messages.success(self.request, _('Automatic upgrades enabled'))
             else:
-                messages.success(self.request, _('Automatic upgrades disabled'))
+                messages.success(self.request,
+                                 _('Automatic upgrades disabled'))
         else:
             messages.info(self.request, _('Settings unchanged'))
 
@@ -108,9 +115,11 @@ def upgrade(request):
         except ActionError:
             messages.error(request, _('Starting upgrade failed.'))
 
-    return TemplateResponse(request, 'upgrades.html',
-                            {'title': upgrades.name,
-                             'description': upgrades.description,
-                             'subsubmenu': subsubmenu,
-                             'is_busy': is_busy,
-                             'log': get_log()})
+    return TemplateResponse(
+        request, 'upgrades.html', {
+            'title': upgrades.name,
+            'description': upgrades.description,
+            'subsubmenu': subsubmenu,
+            'is_busy': is_busy,
+            'log': get_log()
+        })

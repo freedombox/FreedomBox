@@ -18,14 +18,16 @@
 FreedomBox app for configuring date and time.
 """
 
-from django.contrib import messages
-from django.utils.translation import ugettext as _
 import logging
 
-from .forms import DateTimeForm
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
 from plinth import actions
 from plinth.modules import datetime
 from plinth.views import ServiceView
+
+from .forms import DateTimeForm
 
 logger = logging.getLogger(__name__)
 
@@ -35,11 +37,14 @@ class DateTimeServiceView(ServiceView):
     form_class = DateTimeForm
     service_id = datetime.managed_services[0]
     diagnostics_module_name = "datetime"
+    manual_page = datetime.manual_page
 
     def get_initial(self):
-        return {'is_enabled': self.service.is_enabled(),
-                'is_running': self.service.is_running(),
-                'time_zone': self.get_current_time_zone()}
+        return {
+            'is_enabled': self.service.is_enabled(),
+            'is_running': self.service.is_running(),
+            'time_zone': self.get_current_time_zone()
+        }
 
     def get_current_time_zone(self):
         """Get current time zone."""
@@ -53,12 +58,12 @@ class DateTimeServiceView(ServiceView):
         if old_status['time_zone'] != new_status['time_zone'] and \
            new_status['time_zone'] != 'none':
             try:
-                actions.superuser_run(
-                    'timezone-change', [new_status['time_zone']])
+                actions.superuser_run('timezone-change',
+                                      [new_status['time_zone']])
             except Exception as exception:
-                messages.error(
-                    self.request, _('Error setting time zone: {exception}')
-                    .format(exception=exception))
+                messages.error(self.request,
+                               _('Error setting time zone: {exception}')
+                               .format(exception=exception))
             else:
                 messages.success(self.request, _('Time zone set'))
 

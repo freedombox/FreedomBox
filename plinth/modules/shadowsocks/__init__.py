@@ -21,14 +21,10 @@ FreedomBox app to configure Shadowsocks.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-
 
 version = 1
 
@@ -50,11 +46,13 @@ description = [
         _('Your {box_name} can run a Shadowsocks client, that can connect to '
           'a Shadowsocks server. It will also run a SOCKS5 proxy. Local '
           'devices can connect to this proxy, and their data will be '
-          'encrypted and proxied through the Shadowsocks server.'),
-        box_name=_(cfg.box_name)),
+          'encrypted and proxied through the Shadowsocks server.'), box_name=_(
+              cfg.box_name)),
     _('To use Shadowsocks after setup, set the SOCKS5 proxy URL in your '
       'device, browser or application to http://freedombox_address:1080/')
 ]
+
+manual_page = 'Shadowsocks'
 
 
 def init():
@@ -66,11 +64,10 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'shadowsocks', name,
-            ports=['shadowsocks-local-plinth'], is_external=False,
-            is_enabled=is_enabled, is_running=is_running,
-            enable=enable, disable=disable)
+        service = service_module.Service('shadowsocks', name, ports=[
+            'shadowsocks-local-plinth'
+        ], is_external=False, is_enabled=is_enabled, is_running=is_running,
+                                         enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -82,20 +79,18 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            'shadowsocks', name,
-            ports=['shadowsocks-local-plinth'], is_external=False,
-            is_enabled=is_enabled, is_running=is_running,
-            enable=enable, disable=disable)
+        service = service_module.Service('shadowsocks', name, ports=[
+            'shadowsocks-local-plinth'
+        ], is_external=False, is_enabled=is_enabled, is_running=is_running,
+                                         enable=enable, disable=disable)
 
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('shadowsocks', name,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('shadowsocks:index'),
-                           login_required=False)
+    frontpage.add_shortcut(
+        'shadowsocks', name, short_description=short_description,
+        details=description, configure_url=reverse_lazy('shadowsocks:index'),
+        login_required=False)
 
 
 def is_enabled():

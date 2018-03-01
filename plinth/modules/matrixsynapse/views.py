@@ -79,6 +79,7 @@ class MatrixSynapseServiceView(ServiceView):
         context = super().get_context_data(*args, **kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         context['clients'] = matrixsynapse.clients
+        context['manual_page'] = matrixsynapse.manual_page
         return context
 
     def get_initial(self):

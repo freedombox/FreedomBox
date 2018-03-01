@@ -38,6 +38,7 @@ class MediaWikiServiceView(views.ServiceView):
     diagnostics_module_name = 'mediawiki'
     service_id = 'mediawiki'
     form_class = MediaWikiForm
+    manual_page = mediawiki.manual_page
     show_status_block = False
 
     def form_valid(self, form):

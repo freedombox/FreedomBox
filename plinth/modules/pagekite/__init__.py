@@ -60,7 +60,7 @@ description = [
     _('Your ISP does not provide you an external IP address and '
       'instead provides Internet connection through NAT.'),
     _('Your ISP does not provide you a static IP address and your IP '
-      'address changes evertime you connect to Internet.'),
+      'address changes every time you connect to Internet.'),
     _('Your ISP limits incoming connections.'),
     format_lazy(
         _('PageKite works around NAT, firewalls and IP-address limitations '
@@ -70,6 +70,8 @@ description = [
           'might be possible to use your buddy\'s {box_name} for this.'),
         box_name=_(cfg.box_name))
 ]
+
+manual_page = 'PageKite'
 
 
 def init():

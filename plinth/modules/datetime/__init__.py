@@ -18,12 +18,12 @@
 FreedomBox app to configure system date and time.
 """
 
-from django.utils.translation import ugettext_lazy as _
 import subprocess
+
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
 from plinth.menu import main_menu
-
 
 version = 1
 
@@ -40,6 +40,8 @@ description = [
       'in synchronization with servers on the Internet.')
 ]
 
+manual_page = 'DateTime'
+
 service = None
 
 
@@ -51,8 +53,8 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['ntp'], is_external=False)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['ntp'], is_external=False)
 
 
 def setup(helper, old_version=None):
@@ -60,8 +62,8 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['ntp'], is_external=False)
+        service = service_module.Service(managed_services[0], name,
+                                         ports=['ntp'], is_external=False)
     helper.call('post', service.notify_enabled, None, True)
 
 

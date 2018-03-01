@@ -21,11 +21,12 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 
-from . import utils as tor_utils
-from .forms import TorForm
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
+
+from . import utils as tor_utils
+from .forms import TorForm
 
 config_process = None
 
@@ -48,14 +49,16 @@ def index(request):
     else:
         form = TorForm(initial=status, prefix='tor')
 
-    return TemplateResponse(request, 'tor.html', {
-        'title': tor.name,
-        'description': tor.description,
-        'clients': tor.clients,
-        'status': status,
-        'config_running': bool(config_process),
-        'form': form
-    })
+    return TemplateResponse(
+        request, 'tor.html', {
+            'title': tor.name,
+            'description': tor.description,
+            'clients': tor.clients,
+            'manual_page': tor.manual_page,
+            'status': status,
+            'config_running': bool(config_process),
+            'form': form
+        })
 
 
 def _apply_changes(request, old_status, new_status):

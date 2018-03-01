@@ -22,7 +22,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.menu import main_menu
 
-
 version = 1
 
 managed_packages = ['monkeysphere']
@@ -38,7 +37,6 @@ description = [
       'sign the key using the regular OpenPGP key signing process.  See the '
       '<a href="http://web.monkeysphere.info/getting-started-ssh/"> '
       'Monkeysphere SSH documentation</a> for more details.'),
-
     _('Monkeysphere can also generate an OpenPGP key for each Secure Web '
       'Server (HTTPS) certificate installed on this machine. The OpenPGP '
       'public key can then be uploaded to the OpenPGP keyservers. Users '
@@ -49,14 +47,16 @@ description = [
       'website</a>.')
 ]
 
+manual_page = "Monkeysphere"
+
 reserved_usernames = ['monkeysphere']
 
 
 def init():
     """Initialize the monkeysphere module."""
     menu = main_menu.get('system')
-    menu.add_urlname(_('Monkeysphere'), 'glyphicon-certificate',
-                     'monkeysphere:index')
+    menu.add_urlname(
+        _('Monkeysphere'), 'glyphicon-certificate', 'monkeysphere:index')
 
 
 def setup(helper, old_version=None):

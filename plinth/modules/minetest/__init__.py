@@ -19,19 +19,15 @@ FreedomBox app for Minetest server.
 """
 
 import augeas
-
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
-from .manifest import clients
 
+from .manifest import clients
 
 version = 2
 
@@ -39,11 +35,13 @@ service = None
 
 managed_services = ['minetest-server']
 
-managed_packages = ['minetest-server', 'minetest-mod-advspawning',
-                    'minetest-mod-animalmaterials', 'minetest-mod-animals',
-                    'minetest-mod-mesecons', 'minetest-mod-mobf-core',
-                    'minetest-mod-mobf-trap', 'minetest-mod-moreblocks',
-                    'minetest-mod-nether', 'minetest-mod-torches']
+managed_packages = [
+    'minetest-server', 'minetest-mod-advspawning',
+    'minetest-mod-animalmaterials', 'minetest-mod-animals',
+    'minetest-mod-mesecons', 'minetest-mod-mobf-core',
+    'minetest-mod-mobf-trap', 'minetest-mod-moreblocks', 'minetest-mod-nether',
+    'minetest-mod-torches'
+]
 
 name = _('Minetest')
 
@@ -60,6 +58,8 @@ description = [
 
 clients = clients
 
+manual_page = 'Minetest'
+
 reserved_usernames = ['Debian-minetest']
 
 CONFIG_FILE = '/etc/minetest/minetest.conf'
@@ -69,15 +69,15 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-th-large', 'minetest:index', short_description)
+    menu.add_urlname(name, 'glyphicon-th-large', 'minetest:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name,
-            ports=['minetest-plinth'], is_external=True, enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'minetest-plinth'
+        ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -88,20 +88,18 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name,
-            ports=['minetest-plinth'], is_external=True, enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'minetest-plinth'
+        ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('minetest', name, url=None,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('minetest:index'),
-                           login_required=False)
+    frontpage.add_shortcut(
+        'minetest', name, url=None, short_description=short_description,
+        details=description, configure_url=reverse_lazy('minetest:index'),
+        login_required=False)
 
 
 def enable():
@@ -127,8 +125,8 @@ def diagnose():
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Php/lens', 'Php.lns')
     aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
     aug.load()

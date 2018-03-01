@@ -20,14 +20,12 @@ FreedomBox app to configure Syncthing.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy
+
 from .manifest import clients
 
 version = 1
@@ -64,6 +62,8 @@ group = ('syncthing', _('Administer Syncthing application'))
 
 service = None
 
+manual_page = 'Syncthing'
+
 
 def init():
     """Intialize the module."""
@@ -75,10 +75,11 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
 
         if is_enabled():
             add_shortcut()
@@ -90,10 +91,11 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'syncthing', ['enable'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable, is_running=is_running)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -112,8 +114,8 @@ def is_running():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('syncthing@syncthing') and
-            action_utils.webserver_is_enabled('syncthing-plinth'))
+    return (action_utils.service_is_enabled('syncthing@syncthing')
+            and action_utils.webserver_is_enabled('syncthing-plinth'))
 
 
 def enable():

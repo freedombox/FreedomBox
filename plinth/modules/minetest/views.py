@@ -22,12 +22,11 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.modules import minetest
+from plinth.modules import minetest, names
 from plinth.views import ServiceView
 
-from . import description, managed_services, get_configuration
+from . import description, get_configuration, managed_services
 from .forms import MinetestForm
-from plinth.modules import names
 
 
 class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
@@ -39,6 +38,7 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     template_name = 'minetest.html'
     form_class = MinetestForm
     clients = minetest.clients
+    manual_page = minetest.manual_page
 
     def get_initial(self):
         """Return the values to fill in the form."""
@@ -49,9 +49,9 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        domains = [domain
-                   for domains in names.domains.values()
-                   for domain in domains]
+        domains = [
+            domain for domains in names.domains.values() for domain in domains
+        ]
         context['domains'] = domains
         return context
 
@@ -62,10 +62,10 @@ class MinetestServiceView(ServiceView):  # pylint: disable=too-many-ancestors
 
         if old_config['max_players'] != data['max_players'] \
            and data['max_players'] != None:
-            actions.superuser_run('minetest', [
-                'configure', '--max_players',
-                str(data['max_players'])
-            ])
+            actions.superuser_run(
+                'minetest',
+                ['configure', '--max_players',
+                 str(data['max_players'])])
             messages.success(self.request,
                              _('Maximum players configuration updated'))
 

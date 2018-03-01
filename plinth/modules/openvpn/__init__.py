@@ -21,11 +21,8 @@ FreedomBox app to configure OpenVPN server.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
@@ -51,6 +48,8 @@ description = [
           'You can also access the rest of the Internet via {box_name} '
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
+
+manual_page = 'OpenVPN'
 
 
 def init():

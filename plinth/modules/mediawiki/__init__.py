@@ -51,6 +51,8 @@ description = [
 
 service = None
 
+manual_page = 'MediaWiki'
+
 clients = clients
 
 

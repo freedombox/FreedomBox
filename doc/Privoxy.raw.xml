@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.docbook.org/xml/4.4/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>FreedomBox/Manual/Privoxy</title>
+    <revhistory>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>2018-03-11 03:09:16</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Fix oversized images</revremark>
+      </revision>
+      <revision>
+        <revnumber>9</revnumber>
+        <date>2016-09-09 15:39:20</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Minor indentation fix with screenshots</revremark>
+      </revision>
+      <revision>
+        <revnumber>8</revnumber>
+        <date>2016-09-09 15:31:16</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Promote the visibility of the screencast</revremark>
+      </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>2016-08-09 19:09:55</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>configuration for advanced users</revremark>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>2016-08-06 20:02:42</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>Screencast of the setting up</revremark>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>2016-08-06 17:57:33</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>screenshots</revremark>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>2016-08-01 19:38:35</date>
+        <authorinitials>Drahtseil</authorinitials>
+        <revremark>Very basic restructuring as preparation for more work to be done.</revremark>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>2016-04-10 07:24:20</date>
+        <authorinitials>PhilippeBaret</authorinitials>
+        <revremark>Added bottom navigation link</revremark>
+      </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>2015-12-15 20:54:14</date>
+        <authorinitials>PhilippeBaret</authorinitials>
+        <revremark>Added link to Privoxy FAQ</revremark>
+      </revision>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2015-12-15 20:22:00</date>
+        <authorinitials>PhilippeBaret</authorinitials>
+        <revremark>Added Privoxy page and definition</revremark>
+      </revision>
+    </revhistory>
+  </articleinfo>
+  <section>
+    <title>Web Proxy (Privoxy)</title>
+    <para>A web proxy acts as a filter for incoming and outgoing internet traffic. Thus, you can instruct any computer in your network to pass internet traffic through the proxy to remove unwanted ads and tracking mechanisms. </para>
+    <para>Privoxy is a software for security, privacy, and accurate control over the web. It provides a much more powerful web proxy (and anonymity on the web) than what your browser can offer. Privoxy "is a proxy that is primarily focused on privacy enhancement, ad and junk elimination and freeing the user from restrictions placed on his activities" (source: <ulink url="http://www.privoxy.org/faq/index.html">Privoxy FAQ</ulink>). </para>
+    <section>
+      <title>Screencast</title>
+      <para>Watch the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy_Installation.webm">screencast</ulink> on how to setup and use Privoxy in FreedomBox. </para>
+    </section>
+    <section>
+      <title>Setting up</title>
+      <orderedlist numeration="arabic">
+        <listitem>
+          <para>In Plinth install <emphasis>Web Proxy (Privoxy)</emphasis> </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy-Installation.png" width="800"/>
+              </imageobject>
+              <textobject>
+                <phrase>Privoxy Installation</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </listitem>
+        <listitem>
+          <para>Adapt your browser proxy settings to your FreedomBox hostname (or IP address) with port 8118. Please note that Privoxy can only proxy HTTP and HTTPS traffic. It will not work with FTP or other protocols.  </para>
+          <para>
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Privoxy?action=AttachFile&amp;do=get&amp;target=Privoxy-BrowserSettings.png" width="800"/>
+              </imageobject>
+              <textobject>
+                <phrase>Privoxy Browser Settings</phrase>
+              </textobject>
+            </inlinemediaobject>
+          </para>
+        </listitem>
+        <listitem>
+          <para>Go to page <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. If Privoxy is installed properly, you will be able to configure it in detail; if not you will see an error message. </para>
+        </listitem>
+        <listitem>
+          <para>If you are using a laptop that occasionally has to connect through other routers than yours with the FreedomBox and Privoxy, you may want to install a proxy switch add-on that allows you to easily turn the proxy on or off.  </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Advanced Users</title>
+      <orderedlist numeration="arabic">
+        <listitem>
+          <para>The default installation should provide a reasonable starting point for most. There will undoubtedly be occasions where you will want to adjust the configuration, that can be dealt with as the need arises.  </para>
+        </listitem>
+        <listitem>
+          <para>While using Privoxy, you can see its configuration details and documentation at <ulink url="http://config.privoxy.org/"/> or <ulink url="http://p.p"/>. </para>
+        </listitem>
+        <listitem>
+          <para>To enable changing these configurations, you first have to change the value of <code>enable-edit-actions</code> in <code>/etc/privoxy/config</code> to <code>1</code>. Before doing so, read carefully the manual, especially:    </para>
+          <itemizedlist>
+            <listitem override="none">
+              <para>
+                <emphasis>Access to the editor can not be controlled separately by "ACLs" or HTTP authentication, so that everybody who can access Privoxy can modify its configuration for all users. This option is not recommended for environments with untrusted users. Note that malicious client side code (e.g Java) is also capable of using the actions editor and you shouldn't enable this options unless you understand the consequences and are sure your browser is configured correctly.</emphasis>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Now you find an <code>EDIT</code> button on the configuration screen in <code>http://config.privoxy.org/</code>. </para>
+        </listitem>
+        <listitem>
+          <para>The <ulink url="http://www.privoxy.org/user-manual/quickstart.html">Quickstart</ulink> is a good starting point to read on how to define own blocking and filtering rules. </para>
+        </listitem>
+      </orderedlist>
+      <!--rule (<hr>) is not applicable to DocBook-->
+      <!--rule (<hr>) is not applicable to DocBook-->
+      <informaltable>
+        <tgroup cols="8">
+          <colspec colname="col_0"/>
+          <colspec colname="col_1"/>
+          <colspec colname="col_2"/>
+          <colspec colname="col_3"/>
+          <colspec colname="col_4"/>
+          <colspec colname="col_5"/>
+          <colspec colname="col_6"/>
+          <colspec colname="col_7"/>
+          <tbody>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong">Information</emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1"/>
+              <entry colsep="1" rowsep="1"/>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong">Support</emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong">Work Space</emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1"/>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong">Reports</emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong">Promote</emphasis>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Introduction#">Overview</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Hardware#">Hardware</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong"> </emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Support#">Live Help</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Contribute#">Where To Start</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Translate#">Translate</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/ProgressCalls#">Calls</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/TalksAndPresentations#">Talks</ulink>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Features#">Features</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Vision#">Vision</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong"> </emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/QuestionsAndAnswers#">Q&amp;A</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Design#">Design</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/TODO#">To Do</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Metrics#">Metrics</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Press#">Press</ulink>
+                </para>
+              </entry>
+            </row>
+            <row rowsep="1">
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Download#">Download</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Manual#">Manual</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <emphasis role="strong"> </emphasis>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/UserExperience#">Use cases</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Contribute/Code#">Code</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Contributors#">Contributors</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/ReleaseNotes#">Releases</ulink>
+                </para>
+              </entry>
+              <entry colsep="1" rowsep="1">
+                <para>
+                  <ulink url="https://wiki.debian.org/FreedomBox/Manual/Privoxy/FreedomBox/Blog#">Blog</ulink>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <!--rule (<hr>) is not applicable to DocBook-->
+      <para>
+      </para>
+    </section>
+  </section>
+</article>

@@ -23,7 +23,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-
 version = 2
 
 is_essential = True
@@ -33,6 +32,8 @@ name = _('Security')
 managed_packages = ['fail2ban']
 
 managed_services = ['fail2ban']
+
+manual_page = 'Security'
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'

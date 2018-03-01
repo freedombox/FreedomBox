@@ -14,22 +14,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the Roundcube module.
 """
 
 from django.conf.urls import url
 
-from plinth.views import ServiceView
 from plinth.modules import roundcube
-
+from plinth.views import ServiceView
 
 urlpatterns = [
-    url(r'^apps/roundcube/$', ServiceView.as_view(
+    url(r'^apps/roundcube/$',
+        ServiceView.as_view(
             service_id="roundcube",
             diagnostics_module_name="roundcube",
             description=roundcube.description,
-            show_status_block=False
+            show_status_block=False,
+            manual_page=roundcube.manual_page,
         ), name='index'),
 ]

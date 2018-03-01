@@ -20,6 +20,7 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
   <style type="text/css">
@@ -30,7 +31,18 @@
 {% endblock %}
 
 {% block content %}
-  <h2>{{ title }}</h2>
+
+  {% block pagetitle %}
+    <h2>{{ title }}</h2>
+  {% endblock %}
+
+  {% if manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
   <div>{% trans "The following disks are in use:" %}</div>
   <div class="row">

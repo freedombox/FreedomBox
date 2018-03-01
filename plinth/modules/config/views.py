@@ -22,7 +22,6 @@ import logging
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from plinth import actions
@@ -51,10 +50,12 @@ def index(request):
     else:
         form = ConfigurationForm(initial=status, prefix='configuration')
 
-    return TemplateResponse(request, 'config.html', {
-        'title': _('General Configuration'),
-        'form': form
-    })
+    return TemplateResponse(
+        request, 'config.html', {
+            'title': _('General Configuration'),
+            'form': form,
+            'manual_page': config.manual_page
+        })
 
 
 def get_status(request):

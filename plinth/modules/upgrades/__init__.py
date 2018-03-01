@@ -20,10 +20,9 @@ FreedomBox app for upgrades.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
 from plinth import service as service_module
+from plinth import actions
 from plinth.menu import main_menu
-
 
 version = 1
 
@@ -41,15 +40,17 @@ description = [
 
 service = None
 
+manual_page = 'Upgrades'
+
 
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
     menu.add_urlname(name, 'glyphicon-refresh', 'upgrades:index')
     global service
-    service = service_module.Service(
-        'auto-upgrades', name, is_external=False, is_enabled=is_enabled,
-        enable=enable, disable=disable)
+    service = service_module.Service('auto-upgrades', name, is_external=False,
+                                     is_enabled=is_enabled, enable=enable,
+                                     disable=disable)
 
 
 def setup(helper, old_version=None):

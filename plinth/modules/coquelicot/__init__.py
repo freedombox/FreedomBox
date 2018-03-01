@@ -50,6 +50,8 @@ description = [
 
 service = None
 
+manual_page = 'Coquelicot'
+
 
 def init():
     """Intialize the module."""

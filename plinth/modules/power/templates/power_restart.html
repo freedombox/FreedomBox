@@ -20,10 +20,19 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 
-  <h2>{{ title }}</h2>
+  {% block pagetitle %}
+    <h2>{{ title }}
+      {% if manual_page %}
+        <a href="{% url 'help:manual-page' manual_page %}">
+          <img class="manual-page" src="{% static 'theme/icons/manual.png' %}" alt="Manual" />
+        </a>
+      {% endif %}
+    </h2>
+  {% endblock %}
 
   <p>
     {% blocktrans trimmed %}

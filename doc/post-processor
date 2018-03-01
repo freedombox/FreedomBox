@@ -1,0 +1,93 @@
+#!/usr/bin/python3
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
+import argparse
+import xml.etree.ElementTree as etree
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparser = subparsers.add_parser(
+        'remove-footer', help='Remove footer from the XML document')
+    subparser.add_argument('filename', help='Name of the XML file')
+
+    subparser = subparsers.add_parser('fix-wiki-urls',
+                                      help='Fix wrongly formatted wiki urls')
+    subparser.add_argument('filename', help='Name of the XML file')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_fix_wiki_urls(arguments):
+    file_name = arguments.filename
+    page_name = file_name.split('.')[0]
+
+    with open(file_name, 'r') as xml_file:
+        lines = xml_file.readlines()
+
+    pattern = 'FreedomBox/Manual/{0}/FreedomBox'.format(page_name)
+    lines = list(map(lambda s: s.replace(pattern, 'FreedomBox'), lines))
+
+    with open(file_name, 'w') as xml_file:
+        xml_file.writelines(lines)
+
+
+def subcommand_remove_footer(arguments):
+    filename = arguments.filename
+    tree = etree.parse(filename)
+    root = tree.getroot()
+    informaltables = []
+
+    def recurse(elem):
+        for child in elem:
+            if child.tag == 'informaltable':
+                informaltables.append((elem, child))
+            else:
+                recurse(child)
+
+    recurse(root)
+
+    if informaltables:
+        parent, child = informaltables[-1]
+        parent.remove(child)
+
+    processed_xml = etree.tostring(root, encoding='utf-8').decode()
+
+    with open(filename, 'r') as xml_file:
+        header = xml_file.readlines()[:2]
+
+    with open(filename, 'w') as xml_file:
+        xml_file.writelines(header)
+        xml_file.write(processed_xml)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

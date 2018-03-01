@@ -23,16 +23,12 @@ import logging
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
+from plinth import action_utils, actions, cfg, module_loader
 from plinth.errors import ActionError
 from plinth.menu import main_menu
-from plinth.modules import names
-from plinth.modules import config
+from plinth.modules import config, names
+from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
-from plinth import module_loader
-from plinth.signals import domainname_change, domain_added, domain_removed
 
 version = 1
 
@@ -53,8 +49,7 @@ description = [
           '{box_name} can automatically obtain and setup digital '
           'certificates for each available domain.  It does so by proving '
           'itself to be the owner of a domain to Let\'s Encrypt, a '
-          'certificate authority (CA).'),
-        box_name=_(cfg.box_name)),
+          'certificate authority (CA).'), box_name=_(cfg.box_name)),
     _('Let\'s Encrypt is a free, automated, and open certificate '
       'authority, run for the public\'s benefit by the Internet Security '
       'Research Group (ISRG).  Please read and agree with the '
@@ -64,6 +59,8 @@ description = [
 
 service = None
 
+manual_page = 'LetsEncrypt'
+
 MODULES_WITH_HOOKS = ['ejabberd']
 LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 logger = logging.getLogger(__name__)
@@ -72,8 +69,8 @@ logger = logging.getLogger(__name__)
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name,
-                     'glyphicon-lock', 'letsencrypt:index', short_description)
+    menu.add_urlname(name, 'glyphicon-lock', 'letsencrypt:index',
+                     short_description)
     domainname_change.connect(on_domainname_change)
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)
@@ -112,8 +109,8 @@ def enable_renewal_management(domain):
         except ActionError as exception:
             logger.error(
                 _('Failed to enable certificate renewal management for '
-                  '{domain}: {error}').format(
-                      domain=domain, error=exception.args[2]))
+                  '{domain}: {error}').format(domain=domain,
+                                              error=exception.args[2]))
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
@@ -124,11 +121,11 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
 
     for module in MODULES_WITH_HOOKS:
         actions.superuser_run(
-            module, ['letsencrypt', 'drop', '--domain',
-                     old_domainname], run_in_background=True)
+            module, ['letsencrypt', 'drop', '--domain', old_domainname],
+            run_in_background=True)
     actions.superuser_run(
-        'letsencrypt', ['manage_hooks', 'disable', '--domain',
-                        old_domainname], run_in_background=True)
+        'letsencrypt', ['manage_hooks', 'disable', '--domain', old_domainname],
+        run_in_background=True)
 
 
 def get_manage_hooks_status():
@@ -143,10 +140,12 @@ def get_manage_hooks_status():
 
 
 def get_installed_modules():
-    installed_modules = [module_name for module_name, module in
-                         module_loader.loaded_modules.items()
-                         if module_name in MODULES_WITH_HOOKS
-                         and module.setup_helper.get_state() == 'up-to-date']
+    installed_modules = [
+        module_name
+        for module_name, module in module_loader.loaded_modules.items()
+        if module_name in MODULES_WITH_HOOKS
+        and module.setup_helper.get_state() == 'up-to-date'
+    ]
 
     return installed_modules
 
@@ -196,10 +195,12 @@ def get_status():
     status = json.loads(status)
     curr_dom = config.get_domainname()
     current_domain = {
-        'name': curr_dom,
-        'has_cert': (curr_dom in status['domains'] and
-                     status['domains'][curr_dom]['certificate_available']),
-        'manage_hooks_status': get_manage_hooks_status()
+        'name':
+            curr_dom,
+        'has_cert': (curr_dom in status['domains']
+                     and status['domains'][curr_dom]['certificate_available']),
+        'manage_hooks_status':
+            get_manage_hooks_status()
     }
     status['current_domain'] = current_domain
 

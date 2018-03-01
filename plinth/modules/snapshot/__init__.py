@@ -49,6 +49,8 @@ description = [
 
 service = None
 
+manual_page = 'Snapshots'
+
 
 def init():
     """Initialize the module."""

@@ -49,11 +49,13 @@ subsubmenu = [{
 
 def index(request):
     """Serve introduction page"""
-    return TemplateResponse(request, 'pagekite_introduction.html', {
-        'title': pagekite.name,
-        'description': pagekite.description,
-        'subsubmenu': subsubmenu
-    })
+    return TemplateResponse(
+        request, 'pagekite_introduction.html', {
+            'title': pagekite.name,
+            'description': pagekite.description,
+            'manual_page': pagekite.manual_page,
+            'subsubmenu': subsubmenu
+        })
 
 
 class ContextMixin(object):

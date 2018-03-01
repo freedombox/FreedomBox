@@ -23,7 +23,6 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import action_utils
 from plinth.menu import main_menu
 
-
 version = 1
 
 is_essential = True
@@ -35,6 +34,8 @@ description = [
       'system to confirm that applications and services are working as '
       'expected.')
 ]
+
+manual_page = 'Diagnostics'
 
 
 def init():
@@ -48,7 +49,8 @@ def diagnose():
     results = []
     results.append(action_utils.diagnose_port_listening(8000, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8000, 'tcp6'))
-    results.extend(action_utils.diagnose_url_on_all(
-        'http://{host}/plinth/', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('http://{host}/plinth/',
+                                         check_certificate=False))
 
     return results

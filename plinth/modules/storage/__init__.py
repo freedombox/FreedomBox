@@ -18,14 +18,14 @@
 FreedomBox app to manage storage.
 """
 
-from django.utils.translation import ugettext_lazy as _
+import json
 import logging
 import subprocess
-import json
+
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
-
 
 version = 1
 
@@ -36,6 +36,8 @@ description = []
 service = None
 
 logger = logging.getLogger(__name__)
+
+manual_page = 'Storage'
 
 
 def init():
@@ -62,9 +64,10 @@ def get_disks():
 
 def _get_disks_from_df():
     """Return the list of disks and free space available using 'df'."""
-    command = ['df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
-               '--block-size=1',
-               '--output=source,target,fstype,size,used,avail,pcent']
+    command = [
+        'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
+        '--block-size=1', '--output=source,target,fstype,size,used,avail,pcent'
+    ]
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as exception:
@@ -110,8 +113,10 @@ def _get_disks_from_lsblk():
 
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
-    devices = [disk['dev_kname'] for disk in disks
-               if disk['mountpoint'] == '/' and disk['type'] == 'part']
+    devices = [
+        disk['dev_kname'] for disk in disks
+        if disk['mountpoint'] == '/' and disk['type'] == 'part'
+    ]
     try:
         return devices[0]
     except IndexError:
@@ -124,8 +129,8 @@ def is_expandable(device):
         return False
 
     try:
-        output = actions.superuser_run(
-            'storage', ['is-partition-expandable', device])
+        output = actions.superuser_run('storage',
+                                       ['is-partition-expandable', device])
     except actions.ActionError:
         return False
 
@@ -145,17 +150,17 @@ def format_bytes(size):
     if size < 1024:
         return _('{disk_size:.1f} bytes').format(disk_size=size)
 
-    if size < 1024 ** 2:
+    if size < 1024**2:
         size /= 1024
         return _('{disk_size:.1f} KiB').format(disk_size=size)
 
-    if size < 1024 ** 3:
-        size /= 1024 ** 2
+    if size < 1024**3:
+        size /= 1024**2
         return _('{disk_size:.1f} MiB').format(disk_size=size)
 
-    if size < 1024 ** 4:
-        size /= 1024 ** 3
+    if size < 1024**4:
+        size /= 1024**3
         return _('{disk_size:.1f} GiB').format(disk_size=size)
 
-    size /= 1024 ** 4
+    size /= 1024**4
     return _('{disk_size:.1f} TiB').format(disk_size=size)

@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for security module
 """
@@ -23,10 +22,10 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from .forms import SecurityForm
+from plinth import action_utils, actions
 from plinth.modules import security
-from plinth import actions
-from plinth import action_utils
+
+from .forms import SecurityForm
 
 
 def index(request):
@@ -44,15 +43,19 @@ def index(request):
     else:
         form = SecurityForm(initial=status, prefix='security')
 
-    return TemplateResponse(request, 'security.html',
-                            {'title': _('Security'),
-                             'form': form})
+    return TemplateResponse(request, 'security.html', {
+        'title': _('Security'),
+        'manual_page': security.manual_page,
+        'form': form
+    })
 
 
 def get_status(request):
     """Return the current status"""
-    return {'restricted_access': security.get_restricted_access_enabled(),
-            'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')}
+    return {
+        'restricted_access': security.get_restricted_access_enabled(),
+        'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')
+    }
 
 
 def _apply_changes(request, old_status, new_status):
@@ -61,10 +64,9 @@ def _apply_changes(request, old_status, new_status):
         try:
             security.set_restricted_access(new_status['restricted_access'])
         except Exception as exception:
-            messages.error(
-                request,
-                _('Error setting restricted access: {exception}')
-                .format(exception=exception))
+            messages.error(request,
+                           _('Error setting restricted access: {exception}')
+                           .format(exception=exception))
         else:
             messages.success(request, _('Updated security configuration'))
 

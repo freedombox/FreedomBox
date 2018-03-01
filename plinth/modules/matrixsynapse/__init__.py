@@ -25,11 +25,10 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from plinth import action_utils
-from plinth import actions
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
+
 from .manifest import clients
 
 version = 2
@@ -50,7 +49,6 @@ description = [
       'synchronization and does not require phone numbers to work. Users on a '
       'given Matrix server can converse with users on all other Matrix '
       'servers via federation.'),
-
     _('To communicate, you can use the '
       '<a href="https://matrix.org/docs/projects/">available clients</a> '
       'for mobile, desktop and the web. <a href="https://riot.im/">Riot</a> '
@@ -60,6 +58,8 @@ description = [
 clients = clients
 
 service = None
+
+manual_page = 'MatrixSynapse'
 
 logger = logging.getLogger(__name__)
 
@@ -76,11 +76,10 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'matrix-synapse', name,
-            ports=['matrix-synapse-plinth'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service('matrix-synapse', name, ports=[
+            'matrix-synapse-plinth'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
         if is_enabled():
             add_shortcut()
 
@@ -90,11 +89,10 @@ def setup(helper, old_version=None):
     helper.install(managed_packages)
     global service
     if service is None:
-        service = service_module.Service(
-            'matrix-synapse', name,
-            ports=['matrix-synapse-plinth'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service('matrix-synapse', name, ports=[
+            'matrix-synapse-plinth'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
     helper.call('post', actions.superuser_run, 'matrixsynapse',
                 ['post-install'])
@@ -138,8 +136,9 @@ def diagnose():
 
     results.append(action_utils.diagnose_port_listening(8008, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(8448, 'tcp4'))
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/_matrix', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/_matrix',
+                                         check_certificate=False))
 
     return results
 

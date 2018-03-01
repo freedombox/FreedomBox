@@ -19,14 +19,15 @@ FreedomBox app for configuring Shadowsocks.
 """
 
 import json
+
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import ShadowsocksForm
-from plinth import actions
-from plinth import views
+from plinth import actions, views
 from plinth.errors import ActionError
 from plinth.modules import shadowsocks
+
+from .forms import ShadowsocksForm
 
 
 class ShadowsocksServiceView(views.ServiceView):
@@ -35,6 +36,7 @@ class ShadowsocksServiceView(views.ServiceView):
     diagnostics_module_name = 'shadowsocks'
     form_class = ShadowsocksForm
     description = shadowsocks.description
+    manual_page = shadowsocks.manual_page
 
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""
@@ -73,9 +75,8 @@ class ShadowsocksServiceView(views.ServiceView):
                 'method': new_status['method'],
             }
 
-            actions.superuser_run(
-                'shadowsocks', ['merge-config'],
-                input=json.dumps(new_config).encode())
+            actions.superuser_run('shadowsocks', ['merge-config'],
+                                  input=json.dumps(new_config).encode())
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

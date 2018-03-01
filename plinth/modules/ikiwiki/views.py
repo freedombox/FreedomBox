@@ -22,11 +22,10 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
-from plinth import actions
-from plinth import frontpage
-from plinth import views
+from plinth import actions, frontpage, views
 from plinth.modules import ikiwiki
 
 from .forms import IkiwikiCreateForm
@@ -63,11 +62,12 @@ def manage(request):
     sites = actions.run('ikiwiki', ['get-sites']).split('\n')
     sites = [name for name in sites if name != '']
 
-    return TemplateResponse(request, 'ikiwiki_manage.html', {
-        'title': _('Manage Wikis and Blogs'),
-        'subsubmenu': subsubmenu,
-        'sites': sites
-    })
+    return TemplateResponse(
+        request, 'ikiwiki_manage.html', {
+            'title': _('Manage Wikis and Blogs'),
+            'subsubmenu': subsubmenu,
+            'sites': sites
+        })
 
 
 def create(request):
@@ -87,22 +87,21 @@ def create(request):
                              form.cleaned_data['admin_password'])
 
             site = form.cleaned_data['name'].replace(' ', '')
-            frontpage.add_shortcut(
-                'ikiwiki_' + site,
-                site,
-                url='/ikiwiki/' + site,
-                login_required=False,
-                icon='ikiwiki')
+            frontpage.add_shortcut('ikiwiki_' + site, site,
+                                   url='/ikiwiki/' + site,
+                                   login_required=False, icon='ikiwiki')
 
             return redirect(reverse_lazy('ikiwiki:manage'))
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
-    return TemplateResponse(request, 'ikiwiki_create.html', {
-        'title': _('Create Wiki or Blog'),
-        'form': form,
-        'subsubmenu': subsubmenu
-    })
+    return TemplateResponse(
+        request, 'ikiwiki_create.html', {
+            'title': _('Create Wiki or Blog'),
+            'form': form,
+            'subsubmenu': subsubmenu,
+            'manual_page': ikiwiki.manual_page,
+        })
 
 
 def _create_wiki(request, name, admin_name, admin_password):
@@ -114,8 +113,8 @@ def _create_wiki(request, name, admin_name, admin_password):
             input=admin_password.encode())
         messages.success(request, _('Created wiki {name}.').format(name=name))
     except actions.ActionError as error:
-        messages.error(
-            request, _('Could not create wiki: {error}').format(error=error))
+        messages.error(request,
+                       _('Could not create wiki: {error}').format(error=error))
 
 
 def _create_blog(request, name, admin_name, admin_password):
@@ -127,8 +126,8 @@ def _create_blog(request, name, admin_name, admin_password):
             input=admin_password.encode())
         messages.success(request, _('Created blog {name}.').format(name=name))
     except actions.ActionError as error:
-        messages.error(
-            request, _('Could not create blog: {error}').format(error=error))
+        messages.error(request,
+                       _('Could not create blog: {error}').format(error=error))
 
 
 def delete(request, name):

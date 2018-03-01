@@ -34,6 +34,8 @@ is_essential = True
 
 depends = ['firewall', 'names']
 
+manual_page = 'Configure'
+
 
 def get_domainname():
     """Return the domainname"""

@@ -21,12 +21,11 @@ FreedomBox app for repro.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.views import ServiceView
+
 from .manifest import clients
 
 version = 2
@@ -64,6 +63,8 @@ reserved_usernames = ['repro']
 
 service = None
 
+manual_page = 'Repro'
+
 
 def init():
     """Initialize the repro module."""
@@ -74,13 +75,9 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['sip', 'sips', 'rtp-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'sip', 'sips', 'rtp-plinth'
+        ], is_external=True, enable=enable, disable=disable)
 
         if service.is_enabled():
             add_shortcut()
@@ -91,6 +88,7 @@ class ReproServiceView(ServiceView):
     description = description
     diagnostics_module_name = "repro"
     service_id = managed_services[0]
+    manual_page = manual_page
 
 
 def setup(helper, old_version=None):
@@ -99,25 +97,18 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'repro', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['sip', 'sips', 'rtp-plinth'],
-            is_external=True,
-            enable=enable,
-            disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'sip', 'sips', 'rtp-plinth'
+        ], is_external=True, enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut(
-        'repro',
-        name,
-        short_description=short_description,
-        details=description,
-        configure_url=reverse_lazy('repro:index'),
-        login_required=True)
+    frontpage.add_shortcut('repro', name, short_description=short_description,
+                           details=description,
+                           configure_url=reverse_lazy('repro:index'),
+                           login_required=True)
 
 
 def enable():

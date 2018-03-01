@@ -18,23 +18,20 @@
 FreedomBox app to configure ejabberd server.
 """
 
-from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
-from plinth.utils import format_lazy
-
 import logging
 import socket
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
-from plinth import service as service_module
-from plinth.menu import main_menu
-from plinth.signals import pre_hostname_change, post_hostname_change
-from plinth.signals import domainname_change
-from .manifest import clients
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
+from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
+from plinth.menu import main_menu
+from plinth.signals import (domainname_change, post_hostname_change,
+                            pre_hostname_change)
+from plinth.utils import format_lazy
+
+from .manifest import clients
 
 version = 1
 
@@ -49,14 +46,13 @@ short_description = _('Chat Server')
 description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
-
     format_lazy(
         _('To actually communicate, you can use the <a href="/plinth/apps/'
           'jsxc">web client</a> or any other <a href=\'https://xmpp.org/'
           'software/clients\' target=\'_blank\'>XMPP client</a>. '
           'When enabled, ejabberd can be accessed by any <a href="/plinth/sys'
-          '/users">user with a {box_name} login</a>.'),
-        box_name=_(cfg.box_name))
+          '/users">user with a {box_name} login</a>.'), box_name=_(
+              cfg.box_name))
 ]
 
 clients = clients
@@ -65,22 +61,24 @@ reserved_usernames = ['ejabberd']
 
 service = None
 
+manual_page = 'ejabberd'
+
 logger = logging.getLogger(__name__)
 
 
 def init():
     """Initialize the ejabberd module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-comment', 'ejabberd:index', short_description)
+    menu.add_urlname(name, 'glyphicon-comment', 'ejabberd:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service('ejabberd', name, ports=[
+            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
         if is_enabled():
             add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
@@ -99,21 +97,19 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server', 'xmpp-bosh'],
-            is_external=True, is_enabled=is_enabled, enable=enable,
-            disable=disable)
+        service = service_module.Service('ejabberd', name, ports=[
+            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
 
 def add_shortcut():
-    frontpage.add_shortcut('ejabberd', name=name,
-                           short_description=short_description,
-                           details=description,
-                           configure_url=reverse_lazy('ejabberd:index'),
-                           login_required=True)
+    frontpage.add_shortcut(
+        'ejabberd', name=name, short_description=short_description,
+        details=description, configure_url=reverse_lazy('ejabberd:index'),
+        login_required=True)
 
 
 def is_enabled():
@@ -146,10 +142,10 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     del sender  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('ejabberd',
-                          ['pre-change-hostname',
-                           '--old-hostname', old_hostname,
-                           '--new-hostname', new_hostname])
+    actions.superuser_run('ejabberd', [
+        'pre-change-hostname', '--old-hostname', old_hostname,
+        '--new-hostname', new_hostname
+    ])
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
@@ -157,11 +153,10 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     del sender  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('ejabberd',
-                          ['change-hostname',
-                           '--old-hostname', old_hostname,
-                           '--new-hostname', new_hostname],
-                          run_in_background=True)
+    actions.superuser_run('ejabberd', [
+        'change-hostname', '--old-hostname', old_hostname, '--new-hostname',
+        new_hostname
+    ], run_in_background=True)
 
 
 def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
@@ -170,10 +165,9 @@ def on_domainname_change(sender, old_domainname, new_domainname, **kwargs):
     del old_domainname  # Unused
     del kwargs  # Unused
 
-    actions.superuser_run('ejabberd',
-                          ['change-domainname',
-                           '--domainname', new_domainname],
-                          run_in_background=True)
+    actions.superuser_run(
+        'ejabberd', ['change-domainname', '--domainname', new_domainname],
+        run_in_background=True)
 
 
 def diagnose():
@@ -186,7 +180,6 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
-    results.extend(
-        action_utils.diagnose_url_on_all('http://{host}/bosh/'))
+    results.extend(action_utils.diagnose_url_on_all('http://{host}/bosh/'))
 
     return results

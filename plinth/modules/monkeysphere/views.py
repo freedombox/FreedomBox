@@ -14,10 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for the monkeysphere module.
 """
+
+import json
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -25,11 +26,9 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
-import json
 
 from plinth import actions
-from plinth.modules import monkeysphere
-from plinth.modules import names
+from plinth.modules import monkeysphere, names
 
 publish_process = None
 
@@ -39,23 +38,25 @@ def index(request):
     _collect_publish_result(request)
     status = get_status()
     return TemplateResponse(
-        request, 'monkeysphere.html',
-        {'title': monkeysphere.name,
-         'description': monkeysphere.description,
-         'status': status,
-         'running': bool(publish_process)})
+        request, 'monkeysphere.html', {
+            'title': monkeysphere.name,
+            'description': monkeysphere.description,
+            'status': status,
+            'manual_page': monkeysphere.manual_page,
+            'running': bool(publish_process)
+        })
 
 
 @require_POST
 def import_key(request, ssh_fingerprint):
     """Import a key into monkeysphere."""
-    available_domains = [domain
-                         for domains in names.domains.values()
-                         for domain in domains]
+    available_domains = [
+        domain for domains in names.domains.values() for domain in domains
+    ]
     try:
         actions.superuser_run(
-            'monkeysphere', ['host-import-key', ssh_fingerprint] +
-            available_domains)
+            'monkeysphere',
+            ['host-import-key', ssh_fingerprint] + available_domains)
         messages.success(request, _('Imported key.'))
     except actions.ActionError as exception:
         messages.error(request, str(exception))
@@ -65,9 +66,10 @@ def import_key(request, ssh_fingerprint):
 
 def details(request, fingerprint):
     """Get details for an OpenPGP key."""
-    return TemplateResponse(request, 'monkeysphere_details.html',
-                            {'title': monkeysphere.name,
-                             'key': get_key(fingerprint)})
+    return TemplateResponse(request, 'monkeysphere_details.html', {
+        'title': monkeysphere.name,
+        'key': get_key(fingerprint)
+    })
 
 
 @require_POST
@@ -88,7 +90,8 @@ def cancel(request):
     global publish_process
     if publish_process:
         actions.superuser_run(
-            'monkeysphere', ['host-cancel-publish', str(publish_process.pid)])
+            'monkeysphere', ['host-cancel-publish',
+                             str(publish_process.pid)])
         publish_process = None
         messages.info(request, _('Cancelled key publishing.'))
 
@@ -107,17 +110,18 @@ def get_keys(fingerprint=None):
                                    ['host-show-keys'] + fingerprint)
     keys = json.loads(output)['keys']
 
-    domains = [domain
-               for domains_of_a_type in names.domains.values()
-               for domain in domains_of_a_type]
+    domains = [
+        domain for domains_of_a_type in names.domains.values()
+        for domain in domains_of_a_type
+    ]
     for key in keys.values():
         key['imported_domains'] = set(key.get('imported_domains', []))
         key['available_domains'] = set(key.get('available_domains', []))
         if '*' in key['available_domains']:
             key['available_domains'] = set(domains)
 
-        key['all_domains'] = sorted(
-            key['available_domains'].union(key['imported_domains']))
+        key['all_domains'] = sorted(key['available_domains'].union(
+            key['imported_domains']))
         key['importable_domains'] = key['available_domains'] \
             .difference(key['imported_domains'])
 

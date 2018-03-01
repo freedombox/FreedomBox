@@ -18,15 +18,13 @@
 FreedomBox app to interface with network-manager.
 """
 
-from django.utils.translation import ugettext_lazy as _
-from logging import Logger
 import subprocess
+from logging import Logger
 
-from plinth import actions
-from plinth import action_utils
-from plinth import network
+from django.utils.translation import ugettext_lazy as _
+
+from plinth import action_utils, actions, network
 from plinth.menu import main_menu
-
 
 version = 1
 
@@ -37,6 +35,8 @@ managed_packages = ['network-manager', 'batctl']
 name = _('Networks')
 
 logger = Logger(__name__)
+
+manual_page = 'Networks'
 
 
 def init():
@@ -113,9 +113,10 @@ def _diagnose_dnssec(kind='4'):
 
     result = 'failed'
     try:
-        output = subprocess.check_output(
-            ['dig', kind_option, '+time=2', '+tries=1',
-             'test.dnssec-or-not.net', 'TXT'])
+        output = subprocess.check_output([
+            'dig', kind_option, '+time=2', '+tries=1',
+            'test.dnssec-or-not.net', 'TXT'
+        ])
 
         if 'Yes, you are using DNSSEC' in output.decode():
             result = 'passed'

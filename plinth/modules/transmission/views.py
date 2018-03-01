@@ -18,16 +18,17 @@
 FreedomBox app for configuring Transmission Server.
 """
 
-from django.contrib import messages
-from django.utils.translation import ugettext as _
 import json
 import logging
 import socket
 
-from .forms import TransmissionForm
-from plinth import actions
-from plinth import views
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
+from plinth import actions, views
 from plinth.modules import transmission
+
+from .forms import TransmissionForm
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +40,7 @@ class TransmissionServiceView(views.ServiceView):
     diagnostics_module_name = 'transmission'
     form_class = TransmissionForm
     service_id = transmission.managed_services[0]
+    manual_page = transmission.manual_page
 
     def get_initial(self):
         """Get the current settings from Transmission server."""
@@ -67,9 +69,8 @@ class TransmissionServiceView(views.ServiceView):
                 'download-dir': new_status['download_dir'],
             }
 
-            actions.superuser_run(
-                'transmission', ['merge-configuration'],
-                input=json.dumps(new_configuration).encode())
+            actions.superuser_run('transmission', ['merge-configuration'],
+                                  input=json.dumps(new_configuration).encode())
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

@@ -21,13 +21,24 @@
 {# Template for simple service configuration/description pages #}
 
 {% load i18n %}
+{% load static %}
 
 {% block content %}
-  <h2>{{ title }}</h2>
+  {% block pagetitle %}
+    <h2>{{ title }}</h2>
+  {% endblock %}
 
   {% for paragraph in description %}
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
+
+  {% if manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
   {% block configuration %}
   {% endblock %}

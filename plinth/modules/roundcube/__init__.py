@@ -20,13 +20,11 @@ FreedomBox app to configure Roundcube.
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth import action_utils
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
-from .manifest import clients
 
+from .manifest import clients
 
 version = 1
 
@@ -42,14 +40,12 @@ description = [
       'full functionality you expect from an email client, including '
       'MIME support, address book, folder manipulation, message '
       'searching and spell checking.'),
-
     _('You can access Roundcube from <a href="/roundcube">'
       '/roundcube</a>. Provide the username and password of the email '
       'account you wish to access followed by the domain name of the '
       'IMAP server for your email provider, like <code>imap.example.com'
       '</code>.  For IMAP over SSL (recommended), fill the server field '
       'like <code>imaps://imap.example.com</code>.'),
-
     _('For Gmail, username will be your Gmail address, password will be '
       'your Google account password and server will be '
       '<code>imaps://imap.gmail.com</code>.  Note that you will also need '
@@ -62,11 +58,14 @@ clients = clients
 
 service = None
 
+manual_page = 'Roundcube'
+
 
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-envelope', 'roundcube:index', short_description)
+    menu.add_urlname(name, 'glyphicon-envelope', 'roundcube:index',
+                     short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -93,9 +92,9 @@ def setup(helper, old_version=None):
 
 
 def add_shortcut():
-    frontpage.add_shortcut(
-        'roundcube', name, short_description=short_description, url='/roundcube',
-        login_required=True)
+    frontpage.add_shortcut('roundcube', name,
+                           short_description=short_description,
+                           url='/roundcube', login_required=True)
 
 
 def is_enabled():
@@ -119,7 +118,8 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/roundcube', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/roundcube',
+                                         check_certificate=False))
 
     return results

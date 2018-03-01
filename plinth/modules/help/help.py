@@ -51,8 +51,9 @@ def init():
 
 def index(request):
     """Serve the index page"""
-    return TemplateResponse(request, 'help_index.html',
-                            {'title': _('Documentation and FAQ')})
+    return TemplateResponse(request, 'help_index.html', {
+        'title': _('Documentation and FAQ')
+    })
 
 
 def about(request):
@@ -68,20 +69,22 @@ def about(request):
     return TemplateResponse(request, 'help_about.html', context)
 
 
-def manual(request):
+def manual(request, page='freedombox-manual.part.html'):
     """Serve the manual page from the 'doc' directory"""
     try:
-        with open(
-                os.path.join(cfg.doc_dir, 'freedombox-manual.part.html'), 'r',
-                encoding='utf-8') as input_file:
+        page = '{}.part.html'.format(
+            page) if not page.endswith('html') else page
+        with open(os.path.join(cfg.doc_dir, page), 'r',
+                  encoding='utf-8') as input_file:
             content = input_file.read()
     except IOError:
         raise Http404
 
-    return TemplateResponse(request, 'help_manual.html', {
-        'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
-        'content': content
-    })
+    return TemplateResponse(
+        request, 'help_manual.html', {
+            'title': _('{box_name} Manual').format(box_name=_(cfg.box_name)),
+            'content': content
+        })
 
 
 def download_manual(request):

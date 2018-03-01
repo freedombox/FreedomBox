@@ -18,26 +18,26 @@
 FreedomBox app to configure Tor.
 """
 
-from django.utils.translation import ugettext_lazy as _
 import json
 
-from plinth import actions
-from plinth import action_utils
+from django.utils.translation import ugettext_lazy as _
+
 from plinth import service as service_module
+from plinth import action_utils, actions
 from plinth.menu import main_menu
 from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
-from .manifest import clients
 
 from . import utils
-
+from .manifest import clients
 
 version = 2
 
 depends = ['names']
 
-managed_packages = ['tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy',
-                    'apt-transport-tor']
+managed_packages = [
+    'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
+]
 
 name = _('Tor')
 
@@ -59,11 +59,14 @@ reserved_usernames = ['debian-tor']
 socks_service = None
 bridge_service = None
 
+manual_page = 'Tor'
+
 
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-eye-close', 'tor:index', short_description)
+    menu.add_urlname(name, 'glyphicon-eye-close', 'tor:index',
+                     short_description)
 
     setup_helper = globals()['setup_helper']
     needs_setup = setup_helper.get_state() == 'needs-setup'
@@ -78,9 +81,8 @@ def init():
         global bridge_service
         bridge_service = service_module.Service(
             'tor-bridge', _('Tor Bridge Relay'),
-            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
-            is_external=True, is_enabled=utils.is_enabled,
-            is_running=utils.is_running)
+            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'], is_external=True,
+            is_enabled=utils.is_enabled, is_running=utils.is_running)
 
         # Register hidden service name with Name Services module.
         status = utils.get_status()
@@ -98,9 +100,8 @@ def init():
             hs_services = None
 
         domain_added.send_robust(
-            sender='tor', domain_type='hiddenservice',
-            name=hostname, description=_('Tor Hidden Service'),
-            services=hs_services)
+            sender='tor', domain_type='hiddenservice', name=hostname,
+            description=_('Tor Hidden Service'), services=hs_services)
 
 
 def setup(helper, old_version=None):
@@ -122,9 +123,8 @@ def setup(helper, old_version=None):
     if bridge_service is None:
         bridge_service = service_module.Service(
             'tor-bridge', _('Tor Bridge Relay'),
-            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'],
-            is_external=True, is_enabled=utils.is_enabled,
-            is_running=utils.is_running)
+            ports=['tor-orport', 'tor-obfs3', 'tor-obfs4'], is_external=True,
+            is_enabled=utils.is_enabled, is_running=utils.is_running)
     helper.call('post', bridge_service.notify_enabled, None, True)
 
     helper.call('post', update_hidden_service_domain)
@@ -135,15 +135,14 @@ def update_hidden_service_domain(status=None):
     if not status:
         status = utils.get_status()
 
-    domain_removed.send_robust(
-        sender='tor', domain_type='hiddenservice')
+    domain_removed.send_robust(sender='tor', domain_type='hiddenservice')
 
     if status['enabled'] and status['is_running'] and \
        status['hs_enabled'] and status['hs_hostname']:
-        domain_added.send_robust(
-            sender='tor', domain_type='hiddenservice',
-            name=status['hs_hostname'], description=_('Tor Hidden Service'),
-            services=status['hs_services'])
+        domain_added.send_robust(sender='tor', domain_type='hiddenservice',
+                                 name=status['hs_hostname'],
+                                 description=_('Tor Hidden Service'),
+                                 services=status['hs_services'])
 
 
 def diagnose():
@@ -161,25 +160,31 @@ def diagnose():
     output = actions.superuser_run('tor', ['get-status'])
     ports = json.loads(output)['ports']
 
-    results.append([_('Tor relay port available'),
-                    'passed' if 'orport' in ports else 'failed'])
+    results.append([
+        _('Tor relay port available'), 'passed'
+        if 'orport' in ports else 'failed'
+    ])
     if 'orport' in ports:
-        results.append(action_utils.diagnose_port_listening(ports['orport'],
-                                                            'tcp4'))
-        results.append(action_utils.diagnose_port_listening(ports['orport'],
-                                                            'tcp6'))
+        results.append(
+            action_utils.diagnose_port_listening(ports['orport'], 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(ports['orport'], 'tcp6'))
 
-    results.append([_('Obfs3 transport registered'),
-                    'passed' if 'obfs3' in ports else 'failed'])
+    results.append([
+        _('Obfs3 transport registered'), 'passed'
+        if 'obfs3' in ports else 'failed'
+    ])
     if 'obfs3' in ports:
-        results.append(action_utils.diagnose_port_listening(ports['obfs3'],
-                                                            'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(ports['obfs3'], 'tcp4'))
 
-    results.append([_('Obfs4 transport registered'),
-                    'passed' if 'obfs4' in ports else 'failed'])
+    results.append([
+        _('Obfs4 transport registered'), 'passed'
+        if 'obfs4' in ports else 'failed'
+    ])
     if 'obfs4' in ports:
-        results.append(action_utils.diagnose_port_listening(
-            ports['obfs4'], 'tcp4'))
+        results.append(
+            action_utils.diagnose_port_listening(ports['obfs4'], 'tcp4'))
 
     results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
     results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
@@ -203,8 +208,9 @@ def _diagnose_control_port():
         if address['address'] == '127.0.0.1':
             negate = False
 
-        results.append(action_utils.diagnose_netcat(
-            address['address'], 9051, input='QUIT\n', negate=negate))
+        results.append(
+            action_utils.diagnose_netcat(address['address'], 9051,
+                                         input='QUIT\n', negate=negate))
 
     return results
 

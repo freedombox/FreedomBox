@@ -19,24 +19,22 @@ FreedomBox app to configure Tiny Tiny RSS.
 """
 
 from django.utils.translation import ugettext_lazy as _
-from plinth.utils import format_lazy
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
 from plinth import service as service_module
+from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
-from .manifest import clients
+from plinth.utils import format_lazy
 
+from .manifest import clients
 
 version = 2
 
 managed_services = ['tt-rss']
 
-managed_packages = ['tt-rss', 'postgresql', 'dbconfig-pgsql',
-                    'php-pgsql', 'python3-psycopg2']
+managed_packages = [
+    'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql', 'python3-psycopg2'
+]
 
 name = _('Tiny Tiny RSS')
 
@@ -46,13 +44,11 @@ description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
       'close to a real desktop application as possible.'),
-
     format_lazy(
         _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
           'rss">/tt-rss</a> path on the web server. It can be accessed by '
           'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
         box_name=_(cfg.box_name)),
-
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
@@ -63,6 +59,8 @@ clients = clients
 group = ('feed-reader', _('Read and subscribe to news feeds'))
 
 service = None
+
+manual_page = 'TinyTinyRSS'
 
 
 def init():
@@ -75,10 +73,10 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -91,10 +89,10 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -107,8 +105,8 @@ def add_shortcut():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled('tt-rss') and
-            action_utils.webserver_is_enabled('tt-rss-plinth'))
+    return (action_utils.service_is_enabled('tt-rss')
+            and action_utils.webserver_is_enabled('tt-rss-plinth'))
 
 
 def enable():
@@ -127,7 +125,8 @@ def diagnose():
     """Run diagnostics and return the results."""
     results = []
 
-    results.extend(action_utils.diagnose_url_on_all(
-        'https://{host}/tt-rss', check_certificate=False))
+    results.extend(
+        action_utils.diagnose_url_on_all('https://{host}/tt-rss',
+                                         check_certificate=False))
 
     return results

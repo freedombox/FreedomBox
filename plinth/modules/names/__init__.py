@@ -18,12 +18,12 @@
 FreedomBox app to configure name services.
 """
 
-from django.utils.translation import ugettext_lazy as _
 import logging
+
+from django.utils.translation import ugettext_lazy as _
 
 from plinth.menu import main_menu
 from plinth.signals import domain_added, domain_removed
-
 
 SERVICES = (
     ('http', _('HTTP'), 80),
@@ -41,6 +41,8 @@ domain_types = {}
 domains = {}
 
 logger = logging.getLogger(__name__)
+
+manual_page = 'NameServices'
 
 
 def init():
@@ -69,8 +71,8 @@ def on_domain_added(sender, domain_type, name='', description='',
         # new domain_type
         domains[domain_type] = {}
     domains[domain_type][name] = services
-    logger.info('Added domain %s of type %s with services %s',
-                name, domain_type, str(services))
+    logger.info('Added domain %s of type %s with services %s', name,
+                domain_type, str(services))
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):

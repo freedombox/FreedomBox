@@ -21,18 +21,21 @@ FreedomBox app for name services.
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from . import SERVICES, get_domain_types, get_description
-from . import get_domain, get_services_status
 from plinth.modules import names
+
+from . import (SERVICES, get_description, get_domain, get_domain_types,
+               get_services_status)
 
 
 def index(request):
     """Serve name services page."""
     status = get_status()
 
-    return TemplateResponse(request, 'names.html',
-                            {'title': names.name,
-                             'status': status})
+    return TemplateResponse(request, 'names.html', {
+        'title': names.name,
+        'manual_page': names.manual_page,
+        'status': status
+    })
 
 
 def get_status():

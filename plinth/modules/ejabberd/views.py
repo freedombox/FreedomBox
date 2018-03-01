@@ -18,12 +18,14 @@
 Views for the Ejabberd module
 """
 
-from plinth.modules import ejabberd
-from plinth.views import ServiceView
-from .forms import EjabberdForm
-from plinth import actions
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+
+from plinth import actions
+from plinth.modules import ejabberd
+from plinth.views import ServiceView
+
+from .forms import EjabberdForm
 
 
 class EjabberdServiceView(ServiceView):
@@ -33,6 +35,7 @@ class EjabberdServiceView(ServiceView):
     description = ejabberd.description
     diagnostics_module_name = 'ejabberd'
     form_class = EjabberdForm
+    manual_page = ejabberd.manual_page
 
     def get_initial(self):
         initdict = super().get_initial()

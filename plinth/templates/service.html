@@ -22,8 +22,10 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
+
   {% block pagetitle %}
     <h2>{{ service.name }}</h2>
   {% endblock %}
@@ -33,6 +35,14 @@
       <p>{{ paragraph|safe }}</p>
     {% endfor %}
   {% endblock %}
+
+  {% if manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
   {% include "clients.html" with clients=clients %}
 

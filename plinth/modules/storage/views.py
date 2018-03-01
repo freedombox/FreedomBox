@@ -14,20 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Views for storage module.
 """
 
 import logging
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+
 from plinth.modules import storage
 from plinth.utils import format_lazy, is_user_admin
-
 
 logger = logging.getLogger(__name__)
 
@@ -41,10 +41,13 @@ def index(request):
 
     warn_about_low_disk_space(request)
 
-    return TemplateResponse(request, 'storage.html',
-                            {'title': _('Storage'),
-                             'disks': disks,
-                             'expandable_root_size': expandable_root_size})
+    return TemplateResponse(
+        request, 'storage.html', {
+            'title': _('Storage'),
+            'disks': disks,
+            'manual_page': storage.manual_page,
+            'expandable_root_size': expandable_root_size
+        })
 
 
 def expand(request):
@@ -58,9 +61,11 @@ def expand(request):
 
     expandable_root_size = storage.is_expandable(root_device)
     expandable_root_size = storage.format_bytes(expandable_root_size)
-    return TemplateResponse(request, 'storage_expand.html',
-                            {'title': _('Expand Root Partition'),
-                             'expandable_root_size': expandable_root_size})
+    return TemplateResponse(
+        request, 'storage_expand.html', {
+            'title': _('Expand Root Partition'),
+            'expandable_root_size': expandable_root_size
+        })
 
 
 def expand_partition(request, device):
@@ -68,7 +73,8 @@ def expand_partition(request, device):
     try:
         storage.expand_partition(device)
     except Exception as exception:
-        messages.error(request, _('Error expanding partition: {exception}')
+        messages.error(request,
+                       _('Error expanding partition: {exception}')
                        .format(exception=exception))
     else:
         messages.success(request, _('Partition expanded successfully.'))
@@ -88,7 +94,7 @@ def warn_about_low_disk_space(request):
     percent_used = list_root[0]['percent_used']
     size_bytes = list_root[0]['size']
     free_bytes = list_root[0]['free']
-    free_gib = free_bytes / (1024 ** 3)
+    free_gib = free_bytes / (1024**3)
 
     message = format_lazy(
         # Translators: xgettext:no-python-format
@@ -101,4 +107,3 @@ def warn_about_low_disk_space(request):
         messages.error(request, message)
     elif percent_used > 75 or free_gib < 2:
         messages.warning(request, message)
-
