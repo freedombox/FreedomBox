@@ -19,9 +19,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
 
-_package_id = 'org.ttrssreader'
-
 clients = validate([{
+    'name':
+        _('Tiny Tiny RSS (Fork)'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'org.fox.tttrss')
+    }]
+}, {
     'name':
         _('Tiny Tiny RSS'),
     'platforms': [{
@@ -32,19 +39,5 @@ clients = validate([{
     }, {
         'type': 'web',
         'url': '/tt-rss'
-    }]
-}, {
-    'name':
-        _('TT-RSS Reader'),
-    'platforms': [{
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'google-play',
-        'url': store_url('google-play', _package_id),
-    }, {
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'f-droid',
-        'url': store_url('f-droid', _package_id),
     }]
 }])
