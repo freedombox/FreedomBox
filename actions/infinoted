@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for infinoted.
 """
@@ -28,7 +27,6 @@ import shutil
 import subprocess
 
 from plinth import action_utils
-
 
 DATA_DIR = '/var/lib/infinoted'
 KEY_DIR = '/etc/infinoted'
@@ -134,10 +132,11 @@ def subcommand_setup(_):
     try:
         pwd.getpwnam('infinoted')
     except KeyError:
-        subprocess.run(['adduser', '--system', '--ingroup', 'infinoted',
-                        '--home', DATA_DIR,
-                        '--gecos', 'Infinoted collaborative editing server',
-                        'infinoted'], check=True)
+        subprocess.run([
+            'adduser', '--system', '--ingroup', 'infinoted', '--home',
+            DATA_DIR, '--gecos', 'Infinoted collaborative editing server',
+            'infinoted'
+        ], check=True)
 
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR, mode=0o750)
@@ -152,16 +151,20 @@ def subcommand_setup(_):
         try:
             # infinoted doesn't have a "create key and exit" mode. Run as
             # daemon so we can stop after.
-            subprocess.run(['infinoted', '--create-key',
-                            '--create-certificate', '--daemonize'], check=True)
+            subprocess.run([
+                'infinoted', '--create-key', '--create-certificate',
+                '--daemonize'
+            ], check=True)
             subprocess.run(['infinoted', '--kill-daemon'], check=True)
         finally:
             os.umask(old_umask)
 
-        shutil.chown(KEY_DIR + '/infinoted-cert.pem',
-                     user='infinoted', group='infinoted')
-        shutil.chown(KEY_DIR + '/infinoted-key.pem',
-                     user='infinoted', group='infinoted')
+    # Always check the ownership of certificate files, in case setup
+    # failed previously.
+    shutil.chown(KEY_DIR + '/infinoted-cert.pem', user='infinoted',
+                 group='infinoted')
+    shutil.chown(KEY_DIR + '/infinoted-key.pem', user='infinoted',
+                 group='infinoted')
 
     action_utils.service_enable('infinoted')
 
