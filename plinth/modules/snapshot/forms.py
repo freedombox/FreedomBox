@@ -29,25 +29,25 @@ class SnapshotForm(forms.Form):
             '(hourly, daily, monthly and yearly).'))
 
     hourly_limit = forms.IntegerField(
-        label=_('Hourly Snapshots Limit'), min_value=0,
-        help_text=('Snapper will only keep this number of hourly snapshots.'))
+        label=_('Hourly Snapshots Limit'), min_value=0, help_text=_(
+            'Keep a maximum of this many hourly snapshots.'))
 
     daily_limit = forms.IntegerField(
-        label=_('Daily Snapshots Limit'), min_value=0,
-        help_text=('Snapper will only keep this number of daily snapshots.'))
+        label=_('Daily Snapshots Limit'), min_value=0, help_text=_(
+            'Keep a maximum of this many daily snapshots.'))
 
     weekly_limit = forms.IntegerField(
-        label=_('Weekly Snapshots Limit'), min_value=0,
-        help_text=('Snapper will only keep this number of weekly snapshots.'))
+        label=_('Weekly Snapshots Limit'), min_value=0, help_text=_(
+            'Keep a maximum of this many weekly snapshots.'))
 
     monthly_limit = forms.IntegerField(
-        label=_('Monthly Snapshots Limit'), min_value=0,
-        help_text=('Snapper will only keep this number of monthly snapshots.'))
+        label=_('Monthly Snapshots Limit'), min_value=0, help_text=_(
+            'Keep a maximum of this many monthly snapshots.'))
 
     yearly_limit = forms.IntegerField(
-        label=_('Yearly Snapshots Limit'), min_value=0,
-        help_text=('Snapper will only keep this number of yearly snapshots. '
-                   'The default is 0 (disabled).'))
+        label=_('Yearly Snapshots Limit'), min_value=0, help_text=_(
+            'Keep a maximum of this many yearly snapshots. '
+            'The default is 0 (disabled).'))
 
     number_min_age = forms.IntegerField(
         label=_('Delete Software Snapshots older than (days)'), min_value=0,

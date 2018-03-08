@@ -23,16 +23,21 @@ import json
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.urls import reverse, reverse_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
 from plinth.utils import yes_or_no
 
+from django.utils.translation import ugettext as _, ugettext_lazy
 from . import get_configuration
 from .forms import SnapshotForm
+
+subsubmenu = [{'url': reverse_lazy('snapshot:index'),
+               'text': ugettext_lazy('Configure')},
+              {'url': reverse_lazy('snapshot:manage'),
+               'text': ugettext_lazy('Manage Snapshots')}]
 
 
 def index(request):
@@ -40,9 +45,6 @@ def index(request):
     status = get_configuration()
     if request.method == 'POST':
         form = SnapshotForm(request.POST)
-        if 'create' in request.POST:
-            actions.superuser_run('snapshot', ['create'])
-            messages.success(request, _('Created snapshot.'))
         if 'update' in request.POST and form.is_valid():
             update_configuration(request, status, form.cleaned_data)
             status = get_configuration()
@@ -50,18 +52,32 @@ def index(request):
     else:
         form = SnapshotForm(initial=status)
 
+    return TemplateResponse(
+        request, 'snapshot.html', {
+            'title': snapshot_module.name,
+            'description': snapshot_module.description,
+            'subsubmenu': subsubmenu,
+            'form': form
+        })
+
+
+def manage(request):
+    """Show snapshot list."""
+    if request.method == 'POST':
+        if 'create' in request.POST:
+            actions.superuser_run('snapshot', ['create'])
+            messages.success(request, _('Created snapshot.'))
+
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
     has_deletable_snapshots = any(
         [snapshot for snapshot in snapshots[1:] if not snapshot['is_default']])
 
     return TemplateResponse(
-        request, 'snapshot.html', {
-            'title': snapshot_module.name,
-            'description': snapshot_module.description,
+        request, 'snapshot_manage.html', {
             'snapshots': snapshots,
             'has_deletable_snapshots': has_deletable_snapshots,
-            'form': form
+            'subsubmenu': subsubmenu,
         })
 
 
@@ -108,7 +124,7 @@ def delete(request, number):
         messages.success(
             request,
             _('Deleted snapshot #{number}.').format(number=number))
-        return redirect(reverse('snapshot:index'))
+        return redirect(reverse('snapshot:manage'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
@@ -125,7 +141,7 @@ def delete_all(request):
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['delete-all'])
         messages.success(request, _('Deleted all snapshots.'))
-        return redirect(reverse('snapshot:index'))
+        return redirect(reverse('snapshot:manage'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
