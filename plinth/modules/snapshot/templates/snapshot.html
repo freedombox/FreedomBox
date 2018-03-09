@@ -22,13 +22,13 @@
 {% load i18n %}
 
 {% block configuration %}
-  <p>
-   <form class="form-horizontal" method="post">
-      {% csrf_token %}
-      <h3>{% trans "Configuration" %}</h3>
+
+  <form class="form-horizontal" method="post">
+    {% csrf_token %}
+    <h3>{% trans "Configuration" %}</h3>
     {{ form|bootstrap_horizontal:'col-sm-4' }}
-      <input type="submit" class="btn btn-primary" name="update"
-             value="{% trans "Update setup" %}"/>
+    <input type="submit" class="btn btn-primary" name="update"
+           value="{% trans "Update setup" %}"/>
   </form>
 
 {% endblock %}

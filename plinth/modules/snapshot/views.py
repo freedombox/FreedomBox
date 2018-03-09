@@ -19,25 +19,29 @@ Views for snapshot module.
 """
 
 import json
+import subprocess
 
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
-from plinth.utils import yes_or_no
 
-from django.utils.translation import ugettext as _, ugettext_lazy
 from . import get_configuration
 from .forms import SnapshotForm
 
-subsubmenu = [{'url': reverse_lazy('snapshot:index'),
-               'text': ugettext_lazy('Configure')},
-              {'url': reverse_lazy('snapshot:manage'),
-               'text': ugettext_lazy('Manage Snapshots')}]
+subsubmenu = [{
+    'url': reverse_lazy('snapshot:index'),
+    'text': ugettext_lazy('Configure')
+}, {
+    'url': reverse_lazy('snapshot:manage'),
+    'text': ugettext_lazy('Manage Snapshots')
+}]
 
 
 def index(request):
@@ -84,31 +88,31 @@ def manage(request):
 def update_configuration(request, old_status, new_status):
     """Update configuration of snapshots."""
 
-    def update_key_configuration(key, stamp, threshold):
+    def make_config(args):
+        key, stamp = args[0], args[1]
         if old_status[key] != new_status[key]:
-            actions.superuser_run(
-                'snapshot', ['configure', stamp.format(threshold)])
+            return stamp.format(new_status[key])
+        else:
+            return None
+
+    new_status['number_min_age'] = int(new_status['number_min_age']) * 86400
+
+    config = filter(None,
+                    map(make_config, [
+                        ('enable_timeline_snapshots', 'TIMELINE_CREATE={}'),
+                        ('hourly_limit', 'TIMELINE_LIMIT_HOURLY={}'),
+                        ('daily_limit', 'TIMELINE_LIMIT_DAILY={}'),
+                        ('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}'),
+                        ('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}'),
+                        ('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}'),
+                        ('number_min_age', 'NUMBER_MIN_AGE={}'),
+                    ]))
+
+    command = ['snapper', 'set-config'] + list(config)
 
     try:
-        update_key_configuration(
-            'enable_timeline_snapshots', 'TIMELINE_CREATE={}',
-            yes_or_no(new_status['enable_timeline_snapshots']))
-        update_key_configuration('hourly_limit', 'TIMELINE_LIMIT_HOURLY={}',
-                                 new_status['hourly_limit'])
-        update_key_configuration('daily_limit', 'TIMELINE_LIMIT_DAILY={}',
-                                 new_status['daily_limit'])
-        update_key_configuration('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}',
-                                 new_status['weekly_limit'])
-        update_key_configuration('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}',
-                                 new_status['monthly_limit'])
-        update_key_configuration('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}',
-                                 new_status['yearly_limit'])
-        update_key_configuration('number_min_age', 'NUMBER_MIN_AGE={}',
-                                 int(new_status['number_min_age']) * 86400)
+        subprocess.run(command, check=True)
 
-        actions.superuser_run('snapshot', ['configure', 'NUMBER_LIMIT=0'])
-        actions.superuser_run('snapshot',
-                              ['configure', 'NUMBER_LIMIT_IMPORTANT=4-10'])
         messages.success(request, _('Storage snapshots configuration updated'))
     except ActionError as exception:
         messages.error(request,

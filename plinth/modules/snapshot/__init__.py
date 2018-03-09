@@ -25,7 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 2
+version = 3
 
 managed_packages = ['snapper']
 
@@ -61,12 +61,23 @@ def setup(helper, old_version=None):
 def get_configuration():
     output = actions.superuser_run('snapshot', ['get-config'])
     output = json.loads(output)
+
+    def get_boolean_choice(status):
+        return ('yes', 'Enabled') if status else ('no', 'Disabled')
+
     return {
-        'enable_timeline_snapshots': output['TIMELINE_CREATE'] == 'yes',
-        'hourly_limit': output['TIMELINE_LIMIT_HOURLY'],
-        'daily_limit': output['TIMELINE_LIMIT_DAILY'],
-        'weekly_limit': output['TIMELINE_LIMIT_WEEKLY'],
-        'yearly_limit': output['TIMELINE_LIMIT_YEARLY'],
-        'monthly_limit': output['TIMELINE_LIMIT_MONTHLY'],
-        'number_min_age': round(int(output['NUMBER_MIN_AGE']) / 86400),
+        'enable_timeline_snapshots':
+            get_boolean_choice(output['TIMELINE_CREATE'] == 'yes'),
+        'hourly_limit':
+            output['TIMELINE_LIMIT_HOURLY'],
+        'daily_limit':
+            output['TIMELINE_LIMIT_DAILY'],
+        'weekly_limit':
+            output['TIMELINE_LIMIT_WEEKLY'],
+        'yearly_limit':
+            output['TIMELINE_LIMIT_YEARLY'],
+        'monthly_limit':
+            output['TIMELINE_LIMIT_MONTHLY'],
+        'number_min_age':
+            round(int(output['NUMBER_MIN_AGE']) / 86400),
     }

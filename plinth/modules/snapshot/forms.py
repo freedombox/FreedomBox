@@ -23,26 +23,27 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SnapshotForm(forms.Form):
-    enable_timeline_snapshots = forms.BooleanField(
-        label=_('Enable Timeline Snapshots'), required=False, help_text=_(
-            'Uncheck this to disable timeline snapshots '
-            '(hourly, daily, monthly and yearly).'))
+    enable_timeline_snapshots = forms.ChoiceField(
+        label=_('Timeline Snapshots'),
+        help_text=_('Enable or disable timeline snapshots '
+                    '(hourly, daily, monthly and yearly).'),
+        choices=[('yes', 'Enabled'), ('no', 'Disabled')])
 
     hourly_limit = forms.IntegerField(
-        label=_('Hourly Snapshots Limit'), min_value=0, help_text=_(
-            'Keep a maximum of this many hourly snapshots.'))
+        label=_('Hourly Snapshots Limit'), min_value=0,
+        help_text=_('Keep a maximum of this many hourly snapshots.'))
 
     daily_limit = forms.IntegerField(
-        label=_('Daily Snapshots Limit'), min_value=0, help_text=_(
-            'Keep a maximum of this many daily snapshots.'))
+        label=_('Daily Snapshots Limit'), min_value=0,
+        help_text=_('Keep a maximum of this many daily snapshots.'))
 
     weekly_limit = forms.IntegerField(
-        label=_('Weekly Snapshots Limit'), min_value=0, help_text=_(
-            'Keep a maximum of this many weekly snapshots.'))
+        label=_('Weekly Snapshots Limit'), min_value=0,
+        help_text=_('Keep a maximum of this many weekly snapshots.'))
 
     monthly_limit = forms.IntegerField(
-        label=_('Monthly Snapshots Limit'), min_value=0, help_text=_(
-            'Keep a maximum of this many monthly snapshots.'))
+        label=_('Monthly Snapshots Limit'), min_value=0,
+        help_text=_('Keep a maximum of this many monthly snapshots.'))
 
     yearly_limit = forms.IntegerField(
         label=_('Yearly Snapshots Limit'), min_value=0, help_text=_(
