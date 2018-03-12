@@ -24,6 +24,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
+from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import ugettext_lazy as _
 import logging
 
@@ -38,7 +39,7 @@ from . import views
 logger = logging.getLogger(__name__)
 
 
-class SetupMiddleware(object):
+class SetupMiddleware(MiddlewareMixin):
     """Django middleware to show pre-setup message and setup progress."""
 
     @staticmethod
@@ -92,7 +93,7 @@ class SetupMiddleware(object):
         return view(request, setup_helper=module.setup_helper)
 
 
-class AdminRequiredMiddleware(object):
+class AdminRequiredMiddleware(MiddlewareMixin):
     """Django middleware for authenticating requests for admin areas."""
 
     @staticmethod
@@ -106,7 +107,7 @@ class AdminRequiredMiddleware(object):
             raise PermissionDenied
 
 
-class FirstSetupMiddleware(object):
+class FirstSetupMiddleware(MiddlewareMixin):
     """Django middleware to block all interactions before first setup."""
 
     @staticmethod

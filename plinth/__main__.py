@@ -277,7 +277,7 @@ def configure_django():
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='index',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
-        MIDDLEWARE_CLASSES=(
+        MIDDLEWARE=(
             'django.middleware.security.SecurityMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.locale.LocaleMiddleware',

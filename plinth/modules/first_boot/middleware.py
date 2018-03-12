@@ -20,17 +20,19 @@ Django middleware to redirect to firstboot wizard if it has not be run
 yet.
 """
 
+import logging
+
+from django.conf import settings
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
-from django.conf import settings
-import logging
+from django.utils.deprecation import MiddlewareMixin
 
 from plinth.modules import first_boot
 
 LOGGER = logging.getLogger(__name__)
 
 
-class FirstBootMiddleware(object):
+class FirstBootMiddleware(MiddlewareMixin):
     """Forward to firstboot page if firstboot isn't finished yet."""
 
     @staticmethod

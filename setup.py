@@ -212,7 +212,7 @@ setuptools.setup(
         'django >= 1.11.0',
         'django-bootstrap-form',
         'django-simple-captcha',
-        'django-stronghold',
+        'django-stronghold >= 0.3.0',
         'psutil',
         'python-apt',
         'python-augeas',
