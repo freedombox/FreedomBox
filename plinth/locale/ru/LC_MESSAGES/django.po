@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-26 17:58+0100\n"
+"POT-Creation-Date: 2018-03-12 18:02-0400\n"
 "PO-Revision-Date: 2018-03-05 17:40+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/freedombox/plinth/ru/>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
+"plinth/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.20-dev\n"
 
 #: plinth/action_utils.py:258
@@ -82,16 +82,16 @@ msgstr "Язык, используемый для представления д�
 msgid "Use the language preference set in the browser"
 msgstr "Использовать языковые настройки браузера"
 
-#: plinth/middleware.py:71
+#: plinth/middleware.py:72
 msgid "Application installed."
 msgstr "Приложение установлено."
 
-#: plinth/middleware.py:77
+#: plinth/middleware.py:78
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Ошибка при установке пакетов: {string}{details}"
 
-#: plinth/middleware.py:81
+#: plinth/middleware.py:82
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Ошибка при установке приложения: {error}"
@@ -209,7 +209,7 @@ msgstr "В настоящее время доступен только огра�
 
 #: plinth/modules/config/__init__.py:53
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:36
+#: plinth/modules/ikiwiki/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Настроить"
@@ -264,6 +264,7 @@ msgstr ""
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
+#: plinth/modules/sharing/templates/sharing_add_edit.html:34
 msgid "Submit"
 msgstr "Отправить"
 
@@ -1254,8 +1255,8 @@ msgid ""
 msgstr ""
 "Последняя строка %(num_lines)s это журнал состояния для этого веб-"
 "интерфейса. Если вы хотите отправить отчет об ошибке, пожалуйста, "
-"используйте <a href=\"https://salsa.debian.org/freedombox-team/plinth/"
-"issues\"> bug tracker</a> и прикрепите этот журнал состояния к этом отчету."
+"используйте <a href=\"https://salsa.debian.org/freedombox-team/plinth/issues"
+"\"> bug tracker</a> и прикрепите этот журнал состояния к этом отчету."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1315,6 +1316,7 @@ msgstr "Тип"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Имя"
 
@@ -1578,7 +1580,7 @@ msgstr "Получить повторно"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:61
+#: plinth/modules/snapshot/templates/snapshot_manage.html:57
 msgid "Delete"
 msgstr "Удалить"
 
@@ -1913,8 +1915,8 @@ msgstr ""
 "администратора. Вы можете установить новый пароль в разделе \"Настройки\" и "
 "войдите в систему, используя \"Учетная запись администратора\". Затем вы "
 "можете создать несколько учетных записей пользователей от самой mediawiki, "
-"перейдя  в раздел <a href=\"/mediawiki/index.php/Special:CreateAccount\""
-">Special:CreateAccount</a>."
+"перейдя  в раздел <a href=\"/mediawiki/index.php/Special:CreateAccount"
+"\">Special:CreateAccount</a>."
 
 #: plinth/modules/mediawiki/__init__.py:48
 msgid ""
@@ -2666,9 +2668,9 @@ msgid "Interface"
 msgstr "Интерфейс"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot.html:59
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
+#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
 msgid "Description"
 msgstr "Описание"
@@ -3886,6 +3888,110 @@ msgstr ""
 msgid "Encryption method. Must match setting on server."
 msgstr "Метод шифрования. Должен соответствовать параметру на сервере."
 
+#: plinth/modules/sharing/__init__.py:31
+#, fuzzy
+#| msgid "File Sharing"
+msgid "Sharing"
+msgstr "Обмен Файлами"
+
+#: plinth/modules/sharing/__init__.py:35
+#, python-brace-format
+msgid ""
+"Sharing allows you to share files and folders on your {box_name} over the "
+"web with chosen groups of users."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:33
+msgid "Name of the share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:35
+msgid ""
+"A lowercase alpha-numeric string that uniquely identifies a share. Example: "
+"<em>media</em>."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:39
+msgid "Path to share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:40
+msgid "Disk path to a folder on this server that you intend to share."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:44
+msgid "User groups who can read the files in the share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:46
+msgid ""
+"Users who have these permissions will also be able to read the files in the "
+"share."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:62
+#, fuzzy
+#| msgid "This service already exists"
+msgid "A share with this name already exists."
+msgstr "Эта служба уже существует"
+
+#: plinth/modules/sharing/templates/sharing.html:43
+#: plinth/modules/sharing/templates/sharing.html:46
+#, fuzzy
+#| msgid "Add Service"
+msgid "Add share"
+msgstr "Добавление службы"
+
+#: plinth/modules/sharing/templates/sharing.html:51
+msgid "No shares currently configured."
+msgstr ""
+
+#: plinth/modules/sharing/templates/sharing.html:57
+msgid "Disk Path"
+msgstr ""
+
+#: plinth/modules/sharing/templates/sharing.html:58
+#, fuzzy
+#| msgid "Shared"
+msgid "Shared Over"
+msgstr "Общее"
+
+#: plinth/modules/sharing/templates/sharing.html:59
+#, fuzzy
+#| msgid "Groups"
+msgid "With Groups"
+msgstr "Группы"
+
+#: plinth/modules/sharing/views.py:54
+#, fuzzy
+#| msgid "Shared"
+msgid "Share added."
+msgstr "Общее"
+
+#: plinth/modules/sharing/views.py:59
+#, fuzzy
+#| msgid "Add Service"
+msgid "Add Share"
+msgstr "Добавление службы"
+
+#: plinth/modules/sharing/views.py:75
+#, fuzzy
+#| msgid "Shared"
+msgid "Share edited."
+msgstr "Общее"
+
+#: plinth/modules/sharing/views.py:80
+#, fuzzy
+#| msgid "Edit User"
+msgid "Edit Share"
+msgstr "Редактирование пользователя"
+
+#: plinth/modules/sharing/views.py:108
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Share deleted."
+msgstr "{name} удален."
+
 #: plinth/modules/snapshot/__init__.py:32
 msgid "Storage Snapshots"
 msgstr "Хранилище снимков"
@@ -3915,42 +4021,68 @@ msgstr ""
 "не являются заменой для резервных копий."
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable Timeline Snapshots"
+#, fuzzy
+#| msgid "Enable Timeline Snapshots"
+msgid "Timeline Snapshots"
 msgstr "Включить снапшоты по графику"
 
 #: plinth/modules/snapshot/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Uncheck this to disable timeline snapshots (hourly, daily, monthly and "
+#| "yearly)."
 msgid ""
-"Uncheck this to disable timeline snapshots (hourly, daily, monthly and "
-"yearly)."
+"Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
 "Снимите этот флажок, чтобы отключить снапшоты по графику (ежечасно, "
 "ежедневно, ежемесячно и ежегодно)."
 
-#: plinth/modules/snapshot/forms.py:32
+#: plinth/modules/snapshot/forms.py:33
 msgid "Hourly Snapshots Limit"
 msgstr "Часовой лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:36
+#: plinth/modules/snapshot/forms.py:34
+msgid "Keep a maximum of this many hourly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:37
 msgid "Daily Snapshots Limit"
 msgstr "Дневной лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:40
+#: plinth/modules/snapshot/forms.py:38
+msgid "Keep a maximum of this many daily snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:41
 msgid "Weekly Snapshots Limit"
 msgstr "Недельный лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:44
+#: plinth/modules/snapshot/forms.py:42
+msgid "Keep a maximum of this many weekly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:45
 msgid "Monthly Snapshots Limit"
 msgstr "Месячный лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:48
+#: plinth/modules/snapshot/forms.py:46
+msgid "Keep a maximum of this many monthly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:49
 msgid "Yearly Snapshots Limit"
 msgstr "Готовой лимит снапшотов"
 
-#: plinth/modules/snapshot/forms.py:53
+#: plinth/modules/snapshot/forms.py:50
+msgid ""
+"Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:54
 msgid "Delete Software Snapshots older than (days)"
 msgstr "Удалить снимки программного обеспечения старше, чем (дней)"
 
-#: plinth/modules/snapshot/forms.py:55
+#: plinth/modules/snapshot/forms.py:56
 msgid ""
 "Software snapshots older than this will be deleted. This does not limit the "
 "number of software snapshots created."
@@ -3958,53 +4090,23 @@ msgstr ""
 "Снимки программного обеспечения старше будут удаляться. Это не ограничивает "
 "количество создаваемых снимков программного обеспечения."
 
-#: plinth/modules/snapshot/templates/snapshot.html:36
-msgid "Create Snapshot"
-msgstr "Создать снимок"
+#: plinth/modules/snapshot/templates/snapshot_delete.html:27
+msgid "Delete this snapshot permanently?"
+msgstr "Окончательно удалить этот снимок?"
 
-#: plinth/modules/snapshot/templates/snapshot.html:40
-msgid "Delete all the snapshots"
-msgstr "Удалить все снапшоты"
-
-#: plinth/modules/snapshot/templates/snapshot.html:47
-msgid "Delete All"
-msgstr "Удалить все"
-
-#: plinth/modules/snapshot/templates/snapshot.html:57
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
+#: plinth/modules/snapshot/templates/snapshot_manage.html:53
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr "Номер"
 
-#: plinth/modules/snapshot/templates/snapshot.html:58
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
+#: plinth/modules/snapshot/templates/snapshot_manage.html:54
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr "Дата"
-
-#: plinth/modules/snapshot/templates/snapshot.html:60
-msgid "Rollback"
-msgstr "Откат"
-
-#: plinth/modules/snapshot/templates/snapshot.html:71
-msgid "active"
-msgstr "активен"
-
-#: plinth/modules/snapshot/templates/snapshot.html:80
-#, python-format
-msgid "Rollback to snapshot #%(number)s"
-msgstr "Откат к снимку #%(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot.html:91
-#, python-format
-msgid "Delete snapshot #%(number)s"
-msgstr "Удалить снимок #%(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot_delete.html:27
-msgid "Delete this snapshot permanently?"
-msgstr "Окончательно удалить этот снимок?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:53
 #, python-format
@@ -4016,9 +4118,39 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Окончательно удалить этот снапшот?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
-#: plinth/modules/snapshot/views.py:134
+#: plinth/modules/snapshot/views.py:154
 msgid "Delete Snapshots"
 msgstr "Удалить снапшот"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+msgid "Create Snapshot"
+msgstr "Создать снимок"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:35
+msgid "Delete all the snapshots"
+msgstr "Удалить все снапшоты"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:42
+msgid "Delete All"
+msgstr "Удалить все"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
+msgid "Rollback"
+msgstr "Откат"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:67
+msgid "active"
+msgstr "активен"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:76
+#, python-format
+msgid "Rollback to snapshot #%(number)s"
+msgstr "Откат к снимку #%(number)s"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:87
+#, python-format
+msgid "Delete snapshot #%(number)s"
+msgstr "Удалить снимок #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4038,42 +4170,48 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Откат к снимку %(number)s"
 
-#: plinth/modules/snapshot/views.py:45
+#: plinth/modules/snapshot/views.py:43
+#, fuzzy
+#| msgid "Storage Snapshots"
+msgid "Manage Snapshots"
+msgstr "Хранилище снимков"
+
+#: plinth/modules/snapshot/views.py:73
 msgid "Created snapshot."
 msgstr "Создан снимок."
 
-#: plinth/modules/snapshot/views.py:96
+#: plinth/modules/snapshot/views.py:116
 msgid "Storage snapshots configuration updated"
 msgstr "Настройки хранения снапшотов обновлены"
 
-#: plinth/modules/snapshot/views.py:99 plinth/modules/tor/views.py:67
+#: plinth/modules/snapshot/views.py:119 plinth/modules/tor/views.py:67
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Ошибка действий: {0}[{1}][{2}]"
 
-#: plinth/modules/snapshot/views.py:110
+#: plinth/modules/snapshot/views.py:130
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr "Удаленный снимок {number}."
 
-#: plinth/modules/snapshot/views.py:118
+#: plinth/modules/snapshot/views.py:138
 msgid "Delete Snapshot"
 msgstr "Удалить снимок"
 
-#: plinth/modules/snapshot/views.py:127
+#: plinth/modules/snapshot/views.py:147
 msgid "Deleted all snapshots."
 msgstr "Удалить все снапшоты."
 
-#: plinth/modules/snapshot/views.py:145
+#: plinth/modules/snapshot/views.py:165
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Откат к снимку #{number}."
 
-#: plinth/modules/snapshot/views.py:148
+#: plinth/modules/snapshot/views.py:168
 msgid "The system must be restarted to complete the rollback."
 msgstr "Необходимо перезагрузить систему для завершения отката."
 
-#: plinth/modules/snapshot/views.py:160
+#: plinth/modules/snapshot/views.py:180
 msgid "Rollback to Snapshot"
 msgstr "Откат к снимку"
 
@@ -4567,7 +4705,7 @@ msgstr ""
 "убедитесь, что новый каталог существует и доступен для записи пользователем "
 "\"debian-transmission\" ."
 
-#: plinth/modules/ttrss/__init__.py:41 plinth/modules/ttrss/manifest.py:26
+#: plinth/modules/ttrss/__init__.py:41 plinth/modules/ttrss/manifest.py:33
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -4608,9 +4746,11 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Чтение и подписка на ленты новостей"
 
-#: plinth/modules/ttrss/manifest.py:38
-msgid "TT-RSS Reader"
-msgstr "ТТ-RSS-ридер"
+#: plinth/modules/ttrss/manifest.py:24
+#, fuzzy
+#| msgid "Tiny Tiny RSS"
+msgid "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS"
 
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Software Upgrades"
@@ -4795,7 +4935,7 @@ msgstr "Изменение пароля для <em>%(username)s</em>"
 msgid "Save Password"
 msgstr "Сохранить пароль"
 
-#: plinth/modules/users/templates/users_create.html:40
+#: plinth/modules/users/templates/users_create.html:32
 #: plinth/modules/users/views.py:39 plinth/modules/users/views.py:60
 msgid "Create User"
 msgstr "Создать пользователя"
@@ -4843,7 +4983,7 @@ msgstr "Удалить пользователя %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:41
+#: plinth/modules/users/templates/users_update.html:33
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -4852,7 +4992,7 @@ msgstr ""
 "Используйте <a href='%(change_password_url)s'>форму смены пароля</a> для "
 "смены пароля."
 
-#: plinth/modules/users/templates/users_update.html:53
+#: plinth/modules/users/templates/users_update.html:45
 #: plinth/templates/language-selection.html:33
 msgid "Save Changes"
 msgstr "Сохранить изменения"
@@ -4955,8 +5095,8 @@ msgid ""
 "freedombox-team/plinth/issues\">issue tracker</a>."
 msgstr ""
 "Если вы считаете, что страница должна существовать, пожалуйста, сообщите об "
-"ошибке в службу проекта  FreedomBox (Plinth)<a href=\""
-"https://salsa.debian.org/freedombox-team/plinth/issues\">issue tracker</a>."
+"ошибке в службу проекта  FreedomBox (Plinth)<a href=\"https://salsa.debian."
+"org/freedombox-team/plinth/issues\">issue tracker</a>."
 
 #: plinth/templates/500.html:25
 msgid "500"
@@ -4971,8 +5111,8 @@ msgid ""
 "href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
 "Это внутренняя ошибка, не Вы были её причиной и вряд ли можете её устранить. "
-"Пожалуйста, сообщите об ошибке на <a href=\"https://salsa.debian.org"
-"/freedombox-team/plinth/issues\">bug tracker</a> и мы исправим это. Так же, "
+"Пожалуйста, сообщите об ошибке на <a href=\"https://salsa.debian.org/"
+"freedombox-team/plinth/issues\">bug tracker</a> и мы исправим это. Так же, "
 "пожалуйста, прикрепите <a href=\"%(status_log_url)s\">Лог состояния</a> к "
 "отчету об ошибке."
 
@@ -5256,6 +5396,9 @@ msgstr ""
 "Параметры влияют на %(box_name)s на основном уровне, так что будьте "
 "осторожны!"
 
+#~ msgid "TT-RSS Reader"
+#~ msgstr "ТТ-RSS-ридер"
+
 #~ msgid "Error setting language: {exception}"
 #~ msgstr "Ошибка настройки языка: {exception}"
 
@@ -5303,9 +5446,6 @@ msgstr ""
 
 #~ msgid "wiki"
 #~ msgstr "Wiki"
-
-#~ msgid "Groups"
-#~ msgstr "Группы"
 
 #~ msgid "Username to login to the web interface."
 #~ msgstr "Имя пользователя для входа на веб-интерфейс."

@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-26 17:58+0100\n"
+"POT-Creation-Date: 2018-03-12 18:02-0400\n"
 "PO-Revision-Date: 2018-02-27 05:37+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/freedombox/plinth/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
+"cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,16 +81,16 @@ msgstr "Jazyk které používat pro toto webové rozhraní"
 msgid "Use the language preference set in the browser"
 msgstr "Použít upřednostňovaný jazyk nastavený ve webovém prohlížeči"
 
-#: plinth/middleware.py:71
+#: plinth/middleware.py:72
 msgid "Application installed."
 msgstr "Aplikace nainstalována."
 
-#: plinth/middleware.py:77
+#: plinth/middleware.py:78
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Chyba při instalaci aplikace: {string} {details}"
 
-#: plinth/middleware.py:81
+#: plinth/middleware.py:82
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Chyba při instalaci aplikace: {error}"
@@ -207,7 +207,7 @@ msgstr "Zatím je k dispozici pouze omezená funkčnost."
 
 #: plinth/modules/config/__init__.py:53
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:36
+#: plinth/modules/ikiwiki/views.py:36 plinth/modules/snapshot/views.py:40
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Nastavit"
@@ -263,6 +263,7 @@ msgstr ""
 
 #: plinth/modules/config/templates/config.html:32
 #: plinth/modules/security/templates/security.html:32
+#: plinth/modules/sharing/templates/sharing_add_edit.html:34
 msgid "Submit"
 msgstr "Potvrdit"
 
@@ -1323,6 +1324,7 @@ msgstr "Typ"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Název"
 
@@ -1587,7 +1589,7 @@ msgstr "Získat znovu"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot.html:61
+#: plinth/modules/snapshot/templates/snapshot_manage.html:57
 msgid "Delete"
 msgstr "Smazat"
 
@@ -2674,9 +2676,9 @@ msgid "Interface"
 msgstr "Rozhraní"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot.html:59
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
+#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
 msgid "Description"
 msgstr "Popis"
@@ -3894,6 +3896,110 @@ msgid "Encryption method. Must match setting on server."
 msgstr ""
 "Metoda šifrování. Je třeba, aby byla stejná, jaká je nastavená na serveru."
 
+#: plinth/modules/sharing/__init__.py:31
+#, fuzzy
+#| msgid "File Sharing"
+msgid "Sharing"
+msgstr "Sdílení souborů"
+
+#: plinth/modules/sharing/__init__.py:35
+#, python-brace-format
+msgid ""
+"Sharing allows you to share files and folders on your {box_name} over the "
+"web with chosen groups of users."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:33
+msgid "Name of the share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:35
+msgid ""
+"A lowercase alpha-numeric string that uniquely identifies a share. Example: "
+"<em>media</em>."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:39
+msgid "Path to share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:40
+msgid "Disk path to a folder on this server that you intend to share."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:44
+msgid "User groups who can read the files in the share"
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:46
+msgid ""
+"Users who have these permissions will also be able to read the files in the "
+"share."
+msgstr ""
+
+#: plinth/modules/sharing/forms.py:62
+#, fuzzy
+#| msgid "This service already exists"
+msgid "A share with this name already exists."
+msgstr "Tato služba už existuje"
+
+#: plinth/modules/sharing/templates/sharing.html:43
+#: plinth/modules/sharing/templates/sharing.html:46
+#, fuzzy
+#| msgid "Add Service"
+msgid "Add share"
+msgstr "Přidat službu"
+
+#: plinth/modules/sharing/templates/sharing.html:51
+msgid "No shares currently configured."
+msgstr ""
+
+#: plinth/modules/sharing/templates/sharing.html:57
+msgid "Disk Path"
+msgstr ""
+
+#: plinth/modules/sharing/templates/sharing.html:58
+#, fuzzy
+#| msgid "Shared"
+msgid "Shared Over"
+msgstr "Sdílené"
+
+#: plinth/modules/sharing/templates/sharing.html:59
+#, fuzzy
+#| msgid "Groups"
+msgid "With Groups"
+msgstr "Skupiny"
+
+#: plinth/modules/sharing/views.py:54
+#, fuzzy
+#| msgid "Shared"
+msgid "Share added."
+msgstr "Sdílené"
+
+#: plinth/modules/sharing/views.py:59
+#, fuzzy
+#| msgid "Add Service"
+msgid "Add Share"
+msgstr "Přidat službu"
+
+#: plinth/modules/sharing/views.py:75
+#, fuzzy
+#| msgid "Shared"
+msgid "Share edited."
+msgstr "Sdílené"
+
+#: plinth/modules/sharing/views.py:80
+#, fuzzy
+#| msgid "Edit User"
+msgid "Edit Share"
+msgstr "Upravit uživatele"
+
+#: plinth/modules/sharing/views.py:108
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Share deleted."
+msgstr "{name} smazáno."
+
 #: plinth/modules/snapshot/__init__.py:32
 msgid "Storage Snapshots"
 msgstr "Zachycené stavy datového úložiště"
@@ -3923,42 +4029,68 @@ msgstr ""
 "Zachycené stavy nejsou náhradou záloh!"
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable Timeline Snapshots"
+#, fuzzy
+#| msgid "Enable Timeline Snapshots"
+msgid "Timeline Snapshots"
 msgstr "Zapnout zachycené stavy časové osy"
 
 #: plinth/modules/snapshot/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Uncheck this to disable timeline snapshots (hourly, daily, monthly and "
+#| "yearly)."
 msgid ""
-"Uncheck this to disable timeline snapshots (hourly, daily, monthly and "
-"yearly)."
+"Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
 "Zrušením zaškrtnutí tohoto vypnete pořizování zachycených stavů časové osy "
 "(denně, týdně, měsíčně a ročně)."
 
-#: plinth/modules/snapshot/forms.py:32
+#: plinth/modules/snapshot/forms.py:33
 msgid "Hourly Snapshots Limit"
 msgstr "Limit hodinových zachycených stavů"
 
-#: plinth/modules/snapshot/forms.py:36
+#: plinth/modules/snapshot/forms.py:34
+msgid "Keep a maximum of this many hourly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:37
 msgid "Daily Snapshots Limit"
 msgstr "Limit denních zachycených stavů"
 
-#: plinth/modules/snapshot/forms.py:40
+#: plinth/modules/snapshot/forms.py:38
+msgid "Keep a maximum of this many daily snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:41
 msgid "Weekly Snapshots Limit"
 msgstr "Limit týdenních zachycených stavů"
 
-#: plinth/modules/snapshot/forms.py:44
+#: plinth/modules/snapshot/forms.py:42
+msgid "Keep a maximum of this many weekly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:45
 msgid "Monthly Snapshots Limit"
 msgstr "Limit měsíčních zachycených stavů"
 
-#: plinth/modules/snapshot/forms.py:48
+#: plinth/modules/snapshot/forms.py:46
+msgid "Keep a maximum of this many monthly snapshots."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:49
 msgid "Yearly Snapshots Limit"
 msgstr "Limit ročních zachycených stavů"
 
-#: plinth/modules/snapshot/forms.py:53
+#: plinth/modules/snapshot/forms.py:50
+msgid ""
+"Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:54
 msgid "Delete Software Snapshots older than (days)"
 msgstr "Smazat zachycené stavy software starší než (dnů)"
 
-#: plinth/modules/snapshot/forms.py:55
+#: plinth/modules/snapshot/forms.py:56
 msgid ""
 "Software snapshots older than this will be deleted. This does not limit the "
 "number of software snapshots created."
@@ -3966,53 +4098,23 @@ msgstr ""
 "Zachycené stavy software starší než tato doba budou smazány. Toto neomezuje "
 "počet vytvořených zachycených stavu software."
 
-#: plinth/modules/snapshot/templates/snapshot.html:36
-msgid "Create Snapshot"
-msgstr "Pořídit zachycený stav"
+#: plinth/modules/snapshot/templates/snapshot_delete.html:27
+msgid "Delete this snapshot permanently?"
+msgstr "Nevratně smazat tento zachycený stav?"
 
-#: plinth/modules/snapshot/templates/snapshot.html:40
-msgid "Delete all the snapshots"
-msgstr "Smazat všechny zachycené stavy"
-
-#: plinth/modules/snapshot/templates/snapshot.html:47
-msgid "Delete All"
-msgstr "Smazat vše"
-
-#: plinth/modules/snapshot/templates/snapshot.html:57
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
+#: plinth/modules/snapshot/templates/snapshot_manage.html:53
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr "Počet"
 
-#: plinth/modules/snapshot/templates/snapshot.html:58
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
+#: plinth/modules/snapshot/templates/snapshot_manage.html:54
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr "Datum"
-
-#: plinth/modules/snapshot/templates/snapshot.html:60
-msgid "Rollback"
-msgstr "Obnovit ze zálohy"
-
-#: plinth/modules/snapshot/templates/snapshot.html:71
-msgid "active"
-msgstr "aktivní"
-
-#: plinth/modules/snapshot/templates/snapshot.html:80
-#, python-format
-msgid "Rollback to snapshot #%(number)s"
-msgstr "Vrátit k zachycenému stavu č. %(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot.html:91
-#, python-format
-msgid "Delete snapshot #%(number)s"
-msgstr "Smazat zachycený stav č. %(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot_delete.html:27
-msgid "Delete this snapshot permanently?"
-msgstr "Nevratně smazat tento zachycený stav?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:53
 #, python-format
@@ -4024,9 +4126,39 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Nevratně smazat tyto zachycené stavy?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
-#: plinth/modules/snapshot/views.py:134
+#: plinth/modules/snapshot/views.py:154
 msgid "Delete Snapshots"
 msgstr "Smazat zachycené stavy"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+msgid "Create Snapshot"
+msgstr "Pořídit zachycený stav"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:35
+msgid "Delete all the snapshots"
+msgstr "Smazat všechny zachycené stavy"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:42
+msgid "Delete All"
+msgstr "Smazat vše"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
+msgid "Rollback"
+msgstr "Obnovit ze zálohy"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:67
+msgid "active"
+msgstr "aktivní"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:76
+#, python-format
+msgid "Rollback to snapshot #%(number)s"
+msgstr "Vrátit k zachycenému stavu č. %(number)s"
+
+#: plinth/modules/snapshot/templates/snapshot_manage.html:87
+#, python-format
+msgid "Delete snapshot #%(number)s"
+msgstr "Smazat zachycený stav č. %(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4046,42 +4178,48 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Vrátit k zachycenému stavu č. %(number)s"
 
-#: plinth/modules/snapshot/views.py:45
+#: plinth/modules/snapshot/views.py:43
+#, fuzzy
+#| msgid "Storage Snapshots"
+msgid "Manage Snapshots"
+msgstr "Zachycené stavy datového úložiště"
+
+#: plinth/modules/snapshot/views.py:73
 msgid "Created snapshot."
 msgstr "Zachycený stav pořízen."
 
-#: plinth/modules/snapshot/views.py:96
+#: plinth/modules/snapshot/views.py:116
 msgid "Storage snapshots configuration updated"
 msgstr "Nastavení zachycování stavů úložiště aktualizováno"
 
-#: plinth/modules/snapshot/views.py:99 plinth/modules/tor/views.py:67
+#: plinth/modules/snapshot/views.py:119 plinth/modules/tor/views.py:67
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Chyba akce: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:110
+#: plinth/modules/snapshot/views.py:130
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr "Zachycený stav #{number} smazán."
 
-#: plinth/modules/snapshot/views.py:118
+#: plinth/modules/snapshot/views.py:138
 msgid "Delete Snapshot"
 msgstr "Smazat zachycený stav"
 
-#: plinth/modules/snapshot/views.py:127
+#: plinth/modules/snapshot/views.py:147
 msgid "Deleted all snapshots."
 msgstr "Všechny zachycené stavy smazány."
 
-#: plinth/modules/snapshot/views.py:145
+#: plinth/modules/snapshot/views.py:165
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Vráceno zpět do podoby zachyceného stavu č. {number}."
 
-#: plinth/modules/snapshot/views.py:148
+#: plinth/modules/snapshot/views.py:168
 msgid "The system must be restarted to complete the rollback."
 msgstr "Pro dokončení obnovy ze zálohy je třeba systém restartovat."
 
-#: plinth/modules/snapshot/views.py:160
+#: plinth/modules/snapshot/views.py:180
 msgid "Rollback to Snapshot"
 msgstr "Vrátit do podoby zachyceného stavu"
 
@@ -4569,7 +4707,7 @@ msgstr ""
 "zajistěte aby existovala a uživatel „debian-transmission“ do ní mohl "
 "zapisovat."
 
-#: plinth/modules/ttrss/__init__.py:41 plinth/modules/ttrss/manifest.py:26
+#: plinth/modules/ttrss/__init__.py:41 plinth/modules/ttrss/manifest.py:33
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
@@ -4609,9 +4747,11 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
-#: plinth/modules/ttrss/manifest.py:38
-msgid "TT-RSS Reader"
-msgstr "TT-RSS Reader"
+#: plinth/modules/ttrss/manifest.py:24
+#, fuzzy
+#| msgid "Tiny Tiny RSS"
+msgid "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS"
 
 #: plinth/modules/upgrades/__init__.py:34
 msgid "Software Upgrades"
@@ -4796,7 +4936,7 @@ msgstr "Změna hesla pro <em>%(username)s</em>"
 msgid "Save Password"
 msgstr "Uložit heslo"
 
-#: plinth/modules/users/templates/users_create.html:40
+#: plinth/modules/users/templates/users_create.html:32
 #: plinth/modules/users/views.py:39 plinth/modules/users/views.py:60
 msgid "Create User"
 msgstr "Vytvořit uživatele"
@@ -4844,7 +4984,7 @@ msgstr "Smazat uživatele %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Upravit uživatele %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:41
+#: plinth/modules/users/templates/users_update.html:33
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -4853,7 +4993,7 @@ msgstr ""
 "Heslo změníte pomocí <a href='%(change_password_url)s'>formuláře pro změnu "
 "hesla</a>."
 
-#: plinth/modules/users/templates/users_update.html:53
+#: plinth/modules/users/templates/users_update.html:45
 #: plinth/templates/language-selection.html:33
 msgid "Save Changes"
 msgstr "Uložit změny"
@@ -4955,8 +5095,8 @@ msgid ""
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
 "freedombox-team/plinth/issues\">issue tracker</a>."
 msgstr ""
-"Pokud se domníváte, že by chybějící stránka měla existovat, nahlaste to do <"
-"a href=\"https://salsa.debian.org/freedombox-team/plinth/issues\">systému "
+"Pokud se domníváte, že by chybějící stránka měla existovat, nahlaste to do "
+"<a href=\"https://salsa.debian.org/freedombox-team/plinth/issues\">systému "
 "hlášení chyb</a> projektu FreedomBox Service (Plinth)."
 
 #: plinth/templates/500.html:25
@@ -5256,6 +5396,9 @@ msgstr ""
 "Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
 "buďte opatrní!"
 
+#~ msgid "TT-RSS Reader"
+#~ msgstr "TT-RSS Reader"
+
 #~ msgid "Error setting language: {exception}"
 #~ msgstr "Chyba při nastavování jazyka: {exception}"
 
@@ -5308,9 +5451,6 @@ msgstr ""
 
 #~ msgid "wiki"
 #~ msgstr "wiki"
-
-#~ msgid "Groups"
-#~ msgstr "Skupiny"
 
 #~ msgid "Username to login to the web interface."
 #~ msgstr "Uživatelské jméno pro přihlášení k webovému rozhraní."
