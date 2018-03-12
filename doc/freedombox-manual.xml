@@ -927,7 +927,7 @@ file = /etc/radicale/rights</screen>
         </section>
         <section>
           <title>Sharing download links privately</title>
-          <para>It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with <ulink url="https://wiki.debian.org/FreedomBox/Manual/Matrix#">Matrix Synapse</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/XMPP#">XMPP</ulink> (ejabberd server on FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using <ulink url="https://securityinabox.org/en/guide/thunderbird/linux/">Thunderbird</ulink>.  </para>
+          <para>It is recommended to share your file download links and download passwords over encrypted channels. You can simply avoid all the above problems with instant messenger previews by using instant messengers that support encrypted conversations like Riot with <ulink url="https://wiki.debian.org/FreedomBox/Manual/MatrixSynapse#">Matrix Synapse</ulink> or <ulink url="https://wiki.debian.org/FreedomBox/Manual/ejabberd#">XMPP</ulink> (ejabberd server on FreedomBox) with clients that support end-to-end encryption. Send the download link and the download password in two separate messages (helps if your messenger supports perfect forward secrecy like XMPP with OTR). You can also share your links over PGP-encrypted email using <ulink url="https://securityinabox.org/en/guide/thunderbird/linux/">Thunderbird</ulink>.  </para>
         </section>
       </section>
     </section>
@@ -937,14 +937,14 @@ file = /etc/radicale/rights</screen>
       <para><emphasis role="strong">Note:</emphasis> Syncthing is available in FreedomBox starting with Plinth version 0.14. </para>
       <para>Users should keep in mind that Syncthing is a peer-to-peer synchronization solution, not a client-server one. This means that the FreedomBox isn't really the server and your other devices clients. They're all devices from Syncthing's perspective. You can use Syncthing to synchronize your files between any of your devices. The advantage that FreedomBox provides is that it is a server that's always running. Suppose you want your photos on your phone to be synchronized to your laptop, if you simply sync the photos to the FreedomBox, the laptop can get them from the FreedomBox whenever it comes online the next time. You don't have to be worried about your other devices being online for synchronization. If your FreedomBox is one of the devices set up with your Syncthing shared folder, you can rest assured that your other devices will eventually get the latest files once they come online. </para>
       <para>After installation follow the instructions in the <ulink url="https://docs.syncthing.net/intro/getting-started.html">getting started of the Syncthing project</ulink>.  Syncthing allows individual folders to be selectively shared with other devices. Devices must be paired up before sharing by scanning QR codes or entering the device ids manually. Syncthing has a discovery service for easily identifying the other devices on the same network having Syncthing installed. </para>
-      <para>In order to access to the web client of the Syncthing instance running on your FreedomBox, use the path */syncthing*. This web client is currently only accessible to the users of the FreedomBox that have administrator privileges, though it might be accessible to all FreedomBox users in a future release. </para>
+      <para>In order to access to the web client of the Syncthing instance running on your FreedomBox, use the path <emphasis>/syncthing</emphasis>. This web client is currently only accessible to the users of the FreedomBox that have administrator privileges, though it might be accessible to all FreedomBox users in a future release. </para>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="images/Syncthing_GUI.png"/>
+            <imagedata fileref="images/Syncthing_GUI.png" width="400pt"/>
           </imageobject>
           <textobject>
-            <phrase>Syncthing_GUI.png</phrase>
+            <phrase>Syncthing web interface</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -975,10 +975,10 @@ file = /etc/radicale/rights</screen>
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="images/Quassel_Installation.png"/>
+                      <imagedata fileref="images/Quassel_Installation.png" width="400pt"/>
                     </imageobject>
                     <textobject>
-                      <phrase>Quassel_Installation.png</phrase>
+                      <phrase>Quassel Installation</phrase>
                     </textobject>
                   </inlinemediaobject>
                 </para>
@@ -1073,7 +1073,7 @@ file = /etc/radicale/rights</screen>
         <para>
           <inlinemediaobject>
             <imageobject>
-              <imagedata fileref="images/ttrss.png" width="500pt"/>
+              <imagedata fileref="images/ttrss.png" width="400pt"/>
             </imageobject>
             <textobject>
               <phrase>Tiny Tiny RSS</phrase>
@@ -1086,7 +1086,7 @@ file = /etc/radicale/rights</screen>
           <para>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/Select-RSS-feed.png"/>
+                <imagedata fileref="images/Select-RSS-feed.png" width="400pt"/>
               </imageobject>
               <textobject>
                 <phrase>Selecting feeds</phrase>
@@ -1108,7 +1108,7 @@ file = /etc/radicale/rights</screen>
           <para>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/Subscribe-dialog.png"/>
+                <imagedata fileref="images/Subscribe-dialog.png" width="400pt"/>
               </imageobject>
               <textobject>
                 <phrase>Subscription dialog box</phrase>
@@ -1133,7 +1133,7 @@ file = /etc/radicale/rights</screen>
           <para>
             <inlinemediaobject>
               <imageobject>
-                <imagedata fileref="images/Unsubscribe.png"/>
+                <imagedata fileref="images/Unsubscribe.png" width="400pt"/>
               </imageobject>
               <textobject>
                 <phrase>Unsubscribe from a feed</phrase>
@@ -1411,10 +1411,10 @@ proto udp</screen>
             <para>
               <inlinemediaobject>
                 <imageobject>
-                  <imagedata fileref="images/Privoxy-Installation.png"/>
+                  <imagedata fileref="images/Privoxy-Installation.png" width="400pt"/>
                 </imageobject>
                 <textobject>
-                  <phrase>Privoxy-Installation.png</phrase>
+                  <phrase>Privoxy Installation</phrase>
                 </textobject>
               </inlinemediaobject>
             </para>
@@ -1424,10 +1424,10 @@ proto udp</screen>
             <para>
               <inlinemediaobject>
                 <imageobject>
-                  <imagedata fileref="images/Privoxy-BrowserSettings.png"/>
+                  <imagedata fileref="images/Privoxy-BrowserSettings.png" width="400pt"/>
                 </imageobject>
                 <textobject>
-                  <phrase>Privoxy-BrowserSettings.png</phrase>
+                  <phrase>Privoxy Browser Settings</phrase>
                 </textobject>
               </inlinemediaobject>
             </para>
@@ -1477,6 +1477,23 @@ proto udp</screen>
         <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
       </section>
       <section>
+        <title>Screenshot</title>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/searx-screenshot.png" width="400pt"/>
+            </imageobject>
+            <textobject>
+              <phrase>Searx Screenshot</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
+      </section>
+      <section>
+        <title>Screencast</title>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/Searx?action=AttachFile&amp;do=get&amp;target=Searx.webm">Searx installation and first steps</ulink> (14 MB) </para>
+      </section>
+      <section>
         <title>Why use Searx?</title>
         <section>
           <title>Personalization and Filter Bubbles</title>
@@ -1496,9 +1513,17 @@ proto udp</screen>
       </section>
       <section>
         <title>Searx on FreedomBox</title>
-        <para>Searx on FreedomBox uses Single Sign On. This means that you should be logged in into your FreedomBox in the browser that you're using Searx.  </para>
-        <para>Searx can be added as a search engine to the Firefox browser's search bar. See <ulink url="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">Firefox Help</ulink> on this topic. Once Searx is added, you can also set it as your default search engine. </para>
-        <para>Searx also offers search results in csv, json and rss formats, which can be used with scripts to automate some tasks. </para>
+        <itemizedlist>
+          <listitem>
+            <para>Searx on FreedomBox uses Single Sign On. This means that you should be logged in into your FreedomBox in the browser that you're using Searx.  </para>
+          </listitem>
+          <listitem>
+            <para>Searx can be added as a search engine to the Firefox browser's search bar. See <ulink url="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">Firefox Help</ulink> on this topic. Once Searx is added, you can also set it as your default search engine. </para>
+          </listitem>
+          <listitem>
+            <para>Searx also offers search results in csv, json and rss formats, which can be used with scripts to automate some tasks. </para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
     <section>
@@ -1692,26 +1717,6 @@ proto udp</screen>
       <para>Just click <emphasis>Run Diagnostics</emphasis>. This may take some minutes. </para>
     </section>
     <section>
-      <title>Disks</title>
-      <para><emphasis>Disks</emphasis> shows free space of mounted partitions. </para>
-      <para>If there is some free space left after the root partition, the option to expand the root partition is also available. </para>
-      <itemizedlist>
-        <listitem>
-          <para>Note: The expand partition feature is <emphasis role="strong">not</emphasis> working in Plinth v0.13.1. A fix is planned for v0.14.0. </para>
-        </listitem>
-      </itemizedlist>
-      <para>
-        <inlinemediaobject>
-          <imageobject>
-            <imagedata fileref="images/Disks.png"/>
-          </imageobject>
-          <textobject>
-            <phrase>Disks.png</phrase>
-          </textobject>
-        </inlinemediaobject>
-      </para>
-    </section>
-    <section>
       <title>Dynamic DNS Client</title>
       <section>
         <title>What is Dynamic DNS?</title>
@@ -1739,10 +1744,10 @@ proto udp</screen>
             <para>
               <inlinemediaobject>
                 <imageobject>
-                  <imagedata fileref="images/DynamicDNS-Settings.png"/>
+                  <imagedata fileref="images/DynamicDNS-Settings.png" width="400pt"/>
                 </imageobject>
                 <textobject>
-                  <phrase>DynamicDNS-Settings.png</phrase>
+                  <phrase>Dynamic DNS Settings</phrase>
                 </textobject>
               </inlinemediaobject>
             </para>
@@ -1851,10 +1856,10 @@ proto udp</screen>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="images/Firewall.png"/>
+            <imagedata fileref="images/Firewall.png" width="400pt"/>
           </imageobject>
           <textobject>
-            <phrase>Firewall.png</phrase>
+            <phrase>Firewall</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -3745,7 +3750,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
             <para>Make the domain name known: </para>
             <itemizedlist>
               <listitem>
-                <para>In <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure#">Configure</ulink> insert your <emphasis>domain name</emphasis>, e.g. <emphasis><code>MyWebName.com</code></emphasis> <inlinemediaobject><imageobject><imagedata fileref="images/LetsEncrypt-Configure.png"/></imageobject><textobject><phrase>LetsEncrypt-Configure.png</phrase></textobject></inlinemediaobject> </para>
+                <para>In <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure#">Configure</ulink> insert your <emphasis>domain name</emphasis>, e.g. <emphasis><code>MyWebName.com</code></emphasis> <inlinemediaobject><imageobject><imagedata fileref="images/LetsEncrypt-Configure.png" width="400pt"/></imageobject><textobject><phrase>Let's Encrypt</phrase></textobject></inlinemediaobject> </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -3753,7 +3758,17 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
             <para>Verify the domain name was accepted </para>
             <itemizedlist>
               <listitem>
-                <para>Check that it is enabled in <ulink url="https://wiki.debian.org/FreedomBox/Manual/NameServices#">Name Services</ulink> <inlinemediaobject><imageobject><imagedata fileref="images/LetsEncrypt-NameServices.png"/></imageobject><textobject><phrase>LetsEncrypt-NameServices.png</phrase></textobject></inlinemediaobject> </para>
+                <para>Check that it is enabled in <ulink url="https://wiki.debian.org/FreedomBox/Manual/NameServices#">Name Services</ulink> </para>
+                <para>
+                  <inlinemediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/LetsEncrypt-NameServices.png" width="400pt"/>
+                    </imageobject>
+                    <textobject>
+                      <phrase>Let's Encrypt Name Services</phrase>
+                    </textobject>
+                  </inlinemediaobject>
+                </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -3765,10 +3780,10 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="images/LetsEncrypt.png"/>
+                      <imagedata fileref="images/LetsEncrypt.png" width="400pt"/>
                     </imageobject>
                     <textobject>
-                      <phrase>LetsEncrypt.png</phrase>
+                      <phrase>Let's Encrypt</phrase>
                     </textobject>
                   </inlinemediaobject>
                 </para>
@@ -3782,10 +3797,10 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
                 <para>
                   <inlinemediaobject>
                     <imageobject>
-                      <imagedata fileref="images/LetsEncrypt-Certificate.png"/>
+                      <imagedata fileref="images/LetsEncrypt-Certificate.png" width="400pt"/>
                     </imageobject>
                     <textobject>
-                      <phrase>LetsEncrypt-Certificate.png</phrase>
+                      <phrase>Let's Encrypt Certificate</phrase>
                     </textobject>
                   </inlinemediaobject>
                 </para>
@@ -3793,7 +3808,7 @@ firewall-cmd --permanent --zone=internal --add-interface=eth0</screen>
             </itemizedlist>
           </listitem>
         </orderedlist>
-        <para>Screencast: <ulink url="https://wiki.debian.org/FreedomBox/Manual/LetsEncrypt?action=AttachFile&amp;do=get&amp;target=Let%27s+Encrypt.webm">Let's Encrypt.webm</ulink> </para>
+        <para><emphasis role="strong">Screencast</emphasis>: <ulink url="https://wiki.debian.org/FreedomBox/Manual/LetsEncrypt?action=AttachFile&amp;do=get&amp;target=Let%27s+Encrypt.webm">Let's Encrypt</ulink></para>
       </section>
       <section>
         <title>Using</title>
@@ -4336,10 +4351,25 @@ nmcli con modify "&lt;connection_name&gt;" connection.zone internal</screen>
       <para>
         <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="images/snapshots.png"/>
+            <imagedata fileref="images/snapshots.png" width="400pt"/>
           </imageobject>
           <textobject>
-            <phrase>snapshots.png</phrase>
+            <phrase>Snapshots</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+    </section>
+    <section>
+      <title>Storage</title>
+      <para><emphasis>Storage</emphasis> shows free space of mounted partitions. </para>
+      <para>If there is some free space left after the root partition, the option to expand the root partition is also available. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/Disks.png"/>
+          </imageobject>
+          <textobject>
+            <phrase>Disks.png</phrase>
           </textobject>
         </inlinemediaobject>
       </para>
@@ -6013,7 +6043,7 @@ Password:
       <para><ulink url="https://wiki.debian.org/VirtualBox#">VirtualBox</ulink> itself is available from <ulink url="https://www.virtualbox.org/"/> (or your distribution's package manager). </para>
       <section>
         <title>Download</title>
-        <para>Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> page to download and verify a VirtualBox image. As pr. 2016-03-26 the latest images are <ulink url="http://ftp.skolelinux.org/pub/freedombox/0.7/freedombox-unstable-free_2015-12-13_all-amd64.vdi.xz">v0.7-amd64</ulink> and <ulink url="http://ftp.skolelinux.org/pub/freedombox/0.7/freedombox-unstable-free_2015-12-13_all-i386.vdi.xz">v0.7-i386</ulink>. </para>
+        <para>Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Download#">download</ulink> page to download and verify a VirtualBox image. The latest images are available on <ulink url="https://freedombox.org/download/">freedombox.org</ulink>. </para>
       </section>
       <section>
         <title>Creating a Virtual Machine</title>
@@ -6943,6 +6973,23 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw<
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version.  </para>
+      <section>
+        <title>Version 0.25.0 (2018-03-12)</title>
+        <itemizedlist>
+          <listitem>
+            <para>sharing: Add app for sharing disk folders. </para>
+          </listitem>
+          <listitem>
+            <para>ttrss: Update list of client apps. </para>
+          </listitem>
+          <listitem>
+            <para>infinoted: Allow setup to recover after timeout issue. </para>
+          </listitem>
+          <listitem>
+            <para>snapshots: Add configuration tab with settings for time-based snapshots. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Plinth v0.24.0 (2018-02-26)</title>
         <itemizedlist>
