@@ -17,6 +17,7 @@
 
 from time import sleep
 
+import splinter
 from support import config, interface
 from support.service import eventually
 
@@ -128,3 +129,77 @@ def modify_upload_password(browser, password):
     browser.find_by_value('Update setup').click()
     # Wait for the service to restart after updating password
     eventually(browser.is_text_present, args=['Upload password updated'])
+
+
+def remove_share(browser, name):
+    """Remove a share in sharing app."""
+    try:
+        share_row = get_share(browser, name)
+    except splinter.exceptions.ElementDoesNotExist:
+        pass
+    else:
+        share_row.find_by_css('.share-remove')[0].click()
+
+
+def add_share(browser, name, path, group):
+    """Add a share in sharing app."""
+    browser.visit('{}/plinth/apps/sharing/add/'.format(default_url))
+    browser.fill('sharing-name', name)
+    browser.fill('sharing-path', path)
+    browser.find_by_css(
+        '#id_sharing-groups input[value="{}"]'.format(group)).check()
+    browser.find_by_css('input[type="submit"]').click()
+    eventually(browser.is_text_present, args=['Share added.'])
+
+
+def edit_share(browser, old_name, new_name, path, group):
+    """Edit a share in sharing app."""
+    row = get_share(browser, old_name)
+    row.find_by_css('.share-edit')[0].click()
+    eventually(browser.is_text_present, args=['Edit Share'])
+    browser.fill('sharing-name', new_name)
+    browser.fill('sharing-path', path)
+    browser.find_by_css('#id_sharing-groups input').uncheck()
+    browser.find_by_css('#id_sharing-groups input[value="{}"]'.format(group)).check()
+    browser.find_by_css('input[type="submit"]').click()
+    eventually(browser.is_text_present, args=['Share edited.'])
+
+
+def get_share(browser, name):
+    """Return the row for a given share."""
+    browser.visit('{}/plinth/apps/sharing/'.format(default_url))
+    return browser.find_by_id('share-{}'.format(name))[0]
+
+
+def verify_share(browser, name, path, group):
+    """Verfiy that a share exists in list of shares."""
+    href = '{}/share/{}'.format(default_url, name)
+    url = '/share/{}'.format(name)
+    row = get_share(browser, name)
+    assert row.find_by_css('.share-name')[0].text == name
+    assert row.find_by_css('.share-path')[0].text == path
+    assert row.find_by_css('.share-url a')[0]['href'] == href
+    assert row.find_by_css('.share-url a')[0].text == url
+    assert row.find_by_css('.share-groups')[0].text == group
+
+
+def access_share(browser, name):
+    """Visit a share and see if it is accessible."""
+    row = get_share(browser, name)
+    url = row.find_by_css('.share-url a')[0]['href']
+    browser.visit(url)
+    browser.is_text_present('Index of /share/{}'.format(name))
+
+
+def verify_nonexistant_share(browser, name):
+    """Verify that given URL for a given share name is a 404."""
+    url = '{}/share/{}'.format(default_url, name)
+    browser.visit(url)
+    browser.is_text_present('Not Found')
+
+
+def verify_inaccessible_share(browser, name):
+    """Verify that given URL for a given share name denies permission."""
+    url = '{}/share/{}'.format(default_url, name)
+    browser.visit(url)
+    eventually(lambda: '/plinth' in browser.url, args=[])

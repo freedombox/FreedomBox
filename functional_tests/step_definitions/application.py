@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import pytest
+import splinter
 from pytest_bdd import given, parsers, then, when
 
 from support import application
@@ -111,3 +113,54 @@ def assert_max_file_size(browser, size):
 @when(parsers.parse('I modify the coquelicot upload password to {password:w}'))
 def modify_upload_password(browser, password):
     application.modify_upload_password(browser, password)
+
+
+@given(parsers.parse('share {name:w} is not available'))
+def remove_share(browser, name):
+    application.remove_share(browser, name)
+
+
+@when(parsers.parse('I add a share {name:w} from path {path} for {group:w}'))
+def add_share(browser, name, path, group):
+    application.add_share(browser, name, path, group)
+
+
+@when(
+    parsers.parse(
+        'I edit share {old_name:w} to {new_name:w} from path {path} for {group:w}'
+    ))
+def edit_share(browser, old_name, new_name, path, group):
+    application.edit_share(browser, old_name, new_name, path, group)
+
+
+@when(parsers.parse('I remove share {name:w}'))
+def remove_share2(browser, name):
+    application.remove_share(browser, name)
+
+
+@then(
+    parsers.parse(
+        'the share {name:w} should be listed from path {path} for {group:w}'))
+def verify_share(browser, name, path, group):
+    application.verify_share(browser, name, path, group)
+
+
+@then(parsers.parse('the share {name:w} should not be listed'))
+def verify_invalid_share(browser, name):
+    with pytest.raises(splinter.exceptions.ElementDoesNotExist):
+        application.get_share(browser, name)
+
+
+@then(parsers.parse('the share {name:w} should be accessible'))
+def access_share(browser, name):
+    application.access_share(browser, name)
+
+
+@then(parsers.parse('the share {name:w} should not exist'))
+def verify_nonexistant_share(browser, name):
+    application.verify_nonexistant_share(browser, name)
+
+
+@then(parsers.parse('the share {name:w} should not be accessible'))
+def verify_inaccessible_share(browser, name):
+    application.verify_inaccessible_share(browser, name)
