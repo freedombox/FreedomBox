@@ -20,6 +20,17 @@
 
 {% load i18n %}
 
+{% block page_head %}
+  <style type="text/css">
+    .share-operations form {
+      display: inline-block;
+    }
+    .share-operations {
+      text-align: right;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 
   <h2>{{ title }}</h2>
@@ -29,10 +40,10 @@
   {% endfor %}
 
   <p>
-    <a title="{% trans 'Add new share' %}"
+    <a title="{% trans 'Add share' %}"
        role="button" class="btn btn-primary"
        href="{% url 'sharing:add' %}">
-      {% trans 'Add new share' %}
+      {% trans 'Add share' %}
     </a>
   </p>
 
@@ -42,10 +53,10 @@
     <table class="table table-bordered table-condensed table-striped" id="shares-list">
       <thead>
         <tr>
-          <th>{% trans "Share Name" %}</th>
+          <th>{% trans "Name" %}</th>
           <th>{% trans "Disk Path" %}</th>
           <th>{% trans "Shared Over" %}</th>
-          <th>{% trans "To Groups" %}</th>
+          <th>{% trans "With Groups" %}</th>
           <th></th>
         </tr>
       </thead>
@@ -63,16 +74,16 @@
             </td>
             <td class="share-groups">{{ share.groups|join:", " }}</td>
             <td class="share-operations">
-              <form class="form form-inline" method="post"
-                    action="{% url 'sharing:remove' share.name %}">
-                {% csrf_token %}
-                <button class="share-remove btn btn-sm btn-default glyphicon glyphicon-trash pull-right"
-                        type="submit"></button>
-              </form>
-              <a class="share-edit btn btn-sm btn-default pull-right"
+              <a class="share-edit btn btn-sm btn-default"
                  href="{% url 'sharing:edit' share.name %}">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
               </a>
+              <form class="form form-inline" method="post"
+                    action="{% url 'sharing:remove' share.name %}">
+                {% csrf_token %}
+                <button class="share-remove btn btn-sm btn-default glyphicon glyphicon-trash"
+                        type="submit"></button>
+              </form>
             </td>
           </tr>
         {% endfor %}
