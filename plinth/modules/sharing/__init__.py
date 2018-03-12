@@ -22,16 +22,19 @@ import json
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
+from plinth import actions, cfg
 from plinth.menu import main_menu
+from plinth.utils import format_lazy
 
 version = 1
 
 name = _('Sharing')
 
 description = [
-    _('Sharing allows you to share your content over web with chosen groups'
-      'of users. Add the content you would like to share in the sharing app.'),
+    format_lazy(
+        _('Sharing allows you to share files and folders on your {box_name} '
+          'over the web with chosen groups of users.'), box_name=_(
+              cfg.box_name))
 ]
 
 
