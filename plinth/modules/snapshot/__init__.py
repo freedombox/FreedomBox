@@ -18,6 +18,7 @@
 FreedomBox app to manage filesystem snapshots.
 """
 
+import augeas
 import json
 
 from django.utils.translation import ugettext_lazy as _
@@ -25,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 3
+version = 4
 
 managed_packages = ['snapper']
 
@@ -52,6 +53,8 @@ service = None
 
 manual_page = 'Snapshots'
 
+DEFAULT_FILE = '/etc/default/snapper'
+
 
 def init():
     """Initialize the module."""
@@ -65,7 +68,26 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
 
 
+def load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+
+    # shell-script config file lens
+    aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
+    aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
+    aug.load()
+    return aug
+
+
+def is_apt_snapshots_enabled(aug):
+    """Return whether APT snapshots is enabled."""
+    value = aug.get('/files' + DEFAULT_FILE + '/DISABLE_APT_SNAPSHOT')
+    return value != 'yes'
+
+
 def get_configuration():
+    aug = load_augeas()
     output = actions.superuser_run('snapshot', ['get-config'])
     output = json.loads(output)
 
@@ -75,6 +97,8 @@ def get_configuration():
     return {
         'enable_timeline_snapshots':
             get_boolean_choice(output['TIMELINE_CREATE'] == 'yes'),
+        'enable_software_snapshots':
+            get_boolean_choice(is_apt_snapshots_enabled(aug)),
         'hourly_limit':
             output['TIMELINE_LIMIT_HOURLY'],
         'daily_limit':

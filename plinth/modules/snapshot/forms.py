@@ -29,6 +29,11 @@ class SnapshotForm(forms.Form):
                     '(hourly, daily, monthly and yearly).'),
         choices=[('yes', 'Enabled'), ('no', 'Disabled')])
 
+    enable_software_snapshots = forms.ChoiceField(
+        label=_('Software Snapshots'),
+        help_text=_('Enable or disable software snapshots '),
+        choices=[('yes', 'Enabled'), ('no', 'Disabled')])
+
     hourly_limit = forms.IntegerField(
         label=_('Hourly Snapshots Limit'), min_value=0,
         help_text=_('Keep a maximum of this many hourly snapshots.'))

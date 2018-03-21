@@ -108,6 +108,12 @@ def update_configuration(request, old_status, new_status):
                         ('number_min_age', 'NUMBER_MIN_AGE={}'),
                     ]))
 
+    if old_status['enable_software_snapshots'] != new_status['enable_software_snapshots']:
+        if new_status['enable_software_snapshots'] == 'yes':
+            actions.superuser_run('snapshot', ['disable-apt-snapshot', 'no'])
+        else:
+            actions.superuser_run('snapshot', ['disable-apt-snapshot', 'yes'])
+
     try:
         actions.superuser_run('snapshot', ['set-config', " ".join(config)])
 
