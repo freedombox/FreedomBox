@@ -273,6 +273,7 @@ def configure_django():
         DEBUG=cfg.debug,
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
+        IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR',),
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='index',
