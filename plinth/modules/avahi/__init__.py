@@ -64,7 +64,7 @@ def init():
                                      is_external=False)
 
 
-def setup(helper, old_version=False):
+def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     # Reload avahi-daemon now that first-run does not reboot. After performing

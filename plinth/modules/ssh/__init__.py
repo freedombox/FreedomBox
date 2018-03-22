@@ -55,7 +55,7 @@ def init():
         managed_services[0], name, ports=['ssh'], is_external=True)
 
 
-def setup(helper, old_version=False):
+def setup(helper, old_version=None):
     """Configure the module."""
     actions.superuser_run('ssh', ['setup'])
 
