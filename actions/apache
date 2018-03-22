@@ -16,12 +16,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Apache web server.
 """
 
 import argparse
+import glob
+import re
 import subprocess
 
 from plinth import action_utils
@@ -38,6 +39,51 @@ def parse_arguments():
 
     subparsers.required = True
     return parser.parse_args()
+
+
+def _get_sort_key_of_version(version):
+    """Return the sort key for a given version string.
+
+    Simple implementation hoping that PHP Apache module version numbers will be
+    simple.
+
+    """
+    parts = []
+    for part in version.split('.'):
+        try:
+            parts.append(int(part))
+        except ValueError:
+            parts.append(part)
+
+    return parts
+
+
+def _sort_versions(versions):
+    """Return a list of sorted version strings."""
+    return sorted(versions, key=_get_sort_key_of_version, reverse=True)
+
+
+def _enable_latest_php(webserver):
+    """Disable all older PHP versions and enable the latest one.
+
+    Idempotent and harmless if all or no PHP modules are identified.
+    Problematic if only some modules are found.
+
+    """
+    paths = glob.glob('/etc/apache2/mods-available/php*.conf')
+    versions = []
+    for path in paths:
+        match = re.search(r'\/php(.*)\.conf$', path)
+        if match:
+            versions.append(match[1])
+
+    versions = _sort_versions(versions)
+
+    for version in versions[1:]:
+        webserver.disable('php' + version, kind='module')
+
+    if versions:
+        webserver.enable('php' + versions[0], kind='module')
 
 
 def subcommand_setup(arguments):
@@ -78,11 +124,12 @@ def subcommand_setup(arguments):
         webserver.enable('cgi', kind='module')
         webserver.enable('authnz_ldap', kind='module')
 
-        # Don't explicitly enable module php7.0. Rely on the package
+        # Workaround for bug https://bugs.debian.org/893481 . Ideally, don't
+        # explicitly enable module php and rely on the package
         # libapache2-mod-php installing the current version of the package and
-        # enabling. This ensures that when PHP version changes, the code is not
-        # broken.
-        # webserver.enable('php7.0', kind='module')
+        # enabling it. This ensures that when PHP version changes, the code is
+        # not broken.
+        _enable_latest_php(webserver)
 
         # enable users to share files uploaded to ~/public_html
         webserver.enable('userdir', kind='module')
