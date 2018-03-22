@@ -52,7 +52,17 @@ def parse_arguments():
 
 
 def subcommand_setup(arguments):
-    """Setup Open SSH server."""
+    """Setup Open SSH server.
+
+    Regenerates deleted SSH keys. This is necessary when FreedomBox image is
+    being used. During the image building process the SSH keys are removed and
+    start OpenSSH server fails without the keys.
+
+    If the keys already exist, do nothing. This is necessary when a user
+    installs FreedomBox using an apt package. SSH keys exist and running
+    reconfigure on the openssh-server package does not regenerate them.
+
+    """
     action_utils.dpkg_reconfigure('openssh-server', {})
 
 
