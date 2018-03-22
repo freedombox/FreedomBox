@@ -20,7 +20,7 @@ FreedomBox app for Apache server.
 
 from plinth import actions
 
-version = 1
+version = 2
 
 is_essential = True
 
