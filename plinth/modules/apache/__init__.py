@@ -30,4 +30,5 @@ managed_packages = ['apache2', 'libapache2-mod-gnutls', 'libapache2-mod-php']
 def setup(helper, old_version=None):
     """Configure the module."""
     helper.install(managed_packages)
-    actions.superuser_run('apache', ['setup'])
+    actions.superuser_run('apache',
+                          ['setup', '--old-version', str(old_version)])

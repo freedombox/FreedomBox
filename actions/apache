@@ -31,18 +31,26 @@ def parse_arguments():
     """Return parsed command line arguments as dictionary"""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    subparsers.add_parser('setup', help='Setup for Apache')
+    subparser = subparsers.add_parser('setup', help='Setup for Apache')
+    subparser.add_argument(
+        '--old-version', type=int, required=True,
+        help='Earlier version of the app that is already setup.')
 
     subparsers.required = True
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Setup Apache configuration."""
     # Regenerate the snakeoil self-signed SSL certificate. This is so that
-    # FreedomBox images don't all have the same certificate.
-    subprocess.run(['make-ssl-cert', 'generate-default-snakeoil',
-                    '--force-overwrite'], check=True)
+    # FreedomBox images don't all have the same certificate. When FreedomBox
+    # package is installed via apt, don't regenerate. When upgrading to newer
+    # version of Apache FreedomBox app and setting up for the first time don't
+    # regenerate.
+    if action_utils.is_disk_image() and arguments.old_version == 0:
+        subprocess.run([
+            'make-ssl-cert', 'generate-default-snakeoil', '--force-overwrite'
+        ], check=True)
 
     with action_utils.WebserverChange() as webserver:
         # set the prefork worker model

@@ -478,3 +478,13 @@ Owners: {package}
         os.remove(override_file.name)
     except OSError:
         pass
+
+
+def is_disk_image():
+    """Return whether the current machine is from a disk image.
+
+    Two primary ways to install FreedomBox are:
+    - Using FreedomBox image for various hardware platforms.
+    - Installing packages on a Debian machine using apt.
+    """
+    return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
