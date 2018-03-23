@@ -78,11 +78,11 @@ def delete_all_snapshots(browser):
 
 
 def create_snapshot(browser):
-    nav_to_module(browser, 'snapshot')
+    browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
     browser.find_by_value('Create Snapshot').click()
 
 
 def get_snapshot_count(browser):
-    nav_to_module(browser, 'snapshot')
+    browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
     # Subtract 1 for table header
     return len(browser.find_by_xpath('//tr')) - 1
