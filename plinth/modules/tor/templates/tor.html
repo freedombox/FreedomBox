@@ -32,14 +32,6 @@
 
 {% block configuration %}
 
-  {% if manual_page %}
-    <p class="manual-page">
-      <a href="{% url 'help:manual-page' manual_page %}">
-        {% trans 'Learn more...' %}
-      </a>
-    </p>
-  {% endif %}
-
   {% include "clients.html" with clients=clients %}
 
   <h3>{% trans "Status" %}</h3>

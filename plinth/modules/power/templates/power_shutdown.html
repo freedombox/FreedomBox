@@ -25,13 +25,7 @@
 {% block content %}
 
   {% block pagetitle %}
-    <h2>{{ title }}
-      {% if manual_page %}
-        <a href="{% url 'help:manual-page' manual_page %}">
-          <img class="manual-page" src="{% static 'theme/icons/manual.png' %}" alt="Manual" />
-        </a>
-      {% endif %}
-    </h2>
+    <h2>{{ title }}</h2>
   {% endblock %}
 
   <p>
@@ -40,6 +34,14 @@
       access this web interface after shut down.
     {% endblocktrans %}
   </p>
+
+  {% if manual_page %}
+    <p class="manual-page">
+      <a href="{% url 'help:manual-page' manual_page %}">
+        {% trans 'Learn more...' %}
+      </a>
+    </p>
+  {% endif %}
 
   {% if pkg_manager_is_busy %}
     <div class="alert alert-danger">
