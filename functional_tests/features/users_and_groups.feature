@@ -38,3 +38,23 @@ Scenario: Delete user
   Given the user alice exists
   When I delete the user alice
   Then alice should not be listed as a user
+
+Scenario Outline: Change language
+  When I change the language to <language>
+  Then Plinth language should be <language>
+
+  Examples:
+  | language       |
+  | dansk          |
+  | Deutsch        |
+  | español        |
+  | français       |
+  | norsk (bokmål) |
+  | Nederlands     |
+  | polski         |
+  | Português      |
+  | Русский        |
+  | svenska        |
+  | తెలుగు          |
+  | Türkçe         |
+  | 简体中文       |

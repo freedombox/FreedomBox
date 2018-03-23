@@ -41,7 +41,7 @@ def login(browser, url, username, password):
     else:
         browser.visit(default_url + '/plinth/firstboot/welcome')
         browser.find_by_value('Start Setup').click()
-        create_admin_account(browser, 'tester', 'testingtesting')
+        create_admin_account(browser, username, 'testingtesting')
         login(browser, url, username, password)
 
 

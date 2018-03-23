@@ -29,23 +29,3 @@ Scenario: Change hostname
 Scenario: Change domain name
   When I change the domain name to mydomain
   Then the domain name should be mydomain
-
-Scenario Outline: Change language
-  When I change the language to <language>
-  Then Plinth language should be <language>
-
-  Examples:
-  | language           |
-  | Danish             |
-  | German             |
-  | Spanish            |
-  | French             |
-  | Norwegian Bokmål   |
-  | Dutch              |
-  | Polish             |
-  | Portuguese         |
-  | Russian            |
-  | Swedish            |
-  | Telugu             |
-  | Turkish            |
-  | Simplified Chinese |

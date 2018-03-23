@@ -59,12 +59,12 @@ def set_domain_name(browser, domain_name):
 
 
 def set_language(browser, language_code):
-    nav_to_module(browser, 'config')
-    browser.find_by_xpath(
-        '//select[@id="id_configuration-language"]//option[@value="' \
-        + language_code + '"]'
-    ).first.click()
-    submit(browser)
+    username = config['DEFAULT']['username']
+    browser.visit(config['DEFAULT']['url'] +
+                  '/plinth/sys/users/{}/edit/'.format(username))
+    browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
+                          language_code + '"]').first.click()
+    browser.find_by_css('input[type=submit]').click()
 
 
 def check_language(browser, language_code):

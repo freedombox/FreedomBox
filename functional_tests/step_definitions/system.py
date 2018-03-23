@@ -20,19 +20,19 @@ from pytest_bdd import given, parsers, then, when
 from support import system
 
 language_codes = {
-    'Danish': 'da',
-    'German': 'de',
-    'Spanish': 'es',
-    'French': 'fr',
-    'Norwegian Bokmål': 'nb',
-    'Dutch': 'nl',
-    'Polish': 'pl',
-    'Portuguese': 'pt',
-    'Russian': 'ru',
-    'Swedish': 'sv',
-    'Telugu': 'te',
-    'Turkish': 'tr',
-    'Simplified Chinese': 'zh-hans',
+    'Deutsch': 'de',
+    'Nederlands': 'nl',
+    'Português': 'pt',
+    'Türkçe': 'tr',
+    'dansk': 'da',
+    'español': 'es',
+    'français': 'fr',
+    'norsk (bokmål)': 'nb',
+    'polski': 'pl',
+    'svenska': 'sv',
+    'Русский': 'ru',
+    'తెలుగు': 'te',
+    '简体中文': 'zh-hans'
 }
 
 
