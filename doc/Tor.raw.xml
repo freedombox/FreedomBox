@@ -5,6 +5,18 @@
     <title>FreedomBox/Manual/Tor</title>
     <revhistory>
       <revision>
+        <revnumber>15</revnumber>
+        <date>2018-03-19 06:27:56</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add section on circumventing tor censorship</revremark>
+      </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>2018-03-19 06:25:43</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add section on circumventing tor censorship</revremark>
+      </revision>
+      <revision>
         <revnumber>13</revnumber>
         <date>2017-01-07 16:00:24</date>
         <authorinitials>JamesValleroy</authorinitials>
@@ -118,6 +130,32 @@
     <section>
       <title>Using Tor SOCKS port (advanced)</title>
       <para>FreedomBox provides a Tor SOCKS port that other applications can connect to, in order to route their traffic over the Tor network. This port is accessible on any interfaces configured in the internal firewall zone. To configure the application, set SOCKS Host to the internal network connection's IP address, and set the SOCKS Port to 9050. </para>
+    </section>
+    <section>
+      <title>Circumventing Tor censorship</title>
+      <para>If your ISP is trying to block Tor traffic, you can use tor bridge relays to connect to the tor network.  </para>
+      <para>1. Get the bridge configuration from the <ulink url="https://bridges.torproject.org/bridges">Tor BridgeDB</ulink> </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Tor?action=AttachFile&amp;do=get&amp;target=tor-bridge-db.png" width="800"/>
+          </imageobject>
+          <textobject>
+            <phrase>Tor BridgeDB</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
+      <para>2. Add the lines to your FreedomBox Tor configuration as show below. </para>
+      <para>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Tor?action=AttachFile&amp;do=get&amp;target=tor-bridge-configuration.png" width="800"/>
+          </imageobject>
+          <textobject>
+            <phrase>Tor Configuration Page</phrase>
+          </textobject>
+        </inlinemediaobject>
+      </para>
       <!--rule (<hr>) is not applicable to DocBook-->
       <informaltable>
         <tgroup cols="8">
