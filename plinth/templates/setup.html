@@ -50,70 +50,57 @@
 
   {% if not setup_helper.current_operation %}
 
-    {% if setup_helper.get_state == 'needs-setup' %}
-      <p>
+    <p>
+      {% if setup_helper.get_state == 'needs-setup' %}
         {% blocktrans trimmed %}
           Install this application?
         {% endblocktrans %}
-      </p>
-
-      <form action="" method="post">
-        {% csrf_token %}
-
-        {% if package_manager_is_busy %}
-          <div class="alert alert-warning" role="alert">
-            {% blocktrans trimmed %}
-              Another installation or upgrade is already running.
-              Please wait for a few moments before trying again.
-            {% endblocktrans %}
-          </div>
-          <input type="submit" class="btn btn-md btn-primary"
-                 disabled="disabled" value="{% trans "Install" %}" />
-        {% else %}
-          <input type="submit" class="btn btn-md btn-primary"
-                 value="{% trans "Install" %}" />
-        {% endif %}
-      </form>
-    {% elif setup_helper.get_state == 'needs-update' %}
-      <p>
+      {% elif setup_helper.get_state == 'needs-update' %}
         {% blocktrans trimmed %}
           This application needs an update. Update now?
         {% endblocktrans %}
-      </p>
+      {% endif %}
+    </p>
 
-      <form action="" method="post">
-        {% csrf_token %}
+    <form class="form-install" action="" method="post">
+      {% csrf_token %}
 
-        {% if package_manager_is_busy %}
-          <div class="alert alert-warning" role="alert">
-            {% blocktrans trimmed %}
-              Another installation or upgrade is already running.
-              Please wait for a few moments before trying again.
-            {% endblocktrans %}
-          </div>
-          <input type="submit" class="btn btn-md btn-primary"
-                 disabled="disabled" value="{% trans "Install" %}" />
-        {% else %}
-          <input type="submit" class="btn btn-md btn-primary"
-                 value="{% trans "Update" %}" />
-        {% endif %}
-      </form>
-    {% endif %}
+      {% if package_manager_is_busy %}
+        <div class="alert alert-warning" role="alert">
+          {% blocktrans trimmed %}
+            Another installation or upgrade is already running.
+            Please wait for a few moments before trying again.
+          {% endblocktrans %}
+        </div>
+      {% endif %}
+      <input type="submit" class="btn btn-md btn-primary"
+             {{ package_manager_is_busy|yesno:'disabled="disabled"' }}
+             {% if setup_helper.get_state == 'needs-setup' %}
+             value="{% trans "Install" %}"
+             {% elif setup_helper.get_state == 'needs-upgrade' %}
+             value="{% trans "Update" %}"
+             {% endif %} />
+
+    </form>
 
   {% else %}
 
     {% if setup_helper.current_operation.step == 'pre' %}
-      {% trans "Performing pre-install operation" %}
+      <div class="install-state-pre">
+        {% trans "Performing pre-install operation" %}
+      </div>
     {% elif setup_helper.current_operation.step == 'post' %}
-      {% trans "Performing post-install operation" %}
+      <div class="install-state-post">
+        {% trans "Performing post-install operation" %}
+      </div>
     {% elif setup_helper.current_operation.step == 'install' %}
       {% with transaction=setup_helper.current_operation.transaction %}
-        <div>
+        <div class="install-state-installing">
           {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
             Installing {{ package_names }}: {{ status }}
           {% endblocktrans %}
         </div>
-        <div class="progress">
+        <div class="install-state-progress">
           <div class="progress-bar progress-bar-striped active"
                role="progressbar" aria-valuemin="0" aria-valuemax="100"
                aria-valuenow="{{ transaction.percentage }}"

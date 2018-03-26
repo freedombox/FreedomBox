@@ -14,7 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 from support import config
+
+from .service import wait_for_page_update
 
 sys_modules = [
     'avahi', 'cockpit', 'config', 'datetime', 'diagnostics', 'firewall',
@@ -61,8 +64,13 @@ def nav_to_module(browser, module):
         browser.find_link_by_href('/plinth/apps/' + module + '/').first.click()
 
 
-def submit(browser):
-    browser.find_by_value('Submit').click()
+def submit(browser, form_class=None):
+    with wait_for_page_update(browser):
+        if form_class:
+            browser.find_by_css(
+                '.{} input[type=submit]'.format(form_class)).click()
+        else:
+            browser.find_by_css('input[type=submit]').click()
 
 
 def create_user(browser, name, password):
@@ -76,16 +84,16 @@ def create_user(browser, name, password):
 
 def rename_user(browser, old_name, new_name):
     nav_to_module(browser, 'users')
-    browser.find_link_by_href('/plinth/sys/users/' + old_name +
-                              '/edit/').first.click()
+    browser.find_link_by_href(
+        '/plinth/sys/users/' + old_name + '/edit/').first.click()
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_value('Save Changes').click()
 
 
 def delete_user(browser, name):
     nav_to_module(browser, 'users')
-    browser.find_link_by_href('/plinth/sys/users/' + name +
-                              '/delete/').first.click()
+    browser.find_link_by_href(
+        '/plinth/sys/users/' + name + '/delete/').first.click()
     browser.find_by_value('Delete ' + name).click()
 
 

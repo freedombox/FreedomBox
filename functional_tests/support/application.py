@@ -18,6 +18,7 @@
 from time import sleep
 
 import splinter
+
 from support import config, interface
 from support.service import eventually
 
@@ -55,20 +56,29 @@ def get_app_checkbox_id(app_name):
 
 def install(browser, app_name):
     interface.nav_to_module(browser, get_app_module(app_name))
-    install = browser.find_by_value('Install')
+    install = browser.find_by_css('.form-install input[type=submit]')
+
+    def install_in_progress():
+        selectors = [
+            '.install-state-' + state
+            for state in ['pre', 'post', 'installing']
+        ]
+        return any(
+            browser.is_element_present_by_css(selector)
+            for selector in selectors)
+
     if install:
         install.click()
-        while browser.is_text_present('Installing') \
-              or browser.is_text_present('Performing post-install operation'):
+        while install_in_progress():
             sleep(1)
-        sleep(2)
+        sleep(2)  # XXX This shouldn't be required.
 
 
 def _change_status(browser, app_name, change_status_to='enabled'):
     interface.nav_to_module(browser, get_app_module(app_name))
     checkbox = browser.find_by_id(get_app_checkbox_id(app_name))
     checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
-    browser.find_by_value('Update setup').click()
+    interface.submit(browser, 'form-configuration')
     if app_name == app_config_updating_text:
         wait_for_config_update(browser, app_name)
 
@@ -90,7 +100,7 @@ def select_domain_name(browser, app_name, domain_name):
     browser.visit('{}/plinth/apps/{}/setup/'.format(default_url, app_name))
     drop_down = browser.find_by_id('id_domain_name')
     drop_down.select(domain_name)
-    browser.find_by_value('Update setup').click()
+    interface.submit(browser, 'form-configuration')
 
 
 def configure_shadowsocks(browser):
@@ -98,22 +108,14 @@ def configure_shadowsocks(browser):
     browser.visit('{}/plinth/apps/shadowsocks/'.format(default_url))
     browser.find_by_id('id_server').fill('some.shadow.tunnel')
     browser.find_by_id('id_password').fill('fakepassword')
-    browser.find_by_value('Update setup').click()
+    interface.submit(browser, 'form-configuration')
 
 
 def modify_max_file_size(browser, size):
     """Change the maximum file size of coquelicot to the given value"""
     browser.visit('{}/plinth/apps/coquelicot/'.format(default_url))
     browser.find_by_id('id_max_file_size').fill(size)
-    browser.find_by_value('Update setup').click()
-    # Wait for the service to restart after updating maximum file size
-    eventually(message_or_setting_unchanged,
-               args=[browser, 'Maximum file size updated'])
-
-
-def message_or_setting_unchanged(browser, message):
-    return browser.is_text_present(message) or browser.is_text_present(
-        'Setting unchanged')
+    interface.submit(browser, 'form-configuration')
 
 
 def get_max_file_size(browser):
@@ -126,9 +128,7 @@ def modify_upload_password(browser, password):
     """Change the upload password for coquelicot to the given value"""
     browser.visit('{}/plinth/apps/coquelicot/'.format(default_url))
     browser.find_by_id('id_upload_password').fill(password)
-    browser.find_by_value('Update setup').click()
-    # Wait for the service to restart after updating password
-    eventually(browser.is_text_present, args=['Upload password updated'])
+    interface.submit(browser, 'form-configuration')
 
 
 def remove_share(browser, name):
@@ -160,7 +160,8 @@ def edit_share(browser, old_name, new_name, path, group):
     browser.fill('sharing-name', new_name)
     browser.fill('sharing-path', path)
     browser.find_by_css('#id_sharing-groups input').uncheck()
-    browser.find_by_css('#id_sharing-groups input[value="{}"]'.format(group)).check()
+    browser.find_by_css(
+        '#id_sharing-groups input[value="{}"]'.format(group)).check()
     browser.find_by_css('input[type="submit"]').click()
     eventually(browser.is_text_present, args=['Share edited.'])
 

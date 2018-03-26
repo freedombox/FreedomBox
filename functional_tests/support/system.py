@@ -64,7 +64,7 @@ def set_language(browser, language_code):
                   '/plinth/sys/users/{}/edit/'.format(username))
     browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
                           language_code + '"]').first.click()
-    browser.find_by_css('input[type=submit]').click()
+    submit(browser)
 
 
 def check_language(browser, language_code):
