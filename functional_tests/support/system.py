@@ -74,12 +74,12 @@ def check_language(browser, language_code):
 
 def delete_all_snapshots(browser):
     browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/all/delete')
-    browser.find_by_value('Delete Snapshots').click()
+    submit(browser)
 
 
 def create_snapshot(browser):
     browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
-    browser.find_by_value('Create Snapshot').click()
+    submit(browser)  # Click on 'Create Snapshot'
 
 
 def get_snapshot_count(browser):
