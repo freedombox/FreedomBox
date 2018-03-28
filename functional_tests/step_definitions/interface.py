@@ -41,12 +41,7 @@ def prompted_for_login(browser):
 
 @given(parsers.parse("the user {name:w} doesn't exist"))
 def new_user_does_not_exist(browser, name):
-    interface.nav_to_module(browser, 'users')
-    delete_link = browser.find_link_by_href(
-        '/plinth/sys/users/' + name + '/delete/')
-    if delete_link:
-        delete_link.first.click()
-        browser.find_by_value('Delete ' + name).click()
+    interface.delete_user(browser, name)
 
 
 @given(parsers.parse('the user {name:w} exists'))

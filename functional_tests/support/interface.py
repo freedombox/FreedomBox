@@ -30,21 +30,21 @@ default_url = config['DEFAULT']['url']
 
 def login(browser, url, username, password):
     browser.visit(url)
-    if browser.find_by_id('logout-nojs'):
-        return  # already logged in
+
+    # XXX browser.visit goes to the web page with no cookies,
+    # hence there should be some kind of session storage for this to work
 
     login_button = browser.find_link_by_href('/plinth/accounts/login/')
     if login_button:
         login_button.first.click()
-        login_submit = browser.find_by_value('Login')
         if login_button:
             browser.fill('username', username)
             browser.fill('password', password)
-            login_submit.click()
+            submit(browser)
     else:
         browser.visit(default_url + '/plinth/firstboot/welcome')
-        browser.find_by_value('Start Setup').click()
-        create_admin_account(browser, username, 'testingtesting')
+        submit(browser)  # click the "Start Setup" button
+        create_admin_account(browser, username, password)
         login(browser, url, username, password)
 
 
@@ -55,46 +55,50 @@ def is_login_prompt(browser):
 
 
 def nav_to_module(browser, module):
-    browser.find_link_by_href('/plinth/').first.click()
-    if module in sys_modules:
-        browser.find_link_by_href('/plinth/sys/').first.click()
-        browser.find_link_by_href('/plinth/sys/' + module + '/').first.click()
-    else:
-        browser.find_link_by_href('/plinth/apps/').first.click()
-        browser.find_link_by_href('/plinth/apps/' + module + '/').first.click()
-
-
-def submit(browser, form_class=None):
     with wait_for_page_update(browser):
-        if form_class:
-            browser.find_by_css(
-                '.{} input[type=submit]'.format(form_class)).click()
-        else:
-            browser.find_by_css('input[type=submit]').click()
+        browser.find_link_by_href('/plinth/').first.click()
+    if module in sys_modules:
+        with wait_for_page_update(browser):
+            browser.find_link_by_href('/plinth/sys/').first.click()
+        with wait_for_page_update(browser):
+            browser.find_link_by_href(
+                '/plinth/sys/' + module + '/').first.click()
+    else:
+        with wait_for_page_update(browser):
+            browser.find_link_by_href('/plinth/apps/').first.click()
+        with wait_for_page_update(browser):
+            browser.find_link_by_href(
+                '/plinth/apps/' + module + '/').first.click()
 
 
 def create_user(browser, name, password):
     nav_to_module(browser, 'users')
-    browser.find_link_by_href('/plinth/sys/users/create/').first.click()
+    with wait_for_page_update(browser):
+        browser.find_link_by_href('/plinth/sys/users/create/').first.click()
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
-    browser.find_by_value('Create User').click()
+    submit(browser)
 
 
 def rename_user(browser, old_name, new_name):
     nav_to_module(browser, 'users')
-    browser.find_link_by_href(
-        '/plinth/sys/users/' + old_name + '/edit/').first.click()
+    with wait_for_page_update(browser):
+        browser.find_link_by_href(
+            '/plinth/sys/users/' + old_name + '/edit/').first.click()
     browser.find_by_id('id_username').fill(new_name)
-    browser.find_by_value('Save Changes').click()
+    submit(browser)
 
 
 def delete_user(browser, name):
     nav_to_module(browser, 'users')
-    browser.find_link_by_href(
-        '/plinth/sys/users/' + name + '/delete/').first.click()
-    browser.find_by_value('Delete ' + name).click()
+    with wait_for_page_update(browser):
+        delete_link = browser.find_link_by_href(
+            '/plinth/sys/users/' + name + '/delete/')
+        if delete_link:
+            delete_link.first.click()
+    if delete_link:
+        submit(browser)
 
 
 def is_user(browser, name):
@@ -106,4 +110,13 @@ def create_admin_account(browser, username, password):
     browser.find_by_id('id_username').fill(username)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
-    browser.find_by_value('Create Account').click()
+    submit(browser)
+
+
+def submit(browser, form_class=None):
+    with wait_for_page_update(browser):
+        if form_class:
+            browser.find_by_css(
+                '.{} input[type=submit]'.format(form_class)).click()
+        else:
+            browser.find_by_css('input[type=submit]').click()
