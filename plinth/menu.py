@@ -17,9 +17,12 @@
 
 from django.urls import reverse, reverse_lazy
 
+from plinth.utils import format_lazy
+
 
 class Menu(object):
     """One menu item."""
+
     def __init__(self, label="", icon="", url="#", order=50):
         """label is the text that is displayed on the menu.
 
@@ -60,15 +63,15 @@ class Menu(object):
         """Return menu items in sorted order according to current locale."""
         return sorted(self.items, key=lambda x: (x.order, x.label))
 
-    def add_urlname(self, name, icon, urlname, short_description="", order=50, url_args=None,
-                    url_kwargs=None):
+    def add_urlname(self, name, icon, urlname, short_description="", order=50,
+                    url_args=None, url_kwargs=None):
         """Add a named URL to the menu (via add_item).
 
         url_args and url_kwargs will be passed on to Django reverse().
 
         """
         if short_description:
-            label = '{0} ({1})'.format(short_description, name)
+            label = format_lazy('{0} ({1})', short_description, name)
         else:
             label = name
         url = reverse_lazy(urlname, args=url_args, kwargs=url_kwargs)

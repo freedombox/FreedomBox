@@ -25,10 +25,8 @@ import random
 import re
 import string
 
-from django.utils.functional import lazy
-
 import ruamel.yaml
-from plinth.modules import names
+from django.utils.functional import lazy
 
 
 def import_from_gi(library, version):
@@ -75,6 +73,8 @@ def is_user_admin(request, cached=False):
 
 def get_domain_names():
     """Return the domain name(s)"""
+    from plinth.modules import names
+
     domain_names = []
 
     for domain_type, domains in names.domains.items():
