@@ -44,8 +44,8 @@ first_boot_steps = [
 
 name = _('Users and Groups')
 
-# List of all FreedomBox user groups
-groups = set()
+# All FreedomBox user groups
+groups = dict()
 
 
 def init():
@@ -104,4 +104,4 @@ def remove_group(group):
 
 
 def register_group(group):
-    groups.add(group)
+    groups[group[0]] = group[1]

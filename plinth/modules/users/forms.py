@@ -32,15 +32,15 @@ from plinth.modules import first_boot, users
 from plinth.modules.security import set_restricted_access
 from plinth.translation import set_language
 from plinth.utils import is_user_admin
-from plinth.models import UserProfile
 
 
 def get_group_choices():
     """Return localized group description and group name in one string."""
     admin_group = ('admin', _('Access to all services and system settings'))
     users.register_group(admin_group)
-    choices = {(g[0], ('{} ({})'.format(g[1], g[0]))) for g in users.groups}
-    return sorted(list(choices), key=lambda g: g[0])
+    choices = [(k, ('{} ({})'.format(users.groups[k], k)))
+               for k in users.groups]
+    return sorted(choices, key=lambda g: g[0])
 
 
 class ValidNewUsernameCheckMixin(object):
@@ -115,18 +115,19 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
             user.userprofile.save()
 
             try:
-                actions.superuser_run('users', [
-                    'create-user', user.get_username()
-                ], input=self.cleaned_data['password1'].encode())
+                actions.superuser_run(
+                    'users',
+                    ['create-user', user.get_username()],
+                    input=self.cleaned_data['password1'].encode())
             except ActionError:
                 messages.error(self.request, _('Creating LDAP user failed.'))
 
             for group in self.cleaned_data['groups']:
                 try:
-                    actions.superuser_run('users', [
-                        'add-user-to-group',
-                        user.get_username(), group
-                    ])
+                    actions.superuser_run(
+                        'users',
+                        ['add-user-to-group',
+                         user.get_username(), group])
                 except ActionError:
                     messages.error(
                         self.request,
@@ -207,10 +208,10 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
             if self.username != user.get_username():
                 try:
-                    actions.superuser_run('users', [
-                        'rename-user', self.username,
-                        user.get_username()
-                    ])
+                    actions.superuser_run(
+                        'users',
+                        ['rename-user', self.username,
+                         user.get_username()])
                 except ActionError:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
@@ -263,10 +264,10 @@ class UserChangePasswordForm(SetPasswordForm):
         user = super(UserChangePasswordForm, self).save(commit)
         if commit:
             try:
-                actions.superuser_run('users', [
-                    'set-user-password',
-                    user.get_username()
-                ], input=self.cleaned_data['new_password1'].encode())
+                actions.superuser_run(
+                    'users', ['set-user-password',
+                              user.get_username()],
+                    input=self.cleaned_data['new_password1'].encode())
             except ActionError:
                 messages.error(self.request,
                                _('Changing LDAP user password failed.'))
@@ -288,17 +289,18 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             first_boot.mark_step_done('users_firstboot')
 
             try:
-                actions.superuser_run('users', [
-                    'create-user', user.get_username()
-                ], input=self.cleaned_data['password1'].encode())
+                actions.superuser_run(
+                    'users',
+                    ['create-user', user.get_username()],
+                    input=self.cleaned_data['password1'].encode())
             except ActionError:
                 messages.error(self.request, _('Creating LDAP user failed.'))
 
             try:
-                actions.superuser_run('users', [
-                    'add-user-to-group',
-                    user.get_username(), 'admin'
-                ])
+                actions.superuser_run(
+                    'users',
+                    ['add-user-to-group',
+                     user.get_username(), 'admin'])
             except ActionError:
                 messages.error(self.request,
                                _('Failed to add new user to admin group.'))
