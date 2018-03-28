@@ -20,7 +20,8 @@ from time import sleep
 import splinter
 
 from support import config, interface
-from support.service import eventually
+from support.interface import submit
+from support.service import eventually, wait_for_page_update
 
 # unlisted apps just use the app_name as module name
 app_module = {
@@ -131,6 +132,9 @@ def modify_upload_password(browser, password):
     interface.submit(browser, 'form-configuration')
 
 
+# Sharing app helper functions
+
+
 def remove_share(browser, name):
     """Remove a share in sharing app."""
     try:
@@ -148,22 +152,20 @@ def add_share(browser, name, path, group):
     browser.fill('sharing-path', path)
     browser.find_by_css(
         '#id_sharing-groups input[value="{}"]'.format(group)).check()
-    browser.find_by_css('input[type="submit"]').click()
-    eventually(browser.is_text_present, args=['Share added.'])
+    submit(browser)
 
 
 def edit_share(browser, old_name, new_name, path, group):
     """Edit a share in sharing app."""
     row = get_share(browser, old_name)
-    row.find_by_css('.share-edit')[0].click()
-    eventually(browser.is_text_present, args=['Edit Share'])
+    with wait_for_page_update(browser):
+        row.find_by_css('.share-edit')[0].click()
     browser.fill('sharing-name', new_name)
     browser.fill('sharing-path', path)
     browser.find_by_css('#id_sharing-groups input').uncheck()
     browser.find_by_css(
         '#id_sharing-groups input[value="{}"]'.format(group)).check()
-    browser.find_by_css('input[type="submit"]').click()
-    eventually(browser.is_text_present, args=['Share edited.'])
+    submit(browser)
 
 
 def get_share(browser, name):
@@ -189,14 +191,14 @@ def access_share(browser, name):
     row = get_share(browser, name)
     url = row.find_by_css('.share-url a')[0]['href']
     browser.visit(url)
-    browser.is_text_present('Index of /share/{}'.format(name))
+    assert '/share/{}'.format(name) in browser.title
 
 
 def verify_nonexistant_share(browser, name):
     """Verify that given URL for a given share name is a 404."""
     url = '{}/share/{}'.format(default_url, name)
     browser.visit(url)
-    browser.is_text_present('Not Found')
+    assert '404' in browser.title
 
 
 def verify_inaccessible_share(browser, name):

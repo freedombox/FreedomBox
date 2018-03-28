@@ -26,27 +26,27 @@ Scenario: Add new share
   Given share tmp is not available
   When I add a share tmp from path /tmp for admin
   Then the share tmp should be listed from path /tmp for admin
-  Then the share tmp should be accessible
+  And the share tmp should be accessible
 
 Scenario: Edit a share
   Given share tmp is not available
   When I remove share boot
-  When I add a share tmp from path /tmp for admin
-  When I edit share tmp to boot from path /boot for admin
+  And I add a share tmp from path /tmp for admin
+  And I edit share tmp to boot from path /boot for admin
   Then the share tmp should not be listed
-  Then the share tmp should not exist
-  Then the share boot should be listed from path /boot for admin
-  Then the share boot should be accessible
+  And the share tmp should not exist
+  And the share boot should be listed from path /boot for admin
+  And the share boot should be accessible
 
 Scenario: Remove a share
   When I remove share tmp
-  When I add a share tmp from path /tmp for admin
-  When I remove share tmp
+  And I add a share tmp from path /tmp for admin
+  And I remove share tmp
   Then the share tmp should not be listed
-  Then the share tmp should not exist
+  And the share tmp should not exist
 
 Scenario: Share permissions
   When I remove share tmp
-  When I add a share tmp from path /tmp for syncthing
+  And I add a share tmp from path /tmp for syncthing
   Then the share tmp should be listed from path /tmp for syncthing
-  Then the share tmp should not be accessible
+  And the share tmp should not be accessible
