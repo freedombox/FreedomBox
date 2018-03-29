@@ -34,11 +34,9 @@ app_checkbox_id = {
     'tor': 'id_tor-enabled',
 }
 
-app_config_updating_text = {
-    'tor': 'Tor configuration is being updated',
-}
-
 default_url = config['DEFAULT']['url']
+
+apps_with_loaders = ['tor']
 
 
 def get_app_module(app_name):
@@ -80,7 +78,7 @@ def _change_status(browser, app_name, change_status_to='enabled'):
     checkbox = browser.find_by_id(get_app_checkbox_id(app_name))
     checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
     interface.submit(browser, 'form-configuration')
-    if app_name == app_config_updating_text:
+    if app_name in apps_with_loaders:
         wait_for_config_update(browser, app_name)
 
 
@@ -93,8 +91,8 @@ def disable(browser, app_name):
 
 
 def wait_for_config_update(browser, app_name):
-    while browser.is_text_present(app_config_updating_text['tor']):
-        sleep(1)
+    while len(browser.find_by_css('.running-status.loading')) != 0:
+        sleep(0.1)
 
 
 def select_domain_name(browser, app_name, domain_name):
