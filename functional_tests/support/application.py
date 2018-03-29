@@ -66,10 +66,22 @@ def install(browser, app_name):
             browser.is_element_present_by_css(selector)
             for selector in selectors)
 
+    def is_server_restarting():
+        return browser.is_element_present_by_css('.neterror')
+
+    def wait_for_install():
+        if install_in_progress():
+            sleep(1)
+        elif is_server_restarting():
+            sleep(1)
+            browser.visit(browser.url)
+        else:
+            return
+        wait_for_install()
+
     if install:
         install.click()
-        while install_in_progress():
-            sleep(1)
+        wait_for_install()
         sleep(2)  # XXX This shouldn't be required.
 
 
@@ -91,7 +103,7 @@ def disable(browser, app_name):
 
 
 def wait_for_config_update(browser, app_name):
-    while len(browser.find_by_css('.running-status.loading')) != 0:
+    while browser.is_element_present_by_css('.running-status.loading'):
         sleep(0.1)
 
 
