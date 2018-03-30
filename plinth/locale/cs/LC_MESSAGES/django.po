@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-26 19:43-0400\n"
-"PO-Revision-Date: 2018-03-16 18:35+0000\n"
+"PO-Revision-Date: 2018-03-30 17:04+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
 "cs/>\n"
@@ -269,10 +269,8 @@ msgstr ""
 #: plinth/modules/storage/templates/storage.html:42
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
-#, fuzzy
-#| msgid "Learn more &raquo;"
 msgid "Learn more..."
-msgstr "Zjistit víc o &raquo;"
+msgstr "Zjistit více…"
 
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
@@ -3025,10 +3023,6 @@ msgstr ""
 "namísto toho poskytuje připojení prostřednictvím NAT překladu."
 
 #: plinth/modules/pagekite/__init__.py:62
-#, fuzzy
-#| msgid ""
-#| "Your ISP does not provide you a static IP address and your IP address "
-#| "changes evertime you connect to Internet."
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -4010,28 +4004,17 @@ msgid "Storage Snapshots"
 msgstr "Zachycené stavy datového úložiště"
 
 #: plinth/modules/snapshot/__init__.py:35
-#, fuzzy
-#| msgid ""
-#| "Snapshots allows creating and managing filesystem snapshots. These can be "
-#| "used to roll back the system to a previously known good state in case of "
-#| "unwanted changes to the system."
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
 "Zachycené stavy umožňují vytváření a spravování zachycených stavů "
-"souborového systému. Ty je možné použít pro vrácení systému do dřívějšího "
-"funkčního stavu v případě nechtěných změn."
+"souborového systému btrfs. Ty je možné použít pro vrácení systému do "
+"dřívějšího funkčního stavu v případě nechtěných změn."
 
 #: plinth/modules/snapshot/__init__.py:38
-#, fuzzy, python-format
-#| msgid ""
-#| "Automatic snapshots are taken every hour, day, month and year. Although "
-#| "snapshots are efficient and only store the differences, they may be "
-#| "deleted to reclaim free space.  Individual files from older snapshots can "
-#| "be accessed by visiting \"/.snapshots\" directory in the filesystem. "
-#| "Snapshots are not a replacement for backups."
+#, python-format
 msgid ""
 "Snapshots are taken every hour, day and month (called timeline snapshots). "
 "Snapshots are also taken before and after a software installation. Although "
@@ -4041,11 +4024,13 @@ msgid ""
 "recommended to enable snapshots only if you have at least 50% free space on "
 "your root partition."
 msgstr ""
-"Zachycené stavy jsou pořizovány každou hodinu, den, měsíc a rok. Ačkoli jsou "
-"zachycené stavy efektivní a ukládají pouze rozdíly, je možné je smazat a "
-"získat tak místo. K jednotlivým souborům ze starších zachycených stavů je "
-"možné přistupovat navštívením složky „/.snapshots“ v souborovém systému. "
-"Zachycené stavy nejsou náhradou záloh!"
+"Zachycené stavy jsou pořizovány každou hodinu, den a měsíc (nazývají se "
+"zachycené stavy časové osy). Jsou také pořízeny před a po instalaci "
+"software. Ačkoli jsou zachycené stavy efektivní a ukládají pouze rozdíly, je "
+"možné je smazat a získat tak místo. K jednotlivým souborům ze starších "
+"zachycených stavů je možné přistupovat navštívením složky „/.snapshots“ v "
+"souborovém systému. Zapnutí pořizování zachycených stavů je doporučeno pouze "
+"pokud je na kořenovém oddílu alespoň 50% volného místa."
 
 #: plinth/modules/snapshot/__init__.py:45
 msgid ""
@@ -4053,6 +4038,9 @@ msgid ""
 "Snapshots are not a replacement for backups since they are stored on the "
 "same partition. "
 msgstr ""
+"Zachycené stavy fungují pouze na souborovém systému btrfs a kořenovém "
+"oddílu. Zachycené stavy nejsou náhradou záloh, protože se nacházejí na "
+"stejném oddílu, jako živá data. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Timeline Snapshots"
