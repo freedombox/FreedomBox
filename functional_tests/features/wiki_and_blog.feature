@@ -32,3 +32,4 @@ Scenario: Disable wiki application
   Given the wiki application is enabled
   When I disable the wiki application
   Then the wiki site should not be available
+  
