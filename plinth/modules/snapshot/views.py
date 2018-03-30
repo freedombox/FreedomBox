@@ -60,6 +60,7 @@ def index(request):
         request, 'snapshot.html', {
             'title': snapshot_module.name,
             'description': snapshot_module.description,
+            'manual_page': snapshot_module.manual_page,
             'subsubmenu': subsubmenu,
             'form': form
         })
@@ -82,7 +83,6 @@ def manage(request):
             'snapshots': snapshots,
             'has_deletable_snapshots': has_deletable_snapshots,
             'subsubmenu': subsubmenu,
-            'manual_page': snapshot_module.manual_page,
         })
 
 
