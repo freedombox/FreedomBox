@@ -69,7 +69,8 @@ class SetupMiddleware(MiddlewareMixin):
         if module.setup_helper.is_finished:
             exception = module.setup_helper.collect_result()
             if not exception:
-                messages.success(request, _('Application installed.'))
+                if not setup._is_module_essential(module):
+                    messages.success(request, _('Application installed.'))
             else:
                 if isinstance(exception, PackageException):
                     error_string = getattr(exception, 'error_string',
