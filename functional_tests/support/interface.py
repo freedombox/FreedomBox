@@ -57,18 +57,13 @@ def is_login_prompt(browser):
 def nav_to_module(browser, module):
     with wait_for_page_update(browser):
         browser.find_link_by_href('/plinth/').first.click()
-    if module in sys_modules:
-        with wait_for_page_update(browser):
-            browser.find_link_by_href('/plinth/sys/').first.click()
-        with wait_for_page_update(browser):
-            browser.find_link_by_href(
-                '/plinth/sys/' + module + '/').first.click()
-    else:
-        with wait_for_page_update(browser):
-            browser.find_link_by_href('/plinth/apps/').first.click()
-        with wait_for_page_update(browser):
-            browser.find_link_by_href(
-                '/plinth/apps/' + module + '/').first.click()
+    sys_or_apps = 'sys' if module in sys_modules else 'apps'
+    with wait_for_page_update(browser):
+        browser.find_link_by_href(
+            '/plinth/{}/'.format(sys_or_apps)).first.click()
+    with wait_for_page_update(browser):
+        browser.find_link_by_href('/plinth/{0}/{1}/'.format(
+            sys_or_apps, module)).first.click()
 
 
 def create_user(browser, name, password):
@@ -92,12 +87,11 @@ def rename_user(browser, old_name, new_name):
 
 def delete_user(browser, name):
     nav_to_module(browser, 'users')
-    with wait_for_page_update(browser):
-        delete_link = browser.find_link_by_href(
-            '/plinth/sys/users/' + name + '/delete/')
-        if delete_link:
-            delete_link.first.click()
+    delete_link = browser.find_link_by_href(
+        '/plinth/sys/users/' + name + '/delete/')
     if delete_link:
+        with wait_for_page_update(browser):
+            delete_link.first.click()
         submit(browser)
 
 
