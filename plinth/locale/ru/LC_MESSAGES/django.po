@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-26 19:43-0400\n"
-"PO-Revision-Date: 2018-03-14 13:31+0000\n"
+"PO-Revision-Date: 2018-03-30 17:12+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/ru/>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.20-dev\n"
 
 #: plinth/action_utils.py:258
@@ -270,10 +270,8 @@ msgstr ""
 #: plinth/modules/storage/templates/storage.html:42
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
-#, fuzzy
-#| msgid "Learn more &raquo;"
 msgid "Learn more..."
-msgstr "Подробнее &raquo;"
+msgstr "Подробнее..."
 
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
@@ -3018,15 +3016,11 @@ msgstr ""
 "обеспечивает подключение к Интернету через NAT."
 
 #: plinth/modules/pagekite/__init__.py:62
-#, fuzzy
-#| msgid ""
-#| "Your ISP does not provide you a static IP address and your IP address "
-#| "changes evertime you connect to Internet."
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
 msgstr ""
-"Ваш провайдер не предоставляет вам статический IP-адрес и ваш IP адрес "
+"Ваш провайдер не предоставляет вам статический IP-адрес, и ваш-IP адрес "
 "изменяется каждый раз при подключении к Интернету."
 
 #: plinth/modules/pagekite/__init__.py:64
@@ -3999,28 +3993,17 @@ msgid "Storage Snapshots"
 msgstr "Хранилище снимков"
 
 #: plinth/modules/snapshot/__init__.py:35
-#, fuzzy
-#| msgid ""
-#| "Snapshots allows creating and managing filesystem snapshots. These can be "
-#| "used to roll back the system to a previously known good state in case of "
-#| "unwanted changes to the system."
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
-"Снимки системы позволяют создавать и управлять снимками файловой системы. "
-"Они могут и пользоваться для отката системы к последнему рабочему состоянию "
-"в случае неприемлемых изменений в системе."
+"Снимки системы позволяют создавать и управлять снимками файловой системы "
+"btrfs. Они могут использоваться для отката системы к последнему рабочему "
+"состоянию в случае неприемлемых изменений в системе."
 
 #: plinth/modules/snapshot/__init__.py:38
-#, fuzzy, python-format
-#| msgid ""
-#| "Automatic snapshots are taken every hour, day, month and year. Although "
-#| "snapshots are efficient and only store the differences, they may be "
-#| "deleted to reclaim free space.  Individual files from older snapshots can "
-#| "be accessed by visiting \"/.snapshots\" directory in the filesystem. "
-#| "Snapshots are not a replacement for backups."
+#, python-format
 msgid ""
 "Snapshots are taken every hour, day and month (called timeline snapshots). "
 "Snapshots are also taken before and after a software installation. Although "
@@ -4030,11 +4013,13 @@ msgid ""
 "recommended to enable snapshots only if you have at least 50% free space on "
 "your root partition."
 msgstr ""
-"Автоматические снимки системы моту выполнятся раз в час, день, месяц и год. "
-"Хоть снимки и являются эффективными и хранят только различия, их можно "
-"удалить для освобождения свободного места. Отдельные файлы из старых снимков "
-"можно найти в каталоге «/.snapshots» в файловой системе. Моментальные снимки "
-"не являются заменой для резервных копий."
+"Снимки системы выполняются раз в час, день или месяц (они называются "
+"хронологическими). Снимки также выполняются до и после установки "
+"программного обеспечения. Хоть снимки и являются эффективными и хранят "
+"только различия, их можно удалить для освобождения свободного места. "
+"Отдельные файлы из старых снимков можно найти в каталоге «/.snapshots» в "
+"файловой системе. Рекомендуется разрешать снимки только если у вас на "
+"корневой файловой системе свободно как минимум 50% места."
 
 #: plinth/modules/snapshot/__init__.py:45
 msgid ""
@@ -4042,6 +4027,9 @@ msgid ""
 "Snapshots are not a replacement for backups since they are stored on the "
 "same partition. "
 msgstr ""
+"Снимки системы работают только на файловой системе btrfs и только на "
+"корневом разделе. Снимки — не замена бэкапам, так как они хранятся на том же "
+"разделе. "
 
 #: plinth/modules/snapshot/forms.py:27
 msgid "Timeline Snapshots"
