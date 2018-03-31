@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-26 19:43-0400\n"
-"PO-Revision-Date: 2018-03-31 07:56+0000\n"
+"PO-Revision-Date: 2018-04-01 08:38+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
 "nl/>\n"
@@ -1184,22 +1184,19 @@ msgid "Learn more &raquo;"
 msgstr "Leer meer &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:76
-#, fuzzy, python-format
-#| msgid "You are running %(os_release)s and Plinth version %(version)s."
+#, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
-msgstr "Dit is %(os_release)s, en Plinth versie %(version)s."
+msgstr "Dit is %(os_release)s, en %(box_name)s versie %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:81
-#, fuzzy, python-format
-#| msgid "There is a new Plinth version available."
+#, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr "Er is een nieuwe Plinth versie beschikbaar."
+msgstr "Er is een nieuwe %(box_name)s versie beschikbaar."
 
 #: plinth/modules/help/templates/help_about.html:85
-#, fuzzy, python-format
-#| msgid "Plinth is up to date."
+#, python-format
 msgid "%(box_name)s is up to date."
-msgstr "De nieuwste versie van Plinth is geïnstalleerd."
+msgstr "De nieuwste versie van %(box_name)s is geïnstalleerd."
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
@@ -1256,12 +1253,7 @@ msgid "Status Log"
 msgstr "Status Logboek"
 
 #: plinth/modules/help/templates/statuslog.html:28
-#, fuzzy, python-format
-#| msgid ""
-#| "These are the last %(num_lines)s lines of the status log for this web "
-#| "interface. If you want to report a bug, please use the <a href=\"https://"
-#| "github.com/freedombox/Plinth/issues\">bug tracker</a> and attach this "
-#| "status log to the bug report."
+#, python-format
 msgid ""
 "These are the last %(num_lines)s lines of the status log for this web "
 "interface. If you want to report a bug, please use the <a href=\"https://"
@@ -1269,9 +1261,9 @@ msgid ""
 "this status log to the bug report."
 msgstr ""
 "Dit zijn de laatste %(num_lines)s regels van het statuslogboek voor deze web "
-"interface. ALs je fouten wilt melden, gebruik dan de <a href=\"https://"
-"github.com/freedombox/Plinth/issues\">bug tracker (Engelstalig)</a> en voeg "
-"dit log toe aan de foutmelding."
+"interface. ALs je fouten wilt melden, gebruik dan de <a href=\""
+"https://salsa.debian.org/freedombox-team/plinth/issues\">bug tracker "
+"(Engelstalig)</a> en voeg dit log toe aan de foutmelding."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1537,14 +1529,15 @@ msgstr ""
 #, fuzzy, python-brace-format
 #| msgid "Certificate successfully deleted for domain {domain}"
 msgid "Certificate renewal management enabled for {domain}."
-msgstr "Certificaat met succes verwijderd voor domein {domain}"
+msgstr "Certificaatvernieuwingsbeheer ingeschakeld voor {domein}."
 
 #: plinth/modules/letsencrypt/__init__.py:111
 #: plinth/modules/letsencrypt/views.py:98
-#, fuzzy, python-brace-format
-#| msgid "Failed to delete certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to enable certificate renewal management for {domain}: {error}"
-msgstr "Verwijderen certificaat voor domein {domain} mislukt: {error}"
+msgstr ""
+"Inschakelen certificaat vernieuwing van het management voor {domain} mislukt:"
+" {error}"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:46
 msgid "Domain"
@@ -1735,10 +1728,9 @@ msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "Verkrijgen van certificaat voor domein {domain} is mislukt: {error}"
 
 #: plinth/modules/letsencrypt/views.py:127
-#, fuzzy, python-brace-format
-#| msgid "Certificate successfully deleted for domain {domain}"
+#, python-brace-format
 msgid "Certificate renewal management disabled for {domain}."
-msgstr "Certificaat met succes verwijderd voor domein {domain}"
+msgstr "Certificaatvernieuwingsbeheer uitgeschakeld voor {domain}."
 
 #: plinth/modules/letsencrypt/views.py:133
 #, fuzzy, python-brace-format
@@ -2977,16 +2969,12 @@ msgstr ""
 "NAT verbinding."
 
 #: plinth/modules/pagekite/__init__.py:62
-#, fuzzy
-#| msgid ""
-#| "Your ISP does not provide you a static IP address and your IP address "
-#| "changes evertime you connect to Internet."
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
 msgstr ""
-"De internetprovider geeft geen statisch IP adres, en het IP adres wijzigt "
-"bij elke verbinding."
+"De internetprovider geeft geen statisch IP adres, en het IP adres verandert "
+"telkens wanneer u verbinding maakt met internet."
 
 #: plinth/modules/pagekite/__init__.py:64
 msgid "Your ISP limits incoming connections."
@@ -3693,7 +3681,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Web Server"
 msgid "Web Search"
-msgstr "Webserver"
+msgstr "Zoeken op internet"
 
 #: plinth/modules/searx/__init__.py:47
 msgid ""
@@ -3715,7 +3703,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Save Services"
 msgid "Safe Search"
-msgstr "Diensten opslaan"
+msgstr "Veilig Zoeken"
 
 #: plinth/modules/searx/forms.py:30
 msgid "Select the default family filter to apply to your search results."
@@ -3861,7 +3849,7 @@ msgstr "Encryptie methode. Moet overeenkomen met de instelling van de server."
 #, fuzzy
 #| msgid "File Synchronization"
 msgid "Sharing"
-msgstr "Bestandssynchronisatie"
+msgstr "Delen"
 
 #: plinth/modules/sharing/__init__.py:35
 #, python-brace-format
