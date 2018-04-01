@@ -35,6 +35,7 @@ description = [
     _('Snapshots allows creating and managing btrfs file system snapshots. '
       'These can be used to roll back the system to a previously known '
       'good state in case of unwanted changes to the system.'),
+    # Translators: xgettext:no-python-format
     _('Snapshots are taken every hour, day and month (called timeline '
       'snapshots). Snapshots are also taken before and after a software '
       'installation. Although snapshots are efficient and only store the '
