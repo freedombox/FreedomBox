@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-01 10:28-0400\n"
-"PO-Revision-Date: 2018-04-06 22:10+0000\n"
-"Last-Translator: Jonny Birkelund <jonny.birkelund@gmail.com>\n"
+"PO-Revision-Date: 2018-04-07 13:46+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/plinth/nb/>\n"
 "Language: nb\n"
@@ -1213,12 +1213,12 @@ msgstr "En ny Plinth-versjon er tilgjengelig."
 #: plinth/modules/help/templates/help_about.html:85
 #, python-format
 msgid "%(box_name)s is up to date."
-msgstr "Plinth er oppdatert."
+msgstr "%(box_name)s er oppdatert."
 
 #: plinth/modules/help/templates/help_base.html:36
 #, python-format
 msgid "%(box_name)s Setup"
-msgstr "%(box_name)s Oppsett"
+msgstr "Oppsett av %(box_name)s"
 
 #: plinth/modules/help/templates/help_index.html:37
 #, python-format
@@ -3966,7 +3966,7 @@ msgstr "Tjernens vertsnavn eller IP-adresse"
 
 #: plinth/modules/shadowsocks/forms.py:67
 msgid "Server port number"
-msgstr "Tjenerport nummer"
+msgstr "Tjener-portnummer"
 
 #: plinth/modules/shadowsocks/forms.py:71
 msgid "Password used to encrypt data. Must match server password."
@@ -4092,24 +4092,17 @@ msgid "Share deleted."
 msgstr "Slettet {name}."
 
 #: plinth/modules/snapshot/__init__.py:32
-#, fuzzy
-#| msgid "Create Snapshot"
 msgid "Storage Snapshots"
-msgstr "Opprett øyeblikksbilde"
+msgstr "Lagringsavbildninger"
 
 #: plinth/modules/snapshot/__init__.py:35
-#, fuzzy
-#| msgid ""
-#| "Snapshots allows creating and managing filesystem snapshots. These can be "
-#| "used to roll back the system to a previously known good state in case of "
-#| "unwanted changes to the system."
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
-"Øyeblikksbilder gjør det mulig å opprette og styre "
-"filsystemøyeblikksbilder.  Disse kan brukes til å rulle systemet tilbake til "
+"Øyeblikksbilder gjør det mulig å opprette og styre Btrfs-"
+"filsystemsavbildninger.  Disse kan brukes til å rulle systemet tilbake til "
 "en tidligere kjent god tilstand i tilfelle det har skjedd uønskede endringer "
 "på systemet."
 
@@ -4145,29 +4138,24 @@ msgid ""
 "Snapshots are not a replacement for backups since they are stored on the "
 "same partition. "
 msgstr ""
+"Avbildninger fungerer kun på Btrfs-systemer, og bare på rot-partisjoner. "
+"Avbildninger er ikke en erstatning for sikkerhetskopier siden de er lagret "
+"på samme partisjon. "
 
 #: plinth/modules/snapshot/forms.py:27
-#, fuzzy
-#| msgid "Delete Snapshot"
 msgid "Timeline Snapshots"
-msgstr "Slett øyeblikksbilde"
+msgstr "Tildslinjeavbildninger"
 
 #: plinth/modules/snapshot/forms.py:28
-#, fuzzy
-#| msgid ""
-#| "Uncheck this to disable timeline snapshots (hourly, daily, monthly and "
-#| "yearly)."
 msgid ""
 "Enable or disable timeline snapshots (hourly, daily, monthly and yearly)."
 msgstr ""
-"Fravelg dette for å skru av tidslinjeøyeblikksbilder (timevist, daglig, "
-"månedlig og årvist)."
+"Skru på eller av tidslinjeavbildninger (timevist, daglig, månedlig og "
+"årvist)."
 
 #: plinth/modules/snapshot/forms.py:33
-#, fuzzy
-#| msgid "Create Snapshot"
 msgid "Hourly Snapshots Limit"
-msgstr "Opprett øyeblikksbilde"
+msgstr "Timevis avbildningsgrense"
 
 #: plinth/modules/snapshot/forms.py:34
 #, fuzzy
@@ -4175,21 +4163,16 @@ msgid "Keep a maximum of this many hourly snapshots."
 msgstr "Behold opptil dette antallet timevise avbildninger."
 
 #: plinth/modules/snapshot/forms.py:37
-#, fuzzy
-#| msgid "Delete Snapshot"
 msgid "Daily Snapshots Limit"
-msgstr "Slett øyeblikksbilde"
+msgstr "Daglig avbildningsgrense"
 
 #: plinth/modules/snapshot/forms.py:38
-#, fuzzy
 msgid "Keep a maximum of this many daily snapshots."
 msgstr "Behold opptil dette antallet daglige avbildninger."
 
 #: plinth/modules/snapshot/forms.py:41
-#, fuzzy
-#| msgid "Delete Snapshot"
 msgid "Weekly Snapshots Limit"
-msgstr "Slett øyeblikksbilde"
+msgstr "Ukentlig avbildningsgrense"
 
 #: plinth/modules/snapshot/forms.py:42
 #, fuzzy
@@ -4197,9 +4180,8 @@ msgid "Keep a maximum of this many weekly snapshots."
 msgstr "Behold opptil dette antallet ukentlige avbildninger."
 
 #: plinth/modules/snapshot/forms.py:45
-#, fuzzy
 msgid "Monthly Snapshots Limit"
-msgstr "Månedlig grense for øyeblikksbilder"
+msgstr "Månedlig avbildningsgrense"
 
 #: plinth/modules/snapshot/forms.py:46
 msgid "Keep a maximum of this many monthly snapshots."
@@ -4207,7 +4189,7 @@ msgstr "Behold opptil dette antallet månedlige avbildninger."
 
 #: plinth/modules/snapshot/forms.py:49
 msgid "Yearly Snapshots Limit"
-msgstr "Slett øyeblikksbilde"
+msgstr "Årlig avbildningsgrense"
 
 #: plinth/modules/snapshot/forms.py:50
 msgid ""
@@ -4217,14 +4199,14 @@ msgstr ""
 
 #: plinth/modules/snapshot/forms.py:54
 msgid "Delete Software Snapshots older than (days)"
-msgstr "Slett programvareøyeblikksbilder eldre enn (dager)"
+msgstr "Slett programvareavbildninger eldre enn (dager)"
 
 #: plinth/modules/snapshot/forms.py:56
 msgid ""
 "Software snapshots older than this will be deleted. This does not limit the "
 "number of software snapshots created."
 msgstr ""
-"Programvareøyeblikksbilder eldre enn dette vil bli slettet. Dette begrenser "
+"Programvareavbildninger eldre enn dette vil bli slettet. Dette begrenser "
 "ikke antallet."
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:27
@@ -4252,12 +4234,12 @@ msgstr "Slett øyeblikksbilde #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:27
 msgid "Delete the following snapshots permanently?"
-msgstr "Slett dette øyeblikksbildet permanent?"
+msgstr "Slett dette øyeblikksbildet for godt?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
 #: plinth/modules/snapshot/views.py:155
 msgid "Delete Snapshots"
-msgstr "Slett øyeblikksbilde"
+msgstr "Slett avbildninger"
 
 #: plinth/modules/snapshot/templates/snapshot_manage.html:31
 msgid "Create Snapshot"
@@ -4309,10 +4291,8 @@ msgid "Rollback to Snapshot #%(number)s"
 msgstr "Rull tilbake til øyeblikksbilde #%(number)s"
 
 #: plinth/modules/snapshot/views.py:43
-#, fuzzy
-#| msgid "Create Snapshot"
 msgid "Manage Snapshots"
-msgstr "Opprett øyeblikksbilde"
+msgstr "Behandle avbildninger"
 
 #: plinth/modules/snapshot/views.py:73
 msgid "Created snapshot."
@@ -4339,10 +4319,8 @@ msgid "Delete Snapshot"
 msgstr "Slett øyeblikksbilde"
 
 #: plinth/modules/snapshot/views.py:148
-#, fuzzy
-#| msgid "Delete Snapshot"
 msgid "Deleted all snapshots."
-msgstr "Slett øyeblikksbilde"
+msgstr "Slettet alle øyeblikksbilder"
 
 #: plinth/modules/snapshot/views.py:166
 #, python-brace-format
