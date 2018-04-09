@@ -47,7 +47,7 @@ def parse_arguments():
     subparser = subparsers.add_parser('delete-all',
                                       help='Delete all the snapshots')
 
-    subparser = subparsers.add_parser('configure',
+    subparser = subparsers.add_parser('set-config',
                                       help='Configure automatic snapshots')
     subparser.add_argument('config')
 
@@ -196,7 +196,7 @@ def _get_delete_arg(range_list):
         return range_list[0] + '-' + range_list[-1]
 
 
-def subcommand_configure(arguments):
+def subcommand_set_config(arguments):
     command = ['snapper', 'set-config', arguments.config]
     subprocess.run(command, check=True)
 

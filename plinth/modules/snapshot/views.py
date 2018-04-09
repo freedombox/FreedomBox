@@ -19,7 +19,6 @@ Views for snapshot module.
 """
 
 import json
-import subprocess
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -109,10 +108,8 @@ def update_configuration(request, old_status, new_status):
                         ('number_min_age', 'NUMBER_MIN_AGE={}'),
                     ]))
 
-    command = ['snapper', 'set-config'] + list(config)
-
     try:
-        subprocess.run(command, check=True)
+        actions.superuser_run('snapshot', ['set-config', " ".join(config)])
 
         messages.success(request, _('Storage snapshots configuration updated'))
     except ActionError as exception:
