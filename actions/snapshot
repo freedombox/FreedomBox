@@ -55,7 +55,8 @@ def parse_arguments():
     subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
     subparser.add_argument('number', help='Number of snapshot to rollback to')
 
-    subparser = subparsers.add_parser('disable-apt-snapshot', help='enable/disable apt snapshots')
+    subparser = subparsers.add_parser('disable-apt-snapshot',
+                                      help='enable/disable apt snapshots')
     subparser.add_argument('state')
 
     subparsers.required = True
@@ -161,10 +162,9 @@ def _get_default_snapshot():
 
 def subcommand_disable_apt_snapshot(arguments):
     """Set flag to Enable/Disable apt software snapshots in config files"""
-
     """Initialize Augeas."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()

@@ -55,14 +55,13 @@ def index(request):
     else:
         form = SnapshotForm(initial=status)
 
-    return TemplateResponse(
-        request, 'snapshot.html', {
-            'title': snapshot_module.name,
-            'description': snapshot_module.description,
-            'manual_page': snapshot_module.manual_page,
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    return TemplateResponse(request, 'snapshot.html', {
+        'title': snapshot_module.name,
+        'description': snapshot_module.description,
+        'manual_page': snapshot_module.manual_page,
+        'subsubmenu': subsubmenu,
+        'form': form
+    })
 
 
 def manage(request):
@@ -77,12 +76,11 @@ def manage(request):
     has_deletable_snapshots = any(
         [snapshot for snapshot in snapshots[1:] if not snapshot['is_default']])
 
-    return TemplateResponse(
-        request, 'snapshot_manage.html', {
-            'snapshots': snapshots,
-            'has_deletable_snapshots': has_deletable_snapshots,
-            'subsubmenu': subsubmenu,
-        })
+    return TemplateResponse(request, 'snapshot_manage.html', {
+        'snapshots': snapshots,
+        'has_deletable_snapshots': has_deletable_snapshots,
+        'subsubmenu': subsubmenu,
+    })
 
 
 def update_configuration(request, old_status, new_status):
@@ -108,7 +106,8 @@ def update_configuration(request, old_status, new_status):
                         ('number_min_age', 'NUMBER_MIN_AGE={}'),
                     ]))
 
-    if old_status['enable_software_snapshots'] != new_status['enable_software_snapshots']:
+    if old_status['enable_software_snapshots'] != new_status[
+            'enable_software_snapshots']:
         if new_status['enable_software_snapshots'] == 'yes':
             actions.superuser_run('snapshot', ['disable-apt-snapshot', 'no'])
         else:
@@ -130,8 +129,7 @@ def delete(request, number):
     if request.method == 'POST':
         actions.superuser_run('snapshot', ['delete', number])
         messages.success(
-            request,
-            _('Deleted snapshot #{number}.').format(number=number))
+            request, _('Deleted snapshot #{number}.').format(number=number))
         return redirect(reverse('snapshot:manage'))
 
     output = actions.superuser_run('snapshot', ['list'])

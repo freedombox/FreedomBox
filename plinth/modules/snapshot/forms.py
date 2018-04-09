@@ -24,16 +24,15 @@ from django.utils.translation import ugettext_lazy as _
 
 class SnapshotForm(forms.Form):
     enable_timeline_snapshots = forms.ChoiceField(
-        label=_('Timeline Snapshots'),
-        help_text=_('Enable or disable timeline snapshots '
-                    '(hourly, daily, monthly and yearly).'),
+        label=_('Timeline Snapshots'), help_text=_(
+            'Enable or disable timeline snapshots '
+            '(hourly, daily, monthly and yearly).'),
         choices=[('yes', 'Enabled'), ('no', 'Disabled')])
 
     enable_software_snapshots = forms.ChoiceField(
-        label=_('Software Installation Snapshots'),
-        help_text=_('Enable or disable snapshots before and after software '
-                    'installation'),
-        choices=[('yes', 'Enabled'), ('no', 'Disabled')])
+        label=_('Software Installation Snapshots'), help_text=_(
+            'Enable or disable snapshots before and after software '
+            'installation'), choices=[('yes', 'Enabled'), ('no', 'Disabled')])
 
     hourly_limit = forms.IntegerField(
         label=_('Hourly Snapshots Limit'), min_value=0,
