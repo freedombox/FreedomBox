@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-01 10:28-0400\n"
+"POT-Creation-Date: 2018-04-09 19:04-0400\n"
 "PO-Revision-Date: 2016-07-03 21:44+0000\n"
 "Last-Translator: Mikkel Kirkgaard Nielsen <memb_weblate@mikini.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -85,16 +85,16 @@ msgstr "Sprog i dette administrationsværktøj"
 msgid "Use the language preference set in the browser"
 msgstr ""
 
-#: plinth/middleware.py:72
+#: plinth/middleware.py:73
 msgid "Application installed."
 msgstr "Applikation installeret."
 
-#: plinth/middleware.py:78
+#: plinth/middleware.py:79
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "Kunne ikke installere applikation: {string} {details}"
 
-#: plinth/middleware.py:82
+#: plinth/middleware.py:83
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "Kunne ikke installere applikation: {error}"
@@ -209,7 +209,7 @@ msgstr ""
 
 #: plinth/modules/config/__init__.py:55
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Konfigurer"
@@ -1638,7 +1638,7 @@ msgstr "Generhverv"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot_manage.html:57
+#: plinth/modules/snapshot/templates/snapshot_manage.html:58
 msgid "Delete"
 msgstr "Slet"
 
@@ -2721,7 +2721,7 @@ msgstr "Interface"
 #: plinth/modules/networks/templates/connection_show.html:110
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
-#: plinth/modules/snapshot/templates/snapshot_manage.html:55
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
 msgid "Description"
 msgstr "Beskrivelse"
@@ -4048,20 +4048,20 @@ msgstr "Rediger Bruger"
 msgid "Share deleted."
 msgstr "{name} slettet."
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 #, fuzzy
 #| msgid "Create User"
 msgid "Storage Snapshots"
 msgstr "Opret Bruger"
 
-#: plinth/modules/snapshot/__init__.py:35
+#: plinth/modules/snapshot/__init__.py:36
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
 "of unwanted changes to the system."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:39
+#: plinth/modules/snapshot/__init__.py:40
 #, no-python-format
 msgid ""
 "Snapshots are taken every hour, day and month (called timeline snapshots). "
@@ -4073,7 +4073,7 @@ msgid ""
 "your root partition."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:46
+#: plinth/modules/snapshot/__init__.py:47
 msgid ""
 "Snapshots work on btrfs file systems only and on the root partition only. "
 "Snapshots are not a replacement for backups since they are stored on the "
@@ -4092,59 +4092,67 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:33
+msgid "Software Installation Snapshots"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:34
+msgid "Enable or disable snapshots before and after software installation"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:38
 #, fuzzy
 #| msgid "Create User"
 msgid "Hourly Snapshots Limit"
 msgstr "Opret Bruger"
 
-#: plinth/modules/snapshot/forms.py:34
+#: plinth/modules/snapshot/forms.py:39
 msgid "Keep a maximum of this many hourly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:37
+#: plinth/modules/snapshot/forms.py:42
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Daily Snapshots Limit"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/forms.py:38
+#: plinth/modules/snapshot/forms.py:43
 msgid "Keep a maximum of this many daily snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:41
+#: plinth/modules/snapshot/forms.py:46
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Weekly Snapshots Limit"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/forms.py:42
+#: plinth/modules/snapshot/forms.py:47
 msgid "Keep a maximum of this many weekly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:45
+#: plinth/modules/snapshot/forms.py:50
 msgid "Monthly Snapshots Limit"
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:46
+#: plinth/modules/snapshot/forms.py:51
 msgid "Keep a maximum of this many monthly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:49
+#: plinth/modules/snapshot/forms.py:54
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Yearly Snapshots Limit"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/forms.py:50
+#: plinth/modules/snapshot/forms.py:55
 msgid ""
 "Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:54
+#: plinth/modules/snapshot/forms.py:59
 msgid "Delete Software Snapshots older than (days)"
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:56
+#: plinth/modules/snapshot/forms.py:61
 msgid ""
 "Software snapshots older than this will be deleted. This does not limit the "
 "number of software snapshots created."
@@ -4158,14 +4166,14 @@ msgstr "Slet bruger permanent?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
-#: plinth/modules/snapshot/templates/snapshot_manage.html:53
+#: plinth/modules/snapshot/templates/snapshot_manage.html:54
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr ""
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
-#: plinth/modules/snapshot/templates/snapshot_manage.html:54
+#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr ""
@@ -4183,46 +4191,46 @@ msgid "Delete the following snapshots permanently?"
 msgstr "Slet bruger permanent?"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
-#: plinth/modules/snapshot/views.py:155
+#: plinth/modules/snapshot/views.py:156
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Delete Snapshots"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 #, fuzzy
 #| msgid "Create User"
 msgid "Create Snapshot"
 msgstr "Opret Bruger"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:35
+#: plinth/modules/snapshot/templates/snapshot_manage.html:36
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Delete all the snapshots"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:42
+#: plinth/modules/snapshot/templates/snapshot_manage.html:43
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete All"
 msgstr "Slet"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:56
+#: plinth/modules/snapshot/templates/snapshot_manage.html:57
 msgid "Rollback"
 msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:67
+#: plinth/modules/snapshot/templates/snapshot_manage.html:68
 #, fuzzy
 #| msgid "Inactive"
 msgid "active"
 msgstr "Inaktiv"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:76
+#: plinth/modules/snapshot/templates/snapshot_manage.html:77
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr ""
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:87
+#: plinth/modules/snapshot/templates/snapshot_manage.html:88
 #, fuzzy, python-format
 #| msgid "Delete %(name)s"
 msgid "Delete snapshot #%(number)s"
@@ -4244,54 +4252,54 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:43
+#: plinth/modules/snapshot/views.py:42
 #, fuzzy
 #| msgid "Create User"
 msgid "Manage Snapshots"
 msgstr "Opret Bruger"
 
-#: plinth/modules/snapshot/views.py:73
+#: plinth/modules/snapshot/views.py:72
 msgid "Created snapshot."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:117
+#: plinth/modules/snapshot/views.py:119
 #, fuzzy
 #| msgid "Configuration updated"
 msgid "Storage snapshots configuration updated"
 msgstr "Konfiguration opdateret"
 
-#: plinth/modules/snapshot/views.py:120 plinth/modules/tor/views.py:70
+#: plinth/modules/snapshot/views.py:122 plinth/modules/tor/views.py:70
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Fejl under handling: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:131
+#: plinth/modules/snapshot/views.py:132
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:139
+#: plinth/modules/snapshot/views.py:140
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Delete Snapshot"
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/views.py:148
+#: plinth/modules/snapshot/views.py:149
 #, fuzzy
 #| msgid "Delete %(name)s"
 msgid "Deleted all snapshots."
 msgstr "Slet %(name)s"
 
-#: plinth/modules/snapshot/views.py:166
+#: plinth/modules/snapshot/views.py:167
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:169
+#: plinth/modules/snapshot/views.py:170
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:182
 msgid "Rollback to Snapshot"
 msgstr ""
 
@@ -4907,7 +4915,7 @@ msgstr "Brugere og Grupper"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Kontrol af LDAP-konfiguration \"{search_item}\""
 
-#: plinth/modules/users/forms.py:40
+#: plinth/modules/users/forms.py:39
 msgid "Access to all services and system settings"
 msgstr ""
 
@@ -4936,20 +4944,20 @@ msgstr ""
 "tjenester. De kan også logge ind på systemet gennem SSH og har "
 "administratorprivilegier (sudo)."
 
-#: plinth/modules/users/forms.py:122 plinth/modules/users/forms.py:295
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
 msgid "Creating LDAP user failed."
 msgstr "Kunne ikke oprette LDAP-bruger."
 
-#: plinth/modules/users/forms.py:133
+#: plinth/modules/users/forms.py:134
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Kunne ikke tilføje ny bruger til gruppen {group}."
 
-#: plinth/modules/users/forms.py:146
+#: plinth/modules/users/forms.py:147
 msgid "SSH Keys"
 msgstr "SSH-nøgler"
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:149
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -4959,35 +4967,35 @@ msgstr ""
 "sikkert ind på systemet uden et kodeord. Der kan defineres flere nøgler, en "
 "på hver linje. Tomme linjer og linjer som starter med # bliver ignoreret."
 
-#: plinth/modules/users/forms.py:216
+#: plinth/modules/users/forms.py:217
 msgid "Renaming LDAP user failed."
 msgstr "Kunne ikke omdøbe LDAP-bruger."
 
-#: plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:229
 msgid "Failed to remove user from group."
 msgstr "Kunne ikke fjerne bruger fra gruppe."
 
-#: plinth/modules/users/forms.py:239
+#: plinth/modules/users/forms.py:240
 msgid "Failed to add user to group."
 msgstr "Kunne ikke tilføje bruger til gruppe."
 
-#: plinth/modules/users/forms.py:248
+#: plinth/modules/users/forms.py:249
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:272
+#: plinth/modules/users/forms.py:273
 msgid "Changing LDAP user password failed."
 msgstr "Kunne ikke ændre LDAP-kodeord."
 
-#: plinth/modules/users/forms.py:304
+#: plinth/modules/users/forms.py:306
 msgid "Failed to add new user to admin group."
 msgstr "Kunne ikke tilføje ny bruger til admin-gruppen."
 
-#: plinth/modules/users/forms.py:321
+#: plinth/modules/users/forms.py:323
 msgid "Failed to restrict console access."
 msgstr ""
 
-#: plinth/modules/users/forms.py:333
+#: plinth/modules/users/forms.py:335
 msgid "User account created, you are now logged in"
 msgstr "Brugerkonto oprettet, du er nu logget ind"
 
@@ -5424,39 +5432,38 @@ msgstr "Installation"
 msgid "Install this application?"
 msgstr "Installer denne applikation?"
 
-#: plinth/templates/setup.html:65 plinth/templates/setup.html:89
+#: plinth/templates/setup.html:59
+msgid "This application needs an update. Update now?"
+msgstr "Denne applikation har brug for en opdatering. Opdater nu?"
+
+#: plinth/templates/setup.html:70
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
 
-#: plinth/templates/setup.html:71 plinth/templates/setup.html:74
-#: plinth/templates/setup.html:95
+#: plinth/templates/setup.html:79
 msgid "Install"
 msgstr "Installer"
 
-#: plinth/templates/setup.html:79
-msgid "This application needs an update. Update now?"
-msgstr "Denne applikation har brug for en opdatering. Opdater nu?"
-
-#: plinth/templates/setup.html:98
+#: plinth/templates/setup.html:81
 msgid "Update"
 msgstr "Opdater"
 
-#: plinth/templates/setup.html:106
+#: plinth/templates/setup.html:90
 msgid "Performing pre-install operation"
 msgstr "Udfører før-installationshandlinger"
 
-#: plinth/templates/setup.html:108
+#: plinth/templates/setup.html:94
 msgid "Performing post-install operation"
 msgstr "Udfører efter-installationshandlinger"
 
-#: plinth/templates/setup.html:112
+#: plinth/templates/setup.html:99
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "Installerer %(package_names)s: %(status)s"
 
-#: plinth/templates/setup.html:122
+#: plinth/templates/setup.html:109
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% færdig"

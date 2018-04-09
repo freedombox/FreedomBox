@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-01 10:28-0400\n"
+"POT-Creation-Date: 2018-04-09 19:04-0400\n"
 "PO-Revision-Date: 2018-03-14 07:35+0000\n"
 "Last-Translator: 关羽 <quguibo1988@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -81,16 +81,16 @@ msgstr "此 web 管理界面的语言"
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
 
-#: plinth/middleware.py:72
+#: plinth/middleware.py:73
 msgid "Application installed."
 msgstr "应用程序已安装。"
 
-#: plinth/middleware.py:78
+#: plinth/middleware.py:79
 #, python-brace-format
 msgid "Error installing application: {string} {details}"
 msgstr "安装应用程序出错：{string}{details}"
 
-#: plinth/middleware.py:82
+#: plinth/middleware.py:83
 #, python-brace-format
 msgid "Error installing application: {error}"
 msgstr "安装应用程序出错：{error}"
@@ -212,7 +212,7 @@ msgstr ""
 
 #: plinth/modules/config/__init__.py:55
 #: plinth/modules/dynamicdns/dynamicdns.py:45
-#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:40
+#: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "配置"
@@ -1591,7 +1591,7 @@ msgstr "重新获取"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:114
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot_manage.html:57
+#: plinth/modules/snapshot/templates/snapshot_manage.html:58
 msgid "Delete"
 msgstr "删除"
 
@@ -2640,7 +2640,7 @@ msgstr "接口"
 #: plinth/modules/networks/templates/connection_show.html:110
 #: plinth/modules/snapshot/templates/snapshot_delete.html:35
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
-#: plinth/modules/snapshot/templates/snapshot_manage.html:55
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:43
 msgid "Description"
 msgstr "描述"
@@ -3926,13 +3926,13 @@ msgstr "编辑用户"
 msgid "Share deleted."
 msgstr "{name} 已删除。"
 
-#: plinth/modules/snapshot/__init__.py:32
+#: plinth/modules/snapshot/__init__.py:33
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Storage Snapshots"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/__init__.py:35
+#: plinth/modules/snapshot/__init__.py:36
 #, fuzzy
 #| msgid ""
 #| "Snapshots allows creating and managing filesystem snapshots. These can be "
@@ -3946,7 +3946,7 @@ msgstr ""
 "快照可以允许创建并管理文件系统快照。这些可以用来回滚系统到前一个已知可用的状"
 "态，以防意外改变系统状态。"
 
-#: plinth/modules/snapshot/__init__.py:39
+#: plinth/modules/snapshot/__init__.py:40
 #, fuzzy, no-python-format
 #| msgid ""
 #| "Automatic snapshots are taken every hour, day, month and year. Older "
@@ -3969,7 +3969,7 @@ msgstr ""
 "可用空间。通过访问文件系统中的“.snapshots”目录，可以访问旧快照中的单个文件。"
 "快照功能不能替代备份。"
 
-#: plinth/modules/snapshot/__init__.py:46
+#: plinth/modules/snapshot/__init__.py:47
 msgid ""
 "Snapshots work on btrfs file systems only and on the root partition only. "
 "Snapshots are not a replacement for backups since they are stored on the "
@@ -3988,59 +3988,67 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:33
+msgid "Software Installation Snapshots"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:34
+msgid "Enable or disable snapshots before and after software installation"
+msgstr ""
+
+#: plinth/modules/snapshot/forms.py:38
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Hourly Snapshots Limit"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/forms.py:34
+#: plinth/modules/snapshot/forms.py:39
 msgid "Keep a maximum of this many hourly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:37
+#: plinth/modules/snapshot/forms.py:42
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Daily Snapshots Limit"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/forms.py:38
+#: plinth/modules/snapshot/forms.py:43
 msgid "Keep a maximum of this many daily snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:41
+#: plinth/modules/snapshot/forms.py:46
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Weekly Snapshots Limit"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/forms.py:42
+#: plinth/modules/snapshot/forms.py:47
 msgid "Keep a maximum of this many weekly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:45
+#: plinth/modules/snapshot/forms.py:50
 msgid "Monthly Snapshots Limit"
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:46
+#: plinth/modules/snapshot/forms.py:51
 msgid "Keep a maximum of this many monthly snapshots."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:49
+#: plinth/modules/snapshot/forms.py:54
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Yearly Snapshots Limit"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/forms.py:50
+#: plinth/modules/snapshot/forms.py:55
 msgid ""
 "Keep a maximum of this many yearly snapshots. The default is 0 (disabled)."
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:54
+#: plinth/modules/snapshot/forms.py:59
 msgid "Delete Software Snapshots older than (days)"
 msgstr ""
 
-#: plinth/modules/snapshot/forms.py:56
+#: plinth/modules/snapshot/forms.py:61
 msgid ""
 "Software snapshots older than this will be deleted. This does not limit the "
 "number of software snapshots created."
@@ -4052,14 +4060,14 @@ msgstr "永久删除此快照？"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:33
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
-#: plinth/modules/snapshot/templates/snapshot_manage.html:53
+#: plinth/modules/snapshot/templates/snapshot_manage.html:54
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Number"
 msgstr "编号"
 
 #: plinth/modules/snapshot/templates/snapshot_delete.html:34
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
-#: plinth/modules/snapshot/templates/snapshot_manage.html:54
+#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:42
 msgid "Date"
 msgstr "日期"
@@ -4076,42 +4084,42 @@ msgid "Delete the following snapshots permanently?"
 msgstr "永久删除此快照？"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
-#: plinth/modules/snapshot/views.py:155
+#: plinth/modules/snapshot/views.py:156
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Delete Snapshots"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Create Snapshot"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:35
+#: plinth/modules/snapshot/templates/snapshot_manage.html:36
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Delete all the snapshots"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:42
+#: plinth/modules/snapshot/templates/snapshot_manage.html:43
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete All"
 msgstr "删除"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:56
+#: plinth/modules/snapshot/templates/snapshot_manage.html:57
 msgid "Rollback"
 msgstr "回滚"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:67
+#: plinth/modules/snapshot/templates/snapshot_manage.html:68
 msgid "active"
 msgstr "激活"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:76
+#: plinth/modules/snapshot/templates/snapshot_manage.html:77
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "回滚到快照 #%(number)s"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:87
+#: plinth/modules/snapshot/templates/snapshot_manage.html:88
 #, python-format
 msgid "Delete snapshot #%(number)s"
 msgstr "删除快照 #%(number)s"
@@ -4134,52 +4142,52 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "回滚到快照 #%(number)s"
 
-#: plinth/modules/snapshot/views.py:43
+#: plinth/modules/snapshot/views.py:42
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Manage Snapshots"
 msgstr "创建快照"
 
-#: plinth/modules/snapshot/views.py:73
+#: plinth/modules/snapshot/views.py:72
 msgid "Created snapshot."
 msgstr "创建快照。"
 
-#: plinth/modules/snapshot/views.py:117
+#: plinth/modules/snapshot/views.py:119
 #, fuzzy
 #| msgid "Access rights configuration updated"
 msgid "Storage snapshots configuration updated"
 msgstr "访问权配置已更新"
 
-#: plinth/modules/snapshot/views.py:120 plinth/modules/tor/views.py:70
+#: plinth/modules/snapshot/views.py:122 plinth/modules/tor/views.py:70
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "操作错误：{0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:131
+#: plinth/modules/snapshot/views.py:132
 #, python-brace-format
 msgid "Deleted snapshot #{number}."
 msgstr "快照 #{number} 已删除。"
 
-#: plinth/modules/snapshot/views.py:139
+#: plinth/modules/snapshot/views.py:140
 msgid "Delete Snapshot"
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/views.py:148
+#: plinth/modules/snapshot/views.py:149
 #, fuzzy
 #| msgid "Delete Snapshot"
 msgid "Deleted all snapshots."
 msgstr "删除快照"
 
-#: plinth/modules/snapshot/views.py:166
+#: plinth/modules/snapshot/views.py:167
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "回滚到快照 #{number}。"
 
-#: plinth/modules/snapshot/views.py:169
+#: plinth/modules/snapshot/views.py:170
 msgid "The system must be restarted to complete the rollback."
 msgstr "系统需要重启以完成完全回滚。"
 
-#: plinth/modules/snapshot/views.py:181
+#: plinth/modules/snapshot/views.py:182
 msgid "Rollback to Snapshot"
 msgstr "回滚到快照"
 
@@ -4776,7 +4784,7 @@ msgstr "用户和组"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
 
-#: plinth/modules/users/forms.py:40
+#: plinth/modules/users/forms.py:39
 msgid "Access to all services and system settings"
 msgstr ""
 
@@ -4802,20 +4810,20 @@ msgstr ""
 "支持单一登录的服务。<br/><br/>管理员（admin）组中的用户将能够登录所有服务。他"
 "们还可以通过 SSH 登录到系统并具有管理权限（sudo）。"
 
-#: plinth/modules/users/forms.py:122 plinth/modules/users/forms.py:295
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
 msgid "Creating LDAP user failed."
 msgstr "创建 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:133
+#: plinth/modules/users/forms.py:134
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "未能将新用户添加到 {group}。"
 
-#: plinth/modules/users/forms.py:146
+#: plinth/modules/users/forms.py:147
 msgid "SSH Keys"
 msgstr "SSH 密钥"
 
-#: plinth/modules/users/forms.py:148
+#: plinth/modules/users/forms.py:149
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -4824,35 +4832,35 @@ msgstr ""
 "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行"
 "一个。将忽略空行和以 # 开头的行。"
 
-#: plinth/modules/users/forms.py:216
+#: plinth/modules/users/forms.py:217
 msgid "Renaming LDAP user failed."
 msgstr "重命名 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:229
 msgid "Failed to remove user from group."
 msgstr "无法从组中删除用户。"
 
-#: plinth/modules/users/forms.py:239
+#: plinth/modules/users/forms.py:240
 msgid "Failed to add user to group."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:248
+#: plinth/modules/users/forms.py:249
 msgid "Unable to set SSH keys."
 msgstr "不能设置 SSH 密钥。"
 
-#: plinth/modules/users/forms.py:272
+#: plinth/modules/users/forms.py:273
 msgid "Changing LDAP user password failed."
 msgstr "更改 LDAP 用户密码失败。"
 
-#: plinth/modules/users/forms.py:304
+#: plinth/modules/users/forms.py:306
 msgid "Failed to add new user to admin group."
 msgstr "未能将新用户添加到管理员组。"
 
-#: plinth/modules/users/forms.py:321
+#: plinth/modules/users/forms.py:323
 msgid "Failed to restrict console access."
 msgstr "限制命令行访问失败。"
 
-#: plinth/modules/users/forms.py:333
+#: plinth/modules/users/forms.py:335
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
@@ -5297,39 +5305,38 @@ msgstr "安装"
 msgid "Install this application?"
 msgstr "安装此应用程序？"
 
-#: plinth/templates/setup.html:65 plinth/templates/setup.html:89
+#: plinth/templates/setup.html:59
+msgid "This application needs an update. Update now?"
+msgstr "此应用程序需要一次更新。立即更新？"
+
+#: plinth/templates/setup.html:70
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
 
-#: plinth/templates/setup.html:71 plinth/templates/setup.html:74
-#: plinth/templates/setup.html:95
+#: plinth/templates/setup.html:79
 msgid "Install"
 msgstr "安装"
 
-#: plinth/templates/setup.html:79
-msgid "This application needs an update. Update now?"
-msgstr "此应用程序需要一次更新。立即更新？"
-
-#: plinth/templates/setup.html:98
+#: plinth/templates/setup.html:81
 msgid "Update"
 msgstr "更新"
 
-#: plinth/templates/setup.html:106
+#: plinth/templates/setup.html:90
 msgid "Performing pre-install operation"
 msgstr "执行安装前操作"
 
-#: plinth/templates/setup.html:108
+#: plinth/templates/setup.html:94
 msgid "Performing post-install operation"
 msgstr "执行安装后操作"
 
-#: plinth/templates/setup.html:112
+#: plinth/templates/setup.html:99
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
 msgstr "正在安装 %(package_names)s：%(status)s"
 
-#: plinth/templates/setup.html:122
+#: plinth/templates/setup.html:109
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "已完成 %(percentage)s%%"
