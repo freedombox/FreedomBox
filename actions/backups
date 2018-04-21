@@ -1,0 +1,122 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""
+Configuration helper for backups.
+"""
+
+import argparse
+import os
+import subprocess
+
+REPOSITORY = '/tmp/freedombox-backups'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser(
+        'setup', help='Create repository if it does not already exist')
+    subparsers.add_parser('info', help='Show repository information')
+    subparsers.add_parser('list', help='List repository contents')
+
+    create = subparsers.add_parser('create', help='Create archive')
+    create.add_argument('--name', help='Archive name', required=True)
+    create.add_argument('--path', help='Path to archive', required=True)
+
+    delete = subparsers.add_parser('delete', help='Delete archive')
+    delete.add_argument('--name', help='Archive name', required=True)
+
+    extract = subparsers.add_parser('extract', help='Extract archive contents')
+    extract.add_argument('--name', help='Archive name', required=True)
+    extract.add_argument('--destination', help='Extract destination',
+                         required=True)
+
+    export = subparsers.add_parser('export',
+                                   help='Export archive contents as tarball')
+    export.add_argument('--name', help='Archive name', required=True)
+    export.add_argument('--filename', help='Tarball file name', required=True)
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Create repository if it does not already exist."""
+    try:
+        subprocess.run(['borg', 'info', REPOSITORY], check=True)
+    except:
+        subprocess.run(['borg', 'init', '--encryption', 'none', REPOSITORY])
+
+
+def subcommand_info(_):
+    """Show repository information."""
+    subprocess.run(['borg', 'info', '--json', REPOSITORY], check=True)
+
+
+def subcommand_list(_):
+    """List repository contents."""
+    subprocess.run(['borg', 'list', '--json', REPOSITORY], check=True)
+
+
+def subcommand_create(arguments):
+    """Create archive."""
+    subprocess.run([
+        'borg', 'create', '--json', REPOSITORY + '::' + arguments.name,
+        arguments.path
+    ], check=True)
+
+
+def subcommand_delete(arguments):
+    """Delete archive."""
+    subprocess.run(['borg', 'delete', REPOSITORY + '::' + arguments.name],
+                   check=True)
+
+
+def subcommand_extract(arguments):
+    """Extract archive contents."""
+    prev_dir = os.getcwd()
+    try:
+        os.chdir(os.path.expanduser(arguments.destination))
+        subprocess.run(['borg', 'extract', REPOSITORY + '::' + arguments.name],
+                       check=True)
+    finally:
+        os.chdir(prev_dir)
+
+
+def subcommand_export(arguments):
+    """Export archive contents as tarball."""
+    subprocess.run([
+        'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
+        arguments.filename
+    ], check=True)
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

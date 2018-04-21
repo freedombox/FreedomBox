@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block page_head %}
+  <style type="text/css">
+    .share-operations form {
+      display: inline-block;
+    }
+    .share-operations {
+      text-align: right;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <h2>{{ title }}</h2>
+
+  {% for paragraph in description %}
+    <p>{{ paragraph|safe }}</p>
+  {% endfor %}
+
+  <p>
+    <a title="{% trans 'Create archive' %}"
+       role="button" class="btn btn-primary"
+       href="{% url 'backups:create' %}">
+      {% trans 'Create archive' %}
+    </a>
+  </p>
+
+  {% if not archives %}
+    <p>{% trans 'No archives currently exist.' %}</p>
+  {% else %}
+    <table class="table table-bordered table-condensed table-striped"
+	   id="archives-list">
+      <thead>
+        <tr>
+          <th>{% trans "Name" %}</th>
+          <th>{% trans "Time" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for archive in archives %}
+          <tr id="archive-{{ archive.name }}" class="archive">
+            <td class="archive-name">{{ archive.name }}</td>
+            <td class="archive-time">{{ archive.time }}</td>
+            <td class="archive-operations">
+              <a class="archive-extract btn btn-sm btn-default"
+                 href="{% url 'backups:extract' archive.name %}">
+		{% trans "Extract" %}
+              </a>
+              <a class="archive-export btn btn-sm btn-default"
+                 href="{% url 'backups:export' archive.name %}">
+		{% trans "Export" %}
+              </a>
+              <a class="archive-delete btn btn-sm btn-default"
+		 href="{% url 'backups:delete' archive.name %}">
+		<span class="glyphicon glyphicon-trash" aria-hidden="true">
+		</span>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}
