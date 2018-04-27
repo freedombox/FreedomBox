@@ -41,6 +41,11 @@ def parse_arguments():
     subparsers.add_parser('enable', help='Enable MediaWiki')
     subparsers.add_parser('disable', help='Disable MediaWiki')
     subparsers.add_parser('setup', help='Setup MediaWiki')
+    help_pubreg = 'Enable/Disable/Status public user registration.'
+    pubreg = subparsers.add_parser('public-registration', help=help_pubreg)
+    pubreg.add_argument('command', choices=('true', 'false', 'status'),
+                        help=help_pubreg)
+
     change_password = subparsers.add_parser('change-password',
                                             help='Change user password')
     change_password.add_argument('--username', default='admin',
@@ -127,6 +132,34 @@ def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('mediawiki')
     action_utils.service_disable('mediawiki-jobrunner')
+
+
+def subcommand_public_registration(argument):
+    """ Enable public registrations for mediawiki"""
+    with open(CONF_FILE, 'r+') as file_handle:
+        config_line_index = None
+        lines = file_handle.readlines()
+        config_line = "$wgGroupPermissions['*']['createaccount'] = "
+        for i in range(len(lines)):
+            line = lines[i]
+            if line.startswith("$wgGroupPermissions['*']['createaccount']"):
+                config_line_index = i
+                break
+
+        if config_line_index is None:
+            lines.append(config_line)
+            print('disabled')
+        else:
+            status = lines[config_line_index].strip(' \n').split('=')[1]
+            if argument.command == 'status':
+                print(status)
+                return
+            elif status != argument.command:
+                config_line = config_line + argument.command + '\n'
+                lines[config_line_index] = config_line
+        file_handle.seek(0)
+        file_handle.writelines(lines)
+        file_handle.truncate()
 
 
 def main():

@@ -27,6 +27,7 @@ from plinth import actions, views
 from plinth.modules import mediawiki
 
 from .forms import MediaWikiForm
+from . import get_public_registration_status
 
 logger = logging.getLogger(__name__)
 
@@ -41,13 +42,47 @@ class MediaWikiServiceView(views.ServiceView):
     manual_page = mediawiki.manual_page
     show_status_block = False
 
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial.update({
+            'enable_public_registration': get_public_registration_status()
+        })
+        return initial
+
     def form_valid(self, form):
         """Apply the changes submitted in the form."""
-        form_data = form.cleaned_data
-
-        if form_data['password']:
+        old_config = self.get_initial()
+        new_config = form.cleaned_data
+        app_same = old_config['is_enabled'] == new_config['is_enabled']
+        pubreg_same = old_config['enable_public_registration'] == \
+                      new_config['enable_public_registration']
+        if new_config['password']:
             actions.superuser_run('mediawiki', ['change-password'],
-                                  input=form_data['password'].encode())
+                                  input=new_config['password'].encode())
             messages.success(self.request, _('Password updated'))
+        if app_same and pubreg_same:
+            if not self.request._messages._queued_messages:
+                messages.info(self.request, _('Setting unchanged'))
+        elif not app_same:
+            if new_config['is_enabled']:
+                self.service.enable()
+                messages.success(self.request, _('Application enabled'))
+            else:
+                self.service.disable()
+                messages.success(self.request, _('Application disabled'))
+
+        if not pubreg_same:
+            # note action public-registration restarts, if running now
+            if new_config['enable_public_registration']:
+                actions.superuser_run('mediawiki',
+                                      ['public-registration', 'true'])
+                messages.success(self.request,
+                                 _('Public registration enabled'))
+            else:
+                actions.superuser_run('mediawiki',
+                                      ['public-registration', 'false'])
+                messages.success(self.request,
+                                 _('Public registration disabled'))
 
         return super().form_valid(form)
