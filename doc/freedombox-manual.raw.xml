@@ -7181,7 +7181,6 @@ iface lo inet loopback]]></screen>
         </inlinemediaobject>
       </para>
       <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry Pi 2</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi Model B+ with much faster processor and more RAM.  FreedomBox images are built and tested for it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink> that does not require non-free firmware is recommended. </para>
-      <para><emphasis>Note:</emphasis> For FreedomBox release 0.5, the Debian architecture used for this device is <code>armel</code>.  This means floating point computations are done in software and most operations are slower than what Raspberry Pi 2 is capable of.  Starting with FreedomBox release 0.6 separate <code>armhf</code> images with full hardware floating point support are available. </para>
       <section>
         <title>Download</title>
         <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
@@ -7242,15 +7241,7 @@ iface lo inet loopback]]></screen>
             <para>WiFi: Not available </para>
           </listitem>
           <listitem>
-            <para>Works with stock Debian kernel: No </para>
-          </listitem>
-        </itemizedlist>
-      </section>
-      <section>
-        <title>Known Issues</title>
-        <itemizedlist>
-          <listitem>
-            <para>The Debian architecture used for this device is <code>armel</code>.  This means floating point computations are done in software and generally most operations are slower than what Raspberry Pi 2 is capable of.  However, starting with FreedomBox 0.6 separate images for Raspberry Pi 2 with <code>armhf</code> architecture will be built. </para>
+            <para>Works with stock Debian kernel: Yes </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7267,14 +7258,14 @@ iface lo inet loopback]]></screen>
           </textobject>
         </inlinemediaobject>
       </para>
-      <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry Pi 3</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 2 Model B with a 64-bit processor and on-board Wi-Fi.  FreedomBox images built for Raspberry Pi 2 are tested to work well with it.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink>, that does not require non-free firmware, is recommended instead of the on-board Wi-Fi. </para>
+      <para><ulink url="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry Pi 3</ulink> (Model B ) is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 2 Model B with a 64-bit processor and on-board Wi-Fi.  A FreedomBox "testing" image is available for Raspberry Pi 3.  For using this board as FreedomBox, a <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/USBWiFi#">USB WiFi device</ulink>, that does not require non-free firmware, is recommended instead of the on-board Wi-Fi. </para>
       <section>
         <title>Download</title>
-        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Download the image meant for Raspberry Pi 2 and that image will work for this board.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
+        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> for this hardware are available.  Download the "testing" image for Raspberry Pi 3.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot into FreedomBox. </para>
       </section>
       <section>
         <title>Build Image</title>
-        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>.  Use the target 'raspberry2' to build the image for this board. </para>
+        <para>FreedomBox images for this hardware can be built using <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Maker#">Freedom Maker</ulink>.  Use the target 'raspberry3' with distribution 'testing' to build the image for this board. </para>
       </section>
       <section>
         <title>Availability</title>
@@ -7328,7 +7319,7 @@ iface lo inet loopback]]></screen>
             <para>WiFi: Requires non-free firmware </para>
           </listitem>
           <listitem>
-            <para>Works with stock Debian kernel: No </para>
+            <para>Works with stock Debian kernel: Yes </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7381,6 +7372,26 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.29.0 (2018-05-07)</title>
+        <itemizedlist>
+          <listitem>
+            <para>security: Allow console login access to user plinth </para>
+          </listitem>
+          <listitem>
+            <para>Add an option to enable/disable public registrations in mediawiki </para>
+          </listitem>
+          <listitem>
+            <para>tt-rss: Skip the check for SELF_URL_PATH </para>
+          </listitem>
+          <listitem>
+            <para>searx: Fix issue with uwsgi crashing </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech, Spanish, German, Norwegian Bokmål, and Italian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.28.0 (2018-04-23)</title>
         <itemizedlist>
@@ -9121,7 +9132,7 @@ FreedomBox app to configure Tiny Tiny RSS.
         <title>Using</title>
         <itemizedlist>
           <listitem>
-            <para>Plinth comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access Plinth by visiting the URL <ulink url="http://freedombox/plinth"/>. </para>
+            <para>Plinth comes installed with all FreedomBox images.  You can <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> FreedomBox images and run on any of the supported hardware. Then, you can access Plinth by visiting the URL <ulink url="http://freedombox/plinth"/> or <ulink url="https://freedombox.local/plinth"/>. </para>
           </listitem>
           <listitem>
             <para>If you are on a Debian box, you may install Plinth from Debian package archive.  Currently, only Stretch (testing) and Sid (unstable) are supported.  To install Plinth run: </para>
