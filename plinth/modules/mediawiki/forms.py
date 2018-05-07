@@ -26,14 +26,13 @@ from plinth.forms import ServiceForm
 
 class MediaWikiForm(ServiceForm):  # pylint: disable=W0232
     """MediaWiki configuration form."""
-    password = forms.CharField(label=_('Administrator Password'), help_text=_(
-        'Set a new password for MediaWiki\'s administrator account (admin). '
-        'Leave this field blank to keep the current password.'),
-                               required=False, widget=forms.PasswordInput)
-    enable_public_registration = forms.BooleanField(
-        label=_('Enable Public Registration'),
-        required=False,
-        help_text=_(
-            'Disabling public registration means that you restrict account '
-            'creation from outside the freedombox'))
+    password = forms.CharField(
+        label=_('Administrator Password'), help_text=_(
+            'Set a new password for MediaWiki\'s administrator account '
+            '(admin). Leave this field blank to keep the current password.'),
+        required=False, widget=forms.PasswordInput)
 
+    enable_public_registrations = forms.BooleanField(
+        label=_('Enable public registrations'), required=False, help_text=_(
+            'If enabled, anyone on the internet will be able to '
+            'create an account on your MediaWiki instance.'))

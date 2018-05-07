@@ -32,3 +32,13 @@ Scenario: Disable mediawiki application
   Given the mediawiki application is enabled
   When I disable the mediawiki application
   Then the mediawiki site should not be available
+
+Scenario: Enable public registrations
+  Given the mediawiki application is enabled
+  When I enable mediawiki public registrations
+  Then the mediawiki site should allow creating accounts
+
+Scenario: Disable public registrations
+  Given the mediawiki application is enabled
+  When I disable mediawiki public registrations
+  Then the mediawiki site should not allow creating accounts

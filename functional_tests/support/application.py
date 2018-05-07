@@ -85,9 +85,11 @@ def install(browser, app_name):
         sleep(2)  # XXX This shouldn't be required.
 
 
-def _change_status(browser, app_name, change_status_to='enabled'):
+def _change_status(browser, app_name, change_status_to='enabled',
+                   checkbox_id=None):
     interface.nav_to_module(browser, get_app_module(app_name))
-    checkbox = browser.find_by_id(get_app_checkbox_id(app_name))
+    checkbox_id = checkbox_id or get_app_checkbox_id(app_name)
+    checkbox = browser.find_by_id(checkbox_id)
     checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
     interface.submit(browser, 'form-configuration')
     if app_name in apps_with_loaders:
@@ -216,3 +218,17 @@ def verify_inaccessible_share(browser, name):
     url = '{}/share/{}'.format(default_url, name)
     browser.visit(url)
     eventually(lambda: '/plinth' in browser.url, args=[])
+
+
+def enable_mediawiki_public_registrations(browser):
+    """Enable public registrations in MediaWiki."""
+    interface.nav_to_module(browser, 'mediawiki')
+    _change_status(browser, 'mediawiki', 'enabled',
+                   checkbox_id='id_enable_public_registrations')
+
+
+def disable_mediawiki_public_registrations(browser):
+    """Enable public registrations in MediaWiki."""
+    interface.nav_to_module(browser, 'mediawiki')
+    _change_status(browser, 'mediawiki', 'disabled',
+                   checkbox_id='id_enable_public_registrations')

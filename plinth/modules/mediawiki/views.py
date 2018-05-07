@@ -26,8 +26,8 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from .forms import MediaWikiForm
 from . import get_public_registration_status
+from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ class MediaWikiServiceView(views.ServiceView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registration': get_public_registration_status()
+            'enable_public_registrations': get_public_registration_status()
         })
         return initial
 
@@ -54,14 +54,19 @@ class MediaWikiServiceView(views.ServiceView):
         """Apply the changes submitted in the form."""
         old_config = self.get_initial()
         new_config = form.cleaned_data
-        app_same = old_config['is_enabled'] == new_config['is_enabled']
-        pubreg_same = old_config['enable_public_registration'] == \
-                      new_config['enable_public_registration']
+
+        def is_unchanged(key):
+            return old_config[key] == new_config[key]
+
+        app_same = is_unchanged('is_enabled')
+        pub_reg_same = is_unchanged('enable_public_registrations')
+
         if new_config['password']:
             actions.superuser_run('mediawiki', ['change-password'],
                                   input=new_config['password'].encode())
             messages.success(self.request, _('Password updated'))
-        if app_same and pubreg_same:
+
+        if app_same and pub_reg_same:
             if not self.request._messages._queued_messages:
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
@@ -72,17 +77,17 @@ class MediaWikiServiceView(views.ServiceView):
                 self.service.disable()
                 messages.success(self.request, _('Application disabled'))
 
-        if not pubreg_same:
+        if not pub_reg_same:
             # note action public-registration restarts, if running now
-            if new_config['enable_public_registration']:
+            if new_config['enable_public_registrations']:
                 actions.superuser_run('mediawiki',
-                                      ['public-registration', 'true'])
+                                      ['public-registrations', 'enable'])
                 messages.success(self.request,
-                                 _('Public registration enabled'))
+                                 _('Public registrations enabled'))
             else:
                 actions.superuser_run('mediawiki',
-                                      ['public-registration', 'false'])
+                                      ['public-registrations', 'disable'])
                 messages.success(self.request,
-                                 _('Public registration disabled'))
+                                 _('Public registrations disabled'))
 
         return super().form_valid(form)

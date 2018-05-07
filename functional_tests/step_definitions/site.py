@@ -40,3 +40,13 @@ def access_application(browser, app_name):
         'I should be able to login to coquelicot with password {password:w}'))
 def verify_upload_password(browser, password):
     site.verify_coquelicot_upload_password(browser, password)
+
+
+@then(parsers.parse('the mediawiki site should allow creating accounts'))
+def mediawiki_allows_creating_accounts(browser):
+    site.verify_mediawiki_create_account_link(browser)
+
+
+@then(parsers.parse('the mediawiki site should not allow creating accounts'))
+def mediawiki_does_not_allow_creating_accounts(browser):
+    site.verify_mediawiki_no_create_account_link(browser)

@@ -131,5 +131,5 @@ def diagnose():
 def get_public_registration_status():
     """Return whether public registration is enabled."""
     output = actions.superuser_run('mediawiki',
-                                   ['public-registration', 'status'])
-    return output.strip() == 'true'
+                                   ['public-registrations', 'status'])
+    return output.strip() == 'enabled'

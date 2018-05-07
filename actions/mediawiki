@@ -41,10 +41,11 @@ def parse_arguments():
     subparsers.add_parser('enable', help='Enable MediaWiki')
     subparsers.add_parser('disable', help='Disable MediaWiki')
     subparsers.add_parser('setup', help='Setup MediaWiki')
-    help_pubreg = 'Enable/Disable/Status public user registration.'
-    pubreg = subparsers.add_parser('public-registration', help=help_pubreg)
-    pubreg.add_argument('command', choices=('true', 'false', 'status'),
-                        help=help_pubreg)
+
+    help_pub_reg = 'Enable/Disable/Status public user registration.'
+    pub_reg = subparsers.add_parser('public-registrations', help=help_pub_reg)
+    pub_reg.add_argument('command', choices=('enable', 'disable', 'status'),
+                         help=help_pub_reg)
 
     change_password = subparsers.add_parser('change-password',
                                             help='Change user password')
@@ -92,7 +93,7 @@ def _disable_public_registrations():
 def _disable_anonymous_editing():
     """Edit MediaWiki configuration to allow anonymous users from editing.
 
-    MediaWiki instances get a lot of spam bot typically.
+    MediaWiki instances typically get a lot of spam bots.
     """
     if not grep(r'\$wgGroupPermissions.*edit', CONF_FILE):
         with open(CONF_FILE, 'a') as file_handle:
@@ -134,32 +135,33 @@ def subcommand_disable(_):
     action_utils.service_disable('mediawiki-jobrunner')
 
 
-def subcommand_public_registration(argument):
-    """ Enable public registrations for mediawiki"""
-    with open(CONF_FILE, 'r+') as file_handle:
-        config_line_index = None
-        lines = file_handle.readlines()
-        config_line = "$wgGroupPermissions['*']['createaccount'] = "
-        for i in range(len(lines)):
-            line = lines[i]
-            if line.startswith("$wgGroupPermissions['*']['createaccount']"):
-                config_line_index = i
-                break
+def subcommand_public_registrations(arguments):
+    """Enable or Disable public registrations for MediaWiki."""
 
-        if config_line_index is None:
-            lines.append(config_line)
-            print('disabled')
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    def is_pub_reg_line(line):
+        return line.startswith("$wgGroupPermissions['*']['createaccount']")
+
+    if arguments.command == 'status':
+        conf_lines = list(filter(is_pub_reg_line, lines))
+        if conf_lines:
+            print('enabled' if 'true' in conf_lines[0] else 'disabled')
         else:
-            status = lines[config_line_index].strip(' \n').split('=')[1]
-            if argument.command == 'status':
-                print(status)
-                return
-            elif status != argument.command:
-                config_line = config_line + argument.command + '\n'
-                lines[config_line_index] = config_line
-        file_handle.seek(0)
-        file_handle.writelines(lines)
-        file_handle.truncate()
+            print('disabled')
+    else:
+        with open(CONF_FILE, 'w') as conf_file:
+            for line in lines:
+                if is_pub_reg_line(line):
+                    words = line.split()
+                    if arguments.command == 'enable':
+                        words[-1] = 'true;'
+                    else:
+                        words[-1] = 'false;'
+                    conf_file.write(" ".join(words) + '\n')
+                else:
+                    conf_file.write(line)
 
 
 def main():

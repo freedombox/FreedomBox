@@ -57,3 +57,15 @@ def verify_coquelicot_upload_password(browser, password):
     actions.perform()
     assert eventually(browser.is_element_present_by_css,
                       args=['div[style*="display: none;"]'])
+
+
+def verify_mediawiki_create_account_link(browser):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    assert eventually(browser.is_element_present_by_id,
+                      args=['pt-createaccount'])
+
+
+def verify_mediawiki_no_create_account_link(browser):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    assert eventually(browser.is_element_not_present_by_id,
+                      args=['pt-createaccount'])

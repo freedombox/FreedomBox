@@ -164,3 +164,13 @@ def verify_nonexistant_share(browser, name):
 @then(parsers.parse('the share {name:w} should not be accessible'))
 def verify_inaccessible_share(browser, name):
     application.verify_inaccessible_share(browser, name)
+
+
+@when(parsers.parse('I enable mediawiki public registrations'))
+def enable_mediawiki_public_registrations(browser):
+    application.enable_mediawiki_public_registrations(browser)
+
+
+@when(parsers.parse('I disable mediawiki public registrations'))
+def disable_mediawiki_public_registrations(browser):
+    application.disable_mediawiki_public_registrations(browser)
