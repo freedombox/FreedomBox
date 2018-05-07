@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-23 18:26-0400\n"
+"POT-Creation-Date: 2018-05-07 18:25-0400\n"
 "PO-Revision-Date: 2018-04-29 02:39+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -578,8 +578,8 @@ msgstr "Oppdater oppsett"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/openvpn/views.py:149 plinth/modules/tor/views.py:140
-#: plinth/views.py:149
+#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
@@ -967,12 +967,14 @@ msgid "Configuration"
 msgstr "Oppsett"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:109 plinth/views.py:153
+#: plinth/modules/matrixsynapse/views.py:109
+#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Programmet er aktivert"
 
 #: plinth/modules/ejabberd/views.py:70
-#: plinth/modules/matrixsynapse/views.py:112 plinth/views.py:156
+#: plinth/modules/matrixsynapse/views.py:112
+#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Programmet er deaktivert"
 
@@ -1948,11 +1950,11 @@ msgstr ""
 "Alle med en lenke til denne wiki-en kan lese den. Kun brukere som er "
 "innlogget kan endre innholdet."
 
-#: plinth/modules/mediawiki/forms.py:29
+#: plinth/modules/mediawiki/forms.py:30
 msgid "Administrator Password"
 msgstr "Administratorpassord"
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:31
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
@@ -1960,9 +1962,33 @@ msgstr ""
 "Sett et nytt passord for MediaWikis administratorkonto (admin). La dette "
 "feltet stå tomt for å beholde gjeldende passord."
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/forms.py:36
+#, fuzzy
+#| msgid "Enable Public Registration"
+msgid "Enable public registrations"
+msgstr "Skru på offentlig registrering"
+
+#: plinth/modules/mediawiki/forms.py:37
+msgid ""
+"If enabled, anyone on the internet will be able to create an account on your "
+"MediaWiki instance."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:67
 msgid "Password updated"
 msgstr "Passord oppdatert"
+
+#: plinth/modules/mediawiki/views.py:86
+#, fuzzy
+#| msgid "Public registration enabled"
+msgid "Public registrations enabled"
+msgstr "Offentlig registrering påskrudd"
+
+#: plinth/modules/mediawiki/views.py:91
+#, fuzzy
+#| msgid "Public registration disabled"
+msgid "Public registrations disabled"
+msgstr "Offentlig registrering avskrudd"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
@@ -2098,8 +2124,8 @@ msgstr ""
 "nøkkelen kan deretter lastes opp til OpenPGP-nøkkeltjenere. Brukere som "
 "kobler til nett-tjeneren via maskinen via HTTPS kan få bekreftet at de "
 "kobler til riktig vert. For at brukerne skal stole på sertifikatet, trenger "
-"brukeren å installere noe programvare som er tilgjengelig på <a href=\""
-"https://web.monkeysphere.info/download/\"> Monkeysphere-nettsiden </a>."
+"brukeren å installere noe programvare som er tilgjengelig på <a href="
+"\"https://web.monkeysphere.info/download/\"> Monkeysphere-nettsiden </a>."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:57
 msgid "Publishing key to keyserver..."
@@ -3481,10 +3507,10 @@ msgid ""
 "one or more Quassel clients from a desktop or a mobile can be used to "
 "connect and disconnect from it."
 msgstr ""
-"Quassel er et IRC-program som er delt i to deler, en «kjerne» og en «klient»"
-". Dette tillater kjernen å forbli tilkoblet til IRC-tjenere, og å fortsette "
-"å motta meldinger, selv når klienten er frakoblet. {box_name} kan kjøre "
-"Quassel kjernetjeneste, og alltid holde deg på nett. Fra mobilen eller "
+"Quassel er et IRC-program som er delt i to deler, en «kjerne» og en "
+"«klient». Dette tillater kjernen å forbli tilkoblet til IRC-tjenere, og å "
+"fortsette å motta meldinger, selv når klienten er frakoblet. {box_name} kan "
+"kjøre Quassel kjernetjeneste, og alltid holde deg på nett. Fra mobilen eller "
 "skrivebordet kan en eller flere Quassel-klienter brukes til å koble til og "
 "fra."
 
@@ -3739,11 +3765,11 @@ msgid ""
 "a>)."
 msgstr ""
 "For Gmail vil brukernavnet være din Gmail-adresse, passordet blir ditt "
-"Google-kontopassord, og tjeneren vil være <code> "
-"imaps://imap.gmail.com</code>.  Merk at du også må aktivere «Less secure "
-"apps» i Google-innstillingene dine. (<a href=\"https://www.google.com/"
-"settings/security/lesssecureapps\">https://www.google.com/settings/security/"
-"lesssecureapps</a>)."
+"Google-kontopassord, og tjeneren vil være <code> imaps://imap.gmail.com</"
+"code>.  Merk at du også må aktivere «Less secure apps» i Google-"
+"innstillingene dine. (<a href=\"https://www.google.com/settings/security/"
+"lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
+"a>)."
 
 #: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
 msgid "Searx"

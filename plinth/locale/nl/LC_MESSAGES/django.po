@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-23 18:26-0400\n"
+"POT-Creation-Date: 2018-05-07 18:25-0400\n"
 "PO-Revision-Date: 2018-04-21 00:13+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -560,8 +560,8 @@ msgstr "Instelling bijwerken"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/openvpn/views.py:149 plinth/modules/tor/views.py:140
-#: plinth/views.py:149
+#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Instelling onveranderd"
 
@@ -947,12 +947,14 @@ msgid "Configuration"
 msgstr "Configuratie"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:109 plinth/views.py:153
+#: plinth/modules/matrixsynapse/views.py:109
+#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Toepassing ingeschakeld"
 
 #: plinth/modules/ejabberd/views.py:70
-#: plinth/modules/matrixsynapse/views.py:112 plinth/views.py:156
+#: plinth/modules/matrixsynapse/views.py:112
+#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Toepassing uitgeschakeld"
 
@@ -1890,11 +1892,11 @@ msgstr ""
 "Iedereen met een link naar deze wiki kan hem lezen. Alleen ingelogde "
 "gebruikers kunnen wijzigingen aanbrengen in de inhoud."
 
-#: plinth/modules/mediawiki/forms.py:29
+#: plinth/modules/mediawiki/forms.py:30
 msgid "Administrator Password"
 msgstr "Beheerderswachtwoord"
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:31
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
@@ -1902,9 +1904,33 @@ msgstr ""
 "Stel een nieuw wachtwoord in voor MediaWiki's beheerdersaccount (admin). "
 "Laat dit veld leeg om het huidige wachtwoord te behouden."
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/forms.py:36
+#, fuzzy
+#| msgid "Enable Public Registration"
+msgid "Enable public registrations"
+msgstr "Openbare registratie inschakelen"
+
+#: plinth/modules/mediawiki/forms.py:37
+msgid ""
+"If enabled, anyone on the internet will be able to create an account on your "
+"MediaWiki instance."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:67
 msgid "Password updated"
 msgstr "Wachtwoord bijgewerkt"
+
+#: plinth/modules/mediawiki/views.py:86
+#, fuzzy
+#| msgid "Public registration enabled"
+msgid "Public registrations enabled"
+msgstr "Openbare registratie ingeschakeld"
+
+#: plinth/modules/mediawiki/views.py:91
+#, fuzzy
+#| msgid "Public registration disabled"
+msgid "Public registrations disabled"
+msgstr "Openbare registratie uitgeschakeld"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-23 18:26-0400\n"
+"POT-Creation-Date: 2018-05-07 18:25-0400\n"
 "PO-Revision-Date: 2018-05-07 20:35+0000\n"
 "Last-Translator: Sciumedanglisc <traduxi@riseup.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -588,8 +588,8 @@ msgstr "Aggiorna impostazioni"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/openvpn/views.py:149 plinth/modules/tor/views.py:140
-#: plinth/views.py:149
+#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Impostazioni invariate"
 
@@ -992,12 +992,14 @@ msgid "Configuration"
 msgstr "Configurazione"
 
 #: plinth/modules/ejabberd/views.py:67
-#: plinth/modules/matrixsynapse/views.py:109 plinth/views.py:153
+#: plinth/modules/matrixsynapse/views.py:109
+#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Applicazione abilitata"
 
 #: plinth/modules/ejabberd/views.py:70
-#: plinth/modules/matrixsynapse/views.py:112 plinth/views.py:156
+#: plinth/modules/matrixsynapse/views.py:112
+#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Applicazione disabilitata"
 
@@ -1262,8 +1264,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"Il project wiki <a href=\"http://wiki.debian.org/FreedomBox\" target=\""
-"_blank\"> %(box_name)s contiene ulteriori informazioni."
+"Il project wiki <a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank"
+"\"> %(box_name)s contiene ulteriori informazioni."
 
 #: plinth/modules/help/templates/help_index.html:51
 #, fuzzy, python-format
@@ -1896,19 +1898,43 @@ msgid ""
 "can make changes to the content."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:29
+#: plinth/modules/mediawiki/forms.py:30
 msgid "Administrator Password"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:30
+#: plinth/modules/mediawiki/forms.py:31
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/forms.py:36
+#, fuzzy
+#| msgid "Enable new user registrations"
+msgid "Enable public registrations"
+msgstr "Abilita registrazione nuovi utenti"
+
+#: plinth/modules/mediawiki/forms.py:37
+msgid ""
+"If enabled, anyone on the internet will be able to create an account on your "
+"MediaWiki instance."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:67
 msgid "Password updated"
 msgstr ""
+
+#: plinth/modules/mediawiki/views.py:86
+#, fuzzy
+#| msgid "User registrations enabled"
+msgid "Public registrations enabled"
+msgstr "Registrazione utenti abilitata"
+
+#: plinth/modules/mediawiki/views.py:91
+#, fuzzy
+#| msgid "User registrations disabled"
+msgid "Public registrations disabled"
+msgstr "Registrazione utenti disabilitqta"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
