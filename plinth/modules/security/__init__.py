@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 2
+version = 3
 
 is_essential = True
 
@@ -36,7 +36,9 @@ managed_services = ['fail2ban']
 manual_page = 'Security'
 
 ACCESS_CONF_FILE = '/etc/security/access.conf'
-ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
+OLD_ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
 
 
 def init():
@@ -59,13 +61,8 @@ def setup_fail2ban():
 def get_restricted_access_enabled():
     """Return whether restricted access is enabled"""
     with open(ACCESS_CONF_FILE, 'r') as conffile:
-        lines = conffile.readlines()
-
-    for line in lines:
-        if ACCESS_CONF_SNIPPET in line:
-            return True
-
-    return False
+        return any(line.strip() in ACCESS_CONF_SNIPPETS
+                   for line in conffile.readlines())
 
 
 def set_restricted_access(enabled):

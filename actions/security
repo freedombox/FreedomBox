@@ -21,8 +21,8 @@ Helper for security configuration
 
 import argparse
 
-ACCESS_CONF_FILE = '/etc/security/access.conf'
-ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
+from plinth.modules.security import (ACCESS_CONF_FILE, ACCESS_CONF_SNIPPET,
+                                     ACCESS_CONF_SNIPPETS)
 
 
 def parse_arguments():
@@ -46,12 +46,19 @@ def subcommand_enable_restricted_access(_):
     with open(ACCESS_CONF_FILE, 'r') as conffile:
         lines = conffile.readlines()
 
-    for line in lines:
-        if ACCESS_CONF_SNIPPET == line.strip():
-            return
+    is_upgrading = False
 
-    with open(ACCESS_CONF_FILE, 'a') as conffile:
-        conffile.write(ACCESS_CONF_SNIPPET + '\n')
+    with open(ACCESS_CONF_FILE, 'w') as conffile:
+        for line in lines:
+            if line.strip() in ACCESS_CONF_SNIPPETS:
+                conffile.write(ACCESS_CONF_SNIPPET + '\n')
+                is_upgrading = True
+            else:
+                conffile.write(line)
+
+    if not is_upgrading:
+        with open(ACCESS_CONF_FILE, 'a') as conffile:
+            conffile.write(ACCESS_CONF_SNIPPET + '\n')
 
 
 def subcommand_disable_restricted_access(_):
@@ -61,7 +68,7 @@ def subcommand_disable_restricted_access(_):
 
     with open(ACCESS_CONF_FILE, 'w') as conffile:
         for line in lines:
-            if ACCESS_CONF_SNIPPET != line.strip():
+            if line.strip() not in ACCESS_CONF_SNIPPETS:
                 conffile.write(line)
 
 
