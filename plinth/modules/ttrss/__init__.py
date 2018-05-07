@@ -28,7 +28,7 @@ from plinth.utils import format_lazy
 
 from .manifest import clients
 
-version = 2
+version = 3
 
 managed_services = ['tt-rss']
 

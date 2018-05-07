@@ -58,11 +58,21 @@ def subcommand_setup(_):
 
     aug.set('/files' + DEFAULT_FILE + '/DISABLED', '0')
 
+    skip_self_url_path_exists = False
+
     for match in aug.match('/files' + CONFIG_FILE + '/define'):
         if aug.get(match) == 'SELF_URL_PATH':
             aug.set(match + '/value', "'http://localhost/tt-rss/'")
         elif aug.get(match) == 'PLUGINS':
             aug.set(match + '/value', "'auth_remote, note'")
+        elif aug.get(match) == '_SKIP_SELF_URL_PATH_CHECKS':
+            skip_self_url_path_exists = True
+            aug.set(match + '/value', 'true')
+
+    if not skip_self_url_path_exists:
+        aug.set('/files' + CONFIG_FILE + '/define[last() + 1]',
+                '_SKIP_SELF_URL_PATH_CHECKS')
+        aug.set('/files' + CONFIG_FILE + '/define[last()]/value', 'true')
 
     aug.save()
 
