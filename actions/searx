@@ -20,6 +20,7 @@ Configuration helper for searx.
 """
 
 import argparse
+import augeas
 import os
 import secrets
 import shutil
@@ -30,6 +31,8 @@ from plinth import action_utils
 from plinth.utils import gunzip
 
 SETTINGS_FILE = '/etc/searx/settings.yml'
+
+UWSGI_FILE = '/etc/uwsgi/apps-available/searx.ini'
 
 
 def parse_arguments():
@@ -64,10 +67,22 @@ def _copy_uwsgi_configuration():
     """
     example_config = ('/usr/share/doc/searx/examples/'
                       'uwsgi/apps-available/searx.ini')
-    destination = '/etc/uwsgi/apps-available/'
+    if not os.path.exists(UWSGI_FILE):
+        shutil.copy(example_config, os.path.dirname(UWSGI_FILE))
 
-    if not os.path.exists(os.path.join(destination, 'searx.ini')):
-        shutil.copy(example_config, destination)
+
+def _update_uwsgi_configuration():
+    """Fix uwsgi configuration.
+
+    uwsgi 2.0.15-debian crashes when trying to autoload.
+    """
+    aug = augeas.Augeas(
+        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/inifile/lens', 'Puppet.lns')
+    aug.set('/augeas/load/inifile/incl[last() + 1]', UWSGI_FILE)
+    aug.load()
+    aug.set('/files/etc/uwsgi/apps-available/searx.ini/uwsgi/autoload', 'false')
+    aug.save()
 
 
 def _generate_secret_key(settings):
@@ -119,6 +134,7 @@ def write_settings(settings):
 def subcommand_setup(_):
     """Post installation actions for Searx"""
     _copy_uwsgi_configuration()
+    _update_uwsgi_configuration()
     action_utils.webserver_enable('proxy_uwsgi', kind='module')
 
     if not os.path.exists(SETTINGS_FILE):

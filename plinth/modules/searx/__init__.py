@@ -31,7 +31,7 @@ from .manifest import clients
 
 clients = clients
 
-version = 1
+version = 2
 
 managed_services = ['searx']
 
@@ -80,7 +80,9 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'searx', ['setup'])
-    helper.call('post', actions.superuser_run, 'searx', ['enable'])
+    if not old_version:
+        helper.call('post', actions.superuser_run, 'searx', ['enable'])
+
     global service
     if service is None:
         service = service_module.Service(managed_services[0], name, ports=[
