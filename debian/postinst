@@ -5,6 +5,12 @@ set -e
 daemonuser=plinth
 daemongroup=plinth
 
+# Due to a change in sudo, now it runs PAM modules even on password-less
+# invocations. This leads to plinth not being able to run root privileges. This
+# is because of our own restrictions in /etc/security/access.conf. Since Plinth
+# is locked out after upgrade, we need to do this in postinst.
+sed -ie 's+-:ALL EXCEPT root fbx (admin) (sudo):ALL+-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL+' /etc/security/access.conf
+
 case "$1" in
 configure)
 	addgroup --system --quiet plinth

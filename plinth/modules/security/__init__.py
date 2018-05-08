@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 3
+version = 4
 
 is_essential = True
 
@@ -50,7 +50,11 @@ def init():
 def setup(helper, old_version=None):
     """Install the required packages"""
     helper.install(managed_packages)
-    setup_fail2ban()
+    if not old_version:
+        setup_fail2ban()
+
+    if get_restricted_access_enabled():
+        set_restricted_access(True)
 
 
 def setup_fail2ban():
