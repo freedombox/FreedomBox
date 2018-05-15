@@ -72,22 +72,22 @@
             Please wait for a few moments before trying again.
           {% endblocktrans %}
         </div>
-      {% elif setup_helper.get_state == 'unavailable' %}
+      {% elif setup_helper.has_unavailable_packages %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
-            This application is currently unavailable in your distribution.
-         {% endblocktrans %}
+            This application is currently not available in your distribution.
+          {% endblocktrans %}
         </div>
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary"
-             {{ package_manager_is_busy|yesno:'disabled="disabled"' }}
+             {% if package_manager_is_busy or setup_helper.has_unavailable_packages %}
+             disabled="disabled"
+             {% endif %}
              {% if setup_helper.get_state == 'needs-setup' %}
              value="{% trans "Install" %}"
              {% elif setup_helper.get_state == 'needs-upgrade' %}
              value="{% trans "Update" %}"
-             {% elif setup_helper.get_state == 'unavailable' %}
-             value="{% trans "Install" %}" disabled="disabled"
              {% endif %} />
 
     </form>

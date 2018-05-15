@@ -143,8 +143,6 @@ class Helper(object):
             return 'up-to-date'
 
         if not current_version:
-            if any(self.list_unavailable_packages()):
-                return 'unavailable'
             return 'needs-setup'
         else:
             return 'needs-update'
@@ -164,17 +162,16 @@ class Helper(object):
         """Set a module's setup version."""
         from . import models
 
-        models.Module.objects.update_or_create(pk=self.module_name, defaults={
-            'setup_version': version
-        })
+        models.Module.objects.update_or_create(
+            pk=self.module_name, defaults={'setup_version': version})
 
-    def list_unavailable_packages(self):
+    def has_unavailable_packages(self):
         """List the unavailable packages managed by the module (if any)."""
         cache = apt.Cache()
         managed_pkgs = getattr(self.module, 'managed_packages', [])
-        unavailable_pkgs = [pkg_name for pkg_name in managed_pkgs
-                            if pkg_name not in cache]
-        return unavailable_pkgs
+        unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
+                            if pkg_name not in cache)
+        return any(unavailable_pkgs)
 
 
 def init(module_name, module):
