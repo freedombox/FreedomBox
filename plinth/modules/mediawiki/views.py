@@ -26,7 +26,7 @@ from django.utils.translation import ugettext as _
 from plinth import actions, views
 from plinth.modules import mediawiki
 
-from . import get_public_registration_status
+from . import get_public_registration_status, get_private_mode_status
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,8 @@ class MediaWikiServiceView(views.ServiceView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registrations': get_public_registration_status()
+            'enable_public_registrations': get_public_registration_status(),
+            'enable_private_mode': get_private_mode_status()
         })
         return initial
 
@@ -60,13 +61,14 @@ class MediaWikiServiceView(views.ServiceView):
 
         app_same = is_unchanged('is_enabled')
         pub_reg_same = is_unchanged('enable_public_registrations')
+        private_mode_same = is_unchanged('enable_private_mode')
 
         if new_config['password']:
             actions.superuser_run('mediawiki', ['change-password'],
                                   input=new_config['password'].encode())
             messages.success(self.request, _('Password updated'))
 
-        if app_same and pub_reg_same:
+        if app_same and pub_reg_same and private_mode_same:
             if not self.request._messages._queued_messages:
                 messages.info(self.request, _('Setting unchanged'))
         elif not app_same:
@@ -89,5 +91,21 @@ class MediaWikiServiceView(views.ServiceView):
                                       ['public-registrations', 'disable'])
                 messages.success(self.request,
                                  _('Public registrations disabled'))
+
+        if not private_mode_same:
+            if new_config['enable_private_mode']:
+                actions.superuser_run('mediawiki',
+                                      ['private-mode', 'enable'])
+                if new_config['enable_public_registrations']:
+                    # If public registrations are enabled, then disable it
+                    actions.superuser_run('mediawiki',
+                                          ['public-registrations', 'disable'])
+                messages.success(self.request,
+                                 _('Private mode enabled'))
+            else:
+                actions.superuser_run('mediawiki',
+                                      ['private-mode', 'disable'])
+                messages.success(self.request,
+                                 _('Private mode disabled'))
 
         return super().form_valid(form)

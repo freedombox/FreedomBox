@@ -174,3 +174,13 @@ def enable_mediawiki_public_registrations(browser):
 @when(parsers.parse('I disable mediawiki public registrations'))
 def disable_mediawiki_public_registrations(browser):
     application.disable_mediawiki_public_registrations(browser)
+
+
+@when(parsers.parse('I enable mediawiki private mode'))
+def enable_mediawiki_private_mode(browser):
+    application.enable_mediawiki_private_mode(browser)
+
+
+@when(parsers.parse('I disable mediawiki private mode'))
+def disable_mediawiki_private_mode(browser):
+    application.disable_mediawiki_private_mode(browser)

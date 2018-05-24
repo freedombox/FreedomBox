@@ -69,3 +69,18 @@ def verify_mediawiki_no_create_account_link(browser):
     browser.visit(config['DEFAULT']['url'] + '/mediawiki')
     assert eventually(browser.is_element_not_present_by_id,
                       args=['pt-createaccount'])
+
+
+def verify_mediawiki_anonymous_reads_edits_link(browser):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    assert eventually(browser.is_element_present_by_id,
+                      args=['ca-nstab-main'])
+
+
+def verify_mediawiki_no_anonymous_reads_edits_link(browser):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    assert eventually(browser.is_element_not_present_by_id,
+                      args=['ca-nstab-main'])
+    assert eventually(browser.is_element_present_by_id,
+                      args=['ca-nstab-special'])
+

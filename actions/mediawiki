@@ -48,6 +48,11 @@ def parse_arguments():
     pub_reg.add_argument('command', choices=('enable', 'disable', 'status'),
                          help=help_pub_reg)
 
+    help_private_mode = 'Enable/Disable/Status private mode.'
+    private_mode = subparsers.add_parser('private-mode', help=help_private_mode)
+    private_mode.add_argument('command', choices=('enable', 'disable', 'status'),
+                              help=help_private_mode)
+
     change_password = subparsers.add_parser('change-password',
                                             help='Change user password')
     change_password.add_argument('--username', default='admin',
@@ -169,6 +174,42 @@ def subcommand_public_registrations(arguments):
                     conf_file.write(" ".join(words) + '\n')
                 else:
                     conf_file.write(line)
+
+
+def subcommand_private_mode(arguments):
+    """Enable or Disable Private mode for wiki"""
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+
+    def is_edit_line(line):
+        return line.startswith("$wgGroupPermissions['*']['edit']")
+
+    def is_read_line(line):
+        return line.startswith("$wgGroupPermissions['*']['read']")
+
+    edit_conf_lines = list(filter(is_edit_line, lines))
+    read_conf_lines = list(filter(is_read_line, lines))
+    if arguments.command == 'status':
+        if edit_conf_lines and read_conf_lines:
+            print('enabled' if ('false' in read_conf_lines[0]) and
+                               ('false' in edit_conf_lines[0]) else 'disabled')
+        else:
+            print('disabled')
+    else:
+        with open(CONF_FILE, 'w') as conf_file:
+            conf_value = 'false;' if arguments.command == 'enable' else 'true;'
+            for line in lines:
+                if is_edit_line(line) or is_read_line(line):
+                    words = line.split()
+                    words[-1] = conf_value
+                    conf_file.write(" ".join(words) + '\n')
+                else:
+                    conf_file.write(line)
+
+            if edit_conf_lines is None:
+                conf_file.write("$wgGroupPermissions['*']['edit'] = " + conf_value + '\n')
+            if read_conf_lines is None:
+                conf_file.write("$wgGroupPermissions['*']['read'] = " + conf_value + '\n')
 
 
 def main():

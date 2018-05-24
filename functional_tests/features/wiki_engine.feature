@@ -42,3 +42,14 @@ Scenario: Disable public registrations
   Given the mediawiki application is enabled
   When I disable mediawiki public registrations
   Then the mediawiki site should not allow creating accounts
+
+Scenario: Enable private mode
+  Given the mediawiki application is enabled
+  When I enable mediawiki private mode
+  Then the mediawiki site should not allow creating accounts
+  Then the mediawiki site should not allow anonymous reads and writes
+
+Scenario: Disable private mode
+  Given the mediawiki application is enabled
+  When I disable mediawiki private mode
+  Then the mediawiki site should allow anonymous reads and writes

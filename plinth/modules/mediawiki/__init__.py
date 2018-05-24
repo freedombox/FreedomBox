@@ -134,3 +134,10 @@ def get_public_registration_status():
     output = actions.superuser_run('mediawiki',
                                    ['public-registrations', 'status'])
     return output.strip() == 'enabled'
+
+
+def get_private_mode_status():
+    """ Return wheter private mode is enabled or disabled"""
+    output = actions.superuser_run('mediawiki',
+                                   ['private-mode', 'status'])
+    return output.strip() == 'enabled'

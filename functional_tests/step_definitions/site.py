@@ -50,3 +50,13 @@ def mediawiki_allows_creating_accounts(browser):
 @then(parsers.parse('the mediawiki site should not allow creating accounts'))
 def mediawiki_does_not_allow_creating_accounts(browser):
     site.verify_mediawiki_no_create_account_link(browser)
+
+
+@then(parsers.parse('the mediawiki site should allow anonymous reads and writes'))
+def mediawiki_allows_anonymous_reads_edits(browser):
+    site.verify_mediawiki_anonymous_reads_edits_link(browser)
+
+
+@then(parsers.parse('the mediawiki site should not allow anonymous reads and writes'))
+def mediawiki_does_not_allow__account_creation_anonymous_reads_edits(browser):
+    site.verify_mediawiki_no_anonymous_reads_edits_link(browser)

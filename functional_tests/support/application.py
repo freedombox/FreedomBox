@@ -232,3 +232,17 @@ def disable_mediawiki_public_registrations(browser):
     interface.nav_to_module(browser, 'mediawiki')
     _change_status(browser, 'mediawiki', 'disabled',
                    checkbox_id='id_enable_public_registrations')
+
+
+def enable_mediawiki_private_mode(browser):
+    """Enable public registrations in MediaWiki."""
+    interface.nav_to_module(browser, 'mediawiki')
+    _change_status(browser, 'mediawiki', 'enabled',
+                   checkbox_id='id_enable_private_mode')
+
+
+def disable_mediawiki_private_mode(browser):
+    """Enable public registrations in MediaWiki."""
+    interface.nav_to_module(browser, 'mediawiki')
+    _change_status(browser, 'mediawiki', 'disabled',
+                   checkbox_id='id_enable_private_mode')
