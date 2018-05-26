@@ -241,7 +241,7 @@ setuptools.setup(
                  ['data/etc/NetworkManager/dispatcher.d/10-freedombox-batman']),
                 ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
                 ('/lib/systemd/system',
-                 ['data/lib/systemd/system/plinth.service']),
+                 glob.glob('data/lib/systemd/system/*.service')),
                 ('/usr/share/plinth/actions',
                  glob.glob(os.path.join('actions', '*'))),
                 ('/usr/share/polkit-1/rules.d',
