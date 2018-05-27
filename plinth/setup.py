@@ -100,7 +100,7 @@ class Helper(object):
             self.is_finished = True
             self.current_operation = None
 
-    def install(self, package_names):
+    def install(self, package_names, skip_recommends=False):
         """Install a set of packages marking progress."""
         if self.allow_install is False:
             # Raise error if packages are not already installed.
@@ -119,7 +119,7 @@ class Helper(object):
             'step': 'install',
             'transaction': transaction,
         }
-        transaction.install()
+        transaction.install(skip_recommends)
 
     def call(self, step, method, *args, **kwargs):
         """Call an arbitrary method during setup and note down its stage."""

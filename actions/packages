@@ -39,6 +39,9 @@ def parse_arguments():
 
     subparser = subparsers.add_parser('install', help='install packages')
     subparser.add_argument(
+        '--skip-recommends', action='store_true',
+        help='whether to skip installing recommended packages')
+    subparser.add_argument(
         'module', help='name of module for which package is being installed')
     subparser.add_argument('packages', nargs='+',
                            help='list of packages to install')
@@ -82,7 +85,11 @@ def subcommand_install(arguments):
         print('Access check failed:', exception, file=sys.stderr)
         sys.exit(99)
 
-    _run_apt_command(['install'] + arguments.packages)
+    if arguments.skip_recommends:
+        _run_apt_command(
+            ['install', '--no-install-recommends'] + arguments.packages)
+    else:
+        _run_apt_command(['install'] + arguments.packages)
 
 
 def _assert_managed_packages(module, packages):

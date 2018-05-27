@@ -69,7 +69,7 @@ class Transaction(object):
         self.percentage = 0
         self.stderr = None
 
-    def install(self):
+    def install(self, skip_recommends=False):
         """Run an apt-get transaction to install given packages.
 
         FreedomBox Service (Plinth) needs to be running as root when calling
@@ -79,7 +79,12 @@ class Transaction(object):
         """
         try:
             self._run_apt_command(['update'])
-            self._run_apt_command(['install', self.module_name] +
+            if skip_recommends:
+                self._run_apt_command(
+                    ['install', '--skip-recommends', self.module_name] +
+                    self.package_names)
+            else:
+                self._run_apt_command(['install', self.module_name] +
                                   self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
