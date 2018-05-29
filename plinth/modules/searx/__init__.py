@@ -35,9 +35,7 @@ version = 2
 
 managed_services = ['searx']
 
-managed_packages = [
-    'searx', 'uwsgi', 'uwsgi-plugin-python3', 'libapache2-mod-proxy-uwsgi'
-]
+managed_packages = ['searx', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Searx')
 
