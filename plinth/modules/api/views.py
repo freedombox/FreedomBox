@@ -18,6 +18,7 @@
 FreedomBox app for api for android app.
 """
 
+import copy
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -55,13 +56,17 @@ def shortcuts(request, **kwargs):
 def _get_shortcut_data(module_name, shortcut):
     """Return detailed information about a shortcut."""
     module = module_loader.loaded_modules[module_name]
-    return {
+    shortcut_data = {
         'name': shortcut['name'],
         'short_description': shortcut['short_description'],
         'description': shortcut['details'],
         'icon_url': _get_icon_url(shortcut['icon']),
-        'clients': getattr(module, 'clients', None)
+        'clients': copy.deepcopy(getattr(module, 'clients', None))
     }
+    if module_name == 'ikiwiki':
+        shortcut_data['clients'][0]['platforms'][0]['url'] += '/{}'.format(
+            shortcut['name'])
+    return shortcut_data
 
 
 def _get_icon_url(icon_name):
