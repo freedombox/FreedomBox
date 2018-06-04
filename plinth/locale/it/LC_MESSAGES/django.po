@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 17:02-0400\n"
+"POT-Creation-Date: 2018-06-04 17:56-0400\n"
 "PO-Revision-Date: 2018-05-24 16:38+0000\n"
 "Last-Translator: Sciumedanglisc <traduxi@riseup.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -574,8 +574,8 @@ msgstr ""
 "utente apparirà <i>username e diaspora.%(domain_name)s</i><br/>. Nel caso in "
 "cui il nome di dominio del FreedomBox venga cambiato, tutti i dati degli "
 "utenti registrati col podname precedente non saranno accessibili. <br/> Puoi "
-"accedere al pod diaspora* da <a href=\"https://diaspora.%(domain_name)s\""
-">diaspora.%(domain_name)s</a>"
+"accedere al pod diaspora* da <a href=\"https://diaspora.%(domain_name)s"
+"\">diaspora.%(domain_name)s</a>"
 
 #: plinth/modules/diaspora/templates/diaspora-pre-setup.html:58
 #: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:40
@@ -594,7 +594,7 @@ msgstr "Aggiorna impostazioni"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/mediawiki/views.py:73 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Impostazioni invariate"
@@ -999,13 +999,13 @@ msgstr "Configurazione"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
-#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
+#: plinth/modules/mediawiki/views.py:77 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Applicazione abilitata"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
-#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
+#: plinth/modules/mediawiki/views.py:80 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Applicazione disabilitata"
 
@@ -1957,8 +1957,8 @@ msgid ""
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
 "Questa istanza di MediaWiki viene fornita con una password d'amministrazione "
-"generata casualmente. Puoi impostare una nuova password nella sezione \""
-"Configurazione\", e autenticarti usando il profilo \"admin\". "
+"generata casualmente. Puoi impostare una nuova password nella sezione "
+"\"Configurazione\", e autenticarti usando il profilo \"admin\". "
 "Successivamente sarà possibile creare altri profili direttamente da "
 "MediaWiki, andando nella pagina <a href=\"/mediawiki/index.php/Special:"
 "CreateAccount\">Speciale:CreateAccount</a>."
@@ -1997,21 +1997,45 @@ msgstr ""
 "Se abilitato, chiunque nell'Internet potrà creare un profilo nella tua "
 "istanza MediaWiki."
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/forms.py:41
+#, fuzzy
+#| msgid "Enable creative mode"
+msgid "Enable private mode"
+msgstr "Abilita modalità creativa"
+
+#: plinth/modules/mediawiki/forms.py:42
+msgid ""
+"If enabled, Access will be restricted. Only people who have accounts can "
+"read/write to the wiki. Public registrations will also be disabled."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:69
 msgid "Password updated"
 msgstr "Password aggiornata"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:88
 #, fuzzy
 #| msgid "User registrations enabled"
 msgid "Public registrations enabled"
 msgstr "Registrazione utenti abilitata"
 
-#: plinth/modules/mediawiki/views.py:91
+#: plinth/modules/mediawiki/views.py:93
 #, fuzzy
 #| msgid "User registrations disabled"
 msgid "Public registrations disabled"
 msgstr "Registrazione utenti disabilitqta"
+
+#: plinth/modules/mediawiki/views.py:104
+#, fuzzy
+#| msgid "Application enabled"
+msgid "Private mode enabled"
+msgstr "Applicazione abilitata"
+
+#: plinth/modules/mediawiki/views.py:109
+#, fuzzy
+#| msgid "Application disabled"
+msgid "Private mode disabled"
+msgstr "Applicazione disabilitata"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
@@ -2057,8 +2081,8 @@ msgid ""
 "creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
 "La modalità creativa cambia le regole di gioco per renderlo più adatto ad un "
-"gameplay creativo, piuttosto che uno stimolante stile di gioco di \""
-"sopravvivenza\"."
+"gameplay creativo, piuttosto che uno stimolante stile di gioco di "
+"\"sopravvivenza\"."
 
 #: plinth/modules/minetest/forms.py:46
 msgid "Enable PVP"
@@ -3579,27 +3603,27 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
 msgid "Searx"
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:44
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:47
+#: plinth/modules/searx/__init__.py:45
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:47
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:53
+#: plinth/modules/searx/__init__.py:51
 msgid "Search the web"
 msgstr ""
 
@@ -4583,7 +4607,7 @@ msgstr ""
 msgid "Username is taken or is reserved."
 msgstr ""
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:184
 msgid "Permissions"
 msgstr ""
 
@@ -4596,7 +4620,7 @@ msgid ""
 "SSH and have administrative privileges (sudo)."
 msgstr ""
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:298
 msgid "Creating LDAP user failed."
 msgstr ""
 
@@ -4616,35 +4640,35 @@ msgid ""
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
 
-#: plinth/modules/users/forms.py:217
+#: plinth/modules/users/forms.py:218
 msgid "Renaming LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:229
+#: plinth/modules/users/forms.py:230
 msgid "Failed to remove user from group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:241
 msgid "Failed to add user to group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:249
+#: plinth/modules/users/forms.py:250
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:273
+#: plinth/modules/users/forms.py:274
 msgid "Changing LDAP user password failed."
 msgstr ""
 
-#: plinth/modules/users/forms.py:306
+#: plinth/modules/users/forms.py:307
 msgid "Failed to add new user to admin group."
 msgstr ""
 
-#: plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:324
 msgid "Failed to restrict console access."
 msgstr ""
 
-#: plinth/modules/users/forms.py:335
+#: plinth/modules/users/forms.py:336
 msgid "User account created, you are now logged in"
 msgstr ""
 

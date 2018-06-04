@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 17:02-0400\n"
+"POT-Creation-Date: 2018-06-04 17:56-0400\n"
 "PO-Revision-Date: 2018-05-22 05:21+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -570,7 +570,7 @@ msgstr "Aktualizovat nastavení"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/mediawiki/views.py:73 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
@@ -966,13 +966,13 @@ msgstr "Nastavení"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
-#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
+#: plinth/modules/mediawiki/views.py:77 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
-#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
+#: plinth/modules/mediawiki/views.py:80 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 
@@ -1971,17 +1971,41 @@ msgstr ""
 "Pokud je zapnuto, kdokoli z Internetu si bude moci vytvořit účet na vaší "
 "instanci MediaWiki."
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/forms.py:41
+#, fuzzy
+#| msgid "Enable creative mode"
+msgid "Enable private mode"
+msgstr "Zapnout tvořivý režim"
+
+#: plinth/modules/mediawiki/forms.py:42
+msgid ""
+"If enabled, Access will be restricted. Only people who have accounts can "
+"read/write to the wiki. Public registrations will also be disabled."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:69
 msgid "Password updated"
 msgstr "Heslo aktualizováno"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:88
 msgid "Public registrations enabled"
 msgstr "Registrace pro veřejnost otevřené"
 
-#: plinth/modules/mediawiki/views.py:91
+#: plinth/modules/mediawiki/views.py:93
 msgid "Public registrations disabled"
 msgstr "Registrace pro veřejnost zavřené"
+
+#: plinth/modules/mediawiki/views.py:104
+#, fuzzy
+#| msgid "PageKite enabled"
+msgid "Private mode enabled"
+msgstr "PageKite zapnuto"
+
+#: plinth/modules/mediawiki/views.py:109
+#, fuzzy
+#| msgid "PageKite disabled"
+msgid "Private mode disabled"
+msgstr "PageKite vypnuto"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
@@ -3745,15 +3769,15 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:44
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Vyhledávání na webu"
 
-#: plinth/modules/searx/__init__.py:47
+#: plinth/modules/searx/__init__.py:45
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -3761,7 +3785,7 @@ msgstr ""
 "Searx je soukromí respektující metavyhledavač na Internetu. Slučuje a "
 "zobrazuje výsledky z vícero vyhledávačů."
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:47
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -3769,7 +3793,7 @@ msgstr ""
 "Použitím Searx je možné se vyhnout sledování a profilování vyhledávači. Ve "
 "výchozím stavu neukládá žádné cookie."
 
-#: plinth/modules/searx/__init__.py:53
+#: plinth/modules/searx/__init__.py:51
 msgid "Search the web"
 msgstr "Hledat na webu"
 
@@ -4892,7 +4916,7 @@ msgid "Username is taken or is reserved."
 msgstr ""
 "Toto uživatelské jméno je už používáno někým jiným nebo vyhrazeno pro systém."
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:184
 msgid "Permissions"
 msgstr "Oprávnění"
 
@@ -4910,7 +4934,7 @@ msgstr ""
 "skupině správců (admin) se budou moci přihlásit všude. Mohou se k systému "
 "přihlásit také prostřednictvím SSH a mají práva správy (sudo)."
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:298
 msgid "Creating LDAP user failed."
 msgstr "Vytvoření LDAP uživatele se nezdařilo."
 
@@ -4933,35 +4957,35 @@ msgstr ""
 "systému i bez zadávání hesla. Klíčů je možné vložit vícero, každý na vlastní "
 "řádek. Prázdné řádky a ty, které začínají na znak # budou ignorovány."
 
-#: plinth/modules/users/forms.py:217
+#: plinth/modules/users/forms.py:218
 msgid "Renaming LDAP user failed."
 msgstr "Přejmenování LDAP uživatele se nezdařilo."
 
-#: plinth/modules/users/forms.py:229
+#: plinth/modules/users/forms.py:230
 msgid "Failed to remove user from group."
 msgstr "Odebrání uživatele ze skupiny se nezdařilo."
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:241
 msgid "Failed to add user to group."
 msgstr "Přidání uživatele do skupiny se nezdařilo."
 
-#: plinth/modules/users/forms.py:249
+#: plinth/modules/users/forms.py:250
 msgid "Unable to set SSH keys."
 msgstr "Nepodařilo se vložit SSH klíče."
 
-#: plinth/modules/users/forms.py:273
+#: plinth/modules/users/forms.py:274
 msgid "Changing LDAP user password failed."
 msgstr "Změna hesla LDAP uživatele se nezdařila."
 
-#: plinth/modules/users/forms.py:306
+#: plinth/modules/users/forms.py:307
 msgid "Failed to add new user to admin group."
 msgstr "Přidání nového uživatele do skupiny správců (admin) se nezdařilo."
 
-#: plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:324
 msgid "Failed to restrict console access."
 msgstr "Omezení přístupu ke konzoli se nezdařilo."
 
-#: plinth/modules/users/forms.py:335
+#: plinth/modules/users/forms.py:336
 msgid "User account created, you are now logged in"
 msgstr "Uživatelský účet vytvořen, není jste jím přihlášeni"
 

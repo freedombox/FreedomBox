@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 17:02-0400\n"
+"POT-Creation-Date: 2018-06-04 17:56-0400\n"
 "PO-Revision-Date: 2018-05-22 14:18+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.0-dev\n"
 
 #: plinth/action_utils.py:258
@@ -567,7 +567,7 @@ msgstr "Обновить настройки"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/mediawiki/views.py:73 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Настройки без изменений"
@@ -956,13 +956,13 @@ msgstr "Конфигурация"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
-#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
+#: plinth/modules/mediawiki/views.py:77 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Приложение включено"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
-#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
+#: plinth/modules/mediawiki/views.py:80 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Приложение отключено"
 
@@ -1963,17 +1963,41 @@ msgstr ""
 "Если включено, кто угодно в интернете сможет создать учётную запись в вашем "
 "экземпляре MediaWiki."
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/forms.py:41
+#, fuzzy
+#| msgid "Enable creative mode"
+msgid "Enable private mode"
+msgstr "Включить творческий режим"
+
+#: plinth/modules/mediawiki/forms.py:42
+msgid ""
+"If enabled, Access will be restricted. Only people who have accounts can "
+"read/write to the wiki. Public registrations will also be disabled."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:69
 msgid "Password updated"
 msgstr "Пароль обновлен"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:88
 msgid "Public registrations enabled"
 msgstr "Публичная регистрация включена"
 
-#: plinth/modules/mediawiki/views.py:91
+#: plinth/modules/mediawiki/views.py:93
 msgid "Public registrations disabled"
 msgstr "Публичная регистрация отключена"
+
+#: plinth/modules/mediawiki/views.py:104
+#, fuzzy
+#| msgid "PageKite enabled"
+msgid "Private mode enabled"
+msgstr "PageKite включен"
+
+#: plinth/modules/mediawiki/views.py:109
+#, fuzzy
+#| msgid "PageKite disabled"
+msgid "Private mode disabled"
+msgstr "PageKite выключен"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
@@ -3738,15 +3762,15 @@ msgstr ""
 "security/lesssecureapps\" >https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:44
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Веб-поиск"
 
-#: plinth/modules/searx/__init__.py:47
+#: plinth/modules/searx/__init__.py:45
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -3754,7 +3778,7 @@ msgstr ""
 "Searx - это конфиденциальная метапоисковая система. Она агрегирует и "
 "показывает результаты с разных поисковых систем."
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:47
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -3762,7 +3786,7 @@ msgstr ""
 "Searx может быть использован, чтобы избежать отслеживания и профилирования "
 "поисковыми системами. Она не хранит никаких файлов cookie по умолчанию."
 
-#: plinth/modules/searx/__init__.py:53
+#: plinth/modules/searx/__init__.py:51
 msgid "Search the web"
 msgstr "Поиск в интернете"
 
@@ -4885,7 +4909,7 @@ msgstr "Доступ ко всем сервисам и настройкам си
 msgid "Username is taken or is reserved."
 msgstr "Имя пользователя уже занято."
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:184
 msgid "Permissions"
 msgstr "Разрешения"
 
@@ -4903,7 +4927,7 @@ msgstr ""
 "Пользователи в группе администратора имеют доступ ко всем службам. Они также "
 "могут войти в систему через SSH и иметь административные привилегии (sudo)."
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:298
 msgid "Creating LDAP user failed."
 msgstr "Создание пользователя LDAP не удалось."
 
@@ -4927,35 +4951,35 @@ msgstr ""
 "на каждой строке. Пустые строки и строки, начинающиеся с # будут "
 "игнорироваться."
 
-#: plinth/modules/users/forms.py:217
+#: plinth/modules/users/forms.py:218
 msgid "Renaming LDAP user failed."
 msgstr "Переименование пользователя LDAP не удалось."
 
-#: plinth/modules/users/forms.py:229
+#: plinth/modules/users/forms.py:230
 msgid "Failed to remove user from group."
 msgstr "Не удалось удалить пользователя из группы."
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:241
 msgid "Failed to add user to group."
 msgstr "Не удалось добавить пользователя в группу."
 
-#: plinth/modules/users/forms.py:249
+#: plinth/modules/users/forms.py:250
 msgid "Unable to set SSH keys."
 msgstr "Не удалось задать ключи SSH."
 
-#: plinth/modules/users/forms.py:273
+#: plinth/modules/users/forms.py:274
 msgid "Changing LDAP user password failed."
 msgstr "Изменение LDAP пароля пользователя не удалось."
 
-#: plinth/modules/users/forms.py:306
+#: plinth/modules/users/forms.py:307
 msgid "Failed to add new user to admin group."
 msgstr "Не удалось добавить нового пользователя в группу администратора."
 
-#: plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:324
 msgid "Failed to restrict console access."
 msgstr "Не удалось ограничить доступ к консоли."
 
-#: plinth/modules/users/forms.py:335
+#: plinth/modules/users/forms.py:336
 msgid "User account created, you are now logged in"
 msgstr "Учетная запись пользователя создана, теперь вы вошли"
 

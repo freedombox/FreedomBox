@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 17:02-0400\n"
+"POT-Creation-Date: 2018-06-04 17:56-0400\n"
 "PO-Revision-Date: 2018-01-03 17:10+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -577,7 +577,7 @@ msgstr "Kurulumu güncelle"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/mediawiki/views.py:71 plinth/modules/openvpn/views.py:149
+#: plinth/modules/mediawiki/views.py:73 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Ayar değiştirilmedi"
@@ -973,13 +973,13 @@ msgstr "Yapılandırma"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
-#: plinth/modules/mediawiki/views.py:75 plinth/views.py:153
+#: plinth/modules/mediawiki/views.py:77 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Uygulama etkinleştirildi"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
-#: plinth/modules/mediawiki/views.py:78 plinth/views.py:156
+#: plinth/modules/mediawiki/views.py:80 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Uygulama devre dışı bırakıldı"
 
@@ -2009,21 +2009,45 @@ msgid ""
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/forms.py:41
+#, fuzzy
+#| msgid "Enable creative mode"
+msgid "Enable private mode"
+msgstr "Yaratıcı kipi etkinleştir"
+
+#: plinth/modules/mediawiki/forms.py:42
+msgid ""
+"If enabled, Access will be restricted. Only people who have accounts can "
+"read/write to the wiki. Public registrations will also be disabled."
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:69
 msgid "Password updated"
 msgstr "Parola güncellendi"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:88
 #, fuzzy
 #| msgid "Public registration enabled"
 msgid "Public registrations enabled"
 msgstr "Herkese açık kayıt etkinleştirildi"
 
-#: plinth/modules/mediawiki/views.py:91
+#: plinth/modules/mediawiki/views.py:93
 #, fuzzy
 #| msgid "Public registration disabled"
 msgid "Public registrations disabled"
 msgstr "Herkese açık kayıt devre dışı bırakıldı"
+
+#: plinth/modules/mediawiki/views.py:104
+#, fuzzy
+#| msgid "PageKite enabled"
+msgid "Private mode enabled"
+msgstr "PageKite etkinleştirildi"
+
+#: plinth/modules/mediawiki/views.py:109
+#, fuzzy
+#| msgid "PageKite disabled"
+msgid "Private mode disabled"
+msgstr "PageKite devre dışı"
 
 #: plinth/modules/minetest/__init__.py:46
 #: plinth/modules/minetest/manifest.py:24
@@ -3803,29 +3827,29 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>) \"daha az güvenli uygulamalara\" müsaade etmeniz gerekeceğini unutmayın."
 
-#: plinth/modules/searx/__init__.py:42 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
 msgid "Searx"
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:44
+#: plinth/modules/searx/__init__.py:42
 #, fuzzy
 #| msgid "Web Server"
 msgid "Web Search"
 msgstr "Web Sunucusu"
 
-#: plinth/modules/searx/__init__.py:47
+#: plinth/modules/searx/__init__.py:45
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:47
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:53
+#: plinth/modules/searx/__init__.py:51
 msgid "Search the web"
 msgstr ""
 
@@ -5003,7 +5027,7 @@ msgstr "Tüm servislere ve sistem ayarlarına erişim"
 msgid "Username is taken or is reserved."
 msgstr "Kullanıcı ismi zaten alınmış ya da ayrılmıştır."
 
-#: plinth/modules/users/forms.py:86
+#: plinth/modules/users/forms.py:86 plinth/modules/users/forms.py:184
 msgid "Permissions"
 msgstr "İzinler"
 
@@ -5021,7 +5045,7 @@ msgstr ""
 "servislere giriş yapabilecektir. Aynı zamanda sisteme SSH aracılığıyla giriş "
 "yapıp yönetici izinlerine (sudo) erişebileceklerdir."
 
-#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:297
+#: plinth/modules/users/forms.py:123 plinth/modules/users/forms.py:298
 msgid "Creating LDAP user failed."
 msgstr "LDAP kullanıcısı oluşturması başarısız oldu."
 
@@ -5045,35 +5069,35 @@ msgstr ""
 "çok anahtar girebilirsiniz, her anahtarı yeni bir satırda girin. Boş "
 "satırlar ve # ile başlayan satırlar görmezden gelinecektir."
 
-#: plinth/modules/users/forms.py:217
+#: plinth/modules/users/forms.py:218
 msgid "Renaming LDAP user failed."
 msgstr "LDAP kullanıcısının tekrar adlandırılması başarısız oldu."
 
-#: plinth/modules/users/forms.py:229
+#: plinth/modules/users/forms.py:230
 msgid "Failed to remove user from group."
 msgstr "Kullanıcının gruptan kaldırılması başarısız oldu."
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:241
 msgid "Failed to add user to group."
 msgstr "Kullanıcının gruba eklenmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:249
+#: plinth/modules/users/forms.py:250
 msgid "Unable to set SSH keys."
 msgstr "SSH anahtarları ayarlanamadı."
 
-#: plinth/modules/users/forms.py:273
+#: plinth/modules/users/forms.py:274
 msgid "Changing LDAP user password failed."
 msgstr "LDAP kullanıcı parolasının değiştirilmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:306
+#: plinth/modules/users/forms.py:307
 msgid "Failed to add new user to admin group."
 msgstr "Yeni kullanıcının admin (yönetici) grubuna eklenmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:324
 msgid "Failed to restrict console access."
 msgstr "Konsol erişiminin kısıtlanması başarısız oldu."
 
-#: plinth/modules/users/forms.py:335
+#: plinth/modules/users/forms.py:336
 msgid "User account created, you are now logged in"
 msgstr "Kullanıcı hesabı oluşturuldu, artık giriş yaptınız"
 
