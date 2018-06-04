@@ -49,8 +49,10 @@ def parse_arguments():
                          help=help_pub_reg)
 
     help_private_mode = 'Enable/Disable/Status private mode.'
-    private_mode = subparsers.add_parser('private-mode', help=help_private_mode)
-    private_mode.add_argument('command', choices=('enable', 'disable', 'status'),
+    private_mode = subparsers.add_parser('private-mode',
+                                         help=help_private_mode)
+    private_mode.add_argument('command',
+                              choices=('enable', 'disable', 'status'),
                               help=help_private_mode)
 
     change_password = subparsers.add_parser('change-password',
@@ -191,8 +193,8 @@ def subcommand_private_mode(arguments):
     read_conf_lines = list(filter(is_read_line, lines))
     if arguments.command == 'status':
         if edit_conf_lines and read_conf_lines:
-            print('enabled' if ('false' in read_conf_lines[0]) and
-                               ('false' in edit_conf_lines[0]) else 'disabled')
+            print('enabled' if ('false' in read_conf_lines[0]) and (
+                'false' in edit_conf_lines[0]) else 'disabled')
         else:
             print('disabled')
     else:
@@ -206,10 +208,12 @@ def subcommand_private_mode(arguments):
                 else:
                     conf_file.write(line)
 
-            if edit_conf_lines is None:
-                conf_file.write("$wgGroupPermissions['*']['edit'] = " + conf_value + '\n')
-            if read_conf_lines is None:
-                conf_file.write("$wgGroupPermissions['*']['read'] = " + conf_value + '\n')
+            if not edit_conf_lines:
+                conf_file.write("$wgGroupPermissions['*']['edit'] = " +
+                                conf_value + '\n')
+            if not read_conf_lines:
+                conf_file.write("$wgGroupPermissions['*']['read'] = " +
+                                conf_value + '\n')
 
 
 def main():
