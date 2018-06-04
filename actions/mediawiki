@@ -41,6 +41,7 @@ def parse_arguments():
     subparsers.add_parser('enable', help='Enable MediaWiki')
     subparsers.add_parser('disable', help='Disable MediaWiki')
     subparsers.add_parser('setup', help='Setup MediaWiki')
+    subparsers.add_parser('update', help='Run MediaWiki update script')
 
     help_pub_reg = 'Enable/Disable/Status public user registration.'
     pub_reg = subparsers.add_parser('public-registrations', help=help_pub_reg)
@@ -121,6 +122,12 @@ def subcommand_change_password(arguments):
         'php', change_password_script, '--user', arguments.username,
         '--password', new_password
     ])
+
+
+def subcommand_update(_):
+    """Run update.php maintenance script when version upgrades happen."""
+    update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
+    subprocess.check_call(['php', update_script])
 
 
 def subcommand_enable(_):

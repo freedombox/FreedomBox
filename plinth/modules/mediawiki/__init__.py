@@ -26,7 +26,7 @@ from plinth.menu import main_menu
 
 from .manifest import clients
 
-version = 1
+version = 2
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
@@ -77,6 +77,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
     helper.call('setup', actions.superuser_run, 'mediawiki', ['setup'])
+    helper.call('update', actions.superuser_run, 'mediawiki', ['update'])
     helper.call('enable', actions.superuser_run, 'mediawiki', ['enable'])
     global service
     if service is None:
