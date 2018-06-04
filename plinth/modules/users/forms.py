@@ -200,6 +200,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
 
         if commit:
             user.save()
+            self.save_m2m()
 
             output = actions.superuser_run('users',
                                            ['get-user-groups', self.username])
