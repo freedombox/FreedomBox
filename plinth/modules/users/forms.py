@@ -181,7 +181,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                 # Replace group names with descriptions
                 choices.append((c[0], group_choices[c[1]]))
 
-        self.fields['groups'].label = 'Permissions'
+        self.fields['groups'].label = _('Permissions')
         self.fields['groups'].choices = choices
 
         if not is_user_admin(request):
