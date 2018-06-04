@@ -489,10 +489,10 @@
           <para>Power on the FreedomBox. </para>
         </listitem>
         <listitem>
-          <para>On first boot, the FreedomBox will perform its initial setup and then reboot. This may take several minutes. </para>
+          <para>On first boot, FreedomBox will perform its initial setup (older versions of FreedomBox reboot after this step). This process may take several minutes on some machines. After giving it about 10 minutes, proceed to the next step. </para>
         </listitem>
         <listitem>
-          <para>After the FreedomBox has rebooted, you can access its web interface (called Plinth) through your web browser. </para>
+          <para>After the FreedomBox has finished its initial setup, you can access its web interface (called Plinth) through your web browser. </para>
           <itemizedlist>
             <listitem>
               <para>If your computer is connected directly to the FreedomBox through a second (LAN) ethernet port, you can browse to: <ulink url="http://freedombox/"/> or <ulink url="http://10.42.0.1/"/>. </para>
@@ -1072,7 +1072,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
         <para>Now open your client application to create new calendar and address books that will use your FreedomBox and Radicale server. The Radicale website provides <ulink url="http://radicale.org/clients/">an overview of supported clients</ulink>, but do <emphasis>not</emphasis> use the URLs described there; FreedomBox uses another setup, follow this manual. Below are the steps for two examples: </para>
         <itemizedlist>
           <listitem>
-            <para>Example of setup with Evolution client:   </para>
+            <para>Example of setup with Evolution client: </para>
             <itemizedlist>
               <listitem>
                 <para>Calendar </para>
@@ -1125,39 +1125,45 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
               </listitem>
             </itemizedlist>
           </listitem>
-          <listitem>
-            <para>Android </para>
-            <itemizedlist>
-              <listitem>
-                <para>There are various Apps that allow the integration of the *radicale* server. This example uses DAVdroid, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>. </para>
-              </listitem>
-              <listitem>
-                <para>If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
-              </listitem>
-              <listitem>
-                <para>Install DAVdroid </para>
-              </listitem>
-              <listitem>
-                <para>Create an account in DAVdroid with the same settings as described for Evolution </para>
-              </listitem>
-              <listitem>
-                <para>Click the newly created account and synchronize. </para>
-              </listitem>
-              <listitem>
-                <para>The settings, such as periodicity of synchronization, can be adjusted. </para>
-              </listitem>
-              <listitem>
-                <para>A contact or calendar file, that was created before appears.  </para>
-              </listitem>
-              <listitem>
-                <para>Enable it. </para>
-              </listitem>
-              <listitem>
-                <para>It may take some minutes before e.g. the calendar is visible in your calendar app. </para>
-              </listitem>
-            </itemizedlist>
-          </listitem>
         </itemizedlist>
+      </section>
+      <section>
+        <title>Synchronizing with your Android phone</title>
+        <para>There are various Apps that allow integration with the Radicale server. This example uses DAVdroid, which is available e.g. on <ulink url="https://f-droid.org/repository/browse/?fdid=at.bitfire.davdroid">F-Droid</ulink>.   If you intend to use ToDo-Lists as well, the compatible app <ulink url="https://f-droid.org/repository/browse/?fdid=org.dmfs.tasks">OpenTasks</ulink> has to be installed first. </para>
+        <para>Follow these steps for setting up your account with the Radicale server running on your FreedomBox. </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Install DAVdroid </para>
+          </listitem>
+          <listitem>
+            <para>Create a new account on DAVdroid by clicking on the floating + button. </para>
+          </listitem>
+          <listitem>
+            <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis>. DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user. </para>
+          </listitem>
+          <listitem>
+            <para>Follow this video from <ulink url="https://www.davdroid.com/faq/existing-contacts-are-not-synced">DAVdroid FAQ</ulink> to learn how to migrate your existing contacts to Radicale. </para>
+          </listitem>
+        </orderedlist>
+        <para><emphasis role="strong">Note:</emphasis> One UI quirk in DAVdroid is that you have to check the checkboxes before clicking on the sync button in the header. </para>
+        <para>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-setup-account.png" width="288"/>
+            </imageobject>
+            <textobject>
+              <phrase>DAVdroid account setup</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-sync-account.png" width="288"/>
+            </imageobject>
+            <textobject>
+              <phrase>DAVdroid account sync</phrase>
+            </textobject>
+          </inlinemediaobject>
+        </para>
       </section>
       <section>
         <title>Advanced Users</title>
@@ -6518,7 +6524,7 @@ Password:
             </textobject>
           </inlinemediaobject>
         </para>
-        <para>To access the web interface you need to find out your FreedomBox's IP address as described in section: Finding out the IP address of the virtual machine. Then access this IP from a web browser which is on the same network as the VM (f.ex. the host). If all is well, you are now presented with a welcome message and invited to complete the <emphasis>first boot</emphasis> process. </para>
+        <para>To access the web interface you need to find out your FreedomBox's IP address as described in <link linkend="finding-ip-address-of-vm">Finding out the IP address of the virtual machine</link>. Then access this IP from a web browser which is on the same network as the VM (f.ex. the host). If all is well, you are now presented with a welcome message and invited to complete the <emphasis>first boot</emphasis> process. </para>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -6876,6 +6882,9 @@ Password:
               </tbody>
             </tgroup>
           </informaltable>
+          <para>
+            <anchor id="finding-ip-address-of-vm"/>
+          </para>
         </section>
         <section>
           <title>Finding out the IP address of the virtual machine</title>
@@ -7372,6 +7381,29 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.31.0 (2018-06-04)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Updated translations for Czech, Spanish, Russian, German, Italian, Hindi, Telugu, and Norwegian Bokmål </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Added private mode option </para>
+          </listitem>
+          <listitem>
+            <para>users: Fix user permissions not being saved </para>
+          </listitem>
+          <listitem>
+            <para>users: internationalize a string </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Run update script for 1.30 upgrade </para>
+          </listitem>
+          <listitem>
+            <para>shortcuts: Fix urls for ikiwiki shortcuts </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.30.0 (2018-05-21)</title>
         <itemizedlist>
