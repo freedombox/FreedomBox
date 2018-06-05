@@ -23,10 +23,10 @@ import logging
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 
-from plinth import actions, views
+from plinth import actions, views, frontpage
 from plinth.modules import mediawiki
 
-from . import get_public_registration_status, get_private_mode_status
+from . import is_public_registration_enabled, is_private_mode_enabled, is_enabled, add_shortcut
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -46,8 +46,8 @@ class MediaWikiServiceView(views.ServiceView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registrations': get_public_registration_status(),
-            'enable_private_mode': get_private_mode_status()
+            'enable_public_registrations': is_public_registration_enabled(),
+            'enable_private_mode': is_private_mode_enabled()
         })
         return initial
 
@@ -107,5 +107,6 @@ class MediaWikiServiceView(views.ServiceView):
                                       ['private-mode', 'disable'])
                 messages.success(self.request,
                                  _('Private mode disabled'))
-
+            if is_enabled():
+                add_shortcut()
         return super().form_valid(form)

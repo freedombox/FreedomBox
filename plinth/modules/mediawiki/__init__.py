@@ -98,7 +98,7 @@ def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut('mediawiki', name,
                            short_description=short_description,
-                           url='/mediawiki', login_required=False)
+                           url='/mediawiki', login_required=is_private_mode_enabled())
 
 
 def is_enabled():
@@ -125,18 +125,17 @@ def diagnose():
     results.extend(
         action_utils.diagnose_url_on_all('https://{host}/mediawiki',
                                          check_certificate=False))
-
     return results
 
 
-def get_public_registration_status():
+def is_public_registration_enabled():
     """Return whether public registration is enabled."""
     output = actions.superuser_run('mediawiki',
                                    ['public-registrations', 'status'])
     return output.strip() == 'enabled'
 
 
-def get_private_mode_status():
+def is_private_mode_enabled():
     """ Return wheter private mode is enabled or disabled"""
     output = actions.superuser_run('mediawiki',
                                    ['private-mode', 'status'])

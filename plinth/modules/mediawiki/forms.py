@@ -33,12 +33,12 @@ class MediaWikiForm(ServiceForm):  # pylint: disable=W0232
         required=False, widget=forms.PasswordInput)
 
     enable_public_registrations = forms.BooleanField(
-        label=_('Enable public registrations'), required=False, help_text=_(
-            'If enabled, anyone on the internet will be able to '
-            'create an account on your MediaWiki instance.'))
+        label=_('Enable public registrations'), required=False,
+        help_text=_('If enabled, anyone on the internet will be able to '
+                    'create an account on your MediaWiki instance.'))
 
     enable_private_mode = forms.BooleanField(
-        label=_('Enable private mode'), required=False, help_text=_(
-            'If enabled, Access will be restricted. Only people '
-            'who have accounts can read/write to the wiki. '
-            'Public registrations will also be disabled.'))
+        label=_('Enable private mode'), required=False,
+        help_text=_('If enabled, access will be restricted. Only people '
+                    'who have accounts can read/write to the wiki. '
+                    'Public registrations will also be disabled.'))
