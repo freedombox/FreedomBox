@@ -38,14 +38,16 @@ def build_menu(size=5):
     random.seed()
     item_data = []
     for index in range(1, size + 1):
-        item_data.append(['Item' + str(index),
+        item_data.append(['Name' + str(index),
+                          'ShortDescription' + str(index),
+                          'Item' + str(index),
                           'Icon' + str(index),
                           URL_TEMPLATE.format(index, index, index),
                           random.randint(0, 1000)])
 
     menu = Menu()
     for data in item_data:
-        menu.add_item(data[0], data[1], data[2], data[3])
+        menu.add_item(data[0], data[1], data[2], data[3], data[4], data[5])
 
     return menu
 
@@ -90,13 +92,17 @@ class MenuTestCase(TestCase):
 
     def test_menu_creation_with_arguments(self):
         """Verify the Menu state with initialization parameters."""
+        expected_name = 'Name'
+        expected_short_description = 'ShortDescription'
         expected_label = 'Label'
         expected_icon = 'Icon'
         expected_url = '/aaa/bbb/ccc/'
         expected_order = 42
-        menu = Menu(expected_label, expected_icon, expected_url,
+        menu = Menu(expected_name, expected_short_description, expected_label, expected_icon, expected_url,
                     expected_order)
 
+        self.assertEqual(expected_name, menu.name)
+        self.assertEqual(expected_short_description, menu.short_description)
         self.assertEqual(expected_label, menu.label)
         self.assertEqual(expected_icon, menu.icon)
         self.assertEqual(expected_url, menu.url)
@@ -105,17 +111,21 @@ class MenuTestCase(TestCase):
 
     def test_get(self):
         """Verify that a menu item can be correctly retrieved."""
+        expected_name = 'Name2'
+        expected_short_description = 'ShortDescription2'
         expected_label = 'Label2'
         expected_icon = 'Icon2'
         expected_url = 'index'
         reversed_url = reverse(expected_url)
         expected_order = 2
         menu = Menu()
-        menu.add_item(expected_label, expected_icon, reversed_url,
+        menu.add_item(expected_name, expected_short_description, expected_label, expected_icon, reversed_url,
                       expected_order)
         actual_item = menu.get(expected_url)
 
         self.assertIsNotNone(actual_item)
+        self.assertEqual(expected_name, actual_item.name)
+        self.assertEqual(expected_short_description, actual_item.short_description)
         self.assertEqual(expected_label, actual_item.label)
         self.assertEqual(expected_icon, actual_item.icon)
         self.assertEqual(reversed_url, actual_item.url)
@@ -124,12 +134,14 @@ class MenuTestCase(TestCase):
 
     def test_get_with_item_not_found(self):
         """Verify that a KeyError is raised if a menu item is not found."""
+        expected_name = 'Name3'
+        expected_short_description = 'ShortDescription3'
         expected_label = 'Label3'
         expected_icon = 'Icon3'
         expected_url = 'index'
         expected_order = 3
         menu = Menu()
-        menu.add_item(expected_label, expected_icon, expected_url,
+        menu.add_item(expected_name, expected_short_description, expected_label, expected_icon, expected_url,
                       expected_order)
 
         self.assertRaises(KeyError, menu.get, expected_url)
@@ -175,17 +187,21 @@ class MenuTestCase(TestCase):
 
     def test_add_item(self):
         """Verify that a menu item can be correctly added."""
+        expected_name = 'Name5'
+        expected_short_description = 'ShortDescription5'
         expected_label = 'Label5'
         expected_icon = 'Icon5'
         expected_url = '/jjj/kkk/lll/'
         expected_order = 5
         menu = Menu()
-        actual_item = menu.add_item(expected_label, expected_icon,
+        actual_item = menu.add_item(expected_name, expected_short_description, expected_label, expected_icon,
                                     expected_url, expected_order)
 
         self.assertEqual(1, len(menu.items))
         self.assertIsNotNone(actual_item)
         self.assertEqual(actual_item, menu.items[0])
+        self.assertEqual(expected_name, actual_item.name)
+        self.assertEqual(expected_short_description, actual_item.short_description)
         self.assertEqual(expected_label, actual_item.label)
         self.assertEqual(expected_icon, actual_item.icon)
         self.assertEqual(expected_url, actual_item.url)

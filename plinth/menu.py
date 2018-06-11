@@ -23,7 +23,7 @@ from plinth.utils import format_lazy
 class Menu(object):
     """One menu item."""
 
-    def __init__(self, label="", icon="", url="#", order=50):
+    def __init__(self, name="",short_description="", label="", icon="", url="#", order=50):
         """label is the text that is displayed on the menu.
 
         icon is the icon to be displayed next to the label.
@@ -41,6 +41,8 @@ class Menu(object):
         use fractional orders.
 
         """
+        self.name = name
+        self.short_description = short_description
         self.label = label
         self.icon = icon
         self.url = url
@@ -61,7 +63,7 @@ class Menu(object):
 
     def sorted_items(self):
         """Return menu items in sorted order according to current locale."""
-        return sorted(self.items, key=lambda x: (x.order, x.label))
+        return sorted(self.items, key=lambda x: (x.order, x.name.lower()))
 
     def add_urlname(self, name, icon, urlname, short_description="", order=50,
                     url_args=None, url_kwargs=None):
@@ -75,14 +77,14 @@ class Menu(object):
         else:
             label = name
         url = reverse_lazy(urlname, args=url_args, kwargs=url_kwargs)
-        return self.add_item(label, icon, url, order)
+        return self.add_item(name, short_description, label, icon, url, order)
 
-    def add_item(self, label, icon, url, order=50):
+    def add_item(self, name, short_description, label, icon, url, order=50):
         """Create a new menu item with given parameters, add it to this menu and
         return it.
 
         """
-        item = Menu(label=label, icon=icon, url=url, order=order)
+        item = Menu(name=name, short_description=short_description, label=label, icon=icon, url=url, order=order)
         self.items.append(item)
         return item
 

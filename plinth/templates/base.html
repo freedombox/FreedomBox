@@ -77,7 +77,7 @@
 <body>
 <div id="wrapper">
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://mozilla.org/firefox">Upgrade to a modern version of Firefox</a> to experience this site.</p><![endif]-->
-  <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+  <div class="navbar navbar-fixed-top navbar-default main-header" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -90,7 +90,7 @@
         {% block mainmenu_left %}
           <a href="{% url 'index' %}"  class="navbar-brand"
              title="{{ box_name }}">
-            <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
+            <img src="{% static 'theme/img/FreedomBox-logo-32px-white.png' %}"
                  alt="{{ box_name }}" />
           </a>
         {% endblock %}
@@ -99,18 +99,27 @@
         <ul class="nav navbar-nav">
           {% if user.is_authenticated and user_is_admin %}
             <li>
-              <a href="{% url 'index' %}" title="{% trans "Home" %}">
+              {% url 'index' as index_url %}
+              <a href="{{ index_url }}" title='{% trans " Home" %}'
+                 class="{% if not submenu.url %}
+                 menu_link_active {% else %} menu_link {% endif %}">
                 {% trans "Home" %}
               </a>
             </li>
             <li>
-              <a href="{% url 'apps' %}" title="{% trans "Apps" %}">
+              {% url 'apps' as apps_url %}
+              <a href="{{ apps_url }}" title='{% trans " Apps" %}'
+                 class="{% if apps_url == submenu.url %}
+                 menu_link_active {% else %} menu_link {% endif %}">
                 <span class="glyphicon glyphicon-th"></span>
                 {% trans "Apps" %}
               </a>
             </li>
             <li>
-              <a href="{% url 'system' %}" title="{% trans "System" %}">
+              {% url 'system' as system_url %}
+              <a href="{{ system_url }}" title='{% trans " System" %}'
+                 class="{% if system_url == submenu.url %}
+                 menu_link_active {% else %} menu_link {% endif %}">
                 <span class="glyphicon glyphicon-cog nav-icon"></span>
                 {% trans "System" %}
               </a>
@@ -199,52 +208,27 @@
     </div>
   </div>
 
-  <div id="container-wrapper" class="container">
-    <div class="row">
-      {% block content_row %}
-        <div class="col-md-3">
-          {% block submenu %}
-            {% if submenu %}
-              <div class="sidebar visible-lg-block">
-                {% include "submenu.html" with menu=submenu %}
-              </div><!--/.sidebar -->
-            {% endif %}
-          {% endblock %}
+  {% block container %}
+    <div id="container-wrapper" class="container">
+      <div class="row">
+        {% block content_row %}
+          <div class="col-md-6">
+            {% block subsubmenu %}
+              {% if subsubmenu %}
+                {% show_subsubmenu subsubmenu %}
+              {% endif %}
+            {% endblock %}
 
-          {% block sidebar %}
-            {# this sidebar should contain help texts but no menus #}
-          {% endblock %}
-        </div><!--/col-->
+            {% include 'messages.html' %}
 
-        <div class="col-md-9">
-          {% block subsubmenu %}
-            {% if subsubmenu %}
-              {% show_subsubmenu subsubmenu %}
-            {% endif %}
-          {% endblock %}
-
-          {% include 'messages.html' %}
-
-          {% block content %}
-            {# main content goes here #}
-          {% endblock %}
-        </div><!--/col-->
-
-        <div class="col-md-12">
-          {% block icons %}
-            {# icons go here #}
-          {% endblock %}
-        </div><!--/col-->
-
-      {% endblock %}
-    </div><!--/row-->
-
-    <div class="text-center">
-      {% block center-info %}
-        {# this center-info should contain help texts but no menus #}
-      {% endblock %}
+            {% block content %}
+              {# main content goes here #}
+            {% endblock %}
+          </div>
+        {% endblock %}
+      </div>
     </div>
-  </div><!--/.fluid-container-->
+  {% endblock %}
 
   <footer>
     <hr>

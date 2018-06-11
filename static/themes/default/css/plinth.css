@@ -4,10 +4,12 @@
 }
 
 body {
-    padding-top: 70px;
+    padding-top: 6em;
     position: relative;
     font-family: LatoRegular, sans-serif;
     font-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 22.5px 75px;
 }
 
 .multiple-checkbox li {
@@ -21,7 +23,7 @@ body {
 
 .navbar-brand img {
     float: left;
-    margin-top: -14px;
+    margin-top: -10px;
     padding: 8px;
 }
 
@@ -61,6 +63,10 @@ body {
     height: 16px;
     display: inline-block;
     animation: spin 1s linear infinite;
+}
+
+.nav-link:hover, .nav-link:visited, .nav-link:link, .nav-link:active {
+    text-decoration: none;
 }
 
 @keyframes spin {
@@ -177,4 +183,100 @@ footer license-info p {
 
 .manual-page {
     text-align: right;
+}
+
+/* applying styles to header - begin */
+.main-header {
+    background: #4989D4;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
+    border: none;
+}
+
+.main-header .navbar-nav>li>a {
+    color: #FFF;
+}
+
+.main-header.navbar-default .navbar-nav>li>a:focus,
+.main-header.navbar-default .navbar-nav>li>a:hover,
+.main-header.navbar-default .navbar-nav>.active>a,
+.main-header.navbar-default .navbar-nav>.active>a:hover,
+.main-header.navbar-default .navbar-nav>.active>a:focus,
+.main-header.navbar-default .navbar-nav>.open>a,
+.main-header.navbar-default .navbar-nav>.open>a:hover,
+.main-header.navbar-default .navbar-nav>.open>a:focus {
+    color: #FFF;
+    background: transparent;
+}
+
+.main-header .navbar-nav>li>a .nav-icon {
+    margin-right: 0px;
+}
+/* applying styles to header - end */
+
+.card-list {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+a.menu_link {
+    text-decoration: none;
+}
+
+a.menu_link:hover,a.menu_link:active {
+    text-decoration: none;
+}
+
+a.menu_link_active {
+    border-bottom: white 3px solid;
+}
+
+.card {
+    text-align: center;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease-in-out;
+    width: 16rem;
+    padding: 0;
+    margin: 0 10px 20px;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card .nav-link {
+    display: block;
+    padding: 20px 4px 4px 4px;
+}
+
+.card-title, .card-description {
+    margin: 4px;
+    color: #333;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.75rem
+}
+
+.card-description {
+    font-size: small;
+}
+
+.card-icon {
+	  background: radial-gradient(farthest-side at bottom,#eefff0, white);
+	  background-position: 50% 100%;
+	  background-repeat: no-repeat;
+	  background-size: 150% 25%;
+}
+
+.card-icon span {
+    width: 100px;
+    height: 100px;
+    font-size: 80px
 }

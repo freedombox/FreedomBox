@@ -21,72 +21,88 @@
 {% load i18n %}
 {% load static %}
 
-{% block icons %}
+{% block page_head %}
+  <style type="text/css">
+    body {
+        background-image: url({% static 'theme/img/freedombox-logo-background.svg' %});
+    }
+  </style>
+{% endblock %}
 
-  <div class="row">
-    {% if shortcuts %}
+{% block container %}
 
-      {% for shortcut in shortcuts %}
-        {% if not shortcut.hidden %}
-          {% if user.is_authenticated or not shortcut.login_required %}
-            <div class="col-sm-3">
-              <ul class="nav nav-pills nav-stacked">
-                {% if selected_id == shortcut.id %}
-                  <li class="active">
-                    <a href="{{ shortcut.url }}" class="active">
-                {% else %}
-                  <li>
-                    <a href="{{ shortcut.url }}">
-                {% endif %}
-                      <center>
-                        <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png" style="max-width: 100px; height: 100px" />
-                        <br>
-                        <div class="shortcut-label">
-                        {{ shortcut.label|linebreaks }}
-                        </div>
-                      </center>
-                    </a>
-                  </li>
-              </ul>
-            </div>
-          {% endif %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+
+        {% include 'messages.html' %}
+
+        {% if not shortcuts %}
+          <h4>
+            {% url 'apps' as apps_url %}
+            {% blocktrans trimmed %}
+              Enable some <a href="{{ apps_url }}">applications</a> to add
+              shortcuts to this page.
+            {% endblocktrans %}
+          </h4>
         {% endif %}
-      {% endfor %}
 
-    {% else %}
+        {% if details %}
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ details_label }}</h3>
+            </div>
 
-      <h4>
-        {% url 'apps' as apps_url %}
-        {% blocktrans trimmed %}
-          Enable some <a href="{{ apps_url }}">applications</a> to add
-          shortcuts to this page.
-        {% endblocktrans %}
-      </h4>
+            {% for paragraph in details %}
+              <div class="panel-body">
+                {{ paragraph|safe }}
+              </div>
+            {% endfor %}
+            <br>
 
-    {% endif %}
+            {% if user.is_authenticated and user_is_admin and configure_url %}
+              <a class="btn btn-primary btn-sm"
+                 style="margin-left : 10px; margin-bottom : 5px"
+                 href="{{ configure_url }}">
+                {% trans "Configure &raquo;" %}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
   </div>
 
-  <br>
-  {% if details %}
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ details_label }}</h3>
-      </div>
-
-      {% for paragraph in details %}
-        <div class="panel-body">
-          {{ paragraph|safe }}
+  {% if shortcuts %}
+    <div id="container-wrapper" class="container-fluid">
+      <div class="row">
+        <div class="card-list">
+          {% for shortcut in shortcuts %}
+            {% if not shortcut.hidden %}
+              {% if user.is_authenticated or not shortcut.login_required %}
+                <div class="card thumbnail">
+                  {% if selected_id == shortcut.id %}
+                    <a href="{{ shortcut.url }}" class="active">
+                  {% else %}
+                    <a href="{{ shortcut.url }}">
+                  {% endif %}
+                        <div class="card-icon">
+                          <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png"
+                               style="max-width: 100px; height: 100px; font-size: 80px"/>
+                        </div>
+                        <div class="card-title">
+                          {{ shortcut.name }}
+                        </div>
+                        <div class="card-description">
+                          {{ shortcut.short_description }}
+                        </div>
+                    </a>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
         </div>
-      {% endfor %}
-      <br>
-
-      {% if user.is_authenticated and user_is_admin and configure_url %}
-        <a class="btn btn-primary btn-sm"
-           style="margin-left : 10px; margin-bottom : 5px"
-           href="{{ configure_url }}">
-          {% trans "Configure &raquo;" %}</a>
-      {% endif %}
-
+      </div>
     </div>
   {% endif %}
 

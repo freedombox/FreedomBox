@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'cards.html' %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -18,35 +18,13 @@
 #
 {% endcomment %}
 
+{% load static %}
 {% load i18n %}
 
-{% block submenu %}
-  {% if submenu %}
-    <div class="sidebar">
-      {% include "submenu.html" with menu=submenu %}
-    </div>
-  {% endif %}
-{% endblock %}
-
-{% block content %}
-
-  <h2>{% trans "Services and Applications" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      You can install and run various services and applications on
-      your {{ box_name }}. Click on any app page link on the left to
-      read a description of the application and choose to install it.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      This box can be your photo sharing site, your instant messaging
-      site, your social networking site, your news site.  Remember web
-      portals?  We can be one of those too.  Many of the services you
-      use on the web could soon be on site and under your control!
-    {% endblocktrans %}
-  </p>
-
+{% block page_head %}
+  <style type="text/css">
+    body {
+        background-image: url({% static 'theme/img/apps-background.svg' %});
+    }
+  </style>
 {% endblock %}

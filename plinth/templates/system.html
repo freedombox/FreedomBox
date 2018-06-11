@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'cards.html' %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -18,30 +18,13 @@
 #
 {% endcomment %}
 
+{% load static %}
 {% load i18n %}
 
-{% block submenu %}
-  {% if submenu %}
-    <div class="sidebar">
-      {% include "submenu.html" with menu=submenu %}
-    </div>
-  {% endif %}
-{% endblock %}
-
-{% block content %}
-
-  <h2>{% trans "System Configuration" %}</h2>
-
-  <p>
-    {% blocktrans trimmed %}
-      Here you can administrate the underlying system of your {{ box_name }}.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      The options affect the {{ box_name }} at its most general level,
-      so be careful!
-    {% endblocktrans %}
-  </p>
+{% block page_head %}
+  <style type="text/css">
+    body {
+        background-image: url({% static 'theme/img/system-background.svg' %});
+    }
+  </style>
 {% endblock %}
