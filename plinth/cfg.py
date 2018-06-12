@@ -45,24 +45,16 @@ DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
 DEFAULT_ROOT = '/'
 
 
-def get_config_file():
-    """Return the configuration file to read."""
-    if os.path.isfile(DEFAULT_CONFIG_FILE):
+def read(file_path=None, root_directory=None):
+    """
+    Read configuration.
+
+    - file_path: path of plinth.config file
+    - root_directory: path of plinth root folder
+    """
+    if not file_path and not root_directory:
         root_directory = DEFAULT_ROOT
         file_path = DEFAULT_CONFIG_FILE
-    else:
-        root_directory = os.path.dirname(os.path.realpath(__file__))
-        root_directory = os.path.join(root_directory, '..')
-        root_directory = os.path.realpath(root_directory)
-        file_path = os.path.join(root_directory, 'plinth.config')
-
-    return file_path, root_directory
-
-
-def read(file_path=None, root_directory=None):
-    """Read configuration."""
-    if not file_path and not root_directory:
-        file_path, root_directory = get_config_file()
 
     if not os.path.isfile(file_path):
         raise FileNotFoundError('No plinth.config file could be found.')

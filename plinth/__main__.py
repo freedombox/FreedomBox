@@ -34,10 +34,9 @@ import cherrypy
 from plinth import cfg, menu, module_loader, service, setup
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
+precedence_commandline_arguments = ["server_dir", "debug", "develop"]
 
 logger = logging.getLogger(__name__)
-
-arguments = None
 
 
 def parse_arguments():
@@ -46,10 +45,13 @@ def parse_arguments():
         description='Core functionality and web interface for FreedomBox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # TODO: server_dir is actually a url prefix; use a better variable name
-    parser.add_argument('--server_dir', default=cfg.server_dir,
+    parser.add_argument('--server_dir', default=None,
                         help='web server path under which to serve')
-    parser.add_argument('--debug', action='store_true', default=cfg.debug,
+    parser.add_argument('--debug', action='store_true', default=None,
                         help='enable debugging and run server *insecurely*')
+    parser.add_argument('--develop', action='store_true', default=None,
+                        help=('use files from current source code folder '
+                              'instead of system-installed plinth files'))
     parser.add_argument(
         '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
@@ -63,10 +65,7 @@ def parse_arguments():
     parser.add_argument('--list-modules', default=False, nargs='*',
                         help='list modules')
 
-    global arguments
-    arguments = parser.parse_args()
-    cfg.server_dir = arguments.server_dir
-    cfg.debug = arguments.debug
+    return parser.parse_args()
 
 
 def setup_logging():
@@ -377,11 +376,35 @@ def run_diagnostics_and_exit():
     sys.exit(error_code)
 
 
+def adapt_config(arguments):
+    """Give commandline arguments precedence over plinth.config entries"""
+    for argument_name in precedence_commandline_arguments:
+        argument_value = getattr(arguments, argument_name)
+        if argument_value is not None:
+            setattr(cfg, argument_name, argument_value)
+
+
+def get_relative_config_paths():
+    """Get config paths of the current source code folder"""
+    root_directory = os.path.dirname(os.path.realpath(__file__))
+    root_directory = os.path.join(root_directory, '..')
+    root_directory = os.path.realpath(root_directory)
+    file_path = os.path.join(root_directory, 'plinth.config')
+    return {
+        'file_path': file_path,
+        'root_directory': root_directory,
+    }
+
+
 def main():
     """Intialize and start the application"""
-    cfg.read()
+    arguments = parse_arguments()
+    config_paths = {}
+    if arguments.develop:
+        config_paths = get_relative_config_paths()
 
-    parse_arguments()
+    cfg.read(**config_paths)
+    adapt_config(arguments)
 
     setup_logging()
 
