@@ -68,13 +68,13 @@ However, for some reason, you wish setup manually, the following tips will help:
    as possible). Simply run it as:
 
    ```
-   $ sudo ./run --debug
+   $ sudo ./run --debug --develop
    ```
 
    In this mode, FreedomBox Service (Plinth) runs in working directory without
-   need for installation. It uses the `plinth.conf` config file in the working
-   directory if no regular config file (`/etc/plinth/plinth.conf`) is found. It
-   creates all that data and runtime files in `data/var/*`.
+   need for installation. The `plinth.conf` config file and the action
+   scripts of the working directory are used. It creates all that data and
+   runtime files in `data/var/*`.
 
    *Note:* This mode is supported only in a limited manner.  The following are
    the unknown issues with it:

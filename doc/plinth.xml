@@ -39,6 +39,7 @@
       <arg><option>-h, </option><option>--help</option></arg>
       <arg><option>--server_dir</option><arg choice="req">SERVER_DIR</arg></arg>
       <arg><option>--debug</option></arg>
+      <arg><option>--develop</option></arg>
       <arg><option>--diagnose</option></arg>
       <arg>
         <option>--setup</option>
@@ -92,11 +93,7 @@
             shipped with a value of <filename>/plinth</filename> in
             <filename>/etc/plinth/plinth.config</filename>.  This
             means that Plinth will be available as
-            http://localhost:8000/plinth by default.  When
-            <filename>/etc/plinth/plinth.config</filename> is not
-            available, <filename>plinth.config</filename> from current
-            directory is used.  In source directory, this has the
-            default value of <filename>/</filename>.
+            http://localhost:8000/plinth by default.
           </para>
         </listitem>
       </varlistentry>
@@ -109,6 +106,16 @@
             changes and restart Plinth on modifications.  Turn on
             Django debug mode to show details on error pages.  Die if
             there is an error during module initialization.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--develop</option></term>
+        <listitem>
+          <para>
+            Enable development mode.  Use plinth.config and the actions_dir
+            of the current working directory, opposed to the actions_dir
+            and plinth.config file of the operating system installation.
           </para>
         </listitem>
       </varlistentry>
@@ -200,12 +207,21 @@
     </example>
 
     <example>
-      <title>Run Plinth for debugging</title>
-      <synopsis>$ plinth --server_dir=/plinth --debug</synopsis>
+      <title>Run Plinth with different URL prefix</title>
+      <synopsis>$ plinth --server_dir='/myurl'</synopsis>
       <para>
-        Enable debug mode and run on terminal.  Also override the
-        configuration file value for the URL fragment to start Plinth
-        under and set it to /plinth.
+        Run Plinth with the '/myurl' prefix. Note that Apache forwards requests
+        to '/plinth' by default, so /myurl is not accessible outside of your
+        FreedomBox without adapting the apache configuration.
+      </para>
+    </example>
+
+    <example>
+      <title>Run Plinth in development mode</title>
+      <synopsis>$ plinth --debug --develop</synopsis>
+      <para>
+        Enable debug and development mode and run on terminal.  This uses
+        the configuration and action files of the current working directory.
       </para>
     </example>
   </refsect1>
