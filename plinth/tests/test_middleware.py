@@ -38,7 +38,6 @@ class TestSetupMiddleware(TestCase):
     def setUpClass(cls):
         """Setup all the test cases."""
         super(TestSetupMiddleware, cls).setUpClass()
-
         cfg.read()
 
     def setUp(self):

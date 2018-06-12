@@ -384,24 +384,15 @@ def adapt_config(arguments):
             setattr(cfg, argument_name, argument_value)
 
 
-def get_relative_config_paths():
-    """Get config paths of the current source code folder"""
-    root_directory = os.path.dirname(os.path.realpath(__file__))
-    root_directory = os.path.join(root_directory, '..')
-    root_directory = os.path.realpath(root_directory)
-    file_path = os.path.join(root_directory, 'plinth.config')
-    return {
-        'file_path': file_path,
-        'root_directory': root_directory,
-    }
-
-
 def main():
     """Intialize and start the application"""
     arguments = parse_arguments()
     config_paths = {}
     if arguments.develop:
-        config_paths = get_relative_config_paths()
+        # use the root and plinth.config of the current working directory
+        file_path, root_directory = cfg.get_fallback_config_paths()
+        config_paths['file_path'] = file_path
+        config_paths['root_directory'] = root_directory
 
     cfg.read(**config_paths)
     adapt_config(arguments)

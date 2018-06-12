@@ -45,22 +45,41 @@ DEFAULT_CONFIG_FILE = '/etc/plinth/plinth.config'
 DEFAULT_ROOT = '/'
 
 
-def read(file_path=None, root_directory=None):
+def get_fallback_config_paths():
+    """Get config paths of the current source code folder"""
+    root_directory = os.path.dirname(os.path.realpath(__file__))
+    root_directory = os.path.join(root_directory, '..')
+    root_directory = os.path.realpath(root_directory)
+    config_path = os.path.join(root_directory, 'plinth.config')
+    return config_path, root_directory
+
+
+def get_config_paths():
+    """Get config paths.
+    Return the fallback plinth config if the default one does not exist"""
+    root_directory = DEFAULT_ROOT
+    config_path = DEFAULT_CONFIG_FILE
+    if not os.path.isfile(config_path):
+        config_path, root_directory = get_fallback_config_paths()
+    return config_path, root_directory
+
+
+def read(config_path=None, root_directory=None):
     """
     Read configuration.
 
-    - file_path: path of plinth.config file
+    - config_path: path of plinth.config file
     - root_directory: path of plinth root folder
     """
-    if not file_path and not root_directory:
-        root_directory = DEFAULT_ROOT
-        file_path = DEFAULT_CONFIG_FILE
+    if not config_path and not root_directory:
+        config_path, root_directory = get_config_paths()
 
-    if not os.path.isfile(file_path):
-        raise FileNotFoundError('No plinth.config file could be found.')
+    if not os.path.isfile(config_path):
+        msg = 'No plinth.config file could be found on path: %s' % config_path
+        raise FileNotFoundError(msg)
 
     global config_file  # pylint: disable-msg=invalid-name,global-statement
-    config_file = file_path
+    config_file = config_path
 
     parser = configparser.ConfigParser(
         defaults={

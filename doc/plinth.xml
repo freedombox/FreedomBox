@@ -94,6 +94,10 @@
             <filename>/etc/plinth/plinth.config</filename>.  This
             means that Plinth will be available as
             http://localhost:8000/plinth by default.
+            When <filename>/etc/plinth/plinth.config</filename> is not
+            available, <filename>plinth.config</filename> from the current
+            working directory is used.
+
           </para>
         </listitem>
       </varlistentry>
@@ -221,7 +225,9 @@
       <synopsis>$ plinth --debug --develop</synopsis>
       <para>
         Enable debug and development mode and run on terminal.  This uses
-        the configuration and action files of the current working directory.
+        the configuration and action files of the current working directory and
+        gives debugging information like extended error pages, or not failing
+        silently on module initialization errors.
       </para>
     </example>
   </refsect1>

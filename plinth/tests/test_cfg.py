@@ -41,7 +41,7 @@ class TestCfg(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Locate and copy the official plinth.config file."""
-        cls.test_config_file, cls.test_config_dir = cfg.get_config_file()
+        cls.test_config_file, cls.test_config_dir = cfg.get_config_paths()
 
     @classmethod
     def tearDownClass(cls):
@@ -62,42 +62,37 @@ class TestCfg(unittest.TestCase):
         self.compare_configurations(parser)
 
     def test_read_primary_config_file(self):
-        """Verify that the primary config file can be read correctly."""
-        original_file_path = cfg.DEFAULT_CONFIG_FILE
+        """Verify that the primary config file is used by default."""
+        original_config_path = cfg.DEFAULT_CONFIG_FILE
         original_root_directory = cfg.DEFAULT_ROOT
 
-        expected_file_path = CONFIG_FILE_WITH_MISSING_OPTIONS
-        expected_root_directory = 'x-default-root'
+        expected_config_path = CONFIG_FILE_WITH_MISSING_OPTIONS
+        root_directory = 'x-default-root'
+        expected_root_directory = os.path.realpath(root_directory)
 
         try:
-            cfg.DEFAULT_CONFIG_FILE = expected_file_path
-            cfg.DEFAULT_ROOT = expected_root_directory
-            file_path, root_directoy = cfg.get_config_file()
-            self.assertEqual(file_path, expected_file_path)
-            self.assertEqual(root_directoy, expected_root_directory)
+            cfg.DEFAULT_CONFIG_FILE = expected_config_path
+            cfg.DEFAULT_ROOT = root_directory
+            # reading the config file will fail, but still cfg.root and
+            # cfg.config_file will be set for parsing the config file
+            try:
+                cfg.read()
+            except configparser.NoOptionError:
+                pass
+            self.assertEqual(cfg.config_file, expected_config_path)
+            self.assertEqual(cfg.root, expected_root_directory)
         finally:
-            cfg.DEFAULT_CONFIG_FILE = original_file_path
+            cfg.DEFAULT_CONFIG_FILE = original_config_path
             cfg.DEFAULT_ROOT = original_root_directory
 
     def test_read_fallback_config_file(self):
-        """Verify that the fallback config file can be read correctly."""
-        original_file_path = cfg.DEFAULT_CONFIG_FILE
-        original_root_directory = cfg.DEFAULT_ROOT
-
+        """Verify that the correct fallback config file is used"""
         fallback_root = os.path.realpath('.')
         fallback_config_file = os.path.join(fallback_root, 'plinth.config')
-        expected_file_path = os.path.realpath(fallback_config_file)
-        expected_root_directory = fallback_root
-
-        try:
-            cfg.DEFAULT_CONFIG_FILE = 'x-non-existant-file'
-            cfg.DEFAULT_ROOT = 'x-non-existant-directory'
-            file_path, root_directoy = cfg.get_config_file()
-            self.assertEqual(file_path, expected_file_path)
-            self.assertEqual(root_directoy, expected_root_directory)
-        finally:
-            cfg.DEFAULT_CONFIG_FILE = original_file_path
-            cfg.DEFAULT_ROOT = original_root_directory
+        config_path, root_directory = cfg.get_fallback_config_paths()
+        cfg.read(config_path, root_directory)
+        self.assertEqual(cfg.config_file, fallback_config_file)
+        self.assertEqual(cfg.root, fallback_root)
 
     def test_read_missing_config_file(self):
         """Verify that an exception is raised when there's no config file."""
