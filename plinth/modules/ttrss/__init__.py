@@ -18,6 +18,7 @@
 FreedomBox app to configure Tiny Tiny RSS.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
@@ -47,8 +48,8 @@ description = [
     format_lazy(
         _('When enabled, Tiny Tiny RSS will be available from <a href="/tt-'
           'rss">/tt-rss</a> path on the web server. It can be accessed by '
-          'any <a href="/plinth/sys/users">user with a {box_name} login</a>.'),
-        box_name=_(cfg.box_name)),
+          'any <a href="{users_url}">user with a {box_name} login</a>.'),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import validate
@@ -24,6 +25,6 @@ clients = validate([{
         _('JSXC'),
     'platforms': [{
         'type': 'web',
-        'url': '/plinth/apps/jsxc/jsxc/'
+        'url': reverse_lazy('jsxc:jsxc')
     }]
 }])

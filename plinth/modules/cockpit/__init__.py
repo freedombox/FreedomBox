@@ -18,6 +18,7 @@
 FreedomBox app to configure Cockpit.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from plinth.utils import format_lazy
 
@@ -50,10 +51,10 @@ description = [
     format_lazy(
         _('When enabled, Cockpit will be available from <a href="/_cockpit/">'
           '/_cockpit/</a> path on the web server. It can be accessed by '
-          '<a href="/plinth/sys/users">any user</a> with a {box_name} login. '
+          '<a href="{users_url}">any user</a> with a {box_name} login. '
           'Sensitive information and system altering abilities are limited to '
           'users belonging to admin group.'),
-        box_name=_(cfg.box_name)),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
     _('Currently only limited functionality is available.'),
 ]
 

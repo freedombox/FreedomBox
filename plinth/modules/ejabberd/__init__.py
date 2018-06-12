@@ -47,12 +47,14 @@ description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
     format_lazy(
-        _('To actually communicate, you can use the <a href="/plinth/apps/'
-          'jsxc">web client</a> or any other <a href=\'https://xmpp.org/'
+        _('To actually communicate, you can use the <a href="{jsxc_url}">'
+          'web client</a> or any other <a href=\'https://xmpp.org/'
           'software/clients\' target=\'_blank\'>XMPP client</a>. '
-          'When enabled, ejabberd can be accessed by any <a href="/plinth/sys'
-          '/users">user with a {box_name} login</a>.'), box_name=_(
-              cfg.box_name))
+          'When enabled, ejabberd can be accessed by any <a href="{users_url}">'
+          'user with a {box_name} login</a>.'),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
+        jsxc_url=reverse_lazy('jsxc:index')
+    )
 ]
 
 clients = clients

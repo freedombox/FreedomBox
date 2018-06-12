@@ -66,7 +66,7 @@
       </tr>
   </table>
 
-  <form class="form" method="post" action="/plinth/apps/tahoe-lafs/add_introducer">
+  <form class="form" method="post" action="{% url 'tahoe:add-introducer' %}">
       {% csrf_token %}
       <h4>{% trans "Add new introducer" %}</h4>
 
@@ -97,7 +97,7 @@
           <td> {{ introducer }} </td>
           <td> {{ furl }} </td>
           <form class="form" method="post"
-                action="/plinth/apps/tahoe-lafs/remove_introducer/{{introducer}}" id="introducer_list">
+                action="{% url 'tahoe:remove-introducer' introducer %}" id="introducer_list">
                  {% csrf_token %}
               <td><button type="submit" class="btn btn-danger">
                   {% trans "Remove" %}

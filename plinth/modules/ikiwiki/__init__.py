@@ -18,6 +18,7 @@
 FreedomBox app to configure ikiwiki.
 """
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
@@ -50,9 +51,10 @@ description = [
     format_lazy(
         _('Only {box_name} users in the <b>admin</b> group can <i>create</i> '
           'and <i>manage</i> blogs and wikis, but any user in the <b>wiki</b> '
-          'group can <i>edit</i> existing ones. In the <a href="/plinth/sys/'
-          'users">User Configuration</a> you can change these '
-          'permissions or add new users.'), box_name=_(cfg.box_name))
+          'group can <i>edit</i> existing ones. In the <a href="{users_url}">'
+          'User Configuration</a> you can change these '
+          'permissions or add new users.'), box_name=_(cfg.box_name),
+          users_url = reverse_lazy('users:index'))
 ]
 
 clients = clients
