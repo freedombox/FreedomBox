@@ -21,7 +21,6 @@ Forms for configuring diaspora*
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import utils
 from plinth.forms import ServiceForm
 
 

@@ -24,7 +24,6 @@ from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
 import struct
-import subprocess
 import uuid
 
 from plinth.utils import import_from_gi

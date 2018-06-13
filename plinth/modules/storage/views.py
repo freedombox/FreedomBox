@@ -92,7 +92,6 @@ def warn_about_low_disk_space(request):
         return
 
     percent_used = list_root[0]['percent_used']
-    size_bytes = list_root[0]['size']
     free_bytes = list_root[0]['free']
     free_gib = free_bytes / (1024**3)
 

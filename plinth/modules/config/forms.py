@@ -24,15 +24,11 @@ from django import forms
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.core import validators
 from django.core.exceptions import ValidationError
-from django.conf import settings
-from django.utils import translation
 
 from plinth import cfg
 from plinth.utils import format_lazy
 
-import plinth
 import logging
-import os
 import re
 
 logger = logging.getLogger(__name__)
