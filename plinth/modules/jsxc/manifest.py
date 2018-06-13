@@ -21,8 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.clients import validate
 
 clients = validate([{
-    'name':
-        _('JSXC'),
+    'name': _('JSXC'),
     'platforms': [{
         'type': 'web',
         'url': reverse_lazy('jsxc:jsxc')

@@ -24,8 +24,8 @@ import socket
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions, cfg, frontpage
+from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.signals import (domainname_change, post_hostname_change,
                             pre_hostname_change)
@@ -51,10 +51,9 @@ description = [
           'web client</a> or any other <a href=\'https://xmpp.org/'
           'software/clients\' target=\'_blank\'>XMPP client</a>. '
           'When enabled, ejabberd can be accessed by any <a href="{users_url}">'
-          'user with a {box_name} login</a>.'),
-        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index'),
-        jsxc_url=reverse_lazy('jsxc:index')
-    )
+          'user with a {box_name} login</a>.'), box_name=_(cfg.box_name),
+        users_url=reverse_lazy('users:index'),
+        jsxc_url=reverse_lazy('jsxc:index'))
 ]
 
 clients = clients
@@ -77,10 +76,11 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service('ejabberd', name, ports=[
-            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
+        service = service_module.Service(
+            'ejabberd', name,
+            ports=['xmpp-client', 'xmpp-server',
+                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
+            enable=enable, disable=disable)
         if is_enabled():
             add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
@@ -99,10 +99,11 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
     global service
     if service is None:
-        service = service_module.Service('ejabberd', name, ports=[
-            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
-        ], is_external=True, is_enabled=is_enabled, enable=enable,
-                                         disable=disable)
+        service = service_module.Service(
+            'ejabberd', name,
+            ports=['xmpp-client', 'xmpp-server',
+                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
+            enable=enable, disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 

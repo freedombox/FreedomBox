@@ -21,8 +21,8 @@ FreedomBox app to configure Tiny Tiny RSS.
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions, cfg, frontpage
+from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
 from plinth.utils import format_lazy

@@ -20,16 +20,13 @@ FreedomBox app to configure Cockpit.
 
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from plinth.utils import format_lazy
 
-from plinth import actions
-from plinth import action_utils
-from plinth import cfg
-from plinth import frontpage
+from plinth import action_utils, actions, cfg, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.modules import names
 from plinth.signals import domain_added, domain_removed, domainname_change
+from plinth.utils import format_lazy
 
 version = 1
 
@@ -53,8 +50,8 @@ description = [
           '/_cockpit/</a> path on the web server. It can be accessed by '
           '<a href="{users_url}">any user</a> with a {box_name} login. '
           'Sensitive information and system altering abilities are limited to '
-          'users belonging to admin group.'),
-        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
+          'users belonging to admin group.'), box_name=_(cfg.box_name),
+        users_url=reverse_lazy('users:index')),
     _('Currently only limited functionality is available.'),
 ]
 
@@ -70,10 +67,10 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
 
         if is_enabled():
             add_shortcut()
@@ -86,16 +83,17 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    domains = [domain
-               for domains_of_a_type in names.domains.values()
-               for domain in domains_of_a_type]
+    domains = [
+        domain for domains_of_a_type in names.domains.values()
+        for domain in domains_of_a_type
+    ]
     helper.call('post', actions.superuser_run, 'cockpit', ['setup'] + domains)
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0], name, ports=['http', 'https'],
-            is_external=True,
-            is_enabled=is_enabled, enable=enable, disable=disable)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'http', 'https'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -104,14 +102,13 @@ def add_shortcut():
     """Add a shortcut the frontpage."""
     frontpage.add_shortcut('cockpit', name,
                            short_description=short_description,
-                           url='/_cockpit/',
-                           login_required=True)
+                           url='/_cockpit/', login_required=True)
 
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.webserver_is_enabled('cockpit-freedombox') and
-            action_utils.service_is_running('cockpit.socket'))
+    return (action_utils.webserver_is_enabled('cockpit-freedombox')
+            and action_utils.service_is_running('cockpit.socket'))
 
 
 def enable():
