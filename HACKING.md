@@ -9,31 +9,31 @@ FreedomBox development rather simple: You can edit the source code on your host
 and immediately see the effects in the running VM. The entire setup is automatic
 and requires about 4.5 GB of disk space.
 
-1. Install Vagrant and VirtualBox:
+1.  Install Vagrant and VirtualBox:
 
-   ```
-   $ sudo apt-get install virtualbox vagrant
-   ```
+    ```
+    $ sudo apt-get install virtualbox vagrant
+    ```
 
-2. To download, setup, run, and configure a VM for FreedomBox development using
-   Vagrant, simply execute in your FreedomBox Service (Plinth) development
-   folder:
+2.  To download, setup, run, and configure a VM for FreedomBox development using
+    Vagrant, simply execute in your FreedomBox Service (Plinth) development
+    folder:
 
-   ```
-   $ vagrant up
-   ```
+    ```
+    $ vagrant up
+    ```
 
-3. To access FreedomBox web interface (from host), visit
-   https://localhost:4430/plinth/
+3.  To access FreedomBox web interface (from host), visit
+    https://localhost:4430/plinth/
 
-4. Edit the source code in your host machine's FreedomBox Service (Plinth)
-   development folder. By default, this folder is shared within the VM, at
-   `/vagrant/`. To actually reflect the changes in the running VM, run on your
-   host:
+4.  Edit the source code in your host machine's FreedomBox Service (Plinth)
+    development folder. By default, this folder is shared within the VM, at
+    `/vagrant/`. To actually reflect the changes in the running VM, run on your
+    host:
 
-   ```
-   $ vagrant provision
-   ```
+    ```
+    $ vagrant provision
+    ```
 
 ## Installing Dependencies
 
@@ -49,54 +49,54 @@ $ sudo apt install -y $(plinth --list-dependencies)
 It is recommended that you use Vagrant to setup your development environment.
 However, for some reason, you wish setup manually, the following tips will help:
 
-1. Instead of running `setup.py install` after every source modification, run
-   the following command:
+1.  Instead of running `setup.py install` after every source modification, run
+    the following command:
 
-   ```
-   $ sudo python3 setup.py develop
-   ```
+    ```
+    $ sudo python3 setup.py develop
+    ```
 
-   This will install the python package in a special development mode.  Run it
-   normally.  Any updates to the code (and core package data files) do not
-   require re-installation after every modification.
+    This will install the python package in a special development mode.  Run it
+    normally.  Any updates to the code (and core package data files) do not
+    require re-installation after every modification.
 
-   CherryPy web server also monitors changes to the source files and reloads
-   the server as soon as a file is modified.  Hence it is usually sufficient
-   to modify the source and refresh the browser page to see the changes.
+    CherryPy web server also monitors changes to the source files and reloads
+    the server as soon as a file is modified.  Hence it is usually sufficient
+    to modify the source and refresh the browser page to see the changes.
 
-2. FreedomBox Service (Plinth) also supports running without installing (as much
-   as possible). Simply run it as:
+2.  FreedomBox Service (Plinth) also supports running without installing (as much
+    as possible). Simply run it as:
 
-   ```
-   $ sudo ./run --debug --develop
-   ```
+    ```
+    $ sudo ./run --debug --develop
+    ```
 
-   In this mode, FreedomBox Service (Plinth) runs in working directory without
-   need for installation. The `plinth.conf` config file and the action
-   scripts of the working directory are used. It creates all that data and
-   runtime files in `data/var/*`.
+    In this mode, FreedomBox Service (Plinth) runs in working directory without
+    need for installation. The `plinth.conf` config file and the action
+    scripts of the working directory are used. It creates all that data and
+    runtime files in `data/var/*`.
 
-   *Note:* This mode is supported only in a limited manner.  The following are
-   the unknown issues with it:
+    *Note:* This mode is supported only in a limited manner.  The following are
+    the unknown issues with it:
 
-    1. Help pages are also not built. Run `make -C doc` manually.
+     1. Help pages are also not built. Run `make -C doc` manually.
 
-    2. Actions do not work when running as normal user without `sudo` prefix.
-       You need to add `actions` directory to be allowed for `sudo` commands.
-       See `data/etc/sudoers.d/plinth` for a hint.
+     2. Actions do not work when running as normal user without `sudo` prefix.
+        You need to add `actions` directory to be allowed for `sudo` commands.
+        See `data/etc/sudoers.d/plinth` for a hint.
 
 ### Testing Inside a Virtual Machine
 
-1. Checkout source on the host.
+1.  Checkout source on the host.
 
-2. Share the source folder and mount it on virtual machine.  This could be done
-   over NFS, SSH-fs or 'Shared Folders' feature on VirtualBox.
+2.  Share the source folder and mount it on virtual machine.  This could be done
+    over NFS, SSH-fs or 'Shared Folders' feature on VirtualBox.
 
-3. Run `setup.py develop` or `setup.py install` as described above on guest
-   machine.
+3.  Run `setup.py develop` or `setup.py install` as described above on guest
+    machine.
 
-4. Access the guest machine's FreedomBox web UI from host after setting bridging
-   or NATing for guest virtual machine.
+4.  Access the guest machine's FreedomBox web UI from host after setting bridging
+    or NATing for guest virtual machine.
 
 ## Running Tests
 
