@@ -34,7 +34,7 @@ import cherrypy
 from plinth import cfg, menu, module_loader, service, setup
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
-precedence_commandline_arguments = ["server_dir", "debug", "develop"]
+precedence_commandline_arguments = ["server_dir", "develop"]
 
 logger = logging.getLogger(__name__)
 
@@ -47,11 +47,9 @@ def parse_arguments():
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument('--server_dir', default=None,
                         help='web server path under which to serve')
-    parser.add_argument('--debug', action='store_true', default=None,
-                        help='enable debugging and run server *insecurely*')
     parser.add_argument('--develop', action='store_true', default=None,
-                        help=('use files from current source code folder '
-                              'instead of system-installed plinth files'))
+                        help=('run Plinth *insecurely* from current folder; '
+                            'enable auto-reloading and debugging options'))
     parser.add_argument(
         '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
@@ -79,8 +77,8 @@ def setup_logging():
     # Capture all Python warnings such as deprecation warnings
     logging.captureWarnings(True)
 
-    # Log all deprecation warnings when in debug mode
-    if cfg.debug:
+    # Log all deprecation warnings when in develop mode
+    if cfg.develop:
         warnings.filterwarnings('default', '', DeprecationWarning)
         warnings.filterwarnings('default', '', PendingDeprecationWarning)
         warnings.filterwarnings('default', '', ImportWarning)
@@ -96,7 +94,7 @@ def setup_server():
         'server.socket_port': cfg.port,
         'server.thread_pool': 10,
         # Avoid stating files once per second in production
-        'engine.autoreload.on': cfg.debug,
+        'engine.autoreload.on': cfg.develop,
     })
 
     application = django.core.wsgi.get_wsgi_application()
@@ -189,7 +187,7 @@ def configure_django():
         },
         'root': {
             'handlers': ['console', 'file'],
-            'level': 'DEBUG' if cfg.debug else 'INFO'
+            'level': 'DEBUG' if cfg.develop else 'INFO'
         }
     }
 
@@ -269,7 +267,7 @@ def configure_django():
                 'NAME': cfg.store_file
             }
         },
-        DEBUG=cfg.debug,
+        DEBUG=cfg.develop,
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
         IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR',),
@@ -312,7 +310,7 @@ def configure_django():
     logger.debug('Configured Django with applications - %s', applications)
 
     logger.debug('Creating or adding new tables to data file')
-    verbosity = 1 if cfg.debug else 0
+    verbosity = 1 if cfg.develop else 0
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
@@ -387,14 +385,14 @@ def adapt_config(arguments):
 def main():
     """Intialize and start the application"""
     arguments = parse_arguments()
-    config_paths = {}
+
     if arguments.develop:
         # use the root and plinth.config of the current working directory
-        file_path, root_directory = cfg.get_fallback_config_paths()
-        config_paths['file_path'] = file_path
-        config_paths['root_directory'] = root_directory
+        config_path, root_directory = cfg.get_fallback_config_paths()
+        cfg.read(config_path, root_directory)
+    else:
+        cfg.read()
 
-    cfg.read(**config_paths)
     adapt_config(arguments)
 
     setup_logging()

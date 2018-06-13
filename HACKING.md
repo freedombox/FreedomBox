@@ -68,13 +68,16 @@ However, for some reason, you wish setup manually, the following tips will help:
     as possible). Simply run it as:
 
     ```
-    $ sudo ./run --debug --develop
+    $ sudo ./run --develop
     ```
 
-    In this mode, FreedomBox Service (Plinth) runs in working directory without
-    need for installation. The `plinth.conf` config file and the action
+    In this mode, FreedomBox Service (Plinth) runs from the working directory
+    without need for installation. The server restarts automatically when any
+    python file changes.  The `plinth.conf` config file and the action
     scripts of the working directory are used. It creates all that data and
     runtime files in `data/var/*`.
+    More extensive debugging is enabled, Django security features are disabled
+    and module initialization errors will not pass silently.
 
     *Note:* This mode is supported only in a limited manner.  The following are
     the unknown issues with it:

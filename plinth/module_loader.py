@@ -57,7 +57,7 @@ def load_modules():
         except Exception as exception:
             logger.exception('Could not import %s: %s', module_import_path,
                              exception)
-            if cfg.debug:
+            if cfg.develop:
                 raise
 
     ordered_modules = []
@@ -120,7 +120,7 @@ def _include_module_urls(module_import_path, module_name):
                 r'', django.conf.urls.include((url_module, module_name)))]
     except ImportError:
         logger.debug('No URLs for %s', module_name)
-        if cfg.debug:
+        if cfg.develop:
             raise
 
 
@@ -140,7 +140,7 @@ def _initialize_module(module_name, module):
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s',
                          module, exception)
-        if cfg.debug:
+        if cfg.develop:
             raise
 
 

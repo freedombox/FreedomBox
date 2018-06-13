@@ -38,7 +38,6 @@
       <command>plinth</command>
       <arg><option>-h, </option><option>--help</option></arg>
       <arg><option>--server_dir</option><arg choice="req">SERVER_DIR</arg></arg>
-      <arg><option>--debug</option></arg>
       <arg><option>--develop</option></arg>
       <arg><option>--diagnose</option></arg>
       <arg>
@@ -102,24 +101,15 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term><option>--debug</option></term>
-        <listitem>
-          <para>
-            Enable debug mode.  Turn off Django security features.
-            Print extra debug messages.  Monitor source files for
-            changes and restart Plinth on modifications.  Turn on
-            Django debug mode to show details on error pages.  Die if
-            there is an error during module initialization.
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
         <term><option>--develop</option></term>
         <listitem>
           <para>
             Enable development mode.  Use plinth.config and the actions_dir
-            of the current working directory, opposed to the actions_dir
-            and plinth.config file of the operating system installation.
+            of the current working directory.  Enables extra debug messages,
+            enable Django debug mode for detailed error pages and and turn off
+            Django security features.  Monitor source files for changes and
+            restart Plinth on modifications.  Die if there is an error during
+            module initialization.
           </para>
         </listitem>
       </varlistentry>
@@ -222,12 +212,10 @@
 
     <example>
       <title>Run Plinth in development mode</title>
-      <synopsis>$ plinth --debug --develop</synopsis>
+      <synopsis>$ plinth --develop</synopsis>
       <para>
-        Enable debug and development mode and run on terminal.  This uses
-        the configuration and action files of the current working directory and
-        gives debugging information like extended error pages, or not failing
-        silently on module initialization errors.
+        Run in development mode on the terminal.  Enable auto-reloading and
+        more extensive debugging.
       </para>
     </example>
   </refsect1>
