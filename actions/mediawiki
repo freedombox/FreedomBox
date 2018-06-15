@@ -88,6 +88,7 @@ def subcommand_setup(_):
     _disable_public_registrations()
     _disable_anonymous_editing()
     _change_logo()
+    _enable_file_uploads()
 
 
 def _disable_public_registrations():
@@ -117,6 +118,20 @@ def _change_logo():
                 line = line.replace('assets/wiki.png', 'assets/mediawiki.png')
 
             file_handle.write(line)
+
+
+def _enable_file_uploads():
+    """Enable file uploads in mediawiki"""
+    with open(CONF_FILE, 'r') as conf_file:
+        lines = conf_file.readlines()
+    with open(CONF_FILE, 'w') as conf_file:
+        for line in lines:
+            if line.startswith("$wgEnableUploads"):
+                words = line.split()
+                words[-1] = 'true;'
+                conf_file.write(" ".join(words) + '\n')
+            else:
+                conf_file.write(line)
 
 
 def subcommand_change_password(arguments):
