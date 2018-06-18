@@ -22,45 +22,42 @@
 {% load i18n %}
 {% load static %}
 
-{% block content_row %}
+{% block content %}
+  <h2>{% trans "Setup a freedombox.me subdomain with your voucher" %}</h2>
 
-  <div class="col-md-6 col-md-offset-3">
-    <h2>{% trans "Setup a freedombox.me subdomain with your voucher" %}</h2>
+  <p>
+    {% url 'pagekite:firstboot-skip' as finish_firstboot_url %}
+    {% blocktrans trimmed %}
+      <a href="{{ finish_firstboot_url }}">Skip this step</a> if you
+      do not have a voucher or want to configure PageKite later with a
+      different domain or credentials.
+    {% endblocktrans %}
+  </p>
 
-    <p>
-      {% url 'pagekite:firstboot-skip' as finish_firstboot_url %}
-      {% blocktrans trimmed %}
-        <a href="{{ finish_firstboot_url }}">Skip this step</a> if you
-        do not have a voucher or want to configure PageKite later with a
-        different domain or credentials.
-      {% endblocktrans %}
-    </p>
+  <p>
+    {% blocktrans trimmed %}
+      You can use an already redeemed voucher but it will only work
+      with the initially registered subdomain.
+    {% endblocktrans %}
+  </p>
 
-    <p>
-      {% blocktrans trimmed %}
-        You can use an already redeemed voucher but it will only work
-        with the initially registered subdomain.
-      {% endblocktrans %}
-    </p>
+  <form class='firstboot form-horizontal' role="form" action=""
+        method="post">
+    {% csrf_token %}
 
-    <form class='firstboot form-horizontal' role="form" action=""
-          method="post">
-      {% csrf_token %}
-
-      {{ form|bootstrap_horizontal:'col-lg-3' }}
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit" class="btn btn-primary">
-            {% trans "Register" %}
-          </button>
-          <a href="{% url 'pagekite:firstboot-skip' %}" class="btn btn-default"
-             role="button">
-            {% trans "Skip Registration" %}
-          </a>
-        </div>
+    {{ form|bootstrap_horizontal:'col-lg-3' }}
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <button type="submit" class="btn btn-primary">
+          {% trans "Register" %}
+        </button>
+        <a href="{% url 'pagekite:firstboot-skip' %}" class="btn btn-default"
+           role="button">
+          {% trans "Skip Registration" %}
+        </a>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 {% endblock %}
 
 {% block page_js %}
