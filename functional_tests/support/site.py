@@ -20,8 +20,8 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from support import config
-from support.service import eventually
+from support import config, interface
+from support.service import eventually, wait_for_page_update
 
 # unlisted sites just use '/' + site_name as url
 site_url = {
@@ -73,8 +73,7 @@ def verify_mediawiki_no_create_account_link(browser):
 
 def verify_mediawiki_anonymous_reads_edits_link(browser):
     browser.visit(config['DEFAULT']['url'] + '/mediawiki')
-    assert eventually(browser.is_element_present_by_id,
-                      args=['ca-nstab-main'])
+    assert eventually(browser.is_element_present_by_id, args=['ca-nstab-main'])
 
 
 def verify_mediawiki_no_anonymous_reads_edits_link(browser):
@@ -84,3 +83,14 @@ def verify_mediawiki_no_anonymous_reads_edits_link(browser):
     assert eventually(browser.is_element_present_by_id,
                       args=['ca-nstab-special'])
 
+
+def login_to_mediawiki_with_credentials(browser, username, password):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    browser.find_by_id('pt-login').click()
+    browser.find_by_id('wpName1').fill(username)
+    browser.find_by_id('wpPassword1').fill(password)
+    with wait_for_page_update(browser):
+        browser.find_by_id('wpLoginAttempt').click()
+    # Had to put it in the same step because sessions don't
+    # persist between steps
+    assert eventually(browser.is_element_present_by_id, args=['t-upload'])

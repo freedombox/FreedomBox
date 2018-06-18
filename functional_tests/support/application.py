@@ -246,3 +246,10 @@ def disable_mediawiki_private_mode(browser):
     interface.nav_to_module(browser, 'mediawiki')
     _change_status(browser, 'mediawiki', 'disabled',
                    checkbox_id='id_enable_private_mode')
+
+
+def set_mediawiki_admin_password(browser, password):
+    """Set a password for the MediaWiki user called admin."""
+    interface.nav_to_module(browser, 'mediawiki')
+    browser.find_by_id('id_password').fill(password)
+    interface.submit(browser, form_class='form-configuration')

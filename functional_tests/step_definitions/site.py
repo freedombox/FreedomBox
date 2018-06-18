@@ -52,11 +52,23 @@ def mediawiki_does_not_allow_creating_accounts(browser):
     site.verify_mediawiki_no_create_account_link(browser)
 
 
-@then(parsers.parse('the mediawiki site should allow anonymous reads and writes'))
+@then(
+    parsers.parse('the mediawiki site should allow anonymous reads and writes')
+)
 def mediawiki_allows_anonymous_reads_edits(browser):
     site.verify_mediawiki_anonymous_reads_edits_link(browser)
 
 
-@then(parsers.parse('the mediawiki site should not allow anonymous reads and writes'))
+@then(
+    parsers.parse(
+        'the mediawiki site should not allow anonymous reads and writes'))
 def mediawiki_does_not_allow__account_creation_anonymous_reads_edits(browser):
     site.verify_mediawiki_no_anonymous_reads_edits_link(browser)
+
+
+@then(
+    parsers.parse(
+        'I should see the Upload File option in the side pane when logged in with credentials {username:w} and {password:w}'
+    ))
+def login_to_mediawiki_with_credentials(browser, username, password):
+    site.login_to_mediawiki_with_credentials(browser, username, password)

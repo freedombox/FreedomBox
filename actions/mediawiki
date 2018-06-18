@@ -51,8 +51,8 @@ def parse_arguments():
     help_private_mode = 'Enable/Disable/Status private mode.'
     private_mode = subparsers.add_parser('private-mode',
                                          help=help_private_mode)
-    private_mode.add_argument('command',
-                              choices=('enable', 'disable', 'status'),
+    private_mode.add_argument('command', choices=('enable', 'disable',
+                                                  'status'),
                               help=help_private_mode)
 
     change_password = subparsers.add_parser('change-password',
@@ -122,16 +122,19 @@ def _change_logo():
 
 def _enable_file_uploads():
     """Enable file uploads in mediawiki"""
+    conf_line = '$wgEnableUploads = true;\n'
+    conf_updated = False
     with open(CONF_FILE, 'r') as conf_file:
         lines = conf_file.readlines()
     with open(CONF_FILE, 'w') as conf_file:
         for line in lines:
-            if line.startswith("$wgEnableUploads"):
-                words = line.split()
-                words[-1] = 'true;'
-                conf_file.write(" ".join(words) + '\n')
+            if "$wgEnableUploads" in line:
+                conf_file.write(conf_line)
+                conf_updated = True
             else:
                 conf_file.write(line)
+        if not conf_updated:
+            conf_file.write(conf_line)
 
 
 def subcommand_change_password(arguments):

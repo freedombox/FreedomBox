@@ -184,3 +184,8 @@ def enable_mediawiki_private_mode(browser):
 @when(parsers.parse('I disable mediawiki private mode'))
 def disable_mediawiki_private_mode(browser):
     application.disable_mediawiki_private_mode(browser)
+
+
+@when(parsers.parse('I set the mediawiki admin password to {password}'))
+def set_mediawiki_admin_password(browser, password):
+    application.set_mediawiki_admin_password(browser, password)
