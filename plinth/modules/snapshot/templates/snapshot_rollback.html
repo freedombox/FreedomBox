@@ -34,24 +34,20 @@
     {% endblocktrans %}
   </p>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <th>{% trans "Number" %}</th>
-          <th>{% trans "Date" %}</th>
-          <th>{% trans "Description" %}</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ snapshot.number }}</td>
-            <td>{{ snapshot.date }}</td>
-            <td>{{ snapshot.description }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <th>{% trans "Number" %}</th>
+      <th>{% trans "Date" %}</th>
+      <th>{% trans "Description" %}</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ snapshot.number }}</td>
+        <td>{{ snapshot.date }}</td>
+        <td>{{ snapshot.description }}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>
     <form class="form" method="post">
