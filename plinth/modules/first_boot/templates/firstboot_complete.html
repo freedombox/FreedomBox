@@ -21,33 +21,29 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block content_row %}
+{% block content %}
 
-  <div class="col-lg-6 col-lg-offset-3">
-    {% include 'messages.html' %}
+  <h2>{% trans "Setup Complete!" %}</h2>
 
-    <h2>{% trans "Setup Complete!" %}</h2>
+  <p>
+    {% blocktrans trimmed %}
+      Without any apps, your {{ box_name }} cannot do very much.
+    {% endblocktrans %}
+  </p>
 
+  <div class="text-center">
+    <a class="btn btn-lg btn-primary" href="{% url 'apps' %}">
+      {% trans "Install Apps" %}</a>
+  </div>
+
+  <p>
     <p>
+      {% url 'networks:index' as networks_url %}
       {% blocktrans trimmed %}
-        Without any apps, your {{ box_name }} cannot do very much.
+        You may want to check the <a href="{{ networks_url }}">network
+        setup</a> and modify it if necessary.
       {% endblocktrans %}
     </p>
-
-    <div class="text-center">
-      <a class="btn btn-lg btn-primary" href="{% url 'apps' %}">
-        {% trans "Install Apps" %}</a>
-    </div>
-
-    <p>
-      <p>
-        {% url 'networks:index' as networks_url %}
-        {% blocktrans trimmed %}
-          You may want to check the <a href="{{ networks_url }}">network
-          setup</a> and modify it if necessary.
-        {% endblocktrans %}
-      </p>
-    </p>
-  </div>
+  </p>
 
 {% endblock %}
