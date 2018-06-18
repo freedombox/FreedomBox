@@ -38,104 +38,100 @@
   <h3>{% trans "Configuration" %}</h3>
 
   {% if status.domains %}
-    <div class="row">
-      <div class="col-lg-12">
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th>{% trans "Domain" %}</th>
-              <th>{% trans "Certificate Status" %}</th>
-              <th>{% trans "Website Security" %}</th>
-              <th>{% trans "Actions" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for domain, domain_status in status.domains.items %}
-              <tr>
-                <td>
-                  {% if domain == status.current_domain.name %}
-                    <b>{{ domain }}</b>
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "Domain" %}</th>
+          <th>{% trans "Certificate Status" %}</th>
+          <th>{% trans "Website Security" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for domain, domain_status in status.domains.items %}
+          <tr>
+            <td>
+              {% if domain == status.current_domain.name %}
+                <b>{{ domain }}</b>
+              {% else %}
+                {{ domain }}
+              {% endif %}
+            </td>
+            <td>
+              {% if domain_status.certificate_available and domain_status.validity == "valid" %}
+                <span class="label label-success">
+                  {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
+                    Valid, expires on {{ expiry_date }}
+                  {% endblocktrans %}
+                </span>
+              {% elif domain_status.certificate_available and not domain_status.validity == "valid" %}
+                <span class="label label-warning">
+                  {% if "revoked" in domain_status.validity %}
+                    {% blocktrans trimmed %}
+                      Revoked
+                    {% endblocktrans %}
+                  {% elif "expired" in domain_status.validity %}
+                    {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
+                      Expired on {{ expiry_date }}
+                    {% endblocktrans %}
+                  {% elif "test" in domain_status.validity %}
+                    {% blocktrans trimmed %}
+                      Invalid test certificate
+                    {% endblocktrans %}
                   {% else %}
-                    {{ domain }}
+                    {% blocktrans trimmed with reason=domain_status.validity %}
+                      Invalid ({{ reason }})
+                    {% endblocktrans %}
                   {% endif %}
-                </td>
-                <td>
-                  {% if domain_status.certificate_available and domain_status.validity == "valid" %}
-                    <span class="label label-success">
-                      {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
-                        Valid, expires on {{ expiry_date }}
-                      {% endblocktrans %}
-                    </span>
-                  {% elif domain_status.certificate_available and not domain_status.validity == "valid" %}
-                    <span class="label label-warning">
-                      {% if "revoked" in domain_status.validity %}
-                        {% blocktrans trimmed %}
-                          Revoked
-                        {% endblocktrans %}
-                      {% elif "expired" in domain_status.validity %}
-                        {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
-                          Expired on {{ expiry_date }}
-                        {% endblocktrans %}
-                      {% elif "test" in domain_status.validity %}
-                        {% blocktrans trimmed %}
-                          Invalid test certificate
-                        {% endblocktrans %}
-                      {% else %}
-                        {% blocktrans trimmed with reason=domain_status.validity %}
-                          Invalid ({{ reason }})
-                        {% endblocktrans %}
-                      {% endif %}
-                    </span>
-                  {% else %}
-                    <span class="label label-warning">
-                      {% trans "No certificate" %}
-                    </span>
-                  {% endif %}
-                </td>
-                <td>
-                  {% if domain_status.web_enabled %}
-                    <span class="label label-success">{% trans "Enabled" %}</span>
-                  {% else %}
-                    <span class="label label-warning">{% trans "Disabled" %}</span>
-                  {% endif %}
-                </td>
-                <td>
-                  {% if domain_status.certificate_available %}
-                    <form class="form form-inline" method="post"
-                          action="{% url 'letsencrypt:obtain' domain %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-default" type="submit">
-                        {% trans "Re-obtain" %}</button>
-                    </form>
-                    <form class="form form-inline" method="post"
-                          action="{% url 'letsencrypt:delete' domain %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-default" type="submit">
-                        {% trans "Delete" %}</button>
-                    </form>
-                    {% if "revoked" not in domain_status.validity %}
-                      <form class="form form-inline" method="post"
-                            action="{% url 'letsencrypt:revoke' domain %}">
-                        {% csrf_token %}
-                        <button class="btn btn-sm btn-default" type="submit">
-                          {% trans "Revoke" %}</button>
-                      </form>
-                    {% endif %}
-                  {% else %}
-                    <form class="form form-inline" method="post"
-                          action="{% url 'letsencrypt:obtain' domain %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-primary" type="submit">
-                        {% trans "Obtain" %}</button>
-                    </form>
-                  {% endif %}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                </span>
+              {% else %}
+                <span class="label label-warning">
+                  {% trans "No certificate" %}
+                </span>
+              {% endif %}
+            </td>
+            <td>
+              {% if domain_status.web_enabled %}
+                <span class="label label-success">{% trans "Enabled" %}</span>
+              {% else %}
+                <span class="label label-warning">{% trans "Disabled" %}</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if domain_status.certificate_available %}
+                <form class="form form-inline" method="post"
+                      action="{% url 'letsencrypt:obtain' domain %}">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-default" type="submit">
+                    {% trans "Re-obtain" %}</button>
+                </form>
+                <form class="form form-inline" method="post"
+                      action="{% url 'letsencrypt:delete' domain %}">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-default" type="submit">
+                    {% trans "Delete" %}</button>
+                </form>
+                {% if "revoked" not in domain_status.validity %}
+                  <form class="form form-inline" method="post"
+                        action="{% url 'letsencrypt:revoke' domain %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-default" type="submit">
+                      {% trans "Revoke" %}</button>
+                  </form>
+                {% endif %}
+              {% else %}
+                <form class="form form-inline" method="post"
+                      action="{% url 'letsencrypt:obtain' domain %}">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-primary" type="submit">
+                    {% trans "Obtain" %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
     {% include "diagnostics_button.html" with module="letsencrypt" enabled=True %}
 
