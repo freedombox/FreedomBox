@@ -58,30 +58,26 @@
     {% include "diagnostics_button.html" with module="tor" enabled=status.enabled %}
 
     {% if status.hs_enabled %}
-      <div class="row">
-        <div class="col-sm-6">
-          <table class="table table-bordered table-condensed table-striped">
-            <thead>
-              <tr>
-                <th>{% trans "Hidden Service" %}</th>
-                <th>{% trans "Status" %}</th>
-                <th>{% trans "Ports" %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ status.hs_hostname }}</td>
-                <td>{{ status.hs_status }}</td>
-                <td>
-                  {% for service in status.hs_services %}
-                    {{ service }}
-                  {% endfor %}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <table class="table table-bordered table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Hidden Service" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Ports" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ status.hs_hostname }}</td>
+            <td>{{ status.hs_status }}</td>
+            <td>
+              {% for service in status.hs_services %}
+                {{ service }}
+              {% endfor %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     {% endif %}
 
     <h3>{% trans "Configuration" %}</h3>
@@ -105,7 +101,7 @@
         {% endblocktrans %}
       </p>
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <table class="table table-bordered table-condensed table-striped">
             <thead>
               <tr>
