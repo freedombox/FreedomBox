@@ -44,47 +44,44 @@
     </p>
   {% endif %}
 
-  <div>{% trans "The following disks are in use:" %}</div>
-  <div class="row">
-    <div class="col-lg-12">
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>{% trans "Device" %}</th>
-            <th>{% trans "Mount Point" %}</th>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Used" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for disk in disks %}
-            <tr>
-              <td>{{ disk.dev_kname }}</td>
-              <td>{{ disk.mount_point }}</td>
-              <td>{{ disk.file_system_type }}</td>
-              <td>
-                <div class="progress">
-                  {% if disk.percent_used < 75 %}
-                    <div class="progress-bar progress-bar-striped progress-bar-success"
-                  {% elif disk.percent_used < 90 %}
-                    <div class="progress-bar progress-bar-striped progress-bar-warning"
-                  {% else %}
-                    <div class="progress-bar progress-bar-striped progress-bar-danger"
-                  {% endif %}
-                         role="progressbar" aria-valuenow="disk.percent_used"
-                         aria-valuemin="0" aria-valuemax="100"
-                         style="width: {{ disk.percent_used }}%;">
-                      {{ disk.percent_used }}%
-                    </div>
+  <p>{% trans "The following disks are in use:" %}</p>
+
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>{% trans "Device" %}</th>
+        <th>{% trans "Mount Point" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Used" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for disk in disks %}
+        <tr>
+          <td>{{ disk.dev_kname }}</td>
+          <td>{{ disk.mount_point }}</td>
+          <td>{{ disk.file_system_type }}</td>
+          <td>
+            <div class="progress">
+              {% if disk.percent_used < 75 %}
+                <div class="progress-bar progress-bar-striped progress-bar-success"
+              {% elif disk.percent_used < 90 %}
+                <div class="progress-bar progress-bar-striped progress-bar-warning"
+              {% else %}
+                <div class="progress-bar progress-bar-striped progress-bar-danger"
+              {% endif %}
+                     role="progressbar" aria-valuenow="disk.percent_used"
+                     aria-valuemin="0" aria-valuemax="100"
+                     style="width: {{ disk.percent_used }}%;">
+                  {{ disk.percent_used }}%
                 </div>
-                <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+            </div>
+            <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
   <h3>{% trans "Partition Expansion" %}</h3>
   {% if expandable_root_size %}
