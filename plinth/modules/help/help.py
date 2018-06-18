@@ -37,9 +37,6 @@ def init():
     menu = main_menu.add_urlname(
         ugettext_lazy('Documentation'), 'glyphicon-book', 'help:index')
     menu.add_urlname(
-        ugettext_lazy('Where to Get Help'), 'glyphicon-search',
-        'help:index-explicit', order=5)
-    menu.add_urlname(
         ugettext_lazy('Manual'), 'glyphicon-info-sign', 'help:manual',
         order=10)
     menu.add_urlname(
