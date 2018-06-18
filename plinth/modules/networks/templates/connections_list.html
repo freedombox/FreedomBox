@@ -56,60 +56,56 @@
 
 {% block content %}
 
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="list-group">
-        {% for connection in connections %}
-          <div class="list-group-item clearfix">
-            <a href="{% url 'networks:delete' connection.uuid %}"
-               class="btn btn-default btn-sm pull-right"
-               role="button"
-               title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
-              <span class="glyphicon glyphicon-trash"
-                    aria-hidden="true"></span>
-            </a>
+  <div class="list-group">
+    {% for connection in connections %}
+      <div class="list-group-item clearfix">
+        <a href="{% url 'networks:delete' connection.uuid %}"
+           class="btn btn-default btn-sm pull-right"
+           role="button"
+           title="{% blocktrans with name=connection.name %}Delete connection {{ name }}{% endblocktrans %}">
+          <span class="glyphicon glyphicon-trash"
+                aria-hidden="true"></span>
+        </a>
 
-            {% if connection.is_active %}
-              <form class="form pull-right" method="post"
-                    action="{% url 'networks:deactivate' connection.uuid %}">
-                {% csrf_token %}
+        {% if connection.is_active %}
+          <form class="form pull-right" method="post"
+                action="{% url 'networks:deactivate' connection.uuid %}">
+            {% csrf_token %}
 
-                <button type="submit" class="btn btn-default btn-sm">
-                  {% trans "Deactivate" %}</button>
-              </form>
-            {% else %}
-              <form class="form pull-right" method="post"
-                    action="{% url 'networks:activate' connection.uuid %}">
-                {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-sm">
+              {% trans "Deactivate" %}</button>
+          </form>
+        {% else %}
+          <form class="form pull-right" method="post"
+                action="{% url 'networks:activate' connection.uuid %}">
+            {% csrf_token %}
 
-                <button type="submit" class="btn btn-default btn-sm">
-                  {% trans "Activate" %}</button>
-              </form>
-            {% endif %}
+            <button type="submit" class="btn btn-default btn-sm">
+              {% trans "Activate" %}</button>
+          </form>
+        {% endif %}
 
-            {% if connection.is_active %}
-              <span class="label label-success connection-status-label">
-                {% trans "Active" %}</span>
-            {% else %}
-              <span class="label label-warning connection-status-label">
-                {% trans "Inactive" %}</span>
-            {% endif %}
+        {% if connection.is_active %}
+          <span class="label label-success connection-status-label">
+            {% trans "Active" %}</span>
+        {% else %}
+          <span class="label label-warning connection-status-label">
+            {% trans "Inactive" %}</span>
+        {% endif %}
 
-            <a class="connection-show-label"
-               href="{% url 'networks:show' connection.uuid %}"
-               title="Show connection {{ connection.name }}">
-              {{ connection.name }}
-            </a>
+        <a class="connection-show-label"
+           href="{% url 'networks:show' connection.uuid %}"
+           title="Show connection {{ connection.name }}">
+          {{ connection.name }}
+        </a>
 
-            <span class="connection-type-label">{{ connection.type_name }}</span>
-          </div>
-        {% endfor %}
+        <span class="connection-type-label">{{ connection.type_name }}</span>
       </div>
-
-      {% include "connections_diagram.html" %}
-
-      {% include "diagnostics_button.html" with module="networks" enabled=True %}
-    </div>
+    {% endfor %}
   </div>
+
+  {% include "connections_diagram.html" %}
+
+  {% include "diagnostics_button.html" with module="networks" enabled=True %}
 
 {% endblock %}
