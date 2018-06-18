@@ -27,7 +27,7 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
-version = 1
+version = 2
 
 name = _('Storage')
 
@@ -38,6 +38,8 @@ service = None
 logger = logging.getLogger(__name__)
 
 manual_page = 'Storage'
+
+is_essential = True
 
 
 def init():
@@ -164,3 +166,11 @@ def format_bytes(size):
 
     size /= 1024**4
     return _('{disk_size:.1f} TiB').format(disk_size=size)
+
+
+def setup(helper, old_version=None):
+    """Expand root parition on first setup."""
+    disks = get_disks()
+    root_device = get_root_device(disks)
+    if is_expandable(root_device):
+        expand_partition(root_device)

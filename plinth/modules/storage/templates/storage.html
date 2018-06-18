@@ -83,8 +83,8 @@
     </tbody>
   </table>
 
-  <h3>{% trans "Partition Expansion" %}</h3>
   {% if expandable_root_size %}
+    <h3>{% trans "Partition Expansion" %}</h3>
     <p>
       {% blocktrans trimmed %}
         There is {{ expandable_root_size }} of unallocated space
@@ -96,18 +96,6 @@
     <p>
       <a class="btn btn-primary btn-md" href="{% url 'storage:expand' %}"
          role="button">
-        {% trans "Expand Root Partition" %}</a>
-    </p>
-  {% else %}
-    <p>
-      {% blocktrans trimmed %}
-        There is no unallocated space after your root partition.
-        There is no need to expand it.
-      {% endblocktrans %}
-    </p>
-    <p>
-      <a class="btn btn-primary btn-md disabled"
-         href="{% url 'storage:expand' %}" role="button">
         {% trans "Expand Root Partition" %}</a>
     </p>
   {% endif %}
