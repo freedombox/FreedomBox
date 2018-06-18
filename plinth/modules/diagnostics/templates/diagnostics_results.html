@@ -19,33 +19,29 @@
 
 {% load i18n %}
 
-<div class="row">
-  <div class="col-lg-12">
-    <table class="table table-bordered table-striped diagnostics-results">
-      <thead>
-        <tr>
-          <th class="diagnostic-test">{% trans "Test" %}</th>
-          <th class="diagnostics-result">{% trans "Result" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for test, result in results %}
-          <tr>
-            <td>{{ test }}</td>
-            <td>
-              {% if result == 'passed' %}
-                <span class="label label-success">{{ result }}</span>
-              {% elif result == 'failed' %}
-                <span class="label label-danger">{{ result }}</span>
-              {% elif result == 'error' %}
-                <span class="label label-warning">{{ result }}</span>
-              {% else %}
-                {{ result }}
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+<table class="table table-bordered table-striped diagnostics-results">
+  <thead>
+    <tr>
+      <th class="diagnostic-test">{% trans "Test" %}</th>
+      <th class="diagnostics-result">{% trans "Result" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for test, result in results %}
+      <tr>
+        <td>{{ test }}</td>
+        <td>
+          {% if result == 'passed' %}
+            <span class="label label-success">{{ result }}</span>
+          {% elif result == 'failed' %}
+            <span class="label label-danger">{{ result }}</span>
+          {% elif result == 'error' %}
+            <span class="label label-warning">{{ result }}</span>
+          {% else %}
+            {{ result }}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
