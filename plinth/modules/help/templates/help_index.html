@@ -1,4 +1,4 @@
-{% extends 'help_base.html' %}
+{% extends 'cards.html' %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -19,14 +19,8 @@
 {% endcomment %}
 
 {% load i18n %}
-
-{% block submenu %}
-  {% if submenu %}
-    <div class="sidebar">
-      {% include "submenu.html" with menu=submenu %}
-    </div>
-  {% endif %}
-{% endblock %}
+{% load firstboot_extras %}
+{% load static %}
 
 {% block content %}
 
@@ -65,5 +59,38 @@
       #freedombox</a> channel using the IRC web interface.
     {% endblocktrans %}
   </p>
+
+{% endblock %}
+
+
+{# Adapt mainmenu-links during firstboot #}
+{% block mainmenu_left %}
+
+  {% firstboot_is_completed as firstboot_completed %}
+  {% if not firstboot_completed %}
+
+  <span class="navbar-brand">
+    <img src="{% static 'theme/img/freedombox-logo-32px.png' %}"
+         alt="{{ cfg.box_name }}" />
+    <a href="{% url 'index' %}">
+      {% blocktrans trimmed %}{{ box_name }} Setup{% endblocktrans %}
+    </a>
+  </span>
+
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+
+{% endblock %}
+
+
+{% block mainmenu_right %}
+
+  {% firstboot_is_completed as firstboot_completed %}
+  {% if not firstboot_completed %}
+    {% include "firstboot_navbar.html" %}
+  {% else %}
+    {{ block.super }}
+  {% endif %}
 
 {% endblock %}
