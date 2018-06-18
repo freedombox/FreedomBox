@@ -22,30 +22,25 @@
 {% load i18n %}
 {% load static %}
 
-{% block content_row %}
-  <div class="col-md-6 col-md-offset-3">
-    {% include 'messages.html' %}
+{% block content %}
+  <h2>{% trans "Administrator Account" %}</h2>
 
-    <h2>{% trans "Administrator Account" %}</h2>
+  <p>
+    {% blocktrans trimmed %}
+      Choose a username and password to access this web interface.
+      The password can be changed later. This user will be granted
+      administrative privileges. Other users can be added later.
+    {% endblocktrans %}
+  </p>
 
-    <p>
-      {% blocktrans trimmed %}
-        Choose a username and password to access this web interface.
-        The password can be changed later. This user will be granted
-        administrative privileges. Other users can be added later.
-      {% endblocktrans %}
-    </p>
+  <form class="form" method="post">
+    {% csrf_token %}
 
-    <form class="form" method="post">
-      {% csrf_token %}
+    {{ form|bootstrap }}
 
-      {{ form|bootstrap }}
-
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Create Account" %}"/>
-    </form>
-
-  </div>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Create Account" %}"/>
+  </form>
 {% endblock %}
 
 {% block page_js %}
