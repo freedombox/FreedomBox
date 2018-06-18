@@ -30,8 +30,8 @@
     </button>
   </p>
 
-  <div>
-  <table id="clients" class="table table-striped collapse" style="width: 100%">
+  <div id="clients" class="collapse">
+  <table id="clients" class="table table-striped">
 
     {% with clients|clients_of_type:'web' as web_clients %}
       {% for client in web_clients %}
@@ -120,23 +120,19 @@
           {% endif %}
           <td>{{ client.name }}</td>
           <td>
-            <div class="row">
-              <ul>
-                {% for platform in client.platforms %}
-                  {% if platform.type == 'package' %}
-                    {% if platform.format == 'deb' %}
-                      <li><strong>{% trans "Debian:" %}</strong> {{ platform.name }}</li>
-                    {% endif %}
-                    {% if platform.format == 'brew' %}
-                      <li><strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}</li>
-                    {% endif %}
-                    {% if platform.format == 'rpm' %}
-                      <li><strong>{% trans "RPM:" %}</strong> {{ platform.name }}</li>
-                    {% endif %}
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </div>
+            {% for platform in client.platforms %}
+              {% if platform.type == 'package' %}
+                {% if platform.format == 'deb' %}
+                  <div><strong>{% trans "Debian:" %}</strong> {{ platform.name }}</div>
+                {% endif %}
+                {% if platform.format == 'brew' %}
+                  <div><strong>{% trans "Homebrew:" %}</strong> {{ platform.name }}</div>
+                {% endif %}
+                {% if platform.format == 'rpm' %}
+                  <p><strong>{% trans "RPM:" %}</strong> {{ platform.name }}</p>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
           </td>
         </tr>
       {% endfor %}
