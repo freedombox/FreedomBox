@@ -102,7 +102,8 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('transmission', name,
                            short_description=short_description,
-                           url='/transmission', login_required=True)
+                           url='/transmission', login_required=True,
+                           allowed_groups=[group[0]])
 
 
 def is_enabled():

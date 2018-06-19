@@ -43,7 +43,8 @@ REDIRECT_FIELD_NAME = 'next'
 @public
 def index(request):
     """Serve the main index page."""
-    shortcuts = frontpage.get_shortcuts()
+    username = str(request.user) if request.user.is_authenticated else None
+    shortcuts = frontpage.get_shortcuts(username)
     selection = request.GET.get('selected')
 
     details, details_label, configure_url = None, None, None

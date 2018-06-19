@@ -43,9 +43,10 @@ def access_info(request, **kwargs):
 def shortcuts(request, **kwargs):
     """API view to return the list of frontpage services."""
     # XXX: Get the module (or module name) from shortcut properly.
+    username = str(request.user) if request.user.is_authenticated else None
     shortcuts = [
         _get_shortcut_data(shortcut['id'].split('_')[0], shortcut)
-        for shortcut in frontpage.get_shortcuts()
+        for shortcut in frontpage.get_shortcuts(username)
     ]
     response = {'shortcuts': shortcuts}
     return HttpResponse(

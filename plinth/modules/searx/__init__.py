@@ -93,7 +93,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut('searx', name, short_description=short_description,
-                           url='/searx/', login_required=True)
+                           url='/searx/', login_required=True, allowed_groups=[group[0]])
 
 
 def get_safe_search_setting():

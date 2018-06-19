@@ -91,7 +91,7 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     frontpage.add_shortcut('deluge', name, short_description, url='/deluge',
-                           login_required=True)
+                           login_required=True, allowed_groups=[group[0]])
 
 
 def is_enabled():

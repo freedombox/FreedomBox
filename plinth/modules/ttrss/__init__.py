@@ -101,7 +101,8 @@ def setup(helper, old_version=None):
 def add_shortcut():
     """Add a shortcut to the front page."""
     frontpage.add_shortcut('ttrss', name, short_description=short_description,
-                           url='/tt-rss', login_required=True)
+                           url='/tt-rss', login_required=True,
+                           allowed_groups=[group[0]])
 
 
 def is_enabled():

@@ -104,7 +104,8 @@ def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
     frontpage.add_shortcut('syncthing', name,
                            short_description=short_description,
-                           url='/syncthing/', login_required=True)
+                           url='/syncthing/', login_required=True,
+                           allowed_groups=[group[0]])
 
 
 def is_running():
