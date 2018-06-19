@@ -68,7 +68,7 @@ manual_page = 'Syncthing'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-refresh', 'syncthing:index',
+    menu.add_urlname(name, 'syncthing', 'syncthing:index',
                      short_description)
     register_group(group)
 

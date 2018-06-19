@@ -65,7 +65,7 @@ manual_page = 'Tor'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-eye-close', 'tor:index',
+    menu.add_urlname(name, 'tor', 'tor:index',
                      short_description)
 
     setup_helper = globals()['setup_helper']

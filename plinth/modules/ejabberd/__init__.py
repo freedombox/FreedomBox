@@ -70,7 +70,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the ejabberd module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-comment', 'ejabberd:index',
+    menu.add_urlname(name, 'ejabberd', 'ejabberd:index',
                      short_description)
 
     global service

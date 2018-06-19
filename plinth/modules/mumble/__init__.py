@@ -58,7 +58,7 @@ manual_page = 'Mumble'
 def init():
     """Intialize the Mumble module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-headphones', 'mumble:index',
+    menu.add_urlname(name, 'mumble', 'mumble:index',
                      short_description)
 
     global service

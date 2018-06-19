@@ -59,7 +59,7 @@ clients = clients
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-edit', 'mediawiki:index',
+    menu.add_urlname(name, 'mediawiki', 'mediawiki:index',
                      short_description)
 
     global service

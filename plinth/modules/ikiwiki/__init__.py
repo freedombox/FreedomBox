@@ -67,7 +67,7 @@ manual_page = 'Ikiwiki'
 def init():
     """Initialize the ikiwiki module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-edit', 'ikiwiki:index',
+    menu.add_urlname(name, 'ikiwiki', 'ikiwiki:index',
                      short_description)
     register_group(group)
 

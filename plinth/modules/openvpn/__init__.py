@@ -55,7 +55,7 @@ manual_page = 'OpenVPN'
 def init():
     """Initialize the OpenVPN module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-lock', 'openvpn:index',
+    menu.add_urlname(name, 'openvpn', 'openvpn:index',
                      short_description)
 
     global service

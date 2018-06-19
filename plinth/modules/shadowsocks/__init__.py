@@ -58,7 +58,7 @@ manual_page = 'Shadowsocks'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-send', 'shadowsocks:index',
+    menu.add_urlname(name, 'shadowsocks', 'shadowsocks:index',
                      short_description)
 
     global service

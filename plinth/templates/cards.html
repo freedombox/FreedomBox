@@ -38,7 +38,11 @@
           <div class="card thumbnail">
             <a href="{{ item.url }}" class="nav-link">
               <div class="card-icon">
-                <span class="{{ item.icon }} glyphicon"></span>
+                {% if 'glyphicon-' in item.icon %}
+                  <span class="{{ item.icon }} glyphicon"></span>
+                {% else %}
+                  <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
+                {% endif %}
               </div>
               <div class="card-title">{{ item.name }}</div>
               <div class="card-description">{{ item.short_description}}</div>

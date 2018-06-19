@@ -67,7 +67,7 @@ manual_page = 'Quassel'
 def init():
     """Initialize the quassel module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-retweet', 'quassel:index',
+    menu.add_urlname(name, 'quassel', 'quassel:index',
                      short_description)
 
     global service

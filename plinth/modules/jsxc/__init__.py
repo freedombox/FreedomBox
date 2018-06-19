@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the JSXC module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-comment', 'jsxc:index', short_description)
+    menu.add_urlname(name, 'jsxc', 'jsxc:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

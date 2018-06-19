@@ -67,7 +67,7 @@ manual_page = 'TinyTinyRSS'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-envelope', 'ttrss:index',
+    menu.add_urlname(name, 'ttrss', 'ttrss:index',
                      short_description)
     register_group(group)
 

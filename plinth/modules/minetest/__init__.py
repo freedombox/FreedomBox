@@ -69,7 +69,7 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-th-large', 'minetest:index',
+    menu.add_urlname(name, 'minetest', 'minetest:index',
                      short_description)
 
     global service

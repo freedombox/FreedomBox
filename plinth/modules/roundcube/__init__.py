@@ -64,7 +64,7 @@ manual_page = 'Roundcube'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-envelope', 'roundcube:index',
+    menu.add_urlname(name, 'roundcube', 'roundcube:index',
                      short_description)
 
     global service

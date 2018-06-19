@@ -41,7 +41,7 @@ description = [
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-share', 'sharing:index')
+    menu.add_urlname(name, 'sharing', 'sharing:index')
 
 
 def list_shares():

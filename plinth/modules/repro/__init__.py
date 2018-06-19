@@ -69,7 +69,7 @@ manual_page = 'Repro'
 def init():
     """Initialize the repro module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-phone-alt', 'repro:index',
+    menu.add_urlname(name, 'repro', 'repro:index',
                      short_description)
 
     global service

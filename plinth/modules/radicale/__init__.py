@@ -62,7 +62,7 @@ CONFIG_FILE = '/etc/radicale/config'
 def init():
     """Initialize the radicale module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-calendar', 'radicale:index',
+    menu.add_urlname(name, 'radicale', 'radicale:index',
                      short_description)
 
     global service

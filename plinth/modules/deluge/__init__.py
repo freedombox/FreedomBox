@@ -59,7 +59,7 @@ manual_page = 'Deluge'
 def init():
     """Initialize the Deluge module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-magnet', 'deluge:index',
+    menu.add_urlname(name, 'deluge', 'deluge:index',
                      short_description)
     register_group(group)
 

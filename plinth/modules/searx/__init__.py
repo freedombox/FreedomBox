@@ -58,7 +58,7 @@ manual_page = 'Searx'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-search', 'searx:index',
+    menu.add_urlname(name, 'searx', 'searx:index',
                      short_description)
     register_group(group)
 

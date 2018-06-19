@@ -58,7 +58,7 @@ clients = clients
 def init():
     """Initialize the infinoted module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-pencil', 'infinoted:index',
+    menu.add_urlname(name, 'infinoted', 'infinoted:index',
                      short_description)
 
     global service

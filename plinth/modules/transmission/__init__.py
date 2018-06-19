@@ -60,7 +60,7 @@ manual_page = 'Transmission'
 def init():
     """Intialize the Transmission module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-save', 'transmission:index',
+    menu.add_urlname(name, 'transmission', 'transmission:index',
                      short_description)
     register_group(group)
 

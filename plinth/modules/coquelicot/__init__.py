@@ -56,7 +56,7 @@ manual_page = 'Coquelicot'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-open-file', 'coquelicot:index',
+    menu.add_urlname(name, 'coquelicot', 'coquelicot:index',
                      short_description)
 
     global service

@@ -87,7 +87,7 @@ description = [
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-hdd', 'tahoe:index', short_description)
+    menu.add_urlname(name, 'tahoe-lafs', 'tahoe:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

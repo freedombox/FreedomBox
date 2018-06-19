@@ -70,7 +70,7 @@ CONFIG_FILE_PATH = '/etc/matrix-synapse/homeserver.yaml'
 def init():
     """Initialize the matrix-synapse module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-comment', 'matrixsynapse:index',
+    menu.add_urlname(name, 'matrixsynapse', 'matrixsynapse:index',
                      short_description)
 
     global service

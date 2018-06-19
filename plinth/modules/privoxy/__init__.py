@@ -64,7 +64,7 @@ manual_page = 'Privoxy'
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-cloud-upload', 'privoxy:index',
+    menu.add_urlname(name, 'privoxy', 'privoxy:index',
                      short_description)
 
     global service
