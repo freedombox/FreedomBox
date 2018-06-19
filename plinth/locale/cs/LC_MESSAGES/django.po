@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-04 17:56-0400\n"
+"POT-Creation-Date: 2018-06-18 19:59-0400\n"
 "PO-Revision-Date: 2018-06-05 04:44+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -166,15 +166,15 @@ msgstr "Zapnout zabezpečovací rozšíření systému doménových názvů"
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
-#: plinth/modules/cockpit/__init__.py:39
+#: plinth/modules/cockpit/__init__.py:37
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:41
+#: plinth/modules/cockpit/__init__.py:39
 msgid "Server Administration"
 msgstr "Správa serveru"
 
-#: plinth/modules/cockpit/__init__.py:45
+#: plinth/modules/cockpit/__init__.py:43
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -187,21 +187,26 @@ msgstr ""
 "pokročilých funkcí, které obvykle nejsou potřeba. Je také k dispozici webový "
 "terminál pro operace na příkazovém řádku."
 
-#: plinth/modules/cockpit/__init__.py:51
-#, python-brace-format
+#: plinth/modules/cockpit/__init__.py:49
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
+#| "plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
+#| "information and system altering abilities are limited to users belonging "
+#| "to admin group."
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-"_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
-"plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
-"information and system altering abilities are limited to users belonging to "
-"admin group."
+"_cockpit/</a> path on the web server. It can be accessed by <a href="
+"\"{users_url}\">any user</a> with a {box_name} login. Sensitive information "
+"and system altering abilities are limited to users belonging to admin group."
 msgstr ""
 "Pokud je zapnuto, Cockpit bude k dispozici v umístění <a href=\"/cockpit\">/"
 "cockpit</a> na webovém serveru. Je přístupné pro libovolného <a href=\"/"
 "plinth/sys/users\">uživatele s účtem na {box_name}</a>. Citlivé informace a "
 "pozměňování systému jsou omezeny na uživatele, náležející do skupiny admin."
 
-#: plinth/modules/cockpit/__init__.py:57
+#: plinth/modules/cockpit/__init__.py:55
 msgid "Currently only limited functionality is available."
 msgstr "Zatím je k dispozici pouze omezená funkčnost."
 
@@ -212,22 +217,22 @@ msgstr "Zatím je k dispozici pouze omezená funkčnost."
 msgid "Configure"
 msgstr "Nastavit"
 
-#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:81
+#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:77
 #: plinth/modules/config/views.py:140
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: plinth/modules/config/forms.py:57 plinth/modules/config/forms.py:94
+#: plinth/modules/config/forms.py:53 plinth/modules/config/forms.py:90
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: plinth/modules/config/forms.py:68
+#: plinth/modules/config/forms.py:64
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: plinth/modules/config/forms.py:70
+#: plinth/modules/config/forms.py:66
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -240,11 +245,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: plinth/modules/config/forms.py:78
+#: plinth/modules/config/forms.py:74
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: plinth/modules/config/forms.py:83
+#: plinth/modules/config/forms.py:79
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -496,11 +501,11 @@ msgstr "Modul: %(module_name)s"
 msgid "This module does not support diagnostics"
 msgstr "Tento modul nepodporuje diagnostiku"
 
-#: plinth/modules/diagnostics/templates/diagnostics_results.html:27
+#: plinth/modules/diagnostics/templates/diagnostics_results.html:25
 msgid "Test"
 msgstr "Vyzkoušet"
 
-#: plinth/modules/diagnostics/templates/diagnostics_results.html:28
+#: plinth/modules/diagnostics/templates/diagnostics_results.html:26
 msgid "Result"
 msgstr "Výsledek"
 
@@ -521,7 +526,7 @@ msgstr ""
 "diaspora* je decentralizovaná společenská síť na které svá vlastní data "
 "uchováváte a ovládáte vy."
 
-#: plinth/modules/diaspora/forms.py:31
+#: plinth/modules/diaspora/forms.py:30
 msgid "Enable new user registrations"
 msgstr "Umožnit registrování nových uživatelů"
 
@@ -562,7 +567,7 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot.html:31
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
-#: plinth/modules/tor/templates/tor.html:95
+#: plinth/modules/tor/templates/tor.html:91
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #: plinth/templates/service.html:85
 msgid "Update setup"
@@ -570,7 +575,7 @@ msgstr "Aktualizovat nastavení"
 
 #: plinth/modules/diaspora/views.py:97 plinth/modules/ejabberd/views.py:63
 #: plinth/modules/matrixsynapse/views.py:105
-#: plinth/modules/mediawiki/views.py:73 plinth/modules/openvpn/views.py:149
+#: plinth/modules/mediawiki/views.py:75 plinth/modules/openvpn/views.py:149
 #: plinth/modules/tor/views.py:140 plinth/views.py:149
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
@@ -621,16 +626,16 @@ msgstr ""
 msgid "Dynamic DNS Service"
 msgstr "Služba dynamického DNS"
 
-#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:49
+#: plinth/modules/dynamicdns/dynamicdns.py:42 plinth/modules/help/help.py:46
 msgid "About"
 msgstr "O systému"
 
 #: plinth/modules/dynamicdns/dynamicdns.py:48
-#: plinth/modules/firewall/templates/firewall.html:47
+#: plinth/modules/firewall/templates/firewall.html:45
 #: plinth/modules/networks/templates/connection_show.html:261
 #: plinth/modules/openvpn/templates/openvpn.html:67
 #: plinth/modules/tor/templates/tor.html:37
-#: plinth/modules/tor/templates/tor.html:67 plinth/templates/service.html:51
+#: plinth/modules/tor/templates/tor.html:65 plinth/templates/service.html:51
 msgid "Status"
 msgstr "Stav"
 
@@ -863,12 +868,18 @@ msgstr ""
 "nastavit a spustit vlastní XMPP server, zvaný ejabberd."
 
 #: plinth/modules/ejabberd/__init__.py:50
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc"
+#| "\">web client</a> or any other <a href='https://xmpp.org/software/"
+#| "clients' target='_blank'>XMPP client</a>. When enabled, ejabberd can be "
+#| "accessed by any <a href=\"/plinth/sys/users\">user with a {box_name} "
+#| "login</a>."
 msgid ""
-"To actually communicate, you can use the <a href=\"/plinth/apps/jsxc\">web "
-"client</a> or any other <a href='https://xmpp.org/software/clients' "
+"To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
+"a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
-"any <a href=\"/plinth/sys/users\">user with a {box_name} login</a>."
+"any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Pro komunikaci můžete použít <a href=\"/plinth/apps/jsxc\">webového klienta</"
 "a> nebo libovolného jiného <a href='http://xmpp.org/software/clients' "
@@ -960,19 +971,19 @@ msgstr "Spustit webového klienta"
 #: plinth/modules/openvpn/templates/openvpn.html:116
 #: plinth/modules/snapshot/templates/snapshot.html:28
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
-#: plinth/modules/tor/templates/tor.html:87 plinth/templates/service.html:77
+#: plinth/modules/tor/templates/tor.html:83 plinth/templates/service.html:77
 msgid "Configuration"
 msgstr "Nastavení"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
-#: plinth/modules/mediawiki/views.py:77 plinth/views.py:153
+#: plinth/modules/mediawiki/views.py:79 plinth/views.py:153
 msgid "Application enabled"
 msgstr "Aplikace zapnuta"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
-#: plinth/modules/mediawiki/views.py:80 plinth/views.py:156
+#: plinth/modules/mediawiki/views.py:82 plinth/views.py:156
 msgid "Application disabled"
 msgstr "Aplikace vypnuta"
 
@@ -1017,44 +1028,44 @@ msgstr ""
 "příkazem „service firewalld start“ nebo v případě systému se systemd pomocí "
 "„systemctl start firewalld“."
 
-#: plinth/modules/firewall/templates/firewall.html:45
+#: plinth/modules/firewall/templates/firewall.html:43
 msgid "Show Ports"
 msgstr "Zobrazit porty"
 
-#: plinth/modules/firewall/templates/firewall.html:46
+#: plinth/modules/firewall/templates/firewall.html:44
 msgid "Service/Port"
 msgstr "Služba/port"
 
-#: plinth/modules/firewall/templates/firewall.html:65
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:97
-#: plinth/modules/names/templates/names.html:49
+#: plinth/modules/firewall/templates/firewall.html:63
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:95
+#: plinth/modules/names/templates/names.html:47
 msgid "Enabled"
 msgstr "Zapnuto"
 
-#: plinth/modules/firewall/templates/firewall.html:68
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:99
-#: plinth/modules/names/templates/names.html:51
+#: plinth/modules/firewall/templates/firewall.html:66
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:97
+#: plinth/modules/names/templates/names.html:49
 #: plinth/modules/networks/forms.py:63
 msgid "Disabled"
 msgstr "Vypnuto"
 
-#: plinth/modules/firewall/templates/firewall.html:80
+#: plinth/modules/firewall/templates/firewall.html:78
 msgid "Permitted"
 msgstr "Umožněno"
 
-#: plinth/modules/firewall/templates/firewall.html:83
+#: plinth/modules/firewall/templates/firewall.html:81
 msgid "Permitted (internal only)"
 msgstr "Umožněno (pouze vnitřní)"
 
-#: plinth/modules/firewall/templates/firewall.html:86
+#: plinth/modules/firewall/templates/firewall.html:84
 msgid "Permitted (external only)"
 msgstr "Umožněno (pouze vnější)"
 
-#: plinth/modules/firewall/templates/firewall.html:89
+#: plinth/modules/firewall/templates/firewall.html:87
 msgid "Blocked"
 msgstr "Blokováno"
 
-#: plinth/modules/firewall/templates/firewall.html:103
+#: plinth/modules/firewall/templates/firewall.html:99
 msgid ""
 "The operation of the firewall is automatic. When you enable a service it is "
 "also permitted in the firewall and when you disable a service it is also "
@@ -1064,20 +1075,20 @@ msgstr ""
 "také povolena na bráně firewall a když nějako službu vypnete, je také "
 "zakázána na bráně firewall."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:29
+#: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
 msgstr "Nastavení dokončeno!"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:32
+#: plinth/modules/first_boot/templates/firstboot_complete.html:29
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
 msgstr "Bez aplikací váš %(box_name)s není moc užitečný."
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:39
+#: plinth/modules/first_boot/templates/firstboot_complete.html:36
 msgid "Install Apps"
 msgstr "Nainstalovat aplikace"
 
-#: plinth/modules/first_boot/templates/firstboot_complete.html:45
+#: plinth/modules/first_boot/templates/firstboot_complete.html:42
 #, python-format
 msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
@@ -1087,8 +1098,8 @@ msgstr ""
 "a> a případně pravit."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
-#: plinth/modules/help/templates/help_index.html:33
-#: plinth/templates/base.html:125
+#: plinth/modules/help/templates/help_index.html:27
+#: plinth/templates/base.html:134
 msgid "Help"
 msgstr "Nápověda"
 
@@ -1112,34 +1123,30 @@ msgstr "Nastavení dokončeno"
 msgid "Documentation"
 msgstr "Dokumentace"
 
-#: plinth/modules/help/help.py:40
-msgid "Where to Get Help"
-msgstr "Kde získat pomoc"
-
-#: plinth/modules/help/help.py:43 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:126
+#: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
 msgid "Manual"
 msgstr "Příručka"
 
-#: plinth/modules/help/help.py:46
+#: plinth/modules/help/help.py:43
 msgid "Download Manual"
 msgstr "Stáhnout si příručku"
 
-#: plinth/modules/help/help.py:55
+#: plinth/modules/help/help.py:52
 msgid "Documentation and FAQ"
 msgstr "Dokumentace a často kladené dotazy"
 
-#: plinth/modules/help/help.py:64
+#: plinth/modules/help/help.py:61
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "O {box_name}"
 
-#: plinth/modules/help/help.py:85
+#: plinth/modules/help/help.py:82
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Příručka k {box_name}"
 
-#: plinth/modules/help/templates/help_about.html:30
+#: plinth/modules/help/templates/help_about.html:32
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -1158,7 +1165,7 @@ msgstr ""
 "proxy a Tor předávání. To vše na zařízení, které může nahradit váš Wi-Fi "
 "směrovač. Vaše data zůstávají u vás."
 
-#: plinth/modules/help/templates/help_about.html:43
+#: plinth/modules/help/templates/help_about.html:45
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -1174,7 +1181,7 @@ msgstr ""
 "ochranu. Vrácením moci uživatelům nad jejich sítěmi a stroji, vracíme "
 "Internet k jeho původně zamýšlené decentralizované architektuře."
 
-#: plinth/modules/help/templates/help_about.html:56
+#: plinth/modules/help/templates/help_about.html:58
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -1185,7 +1192,7 @@ msgstr ""
 "distribuovaných služeb; %(box_name)s se snaží je všechny spojit dohromady v "
 "pohodlně použitelné podobě."
 
-#: plinth/modules/help/templates/help_about.html:64
+#: plinth/modules/help/templates/help_about.html:66
 #, python-format
 msgid ""
 "For more information about the %(box_name)s project, see the <a href="
@@ -1194,31 +1201,32 @@ msgstr ""
 "Více informací o projektu %(box_name)s naleznete na <a href=\"https://wiki."
 "debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 
-#: plinth/modules/help/templates/help_about.html:73
+#: plinth/modules/help/templates/help_about.html:75
 msgid "Learn more &raquo;"
 msgstr "Zjistit víc o &raquo;"
 
-#: plinth/modules/help/templates/help_about.html:76
+#: plinth/modules/help/templates/help_about.html:78
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Provozujete %(os_release)s a %(box_name)s verze %(version)s."
 
-#: plinth/modules/help/templates/help_about.html:81
+#: plinth/modules/help/templates/help_about.html:83
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Je k dispozici nová verze %(box_name)s."
 
-#: plinth/modules/help/templates/help_about.html:85
+#: plinth/modules/help/templates/help_about.html:87
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s je aktuální."
 
 #: plinth/modules/help/templates/help_base.html:36
+#: plinth/modules/help/templates/help_index.html:76
 #, python-format
 msgid "%(box_name)s Setup"
 msgstr "Nastavení %(box_name)s"
 
-#: plinth/modules/help/templates/help_index.html:37
+#: plinth/modules/help/templates/help_index.html:31
 #, python-format
 msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
@@ -1227,7 +1235,7 @@ msgstr ""
 "<a href=\"%(manual_url)s\">%(box_name)s Příručka</a> je nejlepším úvodem do "
 "%(box_name)s."
 
-#: plinth/modules/help/templates/help_index.html:44
+#: plinth/modules/help/templates/help_index.html:38
 #, python-format
 msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
@@ -1236,7 +1244,7 @@ msgstr ""
 "Další informace jsou uvedeny na <a href=\"http://wiki.debian.org/FreedomBox"
 "\" target=\"_blank\"> wiki stránkách projektu %(box_name)s </a>."
 
-#: plinth/modules/help/templates/help_index.html:51
+#: plinth/modules/help/templates/help_index.html:45
 #, python-format
 msgid ""
 "To seek help from %(box_name)s community, queries may be posted on the <a "
@@ -1249,7 +1257,7 @@ msgstr ""
 "mailové konferenci</a>. Archivy konferencí také obsahují popisy problémů, se "
 "kterými se setkali ostatní uživatelé, a jejich možná řešení."
 
-#: plinth/modules/help/templates/help_index.html:61
+#: plinth/modules/help/templates/help_index.html:55
 #, python-format
 msgid ""
 "Many %(box_name)s contributors and users are also available on the irc.oftc."
@@ -1291,15 +1299,15 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
-#: plinth/modules/ikiwiki/__init__.py:40 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:42
+#: plinth/modules/ikiwiki/__init__.py:43
 msgid "Wiki and Blog"
 msgstr "wiki a blog"
 
-#: plinth/modules/ikiwiki/__init__.py:45
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -1311,12 +1319,17 @@ msgstr ""
 "komentáře a RSS kanály. Když je zapnuté, blogy a wiki budou dostupné na <a "
 "href=\"/ikiwiki\">/ikiwiki</a> (po vytvoření)."
 
-#: plinth/modules/ikiwiki/__init__.py:51
-#, python-brace-format
+#: plinth/modules/ikiwiki/__init__.py:52
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
+#| "<i>manage</i> blogs and wikis, but any user in the <b>wiki</b> group can "
+#| "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
+#| "Configuration</a> you can change these permissions or add new users."
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
 "<i>manage</i> blogs and wikis, but any user in the <b>wiki</b> group can "
-"<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
+"<i>edit</i> existing ones. In the <a href=\"{users_url}\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
 "Pouze uživatelé {box_name} ze skupiny <b>admin</b> mohou <i>vytvářet</i> a "
@@ -1325,13 +1338,13 @@ msgstr ""
 "\">Nastavení uživatele</a> můžete tato oprávnění změnit nebo přidat nové "
 "uživatele."
 
-#: plinth/modules/ikiwiki/__init__.py:60
+#: plinth/modules/ikiwiki/__init__.py:62
 msgid "View and edit wiki applications"
 msgstr "Zobrazit a upravit wiki aplikace"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:54
 msgid "Type"
 msgstr "Typ"
 
@@ -1553,72 +1566,72 @@ msgstr ""
 "Nepodařilo se zapnout správu obnovování certifikátu pro doménu {domain}: "
 "{error}"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:46
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Domain"
 msgstr "Doména"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:47
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:45
 msgid "Certificate Status"
 msgstr "Stav certifikátu"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:48
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:46
 msgid "Website Security"
 msgstr "Zabezpečení webové stránky"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:49
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:47
 msgid "Actions"
 msgstr "Akce"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:65
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:63
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
 msgstr "Platné, končí %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:72
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:70
 msgid "Revoked"
 msgstr "Platnost odvolána"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:76
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:74
 #, python-format
 msgid "Expired on %(expiry_date)s"
 msgstr "Platnost skončila %(expiry_date)s"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:80
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:78
 msgid "Invalid test certificate"
 msgstr "Neplatný testovací certifikát"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:84
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:82
 #, python-format
 msgid "Invalid (%(reason)s)"
 msgstr "Neplatné (%(reason)s)"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:91
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:89
 msgid "No certificate"
 msgstr "Žádný certifikát"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:108
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:106
 msgid "Re-obtain"
 msgstr "Získat znovu"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:114
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:112
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot_manage.html:58
+#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 msgid "Delete"
 msgstr "Smazat"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:121
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:119
 msgid "Revoke"
 msgstr "Odvolat platnost"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:129
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:127
 msgid "Obtain"
 msgstr "Získat"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:142
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:138
 msgid "Certificate renewal management and use by other modules"
 msgstr "Správa obnovy certifikátu a využití ostatními moduly"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:144
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:140
 #, python-format
 msgid ""
 "If you have a Let's Encrypt certificate for your current domain, you may let "
@@ -1631,14 +1644,14 @@ msgstr ""
 "ostatními aplikacemi, takže jejich uživatelům by se pak neměla zobrazovat "
 "varování ohledně zabezpečení."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:167
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:214
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:221
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:163
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:170
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:210
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:217
 msgid "Update config"
 msgstr "Aktualizovat nastavení"
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:178
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:174
 #, python-format
 msgid ""
 "\n"
@@ -1651,7 +1664,7 @@ msgstr ""
 "                <b>%(current_domain)s</b> na %(box_name)s\n"
 "              "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:187
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
 msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
@@ -1660,7 +1673,7 @@ msgstr ""
 "Když je zapnuto, %(box_name)s může zajistit že všechny ostatní aplikace "
 "mohou používat certifikát hned po jeho obnovení."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:192
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:188
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
@@ -1668,7 +1681,7 @@ msgstr ""
 "<b>Pro stávající doménu není k dispozici certifikát.</b> Nejprve ho získejte "
 "a pak zapněte jeho správu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:222
 #, python-format
 msgid ""
 "\n"
@@ -1679,7 +1692,7 @@ msgstr ""
 "                  Použít certifikát %(current_domain)s pro <b>ejabberd</b>\n"
 "                "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:230
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:226
 msgid ""
 "\n"
 "                  Use certificate of the current domain for <b>ejabberd</b>\n"
@@ -1689,7 +1702,7 @@ msgstr ""
 "                  Použít certifikát stávající domény pro <b>ejabberd</b>\n"
 "                "
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:240
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:236
 #, python-format
 msgid ""
 "If enabled, the app <a href=\"%(ejabberd_url)s\">ejabberd</a> will also use "
@@ -1702,7 +1715,7 @@ msgstr ""
 "varování ohledně certifikátů, podepsaných sám sebou a umožní širší "
 "spolčování s ostatními XMPP servery na Internetu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:248
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:244
 #, python-format
 msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
@@ -1711,7 +1724,7 @@ msgstr ""
 "Tato funkce dává smysl pouze pokud používáte serverovou chatovací aplikaci "
 "<a href=\"%(ejabberd_url)s\">ejabberd</a>."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:253
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:249
 #, python-format
 msgid ""
 "To use a Let's Encrypt certificate for <a href=\"%(ejabberd_url)s"
@@ -1722,7 +1735,7 @@ msgstr ""
 "\"%(ejabberd_url)s\">ejabberd</a> chat server, je třeba nejprve zapnout "
 "obnovování certifikátu pro stávající doménu."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:262
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:258
 msgid ""
 "<b>No current domain is configured.</b> First configure a domain to enable "
 "management of its certificates."
@@ -1730,7 +1743,7 @@ msgstr ""
 "<b>Nyní není nastavena žádná doména.</b> Nejprve nějakou nastavte a až pak "
 "pro ní bude možné spravovat certifikáty."
 
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:269
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:265
 msgid ""
 "No domains have been configured. Configure domains to be able to obtain "
 "certificates for them."
@@ -1909,7 +1922,7 @@ msgstr "Registrace pro veřejnost zavřena"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:130
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -1976,30 +1989,34 @@ msgid "Enable private mode"
 msgstr "Zapnout soukromý režim"
 
 #: plinth/modules/mediawiki/forms.py:42
+#, fuzzy
+#| msgid ""
+#| "If enabled, Access will be restricted. Only people who have accounts can "
+#| "read/write to the wiki. Public registrations will also be disabled."
 msgid ""
-"If enabled, Access will be restricted. Only people who have accounts can "
+"If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 "Když je zapnuto, přístup bude omezen. Pouze lidé kteří zde mají uživatelské "
 "účty mohou číst/psát do wiki. Registrace veřejnosti jsou také vypnuté."
 
-#: plinth/modules/mediawiki/views.py:69
+#: plinth/modules/mediawiki/views.py:71
 msgid "Password updated"
 msgstr "Heslo aktualizováno"
 
-#: plinth/modules/mediawiki/views.py:88
+#: plinth/modules/mediawiki/views.py:91
 msgid "Public registrations enabled"
 msgstr "Registrace pro veřejnost otevřené"
 
-#: plinth/modules/mediawiki/views.py:93
+#: plinth/modules/mediawiki/views.py:100
 msgid "Public registrations disabled"
 msgstr "Registrace pro veřejnost zavřené"
 
-#: plinth/modules/mediawiki/views.py:104
+#: plinth/modules/mediawiki/views.py:109
 msgid "Private mode enabled"
 msgstr "Soukromý režim zapnut"
 
-#: plinth/modules/mediawiki/views.py:109
+#: plinth/modules/mediawiki/views.py:112
 msgid "Private mode disabled"
 msgstr "Soukromý režim vypnut"
 
@@ -2071,7 +2088,7 @@ msgid "Address"
 msgstr "Adresa"
 
 #: plinth/modules/minetest/templates/minetest.html:33
-#: plinth/modules/tor/templates/tor.html:113
+#: plinth/modules/tor/templates/tor.html:109
 msgid "Port"
 msgstr "Port"
 
@@ -2139,55 +2156,55 @@ msgstr ""
 msgid "Publishing key to keyserver..."
 msgstr "Zveřejňování klíče na serveru s klíči…"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:74
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:72
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
-#: plinth/modules/tor/templates/tor.html:112
+#: plinth/modules/tor/templates/tor.html:108
 msgid "Service"
 msgstr "Služba"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:75
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:73
 msgid "Domains"
 msgstr "Domény"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:76
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:74
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:31
 msgid "OpenPGP Fingerprint"
 msgstr "OpenPGP otisk"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:85
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:83
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:58
 msgid "Secure Shell"
 msgstr "Zabezpečený shell"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:87
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:85
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
 #: plinth/service.py:116
 msgid "Web Server"
 msgstr "Webový server"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:89
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:87
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:62
 msgid "Other"
 msgstr "Ostatní"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:117
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:115
 #, python-format
 msgid "Show details for key %(fingerprint)s"
 msgstr "Zobrazit podrobnosti klíče %(fingerprint)s"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:123
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:121
 msgid "-"
 msgstr "-"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:133
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:131
 msgid "Import Key"
 msgstr "Importovat klíč"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:142
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:140
 msgid "Publish Key"
 msgstr "Zveřejnit klíč"
 
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:151
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:149
 msgid "Add Domains"
 msgstr "Přidat domény"
 
@@ -2671,17 +2688,17 @@ msgid "Edit connection"
 msgstr "Upravit připojení"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:140 plinth/templates/base.html:141
+#: plinth/templates/base.html:149 plinth/templates/base.html:150
 msgid "Edit"
 msgstr "Upravit"
 
 #: plinth/modules/networks/templates/connection_show.html:50
-#: plinth/modules/networks/templates/connections_list.html:78
+#: plinth/modules/networks/templates/connections_list.html:76
 msgid "Deactivate"
 msgstr "Deaktivovat"
 
 #: plinth/modules/networks/templates/connection_show.html:57
-#: plinth/modules/networks/templates/connections_list.html:86
+#: plinth/modules/networks/templates/connections_list.html:84
 msgid "Activate"
 msgstr "Aktivovat"
 
@@ -2708,7 +2725,7 @@ msgid "yes"
 msgstr "ano"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:53
+#: plinth/modules/storage/templates/storage.html:52
 msgid "Device"
 msgstr "Zařízení"
 
@@ -2729,10 +2746,10 @@ msgid "Interface"
 msgstr "Rozhraní"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot_delete.html:35
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:35
-#: plinth/modules/snapshot/templates/snapshot_manage.html:56
-#: plinth/modules/snapshot/templates/snapshot_rollback.html:43
+#: plinth/modules/snapshot/templates/snapshot_delete.html:33
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
+#: plinth/modules/snapshot/templates/snapshot_manage.html:53
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Description"
 msgstr "Popis"
 
@@ -2873,13 +2890,13 @@ msgstr "Mezery"
 
 #: plinth/modules/networks/templates/connections_diagram.html:83
 #: plinth/modules/networks/templates/connections_diagram.html:113
-#: plinth/network.py:37
+#: plinth/network.py:36
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: plinth/modules/networks/templates/connections_diagram.html:86
 #: plinth/modules/networks/templates/connections_diagram.html:116
-#: plinth/network.py:38
+#: plinth/network.py:37
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -2897,16 +2914,16 @@ msgstr "Zobrazit připojení %(name)s"
 msgid "Computer"
 msgstr "Počítač"
 
-#: plinth/modules/networks/templates/connections_list.html:67
+#: plinth/modules/networks/templates/connections_list.html:65
 #, python-format
 msgid "Delete connection %(name)s"
 msgstr "Smazat připojení %(name)s"
 
-#: plinth/modules/networks/templates/connections_list.html:92
+#: plinth/modules/networks/templates/connections_list.html:90
 msgid "Active"
 msgstr "Aktivní"
 
-#: plinth/modules/networks/templates/connections_list.html:95
+#: plinth/modules/networks/templates/connections_list.html:93
 msgid "Inactive"
 msgstr "Neaktivní"
 
@@ -3274,11 +3291,11 @@ msgstr "připojeno na %(backend_host)s:%(backend_port)s"
 msgid "Delete this service"
 msgstr "Smazat tuto službu"
 
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:28
+#: plinth/modules/pagekite/templates/pagekite_firstboot.html:26
 msgid "Setup a freedombox.me subdomain with your voucher"
 msgstr "Nastavit podřízenou doménu freedombox.me pomocí vašeho kuponu"
 
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:32
+#: plinth/modules/pagekite/templates/pagekite_firstboot.html:30
 #, python-format
 msgid ""
 "<a href=\"%(finish_firstboot_url)s\">Skip this step</a> if you do not have a "
@@ -3289,7 +3306,7 @@ msgstr ""
 "kupon nebo chcete nastavit PageKite později s jinou doménou nebo "
 "přihlašovacími údaji."
 
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:40
+#: plinth/modules/pagekite/templates/pagekite_firstboot.html:38
 msgid ""
 "You can use an already redeemed voucher but it will only work with the "
 "initially registered subdomain."
@@ -3297,11 +3314,11 @@ msgstr ""
 "Je možné použít i už použitý kupon ale ten bude fungovat jen pro jím původně "
 "zaregistrovanou podřízenou doménu."
 
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:54
+#: plinth/modules/pagekite/templates/pagekite_firstboot.html:52
 msgid "Register"
 msgstr "Zaregistrovat"
 
-#: plinth/modules/pagekite/templates/pagekite_firstboot.html:58
+#: plinth/modules/pagekite/templates/pagekite_firstboot.html:56
 msgid "Skip Registration"
 msgstr "Přeskočit registraci"
 
@@ -4164,21 +4181,21 @@ msgstr ""
 msgid "Delete this snapshot permanently?"
 msgstr "Nevratně smazat tento zachycený stav?"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:33
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
-#: plinth/modules/snapshot/templates/snapshot_manage.html:54
-#: plinth/modules/snapshot/templates/snapshot_rollback.html:41
+#: plinth/modules/snapshot/templates/snapshot_delete.html:31
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:39
 msgid "Number"
 msgstr "Počet"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:34
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:34
-#: plinth/modules/snapshot/templates/snapshot_manage.html:55
-#: plinth/modules/snapshot/templates/snapshot_rollback.html:42
+#: plinth/modules/snapshot/templates/snapshot_delete.html:32
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:32
+#: plinth/modules/snapshot/templates/snapshot_manage.html:52
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:40
 msgid "Date"
 msgstr "Datum"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:53
+#: plinth/modules/snapshot/templates/snapshot_delete.html:49
 #, python-format
 msgid "Delete Snapshot #%(number)s"
 msgstr "Smazat zachycený stav č. %(number)s"
@@ -4187,37 +4204,37 @@ msgstr "Smazat zachycený stav č. %(number)s"
 msgid "Delete the following snapshots permanently?"
 msgstr "Nevratně smazat tyto zachycené stavy?"
 
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:57
+#: plinth/modules/snapshot/templates/snapshot_delete_all.html:53
 #: plinth/modules/snapshot/views.py:156
 msgid "Delete Snapshots"
 msgstr "Smazat zachycené stavy"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:32
+#: plinth/modules/snapshot/templates/snapshot_manage.html:33
 msgid "Create Snapshot"
 msgstr "Pořídit zachycený stav"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:36
+#: plinth/modules/snapshot/templates/snapshot_manage.html:37
 msgid "Delete all the snapshots"
 msgstr "Smazat všechny zachycené stavy"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:43
+#: plinth/modules/snapshot/templates/snapshot_manage.html:44
 msgid "Delete All"
 msgstr "Smazat vše"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:57
+#: plinth/modules/snapshot/templates/snapshot_manage.html:54
 msgid "Rollback"
 msgstr "Obnovit ze zálohy"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:68
+#: plinth/modules/snapshot/templates/snapshot_manage.html:65
 msgid "active"
 msgstr "aktivní"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:77
+#: plinth/modules/snapshot/templates/snapshot_manage.html:74
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Vrátit k zachycenému stavu č. %(number)s"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:88
+#: plinth/modules/snapshot/templates/snapshot_manage.html:85
 #, python-format
 msgid "Delete snapshot #%(number)s"
 msgstr "Smazat zachycený stav č. %(number)s"
@@ -4235,7 +4252,7 @@ msgstr ""
 "Bude automaticky pořízen zachycený stav stávajícího stavu systému. Tak bude "
 "možné se vrátit zpět do podoby nově zachyceného stavu."
 
-#: plinth/modules/snapshot/templates/snapshot_rollback.html:61
+#: plinth/modules/snapshot/templates/snapshot_rollback.html:57
 #, python-format
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Vrátit k zachycenému stavu č. %(number)s"
@@ -4311,27 +4328,27 @@ msgstr "Přihlášení"
 msgid "Storage"
 msgstr "Úložiště"
 
-#: plinth/modules/storage/__init__.py:151
+#: plinth/modules/storage/__init__.py:153
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajtů"
 
-#: plinth/modules/storage/__init__.py:155
+#: plinth/modules/storage/__init__.py:157
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:159
+#: plinth/modules/storage/__init__.py:161
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:163
+#: plinth/modules/storage/__init__.py:165
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:166
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
@@ -4340,19 +4357,19 @@ msgstr "{disk_size:.1f} TiB"
 msgid "The following disks are in use:"
 msgstr "Následující jednotky datového úložiště jsou v používání:"
 
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:53
 msgid "Mount Point"
 msgstr "Přípojný bod"
 
-#: plinth/modules/storage/templates/storage.html:56
+#: plinth/modules/storage/templates/storage.html:55
 msgid "Used"
 msgstr "Použito"
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:87
 msgid "Partition Expansion"
 msgstr "Zvětšení oddílu"
 
-#: plinth/modules/storage/templates/storage.html:92
+#: plinth/modules/storage/templates/storage.html:89
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4363,19 +4380,11 @@ msgstr ""
 "Kořenový oddíl je možné zvětšit a místo tak využít. Poskytne vám to další "
 "prostor pro ukládání vašich souborů."
 
-#: plinth/modules/storage/templates/storage.html:102
-#: plinth/modules/storage/templates/storage.html:114
+#: plinth/modules/storage/templates/storage.html:99
 #: plinth/modules/storage/templates/storage_expand.html:39
 #: plinth/modules/storage/views.py:66
 msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
-
-#: plinth/modules/storage/templates/storage.html:106
-msgid ""
-"There is no unallocated space after your root partition. There is no need to "
-"expand it."
-msgstr ""
-"Za kořenovým oddílem není žádné nevyužité místo. Není ho tedy možné zvětšit."
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4396,7 +4405,7 @@ msgstr "Chyba při zvětšování oddílu: {exception}"
 msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
-#: plinth/modules/storage/views.py:101
+#: plinth/modules/storage/views.py:100
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4702,19 +4711,19 @@ msgstr "Tor je spuštěné"
 msgid "Tor is not running"
 msgstr "Tor není spuštěné"
 
-#: plinth/modules/tor/templates/tor.html:66
+#: plinth/modules/tor/templates/tor.html:64
 msgid "Hidden Service"
 msgstr "Skrytá služba"
 
-#: plinth/modules/tor/templates/tor.html:68
+#: plinth/modules/tor/templates/tor.html:66
 msgid "Ports"
 msgstr "Porty"
 
-#: plinth/modules/tor/templates/tor.html:99
+#: plinth/modules/tor/templates/tor.html:95
 msgid "Relay"
 msgstr "Předávání"
 
-#: plinth/modules/tor/templates/tor.html:101
+#: plinth/modules/tor/templates/tor.html:97
 #, python-format
 msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
@@ -4724,11 +4733,11 @@ msgstr ""
 "byste ověřit, zda jsou otevřené a předávané následující porty (pokud je "
 "třeba):"
 
-#: plinth/modules/tor/templates/tor.html:129
+#: plinth/modules/tor/templates/tor.html:125
 msgid "SOCKS"
 msgstr "SOCKS"
 
-#: plinth/modules/tor/templates/tor.html:132
+#: plinth/modules/tor/templates/tor.html:128
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Tor SOCKS port je k dispozici na vašem %(box_name)s na TCP portu 9050."
@@ -4767,15 +4776,15 @@ msgstr ""
 "zajistěte aby existovala a uživatel „debian-transmission“ do ní mohl "
 "zapisovat."
 
-#: plinth/modules/ttrss/__init__.py:39 plinth/modules/ttrss/manifest.py:33
+#: plinth/modules/ttrss/__init__.py:40 plinth/modules/ttrss/manifest.py:33
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:41
+#: plinth/modules/ttrss/__init__.py:42
 msgid "News Feed Reader"
 msgstr "Čtečka novinek"
 
-#: plinth/modules/ttrss/__init__.py:44
+#: plinth/modules/ttrss/__init__.py:45
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -4784,18 +4793,22 @@ msgstr ""
 "Tiny Tiny RSS je čtečka a slučovač novinek (RSS/Atom), navržená pro čtení "
 "odkudkoli, ale s pohodlím podobným desktopové aplikaci."
 
-#: plinth/modules/ttrss/__init__.py:48
-#, python-brace-format
+#: plinth/modules/ttrss/__init__.py:49
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
+#| "tt-rss</a> path on the web server. It can be accessed by any <a href=\"/"
+#| "plinth/sys/users\">user with a {box_name} login</a>."
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
-"rss</a> path on the web server. It can be accessed by any <a href=\"/plinth/"
-"sys/users\">user with a {box_name} login</a>."
+"rss</a> path on the web server. It can be accessed by any <a href="
+"\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Pokud je zapnuto, Tiny Tiny RSS bude k dispozici v umístění <a href=\"/tt-rss"
 "\">/tt-rss</a> umístění na webovém serveru. Je přístupné pro libovolného <a "
 "href=\"/plinth/sys/users\">uživatele s účtem na {box_name}</a>."
 
-#: plinth/modules/ttrss/__init__.py:53
+#: plinth/modules/ttrss/__init__.py:54
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -4803,7 +4816,7 @@ msgstr ""
 "Při používání mobilní nebo desktopové aplikace pro Tiny Tiny RSS použijte "
 "pro připojování URL adresu <a href=\"/tt-rss-app/\">/tt-rss-app</a>."
 
-#: plinth/modules/ttrss/__init__.py:59
+#: plinth/modules/ttrss/__init__.py:60
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
@@ -4985,12 +4998,12 @@ msgstr "Omezení přístupu ke konzoli se nezdařilo."
 msgid "User account created, you are now logged in"
 msgstr "Uživatelský účet vytvořen, není jste jím přihlášeni"
 
-#: plinth/modules/users/templates/users_change_password.html:29
+#: plinth/modules/users/templates/users_change_password.html:26
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
 msgstr "Změna hesla pro <em>%(username)s</em>"
 
-#: plinth/modules/users/templates/users_change_password.html:39
+#: plinth/modules/users/templates/users_change_password.html:36
 msgid "Save Password"
 msgstr "Uložit heslo"
 
@@ -5014,11 +5027,11 @@ msgstr "Nevratně smazat uživatele <strong>%(username)s</strong>?"
 msgid "Delete %(username)s"
 msgstr "Smazat %(username)s"
 
-#: plinth/modules/users/templates/users_firstboot.html:29
+#: plinth/modules/users/templates/users_firstboot.html:26
 msgid "Administrator Account"
 msgstr "Účet správce"
 
-#: plinth/modules/users/templates/users_firstboot.html:32
+#: plinth/modules/users/templates/users_firstboot.html:29
 msgid ""
 "Choose a username and password to access this web interface. The password "
 "can be changed later. This user will be granted administrative privileges. "
@@ -5028,7 +5041,7 @@ msgstr ""
 "možné později změnit. Tomuto uživateli budou dána práva správy. Později je "
 "možné přidat další uživatele."
 
-#: plinth/modules/users/templates/users_firstboot.html:45
+#: plinth/modules/users/templates/users_firstboot.html:42
 msgid "Create Account"
 msgstr "Vytvořit účet"
 
@@ -5042,7 +5055,7 @@ msgstr "Smazat uživatele %(username)s"
 msgid "Edit user %(username)s"
 msgstr "Upravit uživatele %(username)s"
 
-#: plinth/modules/users/templates/users_update.html:33
+#: plinth/modules/users/templates/users_update.html:30
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -5051,8 +5064,8 @@ msgstr ""
 "Heslo změníte pomocí <a href='%(change_password_url)s'>formuláře pro změnu "
 "hesla</a>."
 
-#: plinth/modules/users/templates/users_update.html:45
-#: plinth/templates/language-selection.html:33
+#: plinth/modules/users/templates/users_update.html:42
+#: plinth/templates/language-selection.html:32
 msgid "Save Changes"
 msgstr "Uložit změny"
 
@@ -5091,11 +5104,11 @@ msgstr "Změnit heslo"
 msgid "Password changed successfully."
 msgstr "Heslo úspěšně změněno."
 
-#: plinth/network.py:39
+#: plinth/network.py:38
 msgid "PPPoE"
 msgstr "PPPoE"
 
-#: plinth/network.py:40
+#: plinth/network.py:39
 msgid "Generic"
 msgstr "Obecné"
 
@@ -5129,11 +5142,11 @@ msgstr "Webový server přes vrstvu zabezpečeného soketu (SSL)"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Webové rozhraní {box_name} (Plinth)"
 
-#: plinth/templates/403.html:28
+#: plinth/templates/403.html:25
 msgid "403 Forbidden"
 msgstr "403 odepřeno"
 
-#: plinth/templates/403.html:32
+#: plinth/templates/403.html:29
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
 msgstr "Nemáte oprávnění pro přístup k %(request_path)s na tomto serveru."
@@ -5174,33 +5187,6 @@ msgstr ""
 "issues\">systému hlášení chyb</a> abychom to mohli opravit. K hlášení také "
 "přiložte <a href=\"%(status_log_url)s\">záznam (log) stavu</a>."
 
-#: plinth/templates/apps.html:33
-msgid "Services and Applications"
-msgstr "Služby a aplikace"
-
-#: plinth/templates/apps.html:36
-#, python-format
-msgid ""
-"You can install and run various services and applications on your "
-"%(box_name)s. Click on any app page link on the left to read a description "
-"of the application and choose to install it."
-msgstr ""
-"Na svém %(box_name)s můžete instalovat a spouštět různé služby a aplikace. "
-"Klikněte na odkaz libovolné aplikace na levé straně a přečtěte si její popis "
-"a případně ji nainstalujte."
-
-#: plinth/templates/apps.html:44
-msgid ""
-"This box can be your photo sharing site, your instant messaging site, your "
-"social networking site, your news site.  Remember web portals?  We can be "
-"one of those too.  Many of the services you use on the web could soon be on "
-"site and under your control!"
-msgstr ""
-"Tato krabička může být místem pro sdílení fotografií, okamžitou textovou "
-"komunikaci, společenskou síť a novinky. Pamatujete si na webové portály? "
-"Může být jako jeden z nich. Mnohé ze služeb které používáte na webu mohou "
-"brzy být u vás doma a pod vaší kontrolou!"
-
 #: plinth/templates/base.html:49
 #, python-format
 msgid "Core funtionality and web interface for %(box_name)s"
@@ -5210,44 +5196,62 @@ msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 msgid "Toggle navigation"
 msgstr "Přepnout navigaci"
 
-#: plinth/templates/base.html:102 plinth/templates/base.html:103
+#: plinth/templates/base.html:103
+#, fuzzy
+#| msgid "Home"
+msgid " Home"
+msgstr "Domů"
+
+#: plinth/templates/base.html:106
 msgid "Home"
 msgstr "Domů"
 
-#: plinth/templates/base.html:107 plinth/templates/base.html:109
+#: plinth/templates/base.html:111
+#, fuzzy
+#| msgid "Apps"
+msgid " Apps"
+msgstr "Aplikace"
+
+#: plinth/templates/base.html:115
 msgid "Apps"
 msgstr "Aplikace"
 
-#: plinth/templates/base.html:113 plinth/templates/base.html:115
+#: plinth/templates/base.html:120
+#, fuzzy
+#| msgid "System"
+msgid " System"
+msgstr "Systém"
+
+#: plinth/templates/base.html:124
 msgid "System"
 msgstr "Systém"
 
-#: plinth/templates/base.html:146 plinth/templates/base.html:147
+#: plinth/templates/base.html:155 plinth/templates/base.html:156
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: plinth/templates/base.html:154 plinth/templates/base.html:155
+#: plinth/templates/base.html:163 plinth/templates/base.html:164
 msgid "Restart"
 msgstr "Restartovat"
 
-#: plinth/templates/base.html:160 plinth/templates/base.html:161
+#: plinth/templates/base.html:169 plinth/templates/base.html:170
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: plinth/templates/base.html:168 plinth/templates/base.html:169
-#: plinth/templates/base.html:190 plinth/templates/base.html:192
+#: plinth/templates/base.html:177 plinth/templates/base.html:178
+#: plinth/templates/base.html:199 plinth/templates/base.html:201
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: plinth/templates/base.html:177
+#: plinth/templates/base.html:186
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: plinth/templates/base.html:182 plinth/templates/base.html:184
+#: plinth/templates/base.html:191 plinth/templates/base.html:193
 msgid "Log in"
 msgstr "Přihlásit"
 
-#: plinth/templates/base.html:256 plinth/templates/index.html:166
+#: plinth/templates/base.html:240 plinth/templates/index.html:182
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -5299,15 +5303,15 @@ msgstr "Zdroj aplikací"
 msgid "Package"
 msgstr "Balíček"
 
-#: plinth/templates/clients.html:128
+#: plinth/templates/clients.html:126
 msgid "Debian:"
 msgstr "Debian:"
 
-#: plinth/templates/clients.html:131
+#: plinth/templates/clients.html:129
 msgid "Homebrew:"
 msgstr "Homebrew:"
 
-#: plinth/templates/clients.html:134
+#: plinth/templates/clients.html:132
 msgid "RPM:"
 msgstr "RPM:"
 
@@ -5320,7 +5324,7 @@ msgstr ""
 "Vyčkejte až %(box_name)s dokončí instalaci. Jakmile bude hotová, budete moci "
 "začít svůj %(box_name)s používat."
 
-#: plinth/templates/index.html:60
+#: plinth/templates/index.html:43
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5329,11 +5333,11 @@ msgstr ""
 "Odkazy na této stránce se objeví až po zapnutí nějakých <a href="
 "\"%(apps_url)s\">aplikací</a>."
 
-#: plinth/templates/index.html:87
+#: plinth/templates/index.html:67
 msgid "Configure &raquo;"
 msgstr "Nastavit &raquo;"
 
-#: plinth/templates/index.html:106
+#: plinth/templates/index.html:122
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5345,7 +5349,7 @@ msgstr ""
 "aplikací na malých strojích. Poskytuje nástroje pro online komunikaci, "
 "respektující vaše soukromí a vlastnictví dat."
 
-#: plinth/templates/index.html:115
+#: plinth/templates/index.html:131
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5356,27 +5360,27 @@ msgstr ""
 "svobodný software, šířený pod licencí GNU Affero General Public License, "
 "verze 3 a novějších."
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:151
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: plinth/templates/index.html:138
+#: plinth/templates/index.html:154
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:141
+#: plinth/templates/index.html:157
 msgid "Donate"
 msgstr "Podpořit darem"
 
-#: plinth/templates/index.html:145
+#: plinth/templates/index.html:161
 msgid "FreedomBox Foundation"
 msgstr "Nadace FreedomBox"
 
-#: plinth/templates/index.html:152
+#: plinth/templates/index.html:168
 msgid "IRC Chatroom"
 msgstr "Chatovací místnost na IRC"
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:173
 msgid "Mailing list"
 msgstr "Poštovní konference"
 
@@ -5442,22 +5446,52 @@ msgstr "Instalace %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
 
-#: plinth/templates/system.html:33
-msgid "System Configuration"
-msgstr "Nastavení systému"
+#~ msgid "Where to Get Help"
+#~ msgstr "Kde získat pomoc"
 
-#: plinth/templates/system.html:36
-#, python-format
-msgid "Here you can administrate the underlying system of your %(box_name)s."
-msgstr "Zde je možné spravovat systém, pohánějící váš %(box_name)s."
+#~ msgid ""
+#~ "There is no unallocated space after your root partition. There is no need "
+#~ "to expand it."
+#~ msgstr ""
+#~ "Za kořenovým oddílem není žádné nevyužité místo. Není ho tedy možné "
+#~ "zvětšit."
 
-#: plinth/templates/system.html:42
-#, python-format
-msgid ""
-"The options affect the %(box_name)s at its most general level, so be careful!"
-msgstr ""
-"Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
-"buďte opatrní!"
+#~ msgid "Services and Applications"
+#~ msgstr "Služby a aplikace"
+
+#~ msgid ""
+#~ "You can install and run various services and applications on your "
+#~ "%(box_name)s. Click on any app page link on the left to read a "
+#~ "description of the application and choose to install it."
+#~ msgstr ""
+#~ "Na svém %(box_name)s můžete instalovat a spouštět různé služby a "
+#~ "aplikace. Klikněte na odkaz libovolné aplikace na levé straně a přečtěte "
+#~ "si její popis a případně ji nainstalujte."
+
+#~ msgid ""
+#~ "This box can be your photo sharing site, your instant messaging site, "
+#~ "your social networking site, your news site.  Remember web portals?  We "
+#~ "can be one of those too.  Many of the services you use on the web could "
+#~ "soon be on site and under your control!"
+#~ msgstr ""
+#~ "Tato krabička může být místem pro sdílení fotografií, okamžitou textovou "
+#~ "komunikaci, společenskou síť a novinky. Pamatujete si na webové portály? "
+#~ "Může být jako jeden z nich. Mnohé ze služeb které používáte na webu mohou "
+#~ "brzy být u vás doma a pod vaší kontrolou!"
+
+#~ msgid "System Configuration"
+#~ msgstr "Nastavení systému"
+
+#~ msgid ""
+#~ "Here you can administrate the underlying system of your %(box_name)s."
+#~ msgstr "Zde je možné spravovat systém, pohánějící váš %(box_name)s."
+
+#~ msgid ""
+#~ "The options affect the %(box_name)s at its most general level, so be "
+#~ "careful!"
+#~ msgstr ""
+#~ "Tyto předvolby ovlivňují %(box_name)s na jeho nejobecnější úrovni, proto "
+#~ "buďte opatrní!"
 
 #~ msgid "TT-RSS Reader"
 #~ msgstr "TT-RSS Reader"
