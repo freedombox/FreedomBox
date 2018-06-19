@@ -5,6 +5,12 @@
     <title>FreedomBox/Manual/Radicale</title>
     <revhistory>
       <revision>
+        <revnumber>33</revnumber>
+        <date>2018-06-17 16:36:11</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add a missing instruction on how to synchronize using DAVdroid</revremark>
+      </revision>
+      <revision>
         <revnumber>32</revnumber>
         <date>2018-06-01 10:48:04</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -318,13 +324,23 @@
           <para>Create a new account on DAVdroid by clicking on the floating + button. </para>
         </listitem>
         <listitem>
-          <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis>. DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user. </para>
+          <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis> (see the first screenshot below). DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user.  </para>
         </listitem>
         <listitem>
           <para>Follow this video from <ulink url="https://www.davdroid.com/faq/existing-contacts-are-not-synced">DAVdroid FAQ</ulink> to learn how to migrate your existing contacts to Radicale. </para>
         </listitem>
       </orderedlist>
-      <para><emphasis role="strong">Note:</emphasis> One UI quirk in DAVdroid is that you have to check the checkboxes before clicking on the sync button in the header. </para>
+      <para>
+        <emphasis role="strong">Synchronizing contacts</emphasis>
+      </para>
+      <orderedlist numeration="arabic">
+        <listitem>
+          <para>Click on the hamburger menus of CalDAV and CardDAV and select either "Refresh ..." in case of existing accounts or "Create ..." in case of new accounts (see the second screenshot below). </para>
+        </listitem>
+        <listitem>
+          <para>Check the checkboxes for the address books and calendars you want to synchronize and click on the sync button in the header. (see the third screenshot below) </para>
+        </listitem>
+      </orderedlist>
       <para>
         <inlinemediaobject>
           <imageobject>
@@ -332,6 +348,14 @@
           </imageobject>
           <textobject>
             <phrase>DAVdroid account setup</phrase>
+          </textobject>
+        </inlinemediaobject>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-refresh.png" width="288"/>
+          </imageobject>
+          <textobject>
+            <phrase>DAVdroid refresh</phrase>
           </textobject>
         </inlinemediaobject>
         <inlinemediaobject>

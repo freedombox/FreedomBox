@@ -737,12 +737,16 @@
       <section>
         <title>Verifying the Downloaded Images</title>
         <para>It is important to verify the images you have downloaded to ensure that the file has not be corrupted during the transmission and that it is indeed the image built by FreedomBox developers.  </para>
+        <para><emphasis role="strong">Note:</emphasis> Testing and nightly images are automatically signed by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox#">FreedomBox</ulink> CI server.  </para>
         <itemizedlist>
           <listitem>
             <para>First open a terminal and import the public keys of the FreedomBox developers who built the images: </para>
             <screen><![CDATA[$ gpg --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
 
-$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808]]></screen>
+$ gpg --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+
+# This is the FreedomBox CI server's key
+$ gpg --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8]]></screen>
           </listitem>
           <listitem>
             <para>Next, verify the fingerprint of the public keys: </para>
@@ -759,7 +763,13 @@ uid                  James Valleroy <jvalleroy@mailbox.org>
 uid                  James Valleroy <jvalleroy@freedombox.org>
 sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
 sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
-sub   2048R/2A624357 2015-12-22]]></screen>
+sub   2048R/2A624357 2015-12-22
+
+$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+pub   rsa4096 2018-06-06 [SC]
+      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
+sub   rsa4096 2018-06-06 [E]]]></screen>
           </listitem>
           <listitem>
             <para>Finally, verify your downloaded image with its signature file <code>.sig</code>. For example: </para>
@@ -1139,13 +1149,23 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             <para>Create a new account on DAVdroid by clicking on the floating + button. </para>
           </listitem>
           <listitem>
-            <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis>. DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user. </para>
+            <para>Select the second option as shown in the first figure below and enter the base url as <emphasis><ulink url="https://&lt;your.freedombox.address&gt;/radicale/&lt;username&gt;/"/></emphasis> (see the first screenshot below). DAVdroid will be able to discover both CalDAV and WebDAV accounts for the user.  </para>
           </listitem>
           <listitem>
             <para>Follow this video from <ulink url="https://www.davdroid.com/faq/existing-contacts-are-not-synced">DAVdroid FAQ</ulink> to learn how to migrate your existing contacts to Radicale. </para>
           </listitem>
         </orderedlist>
-        <para><emphasis role="strong">Note:</emphasis> One UI quirk in DAVdroid is that you have to check the checkboxes before clicking on the sync button in the header. </para>
+        <para>
+          <emphasis role="strong">Synchronizing contacts</emphasis>
+        </para>
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para>Click on the hamburger menus of CalDAV and CardDAV and select either "Refresh ..." in case of existing accounts or "Create ..." in case of new accounts (see the second screenshot below). </para>
+          </listitem>
+          <listitem>
+            <para>Check the checkboxes for the address books and calendars you want to synchronize and click on the sync button in the header. (see the third screenshot below) </para>
+          </listitem>
+        </orderedlist>
         <para>
           <inlinemediaobject>
             <imageobject>
@@ -1153,6 +1173,14 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
             </imageobject>
             <textobject>
               <phrase>DAVdroid account setup</phrase>
+            </textobject>
+          </inlinemediaobject>
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="https://wiki.debian.org/FreedomBox/Manual/Radicale?action=AttachFile&amp;do=get&amp;target=DAVdroid-refresh.png" width="288"/>
+            </imageobject>
+            <textobject>
+              <phrase>DAVdroid refresh</phrase>
             </textobject>
           </inlinemediaobject>
           <inlinemediaobject>
@@ -6984,7 +7012,19 @@ $ sudo reboot]]></screen>
 iface lo inet loopback]]></screen>
             <para>If you have already completed the setup process without doing this step, you will need to clear out the <code>/etc/network/interfaces</code> file keeping only the above lines.  Then perform a reboot.  After this network connections configured by the <code>setup</code> step above will configure your network.  Network interfaces will then be in the <code>internal</code> or <code>external</code> firewall zone.  This is essential for the FreedomBox's web interface to be reachable from other machines in the network.  You can tweak network manager connections with the <code>nmtui</code> command if you wish.  </para>
           </listitem>
+          <listitem>
+            <para>Freedombox-setup will not set up a static IP, and if you set one up during your Debian install, it will clobber it. After you have run the setup, you will need to re-configure the network. For ipv4 addresses, use: </para>
+            <screen><![CDATA[  nmcli con mod "Ethernet connection 1"  \
+  ipv4.addresses A.A.A.A/X  \
+  ipv4.gateway G.G.G.G  \
+  ipv4.dns N.N.N.N  \
+  ipv4.dns-search somedomain.com  \
+  ipv4.method "manual"  \
+  ipv4.ignore-auto-dns yes  \
+ ipv6.method ignore]]></screen>
+          </listitem>
         </orderedlist>
+        <para>...with the block capitals and somedomain.com replaced with your actual address, mask description, gateway and dns server details. </para>
       </section>
     </section>
     <section>
@@ -7381,6 +7421,32 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.32.0 (2018-06-18)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Apply new card based design </para>
+          </listitem>
+          <listitem>
+            <para>Fix client info table size and flickering </para>
+          </listitem>
+          <listitem>
+            <para>first-setup: Automatically expand root partition </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Enable image uploads </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Make private mode and public registrations mutually exclusive </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Hide frontpage shortcut when private mode is enabled </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Norwegian Bokmål, Czech, Spanish, Russian, Hindi, Telugu, Italian, Dutch, German, and Hungarian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.31.0 (2018-06-04)</title>
         <itemizedlist>
@@ -8607,7 +8673,7 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
       </section>
       <section>
         <title>Donate</title>
-        <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a Delaware non-profit corporation in the process of applying for 501(c)(3) federal nonprofit recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
+        <para>The <ulink url="https://freedomboxfoundation.org">FreedomBox Foundation</ulink> is a 501(c)(3) federal nonprofit corporation with recognition from the IRS. FreedomBox project is run by volunteers.  You can help the project financially by donating via PayPal, Bitcoin or by mailing a check.  Please see the <ulink url="https://www.freedomboxfoundation.org/donate/">donation page</ulink> for details on how to donate. </para>
       </section>
       <section>
         <title>Document: User Manual, Website and Wiki</title>
@@ -8766,13 +8832,14 @@ urlpatterns = [
       <section>
         <title>Adding a menu item</title>
         <para>We have added a URL to be handled by our application but this does not yet show up to be a link in Plinth web interface.  Let us add a link in the applications list.  In <code>__init__.py</code> add the following: </para>
-        <screen><![CDATA[from plinth import cfg
+        <screen><![CDATA[from django.utils.translation import ugettext_lazy as _
+from plinth.menu import main_menu
 
 def init():
     """Intialize the module."""
-    menu = cfg.main_menu.get('apps:index')
-    menu.add_urlname('News Feed Reader (Tiny Tiny RSS)', 'glyphicon-bullhorn',
-                     'ttrss:index', 850)]]></screen>
+    menu = main_menu.get('apps')
+    menu.add_urlname(_('Tiny Tiny RSS'), 'glyphicon-bullhorn',
+                     'ttrss:index', _('News Feed Reader'))]]></screen>
         <para>As soon as Plinth starts, it will load all the enabled modules into memory.  After this, it gives a chance to each of the modules to initialize itself by calling the <code>init()</code> method if there is such a method available as <code>&lt;app&gt;.init()</code>.  Here we have implemented this method and added our menu item to the applications menu as part of the initialization process. </para>
         <para>We wish to add our menu item to the list of applications which is why we have retrieved the applications menu which is available under the main menu.  After this we add our own menu item to this menu.  There are several parameters during this process that are important: </para>
         <itemizedlist>
@@ -8788,8 +8855,7 @@ def init():
             <para>URL namespace.  Hence it is <code>ttrss:index</code> and not just <code>index</code>. </para>
           </listitem>
           <listitem>
-            <para>The final parameter specifies where in the menu this application shows up.  This is weightage number with which Plinth sorts the menu items.  Higher the weightage, the lower the menu item appears (as it sinks).  Since Plinth menu items are alphabetically sorted, for our </para>
-            <para>application we wish for it to appear between <emphasis>Public Visibility</emphasis> and <emphasis>Voice Chat</emphasis>.  Their weights are 800 and 900 respectively.  So we selected 850. </para>
+            <para>The final parameter is a short description of the application. </para>
           </listitem>
         </itemizedlist>
         <para>We have used the application menu item to insert our own menu item as a child.  To be able to use the application menu item, we need to make sure that the module providing the application menu is loaded before our application is loaded.  We will do that in the next step. </para>
