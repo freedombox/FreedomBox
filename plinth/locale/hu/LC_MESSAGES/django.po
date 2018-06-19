@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-19 00:33+0000\n"
+"PO-Revision-Date: 2018-06-19 01:24+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -191,13 +191,7 @@ msgstr ""
 "terminál szintén elérhető a konzolos műveletekhez."
 
 #: plinth/modules/cockpit/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
-#| "plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
@@ -205,10 +199,10 @@ msgid ""
 "and system altering abilities are limited to users belonging to admin group."
 msgstr ""
 "Ha engedélyezve van, a Cockpit elérhető lesz a webkiszolgáló <a href=\"/"
-"_cockpit/\">/_cockpit/</a> útvonalán. Elérhető lesz <a href=\"/plinth/sys/"
-"users\">bármely felhasználónak</a> {box_name} felhasználónévvel. A bizalmas "
-"adatok és a rendszert módosító képességek az adminisztrátori csoportba "
-"tartozó felhasználókra van korlátozva."
+"_cockpit/\">/_cockpit/</a> útvonalán. Elérhető lesz <a href=\"{users_url}\">"
+"bármely felhasználónak</a> {box_name} felhasználónévvel. A bizalmas adatok "
+"és a rendszert módosító képességek az adminisztrátori csoportba tartozó "
+"felhasználókra van korlátozva."
 
 #: plinth/modules/cockpit/__init__.py:55
 msgid "Currently only limited functionality is available."
@@ -872,23 +866,17 @@ msgstr ""
 "konfigurálni a te XMPP kiszolgálódat, amit ejabberd-nek neveznek."
 
 #: plinth/modules/ejabberd/__init__.py:50
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc"
-#| "\">web client</a> or any other <a href='https://xmpp.org/software/"
-#| "clients' target='_blank'>XMPP client</a>. When enabled, ejabberd can be "
-#| "accessed by any <a href=\"/plinth/sys/users\">user with a {box_name} "
-#| "login</a>."
+#, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
 "a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ahhoz hogy kommunikálj, használhatod a <a href=\"/plinth/apps/jsxc\">webes "
+"Ahhoz hogy kommunikálj, használhatod a <a href=\"{jsxc_url}\">webes "
 "klienst</a> vagy bármi egyéb <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP klienst</a>. Ha engedélyezed, az ejabberd elérhető lesz "
-"bármely <a href=\"/plinth/sys/users\">felhasználónak {box_name} "
+"bármely <a href=\"{users_url}\">felhasználónak {box_name} "
 "felhasználónéven</a>."
 
 #: plinth/modules/ejabberd/forms.py:33
@@ -1332,12 +1320,7 @@ msgstr ""
 "lett hozva)."
 
 #: plinth/modules/ikiwiki/__init__.py:52
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
-#| "<i>manage</i> blogs and wikis, but any user in the <b>wiki</b> group can "
-#| "<i>edit</i> existing ones. In the <a href=\"/plinth/sys/users\">User "
-#| "Configuration</a> you can change these permissions or add new users."
+#, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
 "<i>manage</i> blogs and wikis, but any user in the <b>wiki</b> group can "
@@ -1347,7 +1330,7 @@ msgstr ""
 "Csak a {box_name} felhasználói az <b>adminisztrátori</b> csoportnak tudnak "
 "<i>létrehozni</i> és <i>kezelni</i> blogokat és wikiket, de bármely "
 "felhasználó a <b>wiki</b> csoportban tud <i>szerkeszteni</i> már meglévőket. "
-"A <a href=\"/plinth/sys/users\">Felhasználók beállítása</a> oldalon tudod "
+"A <a href=\"{users_url}\">Felhasználók beállítása</a> oldalon tudod "
 "módosítani ezeket a jogosultságokat vagy hozzáadhatsz új felhasználókat."
 
 #: plinth/modules/ikiwiki/__init__.py:62
@@ -1837,7 +1820,7 @@ msgstr "{domain} domain-on nem sikerült kitörölni a tanúsítványt: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:40
 msgid "Matrix Synapse"
-msgstr ""
+msgstr "Matrix Synapse"
 
 #: plinth/modules/matrixsynapse/__init__.py:45
 msgid ""
@@ -1848,6 +1831,14 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> egy új "
+"ökoszisztéma a nyílt, egységes azonnali üzenetküldés és VoIP számára. "
+"Synapse az a kiszolgáló, ami megvalósítja a Matrix protokollt. Ez biztosítja "
+"a chat csoportokat, hang/videó hívásokat, végponttól végpontig történő "
+"titkosítást, több eszközös szinkronizációt és a működéséhez nem igényel "
+"telefonszámokat. Egy adott Matrix kiszolgáló felhasználói képesek "
+"beszélgetni az összes többi Matrix kiszolgáló felhasználóival a szövetségen "
+"keresztül."
 
 #: plinth/modules/matrixsynapse/__init__.py:52
 msgid ""
@@ -1855,10 +1846,13 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
+"A kommunikációhoz válassz az <a href=\"https://matrix.org/docs/projects/\">"
+"elérhető kliensek</a> közül, akár mobil, asztali vagy webes felületűt. <a "
+"href=\"https://riot.im/\">Riot</a> kliens az ajánlott."
 
 #: plinth/modules/matrixsynapse/forms.py:29
 msgid "Enable Public Registration"
-msgstr ""
+msgstr "Szabad regisztráció engedélyezése"
 
 #: plinth/modules/matrixsynapse/forms.py:32
 msgid ""
@@ -1866,10 +1860,13 @@ msgid ""
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
+"A szabad regisztráció azt jelenti, hogy bárki az Interneten képes új "
+"felhasználói fiókot létrehozni a te Matrix kiszolgálódon. Tiltsd le, ha azt "
+"szeretnéd hogy csak a már meglévő felhasználók használhassák."
 
 #: plinth/modules/matrixsynapse/manifest.py:27
 msgid "Riot"
-msgstr ""
+msgstr "Riot"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:34
 msgid ""
@@ -4442,23 +4439,15 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
-#| "plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/tt-"
 "rss</a> path on the web server. It can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ha engedélyezve van, a Cockpit elérhető lesz a webkiszolgáló <a href=\"/"
-"_cockpit/\">/_cockpit/</a> útvonalán. Elérhető lesz <a href=\"/plinth/sys/"
-"users\">bármely felhasználónak</a> {box_name} felhasználónévvel. A bizalmas "
-"adatok és a rendszert módosító képességek az adminisztrátori csoportba "
-"tartozó felhasználókra van korlátozva."
+"Ha engedélyezve van, a Tiny Tiny RSS elérhető lesz a webkiszolgáló <a href"
+"=\"/tt-rss\">/tt-rss</a> útvonalán. Elérhető lesz <a href=\"{users_url}\">"
+"bármely felhasználónak</a> {box_name} felhasználónévvel."
 
 #: plinth/modules/ttrss/__init__.py:54
 msgid ""
@@ -4833,30 +4822,24 @@ msgid "Toggle navigation"
 msgstr ""
 
 #: plinth/templates/base.html:103
-#, fuzzy
-#| msgid "Home"
 msgid " Home"
-msgstr "Kezdőlap"
+msgstr " Kezdőlap"
 
 #: plinth/templates/base.html:106
 msgid "Home"
 msgstr "Kezdőlap"
 
 #: plinth/templates/base.html:111
-#, fuzzy
-#| msgid "Apps"
 msgid " Apps"
-msgstr "Alkalmazások"
+msgstr " Alkalmazások"
 
 #: plinth/templates/base.html:115
 msgid "Apps"
 msgstr "Alkalmazások"
 
 #: plinth/templates/base.html:120
-#, fuzzy
-#| msgid "System"
 msgid " System"
-msgstr "Rendszer"
+msgstr " Rendszer"
 
 #: plinth/templates/base.html:124
 msgid "System"
