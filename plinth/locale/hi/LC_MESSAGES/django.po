@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-18 14:55+0000\n"
+"PO-Revision-Date: 2018-06-20 02:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
 "hi/>\n"
@@ -185,22 +185,17 @@ msgstr ""
 "ज़रूरत नहीं है. कंट्रोल संचालन के लिये वेब आधारित कंसोल भी माैजूद है."
 
 #: plinth/modules/cockpit/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href=\"/"
-#| "plinth/sys/users\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> with a {box_name} login. Sensitive information "
 "and system altering abilities are limited to users belonging to admin group."
 msgstr ""
-"सक्षम होने से, कॉकपिट <a href=\"/_cockpit/\">/_cockpit/</a> पात पर वेब सर्वर से "
-"माैजूद होते है. यह <a href=\"/plinth/sys/users\"> कोई से </a> एक {box_name} के सात "
-"पहुंच सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्थापक लोग के पास है."
+"सक्षम होने पर, कॉकपिट <a href=\"/_cockpit/\">/_cockpit/</a> पात पर वेब सर्वर "
+"से माैजूद होते है. यह <a href=\"{users_url}\"> कोई से </a> एक {box_name} के "
+"सात पहुंच सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्था"
+"पक लोग के पास है."
 
 #: plinth/modules/cockpit/__init__.py:55
 msgid "Currently only limited functionality is available."
@@ -837,23 +832,17 @@ msgstr ""
 "कॉंफ़िगर आैर चल सकते हैं, सर्वर का नाम एजाबेरड है."
 
 #: plinth/modules/ejabberd/__init__.py:50
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "To actually communicate, you can use the <a href=\"/plinth/apps/jsxc"
-#| "\">web client</a> or any other <a href='https://xmpp.org/software/"
-#| "clients' target='_blank'>XMPP client</a>. When enabled, ejabberd can be "
-#| "accessed by any <a href=\"/plinth/sys/users\">user with a {box_name} "
-#| "login</a>."
+#, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
 "a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"संचार करने के लिये, आप <a href=\"/plinth/apps/jsxc\">web client</a> उपयोग कर सकतें "
+"संचार करने के लिये, आप <a href=\"{jsxc_url}\">web client</a> उपयोग कर सकतें "
 "हैं या दूसरा <a href='https://xmpp.org/software/clients' target='_blank'> "
-"एक्सएमरपिपि ग्राहक</a>. सक्षम होने पर एजाबेरड कोई <a href=\"/plinth/sys/users\"> "
-"यूसर एक {box_name} लोगिन</a> से उपयोग कर सकते हैं."
+"एक्सएमरपिपि ग्राहक</a>. सक्षम होने पर एजाबेरड कोई <a href=\"{users_url}\"> यू"
+"सर एक {box_name} लोगिन</a> से उपयोग कर सकते हैं."
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
@@ -867,6 +856,10 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
+"अगर आपका {box_name} सक्षम किया गया है, यह चैट संदेश इतिहास को संग्रहीत करेगा"
+". यह कई ग्राहकों के बीच सिंक्रनाइज़ करने कि और बहु प्रयोक्ता चैट रूम के इतिहा"
+"स को पढ़ने की अनुमति देता है. अगर इतिहासे सादे पाठ या एंक्रिप्टेड रूप में  "
+"संग्रहीत हैं, यह ग्राहक सेटिंग्स पर निर्भर करता है."
 
 #: plinth/modules/ejabberd/manifest.py:25
 msgid "Conversations"
@@ -889,7 +882,7 @@ msgstr "याएक्समि"
 
 #: plinth/modules/ejabberd/manifest.py:70
 msgid "ChatSecure"
-msgstr ""
+msgstr "चैटसेकुएर"
 
 #: plinth/modules/ejabberd/manifest.py:72
 msgid ""
@@ -898,14 +891,18 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"चैटसेकुएर एक मुक्त और खुला सोरसॅ मैसेजिंग एप्लिकेशन है जिसमें एक्सएमपिपि के "
+"बजाय अोटीआर एन्क्रिप्शन है. आप एक मौजूदा Google अकाउंट बना सकता है, "
+"एक्सएमपिपि सर्वर पर नया अकाउंट बना सकता है और अपने स्वयं सर्वर पर कनेक्ट कर "
+"सकता है."
 
 #: plinth/modules/ejabberd/manifest.py:88
 msgid "Dino"
-msgstr ""
+msgstr "डिनो"
 
 #: plinth/modules/ejabberd/manifest.py:100
 msgid "Gajim"
-msgstr ""
+msgstr "गाजिम"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:33
 #, python-format
@@ -914,11 +911,14 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
+"आपका एक्सएमपीपी सर्वर डोमेन <b>%(domainname)s%</b> पर सेट है. यूसर आईडि इस "
+"तरह दिखेगा <i>username@%(domainname)s</i>. आपका डोमेन सिसटेम पर सेटअप कर सकता"
+" है <a href=\"%(index_url)s\"> कॉन्फ़िगर </a> पेजॅ."
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:47
 #: plinth/modules/jsxc/templates/jsxc.html:32
 msgid "Launch web client"
-msgstr ""
+msgstr "वेब क्लाइंट लॉंच"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
@@ -928,31 +928,31 @@ msgstr ""
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
 #: plinth/modules/tor/templates/tor.html:83 plinth/templates/service.html:77
 msgid "Configuration"
-msgstr ""
+msgstr "कॉन्फ़िगरेशन"
 
 #: plinth/modules/ejabberd/views.py:67
 #: plinth/modules/matrixsynapse/views.py:109
 #: plinth/modules/mediawiki/views.py:79 plinth/views.py:153
 msgid "Application enabled"
-msgstr ""
+msgstr "एप्लीकेशन सक्षम किया गया है"
 
 #: plinth/modules/ejabberd/views.py:70
 #: plinth/modules/matrixsynapse/views.py:112
 #: plinth/modules/mediawiki/views.py:82 plinth/views.py:156
 msgid "Application disabled"
-msgstr ""
+msgstr "एप्लीकेशन अक्षम किया गया है"
 
 #: plinth/modules/ejabberd/views.py:77
 msgid "Message Archive Management enabled"
-msgstr ""
+msgstr "संदेश संग्रह प्रबंधन सक्षम किया गया है"
 
 #: plinth/modules/ejabberd/views.py:81
 msgid "Message Archive Management disabled"
-msgstr ""
+msgstr "संदेश संग्रह प्रबंधन अक्षम किया गया है"
 
 #: plinth/modules/firewall/__init__.py:37
 msgid "Firewall"
-msgstr ""
+msgstr "फ़ायरवॉल"
 
 #: plinth/modules/firewall/__init__.py:41
 #, python-brace-format
