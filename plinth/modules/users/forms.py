@@ -22,6 +22,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
+
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
@@ -32,6 +33,8 @@ from plinth.modules import first_boot, users
 from plinth.modules.security import set_restricted_access
 from plinth.translation import set_language
 from plinth.utils import is_user_admin
+
+from . import get_last_admin_user
 
 
 def get_group_choices():
@@ -159,7 +162,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active')
         model = User
         widgets = {
-            'groups': forms.widgets.CheckboxSelectMultiple(),
+            'groups': plinth.forms.CheckboxSelectMultipleWithDisabled(),
         }
 
     def __init__(self, request, username, *args, **kwargs):
@@ -171,6 +174,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         self.request = request
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
+        last_admin_user = get_last_admin_user()
 
         choices = []
 
@@ -179,7 +183,10 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
             # applications not installed yet.
             if c[1] in group_choices:
                 # Replace group names with descriptions
-                choices.append((c[0], group_choices[c[1]]))
+                if c[1] == 'admin' and last_admin_user is not None:
+                    choices.append((c[0], {'label': group_choices[c[1]], 'disabled': True}))
+                else:
+                    choices.append((c[0], group_choices[c[1]]))
 
         self.fields['groups'].label = _('Permissions')
         self.fields['groups'].choices = choices
@@ -187,6 +194,9 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         if not is_user_admin(request):
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['groups'].disabled = True
+
+        if last_admin_user and last_admin_user == self.username:
+            self.fields['is_active'].disabled = True
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""

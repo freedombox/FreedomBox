@@ -28,6 +28,8 @@ from django.utils.translation import ugettext as _, ugettext_lazy
 
 from .forms import CreateUserForm, UserChangePasswordForm, UserUpdateForm, \
     FirstBootForm
+from . import get_last_admin_user
+
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
@@ -72,6 +74,13 @@ class UserList(ContextMixin, django.views.generic.ListView):
     template_name = 'users_list.html'
     title = ugettext_lazy('Users')
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserList, self).get_context_data(*args, **kwargs)
+        last_admin_user = get_last_admin_user()
+        if last_admin_user is not None:
+            context['last_admin_user'] = last_admin_user
+        return context
+
 
 class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     """View to update a user's details."""
@@ -85,7 +94,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not is_user_admin(self.request):
+                and not is_user_admin(self.request):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
@@ -157,7 +166,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         """Handle a request and return a HTTP response."""
         if self.request.user.get_username() != self.kwargs['slug'] \
-           and not is_user_admin(self.request):
+                and not is_user_admin(self.request):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)

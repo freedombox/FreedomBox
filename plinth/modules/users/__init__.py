@@ -105,3 +105,15 @@ def remove_group(group):
 
 def register_group(group):
     groups[group[0]] = group[1]
+
+
+def get_last_admin_user():
+    """ Check if there is only one admin user
+        if yes return its name else return None
+    """
+    admin_users = actions.superuser_run('users',
+                                        ['get-group-users','admin']
+                                        ).strip().split('\n')
+    if len(admin_users) > 1:
+        return None
+    return admin_users[0]

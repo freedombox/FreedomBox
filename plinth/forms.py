@@ -19,10 +19,13 @@ Common forms for use by modules.
 """
 
 import os
+from itertools import chain
 
 from django import forms
 from django.conf import settings
+from django.forms import CheckboxInput
 from django.utils import translation
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language_info
 
@@ -32,8 +35,8 @@ from plinth import utils
 
 class ServiceForm(forms.Form):
     """Generic configuration form for a service."""
-    is_enabled = forms.BooleanField(label=_('Enable application'),
-                                    required=False)
+    is_enabled = forms.BooleanField(
+        label=_('Enable application'), required=False)
 
 
 class DomainSelectionForm(forms.Form):
@@ -82,3 +85,38 @@ class LanguageSelectionForm(LanguageSelectionFormMixin, forms.Form):
     """Language selection form."""
 
     language = LanguageSelectionFormMixin.language
+
+
+class CheckboxSelectMultipleWithDisabled(forms.widgets.CheckboxSelectMultiple):
+    """
+    Subclass of Django's checkbox select multiple widget that allows disabling checkbox-options.
+    To disable an option, pass a dict instead of a string for its label,
+    of the form: {'label': 'option label', 'disabled': True}
+
+    Derived from https://djangosnippets.org/snippets/2786/
+    """
+
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
+        if value is None: value = []
+        final_attrs = self.build_attrs(attrs)
+        output = [u'<ul>']
+        global_disabled = 'disabled' in final_attrs
+        str_values = set([v for v in value])
+        for i, (option_value, option_label) in enumerate(
+                chain(self.choices, choices)):
+            if not global_disabled and 'disabled' in final_attrs:
+                # If the entire group is disabled keep all options disabled
+                del final_attrs['disabled']
+            if isinstance(option_label, dict):
+                if dict.get(option_label, 'disabled'):
+                    final_attrs = dict(final_attrs, disabled='disabled')
+                option_label = option_label['label']
+            final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
+            label_for = u' for="%s"' % final_attrs['id']
+            cb = CheckboxInput(final_attrs,
+                               check_test=lambda value: value in str_values)
+            rendered_cb = cb.render(name, option_value)
+            output.append(u'<li><label%s>%s %s</label></li>' %
+                          (label_for, rendered_cb, option_label))
+        output.append(u'</ul>')
+        return mark_safe(u'\n'.join(output))

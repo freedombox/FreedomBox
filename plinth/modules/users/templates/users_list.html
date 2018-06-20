@@ -40,7 +40,7 @@
       <div class="list-group">
         {% for user in object_list %}
           <div class="list-group-item clearfix">
-            {% if object_list|length != 1 %}
+            {% if user.username != last_admin_user %}
               <a href="{% url 'users:delete' user.username %}"
                 class="btn btn-default btn-sm pull-right"
                 role="button"
