@@ -123,6 +123,13 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         """Return the URL to redirect to in case of successful updation."""
         return reverse('users:edit', kwargs={'slug': self.object.username})
 
+    def get_context_data(self, **kwargs):
+        """Use self.title and the module-level subsubmenu"""
+        context = super(UserUpdate, self).get_context_data(**kwargs)
+        if not is_user_admin(self.request):
+            del context['subsubmenu']
+        return context
+
 
 class UserDelete(ContextMixin, DeleteView):
     """Handle deleting users, showing a confirmation dialog first.
