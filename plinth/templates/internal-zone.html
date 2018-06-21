@@ -1,0 +1,41 @@
+{% comment %}
+#
+# This file is part of FreedomBox.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+{% endcomment %}
+
+{% load i18n %}
+
+{% block internal_zone_warning %}
+  {% if not service.is_external %}
+    <div class="bg-warning">
+      {% blocktrans trimmed with service_name=service.name %}
+        <em>{{ service_name }}</em> is available only on internal networks.
+      {% endblocktrans %}
+      <p>
+        {% with interfaces=service.get_internal_interfaces %}
+          {% if not interfaces %}
+            {% trans "Currently there are no network interfaces configured as internal." %}
+          {% else %}
+            {% blocktrans trimmed with interface_list=interfaces|join:", " %}
+              Currently the following network interfaces are configured as internal: {{ interface_list }}
+            {% endblocktrans %}
+          {% endif %}
+        {% endwith %}
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -57,7 +57,8 @@ def index(request):
             'manual_page': tor.manual_page,
             'status': status,
             'config_running': bool(config_process),
-            'form': form
+            'form': form,
+            'socks_service': tor.socks_service
         })
 
 
@@ -66,10 +67,10 @@ def _apply_changes(request, old_status, new_status):
     try:
         __apply_changes(request, old_status, new_status)
     except ActionError as exception:
-        messages.error(request,
-                       _('Action error: {0} [{1}] [{2}]').format(
-                           exception.args[0], exception.args[1],
-                           exception.args[2]))
+        messages.error(
+            request,
+            _('Action error: {0} [{1}] [{2}]').format(
+                exception.args[0], exception.args[1], exception.args[2]))
 
 
 def __apply_changes(request, old_status, new_status):

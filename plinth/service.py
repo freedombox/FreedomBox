@@ -110,6 +110,11 @@ class Service(object):
         """Returns is_enabled relying on a correct service_id"""
         return action_utils.service_is_enabled(self.service_id)
 
+    def get_internal_interfaces(self):
+        """Returns a list of interfaces in a firewall zone."""
+        from plinth.modules import firewall
+        return firewall.get_interfaces('internal')
+
 
 def init():
     """Register some misc. services that don't fit elsewhere."""

@@ -42,12 +42,18 @@ def parse_arguments():
         '--zone', help='Zone from which the list is to be retrieved',
         required=True)
 
+    # Get interface status
+    get_interfaces = subparsers.add_parser(
+        'get-interfaces', help='Get list of interfaces in a zone')
+    get_interfaces.add_argument(
+        '--zone', help='Zone from which the list is to be retrieved',
+        required=True)
+
     # Add a service
     add_service = subparsers.add_parser('add-service', help='Add a service')
     add_service.add_argument('service', help='Name of the service to add')
-    add_service.add_argument('--zone',
-                             help='Zone to which service is to be added',
-                             required=True)
+    add_service.add_argument(
+        '--zone', help='Zone to which service is to be added', required=True)
 
     # Remove a service status
     remove_service = subparsers.add_parser('remove-service',
@@ -81,8 +87,14 @@ def subcommand_get_status(_):
 
 def subcommand_get_enabled_services(arguments):
     """Print the status of variours services"""
-    subprocess.call(['firewall-cmd', '--zone', arguments.zone,
-                     '--list-services'])
+    subprocess.call(
+        ['firewall-cmd', '--zone', arguments.zone, '--list-services'])
+
+
+def subcommand_get_interfaces(arguments):
+    """Print the list of interfaces in a zone."""
+    subprocess.call(
+        ['firewall-cmd', '--zone', arguments.zone, '--list-interfaces'])
 
 
 def subcommand_add_service(arguments):
@@ -93,16 +105,21 @@ def subcommand_add_service(arguments):
 def add_service(zone, service):
     """Permit a service in the firewall."""
     subprocess.call(['firewall-cmd', '--zone', zone, '--add-service', service])
-    subprocess.call(['firewall-cmd', '--zone', zone, '--permanent',
-                     '--add-service', service])
+    subprocess.call([
+        'firewall-cmd', '--zone', zone, '--permanent', '--add-service', service
+    ])
 
 
 def subcommand_remove_service(arguments):
     """Block a service in the firewall"""
-    subprocess.call(['firewall-cmd', '--zone', arguments.zone,
-                     '--remove-service', arguments.service])
-    subprocess.call(['firewall-cmd', '--zone', arguments.zone, '--permanent',
-                     '--remove-service', arguments.service])
+    subprocess.call([
+        'firewall-cmd', '--zone', arguments.zone, '--remove-service',
+        arguments.service
+    ])
+    subprocess.call([
+        'firewall-cmd', '--zone', arguments.zone, '--permanent',
+        '--remove-service', arguments.service
+    ])
 
 
 def main():

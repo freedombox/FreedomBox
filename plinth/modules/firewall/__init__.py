@@ -78,6 +78,12 @@ def get_enabled_services(zone):
     return output.split()
 
 
+def get_interfaces(zone):
+    """Return the list of interfaces in a zone."""
+    output = _run(['get-interfaces', '--zone', zone], superuser=True)
+    return output.split()
+
+
 def add_service(port, zone):
     """Enable a service in firewall"""
     _run(['add-service', port, '--zone', zone], superuser=True)
