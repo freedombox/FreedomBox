@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-20 02:39+0000\n"
+"PO-Revision-Date: 2018-06-24 02:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
 "hi/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #: plinth/action_utils.py:258
 #, python-brace-format
@@ -961,10 +961,13 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
+"फ़ायरवॉल एक सुरक्षा सिस्टम है जो आपके {box_name} पर अाने वाले और चसने वाले "
+"नेटवर्क ट्रैफ़िक को नियंत्रित करता है. फ़ायरवॉल सक्षम और ठीक से कॉंफ़िगर रखते"
+" हुए इंटरनेट से सुरक्षा खतरे का जोखिम कम कर देता है."
 
 #: plinth/modules/firewall/templates/firewall.html:25
 msgid "Current status:"
-msgstr ""
+msgstr "वर्तमान स्थिति:"
 
 #: plinth/modules/firewall/templates/firewall.html:30
 #, python-format
@@ -974,43 +977,47 @@ msgid ""
 "you may run it using the command 'service firewalld start' or in case of a "
 "system with systemd 'systemctl start firewalld'."
 msgstr ""
+"फ़ायरवॉल डेमन नहीं चल रहा है. इको चलिये. फ़ायरवॉल %(box_name)s पर डिफ़ॉल्ट से"
+" सक्षम आता है. किसी डेबियन आधारित सिसटेम पर (%(box_name)s से तरह) आप इससे चल "
+"सकते है, 'सेवा फायरवॉल शुरू' आदेश उपयेग कर या एक सिस्टमदि सिस्टम के साथ "
+"'सिसटेमसिटिएल फायरवॉल शुरू' उपयेग कर."
 
 #: plinth/modules/firewall/templates/firewall.html:43
 msgid "Show Ports"
-msgstr ""
+msgstr "पोर्ट दिखाईये"
 
 #: plinth/modules/firewall/templates/firewall.html:44
 msgid "Service/Port"
-msgstr ""
+msgstr "सर्विस/पोर्ट"
 
 #: plinth/modules/firewall/templates/firewall.html:63
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:95
 #: plinth/modules/names/templates/names.html:47
 msgid "Enabled"
-msgstr ""
+msgstr "सक्षम किया गया है"
 
 #: plinth/modules/firewall/templates/firewall.html:66
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:97
 #: plinth/modules/names/templates/names.html:49
 #: plinth/modules/networks/forms.py:63
 msgid "Disabled"
-msgstr ""
+msgstr "अक्षम किया गया है"
 
 #: plinth/modules/firewall/templates/firewall.html:78
 msgid "Permitted"
-msgstr ""
+msgstr "अनुमति दिया गया है"
 
 #: plinth/modules/firewall/templates/firewall.html:81
 msgid "Permitted (internal only)"
-msgstr ""
+msgstr "अनुमति दिया गया है (सिर्फ आंतरिक)"
 
 #: plinth/modules/firewall/templates/firewall.html:84
 msgid "Permitted (external only)"
-msgstr ""
+msgstr "अनुमति दिया गया है (सिर्फ बाहरी)"
 
 #: plinth/modules/firewall/templates/firewall.html:87
 msgid "Blocked"
-msgstr ""
+msgstr "अवरुद्ध"
 
 #: plinth/modules/firewall/templates/firewall.html:99
 msgid ""
@@ -1018,19 +1025,21 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
+"फ़ायरवॉल की ऑपरेशन स्वचालित है. जब आप एक सेवा सक्षम करते है, फ़ायरवॉल में भी "
+"अनुमति है और जब एक सेवा अक्षम करते है, फ़ायरवॉल में भी  अक्षम करेगा."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
-msgstr ""
+msgstr "सेटअप पूरा हे गया!"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:29
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "किसी ऐप्स के बिन आपका %(box_name)s बहुत कुछ नहीं कर सकता है."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:36
 msgid "Install Apps"
-msgstr ""
+msgstr "ऐप्लिकेशन इंस्टॉल करें"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:42
 #, python-format
@@ -1038,54 +1047,56 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
+"आप <a href=\"%(networks_url)s\"> नेटवर्क सेटअप </a> जांचना चाह सकते है और "
+"अगर जरुरत हू, इससे बदलें."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:27
 #: plinth/templates/base.html:134
 msgid "Help"
-msgstr ""
+msgstr "मदद"
 
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:44
 msgid "Start Setup"
-msgstr ""
+msgstr "सटअप शुरु करें"
 
 #: plinth/modules/first_boot/templates/firstboot_welcome.html:49
 #, python-format
 msgid ""
 "To complete the setup of your %(box_name)s, please provide some basic "
 "information."
-msgstr ""
+msgstr "आपका %(box_name)s का सेटअप पूरा करने के लिए कुछ मूलभूत जानकारी दिजिये."
 
 #: plinth/modules/first_boot/views.py:56
 msgid "Setup Complete"
-msgstr ""
+msgstr "सेटअप पूरा हो गया"
 
 #: plinth/modules/help/help.py:38
 msgid "Documentation"
-msgstr ""
+msgstr "प्रलेखन"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
 #: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
 msgid "Manual"
-msgstr ""
+msgstr "मैन्युअल"
 
 #: plinth/modules/help/help.py:43
 msgid "Download Manual"
-msgstr ""
+msgstr "मैन्युअल डाउनलोड करें"
 
 #: plinth/modules/help/help.py:52
 msgid "Documentation and FAQ"
-msgstr ""
+msgstr "प्रलेखन और एफ़एक्यू"
 
 #: plinth/modules/help/help.py:61
 #, python-brace-format
 msgid "About {box_name}"
-msgstr ""
+msgstr "{box_name} के बारे में"
 
 #: plinth/modules/help/help.py:82
 #, python-brace-format
 msgid "{box_name} Manual"
-msgstr ""
+msgstr "{box_name} मैनुअल"
 
 #: plinth/modules/help/templates/help_about.html:32
 #, python-format
@@ -1098,6 +1109,12 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
+"%(box_name)s एक सामुदायिक प्रोजेक्ट है. यह मुफ्त सॉफ्टवेयर पर व्यक्तिगत सर्"
+"वर बनाने, डिज़ाइन और बढ़ावे का प्रोजेक्ट है  निजी और सार्वजनिक संचार के लिए. "
+"एक नेटवर्किंग उपलायंस है इंटरनेट पर इंटरफ़ेसिंग के लिये एकांत और डेटा सुरक्षा"
+" के साथ. %(box_name)s ब्लॉग, विकि, वेबसाइट, सामाजिक नेटवर्क, ईमेल, वेब "
+"प्रॉक्सी और एक टोर रिले के जैसे एप्लिकेशन होस्ट कर सकते है, एक वाई - फाई रू"
+"टर के जैसे डिवाइस पर ताकि आपना डेटा आपना साख रखेगें."
 
 #: plinth/modules/help/templates/help_about.html:45
 msgid ""
@@ -1108,6 +1125,12 @@ msgid ""
 "giving back power to the users over their networks and machines, we are "
 "returning the Internet to its intended peer-to-peer architecture."
 msgstr ""
+"हम एक ऐसी दुनिया में रहते है जहां जो लेग हमारे नेटवर्क को नियंत्रित करते है "
+"वो लेग के दिलें में हमारे सबसे अच्छा हित नहीं है. एक सॉफ्टवेयर निर्माण करके, "
+"जो केंद्रीय सर्विस पर भरोसा नहीं करते है, हम नियंत्रण और एकांत हासिल कर सकते "
+"हैं.  हमारे घरों में हमारे डेटा रखकर, हम इस पर उपयोगी कानूनी सुरक्षा प्राप्त "
+"करते हैं. अपने नेटवर्क और मशीनों पर उपयोगकर्ताओं को वापस शक्ति देकर, हम "
+"इंटरनेट उसके इरादे-वाले पीयर टू पीयर वास्तुकला  पर लौट रहे हैं."
 
 #: plinth/modules/help/templates/help_about.html:58
 #, python-format
@@ -1116,6 +1139,8 @@ msgid ""
 "services; %(box_name)s aims to bring them all together in a convenient "
 "package."
 msgstr ""
+"बहुत सारे प्रोजैक्ट चल रहे है, एक वितरित सेवाओं का भविष्य एहसास करने के लिए. "
+"%(box_name)s यह सब साथ लाने के लिए कोशिस करती है."
 
 #: plinth/modules/help/templates/help_about.html:66
 #, python-format
@@ -1123,31 +1148,33 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a href="
 "\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
+"%(box_name)s के बारे में और सिखने के लिये यह देखिये <a href=\""
+"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 
 #: plinth/modules/help/templates/help_about.html:75
 msgid "Learn more &raquo;"
-msgstr ""
+msgstr "और सिखिये &raquo;"
 
 #: plinth/modules/help/templates/help_about.html:78
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
-msgstr ""
+msgstr "आप %(os_release)s चल रहे है और %(box_name)s संस्करण %(version)s."
 
 #: plinth/modules/help/templates/help_about.html:83
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr ""
+msgstr "एक नया %(box_name)s संस्करण उपलब्ध है."
 
 #: plinth/modules/help/templates/help_about.html:87
 #, python-format
 msgid "%(box_name)s is up to date."
-msgstr ""
+msgstr "%(box_name)s उद्दिनांकित है."
 
 #: plinth/modules/help/templates/help_base.html:36
 #: plinth/modules/help/templates/help_index.html:76
 #, python-format
 msgid "%(box_name)s Setup"
-msgstr ""
+msgstr "%(box_name)s सेटअप"
 
 #: plinth/modules/help/templates/help_index.html:31
 #, python-format
@@ -1155,6 +1182,8 @@ msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
 "start for information regarding %(box_name)s."
 msgstr ""
+"वह <a href=\"%(manual_url)s\">%(box_name)s मैन्युअल</a> %(box_name)s के बारे "
+"में जानकारी के लिये सबसे अच्छे जगह है."
 
 #: plinth/modules/help/templates/help_index.html:38
 #, python-format
@@ -1162,6 +1191,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">%(box_name)s "
+"प्रोजेक्ट विकि </a> में और जानकारी है."
 
 #: plinth/modules/help/templates/help_index.html:45
 #, python-format
@@ -1171,6 +1202,10 @@ msgid ""
 "\"> mailing list</a>.  The list archives also contain information about "
 "problems faced by other users and possible solutions."
 msgstr ""
+"%(box_name)s समुदाय से मदद लेने के लिये, सवाले <a href=\""
+"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\"> मेलिगं"
+" लिस्ट</a> पर पोस्ट जा सकते है. लिस्ट अभिलेखागार में द्वारा यूजर की समस्याओं "
+"के बारे में जानकारी और संभावित समाधान भी हे सकता है."
 
 #: plinth/modules/help/templates/help_index.html:55
 #, python-format
@@ -1180,10 +1215,14 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
+"बहुत सारे %(box_name)s योगदानकर्ताओं और यूजर irc.oftc.net आईआरसी नेटवर्क पर "
+"भी उपलब्ध हैं. शामिल हों और मदद के लिए पूछें <a href=\"https://webchat.oftc."
+"net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> चानेल पर "
+"आईआरसी वेब इंटरफेस उपयोग कर."
 
 #: plinth/modules/help/templates/statuslog.html:25
 msgid "Status Log"
-msgstr ""
+msgstr "स्थिति लॉग"
 
 #: plinth/modules/help/templates/statuslog.html:28
 #, python-format
@@ -1193,24 +1232,29 @@ msgid ""
 "salsa.debian.org/freedombox-team/plinth/issues\">bug tracker</a> and attach "
 "this status log to the bug report."
 msgstr ""
+"यह अंतिम %(num_lines)s पंक्तियां हैं इस वेब इंटरफ़ेस स्थिति लॉग के लिये. एक "
+"बग रिपोर्ट करके यह <a href=\"https://salsa.debian.org/freedombox-team/plinth/"
+"issues\">  बग ट्रैकर </a> उपयोग किजिये और इस स्थिति लॉग को बग रिपोर्ट में "
+"जोड़ें."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
-msgstr ""
+msgstr "सावधान:"
 
 #: plinth/modules/help/templates/statuslog.html:39
 msgid ""
 "Please remove any passwords or other personal information from the log "
 "before submitting the bug report."
 msgstr ""
+"बग रिपोर्ट सबमिट करने से पहले कोई पासवर्ड या दूसरे व्यक्तिगत जानकारी निकालें."
 
 #: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
 msgid "ikiwiki"
-msgstr ""
+msgstr "इकिविकि"
 
 #: plinth/modules/ikiwiki/__init__.py:43
 msgid "Wiki and Blog"
-msgstr ""
+msgstr "विकि और ब्लॉग"
 
 #: plinth/modules/ikiwiki/__init__.py:46
 msgid ""
@@ -1219,6 +1263,10 @@ msgid ""
 "functionality such as comments and RSS feeds. When enabled, the blogs and "
 "wikis will be available at <a href=\"/ikiwiki\">/ikiwiki</a> (once created)."
 msgstr ""
+"इकिविकि एक साधा विकि और ब्लॉग एप्लिकेशन है. यह बहूत सारे हल्के मार्कअप भाषाओं"
+" का समर्थन करता है, Markdown भी, और आम ब्लॉगिंग कार्यशीलता, आरएसएस फ़ीड और "
+"टिप्पणी के जैसे. सक्षम होने पर, ब्लॉग्स और विकि <a href=\"/ikiwiki\""
+">/इकिविकि/</a> (एक बार बनाए गए) पर उपलब्ध होंगे."
 
 #: plinth/modules/ikiwiki/__init__.py:52
 #, python-brace-format
@@ -1231,27 +1279,27 @@ msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:62
 msgid "View and edit wiki applications"
-msgstr ""
+msgstr "विकी एप्लिकेशन को देखें और संपादित करें"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
 #: plinth/modules/storage/templates/storage.html:54
 msgid "Type"
-msgstr ""
+msgstr "टाइप"
 
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
-msgstr ""
+msgstr "नाम"
 
 #: plinth/modules/ikiwiki/forms.py:35
 msgid "Only alphanumeric characters are allowed."
-msgstr ""
+msgstr "सिर्फ अक्षरांकीय अक्षरे की अनुमति है."
 
 #: plinth/modules/ikiwiki/forms.py:38
 msgid "Admin Account Name"
-msgstr ""
+msgstr "व्यवस्थापक अकाउंट नाम"
 
 #: plinth/modules/ikiwiki/forms.py:41
 msgid "Admin Account Password"
