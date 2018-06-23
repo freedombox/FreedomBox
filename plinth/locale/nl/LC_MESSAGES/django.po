@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-11 12:36+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2018-06-24 08:37+0000\n"
+"Last-Translator: Bart Notelaers <bartnotelaers@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
 "nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -34,7 +34,7 @@ msgstr "Luistert op {kind} poort {port}"
 #: plinth/action_utils.py:348
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
-msgstr "Gebruik URL {url} op tcp{kind}"
+msgstr "ToegangsURL {url} op tcp{kind}"
 
 #: plinth/action_utils.py:352
 #, python-brace-format
@@ -141,6 +141,9 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
+"Op {box_name} wordt BIND nu enkel gebruikt om DNS-aanvragen van andere "
+"apparaten op het netwerk te beantwoorden. Het werkt niet in samenspel met "
+"het delen van de Internetverbinding vanaf {box_name}.  "
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
@@ -189,18 +192,19 @@ msgstr ""
 "Er is ook een webgebaseerde terminal beschikbaar voor consoleactiviteiten."
 
 #: plinth/modules/cockpit/__init__.py:49
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
-#| "tt-rss</a> path on the web server."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> with a {box_name} login. Sensitive information "
 "and system altering abilities are limited to users belonging to admin group."
 msgstr ""
-"Indien ingeschakeld, is Tiny Tiny RSS beschikbaar door het <a href=\"/tt-rss"
-"\"> / tt-rss</a> pad op de webserver."
+"Indien ingeschakeld, is Cockpit beschikbaar op het <a href=\"/_cockpit/\">/"
+"_cockpit/</a> pad op de webserver. Het kan geraadpleegd worden door <a href="
+"\"{users_url}\">elke geregistreerde gebruiker</a> die kan inloggen op "
+"{box_name}. Toegang tot gevoelige (persoonlijke) informatie en de "
+"mogelijkheid om het systeem aan te passen is beperkt tot de gebruikers die "
+"tot de systeembeheerdergroep (admin) horen."
 
 #: plinth/modules/cockpit/__init__.py:55
 msgid "Currently only limited functionality is available."
@@ -307,7 +311,7 @@ msgstr "Coquelicot"
 
 #: plinth/modules/coquelicot/__init__.py:39
 msgid "File Sharing"
-msgstr "Bestandsdeling"
+msgstr "Delen van bestanden"
 
 #: plinth/modules/coquelicot/__init__.py:42
 msgid ""
@@ -315,6 +319,9 @@ msgid ""
 "protecting users’ privacy. It is best used for quickly sharing a single "
 "file. "
 msgstr ""
+"Coquelicot is een programma om snel en eenvoudig bestanden te delen. Het is "
+"ontworpen zodat de privacy van gebruikers wordt beschermd.  Coquelicot is "
+"bij uitstek geschikt om gemakkelijk een enkel bestand te delen. "
 
 #: plinth/modules/coquelicot/__init__.py:45
 msgid ""
@@ -323,6 +330,10 @@ msgid ""
 "in the form that will appear below after installation. The default upload "
 "password is \"test\"."
 msgstr ""
+"Uw Coquelicot is toegankelijk voor anderen, maar u heeft een wachtwoord "
+"nodig om bestanden te kunnen delen. U kan een nieuw wachtwoord voor "
+"Coquelicot instellen in het formulier dat hieronder getoond wordt. Het "
+"standaardwachtwoord voor Coquelicot is \"test\"."
 
 #: plinth/modules/coquelicot/forms.py:30
 msgid "Upload Password"
@@ -910,6 +921,11 @@ msgid ""
 "new accounts on public XMPP servers (including via Tor), or even connect to "
 "your own server for extra security."
 msgstr ""
+"ChatSecure is een vrij en open source programma om berichten te sturen. Het "
+"maakt gebruik van OTR versleuteling over het XMPP protocol. Je kan er mee "
+"verbinden gebruik makend van een bestaande Google registratie, of een nieuwe "
+"registratie aanmaken op publieke XMPP servers (ook via Tor), of zelfs "
+"verbinden met je eigen server voor nog meer veiligheid."
 
 #: plinth/modules/ejabberd/manifest.py:88
 msgid "Dino"
@@ -1609,6 +1625,10 @@ msgid ""
 "that certificate, so most users would not prompted with security warnings "
 "when using them."
 msgstr ""
+"Als je een Let's Encrypt certificaat hebt voor je huidige domein, kan je "
+"%(box_name)s deze laten hernieuwen. Dit certificaat kan ook worden gebruikt "
+"door andere toepassingen, zodat de meeste gebruikers geen waarschuwingen "
+"zullen zien wanneer ze deze gebruiken."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:163
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:170
@@ -1636,12 +1656,16 @@ msgid ""
 "If enabled, %(box_name)s can make sure that all apps can use the certificate "
 "as soon as it is renewed."
 msgstr ""
+"Wanneer ingeschakeld, zorgt %(box_name)s er voor dat alle toepassingen het "
+"certificaat kunnen gebruiken zodra deze hernieuwd is."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:188
 msgid ""
 "<b>No certificate available for the current domain.</b> First obtain a "
 "certificate to enable its management."
 msgstr ""
+"<b>Geen certificaat beschikbaar voor het huidige domein.</b> Maak eerst een "
+"certificaat aan om deze te beheren."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:222
 #, python-format
