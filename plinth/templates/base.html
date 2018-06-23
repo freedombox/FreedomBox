@@ -70,6 +70,15 @@
   <link rel="stylesheet" href="{% static '/javascript/bootstrap/css/bootstrap.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/responsive.css' %}"/>
+  <!-- Local link to system Turbolinks JS -->
+  <script type="text/javascript" src="{% static '/javascript/turbolinks/turbolinks.js' %}" defer></script>
+  <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
+  <script type="text/javascript" src="{% static '/javascript/modernizr/modernizr.min.js' %}" defer></script>
+  <!-- Local link to system jQuery -->
+  <!-- TODO Deferring jQuery is causing scripts to be loaded before jQuery is available -->
+  <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
+  <!-- Local link to system Bootstrap JS -->
+  <script type="text/javascript" src="{% static '/javascript/bootstrap/js/bootstrap.min.js' %}" defer></script>
   {% block app_head %}<!-- placeholder for app/module-specific head files -->{% endblock %}
   {% block page_head %}<!-- placeholder for page-specific head files -->{% endblock %}
 </head>
@@ -244,14 +253,6 @@
     </div>
   </footer><!--/.footer-->
 </div><!--/#container-->
-  <!-- JavaScript <script> tags are placed at the end of the document to speed up initial page loads-->
-  <!-- Local link to system Modernizr (includes HTML5 Shiv) -->
-  <script type="text/javascript" src="{% static '/javascript/modernizr/modernizr.min.js' %}"></script>
-  <!-- Local link to system jQuery -->
-  <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
-  <!-- Local link to system Bootstrap JS -->
-  <script type="text/javascript" src="{% static '/javascript/bootstrap/js/bootstrap.min.js' %}"></script>
-
   {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
   {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 </body>

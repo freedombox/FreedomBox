@@ -94,3 +94,12 @@
   {% endif %}
 
 {% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript">
+   (function($) {
+       let downloadManualButton = $('a[href="/plinth/help/manual/download/"]');
+       downloadManualButton.attr("data-turbolinks", "false");
+   })(jQuery);
+  </script>
+{% endblock %}
