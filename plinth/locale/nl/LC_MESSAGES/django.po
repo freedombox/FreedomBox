@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-24 08:37+0000\n"
+"PO-Revision-Date: 2018-06-26 19:37+0000\n"
 "Last-Translator: Bart Notelaers <bartnotelaers@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
 "nl/>\n"
@@ -143,7 +143,7 @@ msgid ""
 msgstr ""
 "Op {box_name} wordt BIND nu enkel gebruikt om DNS-aanvragen van andere "
 "apparaten op het netwerk te beantwoorden. Het werkt niet in samenspel met "
-"het delen van de Internetverbinding vanaf {box_name}.  "
+"het delen van de Internetverbinding vanaf {box_name}."
 
 #: plinth/modules/bind/forms.py:37
 msgid "Forwarders"
@@ -275,7 +275,7 @@ msgstr ""
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
-msgstr "Leer meer..."
+msgstr "Lees meer..."
 
 #: plinth/modules/config/templates/config.html:45
 #: plinth/modules/security/templates/security.html:32
@@ -331,9 +331,8 @@ msgid ""
 "password is \"test\"."
 msgstr ""
 "Uw Coquelicot is toegankelijk voor anderen, maar u heeft een wachtwoord "
-"nodig om bestanden te kunnen delen. U kan een nieuw wachtwoord voor "
-"Coquelicot instellen in het formulier dat hieronder getoond wordt. Het "
-"standaardwachtwoord voor Coquelicot is \"test\"."
+"nodig om bestanden te kunnen delen. Het standaardwachtwoord voor Coquelicot "
+"is \"test\". Na installatie kunt u hieronder een nieuw wachtwoord instellen."
 
 #: plinth/modules/coquelicot/forms.py:30
 msgid "Upload Password"
@@ -344,7 +343,7 @@ msgid ""
 "Set a new upload password for Coquelicot. Leave this field blank to keep the "
 "current password."
 msgstr ""
-"Stel een nieuw upload wachtwoord in voor Coquelicot. Laat dit veld leeg om "
+"Stel een nieuw uploadwachtwoord in voor Coquelicot. Laat dit veld leeg om "
 "het huidige wachtwoord te behouden."
 
 #: plinth/modules/coquelicot/forms.py:35
@@ -513,7 +512,7 @@ msgstr "diaspora*"
 
 #: plinth/modules/diaspora/__init__.py:53
 msgid "Federated Social Network"
-msgstr ""
+msgstr "Gedecentraliseerd Sociaal Netwerk"
 
 #: plinth/modules/diaspora/__init__.py:62
 msgid ""
@@ -536,6 +535,8 @@ msgid ""
 "It is an unofficial webview based client for the community-run, distributed "
 "social network diaspora*"
 msgstr ""
+"Het is een via het web toegankelijk programma voor het gemeenschap-gedreven "
+"gedistribueerde sociale netwerk diaspora*"
 
 #: plinth/modules/diaspora/templates/diaspora-post-setup.html:32
 #, python-format
@@ -860,20 +861,18 @@ msgstr ""
 "XMPP server met de naam ejabberd worden ingesteld."
 
 #: plinth/modules/ejabberd/__init__.py:50
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "To actually communicate, you can use the web client or any other <a "
-#| "href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP "
-#| "client</a>."
+#, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
 "a> or any other <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Om daadwerkelijk te communiceren, kan de web cliënt of iedere andere <a "
-"href='http://xmpp.org/xmpp-software/clients/' target='_blank'>XMPP cliënt</"
-"a> worden gebruikt."
+"Om daadwerkelijk te communiceren, kan de <a href=\"{jsxc_url}\">web "
+"cliënt</a> of iedere andere <a href='https://xmpp.org/software/clients' "
+"target='_blank'>XMPP cliënt</a> worden gebruikt. Wanneer ejabberd actief is, "
+"kan elke <a href=\"{users_url}\">gebruiker van {box_name}</a> daartoe "
+"toegang krijgen."
 
 #: plinth/modules/ejabberd/forms.py:33
 msgid "Enable Message Archive Management"
@@ -905,6 +904,8 @@ msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
+"Open source Jabber (XMPP) programma met ondersteuning voor meerdere "
+"gebruikers en een eenvoudige vormgeving. "
 
 #: plinth/modules/ejabberd/manifest.py:56
 msgid "Yaxim"
@@ -1192,7 +1193,7 @@ msgstr ""
 
 #: plinth/modules/help/templates/help_about.html:75
 msgid "Learn more &raquo;"
-msgstr "Leer meer &raquo;"
+msgstr "Lees meer&raquo;"
 
 #: plinth/modules/help/templates/help_about.html:78
 #, python-format
@@ -1318,6 +1319,11 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"{users_url}\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
+"Alleen {box_name} gebruikers in de <b>admin</b> groep kunnen blogs en wikis "
+"<i>aanmaken</i> en <i>beheren</i>, maar elke gebruiker in de <b>wiki</b> "
+"groep kan deze <i>bewerken</i>. In <a href=\"{users_url}\""
+">Gebruikersconfiguratie</a> kan je deze regels aanpassen of nieuwe "
+"gebruikers registreren."
 
 #: plinth/modules/ikiwiki/__init__.py:62
 msgid "View and edit wiki applications"
@@ -1612,10 +1618,8 @@ msgid "Obtain"
 msgstr "Verkrijgen"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:138
-#, fuzzy
-#| msgid "Certificate successfully deleted for domain {domain}"
 msgid "Certificate renewal management and use by other modules"
-msgstr "Certificaat met succes verwijderd voor domein {domain}"
+msgstr "Certificaatvernieuwingsbeheer en gebruik door andere modules"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:140
 #, python-format
@@ -1698,6 +1702,11 @@ msgid ""
 "certificates in client applications, and enable more wide-spread federation "
 "with other XMPP servers in the Internet."
 msgstr ""
+"Wanneer ingeschakeld, zal de applicatie <a href=\"%(ejabberd_url)s\""
+">ejabberd</a> ook het Let's Encrypt certificaat gebruiken. Dit vermindert de "
+"waarschuwingen over zelf-gesigneerde certificaten die gebruikers zullen "
+"zien, en maakt meer verbindingen mogelijk met andere XMPP servers op het "
+"Internet."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:244
 #, python-format
@@ -1705,6 +1714,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
+"Deze optie is enkel zinvol als u het <a href=\"%(ejabberd_url)s\""
+">ejabberd</a> chat server programma gebruikt."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:249
 #, python-format
@@ -1713,6 +1724,9 @@ msgid ""
 "\">ejabberd</a> chat server app, you must first enable certificate renewal "
 "of the current domain."
 msgstr ""
+"Om een Let's Encrypt certificaat te gebruiken voor het <a href=\""
+"%(ejabberd_url)s\">ejabberd</a> chat server programma, moet u eerst "
+"certificaat-vernieuwing inschakelen voor het huidige domein."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:258
 msgid ""
@@ -1760,27 +1774,30 @@ msgid "Certificate renewal management disabled for {domain}."
 msgstr "Certificaatvernieuwingsbeheer uitgeschakeld voor {domain}."
 
 #: plinth/modules/letsencrypt/views.py:133
-#, fuzzy, python-brace-format
-#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to switch certificate renewal management for {domain}: {error}"
-msgstr "Verkrijgen van certificaat voor domein {domain} is mislukt: {error}"
+msgstr ""
+"Fout bij het veranderen van het beheer van certificaat-vernieuwing voor "
+"domein {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:165
 #, python-brace-format
 msgid "Switched use of certificate for app {module}"
-msgstr ""
+msgstr "Gebruik van certificaat voor het programma {module} is veranderd"
 
 #: plinth/modules/letsencrypt/views.py:170
-#, fuzzy, python-brace-format
-#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to switch certificate use for app {module}: {error}"
-msgstr "Verkrijgen van certificaat voor domein {domain} is mislukt: {error}"
+msgstr ""
+"Veranderen van het gebruik van het certificaat voor het programma {module} "
+"is mislukt: {error}"
 
 #: plinth/modules/letsencrypt/views.py:194
-#, fuzzy, python-brace-format
-#| msgid "Failed to delete certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to disable certificate renewal management for {domain}: {error}"
-msgstr "Verwijderen certificaat voor domein {domain} mislukt: {error}"
+msgstr ""
+"Fout bij het uitschakelen van certificaatvernieuwingsbeheer voor {domain}: "
+"{error}"
 
 #: plinth/modules/letsencrypt/views.py:201
 #, python-brace-format
@@ -1805,6 +1822,13 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is een nieuw "
+"systeem voor gedistribueerde berichtendiensten  en VoIP. Synapse is een "
+"server die het Matrix protocol gebruikt. Het ondersteunt chatgroepen, audio/"
+"video gesprekken, versleuteling, synchronisatie van verschillende apparaten "
+"en daarnaast vereist het geen telefoonnummer. Gebruikers op een willekeurige "
+"Matrix server kunnen gesprekken aangaan met gebruikers op alle andere Matrix "
+"servers door federatie (gedecentraliseerd netwerk)."
 
 #: plinth/modules/matrixsynapse/__init__.py:52
 msgid ""
@@ -1812,6 +1836,9 @@ msgid ""
 "\">available clients</a> for mobile, desktop and the web. <a href=\"https://"
 "riot.im/\">Riot</a> client is recommended."
 msgstr ""
+"Om hiervan gebruik te maken, gebruikt u de <a href=\"https://matrix.org/docs/"
+"projects/\">beschikbare programma's</a> voor smartphone, computer of via het "
+"web. Het programma <a href=\"https://riot.im/\">Riot</a> wordt aanbevolen."
 
 #: plinth/modules/matrixsynapse/forms.py:29
 msgid "Enable Public Registration"
@@ -1823,6 +1850,10 @@ msgid ""
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
+"Openbare registratie aanzetten betekent dat iedereen op het Internet een "
+"nieuwe gebruikersaccount kan aanmaken op uw Matrix server. Schakel dit uit "
+"als u wilt dat enkel reeds geregistreerde gebruikers deze dienst kunnen "
+"gebruiken."
 
 #: plinth/modules/matrixsynapse/manifest.py:27
 msgid "Riot"
@@ -4949,7 +4980,7 @@ msgstr "Wachtwoord Opslaan"
 #: plinth/modules/users/templates/users_create.html:32
 #: plinth/modules/users/views.py:39 plinth/modules/users/views.py:60
 msgid "Create User"
-msgstr "Maak gebruiker"
+msgstr "Nieuwe gebruiker registreren"
 
 #: plinth/modules/users/templates/users_delete.html:26
 #: plinth/modules/users/views.py:128
@@ -5182,7 +5213,7 @@ msgstr "Herstarten"
 
 #: plinth/templates/base.html:169 plinth/templates/base.html:170
 msgid "Shut down"
-msgstr "Afsluiten"
+msgstr "Uitschakelen"
 
 #: plinth/templates/base.html:177 plinth/templates/base.html:178
 #: plinth/templates/base.html:199 plinth/templates/base.html:201
