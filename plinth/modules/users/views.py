@@ -201,6 +201,13 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         update_session_auth_hash(self.request, form.user)
         return super(UserChangePassword, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        """Remove subsubmenu for non-admin users."""
+        context = super(UserChangePassword, self).get_context_data(**kwargs)
+        if not is_user_admin(self.request):
+            del context['subsubmenu']
+        return context
+
 
 class FirstBootView(django.views.generic.CreateView):
     """Create user account and log the user in."""
