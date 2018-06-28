@@ -67,6 +67,10 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
         kwargs['request'] = self.request
         return kwargs
 
+    def get_success_url(self):
+        """Return the URL to redirect to in case of successful updation."""
+        return reverse('users:index')
+
 
 class UserList(ContextMixin, django.views.generic.ListView):
     """View to list users."""
