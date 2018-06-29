@@ -27,28 +27,29 @@
    .navbar-brand {
        display: none;
    }
+   img.firstboot {
+       display: block;
+       max-width: 100%;
+   }
   </style>
 {% endblock %}
 
 {% block content %}
-  <p class="text-center">
-    <img src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
-         alt="{{ box_name }}" width="640"/>
-  </p>
+  <div class="logo">
+    <img class="firstboot" src="{% static 'theme/img/FreedomBox-logo-standard.png' %}"
+         alt="{{ box_name }}" />
+  </div>
 
   <form class="form text-center" method="post">
     {% csrf_token %}
+
+    {% if show_wizard_password_prompt %}
+      {{ form|bootstrap }}
+    {% endif %}
 
     <p>
       <input type="submit" class="btn btn-lg btn-primary"
              value="{% trans "Start Setup" %}"/>
     </p>
   </form>
-
-  <p class="text-center" style="font-size: larger">
-    {% blocktrans trimmed %}
-      To complete the setup of your {{ box_name }}, please provide
-      some basic information.
-    {% endblocktrans %}
-  </p>
 {% endblock %}

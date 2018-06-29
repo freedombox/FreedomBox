@@ -2,6 +2,9 @@
 
 set -e
 
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
 daemonuser=plinth
 daemongroup=plinth
 
@@ -12,11 +15,20 @@ daemongroup=plinth
 sed -ie 's+-:ALL EXCEPT root fbx (admin) (sudo):ALL+-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL+' /etc/security/access.conf
 
 case "$1" in
-configure)
-	addgroup --system --quiet plinth
-	adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
-	chown -R plinth: /var/lib/plinth /var/log/plinth
-	;;
+    configure)
+	      addgroup --system --quiet plinth
+	      adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
+	      chown -R plinth: /var/lib/plinth /var/log/plinth
+
+        if [ ! -e '/var/lib/freedombox/is-freedombox-disk-image' ]; then
+            umask 377
+            cat /dev/urandom | base64 | head -c16 > /var/lib/plinth/firstboot-wizard-secret
+            chown plinth:plinth /var/lib/plinth/firstboot-wizard-secret
+            db_subst plinth/firstboot_wizard_secret secret $(cat /var/lib/plinth/firstboot-wizard-secret)
+            db_input high plinth/firstboot_wizard_secret || true
+            db_go
+        fi
+	      ;;
 esac
 
 #DEBHELPER#

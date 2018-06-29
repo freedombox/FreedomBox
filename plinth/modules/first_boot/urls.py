@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the First Boot module
 """
@@ -22,8 +21,7 @@ URLs for the First Boot module
 from django.conf.urls import url
 from stronghold.decorators import public
 
-from .views import WelcomeView, CompleteView
-
+from .views import CompleteView, WelcomeView
 
 urlpatterns = [
     # Take care of the firstboot middleware when changing URLs

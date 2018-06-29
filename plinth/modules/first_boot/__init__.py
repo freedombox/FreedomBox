@@ -19,10 +19,11 @@ FreedomBox app for first boot wizard.
 """
 
 import operator
+import os
 
 from django.urls import reverse
 
-from plinth import module_loader
+from plinth import cfg, module_loader
 from plinth.signals import post_setup
 
 version = 1
@@ -140,3 +141,14 @@ def set_completed():
     global _is_completed
     _is_completed = True
     kvstore.set('firstboot_completed', 1)
+
+
+def get_secret_file_path():
+    """Returns the path to the first boot wizard secret file."""
+    return os.path.join(cfg.data_dir, 'firstboot-wizard-secret')
+
+
+def firstboot_wizard_secret_exists():
+    """Return whether a firstboot wizard secret exists."""
+    secret_file = get_secret_file_path()
+    return os.path.exists(secret_file) and os.path.getsize(secret_file) > 0
