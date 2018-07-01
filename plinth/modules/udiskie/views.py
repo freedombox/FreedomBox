@@ -23,6 +23,7 @@ from plinth.views import ServiceView
 
 
 class UdiskieView(ServiceView):
+    """View to show devices."""
     template_name = 'udiskie.html'
 
     def get_context_data(self, **kwargs):

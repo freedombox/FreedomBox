@@ -18,11 +18,11 @@
 FreedomBox app for udiskie.
 """
 
-import dbus
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions
+from plinth import service as service_module
+from plinth import utils
 from plinth.menu import main_menu
 from plinth.modules.storage import format_bytes
 
@@ -30,7 +30,7 @@ version = 1
 
 managed_services = ['freedombox-udiskie']
 
-managed_packages = ['udiskie']
+managed_packages = ['udiskie', 'gir1.2-udisks-2.0']
 
 name = _('udiskie')
 
@@ -93,55 +93,46 @@ def disable():
 
 
 def list_devices():
-    UDISKS2 = 'org.freedesktop.UDisks2'
-    UDISKS2_PATH = '/org/freedesktop/UDisks2'
-    BLOCK = UDISKS2 + '.Block'
-    PROPERTIES = 'org.freedesktop.DBus.Properties'
+    """List devices that can be ejected."""
+    udisks = utils.import_from_gi('UDisks', '2.0')
 
+    client = udisks.Client.new_sync()
+    object_manager = client.get_object_manager()
+
+    block = None
     devices = []
-    bus = dbus.SystemBus()
-    udisks_obj = bus.get_object(UDISKS2, UDISKS2_PATH)
-    manager = dbus.Interface(udisks_obj, 'org.freedesktop.DBus.ObjectManager')
-    for k, v in manager.GetManagedObjects().items():
-        drive_info = v.get(BLOCK, {})
-        if drive_info.get('IdUsage') == "filesystem" \
-           and not drive_info.get('HintSystem') \
-           and not drive_info.get('ReadOnly'):
-            device_name = drive_info.get('Device')
-            if device_name:
-                device_name = bytearray(device_name).replace(
-                    b'\x00', b'').decode('utf-8')
-                short_name = device_name.replace('/dev', '', 1)
-                bd = bus.get_object(
-                    UDISKS2, UDISKS2_PATH + '/block_devices%s' % short_name)
-                drive_name = bd.Get(BLOCK, 'Drive', dbus_interface=PROPERTIES)
-                drive = bus.get_object(UDISKS2, drive_name)
-                ejectable = drive.Get(UDISKS2 + '.Drive', 'Ejectable',
-                                      dbus_interface=PROPERTIES)
-                if ejectable:
-                    label = bd.Get(BLOCK, 'IdLabel', dbus_interface=PROPERTIES)
-                    size = bd.Get(BLOCK, 'Size', dbus_interface=PROPERTIES)
-                    file_system = bd.Get(BLOCK, 'IdType',
-                                         dbus_interface=PROPERTIES)
-                    try:
-                        mount_points = bd.Get(UDISKS2 + '.Filesystem',
-                                              'MountPoints',
-                                              dbus_interface=PROPERTIES)
-                        mount_point = mount_points[0]
-                    except:
-                        mount_point = None
+    for obj in object_manager.get_objects():
+        if not obj.get_block():
+            continue
 
-                    devices.append({
-                        'device':
-                            device_name,
-                        'label':
-                            str(label),
-                        'size':
-                            format_bytes(size),
-                        'file_system':
-                            str(file_system),
-                        'mount_point':
-                            ''.join([chr(ch) for ch in mount_point]),
-                    })
+        block = obj.get_block()
+        if block.props.id_usage != 'filesystem' or \
+           block.props.hint_system or \
+           block.props.read_only:
+            continue
+
+        device_name = block.props.device
+        if not device_name:
+            continue
+
+        device = {
+            'device': block.props.device,
+            'label': block.props.id_label,
+            'size': format_bytes(block.props.size),
+            'filesystem_type': block.props.id_type
+        }
+
+        try:
+            drive = client.get_drive_for_block(block)
+            device['ejectable'] = drive.props.id_type
+        except Exception:
+            pass
+
+        try:
+            device['mount_points'] = obj.get_filesystem().props.mount_points
+        except Exception:
+            pass
+
+        devices.append(device)
 
     return devices
