@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 19:59-0400\n"
-"PO-Revision-Date: 2018-06-12 15:39+0000\n"
+"PO-Revision-Date: 2018-07-01 17:03+0000\n"
 "Last-Translator: Sciumedanglisc <traduxi@riseup.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #: plinth/action_utils.py:258
 #, python-brace-format
@@ -2158,6 +2158,7 @@ msgid "Monkeysphere"
 msgstr "Monkeysphere"
 
 #: plinth/modules/monkeysphere/__init__.py:32
+#, fuzzy
 msgid ""
 "With Monkeysphere, an OpenPGP key can be generated for each configured "
 "domain serving SSH. The OpenPGP public key can then be uploaded to the "
@@ -2168,6 +2169,10 @@ msgid ""
 "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</a> "
 "for more details."
 msgstr ""
+"keysphere può essere generata una chiave OpenPGP per ogni dominio "
+"configurato, in cui è attivo SSH. La chiave pubblica OpenPGP potrà essere "
+"caricata nei keyserver OpenPGP. Gli utenti connessi a questa macchina "
+"tramite SSH potranno verificare di essere connessi all'host corretto."
 
 #: plinth/modules/monkeysphere/__init__.py:40
 msgid ""
@@ -2179,50 +2184,57 @@ msgid ""
 "is available on the <a href=\"https://web.monkeysphere.info/download/\"> "
 "Monkeysphere website</a>."
 msgstr ""
+"Monkeysphere può anche generare una chiave OpenPGP per ogni certificato "
+"Secure Web Server (HTTPS) installato in questa macchina. Successivamente, la "
+"chiave pubblica OpenPGP, potrà essere caricata sui keyserver OpenPGP.. Gli "
+"utenti che accedono via HTTPS possono verificare di essere connessi all'host "
+"corretto. Per validare il certificato, l'utente dovrà installare alcuni "
+"software  disponibili sul <a href=\"https://web.monkeysphere.info/download/\""
+"> sito di Monkeysphere</a> ."
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:57
 msgid "Publishing key to keyserver..."
-msgstr ""
+msgstr "Pubblicazione della chiave nel keyserver…"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:72
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:55
 #: plinth/modules/tor/templates/tor.html:108
 msgid "Service"
-msgstr ""
+msgstr "Servizio"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:73
 msgid "Domains"
-msgstr ""
+msgstr "Domini"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:74
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:31
 msgid "OpenPGP Fingerprint"
-msgstr ""
+msgstr "OpenPGP Fingerprint"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:83
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:58
 msgid "Secure Shell"
-msgstr ""
+msgstr "Secure Shell"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:85
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:60
 #: plinth/service.py:116
 msgid "Web Server"
-msgstr ""
+msgstr "Web Server"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:87
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:62
 msgid "Other"
-msgstr ""
+msgstr "Altro"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:115
 #, python-format
 msgid "Show details for key %(fingerprint)s"
-msgstr ""
+msgstr "Mostra i dettagli per la chiave %(fingerprint)s"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:121
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:131
 msgid "Import Key"
@@ -2230,81 +2242,84 @@ msgstr ""
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:140
 msgid "Publish Key"
-msgstr ""
+msgstr "Importa chiave"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:149
 msgid "Add Domains"
-msgstr ""
+msgstr "Aggiungi Domini"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:35
 msgid "OpenPGP User IDs"
-msgstr ""
+msgstr "OpenPGP User ID"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:39
 msgid "Key Import Date"
-msgstr ""
+msgstr "Data Importazione Chiave"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:43
 msgid "SSH Key Type"
-msgstr ""
+msgstr "Tipo Chiave SSH"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:47
+#, fuzzy
 msgid "SSH Key Size"
-msgstr ""
+msgstr "Grandezza Chiave SSH"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:51
 msgid "SSH Fingerprint"
-msgstr ""
+msgstr "SSH Fingerprint"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:67
 msgid "Key File"
-msgstr ""
+msgstr "Key File"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:71
 msgid "Available Domains"
-msgstr ""
+msgstr "Domini disponibili"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
 msgid "Added Domains"
-msgstr ""
+msgstr "Domini Aggiunti"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:82
 msgid ""
 "After this key is published to the keyservers, it can be signed using <a "
 "href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
 msgstr ""
+"Dopo che la chiave viene pubblicata nei keyserver, può essere firmata usando "
+"<a href=\"https://www.gnupg.org/\">GnuPG</a> con i comandi seguenti:"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:88
 msgid "Download the key"
-msgstr ""
+msgstr "Scarica la chiave"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:91
 msgid "Sign the key"
-msgstr ""
+msgstr "Firma la chiave"
 
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:94
 msgid "Send the key back to the keyservers"
-msgstr ""
+msgstr "Rispedisci la chiave ai keyserver"
 
 #: plinth/modules/monkeysphere/views.py:60
 msgid "Imported key."
-msgstr ""
+msgstr "Chiave importata."
 
 #: plinth/modules/monkeysphere/views.py:96
 msgid "Cancelled key publishing."
-msgstr ""
+msgstr "Pubblicazione chiave cancellata."
 
 #: plinth/modules/monkeysphere/views.py:150
 msgid "Published key to keyserver."
-msgstr ""
+msgstr "Chiave pubblicata nel keyserver."
 
 #: plinth/modules/monkeysphere/views.py:152
 msgid "Error occurred while publishing key."
-msgstr ""
+msgstr "Errore sorto durante la pubblicazione della chiave."
 
 #: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:26
 msgid "Mumble"
-msgstr ""
+msgstr "Mumble"
 
 #: plinth/modules/mumble/__init__.py:35
 msgid "Voice Chat"
