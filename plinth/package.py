@@ -14,18 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Framework for installing and updating distribution packages
 """
 
-from django.utils.translation import ugettext as _
 import logging
 import subprocess
 import threading
 
-from plinth import actions
+from django.utils.translation import ugettext as _
 
+from plinth import actions
 
 logger = logging.getLogger(__name__)
 
@@ -90,6 +89,14 @@ class Transaction(object):
             logger.exception('Error installing package: %s', exception)
             raise
 
+    def refresh_package_lists(self):
+        """Refresh apt package lists."""
+        try:
+            self._run_apt_command(['update'])
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Error updating package lists: %s', exception)
+            raise
+
     def _run_apt_command(self, arguments):
         """Run apt-get and update progress."""
         self._reset_status()
@@ -151,3 +158,9 @@ def is_package_manager_busy():
         return True
     except actions.ActionError:
         return False
+
+
+def refresh_package_lists():
+    """To be run in case apt package lists are outdated."""
+    transaction = Transaction(None, None)
+    transaction.refresh_package_lists()

@@ -181,16 +181,22 @@ class SetupView(TemplateView):
         context['package_manager_is_busy'] = package.is_package_manager_busy()
         return context
 
-    def post(self, *args, **kwargs):
-        """Handle installing/upgrading applications.
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            if 'install' in request.POST:
+                # Handle installing/upgrading applications.
+                # Start the application setup, and refresh the page every few
+                # seconds to keep displaying the status.
+                self.kwargs['setup_helper'].run_in_thread()
 
-        Start the application setup, and refresh the page every few
-        seconds to keep displaying the status.
-        """
-        self.kwargs['setup_helper'].run_in_thread()
+                # Give a moment for the setup process to start and show
+                # meaningful status.
+                time.sleep(1)
+                return self.render_to_response(self.get_context_data())
 
-        # Give a moment for the setup process to start and show
-        # meaningful status.
-        time.sleep(1)
-
-        return self.render_to_response(self.get_context_data())
+            elif 'refresh-packages' in request.POST:
+                # Refresh apt package lists
+                package.refresh_package_lists()
+                return self.render_to_response(self.get_context_data())
+        else:
+            return super(SetupView, self).dispatch(request, *args, **kwargs)
