@@ -86,10 +86,12 @@ def parse_arguments():
     subparser.add_argument('groupname',
                            help='LDAP group to remove the user from')
 
-    help_get_admin_user = 'Get the list of all users in an LDAP group'
-    subparser = subparsers.add_parser('get-group-users', help=help_get_admin_user)
-    subparser.add_argument('groupname', help='name of the LDAP group to get the '
-                                             'list of users')
+    help_get_group_users = 'Get the list of all users in an LDAP group'
+    subparser = subparsers.add_parser('get-group-users',
+                                      help=help_get_group_users)
+    subparser.add_argument(
+        'groupname', help='name of the LDAP group to get the '
+        'list of users')
 
     subparsers.required = True
     return parser.parse_args()
@@ -351,13 +353,14 @@ def subcommand_remove_user_from_group(arguments):
 
 
 def subcommand_get_group_users(arguments):
-    """ Get the list of admin users """
-    process = _run(['ldapgid', arguments.groupname], stdout=subprocess.PIPE)
-    output = str(process.stdout).split()
-    users_info = output[1].split('=')[1].strip('\\n').split(',')
-    for user_info in users_info:
-        user_name = user_info.split('(')[1].split(')')[0]
-        print(user_name)
+    """ Get the list of users of an LDAP group."""
+    process = _run(['ldapgid', '-P', arguments.groupname],
+                   stdout=subprocess.PIPE)
+    output = process.stdout.decode()
+    users = output.rsplit(':')[-1]
+    if users:
+        for user in users.strip().split(','):
+            print(user)
 
 
 def flush_cache():
