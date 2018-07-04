@@ -87,32 +87,34 @@ class LanguageSelectionForm(LanguageSelectionFormMixin, forms.Form):
     language = LanguageSelectionFormMixin.language
 
 
-class CheckboxSelectMultipleWithDisabled(forms.widgets.CheckboxSelectMultiple):
+class CheckboxSelectMultipleWithReadOnly(forms.widgets.CheckboxSelectMultiple):
     """
-    Subclass of Django's checkbox select multiple widget that allows disabling checkbox-options.
-    To disable an option, pass a dict instead of a string for its label,
-    of the form: {'label': 'option label', 'disabled': True}
+    Subclass of Django's CheckboxSelectMultiple widget that allows setting
+    individual fields as readonly
+    To mark a feature as readonly an option, pass a dict instead of a string
+    for its label, of the form: {'label': 'option label', 'disabled': True}
 
     Derived from https://djangosnippets.org/snippets/2786/
     """
 
     def render(self, name, value, attrs=None, choices=(), renderer=None):
-        if value is None: value = []
+        if value is None:
+            value = []
         final_attrs = self.build_attrs(attrs)
         output = [u'<ul>']
-        global_disabled = 'disabled' in final_attrs
+        global_readonly = 'readonly' in final_attrs
         str_values = set([v for v in value])
         for i, (option_value, option_label) in enumerate(
                 chain(self.choices, choices)):
-            if not global_disabled and 'disabled' in final_attrs:
-                # If the entire group is disabled keep all options disabled
-                del final_attrs['disabled']
+            if not global_readonly and 'readonly' in final_attrs:
+                # If the entire group is readonly keep all options readonly
+                del final_attrs['readonly']
             if isinstance(option_label, dict):
-                if dict.get(option_label, 'disabled'):
-                    final_attrs = dict(final_attrs, disabled='disabled')
+                if dict.get(option_label, 'readonly'):
+                    final_attrs = dict(final_attrs, readonly='readonly')
                 option_label = option_label['label']
-            final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
-            label_for = u' for="%s"' % final_attrs['id']
+            final_attrs = dict(final_attrs, id='{}_{}'.format(attrs['id'], i))
+            label_for = u' for="{}"'.format(final_attrs['id'])
             cb = CheckboxInput(final_attrs,
                                check_test=lambda value: value in str_values)
             rendered_cb = cb.render(name, option_value)

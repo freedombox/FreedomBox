@@ -22,7 +22,6 @@ from django.contrib import auth, messages
 from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
-
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
@@ -87,8 +86,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
     """
     groups = forms.MultipleChoiceField(
         choices=get_group_choices(), label=ugettext_lazy('Permissions'),
-        required=False,
-        widget=forms.CheckboxSelectMultiple, help_text=ugettext_lazy(
+        required=False, widget=forms.CheckboxSelectMultiple,
+        help_text=ugettext_lazy(
             'Select which services should be available to the new '
             'user. The user will be able to log in to services that '
             'support single sign-on through LDAP, if they are in the '
@@ -147,8 +146,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
-        label=ugettext_lazy('SSH Keys'),
-        required=False, widget=forms.Textarea, help_text=ugettext_lazy(
+        label=ugettext_lazy('SSH Keys'), required=False, widget=forms.Textarea,
+        help_text=ugettext_lazy(
             'Setting an SSH public key will allow this user to '
             'securely log in to the system without using a '
             'password. You may enter multiple keys, one on each '
@@ -162,7 +161,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active')
         model = User
         widgets = {
-            'groups': plinth.forms.CheckboxSelectMultipleWithDisabled(),
+            'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),
         }
 
     def __init__(self, request, username, *args, **kwargs):
@@ -174,7 +173,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
         self.request = request
         self.username = username
         super(UserUpdateForm, self).__init__(*args, **kwargs)
-        last_admin_user = get_last_admin_user()
+        self.is_last_admin_user = get_last_admin_user() == self.username
 
         choices = []
 
@@ -183,8 +182,11 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
             # applications not installed yet.
             if c[1] in group_choices:
                 # Replace group names with descriptions
-                if c[1] == 'admin' and last_admin_user is not None:
-                    choices.append((c[0], {'label': group_choices[c[1]], 'disabled': True}))
+                if c[1] == 'admin' and self.is_last_admin_user:
+                    choices.append((c[0], {
+                        'label': group_choices[c[1]],
+                        'readonly': True
+                    }))
                 else:
                     choices.append((c[0], group_choices[c[1]]))
 
@@ -195,7 +197,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['groups'].disabled = True
 
-        if last_admin_user and last_admin_user == self.username:
+        if self.is_last_admin_user:
             self.fields['is_active'].disabled = True
 
     def save(self, commit=True):
@@ -260,6 +262,19 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                 messages.error(self.request, _('Unable to set SSH keys.'))
 
         return user
+
+    def validate_last_admin_user(self, groups):
+        group_names = [group.name for group in groups]
+        if 'admin' not in group_names:
+            raise ValidationError(
+                _('Cannot delete the only administrator in the system.'))
+
+    def clean(self):
+        """Override clean to add form validation logic."""
+        cleaned_data = super().clean()
+        if self.is_last_admin_user:
+            self.validate_last_admin_user(cleaned_data.get("groups"))
+        return cleaned_data
 
 
 class UserChangePasswordForm(SetPasswordForm):
