@@ -16,9 +16,9 @@ sed -ie 's+-:ALL EXCEPT root fbx (admin) (sudo):ALL+-:ALL EXCEPT root fbx plinth
 
 case "$1" in
     configure)
-	      addgroup --system --quiet plinth
-	      adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
-	      chown -R plinth: /var/lib/plinth /var/log/plinth
+        addgroup --system --quiet plinth
+        adduser --system --quiet --ingroup plinth --no-create-home --home /var/lib/plinth plinth
+        chown -R plinth: /var/lib/plinth /var/log/plinth
 
         if [ ! -e '/var/lib/freedombox/is-freedombox-disk-image' ]; then
             umask 377
@@ -28,7 +28,7 @@ case "$1" in
             db_input high plinth/firstboot_wizard_secret || true
             db_go
         fi
-	      ;;
+        ;;
 esac
 
 #DEBHELPER#
