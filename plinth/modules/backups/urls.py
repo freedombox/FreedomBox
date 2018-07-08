@@ -26,10 +26,10 @@ from .views import IndexView, CreateArchiveView, DeleteArchiveView, \
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
-    url(r'^sys/backups/(?P<name>[a-z0-9]+)/delete/$',
+    url(r'^sys/backups/(?P<name>[^/]+)/delete/$',
         DeleteArchiveView.as_view(), name='delete'),
-    url(r'^sys/backups/(?P<name>[a-z0-9]+)/extract/$',
+    url(r'^sys/backups/(?P<name>[^/]+)/extract/$',
         ExtractArchiveView.as_view(), name='extract'),
-    url(r'^sys/backups/(?P<name>[a-z0-9]+)/export/$',
+    url(r'^sys/backups/(?P<name>[^/]+)/export/$',
         ExportArchiveView.as_view(), name='export'),
 ]

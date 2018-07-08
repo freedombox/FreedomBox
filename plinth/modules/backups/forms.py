@@ -19,12 +19,16 @@ Forms for backups module.
 """
 
 from django import forms
+from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
 
 class CreateArchiveForm(forms.Form):
-    name = forms.CharField(label=_('Archive name'), strip=True,
-                           help_text=_('Name for new backup archive.'))
+    name = forms.CharField(
+        label=_('Archive name'), strip=True,
+        help_text=_('Name for new backup archive.'), validators=[
+            validators.RegexValidator(r'^[^/]+$', _('Invalid archive name'))
+        ])
 
     path = forms.CharField(label=_('Path'), strip=True, help_text=_(
         'Disk path to a folder on this server that will be archived into '
