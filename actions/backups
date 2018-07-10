@@ -93,10 +93,11 @@ def subcommand_delete(arguments):
 def subcommand_extract(arguments):
     """Extract archive contents."""
     prev_dir = os.getcwd()
+    env = dict(os.environ, LANG='C.UTF-8')
     try:
         os.chdir(os.path.expanduser(arguments.destination))
         subprocess.run(['borg', 'extract', REPOSITORY + '::' + arguments.name],
-                       check=True)
+                       env=env, check=True)
     finally:
         os.chdir(prev_dir)
 
