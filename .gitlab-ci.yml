@@ -7,6 +7,7 @@ before_script:
   - apt-get install -y build-essential  # Build dependencies
   - apt-get install -y sshpass parted  # Test dependencies
   - apt-get install -y sudo
+  - apt-get remove -y python3.7* libpython3.7*  # Use python3.6 when installing dependencies
   - apt-get install -y $(./run --list-dependencies)  # Module dependencies
 
 stages:
@@ -25,6 +26,7 @@ run-unit-tests:
 build-debian-package:
   stage: package
   script:
+    - apt-get build-dep -y .  # Re-install python3.7 again
     - DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -us -uc -b
     - mkdir debian-package
     - mv ../plinth*.deb debian-package
