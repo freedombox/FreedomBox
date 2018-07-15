@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ejabberd
-Feature: Chat Server
-  Run ejabberd chat server.
+@apps @quassel
+Feature: Quassel IRC Client
+  Run Quassel core.
 
 Background:
   Given I'm a logged in user
-  Given the ejabberd application is installed
+  Given the quassel application is installed
 
-Scenario: Enable ejabberd application
-  Given the ejabberd application is disabled
-  When I enable the ejabberd application
-  Then the ejabberd service should be running
+Scenario: Enable quassel application
+  Given the quassel application is disabled
+  When I enable the quassel application
+  Then the quassel service should be running
 
-Scenario: Disable ejabberd application
-  Given the ejabberd application is enabled
-  When I disable the ejabberd application
-  Then the ejabberd service should not be running
+Scenario: Disable quassel application
+  Given the quassel application is enabled
+  When I disable the quassel application
+  Then the quassel service should not be running

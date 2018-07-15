@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @syncthing
-Feature: File Synchronization
-  Run Syncthing File Synchronization server.
+@apps @roundcube
+Feature: Roundcube Email Client
+  Run webmail client.
 
 Background:
   Given I'm a logged in user
-  Given the syncthing application is installed
+  Given the roundcube application is installed
 
-Scenario: Enable syncthing application
-  Given the syncthing application is disabled
-  When I enable the syncthing application
-  Then the syncthing service should be running
+Scenario: Enable roundcube application
+  Given the roundcube application is disabled
+  When I enable the roundcube application
+  Then the roundcube site should be available
 
-Scenario: Disable syncthing application
-  Given the syncthing application is enabled
-  When I disable the syncthing application
-  Then the syncthing service should not be running
+Scenario: Disable roundcube application
+  Given the roundcube application is enabled
+  When I disable the roundcube application
+  Then the roundcube site should not be available

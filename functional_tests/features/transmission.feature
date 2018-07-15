@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @sip
-Feature: SIP Server
-  Make audio and video calls.
+@apps @transmission
+Feature: Transmission BitTorrent Client
+  Run the Transmission BitTorrent client.
 
 Background:
   Given I'm a logged in user
-  Given the repro application is installed
+  Given the transmission application is installed
 
-Scenario: Enable repro application
-  Given the repro application is disabled
-  When I enable the repro application
-  Then the repro service should be running
+Scenario: Enable transmission application
+  Given the transmission application is disabled
+  When I enable the transmission application
+  Then the transmission site should be available
 
-Scenario: Disable repro application
-  Given the repro application is enabled
-  When I disable the repro application
-  Then the repro service should not be running
+Scenario: Disable transmission application
+  Given the transmission application is enabled
+  When I disable the transmission application
+  Then the transmission site should not be available

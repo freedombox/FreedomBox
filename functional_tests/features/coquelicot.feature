@@ -16,7 +16,7 @@
 #
 
 @apps @coquelicot
-Feature: File Sharing
+Feature: Coquelicot File Sharing
   Run Coquelicot File Sharing server.
 
 Background:

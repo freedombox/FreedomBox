@@ -15,13 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @jsxc
-Feature: XMPP Client
-  Run the JSXC XMPP client.
+@apps @tor
+Feature: Tor Anonymity Network
+  Manage Tor configuration.
 
 Background:
   Given I'm a logged in user
+  Given the tor application is installed
 
-Scenario: Install jsxc application
-  Given the jsxc application is installed
-  Then the jsxc site should be available
+Scenario: Enable tor application
+  Given the tor application is disabled
+  When I enable the tor application
+  Then the tor service should be running
+
+Scenario: Disable tor application
+  Given the tor application is enabled
+  When I disable the tor application
+  Then the tor service should not be running

@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @searx
-Feature: Web Search
-  Run Searx metasearch engine.
+@apps @radicale
+Feature: Radicale Calendar and Addressbook
+  Configure CalDAV/CardDAV server.
 
 Background:
   Given I'm a logged in user
-  Given the searx application is installed
+  Given the radicale application is installed
 
-Scenario: Enable searx application
-  Given the searx application is disabled
-  When I enable the searx application
-  Then the searx site should be available
+Scenario: Enable radicale application
+  Given the radicale application is disabled
+  When I enable the radicale application
+  Then the radicale service should be running
 
-Scenario: Disable searx application
-  Given the searx application is enabled
-  When I disable the searx application
-  Then the searx site should not be available
+Scenario: Disable radicale application
+  Given the radicale application is enabled
+  When I disable the radicale application
+  Then the radicale service should not be running

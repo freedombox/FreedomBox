@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @infinoted
-Feature: Collaborative Text Editor
-  Run Gobby Server - Infinoted
+@apps @privoxy
+Feature: Privoxy Web Proxy
+  Proxy web connections for enhanced privacy.
 
 Background:
   Given I'm a logged in user
-  Given the infinoted application is installed
+  Given the privoxy application is installed
 
-Scenario: Enable infinoted application
-  Given the infinoted application is disabled
-  When I enable the infinoted application
-  Then the infinoted service should be running
+Scenario: Enable privoxy application
+  Given the privoxy application is disabled
+  When I enable the privoxy application
+  Then the privoxy service should be running
 
-Scenario: Disable infinoted application
-  Given the infinoted application is enabled
-  When I disable the infinoted application
-  Then the infinoted service should not be running
+Scenario: Disable privoxy application
+  Given the privoxy application is enabled
+  When I disable the privoxy application
+  Then the privoxy service should not be running

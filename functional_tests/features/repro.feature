@@ -15,22 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @matrixsynapse
-Feature: VoIP and Chat Server
-  Run Matrix Synapse server
+@apps @sip
+Feature: Repro SIP Server
+  Make audio and video calls.
 
 Background:
   Given I'm a logged in user
-  Given the domain name is set to mydomain
-  Given the matrixsynapse application is installed
-  Given the domain name for matrixsynapse is set to mydomain
+  Given the repro application is installed
 
-Scenario: Enable matrixsynapse application
-  Given the matrixsynapse application is disabled
-  When I enable the matrixsynapse application
-  Then the matrixsynapse service should be running
+Scenario: Enable repro application
+  Given the repro application is disabled
+  When I enable the repro application
+  Then the repro service should be running
 
-Scenario: Disable matrixsynapse application
-  Given the matrixsynapse application is enabled
-  When I disable the matrixsynapse application
-  Then the matrixsynapse service should not be running
+Scenario: Disable repro application
+  Given the repro application is enabled
+  When I disable the repro application
+  Then the repro service should not be running

@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ttrss
-Feature: News Feed Reader
-  Run TT-RSS News Feed Reader.
+@apps @syncthing
+Feature: Syncthing File Synchronization
+  Run Syncthing File Synchronization server.
 
 Background:
   Given I'm a logged in user
-  Given the ttrss application is installed
+  Given the syncthing application is installed
 
-Scenario: Enable ttrss application
-  Given the ttrss application is disabled
-  When I enable the ttrss application
-  Then the ttrss service should be running
+Scenario: Enable syncthing application
+  Given the syncthing application is disabled
+  When I enable the syncthing application
+  Then the syncthing service should be running
 
-Scenario: Disable ttrss application
-  Given the ttrss application is enabled
-  When I disable the ttrss application
-  Then the ttrss service should not be running
+Scenario: Disable syncthing application
+  Given the syncthing application is enabled
+  When I disable the syncthing application
+  Then the syncthing service should not be running

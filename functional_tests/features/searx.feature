@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @transmission
-Feature: BitTorrent Client
-  Run the Transmission BitTorrent client.
+@apps @searx
+Feature: Searx Web Search
+  Run Searx metasearch engine.
 
 Background:
   Given I'm a logged in user
-  Given the transmission application is installed
+  Given the searx application is installed
 
-Scenario: Enable transmission application
-  Given the transmission application is disabled
-  When I enable the transmission application
-  Then the transmission site should be available
+Scenario: Enable searx application
+  Given the searx application is disabled
+  When I enable the searx application
+  Then the searx site should be available
 
-Scenario: Disable transmission application
-  Given the transmission application is enabled
-  When I disable the transmission application
-  Then the transmission site should not be available
+Scenario: Disable searx application
+  Given the searx application is enabled
+  When I disable the searx application
+  Then the searx site should not be available

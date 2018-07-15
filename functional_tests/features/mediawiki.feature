@@ -16,7 +16,7 @@
 #
 
 @apps @mediawiki
-Feature: Wiki Engine
+Feature: MediaWiki Wiki Engine
   Manage wikis, multimedia and more.
 
 Background:

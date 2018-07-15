@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @tor
-Feature: Anonymity Network
-  Manage Tor configuration.
+@apps @mumble
+Feature: Mumble Voice Chat
+  Run Mumble voice chat server.
 
 Background:
   Given I'm a logged in user
-  Given the tor application is installed
+  Given the mumble application is installed
 
-Scenario: Enable tor application
-  Given the tor application is disabled
-  When I enable the tor application
-  Then the tor service should be running
+Scenario: Enable mumble application
+  Given the mumble application is disabled
+  When I enable the mumble application
+  Then the mumble service should be running
 
-Scenario: Disable tor application
-  Given the tor application is enabled
-  When I disable the tor application
-  Then the tor service should not be running
+Scenario: Disable mumble application
+  Given the mumble application is enabled
+  When I disable the mumble application
+  Then the mumble service should not be running

@@ -15,20 +15,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @minetest
-Feature: Block Sandbox
-  Run the Minetest server
+@apps @shadowsocks
+Feature: Shadowsocks Socks5 Proxy
+  Run the Shadowsocks Socks5 proxy client.
 
 Background:
   Given I'm a logged in user
-  Given the minetest application is installed
+  Given the shadowsocks application is installed
+  Given the shadowsocks application is configured
 
-Scenario: Enable minetest application
-  Given the minetest application is disabled
-  When I enable the minetest application
-  Then the minetest service should be running
+Scenario: Enable shadowsocks application
+  Given the shadowsocks application is disabled
+  When I enable the shadowsocks application
+  Then the shadowsocks service should be running
 
-Scenario: Disable minetest application
-  Given the minetest application is enabled
-  When I disable the minetest application
-  Then the minetest service should not be running
+Scenario: Disable shadowsocks application
+  Given the shadowsocks application is enabled
+  When I disable the shadowsocks application
+  Then the shadowsocks service should not be running
+

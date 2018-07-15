@@ -15,21 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ikiwiki
-Feature: Wiki and Blog
-  Manage wikis and blogs.
+@apps @jsxc
+Feature: JSXC XMPP Client
+  Run the JSXC XMPP client.
 
 Background:
   Given I'm a logged in user
-  Given the wiki application is installed
 
-Scenario: Enable wiki application
-  Given the wiki application is disabled
-  When I enable the wiki application
-  Then the wiki site should be available
-
-Scenario: Disable wiki application
-  Given the wiki application is enabled
-  When I disable the wiki application
-  Then the wiki site should not be available
-  
+Scenario: Install jsxc application
+  Given the jsxc application is installed
+  Then the jsxc site should be available

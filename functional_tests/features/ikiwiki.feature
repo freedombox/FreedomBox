@@ -15,20 +15,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @radicale
-Feature: Calendar and Addressbook
-  Configure CalDAV/CardDAV server.
+@apps @ikiwiki
+Feature: ikiwiki Wiki and Blog
+  Manage wikis and blogs.
 
 Background:
   Given I'm a logged in user
-  Given the radicale application is installed
+  Given the wiki application is installed
 
-Scenario: Enable radicale application
-  Given the radicale application is disabled
-  When I enable the radicale application
-  Then the radicale service should be running
+Scenario: Enable wiki application
+  Given the wiki application is disabled
+  When I enable the wiki application
+  Then the wiki site should be available
 
-Scenario: Disable radicale application
-  Given the radicale application is enabled
-  When I disable the radicale application
-  Then the radicale service should not be running
+Scenario: Disable wiki application
+  Given the wiki application is enabled
+  When I disable the wiki application
+  Then the wiki site should not be available
+  

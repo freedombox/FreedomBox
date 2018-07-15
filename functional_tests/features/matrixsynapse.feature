@@ -15,20 +15,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @deluge
-Feature: BitTorrent Client
-  Run the Deluge BitTorrent client.
+@apps @matrixsynapse
+Feature: Matrix Synapse VoIP and Chat Server
+  Run Matrix Synapse server
 
 Background:
   Given I'm a logged in user
-  Given the deluge application is installed
+  Given the domain name is set to mydomain
+  Given the matrixsynapse application is installed
+  Given the domain name for matrixsynapse is set to mydomain
 
-Scenario: Enable deluge application
-  Given the deluge application is disabled
-  When I enable the deluge application
-  Then the deluge site should be available
+Scenario: Enable matrixsynapse application
+  Given the matrixsynapse application is disabled
+  When I enable the matrixsynapse application
+  Then the matrixsynapse service should be running
 
-Scenario: Disable deluge application
-  Given the deluge application is enabled
-  When I disable the deluge application
-  Then the deluge site should not be available
+Scenario: Disable matrixsynapse application
+  Given the matrixsynapse application is enabled
+  When I disable the matrixsynapse application
+  Then the matrixsynapse service should not be running

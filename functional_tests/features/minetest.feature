@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @roundcube
-Feature: Email Client
-  Run webmail client.
+@apps @minetest
+Feature: Minetest Block Sandbox
+  Run the Minetest server
 
 Background:
   Given I'm a logged in user
-  Given the roundcube application is installed
+  Given the minetest application is installed
 
-Scenario: Enable roundcube application
-  Given the roundcube application is disabled
-  When I enable the roundcube application
-  Then the roundcube site should be available
+Scenario: Enable minetest application
+  Given the minetest application is disabled
+  When I enable the minetest application
+  Then the minetest service should be running
 
-Scenario: Disable roundcube application
-  Given the roundcube application is enabled
-  When I disable the roundcube application
-  Then the roundcube site should not be available
+Scenario: Disable minetest application
+  Given the minetest application is enabled
+  When I disable the minetest application
+  Then the minetest service should not be running

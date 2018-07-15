@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @quassel
-Feature: IRC Client
-  Run Quassel core.
+@apps @ttrss
+Feature: TT-RSS News Feed Reader
+  Run TT-RSS News Feed Reader.
 
 Background:
   Given I'm a logged in user
-  Given the quassel application is installed
+  Given the ttrss application is installed
 
-Scenario: Enable quassel application
-  Given the quassel application is disabled
-  When I enable the quassel application
-  Then the quassel service should be running
+Scenario: Enable ttrss application
+  Given the ttrss application is disabled
+  When I enable the ttrss application
+  Then the ttrss service should be running
 
-Scenario: Disable quassel application
-  Given the quassel application is enabled
-  When I disable the quassel application
-  Then the quassel service should not be running
+Scenario: Disable ttrss application
+  Given the ttrss application is enabled
+  When I disable the ttrss application
+  Then the ttrss service should not be running

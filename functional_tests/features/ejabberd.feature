@@ -15,20 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @privoxy
-Feature: Web Proxy
-  Proxy web connections for enhanced privacy.
+@apps @ejabberd
+Feature: Ejabberd Chat Server
+  Run ejabberd chat server.
 
 Background:
   Given I'm a logged in user
-  Given the privoxy application is installed
+  Given the ejabberd application is installed
 
-Scenario: Enable privoxy application
-  Given the privoxy application is disabled
-  When I enable the privoxy application
-  Then the privoxy service should be running
+Scenario: Enable ejabberd application
+  Given the ejabberd application is disabled
+  When I enable the ejabberd application
+  Then the ejabberd service should be running
 
-Scenario: Disable privoxy application
-  Given the privoxy application is enabled
-  When I disable the privoxy application
-  Then the privoxy service should not be running
+Scenario: Disable ejabberd application
+  Given the ejabberd application is enabled
+  When I disable the ejabberd application
+  Then the ejabberd service should not be running
