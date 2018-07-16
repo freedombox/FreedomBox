@@ -5,6 +5,11 @@
     <title>FreedomBox/Manual/Radicale</title>
     <revhistory>
       <revision>
+        <revnumber>34</revnumber>
+        <date>2018-07-10 18:04:49</date>
+        <authorinitials>BartNotelaers</authorinitials>
+      </revision>
+      <revision>
         <revnumber>33</revnumber>
         <date>2018-06-17 16:36:11</date>
         <authorinitials>JosephNuthalapati</authorinitials>
@@ -408,13 +413,51 @@ file = /etc/radicale/rights]]></screen>
             </itemizedlist>
           </listitem>
           <listitem>
-            <para>Restart the radicale server or the FreedbomBox </para>
+            <para>Restart the radicale server or the FreedomBox </para>
           </listitem>
         </orderedlist>
       </section>
       <section>
         <title>Importing files</title>
         <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
+      </section>
+      <section>
+        <title>Installing Radicale on ''testing'' version of Freedombox</title>
+        <para>Radicale is currently not included in the <emphasis>testing</emphasis> version of Freedombox, but can be installed by temporarily using files from the <emphasis>unstable</emphasis> version. Use SSH to connect to your Freedombox: </para>
+        <itemizedlist>
+          <listitem override="none">
+            <screen><![CDATA[ssh username@freedombox.local]]></screen>
+          </listitem>
+        </itemizedlist>
+        <para>Then edit the sources for the Freedombox software repositories: </para>
+        <itemizedlist>
+          <listitem override="none">
+            <screen><![CDATA[sudo apt edit-sources]]></screen>
+          </listitem>
+        </itemizedlist>
+        <para>This will open a command line text editor. Edit the list as seen below. Add one line with the unstable sources and disable the other sources by turning them into comments by adding # in front: </para>
+        <itemizedlist>
+          <listitem override="none">
+            <screen><![CDATA[    deb http://deb.debian.org/debian unstable main
+
+    #deb http://deb.debian.org/debian testing main
+    #deb-src http://deb.debian.org/debian testing main
+
+    #deb http://deb.debian.org/debian testing-updates main
+    #deb-src http://deb.debian.org/debian testing-updates main
+
+    #deb http://security.debian.org/debian-security/ testing/updates main
+    #deb-src http://security.debian.org/debian-security/ testing/updates main ]]></screen>
+          </listitem>
+        </itemizedlist>
+        <para>After saving this file, refresh the sources: </para>
+        <itemizedlist>
+          <listitem override="none">
+            <screen><![CDATA[sudo apt update]]></screen>
+          </listitem>
+        </itemizedlist>
+        <para>Then you may install Radicale from Plinth. </para>
+        <para>Afterwards, reverse the changes to the software sources list so automatic updates may be processed properly - <emphasis role="strong">important for the security of your Freedombox</emphasis>. </para>
         <!--rule (<hr>) is not applicable to DocBook-->
         <informaltable>
           <tgroup cols="8">

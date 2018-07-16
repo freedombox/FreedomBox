@@ -1233,13 +1233,51 @@ file = /etc/radicale/rights]]></screen>
               </itemizedlist>
             </listitem>
             <listitem>
-              <para>Restart the radicale server or the FreedbomBox </para>
+              <para>Restart the radicale server or the FreedomBox </para>
             </listitem>
           </orderedlist>
         </section>
         <section>
           <title>Importing files</title>
           <para>If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/<emphasis>user</emphasis>/<emphasis>contact file name</emphasis>.vcf. </para>
+        </section>
+        <section>
+          <title>Installing Radicale on ''testing'' version of Freedombox</title>
+          <para>Radicale is currently not included in the <emphasis>testing</emphasis> version of Freedombox, but can be installed by temporarily using files from the <emphasis>unstable</emphasis> version. Use SSH to connect to your Freedombox: </para>
+          <itemizedlist>
+            <listitem override="none">
+              <screen><![CDATA[ssh username@freedombox.local]]></screen>
+            </listitem>
+          </itemizedlist>
+          <para>Then edit the sources for the Freedombox software repositories: </para>
+          <itemizedlist>
+            <listitem override="none">
+              <screen><![CDATA[sudo apt edit-sources]]></screen>
+            </listitem>
+          </itemizedlist>
+          <para>This will open a command line text editor. Edit the list as seen below. Add one line with the unstable sources and disable the other sources by turning them into comments by adding # in front: </para>
+          <itemizedlist>
+            <listitem override="none">
+              <screen><![CDATA[    deb http://deb.debian.org/debian unstable main
+
+    #deb http://deb.debian.org/debian testing main
+    #deb-src http://deb.debian.org/debian testing main
+
+    #deb http://deb.debian.org/debian testing-updates main
+    #deb-src http://deb.debian.org/debian testing-updates main
+
+    #deb http://security.debian.org/debian-security/ testing/updates main
+    #deb-src http://security.debian.org/debian-security/ testing/updates main ]]></screen>
+            </listitem>
+          </itemizedlist>
+          <para>After saving this file, refresh the sources: </para>
+          <itemizedlist>
+            <listitem override="none">
+              <screen><![CDATA[sudo apt update]]></screen>
+            </listitem>
+          </itemizedlist>
+          <para>Then you may install Radicale from Plinth. </para>
+          <para>Afterwards, reverse the changes to the software sources list so automatic updates may be processed properly - <emphasis role="strong">important for the security of your Freedombox</emphasis>. </para>
         </section>
       </section>
     </section>
@@ -6059,7 +6097,7 @@ Password:
       </section>
       <section>
         <title>Download</title>
-        <para>FreedomBox SD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> are available for this device.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox SD card and boot the device.  These SD card images are meant for use with the on-board SD card slot and won't work when used with a separate SD card reader connected via USB. </para>
+        <para>FreedomBox MicroSD card <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">images</ulink> are available for this device.  Follow the instructions on the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Download#">download</ulink> page to create a FreedomBox MicroSD card and boot the device.  These MicroSD card images are meant for use with the on-board MicroSD card slot and won't work on the SD card slot or when using a separate MicroSD card reader connected via USB. </para>
         <para>An alternative to downloading these images is to <ulink url="https://wiki.debian.org/FreedomBox/Manual/InstallingDebianOn/Allwinner#">install Debian</ulink> on the device and then <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Hardware/Debian#">install FreedomBox</ulink> on it. </para>
       </section>
       <section>
@@ -6132,7 +6170,10 @@ Password:
         <title>Known Issues</title>
         <itemizedlist>
           <listitem>
-            <para>None </para>
+            <para>Not visible on local network </para>
+          </listitem>
+          <listitem>
+            <para>When booting the 'stable' image (made on 2017-06-18) the board does not automatically get an IP address from the router's DHCP server over ethernet. Booting the 'testing' image (2018-06) the board does get an IP address. Tested on MICRO hardware revision J. </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7421,6 +7462,22 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.34.0 (2018-07-16)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Prompt for secret during firstboot welcome </para>
+            <itemizedlist>
+              <listitem>
+                <para>(Does not apply to downloadable FreedomBox images, but only when installed using freedombox-setup package.) </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Italian, Dutch, Hindi, Hungarian </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.33.1 (2018-07-04)</title>
         <itemizedlist>
