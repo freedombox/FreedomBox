@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 19:56-0400\n"
+"POT-Creation-Date: 2018-07-16 18:33-0400\n"
 "PO-Revision-Date: 2018-03-14 07:35+0000\n"
 "Last-Translator: 关羽 <quguibo1988@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -113,6 +113,144 @@ msgstr ""
 "{box_name} 发现在您本地网络上运行的其他设备和服务。服务发现是非必需的，且只能"
 "在内部网络上运行。可以禁用以提高安全性，尤其是当连接到一个充满敌意的本地网"
 "络。"
+
+#: plinth/modules/backups/__init__.py:32
+msgid "Backups"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:34
+msgid "Backups allows creating and managing backup archives."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:28
+#, fuzzy
+#| msgid "Kite name"
+msgid "Archive name"
+msgstr "Kite 名字"
+
+#: plinth/modules/backups/forms.py:29
+msgid "Name for new backup archive."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:30
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Invalid archive name"
+msgstr "服务器名称无效"
+
+#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+msgid "Path"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:34
+msgid ""
+"Disk path to a folder on this server that will be archived into backup "
+"repository."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:40
+msgid ""
+"Disk path to a folder on this server where the archive will be extracted."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:46
+msgid "Exported filename"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:47
+msgid "Name for the tar file exported from the archive."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:43
+#: plinth/modules/backups/templates/backups.html:46
+#, fuzzy
+#| msgid "Create User"
+msgid "Create archive"
+msgstr "创建用户"
+
+#: plinth/modules/backups/templates/backups.html:51
+msgid "No archives currently exist."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
+msgid "Name"
+msgstr "名称"
+
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups_delete.html:34
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Time"
+msgstr "时区"
+
+#: plinth/modules/backups/templates/backups.html:71
+msgid "Extract"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:75
+msgid "Export"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_delete.html:27
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this archive permanently?"
+msgstr "永久删除此快照？"
+
+#: plinth/modules/backups/templates/backups_delete.html:51
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete Archive %(name)s"
+msgstr "删除 %(name)s"
+
+#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/config/templates/config.html:45
+#: plinth/modules/security/templates/security.html:32
+#: plinth/modules/sharing/templates/sharing_add_edit.html:34
+msgid "Submit"
+msgstr "提交"
+
+#: plinth/modules/backups/views.py:54
+msgid "Archive created."
+msgstr ""
+
+#: plinth/modules/backups/views.py:59
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create Archive"
+msgstr "创建帐户"
+
+#: plinth/modules/backups/views.py:76
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Archive"
+msgstr "删除"
+
+#: plinth/modules/backups/views.py:86
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Archive deleted."
+msgstr "{name} 已删除。"
+
+#: plinth/modules/backups/views.py:96
+msgid "Archive extracted."
+msgstr ""
+
+#: plinth/modules/backups/views.py:101
+msgid "Extract Archive"
+msgstr ""
+
+#: plinth/modules/backups/views.py:120
+msgid "Archive exported."
+msgstr ""
+
+#: plinth/modules/backups/views.py:125
+msgid "Export Archive"
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -274,12 +412,6 @@ msgstr ""
 #| msgid "Learn more &raquo;"
 msgid "Learn more..."
 msgstr "了解更多&raquo;"
-
-#: plinth/modules/config/templates/config.html:45
-#: plinth/modules/security/templates/security.html:32
-#: plinth/modules/sharing/templates/sharing_add_edit.html:34
-msgid "Submit"
-msgstr "提交"
 
 #: plinth/modules/config/views.py:55
 msgid "General Configuration"
@@ -1034,6 +1166,16 @@ msgstr ""
 "防火墙的操作是自动的。当您启用服务时它也在防火墙中允许，当禁用一项服务时也会"
 "禁用防火墙中的相应服务。"
 
+#: plinth/modules/first_boot/forms.py:28
+msgid ""
+"Enter the secret generated during FreedomBox installation. This secret can "
+"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+msgstr ""
+
+#: plinth/modules/first_boot/forms.py:31
+msgid "Secret"
+msgstr ""
+
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
 msgstr "安装已完成！"
@@ -1062,18 +1204,11 @@ msgstr ""
 msgid "Help"
 msgstr "帮助"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:44
+#: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
 msgstr "启动安装程序"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:49
-#, python-format
-msgid ""
-"To complete the setup of your %(box_name)s, please provide some basic "
-"information."
-msgstr "要完成您的 %(box_name)s 安装，请提供一些基本信息。"
-
-#: plinth/modules/first_boot/views.py:56
+#: plinth/modules/first_boot/views.py:66
 msgid "Setup Complete"
 msgstr "安装完成"
 
@@ -1305,12 +1440,6 @@ msgstr "服务和应用程序"
 #: plinth/modules/storage/templates/storage.html:54
 msgid "Type"
 msgstr "类型"
-
-#: plinth/modules/ikiwiki/forms.py:34
-#: plinth/modules/networks/templates/connection_show.html:78
-#: plinth/modules/sharing/templates/sharing.html:56
-msgid "Name"
-msgstr "名称"
 
 #: plinth/modules/ikiwiki/forms.py:35
 msgid "Only alphanumeric characters are allowed."
@@ -4862,21 +4991,21 @@ msgstr "用户和组"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
 
-#: plinth/modules/users/forms.py:42
+#: plinth/modules/users/forms.py:41
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/forms.py:58
+#: plinth/modules/users/forms.py:57
 msgid "Username is taken or is reserved."
 msgstr "用户名已经占用或保留。"
 
-#: plinth/modules/users/forms.py:89 plinth/modules/users/forms.py:191
+#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:193
 #, fuzzy
 #| msgid "Transmission BitTorrent"
 msgid "Permissions"
 msgstr "Transmission BitTorrent"
 
-#: plinth/modules/users/forms.py:92
+#: plinth/modules/users/forms.py:91
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -4888,20 +5017,20 @@ msgstr ""
 "支持单一登录的服务。<br/><br/>管理员（admin）组中的用户将能够登录所有服务。他"
 "们还可以通过 SSH 登录到系统并具有管理权限（sudo）。"
 
-#: plinth/modules/users/forms.py:126 plinth/modules/users/forms.py:308
+#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:323
 msgid "Creating LDAP user failed."
 msgstr "创建 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:137
+#: plinth/modules/users/forms.py:136
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "未能将新用户添加到 {group}。"
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:149
 msgid "SSH Keys"
 msgstr "SSH 密钥"
 
-#: plinth/modules/users/forms.py:152
+#: plinth/modules/users/forms.py:151
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -4910,35 +5039,39 @@ msgstr ""
 "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行"
 "一个。将忽略空行和以 # 开头的行。"
 
-#: plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:230
 msgid "Renaming LDAP user failed."
 msgstr "重命名 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:242
 msgid "Failed to remove user from group."
 msgstr "无法从组中删除用户。"
 
-#: plinth/modules/users/forms.py:251
+#: plinth/modules/users/forms.py:253
 msgid "Failed to add user to group."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:260
+#: plinth/modules/users/forms.py:262
 msgid "Unable to set SSH keys."
 msgstr "不能设置 SSH 密钥。"
 
-#: plinth/modules/users/forms.py:284
+#: plinth/modules/users/forms.py:270
+msgid "Cannot delete the only administrator in the system."
+msgstr ""
+
+#: plinth/modules/users/forms.py:299
 msgid "Changing LDAP user password failed."
 msgstr "更改 LDAP 用户密码失败。"
 
-#: plinth/modules/users/forms.py:317
+#: plinth/modules/users/forms.py:332
 msgid "Failed to add new user to admin group."
 msgstr "未能将新用户添加到管理员组。"
 
-#: plinth/modules/users/forms.py:334
+#: plinth/modules/users/forms.py:349
 msgid "Failed to restrict console access."
 msgstr "限制命令行访问失败。"
 
-#: plinth/modules/users/forms.py:346
+#: plinth/modules/users/forms.py:361
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
@@ -5430,6 +5563,11 @@ msgstr "正在安装 %(package_names)s：%(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "已完成 %(percentage)s%%"
+
+#~ msgid ""
+#~ "To complete the setup of your %(box_name)s, please provide some basic "
+#~ "information."
+#~ msgstr "要完成您的 %(box_name)s 安装，请提供一些基本信息。"
 
 #~ msgid "Where to Get Help"
 #~ msgstr "从何处获得帮助"

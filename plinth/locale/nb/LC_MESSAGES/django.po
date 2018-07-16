@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 19:56-0400\n"
+"POT-Creation-Date: 2018-07-16 18:33-0400\n"
 "PO-Revision-Date: 2018-07-03 00:24+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -122,6 +122,152 @@ msgstr ""
 "Tjenesteoppdagelse er ikke påkrevd, og arbeider bare i interne nettverk. Det "
 "kan slås av for å bedre sikkerheten, spesielt ved tilkobling til et "
 "fiendtlig/fremmed lokalt nettverk."
+
+#: plinth/modules/backups/__init__.py:32
+msgid "Backups"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:34
+msgid "Backups allows creating and managing backup archives."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:28
+#, fuzzy
+#| msgid "Kite name"
+msgid "Archive name"
+msgstr "«Kite»-navn"
+
+#: plinth/modules/backups/forms.py:29
+msgid "Name for new backup archive."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:30
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Invalid archive name"
+msgstr "Ugyldig tjenernavn"
+
+#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#, fuzzy
+#| msgid "Disk Path"
+msgid "Path"
+msgstr "Disksti"
+
+#: plinth/modules/backups/forms.py:34
+#, fuzzy
+#| msgid "Disk path to a folder on this server that you intend to share."
+msgid ""
+"Disk path to a folder on this server that will be archived into backup "
+"repository."
+msgstr "Disksti til en mappe på denne tjeneren som du ønsker å dele."
+
+#: plinth/modules/backups/forms.py:40
+#, fuzzy
+#| msgid "Disk path to a folder on this server that you intend to share."
+msgid ""
+"Disk path to a folder on this server where the archive will be extracted."
+msgstr "Disksti til en mappe på denne tjeneren som du ønsker å dele."
+
+#: plinth/modules/backups/forms.py:46
+msgid "Exported filename"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:47
+msgid "Name for the tar file exported from the archive."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:43
+#: plinth/modules/backups/templates/backups.html:46
+#, fuzzy
+#| msgid "Create User"
+msgid "Create archive"
+msgstr "Opprett bruker"
+
+#: plinth/modules/backups/templates/backups.html:51
+#, fuzzy
+#| msgid "No shares currently configured."
+msgid "No archives currently exist."
+msgstr "Ingen delte områder er satt opp foreløpig."
+
+#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
+msgid "Name"
+msgstr "Navn"
+
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups_delete.html:34
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Time"
+msgstr "Tidssone"
+
+#: plinth/modules/backups/templates/backups.html:71
+msgid "Extract"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:75
+msgid "Export"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_delete.html:27
+#, fuzzy
+#| msgid "Delete this snapshot permanently?"
+msgid "Delete this archive permanently?"
+msgstr "Slett dette øyeblikksbildet permanent?"
+
+#: plinth/modules/backups/templates/backups_delete.html:51
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete Archive %(name)s"
+msgstr "Slette %(name)s"
+
+#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/config/templates/config.html:45
+#: plinth/modules/security/templates/security.html:32
+#: plinth/modules/sharing/templates/sharing_add_edit.html:34
+msgid "Submit"
+msgstr "Send inn"
+
+#: plinth/modules/backups/views.py:54
+msgid "Archive created."
+msgstr ""
+
+#: plinth/modules/backups/views.py:59
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create Archive"
+msgstr "Opprett konto"
+
+#: plinth/modules/backups/views.py:76
+#, fuzzy
+#| msgid "Delete All"
+msgid "Delete Archive"
+msgstr "Slett alle"
+
+#: plinth/modules/backups/views.py:86
+#, fuzzy
+#| msgid "Share deleted."
+msgid "Archive deleted."
+msgstr "Deling slettet."
+
+#: plinth/modules/backups/views.py:96
+msgid "Archive extracted."
+msgstr ""
+
+#: plinth/modules/backups/views.py:101
+msgid "Extract Archive"
+msgstr ""
+
+#: plinth/modules/backups/views.py:120
+msgid "Archive exported."
+msgstr ""
+
+#: plinth/modules/backups/views.py:125
+msgid "Export Archive"
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -279,12 +425,6 @@ msgstr ""
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "Lær mer..."
-
-#: plinth/modules/config/templates/config.html:45
-#: plinth/modules/security/templates/security.html:32
-#: plinth/modules/sharing/templates/sharing_add_edit.html:34
-msgid "Submit"
-msgstr "Send inn"
 
 #: plinth/modules/config/views.py:55
 msgid "General Configuration"
@@ -1061,6 +1201,16 @@ msgstr ""
 "også tillatt i brannmuren, og når du deaktiverer en tjeneste, er den også "
 "deaktivert i brannmuren."
 
+#: plinth/modules/first_boot/forms.py:28
+msgid ""
+"Enter the secret generated during FreedomBox installation. This secret can "
+"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+msgstr ""
+
+#: plinth/modules/first_boot/forms.py:31
+msgid "Secret"
+msgstr ""
+
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
 msgstr "Oppsett er fullført!"
@@ -1089,20 +1239,11 @@ msgstr ""
 msgid "Help"
 msgstr "Hjelp"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:44
+#: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
 msgstr "Starte Setup"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:49
-#, python-format
-msgid ""
-"To complete the setup of your %(box_name)s, please provide some basic "
-"information."
-msgstr ""
-"For å fullføre oppsettet til din %(box_name)s, trengs det endel "
-"grunnleggende informasjon."
-
-#: plinth/modules/first_boot/views.py:56
+#: plinth/modules/first_boot/views.py:66
 msgid "Setup Complete"
 msgstr "Oppsett ferdig"
 
@@ -1331,12 +1472,6 @@ msgstr "Vis og rediger wiki-programmer"
 #: plinth/modules/storage/templates/storage.html:54
 msgid "Type"
 msgstr "Type"
-
-#: plinth/modules/ikiwiki/forms.py:34
-#: plinth/modules/networks/templates/connection_show.html:78
-#: plinth/modules/sharing/templates/sharing.html:56
-msgid "Name"
-msgstr "Navn"
 
 #: plinth/modules/ikiwiki/forms.py:35
 msgid "Only alphanumeric characters are allowed."
@@ -4933,19 +5068,19 @@ msgstr "Brukere og grupper"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Sjekk LDAP-oppføring «{search_item}»"
 
-#: plinth/modules/users/forms.py:42
+#: plinth/modules/users/forms.py:41
 msgid "Access to all services and system settings"
 msgstr "Tilgang til alle tjenester og systeminnstillinger"
 
-#: plinth/modules/users/forms.py:58
+#: plinth/modules/users/forms.py:57
 msgid "Username is taken or is reserved."
 msgstr "Brukernavnet er opptatt eller reservert."
 
-#: plinth/modules/users/forms.py:89 plinth/modules/users/forms.py:191
+#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:193
 msgid "Permissions"
 msgstr "Tilganger"
 
-#: plinth/modules/users/forms.py:92
+#: plinth/modules/users/forms.py:91
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -4959,20 +5094,20 @@ msgstr ""
 "gruppen kan logge seg på alle tjenester. De kan også logge inn på systemet "
 "via SSH, og ha administrative rettigheter (sudo)."
 
-#: plinth/modules/users/forms.py:126 plinth/modules/users/forms.py:308
+#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:323
 msgid "Creating LDAP user failed."
 msgstr "Oppretting av LDAP-bruker feilet."
 
-#: plinth/modules/users/forms.py:137
+#: plinth/modules/users/forms.py:136
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "Klarte ikke legge ny bruker til gruppe {group}."
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:149
 msgid "SSH Keys"
 msgstr "SSH-nøkler"
 
-#: plinth/modules/users/forms.py:152
+#: plinth/modules/users/forms.py:151
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -4982,35 +5117,39 @@ msgstr ""
 "på systemet uten å bruke passord. Du kan legge inn multiple  (flere) nøkler, "
 "én på hver linje. Blanke linjer og linjer som starter med # vil bli ignorert."
 
-#: plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:230
 msgid "Renaming LDAP user failed."
 msgstr "Klarte ikke å bytte navn på LDAP-bruker."
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:242
 msgid "Failed to remove user from group."
 msgstr "Klarte ikke å slette bruker fra gruppe."
 
-#: plinth/modules/users/forms.py:251
+#: plinth/modules/users/forms.py:253
 msgid "Failed to add user to group."
 msgstr "Klarte ikke legge bruker til gruppe."
 
-#: plinth/modules/users/forms.py:260
+#: plinth/modules/users/forms.py:262
 msgid "Unable to set SSH keys."
 msgstr "Klarte ikke sette SSH-nøkler."
 
-#: plinth/modules/users/forms.py:284
+#: plinth/modules/users/forms.py:270
+msgid "Cannot delete the only administrator in the system."
+msgstr ""
+
+#: plinth/modules/users/forms.py:299
 msgid "Changing LDAP user password failed."
 msgstr "Klarte ikke å bytte passord for LDAP-bruker."
 
-#: plinth/modules/users/forms.py:317
+#: plinth/modules/users/forms.py:332
 msgid "Failed to add new user to admin group."
 msgstr "Klarte ikke å legge til en ny bruker i admin-gruppen."
 
-#: plinth/modules/users/forms.py:334
+#: plinth/modules/users/forms.py:349
 msgid "Failed to restrict console access."
 msgstr "Klarte ikke begrense konsolltilgang."
 
-#: plinth/modules/users/forms.py:346
+#: plinth/modules/users/forms.py:361
 msgid "User account created, you are now logged in"
 msgstr "Brukerkonto er opprettet, du er nå logget inn"
 
@@ -5474,6 +5613,13 @@ msgstr "Installere %(package_names)s: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% fullført"
+
+#~ msgid ""
+#~ "To complete the setup of your %(box_name)s, please provide some basic "
+#~ "information."
+#~ msgstr ""
+#~ "For å fullføre oppsettet til din %(box_name)s, trengs det endel "
+#~ "grunnleggende informasjon."
 
 #~ msgid "Where to Get Help"
 #~ msgstr "Hvor kan en få hjelp"

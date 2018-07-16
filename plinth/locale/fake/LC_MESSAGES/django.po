@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 19:56-0400\n"
+"POT-Creation-Date: 2018-07-16 18:33-0400\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -130,6 +130,144 @@ msgstr ""
 "DISCOVERY IS NOT ESSENTIAL AND WORKS ONLY ON INTERNAL NETWORKS.  IT MAY BE "
 "DISABLED TO IMPROVE SECURITY ESPECIALLY WHEN CONNECTING TO A HOSTILE LOCAL "
 "NETWORK."
+
+#: plinth/modules/backups/__init__.py:32
+msgid "Backups"
+msgstr ""
+
+#: plinth/modules/backups/__init__.py:34
+msgid "Backups allows creating and managing backup archives."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:28
+#, fuzzy
+#| msgid "Kite name"
+msgid "Archive name"
+msgstr "KITE NAME"
+
+#: plinth/modules/backups/forms.py:29
+msgid "Name for new backup archive."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:30
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Invalid archive name"
+msgstr "INVALID SERVER NAME"
+
+#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+msgid "Path"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:34
+msgid ""
+"Disk path to a folder on this server that will be archived into backup "
+"repository."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:40
+msgid ""
+"Disk path to a folder on this server where the archive will be extracted."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:46
+msgid "Exported filename"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:47
+msgid "Name for the tar file exported from the archive."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:43
+#: plinth/modules/backups/templates/backups.html:46
+#, fuzzy
+#| msgid "Create User"
+msgid "Create archive"
+msgstr "CREATE USER"
+
+#: plinth/modules/backups/templates/backups.html:51
+msgid "No archives currently exist."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
+msgid "Name"
+msgstr "NAME"
+
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups_delete.html:34
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Time"
+msgstr "TIME ZONE"
+
+#: plinth/modules/backups/templates/backups.html:71
+msgid "Extract"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:75
+msgid "Export"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_delete.html:27
+#, fuzzy
+#| msgid "Delete user permanently?"
+msgid "Delete this archive permanently?"
+msgstr "DELETE USER PERMANENTLY?"
+
+#: plinth/modules/backups/templates/backups_delete.html:51
+#, fuzzy, python-format
+#| msgid "Delete %(name)s"
+msgid "Delete Archive %(name)s"
+msgstr "DELETE %(name)s"
+
+#: plinth/modules/backups/templates/backups_form.html:34
+#: plinth/modules/config/templates/config.html:45
+#: plinth/modules/security/templates/security.html:32
+#: plinth/modules/sharing/templates/sharing_add_edit.html:34
+msgid "Submit"
+msgstr "SUBMIT"
+
+#: plinth/modules/backups/views.py:54
+msgid "Archive created."
+msgstr ""
+
+#: plinth/modules/backups/views.py:59
+#, fuzzy
+#| msgid "PageKite Account"
+msgid "Create Archive"
+msgstr "PAGEKITE ACCOUNT"
+
+#: plinth/modules/backups/views.py:76
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Archive"
+msgstr "DELETE"
+
+#: plinth/modules/backups/views.py:86
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Archive deleted."
+msgstr "{name} DELETED."
+
+#: plinth/modules/backups/views.py:96
+msgid "Archive extracted."
+msgstr ""
+
+#: plinth/modules/backups/views.py:101
+msgid "Extract Archive"
+msgstr ""
+
+#: plinth/modules/backups/views.py:120
+msgid "Archive exported."
+msgstr ""
+
+#: plinth/modules/backups/views.py:125
+msgid "Export Archive"
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -285,12 +423,6 @@ msgstr ""
 #| msgid "Learn more &raquo;"
 msgid "Learn more..."
 msgstr "LEARN MORE &raquo;"
-
-#: plinth/modules/config/templates/config.html:45
-#: plinth/modules/security/templates/security.html:32
-#: plinth/modules/sharing/templates/sharing_add_edit.html:34
-msgid "Submit"
-msgstr "SUBMIT"
 
 #: plinth/modules/config/views.py:55
 msgid "General Configuration"
@@ -1138,6 +1270,16 @@ msgstr ""
 "ALSO PERMITTED IN THE FIREWALL AND WHEN YOU DISABLE A SERVICE IT IS ALSO "
 "DISABLED IN THE FIREWALL."
 
+#: plinth/modules/first_boot/forms.py:28
+msgid ""
+"Enter the secret generated during FreedomBox installation. This secret can "
+"also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
+msgstr ""
+
+#: plinth/modules/first_boot/forms.py:31
+msgid "Secret"
+msgstr ""
+
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
 msgstr "SETUP COMPLETE!"
@@ -1166,20 +1308,11 @@ msgstr ""
 msgid "Help"
 msgstr "HELP"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:44
+#: plinth/modules/first_boot/templates/firstboot_welcome.html:52
 msgid "Start Setup"
 msgstr "START SETUP"
 
-#: plinth/modules/first_boot/templates/firstboot_welcome.html:49
-#, python-format
-msgid ""
-"To complete the setup of your %(box_name)s, please provide some basic "
-"information."
-msgstr ""
-"TO COMPLETE THE SETUP OF YOUR %(box_name)s, PLEASE PROVIDE SOME BASIC "
-"INFORMATION."
-
-#: plinth/modules/first_boot/views.py:56
+#: plinth/modules/first_boot/views.py:66
 msgid "Setup Complete"
 msgstr "SETUP COMPLETE"
 
@@ -1408,12 +1541,6 @@ msgstr "SERVICES AND APPLICATIONS"
 #: plinth/modules/storage/templates/storage.html:54
 msgid "Type"
 msgstr "TYPE"
-
-#: plinth/modules/ikiwiki/forms.py:34
-#: plinth/modules/networks/templates/connection_show.html:78
-#: plinth/modules/sharing/templates/sharing.html:56
-msgid "Name"
-msgstr "NAME"
 
 #: plinth/modules/ikiwiki/forms.py:35
 msgid "Only alphanumeric characters are allowed."
@@ -5097,21 +5224,21 @@ msgstr "USERS AND GROUPS"
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "CHECK LDAP ENTRY \"{search_item}\""
 
-#: plinth/modules/users/forms.py:42
+#: plinth/modules/users/forms.py:41
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/forms.py:58
+#: plinth/modules/users/forms.py:57
 msgid "Username is taken or is reserved."
 msgstr ""
 
-#: plinth/modules/users/forms.py:89 plinth/modules/users/forms.py:191
+#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:193
 #, fuzzy
 #| msgid "Transmission BitTorrent"
 msgid "Permissions"
 msgstr "TRANSMISSION BITTORRENT"
 
-#: plinth/modules/users/forms.py:92
+#: plinth/modules/users/forms.py:91
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -5125,20 +5252,20 @@ msgstr ""
 "ABLE TO LOG IN TO ALL SERVICES. THEY CAN ALSO LOG IN TO THE SYSTEM THROUGH "
 "SSH AND HAVE ADMINISTRATIVE PRIVILEGES (SUDO)."
 
-#: plinth/modules/users/forms.py:126 plinth/modules/users/forms.py:308
+#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:323
 msgid "Creating LDAP user failed."
 msgstr "CREATING LDAP USER FAILED."
 
-#: plinth/modules/users/forms.py:137
+#: plinth/modules/users/forms.py:136
 #, python-brace-format
 msgid "Failed to add new user to {group} group."
 msgstr "FAILED TO ADD NEW USER TO {group} GROUP."
 
-#: plinth/modules/users/forms.py:150
+#: plinth/modules/users/forms.py:149
 msgid "SSH Keys"
 msgstr "SSH KEYS"
 
-#: plinth/modules/users/forms.py:152
+#: plinth/modules/users/forms.py:151
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -5148,35 +5275,39 @@ msgstr ""
 "SYSTEM WITHOUT USING A PASSWORD. YOU MAY ENTER MULTIPLE KEYS, ONE ON EACH "
 "LINE. BLANK LINES AND LINES STARTING WITH # WILL BE IGNORED."
 
-#: plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:230
 msgid "Renaming LDAP user failed."
 msgstr "RENAMING LDAP USER FAILED."
 
-#: plinth/modules/users/forms.py:240
+#: plinth/modules/users/forms.py:242
 msgid "Failed to remove user from group."
 msgstr "FAILED TO REMOVE USER FROM GROUP."
 
-#: plinth/modules/users/forms.py:251
+#: plinth/modules/users/forms.py:253
 msgid "Failed to add user to group."
 msgstr "FAILED TO ADD USER TO GROUP."
 
-#: plinth/modules/users/forms.py:260
+#: plinth/modules/users/forms.py:262
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:284
+#: plinth/modules/users/forms.py:270
+msgid "Cannot delete the only administrator in the system."
+msgstr ""
+
+#: plinth/modules/users/forms.py:299
 msgid "Changing LDAP user password failed."
 msgstr "CHANGING LDAP USER PASSWORD FAILED."
 
-#: plinth/modules/users/forms.py:317
+#: plinth/modules/users/forms.py:332
 msgid "Failed to add new user to admin group."
 msgstr "FAILED TO ADD NEW USER TO ADMIN GROUP."
 
-#: plinth/modules/users/forms.py:334
+#: plinth/modules/users/forms.py:349
 msgid "Failed to restrict console access."
 msgstr ""
 
-#: plinth/modules/users/forms.py:346
+#: plinth/modules/users/forms.py:361
 msgid "User account created, you are now logged in"
 msgstr "USER ACCOUNT CREATED, YOU ARE NOW LOGGED IN"
 
@@ -5667,6 +5798,13 @@ msgstr "INSTALLING %(package_names)s: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% COMPLETE"
+
+#~ msgid ""
+#~ "To complete the setup of your %(box_name)s, please provide some basic "
+#~ "information."
+#~ msgstr ""
+#~ "TO COMPLETE THE SETUP OF YOUR %(box_name)s, PLEASE PROVIDE SOME BASIC "
+#~ "INFORMATION."
 
 #~ msgid "Where to Get Help"
 #~ msgstr "WHERE TO GET HELP"
