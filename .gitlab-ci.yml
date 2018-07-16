@@ -17,6 +17,7 @@ stages:
 run-unit-tests:
   stage: test
   script:
+    - apt-get install -y python3-coverage
     - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
     - echo "tester:password" | chpasswd
     - cp -r . /home/tester/plinth
