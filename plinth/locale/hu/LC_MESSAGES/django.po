@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-16 18:33-0400\n"
-"PO-Revision-Date: 2018-07-10 13:38+0000\n"
+"PO-Revision-Date: 2018-07-18 16:38+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -118,59 +118,60 @@ msgstr ""
 
 #: plinth/modules/backups/__init__.py:32
 msgid "Backups"
-msgstr ""
+msgstr "Biztonsági másolatok"
 
 #: plinth/modules/backups/__init__.py:34
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
+"Lehetővé teszi a biztonsági másolat archívumok létrehozását és kezelését."
 
 #: plinth/modules/backups/forms.py:28
 msgid "Archive name"
-msgstr ""
+msgstr "Archívum neve"
 
 #: plinth/modules/backups/forms.py:29
 msgid "Name for new backup archive."
-msgstr ""
+msgstr "Az új biztonsági másolat archívum neve."
 
 #: plinth/modules/backups/forms.py:30
-#, fuzzy
-#| msgid "Invalid server name"
 msgid "Invalid archive name"
-msgstr "Érvénytelen kiszolgálónév"
+msgstr "Érvénytelen archívum név"
 
 #: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
 msgid "Path"
-msgstr ""
+msgstr "Elérési út"
 
 #: plinth/modules/backups/forms.py:34
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
 msgstr ""
+"Lemez elérési útja egy olyan mappára ezen a kiszolgálón, amely archiválásra "
+"kerül a mentési adattárba."
 
 #: plinth/modules/backups/forms.py:40
 msgid ""
 "Disk path to a folder on this server where the archive will be extracted."
 msgstr ""
+"Lemez elérési út egy olyan mappára ezen a kiszolgálón, ahová az archívum ki "
+"lesz csomagolva."
 
 #: plinth/modules/backups/forms.py:46
 msgid "Exported filename"
-msgstr ""
+msgstr "Exportált fájlnév"
 
 #: plinth/modules/backups/forms.py:47
 msgid "Name for the tar file exported from the archive."
-msgstr ""
+msgstr "Az archívumból kiexportált tar fájl neve."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
-#, fuzzy
-#| msgid "Create User"
 msgid "Create archive"
-msgstr "Felhasználó létrehozása"
+msgstr "Archívum létrehozása"
 
 #: plinth/modules/backups/templates/backups.html:51
 msgid "No archives currently exist."
-msgstr ""
+msgstr "Jelenleg nincsenek archívumok."
 
 #: plinth/modules/backups/templates/backups.html:57
 #: plinth/modules/backups/templates/backups_delete.html:33
@@ -182,28 +183,25 @@ msgstr "Név"
 
 #: plinth/modules/backups/templates/backups.html:58
 #: plinth/modules/backups/templates/backups_delete.html:34
-#, fuzzy
-#| msgid "Time Zone"
 msgid "Time"
-msgstr "Időzóna"
+msgstr "Idő"
 
 #: plinth/modules/backups/templates/backups.html:71
 msgid "Extract"
-msgstr ""
+msgstr "Kicsomagol"
 
 #: plinth/modules/backups/templates/backups.html:75
 msgid "Export"
-msgstr ""
+msgstr "Exportál"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
-msgstr ""
+msgstr "Véglegesen törlöd ezt az archívumot?"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
-#, fuzzy, python-format
-#| msgid "Delete %(name)s"
+#, python-format
 msgid "Delete Archive %(name)s"
-msgstr "%(name)s törlése"
+msgstr "%(name)s archívum törlése"
 
 #: plinth/modules/backups/templates/backups_form.html:34
 #: plinth/modules/config/templates/config.html:45
@@ -214,41 +212,35 @@ msgstr "Küldés"
 
 #: plinth/modules/backups/views.py:54
 msgid "Archive created."
-msgstr ""
+msgstr "Archívum létrehozva."
 
 #: plinth/modules/backups/views.py:59
-#, fuzzy
-#| msgid "Create Account"
 msgid "Create Archive"
-msgstr "Fiók létrehozása"
+msgstr "Archívum létrehozása"
 
 #: plinth/modules/backups/views.py:76
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete Archive"
-msgstr "Felhasználó törlése"
+msgstr "Archívum törlése"
 
 #: plinth/modules/backups/views.py:86
-#, fuzzy
-#| msgid "Share deleted."
 msgid "Archive deleted."
-msgstr "Megosztás törölve."
+msgstr "Archívum törölve."
 
 #: plinth/modules/backups/views.py:96
 msgid "Archive extracted."
-msgstr ""
+msgstr "Archívum kicsomagolva."
 
 #: plinth/modules/backups/views.py:101
 msgid "Extract Archive"
-msgstr ""
+msgstr "Archívum kicsomagolása"
 
 #: plinth/modules/backups/views.py:120
 msgid "Archive exported."
-msgstr ""
+msgstr "Archívum exportálva."
 
 #: plinth/modules/backups/views.py:125
 msgid "Export Archive"
-msgstr ""
+msgstr "Archívum exportálása"
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -1201,10 +1193,13 @@ msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgstr ""
+"Add meg a FreedomBox telepítése során létrehozott titkos kulcsot. Ezt a "
+"kulcsot ebben a fájlban is megtalálhatod: /var/lib/plinth/firstboot-wizard-"
+"secret"
 
 #: plinth/modules/first_boot/forms.py:31
 msgid "Secret"
-msgstr ""
+msgstr "Titkos kulcs"
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:26
 msgid "Setup Complete!"
