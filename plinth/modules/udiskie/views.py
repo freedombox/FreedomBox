@@ -18,8 +18,9 @@
 Views for udiskie module.
 """
 
-from plinth.modules import udiskie
 from plinth.views import ServiceView
+
+from . import udisks2
 
 
 class UdiskieView(ServiceView):
@@ -29,5 +30,5 @@ class UdiskieView(ServiceView):
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['devices'] = udiskie.list_devices()
+        context['devices'] = udisks2.list_devices()
         return context
