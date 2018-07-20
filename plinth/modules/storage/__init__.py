@@ -68,7 +68,7 @@ def _get_disks_from_df():
     """Return the list of disks and free space available using 'df'."""
     command = [
         'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
-        '--block-size=1', '--output=source,target,fstype,size,used,avail,pcent'
+        '--block-size=1', '--output=source,fstype,size,used,avail,pcent,target'
     ]
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
@@ -80,9 +80,9 @@ def _get_disks_from_df():
 
     disks = []
     for line in output.splitlines()[1:]:
-        parts = line.split()
-        keys = ('device', 'mount_point', 'file_system_type', 'size', 'used',
-                'free', 'percent_used')
+        parts = line.split(maxsplit=6)
+        keys = ('device', 'file_system_type', 'size', 'used',
+                'free', 'percent_used', 'mount_point')
         disk = dict(zip(keys, parts))
         disk['percent_used'] = int(disk['percent_used'].rstrip('%'))
         disk['size'] = int(disk['size'])
