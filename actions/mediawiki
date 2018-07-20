@@ -85,6 +85,7 @@ def subcommand_setup(_):
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
+    _change_article_path()
     _disable_public_registrations()
     _disable_anonymous_editing()
     _change_logo()
@@ -118,6 +119,17 @@ def _change_logo():
                 line = line.replace('assets/wiki.png', 'assets/mediawiki.png')
 
             file_handle.write(line)
+
+def _change_article_path():
+    lines = open(CONF_FILE, 'r').readlines()
+    with open(CONF_FILE, 'a') as file_handle:
+        conf_line = ""
+        for line in lines:
+            if not re.match('^\s*\$wgArticlePath', line):
+                conf_line = "$wgArticlePath = \"/mediawiki/$1\";\n"
+            if not re.match('^\s*\$wgUsePathInfo', line):
+                conf_line = conf_line+"$wgUsePathInfo = true;\n";
+        file_handle.write(conf_line)
 
 
 def _enable_file_uploads():
@@ -159,11 +171,13 @@ def subcommand_enable(_):
     """Enable web configuration and reload."""
     action_utils.service_enable('mediawiki-jobrunner')
     action_utils.webserver_enable('mediawiki')
+    action_utils.webserver_enable('mediawiki-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('mediawiki')
+    action_utils.webserver_disable('mediawiki-freedombox')
     action_utils.service_disable('mediawiki-jobrunner')
 
 
