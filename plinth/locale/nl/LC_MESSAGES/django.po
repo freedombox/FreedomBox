@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-16 18:33-0400\n"
-"PO-Revision-Date: 2018-07-18 22:36+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2018-07-20 20:01+0000\n"
+"Last-Translator: Bart Notelaers <bartnotelaers@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/plinth/"
 "nl/>\n"
 "Language: nl\n"
@@ -163,6 +163,7 @@ msgstr "Geëxporteerde bestandsnaam"
 #: plinth/modules/backups/forms.py:47
 msgid "Name for the tar file exported from the archive."
 msgstr ""
+"Naam voor het tar bestand welke geëxporteerd zal worden uit het archief."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
@@ -1184,6 +1185,9 @@ msgid ""
 "Enter the secret generated during FreedomBox installation. This secret can "
 "also be obtained from the file /var/lib/plinth/firstboot-wizard-secret"
 msgstr ""
+"Voer het geheim in wat tijdens de FreedomBox installatie gegenereerd werd. "
+"Dit geheim kan ook gevonden worden in het bestand /var/lib/plinth/firstboot-"
+"wizard-secret"
 
 #: plinth/modules/first_boot/forms.py:31
 msgid "Secret"
@@ -4554,7 +4558,7 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
-"Syncthing is een applicatie om bestanden tussen meerdere apparaten te "
+"Syncthing is een toepassing om bestanden tussen meerdere apparaten te "
 "synchroniseren, bijvoorbeeld tussen uw laptop en uw telefoon. Bestanden die "
 "aangemaakt, veranderd of verwijderd worden op één van die apparaten zullen "
 "automatisch dezelfde veranderingen ondergaan op de andere apparaten waarop "
@@ -4570,6 +4574,12 @@ msgid ""
 "synchronized with a distinct set of folders.  The web interface on "
 "{box_name} is only available for users belonging to the \"admin\" group."
 msgstr ""
+"Syncthing op {box_name} biedt een extra synchronisatiepunt voor uw gegevens. "
+"{box_name} draait een enkel exemplaar van Syncthing die gebruikt kan worden "
+"door meerdere gebruikers.  Elke gebruiker kan de eigen apparaten "
+"synchroniseren met een eigen verzameling mappen.  De webinterface op "
+"{box_name} is alleen beschikbaar voor gebruikers die tot de \"admin\"-groep "
+"behoren."
 
 #: plinth/modules/syncthing/__init__.py:54
 msgid ""
@@ -4577,6 +4587,10 @@ msgid ""
 "syncthing/\">/syncthing</a>.  Desktop and mobile clients are also <a href="
 "\"https://syncthing.net/\">available</a>."
 msgstr ""
+"Indien ingeschakeld, zal de webinterface van Syncthing toegankelijk zijn "
+"vanaf <a href=\"/syncthing/\">/syncthing</a>.  Toepassingen voor desktop "
+"computers en mobiele apparaten zijn ook <a href=\"https://syncthing.net/\""
+">beschikbaar</a>."
 
 #: plinth/modules/syncthing/__init__.py:61
 msgid "Administer Syncthing application"
@@ -4597,6 +4611,11 @@ msgid ""
 "nodes. Even if some of the nodes fail, your files can be retrieved from the "
 "remaining nodes."
 msgstr ""
+"Tahoe-LAFS is een gedecentraliseerd systeem voor veilige bestandsopslag. Het "
+"maakt gebruik van provider-onafhankelijke beveiliging om bestanden op te "
+"slaan via een gedistribueerd netwerk van knooppunten. Zelfs als sommige "
+"knooppunten uitvallen, kunnen uw bestanden uit de resterende knooppunten "
+"worden opgehaald."
 
 #: plinth/modules/tahoe/__init__.py:80
 #, python-brace-format
@@ -4605,6 +4624,9 @@ msgid ""
 "Additional introducers can be added, which will introduce this node to the "
 "other storage nodes."
 msgstr ""
+"Deze {box_name} herbergt standaard een opslagknooppunt en een "
+"introduceerder. Er kunnen extra introduceerders worden toegevoegd, waardoor "
+"dit knooppunt aan de andere knooppunten bekend wordt gemaakt."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:33
 #, python-format
@@ -4614,10 +4636,15 @@ msgid ""
 "DATA. You can access Tahoe-LAFS at <a href=\"https://"
 "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
 msgstr ""
+"Het Tahoe-LAFS server domein is ingesteld op <b>%(domain_name)s</b>. Het "
+"wijzigen van deze domeinnaam vereist een herinstallatie van Tahoe-LAFS en U "
+"ZAL UW REEDS OPGESLAGEN GEGEVENS VERLIEZEN. U kunt toegang krijgen tot Tahoe-"
+"LAFS op <a href=\"https://%(domain_name)s:5678\""
+">https://%(domain_name)s:5678</a>."
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:55
 msgid "Local introducer"
-msgstr ""
+msgstr "Lokale introduceerder"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:74
@@ -4627,7 +4654,7 @@ msgstr "Naam Huisdier"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:71
 msgid "Add new introducer"
-msgstr ""
+msgstr "Nieuwe introduceerder toevoegen"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
 msgid "Add"
@@ -4635,7 +4662,7 @@ msgstr "Toevoegen"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:87
 msgid "Connected introducers"
-msgstr ""
+msgstr "Verbonden introduceerders"
 
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:103
 msgid "Remove"
@@ -4705,6 +4732,8 @@ msgstr "Bevestig Tor gebruik met {url} via tcp{kind}"
 msgid ""
 "Enter a valid bridge with this format: [transport] IP:ORPort [fingerprint]"
 msgstr ""
+"Voer een geldige Tor-brug in met deze indeling: [transport] IP: ORPort "
+"[fingerprint]"
 
 #: plinth/modules/tor/forms.py:90
 msgid "Enable Tor"
@@ -4720,6 +4749,10 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Als deze optie is ingeschakeld, worden de hieronder geconfigureerde Tor-"
+"bruggen gebruikt om verbinding te maken met het Tor-netwerk. Gebruik deze "
+"optie als je Internet Service Provider (ISP) verbindingen met het Tor-"
+"netwerk blokkeert of censureert. Hierdoor worden de relaismodi uitgeschakeld."
 
 #: plinth/modules/tor/forms.py:102
 msgid "Upstream bridges"
@@ -4731,6 +4764,10 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"U kunt enkele Tor-bruggen verkrijgen op <a href=\"https://bridges.torproject."
+"org/\">https://bridges.torproject.org/</a> en de bruggegevens kopiëren/"
+"plakken. Momenteel worden de volgende transporten ondersteund; geen, obfs3, "
+"obfs4 en scamblesuit."
 
 #: plinth/modules/tor/forms.py:112
 msgid "Enable Tor relay"
