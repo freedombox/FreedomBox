@@ -22,15 +22,19 @@ Forms for radicale module.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from plinth import cfg
 from plinth.forms import ServiceForm
+from plinth.utils import format_lazy
 
 CHOICES = [
     ('owner_only', _('Only the owner of a calendar/addressbook can view or '
                      'make changes.')),
-    ('owner_write', _('Any user can view any calendar/addressbook, but only '
-                      'the owner can make changes.')),
-    ('authenticated', _('Any user can view or make changes to any '
-                        'calendar/addressbook.')),
+    ('owner_write', format_lazy(
+        _('Any user with a {box_name} login can view any calendar/addressbook'
+          ', but only the owner can make changes.'), box_name=_(cfg.box_name))),
+    ('authenticated', format_lazy(
+        _('Any user with a {box_name} login can view or make changes'
+          ' to any calendar/addressbook.'), box_name=_(cfg.box_name))),
 ]
 
 
