@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-16 18:33-0400\n"
-"PO-Revision-Date: 2018-07-21 22:39+0000\n"
+"PO-Revision-Date: 2018-07-23 12:05+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
 "hi/>\n"
@@ -4261,24 +4261,24 @@ msgstr "स्नैपशॉट हटाएे"
 
 #: plinth/modules/snapshot/views.py:149
 msgid "Deleted all snapshots."
-msgstr ""
+msgstr "सब स्नैपशॉटस हटाएँ गएे."
 
 #: plinth/modules/snapshot/views.py:167
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
-msgstr ""
+msgstr "स्नैपशॉट #{number} पर वापस रोलबाक होगा."
 
 #: plinth/modules/snapshot/views.py:170
 msgid "The system must be restarted to complete the rollback."
-msgstr ""
+msgstr "रोलबैक शुरु करने के लिए सिस्टम रीस्टार्ट करने का ज़रुरत है."
 
 #: plinth/modules/snapshot/views.py:182
 msgid "Rollback to Snapshot"
-msgstr ""
+msgstr "स्नैपशॉट को रोलबैक करें"
 
 #: plinth/modules/ssh/__init__.py:36
 msgid "Secure Shell (SSH) Server"
-msgstr ""
+msgstr "सुरक्षित शैल (SSH) सर्वर"
 
 #: plinth/modules/ssh/__init__.py:39
 msgid ""
@@ -4287,60 +4287,64 @@ msgid ""
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
+"एक सुरक्षित शेल सर्वर सुरक्षित शेल प्रोटोकॉल का उपयोग करता है रिमोट कंप्यू"
+"टरस से कनेक्शनस स्वीकार करने के लिये. एक अधिकार दिया गया रिमोट कंप्यूटर प्रशा"
+"सन कार्य निष्पादित कर सकता है, फ़ाइलों की कॉपी कर सकता है या ऐसे कनेक्शंस का "
+"उपयोग करके अंय सर्विसस चलाएे."
 
 #: plinth/modules/sso/__init__.py:30
 msgid "Single Sign On"
-msgstr ""
+msgstr "एकल साइन-ऑन"
 
 #: plinth/modules/sso/templates/login.html:35
 msgid "Login"
-msgstr ""
+msgstr "लॉगिन"
 
 #: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
 msgid "Storage"
-msgstr ""
+msgstr "स्टोरेज"
 
 #: plinth/modules/storage/__init__.py:153
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
-msgstr ""
+msgstr "{disk_size:.1f} बाइट्स"
 
 #: plinth/modules/storage/__init__.py:157
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
-msgstr ""
+msgstr "{disk_size:.1f} किब"
 
 #: plinth/modules/storage/__init__.py:161
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
-msgstr ""
+msgstr "{disk_size:.1f} मेब"
 
 #: plinth/modules/storage/__init__.py:165
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
-msgstr ""
+msgstr "{disk_size:.1f} जिब"
 
 #: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
-msgstr ""
+msgstr "{disk_size:.1f} टीब"
 
 #: plinth/modules/storage/templates/storage.html:47
 msgid "The following disks are in use:"
-msgstr ""
+msgstr "निम्नलिखित डिस्कस उपयोग में है:"
 
 #: plinth/modules/storage/templates/storage.html:53
 #: plinth/modules/udiskie/templates/udiskie.html:38
 msgid "Mount Point"
-msgstr ""
+msgstr "माउन्ट प्वाइंट"
 
 #: plinth/modules/storage/templates/storage.html:55
 msgid "Used"
-msgstr ""
+msgstr "उपयोग किया गया"
 
 #: plinth/modules/storage/templates/storage.html:87
 msgid "Partition Expansion"
-msgstr ""
+msgstr "पारटिशन एक्सपांसन"
 
 #: plinth/modules/storage/templates/storage.html:89
 #, python-format
@@ -4349,12 +4353,15 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"आपके रूट पार्टीशन के बाद %(expandable_root_size)s अनएलोकेटड स्थान उपलब्ध है. "
+"रूट पार्टीशन इस स्थान ज्यादा बनने के लिए उपयोग किया जा सकता है. यह आपको आपकी "
+"फ़ाइलों स्टोर करने के लिए अतिरिक्त मुक्त स्थान प्रदान करेगा."
 
 #: plinth/modules/storage/templates/storage.html:99
 #: plinth/modules/storage/templates/storage_expand.html:39
 #: plinth/modules/storage/views.py:66
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "रूट पारटिशन विस्तार करें"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4363,15 +4370,18 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"आगे बढ़ने से पहले अपने डेटा का बैकअप करें. इस ऑपरेशन के बाद, "
+"%(expandable_root_size)s से अतिरिक्त खाली जगह आपके रूट पार्टीशन में उपलब्ध "
+"होगा."
 
 #: plinth/modules/storage/views.py:77
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr ""
+msgstr "पार्टीशन का विस्तार करने में त्रुटि: {exception}"
 
 #: plinth/modules/storage/views.py:80
 msgid "Partition expanded successfully."
-msgstr ""
+msgstr "पार्टीशन सफलतापूर्वक विस्तारित हुआ."
 
 #: plinth/modules/storage/views.py:100
 #, no-python-format, python-brace-format
@@ -4379,15 +4389,17 @@ msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
+"वार्निंग: सिस्टम पार्टीशन पर कम जगह ({percent_used}% उपयोग किया गया, "
+"{free_space} free)."
 
 #: plinth/modules/syncthing/__init__.py:37
 #: plinth/modules/syncthing/manifest.py:27
 msgid "Syncthing"
-msgstr ""
+msgstr "सिंकतिन्ग"
 
 #: plinth/modules/syncthing/__init__.py:39
 msgid "File Synchronization"
-msgstr ""
+msgstr "फ़ाइल सिंक्रनाइज़ेशन"
 
 #: plinth/modules/syncthing/__init__.py:42
 msgid ""
@@ -4396,6 +4408,10 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
+"सिंकतिन्ग एकाधिक डिवाइसस पर जैसे अपने डेस्कटॉप कंप्यूटर और मोबाइल फोन में "
+"फ़ाइलों को सिंक्रनाइज़ करने के लिए एक एप्लिकेशन है. सिंकतिन्ग चलते हए डिवा"
+"इसस पर किसी एक डिवाइस में फ़ाइलों का निर्माण, संशोधन, या हटाना ऑटोमेटिक दोहरा"
+" किया गया."
 
 #: plinth/modules/syncthing/__init__.py:47
 #, python-brace-format
