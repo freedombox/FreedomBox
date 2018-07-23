@@ -53,12 +53,6 @@ def list_devices():
         }
 
         try:
-            drive = client.get_drive_for_block(block)
-            device['ejectable'] = drive.props.id_type
-        except Exception:
-            pass
-
-        try:
             device['mount_points'] = obj.get_filesystem().props.mount_points
         except Exception:
             pass
