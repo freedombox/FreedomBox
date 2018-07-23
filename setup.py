@@ -242,6 +242,7 @@ setuptools.setup(
                 ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
                 ('/lib/systemd/system',
                  glob.glob('data/lib/systemd/system/*.service')),
+                ('/etc/mediawiki', glob.glob('data/etc/mediawiki/*.php')),
                 ('/usr/share/plinth/actions',
                  glob.glob(os.path.join('actions', '*'))),
                 ('/usr/share/polkit-1/rules.d',

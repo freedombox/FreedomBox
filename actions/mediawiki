@@ -21,7 +21,6 @@ Configuration helper for MediaWiki.
 
 import argparse
 import os
-import re
 import subprocess
 import sys
 import tempfile
@@ -30,7 +29,7 @@ from plinth import action_utils
 from plinth.utils import generate_password, grep
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
-CONF_FILE = '/var/lib/mediawiki/LocalSettings.php'
+CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 
 
 def parse_arguments():
@@ -85,68 +84,17 @@ def subcommand_setup(_):
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
-    _change_article_path()
-    _disable_public_registrations()
-    _disable_anonymous_editing()
-    _change_logo()
-    _enable_file_uploads()
+    include_custom_config()
 
 
-def _disable_public_registrations():
-    """Edit MediaWiki configuration to disable public registrations."""
-    if not grep(r'\$wgGroupPermissions.*createaccount', CONF_FILE):
-        with open(CONF_FILE, 'a') as file_handle:
-            file_handle.write(
-                "$wgGroupPermissions['*']['createaccount'] = false;\n")
-
-
-def _disable_anonymous_editing():
-    """Edit MediaWiki configuration to allow anonymous users from editing.
-
-    MediaWiki instances typically get a lot of spam bots.
+def include_custom_config():
+    """Include FreedomBox specific configuration in LocalSettings.php
     """
-    if not grep(r'\$wgGroupPermissions.*edit', CONF_FILE):
-        with open(CONF_FILE, 'a') as file_handle:
-            file_handle.write("$wgGroupPermissions['*']['edit'] = false;\n")
-
-
-def _change_logo():
-    """Change the placeholder logo to MediaWiki's official logo"""
-    lines = open(CONF_FILE, 'r').readlines()
-    with open(CONF_FILE, 'w') as file_handle:
-        for line in lines:
-            if re.match('^\s*\$wgLogo', line):
-                line = line.replace('assets/wiki.png', 'assets/mediawiki.png')
-
-            file_handle.write(line)
-
-def _change_article_path():
-    lines = open(CONF_FILE, 'r').readlines()
-    with open(CONF_FILE, 'a') as file_handle:
-        conf_line = ""
-        for line in lines:
-            if not re.match('^\s*\$wgArticlePath', line):
-                conf_line = "$wgArticlePath = \"/mediawiki/$1\";\n"
-            if not re.match('^\s*\$wgUsePathInfo', line):
-                conf_line = conf_line+"$wgUsePathInfo = true;\n";
-        file_handle.write(conf_line)
-
-
-def _enable_file_uploads():
-    """Enable file uploads in mediawiki"""
-    conf_line = '$wgEnableUploads = true;\n'
-    conf_updated = False
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-    with open(CONF_FILE, 'w') as conf_file:
-        for line in lines:
-            if "$wgEnableUploads" in line:
-                conf_file.write(conf_line)
-                conf_updated = True
-            else:
-                conf_file.write(line)
-        if not conf_updated:
-            conf_file.write(conf_line)
+    local_settings_conf = '/etc/mediawiki/LocalSettings.php'
+    if not grep(r'FreedomBoxSettings', local_settings_conf):
+        with open(local_settings_conf, 'a') as conf_file:
+            conf_file.write(
+                'include dirname(__FILE__)."/FreedomBoxSettings.php";\n')
 
 
 def subcommand_change_password(arguments):
