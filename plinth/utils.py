@@ -121,10 +121,6 @@ class YAMLFile(object):
         return os.stat(self.yaml_file).st_size == 0
 
 
-def yes_or_no(cond):
-    return 'yes' if cond else 'no'
-
-
 def generate_password(size=32):
     """Generate a random password using ascii alphabet and digits."""
     chars = (random.SystemRandom().choice(string.ascii_letters + string.digits)
