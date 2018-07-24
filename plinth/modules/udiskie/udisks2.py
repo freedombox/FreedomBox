@@ -47,8 +47,7 @@ def list_devices():
 
         block = obj.get_block()
         if block.props.id_usage != 'filesystem' or \
-           block.props.hint_system or \
-           block.props.read_only:
+           block.props.hint_system:
             continue
 
         device_name = block.props.device
