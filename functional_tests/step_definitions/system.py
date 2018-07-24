@@ -36,6 +36,11 @@ language_codes = {
 }
 
 
+@given(parsers.parse('the default app is {app_name:w}'))
+def set_default_app(browser, app_name):
+    system.set_default_app(browser, app_name)
+
+
 @given(parsers.parse('the domain name is set to {domain:w}'))
 def set_domain_name(browser, domain):
     system.set_domain_name(browser, domain)
@@ -49,6 +54,11 @@ def change_hostname_to(browser, hostname):
 @when(parsers.parse('I change the domain name to {domain:w}'))
 def change_domain_name_to(browser, domain):
     system.set_domain_name(browser, domain)
+
+
+@when(parsers.parse('I change the default app to {app_name:w}'))
+def change_default_app_to(browser, app_name):
+    system.set_default_app(browser, app_name)
 
 
 @when('I change the language to <language>')
@@ -85,3 +95,8 @@ def create_snapshot(browser):
 def verify_snapshot_count(browser, count):
     num_snapshots = system.get_snapshot_count(browser)
     assert num_snapshots == count
+
+
+@then(parsers.parse('the default app should be {app_name:w}'))
+def default_app_should_be(browser, app_name):
+    assert system.check_home_page_redirect(browser, app_name)

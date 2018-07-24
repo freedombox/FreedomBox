@@ -18,6 +18,7 @@
 FreedomBox app for basic system configuration.
 """
 
+import re
 import socket
 
 from django.utils.translation import ugettext_lazy
@@ -46,6 +47,16 @@ def get_domainname():
 def get_hostname():
     """Return the hostname"""
     return socket.gethostname()
+
+
+def get_default_app():
+    """Get the default application for the domain."""
+    with open('/etc/apache2/conf-available/freedombox.conf') as conf_file:
+        for line in conf_file:
+            if re.findall(r'\^\/\$', line):
+                app_path = line.split()[-1].strip('"')
+                break
+    return app_path.strip("/")
 
 
 def init():

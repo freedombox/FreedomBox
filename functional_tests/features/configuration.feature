@@ -29,3 +29,10 @@ Scenario: Change hostname
 Scenario: Change domain name
   When I change the domain name to mydomain
   Then the domain name should be mydomain
+
+Scenario: Change default app
+  Given the syncthing application is installed
+  And the default app is syncthing
+  When I change the default app to plinth
+  Then the default app should be plinth
+

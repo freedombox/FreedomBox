@@ -22,28 +22,33 @@ from . import actions
 shortcuts = {}
 
 
-def get_shortcuts(username):
+def get_shortcuts(username=None, web_apps_only=False, sort_by='label'):
     """Return menu items in sorted order according to current locale."""
+    shortcuts_to_return = {}
     if username:
-        shortcuts_to_return = {}
         output = actions.superuser_run('users', ['get-user-groups', username])
         user_groups = set(output.strip().split('\n'))
 
-        if 'admin' in user_groups:
-            # Admin has access to all services
-            return sorted(shortcuts.values(), key=lambda item: item['label'])
-
-        for shortcut_id, shortcut in shortcuts.items():
-            if shortcut['allowed_groups']:
-                if not user_groups.isdisjoint(shortcut['allowed_groups']):
+        if 'admin' in user_groups:  # Admin has access to all services
+            shortcuts_to_return = shortcuts
+        else:
+            for shortcut_id, shortcut in shortcuts.items():
+                if shortcut['allowed_groups']:
+                    if not user_groups.isdisjoint(shortcut['allowed_groups']):
+                        shortcuts_to_return[shortcut_id] = shortcut
+                else:
                     shortcuts_to_return[shortcut_id] = shortcut
-            else:
-                shortcuts_to_return[shortcut_id] = shortcut
-
-        return sorted(shortcuts_to_return.values(),
-                      key=lambda item: item['label'])
     else:
-        return sorted(shortcuts.values(), key=lambda item: item['label'])
+        shortcuts_to_return = shortcuts
+
+    if web_apps_only:
+        shortcuts_to_return = {
+            _id: shortcut
+            for _id, shortcut in shortcuts_to_return.items()
+            if not shortcut['url'].startswith('?selected=')
+        }
+
+    return sorted(shortcuts_to_return.values(), key=lambda item: item[sort_by])
 
 
 def add_shortcut(shortcut_id, name, short_description="", login_required=False,

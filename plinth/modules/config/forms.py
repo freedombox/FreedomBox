@@ -14,36 +14,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for basic system configuration
 """
 
-
-from django import forms
-from django.utils.translation import ugettext as _, ugettext_lazy
-from django.core import validators
-from django.core.exceptions import ValidationError
-
-from plinth import cfg
-from plinth.utils import format_lazy
-
 import logging
 import re
+
+from django import forms
+from django.core import validators
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
+
+from plinth import cfg, frontpage
+from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
 
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
-
-
-class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
-    def clean(self, value):
-        """Clean and validate the field value"""
-        if value:
-            value = value.strip()
-
-        return super(TrimmedCharField, self).clean(value)
 
 
 def domain_label_validator(domainname):
@@ -53,6 +42,12 @@ def domain_label_validator(domainname):
             raise ValidationError(_('Invalid domain name'))
 
 
+def get_default_app_choices():
+    shortcuts = frontpage.get_shortcuts(web_apps_only=True, sort_by='name')
+    apps = [(shortcut['id'], shortcut['name']) for shortcut in shortcuts]
+    return [('plinth', 'FreedomBox Service (Plinth)')] + apps
+
+
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
     # See:
@@ -60,32 +55,44 @@ class ConfigurationForm(forms.Form):
     # https://tools.ietf.org/html/rfc1035#section-2.3.1
     # https://tools.ietf.org/html/rfc1123#section-2
     # https://tools.ietf.org/html/rfc2181#section-11
-    hostname = TrimmedCharField(
-        label=ugettext_lazy('Hostname'),
-        help_text=format_lazy(ugettext_lazy(
-            'Hostname is the local name by which other devices on the local '
-            'network can reach your {box_name}.  It must start and end with '
-            'an alphabet or a digit and have as interior characters only '
-            'alphabets, digits and hyphens.  Total length must be 63 '
-            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
+    hostname = forms.CharField(
+        label=ugettext_lazy('Hostname'), help_text=format_lazy(
+            ugettext_lazy(
+                'Hostname is the local name by which other devices on the local '
+                'network can reach your {box_name}.  It must start and end with '
+                'an alphabet or a digit and have as interior characters only '
+                'alphabets, digits and hyphens.  Total length must be 63 '
+                'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
         validators=[
-            validators.RegexValidator(
-                HOSTNAME_REGEX,
-                ugettext_lazy('Invalid hostname'))])
+            validators.RegexValidator(HOSTNAME_REGEX,
+                                      ugettext_lazy('Invalid hostname'))
+        ], strip=True)
 
-    domainname = TrimmedCharField(
-        label=ugettext_lazy('Domain Name'),
-        help_text=format_lazy(ugettext_lazy(
-            'Domain name is the global name by which other devices on the '
-            'Internet can reach your {box_name}.  It must consist of labels '
-            'separated by dots.  Each label must start and end with an '
-            'alphabet or a digit and have as interior characters only '
-            'alphabets, digits and hyphens.  Length of each label must be 63 '
-            'characters or less.  Total length of domain name must be 253 '
-            'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
-        required=False,
-        validators=[
+    domainname = forms.CharField(
+        label=ugettext_lazy('Domain Name'), help_text=format_lazy(
+            ugettext_lazy(
+                'Domain name is the global name by which other devices on the '
+                'Internet can reach your {box_name}.  It must consist of labels '
+                'separated by dots.  Each label must start and end with an '
+                'alphabet or a digit and have as interior characters only '
+                'alphabets, digits and hyphens.  Length of each label must be 63 '
+                'characters or less.  Total length of domain name must be 253 '
+                'characters or less.'), box_name=ugettext_lazy(cfg.box_name)),
+        required=False, validators=[
             validators.RegexValidator(
                 r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
-                ugettext_lazy('Invalid domain name')),
-            domain_label_validator])
+                ugettext_lazy('Invalid domain name')), domain_label_validator
+        ], strip=True)
+
+    defaultapp = forms.ChoiceField(
+        label=ugettext_lazy('Default App'), help_text=format_lazy(
+            ugettext_lazy(
+                'Choose the default web application that must be served when '
+                'someone visits your {box_name} on the web. A typical use '
+                'case is to set your blog or wiki as the landing page when '
+                'someone visits the domain name. Note that once the default '
+                'app is set to something other than {box_name} Service '
+                '(Plinth), your users must explicitly type /plinth or '
+                '/freedombox to reach {box_name} Service (Plinth).'),
+            box_name=ugettext_lazy(cfg.box_name)), required=False,
+        choices=get_default_app_choices)

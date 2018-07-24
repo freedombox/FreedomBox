@@ -19,12 +19,13 @@ FreedomBox views for basic system configuration.
 """
 
 import logging
+import re
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
-from plinth import actions
+from plinth import action_utils, actions, frontpage
 from plinth.modules import config, firewall
 from plinth.modules.names import SERVICES
 from plinth.signals import (domain_added, domain_removed, domainname_change,
@@ -63,6 +64,7 @@ def get_status(request):
     return {
         'hostname': config.get_hostname(),
         'domainname': config.get_domainname(),
+        'defaultapp': config.get_default_app(),
     }
 
 
@@ -72,9 +74,10 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_hostname(new_status['hostname'])
         except Exception as exception:
-            messages.error(request,
-                           _('Error setting hostname: {exception}')
-                           .format(exception=exception))
+            messages.error(
+                request,
+                _('Error setting hostname: {exception}')
+                .format(exception=exception))
         else:
             messages.success(request, _('Hostname set'))
 
@@ -82,11 +85,45 @@ def _apply_changes(request, old_status, new_status):
         try:
             set_domainname(new_status['domainname'])
         except Exception as exception:
-            messages.error(request,
-                           _('Error setting domain name: {exception}')
-                           .format(exception=exception))
+            messages.error(
+                request,
+                _('Error setting domain name: {exception}')
+                .format(exception=exception))
         else:
             messages.success(request, _('Domain name set'))
+
+    if old_status['defaultapp'] != new_status['defaultapp']:
+        try:
+            change_default_app(new_status['defaultapp'])
+        except Exception as exception:
+            messages.error(
+                request,
+                _('Error setting default app: {exception}')
+                .format(exception=exception))
+        else:
+            messages.success(request, _('Default app set'))
+
+
+def change_default_app(app_id):
+    """Changes the FreedomBox's default app to the app specified by app_id."""
+    if app_id == 'plinth':
+        url = '/plinth'
+    else:
+        shortcuts = frontpage.get_shortcuts()
+        url = [
+            shortcut['url'] for shortcut in shortcuts
+            if shortcut['id'] == app_id
+        ][0]
+    lines = []
+    freedombox_apache_conf = '/etc/apache2/conf-available/freedombox.conf'
+    with open(freedombox_apache_conf, 'r') as conf_file:
+        for line in conf_file:
+            if re.findall(r'\^\/\$', line):
+                line = 'RedirectMatch "^/$" ' + '"{}"'.format(url)
+            lines.append(line)
+    with open(freedombox_apache_conf, 'w') as conf_file:
+        conf_file.write("\n".join(lines))
+    action_utils.service_reload('apache2')
 
 
 def set_hostname(hostname):
@@ -95,7 +132,7 @@ def set_hostname(hostname):
     domainname = config.get_domainname()
 
     # Hostname should be ASCII. If it's unicode but passed our
-    # valid_hostname check, convert to ASCII.
+    # valid_hostname check, convert
     hostname = str(hostname)
 
     pre_hostname_change.send_robust(sender='config', old_hostname=old_hostname,

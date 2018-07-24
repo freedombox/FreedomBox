@@ -58,6 +58,13 @@ def set_domain_name(browser, domain_name):
     submit(browser)
 
 
+def set_default_app(browser, app_name):
+    nav_to_module(browser, 'config')
+    drop_down = browser.find_by_id('id_configuration-defaultapp')
+    drop_down.select(app_name)
+    submit(browser)
+
+
 def set_language(browser, language_code):
     username = config['DEFAULT']['username']
     browser.visit(config['DEFAULT']['url'] +
@@ -86,3 +93,9 @@ def get_snapshot_count(browser):
     browser.visit(config['DEFAULT']['url'] + '/plinth/sys/snapshot/manage/')
     # Subtract 1 for table header
     return len(browser.find_by_xpath('//tr')) - 1
+
+
+def check_home_page_redirect(browser, app_name):
+    browser.visit(config['DEFAULT']['url'])
+    return browser.find_by_xpath(
+        "//a[contains(@href, '/plinth/') and @title='FreedomBox']")
