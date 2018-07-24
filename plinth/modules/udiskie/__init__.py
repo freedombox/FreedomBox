@@ -52,7 +52,7 @@ def init():
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(
-            managed_services[0], name, ports=[], is_external=False,
+            managed_services[0], name, ports=[], is_external=True,
             is_enabled=is_enabled, enable=enable, disable=disable,
             is_running=is_running)
 
