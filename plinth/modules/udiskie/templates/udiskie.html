@@ -28,40 +28,48 @@
 
   <h3>{% trans "Devices" %}</h3>
 
-  <table class="table table-bordered table-condensed table-striped">
-    <thead>
-      <tr>
-        <th>{% trans "Device" %}</th>
-        <th>{% trans "Label" %}</th>
-        <th>{% trans "Size" %}</th>
-        <th>{% trans "Filesystem" %}</th>
-        <th>{% trans "Mount Point" %}</th>
-        <th>{% trans "Actions" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for device in devices %}
+  {% if not devices %}
+    <p>
+      {% blocktrans trimmed %}
+        There are no additional storage devices attached.
+      {% endblocktrans %}
+    </p>
+  {% else %}
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
         <tr>
-          <td>{{ device.device }}</td>
-          <td>{{ device.label }}</td>
-          <td>{{ device.size }}</td>
-          <td>{{ device.filesystem_type }}</td>
-          <td>{{ device.mount_points|join:', ' }}</td>
-          <td>
-            {% if device.mount_points %}
-              <form class="form" method="post"
-                    action="{% url 'udiskie:eject' device.device|urlencode:"" %}">
-                {% csrf_token %}
-
-                <button type="submit"
-                        class="btn btn-sm btn-default glyphicon glyphicon-eject">
-                </button>
-              </form>
-            {% endif %}
-          </td>
+          <th>{% trans "Device" %}</th>
+          <th>{% trans "Label" %}</th>
+          <th>{% trans "Size" %}</th>
+          <th>{% trans "Filesystem" %}</th>
+          <th>{% trans "Mount Point" %}</th>
+          <th>{% trans "Actions" %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for device in devices %}
+          <tr>
+            <td>{{ device.device }}</td>
+            <td>{{ device.label }}</td>
+            <td>{{ device.size }}</td>
+            <td>{{ device.filesystem_type }}</td>
+            <td>{{ device.mount_points|join:', ' }}</td>
+            <td>
+              {% if device.mount_points %}
+                <form class="form" method="post"
+                      action="{% url 'udiskie:eject' device.device|urlencode:"" %}">
+                  {% csrf_token %}
+
+                  <button type="submit"
+                          class="btn btn-sm btn-default glyphicon glyphicon-eject">
+                  </button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
 
 {% endblock %}
