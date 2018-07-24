@@ -20,12 +20,15 @@ URLs for the udiskie module.
 
 from django.conf.urls import url
 
-from .views import UdiskieView
 from plinth.modules import udiskie
 
+from .views import Index, eject
+
 urlpatterns = [
-    url(r'^sys/udiskie/$',
-        UdiskieView.as_view(service_id=udiskie.managed_services[0],
-                            description=udiskie.description,
-                            show_status_block=True), name='index'),
+    url(
+        r'^sys/udiskie/$',
+        Index.as_view(service_id=udiskie.managed_services[0],
+                      description=udiskie.description, show_status_block=True),
+        name='index'),
+    url(r'^sys/udiskie/eject/(?P<device_path>[\w%]+)/$', eject, name='eject'),
 ]
