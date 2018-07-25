@@ -18,9 +18,9 @@
 FreedomBox app for basic system configuration.
 """
 
-import re
 import socket
 
+import augeas
 from django.utils.translation import ugettext_lazy
 
 from plinth import actions
@@ -51,11 +51,21 @@ def get_hostname():
 
 def get_default_app():
     """Get the default application for the domain."""
-    with open('/etc/apache2/conf-available/freedombox.conf') as conf_file:
-        for line in conf_file:
-            if re.findall(r'\^\/\$', line):
-                app_path = line.split()[-1].strip('"')
-                break
+    APACHE_CONFIGURATION = '/etc/apache2/conf-available/freedombox.conf'
+
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
+    aug.set('/augeas/load/Httpd/incl[last() + 1]', APACHE_CONFIGURATION)
+    aug.load()
+
+    aug.defvar('conf', '/files' + APACHE_CONFIGURATION)
+
+    for match in aug.match('/files' + APACHE_CONFIGURATION +
+                           '/directive["RedirectMatch"]'):
+        if aug.get(match + "/arg[1]") == '''"^/$"''':
+            app_path = aug.get(match + "/arg[2]")
+
     return app_path.strip("/")
 
 

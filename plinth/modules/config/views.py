@@ -114,16 +114,8 @@ def change_default_app(app_id):
             shortcut['url'] for shortcut in shortcuts
             if shortcut['id'] == app_id
         ][0]
-    lines = []
-    freedombox_apache_conf = '/etc/apache2/conf-available/freedombox.conf'
-    with open(freedombox_apache_conf, 'r') as conf_file:
-        for line in conf_file:
-            if re.findall(r'\^\/\$', line):
-                line = 'RedirectMatch "^/$" ' + '"{}"'.format(url)
-            lines.append(line)
-    with open(freedombox_apache_conf, 'w') as conf_file:
-        conf_file.write("\n".join(lines))
-    action_utils.service_reload('apache2')
+
+    actions.superuser_run('config', ['set-default-app', url.strip("/")])
 
 
 def set_hostname(hostname):
