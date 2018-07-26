@@ -61,7 +61,7 @@ def eventually(function, args=[], timeout=30):
 
 @contextmanager
 def wait_for_page_update(browser, timeout=300):
-    current_page = browser.find_by_tag('html').first
+    current_page = browser.find_by_tag('body').first
     yield
     WebDriverWait(browser, timeout).until(is_stale(current_page))
 
