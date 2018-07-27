@@ -45,7 +45,6 @@ def login(browser, url, username, password):
         browser.visit(default_url + '/plinth/firstboot/welcome')
         submit(browser)  # click the "Start Setup" button
         create_admin_account(browser, username, password)
-        login(browser, url, username, password)
 
 
 def is_login_prompt(browser):
@@ -79,16 +78,16 @@ def create_user(browser, name, password):
 def rename_user(browser, old_name, new_name):
     nav_to_module(browser, 'users')
     with wait_for_page_update(browser):
-        browser.find_link_by_href(
-            '/plinth/sys/users/' + old_name + '/edit/').first.click()
+        browser.find_link_by_href('/plinth/sys/users/' + old_name +
+                                  '/edit/').first.click()
     browser.find_by_id('id_username').fill(new_name)
     submit(browser)
 
 
 def delete_user(browser, name):
     nav_to_module(browser, 'users')
-    delete_link = browser.find_link_by_href(
-        '/plinth/sys/users/' + name + '/delete/')
+    delete_link = browser.find_link_by_href('/plinth/sys/users/' + name +
+                                            '/delete/')
     if delete_link:
         with wait_for_page_update(browser):
             delete_link.first.click()
