@@ -49,7 +49,7 @@ Run FreedomBox Service (Plinth) on the local system with:
 
 # Contributing
 
-See the HACKING file for contributing to FreedomBox Service (Plinth).
+See the [HACKING](https://salsa.debian.org/freedombox-team/plinth/blob/master/HACKING.md) file for contributing to FreedomBox Service (Plinth).
 
 # Localization
 
