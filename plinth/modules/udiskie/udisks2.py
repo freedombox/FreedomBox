@@ -23,12 +23,10 @@ from django.utils.translation import ugettext as _
 from plinth import utils
 from plinth.modules.storage import format_bytes
 
-glib = utils.import_from_gi('GLib', '2.0')
-udisks = utils.import_from_gi('UDisks', '2.0')
-
 
 def _get_options():
     """Return the common options used for udisks2 operations."""
+    glib = utils.import_from_gi('GLib', '2.0')
     options = glib.Variant(
         'a{sv}', {'auth.no_user_interaction': glib.Variant('b', True)})
     return options
@@ -36,6 +34,7 @@ def _get_options():
 
 def list_devices():
     """List devices that can be ejected."""
+    udisks = utils.import_from_gi('UDisks', '2.0')
     client = udisks.Client.new_sync()
     object_manager = client.get_object_manager()
 
@@ -76,6 +75,7 @@ def eject_drive_of_device(device_path):
 
     Return the details (model, vendor) of drives ejected.
     """
+    udisks = utils.import_from_gi('UDisks', '2.0')
     client = udisks.Client.new_sync()
     object_manager = client.get_object_manager()
 
@@ -120,6 +120,7 @@ def umount_filesystem(filesystem):
 
 def umount_all_filesystems_of_drive(drive_object_path):
     """Unmount all filesystems on block devices of a drive."""
+    udisks = utils.import_from_gi('UDisks', '2.0')
     client = udisks.Client.new_sync()
     object_manager = client.get_object_manager()
 
@@ -133,6 +134,7 @@ def umount_all_filesystems_of_drive(drive_object_path):
 
 def get_error_message(error):
     """Return an error message given an exception."""
+    udisks = utils.import_from_gi('UDisks', '2.0')
     if error.matches(udisks.Error.quark(), udisks.Error.FAILED):
         message = _('The operation failed.')
     elif error.matches(udisks.Error.quark(), udisks.Error.CANCELLED):
