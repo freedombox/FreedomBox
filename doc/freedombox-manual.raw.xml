@@ -2148,7 +2148,7 @@ proto udp]]></screen>
     <title>System</title>
     <section>
       <title>Configure</title>
-      <para>Configure covers a couple of general topics: </para>
+      <para>Configure has some general configuration options: </para>
       <orderedlist numeration="arabic">
         <listitem>
           <para>Hostname </para>
@@ -2162,15 +2162,21 @@ proto udp]]></screen>
           <para>Domain Name </para>
           <itemizedlist>
             <listitem override="none">
-              <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/XMPP#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
+              <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/ejabberd#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
             </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>Language </para>
+          <para>Default App </para>
           <itemizedlist>
             <listitem override="none">
-              <para>Language for the web administration interface Plinth </para>
+              <para>This is an advanced option that allows you to set something other than FreedomBox Service (Plinth) as the default application to be served on the domain name of the FreedomBox. For example, if your FreedomBox's domain name is <ulink url="https://myfreedombox.rocks"/> and you set MediaWiki as the default app, visiting <ulink url="https://myfreedombox.rocks"/> will take you to <ulink url="https://myfreedombox.rocks/mediawiki/"/> instead of the usual <ulink url="https://myfreedombox.rocks/plinth/"/>. Only web applications served from FreedomBox are allowed as choices. </para>
+            </listitem>
+            <listitem override="none">
+              <para><emphasis role="strong">Warning:</emphasis> Once some other app is set as the default app, you can only navigate to the FreedomBox Service (Plinth) by typing <ulink url="https://myfreedombox.rocks/plinth/"/> into the browser. <emphasis>/freedombox</emphasis> can also be  used as an alias to <emphasis>/plinth</emphasis> </para>
+            </listitem>
+            <listitem override="none">
+              <para><emphasis>Tip:</emphasis> Bookmark the URL of FreedomBox Service (Plinth) before changing the default app to some other app. </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -7462,6 +7468,50 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.35.0 (2018-07-30)</title>
+        <itemizedlist>
+          <listitem>
+            <para>configuration: Add an option to set a default app for FreedomBox. The root URL path (<code>https://domainname/</code>) will redirect to the selected app. </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Remove deprecated <code>iqdisc</code> setting. To apply this fix, disable and then re-enable the Message Archive Management setting. </para>
+          </listitem>
+          <listitem>
+            <para>ejabberd: Replace logo with original version. </para>
+          </listitem>
+          <listitem>
+            <para>mediawiki: Enable short URLs, which look like <code>https://domainname/mediawiki/ArticleName</code>. </para>
+          </listitem>
+          <listitem>
+            <para>radicale: Clarify description for shared calendar/addressbook. </para>
+          </listitem>
+          <listitem>
+            <para>storage: Handle mount points with spaces. </para>
+          </listitem>
+          <listitem>
+            <para>udiskie: Add button to eject drives. </para>
+          </listitem>
+          <listitem>
+            <para>udiskie: Also show read-only filesystems. </para>
+          </listitem>
+          <listitem>
+            <para>udiskie: Remove internal networks warning. </para>
+          </listitem>
+          <listitem>
+            <para>udiskie: Show special message when no storage device available. </para>
+          </listitem>
+          <listitem>
+            <para>Add turbolinks library for smoother navigation. </para>
+          </listitem>
+          <listitem>
+            <para>Removed extra text from icons for mediawiki, radicale, and tahoe-lafs. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Russian, Spanish, Dutch, Hungarian, Hindi, Italian, Telugu, and German. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.34.0 (2018-07-16)</title>
         <itemizedlist>

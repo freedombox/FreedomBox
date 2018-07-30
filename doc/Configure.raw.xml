@@ -5,6 +5,30 @@
     <title>FreedomBox/Manual/Configure</title>
     <revhistory>
       <revision>
+        <revnumber>7</revnumber>
+        <date>2018-07-25 08:38:53</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Remove /home as an alias to /freedombox</revremark>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>2018-07-24 17:51:28</date>
+        <authorinitials>SunilMohanAdapa</authorinitials>
+        <revremark>Rename FreedomBox Plinth to FreedomBox Service (Plinth)</revremark>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>2018-07-24 16:12:49</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add tip about bookmarking FreedomBox Plinth</revremark>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>2018-07-24 13:52:47</date>
+        <authorinitials>JosephNuthalapati</authorinitials>
+        <revremark>Add wiki entry about Default App</revremark>
+      </revision>
+      <revision>
         <revnumber>3</revnumber>
         <date>2016-12-31 04:11:43</date>
         <authorinitials>JamesValleroy</authorinitials>
@@ -26,7 +50,7 @@
   </articleinfo>
   <section>
     <title>Configure</title>
-    <para>Configure covers a couple of general topics: </para>
+    <para>Configure has some general configuration options: </para>
     <orderedlist numeration="arabic">
       <listitem>
         <para>Hostname </para>
@@ -40,15 +64,21 @@
         <para>Domain Name </para>
         <itemizedlist>
           <listitem override="none">
-            <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/XMPP#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
+            <para>Domain name is the global name by which other devices on the Internet can reach your FreedomBox. The value set here is used by the <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/ejabberd#">Chat Server (XMPP)</ulink>, <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/LetsEncrypt#">Certificates (Let's Encrypt)</ulink>, and <ulink url="https://wiki.debian.org/FreedomBox/Manual/Configure/FreedomBox/Manual/Monkeysphere#">Monkeysphere</ulink>. </para>
           </listitem>
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>Language </para>
+        <para>Default App </para>
         <itemizedlist>
           <listitem override="none">
-            <para>Language for the web administration interface Plinth </para>
+            <para>This is an advanced option that allows you to set something other than FreedomBox Service (Plinth) as the default application to be served on the domain name of the FreedomBox. For example, if your FreedomBox's domain name is <ulink url="https://myfreedombox.rocks"/> and you set MediaWiki as the default app, visiting <ulink url="https://myfreedombox.rocks"/> will take you to <ulink url="https://myfreedombox.rocks/mediawiki/"/> instead of the usual <ulink url="https://myfreedombox.rocks/plinth/"/>. Only web applications served from FreedomBox are allowed as choices. </para>
+          </listitem>
+          <listitem override="none">
+            <para><emphasis role="strong">Warning:</emphasis> Once some other app is set as the default app, you can only navigate to the FreedomBox Service (Plinth) by typing <ulink url="https://myfreedombox.rocks/plinth/"/> into the browser. <emphasis>/freedombox</emphasis> can also be  used as an alias to <emphasis>/plinth</emphasis> </para>
+          </listitem>
+          <listitem override="none">
+            <para><emphasis>Tip:</emphasis> Bookmark the URL of FreedomBox Service (Plinth) before changing the default app to some other app. </para>
           </listitem>
         </itemizedlist>
       </listitem>
