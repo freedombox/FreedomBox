@@ -66,7 +66,7 @@ def get_default_app():
         if aug.get(match + "/arg[1]") == '''"^/$"''':
             app_path = aug.get(match + "/arg[2]")
 
-    return app_path.strip("/")
+    return app_path.strip('"').strip('/')
 
 
 def init():
