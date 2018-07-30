@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 18:33-0400\n"
+"POT-Creation-Date: 2018-07-30 18:25-0400\n"
 "PO-Revision-Date: 2018-07-03 05:37+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -354,29 +354,29 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr "Zatím je k dispozici pouze omezená funkčnost."
 
-#: plinth/modules/config/__init__.py:55
+#: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Nastavit"
 
-#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:77
-#: plinth/modules/config/views.py:140
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: plinth/modules/config/forms.py:53 plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: plinth/modules/config/forms.py:64
+#: plinth/modules/config/forms.py:59
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: plinth/modules/config/forms.py:66
+#: plinth/modules/config/forms.py:61
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -389,11 +389,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:68
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: plinth/modules/config/forms.py:79
+#: plinth/modules/config/forms.py:74
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -410,6 +410,23 @@ msgstr ""
 "ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
 "nejvýše 253 znaků."
 
+#: plinth/modules/config/forms.py:88
+#, fuzzy
+#| msgid "Default"
+msgid "Default App"
+msgstr "Výchozí"
+
+#: plinth/modules/config/forms.py:90
+#, python-brace-format
+msgid ""
+"Choose the default web application that must be served when someone visits "
+"your {box_name} on the web. A typical use case is to set your blog or wiki "
+"as the landing page when someone visits the domain name. Note that once the "
+"default app is set to something other than {box_name} Service (Plinth), your "
+"users must explicitly type /plinth or /freedombox to reach {box_name} "
+"Service (Plinth)."
+msgstr ""
+
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
@@ -425,23 +442,35 @@ msgstr "Zjistit více…"
 msgid "General Configuration"
 msgstr "Obecná nastavení"
 
-#: plinth/modules/config/views.py:76
+#: plinth/modules/config/views.py:78
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Chyba při nastavování názvu stroje: {exception}"
 
-#: plinth/modules/config/views.py:79
+#: plinth/modules/config/views.py:81
 msgid "Hostname set"
 msgstr "Nastavení názvu stroje"
 
-#: plinth/modules/config/views.py:86
+#: plinth/modules/config/views.py:89
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Chyba při nastavování doménového názvu: {exception}"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:92
 msgid "Domain name set"
 msgstr "Nastavení doménového názvu"
+
+#: plinth/modules/config/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Error setting language: {exception}"
+msgid "Error setting default app: {exception}"
+msgstr "Chyba při nastavování jazyka: {exception}"
+
+#: plinth/modules/config/views.py:103
+#, fuzzy
+#| msgid "Default"
+msgid "Default app set"
+msgstr "Výchozí"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1240,7 +1269,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:134
+#: plinth/templates/base.html:144
 msgid "Help"
 msgstr "Nápověda"
 
@@ -1257,7 +1286,7 @@ msgid "Documentation"
 msgstr "Dokumentace"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:141
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
 msgid "Manual"
 msgstr "Příručka"
 
@@ -1700,6 +1729,7 @@ msgid "Website Security"
 msgstr "Zabezpečení webové stránky"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
+#: plinth/modules/udiskie/templates/udiskie.html:46
 msgid "Actions"
 msgstr "Akce"
 
@@ -2043,7 +2073,7 @@ msgstr "Registrace pro veřejnost zavřena"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:145
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2805,7 +2835,7 @@ msgid "Edit connection"
 msgstr "Upravit připojení"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:149 plinth/templates/base.html:150
+#: plinth/templates/base.html:159 plinth/templates/base.html:160
 msgid "Edit"
 msgstr "Upravit"
 
@@ -2843,7 +2873,7 @@ msgstr "ano"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 #: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:34
+#: plinth/modules/udiskie/templates/udiskie.html:41
 msgid "Device"
 msgstr "Zařízení"
 
@@ -3676,22 +3706,30 @@ msgstr ""
 "a>. K Radicale je možné přistupovat pomocí libovolného uživatelského účtu na "
 "{box_name}."
 
-#: plinth/modules/radicale/forms.py:28
+#: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr ""
 "Pouze vlastník kalendáře / adresáře kontaktů může zobrazovat nebo dělat "
 "změny."
 
-#: plinth/modules/radicale/forms.py:30
+#: plinth/modules/radicale/forms.py:33
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Any user can view any calendar/addressbook, but only the owner can make "
+#| "changes."
 msgid ""
-"Any user can view any calendar/addressbook, but only the owner can make "
-"changes."
+"Any user with a {box_name} login can view any calendar/addressbook, but only "
+"the owner can make changes."
 msgstr ""
 "Jakýkoli uživatel může kalendář / adresář kontaktů zobrazit, ale pouze "
 "vlastník může dělat změny."
 
-#: plinth/modules/radicale/forms.py:32
-msgid "Any user can view or make changes to any calendar/addressbook."
+#: plinth/modules/radicale/forms.py:36
+#, fuzzy, python-brace-format
+#| msgid "Any user can view or make changes to any calendar/addressbook."
+msgid ""
+"Any user with a {box_name} login can view or make changes to any calendar/"
+"addressbook."
 msgstr ""
 "Jakýkoli uživatel může zobrazit nebo dělat změny v libovolném kalendáři / "
 "adresáři kontaktů."
@@ -4476,7 +4514,7 @@ msgid "The following disks are in use:"
 msgstr "Následující jednotky datového úložiště jsou v používání:"
 
 #: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:38
+#: plinth/modules/udiskie/templates/udiskie.html:45
 msgid "Mount Point"
 msgstr "Přípojný bod"
 
@@ -4943,15 +4981,15 @@ msgstr "Číst a přihlásit se k odběru novinek"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (fork)"
 
-#: plinth/modules/udiskie/__init__.py:35
+#: plinth/modules/udiskie/__init__.py:33
 msgid "udiskie"
 msgstr "udiskie"
 
-#: plinth/modules/udiskie/__init__.py:37
+#: plinth/modules/udiskie/__init__.py:35
 msgid "Removable Media"
 msgstr "Vyjímatelná média"
 
-#: plinth/modules/udiskie/__init__.py:40
+#: plinth/modules/udiskie/__init__.py:38
 msgid ""
 "udiskie allows automatic mounting of removable media, such as flash drives."
 msgstr ""
@@ -4962,17 +5000,96 @@ msgstr ""
 msgid "Devices"
 msgstr "Zařízení"
 
-#: plinth/modules/udiskie/templates/udiskie.html:35
+#: plinth/modules/udiskie/templates/udiskie.html:33
+msgid "There are no additional storage devices attached."
+msgstr ""
+
+#: plinth/modules/udiskie/templates/udiskie.html:42
 msgid "Label"
 msgstr "Štítek"
 
-#: plinth/modules/udiskie/templates/udiskie.html:36
+#: plinth/modules/udiskie/templates/udiskie.html:43
 msgid "Size"
 msgstr "Velikost"
 
-#: plinth/modules/udiskie/templates/udiskie.html:37
+#: plinth/modules/udiskie/templates/udiskie.html:44
 msgid "Filesystem"
 msgstr "Souborový systém"
+
+#: plinth/modules/udiskie/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:139
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:143
+#, fuzzy
+#| msgid "This service already exists"
+msgid "The device is already unmounting."
+msgstr "Tato služba už existuje"
+
+#: plinth/modules/udiskie/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:148
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:163
+#, fuzzy
+#| msgid "This service already exists"
+msgid "The device is already mounted."
+msgstr "Tato služba už existuje"
+
+#: plinth/modules/udiskie/udisks2.py:165
+msgid "The device is not mounted."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:62
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:66
+msgid "Device can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:76
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
@@ -5341,65 +5458,65 @@ msgstr ""
 "issues\">systému hlášení chyb</a> abychom to mohli opravit. K hlášení také "
 "přiložte <a href=\"%(status_log_url)s\">záznam (log) stavu</a>."
 
-#: plinth/templates/base.html:49
+#: plinth/templates/base.html:50
 #, python-format
 msgid "Core funtionality and web interface for %(box_name)s"
 msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 
-#: plinth/templates/base.html:85
+#: plinth/templates/base.html:95
 msgid "Toggle navigation"
 msgstr "Přepnout navigaci"
 
-#: plinth/templates/base.html:103
+#: plinth/templates/base.html:113
 msgid " Home"
 msgstr " Domů"
 
-#: plinth/templates/base.html:106
+#: plinth/templates/base.html:116
 msgid "Home"
 msgstr "Domů"
 
-#: plinth/templates/base.html:111
+#: plinth/templates/base.html:121
 msgid " Apps"
 msgstr " Aplikace"
 
-#: plinth/templates/base.html:115
+#: plinth/templates/base.html:125
 msgid "Apps"
 msgstr "Aplikace"
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:130
 msgid " System"
 msgstr " Systém"
 
-#: plinth/templates/base.html:124
+#: plinth/templates/base.html:134
 msgid "System"
 msgstr "Systém"
 
-#: plinth/templates/base.html:155 plinth/templates/base.html:156
+#: plinth/templates/base.html:165 plinth/templates/base.html:166
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: plinth/templates/base.html:163 plinth/templates/base.html:164
+#: plinth/templates/base.html:173 plinth/templates/base.html:174
 msgid "Restart"
 msgstr "Restartovat"
 
-#: plinth/templates/base.html:169 plinth/templates/base.html:170
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: plinth/templates/base.html:177 plinth/templates/base.html:178
-#: plinth/templates/base.html:199 plinth/templates/base.html:201
+#: plinth/templates/base.html:187 plinth/templates/base.html:188
+#: plinth/templates/base.html:209 plinth/templates/base.html:211
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: plinth/templates/base.html:186
+#: plinth/templates/base.html:196
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: plinth/templates/base.html:191 plinth/templates/base.html:193
+#: plinth/templates/base.html:201 plinth/templates/base.html:203
 msgid "Log in"
 msgstr "Přihlásit"
 
-#: plinth/templates/base.html:240 plinth/templates/index.html:181
+#: plinth/templates/base.html:250 plinth/templates/index.html:178
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -5472,7 +5589,7 @@ msgstr ""
 "Vyčkejte až %(box_name)s dokončí instalaci. Jakmile bude hotová, budete moci "
 "začít svůj %(box_name)s používat."
 
-#: plinth/templates/index.html:43
+#: plinth/templates/index.html:40
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5481,11 +5598,11 @@ msgstr ""
 "Odkazy na této stránce se objeví až po zapnutí nějakých <a href="
 "\"%(apps_url)s\">aplikací</a>."
 
-#: plinth/templates/index.html:67
+#: plinth/templates/index.html:64
 msgid "Configure &raquo;"
 msgstr "Nastavit &raquo;"
 
-#: plinth/templates/index.html:121
+#: plinth/templates/index.html:118
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5497,7 +5614,7 @@ msgstr ""
 "aplikací na malých strojích. Poskytuje nástroje pro online komunikaci, "
 "respektující vaše soukromí a vlastnictví dat."
 
-#: plinth/templates/index.html:130
+#: plinth/templates/index.html:127
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5508,27 +5625,27 @@ msgstr ""
 "svobodný software, šířený pod licencí GNU Affero General Public License, "
 "verze 3 a novějších."
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:147
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:150
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:156
+#: plinth/templates/index.html:153
 msgid "Donate"
 msgstr "Podpořit darem"
 
-#: plinth/templates/index.html:160
+#: plinth/templates/index.html:157
 msgid "FreedomBox Foundation"
 msgstr "Nadace FreedomBox"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:164
 msgid "IRC Chatroom"
 msgstr "Chatovací místnost na IRC"
 
-#: plinth/templates/index.html:172
+#: plinth/templates/index.html:169
 msgid "Mailing list"
 msgstr "Poštovní konference"
 
@@ -5668,9 +5785,6 @@ msgstr "%(percentage)s%% dokončeno"
 
 #~ msgid "TT-RSS Reader"
 #~ msgstr "TT-RSS Reader"
-
-#~ msgid "Error setting language: {exception}"
-#~ msgstr "Chyba při nastavování jazyka: {exception}"
 
 #~ msgid "Language changed"
 #~ msgstr "Jazyk změněn"

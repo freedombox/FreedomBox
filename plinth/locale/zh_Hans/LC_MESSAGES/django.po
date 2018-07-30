@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 18:33-0400\n"
+"POT-Creation-Date: 2018-07-30 18:25-0400\n"
 "PO-Revision-Date: 2018-03-14 07:35+0000\n"
 "Last-Translator: 关羽 <quguibo1988@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -347,29 +347,29 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr ""
 
-#: plinth/modules/config/__init__.py:55
+#: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "配置"
 
-#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:77
-#: plinth/modules/config/views.py:140
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "域名"
 
-#: plinth/modules/config/forms.py:53 plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "无效的域名"
 
-#: plinth/modules/config/forms.py:64
+#: plinth/modules/config/forms.py:59
 msgid "Hostname"
 msgstr "主机名"
 
-#: plinth/modules/config/forms.py:66
+#: plinth/modules/config/forms.py:61
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -381,11 +381,11 @@ msgstr ""
 "数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 63 个字符或更"
 "少。"
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:68
 msgid "Invalid hostname"
 msgstr "无效的主机名"
 
-#: plinth/modules/config/forms.py:79
+#: plinth/modules/config/forms.py:74
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -399,6 +399,23 @@ msgstr ""
 "的标签组成。每个标签必须以字母或数字开头和结尾，并且只有字母，数字和连字符作"
 "为内部字符。每个标签的长度必须为 63 个字符或更少。域名总长度不得超过 253 个字"
 "符。"
+
+#: plinth/modules/config/forms.py:88
+#, fuzzy
+#| msgid "Default"
+msgid "Default App"
+msgstr "默认"
+
+#: plinth/modules/config/forms.py:90
+#, python-brace-format
+msgid ""
+"Choose the default web application that must be served when someone visits "
+"your {box_name} on the web. A typical use case is to set your blog or wiki "
+"as the landing page when someone visits the domain name. Note that once the "
+"default app is set to something other than {box_name} Service (Plinth), your "
+"users must explicitly type /plinth or /freedombox to reach {box_name} "
+"Service (Plinth)."
+msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -417,23 +434,35 @@ msgstr "了解更多&raquo;"
 msgid "General Configuration"
 msgstr "常规配置"
 
-#: plinth/modules/config/views.py:76
+#: plinth/modules/config/views.py:78
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "设置主机名错误：{exception}"
 
-#: plinth/modules/config/views.py:79
+#: plinth/modules/config/views.py:81
 msgid "Hostname set"
 msgstr "主机名设置"
 
-#: plinth/modules/config/views.py:86
+#: plinth/modules/config/views.py:89
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "设置域名错误：{exception}"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:92
 msgid "Domain name set"
 msgstr "域名集"
+
+#: plinth/modules/config/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Error setting language: {exception}"
+msgid "Error setting default app: {exception}"
+msgstr "设置语言错误：{exception}"
+
+#: plinth/modules/config/views.py:103
+#, fuzzy
+#| msgid "Default"
+msgid "Default app set"
+msgstr "默认"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1200,7 +1229,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:134
+#: plinth/templates/base.html:144
 msgid "Help"
 msgstr "帮助"
 
@@ -1217,7 +1246,7 @@ msgid "Documentation"
 msgstr "文档"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:141
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
 msgid "Manual"
 msgstr "手册"
 
@@ -1676,6 +1705,7 @@ msgid "Website Security"
 msgstr "网站安全"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
+#: plinth/modules/udiskie/templates/udiskie.html:46
 msgid "Actions"
 msgstr "行动"
 
@@ -1993,7 +2023,7 @@ msgstr "应用程序已禁用"
 msgid "MediaWiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:145
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
 msgid "Wiki"
 msgstr ""
 
@@ -2755,7 +2785,7 @@ msgid "Edit connection"
 msgstr "编辑连接"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:149 plinth/templates/base.html:150
+#: plinth/templates/base.html:159 plinth/templates/base.html:160
 msgid "Edit"
 msgstr "編輯"
 
@@ -2793,7 +2823,7 @@ msgstr "是的"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 #: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:34
+#: plinth/modules/udiskie/templates/udiskie.html:41
 msgid "Device"
 msgstr "设备"
 
@@ -3612,18 +3642,26 @@ msgstr ""
 "user_documentation/#idcaldav-and-carddav-client\">支持的客户端应用程序</a>。"
 "任何拥有 {box_name} 登录名的用户都可以访问 Radicale。"
 
-#: plinth/modules/radicale/forms.py:28
+#: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr "只有日历/通训录的所有者可以查看或做出改动。"
 
-#: plinth/modules/radicale/forms.py:30
+#: plinth/modules/radicale/forms.py:33
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Any user can view any calendar/addressbook, but only the owner can make "
+#| "changes."
 msgid ""
-"Any user can view any calendar/addressbook, but only the owner can make "
-"changes."
+"Any user with a {box_name} login can view any calendar/addressbook, but only "
+"the owner can make changes."
 msgstr "任何用户都可以查看任何日历/通训录，但是只有所有者可以作出修改。"
 
-#: plinth/modules/radicale/forms.py:32
-msgid "Any user can view or make changes to any calendar/addressbook."
+#: plinth/modules/radicale/forms.py:36
+#, fuzzy, python-brace-format
+#| msgid "Any user can view or make changes to any calendar/addressbook."
+msgid ""
+"Any user with a {box_name} login can view or make changes to any calendar/"
+"addressbook."
 msgstr "任何用户都可以查看和修改任何日历/通训录。"
 
 #: plinth/modules/radicale/manifest.py:24
@@ -4428,7 +4466,7 @@ msgid "The following disks are in use:"
 msgstr "正在使用以下磁盘："
 
 #: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:38
+#: plinth/modules/udiskie/templates/udiskie.html:45
 msgid "Mount Point"
 msgstr "挂载点"
 
@@ -4869,15 +4907,15 @@ msgstr ""
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/udiskie/__init__.py:35
+#: plinth/modules/udiskie/__init__.py:33
 msgid "udiskie"
 msgstr ""
 
-#: plinth/modules/udiskie/__init__.py:37
+#: plinth/modules/udiskie/__init__.py:35
 msgid "Removable Media"
 msgstr ""
 
-#: plinth/modules/udiskie/__init__.py:40
+#: plinth/modules/udiskie/__init__.py:38
 msgid ""
 "udiskie allows automatic mounting of removable media, such as flash drives."
 msgstr ""
@@ -4888,19 +4926,100 @@ msgstr ""
 msgid "Devices"
 msgstr "设备"
 
-#: plinth/modules/udiskie/templates/udiskie.html:35
+#: plinth/modules/udiskie/templates/udiskie.html:33
+msgid "There are no additional storage devices attached."
+msgstr ""
+
+#: plinth/modules/udiskie/templates/udiskie.html:42
 msgid "Label"
 msgstr ""
 
-#: plinth/modules/udiskie/templates/udiskie.html:36
+#: plinth/modules/udiskie/templates/udiskie.html:43
 msgid "Size"
 msgstr ""
 
-#: plinth/modules/udiskie/templates/udiskie.html:37
+#: plinth/modules/udiskie/templates/udiskie.html:44
 #, fuzzy
 #| msgid "System"
 msgid "Filesystem"
 msgstr "系统"
+
+#: plinth/modules/udiskie/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:139
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:143
+#, fuzzy
+#| msgid "repro service is running"
+msgid "The device is already unmounting."
+msgstr "repro 服务正在运行"
+
+#: plinth/modules/udiskie/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:148
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:163
+#, fuzzy
+#| msgid "This service already exists"
+msgid "The device is already mounted."
+msgstr "此服务已存在"
+
+#: plinth/modules/udiskie/udisks2.py:165
+#, fuzzy
+#| msgid "repro service is not running"
+msgid "The device is not mounted."
+msgstr "repro 服务未运行"
+
+#: plinth/modules/udiskie/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:62
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:66
+msgid "Device can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:76
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
@@ -5269,76 +5388,76 @@ msgstr ""
 "com/freedombox/Plinth/issues\"> bug 追踪器</a> 上这样我们就可以修复该错误。同"
 "时请附加<a href=\"%(status_log_url)s\">状态日志</a>到 Bug 报告里。"
 
-#: plinth/templates/base.html:49
+#: plinth/templates/base.html:50
 #, fuzzy, python-format
 #| msgid "Plinth administrative interface for the %(box_name)s"
 msgid "Core funtionality and web interface for %(box_name)s"
 msgstr "Plinth %(box_name)s 管理界面"
 
-#: plinth/templates/base.html:85
+#: plinth/templates/base.html:95
 msgid "Toggle navigation"
 msgstr "切换导航"
 
-#: plinth/templates/base.html:103
+#: plinth/templates/base.html:113
 msgid " Home"
 msgstr ""
 
-#: plinth/templates/base.html:106
+#: plinth/templates/base.html:116
 msgid "Home"
 msgstr ""
 
-#: plinth/templates/base.html:111
+#: plinth/templates/base.html:121
 #, fuzzy
 #| msgid "Apps"
 msgid " Apps"
 msgstr "应用程序"
 
-#: plinth/templates/base.html:115
+#: plinth/templates/base.html:125
 msgid "Apps"
 msgstr "应用程序"
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:130
 #, fuzzy
 #| msgid "System"
 msgid " System"
 msgstr "系统"
 
-#: plinth/templates/base.html:124
+#: plinth/templates/base.html:134
 msgid "System"
 msgstr "系统"
 
-#: plinth/templates/base.html:155 plinth/templates/base.html:156
+#: plinth/templates/base.html:165 plinth/templates/base.html:166
 msgid "Change password"
 msgstr "更改密码"
 
-#: plinth/templates/base.html:163 plinth/templates/base.html:164
+#: plinth/templates/base.html:173 plinth/templates/base.html:174
 #, fuzzy
 #| msgid "Restart Now"
 msgid "Restart"
 msgstr "现在重新启动"
 
-#: plinth/templates/base.html:169 plinth/templates/base.html:170
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 #, fuzzy
 #| msgid "Shut Down Now"
 msgid "Shut down"
 msgstr "现在关闭"
 
-#: plinth/templates/base.html:177 plinth/templates/base.html:178
-#: plinth/templates/base.html:199 plinth/templates/base.html:201
+#: plinth/templates/base.html:187 plinth/templates/base.html:188
+#: plinth/templates/base.html:209 plinth/templates/base.html:211
 msgid "Log out"
 msgstr "登出"
 
-#: plinth/templates/base.html:186
+#: plinth/templates/base.html:196
 #, fuzzy
 #| msgid "Language"
 msgid "Select language"
 msgstr "语言"
 
-#: plinth/templates/base.html:191 plinth/templates/base.html:193
+#: plinth/templates/base.html:201 plinth/templates/base.html:203
 msgid "Log in"
 msgstr "登录"
 
-#: plinth/templates/base.html:240 plinth/templates/index.html:181
+#: plinth/templates/base.html:250 plinth/templates/index.html:178
 msgid "JavaScript license information"
 msgstr ""
 
@@ -5425,7 +5544,7 @@ msgid ""
 "your %(box_name)s once it is done."
 msgstr ""
 
-#: plinth/templates/index.html:43
+#: plinth/templates/index.html:40
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5433,11 +5552,11 @@ msgid ""
 msgstr ""
 "启用一些<a href=\"%(apps_url)s\">应用程序</a>来将其快捷方式放到此页面。"
 
-#: plinth/templates/index.html:67
+#: plinth/templates/index.html:64
 msgid "Configure &raquo;"
 msgstr "配置 &raquo；"
 
-#: plinth/templates/index.html:121
+#: plinth/templates/index.html:118
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5447,7 +5566,7 @@ msgstr ""
 "%(box_name)s 是一个基于 Debian 并完全使用自由软件来自托管部署社交应用的小机"
 "器。它提供在线交流工具以尊重您的隐私和数据所有权。"
 
-#: plinth/templates/index.html:130
+#: plinth/templates/index.html:127
 #, fuzzy, python-format
 #| msgid ""
 #| "This portal is a part of Plinth, the %(box_name)s web interface. Plinth "
@@ -5461,29 +5580,29 @@ msgstr ""
 "此页面是 Plinth 的一部分，%(box_name)s 的 Web 接口。Plinth 是自由软件，以 "
 "GNU Affero 通用许可证第 3 版或更高版发布。"
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:147
 msgid "Homepage"
 msgstr ""
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:150
 msgid "Source Code"
 msgstr ""
 
-#: plinth/templates/index.html:156
+#: plinth/templates/index.html:153
 msgid "Donate"
 msgstr ""
 
-#: plinth/templates/index.html:160
+#: plinth/templates/index.html:157
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:164
 msgid "IRC Chatroom"
 msgstr ""
 
-#: plinth/templates/index.html:172
+#: plinth/templates/index.html:169
 msgid "Mailing list"
 msgstr ""
 
@@ -5610,9 +5729,6 @@ msgstr "已完成 %(percentage)s%%"
 #~ "The options affect the %(box_name)s at its most general level, so be "
 #~ "careful!"
 #~ msgstr "此选项会在通用层面影响 {box_name} 所以要小心！"
-
-#~ msgid "Error setting language: {exception}"
-#~ msgstr "设置语言错误：{exception}"
 
 #~ msgid "Language changed"
 #~ msgstr "语言已更改"
@@ -5892,12 +6008,6 @@ msgstr "已完成 %(percentage)s%%"
 #~| msgid "repro service is not running"
 #~ msgid "Radicale service is not running"
 #~ msgstr "Radicale 服务未运行"
-
-#~ msgid "repro service is running"
-#~ msgstr "repro 服务正在运行"
-
-#~ msgid "repro service is not running"
-#~ msgstr "repro 服务未运行"
 
 #~ msgid "Transmission daemon is running"
 #~ msgstr "Transmission 守护程序正在运行"

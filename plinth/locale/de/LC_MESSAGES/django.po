@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 18:33-0400\n"
+"POT-Creation-Date: 2018-07-30 18:25-0400\n"
 "PO-Revision-Date: 2018-07-25 11:04+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -326,8 +326,8 @@ msgid ""
 "\"{users_url}\">any user</a> with a {box_name} login. Sensitive information "
 "and system altering abilities are limited to users belonging to admin group."
 msgstr ""
-"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/\""
-">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
+"Falls aktiviert, steht Cockpit auf dem Webserver unter <a href=\"/_cockpit/"
+"\">/_cockpit/</a> zur Verfügung. Zugriff hat <a href=\"{users_url}\">jeder "
 "Nutzer</a> mit einem {box_name} Nutzerkonto. Vertrauliche Informationen und "
 "Änderungen sind Nutzern in der Administratorgruppe vorbehalten."
 
@@ -335,29 +335,29 @@ msgstr ""
 msgid "Currently only limited functionality is available."
 msgstr "Derzeit ist nur eine eingeschränkte Funktionalität möglich."
 
-#: plinth/modules/config/__init__.py:55
+#: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
 #: plinth/modules/ikiwiki/views.py:35 plinth/modules/snapshot/views.py:39
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:39
 msgid "Configure"
 msgstr "Konfigurieren"
 
-#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:77
-#: plinth/modules/config/views.py:140
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Domain-Name"
 
-#: plinth/modules/config/forms.py:53 plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Ungültiger Domain-Name"
 
-#: plinth/modules/config/forms.py:64
+#: plinth/modules/config/forms.py:59
 msgid "Hostname"
 msgstr "Hostname"
 
-#: plinth/modules/config/forms.py:66
+#: plinth/modules/config/forms.py:61
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -370,11 +370,11 @@ msgstr ""
 "darf als einziges Sonderzeichen das Minuszeichen enthalten. Insgesamt darf "
 "die Länge 63 Zeichen nicht überschreiten."
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:68
 msgid "Invalid hostname"
 msgstr "Ungültiger Hostname"
 
-#: plinth/modules/config/forms.py:79
+#: plinth/modules/config/forms.py:74
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -389,6 +389,23 @@ msgstr ""
 "Kennungen bestehen. Jede Kennung muss alphanumerisch beginnen und enden und "
 "aus alphanumerischen Zeichen und Bindestrichen bestehen. Jede Kennung darf "
 "maximal 63 Zeichen lang sein, die Gesamtlänge des Domain-Names 253 Zeichen."
+
+#: plinth/modules/config/forms.py:88
+#, fuzzy
+#| msgid "Default"
+msgid "Default App"
+msgstr "Standard"
+
+#: plinth/modules/config/forms.py:90
+#, python-brace-format
+msgid ""
+"Choose the default web application that must be served when someone visits "
+"your {box_name} on the web. A typical use case is to set your blog or wiki "
+"as the landing page when someone visits the domain name. Note that once the "
+"default app is set to something other than {box_name} Service (Plinth), your "
+"users must explicitly type /plinth or /freedombox to reach {box_name} "
+"Service (Plinth)."
+msgstr ""
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -405,23 +422,35 @@ msgstr "Mehr lernen..."
 msgid "General Configuration"
 msgstr "Allgemeine Konfiguration"
 
-#: plinth/modules/config/views.py:76
+#: plinth/modules/config/views.py:78
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Fehler beim Setzen des Hostnamens: {exception}"
 
-#: plinth/modules/config/views.py:79
+#: plinth/modules/config/views.py:81
 msgid "Hostname set"
 msgstr "Hostname gesetzt"
 
-#: plinth/modules/config/views.py:86
+#: plinth/modules/config/views.py:89
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Fehler beim Setzen des Domain-Namens: {exception}"
 
-#: plinth/modules/config/views.py:89
+#: plinth/modules/config/views.py:92
 msgid "Domain name set"
 msgstr "Domain Name gesetzt"
+
+#: plinth/modules/config/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Error setting language: {exception}"
+msgid "Error setting default app: {exception}"
+msgstr "Fehler beim Setzen der Sprache: {exception}"
+
+#: plinth/modules/config/views.py:103
+#, fuzzy
+#| msgid "Default"
+msgid "Default app set"
+msgstr "Standard"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1223,7 +1252,7 @@ msgstr ""
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:27
-#: plinth/templates/base.html:134
+#: plinth/templates/base.html:144
 msgid "Help"
 msgstr "Hilfe"
 
@@ -1240,7 +1269,7 @@ msgid "Documentation"
 msgstr "Dokumentation"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:141
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
 msgid "Manual"
 msgstr "Handbuch"
 
@@ -1446,11 +1475,11 @@ msgid ""
 "<i>edit</i> existing ones. In the <a href=\"{users_url}\">User "
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
-"Blogs und Wikis können nur von {box_name} Nutzern in der <b>Administrator</b>"
-" Gruppe <i>erstellt</i> und <i>verwaltet</i> werden, aber von allen Nutzern "
-"in der <b>Wiki</b> Gruppe <i>editiert</i> werden. In der <a href=\"{users_url"
-"}\">Benutzer-Konfiguration</a> können Sie diese Rechte ändern oder neue "
-"Nutzer anlegen."
+"Blogs und Wikis können nur von {box_name} Nutzern in der <b>Administrator</"
+"b> Gruppe <i>erstellt</i> und <i>verwaltet</i> werden, aber von allen "
+"Nutzern in der <b>Wiki</b> Gruppe <i>editiert</i> werden. In der <a href="
+"\"{users_url}\">Benutzer-Konfiguration</a> können Sie diese Rechte ändern "
+"oder neue Nutzer anlegen."
 
 #: plinth/modules/ikiwiki/__init__.py:62
 msgid "View and edit wiki applications"
@@ -1689,6 +1718,7 @@ msgid "Website Security"
 msgstr "Webseiten-Sicherheit"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
+#: plinth/modules/udiskie/templates/udiskie.html:46
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -2036,7 +2066,7 @@ msgstr "Öffentliche Registrierung deaktiviert"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:145
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2811,7 +2841,7 @@ msgid "Edit connection"
 msgstr "Bearbeite Verbindung"
 
 #: plinth/modules/networks/templates/connection_show.html:43
-#: plinth/templates/base.html:149 plinth/templates/base.html:150
+#: plinth/templates/base.html:159 plinth/templates/base.html:160
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -2849,7 +2879,7 @@ msgstr "ja"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 #: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:34
+#: plinth/modules/udiskie/templates/udiskie.html:41
 msgid "Device"
 msgstr "Gerät"
 
@@ -3695,22 +3725,30 @@ msgstr ""
 "notwendig. Radicale kann von jedem Nutzer mit einem {box_name} Konto "
 "verwendet werden."
 
-#: plinth/modules/radicale/forms.py:28
+#: plinth/modules/radicale/forms.py:30
 msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr ""
 "Nur der Eigentümer eines Kalenders/Adressbuches kann dieses einsehen oder "
 "Änderungen durchführen."
 
-#: plinth/modules/radicale/forms.py:30
+#: plinth/modules/radicale/forms.py:33
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Any user can view any calendar/addressbook, but only the owner can make "
+#| "changes."
 msgid ""
-"Any user can view any calendar/addressbook, but only the owner can make "
-"changes."
+"Any user with a {box_name} login can view any calendar/addressbook, but only "
+"the owner can make changes."
 msgstr ""
 "Jeder Nutzer kann jeden Kalender/Adressbuch sehen, aber nur der Eigentümer "
 "kann Änderungen durchführen."
 
-#: plinth/modules/radicale/forms.py:32
-msgid "Any user can view or make changes to any calendar/addressbook."
+#: plinth/modules/radicale/forms.py:36
+#, fuzzy, python-brace-format
+#| msgid "Any user can view or make changes to any calendar/addressbook."
+msgid ""
+"Any user with a {box_name} login can view or make changes to any calendar/"
+"addressbook."
 msgstr ""
 "Jeder Nutzer kann jeden Kalender/Adressbuch einsehen oder Änderungen "
 "durchführen."
@@ -4503,7 +4541,7 @@ msgid "The following disks are in use:"
 msgstr "Die folgenden Speichermedien werden verwendet:"
 
 #: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:38
+#: plinth/modules/udiskie/templates/udiskie.html:45
 msgid "Mount Point"
 msgstr "Einhängepunkt"
 
@@ -4965,8 +5003,8 @@ msgid ""
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
 "Falls aktiviert, steht Tiny Tiny RSS auf dem Webserver unter <a href=\"/tt-"
-"rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href=\""
-"{users_url}\">{box_name} Benutzerkonto</a>."
+"rss\">/tt-rss</a> zur Verfügung. Zugriff hat jeder mit einem <a href="
+"\"{users_url}\">{box_name} Benutzerkonto</a>."
 
 #: plinth/modules/ttrss/__init__.py:54
 msgid ""
@@ -4984,15 +5022,15 @@ msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/udiskie/__init__.py:35
+#: plinth/modules/udiskie/__init__.py:33
 msgid "udiskie"
 msgstr "udiskie"
 
-#: plinth/modules/udiskie/__init__.py:37
+#: plinth/modules/udiskie/__init__.py:35
 msgid "Removable Media"
 msgstr "Wechseldatenträger"
 
-#: plinth/modules/udiskie/__init__.py:40
+#: plinth/modules/udiskie/__init__.py:38
 msgid ""
 "udiskie allows automatic mounting of removable media, such as flash drives."
 msgstr ""
@@ -5003,17 +5041,98 @@ msgstr ""
 msgid "Devices"
 msgstr "Geräte"
 
-#: plinth/modules/udiskie/templates/udiskie.html:35
+#: plinth/modules/udiskie/templates/udiskie.html:33
+msgid "There are no additional storage devices attached."
+msgstr ""
+
+#: plinth/modules/udiskie/templates/udiskie.html:42
 msgid "Label"
 msgstr "Bezeichnung"
 
-#: plinth/modules/udiskie/templates/udiskie.html:36
+#: plinth/modules/udiskie/templates/udiskie.html:43
 msgid "Size"
 msgstr "Größe"
 
-#: plinth/modules/udiskie/templates/udiskie.html:37
+#: plinth/modules/udiskie/templates/udiskie.html:44
 msgid "Filesystem"
 msgstr "Dateisystem"
+
+#: plinth/modules/udiskie/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:139
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:143
+#, fuzzy
+#| msgid "repro service is running"
+msgid "The device is already unmounting."
+msgstr "repro Dienst läuft"
+
+#: plinth/modules/udiskie/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:148
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:163
+#, fuzzy
+#| msgid "This service already exists"
+msgid "The device is already mounted."
+msgstr "Dieser Dienst existiert bereits"
+
+#: plinth/modules/udiskie/udisks2.py:165
+#, fuzzy
+#| msgid "repro service is not running"
+msgid "The device is not mounted."
+msgstr "repro Dienst läuft nicht"
+
+#: plinth/modules/udiskie/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/udiskie/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:62
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:66
+msgid "Device can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/udiskie/views.py:76
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
@@ -5391,65 +5510,65 @@ msgstr ""
 "wir ihn beheben können. Fügen sie auch das <a href=\"%(status_log_url)s"
 "\">Statusprotokoll</a> dem Fehlerbericht bei."
 
-#: plinth/templates/base.html:49
+#: plinth/templates/base.html:50
 #, python-format
 msgid "Core funtionality and web interface for %(box_name)s"
 msgstr "Kernfunktionalität und Webinterface für %(box_name)s"
 
-#: plinth/templates/base.html:85
+#: plinth/templates/base.html:95
 msgid "Toggle navigation"
 msgstr "Navigation ein-/ausklappen"
 
-#: plinth/templates/base.html:103
+#: plinth/templates/base.html:113
 msgid " Home"
 msgstr " Startseite"
 
-#: plinth/templates/base.html:106
+#: plinth/templates/base.html:116
 msgid "Home"
 msgstr "Startseite"
 
-#: plinth/templates/base.html:111
+#: plinth/templates/base.html:121
 msgid " Apps"
 msgstr " Apps"
 
-#: plinth/templates/base.html:115
+#: plinth/templates/base.html:125
 msgid "Apps"
 msgstr "Apps"
 
-#: plinth/templates/base.html:120
+#: plinth/templates/base.html:130
 msgid " System"
 msgstr " System"
 
-#: plinth/templates/base.html:124
+#: plinth/templates/base.html:134
 msgid "System"
 msgstr "System"
 
-#: plinth/templates/base.html:155 plinth/templates/base.html:156
+#: plinth/templates/base.html:165 plinth/templates/base.html:166
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: plinth/templates/base.html:163 plinth/templates/base.html:164
+#: plinth/templates/base.html:173 plinth/templates/base.html:174
 msgid "Restart"
 msgstr "Neustarten"
 
-#: plinth/templates/base.html:169 plinth/templates/base.html:170
+#: plinth/templates/base.html:179 plinth/templates/base.html:180
 msgid "Shut down"
 msgstr "Herunterfahren"
 
-#: plinth/templates/base.html:177 plinth/templates/base.html:178
-#: plinth/templates/base.html:199 plinth/templates/base.html:201
+#: plinth/templates/base.html:187 plinth/templates/base.html:188
+#: plinth/templates/base.html:209 plinth/templates/base.html:211
 msgid "Log out"
 msgstr "Abmelden"
 
-#: plinth/templates/base.html:186
+#: plinth/templates/base.html:196
 msgid "Select language"
 msgstr "Wählen Sie die Sprache"
 
-#: plinth/templates/base.html:191 plinth/templates/base.html:193
+#: plinth/templates/base.html:201 plinth/templates/base.html:203
 msgid "Log in"
 msgstr "Anmelden"
 
-#: plinth/templates/base.html:240 plinth/templates/index.html:181
+#: plinth/templates/base.html:250 plinth/templates/index.html:178
 msgid "JavaScript license information"
 msgstr "JavaScript Lizenzinformation"
 
@@ -5522,7 +5641,7 @@ msgstr ""
 "Bitte warten Sie, bis %(box_name)s fertig eingerichtet ist. Sie können ihre "
 "%(box_name)s sofort danach benutzen."
 
-#: plinth/templates/index.html:43
+#: plinth/templates/index.html:40
 #, python-format
 msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
@@ -5531,11 +5650,11 @@ msgstr ""
 "Aktiviere einige <a href=\"%(apps_url)s\">Anwendungen</a> um Verknüpfungen "
 "zu dieser Seite hinzuzufügen."
 
-#: plinth/templates/index.html:67
+#: plinth/templates/index.html:64
 msgid "Configure &raquo;"
 msgstr "Konfigurieren &raquo;"
 
-#: plinth/templates/index.html:121
+#: plinth/templates/index.html:118
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5549,7 +5668,7 @@ msgstr ""
 "Es bietet Online-Kommunikationswerkzeuge, die Ihre Privatsphäre und Ihr "
 "Eigentum an Ihren Daten respektieren."
 
-#: plinth/templates/index.html:130
+#: plinth/templates/index.html:127
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5560,27 +5679,27 @@ msgstr ""
 "freie Software, die unter der GNU Affero General Public License, Version 3 "
 "oder höher, vertrieben wird."
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:147
 msgid "Homepage"
 msgstr "Homepage"
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:150
 msgid "Source Code"
 msgstr "Quellcode"
 
-#: plinth/templates/index.html:156
+#: plinth/templates/index.html:153
 msgid "Donate"
 msgstr "Spenden"
 
-#: plinth/templates/index.html:160
+#: plinth/templates/index.html:157
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Stiftung"
 
-#: plinth/templates/index.html:167
+#: plinth/templates/index.html:164
 msgid "IRC Chatroom"
 msgstr "IRC Chatraum"
 
-#: plinth/templates/index.html:172
+#: plinth/templates/index.html:169
 msgid "Mailing list"
 msgstr "Email Verteiler"
 
@@ -5719,9 +5838,6 @@ msgstr "%(percentage)s%% abgeschlossen"
 
 #~ msgid "TT-RSS Reader"
 #~ msgstr "TT-RSS Feedreader"
-
-#~ msgid "Error setting language: {exception}"
-#~ msgstr "Fehler beim Setzen der Sprache: {exception}"
 
 #~ msgid "Language changed"
 #~ msgstr "Sprache geändert"
@@ -6040,12 +6156,6 @@ msgstr "%(percentage)s%% abgeschlossen"
 #~| msgid "repro service is not running"
 #~ msgid "Radicale service is not running"
 #~ msgstr "Radicale Dienst läuft nicht"
-
-#~ msgid "repro service is running"
-#~ msgstr "repro Dienst läuft"
-
-#~ msgid "repro service is not running"
-#~ msgstr "repro Dienst läuft nicht"
 
 #~ msgid "Transmission daemon is running"
 #~ msgstr "Transmission daemon läuft"
