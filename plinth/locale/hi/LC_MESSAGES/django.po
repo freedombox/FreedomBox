@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-30 18:25-0400\n"
-"PO-Revision-Date: 2018-07-30 23:04+0000\n"
+"PO-Revision-Date: 2018-07-30 23:36+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
 "hi/>\n"
@@ -389,6 +389,12 @@ msgid ""
 "users must explicitly type /plinth or /freedombox to reach {box_name} "
 "Service (Plinth)."
 msgstr ""
+"डिफ़ॉल्ट वेब एप्लिकेशन चूनिये जो परोसा जाता पढ़ेगा जब किसी को आपका {box_name}"
+" वेब में दौरा करता है. जब किसी आैर डोमेन नाम पर जाता है तो एक टिपिकल उपयोग "
+"मामला है आपके ब्लॉग या विकी को लैंडिंग पेज के रूप में सेट करना है. नोट करें "
+"कि अगर एक बार डिफ़ॉल्ट एेप {box_name} के अलावा कुछ पर सेट करना है, आपके यू"
+"सकस {box_name} सर्विस (प्लिंथ) पहुचते के लिये प्लिंथ या फ्रीडमबॉक्स स्पष्ट रू"
+"प से टाइप करना पढ़ेगा."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -424,16 +430,13 @@ msgid "Domain name set"
 msgstr "डोमेन नाम सेट"
 
 #: plinth/modules/config/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error setting domain name: {exception}"
+#, python-brace-format
 msgid "Error setting default app: {exception}"
-msgstr "{exception}: डोमेन नाम सेट करने में एरर"
+msgstr "{exception}: डिफ़ॉल्ट एेप सेट करने में एरर"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
 msgid "Default app set"
-msgstr "डिफ़ॉल्ट"
+msgstr "डिफ़ॉल्ट एेप सेट"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -3593,23 +3596,22 @@ msgid "Only the owner of a calendar/addressbook can view or make changes."
 msgstr "सिर्फ कैलेंडर/पता पुस्तिका का मालिक परिवर्तन देख या कर सकता है."
 
 #: plinth/modules/radicale/forms.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Any user can view any calendar/addressbook, but only the owner can make "
-#| "changes."
+#, python-brace-format
 msgid ""
 "Any user with a {box_name} login can view any calendar/addressbook, but only "
 "the owner can make changes."
 msgstr ""
-"कोई यूसर किसी कैलेंडर/पता पुस्तिका देख सकते हैं, लेकिन सिर्फ मालिक परिवर्तन कर सकते हैं."
+"किसी यूसर {box_name} लॉगिन के साथ कैलेंडर/पता पुस्तिका देख सकते हैं, लेकिन "
+"सिर्फ मालिक परिवर्तन कर सकते हैं."
 
 #: plinth/modules/radicale/forms.py:36
-#, fuzzy, python-brace-format
-#| msgid "Any user can view or make changes to any calendar/addressbook."
+#, python-brace-format
 msgid ""
 "Any user with a {box_name} login can view or make changes to any calendar/"
 "addressbook."
-msgstr "कोई भी यूसर कैलेंडर/पता पुस्तिका को परिवर्तन देख या कर सकता है."
+msgstr ""
+"किसी यूसर {box_name} लॉगिन के साथ कैलेंडर/पता पुस्तिका को परिवर्तन देख या कर "
+"सकता है."
 
 #: plinth/modules/radicale/manifest.py:24
 msgid "DAVDroid"
@@ -4839,7 +4841,7 @@ msgstr "डिवाइसेस"
 
 #: plinth/modules/udiskie/templates/udiskie.html:33
 msgid "There are no additional storage devices attached."
-msgstr ""
+msgstr "कोई अतिरिक्त स्टोरेज डिवाइस अनुलग्न नहीं हैं."
 
 #: plinth/modules/udiskie/templates/udiskie.html:42
 msgid "Label"
@@ -4856,72 +4858,68 @@ msgstr "फ़ाइलसिस्टम"
 #: plinth/modules/udiskie/udisks2.py:89
 #, python-brace-format
 msgid "No such device - {device_path}"
-msgstr ""
+msgstr "ऐसा कोई डिवाइस नहीं - {device_path}"
 
 #: plinth/modules/udiskie/udisks2.py:139
 msgid "The operation failed."
-msgstr ""
+msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
 
 #: plinth/modules/udiskie/udisks2.py:141
 msgid "The operation was cancelled."
-msgstr ""
+msgstr "ऑपरेशन रद्द किया गया."
 
 #: plinth/modules/udiskie/udisks2.py:143
-#, fuzzy
-#| msgid "This service already exists"
 msgid "The device is already unmounting."
-msgstr "यह सर्विस पहले से मौजूद है"
+msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
 
 #: plinth/modules/udiskie/udisks2.py:145
 msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
+msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
 
 #: plinth/modules/udiskie/udisks2.py:148
 msgid "The operation timed out."
-msgstr ""
+msgstr "ऑपरेशन टाइम आउट हो गया."
 
 #: plinth/modules/udiskie/udisks2.py:150
 msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
+msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
 
 #: plinth/modules/udiskie/udisks2.py:153
 msgid "Attempting to unmount a device that is busy."
-msgstr ""
+msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
 
 #: plinth/modules/udiskie/udisks2.py:155
 msgid "The operation has already been cancelled."
-msgstr ""
+msgstr "ऑपरेशन पहले से रद्द किया गया."
 
 #: plinth/modules/udiskie/udisks2.py:161
 msgid "Not authorized to perform the requested operation."
-msgstr ""
+msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
 
 #: plinth/modules/udiskie/udisks2.py:163
-#, fuzzy
-#| msgid "This service already exists"
 msgid "The device is already mounted."
-msgstr "यह सर्विस पहले से मौजूद है"
+msgstr "यह डिवाइस पहले से माउंट किया गया."
 
 #: plinth/modules/udiskie/udisks2.py:165
 msgid "The device is not mounted."
-msgstr ""
+msgstr "यह डिवाइस नहीं माउंट किया गया."
 
 #: plinth/modules/udiskie/udisks2.py:168
 msgid "Not permitted to use the requested option."
-msgstr ""
+msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
 
 #: plinth/modules/udiskie/udisks2.py:171
 msgid "The device is mounted by another user."
-msgstr ""
+msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
 
 #: plinth/modules/udiskie/views.py:62
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
+msgstr "{drive_vendor}{drive_model} को सुरक्षित रूप से अनप्लग किया जा सकता है."
 
 #: plinth/modules/udiskie/views.py:66
 msgid "Device can be safely unplugged."
-msgstr ""
+msgstr "डिवाइस सुरक्षित रूप से अनप्लग किया जा सकता है."
 
 #: plinth/modules/udiskie/views.py:76
 #, python-brace-format
