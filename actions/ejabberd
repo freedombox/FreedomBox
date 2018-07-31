@@ -28,6 +28,7 @@ import stat
 import subprocess
 import sys
 import ruamel.yaml
+from distutils.version import LooseVersion as LV
 
 from plinth import action_utils
 from plinth.modules import config
@@ -38,6 +39,8 @@ EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
 EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
+IQDISC_DEPRECATED_VERSION = LV('18.03')
+MOD_IRC_DEPRECATED_VERSION = LV('18.06')
 
 
 def parse_arguments():
@@ -93,6 +96,8 @@ def parse_arguments():
     letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
     letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
     letsencrypt.add_argument('--domain', help='Domain name to drop.')
+
+    subparsers.add_parser('fix-config', help='Fix the deprecated config files')
 
     subparsers.required = True
     return parser.parse_args()
@@ -289,7 +294,7 @@ def subcommand_letsencrypt(arguments):
         sys.exit(1)
 
     if arguments.command == 'add' and arguments.domain is not None \
-       and arguments.domain != current_domain:
+        and arguments.domain != current_domain:
         print('Aborted: Only certificate of current domain "%s" can be added.'
               % current_domain)
         sys.exit(2)
@@ -339,7 +344,7 @@ def subcommand_letsencrypt(arguments):
 
         for listen_port in conf['listen']:
             if 'certfile' in listen_port \
-               and listen_port['certfile'] == cert_file:
+                and listen_port['certfile'] == cert_file:
                 listen_port['certfile'] = orig_cert_file
 
         if conf['s2s_certfile'] == cert_file:
@@ -353,6 +358,39 @@ def subcommand_letsencrypt(arguments):
 
     if action_utils.service_is_running('ejabberd'):
         action_utils.service_restart('ejabberd')
+
+
+def subcommand_fix_config(_):
+    """ Fix the config file by removing deprecated settings"""
+    current_version = _get_version()
+    if not current_version:
+        print('Unable to get the version. Check if ejabberd is installed')
+        return
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    # Check if `iqdisc` is present and remove it
+    if 'mod_mam' in conf['modules'] and current_version > IQDISC_DEPRECATED_VERSION:
+        conf['modules']['mod_mam'].pop('iqdisc', None)
+
+    # check if mod_irc is present in modules and remove it
+    if 'mod_irc' in conf['modules'] and current_version > MOD_IRC_DEPRECATED_VERSION:
+        conf['modules'].pop('mod_irc')
+
+    # Write changes back to the file
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
+
+
+def _get_version():
+    """ Get the current ejabberd version """
+    output = subprocess.check_output(['ejabberdctl', 'status']).decode('utf-8')
+    version_info = output.strip().split('\n')[-1].split()
+    if version_info:
+        version = str(version_info[1])
+        return LV(version)
+    return None
 
 
 def main():

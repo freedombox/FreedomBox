@@ -33,7 +33,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup, clients
 
-version = 1
+version = 2
 
 managed_services = ['ejabberd']
 
@@ -97,6 +97,7 @@ def setup(helper, old_version=None):
                 ['pre-install', '--domainname', domainname])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
+    actions.superuser_run('ejabberd', ['fix-config'])
     global service
     if service is None:
         service = service_module.Service(
