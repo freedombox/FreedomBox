@@ -44,7 +44,7 @@
     </p>
   {% endif %}
 
-  {% include "clients.html" with clients=clients %}
+  {% include "clients.html" with clients=clients enabled=service.is_enabled %}
 
   {% block status %}
     {% if show_status_block %}

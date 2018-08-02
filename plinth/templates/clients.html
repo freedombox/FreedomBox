@@ -43,7 +43,10 @@
             {% if platform.type == 'web' %}
               <td>{{ client.name }}</td>
               <td>
-                <a class="btn btn-success" href="{{ platform.url }}" role="button">
+                <a class="btn btn-success" role="button"
+                {% if not enabled %} disabled="disabled"
+                {% else %} href="{{ platform.url }}"
+                {% endif %}>
                   {% trans "Launch" %}
                   <span class="glyphicon glyphicon-new-window"></span>
                 </a>
