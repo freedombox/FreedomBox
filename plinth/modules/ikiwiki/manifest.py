@@ -26,3 +26,19 @@ clients = validate([{
         'url': '/ikiwiki'
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': [],
+        'files': [],
+    },
+    'data': {
+        'directories': ['/var/lib/ikiwiki/'],
+        'files': [],
+    },
+    'secrets': {
+        'directories': [],
+        'files': [],
+    },
+    'services': []
+}

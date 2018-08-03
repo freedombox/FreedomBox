@@ -73,3 +73,19 @@ clients = validate([{
         'url': store_url('google-play', _csipsimple_package_id)
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': [],
+        'files': ['/etc/repro/repro.config', '/etc/repro/users.txt'],
+    },
+    'data': {
+        'directories': ['/var/lib/repro/'],
+        'files': [],
+    },
+    'secrets': {
+        'directories': ['/etc/repro/ssl/'],
+        'files': ['/etc/repro/dh2048.pem'],
+    },
+    'services': ['repro']
+}

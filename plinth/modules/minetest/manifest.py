@@ -50,3 +50,19 @@ clients = validate([{
         'name': 'minetest'
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': [],
+        'files': ['/etc/minetest/minetest.conf'],
+    },
+    'data': {
+        'directories': ['/var/games/minetest-server/'],
+        'files': [],
+    },
+    'secrets': {
+        'directories': [],
+        'files': [],
+    },
+    'services': ['minetest-server']
+}

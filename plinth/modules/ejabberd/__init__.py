@@ -31,7 +31,7 @@ from plinth.signals import (domainname_change, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 1
 

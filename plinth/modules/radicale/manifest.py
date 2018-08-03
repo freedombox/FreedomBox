@@ -85,3 +85,19 @@ clients = validate([{
         'name': 'evolution'
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': [],
+        'files': [],
+    },
+    'data': {
+        'directories': ['/var/lib/radicale/'],
+        'files': [],
+    },
+    'secrets': {
+        'directories': [],
+        'files': [],
+    },
+    'services': ['radicale']
+}

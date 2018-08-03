@@ -29,8 +29,8 @@ clients = validate([{
     'usage':
         format_lazy(
             _('Start Gobby and select "Connect to Server" and '
-              'enter your {box_name}\'s domain name.'), box_name=_(
-                  cfg.box_name)),
+              'enter your {box_name}\'s domain name.'),
+            box_name=_(cfg.box_name)),
     'platforms': [{
         'type': 'download',
         'os': 'gnu-linux',
@@ -45,3 +45,22 @@ clients = validate([{
         'name': 'gobby'
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': [],
+        'files': [],
+    },
+    'data': {
+        'directories': ['/var/lib/infinoted/'],
+        'files': [],
+    },
+    'secrets': {
+        'directories': [],
+        'files': [
+            '/etc/infinoted/infinoted-cert.pem',
+            '/etc/infinoted/infinoted-key.pem'
+        ],
+    },
+    'services': ['infinoted']
+}

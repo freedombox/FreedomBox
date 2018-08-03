@@ -15,25 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.utils.translation import ugettext_lazy as _
-
-from plinth.clients import validate
-
-clients = validate([{
-    'name': _('MediaWiki'),
-    'platforms': [{
-        'type': 'web',
-        'url': '/mediawiki'
-    }]
-}])
-
 backup = {
     'config': {
-        'directories': [],
+        'directories': ['/etc/ez-ipupdate/'],
         'files': [],
     },
     'data': {
-        'directories': ['/var/lib/mediawiki-db/'],
+        'directories': [],
         'files': [],
     },
     'secrets': {

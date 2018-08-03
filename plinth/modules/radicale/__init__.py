@@ -27,7 +27,7 @@ from plinth import action_utils, actions, cfg, frontpage
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 1
 

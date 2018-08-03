@@ -26,7 +26,7 @@ from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.views import ServiceView
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 2
 

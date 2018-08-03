@@ -24,7 +24,7 @@ from plinth import service as service_module
 from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 4
 

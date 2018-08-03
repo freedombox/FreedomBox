@@ -52,3 +52,30 @@ clients = validate([{
         'url': _riot_desktop_download_url,
     }]
 }])
+
+backup = {
+    'config': {
+        'directories': ['/etc/matrix-synapse/conf.d/'],
+        'files': [
+            '/etc/matrix-synapse/homeserver.yaml',
+            '/etc/matrix-synapse/log.yaml'
+        ],
+    },
+    'data': {
+        'directories': [
+            '/var/lib/matrix-synapse/media/',
+            '/var/lib/matrix-synapse/uploads/'
+        ],
+        'files': ['/var/lib/matrix-synapse/homeserver.db'],
+    },
+    'secrets': {
+        'directories': [],
+        'files': [
+            '/etc/matrix-synapse/homeserver.signing.key',
+            '/etc/matrix-synapse/homeserver.tls.crt',
+            '/etc/matrix-synapse/homeserver.tls.dh',
+            '/etc/matrix-synapse/homeserver.tls.key'
+        ],
+    },
+    'services': ['matrix-synapse']
+}

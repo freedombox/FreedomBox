@@ -26,6 +26,7 @@ from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
 from . import dynamicdns
+from .manifest import backup
 
 version = 1
 
