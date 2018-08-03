@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-30 18:25-0400\n"
-"PO-Revision-Date: 2018-07-25 11:04+0000\n"
+"PO-Revision-Date: 2018-08-03 22:01+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1-dev\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #: plinth/action_utils.py:258
 #, python-brace-format
@@ -391,10 +391,8 @@ msgstr ""
 "maximal 63 Zeichen lang sein, die Gesamtlänge des Domain-Names 253 Zeichen."
 
 #: plinth/modules/config/forms.py:88
-#, fuzzy
-#| msgid "Default"
 msgid "Default App"
-msgstr "Standard"
+msgstr "Standard-Anwendung"
 
 #: plinth/modules/config/forms.py:90
 #, python-brace-format
@@ -406,6 +404,12 @@ msgid ""
 "users must explicitly type /plinth or /freedombox to reach {box_name} "
 "Service (Plinth)."
 msgstr ""
+"Wähle die Standard-Web-Anwendung die angezeigt wird wenn jemand deine "
+"{box_name} im Web aufruft. Ein typischer Anwendungsfall ist deinen Blog oder "
+"Wiki als die Einstiegsseite einzustellen wenn jemand die Domain besucht. "
+"Beachte dass wenn eine andere Standard-Anwendung als {box_name}-Dienst "
+"(Plinth) eingestellt ist, deine Benutzer explizit /plinth oder /freedombox "
+"eingeben müssen um den {box_name}-Dienst (Plinth) zu erreichen."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -441,16 +445,13 @@ msgid "Domain name set"
 msgstr "Domain Name gesetzt"
 
 #: plinth/modules/config/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error setting language: {exception}"
+#, python-brace-format
 msgid "Error setting default app: {exception}"
-msgstr "Fehler beim Setzen der Sprache: {exception}"
+msgstr "Fehler beim Einstellen der Standard-Anwendung: {exception}"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
 msgid "Default app set"
-msgstr "Standard"
+msgstr "Standard-Anwendung eingestellt"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -3732,26 +3733,22 @@ msgstr ""
 "Änderungen durchführen."
 
 #: plinth/modules/radicale/forms.py:33
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Any user can view any calendar/addressbook, but only the owner can make "
-#| "changes."
+#, python-brace-format
 msgid ""
 "Any user with a {box_name} login can view any calendar/addressbook, but only "
 "the owner can make changes."
 msgstr ""
-"Jeder Nutzer kann jeden Kalender/Adressbuch sehen, aber nur der Eigentümer "
-"kann Änderungen durchführen."
+"Jeder mit einem {box_name} Nutzeronto kann jeden Kalender/Adressbuch sehen, "
+"aber nur der Eigentümer kann Änderungen durchführen."
 
 #: plinth/modules/radicale/forms.py:36
-#, fuzzy, python-brace-format
-#| msgid "Any user can view or make changes to any calendar/addressbook."
+#, python-brace-format
 msgid ""
 "Any user with a {box_name} login can view or make changes to any calendar/"
 "addressbook."
 msgstr ""
-"Jeder Nutzer kann jeden Kalender/Adressbuch einsehen oder Änderungen "
-"durchführen."
+"Jeder mit einem {box_name} Nutzerkonto kann jeden Kalender/Adressbuch "
+"einsehen oder Änderungen durchführen."
 
 #: plinth/modules/radicale/manifest.py:24
 msgid "DAVDroid"
@@ -5043,7 +5040,7 @@ msgstr "Geräte"
 
 #: plinth/modules/udiskie/templates/udiskie.html:33
 msgid "There are no additional storage devices attached."
-msgstr ""
+msgstr "Es sind keine zusätzlichen Speichergeräte angeschlossen."
 
 #: plinth/modules/udiskie/templates/udiskie.html:42
 msgid "Label"
@@ -5060,79 +5057,77 @@ msgstr "Dateisystem"
 #: plinth/modules/udiskie/udisks2.py:89
 #, python-brace-format
 msgid "No such device - {device_path}"
-msgstr ""
+msgstr "Kein solches Gerät - {device_path}"
 
 #: plinth/modules/udiskie/udisks2.py:139
 msgid "The operation failed."
-msgstr ""
+msgstr "Der Vorgang schlug fehl."
 
 #: plinth/modules/udiskie/udisks2.py:141
 msgid "The operation was cancelled."
-msgstr ""
+msgstr "Der Vorgang wurde abgebrochen."
 
 #: plinth/modules/udiskie/udisks2.py:143
-#, fuzzy
-#| msgid "repro service is running"
 msgid "The device is already unmounting."
-msgstr "repro Dienst läuft"
+msgstr "Das Gerät wird bereits ausgehangen."
 
 #: plinth/modules/udiskie/udisks2.py:145
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
+"Der Vorgang ist wegen fehlender Treiber-/Werkzeugunterstützung nicht möglich."
 
 #: plinth/modules/udiskie/udisks2.py:148
 msgid "The operation timed out."
-msgstr ""
+msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
 
 #: plinth/modules/udiskie/udisks2.py:150
+#, fuzzy
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
+"Dieser Vorgang würde ein Gerät aufwecken dass sich in einem Tiefschlaf-"
+"Zustand befindet."
 
 #: plinth/modules/udiskie/udisks2.py:153
 msgid "Attempting to unmount a device that is busy."
-msgstr ""
+msgstr "Versuche ein Gerät auszuhängen, das beschäftigt ist."
 
 #: plinth/modules/udiskie/udisks2.py:155
 msgid "The operation has already been cancelled."
-msgstr ""
+msgstr "Dieser Vorgang wurde bereits abgebrochen."
 
 #: plinth/modules/udiskie/udisks2.py:161
 msgid "Not authorized to perform the requested operation."
-msgstr ""
+msgstr "Nicht autorisiert um den gewünschten Vorgang auszuführen."
 
 #: plinth/modules/udiskie/udisks2.py:163
-#, fuzzy
-#| msgid "This service already exists"
 msgid "The device is already mounted."
-msgstr "Dieser Dienst existiert bereits"
+msgstr "Dieses Gerät ist bereits eingebunden."
 
 #: plinth/modules/udiskie/udisks2.py:165
-#, fuzzy
-#| msgid "repro service is not running"
 msgid "The device is not mounted."
-msgstr "repro Dienst läuft nicht"
+msgstr "Das Gerät ist nicht eingebunden."
 
 #: plinth/modules/udiskie/udisks2.py:168
 msgid "Not permitted to use the requested option."
-msgstr ""
+msgstr "Die gewünschte Option ist nicht gestattet."
 
 #: plinth/modules/udiskie/udisks2.py:171
 msgid "The device is mounted by another user."
-msgstr ""
+msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
 
 #: plinth/modules/udiskie/views.py:62
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
+msgstr "{drive_vendor} {drive_model} kann sicher entfernt werden."
 
 #: plinth/modules/udiskie/views.py:66
 msgid "Device can be safely unplugged."
-msgstr ""
+msgstr "Gerät kann sicher entfernt werden."
 
 #: plinth/modules/udiskie/views.py:76
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
-msgstr ""
+msgstr "Fehler beim Auswerden des Geräts: {error_message}"
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
