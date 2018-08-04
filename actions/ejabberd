@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for the ejabberd service
 """
@@ -33,7 +32,6 @@ from distutils.version import LooseVersion as LV
 from plinth import action_utils
 from plinth.modules import config
 from plinth.modules.letsencrypt import LIVE_DIRECTORY as LE_LIVE_DIRECTORY
-
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
@@ -64,40 +62,32 @@ def parse_arguments():
 
     # Prepare ejabberd for hostname change
     pre_hostname_change = subparsers.add_parser(
-        'pre-change-hostname',
-        help='Prepare ejabberd for nodename change')
+        'pre-change-hostname', help='Prepare ejabberd for nodename change')
     pre_hostname_change.add_argument('--old-hostname',
                                      help='Previous hostname')
-    pre_hostname_change.add_argument('--new-hostname',
-                                     help='New hostname')
+    pre_hostname_change.add_argument('--new-hostname', help='New hostname')
 
     # Update ejabberd nodename
     hostname_change = subparsers.add_parser('change-hostname',
                                             help='Update ejabberd nodename')
-    hostname_change.add_argument('--old-hostname',
-                                 help='Previous hostname')
-    hostname_change.add_argument('--new-hostname',
-                                 help='New hostname')
+    hostname_change.add_argument('--old-hostname', help='Previous hostname')
+    hostname_change.add_argument('--new-hostname', help='New hostname')
 
     # Update ejabberd with new domainname
     domainname_change = subparsers.add_parser(
-        'change-domainname',
-        help='Update ejabberd with new domainname')
+        'change-domainname', help='Update ejabberd with new domainname')
     domainname_change.add_argument('--domainname', help='New domainname')
 
     # Switch/check Message Archive Management (MAM) in ejabberd config
     help_MAM = 'Switch or check Message Archive Management (MAM).'
     mam = subparsers.add_parser('mam', help=help_MAM)
-    mam.add_argument('command',
-                     choices=('enable', 'disable', 'status'),
+    mam.add_argument('command', choices=('enable', 'disable', 'status'),
                      help=help_MAM)
 
     help_LE = "Add/drop Let's Encrypt certificate if configured domain matches"
     letsencrypt = subparsers.add_parser('letsencrypt', help=help_LE)
     letsencrypt.add_argument('command', choices=('add', 'drop'), help=help_LE)
     letsencrypt.add_argument('--domain', help='Domain name to drop.')
-
-    subparsers.add_parser('fix-config', help='Fix the deprecated config files')
 
     subparsers.required = True
     return parser.parse_args()
@@ -125,13 +115,16 @@ def subcommand_setup(_):
             listen_port['tls'] = False
 
     conf['auth_method'] = 'ldap'
-    conf['ldap_servers'] = [ruamel.yaml.scalarstring.DoubleQuotedScalarString(
-        'localhost')]
+    conf['ldap_servers'] = [
+        ruamel.yaml.scalarstring.DoubleQuotedScalarString('localhost')
+    ]
     conf['ldap_base'] = ruamel.yaml.scalarstring.DoubleQuotedScalarString(
         'ou=users,dc=thisbox')
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
+
+    upgrade_config()
 
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
@@ -140,6 +133,30 @@ def subcommand_setup(_):
 
     with action_utils.WebserverChange() as webserver_change:
         webserver_change.enable('jwchat-plinth')
+
+
+def upgrade_config():
+    """Fix the config file by removing deprecated settings"""
+    current_version = _get_version()
+    if not current_version:
+        print('Warning: Unable to get ejabberd version.')
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
+
+    # Check if `iqdisc` is present and remove it
+    if 'mod_mam' in conf['modules'] and \
+       (not current_version or current_version > IQDISC_DEPRECATED_VERSION):
+        conf['modules']['mod_mam'].pop('iqdisc', None)
+
+    # check if mod_irc is present in modules and remove it
+    if 'mod_irc' in conf['modules'] and \
+       (not current_version or current_version > MOD_IRC_DEPRECATED_VERSION):
+        conf['modules'].pop('mod_irc')
+
+    # Write changes back to the file
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        ruamel.yaml.round_trip_dump(conf, file_handle)
 
 
 def subcommand_enable(_):
@@ -165,10 +182,11 @@ def subcommand_pre_change_hostname(arguments):
 
     subprocess.call(['ejabberdctl', 'backup', EJABBERD_BACKUP])
     try:
-        subprocess.check_output(['ejabberdctl', 'mnesia-change-nodename',
-                                 'ejabberd@' + old_hostname,
-                                 'ejabberd@' + new_hostname,
-                                 EJABBERD_BACKUP, EJABBERD_BACKUP_NEW])
+        subprocess.check_output([
+            'ejabberdctl', 'mnesia-change-nodename',
+            'ejabberd@' + old_hostname, 'ejabberd@' + new_hostname,
+            EJABBERD_BACKUP, EJABBERD_BACKUP_NEW
+        ])
         os.remove(EJABBERD_BACKUP)
     except subprocess.CalledProcessError as err:
         print('Failed to change hostname in ejabberd backup database: %s', err)
@@ -193,15 +211,14 @@ def subcommand_change_hostname(arguments):
     # restore backup database
     if os.path.exists(EJABBERD_BACKUP_NEW):
         try:
-            subprocess.check_output(['ejabberdctl',
-                                     'restore',
-                                     EJABBERD_BACKUP_NEW])
+            subprocess.check_output(
+                ['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW])
             os.remove(EJABBERD_BACKUP_NEW)
         except subprocess.CalledProcessError as err:
             print('Failed to restore ejabberd backup database: %s', err)
     else:
-        print('Could not load ejabberd backup database: %s not found'
-              % EJABBERD_BACKUP_NEW)
+        print('Could not load ejabberd backup database: %s not found' %
+              EJABBERD_BACKUP_NEW)
 
 
 def subcommand_change_domainname(arguments):
@@ -222,8 +239,8 @@ def subcommand_change_domainname(arguments):
     with open(EJABBERD_CONFIG, 'r') as file_handle:
         conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
-    conf['hosts'].append(ruamel.yaml.scalarstring.DoubleQuotedScalarString(
-        domainname))
+    conf['hosts'].append(
+        ruamel.yaml.scalarstring.DoubleQuotedScalarString(domainname))
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
@@ -252,14 +269,17 @@ def subcommand_mam(argument):
     if argument.command == 'enable':
         # Explicitly set the recommended / default settings for mod_mam,
         # see https://docs.ejabberd.im/admin/configuration/#mod-mam.
-        settings_mod_mam = {'mod_mam': {
-            'db_type': 'mnesia',  # default is 'mnesia' (w/o set default_db)
-            'default': 'never',  # policy, default 'never'
-            'request_activates_archiving': False,  # default False
-            'assume_mam_usage': False,  # for non-ack'd msgs, default False
-            'cache_size': 1000,  # default is 1000 items
-            'cache_life_time': 3600  # default is 3600 seconds = 1h
-        }}
+        settings_mod_mam = {
+            'mod_mam': {
+                'db_type':
+                    'mnesia',  # default is 'mnesia' (w/o set default_db)
+                'default': 'never',  # policy, default 'never'
+                'request_activates_archiving': False,  # default False
+                'assume_mam_usage': False,  # for non-ack'd msgs, default False
+                'cache_size': 1000,  # default is 1000 items
+                'cache_life_time': 3600  # default is 3600 seconds = 1h
+            }
+        }
         conf['modules'].update(settings_mod_mam)
     elif argument.command == 'disable':
         # disable modules by erasing from config file
@@ -289,12 +309,12 @@ def subcommand_letsencrypt(arguments):
         conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
 
     if arguments.domain is not None and arguments.domain not in conf['hosts']:
-        print('Aborted: Current domain "%s" not configured for ejabberd.'
-              % arguments.domain)
+        print('Aborted: Current domain "%s" not configured for ejabberd.' %
+              arguments.domain)
         sys.exit(1)
 
     if arguments.command == 'add' and arguments.domain is not None \
-        and arguments.domain != current_domain:
+       and arguments.domain != current_domain:
         print('Aborted: Only certificate of current domain "%s" can be added.'
               % current_domain)
         sys.exit(2)
@@ -344,7 +364,7 @@ def subcommand_letsencrypt(arguments):
 
         for listen_port in conf['listen']:
             if 'certfile' in listen_port \
-                and listen_port['certfile'] == cert_file:
+               and listen_port['certfile'] == cert_file:
                 listen_port['certfile'] = orig_cert_file
 
         if conf['s2s_certfile'] == cert_file:
@@ -360,32 +380,14 @@ def subcommand_letsencrypt(arguments):
         action_utils.service_restart('ejabberd')
 
 
-def subcommand_fix_config(_):
-    """ Fix the config file by removing deprecated settings"""
-    current_version = _get_version()
-    if not current_version:
-        print('Unable to get the version. Check if ejabberd is installed')
-        return
-
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
-        conf = ruamel.yaml.round_trip_load(file_handle, preserve_quotes=True)
-
-    # Check if `iqdisc` is present and remove it
-    if 'mod_mam' in conf['modules'] and current_version > IQDISC_DEPRECATED_VERSION:
-        conf['modules']['mod_mam'].pop('iqdisc', None)
-
-    # check if mod_irc is present in modules and remove it
-    if 'mod_irc' in conf['modules'] and current_version > MOD_IRC_DEPRECATED_VERSION:
-        conf['modules'].pop('mod_irc')
-
-    # Write changes back to the file
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
-        ruamel.yaml.round_trip_dump(conf, file_handle)
-
-
 def _get_version():
     """ Get the current ejabberd version """
-    output = subprocess.check_output(['ejabberdctl', 'status']).decode('utf-8')
+    try:
+        output = subprocess.check_output(
+            ['ejabberdctl', 'status']).decode('utf-8')
+    except subprocess.CalledProcessError:
+        return None
+
     version_info = output.strip().split('\n')[-1].split()
     if version_info:
         version = str(version_info[1])

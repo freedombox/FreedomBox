@@ -70,17 +70,15 @@ logger = logging.getLogger(__name__)
 def init():
     """Initialize the ejabberd module"""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'ejabberd', 'ejabberd:index',
-                     short_description)
+    menu.add_urlname(name, 'ejabberd', 'ejabberd:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server',
-                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
+        service = service_module.Service('ejabberd', name, ports=[
+            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
         if is_enabled():
             add_shortcut()
     pre_hostname_change.connect(on_pre_hostname_change)
@@ -97,14 +95,12 @@ def setup(helper, old_version=None):
                 ['pre-install', '--domainname', domainname])
     helper.install(managed_packages)
     helper.call('post', actions.superuser_run, 'ejabberd', ['setup'])
-    actions.superuser_run('ejabberd', ['fix-config'])
     global service
     if service is None:
-        service = service_module.Service(
-            'ejabberd', name,
-            ports=['xmpp-client', 'xmpp-server',
-                   'xmpp-bosh'], is_external=True, is_enabled=is_enabled,
-            enable=enable, disable=disable)
+        service = service_module.Service('ejabberd', name, ports=[
+            'xmpp-client', 'xmpp-server', 'xmpp-bosh'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
