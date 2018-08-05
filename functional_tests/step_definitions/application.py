@@ -189,3 +189,13 @@ def disable_mediawiki_private_mode(browser):
 @when(parsers.parse('I set the mediawiki admin password to {password}'))
 def set_mediawiki_admin_password(browser, password):
     application.set_mediawiki_admin_password(browser, password)
+
+
+@when(parsers.parse('I enable message archive management'))
+def set_mediawiki_admin_password(browser):
+    application.enable_ejabberd_message_archive_management(browser)
+
+
+@when(parsers.parse('I disable message archive management'))
+def set_mediawiki_admin_password(browser):
+    application.disable_ejabberd_message_archive_management(browser)

@@ -253,3 +253,17 @@ def set_mediawiki_admin_password(browser, password):
     interface.nav_to_module(browser, 'mediawiki')
     browser.find_by_id('id_password').fill(password)
     interface.submit(browser, form_class='form-configuration')
+
+
+def enable_ejabberd_message_archive_management(browser):
+    """Enable Message Archive Management in Ejabberd."""
+    interface.nav_to_module(browser, 'ejabberd')
+    _change_status(browser, 'ejabberd', 'enabled',
+                   checkbox_id='id_MAM_enabled')
+
+
+def disable_ejabberd_message_archive_management(browser):
+    """Enable Message Archive Management in Ejabberd."""
+    interface.nav_to_module(browser, 'ejabberd')
+    _change_status(browser, 'ejabberd', 'disabled',
+                   checkbox_id='id_MAM_enabled')

@@ -32,3 +32,13 @@ Scenario: Disable ejabberd application
   Given the ejabberd application is enabled
   When I disable the ejabberd application
   Then the ejabberd service should not be running
+
+Scenario: Enable message archive management
+  Given the ejabberd application is enabled
+  When I enable message archive management
+  Then the ejabberd service should be running
+
+Scenario: Disable message archive management
+  Given the ejabberd application is enabled
+  When I disable message archive management
+  Then the ejabberd service should be running
