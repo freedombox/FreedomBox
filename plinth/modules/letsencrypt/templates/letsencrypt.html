@@ -171,7 +171,7 @@
               </noscript>
             {% endif %}
             <span>
-              {% blocktrans with current_domain=status.current_domain.name %}
+              {% blocktrans trimmed with current_domain=status.current_domain.name %}
                 Let {{ box_name }} manage certificate renewal of
                 <b>{{ current_domain }}</b>
               {% endblocktrans %}
@@ -219,11 +219,11 @@
             {% endif %}
             <span>
 	      {% if 'ejabberd' in installed_modules and 'enabled' in status.current_domain.manage_hooks_status %}
-                {% blocktrans with current_domain=status.current_domain.name %}
+                {% blocktrans trimmed with current_domain=status.current_domain.name %}
                   Use certificate of {{ current_domain }} for <b>ejabberd</b>
                 {% endblocktrans %}
               {% else %}
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                   Use certificate of the current domain for <b>ejabberd</b>
                 {% endblocktrans %}
               {% endif %}
