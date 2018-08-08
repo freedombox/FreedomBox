@@ -22,7 +22,12 @@ run-unit-tests:
     - echo "tester:password" | chpasswd
     - cp -r . /home/tester/plinth
     - chown -R tester:tester /home/tester/plinth
-    - su -c "cd ~/plinth; python3 setup.py test" tester
+    - su -c "cd ~/plinth; python3 setup.py test_coverage" tester
+    - cp -r /home/tester/plinth/plinth/tests/coverage/report test-coverage-report
+
+  artifacts:
+    paths:
+      - test-coverage-report/*
 
 build-debian-package:
   stage: package
