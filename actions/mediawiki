@@ -30,6 +30,7 @@ from plinth.utils import generate_password, grep
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
 CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
+LOCAL_SETTINGS_CONF = '/etc/mediawiki/LocalSettings.php'
 
 
 def parse_arguments():
@@ -71,7 +72,8 @@ def subcommand_setup(_):
     if not os.path.exists(data_dir):
         os.mkdir(data_dir)
 
-    if not os.path.exists(os.path.join(data_dir, 'my_wiki.sqlite')):
+    if not os.path.exists(os.path.join(data_dir, 'my_wiki.sqlite')) or \
+       not os.path.exists(LOCAL_SETTINGS_CONF):
         install_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'install.php')
         password = generate_password()
         with tempfile.NamedTemporaryFile() as password_file_handle:
@@ -90,9 +92,8 @@ def subcommand_setup(_):
 def include_custom_config():
     """Include FreedomBox specific configuration in LocalSettings.php
     """
-    local_settings_conf = '/etc/mediawiki/LocalSettings.php'
-    if not grep(r'FreedomBoxSettings', local_settings_conf):
-        with open(local_settings_conf, 'a') as conf_file:
+    if not grep(r'FreedomBoxSettings', LOCAL_SETTINGS_CONF):
+        with open(LOCAL_SETTINGS_CONF, 'a') as conf_file:
             conf_file.write(
                 'include dirname(__FILE__)."/FreedomBoxSettings.php";\n')
 
