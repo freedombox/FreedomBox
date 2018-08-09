@@ -67,7 +67,13 @@ Scenario: Enabling public registrations disables private mode
   And I enable mediawiki public registrations
   Then the mediawiki site should allow creating accounts
 
+# Requires JS
 Scenario: Logged in user can see upload files option
   Given the mediawiki application is enabled
   When I set the mediawiki admin password to whatever123
   Then I should see the Upload File option in the side pane when logged in with credentials admin and whatever123
+
+Scenario: Upload images
+  Given the mediawiki application is enabled
+  When I upload an image to mediawiki with credentials admin and whatever123
+  Then there should be 1 uploaded images

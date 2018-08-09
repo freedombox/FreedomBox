@@ -35,6 +35,20 @@ def access_application(browser, app_name):
     site.access_url(browser, app_name)
 
 
+@when(
+    parsers.parse(
+        'I upload an image to mediawiki with credentials {username:w} and {password:w}'
+    ))
+def upload_image(browser, username, password):
+    site.upload_image_mediawiki(browser, username, password)
+
+
+@then(parsers.parse('there should be {count:d} uploaded images'))
+def uploaded_image_should_be_available(browser, count):
+    num_images = site.get_number_of_uploaded_images_in_mediawiki(browser)
+    assert count == num_images
+
+
 @then(
     parsers.parse(
         'I should be able to login to coquelicot with password {password:w}'))

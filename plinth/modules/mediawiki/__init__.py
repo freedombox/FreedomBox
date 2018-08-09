@@ -26,7 +26,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
-version = 4
+version = 5
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
@@ -59,8 +59,7 @@ clients = clients
 def init():
     """Intialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'mediawiki', 'mediawiki:index',
-                     short_description)
+    menu.add_urlname(name, 'mediawiki', 'mediawiki:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -96,9 +95,9 @@ def setup(helper, old_version=None):
 
 def add_shortcut():
     """Helper method to add a shortcut to the frontpage."""
-    frontpage.add_shortcut('mediawiki', name,
-                           short_description=short_description,
-                           url='/mediawiki', login_required=is_private_mode_enabled())
+    frontpage.add_shortcut(
+        'mediawiki', name, short_description=short_description,
+        url='/mediawiki', login_required=is_private_mode_enabled())
 
 
 def is_enabled():
@@ -137,6 +136,5 @@ def is_public_registration_enabled():
 
 def is_private_mode_enabled():
     """ Return wheter private mode is enabled or disabled"""
-    output = actions.superuser_run('mediawiki',
-                                   ['private-mode', 'status'])
+    output = actions.superuser_run('mediawiki', ['private-mode', 'status'])
     return output.strip() == 'enabled'

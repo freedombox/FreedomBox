@@ -91,7 +91,7 @@ def _change_status(browser, app_name, change_status_to='enabled',
     checkbox_id = checkbox_id or get_app_checkbox_id(app_name)
     checkbox = browser.find_by_id(checkbox_id)
     checkbox.check() if change_status_to == 'enabled' else checkbox.uncheck()
-    interface.submit(browser, 'form-configuration')
+    interface.submit(browser, form_class='form-configuration')
     if app_name in apps_with_loaders:
         wait_for_config_update(browser, app_name)
 
@@ -113,7 +113,7 @@ def select_domain_name(browser, app_name, domain_name):
     browser.visit('{}/plinth/apps/{}/setup/'.format(default_url, app_name))
     drop_down = browser.find_by_id('id_domain_name')
     drop_down.select(domain_name)
-    interface.submit(browser, 'form-configuration')
+    interface.submit(browser, form_class='form-configuration')
 
 
 def configure_shadowsocks(browser):
@@ -121,14 +121,14 @@ def configure_shadowsocks(browser):
     browser.visit('{}/plinth/apps/shadowsocks/'.format(default_url))
     browser.find_by_id('id_server').fill('some.shadow.tunnel')
     browser.find_by_id('id_password').fill('fakepassword')
-    interface.submit(browser, 'form-configuration')
+    interface.submit(browser, form_class='form-configuration')
 
 
 def modify_max_file_size(browser, size):
     """Change the maximum file size of coquelicot to the given value"""
     browser.visit('{}/plinth/apps/coquelicot/'.format(default_url))
     browser.find_by_id('id_max_file_size').fill(size)
-    interface.submit(browser, 'form-configuration')
+    interface.submit(browser, form_class='form-configuration')
 
 
 def get_max_file_size(browser):
@@ -141,7 +141,7 @@ def modify_upload_password(browser, password):
     """Change the upload password for coquelicot to the given value"""
     browser.visit('{}/plinth/apps/coquelicot/'.format(default_url))
     browser.find_by_id('id_upload_password').fill(password)
-    interface.submit(browser, 'form-configuration')
+    interface.submit(browser, form_class='form-configuration')
 
 
 # Sharing app helper functions

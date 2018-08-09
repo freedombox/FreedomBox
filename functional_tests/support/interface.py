@@ -106,9 +106,11 @@ def create_admin_account(browser, username, password):
     submit(browser)
 
 
-def submit(browser, form_class=None):
+def submit(browser, element=None, form_class=None):
     with wait_for_page_update(browser):
-        if form_class:
+        if element:
+            element.click()
+        elif form_class:
             browser.find_by_css(
                 '.{} input[type=submit]'.format(form_class)).click()
         else:

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
 from time import sleep
 
 from selenium.webdriver.common.action_chains import ActionChains
@@ -84,13 +85,35 @@ def verify_mediawiki_no_anonymous_reads_edits_link(browser):
                       args=['ca-nstab-special'])
 
 
-def login_to_mediawiki_with_credentials(browser, username, password):
+def _login_to_mediawiki(browser, username, password):
     browser.visit(config['DEFAULT']['url'] + '/mediawiki')
     browser.find_by_id('pt-login').click()
     browser.find_by_id('wpName1').fill(username)
     browser.find_by_id('wpPassword1').fill(password)
     with wait_for_page_update(browser):
         browser.find_by_id('wpLoginAttempt').click()
+
+
+def login_to_mediawiki_with_credentials(browser, username, password):
+    _login_to_mediawiki(browser, username, password)
     # Had to put it in the same step because sessions don't
     # persist between steps
     assert eventually(browser.is_element_present_by_id, args=['t-upload'])
+
+
+def upload_image_mediawiki(browser, username, password):
+    """Upload an image to MediaWiki. Idempotent."""
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki')
+    _login_to_mediawiki(browser, username, password)
+
+    # Upload file
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:Upload')
+    file_path = os.path.realpath(
+        '../static/themes/default/img/freedombox-logo-32px.png')
+    browser.attach_file('wpUploadFile', file_path)
+    interface.submit(browser, element=browser.find_by_name('wpUpload')[0])
+
+
+def get_number_of_uploaded_images_in_mediawiki(browser):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:ListFiles')
+    return len(browser.find_by_css('.TablePager_col_img_timestamp'))
