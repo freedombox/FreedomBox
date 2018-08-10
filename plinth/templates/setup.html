@@ -23,11 +23,11 @@
 {% load static %}
 
 {% block page_head %}
-
   {% if setup_helper.current_operation %}
-    <meta http-equiv="refresh" content="3" />
+    <noscript>
+      <meta http-equiv="refresh" content="3" />
+    </noscript>
   {% endif %}
-
 {% endblock %}
 
 {% block content %}
@@ -128,6 +128,15 @@
       {% endwith %}
     {% endif %}
 
+  {% endif %}
+
+{% endblock %}
+
+
+{% block page_js %}
+
+  {% if setup_helper.current_operation %}
+    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
   {% endif %}
 
 {% endblock %}

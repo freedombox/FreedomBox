@@ -20,11 +20,14 @@
 
 {% load bootstrap %}
 {% load i18n %}
+{% load static %}
 
 {% block page_head %}
 
   {% if status.setup_running %}
-    <meta http-equiv="refresh" content="3" />
+    <noscript>
+      <meta http-equiv="refresh" content="3" />
+    </noscript>
   {% endif %}
 
 {% endblock %}
@@ -125,4 +128,10 @@
     </form>
   {% endif %}
 
+{% endblock %}
+
+{% block page_js %}
+  {% if status.setup_running %}
+    <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
+  {% endif %}
 {% endblock %}
