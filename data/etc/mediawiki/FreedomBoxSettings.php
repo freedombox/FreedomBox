@@ -17,3 +17,5 @@ $wgGroupPermissions['*']['read'] = true;
 $wgArticlePath = "/mediawiki/$1";
 $wgUsePathInfo = true;
 
+# Instant Commons
+$wgUseInstantCommons = true;
