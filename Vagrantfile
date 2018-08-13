@@ -25,12 +25,19 @@ Vagrant.configure(2) do |config|
     apt update
     DEBIAN_FRONTEND=noninteractive apt install -y $(plinth --list-dependencies)
     systemctl daemon-reload
-    systemctl restart plinth
   SHELL
-  config.vm.post_up_message = "FreedomBox machine is ready for development.
-You can access it on https://localhost:4430/plinth/ (with an invalid
-SSL certificate). You can modify source code on the host machine and
-then test it by running:
-$ vagrant provision
+  config.vm.provision "shell", run: 'always', inline: <<-SHELL
+    # Do not run system plinth
+    systemctl stop plinth
+    systemctl disable plinth
+    # Disable automatic upgrades
+    /vagrant/actions/upgrades disable-auto
+  SHELL
+  config.vm.post_up_message = "FreedomBox virtual machine is ready
+for development. You can run the development version of Plinth using
+the following command.
+$ sudo /vagrant/run --develop
+Plinth will be available at https://localhost:4430/plinth (with
+an invalid SSL certificate).
 "
 end

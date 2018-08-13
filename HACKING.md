@@ -18,22 +18,25 @@ and requires about 4.5 GB of disk space.
 2.  To download, setup, run, and configure a VM for FreedomBox development using
     Vagrant, simply execute in your FreedomBox Service (Plinth) development
     folder:
-
     ```
     $ vagrant up
     ```
 
-3.  To access FreedomBox web interface (from host), visit
-    https://localhost:4430/plinth/
-
-4.  Edit the source code in your host machine's FreedomBox Service (Plinth)
-    development folder. By default, this folder is shared within the VM, at
-    `/vagrant/`. To actually reflect the changes in the running VM, run on your
-    host:
-
+3. SSH into the running vagrant box with the following command:
     ```
-    $ vagrant provision
+    $ vagrant ssh
     ```
+
+4. Run the development version of Plinth from your source directory in the
+   virtual machine using the following command. This command continuously
+   deploys your code changes into the virtual machine providing a quick feedback
+   cycle during development.
+    ```
+    $ sudo /vagrant/run --develop
+    ```
+
+Note: This virtual machine has automatic upgrades disabled by default.
+
 
 ## Installing Dependencies
 
