@@ -32,6 +32,7 @@ Scenario: Change domain name
 
 Scenario: Change default app
   Given the syncthing application is installed
+  And the syncthing application is enabled
   And the default app is syncthing
   When I change the default app to plinth
   Then the default app should be plinth
