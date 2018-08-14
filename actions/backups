@@ -104,6 +104,10 @@ def subcommand_extract(arguments):
 
 def subcommand_export(arguments):
     """Export archive contents as tarball."""
+    path = os.path.dirname(arguments.filename)
+    if not os.path.exists(path):
+        os.makedirs(path)
+
     subprocess.run([
         'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
         arguments.filename

@@ -132,5 +132,5 @@ class ExportArchiveView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Create the archive on valid form submission."""
         backups.export_archive(self.kwargs['name'],
-                               form.cleaned_data['filename'])
+                               form.cleaned_data['disk'])
         return super().form_valid(form)

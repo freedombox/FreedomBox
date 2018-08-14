@@ -22,6 +22,8 @@ from django import forms
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
+from . import get_export_locations
+
 
 class CreateArchiveForm(forms.Form):
     name = forms.CharField(
@@ -42,6 +44,12 @@ class ExtractArchiveForm(forms.Form):
 
 
 class ExportArchiveForm(forms.Form):
-    filename = forms.CharField(
-        label=_('Exported filename'), strip=True,
-        help_text=_('Name for the tar file exported from the archive.'))
+    disk = forms.ChoiceField(
+        label=_('Disk'), widget=forms.RadioSelect(),
+        help_text=_('Disk or removable storage where the backup archive will '
+                    'be saved.'))
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with disk choices."""
+        super().__init__(*args, **kwargs)
+        self.fields['disk'].choices = get_export_locations()
