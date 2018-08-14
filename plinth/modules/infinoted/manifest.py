@@ -18,6 +18,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import cfg
+from plinth.backup import validate as validate_backup
 from plinth.clients import validate
 from plinth.utils import format_lazy
 
@@ -46,7 +47,7 @@ clients = validate([{
     }]
 }])
 
-backup = {
+backup = validate_backup({
     'config': {
         'directories': [],
         'files': [],
@@ -63,4 +64,4 @@ backup = {
         ],
     },
     'services': ['infinoted']
-}
+})

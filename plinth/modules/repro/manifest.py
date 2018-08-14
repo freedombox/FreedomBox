@@ -17,6 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.backup import validate as validate_backup
 from plinth.clients import store_url, validate
 
 _jitsi_package_id = 'org.jitsi.meet'
@@ -74,7 +75,7 @@ clients = validate([{
     }]
 }])
 
-backup = {
+backup = validate_backup({
     'config': {
         'directories': [],
         'files': ['/etc/repro/repro.config', '/etc/repro/users.txt'],
@@ -88,4 +89,4 @@ backup = {
         'files': ['/etc/repro/dh2048.pem'],
     },
     'services': ['repro']
-}
+})

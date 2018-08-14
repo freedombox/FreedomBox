@@ -15,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-backup = {
+from plinth.backup import validate as validate_backup
+
+backup = validate_backup({
     'config': {
         'directories': ['/etc/ez-ipupdate/'],
         'files': [],
@@ -29,4 +31,4 @@ backup = {
         'files': [],
     },
     'services': []
-}
+})

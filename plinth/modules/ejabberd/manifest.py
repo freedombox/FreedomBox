@@ -17,6 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.backup import validate as validate_backup
 from plinth.clients import store_url, validate
 from plinth.modules.jsxc import manifest as jsxc_manifest
 
@@ -121,7 +122,7 @@ _clients.extend(jsxc_manifest.clients)
 
 clients = _clients
 
-backup = {
+backup = validate_backup({
     'config': {
         'directories': [],
         'files': ['/etc/ejabberd/ejabberd.yml'],
@@ -135,4 +136,4 @@ backup = {
         'files': ['/etc/ejabberd/ejabberd.pem'],
     },
     'services': ['ejabberd']
-}
+})

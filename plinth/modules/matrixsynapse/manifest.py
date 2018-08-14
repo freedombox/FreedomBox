@@ -17,6 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
+from plinth.backup import validate as validate_backup
 from plinth.clients import store_url, validate
 
 _android_package_id = 'im.vector.alpha'
@@ -53,7 +54,7 @@ clients = validate([{
     }]
 }])
 
-backup = {
+backup = validate_backup({
     'config': {
         'directories': ['/etc/matrix-synapse/conf.d/'],
         'files': [
@@ -78,4 +79,4 @@ backup = {
         ],
     },
     'services': ['matrix-synapse']
-}
+})
