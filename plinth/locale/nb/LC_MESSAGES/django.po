@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-13 17:48-0400\n"
-"PO-Revision-Date: 2018-08-15 13:39+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2018-08-16 12:13+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/plinth/nb/>\n"
 "Language: nb\n"
@@ -149,19 +149,17 @@ msgid "Path"
 msgstr "Sti"
 
 #: plinth/modules/backups/forms.py:34
-#, fuzzy
-#| msgid "Disk path to a folder on this server that you intend to share."
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
-msgstr "Disksti til en mappe på denne tjeneren som du ønsker å dele."
+msgstr ""
+"Disksti til en mappe på denne tjeneren som vil bli arkivert inn i "
+"sikkerhetskopilageret."
 
 #: plinth/modules/backups/forms.py:40
-#, fuzzy
-#| msgid "Disk path to a folder on this server that you intend to share."
 msgid ""
 "Disk path to a folder on this server where the archive will be extracted."
-msgstr "Disksti til en mappe på denne tjeneren som du ønsker å dele."
+msgstr "Disksti til en mappe på denne tjeneren der arkivet vil bli pakket ut."
 
 #: plinth/modules/backups/forms.py:46
 msgid "Exported filename"
@@ -409,6 +407,12 @@ msgid ""
 "users must explicitly type /plinth or /freedombox to reach {box_name} "
 "Service (Plinth)."
 msgstr ""
+"Velg programmet som presenteres som standard når noen besøker din {box_name} "
+"på nettet.  Et typisk bruksområde er å velge bloggen eller wikien din som "
+"startside når noen besøker domenenavnet.  Merk at med en gang standard-"
+"programmet er satt til noe annet enn {box_name}-tjenesten (Plinth), så må "
+"brukerne dine skrive /plinth eller /freedombox eksplisitt for å nå "
+"{box_name}-tjenesten (Plinth)."
 
 #: plinth/modules/config/templates/config.html:34
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:35
@@ -444,16 +448,13 @@ msgid "Domain name set"
 msgstr "Domenenavn satt"
 
 #: plinth/modules/config/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Error setting language: {exception}"
+#, python-brace-format
 msgid "Error setting default app: {exception}"
-msgstr "Språksettingsfeil: {exception}"
+msgstr "Feil ved endring av standard-program: {exception}"
 
 #: plinth/modules/config/views.py:103
-#, fuzzy
-#| msgid "Default"
 msgid "Default app set"
-msgstr "Forvalg"
+msgstr "Standardprogram satt"
 
 #: plinth/modules/coquelicot/__init__.py:37
 msgid "Coquelicot"
@@ -1781,19 +1782,11 @@ msgid "Update config"
 msgstr "Oppdater oppsett"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:174
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let %(box_name)s manage certificate renewal of\n"
-#| "                <b>%(current_domain)s</b>\n"
-#| "              "
+#, python-format
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
 msgstr ""
-"\n"
-"                La %(box_name)s håndtere fornyelsesprosessen av\n"
-"                <b>%(current_domain)s</b>\n"
-"              "
+"La %(box_name)s håndtere fornyelsesprosessen av <b>%(current_domain)s</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
@@ -1813,32 +1806,13 @@ msgstr ""
 "sertifikatet først for å kunne håndtere det."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:222
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                  Use certificate of %(current_domain)s for <b>ejabberd</"
-#| "b>\n"
-#| "                "
+#, python-format
 msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
-msgstr ""
-"\n"
-"                  Bruk sertifikatet tilhørende %(current_domain)s for "
-"<b>ejabberd</b>\n"
-"                "
+msgstr "Bruk sertifikatet tilhørende %(current_domain)s for <b>ejabberd</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:226
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                  Use certificate of the current domain for <b>ejabberd</"
-#| "b>\n"
-#| "                "
 msgid "Use certificate of the current domain for <b>ejabberd</b>"
-msgstr ""
-"\n"
-"                  Bruk sertifikatet tilhørende gjeldende domene for "
-"<b>ejabberd</b>\n"
-"                "
+msgstr "Bruk sertifikatet tilhørende gjeldende domene for <b>ejabberd</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:236
 #, python-format
@@ -4694,10 +4668,8 @@ msgstr ""
 "a>."
 
 #: plinth/modules/tor/__init__.py:77
-#, fuzzy
-#| msgid "Socks5 Proxy"
 msgid "Tor Socks Proxy"
-msgstr "SOCKS5-mellomtjener"
+msgstr "Tor Socks-mellomtjener"
 
 #: plinth/modules/tor/__init__.py:83 plinth/modules/tor/__init__.py:125
 msgid "Tor Bridge Relay"
@@ -5634,10 +5606,10 @@ msgid "Mailing list"
 msgstr "Adresseliste"
 
 #: plinth/templates/internal-zone.html:25
-#, fuzzy, python-format
-#| msgid "Service <em>%(service_name)s</em> is not running."
+#, python-format
 msgid "<em>%(service_name)s</em> is available only on internal networks."
-msgstr "Tjenesten <em>%(service_name)s</em> kjører ikke."
+msgstr ""
+"Tjenesten <em>%(service_name)s</em> er kun tilgjengelig på interne nettverk."
 
 #: plinth/templates/internal-zone.html:31
 msgid "Currently there are no network interfaces configured as internal."
