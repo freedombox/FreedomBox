@@ -21,6 +21,7 @@ Configuration helper for backups.
 """
 
 import argparse
+import json
 import os
 import subprocess
 
@@ -54,6 +55,10 @@ def parse_arguments():
     export.add_argument('--name', help='Archive name', required=True)
     export.add_argument('--filename', help='Tarball file name', required=True)
 
+    list_exports = subparsers.add_parser(
+        'list-exports', help='List exported backup archive files')
+    list_exports.add_argument('--locations', nargs='+',
+                              help='list of locations to check')
     subparsers.required = True
     return parser.parse_args()
 
@@ -112,6 +117,21 @@ def subcommand_export(arguments):
         'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
         arguments.filename
     ], check=True)
+
+
+def subcommand_list_exports(arguments):
+    """List exported backup archive files."""
+    archive_files = []
+    for location in arguments.locations:
+        backup_path = location
+        if backup_path[-1] != '/':
+            backup_path += '/'
+        backup_path += 'FreedomBox-backups/'
+        if os.path.exists(backup_path):
+            for filename in os.listdir(backup_path):
+                archive_files.append(os.path.join(backup_path, filename))
+
+    print(json.dumps(archive_files))
 
 
 def main():

@@ -100,3 +100,11 @@ def get_export_locations():
                 locations.append((device['mount_points'][0], name))
 
     return locations
+
+
+def list_export_files():
+    """Return a list of exported backup archives found in storage locations."""
+    locations = [x[0] for x in get_export_locations()]
+    command = ['list-exports', '--locations'] + locations
+    output = actions.superuser_run('backups', command)
+    return json.loads(output)

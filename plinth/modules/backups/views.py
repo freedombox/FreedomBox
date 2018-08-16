@@ -42,6 +42,7 @@ class IndexView(TemplateView):
         context['description'] = backups.description
         context['info'] = backups.get_info()
         context['archives'] = backups.list_archives()
+        context['exports'] = backups.list_export_files()
         return context
 
 

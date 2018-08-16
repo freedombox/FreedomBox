@@ -47,6 +47,7 @@
     </a>
   </p>
 
+  <h3>{% trans 'Backup archives' %}</h3>
   {% if not archives %}
     <p>{% trans 'No archives currently exist.' %}</p>
   {% else %}
@@ -80,6 +81,28 @@
 		</span>
               </a>
             </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <h3>{% trans 'Exported backup archives' %}</h3>
+  {% if not exports %}
+    <p>{% trans 'No exported backup archives were found.' %}</p>
+  {% else %}
+    <table class="table table-bordered table-condensed table-striped"
+	   id="exports-list">
+      <thead>
+        <tr>
+          <th>{% trans "Name" %}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for export in exports %}
+          <tr id="export-{{ export }}" class="export">
+            <td class="export-name">{{ export }}</td>
           </tr>
         {% endfor %}
       </tbody>
