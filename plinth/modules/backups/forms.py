@@ -37,12 +37,6 @@ class CreateArchiveForm(forms.Form):
         'backup repository.'))
 
 
-class ExtractArchiveForm(forms.Form):
-    path = forms.CharField(label=_('Path'), strip=True, help_text=_(
-        'Disk path to a folder on this server where the archive will be '
-        'extracted.'))
-
-
 class ExportArchiveForm(forms.Form):
     disk = forms.ChoiceField(
         label=_('Disk'), widget=forms.RadioSelect(),

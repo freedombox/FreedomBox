@@ -25,10 +25,11 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
+from urllib.parse import unquote
 
 from plinth.modules import backups
 
-from .forms import CreateArchiveForm, ExtractArchiveForm, ExportArchiveForm
+from .forms import CreateArchiveForm, ExportArchiveForm
 
 
 class IndexView(TemplateView):
@@ -42,7 +43,7 @@ class IndexView(TemplateView):
         context['description'] = backups.description
         context['info'] = backups.get_info()
         context['archives'] = backups.list_archives()
-        context['exports'] = backups.list_export_files()
+        context['exports'] = backups.get_export_files()
         return context
 
 
@@ -88,30 +89,6 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         return redirect(reverse_lazy('backups:index'))
 
 
-class ExtractArchiveView(SuccessMessageMixin, FormView):
-    """View to extract an archive."""
-    form_class = ExtractArchiveForm
-    prefix = 'backups'
-    template_name = 'backups_form.html'
-    success_url = reverse_lazy('backups:index')
-    success_message = _('Archive extracted.')
-
-    def get_context_data(self, **kwargs):
-        """Return additional context for rendering the template."""
-        context = super().get_context_data(**kwargs)
-        context['title'] = _('Extract Archive')
-        context['archive'] = backups.get_archive(self.kwargs['name'])
-        if context['archive'] is None:
-            raise Http404
-
-        return context
-
-    def form_valid(self, form):
-        """Create the archive on valid form submission."""
-        backups.extract_archive(self.kwargs['name'], form.cleaned_data['path'])
-        return super().form_valid(form)
-
-
 class ExportArchiveView(SuccessMessageMixin, FormView):
     """View to export an archive."""
     form_class = ExportArchiveForm
@@ -135,3 +112,22 @@ class ExportArchiveView(SuccessMessageMixin, FormView):
         backups.export_archive(self.kwargs['name'],
                                form.cleaned_data['disk'])
         return super().form_valid(form)
+
+
+class RestoreView(SuccessMessageMixin, TemplateView):
+    """View to restore files from an exported archive."""
+    template_name = 'backups_restore.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Restore from backup')
+        context['label'] = unquote(self.kwargs['label'])
+        context['name'] = self.kwargs['name']
+        return context
+
+    def post(self, request, label, name):
+        """Restore files from the archive on valid form submission."""
+        backups.restore_exported(label, name)
+        messages.success(request, _('Restored data from backup.'))
+        return redirect(reverse_lazy('backups:index'))

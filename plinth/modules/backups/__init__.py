@@ -76,11 +76,6 @@ def delete_archive(name):
     actions.superuser_run('backups', ['delete', '--name', name])
 
 
-def extract_archive(name, destination):
-    actions.superuser_run(
-        'backups', ['extract', '--name', name, '--destination', destination])
-
-
 def export_archive(name, location):
     if location[-1] != '/':
         location += '/'
@@ -102,9 +97,27 @@ def get_export_locations():
     return locations
 
 
-def list_export_files():
-    """Return a list of exported backup archives found in storage locations."""
-    locations = [x[0] for x in get_export_locations()]
-    command = ['list-exports', '--locations'] + locations
-    output = actions.superuser_run('backups', command)
-    return json.loads(output)
+def get_export_files():
+    """Return a dict of exported backup archives found in storage locations."""
+    locations = get_export_locations()
+    export_files = {}
+    for location in locations:
+        output = actions.superuser_run(
+            'backups', ['list-exports', '--location',  location[0]])
+        export_files[location[1]] = json.loads(output)
+
+    return export_files
+
+
+def restore_exported(label, name):
+    """Restore files from exported backup archive."""
+    locations = get_export_locations()
+    for location in locations:
+        if location[1] == label:
+            filename = location[0]
+            if filename[-1] != '/':
+                filename += '/'
+            filename += 'FreedomBox-backups/' + name
+            actions.superuser_run(
+                'backups', ['restore', '--filename', filename])
+            break

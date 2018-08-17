@@ -21,6 +21,7 @@ Configuration helper for backups.
 """
 
 import argparse
+import glob
 import json
 import os
 import subprocess
@@ -57,8 +58,13 @@ def parse_arguments():
 
     list_exports = subparsers.add_parser(
         'list-exports', help='List exported backup archive files')
-    list_exports.add_argument('--locations', nargs='+',
-                              help='list of locations to check')
+    list_exports.add_argument('--location', required=True,
+                              help='location to check')
+
+    restore = subparsers.add_parser(
+        'restore', help='Restore files from an exported archive')
+    restore.add_argument('--filename', help='Tarball file name', required=True)
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -121,17 +127,27 @@ def subcommand_export(arguments):
 
 def subcommand_list_exports(arguments):
     """List exported backup archive files."""
-    archive_files = []
-    for location in arguments.locations:
-        backup_path = location
-        if backup_path[-1] != '/':
-            backup_path += '/'
-        backup_path += 'FreedomBox-backups/'
-        if os.path.exists(backup_path):
-            for filename in os.listdir(backup_path):
-                archive_files.append(os.path.join(backup_path, filename))
+    exports = []
+    path = arguments.location
+    if path[-1] != '/':
+        path += '/'
 
-    print(json.dumps(archive_files))
+    path += 'FreedomBox-backups/'
+    if os.path.exists(path):
+        for filename in glob.glob(path + '*.tar.gz'):
+            exports.append(os.path.basename(filename))
+
+    print(json.dumps(exports))
+
+
+def subcommand_restore(arguments):
+    """Restore files from an exported archive."""
+    prev_dir = os.getcwd()
+    try:
+        os.chdir('/')
+        subprocess.run(['tar', 'xf', arguments.filename], check=True)
+    finally:
+        os.chdir(prev_dir)
 
 
 def main():

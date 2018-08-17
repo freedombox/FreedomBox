@@ -52,7 +52,7 @@
     <p>{% trans 'No archives currently exist.' %}</p>
   {% else %}
     <table class="table table-bordered table-condensed table-striped"
-	   id="archives-list">
+           id="archives-list">
       <thead>
         <tr>
           <th>{% trans "Name" %}</th>
@@ -67,18 +67,14 @@
             <td class="archive-name">{{ archive.name }}</td>
             <td class="archive-time">{{ archive.time }}</td>
             <td class="archive-operations">
-              <a class="archive-extract btn btn-sm btn-default"
-                 href="{% url 'backups:extract' archive.name %}">
-		{% trans "Extract" %}
-              </a>
               <a class="archive-export btn btn-sm btn-default"
                  href="{% url 'backups:export' archive.name %}">
-		{% trans "Export" %}
+                {% trans "Export" %}
               </a>
               <a class="archive-delete btn btn-sm btn-default"
-		 href="{% url 'backups:delete' archive.name %}">
-		<span class="glyphicon glyphicon-trash" aria-hidden="true">
-		</span>
+                 href="{% url 'backups:delete' archive.name %}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                </span>
               </a>
             </td>
           </tr>
@@ -92,18 +88,29 @@
     <p>{% trans 'No exported backup archives were found.' %}</p>
   {% else %}
     <table class="table table-bordered table-condensed table-striped"
-	   id="exports-list">
+           id="exports-list">
       <thead>
         <tr>
+          <th>{% trans "Location" %}</th>
           <th>{% trans "Name" %}</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        {% for export in exports %}
-          <tr id="export-{{ export }}" class="export">
-            <td class="export-name">{{ export }}</td>
-          </tr>
+        {% for label, file_list in exports.items %}
+          {% for name in file_list %}
+            <tr id="export-{{ label }}-{{ name }}" class="export">
+              <td class="export-label">{{ label }}</td>
+              <td class="export-name">{{ name }}</td>
+              <td class="export-operations">
+                <a class="restore btn btn-sm btn-default"
+                   href="{% url 'backups:restore' label|urlencode name|urlencode %}">
+                  {% trans "Restore" %}
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
         {% endfor %}
       </tbody>
     </table>
