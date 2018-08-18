@@ -36,6 +36,7 @@ Vagrant.configure(2) do |config|
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
 the following command.
+$ vagrant ssh
 $ sudo /vagrant/run --develop
 Plinth will be available at https://localhost:4430/plinth (with
 an invalid SSL certificate).
