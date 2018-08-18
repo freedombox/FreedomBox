@@ -30,6 +30,36 @@ import collections
 from plinth import actions, action_utils, module_loader
 
 
+def validate(backup):
+    """Validate the backup' information schema."""
+    assert isinstance(backup, dict)
+
+    assert 'config' in backup
+    assert isinstance(backup['config'], dict)
+    _validate_directories_and_files(backup['config'])
+
+    assert 'data' in backup
+    assert isinstance(backup['data'], dict)
+    _validate_directories_and_files(backup['data'])
+
+    assert 'secrets' in backup
+    assert isinstance(backup['secrets'], dict)
+    _validate_directories_and_files(backup['secrets'])
+
+    assert 'services' in backup
+    assert isinstance(backup['services'], list)
+
+    return backup
+
+
+def _validate_directories_and_files(df):
+    """Validate directories and files structure."""
+    assert 'directories' in df
+    assert isinstance(df['directories'], list)
+    assert 'files' in df
+    assert isinstance(df['files'], list)
+
+
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 

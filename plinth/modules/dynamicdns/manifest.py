@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from plinth.backup import validate as validate_backup
+from plinth.modules.backups.backups import validate as validate_backup
 
 backup = validate_backup({
     'config': {

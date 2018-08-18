@@ -17,7 +17,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.backup import validate as validate_backup
+from plinth.modules.backups.backups import validate as validate_backup
 from plinth.clients import store_url, validate
 from plinth.modules.jsxc import manifest as jsxc_manifest
 
