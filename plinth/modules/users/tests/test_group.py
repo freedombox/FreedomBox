@@ -28,6 +28,7 @@ class TestGroups(unittest.TestCase):
     """Test groups behavior."""
     def test_register_group(self):
         """Test for multi addition of same group"""
+        users.groups = dict()  # reset groups
         group = ('TestGroup', 'Group for testing')
         users.register_group(group)
         users.register_group(group)
