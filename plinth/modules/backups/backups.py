@@ -180,7 +180,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True):
 def _list_of_all_apps_for_backup():
     """Return a list of all applications that can be backed up."""
     apps = []
-    for module_name, module in module_loader.loaded_modules.values():
+    for module_name, module in module_loader.loaded_modules.items():
         # Not installed
         if module.setup_helper.get_state() == 'needs-setup':
             continue
@@ -197,7 +197,7 @@ def _list_of_all_apps_for_backup():
 def _get_apps_in_order(app_names):
     """Return a list of app modules in order of dependency."""
     apps = []
-    for module_name, module in module_loader.loaded_modules.values():
+    for module_name, module in module_loader.loaded_modules.items():
         if module_name in app_names:
             apps.append((module_name, module))
 
