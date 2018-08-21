@@ -192,7 +192,10 @@ class SetupView(TemplateView):
                 # Give a moment for the setup process to start and show
                 # meaningful status.
                 time.sleep(1)
-                return self.render_to_response(self.get_context_data())
+                response = self.render_to_response(self.get_context_data())
+                # Post/Response/Get pattern for reloads
+                response.status_code = 303
+                return response
 
             elif 'refresh-packages' in request.POST:
                 # Refresh apt package lists
