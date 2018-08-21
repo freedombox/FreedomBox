@@ -23,6 +23,7 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 
 from . import get_export_locations
+from .backups import _list_of_all_apps_for_backup
 
 
 class CreateArchiveForm(forms.Form):
@@ -32,9 +33,21 @@ class CreateArchiveForm(forms.Form):
             validators.RegexValidator(r'^[^/]+$', _('Invalid archive name'))
         ])
 
+    selected_apps = forms.MultipleChoiceField(
+        label=_('Included apps'),
+        help_text=_('Apps to include in the backup'),
+        widget=forms.CheckboxSelectMultiple)
+
     path = forms.CharField(label=_('Path'), strip=True, help_text=_(
         'Disk path to a folder on this server that will be archived into '
         'backup repository.'))
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with selectable apps."""
+        super().__init__(*args, **kwargs)
+        apps = _list_of_all_apps_for_backup()
+        self.fields['selected_apps'].choices = [
+            (app[0], app[1].name) for app in apps]
 
 
 class ExportArchiveForm(forms.Form):
