@@ -21,11 +21,45 @@ Tests for backups module.
 import unittest
 
 from plinth.module_loader import load_modules
-from ..backups import _list_of_all_apps_for_backup, _get_apps_in_order
+from ..backups import _list_of_all_apps_for_backup, _get_apps_in_order, \
+    Packet, validate
+
+
+def _get_test_manifest(name):
+    return validate({
+        'config': {
+            'directories': ['/etc/' + name + '/config.d/'],
+            'files': ['/etc/' + name + '/config'],
+        },
+        'data': {
+            'directories': ['/var/lib/' + name + '/data.d/'],
+            'files': ['/var/lib/' + name + '/data'],
+        },
+        'secrets': {
+            'directories': ['/etc/' + name + '/secrets.d/'],
+            'files': ['/etc/' + name + '/secrets'],
+        },
+        'services': [name]
+    })
 
 
 class TestBackups(unittest.TestCase):
     """Test cases for backups module."""
+
+    def test_packet_process_manifests(self):
+        """Test that directories/files are collected from manifests."""
+        manifests = [
+            ('a', None, _get_test_manifest('a')),
+            ('b', None, _get_test_manifest('b')),
+        ]
+        packet = Packet('backup', 'apps', '/', manifests)
+        for manifest in manifests:
+            backup = manifest[2]
+            for x in ['config', 'data', 'secrets']:
+                for d in backup[x]['directories']:
+                    assert d in packet.directories
+                for f in backup[x]['files']:
+                    assert f in packet.files
 
     def test__list_of_all_apps_for_backups(self):
         """Test that apps supporting backup are included in returned list."""
