@@ -20,7 +20,7 @@ Tests for backups module.
 
 import collections
 import unittest
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 from plinth.module_loader import load_modules
 from ..backups import _list_of_all_apps_for_backup, _get_apps_in_order, \
@@ -81,15 +81,25 @@ class TestBackups(unittest.TestCase):
         config_index = ordered_app_names.index('config')
         assert names_index < config_index
 
-    def test__shutdown_services(self):
+    @patch('plinth.action_utils.service_is_running')
+    @patch('plinth.actions.superuser_run')
+    def test__shutdown_services(self, run, is_running):
         """Test that services are stopped in correct order."""
         manifests = [
             ('a', None, _get_test_manifest('a')),
             ('b', None, _get_test_manifest('b')),
         ]
+        is_running.return_value = True
         state = _shutdown_services(manifests)
         assert 'a' in state
         assert 'b' in state
+        is_running.assert_any_call('a')
+        is_running.assert_any_call('b')
+        calls = [
+            call('service', ['stop', 'b']),
+            call('service', ['stop', 'a'])
+        ]
+        run.assert_has_calls(calls)
 
     @patch('plinth.actions.superuser_run')
     def test__restore_services(self, run):
