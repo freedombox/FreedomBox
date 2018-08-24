@@ -48,6 +48,7 @@ class CreateArchiveForm(forms.Form):
         apps = _list_of_all_apps_for_backup()
         self.fields['selected_apps'].choices = [
             (app[0], app[1].name) for app in apps]
+        self.fields['selected_apps'].initial = [app[0] for app in apps]
 
 
 class ExportArchiveForm(forms.Form):
