@@ -71,7 +71,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Create the archive on valid form submission."""
         backups.create_archive(form.cleaned_data['name'],
-                               form.cleaned_data['path'])
+                               form.cleaned_data['selected_apps'])
         return super().form_valid(form)
 
 

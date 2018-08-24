@@ -63,7 +63,7 @@ def _validate_directories_and_files(df):
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 
-    def __init__(self, operation, scope, root, manifests=None):
+    def __init__(self, operation, scope, root, manifests=None, label=None):
         """Initialize the packet.
 
         operation is either 'backup' or 'restore.
@@ -80,6 +80,7 @@ class Packet:
         self.scope = scope
         self.root = root
         self.manifests = manifests
+        self.label = label
 
         self.directories = []
         self.files = []
@@ -95,7 +96,7 @@ class Packet:
                 self.files += backup[x]['files']
 
 
-def backup_full(backup_handler):
+def backup_full(backup_handler, label=None):
     """Backup the entire system."""
     if not _is_snapshot_available():
         raise Exception('Full backup is not supported without snapshots.')
@@ -103,7 +104,7 @@ def backup_full(backup_handler):
     snapshot = _take_snapshot()
     backup_root = snapshot['mount_path']
 
-    packet = Packet('backup', 'full', backup_root)
+    packet = Packet('backup', 'full', backup_root, label)
     _run_operation(backup_handler, packet)
 
     _delete_snapshot(snapshot)
@@ -122,7 +123,7 @@ def restore_full(restore_handler):
     _switch_to_subvolume(subvolume)
 
 
-def backup_apps(backup_handler, app_names=None):
+def backup_apps(backup_handler, app_names=None, label=None):
     """Backup data belonging to a set of applications."""
     if not app_names:
         apps = _list_of_all_apps_for_backup()
@@ -141,7 +142,7 @@ def backup_apps(backup_handler, app_names=None):
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, manifests)
+    packet = Packet('backup', 'apps', backup_root, manifests, label)
     _run_operation(backup_handler, packet)
 
     if snapshotted:

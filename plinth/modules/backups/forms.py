@@ -38,10 +38,6 @@ class CreateArchiveForm(forms.Form):
         help_text=_('Apps to include in the backup'),
         widget=forms.CheckboxSelectMultiple)
 
-    path = forms.CharField(label=_('Path'), strip=True, help_text=_(
-        'Disk path to a folder on this server that will be archived into '
-        'backup repository.'))
-
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
         super().__init__(*args, **kwargs)

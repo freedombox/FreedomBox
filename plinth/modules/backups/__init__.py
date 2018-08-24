@@ -22,6 +22,7 @@ import json
 
 from django.utils.translation import ugettext_lazy as _
 
+from .backups import backup_apps
 from plinth import actions
 from plinth.menu import main_menu
 from plinth.modules import udiskie
@@ -67,9 +68,15 @@ def get_archive(name):
     return None
 
 
-def create_archive(name, path):
+def _backup_handler(packet):
+    """Performs backup operation on packet."""
+    paths = packet.directories + packet.files
     actions.superuser_run('backups',
-                          ['create', '--name', name, '--path', path])
+                          ['create', '--name', packet.label, '--path'] + paths)
+
+
+def create_archive(name, app_names):
+    backup_apps(_backup_handler, app_names, name)
 
 
 def delete_archive(name):
