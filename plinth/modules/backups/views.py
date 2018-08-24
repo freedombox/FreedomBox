@@ -18,6 +18,7 @@
 Views for the backups app.
 """
 
+from datetime import date
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
@@ -60,6 +61,12 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Create Archive')
         return context
+
+    def get_initial(self):
+        """Return the initial data to use for forms on this view."""
+        initial = super().get_initial()
+        initial['name'] = 'FreedomBox_backup_' + str(date.today())
+        return initial
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
