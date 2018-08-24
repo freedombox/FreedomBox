@@ -295,10 +295,11 @@ def _shutdown_services(manifests):
                 state[service] = {'app_name': app_name, 'app': app}
 
     for service in state:
-        state['was_running'] = action_utils.service_is_running('service')
+        state[service]['was_running'] = action_utils.service_is_running(
+            service)
 
     for service in reversed(state):
-        if service['was_running']:
+        if state[service]['was_running']:
             actions.superuser_run('service', ['stop', service])
 
     return state
@@ -310,7 +311,7 @@ def _restore_services(original_state):
     Maintain exact order of services so dependencies are satisfied.
     """
     for service in original_state:
-        if service['was_running']:
+        if original_state[service]['was_running']:
             actions.superuser_run('service', ['start', service])
 
 

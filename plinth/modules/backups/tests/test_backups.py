@@ -18,11 +18,13 @@
 Tests for backups module.
 """
 
+import collections
 import unittest
+from unittest.mock import patch
 
 from plinth.module_loader import load_modules
 from ..backups import _list_of_all_apps_for_backup, _get_apps_in_order, \
-    Packet, validate
+    Packet, validate, _shutdown_services, _restore_services
 
 
 def _get_test_manifest(name):
@@ -78,3 +80,24 @@ class TestBackups(unittest.TestCase):
         names_index = ordered_app_names.index('names')
         config_index = ordered_app_names.index('config')
         assert names_index < config_index
+
+    def test__shutdown_services(self):
+        """Test that services are stopped in correct order."""
+        manifests = [
+            ('a', None, _get_test_manifest('a')),
+            ('b', None, _get_test_manifest('b')),
+        ]
+        state = _shutdown_services(manifests)
+        assert 'a' in state
+        assert 'b' in state
+
+    @patch('plinth.actions.superuser_run')
+    def test__restore_services(self, run):
+        """Test that services are restored in correct order."""
+        original_state = collections.OrderedDict()
+        original_state['a'] = {
+            'app_name': 'a', 'app': None, 'was_running': True}
+        original_state['b'] = {
+            'app_name': 'b', 'app': None, 'was_running': False}
+        _restore_services(original_state)
+        run.assert_called_once_with('service', ['start', 'a'])
