@@ -69,11 +69,12 @@ def list_shares():
     return json.loads(output)['shares']
 
 
-def add_share(name, path, groups):
+def add_share(name, path, groups, is_public):
     """Add a new share by called the action script."""
-    actions.superuser_run(
-        'sharing',
-        ['add', '--name', name, '--path', path, '--groups'] + groups)
+    actions.superuser_run('sharing', [
+        'add', '--name', name, '--path', path, '--is-public', is_public,
+        '--groups'
+    ] + groups)
 
 
 def remove_share(name):

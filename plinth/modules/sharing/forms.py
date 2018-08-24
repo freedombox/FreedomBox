@@ -22,8 +22,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.users.forms import get_group_choices
 from plinth.modules import sharing
+from plinth.modules.users.forms import get_group_choices
 
 
 class AddShareForm(forms.Form):
@@ -39,11 +39,15 @@ class AddShareForm(forms.Form):
         label=_('Path to share'), strip=True, help_text=_(
             'Disk path to a folder on this server that you intend to share.'))
 
+    is_public = forms.BooleanField(
+        label=_('Public share'), required=False, help_text=_(
+            'Make files in this folder available to anyone with the link.'))
+
     groups = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
-        label=_('User groups who can read the files in the share'),
+        widget=forms.CheckboxSelectMultiple, required=False,
+        label=_('User groups that can read the files in the share'),
         help_text=_(
-            'Users who have these permissions will also be able to read the '
+            'Users of the selected user groups will be able to read the '
             'files in the share.'))
 
     def __init__(self, *args, **kwargs):
@@ -63,3 +67,13 @@ class AddShareForm(forms.Form):
             raise ValidationError(_('A share with this name already exists.'))
 
         return name
+
+    def clean(self):
+        """Check that at least one group is added for non-public shares."""
+        super(AddShareForm, self).clean()
+        is_public = self.cleaned_data.get('is_public')
+        groups = self.cleaned_data.get('groups')
+        if not is_public and not groups:
+            raise forms.ValidationError(
+                _('Shares should be either public or shared with at least one group'
+                  ))
