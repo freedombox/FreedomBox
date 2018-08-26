@@ -39,6 +39,7 @@
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
 
+  {% if available_apps %}
   <p>
     <a title="{% trans 'Create archive' %}"
        role="button" class="btn btn-primary"
@@ -46,6 +47,15 @@
       {% trans 'Create archive' %}
     </a>
   </p>
+  {% else %}
+  <p>
+    {% blocktrans trimmed %}
+      No apps that support backup are currently installed. After any app
+      that supports backup has been installed, then it will be possible to
+      create backups.
+    {% endblocktrans %}
+  </p>
+  {% endif %}
 
   <h3>{% trans 'Backup archives' %}</h3>
   {% if not archives %}

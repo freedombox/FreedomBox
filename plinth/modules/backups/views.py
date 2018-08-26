@@ -29,6 +29,7 @@ from django.views.generic import FormView, TemplateView
 from urllib.parse import unquote
 
 from plinth.modules import backups
+from .backups import _list_of_all_apps_for_backup
 
 from .forms import CreateArchiveForm, ExportArchiveForm
 
@@ -45,6 +46,8 @@ class IndexView(TemplateView):
         context['info'] = backups.get_info()
         context['archives'] = backups.list_archives()
         context['exports'] = backups.get_export_files()
+        apps = _list_of_all_apps_for_backup()
+        context['available_apps'] = [x[0] for x in apps]
         return context
 
 
