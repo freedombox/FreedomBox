@@ -77,7 +77,11 @@ def _backup_handler(packet):
         os.makedirs(MANIFESTS_FOLDER)
 
     manifest_path = MANIFESTS_FOLDER + packet.label + '.json'
-    manifests = {x[0]: x[2] for x in packet.manifests}
+    manifests = [{
+        'name': x[0],
+        'version': x[1].version,
+        'backup': x[2]
+    } for x in packet.manifests]
     with open(manifest_path, 'w') as manifest_file:
         json.dump(manifests, manifest_file)
 
