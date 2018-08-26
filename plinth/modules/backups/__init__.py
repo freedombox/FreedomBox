@@ -19,6 +19,7 @@ FreedomBox app to manage backup archives.
 """
 
 import json
+import os
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -36,6 +37,8 @@ name = _('Backups')
 description = [_('Backups allows creating and managing backup archives.'), ]
 
 service = None
+
+MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 
 
 def init():
@@ -70,7 +73,16 @@ def get_archive(name):
 
 def _backup_handler(packet):
     """Performs backup operation on packet."""
+    if not os.path.exists(MANIFESTS_FOLDER):
+        os.makedirs(MANIFESTS_FOLDER)
+
+    manifest_path = MANIFESTS_FOLDER + packet.label + '.json'
+    manifests = {x[0]: x[2] for x in packet.manifests}
+    with open(manifest_path, 'w') as manifest_file:
+        json.dump(manifests, manifest_file)
+
     paths = packet.directories + packet.files
+    paths.append(manifest_path)
     actions.superuser_run('backups',
                           ['create', '--name', packet.label, '--path'] + paths)
 
