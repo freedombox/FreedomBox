@@ -19,3 +19,8 @@ $wgUsePathInfo = true;
 
 # Instant Commons
 $wgUseInstantCommons = true;
+
+# SVG Enablement
+$wgFileExtensions[] = 'svg';
+$wgAllowTitlesInSVG = true;
+$wgSVGConverter = 'ImageMagick';

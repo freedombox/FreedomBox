@@ -37,16 +37,16 @@ def access_application(browser, app_name):
 
 @when(
     parsers.parse(
-        'I upload an image to mediawiki with credentials {username:w} and {password:w}'
-    ))
-def upload_image(browser, username, password):
-    site.upload_image_mediawiki(browser, username, password)
+        'I upload an image named {image:S} to mediawiki with credentials {username:w} and '
+        '{password:w}'))
+def upload_image(browser, username, password, image):
+    site.upload_image_mediawiki(browser, username, password, image)
 
 
-@then(parsers.parse('there should be {count:d} uploaded images'))
-def uploaded_image_should_be_available(browser, count):
-    num_images = site.get_number_of_uploaded_images_in_mediawiki(browser)
-    assert count == num_images
+@then(parsers.parse('there should be {image:S} image'))
+def uploaded_image_should_be_available(browser, image):
+    uploaded_image = site.get_uploaded_image_in_mediawiki(browser, image)
+    assert image.lower() == uploaded_image.lower()
 
 
 @then(
@@ -82,7 +82,7 @@ def mediawiki_does_not_allow__account_creation_anonymous_reads_edits(browser):
 
 @then(
     parsers.parse(
-        'I should see the Upload File option in the side pane when logged in with credentials {username:w} and {password:w}'
-    ))
+        'I should see the Upload File option in the side pane when logged in '
+        'with credentials {username:w} and {password:w}'))
 def login_to_mediawiki_with_credentials(browser, username, password):
     site.login_to_mediawiki_with_credentials(browser, username, password)

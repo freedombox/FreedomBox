@@ -101,7 +101,7 @@ def login_to_mediawiki_with_credentials(browser, username, password):
     assert eventually(browser.is_element_present_by_id, args=['t-upload'])
 
 
-def upload_image_mediawiki(browser, username, password):
+def upload_image_mediawiki(browser, username, password, image):
     """Upload an image to MediaWiki. Idempotent."""
     browser.visit(config['DEFAULT']['url'] + '/mediawiki')
     _login_to_mediawiki(browser, username, password)
@@ -109,7 +109,7 @@ def upload_image_mediawiki(browser, username, password):
     # Upload file
     browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:Upload')
     file_path = os.path.realpath(
-        '../static/themes/default/img/freedombox-logo-32px.png')
+        '../static/themes/default/img/' + image)
     browser.attach_file('wpUploadFile', file_path)
     interface.submit(browser, element=browser.find_by_name('wpUpload')[0])
 
@@ -117,3 +117,9 @@ def upload_image_mediawiki(browser, username, password):
 def get_number_of_uploaded_images_in_mediawiki(browser):
     browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:ListFiles')
     return len(browser.find_by_css('.TablePager_col_img_timestamp'))
+
+
+def get_uploaded_image_in_mediawiki(browser, image):
+    browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:ListFiles')
+    elements = browser.find_link_by_partial_href(image)
+    return elements[0].value
