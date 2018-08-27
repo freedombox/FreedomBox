@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -114,79 +114,114 @@ msgstr ""
 "सुरक्षा के लिये, ख़ास तौर पर एक अनजान नेटवर्क से जोड़ करके समय, सर्विस डिस्कोवरि बंद कर "
 "सकते हैं."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr "बैकअपस पुरालेखागार बनाने और  प्रबंधित करने की अनुमति देता है."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+#, fuzzy
+#| msgid "Filesystem"
+msgid "Root Filesystem"
+msgstr "फ़ाइलसिस्टम"
+
+#: plinth/modules/backups/forms.py:30
 msgid "Archive name"
 msgstr "पुरालेख नाम"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 msgid "Invalid archive name"
 msgstr "पुरालेख नाम अमान्य है"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "पाथ"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
 msgstr ""
 "इस सर्वर पर किसी फ़ोल्डर का डिस्क पाथ है जिसे बैकअप रिपॉसिटरी में संग्रहीत किया जाएगा."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+#, fuzzy
+#| msgid "Disk Path"
+msgid "Disk"
+msgstr "डिस्क पाथ"
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "इस सर्वर पर उस फ़ोल्डर का डिस्क पाथ है जहां संग्रह निकाला जाएगा."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "एक्सपोर्टेड फ़ाइल नाम"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "टार फ़ाइल का नाम पुरालेख से एक्सपोर्ट किया गया."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Create archive"
 msgstr "पुरालेख बनाइये"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "बैकअप"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "वर्तमान में कोई संग्रह मौजूद नहीं है."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "नाम"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
 msgstr "समय"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "एक्सट्रेाक्ट"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "निर्यात"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "नया बैकअप पुरालेख के लिये नाम."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "नया बैकअप पुरालेख के लिये नाम."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "प्रलेखन"
+
+#: plinth/modules/backups/templates/backups.html:109
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "रीस्‍टोर"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -204,37 +239,46 @@ msgstr "पुरालेख हटाईये %(name)s"
 msgid "Submit"
 msgstr "जमा करें"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, python-format
+msgid "Restore data from %(name)s"
+msgstr ""
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "पुरालेख बनाया गया."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 msgid "Create Archive"
 msgstr "पुरालेख बनाइये"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Delete Archive"
 msgstr "पुरालेख हटाईये"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 msgid "Archive deleted."
 msgstr "पुरालेख हटा गया है."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "पुरालेख निकाला गया."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "पुरालेख निकालें"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "पुरालेख निर्यात किया गया."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "पुरालेख निर्यात करें"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -5558,6 +5602,21 @@ msgstr "%(package_names)s:%(status)s इंस्टॉलेशन किया
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% पूर्ण"
+
+#~ msgid "Exported filename"
+#~ msgstr "एक्सपोर्टेड फ़ाइल नाम"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "टार फ़ाइल का नाम पुरालेख से एक्सपोर्ट किया गया."
+
+#~ msgid "Extract"
+#~ msgstr "एक्सट्रेाक्ट"
+
+#~ msgid "Archive extracted."
+#~ msgstr "पुरालेख निकाला गया."
+
+#~ msgid "Extract Archive"
+#~ msgstr "पुरालेख निकालें"
 
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "

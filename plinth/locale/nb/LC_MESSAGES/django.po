@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-08-17 12:03+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -123,32 +123,38 @@ msgstr ""
 "kan slås av for å bedre sikkerheten, spesielt ved tilkobling til et "
 "fiendtlig/fremmed lokalt nettverk."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "Sikkerhetskopier"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Sikkerhetskopier tillater opprettelse og behandling av sikkerhetskopiarkiver."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+#, fuzzy
+#| msgid "Filesystem"
+msgid "Root Filesystem"
+msgstr "Filsystem"
+
+#: plinth/modules/backups/forms.py:30
 msgid "Archive name"
 msgstr "Arkivnavn"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "Navn på nytt sikkerhetskopiarkiv."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 msgid "Invalid archive name"
 msgstr "Ugyldig arkivnavn"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "Sti"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
@@ -156,48 +162,77 @@ msgstr ""
 "Disksti til mappe på denne tjeneren som vil bli arkivert inn i "
 "sikkerhetskopilageret."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+#, fuzzy
+#| msgid "Disks"
+msgid "Disk"
+msgstr "Disker"
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "Disksti til en mappe på denne tjeneren der arkivet vil bli pakket ut."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "Eksportert filnavn"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "Navn på TAR-fil eksportert fra arkivet."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Create archive"
 msgstr "Opprett arkiv"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "Sikkerhetskopier"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "Foreløbig eksisterer ingen arkiver."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Navn"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
 msgstr "Tid"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "Pakk ut"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "Eksporter"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "Navn på nytt sikkerhetskopiarkiv."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "Navn på nytt sikkerhetskopiarkiv."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "Dokumentasjon"
+
+#: plinth/modules/backups/templates/backups.html:109
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "reStore"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -215,37 +250,47 @@ msgstr "Slett arkiv %(name)s"
 msgid "Submit"
 msgstr "Send inn"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, fuzzy, python-format
+#| msgid "Welcome to %(box_name)s!"
+msgid "Restore data from %(name)s"
+msgstr "Velkommen til %(box_name)s!"
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "Arkiv opprettet."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 msgid "Create Archive"
 msgstr "Opprett arkiv"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Delete Archive"
 msgstr "Slett arkiv"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 msgid "Archive deleted."
 msgstr "Arkiv slettet."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "Arkiv pakket ut."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "Pakk ut arkiv"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "Arkiv eksportert."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "Eksporter arkiv"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -1833,8 +1878,8 @@ msgid ""
 "This feature only makes sense if you are using the <a href=\"%(ejabberd_url)s"
 "\">ejabberd</a> chat server app."
 msgstr ""
-"Denne funksjonen gir bare mening om du bruker <a href=\"%(ejabberd_url)s\""
-">ejabbert</a> nettprattjener-programmet."
+"Denne funksjonen gir bare mening om du bruker <a href=\"%(ejabberd_url)s"
+"\">ejabbert</a> nettprattjener-programmet."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:249
 #, python-format
@@ -1843,8 +1888,8 @@ msgid ""
 "\">ejabberd</a> chat server app, you must first enable certificate renewal "
 "of the current domain."
 msgstr ""
-"For å bruke Let's Encrypt-sertifikatet for <a href=\"%(ejabberd_url)s\""
-">ejabberd</a> nettprattjenerprogram, må du først skru på "
+"For å bruke Let's Encrypt-sertifikatet for <a href=\"%(ejabberd_url)s"
+"\">ejabberd</a> nettprattjenerprogram, må du først skru på "
 "sertifikatsfornyelse av gjeldende domene."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:258
@@ -1940,10 +1985,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> er et nytt "
 "økosystem for åpne, samvirkende direktemeldinger og IP-telefoni. Synapse er "
-"en tjener som implementerer Matrix-protokollen. Den gir nettpratgrupper, lyd/"
-" videosamtaler, ende til ende-kryptering, synkronisering av flere enheter, "
-"og krever ikke telefonnumre for å virke. Brukere på en gitt Matrix-tjener "
-"kan snakke med brukere på alle andre samvirkende Matrix-tjenere."
+"en tjener som implementerer Matrix-protokollen. Den gir nettpratgrupper, "
+"lyd/ videosamtaler, ende til ende-kryptering, synkronisering av flere "
+"enheter, og krever ikke telefonnumre for å virke. Brukere på en gitt Matrix-"
+"tjener kan snakke med brukere på alle andre samvirkende Matrix-tjenere."
 
 #: plinth/modules/matrixsynapse/__init__.py:52
 msgid ""
@@ -5683,6 +5728,21 @@ msgstr "Installere %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% fullført"
 
+#~ msgid "Exported filename"
+#~ msgstr "Eksportert filnavn"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "Navn på TAR-fil eksportert fra arkivet."
+
+#~ msgid "Extract"
+#~ msgstr "Pakk ut"
+
+#~ msgid "Archive extracted."
+#~ msgstr "Arkiv pakket ut."
+
+#~ msgid "Extract Archive"
+#~ msgstr "Pakk ut arkiv"
+
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "
 #~ "information."
@@ -5810,9 +5870,6 @@ msgstr "%(percentage)s%% fullført"
 #~ "Meldings-klient\n"
 #~ "(jsxc)"
 
-#~ msgid "Disks"
-#~ msgstr "Disker"
-
 #~ msgid "Snapshots"
 #~ msgstr "Øyeblikksbilder"
 
@@ -5926,9 +5983,6 @@ msgstr "%(percentage)s%% fullført"
 #~ msgstr ""
 #~ "Konsollinnloggingstilgang er begrenset til brukere i «admin»-gruppen.  "
 #~ "Dette kan endres i sikkerhetsoppsettet."
-
-#~ msgid "Welcome to %(box_name)s!"
-#~ msgstr "Velkommen til %(box_name)s!"
 
 #~ msgid ""
 #~ "More info about %(box_name)s is available on the project <a href="

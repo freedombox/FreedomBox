@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-08-14 18:53+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -116,33 +116,39 @@ msgstr ""
 "desactivado para incrementar la seguridad, especialmente cuando se conecta a "
 "redes locales inseguras o de poca confianza."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "Copias de seguridad"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Copias de seguridad le permite crear y gestionar archivos de copia de "
 "seguridad."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+#, fuzzy
+#| msgid "Filesystem"
+msgid "Root Filesystem"
+msgstr "Sistema de archivos"
+
+#: plinth/modules/backups/forms.py:30
 msgid "Archive name"
 msgstr "Nombre de archivo"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "Nombre para el nuevo archivo de copia de seguridad."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 msgid "Invalid archive name"
 msgstr "Nombre de archivo no válido"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "Ruta de acceso"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
@@ -150,49 +156,78 @@ msgstr ""
 "Ruta de disco a una carpeta en este servidor que se archivará en el depósito "
 "de copias de seguridad."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+#, fuzzy
+#| msgid "Disks"
+msgid "Disk"
+msgstr "Discos"
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Ruta de disco a una carpeta en este servidor donde se extraerá el archivo."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "Nombre de archivo exportado"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "Nombre para el archivo tar exportado."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Create archive"
 msgstr "Crear archivo"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "Copias de seguridad"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "Actualmente no existe ningún archivo."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Nombre"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
 msgstr "Hora"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "Extraer"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "Exportar"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "Nombre para el nuevo archivo de copia de seguridad."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "Nombre para el nuevo archivo de copia de seguridad."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "Documentación"
+
+#: plinth/modules/backups/templates/backups.html:109
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "reStore"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -210,37 +245,47 @@ msgstr "Eliminar el archivo %(name)s"
 msgid "Submit"
 msgstr "Enviar"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, fuzzy, python-format
+#| msgid "Welcome to %(box_name)s!"
+msgid "Restore data from %(name)s"
+msgstr "Bienvenido/a a %(box_name)s!"
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "Archivo creado."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 msgid "Create Archive"
 msgstr "Crear archivo"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Delete Archive"
 msgstr "Borrar archivo"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 msgid "Archive deleted."
 msgstr "Archivo borrado."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "Archivo extraído."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "Extraer archivo"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "Archivo exportado."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "Exportar archivo"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -1789,8 +1834,8 @@ msgstr "Actualizar configuración"
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
 msgstr ""
-"Permitir que %(box_name)s gestione la renovación del certificado de "
-"<b>%(current_domain)s</b>"
+"Permitir que %(box_name)s gestione la renovación del certificado de <b>"
+"%(current_domain)s</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
@@ -5705,6 +5750,21 @@ msgstr "Instalando %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% completado"
 
+#~ msgid "Exported filename"
+#~ msgstr "Nombre de archivo exportado"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "Nombre para el archivo tar exportado."
+
+#~ msgid "Extract"
+#~ msgstr "Extraer"
+
+#~ msgid "Archive extracted."
+#~ msgstr "Archivo extraído."
+
+#~ msgid "Extract Archive"
+#~ msgstr "Extraer archivo"
+
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "
 #~ "information."
@@ -5841,9 +5901,6 @@ msgstr "%(percentage)s%% completado"
 #~ "certificado del dominio actual\n"
 #~ "              "
 
-#~ msgid "Disks"
-#~ msgstr "Discos"
-
 #~ msgid "Snapshots"
 #~ msgstr "Snapshots"
 
@@ -5959,9 +6016,6 @@ msgstr "%(percentage)s%% completado"
 #~ msgstr ""
 #~ "Acceso al terminal de consola  restringido a los usuarios del grupo "
 #~ "\"admin\". Se puede configurar en las opciones de seguridad."
-
-#~ msgid "Welcome to %(box_name)s!"
-#~ msgstr "Bienvenido/a a %(box_name)s!"
 
 #~ msgid ""
 #~ "More info about %(box_name)s is available on the project <a href="

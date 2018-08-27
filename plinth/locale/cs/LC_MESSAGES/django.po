@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-08-14 04:07+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -115,31 +115,37 @@ msgstr ""
 "nutné a funguje pouze na vnitřních sítích. Je možné ho vypnout a posílit tak "
 "zabezpečení, hlavně v případě připojení do nepříliš přátelské místní sítě."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "Zálohy"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu archivů se zálohami."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+#, fuzzy
+#| msgid "Filesystem"
+msgid "Root Filesystem"
+msgstr "Souborový systém"
+
+#: plinth/modules/backups/forms.py:30
 msgid "Archive name"
 msgstr "Název archivu"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "Název pro nový archiv zálohy."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 msgid "Invalid archive name"
 msgstr "Neplatný název archivu"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "Popis umístění"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
@@ -147,48 +153,77 @@ msgstr ""
 "Popis umístění složky na datovém úložišti tohoto serveru který archivovat to "
 "repozitáře záloh."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+#, fuzzy
+#| msgid "Disks"
+msgid "Disk"
+msgstr "Disky"
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "Popis umístění složky na datovém úložišti kam bude archiv rozbalen."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "Název exportovaného soubour"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "Název pro tar soubor exportovaný z archivu."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Create archive"
 msgstr "Vytvořit archiv"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "Zálohy"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "V tuto chvíli neexistují žádné archivy."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Název"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
 msgstr "Čas"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "Vybalit"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "Export"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "Název pro nový archiv zálohy."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "Název pro nový archiv zálohy."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "Dokumentace"
+
+#: plinth/modules/backups/templates/backups.html:109
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "reStore"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -206,37 +241,46 @@ msgstr "Smazat archiv %(name)s"
 msgid "Submit"
 msgstr "Potvrdit"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, python-format
+msgid "Restore data from %(name)s"
+msgstr ""
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "Archiv vytvořen."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 msgid "Create Archive"
 msgstr "Vytvořit archiv"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Delete Archive"
 msgstr "Smazat archiv"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 msgid "Archive deleted."
 msgstr "Archiv smazán."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "Archiv rozbalen."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "Rozbalit archiv"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "Archiv exportován."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "Exportovat archiv"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -5681,6 +5725,21 @@ msgstr "Instalace %(package_names)s: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
 
+#~ msgid "Exported filename"
+#~ msgstr "Název exportovaného soubour"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "Název pro tar soubor exportovaný z archivu."
+
+#~ msgid "Extract"
+#~ msgstr "Vybalit"
+
+#~ msgid "Archive extracted."
+#~ msgstr "Archiv rozbalen."
+
+#~ msgid "Extract Archive"
+#~ msgstr "Rozbalit archiv"
+
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "
 #~ "information."
@@ -5803,9 +5862,6 @@ msgstr "%(percentage)s%% dokončeno"
 #~ msgstr ""
 #~ "Chatovací klient\n"
 #~ "(jsxc)"
-
-#~ msgid "Disks"
-#~ msgstr "Disky"
 
 #~ msgid "Snapshots"
 #~ msgstr "Zachycené stavy"

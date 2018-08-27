@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-07-26 15:39+0000\n"
 "Last-Translator: Sciumedanglisc <traduxi@riseup.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/freedombox/"
@@ -119,35 +119,39 @@ msgstr ""
 "migliorare la sicurezza specialmente quando si è connessi in una rete locale "
 "ostile."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "Backup"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr "Backups consente di creare e gestire archivi di backup."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+msgid "Root Filesystem"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:30
 #, fuzzy
 #| msgid "Kite name"
 msgid "Archive name"
 msgstr "Nome Kite"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "Nome del nuovo archivio di backup."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Invalid archive name"
 msgstr "Nome Server Invalido"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "Percorso"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 #, fuzzy
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
@@ -156,19 +160,17 @@ msgstr ""
 "Percorso di una cartella su questo server su cui sarà archiviato nel backup "
 "repository."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+msgid "Disk"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Percorso di una cartella su questo server in cui verrà estratto l'archivio."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "Nome file esportato"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "Nome del file tar esportato dall'archivio."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
@@ -177,32 +179,59 @@ msgstr "Nome del file tar esportato dall'archivio."
 msgid "Create archive"
 msgstr "Crea"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "Backup"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "Al momento non esiste nessun archivio."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Nome"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 #, fuzzy
 #| msgid "Time Zone"
 msgid "Time"
 msgstr "Fuso Orario"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "Estratto"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "Esporta"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "Nome del nuovo archivio di backup."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "Nome del nuovo archivio di backup."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "Documentazione"
+
+#: plinth/modules/backups/templates/backups.html:109
+msgid "Restore"
+msgstr ""
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -222,43 +251,52 @@ msgstr "Cancella %(name)s"
 msgid "Submit"
 msgstr "Immetti"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, python-format
+msgid "Restore data from %(name)s"
+msgstr ""
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "Archivio creato."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 #, fuzzy
 #| msgid "Create"
 msgid "Create Archive"
 msgstr "Crea"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 #, fuzzy
 #| msgid "Delete this service"
 msgid "Delete Archive"
 msgstr "Cancella questo servizio"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Archive deleted."
 msgstr "{name} cancellato."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "Archivio estratto."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "Estrai archivio"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "Archivio esportato."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "Esporta Archivio"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -5579,6 +5617,21 @@ msgstr ""
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% completata"
+
+#~ msgid "Exported filename"
+#~ msgstr "Nome file esportato"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "Nome del file tar esportato dall'archivio."
+
+#~ msgid "Extract"
+#~ msgstr "Estratto"
+
+#~ msgid "Archive extracted."
+#~ msgstr "Archivio estratto."
+
+#~ msgid "Extract Archive"
+#~ msgstr "Estrai archivio"
 
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "

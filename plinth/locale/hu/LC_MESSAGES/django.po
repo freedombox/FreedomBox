@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-13 17:48-0400\n"
+"POT-Creation-Date: 2018-08-27 18:09-0400\n"
 "PO-Revision-Date: 2018-08-15 16:37+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -116,32 +116,38 @@ msgstr ""
 "kizárólag a belső hálózaton működik. Kikapcsolható a biztonság növelése "
 "érdekében, különösen nem megbízható hálózatok esetén."
 
-#: plinth/modules/backups/__init__.py:32
+#: plinth/modules/backups/__init__.py:33
 msgid "Backups"
 msgstr "Biztonsági másolatok"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Lehetővé teszi a biztonsági másolat archívumok létrehozását és kezelését."
 
-#: plinth/modules/backups/forms.py:28
+#: plinth/modules/backups/__init__.py:89
+#, fuzzy
+#| msgid "Filesystem"
+msgid "Root Filesystem"
+msgstr "Fájlrendszer"
+
+#: plinth/modules/backups/forms.py:30
 msgid "Archive name"
 msgstr "Archívum neve"
 
-#: plinth/modules/backups/forms.py:29
+#: plinth/modules/backups/forms.py:31
 msgid "Name for new backup archive."
 msgstr "Az új biztonsági másolat archívum neve."
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:32
 msgid "Invalid archive name"
 msgstr "Érvénytelen archívum név"
 
-#: plinth/modules/backups/forms.py:33 plinth/modules/backups/forms.py:39
+#: plinth/modules/backups/forms.py:35
 msgid "Path"
 msgstr "Elérési út"
 
-#: plinth/modules/backups/forms.py:34
+#: plinth/modules/backups/forms.py:36
 msgid ""
 "Disk path to a folder on this server that will be archived into backup "
 "repository."
@@ -149,50 +155,77 @@ msgstr ""
 "Lemez elérési útja egy olyan mappára ezen a kiszolgálón, amely archiválásra "
 "kerül a mentési adattárba."
 
-#: plinth/modules/backups/forms.py:40
-msgid ""
-"Disk path to a folder on this server where the archive will be extracted."
+#: plinth/modules/backups/forms.py:42
+msgid "Disk"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:43
+#, fuzzy
+#| msgid ""
+#| "Disk path to a folder on this server where the archive will be extracted."
+msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Lemez elérési út egy olyan mappára ezen a kiszolgálón, ahová az archívum ki "
 "lesz csomagolva."
-
-#: plinth/modules/backups/forms.py:46
-msgid "Exported filename"
-msgstr "Exportált fájlnév"
-
-#: plinth/modules/backups/forms.py:47
-msgid "Name for the tar file exported from the archive."
-msgstr "Az archívumból kiexportált tar fájl neve."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
 msgid "Create archive"
 msgstr "Archívum létrehozása"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:50
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup archives"
+msgstr "Biztonsági másolatok"
+
+#: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
 msgstr "Jelenleg nincsenek archívumok."
 
-#: plinth/modules/backups/templates/backups.html:57
+#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:95
 #: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "Név"
 
-#: plinth/modules/backups/templates/backups.html:58
+#: plinth/modules/backups/templates/backups.html:59
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
 msgstr "Idő"
 
-#: plinth/modules/backups/templates/backups.html:71
-msgid "Extract"
-msgstr "Kicsomagol"
-
-#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:72
 msgid "Export"
 msgstr "Exportál"
+
+#: plinth/modules/backups/templates/backups.html:86
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "Exported backup archives"
+msgstr "Az új biztonsági másolat archívum neve."
+
+#: plinth/modules/backups/templates/backups.html:88
+#, fuzzy
+#| msgid "Name for new backup archive."
+msgid "No exported backup archives were found."
+msgstr "Az új biztonsági másolat archívum neve."
+
+#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups_restore.html:33
+#, fuzzy
+#| msgid "Documentation"
+msgid "Location"
+msgstr "Dokumentáció"
+
+#: plinth/modules/backups/templates/backups.html:109
+#, fuzzy
+#| msgid "Restart"
+msgid "Restore"
+msgstr "Újraindítás"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -210,37 +243,46 @@ msgstr "%(name)s archívum törlése"
 msgid "Submit"
 msgstr "Küldés"
 
-#: plinth/modules/backups/views.py:54
+#: plinth/modules/backups/templates/backups_restore.html:27
+msgid "Restore data from this archive?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_restore.html:51
+#, python-format
+msgid "Restore data from %(name)s"
+msgstr ""
+
+#: plinth/modules/backups/views.py:56
 msgid "Archive created."
 msgstr "Archívum létrehozva."
 
-#: plinth/modules/backups/views.py:59
+#: plinth/modules/backups/views.py:61
 msgid "Create Archive"
 msgstr "Archívum létrehozása"
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Delete Archive"
 msgstr "Archívum törlése"
 
-#: plinth/modules/backups/views.py:86
+#: plinth/modules/backups/views.py:88
 msgid "Archive deleted."
 msgstr "Archívum törölve."
 
-#: plinth/modules/backups/views.py:96
-msgid "Archive extracted."
-msgstr "Archívum kicsomagolva."
-
-#: plinth/modules/backups/views.py:101
-msgid "Extract Archive"
-msgstr "Archívum kicsomagolása"
-
-#: plinth/modules/backups/views.py:120
+#: plinth/modules/backups/views.py:98
 msgid "Archive exported."
 msgstr "Archívum exportálva."
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:103
 msgid "Export Archive"
 msgstr "Archívum exportálása"
+
+#: plinth/modules/backups/views.py:124
+msgid "Restore from backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:132
+msgid "Restored data from backup."
+msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -1799,8 +1841,8 @@ msgstr "Beállítások frissítése"
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
 msgstr ""
-"Kezelje a(z) %(box_name)s eszköz a tanúsítvány megújítását "
-"<b>%(current_domain)s</b> tartományban"
+"Kezelje a(z) %(box_name)s eszköz a tanúsítvány megújítását <b>"
+"%(current_domain)s</b> tartományban"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
@@ -5568,6 +5610,21 @@ msgstr "%(package_names)s telepítése: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "befejezettségi szint: %(percentage)s%%"
+
+#~ msgid "Exported filename"
+#~ msgstr "Exportált fájlnév"
+
+#~ msgid "Name for the tar file exported from the archive."
+#~ msgstr "Az archívumból kiexportált tar fájl neve."
+
+#~ msgid "Extract"
+#~ msgstr "Kicsomagol"
+
+#~ msgid "Archive extracted."
+#~ msgstr "Archívum kicsomagolva."
+
+#~ msgid "Extract Archive"
+#~ msgstr "Archívum kicsomagolása"
 
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "
