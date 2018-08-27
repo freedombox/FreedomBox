@@ -23,10 +23,11 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from .backups import backup_apps
 from plinth import actions
 from plinth.menu import main_menu
 from plinth.modules import udiskie
+
+from .backups import backup_apps
 
 version = 1
 
@@ -34,7 +35,9 @@ managed_packages = ['borgbackup']
 
 name = _('Backups')
 
-description = [_('Backups allows creating and managing backup archives.'), ]
+description = [
+    _('Backups allows creating and managing backup archives.'),
+]
 
 service = None
 
@@ -87,8 +90,8 @@ def _backup_handler(packet):
 
     paths = packet.directories + packet.files
     paths.append(manifest_path)
-    actions.superuser_run('backups',
-                          ['create', '--name', packet.label, '--path'] + paths)
+    actions.superuser_run(
+        'backups', ['create', '--name', packet.label, '--paths'] + paths)
 
 
 def create_archive(name, app_names):

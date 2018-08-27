@@ -41,8 +41,8 @@ def parse_arguments():
 
     create = subparsers.add_parser('create', help='Create archive')
     create.add_argument('--name', help='Archive name', required=True)
-    create.add_argument(
-        '--path', help='Paths to include in archive', nargs='+')
+    create.add_argument('--paths', help='Paths to include in archive',
+                        nargs='+')
 
     delete = subparsers.add_parser('delete', help='Delete archive')
     delete.add_argument('--name', help='Archive name', required=True)
@@ -90,9 +90,13 @@ def subcommand_list(_):
 
 def subcommand_create(arguments):
     """Create archive."""
+    paths = filter(os.path.exists, arguments.paths)
     subprocess.run([
-        'borg', 'create', '--json', REPOSITORY + '::' + arguments.name,
-    ] + arguments.path, check=True)
+        'borg',
+        'create',
+        '--json',
+        REPOSITORY + '::' + arguments.name,
+    ] + list(paths), check=True)
 
 
 def subcommand_delete(arguments):
