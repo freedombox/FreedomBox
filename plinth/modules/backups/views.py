@@ -18,7 +18,8 @@
 Views for the backups app.
 """
 
-from datetime import date
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
@@ -30,7 +31,6 @@ from urllib.parse import unquote
 
 from plinth.modules import backups
 from .backups import _list_of_all_apps_for_backup
-
 from .forms import CreateArchiveForm, ExportArchiveForm
 
 
@@ -68,7 +68,8 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     def get_initial(self):
         """Return the initial data to use for forms on this view."""
         initial = super().get_initial()
-        initial['name'] = 'FreedomBox_backup_' + str(date.today())
+        initial['name'] = 'FreedomBox_backup_' + datetime.now().strftime(
+            '%Y-%m-%d:%H:%M')
         return initial
 
     def form_valid(self, form):
