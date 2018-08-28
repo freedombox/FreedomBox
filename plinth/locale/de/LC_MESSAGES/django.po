@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-27 18:09-0400\n"
-"PO-Revision-Date: 2018-08-03 22:01+0000\n"
+"PO-Revision-Date: 2018-08-29 12:38+0000\n"
 "Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
 "de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #: plinth/action_utils.py:258
 #, python-brace-format
@@ -127,10 +127,8 @@ msgid "Backups allows creating and managing backup archives."
 msgstr "Backups ermöglicht das Erzeugen und Verwalten von Backup-Archiven."
 
 #: plinth/modules/backups/__init__.py:89
-#, fuzzy
-#| msgid "Filesystem"
 msgid "Root Filesystem"
-msgstr "Dateisystem"
+msgstr "Wurzel-Dateisystem"
 
 #: plinth/modules/backups/forms.py:30
 msgid "Archive name"
@@ -163,13 +161,9 @@ msgid "Disk"
 msgstr "Speichermedium"
 
 #: plinth/modules/backups/forms.py:43
-#, fuzzy
-#| msgid ""
-#| "Disk path to a folder on this server where the archive will be extracted."
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
-"Plattenpfad zu einem Ordner auf diesem Server, wohin das Backup-Archiv "
-"entpackt werden wird."
+"Plattenpfad oder Speichermedium wohin das Backup-Archiv entpackt werden wird."
 
 #: plinth/modules/backups/templates/backups.html:43
 #: plinth/modules/backups/templates/backups.html:46
@@ -177,10 +171,8 @@ msgid "Create archive"
 msgstr "Archiv anlegen"
 
 #: plinth/modules/backups/templates/backups.html:50
-#, fuzzy
-#| msgid "Backups"
 msgid "Backup archives"
-msgstr "Backups"
+msgstr "Backup Archive"
 
 #: plinth/modules/backups/templates/backups.html:52
 msgid "No archives currently exist."
@@ -206,29 +198,21 @@ msgid "Export"
 msgstr "Exportieren"
 
 #: plinth/modules/backups/templates/backups.html:86
-#, fuzzy
-#| msgid "Name for new backup archive."
 msgid "Exported backup archives"
-msgstr "Name für das neue Backup-Archiv."
+msgstr "Exportierte Backup-Archive"
 
 #: plinth/modules/backups/templates/backups.html:88
-#, fuzzy
-#| msgid "Name for new backup archive."
 msgid "No exported backup archives were found."
-msgstr "Name für das neue Backup-Archiv."
+msgstr "Es wurden keine exportierten Backup-Archive gefunden."
 
 #: plinth/modules/backups/templates/backups.html:94
 #: plinth/modules/backups/templates/backups_restore.html:33
-#, fuzzy
-#| msgid "Documentation"
 msgid "Location"
-msgstr "Dokumentation"
+msgstr "Ort"
 
 #: plinth/modules/backups/templates/backups.html:109
-#, fuzzy
-#| msgid "reStore"
 msgid "Restore"
-msgstr "reStore"
+msgstr "Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -248,13 +232,12 @@ msgstr "Absenden"
 
 #: plinth/modules/backups/templates/backups_restore.html:27
 msgid "Restore data from this archive?"
-msgstr ""
+msgstr "Daten aus diesem Archiv wiederherstellen?"
 
 #: plinth/modules/backups/templates/backups_restore.html:51
-#, fuzzy, python-format
-#| msgid "Welcome to %(box_name)s!"
+#, python-format
 msgid "Restore data from %(name)s"
-msgstr "Willkommen zur %(box_name)s!"
+msgstr "Stelle Daten von %(name)s wieder her"
 
 #: plinth/modules/backups/views.py:56
 msgid "Archive created."
@@ -282,11 +265,11 @@ msgstr "Exportiere Archiv"
 
 #: plinth/modules/backups/views.py:124
 msgid "Restore from backup"
-msgstr ""
+msgstr "Wiederherstellen von Backup"
 
 #: plinth/modules/backups/views.py:132
 msgid "Restored data from backup."
-msgstr ""
+msgstr "Daten aus Backup wiederhergestellt."
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -1838,19 +1821,12 @@ msgid "Update config"
 msgstr "Konfiguration aktualisieren"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:174
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let %(box_name)s manage certificate renewal of\n"
-#| "                <b>%(current_domain)s</b>\n"
-#| "              "
+#, python-format
 msgid ""
 "Let %(box_name)s manage certificate renewal of <b>%(current_domain)s</b>"
 msgstr ""
-"\n"
-"                %(box_name)s soll die Zertifikat-Erneurung von <b>"
-"%(current_domain)s</b> verwalten\n"
-"              "
+"%(box_name)s soll die Zertifikat-Erneurung von <b>%(current_domain)s</b> "
+"verwalten"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:183
 #, python-format
@@ -1870,32 +1846,13 @@ msgstr ""
 "Sie zuerst ein Zertifikat um dessen Verwaltung zu aktivieren."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:222
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                  Use certificate of %(current_domain)s for <b>ejabberd</"
-#| "b>\n"
-#| "                "
+#, python-format
 msgid "Use certificate of %(current_domain)s for <b>ejabberd</b>"
-msgstr ""
-"\n"
-"                  Nutze das Zertifikat von %(current_domain)s für "
-"<b>ejabberd</b>\n"
-"                "
+msgstr "Nutze das Zertifikat von %(current_domain)s für <b>ejabberd</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:226
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                  Use certificate of the current domain for <b>ejabberd</"
-#| "b>\n"
-#| "                "
 msgid "Use certificate of the current domain for <b>ejabberd</b>"
-msgstr ""
-"\n"
-"                  Nutze das Zertifikat von der derzeitgen Domain für "
-"<b>ejabberd</b>\n"
-"                "
+msgstr "Nutze das Zertifikat von der derzeitgen Domain für <b>ejabberd</b>"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:236
 #, python-format
