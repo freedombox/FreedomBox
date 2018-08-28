@@ -18,7 +18,6 @@
 
 import re
 import urllib.request
-from subprocess import PIPE, Popen
 
 MANUAL_PAGE_URL = "https://wiki.debian.org/FreedomBox/Manual/{}?action=show&mimetype=text%2Fdocbook"
 
@@ -29,7 +28,9 @@ manual_pages = []
 to_remove = ['QuickStart', 'GettingHelp', 'Developer']
 
 
-def write_manual_pages():
+def list_manual_pages():
+    """Fetch the list of manual pages and write them to a file.
+    """
     pattern = 'FreedomBox/Manual/\w+'
     lst = list(urllib.request.urlopen(MANUAL_INDEX_RAW_URL))
     global manual_pages
@@ -45,19 +46,12 @@ def write_manual_pages():
 def fetch_manual_pages_in_docbook_format():
     for page in manual_pages:
         url = MANUAL_PAGE_URL.format(page)
-        p1 = Popen(['wget', '--quiet', '-O', '-', url], stdout=PIPE)
-        p2 = Popen(['xmllint', '--format', '-'], stdin=p1.stdout, stdout=PIPE)
-        p1.stdout.close()
-        with open('{}.raw.xml'.format(page), 'w') as docbook:
-            p3 = Popen(
-                ['egrep', '-v', 'linkend|Category|Commons|HELP|Back to'],
-                stdin=p2.stdout, stdout=docbook)
-            p2.stdout.close()
-            p3.communicate()
+        filename = '{}.raw.xml'.format(page)
+        urllib.request.urlretrieve(url, filename)
 
 
 def main():
-    write_manual_pages()
+    list_manual_pages()
     fetch_manual_pages_in_docbook_format()
 
 
