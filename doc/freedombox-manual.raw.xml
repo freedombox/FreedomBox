@@ -2010,7 +2010,7 @@ proto udp]]></screen>
       <title>Wiki (MediaWiki)</title>
       <section>
         <title>About MediaWiki</title>
-        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink> is the software that powers the Wikimedia suite of wikis.  </para>
+        <para><ulink url="https://wiki.debian.org/FreedomBox/Manual/MediaWiki#">MediaWiki</ulink> is the software that powers the Wikimedia suite of wikis. </para>
         <para>Read more about MediaWiki on <ulink url="https://en.wikipedia.org/wiki/MediaWiki">Wikipedia</ulink> </para>
         <para><emphasis role="strong">Available since:</emphasis>  version 0.20.0 </para>
       </section>
@@ -2044,15 +2044,37 @@ proto udp]]></screen>
             <title>Personal Wiki-based Website</title>
             <itemizedlist>
               <listitem override="none">
-                <para><ulink url="https://www.mediawiki.org/wiki/Sites_using_MediaWiki/en">Several websites</ulink> on the internet are simply MediaWiki instances. MediaWiki on FreedomBox is read-only to visitors. Hence, it can be adapted to serve as your personal website and/or blog. MediaWiki content is easy to export and can be later moved to use another blog engine.  </para>
+                <para><ulink url="https://www.mediawiki.org/wiki/Sites_using_MediaWiki/en">Several websites</ulink> on the internet are simply MediaWiki instances. MediaWiki on FreedomBox is read-only to visitors. Hence, it can be adapted to serve as your personal website and/or blog. MediaWiki content is easy to export and can be later moved to use another blog engine. </para>
               </listitem>
             </itemizedlist>
           </section>
         </section>
         <section>
           <title>Editing Wiki Content</title>
-          <para>MediWiki's new Visual Editor gives a WYSIWYG user interface to creating wiki pages. Unfortunately, it is not yet available in the current version of MediaWiki on Debian.  </para>
-          <para>You don't have to necessarily learn the MediaWiki formatting language. You can write in your favorite format (Markdown, Org-mode, LaTeX etc.) and convert it to the MediaWiki format using <ulink url="https://pandoc.org/try/">Pandoc</ulink>. </para>
+          <section>
+            <title>Visual Editor</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para>MediaWiki's new Visual Editor gives a WYSIWYG user interface to creating wiki pages. Unfortunately, it is not yet available in the current version of MediaWiki on Debian. A workaround is to use write your content using the Visual Editor in <ulink url="https://en.wikipedia.org/wiki/Wikipedia:Sandbox">Wikipedia's Sandbox</ulink>, switching to source editing mode and copying the content into your wiki. </para>
+              </listitem>
+            </itemizedlist>
+          </section>
+          <section>
+            <title>Other Formats</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para>You don't have to necessarily learn the MediaWiki formatting language. You can write in your favorite format (Markdown, Org-mode, LaTeX etc.) and convert it to the MediaWiki format using <ulink url="https://pandoc.org/try/">Pandoc</ulink>. </para>
+              </listitem>
+            </itemizedlist>
+          </section>
+          <section>
+            <title>Image Uploads</title>
+            <itemizedlist>
+              <listitem override="none">
+                <para>Image uploads have been enabled since FreedomBox version 0.36.0. You can also directly use images from Wikimedia Commons using a feature called <ulink url="https://www.mediawiki.org/wiki/InstantCommons">Instant Commons</ulink>. </para>
+              </listitem>
+            </itemizedlist>
+          </section>
         </section>
       </section>
     </section>
@@ -7048,7 +7070,7 @@ $ sudo umount /tmp/vbox-root1
         <title>Troubleshooting</title>
         <orderedlist numeration="arabic">
           <listitem>
-            <para>There is a <ulink url="https://bugs.debian.org/797368">bug</ulink> in policykit-1 package that causes errors and hangs during installation of freedombox-setup package.  A workaround is to first install policykit-1 package and then reboot.  After that, follow the above procedure setup procedure. </para>
+            <para>There is a <ulink url="https://bugs.debian.org/797368">bug</ulink> in policykit-1 package that causes errors and hangs during installation of freedombox-setup package.  A workaround is to first install policykit-1 package and then reboot.  After that, follow the above setup procedure. </para>
             <screen><![CDATA[$ sudo apt-get update
 $ sudo apt-get install policykit-1
 $ sudo reboot]]></screen>
@@ -7468,6 +7490,17 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.37.0 (2018-08-27)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Updated translations for Czech, Norwegian Bokmål, Russian, Spanish, Hungarian, and Dutch. </para>
+          </listitem>
+          <listitem>
+            <para>install: Use Post/Response/Get pattern for reloads. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.36.0 (2018-08-13)</title>
         <itemizedlist>
