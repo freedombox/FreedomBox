@@ -32,6 +32,8 @@ Vagrant.configure(2) do |config|
     systemctl disable plinth
     # Disable automatic upgrades
     /vagrant/actions/upgrades disable-auto
+    # Install ncurses-term
+    DEBIAN_FRONTEND=noninteractive apt install -y ncurses-term
   SHELL
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
