@@ -21,6 +21,7 @@ FreedomBox app to manage backup archives.
 import json
 import os
 
+from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
@@ -105,7 +106,9 @@ def delete_archive(name):
 def export_archive(name, location):
     if location[-1] != '/':
         location += '/'
-    filename = location + 'FreedomBox-backups/' + name + '.tar.gz'
+
+    filename = location + 'FreedomBox-backups/' + get_valid_filename(
+        name) + '.tar.gz'
     actions.superuser_run('backups',
                           ['export', '--name', name, '--filename', filename])
 
