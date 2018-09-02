@@ -81,7 +81,8 @@ def _backup_handler(packet):
     if not os.path.exists(MANIFESTS_FOLDER):
         os.makedirs(MANIFESTS_FOLDER)
 
-    manifest_path = MANIFESTS_FOLDER + packet.label + '.json'
+    manifest_path = MANIFESTS_FOLDER + get_valid_filename(
+        packet.label) + '.json'
     manifests = [{
         'name': x[0],
         'version': x[1].version,
