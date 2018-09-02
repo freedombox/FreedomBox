@@ -67,9 +67,8 @@ class RestoreForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
+        apps = kwargs.pop('apps')
         super().__init__(*args, **kwargs)
-        apps = _list_of_all_apps_for_backup()
-        # TODO: Only list apps included in the backup file.
         self.fields['selected_apps'].choices = [
             (app[0], app[1].name) for app in apps]
         self.fields['selected_apps'].initial = [app[0] for app in apps]

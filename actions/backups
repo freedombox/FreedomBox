@@ -25,6 +25,7 @@ import glob
 import json
 import os
 import subprocess
+import tarfile
 
 REPOSITORY = '/var/lib/freedombox/borgbackup'
 
@@ -61,6 +62,12 @@ def parse_arguments():
         'list-exports', help='List exported backup archive files')
     list_exports.add_argument('--location', required=True,
                               help='location to check')
+
+    get_export_apps = subparsers.add_parser(
+        'get-export-apps',
+        help='Get list of apps included in exported archive file')
+    get_export_apps.add_argument(
+        '--filename', help='Tarball file name', required=True)
 
     restore = subparsers.add_parser(
         'restore', help='Restore files from an exported archive')
@@ -142,6 +149,23 @@ def subcommand_list_exports(arguments):
             exports.append(os.path.basename(filename))
 
     print(json.dumps(exports))
+
+
+def subcommand_get_export_apps(arguments):
+    """Get list of apps included in exported archive file."""
+    manifest = None
+    with tarfile.open(arguments.filename) as t:
+        filenames = t.getnames()
+        for name in filenames:
+            if 'var/lib/plinth/backups-manifests/' in name \
+               and name.endswith('.json'):
+                manifest_data = t.extractfile(name).read()
+                manifest = json.loads(manifest_data)
+                break
+
+    if manifest:
+        for app in manifest:
+            print(app['name'])
 
 
 def subcommand_restore(arguments):

@@ -30,6 +30,7 @@ from django.views.generic import FormView, TemplateView
 from urllib.parse import unquote
 
 from plinth.modules import backups
+from . import find_exported_archive, get_export_apps
 from .backups import _list_of_all_apps_for_backup
 from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm
 
@@ -132,6 +133,31 @@ class RestoreView(SuccessMessageMixin, FormView):
     template_name = 'backups_restore.html'
     success_url = reverse_lazy('backups:index')
     success_message = _('Restored files from backup.')
+
+    def collect_data(self, label, name):
+        """Save some data used to instantiate the form."""
+        self.label = unquote(label)
+        self.name = unquote(name)
+        self.filename = find_exported_archive(self.label, self.name)
+        self.installed_apps = _list_of_all_apps_for_backup()
+        self.included_apps = get_export_apps(self.filename)
+
+    def get(self, request, *args, **kwargs):
+        """Save request parameters for later."""
+        self.collect_data(kwargs['label'], kwargs['name'])
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """Save request parameters for later."""
+        self.collect_data(kwargs['label'], kwargs['name'])
+        return super().post(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        """Pass additional keyword args for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['apps'] = [
+            x for x in self.installed_apps if x[0] in self.included_apps]
+        return kwargs
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

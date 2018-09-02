@@ -140,7 +140,7 @@ def get_export_files():
     return export_files
 
 
-def _find_exported_archive(disk_label, archive_name):
+def find_exported_archive(disk_label, archive_name):
     """Return the full path for the exported archive file."""
     path = None
     locations = get_export_locations()
@@ -155,9 +155,16 @@ def _find_exported_archive(disk_label, archive_name):
     return path
 
 
+def get_export_apps(filename):
+    """Get list of apps included in exported archive file."""
+    output = actions.superuser_run(
+        'backups', ['get-export-apps', '--filename', filename])
+    return output.splitlines()
+
+
 def restore_exported(label, name, apps=None):
     """Restore files from exported backup archive."""
-    filename = _find_exported_archive(label, name)
+    filename = find_exported_archive(label, name)
     if filename:
         # TODO: Use backups API.
         actions.superuser_run(
