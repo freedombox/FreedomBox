@@ -31,7 +31,7 @@ from urllib.parse import unquote
 
 from plinth.modules import backups
 from .backups import _list_of_all_apps_for_backup
-from .forms import CreateArchiveForm, ExportArchiveForm
+from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm
 
 
 class IndexView(TemplateView):
@@ -125,9 +125,13 @@ class ExportArchiveView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
-class RestoreView(SuccessMessageMixin, TemplateView):
+class RestoreView(SuccessMessageMixin, FormView):
     """View to restore files from an exported archive."""
+    form_class = RestoreForm
+    prefix = 'backups'
     template_name = 'backups_restore.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = _('Restored files from backup.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -137,8 +141,9 @@ class RestoreView(SuccessMessageMixin, TemplateView):
         context['name'] = self.kwargs['name']
         return context
 
-    def post(self, request, label, name):
+    def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        backups.restore_exported(label, name)
-        messages.success(request, _('Restored data from backup.'))
-        return redirect(reverse_lazy('backups:index'))
+        backups.restore_exported(unquote(self.kwargs['label']),
+                                 self.kwargs['name'],
+                                 form.cleaned_data['selected_apps'])
+        return super().form_valid(form)

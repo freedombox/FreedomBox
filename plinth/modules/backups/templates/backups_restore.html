@@ -47,6 +47,8 @@
     <form class="form" method="post">
       {% csrf_token %}
 
+      {{ form|bootstrap }}
+
       <input type="submit" class="btn btn-danger"
              value="{% blocktrans trimmed %}
                       Restore data from {{ name }}

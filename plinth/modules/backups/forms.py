@@ -57,3 +57,19 @@ class ExportArchiveForm(forms.Form):
         """Initialize the form with disk choices."""
         super().__init__(*args, **kwargs)
         self.fields['disk'].choices = get_export_locations()
+
+
+class RestoreForm(forms.Form):
+    selected_apps = forms.MultipleChoiceField(
+        label=_('Restore apps'),
+        help_text=_('Apps data to restore from the backup'),
+        widget=forms.CheckboxSelectMultiple)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with selectable apps."""
+        super().__init__(*args, **kwargs)
+        apps = _list_of_all_apps_for_backup()
+        # TODO: Only list apps included in the backup file.
+        self.fields['selected_apps'].choices = [
+            (app[0], app[1].name) for app in apps]
+        self.fields['selected_apps'].initial = [app[0] for app in apps]
