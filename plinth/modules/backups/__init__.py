@@ -18,6 +18,7 @@
 FreedomBox app to manage backup archives.
 """
 
+import errno
 import json
 import os
 
@@ -138,15 +139,28 @@ def get_export_files():
     return export_files
 
 
-def restore_exported(label, name):
-    """Restore files from exported backup archive."""
+def _find_exported_archive(disk_label, archive_name):
+    """Return the full path for the exported archive file."""
+    path = None
     locations = get_export_locations()
     for location in locations:
-        if location[1] == label:
-            filename = location[0]
-            if filename[-1] != '/':
-                filename += '/'
-            filename += 'FreedomBox-backups/' + name
-            actions.superuser_run(
-                'backups', ['restore', '--filename', filename])
+        if location[1] == disk_label:
+            path = location[0]
+            if path[-1] != '/':
+                path += '/'
+            path += 'FreedomBox-backups/' + archive_name
             break
+
+    return path
+
+
+def restore_exported(label, name, apps=None):
+    """Restore files from exported backup archive."""
+    filename = _find_exported_archive(label, name)
+    if filename:
+        # TODO: Use backups API.
+        actions.superuser_run(
+            'backups', ['restore', '--filename', filename])
+    else:
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), filename)
