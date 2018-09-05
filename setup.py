@@ -233,6 +233,8 @@ setuptools.setup(
                  glob.glob('data/etc/apache2/sites-available/*.conf')),
                 ('/etc/apache2/includes',
                  glob.glob('data/etc/apache2/includes/*.conf')),
+                ('/etc/apt/apt.conf.d',
+                 glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
                 ('/etc/avahi/services/',
                  glob.glob('data/etc/avahi/services/*.service')),
                 ('/etc/ikiwiki',
