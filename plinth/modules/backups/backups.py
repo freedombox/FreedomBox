@@ -152,7 +152,8 @@ def backup_apps(backup_handler, app_names=None, label=None):
         _lockdown_apps(apps, lockdown=False)
 
 
-def restore_apps(restore_handler, app_names=None, create_subvolume=True):
+def restore_apps(restore_handler, app_names=None, create_subvolume=True,
+                 backup_file=None):
     """Restore data belonging to a set of applications."""
     if not app_names:
         apps = _list_of_all_apps_for_backup()
@@ -171,7 +172,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True):
         restore_root = '/'
         subvolume = False
 
-    packet = Packet('restore', 'apps', restore_root, manifests)
+    packet = Packet('restore', 'apps', restore_root, manifests, backup_file)
     _run_operation(restore_handler, packet)
 
     if subvolume:

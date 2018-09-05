@@ -29,7 +29,7 @@ from plinth import actions
 from plinth.menu import main_menu
 from plinth.modules import udiskie
 
-from .backups import backup_apps
+from .backups import backup_apps, restore_apps
 
 version = 1
 
@@ -162,13 +162,24 @@ def get_export_apps(filename):
     return output.splitlines()
 
 
+def _restore_handler(packet):
+    """Perform restore operation on packet."""
+    locations = {
+        'directories': packet.directories,
+        'files': packet.files
+    }
+    locations_data = json.dumps(locations)
+    actions.superuser_run(
+        'backups', ['restore', '--filename', packet.label],
+        input=locations_data.encode())
+
+
 def restore_exported(label, name, apps=None):
     """Restore files from exported backup archive."""
     filename = find_exported_archive(label, name)
     if filename:
-        # TODO: Use backups API.
-        actions.superuser_run(
-            'backups', ['restore', '--filename', filename])
+        restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
+                     backup_file=filename)
     else:
         raise FileNotFoundError(
             errno.ENOENT, os.strerror(errno.ENOENT), filename)

@@ -25,6 +25,7 @@ import glob
 import json
 import os
 import subprocess
+import sys
 import tarfile
 
 REPOSITORY = '/var/lib/freedombox/borgbackup'
@@ -170,12 +171,26 @@ def subcommand_get_export_apps(arguments):
 
 def subcommand_restore(arguments):
     """Restore files from an exported archive."""
-    prev_dir = os.getcwd()
-    try:
-        os.chdir('/')
-        subprocess.run(['tar', 'xf', arguments.filename], check=True)
-    finally:
-        os.chdir(prev_dir)
+    locations_data = ''.join(sys.stdin)
+    locations = json.loads(locations_data)
+
+    found_file = False
+    with tarfile.open(arguments.filename) as t:
+        for member in t.getmembers():
+            path = '/' + member.name
+            if path in locations['files']:
+                t.extract(member, '/')
+                found_file = True
+            else:
+                for d in locations['directories']:
+                    if path.startswith(d):
+                        t.extract(member, '/')
+                        found_file = True
+                        break
+
+    if not found_file:
+        print('No matching files or directories found in archive:', locations)
+        sys.exit(1)
 
 
 def main():
