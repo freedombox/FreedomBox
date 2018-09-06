@@ -20,11 +20,12 @@ Tests for backups module.
 
 import collections
 import unittest
-from unittest.mock import call, patch
+from unittest.mock import call, patch, MagicMock
 
 from plinth.module_loader import load_modules
-from ..backups import _list_of_all_apps_for_backup, _get_apps_in_order, \
-    Packet, validate, _shutdown_services, _restore_services
+from ..backups import validate, Packet, backup_apps, restore_apps, \
+    _list_of_all_apps_for_backup, _get_apps_in_order, _get_manifests, \
+    _lockdown_apps, _shutdown_services, _restore_services
 
 
 def _get_test_manifest(name):
@@ -63,6 +64,18 @@ class TestBackups(unittest.TestCase):
                 for f in backup[x]['files']:
                     assert f in packet.files
 
+    def test_backup_apps(self):
+        """Test that backup_handler is called."""
+        backup_handler = MagicMock()
+        backup_apps(backup_handler)
+        backup_handler.assert_called_once()
+
+    def test_restore_apps(self):
+        """Test that restore_handler is called."""
+        restore_handler = MagicMock()
+        restore_apps(restore_handler)
+        restore_handler.assert_called_once()
+
     def test__list_of_all_apps_for_backups(self):
         """Test that apps supporting backup are included in returned list."""
         load_modules()
@@ -80,6 +93,30 @@ class TestBackups(unittest.TestCase):
         names_index = ordered_app_names.index('names')
         config_index = ordered_app_names.index('config')
         assert names_index < config_index
+
+    def test__get_manifests(self):
+        """Test that manifests are collected from the apps."""
+        a = MagicMock(backup=_get_test_manifest('a'))
+        b = MagicMock(backup=_get_test_manifest('b'))
+        apps = [
+            ('a', a),
+            ('b', b),
+        ]
+        manifests = _get_manifests(apps)
+        assert ('a', a, a.backup) in manifests
+        assert ('b', b, b.backup) in manifests
+
+    def test__lockdown_apps(self):
+        """Test that locked flag is set for each app."""
+        a = MagicMock(locked=False)
+        b = MagicMock(locked=None)
+        apps = [
+            ('a', a),
+            ('b', b),
+        ]
+        _lockdown_apps(apps, True)
+        assert a.locked is True
+        assert b.locked is True
 
     @patch('plinth.action_utils.service_is_running')
     @patch('plinth.actions.superuser_run')
