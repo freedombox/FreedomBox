@@ -20,9 +20,9 @@ from support import config
 from .service import wait_for_page_update
 
 sys_modules = [
-    'avahi', 'cockpit', 'config', 'datetime', 'diagnostics', 'firewall',
-    'letsencrypt', 'monkeysphere', 'names', 'networks', 'power', 'snapshot',
-    'upgrades', 'users'
+    'avahi', 'backups', 'cockpit', 'config', 'datetime', 'diagnostics',
+    'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
+    'networks', 'power', 'snapshot', 'upgrades', 'users'
 ]
 
 default_url = config['DEFAULT']['url']

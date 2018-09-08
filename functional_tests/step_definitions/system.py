@@ -100,3 +100,33 @@ def verify_snapshot_count(browser, count):
 @then(parsers.parse('the default app should be {app_name:w}'))
 def default_app_should_be(browser, app_name):
     assert system.check_home_page_redirect(browser, app_name)
+
+
+@given('dynamicdns is configured')
+def dynamicdns_configure(browser):
+    system.dynamicdns_configure(browser)
+
+
+@when('I change the dynamicdns configuration')
+def dynamicdns_change_config(browser):
+    system.dynamicdns_change_config(browser)
+
+
+@then('dynamicdns should have the original configuration')
+def dynamicdns_has_original_config(browser):
+    assert system.dynamicdns_has_original_config(browser)
+
+
+@when(parsers.parse('I create a backup of the {app_name:w} app data'))
+def backup_create(browser, app_name):
+    system.backup_create(browser, app_name)
+
+
+@when(parsers.parse('I export the {app_name:w} app data backup'))
+def backup_export(browser, app_name):
+    system.backup_export(browser, app_name)
+
+
+@when(parsers.parse('I restore the {app_name:w} app data backup'))
+def backup_restore(browser, app_name):
+    system.backup_restore(browser, app_name)

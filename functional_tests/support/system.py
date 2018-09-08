@@ -99,3 +99,81 @@ def check_home_page_redirect(browser, app_name):
     browser.visit(config['DEFAULT']['url'])
     return browser.find_by_xpath(
         "//a[contains(@href, '/plinth/') and @title='FreedomBox']")
+
+
+def dynamicdns_configure(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    browser.find_by_id('id_enabled').check()
+    browser.find_by_id('id_service_type').select('GnuDIP')
+    browser.find_by_id('id_dynamicdns_server').fill('example.com')
+    browser.find_by_id('id_dynamicdns_domain').fill('freedombox.example.com')
+    browser.find_by_id('id_dynamicdns_user').fill('tester')
+    browser.find_by_id('id_dynamicdns_secret').fill('testingtesting')
+    browser.find_by_id('id_dynamicdns_ipurl').fill(
+        'http://myip.datasystems24.de')
+    submit(browser)
+
+
+def dynamicdns_has_original_config(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    enabled = browser.find_by_id('id_enabled').value
+    service_type = browser.find_by_id('id_service_type').value
+    server = browser.find_by_id('id_dynamicdns_server').value
+    domain = browser.find_by_id('id_dynamicdns_domain').value
+    user = browser.find_by_id('id_dynamicdns_user').value
+    ipurl = browser.find_by_id('id_dynamicdns_ipurl').value
+    if enabled and service_type == 'GnuDIP' and server == 'example.com' \
+       and domain == 'freedombox.example.com' and user == 'tester' \
+       and ipurl == 'http://myip.datasystems24.de':
+        return True
+    else:
+        return False
+
+
+def dynamicdns_change_config(browser):
+    nav_to_module(browser, 'dynamicdns')
+    browser.find_link_by_href(
+        '/plinth/sys/dynamicdns/configure/').first.click()
+    browser.find_by_id('id_enabled').check()
+    browser.find_by_id('id_service_type').select('GnuDIP')
+    browser.find_by_id('id_dynamicdns_server').fill('2.example.com')
+    browser.find_by_id('id_dynamicdns_domain').fill('freedombox2.example.com')
+    browser.find_by_id('id_dynamicdns_user').fill('tester2')
+    browser.find_by_id('id_dynamicdns_secret').fill('testingtesting2')
+    browser.find_by_id('id_dynamicdns_ipurl').fill(
+        'http://myip2.datasystems24.de')
+    submit(browser)
+
+
+def backup_create(browser, app_name):
+    nav_to_module(browser, 'backups')
+    delete = browser.find_link_by_href(
+        '/plinth/sys/backups/delete/_functional_test_' + app_name + '/')
+    if delete:
+        delete.first.click()
+        submit(browser)
+
+    browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
+    browser.find_by_id('id_backups-name').fill('_functional_test_' + app_name)
+    submit(browser)
+
+
+def backup_export(browser, app_name):
+    nav_to_module(browser, 'backups')
+    browser.find_link_by_href(
+        '/plinth/sys/backups/export/_functional_test_'
+        + app_name + '/').first.click()
+    browser.find_by_id('id_backups-disk_0').first.check()
+    submit(browser)
+
+
+def backup_restore(browser, app_name):
+    nav_to_module(browser, 'backups')
+    browser.find_link_by_href(
+        '/plinth/sys/backups/restore/Root%2520Filesystem/_functional_test_'
+        + app_name + '.tar.gz/').first.click()
+    submit(browser)
