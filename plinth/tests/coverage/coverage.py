@@ -26,7 +26,6 @@
 Support for integration of code test coverage analysis with setuptools.
 """
 
-import coverage
 import glob
 import setuptools
 import shutil
@@ -65,6 +64,8 @@ class CoverageCommand(setuptools.Command):
 
     def run(self):
         """Main command implementation."""
+        import coverage
+
         if self.distribution.install_requires:
             self.distribution.fetch_build_eggs(
                 self.distribution.install_requires)
