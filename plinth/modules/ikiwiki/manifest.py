@@ -34,7 +34,7 @@ backup = validate_backup({
         'files': [],
     },
     'data': {
-        'directories': ['/var/lib/ikiwiki/'],
+        'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/'],
         'files': [],
     },
     'secrets': {
