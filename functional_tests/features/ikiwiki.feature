@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ikiwiki
+@apps @ikiwiki @backups
 Feature: ikiwiki Wiki and Blog
   Manage wikis and blogs.
 
@@ -32,4 +32,12 @@ Scenario: Disable wiki application
   Given the wiki application is enabled
   When I disable the wiki application
   Then the wiki site should not be available
-  
+
+Scenario: Backup and restore wiki
+  Given the wiki application is enabled
+  When there is an ikiwiki wiki
+  And I create a backup of the ikiwiki app data
+  And I delete the ikiwiki wiki
+  And I export the ikiwiki app data backup
+  And I restore the ikiwiki app data backup
+  Then the ikiwiki wiki should be restored

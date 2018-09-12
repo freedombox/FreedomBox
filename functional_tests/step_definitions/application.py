@@ -199,3 +199,18 @@ def set_mediawiki_admin_password(browser):
 @when(parsers.parse('I disable message archive management'))
 def set_mediawiki_admin_password(browser):
     application.disable_ejabberd_message_archive_management(browser)
+
+
+@when('there is an ikiwiki wiki')
+def ikiwiki_create_wiki_if_needed(browser):
+    application.ikiwiki_create_wiki_if_needed(browser)
+
+
+@when('I delete the ikiwiki wiki')
+def ikiwiki_delete_wiki(browser):
+    application.ikiwiki_delete_wiki(browser)
+
+
+@then('the ikiwiki wiki should be restored')
+def ikiwiki_should_exist(browser):
+    assert application.ikiwiki_wiki_exists(browser)

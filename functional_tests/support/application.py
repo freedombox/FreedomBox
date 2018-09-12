@@ -267,3 +267,35 @@ def disable_ejabberd_message_archive_management(browser):
     interface.nav_to_module(browser, 'ejabberd')
     _change_status(browser, 'ejabberd', 'disabled',
                    checkbox_id='id_MAM_enabled')
+
+
+def ikiwiki_create_wiki_if_needed(browser):
+    """Create wiki if it does not exist."""
+    interface.nav_to_module(browser, 'ikiwiki')
+    browser.find_link_by_href('/plinth/apps/ikiwiki/manage/').first.click()
+    wiki = browser.find_link_by_href('/ikiwiki/wiki')
+    if not wiki:
+        browser.find_link_by_href('/plinth/apps/ikiwiki/create/').first.click()
+        browser.find_by_id('id_ikiwiki-name').fill('wiki')
+        browser.find_by_id('id_ikiwiki-admin_name').fill(
+            config['DEFAULT']['username'])
+        browser.find_by_id('id_ikiwiki-admin_password').fill(
+            config['DEFAULT']['password'])
+        submit(browser)
+
+
+def ikiwiki_delete_wiki(browser):
+    """Delete wiki."""
+    interface.nav_to_module(browser, 'ikiwiki')
+    browser.find_link_by_href('/plinth/apps/ikiwiki/manage/').first.click()
+    browser.find_link_by_href(
+        '/plinth/apps/ikiwiki/wiki/delete/').first.click()
+    submit(browser)
+
+
+def ikiwiki_wiki_exists(browser):
+    """Check whether the wiki exists."""
+    interface.nav_to_module(browser, 'ikiwiki')
+    browser.find_link_by_href('/plinth/apps/ikiwiki/manage/').first.click()
+    wiki = browser.find_link_by_href('/ikiwiki/wiki')
+    return bool(wiki)
