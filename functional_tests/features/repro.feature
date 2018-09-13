@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @sip
+@apps @sip @backups
 Feature: Repro SIP Server
   Make audio and video calls.
 
@@ -32,3 +32,12 @@ Scenario: Disable repro application
   Given the repro application is enabled
   When I disable the repro application
   Then the repro service should not be running
+
+Scenario: Backup and restore repro
+  Given the repro application is enabled
+  And repro has been configured
+  When I create a backup of the repro app data
+  And I delete the repro configuration
+  And I export the repro app data backup
+  And I restore the repro app data backup
+  Then the repro configuration should be restored

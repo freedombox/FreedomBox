@@ -141,3 +141,24 @@ def mediawiki_has_main_page(browser):
     browser.visit('{}/mediawiki/Main_Page'.format(interface.default_url))
     content = browser.find_by_id('mw-content-text').first
     return 'This page has been deleted.' not in content.text
+
+
+def repro_configure(browser):
+    """Configure repro."""
+    browser.visit(
+        '{}/repro/domains.html?domainUri=freedombox.local&domainTlsPort='
+        '&action=Add'.format(interface.default_url))
+
+
+def repro_delete_config(browser):
+    """Delete the repro config."""
+    browser.visit('{}/repro/domains.html?domainUri=&domainTlsPort='
+                  '&action=Remove&remove.freedombox.local=on'.format(
+                      interface.default_url))
+
+
+def repro_is_configured(browser):
+    """Check whether repro is configured."""
+    browser.visit('{}/repro/domains.html'.format(interface.default_url))
+    remove = browser.find_by_name('remove.freedombox.local')
+    return bool(remove)

@@ -96,3 +96,18 @@ def mediawiki_delete_main_page(browser):
 @then('the mediawiki main page should be restored')
 def mediawiki_verify_text(browser):
     assert site.mediawiki_has_main_page(browser)
+
+
+@given('repro has been configured')
+def repro_configure(browser):
+    site.repro_configure(browser)
+
+
+@when('I delete the repro configuration')
+def repro_delete_config(browser):
+    site.repro_delete_config(browser)
+
+
+@then('the repro configuration should be restored')
+def repro_is_configured(browser):
+    assert site.repro_is_configured(browser)
