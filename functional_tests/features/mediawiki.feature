@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @mediawiki
+@apps @mediawiki @backups
 Feature: MediaWiki Wiki Engine
   Manage wikis, multimedia and more.
 
@@ -82,3 +82,11 @@ Scenario: Upload SVG image
   Given the mediawiki application is enabled
   When I upload an image named FreedomBox-logo-grayscale.svg to mediawiki with credentials admin and whatever123
   Then there should be FreedomBox-logo-grayscale.svg image
+
+Scenario: Backup and restore mediawiki
+  Given the mediawiki application is enabled
+  When I create a backup of the mediawiki app data
+  And I delete the mediawiki main page
+  And I export the mediawiki app data backup
+  And I restore the mediawiki app data backup
+  Then the mediawiki main page should be restored

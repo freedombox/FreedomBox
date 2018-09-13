@@ -24,6 +24,7 @@ from selenium.webdriver.common.keys import Keys
 from support import config, interface
 from support.service import eventually, wait_for_page_update
 
+
 # unlisted sites just use '/' + site_name as url
 site_url = {
     'wiki': '/ikiwiki',
@@ -123,3 +124,20 @@ def get_uploaded_image_in_mediawiki(browser, image):
     browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:ListFiles')
     elements = browser.find_link_by_partial_href(image)
     return elements[0].value
+
+
+def mediawiki_delete_main_page(browser):
+    """Delete the mediawiki main page."""
+    _login_to_mediawiki(browser, 'admin', 'whatever123')
+    browser.visit(
+        '{}/mediawiki/index.php?title=Main_Page&action=delete'.format(
+            interface.default_url))
+    with wait_for_page_update(browser):
+        browser.find_by_id('wpConfirmB').first.click()
+
+
+def mediawiki_has_main_page(browser):
+    """Check if mediawiki main page exists."""
+    browser.visit('{}/mediawiki/Main_Page'.format(interface.default_url))
+    content = browser.find_by_id('mw-content-text').first
+    return 'This page has been deleted.' not in content.text

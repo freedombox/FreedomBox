@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from pytest_bdd import parsers, then, when
+from pytest_bdd import given, parsers, then, when
 
 from support import site
 
@@ -86,3 +86,13 @@ def mediawiki_does_not_allow__account_creation_anonymous_reads_edits(browser):
         'with credentials {username:w} and {password:w}'))
 def login_to_mediawiki_with_credentials(browser, username, password):
     site.login_to_mediawiki_with_credentials(browser, username, password)
+
+
+@when('I delete the mediawiki main page')
+def mediawiki_delete_main_page(browser):
+    site.mediawiki_delete_main_page(browser)
+
+
+@then('the mediawiki main page should be restored')
+def mediawiki_verify_text(browser):
+    assert site.mediawiki_has_main_page(browser)

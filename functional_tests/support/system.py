@@ -17,7 +17,7 @@
 
 from support import config
 
-from .interface import nav_to_module, submit
+from .interface import default_url, nav_to_module, submit
 
 config_page_title_language_map = {
     'da': 'Generel Konfiguration',
@@ -150,6 +150,7 @@ def dynamicdns_change_config(browser):
 
 
 def backup_create(browser, app_name):
+    browser.visit(default_url)
     nav_to_module(browser, 'backups')
     delete = browser.find_link_by_href(
         '/plinth/sys/backups/delete/_functional_test_' + app_name + '/')
@@ -163,6 +164,7 @@ def backup_create(browser, app_name):
 
 
 def backup_export(browser, app_name):
+    browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
         '/plinth/sys/backups/export/_functional_test_'
@@ -172,6 +174,7 @@ def backup_export(browser, app_name):
 
 
 def backup_restore(browser, app_name):
+    browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
         '/plinth/sys/backups/restore/Root%2520Filesystem/_functional_test_'
