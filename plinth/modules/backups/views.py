@@ -18,20 +18,22 @@
 Views for the backups app.
 """
 
+import mimetypes
 from datetime import datetime
 from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404
+from django.core.files.base import File
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
-from django.views.generic import FormView, TemplateView
+from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
 
-from . import backups as backups_api
+from . import backups as backups_api, find_exported_archive
 from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm
 
 
@@ -99,6 +101,24 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         backups.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect(reverse_lazy('backups:index'))
+
+
+class DownloadArchiveView(View):
+    """View to download an archive."""
+    def get(self, request, label, name):
+        label = unquote(label)
+        name = unquote(name)
+        filepath = find_exported_archive(label, name)
+        (content_type, encoding) = mimetypes.guess_type(name)
+        with open(filepath, 'rb') as file_handle:
+            response = HttpResponse(File(file_handle),
+                content_type=content_type)
+            content_disposition = 'attachment; filename="%s"' % name
+            response['Content-Disposition'] = content_disposition
+            if encoding:
+                response['Content-Encoding'] = encoding
+
+        return response
 
 
 class ExportArchiveView(SuccessMessageMixin, FormView):
