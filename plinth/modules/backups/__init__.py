@@ -45,6 +45,8 @@ service = None
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 
+BACKUP_FOLDER_NAME = 'FreedomBox-backups'
+
 
 def init():
     """Intialize the module."""
@@ -106,13 +108,10 @@ def delete_archive(name):
 
 
 def export_archive(name, location):
-    if location[-1] != '/':
-        location += '/'
-
-    filename = location + 'FreedomBox-backups/' + get_valid_filename(
-        name) + '.tar.gz'
+    filepath = get_archive_path(location, get_valid_filename(name) + '.tar.gz')
+    # TODO: that's a full path, not a filename; rename argument
     actions.superuser_run('backups',
-                          ['export', '--name', name, '--filename', filename])
+                          ['export', '--name', name, '--filename', filepath])
 
 
 def get_export_locations():
@@ -140,13 +139,17 @@ def get_export_files():
     return export_files
 
 
+def get_archive_path(location, archive_name):
+    return os.path.join(location, BACKUP_FOLDER_NAME, archive_name)
+
+
 def find_exported_archive(disk_label, archive_name):
     """Return the full path for the exported archive file."""
     locations = get_export_locations()
-    for location in locations:
-        if location[1] == disk_label:
-            return os.path.join(location[0], 'FreedomBox-backups',
-                                archive_name)
+    for (location_path, location_name) in locations:
+        if location_name == disk_label:
+            return get_archive_path(location_path, archive_name)
+
 
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
                             archive_name)

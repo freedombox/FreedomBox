@@ -21,7 +21,7 @@ URLs for the backups module.
 from django.conf.urls import url
 
 from .views import IndexView, CreateArchiveView, DownloadArchiveView, \
-    ExportArchiveView, DeleteArchiveView, RestoreView
+    DeleteArchiveView, ExportArchiveView, RestoreView, UploadArchiveView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -32,6 +32,7 @@ urlpatterns = [
         DownloadArchiveView.as_view(), name='download'),
     url(r'^sys/backups/delete/(?P<name>[^/]+)/$',
         DeleteArchiveView.as_view(), name='delete'),
+    url(r'^sys/backups/upload/$', UploadArchiveView.as_view(), name='upload'),
     url(r'^sys/backups/restore/(?P<label>[^/]+)/(?P<name>[^/]+)/$',
         RestoreView.as_view(), name='restore'),
 ]

@@ -18,12 +18,15 @@
 Forms for backups module.
 """
 
+import os
+
 from django import forms
 from django.core import validators
+from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext_lazy as _
 
 from . import backups as backups_api
-from . import get_export_locations
+from . import get_export_locations, get_archive_path
 
 
 class CreateArchiveForm(forms.Form):
@@ -72,3 +75,35 @@ class RestoreForm(forms.Form):
         self.fields['selected_apps'].choices = [
             (app[0], app[1].name) for app in apps]
         self.fields['selected_apps'].initial = [app[0] for app in apps]
+
+
+class UploadForm(forms.Form):
+    location = forms.ChoiceField(
+        choices=(),
+        label=_('Location'),
+        initial='',
+        widget=forms.Select(),
+        required=True,
+        help_text=_('Location to upload the archive to'))
+    file = forms.FileField(label=_('Upload File'), required=True,
+            validators=[FileExtensionValidator(['gz'],
+                'Backup files have to be in .tar.gz format')],
+            help_text=_('Select the backup file you want to upload'))
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with location choices."""
+        super().__init__(*args, **kwargs)
+        # TODO: write a test that assures the format of get_export_locations
+        self.fields['location'].choices = get_export_locations()
+
+    def clean(self):
+        """Check that the uploaded file does not exist"""
+        cleaned_data = super().clean()
+        file = cleaned_data.get('file')
+        location = cleaned_data.get('location')
+        if (file and file.name):
+            filepath = get_archive_path(location, file.name)
+            if os.path.exists(filepath):
+                raise forms.ValidationError("File %s already exists" % file.name)
+            else:
+                self.cleaned_data.update({'filepath': filepath})

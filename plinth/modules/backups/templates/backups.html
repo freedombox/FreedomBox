@@ -39,6 +39,8 @@
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
 
+  <h3>{% trans 'Backup archives' %}</h3>
+
   {% if available_apps %}
     <p>
       <a title="{% trans 'New backup' %}"
@@ -63,7 +65,6 @@
     </p>
   {% endif %}
 
-  <h3>{% trans 'Backup archives' %}</h3>
   {% if not archives %}
     <p>{% trans 'No archives currently exist.' %}</p>
   {% else %}
@@ -97,9 +98,9 @@
     </table>
   {% endif %}
 
-  <h3>{% trans 'Exported backup archives' %}</h3>
+  <h3>{% trans 'Existing backup files' %}</h3>
   {% if not exports %}
-    <p>{% trans 'No exported backup archives were found.' %}</p>
+    <p>{% trans 'No existing backup files were found.' %}</p>
   {% else %}
     <table class="table table-bordered table-condensed table-striped"
            id="exports-list">
@@ -133,5 +134,13 @@
       </tbody>
     </table>
   {% endif %}
+
+  <p>
+    <a title="{% trans 'Upload a backup file' %}"
+       role="button" class="btn btn-primary"
+       href="{% url 'backups:upload' %}">
+      {% trans 'Upload backup file' %}
+    </a>
+  </p>
 
 {% endblock %}

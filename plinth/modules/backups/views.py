@@ -29,12 +29,22 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
 
 from . import backups as backups_api, find_exported_archive
-from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm
+from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm, UploadForm
+
+
+subsubmenu = [{
+    'url': reverse_lazy('backups:index'),
+    'text': ugettext_lazy('Backups')
+}, {
+    'url': reverse_lazy('backups:upload'),
+    'text': ugettext_lazy('Upload backup')
+}]
 
 
 class IndexView(TemplateView):
@@ -49,6 +59,7 @@ class IndexView(TemplateView):
         context['info'] = backups.get_info()
         context['archives'] = backups.list_archives()
         context['exports'] = backups.get_export_files()
+        context['subsubmenu'] = subsubmenu
         apps = backups_api.get_all_apps_for_backup()
         context['available_apps'] = [app[0] for app in apps]
         return context
@@ -66,6 +77,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('New Backup')
+        context['subsubmenu'] = subsubmenu
         return context
 
     def get_initial(self):
@@ -119,6 +131,28 @@ class DownloadArchiveView(View):
                 response['Content-Encoding'] = encoding
 
         return response
+
+
+class UploadArchiveView(SuccessMessageMixin, FormView):
+    form_class = UploadForm
+    prefix = 'backups'
+    template_name = 'backups_upload.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = _('Archive uploaded.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Upload Backup File')
+        context['subsubmenu'] = subsubmenu
+        return context
+
+    def form_valid(self, form):
+        """store uploaded file."""
+        with open(form.cleaned_data['filepath'], 'wb+') as destination:
+            for chunk in self.request.FILES['backups-file'].chunks():
+                destination.write(chunk)
+        return super().form_valid(form)
 
 
 class ExportArchiveView(SuccessMessageMixin, FormView):
