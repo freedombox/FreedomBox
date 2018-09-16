@@ -49,6 +49,13 @@
   </p>
   {% else %}
   <p>
+    <a title="{% trans 'New backup' %}"
+       role="button" class="btn btn-primary disabled"
+       href="{% url 'backups:create' %}">
+      {% trans 'New backup' %}
+    </a>
+  </p>
+  <p>
     {% blocktrans trimmed %}
       No apps that support backup are currently installed. After any app
       that supports backup has been installed, then it will be possible to
