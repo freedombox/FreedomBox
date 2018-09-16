@@ -26,7 +26,7 @@ from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext_lazy as _
 
 from . import backups as backups_api
-from . import get_export_locations, get_archive_path
+from . import get_export_locations, get_archive_path, get_location_path
 
 
 class CreateArchiveForm(forms.Form):
@@ -93,16 +93,21 @@ class UploadForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form with location choices."""
         super().__init__(*args, **kwargs)
-        # TODO: write a test that assures the format of get_export_locations
-        self.fields['location'].choices = get_export_locations()
+        locations = get_export_locations()
+        # users should only be able to select a location name -- don't
+        # provide paths as a form input for security reasons
+        location_labels = [(location[1], location[1]) for location in locations]
+        self.fields['location'].choices = location_labels
 
     def clean(self):
-        """Check that the uploaded file does not exist"""
+        """Check that the uploaded file does not yet exist."""
         cleaned_data = super().clean()
         file = cleaned_data.get('file')
-        location = cleaned_data.get('location')
+        location_label = cleaned_data.get('location')
+        location_path = get_location_path(location_label)
+        # if other errors occured before, 'file' won't be in cleaned_data
         if (file and file.name):
-            filepath = get_archive_path(location, file.name)
+            filepath = get_archive_path(location_path, file.name)
             if os.path.exists(filepath):
                 raise forms.ValidationError("File %s already exists" % file.name)
             else:

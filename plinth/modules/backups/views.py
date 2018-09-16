@@ -138,7 +138,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
     prefix = 'backups'
     template_name = 'backups_upload.html'
     success_url = reverse_lazy('backups:index')
-    success_message = _('Archive uploaded.')
+    success_message = _('Backup file uploaded.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""

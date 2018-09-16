@@ -19,13 +19,18 @@ Tests for backups module.
 """
 
 import collections
+from django.core.files.uploadedfile import SimpleUploadedFile
 import unittest
 from unittest.mock import call, patch, MagicMock
 
+
+from plinth.errors import PlinthError
 from plinth.module_loader import load_modules
 from ..backups import validate, Packet, backup_apps, restore_apps, \
     get_all_apps_for_backup, _get_apps_in_order, _get_manifests, \
     _lockdown_apps, _shutdown_services, _restore_services
+from .. import get_export_locations, get_location_path
+from ..forms import UploadForm
 
 
 def _get_test_manifest(name):
@@ -46,8 +51,8 @@ def _get_test_manifest(name):
     })
 
 
-class TestBackups(unittest.TestCase):
-    """Test cases for backups module."""
+class TestBackupProcesses(unittest.TestCase):
+    """Test cases for backup processes"""
 
     def test_packet_process_manifests(self):
         """Test that directories/files are collected from manifests."""
@@ -82,6 +87,12 @@ class TestBackups(unittest.TestCase):
         apps = get_all_apps_for_backup()
         assert isinstance(apps, list)
         # apps may be empty, if no apps supporting backup are installed.
+
+    def test_export_locations(self):
+        """Check get_export_locations returns a list of tuples of length 2."""
+        locations = get_export_locations()
+        assert(len(locations))
+        assert(len(locations[0]) == 2)
 
     def test__get_apps_in_order(self):
         """Test that apps are listed in correct dependency order."""
@@ -148,3 +159,34 @@ class TestBackups(unittest.TestCase):
             'app_name': 'b', 'app': None, 'was_running': False}
         _restore_services(original_state)
         run.assert_called_once_with('service', ['start', 'a'])
+
+
+class TestBackupModule(unittest.TestCase):
+    """Tests of the backups django module, like views or forms."""
+
+    def test_get_location_path(self):
+        """Test the 'get_location_path' method"""
+        locations = [('/var/www', 'dummy location'), ('/etc', 'dangerous')]
+        location = get_location_path('dummy location', locations)
+        self.assertEquals(location, locations[0][0])
+        # verify that an unknown location raises an error
+        with self.assertRaises(PlinthError):
+            get_location_path('unknown location', locations)
+
+    def test_file_upload(self):
+        locations = get_export_locations()
+        location_name = locations[0][1]
+        post_data = {'location': location_name}
+
+	# posting a video should fail
+        video_file = SimpleUploadedFile("video.mp4", b"file_content",
+            content_type="video/mp4")
+        form = UploadForm(post_data, {'file': video_file})
+        self.assertFalse(form.is_valid())
+
+	# posting an archive file should work
+        archive_file = SimpleUploadedFile("backup.tar.gz", b"file_content",
+            content_type="application/gzip")
+        form = UploadForm(post_data, {'file': archive_file})
+        form.is_valid()
+        self.assertTrue(form.is_valid())

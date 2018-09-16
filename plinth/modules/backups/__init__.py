@@ -18,7 +18,6 @@
 FreedomBox app to manage backup archives.
 """
 
-import errno
 import json
 import os
 
@@ -26,6 +25,7 @@ from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
+from plinth.errors import PlinthError
 from plinth.menu import main_menu
 from plinth.modules import storage
 
@@ -127,6 +127,16 @@ def get_export_locations():
     return locations
 
 
+def get_location_path(label, locations=None):
+    """Returns the location path given a disk label"""
+    if locations is None:
+        locations = get_export_locations()
+    for (location_path, location_label) in locations:
+        if location_label == label:
+            return location_path
+    raise PlinthError("Could not find path of location %s" % label)
+
+
 def get_export_files():
     """Return a dict of exported backup archives found in storage locations."""
     locations = get_export_locations()
@@ -145,14 +155,8 @@ def get_archive_path(location, archive_name):
 
 def find_exported_archive(disk_label, archive_name):
     """Return the full path for the exported archive file."""
-    locations = get_export_locations()
-    for (location_path, location_name) in locations:
-        if location_name == disk_label:
-            return get_archive_path(location_path, archive_name)
-
-
-    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
-                            archive_name)
+    location_path = get_location_path(disk_label)
+    return get_archive_path(location_path, archive_name)
 
 
 def get_export_apps(filename):
