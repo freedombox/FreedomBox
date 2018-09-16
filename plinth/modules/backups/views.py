@@ -63,7 +63,7 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Create Archive')
+        context['title'] = _('New Backup')
         return context
 
     def get_initial(self):
