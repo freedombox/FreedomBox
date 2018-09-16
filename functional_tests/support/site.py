@@ -138,6 +138,11 @@ def mediawiki_delete_main_page(browser):
 
 def mediawiki_has_main_page(browser):
     """Check if mediawiki main page exists."""
+    return eventually(_mediawiki_has_main_page, [browser])
+
+
+def _mediawiki_has_main_page(browser):
+    """Check if mediawiki main page exists."""
     browser.visit('{}/mediawiki/Main_Page'.format(interface.default_url))
     content = browser.find_by_id('mw-content-text').first
     return 'This page has been deleted.' not in content.text
@@ -158,6 +163,11 @@ def repro_delete_config(browser):
 
 
 def repro_is_configured(browser):
+    """Check whether repro is configured."""
+    return eventually(_repro_is_configured, [browser])
+
+
+def _repro_is_configured(browser):
     """Check whether repro is configured."""
     browser.visit('{}/repro/domains.html'.format(interface.default_url))
     remove = browser.find_by_name('remove.freedombox.local')
