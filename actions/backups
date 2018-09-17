@@ -83,6 +83,10 @@ def subcommand_setup(_):
     try:
         subprocess.run(['borg', 'info', REPOSITORY], check=True)
     except:
+        path = os.path.dirname(REPOSITORY)
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         subprocess.run(['borg', 'init', '--encryption', 'none', REPOSITORY])
 
 
