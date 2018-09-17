@@ -86,6 +86,10 @@
                  href="{% url 'backups:export' archive.name %}">
                 {% trans "Export" %}
               </a>
+              <a class="archive-export btn btn-sm btn-default" target="_blank"
+                 href="{% url 'backups:export-and-download' archive.name %}">
+                {% trans "Download" %}
+              </a>
               <a class="archive-delete btn btn-sm btn-default"
                  href="{% url 'backups:delete' archive.name %}">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true">

@@ -132,6 +132,9 @@ def subcommand_extract(arguments):
 
 def subcommand_export(arguments):
     """Export archive contents as tarball."""
+    # TODO: if this is only used for files in /tmp, add checks to verify that
+    # arguments.filename is within /tmp
+    # TODO: arguments.filename is not a filename but a path
     path = os.path.dirname(arguments.filename)
     if not os.path.exists(path):
         os.makedirs(path)

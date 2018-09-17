@@ -19,6 +19,7 @@ Views for the backups app.
 """
 
 import mimetypes
+import os
 from datetime import datetime
 from urllib.parse import unquote
 
@@ -33,7 +34,7 @@ from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
 
-from . import api, find_exported_archive, forms
+from . import api, find_exported_archive, TMP_BACKUP_PATH, forms
 
 
 subsubmenu = [{
@@ -129,6 +130,39 @@ def _get_file_response(path, filename):
     content_disposition = 'attachment; filename="%s"' % filename
     response['Content-Disposition'] = content_disposition
     return response
+
+
+class ExportAndDownloadView(View):
+    """View to export and download an archive."""
+    def get(self, request, name):
+        name = unquote(name)
+        with create_temporary_backup_file(name) as filename, \
+                open(filename, 'rb') as file_handle:
+            (content_type, encoding) = mimetypes.guess_type(filename)
+            response = HttpResponse(File(file_handle),
+                content_type=content_type)
+            content_disposition = 'attachment; filename="%s"' % filename
+            response['Content-Disposition'] = content_disposition
+            if encoding:
+                response['Content-Encoding'] = encoding
+
+            return response
+
+
+class create_temporary_backup_file:
+    """Create a temporary backup file that gets deleted after using it"""
+
+    def __init__(self, name):
+        self.name = name
+        self.path = TMP_BACKUP_PATH
+
+    def __enter__(self):
+        backups.export_archive(self.name, self.path, tmp_dir=True)
+        return self.path
+
+    def __exit__(self, type, value, traceback):
+        if os.path.isfile(self.path):
+            os.remove(self.path)
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):

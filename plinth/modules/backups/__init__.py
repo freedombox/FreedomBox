@@ -47,6 +47,8 @@ service = None
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 
 BACKUP_FOLDER_NAME = 'FreedomBox-backups'
+# default backup path for temporary actions like imports or download
+TMP_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
 
 
 def init():
@@ -108,10 +110,14 @@ def delete_archive(name):
     actions.superuser_run('backups', ['delete', '--name', name])
 
 
-def export_archive(name, location):
-    location_path = get_location_path(location)
-    filepath = get_archive_path(location_path,
-                                get_valid_filename(name) + '.tar.gz')
+def export_archive(name, location, tmp_dir=False):
+    # TODO: find a better solution for distinguishing exports to /tmp
+    if tmp_dir:
+        filepath = TMP_BACKUP_PATH
+    else:
+        location_path = get_location_path(location)
+        filepath = get_archive_path(location_path,
+                                    get_valid_filename(name) + '.tar.gz')
     # TODO: that's a full path, not a filename; rename argument
     actions.superuser_run('backups',
                           ['export', '--name', name, '--filename', filepath])
