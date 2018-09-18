@@ -160,6 +160,10 @@ def backup_create(browser, app_name):
 
     browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
     browser.find_by_id('id_backups-name').fill('_functional_test_' + app_name)
+    for app in browser.find_by_css('input[type=checkbox]'):
+        app.uncheck()
+
+    browser.find_by_value(app_name).first.check()
     submit(browser)
 
 
