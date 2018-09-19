@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configures or runs unattended-upgrades
 """
@@ -26,7 +25,6 @@ import re
 import subprocess
 import sys
 
-CONF_FILE = '/etc/apt/apt.conf.d/50unattended-upgrades'
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
 
@@ -50,18 +48,10 @@ def parse_arguments():
 def subcommand_run(_):
     """Run unattended-upgrades"""
     try:
-        setup()
-    except FileNotFoundError:
-        print('Error: Could not configure unattended-upgrades.',
-              file=sys.stderr)
-        sys.exit(1)
-
-    try:
-        subprocess.Popen(
-            ['unattended-upgrades', '-v'],
-            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL, close_fds=True,
-            start_new_session=True)
+        subprocess.Popen(['unattended-upgrades', '-v'],
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, close_fds=True,
+                         start_new_session=True)
     except FileNotFoundError:
         print('Error: unattended-upgrades is not available.', file=sys.stderr)
         sys.exit(2)
@@ -72,8 +62,10 @@ def subcommand_run(_):
 
 def subcommand_check_auto(_):
     """Check if automatic upgrades are enabled"""
-    arguments = ['apt-config', 'shell', 'UpdateInterval',
-                 'APT::Periodic::Update-Package-Lists']
+    arguments = [
+        'apt-config', 'shell', 'UpdateInterval',
+        'APT::Periodic::Update-Package-Lists'
+    ]
     try:
         output = subprocess.check_output(arguments).decode()
     except subprocess.CalledProcessError as error:
@@ -90,13 +82,6 @@ def subcommand_check_auto(_):
 
 def subcommand_enable_auto(_):
     """Enable automatic upgrades"""
-    try:
-        setup()
-    except FileNotFoundError:
-        print('Error: Could not configure unattended-upgrades.',
-              file=sys.stderr)
-        sys.exit(1)
-
     with open(AUTO_CONF_FILE, 'w') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "1";\n')
         conffile.write('APT::Periodic::Unattended-Upgrade "1";\n')
@@ -108,22 +93,6 @@ def subcommand_disable_auto(_):
         os.rename(AUTO_CONF_FILE, AUTO_CONF_FILE + '.disabled')
     except FileNotFoundError:
         print('Already disabled.')
-
-
-def setup():
-    """Sets unattended-upgrades config to upgrade any package from Debian."""
-    with open(CONF_FILE, 'r') as conffile:
-        lines = conffile.readlines()
-
-    for line in lines:
-        if re.match(r'\s*"o(rigin)?=Debian";', line):
-            return  # already configured
-
-    with open(CONF_FILE, 'w') as conffile:
-        for line in lines:
-            conffile.write(line)
-            if re.match(r'\s*Unattended-Upgrade::Origins-Pattern\s+{', line):
-                conffile.write('        "origin=Debian";\n')
 
 
 def subcommand_get_log(_):
