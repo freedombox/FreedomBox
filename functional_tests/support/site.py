@@ -21,7 +21,7 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from support import config, interface
+from support import application, config, interface, system
 from support.service import eventually, wait_for_page_update
 
 
@@ -172,3 +172,44 @@ def _repro_is_configured(browser):
     browser.visit('{}/repro/domains.html'.format(interface.default_url))
     remove = browser.find_by_name('remove.freedombox.local')
     return bool(remove)
+
+
+def jsxc_login(browser):
+    """Login to JSXC."""
+    access_url(browser, 'jsxc')
+    browser.find_by_id('jsxc-username').fill(config['DEFAULT']['username'])
+    browser.find_by_id('jsxc-password').fill(config['DEFAULT']['password'])
+    browser.find_by_id('jsxc-submit').click()
+    relogin = browser.find_by_text('relogin')
+    if relogin:
+        relogin.first.click()
+        browser.find_by_id('jsxc_username').fill(config['DEFAULT']['username'])
+        browser.find_by_id('jsxc_password').fill(config['DEFAULT']['password'])
+        browser.find_by_text('Connect').first.click()
+
+
+def jsxc_add_contact(browser):
+    """Add a contact to JSXC user's roster."""
+    system.set_domain_name(browser, 'localhost')
+    application.install(browser, 'jsxc')
+    jsxc_login(browser)
+    new = browser.find_by_text('new contact')
+    if new:  # roster is empty
+        new.first.click()
+        browser.find_by_id('jsxc_username').fill('alice@localhost')
+        browser.find_by_text('Add').first.click()
+
+
+def jsxc_delete_contact(browser):
+    """Delete the contact from JSXC user's roster."""
+    jsxc_login(browser)
+    browser.find_by_css('div.jsxc_more').first.click()
+    browser.find_by_text('delete contact').first.click()
+    browser.find_by_text('Remove').first.click()
+
+
+def jsxc_has_contact(browser):
+    """Check whether the contact is in JSXC user's roster."""
+    jsxc_login(browser)
+    contact = browser.find_by_text('alice@localhost')
+    return bool(contact)

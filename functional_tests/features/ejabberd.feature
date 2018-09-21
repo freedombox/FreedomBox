@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ejabberd
+@apps @ejabberd @backups
 Feature: Ejabberd Chat Server
   Run ejabberd chat server.
 
@@ -42,3 +42,12 @@ Scenario: Disable message archive management
   Given the ejabberd application is enabled
   When I disable message archive management
   Then the ejabberd service should be running
+
+Scenario: Backup and restore ejabberd
+  Given the ejabberd application is enabled
+  And I have added a contact to my roster
+  When I create a backup of the ejabberd app data
+  And I delete the contact from my roster
+  And I export the ejabberd app data backup
+  And I restore the ejabberd app data backup
+  Then I should have a contact on my roster

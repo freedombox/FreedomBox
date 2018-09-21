@@ -19,7 +19,7 @@ from time import sleep
 
 import splinter
 
-from support import config, interface
+from support import config, interface, site
 from support.interface import submit
 from support.service import eventually, wait_for_page_update
 
@@ -267,6 +267,21 @@ def disable_ejabberd_message_archive_management(browser):
     interface.nav_to_module(browser, 'ejabberd')
     _change_status(browser, 'ejabberd', 'disabled',
                    checkbox_id='id_MAM_enabled')
+
+
+def ejabberd_add_contact(browser):
+    """Add a contact to Ejabberd user's roster."""
+    site.jsxc_add_contact(browser)
+
+
+def ejabberd_delete_contact(browser):
+    """Delete the contact from Ejabberd user's roster."""
+    site.jsxc_delete_contact(browser)
+
+
+def ejabberd_has_contact(browser):
+    """Check whether the contact is in Ejabberd user's roster."""
+    return site.jsxc_has_contact(browser)
 
 
 def ikiwiki_create_wiki_if_needed(browser):

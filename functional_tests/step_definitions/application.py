@@ -214,3 +214,18 @@ def ikiwiki_delete_wiki(browser):
 @then('the ikiwiki wiki should be restored')
 def ikiwiki_should_exist(browser):
     assert application.ikiwiki_wiki_exists(browser)
+
+
+@given('I have added a contact to my roster')
+def ejabberd_add_contact(browser):
+    application.ejabberd_add_contact(browser)
+
+
+@when('I delete the contact from my roster')
+def ejabberd_delete_contact(browser):
+    application.ejabberd_delete_contact(browser)
+
+
+@then('I should have a contact on my roster')
+def ejabberd_should_have_contact(browser):
+    assert application.ejabberd_has_contact(browser)
