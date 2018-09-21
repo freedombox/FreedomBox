@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from support import config
+from support import application, config
 
 from .interface import default_url, nav_to_module, submit
 
@@ -151,7 +151,7 @@ def dynamicdns_change_config(browser):
 
 def backup_create(browser, app_name):
     browser.visit(default_url)
-    nav_to_module(browser, 'backups')
+    application.install(browser, 'backups')
     delete = browser.find_link_by_href(
         '/plinth/sys/backups/delete/_functional_test_' + app_name + '/')
     if delete:
