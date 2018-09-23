@@ -126,7 +126,7 @@ def restore_full(restore_handler):
 def backup_apps(backup_handler, app_names=None, label=None):
     """Backup data belonging to a set of applications."""
     if not app_names:
-        apps = _list_of_all_apps_for_backup()
+        apps = get_all_apps_for_backup()
     else:
         apps = _get_apps_in_order(app_names)
 
@@ -156,7 +156,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
                  backup_file=None):
     """Restore data belonging to a set of applications."""
     if not app_names:
-        apps = _list_of_all_apps_for_backup()
+        apps = get_all_apps_for_backup()
     else:
         apps = _get_apps_in_order(app_names)
 
@@ -182,7 +182,7 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         _lockdown_apps(apps, lockdown=False)
 
 
-def _list_of_all_apps_for_backup():
+def get_all_apps_for_backup():
     """Return a list of all applications that can be backed up."""
     apps = []
     for module_name, module in module_loader.loaded_modules.items():

@@ -24,7 +24,7 @@ from unittest.mock import call, patch, MagicMock
 
 from plinth.module_loader import load_modules
 from ..backups import validate, Packet, backup_apps, restore_apps, \
-    _list_of_all_apps_for_backup, _get_apps_in_order, _get_manifests, \
+    get_all_apps_for_backup, _get_apps_in_order, _get_manifests, \
     _lockdown_apps, _shutdown_services, _restore_services
 
 
@@ -76,10 +76,10 @@ class TestBackups(unittest.TestCase):
         restore_apps(restore_handler)
         restore_handler.assert_called_once()
 
-    def test__list_of_all_apps_for_backups(self):
+    def test_get_all_apps_for_backups(self):
         """Test that apps supporting backup are included in returned list."""
         load_modules()
-        apps = _list_of_all_apps_for_backup()
+        apps = get_all_apps_for_backup()
         assert isinstance(apps, list)
         # apps may be empty, if no apps supporting backup are installed.
 
