@@ -81,8 +81,8 @@ def _backup_handler(packet):
     if not os.path.exists(MANIFESTS_FOLDER):
         os.makedirs(MANIFESTS_FOLDER)
 
-    manifest_path = MANIFESTS_FOLDER + get_valid_filename(
-        packet.label) + '.json'
+    manifest_path = os.path.join(MANIFESTS_FOLDER,
+                                 get_valid_filename(packet.label) + '.json')
     manifests = [{
         'name': manifest[0],
         'version': manifest[1].version,
@@ -142,17 +142,14 @@ def get_export_files():
 
 def find_exported_archive(disk_label, archive_name):
     """Return the full path for the exported archive file."""
-    path = None
     locations = get_export_locations()
     for location in locations:
         if location[1] == disk_label:
-            path = location[0]
-            if path[-1] != '/':
-                path += '/'
-            path += 'FreedomBox-backups/' + archive_name
-            break
+            return os.path.join(location[0], 'FreedomBox-backups',
+                                archive_name)
 
-    return path
+    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
+                            archive_name)
 
 
 def get_export_apps(filename):
@@ -170,12 +167,8 @@ def _restore_handler(packet):
                           input=locations_data.encode())
 
 
-def restore_exported(label, name, apps=None):
+def restore_exported(label, archive_name, apps=None):
     """Restore files from exported backup archive."""
-    filename = find_exported_archive(label, name)
-    if filename:
-        restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
-                     backup_file=filename)
-    else:
-        raise FileNotFoundError(
-            errno.ENOENT, os.strerror(errno.ENOENT), filename)
+    filename = find_exported_archive(label, archive_name)
+    restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
+                 backup_file=filename)
