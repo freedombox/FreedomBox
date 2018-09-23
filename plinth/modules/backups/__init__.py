@@ -84,10 +84,10 @@ def _backup_handler(packet):
     manifest_path = MANIFESTS_FOLDER + get_valid_filename(
         packet.label) + '.json'
     manifests = [{
-        'name': x[0],
-        'version': x[1].version,
-        'backup': x[2]
-    } for x in packet.manifests]
+        'name': manifest[0],
+        'version': manifest[1].version,
+        'backup': manifest[2]
+    } for manifest in packet.manifests]
     with open(manifest_path, 'w') as manifest_file:
         json.dump(manifests, manifest_file)
 
@@ -134,7 +134,7 @@ def get_export_files():
     export_files = {}
     for location in locations:
         output = actions.superuser_run(
-            'backups', ['list-exports', '--location',  location[0]])
+            'backups', ['list-exports', '--location', location[0]])
         export_files[location[1]] = json.loads(output)
 
     return export_files
@@ -157,21 +157,17 @@ def find_exported_archive(disk_label, archive_name):
 
 def get_export_apps(filename):
     """Get list of apps included in exported archive file."""
-    output = actions.superuser_run(
-        'backups', ['get-export-apps', '--filename', filename])
+    output = actions.superuser_run('backups',
+                                   ['get-export-apps', '--filename', filename])
     return output.splitlines()
 
 
 def _restore_handler(packet):
     """Perform restore operation on packet."""
-    locations = {
-        'directories': packet.directories,
-        'files': packet.files
-    }
+    locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    actions.superuser_run(
-        'backups', ['restore', '--filename', packet.label],
-        input=locations_data.encode())
+    actions.superuser_run('backups', ['restore', '--filename', packet.label],
+                          input=locations_data.encode())
 
 
 def restore_exported(label, name, apps=None):

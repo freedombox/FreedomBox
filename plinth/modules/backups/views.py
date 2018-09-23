@@ -19,6 +19,7 @@ Views for the backups app.
 """
 
 from datetime import datetime
+from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -27,7 +28,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
-from urllib.parse import unquote
 
 from plinth.modules import backups
 
@@ -49,7 +49,7 @@ class IndexView(TemplateView):
         context['archives'] = backups.list_archives()
         context['exports'] = backups.get_export_files()
         apps = backups_api.get_all_apps_for_backup()
-        context['available_apps'] = [x[0] for x in apps]
+        context['available_apps'] = [app[0] for app in apps]
         return context
 
 
@@ -122,8 +122,7 @@ class ExportArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        backups.export_archive(self.kwargs['name'],
-                               form.cleaned_data['disk'])
+        backups.export_archive(self.kwargs['name'], form.cleaned_data['disk'])
         return super().form_valid(form)
 
 
@@ -157,7 +156,8 @@ class RestoreView(SuccessMessageMixin, FormView):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
         kwargs['apps'] = [
-            x for x in self.installed_apps if x[0] in self.included_apps]
+            app for app in self.installed_apps if app[0] in self.included_apps
+        ]
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -170,7 +170,7 @@ class RestoreView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        backups.restore_exported(unquote(self.kwargs['label']),
-                                 self.kwargs['name'],
-                                 form.cleaned_data['selected_apps'])
+        backups.restore_exported(
+            unquote(self.kwargs['label']), self.kwargs['name'],
+            form.cleaned_data['selected_apps'])
         return super().form_valid(form)

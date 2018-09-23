@@ -91,9 +91,9 @@ class Packet:
         """Look at manifests and fill up the list of directories/files."""
         for manifest in self.manifests:
             backup = manifest[2]
-            for x in ['config', 'data', 'secrets']:
-                self.directories += backup[x]['directories']
-                self.files += backup[x]['files']
+            for section in ['config', 'data', 'secrets']:
+                self.directories += backup[section]['directories']
+                self.files += backup[section]['files']
 
 
 def backup_full(backup_handler, label=None):

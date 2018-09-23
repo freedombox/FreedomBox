@@ -58,11 +58,11 @@ class TestBackups(unittest.TestCase):
         packet = Packet('backup', 'apps', '/', manifests)
         for manifest in manifests:
             backup = manifest[2]
-            for x in ['config', 'data', 'secrets']:
-                for d in backup[x]['directories']:
-                    assert d in packet.directories
-                for f in backup[x]['files']:
-                    assert f in packet.files
+            for section in ['config', 'data', 'secrets']:
+                for directory in backup[section]['directories']:
+                    assert directory in packet.directories
+                for file_path in backup[section]['files']:
+                    assert file_path in packet.files
 
     def test_backup_apps(self):
         """Test that backup_handler is called."""
@@ -88,7 +88,7 @@ class TestBackups(unittest.TestCase):
         load_modules()
         app_names = ['config', 'names']
         apps = _get_apps_in_order(app_names)
-        ordered_app_names = [x[0] for x in apps]
+        ordered_app_names = [app[0] for app in apps]
 
         names_index = ordered_app_names.index('names')
         config_index = ordered_app_names.index('config')
