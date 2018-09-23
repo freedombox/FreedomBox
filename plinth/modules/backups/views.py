@@ -32,7 +32,6 @@ from django.views.generic import FormView, TemplateView
 from plinth.modules import backups
 
 from . import backups as backups_api
-from . import find_exported_archive, get_export_apps
 from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm
 
 
@@ -134,29 +133,20 @@ class RestoreView(SuccessMessageMixin, FormView):
     success_url = reverse_lazy('backups:index')
     success_message = _('Restored files from backup.')
 
-    def collect_data(self, label, name):
+    def _get_included_apps(self):
         """Save some data used to instantiate the form."""
-        self.label = unquote(label)
-        self.name = unquote(name)
-        self.filename = find_exported_archive(self.label, self.name)
-        self.installed_apps = backups_api.get_all_apps_for_backup()
-        self.included_apps = get_export_apps(self.filename)
-
-    def get(self, request, *args, **kwargs):
-        """Save request parameters for later."""
-        self.collect_data(kwargs['label'], kwargs['name'])
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        """Save request parameters for later."""
-        self.collect_data(kwargs['label'], kwargs['name'])
-        return super().post(request, *args, **kwargs)
+        label = unquote(self.kwargs['label'])
+        name = unquote(self.kwargs['name'])
+        filename = backups.find_exported_archive(label, name)
+        return backups.get_export_apps(filename)
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
+        included_apps = self._get_included_apps()
+        installed_apps = backups_api.get_all_apps_for_backup()
         kwargs['apps'] = [
-            app for app in self.installed_apps if app[0] in self.included_apps
+            app for app in installed_apps if app[0] in included_apps
         ]
         return kwargs
 
