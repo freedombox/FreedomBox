@@ -56,6 +56,7 @@ DISABLED_APPS_TO_REMOVE = [
     'system',
     'xmpp',
     'disks',
+    'udiskie',
 ]
 
 LOCALE_PATHS = [
