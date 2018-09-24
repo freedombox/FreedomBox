@@ -831,7 +831,7 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
           <listitem>
             <para>Copy the image to your card.  Double check to make sure you don't write to your computer's main storage (such as /dev/sda).  Also make sure that you don't run this step as root to avoid potentially overriding data on your hard drive due to a mistake in identifying the device or errors while typing the command.  USB disks and SD cards inserted into the system should typically be write accessible to normal users.  If you don't have permission to write to your SD card as a user, you may need to run this command as root.  In this case triple check everything before you run the command.  Another safety precaution is to unplug all external disks except the SD card before running the command. </para>
             <para>For example, if your SD card is <emphasis>/dev/sdg</emphasis> as noted in the first step above, then to copy the image, run: </para>
-            <screen><![CDATA[$ dd bs=1M if=freedombox-unstable-free_2015-12-13_cubietruck-armhf.img of=/dev/sdg conv=fdatasync]]></screen>
+            <screen><![CDATA[$ dd bs=1M if=freedombox-unstable-free_2015-12-13_cubietruck-armhf.img of=/dev/sdg conv=fdatasync status=progress]]></screen>
           </listitem>
         </orderedlist>
         <para>An alternative to copy to SD card command </para>
@@ -7490,6 +7490,20 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.39.0 (2018-09-24)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Updated translations for Hungarian and Norwegian Bokmål. </para>
+          </listitem>
+          <listitem>
+            <para>Merge Removable Media (udiskie) into Storage module. </para>
+          </listitem>
+          <listitem>
+            <para>Add Backups module for backing up apps data. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.38.0 (2018-09-10)</title>
         <itemizedlist>
