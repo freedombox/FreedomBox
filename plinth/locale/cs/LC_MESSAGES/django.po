@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2018-08-28 06:15+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -115,65 +115,81 @@ msgstr ""
 "nutné a funguje pouze na vnitřních sítích. Je možné ho vypnout a posílit tak "
 "zabezpečení, hlavně v případě připojení do nepříliš přátelské místní sítě."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr "Zálohy"
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu archivů se zálohami."
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 msgid "Root Filesystem"
 msgstr "Kořenový souborový systém"
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr "Název archivu"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr "Název pro nový archiv zálohy."
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 msgid "Invalid archive name"
 msgstr "Neplatný název archivu"
 
-#: plinth/modules/backups/forms.py:35
-msgid "Path"
-msgstr "Popis umístění"
-
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
-"Popis umístění složky na datovém úložišti tohoto serveru který archivovat to "
-"repozitáře záloh."
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:52
 msgid "Disk"
 msgstr "Disk"
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "Disk nebo vyjímatelné úložiště na které uložit archiv zálohy."
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-msgid "Create archive"
-msgstr "Vytvořit archiv"
+#: plinth/modules/backups/forms.py:64
+#, fuzzy
+#| msgid "Restore"
+msgid "Restore apps"
+msgstr "Obnovit"
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+#, fuzzy
+#| msgid "Restore from backup"
+msgid "Apps data to restore from the backup"
+msgstr "Obnovit ze zálohy"
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 msgid "Backup archives"
 msgstr "Archivy záloh"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr "V tuto chvíli neexistují žádné archivy."
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -182,35 +198,34 @@ msgstr "V tuto chvíli neexistují žádné archivy."
 msgid "Name"
 msgstr "Název"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-msgid "Time"
-msgstr "Čas"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr "Export"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 msgid "Exported backup archives"
 msgstr "Exportované archivy záloh"
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 msgid "No exported backup archives were found."
 msgstr "Nebyly nalezeny žádné exportované archivy záloh."
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 msgid "Location"
 msgstr "Umístění"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 msgid "Restore"
 msgstr "Obnovit"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
 msgstr "Nevratně smazat tento zachycený archiv?"
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+msgid "Time"
+msgstr "Čas"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
@@ -228,42 +243,46 @@ msgstr "Potvrdit"
 msgid "Restore data from this archive?"
 msgstr "Obnovit data z tohoto archivu?"
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, python-format
 msgid "Restore data from %(name)s"
 msgstr "Obnovit data z %(name)s"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr "Archiv vytvořen."
 
-#: plinth/modules/backups/views.py:61
-msgid "Create Archive"
-msgstr "Vytvořit archiv"
+#: plinth/modules/backups/views.py:66
+#, fuzzy
+#| msgid "Backups"
+msgid "New Backup"
+msgstr "Zálohy"
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 msgid "Delete Archive"
 msgstr "Smazat archiv"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 msgid "Archive deleted."
 msgstr "Archiv smazán."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr "Archiv exportován."
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr "Exportovat archiv"
 
-#: plinth/modules/backups/views.py:124
+#: plinth/modules/backups/views.py:134
+#, fuzzy
+#| msgid "Restored data from backup."
+msgid "Restored files from backup."
+msgstr "Data obnovena ze zálohy."
+
+#: plinth/modules/backups/views.py:156
 msgid "Restore from backup"
 msgstr "Obnovit ze zálohy"
-
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
-msgstr "Data obnovena ze zálohy."
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -436,7 +455,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
@@ -1065,15 +1084,15 @@ msgstr ""
 "místnosti více uživatelů. Závisí na nastavení klienta, zda bude historie "
 "ukládána jako čitelný text nebo zašifrovaně."
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
 msgstr "Konverzace"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr "Xabber"
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
@@ -1081,15 +1100,15 @@ msgstr ""
 "Jabber (XMPP) klient s podporou vícero účtů a čistým jednoduchým rozhraním – "
 "a s otevřeným zdrojovým kódem. "
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "Yaxim"
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
 msgstr "ChatSecure"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1101,11 +1120,11 @@ msgstr ""
 "Google účtu, vytvořit nový účet na některém z veřejných XMPP serverů (i přes "
 "Tor), nebo se dokonce připojit ještě bezpečněji, ke svému vlastnímu serveru."
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr "Dino"
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr "Gajim"
 
@@ -1464,7 +1483,7 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
@@ -1503,7 +1522,8 @@ msgstr "Zobrazit a upravit wiki aplikace"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "Typ"
 
@@ -1636,15 +1656,15 @@ msgstr ""
 "desktopového klienta a nainstalujte ho. Poté spusťte Gobby a zvolte "
 "„Připojit k serveru“ a zadejte doménový název svého {box_name}."
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr "Gobby"
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr "Gobby je textový editor pro spolupráci ve skupině"
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1732,7 +1752,7 @@ msgid "Website Security"
 msgstr "Zabezpečení webové stránky"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "Akce"
 
@@ -1997,7 +2017,7 @@ msgstr ""
 "vytvořit účet na vašem Matrix serveru. Pokud chcete, aby službu mohli "
 "využívat pouze existující uživatelé systému, tuto funkci vypněte."
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr "Riot"
 
@@ -2055,7 +2075,7 @@ msgid "Public registration disabled"
 msgstr "Registrace pro veřejnost zavřena"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
@@ -2154,7 +2174,7 @@ msgid "Private mode disabled"
 msgstr "Soukromý režim vypnut"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "Minetest"
 
@@ -2858,8 +2878,8 @@ msgid "yes"
 msgstr "ano"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "Zařízení"
 
@@ -3716,11 +3736,11 @@ msgstr ""
 "Jakýkoli uživatel s účtem na {box_name} může zobrazit nebo dělat změny v "
 "libovolném kalendáři / adresáři kontaktů."
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 msgid "DAVDroid"
 msgstr "DAVDroid"
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
@@ -3730,19 +3750,19 @@ msgstr ""
 "uživatelské jméno. DAVdroid zobrazí všechny existující kalendáře a adresáře "
 "kontaktů a můžete i vytvářet nové."
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr "Kalendář GNOME"
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr "Mozilla Thunderbird"
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr "Evolution"
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
@@ -3750,7 +3770,7 @@ msgstr ""
 "Evolution je aplikace pro správu osobních informací která v sobě integruje e-"
 "mail, kalendáře a adresář kontaktů."
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3815,11 +3835,11 @@ msgstr ""
 "přihlásit do nastavovacího panelu repro. Po nastavení domény je třeba službu "
 "repro restartovat. Službu vypněte a znovu zapněte."
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr "Jitsi Meet"
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3833,7 +3853,7 @@ msgstr ""
 "zatímco ostatní projekty v komunitě dodávají další funkce, jako například "
 "zvuk, volání, záznam a souběžné vysílání po více médiích."
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr "CSipSimple"
 
@@ -4462,53 +4482,63 @@ msgstr "Sdružené přihlášení (SSO)"
 msgid "Login"
 msgstr "Přihlášení"
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 msgid "Storage"
 msgstr "Úložiště"
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajtů"
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/templates/storage.html:47
-msgid "The following disks are in use:"
+#: plinth/modules/storage/templates/storage.html:53
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "Následující jednotky datového úložiště jsou v používání:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr "Přípojný bod"
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr "Použito"
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr "Zvětšení oddílu"
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4519,11 +4549,29 @@ msgstr ""
 "Kořenový oddíl je možné zvětšit a místo tak využít. Poskytne vám to další "
 "prostor pro ukládání vašich souborů."
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Removable Media"
+msgid "Removable Devices"
+msgstr "Vyjímatelná média"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr "Není připojené žádné další úložiště."
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr "Štítek"
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
+msgstr "Velikost"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4535,16 +4583,73 @@ msgstr ""
 "Než budete pokračovat, zazálohujte svá data. Po provedení této operace na "
 "kořenovém oddílu bude k dispozici %(expandable_root_size)s dalšího prostoru."
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr "Žádné takové zařízení – {device_path}"
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr "Operace se nezdařila."
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr "Operace byla zrušena."
+
+#: plinth/modules/storage/udisks2.py:143
+msgid "The device is already unmounting."
+msgstr "Toto zařízení už je odpojováno (umount)."
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr "Operace není podporována z důvodu chybějící podpory ovladače/nástroje."
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr "Časový limit aplikace překročen."
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr "Operace by probudila disk který je v režimu hlubokého spánku."
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr "Pokus o odpojení zařízení které je zaneprázdněno."
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr "Operace už byla zrušena."
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr "Chybí oprávnění pro provedení požadované operace."
+
+#: plinth/modules/storage/udisks2.py:163
+msgid "The device is already mounted."
+msgstr "Toto zařízení je už připojeno (mount)."
+
+#: plinth/modules/storage/udisks2.py:165
+msgid "The device is not mounted."
+msgstr "Zařízení není připojeno."
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr "Není umožněno použít požadovanou volbu."
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr "Zařízení je připojeno jiným uživatelem."
+
+#: plinth/modules/storage/views.py:84
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Chyba při zvětšování oddílu: {exception}"
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr "Oddíl úspěšně zvětšen."
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4552,6 +4657,20 @@ msgid ""
 msgstr ""
 "Varování: Dochází volné místo na systémovém oddílu ({percent_used}% využito, "
 "{free_space} volné)."
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr "{drive_vendor} {drive_model} je možné bezpečně odebrat."
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr "Zařízení je možné bezpečně odebrat."
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr "Chyba při vysouvání zařízení: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:37
 #: plinth/modules/syncthing/manifest.py:27
@@ -4963,112 +5082,6 @@ msgstr "Číst a přihlásit se k odběru novinek"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (fork)"
 
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr "udiskie"
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr "Vyjímatelná média"
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-"udiskie umožňuje automatické připojování (mount) vyjímatelných médií, jako "
-"jsou třeba USB flash."
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-msgid "Devices"
-msgstr "Zařízení"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr "Není připojené žádné další úložiště."
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr "Štítek"
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr "Velikost"
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-msgid "Filesystem"
-msgstr "Souborový systém"
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr "Žádné takové zařízení – {device_path}"
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr "Operace se nezdařila."
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr "Operace byla zrušena."
-
-#: plinth/modules/udiskie/udisks2.py:143
-msgid "The device is already unmounting."
-msgstr "Toto zařízení už je odpojováno (umount)."
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr "Operace není podporována z důvodu chybějící podpory ovladače/nástroje."
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr "Časový limit aplikace překročen."
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr "Operace by probudila disk který je v režimu hlubokého spánku."
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr "Pokus o odpojení zařízení které je zaneprázdněno."
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr "Operace už byla zrušena."
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr "Chybí oprávnění pro provedení požadované operace."
-
-#: plinth/modules/udiskie/udisks2.py:163
-msgid "The device is already mounted."
-msgstr "Toto zařízení je už připojeno (mount)."
-
-#: plinth/modules/udiskie/udisks2.py:165
-msgid "The device is not mounted."
-msgstr "Zařízení není připojeno."
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr "Není umožněno použít požadovanou volbu."
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr "Zařízení je připojeno jiným uživatelem."
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr "{drive_vendor} {drive_model} je možné bezpečně odebrat."
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr "Zařízení je možné bezpečně odebrat."
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr "Chyba při vysouvání zařízení: {error_message}"
-
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
 msgstr "Aktualizace software"
@@ -5437,8 +5450,9 @@ msgstr ""
 "přiložte <a href=\"%(status_log_url)s\">záznam (log) stavu</a>."
 
 #: plinth/templates/base.html:50
-#, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+#, fuzzy, python-format
+#| msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 
 #: plinth/templates/base.html:95
@@ -5707,6 +5721,38 @@ msgstr "Instalace %(package_names)s: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% dokončeno"
+
+#~ msgid "Path"
+#~ msgstr "Popis umístění"
+
+#~ msgid ""
+#~ "Disk path to a folder on this server that will be archived into backup "
+#~ "repository."
+#~ msgstr ""
+#~ "Popis umístění složky na datovém úložišti tohoto serveru který archivovat "
+#~ "to repozitáře záloh."
+
+#~ msgid "Create archive"
+#~ msgstr "Vytvořit archiv"
+
+#~ msgid "Create Archive"
+#~ msgstr "Vytvořit archiv"
+
+#~ msgid "udiskie"
+#~ msgstr "udiskie"
+
+#~ msgid ""
+#~ "udiskie allows automatic mounting of removable media, such as flash "
+#~ "drives."
+#~ msgstr ""
+#~ "udiskie umožňuje automatické připojování (mount) vyjímatelných médií, "
+#~ "jako jsou třeba USB flash."
+
+#~ msgid "Devices"
+#~ msgstr "Zařízení"
+
+#~ msgid "Filesystem"
+#~ msgstr "Souborový systém"
 
 #~ msgid "Exported filename"
 #~ msgstr "Název exportovaného soubour"

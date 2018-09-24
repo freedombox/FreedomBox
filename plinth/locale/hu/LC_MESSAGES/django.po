@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2018-09-20 17:27+0000\n"
 "Last-Translator: danielwine <danielwine@tutamail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -116,68 +116,84 @@ msgstr ""
 "kizárólag a belső hálózaton működik. Kikapcsolható a biztonság növelése "
 "érdekében, különösen nem megbízható hálózatok esetén."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr "Biztonsági másolatok"
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Lehetővé teszi a biztonsági másolat archívumok létrehozását és kezelését."
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 msgid "Root Filesystem"
 msgstr "Gyökérfájlrendszer"
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr "Archívum neve"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr "Az új biztonsági másolat archívum neve."
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 msgid "Invalid archive name"
 msgstr "Érvénytelen archívum név"
 
-#: plinth/modules/backups/forms.py:35
-msgid "Path"
-msgstr "Elérési út"
-
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
-"Lemez elérési útja egy olyan mappára ezen a kiszolgálón, amely archiválásra "
-"kerül a mentési adattárba."
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:52
 msgid "Disk"
 msgstr "Lemez"
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Lemez vagy cserélhető adathordozó, ahová a biztonsági mentés archívuma "
 "kerüljön."
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-msgid "Create archive"
-msgstr "Archívum létrehozása"
+#: plinth/modules/backups/forms.py:64
+#, fuzzy
+#| msgid "Restore"
+msgid "Restore apps"
+msgstr "Visszaállítás"
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+#, fuzzy
+#| msgid "Restore from backup"
+msgid "Apps data to restore from the backup"
+msgstr "Visszaállítás biztonsági mentésből"
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 msgid "Backup archives"
 msgstr "Biztonsági másolat archívumok"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr "Jelenleg nincsenek archívumok."
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -186,35 +202,34 @@ msgstr "Jelenleg nincsenek archívumok."
 msgid "Name"
 msgstr "Név"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-msgid "Time"
-msgstr "Idő"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr "Exportál"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 msgid "Exported backup archives"
 msgstr "Exportált biztonsági másolat archívumok"
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 msgid "No exported backup archives were found."
 msgstr "Egy exportált biztonsági másolat archívum sem található."
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 msgid "Location"
 msgstr "Hely"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 msgid "Restore"
 msgstr "Visszaállítás"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
 msgstr "Véglegesen törlöd ezt az archívumot?"
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+msgid "Time"
+msgstr "Idő"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
@@ -232,42 +247,46 @@ msgstr "Küldés"
 msgid "Restore data from this archive?"
 msgstr "Adatok visszaállítása ebből az archívumból?"
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, python-format
 msgid "Restore data from %(name)s"
 msgstr "Adatok visszaállítása ebből: %(name)s"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr "Archívum létrehozva."
 
-#: plinth/modules/backups/views.py:61
-msgid "Create Archive"
-msgstr "Archívum létrehozása"
+#: plinth/modules/backups/views.py:66
+#, fuzzy
+#| msgid "Backups"
+msgid "New Backup"
+msgstr "Biztonsági másolatok"
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 msgid "Delete Archive"
 msgstr "Archívum törlése"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 msgid "Archive deleted."
 msgstr "Archívum törölve."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr "Archívum exportálva."
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr "Archívum exportálása"
 
-#: plinth/modules/backups/views.py:124
+#: plinth/modules/backups/views.py:134
+#, fuzzy
+#| msgid "Restored data from backup."
+msgid "Restored files from backup."
+msgstr "Adatok visszaállítva a biztonsági mentésből."
+
+#: plinth/modules/backups/views.py:156
 msgid "Restore from backup"
 msgstr "Visszaállítás biztonsági mentésből"
-
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
-msgstr "Adatok visszaállítva a biztonsági mentésből."
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -444,7 +463,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
@@ -509,8 +528,8 @@ msgstr ""
 "A Coquelicot ezen példánya a nyilvánosságnak van kitéve, de feltöltési "
 "jelszót követel, hogy megakadályozza az illetéktelen hozzáférést.  Új "
 "feltöltési jelszót tudsz beállítani azon az űrlapon, ami lentebb fog "
-"megjelenni a telepítés után. Az alapértelmezett feltöltési jelszó \"test\" ("
-"idézőjelek nélkül)."
+"megjelenni a telepítés után. Az alapértelmezett feltöltési jelszó \"test"
+"\" (idézőjelek nélkül)."
 
 #: plinth/modules/coquelicot/forms.py:30
 msgid "Upload Password"
@@ -793,11 +812,11 @@ msgstr ""
 "A megoldás a következő: rendelj hozzá egy DNS nevet az IP címedhez és "
 "frissítsd azt minden alkalommal, amikor az internetszolgáltatód "
 "megváltoztatja az IP címed. A Dynamic DNS lehetővé teszi számodra, hogy "
-"elküldd a jelenlegi nyilvános IP címed egy <a "
-"href='http://gnudip2.sourceforge.net/' target='_blank'> GnuDIP</a> "
-"kiszolgálónak. Ezután a kiszolgáló hozzá fogja rendelni a DNS neved az új IP "
-"címedhez, és ha valaki az Interneten lekérdezi a DNS neved, válaszként az "
-"aktuális IP címedet fogja megkapni."
+"elküldd a jelenlegi nyilvános IP címed egy <a href='http://gnudip2."
+"sourceforge.net/' target='_blank'> GnuDIP</a> kiszolgálónak. Ezután a "
+"kiszolgáló hozzá fogja rendelni a DNS neved az új IP címedhez, és ha valaki "
+"az Interneten lekérdezi a DNS neved, válaszként az aktuális IP címedet fogja "
+"megkapni."
 
 #: plinth/modules/dynamicdns/__init__.py:69
 #: plinth/modules/dynamicdns/dynamicdns.py:379
@@ -882,8 +901,8 @@ msgstr ""
 "Opcionális. Ha a te {box_name} eszközöd nem közvetlenül kapcsolódik az "
 "Internethez (pl. NAT-útválasztóhoz van kapcsolódva), ennek az URL-nek a "
 "segítségével válik lehetővé nyilvános IP címed meghatározása. Egy ilyen URL "
-"egyszerűen visszaadja a kliens IP címét (például: "
-"http://myip.datasystems24.de)."
+"egyszerűen visszaadja a kliens IP címét (például: http://myip.datasystems24."
+"de)."
 
 #: plinth/modules/dynamicdns/dynamicdns.py:110
 msgid "The username that was used when the account was created."
@@ -1054,8 +1073,8 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ahhoz hogy kommunikálj, használhatod a <a href=\"{jsxc_url}\">webes "
-"klienst</a> vagy bármi egyéb <a href='https://xmpp.org/software/clients' "
+"Ahhoz hogy kommunikálj, használhatod a <a href=\"{jsxc_url}\">webes klienst</"
+"a> vagy bármi egyéb <a href='https://xmpp.org/software/clients' "
 "target='_blank'>XMPP klienst</a>. Ha engedélyezed, az ejabberd elérhető lesz "
 "bármely <a href=\"{users_url}\">felhasználó számára {box_name} "
 "felhasználónéven</a>."
@@ -1078,15 +1097,15 @@ msgstr ""
 "kliens beállításaitól függ hogy az előzmények egyszerű szövegként vagy "
 "titkosítva lesznek eltárolva."
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
 msgstr "Beszélgetések"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr "Xabber"
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
@@ -1094,15 +1113,15 @@ msgstr ""
 "Nyilt forráskódú Jabber (XMPP) kliens több fiókos támogatással, továbbá "
 "letisztult és egyszerű kezelőfelülettel. "
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "Yaxim"
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
 msgstr "ChatSecure"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1115,11 +1134,11 @@ msgstr ""
 "Tor-on keresztül is), sőt még akár a saját kiszolgálódhoz is kapcsolódhatsz "
 "az extra biztonság érdekében."
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr "Dino"
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr "Gajim"
 
@@ -1467,9 +1486,9 @@ msgid ""
 "this status log to the bug report."
 msgstr ""
 "A webes felülethez tartozó állapotnapló utolsó %(num_lines)s sorát látod. Ha "
-"szeretnél hibát bejelenteni, kérlek használd a <a href=\""
-"https://salsa.debian.org/freedombox-team/plinth/issues\">hibabejelentőt</a> "
-"és mellékeld ezt az állapotnaplót a bejelentéshez."
+"szeretnél hibát bejelenteni, kérlek használd a <a href=\"https://salsa."
+"debian.org/freedombox-team/plinth/issues\">hibabejelentőt</a> és mellékeld "
+"ezt az állapotnaplót a bejelentéshez."
 
 #: plinth/modules/help/templates/statuslog.html:38
 msgid "Caution:"
@@ -1483,7 +1502,7 @@ msgstr ""
 "Kérlek távolíts el minden jelszót és személyes információt a naplóból "
 "mielőtt elküldenéd a bejelentést."
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
@@ -1501,8 +1520,8 @@ msgstr ""
 "ikiwiki egy egyszerű wiki és blog alkalmazás. Számos könnyűsúlyú "
 "leírónyelvet támogat, beleértve a Markdown-t és olyan általános bloggolási "
 "funkciókat, mint például a kommentek és az RSS-hírcsatornák. Ha engedélyezve "
-"van, a blogok és wikik itt lesznek elérhetők: <a href=\"/ikiwiki\""
-">/ikiwiki</a> (ha már létre lett hozva)."
+"van, a blogok és wikik itt lesznek elérhetők: <a href=\"/ikiwiki\">/ikiwiki</"
+"a> (ha már létre lett hozva)."
 
 #: plinth/modules/ikiwiki/__init__.py:52
 #, python-brace-format
@@ -1524,7 +1543,8 @@ msgstr "Wiki alkalmazások megtekintése és szerkesztése"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "Típus"
 
@@ -1658,15 +1678,15 @@ msgstr ""
 "\"Csatlakozás a kiszolgálóhoz\"-t (\"Connect to Server\") és írd be a "
 "{box_name} eszközöd domain nevét."
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr "Gobby"
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr "Gobby egy kollaboratív szövegszerkesztő"
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1757,7 +1777,7 @@ msgid "Website Security"
 msgstr "Webhelybiztonság"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "Műveletek"
 
@@ -2026,7 +2046,7 @@ msgstr ""
 "felhasználói fiókot létrehozni a te Matrix kiszolgálódon. Tiltsd le, ha azt "
 "szeretnéd, hogy csak a már meglévő felhasználók használhassák."
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr "Riot"
 
@@ -2084,7 +2104,7 @@ msgid "Public registration disabled"
 msgstr "Szabad regisztráció letiltva"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
@@ -2185,7 +2205,7 @@ msgid "Private mode disabled"
 msgstr "Privát mód letiltva"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "Minetest"
 
@@ -2298,8 +2318,8 @@ msgstr ""
 "megfelelő állomáshoz kapcsolódtak-e.  Ahhoz, hogy a felhasználók megbízzanak "
 "a kulcsban, legalább egy személynek (általában a gép tulajdonosa) alá kell "
 "írnia a kulcsot a szokványos OpenPGP kulcs aláírási folyamat használatával.  "
-"Tekintsd meg a <a href=\"http://web.monkeysphere.info/getting-started-ssh/\">"
-" Monkeysphere SSH dokumentációt</a> további részletekért."
+"Tekintsd meg a <a href=\"http://web.monkeysphere.info/getting-started-ssh/"
+"\"> Monkeysphere SSH dokumentációt</a> további részletekért."
 
 #: plinth/modules/monkeysphere/__init__.py:40
 msgid ""
@@ -2898,8 +2918,8 @@ msgid "yes"
 msgstr "igen"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "Eszköz"
 
@@ -3282,9 +3302,9 @@ msgid ""
 msgstr ""
 "A PageKite megkerüli a NAT, tűzfal és IP-cím korlátozásokat alagutak és "
 "fordított proxy-k kombinációjának használatával. Bármely pagekite "
-"szolgáltatót használhatod, pl.: <a href=\"https://pagekite.net\""
-">pagekite.net</a>.  A jövőben talán a barátod {box_name} eszközét is "
-"lehetőséged lesz használni erre a célra."
+"szolgáltatót használhatod, pl.: <a href=\"https://pagekite.net\">pagekite."
+"net</a>.  A jövőben talán a barátod {box_name} eszközét is lehetőséged lesz "
+"használni erre a célra."
 
 #: plinth/modules/pagekite/forms.py:69
 msgid "Enable PageKite"
@@ -3766,11 +3786,11 @@ msgstr ""
 "Bármely, a(z) {box_name} eszközre bejelentkező felhasználó megtekintheti és "
 "módosíthatja is akármelyik naptárt/címjegyzéket."
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 msgid "DAVDroid"
 msgstr "DAVDroid"
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
@@ -3780,19 +3800,19 @@ msgstr ""
 "felhasználónevet. A DAVdroid meg fogja mutatni az összes elérhető naptárt és "
 "címjegyzéket, és létre is hozhatsz újakat."
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr "GNOME naptár"
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr "Mozilla Thunderbird"
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr "Evolution"
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
@@ -3800,7 +3820,7 @@ msgstr ""
 "Az Evolution egy személyes információkezelő alkalmazás integrált levelező, "
 "naptár és címjegyzék funkcionalitással."
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3837,8 +3857,8 @@ msgstr ""
 "üzenetküldés céljára. A repro biztosítja a kiszolgálót és a SIP felhasználói "
 "fiókokat, melyeket a kliensek felhasználhatnak a jelenlétük ismertté "
 "tételéhez. Továbbá proxy-ként is viselkedik, hogy összekapcsolja a SIP "
-"kommunikációt az Interneten lévő többi kiszolgálóval, hasonlóképpen az "
-"e-mailhez."
+"kommunikációt az Interneten lévő többi kiszolgálóval, hasonlóképpen az e-"
+"mailhez."
 
 #: plinth/modules/repro/__init__.py:48
 msgid ""
@@ -3848,9 +3868,9 @@ msgid ""
 "a> (for Android phones)."
 msgstr ""
 "A SIP hívások kezdeményezéséhez egy kliens alkalmazásra is szükség lesz. "
-"Néhány kliens: <a href=\"https://jitsi.org/\">Jitsi</a> (számítógépekre) és <"
-"a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple\""
-">CSipSimple</a> (Android telefonokra)."
+"Néhány kliens: <a href=\"https://jitsi.org/\">Jitsi</a> (számítógépekre) és "
+"<a href=\"https://f-droid.org/repository/browse/?fdid=com.csipsimple"
+"\">CSipSimple</a> (Android telefonokra)."
 
 #: plinth/modules/repro/__init__.py:52
 msgid ""
@@ -3867,11 +3887,11 @@ msgstr ""
 "repro szolgáltatás újraindítása szükséges. Tiltsd le a szolgáltatást, majd "
 "engedélyezd újra azt."
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr "Jitsi Meet"
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3886,7 +3906,7 @@ msgstr ""
 "képességeket adnak hozzá, mint hang, betárcsázás, felvétel és párhuzamos "
 "közvetítés."
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr "CSipSimple"
 
@@ -4435,53 +4455,63 @@ msgstr "Egyszeri bejelentkezés"
 msgid "Login"
 msgstr "Bejelentkezés"
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 msgid "Storage"
 msgstr "Háttértár"
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/templates/storage.html:47
-msgid "The following disks are in use:"
+#: plinth/modules/storage/templates/storage.html:53
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "A következő tárolóeszközök vannak használatban:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr "Csatolási pont"
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr "Felhasznált"
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4489,11 +4519,29 @@ msgid ""
 "will provide you additional free space to store your files."
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
 msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Removable Media"
+msgid "Removable Devices"
+msgstr "Cserélhető adathordozó"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr "Nincsenek további csatlakoztatott tárolóeszközök."
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr "Címke"
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
+msgstr "Méret"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4503,21 +4551,95 @@ msgid ""
 "root partition."
 msgstr ""
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr "Nincs ilyen eszköz - {device_path}"
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr "A művelet sikertelen."
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr "A művelet meg lett szakítva."
+
+#: plinth/modules/storage/udisks2.py:143
+msgid "The device is already unmounting."
+msgstr "Az eszköz leválasztása már folyamatban van."
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+"A művelet nem támogatott hiányzó eszközvezérlő/segédeszköz támogatás miatt."
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr "A művelet túllépte az időkorlátot."
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+"A művelet fel fogja ébreszteni a lemezt, amely mély-alvó állapotban van."
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+"Megpróbáltál leválasztani egy eszközt, amely jelenleg is használatban van."
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr "A művelet már meg lett szakítva."
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr "Nem jogosult végrehajtani a kért műveletet."
+
+#: plinth/modules/storage/udisks2.py:163
+msgid "The device is already mounted."
+msgstr "Az eszköz már fel lett csatolva."
+
+#: plinth/modules/storage/udisks2.py:165
+msgid "The device is not mounted."
+msgstr "Az eszköz nincs felcsatolva."
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr "Nem használhatja a kért lehetőséget."
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr "Az eszközt egy másik felhasználó felcsatolva."
+
+#: plinth/modules/storage/views.py:84
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr ""
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr ""
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
 msgstr ""
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr "{drive_vendor} {drive_model} biztonságosan kivehető."
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr "Az eszköz biztonságosan kivehető."
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr "Hiba történt az eszköz kiadása során: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:37
 #: plinth/modules/syncthing/manifest.py:27
@@ -4864,9 +4986,10 @@ msgid ""
 "rss</a> path on the web server. It can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ha engedélyezve van, a Tiny Tiny RSS elérhető lesz a webkiszolgáló <a href"
-"=\"/tt-rss\">/tt-rss</a> útvonalán. Elérhető lesz <a href=\"{users_url}\">"
-"bármely felhasználó számára </a> {box_name} felhasználónévvel."
+"Ha engedélyezve van, a Tiny Tiny RSS elérhető lesz a webkiszolgáló <a href="
+"\"/tt-rss\">/tt-rss</a> útvonalán. Elérhető lesz <a href="
+"\"{users_url}\">bármely felhasználó számára </a> {box_name} "
+"felhasználónévvel."
 
 #: plinth/modules/ttrss/__init__.py:54
 msgid ""
@@ -4884,115 +5007,6 @@ msgstr "Olvass és iratkozz fel hírcsatornákra"
 #: plinth/modules/ttrss/manifest.py:24
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
-
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr "udiskie"
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr "Cserélhető adathordozó"
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-"Az udiskie lehetővé teszi a cserélhető adathordozók automatikus "
-"csatlakoztatását, mint pl. flash meghajtók."
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-msgid "Devices"
-msgstr "Eszközök"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr "Nincsenek további csatlakoztatott tárolóeszközök."
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr "Címke"
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr "Méret"
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-msgid "Filesystem"
-msgstr "Fájlrendszer"
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr "Nincs ilyen eszköz - {device_path}"
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr "A művelet sikertelen."
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr "A művelet meg lett szakítva."
-
-#: plinth/modules/udiskie/udisks2.py:143
-msgid "The device is already unmounting."
-msgstr "Az eszköz leválasztása már folyamatban van."
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-"A művelet nem támogatott hiányzó eszközvezérlő/segédeszköz támogatás miatt."
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr "A művelet túllépte az időkorlátot."
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
-"A művelet fel fogja ébreszteni a lemezt, amely mély-alvó állapotban van."
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr ""
-"Megpróbáltál leválasztani egy eszközt, amely jelenleg is használatban van."
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr "A művelet már meg lett szakítva."
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr "Nem jogosult végrehajtani a kért műveletet."
-
-#: plinth/modules/udiskie/udisks2.py:163
-msgid "The device is already mounted."
-msgstr "Az eszköz már fel lett csatolva."
-
-#: plinth/modules/udiskie/udisks2.py:165
-msgid "The device is not mounted."
-msgstr "Az eszköz nincs felcsatolva."
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr "Nem használhatja a kért lehetőséget."
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr "Az eszközt egy másik felhasználó felcsatolva."
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr "{drive_vendor} {drive_model} biztonságosan kivehető."
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr "Az eszköz biztonságosan kivehető."
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr "Hiba történt az eszköz kiadása során: {error_message}"
 
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
@@ -5366,8 +5380,9 @@ msgstr ""
 "\">állapotnapló</a> tartalmát."
 
 #: plinth/templates/base.html:50
-#, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+#, fuzzy, python-format
+#| msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Alapvető funkcionalitás és webes felület %(box_name)s eszközére"
 
 #: plinth/templates/base.html:95
@@ -5635,6 +5650,38 @@ msgstr "%(package_names)s telepítése: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "befejezettségi szint: %(percentage)s%%"
+
+#~ msgid "Path"
+#~ msgstr "Elérési út"
+
+#~ msgid ""
+#~ "Disk path to a folder on this server that will be archived into backup "
+#~ "repository."
+#~ msgstr ""
+#~ "Lemez elérési útja egy olyan mappára ezen a kiszolgálón, amely "
+#~ "archiválásra kerül a mentési adattárba."
+
+#~ msgid "Create archive"
+#~ msgstr "Archívum létrehozása"
+
+#~ msgid "Create Archive"
+#~ msgstr "Archívum létrehozása"
+
+#~ msgid "udiskie"
+#~ msgstr "udiskie"
+
+#~ msgid ""
+#~ "udiskie allows automatic mounting of removable media, such as flash "
+#~ "drives."
+#~ msgstr ""
+#~ "Az udiskie lehetővé teszi a cserélhető adathordozók automatikus "
+#~ "csatlakoztatását, mint pl. flash meghajtók."
+
+#~ msgid "Devices"
+#~ msgstr "Eszközök"
+
+#~ msgid "Filesystem"
+#~ msgstr "Fájlrendszer"
 
 #~ msgid "Exported filename"
 #~ msgstr "Exportált fájlnév"

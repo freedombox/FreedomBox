@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -114,73 +114,88 @@ msgstr ""
 "सुरक्षा के लिये, ख़ास तौर पर एक अनजान नेटवर्क से जोड़ करके समय, सर्विस डिस्कोवरि बंद कर "
 "सकते हैं."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr "बैकअपस पुरालेखागार बनाने और  प्रबंधित करने की अनुमति देता है."
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 #, fuzzy
 #| msgid "Filesystem"
 msgid "Root Filesystem"
 msgstr "फ़ाइलसिस्टम"
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr "पुरालेख नाम"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 msgid "Invalid archive name"
 msgstr "पुरालेख नाम अमान्य है"
 
-#: plinth/modules/backups/forms.py:35
-msgid "Path"
-msgstr "पाथ"
-
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
-"इस सर्वर पर किसी फ़ोल्डर का डिस्क पाथ है जिसे बैकअप रिपॉसिटरी में संग्रहीत किया जाएगा."
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:52
 #, fuzzy
 #| msgid "Disk Path"
 msgid "Disk"
 msgstr "डिस्क पाथ"
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 #, fuzzy
 #| msgid ""
 #| "Disk path to a folder on this server where the archive will be extracted."
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "इस सर्वर पर उस फ़ोल्डर का डिस्क पाथ है जहां संग्रह निकाला जाएगा."
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-msgid "Create archive"
-msgstr "पुरालेख बनाइये"
+#: plinth/modules/backups/forms.py:64
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore apps"
+msgstr "रीस्‍टोर"
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+msgid "Apps data to restore from the backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 #, fuzzy
 #| msgid "Backups"
 msgid "Backup archives"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr "वर्तमान में कोई संग्रह मौजूद नहीं है."
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -189,35 +204,30 @@ msgstr "वर्तमान में कोई संग्रह मौज�
 msgid "Name"
 msgstr "नाम"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-msgid "Time"
-msgstr "समय"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr "निर्यात"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Exported backup archives"
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "No exported backup archives were found."
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 #, fuzzy
 #| msgid "Documentation"
 msgid "Location"
 msgstr "प्रलेखन"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore"
@@ -226,6 +236,10 @@ msgstr "रीस्‍टोर"
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
 msgstr "इस पुरालेख हमेशा के लिया हटाईये?"
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+msgid "Time"
+msgstr "समय"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
@@ -243,41 +257,43 @@ msgstr "जमा करें"
 msgid "Restore data from this archive?"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, python-format
 msgid "Restore data from %(name)s"
 msgstr ""
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr "पुरालेख बनाया गया."
 
-#: plinth/modules/backups/views.py:61
-msgid "Create Archive"
-msgstr "पुरालेख बनाइये"
+#: plinth/modules/backups/views.py:66
+#, fuzzy
+#| msgid "Backups"
+msgid "New Backup"
+msgstr "बैकअप"
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 msgid "Delete Archive"
 msgstr "पुरालेख हटाईये"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 msgid "Archive deleted."
 msgstr "पुरालेख हटा गया है."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr "पुरालेख निर्यात किया गया."
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr "पुरालेख निर्यात करें"
 
-#: plinth/modules/backups/views.py:124
-msgid "Restore from backup"
+#: plinth/modules/backups/views.py:134
+msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
+#: plinth/modules/backups/views.py:156
+msgid "Restore from backup"
 msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
@@ -444,7 +460,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
@@ -1049,30 +1065,30 @@ msgstr ""
 "देता है. अगर इतिहासे सादे पाठ या एंक्रिप्टेड रूप में  संग्रहीत हैं, यह ग्राहक सेटिंग्स पर निर्भर "
 "करता है."
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
 msgstr "बातचिट"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr "एक्साबेर"
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
 "खुला स्रोत जाबेर (एक्सएमरपिपि) ग्राहक बहु-खाता समर्थन और स्वच्छ, आसान इंटरफ़ेस के सात. "
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "याएक्समि"
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
 msgstr "चैटसेकुएर"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1083,11 +1099,11 @@ msgstr ""
 "एन्क्रिप्शन है. आप एक मौजूदा Google अकाउंट बना सकता है, एक्सएमपिपि सर्वर पर नया अकाउंट "
 "बना सकता है और अपने स्वयं सर्वर पर कनेक्ट कर सकता है."
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr "डिनो"
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr "गाजिम"
 
@@ -1436,7 +1452,7 @@ msgid ""
 "before submitting the bug report."
 msgstr "बग रिपोर्ट सबमिट करने से पहले कोई पासवर्ड या दूसरे व्यक्तिगत जानकारी निकालें."
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
 msgstr "इकिविकि"
 
@@ -1475,7 +1491,8 @@ msgstr "विकी एप्लिकेशन को देखें और �
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "टाइप"
 
@@ -1607,15 +1624,15 @@ msgstr ""
 "डाउनलोड </a> और इंस्टॉल करें. फिर गोबी शुरु करें, \"सर्वर से कनेक्ट\" चुनें और {box_name} "
 "कर डोमेन नाम दर्ज करें."
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr "गोबी"
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr "गोबी एक सहयोगी टेक्स्ट संपादक है"
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1698,7 +1715,7 @@ msgid "Website Security"
 msgstr "वेबसईट सुरक्षा"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "एक्सआयन"
 
@@ -1978,7 +1995,7 @@ msgstr ""
 "एक नया अकाउंट रजिस्टर कर सकते हैं. अगर आप चहते है कि सिर्फ मौजूदा यूसरसॅ इसका उपयोग कर "
 "सकता है, इसे अक्षम करें."
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr "रेइट"
 
@@ -2033,7 +2050,7 @@ msgid "Public registration disabled"
 msgstr "सार्वजनिक रजिस्टरेशिन अक्षम किया गया"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "मीडियाविकी"
 
@@ -2129,7 +2146,7 @@ msgid "Private mode disabled"
 msgstr "निजी मोड सक्षम किया"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "मैइनटेस्ट"
 
@@ -2821,8 +2838,8 @@ msgid "yes"
 msgstr "हाँ"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "यंत्र"
 
@@ -3662,11 +3679,11 @@ msgid ""
 msgstr ""
 "किसी यूसर {box_name} लॉगिन के साथ कैलेंडर/पता पुस्तिका को परिवर्तन देख या कर सकता है."
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 msgid "DAVDroid"
 msgstr "डीएवीड्रोइड"
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
@@ -3675,19 +3692,19 @@ msgstr ""
 "राडिकैल सर्वर का यूआरएल दर्ज करें (जैसे http://localhost:5232) और अपने यूसरनाम. "
 "डीएवीड्रोइड सब मौजूदा कैलेंडर और पता पुस्तिकाओं दिखाएगा और आप नया बना सकते हैं."
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr "गनोम कैलेंडर"
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr "मोज़िला थंडरबर्ड"
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr "एवोल्यूशन"
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
@@ -3695,7 +3712,7 @@ msgstr ""
 "एवोल्यूशन एक व्यक्तिगत जानकारी प्रबंधन एप्लिकेशन है कि एकीकृत मेल, कैलेंडरिंग और पता पुस्तिका "
 "फंक्शनलिटी."
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3757,11 +3774,11 @@ msgstr ""
 "<em>admin</em> समूह में यूसरस रेप्रो कॉन्फ़िगरेशन पैनल से लाॅग इन कर सकेंगे. डोमेन को सेट करने "
 "के बाद, रेप्रो सर्विस रिस्टार्ट करने का जरुरत है. सर्विस को अक्षम करें और इसे पुन: सक्षम करें."
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr "जिटसि मीट"
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3774,7 +3791,7 @@ msgstr ""
 "है, जो आपको इंटरनेट पर सम्मेलनों देता है, जबकि समुदाय में अंय परियोजनाओं ऑडियो, डायल-इन, "
 "रिकॉर्डिंग, और सैमुलकास्टिंग जैसे सुविधाओं को सक्षम कर रहे हैं."
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr "सीसिपसिमपल"
 
@@ -4378,53 +4395,63 @@ msgstr "एकल साइन-ऑन"
 msgid "Login"
 msgstr "लॉगिन"
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 msgid "Storage"
 msgstr "स्टोरेज"
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} बाइट्स"
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} किब"
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} मेब"
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} जिब"
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} टीब"
 
-#: plinth/modules/storage/templates/storage.html:47
-msgid "The following disks are in use:"
+#: plinth/modules/storage/templates/storage.html:53
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "निम्नलिखित डिस्कस उपयोग में है:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr "माउन्ट प्वाइंट"
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr "उपयोग किया गया"
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr "पारटिशन एक्सपांसन"
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4435,11 +4462,29 @@ msgstr ""
 "पार्टीशन इस स्थान ज्यादा बनने के लिए उपयोग किया जा सकता है. यह आपको आपकी फ़ाइलों "
 "स्टोर करने के लिए अतिरिक्त मुक्त स्थान प्रदान करेगा."
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
 msgstr "रूट पारटिशन विस्तार करें"
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Removable Media"
+msgid "Removable Devices"
+msgstr "रिमूवेबल मीडिया"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr "कोई अतिरिक्त स्टोरेज डिवाइस अनुलग्न नहीं हैं."
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr "लेबल"
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
+msgstr "आकार"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4451,16 +4496,73 @@ msgstr ""
 "आगे बढ़ने से पहले अपने डेटा का बैकअप करें. इस ऑपरेशन के बाद, %(expandable_root_size)s से "
 "अतिरिक्त खाली जगह आपके रूट पार्टीशन में उपलब्ध होगा."
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr "ऐसा कोई डिवाइस नहीं - {device_path}"
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr "ऑपरेशन रद्द किया गया."
+
+#: plinth/modules/storage/udisks2.py:143
+msgid "The device is already unmounting."
+msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr "ऑपरेशन टाइम आउट हो गया."
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr "ऑपरेशन पहले से रद्द किया गया."
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
+
+#: plinth/modules/storage/udisks2.py:163
+msgid "The device is already mounted."
+msgstr "यह डिवाइस पहले से माउंट किया गया."
+
+#: plinth/modules/storage/udisks2.py:165
+msgid "The device is not mounted."
+msgstr "यह डिवाइस नहीं माउंट किया गया."
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
+
+#: plinth/modules/storage/views.py:84
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "पार्टीशन का विस्तार करने में त्रुटि: {exception}"
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr "पार्टीशन सफलतापूर्वक विस्तारित हुआ."
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4468,6 +4570,20 @@ msgid ""
 msgstr ""
 "वार्निंग: सिस्टम पार्टीशन पर कम जगह ({percent_used}% उपयोग किया गया, "
 "{free_space} free)."
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr "{drive_vendor}{drive_model} को सुरक्षित रूप से अनप्लग किया जा सकता है."
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr "डिवाइस सुरक्षित रूप से अनप्लग किया जा सकता है."
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:37
 #: plinth/modules/syncthing/manifest.py:27
@@ -4870,111 +4986,6 @@ msgstr "समाचार फ़ीड्स पढ़ें और सब्�
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "टैनी टैनी आरएसएस (फोर्क)"
 
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr "यूडिसकि"
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr "रिमूवेबल मीडिया"
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-"युडिसकि फ्लैश ड्राइव के जैसे रिमूवेबल मीडिया ऑटोमेटिकलि माउंट करने के लिये अनुमति देता है."
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-msgid "Devices"
-msgstr "डिवाइसेस"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr "कोई अतिरिक्त स्टोरेज डिवाइस अनुलग्न नहीं हैं."
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr "लेबल"
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr "आकार"
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-msgid "Filesystem"
-msgstr "फ़ाइलसिस्टम"
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr "ऐसा कोई डिवाइस नहीं - {device_path}"
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr "ऑपरेशन रद्द किया गया."
-
-#: plinth/modules/udiskie/udisks2.py:143
-msgid "The device is already unmounting."
-msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr "ऑपरेशन टाइम आउट हो गया."
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr "ऑपरेशन पहले से रद्द किया गया."
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
-
-#: plinth/modules/udiskie/udisks2.py:163
-msgid "The device is already mounted."
-msgstr "यह डिवाइस पहले से माउंट किया गया."
-
-#: plinth/modules/udiskie/udisks2.py:165
-msgid "The device is not mounted."
-msgstr "यह डिवाइस नहीं माउंट किया गया."
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr "{drive_vendor}{drive_model} को सुरक्षित रूप से अनप्लग किया जा सकता है."
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr "डिवाइस सुरक्षित रूप से अनप्लग किया जा सकता है."
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
-
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
 msgstr "सॉफ्टवेयर अपग्रेडस"
@@ -5341,8 +5352,9 @@ msgstr ""
 "स्टेटस लॉग </a> संलग्न करें."
 
 #: plinth/templates/base.html:50
-#, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+#, fuzzy, python-format
+#| msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr "%(box_name)s के लिए कोर फंक्शनलिटी और वेब इंटरफेस"
 
 #: plinth/templates/base.html:95
@@ -5602,6 +5614,37 @@ msgstr "%(package_names)s:%(status)s इंस्टॉलेशन किया
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% पूर्ण"
+
+#~ msgid "Path"
+#~ msgstr "पाथ"
+
+#~ msgid ""
+#~ "Disk path to a folder on this server that will be archived into backup "
+#~ "repository."
+#~ msgstr ""
+#~ "इस सर्वर पर किसी फ़ोल्डर का डिस्क पाथ है जिसे बैकअप रिपॉसिटरी में संग्रहीत किया "
+#~ "जाएगा."
+
+#~ msgid "Create archive"
+#~ msgstr "पुरालेख बनाइये"
+
+#~ msgid "Create Archive"
+#~ msgstr "पुरालेख बनाइये"
+
+#~ msgid "udiskie"
+#~ msgstr "यूडिसकि"
+
+#~ msgid ""
+#~ "udiskie allows automatic mounting of removable media, such as flash "
+#~ "drives."
+#~ msgstr ""
+#~ "युडिसकि फ्लैश ड्राइव के जैसे रिमूवेबल मीडिया ऑटोमेटिकलि माउंट करने के लिये अनुमति देता है."
+
+#~ msgid "Devices"
+#~ msgstr "डिवाइसेस"
+
+#~ msgid "Filesystem"
+#~ msgstr "फ़ाइलसिस्टम"
 
 #~ msgid "Exported filename"
 #~ msgstr "एक्सपोर्टेड फ़ाइल नाम"

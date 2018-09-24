@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2018-08-02 00:27+0000\n"
 "Last-Translator: Hemanth Kumar Veeranki <hems.india1997@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -114,73 +114,85 @@ msgstr ""
 "ప్రకటన అనేది అత్యవసరమినది కాదు. మరియు అంతర్గత నెట్‌వర్క్లలో మాత్రమే పని చేస్తుంది. మీ భద్రతా కారణాల కోసం "
 "పని చేయకుండా చెయ్యచ్చు ముఖ్యంగా మీరు విరుద్ధమైన స్థానిక నెట్‌వర్క్ లో కనెక్ట్ ఆవతున్నప్పుడు."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr "బ్యాకప్స్"
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr "బ్యాకప్స్ అనేది బ్యాకప్ భాండాగారాలను సృష్టించడానికి మరియి నిర్వహించడానికి ఉపయోగపడుతుంది."
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 #, fuzzy
 #| msgid "System"
 msgid "Root Filesystem"
 msgstr "వ్యవస్థ"
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr "ఆర్కైవ్ పేరు"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr "కొత్త బ్యాకప్ ఆర్కైవుకి పేరు."
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 msgid "Invalid archive name"
 msgstr "చెల్లని ఆర్కైవ్ పేరు"
 
-#: plinth/modules/backups/forms.py:35
-#, fuzzy
-#| msgid "Disk Path"
-msgid "Path"
-msgstr "డిస్క్ మార్గం"
-
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
-"మీరు బ్యాకప్ భాండాగారంలో నిల్వ ఉంచాలి అనుకుంటున్న ఈ సర్వర్ మీద నున్న డిస్క్ లో ఉన్న ఒక ఫోల్డర్ యొక్క "
-"స్థానం."
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:52
 #, fuzzy
 #| msgid "Disks"
 msgid "Disk"
 msgstr "డిస్కులు"
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-msgid "Create archive"
-msgstr "ఆర్కైవును సృష్టించు"
+#: plinth/modules/backups/forms.py:64
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore apps"
+msgstr "రిస్టోర్"
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+msgid "Apps data to restore from the backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 #, fuzzy
 #| msgid "Backups"
 msgid "Backup archives"
 msgstr "బ్యాకప్స్"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr "ప్రస్తుతం ఆర్కైవులేమీ లేవు."
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -189,35 +201,30 @@ msgstr "ప్రస్తుతం ఆర్కైవులేమీ లేవ�
 msgid "Name"
 msgstr "పేరు"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-msgid "Time"
-msgstr "సమయం"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr "ఎగుమతించు"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Exported backup archives"
 msgstr "కొత్త బ్యాకప్ ఆర్కైవుకి పేరు."
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "No exported backup archives were found."
 msgstr "కొత్త బ్యాకప్ ఆర్కైవుకి పేరు."
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 #, fuzzy
 #| msgid "Documentation"
 msgid "Location"
 msgstr "పత్రావళి"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore"
@@ -228,6 +235,10 @@ msgstr "రిస్టోర్"
 #| msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgid "Delete this archive permanently?"
 msgstr "<strong>%(name)s</strong> అనుసంధానం శాశ్వతంగా తొలగించు ?"
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+msgid "Time"
+msgstr "సమయం"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, fuzzy, python-format
@@ -246,48 +257,48 @@ msgstr "సమర్పించు"
 msgid "Restore data from this archive?"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, fuzzy, python-format
 #| msgid "Delete %(name)s"
 msgid "Restore data from %(name)s"
 msgstr "%(name)s తొలగించు"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr "భాండాగారాము సృజింపబడింది."
 
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/views.py:66
 #, fuzzy
-#| msgid "Create Account"
-msgid "Create Archive"
-msgstr "ఖాతా సృష్టించు"
+#| msgid "Backups"
+msgid "New Backup"
+msgstr "బ్యాకప్స్"
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 #, fuzzy
 #| msgid "Delete All"
 msgid "Delete Archive"
 msgstr "అన్నింటిని  తొలగించు"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Archive deleted."
 msgstr "{name} తొలగించబడింది."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr "భాండాగారాము ఎగుమతి చేయబడింది."
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr "భాండాగారాము ఎగుమతి చేయుము"
 
-#: plinth/modules/backups/views.py:124
-msgid "Restore from backup"
+#: plinth/modules/backups/views.py:134
+msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
+#: plinth/modules/backups/views.py:156
+msgid "Restore from backup"
 msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
@@ -459,7 +470,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
@@ -1066,15 +1077,15 @@ msgstr ""
 "సంభాషణల సమకాలీకరణను అనుమతిస్తుంది మరియు బహుళ వినియోగదారు చాట్ రూమ్ చరిత్రను చదవగలదు. చరిత్రలు "
 "సాదా టెక్స్ట్ లేదా గుప్తీకరించబడినాయినా లేదో క్లయింట్ సెట్టింగ్లపై ఆధారపడి ఉంటుంది."
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
 msgstr "కాన్వర్సేషన్స్"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr "ఎక్సాబ్బర్"
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
@@ -1082,15 +1093,15 @@ msgstr ""
 "అనేక ఖాతా సౌకర్యం మరియు సాధారణ మరియు సులభమైన సమన్వయము కలిగిన ఓపెన్ సోర్స్ జబ్బెర్ (ఎక్స్.ఎం.పి.పి) "
 "క్లయింట్. "
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "యాక్సిమ్"
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
 msgstr "చాట్ సెక్యూర్"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1101,11 +1112,11 @@ msgstr ""
 "ఉంది. మీరు ఇప్పటికే ఉన్న గూగుల్ ఖాతాకు కనెక్ట్ చేయవచ్చు, పబ్లిక్ XMPP సర్వర్లలో (టోర్ ద్వారా సహా) కొత్త "
 "ఖాతాలను సృష్టించవచ్చు లేదా అదనపు భద్రత కోసం మీ స్వంత సర్వర్కు కనెక్ట్ చేయవచ్చు."
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr "డినో"
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr "గజీం"
 
@@ -1451,7 +1462,7 @@ msgstr ""
 "బగ్ (తప్పుల) నివేదిక సమర్పించే ముందు దయచేసి లాగ్ నుండి ఏవైనా రహస్యపదాలను లేదా ఇతర వ్యక్తిగత సమాచారాన్ని "
 "తొలగించగలరు."
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
 msgstr "ఇకివికీ"
 
@@ -1494,7 +1505,8 @@ msgstr "వికీ అనువర్తనాలను చూడండి మ
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "రకం"
 
@@ -1626,15 +1638,15 @@ msgstr ""
 "మరియు నిక్షిప్తం చెయుము. మొడటిగ గాబ్బి మరియు సెలెక్ట్ \"సర్వర్కు కనెక్ట్ చేయండి\" మరియు మీ ఎంటర్ చెయ్యండి "
 "{box_name}'s డొమైన్ పేరు."
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr "గాబ్బి"
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr "గాబ్బీ ఒక సహకార టెక్స్ట్ ఎడిటర్"
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1719,7 +1731,7 @@ msgid "Website Security"
 msgstr "వెబ్‌సైటు భద్రత"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "చర్యలు"
 
@@ -2007,7 +2019,7 @@ msgstr ""
 "ప్రజా నమోదును సశక్త పరచడం అంటే అంతర్జాలం లో ఉన్న ఎవరైనా కూడా మీ మాట్రిక్స్ సర్వర్ మీద ఖాతాను "
 "సృష్టించుకోగలరు. ప్రస్తుతం ఉండే వినియోగదారులు మాత్రమే వినియోగించాలి అనుకుంటే దీనిని నిర్వీర్యం చేయగలరు."
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr "రయట్"
 
@@ -2066,7 +2078,7 @@ msgid "Public registration disabled"
 msgstr "అనువర్తనం ఆమోదింపబడలేదు"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "మీడియావికీ"
 
@@ -2172,7 +2184,7 @@ msgid "Private mode disabled"
 msgstr "PageKite వికలాంగ"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "మైన్ టెస్ట్"
 
@@ -2909,8 +2921,8 @@ msgid "yes"
 msgstr "అవును"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "పరికరం"
 
@@ -3774,31 +3786,31 @@ msgid ""
 "addressbook."
 msgstr "ఏ వినియోగదారుడు అయినా క్యాలెండరు /ఆడ్రస్ బుక్ ని చూడగలరు లేదా మార్పులు చేయగలరు."
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 #, fuzzy
 msgid "DAVDroid"
 msgstr "DAVDroid"
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
 "you can create new."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr "కేలండర్"
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr "మొజిల్లా థండర్ బర్డ్"
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr "పరిణామం"
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
@@ -3806,7 +3818,7 @@ msgstr ""
 "ఎవల్యూషన్ అనేది ఒక వ్యక్తిగత సమాచార నిర్వహణ అనువర్తనం, ఇది ఇంటిగ్రేటెడ్ మెయిల్, క్యాలెండింగ్ మరియు బుక్ "
 "ఫంక్షనాలిటీని అందించేది."
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3864,11 +3876,11 @@ msgid ""
 "required to restart the repro service. Disable the service and re-enable it."
 msgstr ""
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr "జిట్సి మీట్"
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3881,7 +3893,7 @@ msgstr ""
 "మీకు ఇంటర్నెట్లో సమావేశాలను ఏర్పాటు చేసుకోడానికి, కమ్యూనిటీ లో ఇతర ప్రాజెక్టులు ఆడియో, డయల్ -ఇన్, "
 "రికార్డింగ్, మరియు సైమల్ఖ్యస్టింగ్ వంటి ఇతర సౌకర్యాలు  ఏర్పాటు చేసుకోడానికి సహకరిస్తుంది."
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr "సి సిప్ సింపుల్"
 
@@ -4503,54 +4515,64 @@ msgstr ""
 msgid "Login"
 msgstr "ప్రవేశించు"
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 #, fuzzy
 msgid "Storage"
 msgstr "అన్హొస్టెడ్ స్టోరేజ్  ని (పునరుద్ధరించండి)"
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} బైట్లు"
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} కిలోబైట్లు"
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} మెగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} గిగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f}  టెరాబైట్లు"
 
-#: plinth/modules/storage/templates/storage.html:47
-msgid "The following disks are in use:"
+#: plinth/modules/storage/templates/storage.html:53
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "క్రింది డిస్కులు ఉపయోగంలో ఉన్నాయి:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr "ఆరొహించు కోన"
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr "ఉపయోగించబడినది"
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4561,11 +4583,29 @@ msgstr ""
 "రూట్ విభజనను మీరు విస్తరించుకోగలరు. మీ ఫైళ్లు భద్రపరుచుకునేందుకు అది మీకు అదనపు సామర్ధ్యాన్ని "
 "అందిస్తుంది."
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
 msgstr "రూట్ విభజనను విస్తరించు"
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Name Services"
+msgid "Removable Devices"
+msgstr "పేరు సేవలు"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
+msgstr "పరిమాణం"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4577,20 +4617,96 @@ msgstr ""
 "దయచేసి మీ సమాచారాన్ని బ్యాకప్ (భద్రపరచు కొనుట) చేస్కోండి. ఈ క్రియ తర్వాత %(expandable_root_size)s "
 "అధనపు సామర్ధ్యం మీ రూ విభజనలో అందుబాటులోకి వస్తుంది."
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:143
+#, fuzzy
+#| msgid "Mumble server is running"
+msgid "The device is already unmounting."
+msgstr "మంబ్లు సేవిక నడుస్తుంది"
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:163
+#, fuzzy
+msgid "The device is already mounted."
+msgstr "ఈ సేవ ఇప్పటికే ఉంది"
+
+#: plinth/modules/storage/udisks2.py:165
+#, fuzzy
+#| msgid "Mumble server is not running"
+msgid "The device is not mounted."
+msgstr "మంబ్లు సేవిక నడవంలేదు"
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr ""
+
+#: plinth/modules/storage/views.py:84
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "విభజన విస్తరణలో దోషం: {exception}"
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr "విభజనను విస్తరించడం విజయవంతమైనది."
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
 msgstr ""
 
 #: plinth/modules/syncthing/__init__.py:37
@@ -4993,119 +5109,6 @@ msgstr "న్యూస్ ఫీడ్‌లను  చదవడం మరి�
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "టైనీ టైనీ RSS"
 
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr ""
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr ""
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-#, fuzzy
-#| msgid "Device"
-msgid "Devices"
-msgstr "పరికరం"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr "పరిమాణం"
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-#, fuzzy
-#| msgid "System"
-msgid "Filesystem"
-msgstr "వ్యవస్థ"
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:143
-#, fuzzy
-#| msgid "Mumble server is running"
-msgid "The device is already unmounting."
-msgstr "మంబ్లు సేవిక నడుస్తుంది"
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:163
-#, fuzzy
-msgid "The device is already mounted."
-msgstr "ఈ సేవ ఇప్పటికే ఉంది"
-
-#: plinth/modules/udiskie/udisks2.py:165
-#, fuzzy
-#| msgid "Mumble server is not running"
-msgid "The device is not mounted."
-msgstr "మంబ్లు సేవిక నడవంలేదు"
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr ""
-
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
 msgstr "సాఫ్ట్‌వేర్ నవీకరణలు"
@@ -5449,7 +5452,7 @@ msgstr ""
 
 #: plinth/templates/base.html:50
 #, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr ""
 
 #: plinth/templates/base.html:95
@@ -5723,6 +5726,36 @@ msgstr "సంస్థాపన %(package_names)s%:(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% పూర్తి"
+
+#, fuzzy
+#~| msgid "Disk Path"
+#~ msgid "Path"
+#~ msgstr "డిస్క్ మార్గం"
+
+#~ msgid ""
+#~ "Disk path to a folder on this server that will be archived into backup "
+#~ "repository."
+#~ msgstr ""
+#~ "మీరు బ్యాకప్ భాండాగారంలో నిల్వ ఉంచాలి అనుకుంటున్న ఈ సర్వర్ మీద నున్న డిస్క్ లో ఉన్న ఒక ఫోల్డర్ యొక్క "
+#~ "స్థానం."
+
+#~ msgid "Create archive"
+#~ msgstr "ఆర్కైవును సృష్టించు"
+
+#, fuzzy
+#~| msgid "Create Account"
+#~ msgid "Create Archive"
+#~ msgstr "ఖాతా సృష్టించు"
+
+#, fuzzy
+#~| msgid "Device"
+#~ msgid "Devices"
+#~ msgstr "పరికరం"
+
+#, fuzzy
+#~| msgid "System"
+#~ msgid "Filesystem"
+#~ msgstr "వ్యవస్థ"
 
 #~ msgid "Exported filename"
 #~ msgstr "ఎగుమతి చేయబడిన ఫైల్ పేరు"

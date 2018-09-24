@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2018-08-29 13:27+0000\n"
 "Last-Translator: BO41 <lukasw41@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -118,66 +118,82 @@ msgstr ""
 "deaktiviert werden um die Sicherheit zu erhöhen, vor allem in einem "
 "unsicheren lokalen Netz."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr "Backups"
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr "Backups ermöglicht das Erzeugen und Verwalten von Backup-Archiven."
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 msgid "Root Filesystem"
 msgstr "Wurzel-Dateisystem"
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr "Archivname"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr "Name für das neue Backup-Archiv."
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 msgid "Invalid archive name"
 msgstr "Ungültiger Archiv-Name"
 
-#: plinth/modules/backups/forms.py:35
-msgid "Path"
-msgstr "Pfad"
-
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
-"Plattenpfad zu einem Ordner auf diesem Server, der in das Backup archiviert "
-"werden wird."
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:52
 msgid "Disk"
 msgstr "Speichermedium"
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Plattenpfad oder Speichermedium wohin das Backup-Archiv entpackt werden wird."
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-msgid "Create archive"
-msgstr "Archiv anlegen"
+#: plinth/modules/backups/forms.py:64
+#, fuzzy
+#| msgid "Restore"
+msgid "Restore apps"
+msgstr "Wiederherstellen"
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+#, fuzzy
+#| msgid "Restore from backup"
+msgid "Apps data to restore from the backup"
+msgstr "Wiederherstellen von Backup"
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 msgid "Backup archives"
 msgstr "Backup Archive"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr "Derzeit existieren keine Archive."
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -186,35 +202,34 @@ msgstr "Derzeit existieren keine Archive."
 msgid "Name"
 msgstr "Name"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-msgid "Time"
-msgstr "Zeit"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr "Exportieren"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 msgid "Exported backup archives"
 msgstr "Exportierte Backup-Archive"
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 msgid "No exported backup archives were found."
 msgstr "Es wurden keine exportierten Backup-Archive gefunden."
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 msgid "Location"
 msgstr "Ort"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 msgid "Restore"
 msgstr "Wiederherstellen"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
 msgstr "Archiv permanent löschen?"
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+msgid "Time"
+msgstr "Zeit"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, python-format
@@ -232,42 +247,46 @@ msgstr "Absenden"
 msgid "Restore data from this archive?"
 msgstr "Daten aus diesem Archiv wiederherstellen?"
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, python-format
 msgid "Restore data from %(name)s"
 msgstr "Stelle Daten von %(name)s wieder her"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr "Archiv angelegt."
 
-#: plinth/modules/backups/views.py:61
-msgid "Create Archive"
-msgstr "Archiv anlegen"
+#: plinth/modules/backups/views.py:66
+#, fuzzy
+#| msgid "Backups"
+msgid "New Backup"
+msgstr "Backups"
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 msgid "Delete Archive"
 msgstr "Archiv löschen"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 msgid "Archive deleted."
 msgstr "Archiv gelöscht."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr "Archiv exportiert."
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr "Exportiere Archiv"
 
-#: plinth/modules/backups/views.py:124
+#: plinth/modules/backups/views.py:134
+#, fuzzy
+#| msgid "Restored data from backup."
+msgid "Restored files from backup."
+msgstr "Daten aus Backup wiederhergestellt."
+
+#: plinth/modules/backups/views.py:156
 msgid "Restore from backup"
 msgstr "Wiederherstellen von Backup"
-
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
-msgstr "Daten aus Backup wiederhergestellt."
 
 #: plinth/modules/bind/__init__.py:34
 msgid "BIND"
@@ -442,7 +461,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 msgid "Learn more..."
@@ -1071,15 +1090,15 @@ msgstr ""
 "Client-Einstellungen ab, ob die Nachrichten als Klartext oder verschlüsselt "
 "gespeichert werden."
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 msgid "Conversations"
 msgstr "Conversations"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr "Xabber"
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
@@ -1087,15 +1106,15 @@ msgstr ""
 "Open Source Jabber (XMPP) Client mit Multi-Account-Unterstützung und "
 "sauberer und einfacher Schnittstelle. "
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr "Yaxim"
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 msgid "ChatSecure"
 msgstr "ChatSecure"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1108,11 +1127,11 @@ msgstr ""
 "anlegen (auch über Tor), oder auch ihren eigenen Server nutzen, für "
 "zusätzliche Sicherheit."
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr "Dino"
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr "Gajim"
 
@@ -1474,7 +1493,7 @@ msgstr ""
 "Bitte entfernen Sie Passwörter und andere persönliche Informationen von der "
 "Statusausgabe bevor Sie den Fehlerbericht abschicken."
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
@@ -1514,7 +1533,8 @@ msgstr "Wiki-Anwendungen ansehen und editieren"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "Typ"
 
@@ -1646,15 +1666,15 @@ msgstr ""
 "Client herunter</a> und installiere ihn. Dann starte Gobby und wähle "
 "\"Verbinde mit Server\" und gib die Domain von {box_name} an."
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr "Gobby"
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr "Gobby ist ein kollaborativer Text-Editor"
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1745,7 +1765,7 @@ msgid "Website Security"
 msgstr "Webseiten-Sicherheit"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -2013,7 +2033,7 @@ msgstr ""
 "Deaktivieren Sie diese Option wenn Sie ausschließlich bereits existierende "
 "Benutzer zulassen möchten."
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr "Riot"
 
@@ -2070,7 +2090,7 @@ msgid "Public registration disabled"
 msgstr "Öffentliche Registrierung deaktiviert"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
@@ -2172,7 +2192,7 @@ msgid "Private mode disabled"
 msgstr "Privaten Modus ausgeschaltet"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "Minetest"
 
@@ -2886,8 +2906,8 @@ msgid "yes"
 msgstr "ja"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "Gerät"
 
@@ -3757,11 +3777,11 @@ msgstr ""
 "Jeder mit einem {box_name} Nutzerkonto kann jeden Kalender/Adressbuch "
 "einsehen oder Änderungen durchführen."
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 msgid "DAVDroid"
 msgstr "DAVDroid"
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
@@ -3771,19 +3791,19 @@ msgstr ""
 "ihren Nutzernamen. DAVdroid wird all ihre existierenden Kalender und "
 "Adressbücher anzeigen, und Sie können neue anlegen."
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr "GNOME Calendar"
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr "Mozilla Thunderbird"
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr "Evolution"
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
@@ -3791,7 +3811,7 @@ msgstr ""
 "Evolution ist eine persönliche Informationsverwaltungs-Anwendung die "
 "Funktionen wie Email, Kalender und Adressbuch verbindet."
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3857,11 +3877,11 @@ msgstr ""
 "erforderlich den repro Dienst neu zu starten. Deaktivieren Sie den Dienst "
 "und aktivieren ihn wieder."
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr "Jitsi Meet"
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3876,7 +3896,7 @@ msgstr ""
 "stellen weitere Funktionen zur Verfügung, beispielsweise Audio, Einwahl, "
 "Aufzeichnen, und Simulcast."
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr "CSipSimple"
 
@@ -4511,53 +4531,63 @@ msgstr "Einmal-Anmeldung"
 msgid "Login"
 msgstr "Anmelden"
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 msgid "Storage"
 msgstr "Speicher"
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} Bytes"
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/templates/storage.html:47
-msgid "The following disks are in use:"
+#: plinth/modules/storage/templates/storage.html:53
+#, fuzzy
+#| msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "Die folgenden Speichermedien werden verwendet:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr "Einhängepunkt"
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr "Genutzt"
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr "Partitions-Erweiterung"
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4569,11 +4599,29 @@ msgstr ""
 "Speicherplatz zu nutzen. Die Erweiterung stellt mehr Speicherplatz für Ihre "
 "Dateien bereit."
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
 msgstr "Erweitern der Root Partition"
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Removable Media"
+msgid "Removable Devices"
+msgstr "Wechseldatenträger"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr "Es sind keine zusätzlichen Speichergeräte angeschlossen."
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr "Bezeichnung"
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
+msgstr "Größe"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4586,16 +4634,76 @@ msgstr ""
 "Nach dieser Aktion werden %(expandable_root_size)s zusätzlicher "
 "Speicherplatz auf der Root-Partition verfügbar."
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr "Kein solches Gerät - {device_path}"
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr "Der Vorgang schlug fehl."
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr "Der Vorgang wurde abgebrochen."
+
+#: plinth/modules/storage/udisks2.py:143
+msgid "The device is already unmounting."
+msgstr "Das Gerät wird bereits ausgehangen."
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+"Der Vorgang ist wegen fehlender Treiber-/Werkzeugunterstützung nicht möglich."
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+"Dieser Vorgang würde ein Gerät aufwecken dass sich in einem Tiefschlaf-"
+"Zustand befindet."
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr "Versuche ein Gerät auszuhängen, das beschäftigt ist."
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr "Dieser Vorgang wurde bereits abgebrochen."
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr "Nicht autorisiert um den gewünschten Vorgang auszuführen."
+
+#: plinth/modules/storage/udisks2.py:163
+msgid "The device is already mounted."
+msgstr "Dieses Gerät ist bereits eingebunden."
+
+#: plinth/modules/storage/udisks2.py:165
+msgid "The device is not mounted."
+msgstr "Das Gerät ist nicht eingebunden."
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr "Die gewünschte Option ist nicht gestattet."
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
+
+#: plinth/modules/storage/views.py:84
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Fehler beim Erweitern des Dateisystems: {exception}"
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr "Partition erfolgreich vergrößert."
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4603,6 +4711,20 @@ msgid ""
 msgstr ""
 "Warnung: Geringer Speicherplatz auf der Systempartition ({percent_used}% "
 "belegt, {free_space} verfügbar)."
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr "{drive_vendor} {drive_model} kann sicher entfernt werden."
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr "Gerät kann sicher entfernt werden."
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
+msgstr "Fehler beim Auswerden des Geräts: {error_message}"
 
 #: plinth/modules/syncthing/__init__.py:37
 #: plinth/modules/syncthing/manifest.py:27
@@ -5026,115 +5148,6 @@ msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr "udiskie"
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr "Wechseldatenträger"
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-"udiskie ermöglicht das automatische Einbinden von Wechseldatenträgern wie "
-"Flash-Speicher."
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-msgid "Devices"
-msgstr "Geräte"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr "Es sind keine zusätzlichen Speichergeräte angeschlossen."
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr "Bezeichnung"
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr "Größe"
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-msgid "Filesystem"
-msgstr "Dateisystem"
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr "Kein solches Gerät - {device_path}"
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr "Der Vorgang schlug fehl."
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr "Der Vorgang wurde abgebrochen."
-
-#: plinth/modules/udiskie/udisks2.py:143
-msgid "The device is already unmounting."
-msgstr "Das Gerät wird bereits ausgehangen."
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-"Der Vorgang ist wegen fehlender Treiber-/Werkzeugunterstützung nicht möglich."
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
-"Dieser Vorgang würde ein Gerät aufwecken dass sich in einem Tiefschlaf-"
-"Zustand befindet."
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr "Versuche ein Gerät auszuhängen, das beschäftigt ist."
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr "Dieser Vorgang wurde bereits abgebrochen."
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr "Nicht autorisiert um den gewünschten Vorgang auszuführen."
-
-#: plinth/modules/udiskie/udisks2.py:163
-msgid "The device is already mounted."
-msgstr "Dieses Gerät ist bereits eingebunden."
-
-#: plinth/modules/udiskie/udisks2.py:165
-msgid "The device is not mounted."
-msgstr "Das Gerät ist nicht eingebunden."
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr "Die gewünschte Option ist nicht gestattet."
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr "{drive_vendor} {drive_model} kann sicher entfernt werden."
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr "Gerät kann sicher entfernt werden."
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr "Fehler beim Auswerden des Geräts: {error_message}"
-
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
 msgstr "Software Aktualisierungen"
@@ -5512,8 +5525,9 @@ msgstr ""
 "\">Statusprotokoll</a> dem Fehlerbericht bei."
 
 #: plinth/templates/base.html:50
-#, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+#, fuzzy, python-format
+#| msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Kernfunktionalität und Webinterface für %(box_name)s"
 
 #: plinth/templates/base.html:95
@@ -5782,6 +5796,38 @@ msgstr "Installiere %(package_names)s: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% abgeschlossen"
+
+#~ msgid "Path"
+#~ msgstr "Pfad"
+
+#~ msgid ""
+#~ "Disk path to a folder on this server that will be archived into backup "
+#~ "repository."
+#~ msgstr ""
+#~ "Plattenpfad zu einem Ordner auf diesem Server, der in das Backup "
+#~ "archiviert werden wird."
+
+#~ msgid "Create archive"
+#~ msgstr "Archiv anlegen"
+
+#~ msgid "Create Archive"
+#~ msgstr "Archiv anlegen"
+
+#~ msgid "udiskie"
+#~ msgstr "udiskie"
+
+#~ msgid ""
+#~ "udiskie allows automatic mounting of removable media, such as flash "
+#~ "drives."
+#~ msgstr ""
+#~ "udiskie ermöglicht das automatische Einbinden von Wechseldatenträgern wie "
+#~ "Flash-Speicher."
+
+#~ msgid "Devices"
+#~ msgstr "Geräte"
+
+#~ msgid "Filesystem"
+#~ msgstr "Dateisystem"
 
 #~ msgid "Exported filename"
 #~ msgstr "Exportierter Dateiname"

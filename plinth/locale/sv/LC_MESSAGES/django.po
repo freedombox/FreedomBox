@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 18:09-0400\n"
+"POT-Creation-Date: 2018-09-24 18:47-0400\n"
 "PO-Revision-Date: 2016-07-23 19:30+0000\n"
 "Last-Translator: Caly <caly@aktivix.org>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -125,69 +125,81 @@ msgstr ""
 "interna nätverk. Du kan låta den vara inaktiverad för att förbättra din "
 "säkerhet, särskilt om du ansluter till ett osäkert lokalt nätverk."
 
-#: plinth/modules/backups/__init__.py:33
+#: plinth/modules/backups/__init__.py:38
 msgid "Backups"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:35
+#: plinth/modules/backups/__init__.py:41
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:89
+#: plinth/modules/backups/__init__.py:120
 msgid "Root Filesystem"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:30
+#: plinth/modules/backups/forms.py:31
 msgid "Archive name"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:32
 msgid "Name for new backup archive."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:33
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Invalid archive name"
 msgstr "Du har angett ett ogiltigt servernamn"
 
-#: plinth/modules/backups/forms.py:35
-msgid "Path"
+#: plinth/modules/backups/forms.py:37
+msgid "Included apps"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:36
-msgid ""
-"Disk path to a folder on this server that will be archived into backup "
-"repository."
+#: plinth/modules/backups/forms.py:38
+msgid "Apps to include in the backup"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:42
+#: plinth/modules/backups/forms.py:52
 msgid "Disk"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:43
+#: plinth/modules/backups/forms.py:53
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:43
-#: plinth/modules/backups/templates/backups.html:46
-#, fuzzy
-#| msgid "Create"
-msgid "Create archive"
-msgstr "Skapa"
+#: plinth/modules/backups/forms.py:64
+msgid "Restore apps"
+msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:50
+#: plinth/modules/backups/forms.py:65
+msgid "Apps data to restore from the backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:44
+#: plinth/modules/backups/templates/backups.html:47
+#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:55
+msgid "New backup"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:59
+msgid ""
+"No apps that support backup are currently installed. Backup can be created "
+"after an app supporting backups is installed."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:66
 #, fuzzy
 #| msgid "Create"
 msgid "Backup archives"
 msgstr "Skapa"
 
-#: plinth/modules/backups/templates/backups.html:52
+#: plinth/modules/backups/templates/backups.html:68
 msgid "No archives currently exist."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:58
-#: plinth/modules/backups/templates/backups.html:95
+#: plinth/modules/backups/templates/backups.html:74
+#: plinth/modules/backups/templates/backups.html:109
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -196,39 +208,38 @@ msgstr ""
 msgid "Name"
 msgstr "Namn"
 
-#: plinth/modules/backups/templates/backups.html:59
-#: plinth/modules/backups/templates/backups_delete.html:34
-#, fuzzy
-#| msgid "Time Zone"
-msgid "Time"
-msgstr "Tidszon"
-
-#: plinth/modules/backups/templates/backups.html:72
+#: plinth/modules/backups/templates/backups.html:86
 msgid "Export"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:100
 msgid "Exported backup archives"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:88
+#: plinth/modules/backups/templates/backups.html:102
 msgid "No exported backup archives were found."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:94
+#: plinth/modules/backups/templates/backups.html:108
 #: plinth/modules/backups/templates/backups_restore.html:33
 #, fuzzy
 #| msgid "Documentation"
 msgid "Location"
 msgstr "Dokumentation"
 
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:123
 msgid "Restore"
 msgstr ""
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
 msgstr ""
+
+#: plinth/modules/backups/templates/backups_delete.html:34
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Time"
+msgstr "Tidszon"
 
 #: plinth/modules/backups/templates/backups_delete.html:51
 #, fuzzy, python-format
@@ -247,48 +258,46 @@ msgstr "Sänd"
 msgid "Restore data from this archive?"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups_restore.html:51
+#: plinth/modules/backups/templates/backups_restore.html:53
 #, fuzzy, python-format
 #| msgid "Delete %(name)s"
 msgid "Restore data from %(name)s"
 msgstr "Ta bort %(name)s"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:61
 msgid "Archive created."
 msgstr ""
 
-#: plinth/modules/backups/views.py:61
-#, fuzzy
-#| msgid "Administrator Account"
-msgid "Create Archive"
-msgstr "Administratörskonto"
+#: plinth/modules/backups/views.py:66
+msgid "New Backup"
+msgstr ""
 
-#: plinth/modules/backups/views.py:78
+#: plinth/modules/backups/views.py:90
 #, fuzzy
 #| msgid "Delete"
 msgid "Delete Archive"
 msgstr "Ta bort"
 
-#: plinth/modules/backups/views.py:88
+#: plinth/modules/backups/views.py:100
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Archive deleted."
 msgstr "{name} borttagen."
 
-#: plinth/modules/backups/views.py:98
+#: plinth/modules/backups/views.py:110
 msgid "Archive exported."
 msgstr ""
 
-#: plinth/modules/backups/views.py:103
+#: plinth/modules/backups/views.py:115
 msgid "Export Archive"
 msgstr ""
 
-#: plinth/modules/backups/views.py:124
-msgid "Restore from backup"
+#: plinth/modules/backups/views.py:134
+msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:132
-msgid "Restored data from backup."
+#: plinth/modules/backups/views.py:156
+msgid "Restore from backup"
 msgstr ""
 
 #: plinth/modules/bind/__init__.py:34
@@ -452,7 +461,7 @@ msgstr ""
 #: plinth/modules/pagekite/templates/pagekite_introduction.html:37
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
-#: plinth/modules/storage/templates/storage.html:42
+#: plinth/modules/storage/templates/storage.html:48
 #: plinth/templates/service.html:42 plinth/templates/setup.html:44
 #: plinth/templates/simple_service.html:38
 #, fuzzy
@@ -1133,33 +1142,33 @@ msgid ""
 "the histories are stored as plain text or encrypted."
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:25
+#: plinth/modules/ejabberd/manifest.py:26
 #, fuzzy
 #| msgid "Connection"
 msgid "Conversations"
 msgstr "Anslutning"
 
-#: plinth/modules/ejabberd/manifest.py:39
+#: plinth/modules/ejabberd/manifest.py:40
 msgid "Xabber"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:41
+#: plinth/modules/ejabberd/manifest.py:42
 msgid ""
 "Open source Jabber (XMPP) client with multi-account support and clean and "
 "simple interface. "
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:56
+#: plinth/modules/ejabberd/manifest.py:57
 msgid "Yaxim"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:70
+#: plinth/modules/ejabberd/manifest.py:71
 #, fuzzy
 #| msgid "DNS Server"
 msgid "ChatSecure"
 msgstr "DNS-Server"
 
-#: plinth/modules/ejabberd/manifest.py:72
+#: plinth/modules/ejabberd/manifest.py:73
 msgid ""
 "ChatSecure is a free and open source messaging app that features OTR "
 "encryption over XMPP. You can connect to an existing Google account, create "
@@ -1167,11 +1176,11 @@ msgid ""
 "your own server for extra security."
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:88
+#: plinth/modules/ejabberd/manifest.py:89
 msgid "Dino"
 msgstr ""
 
-#: plinth/modules/ejabberd/manifest.py:100
+#: plinth/modules/ejabberd/manifest.py:101
 msgid "Gajim"
 msgstr ""
 
@@ -1533,7 +1542,7 @@ msgid ""
 "before submitting the bug report."
 msgstr ""
 
-#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:23
+#: plinth/modules/ikiwiki/__init__.py:41 plinth/modules/ikiwiki/manifest.py:24
 #, fuzzy
 #| msgid "Enable ikiwiki"
 msgid "ikiwiki"
@@ -1568,7 +1577,8 @@ msgstr "Tjänster och Applikationer"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:54
+#: plinth/modules/storage/templates/storage.html:60
+#: plinth/modules/storage/templates/storage.html:128
 msgid "Type"
 msgstr "Typ"
 
@@ -1699,15 +1709,15 @@ msgid ""
 "enter your {box_name}'s domain name."
 msgstr ""
 
-#: plinth/modules/infinoted/manifest.py:26
+#: plinth/modules/infinoted/manifest.py:27
 msgid "Gobby"
 msgstr ""
 
-#: plinth/modules/infinoted/manifest.py:28
+#: plinth/modules/infinoted/manifest.py:29
 msgid "Gobby is a collaborative text editor"
 msgstr ""
 
-#: plinth/modules/infinoted/manifest.py:31
+#: plinth/modules/infinoted/manifest.py:32
 #, python-brace-format
 msgid ""
 "Start Gobby and select \"Connect to Server\" and enter your {box_name}'s "
@@ -1808,7 +1818,7 @@ msgid "Website Security"
 msgstr "Säkerhet för webbsida"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/udiskie/templates/udiskie.html:46
+#: plinth/modules/storage/templates/storage.html:130
 msgid "Actions"
 msgstr "Åtgärder"
 
@@ -2051,7 +2061,7 @@ msgid ""
 "users to be able to use it."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/manifest.py:27
+#: plinth/modules/matrixsynapse/manifest.py:28
 msgid "Riot"
 msgstr ""
 
@@ -2098,7 +2108,7 @@ msgid "Public registration disabled"
 msgstr "Applikationer"
 
 #: plinth/modules/mediawiki/__init__.py:33
-#: plinth/modules/mediawiki/manifest.py:23
+#: plinth/modules/mediawiki/manifest.py:24
 msgid "MediaWiki"
 msgstr ""
 
@@ -2196,7 +2206,7 @@ msgid "Private mode disabled"
 msgstr "Applikationer"
 
 #: plinth/modules/minetest/__init__.py:46
-#: plinth/modules/minetest/manifest.py:24
+#: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr ""
 
@@ -2949,8 +2959,8 @@ msgid "yes"
 msgstr "Ja"
 
 #: plinth/modules/networks/templates/connection_show.html:84
-#: plinth/modules/storage/templates/storage.html:52
-#: plinth/modules/udiskie/templates/udiskie.html:41
+#: plinth/modules/storage/templates/storage.html:58
+#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "Enhet"
 
@@ -3709,36 +3719,36 @@ msgid ""
 "addressbook."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:24
+#: plinth/modules/radicale/manifest.py:25
 msgid "DAVDroid"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:26
+#: plinth/modules/radicale/manifest.py:27
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVdroid will show all existing calendars and address books and "
 "you can create new."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:43
+#: plinth/modules/radicale/manifest.py:44
 msgid "GNOME Calendar"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:51
+#: plinth/modules/radicale/manifest.py:52
 msgid "Mozilla Thunderbird"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:71
+#: plinth/modules/radicale/manifest.py:72
 msgid "Evolution"
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:73
+#: plinth/modules/radicale/manifest.py:74
 msgid ""
 "Evolution is a personal information management application that provides "
 "integrated mail, calendaring and address book functionality."
 msgstr ""
 
-#: plinth/modules/radicale/manifest.py:77
+#: plinth/modules/radicale/manifest.py:78
 msgid ""
 "In Evolution add a new calendar and address book respectively with WebDAV. "
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
@@ -3788,11 +3798,11 @@ msgid ""
 "required to restart the repro service. Disable the service and re-enable it."
 msgstr ""
 
-#: plinth/modules/repro/manifest.py:29
+#: plinth/modules/repro/manifest.py:30
 msgid "Jitsi Meet"
 msgstr ""
 
-#: plinth/modules/repro/manifest.py:31
+#: plinth/modules/repro/manifest.py:32
 msgid ""
 "Jitsi is a set of open-source projects that allows you to easily build and "
 "deploy secure videoconferencing solutions. At the heart of Jitsi are Jitsi "
@@ -3801,7 +3811,7 @@ msgid ""
 "dial-in, recording, and simulcasting."
 msgstr ""
 
-#: plinth/modules/repro/manifest.py:68
+#: plinth/modules/repro/manifest.py:69
 msgid "CSipSimple"
 msgstr ""
 
@@ -4387,55 +4397,63 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:32 plinth/modules/storage/views.py:46
+#: plinth/modules/storage/__init__.py:33 plinth/modules/storage/views.py:50
 msgid "Storage"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:153
+#: plinth/modules/storage/__init__.py:41
+#, python-brace-format
+msgid ""
+"This module allows you to manage storage media attached to your {box_name}. "
+"You can view the storage media currently in use, mount and unmount removable "
+"media, expand the root partition etc."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:164
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:157
+#: plinth/modules/storage/__init__.py:168
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:161
+#: plinth/modules/storage/__init__.py:172
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:165
+#: plinth/modules/storage/__init__.py:176
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:168
+#: plinth/modules/storage/__init__.py:179
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:47
+#: plinth/modules/storage/templates/storage.html:53
 #, fuzzy
 #| msgid "The following is the current status:"
-msgid "The following disks are in use:"
+msgid "The following storage devices are in use:"
 msgstr "Aktuell status:"
 
-#: plinth/modules/storage/templates/storage.html:53
-#: plinth/modules/udiskie/templates/udiskie.html:45
+#: plinth/modules/storage/templates/storage.html:59
+#: plinth/modules/storage/templates/storage.html:127
 msgid "Mount Point"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:55
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Used"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:87
+#: plinth/modules/storage/templates/storage.html:93
 msgid "Partition Expansion"
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:89
+#: plinth/modules/storage/templates/storage.html:95
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4443,10 +4461,28 @@ msgid ""
 "will provide you additional free space to store your files."
 msgstr ""
 
-#: plinth/modules/storage/templates/storage.html:99
+#: plinth/modules/storage/templates/storage.html:105
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:66
+#: plinth/modules/storage/views.py:72
 msgid "Expand Root Partition"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:113
+#, fuzzy
+#| msgid "Name Services"
+msgid "Removable Devices"
+msgstr "Namntjänster"
+
+#: plinth/modules/storage/templates/storage.html:117
+msgid "There are no additional storage devices attached."
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:126
+msgid "Label"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:129
+msgid "Size"
 msgstr ""
 
 #: plinth/modules/storage/templates/storage_expand.html:29
@@ -4457,21 +4493,96 @@ msgid ""
 "root partition."
 msgstr ""
 
-#: plinth/modules/storage/views.py:77
+#: plinth/modules/storage/udisks2.py:89
+#, python-brace-format
+msgid "No such device - {device_path}"
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:139
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:141
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:143
+#, fuzzy
+#| msgid "repro service is running"
+msgid "The device is already unmounting."
+msgstr "Tjänsten repro är aktiverad"
+
+#: plinth/modules/storage/udisks2.py:145
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:148
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:150
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:153
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:155
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:161
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:163
+msgid "The device is already mounted."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:165
+#, fuzzy
+#| msgid "repro service is not running"
+msgid "The device is not mounted."
+msgstr "Tjänsten repro är inaktiverad"
+
+#: plinth/modules/storage/udisks2.py:168
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/storage/udisks2.py:171
+msgid "The device is mounted by another user."
+msgstr ""
+
+#: plinth/modules/storage/views.py:84
 #, fuzzy, python-brace-format
 #| msgid "Error setting time zone: {exception}"
 msgid "Error expanding partition: {exception}"
 msgstr "Fel i inställning av tidszon: {exception}"
 
-#: plinth/modules/storage/views.py:80
+#: plinth/modules/storage/views.py:87
 msgid "Partition expanded successfully."
 msgstr ""
 
-#: plinth/modules/storage/views.py:100
+#: plinth/modules/storage/views.py:107
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
 "free)."
+msgstr ""
+
+#: plinth/modules/storage/views.py:132
+#, python-brace-format
+msgid "{drive_vendor} {drive_model} can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/storage/views.py:136
+msgid "Device can be safely unplugged."
+msgstr ""
+
+#: plinth/modules/storage/views.py:146
+#, python-brace-format
+msgid "Error ejecting device: {error_message}"
 msgstr ""
 
 #: plinth/modules/syncthing/__init__.py:37
@@ -4833,116 +4944,6 @@ msgstr ""
 msgid "Tiny Tiny RSS (Fork)"
 msgstr ""
 
-#: plinth/modules/udiskie/__init__.py:33
-msgid "udiskie"
-msgstr ""
-
-#: plinth/modules/udiskie/__init__.py:35
-msgid "Removable Media"
-msgstr ""
-
-#: plinth/modules/udiskie/__init__.py:38
-msgid ""
-"udiskie allows automatic mounting of removable media, such as flash drives."
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:29
-#, fuzzy
-#| msgid "Device"
-msgid "Devices"
-msgstr "Enhet"
-
-#: plinth/modules/udiskie/templates/udiskie.html:33
-msgid "There are no additional storage devices attached."
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:42
-msgid "Label"
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:43
-msgid "Size"
-msgstr ""
-
-#: plinth/modules/udiskie/templates/udiskie.html:44
-msgid "Filesystem"
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:89
-#, python-brace-format
-msgid "No such device - {device_path}"
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:139
-msgid "The operation failed."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:141
-msgid "The operation was cancelled."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:143
-#, fuzzy
-#| msgid "repro service is running"
-msgid "The device is already unmounting."
-msgstr "Tjänsten repro är aktiverad"
-
-#: plinth/modules/udiskie/udisks2.py:145
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:148
-msgid "The operation timed out."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:150
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:153
-msgid "Attempting to unmount a device that is busy."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:155
-msgid "The operation has already been cancelled."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:161
-msgid "Not authorized to perform the requested operation."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:163
-msgid "The device is already mounted."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:165
-#, fuzzy
-#| msgid "repro service is not running"
-msgid "The device is not mounted."
-msgstr "Tjänsten repro är inaktiverad"
-
-#: plinth/modules/udiskie/udisks2.py:168
-msgid "Not permitted to use the requested option."
-msgstr ""
-
-#: plinth/modules/udiskie/udisks2.py:171
-msgid "The device is mounted by another user."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:62
-#, python-brace-format
-msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:66
-msgid "Device can be safely unplugged."
-msgstr ""
-
-#: plinth/modules/udiskie/views.py:76
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
-msgstr ""
-
 #: plinth/modules/upgrades/__init__.py:33
 msgid "Software Upgrades"
 msgstr ""
@@ -5292,7 +5293,7 @@ msgstr ""
 
 #: plinth/templates/base.html:50
 #, python-format
-msgid "Core funtionality and web interface for %(box_name)s"
+msgid "Core functionality and web interface for %(box_name)s"
 msgstr ""
 
 #: plinth/templates/base.html:95
@@ -5560,6 +5561,21 @@ msgstr ""
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Create"
+#~ msgid "Create archive"
+#~ msgstr "Skapa"
+
+#, fuzzy
+#~| msgid "Administrator Account"
+#~ msgid "Create Archive"
+#~ msgstr "Administratörskonto"
+
+#, fuzzy
+#~| msgid "Device"
+#~ msgid "Devices"
+#~ msgstr "Enhet"
 
 #~ msgid ""
 #~ "To complete the setup of your %(box_name)s, please provide some basic "
