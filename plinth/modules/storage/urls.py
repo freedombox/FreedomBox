@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 URLs for the disks module.
 """
@@ -23,8 +22,9 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
     url(r'^sys/storage/$', views.index, name='index'),
     url(r'^sys/storage/expand$', views.expand, name='expand'),
+    url(r'^sys/storage/eject/(?P<device_path>[\w%]+)/$', views.eject,
+        name='eject')
 ]

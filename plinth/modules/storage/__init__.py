@@ -17,21 +17,32 @@
 """
 FreedomBox app to manage storage.
 """
-
 import json
 import logging
 import subprocess
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
+from plinth import service as service_module
+from plinth import action_utils, actions, cfg
 from plinth.menu import main_menu
+from plinth.utils import format_lazy
 
-version = 2
+version = 3
 
 name = _('Storage')
 
-description = []
+managed_services = ['freedombox-udiskie']
+
+managed_packages = ['udiskie', 'gir1.2-udisks-2.0']
+
+description = [
+    format_lazy(
+        _('This module allows you to manage storage media attached to your '
+          '{box_name}. You can view the storage media currently in use, mount '
+          'and unmount removable media, expand the root partition etc.'),
+        box_name=_(cfg.box_name))
+]
 
 service = None
 
@@ -81,8 +92,8 @@ def _get_disks_from_df():
     disks = []
     for line in output.splitlines()[1:]:
         parts = line.split(maxsplit=6)
-        keys = ('device', 'file_system_type', 'size', 'used',
-                'free', 'percent_used', 'mount_point')
+        keys = ('device', 'file_system_type', 'size', 'used', 'free',
+                'percent_used', 'mount_point')
         disk = dict(zip(keys, parts))
         disk['percent_used'] = int(disk['percent_used'].rstrip('%'))
         disk['size'] = int(disk['size'])
@@ -168,8 +179,37 @@ def format_bytes(size):
     return _('{disk_size:.1f} TiB').format(disk_size=size)
 
 
+def is_running():
+    """Return whether the service is running."""
+    return action_utils.service_is_running('freedombox-udiskie')
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    return action_utils.service_is_enabled('freedombox-udiskie')
+
+
+def enable():
+    """Enable the module."""
+    actions.superuser_run('udiskie', ['enable'])
+
+
+def disable():
+    """Disable the module."""
+    actions.superuser_run('udiskie', ['disable'])
+
+
 def setup(helper, old_version=None):
-    """Expand root parition on first setup."""
+    """Install and configure the module."""
+    helper.install(managed_packages, skip_recommends=True)
+    helper.call('post', actions.superuser_run, 'udiskie', ['enable'])
+    global service
+    if service is None:
+        service = service_module.Service(
+            managed_services[0], name, ports=[], is_external=True,
+            is_enabled=is_enabled, enable=enable, disable=disable,
+            is_running=is_running)
+    helper.call('post', service.notify_enabled, None, True)
     disks = get_disks()
     root_device = get_root_device(disks)
     if is_expandable(root_device):

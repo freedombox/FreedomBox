@@ -19,15 +19,19 @@ Views for storage module.
 """
 
 import logging
+import urllib.parse
 
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST
 
 from plinth.modules import storage
 from plinth.utils import format_lazy, is_user_admin
+
+from . import udisks2
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +48,9 @@ def index(request):
     return TemplateResponse(
         request, 'storage.html', {
             'title': _('Storage'),
+            'description': storage.description,
             'disks': disks,
+            'devices': udisks2.list_devices(),
             'manual_page': storage.manual_page,
             'expandable_root_size': expandable_root_size
         })
@@ -73,9 +79,10 @@ def expand_partition(request, device):
     try:
         storage.expand_partition(device)
     except Exception as exception:
-        messages.error(request,
-                       _('Error expanding partition: {exception}')
-                       .format(exception=exception))
+        messages.error(
+            request,
+            _('Error expanding partition: {exception}')
+            .format(exception=exception))
     else:
         messages.success(request, _('Partition expanded successfully.'))
 
@@ -106,3 +113,37 @@ def warn_about_low_disk_space(request):
         messages.error(request, message)
     elif percent_used > 75 or free_gib < 2:
         messages.warning(request, message)
+
+
+@require_POST
+def eject(request, device_path):
+    """Eject a device, given its path.
+
+    Device path is quoted with slashes written as %2F.
+
+    """
+    device_path = urllib.parse.unquote(device_path)
+
+    try:
+        drive = udisks2.eject_drive_of_device(device_path)
+        if drive:
+            messages.success(
+                request,
+                _('{drive_vendor} {drive_model} can be safely unplugged.')
+                .format(drive_vendor=drive['vendor'],
+                        drive_model=drive['model']))
+        else:
+            messages.success(request, _('Device can be safely unplugged.'))
+    except Exception as exception:
+        try:
+            message = udisks2.get_error_message(exception)
+        except AttributeError:
+            message = str(exception)
+
+        logger.exception('Error ejecting device - %s', message)
+        messages.error(
+            request,
+            _('Error ejecting device: {error_message}').format(
+                error_message=message))
+
+    return redirect(reverse('storage:index'))

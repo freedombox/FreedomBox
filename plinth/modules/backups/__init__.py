@@ -27,7 +27,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
-from plinth.modules import udiskie
+from plinth.modules import storage
 
 from .backups import backup_apps, restore_apps
 
@@ -118,8 +118,8 @@ def export_archive(name, location):
 def get_export_locations():
     """Return a list of storage locations for exported backup archives."""
     locations = [('/var/lib/freedombox/', _('Root Filesystem'))]
-    if udiskie.is_running():
-        devices = udiskie.udisks2.list_devices()
+    if storage.is_running():
+        devices = storage.udisks2.list_devices()
         for device in devices:
             if 'mount_points' in device and len(device['mount_points']) > 0:
                 name = device['label'] or device['device']
