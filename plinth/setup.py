@@ -19,6 +19,7 @@ Utilities for performing application setup operations.
 """
 
 import logging
+import os
 import threading
 import time
 
@@ -166,7 +167,19 @@ class Helper(object):
             pk=self.module_name, defaults={'setup_version': version})
 
     def has_unavailable_packages(self):
-        """List the unavailable packages managed by the module (if any)."""
+        """Find if any of the packages managed by the module are not available.
+        Returns True if one or more of the packages is not available in the
+        user's Debian distribution or False otherwise.
+        Returns None if it cannot be reliably determined whether the
+        packages are available or not.
+        """
+        APT_LISTS_DIR = '/var/lib/apt/lists/'
+        num_files = len([
+            name for name in os.listdir(APT_LISTS_DIR)
+            if os.path.isfile(os.path.join(APT_LISTS_DIR, name))
+        ])
+        if num_files < 2:  # not counting the lock file
+            return None
         cache = apt.Cache()
         managed_pkgs = getattr(self.module, 'managed_packages', [])
         unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
@@ -188,8 +201,9 @@ def stop():
 
 def setup_modules(module_list=None, essential=False, allow_install=True):
     """Run setup on selected or essential modules."""
-    logger.info('Running setup for modules, essential - %s, '
-                'selected modules - %s', essential, module_list)
+    logger.info(
+        'Running setup for modules, essential - %s, '
+        'selected modules - %s', essential, module_list)
     for module_name, module in plinth.module_loader.loaded_modules.items():
         if essential and not _is_module_essential(module):
             continue
