@@ -8,6 +8,7 @@ before_script:
   - apt-get install -y sshpass parted  # Test dependencies
   - apt-get install -y sudo
   - apt-get remove -y python3.7* libpython3.7*  # Use python3.6 when installing dependencies
+  - apt-mark hold fuse  # not installable in CI environment
   - apt-get install -y $(./run --list-dependencies)  # Module dependencies
 
 stages:
