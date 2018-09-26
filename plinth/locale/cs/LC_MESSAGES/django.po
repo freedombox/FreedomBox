@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-24 18:47-0400\n"
-"PO-Revision-Date: 2018-08-28 06:15+0000\n"
+"PO-Revision-Date: 2018-09-27 07:13+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
 "cs/>\n"
@@ -141,11 +141,11 @@ msgstr "Neplatný název archivu"
 
 #: plinth/modules/backups/forms.py:37
 msgid "Included apps"
-msgstr ""
+msgstr "Obsažené aplikace"
 
 #: plinth/modules/backups/forms.py:38
 msgid "Apps to include in the backup"
-msgstr ""
+msgstr "Zálohy které zahrnout do zálohy"
 
 #: plinth/modules/backups/forms.py:52
 msgid "Disk"
@@ -156,29 +156,28 @@ msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "Disk nebo vyjímatelné úložiště na které uložit archiv zálohy."
 
 #: plinth/modules/backups/forms.py:64
-#, fuzzy
-#| msgid "Restore"
 msgid "Restore apps"
-msgstr "Obnovit"
+msgstr "Obnovit aplikace"
 
 #: plinth/modules/backups/forms.py:65
-#, fuzzy
-#| msgid "Restore from backup"
 msgid "Apps data to restore from the backup"
-msgstr "Obnovit ze zálohy"
+msgstr "Data aplikací které obnovit ze zálohy"
 
 #: plinth/modules/backups/templates/backups.html:44
 #: plinth/modules/backups/templates/backups.html:47
 #: plinth/modules/backups/templates/backups.html:52
 #: plinth/modules/backups/templates/backups.html:55
 msgid "New backup"
-msgstr ""
+msgstr "Nová záloha"
 
 #: plinth/modules/backups/templates/backups.html:59
 msgid ""
 "No apps that support backup are currently installed. Backup can be created "
 "after an app supporting backups is installed."
 msgstr ""
+"V tuto chvíli nejsou nainstalované žádné aplikace, které by šlo zálohovat. "
+"Nicméně až budou nainstalované aplikace, u kterých to lze, bude je možné "
+"zálohovat."
 
 #: plinth/modules/backups/templates/backups.html:66
 msgid "Backup archives"
@@ -253,10 +252,8 @@ msgid "Archive created."
 msgstr "Archiv vytvořen."
 
 #: plinth/modules/backups/views.py:66
-#, fuzzy
-#| msgid "Backups"
 msgid "New Backup"
-msgstr "Zálohy"
+msgstr "Nová záloha"
 
 #: plinth/modules/backups/views.py:90
 msgid "Delete Archive"
@@ -275,10 +272,8 @@ msgid "Export Archive"
 msgstr "Exportovat archiv"
 
 #: plinth/modules/backups/views.py:134
-#, fuzzy
-#| msgid "Restored data from backup."
 msgid "Restored files from backup."
-msgstr "Data obnovena ze zálohy."
+msgstr "Soubory obnovené ze zálohy."
 
 #: plinth/modules/backups/views.py:156
 msgid "Restore from backup"
@@ -4493,6 +4488,9 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
+"Tento modul umožňuje spravovat úložná zařízení, připojená k vašemu {box_name}"
+". Lze zobrazit úložná zařízení, která jsou využívána, připojovat a odpojovat "
+"ta vyjímatelná."
 
 #: plinth/modules/storage/__init__.py:164
 #, python-brace-format
@@ -4520,10 +4518,8 @@ msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
 #: plinth/modules/storage/templates/storage.html:53
-#, fuzzy
-#| msgid "The following disks are in use:"
 msgid "The following storage devices are in use:"
-msgstr "Následující jednotky datového úložiště jsou v používání:"
+msgstr "Jsou používána následující úložná zařízení:"
 
 #: plinth/modules/storage/templates/storage.html:59
 #: plinth/modules/storage/templates/storage.html:127
@@ -4556,10 +4552,8 @@ msgid "Expand Root Partition"
 msgstr "Zvětšit kořenový oddíl"
 
 #: plinth/modules/storage/templates/storage.html:113
-#, fuzzy
-#| msgid "Removable Media"
 msgid "Removable Devices"
-msgstr "Vyjímatelná média"
+msgstr "Vyjímatelná zařízení"
 
 #: plinth/modules/storage/templates/storage.html:117
 msgid "There are no additional storage devices attached."
@@ -5450,8 +5444,7 @@ msgstr ""
 "přiložte <a href=\"%(status_log_url)s\">záznam (log) stavu</a>."
 
 #: plinth/templates/base.html:50
-#, fuzzy, python-format
-#| msgid "Core funtionality and web interface for %(box_name)s"
+#, python-format
 msgid "Core functionality and web interface for %(box_name)s"
 msgstr "Základní funkce a webové rozhraní pro %(box_name)s"
 
