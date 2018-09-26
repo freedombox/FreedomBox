@@ -276,6 +276,27 @@ footer license-info p {
   justify-content: center;
 }
 
+.card-icon img {
+
+  transition: filter 0.3s;
+
+  /* --- .installed ---*/
+  filter: contrast(0.2) sepia(1) hue-rotate(171deg) contrast(2);
+
+  /* TODO #1309: uninstalled state */
+  /* --- .uninstalled ---*/
+  /* filter: grayscale(1) opacity(0.5); */
+  /* --- .uninstalled:hover ---*/
+  /* filter: grayscale(1) opacity(1); */
+
+}
+
+  /* #container-wrapper .card-icon img –  is a bad hook! see #1349 */
+.card:hover .card-icon img, #container-wrapper .card-icon img {
+  /* --- .installed:hover ---*/
+  filter: none;
+}
+
 a.menu_link {
     text-decoration: none;
 }
