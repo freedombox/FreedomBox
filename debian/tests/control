@@ -1,0 +1,11 @@
+#
+# Smoke test to check various basics on an installed version of Plinth. This
+# checks that the following aspects are working okay:
+#   - Python runtime
+#   - Python library dependencies
+#   - Plinth configuration
+#   - Ability to create and initialize database
+#   - Module inititailzation for essential modules
+#
+Test-Command: plinth --list-modules 2> /dev/null
+Restrictions: needs-root
