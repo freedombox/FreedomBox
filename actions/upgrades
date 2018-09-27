@@ -89,10 +89,9 @@ def subcommand_enable_auto(_):
 
 def subcommand_disable_auto(_):
     """Disable automatic upgrades"""
-    try:
-        os.rename(AUTO_CONF_FILE, AUTO_CONF_FILE + '.disabled')
-    except FileNotFoundError:
-        print('Already disabled.')
+    with open(AUTO_CONF_FILE, 'w') as conffile:
+        conffile.write('APT::Periodic::Update-Package-Lists "0";\n')
+        conffile.write('APT::Periodic::Unattended-Upgrade "0";\n')
 
 
 def subcommand_get_log(_):
