@@ -34,30 +34,37 @@ def validate(backup):
     """Validate the backup' information schema."""
     assert isinstance(backup, dict)
 
-    assert 'config' in backup
-    assert isinstance(backup['config'], dict)
-    _validate_directories_and_files(backup['config'])
+    if 'config' in backup:
+        assert isinstance(backup['config'], dict)
+        _validate_directories_and_files(backup['config'])
 
-    assert 'data' in backup
-    assert isinstance(backup['data'], dict)
-    _validate_directories_and_files(backup['data'])
+    if 'data' in backup:
+        assert isinstance(backup['data'], dict)
+        _validate_directories_and_files(backup['data'])
 
-    assert 'secrets' in backup
-    assert isinstance(backup['secrets'], dict)
-    _validate_directories_and_files(backup['secrets'])
+    if 'secrets' in backup:
+        assert isinstance(backup['secrets'], dict)
+        _validate_directories_and_files(backup['secrets'])
 
-    assert 'services' in backup
-    assert isinstance(backup['services'], list)
+    if 'services' in backup:
+        assert isinstance(backup['services'], list)
+        for service in backup['services']:
+            assert isinstance(service, str)
 
     return backup
 
 
-def _validate_directories_and_files(df):
-    """Validate directories and files structure."""
-    assert 'directories' in df
-    assert isinstance(df['directories'], list)
-    assert 'files' in df
-    assert isinstance(df['files'], list)
+def _validate_directories_and_files(section):
+    """Validate directories and files keys in a section."""
+    if 'directories' in section:
+        assert isinstance(section['directories'], list)
+        for directory in section['directories']:
+            assert isinstance(directory, str)
+
+    if 'files' in section:
+        assert isinstance(section['files'], list)
+        for file_path in section['files']:
+            assert isinstance(file_path, str)
 
 
 class Packet:
@@ -92,8 +99,9 @@ class Packet:
         for manifest in self.manifests:
             backup = manifest[2]
             for section in ['config', 'data', 'secrets']:
-                self.directories += backup[section]['directories']
-                self.files += backup[section]['files']
+                self.directories += backup.get(section, {}).get(
+                    'directories', [])
+                self.files += backup.get(section, {}).get('files', [])
 
 
 def backup_full(backup_handler, label=None):
