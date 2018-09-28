@@ -26,6 +26,7 @@ root = None
 file_root = None
 config_dir = None
 data_dir = None
+custom_static_dir = None
 store_file = None
 actions_dir = None
 doc_dir = None
@@ -81,10 +82,9 @@ def read(config_path=None, root_directory=None):
     global config_file  # pylint: disable-msg=invalid-name,global-statement
     config_file = config_path
 
-    parser = configparser.ConfigParser(
-        defaults={
-            'root': os.path.realpath(root_directory),
-        })
+    parser = configparser.ConfigParser(defaults={
+        'root': os.path.realpath(root_directory),
+    })
     parser.read(config_file)
 
     config_items = (
@@ -92,6 +92,7 @@ def read(config_path=None, root_directory=None):
         ('Path', 'file_root', 'string'),
         ('Path', 'config_dir', 'string'),
         ('Path', 'data_dir', 'string'),
+        ('Path', 'custom_static_dir', 'string'),
         ('Path', 'store_file', 'string'),
         ('Path', 'actions_dir', 'string'),
         ('Path', 'doc_dir', 'string'),
