@@ -37,6 +37,7 @@
         {% for item in submenu.sorted_items %}
           <div class="card thumbnail">
             <a href="{{ item.url }}" class="nav-link">
+              <div class="card-title">{{ item.name }}</div>
               <div class="card-icon">
                 {% if 'glyphicon-' in item.icon %}
                   <span class="{{ item.icon }} glyphicon"></span>
@@ -44,7 +45,6 @@
                   <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
                 {% endif %}
               </div>
-              <div class="card-title">{{ item.name }}</div>
               <div class="card-description">{{ item.short_description}}</div>
             </a>
           </div>
