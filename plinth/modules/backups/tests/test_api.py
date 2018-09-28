@@ -15,26 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Tests for backups module.
+Tests for backups module API.
 """
 
 import collections
 from django.core.files.uploadedfile import SimpleUploadedFile
 import unittest
-from unittest.mock import call, patch, MagicMock
+from unittest.mock import MagicMock, call, patch
 
 
 from plinth.errors import PlinthError
 from plinth.module_loader import load_modules
-from ..backups import validate, Packet, backup_apps, restore_apps, \
-    get_all_apps_for_backup, _get_apps_in_order, _get_manifests, \
-    _lockdown_apps, _shutdown_services, _restore_services
-from .. import get_export_locations, get_location_path
-from ..forms import UploadForm
+from .. import api, forms, get_export_locations, get_location_path
+
+# pylint: disable=protected-access
 
 
 def _get_test_manifest(name):
-    return validate({
+    return api.validate({
         'config': {
             'directories': ['/etc/' + name + '/config.d/'],
             'files': ['/etc/' + name + '/config'],
@@ -54,13 +52,14 @@ def _get_test_manifest(name):
 class TestBackupProcesses(unittest.TestCase):
     """Test cases for backup processes"""
 
-    def test_packet_process_manifests(self):
+    @staticmethod
+    def test_packet_process_manifests():
         """Test that directories/files are collected from manifests."""
         manifests = [
             ('a', None, _get_test_manifest('a')),
             ('b', None, _get_test_manifest('b')),
         ]
-        packet = Packet('backup', 'apps', '/', manifests)
+        packet = api.Packet('backup', 'apps', '/', manifests)
         for manifest in manifests:
             backup = manifest[2]
             for section in ['config', 'data', 'secrets']:
@@ -69,22 +68,25 @@ class TestBackupProcesses(unittest.TestCase):
                 for file_path in backup[section]['files']:
                     assert file_path in packet.files
 
-    def test_backup_apps(self):
+    @staticmethod
+    def test_backup_apps():
         """Test that backup_handler is called."""
         backup_handler = MagicMock()
-        backup_apps(backup_handler)
+        api.backup_apps(backup_handler)
         backup_handler.assert_called_once()
 
-    def test_restore_apps(self):
+    @staticmethod
+    def test_restore_apps():
         """Test that restore_handler is called."""
         restore_handler = MagicMock()
-        restore_apps(restore_handler)
+        api.restore_apps(restore_handler)
         restore_handler.assert_called_once()
 
-    def test_get_all_apps_for_backups(self):
+    @staticmethod
+    def test_get_all_apps_for_backups():
         """Test that apps supporting backup are included in returned list."""
         load_modules()
-        apps = get_all_apps_for_backup()
+        apps = api.get_all_apps_for_backup()
         assert isinstance(apps, list)
         # apps may be empty, if no apps supporting backup are installed.
 
@@ -94,51 +96,55 @@ class TestBackupProcesses(unittest.TestCase):
         assert(len(locations))
         assert(len(locations[0]) == 2)
 
-    def test__get_apps_in_order(self):
+    @staticmethod
+    def test__get_apps_in_order():
         """Test that apps are listed in correct dependency order."""
         load_modules()
         app_names = ['config', 'names']
-        apps = _get_apps_in_order(app_names)
+        apps = api._get_apps_in_order(app_names)
         ordered_app_names = [app[0] for app in apps]
 
         names_index = ordered_app_names.index('names')
         config_index = ordered_app_names.index('config')
         assert names_index < config_index
 
-    def test__get_manifests(self):
+    @staticmethod
+    def test__get_manifests():
         """Test that manifests are collected from the apps."""
-        a = MagicMock(backup=_get_test_manifest('a'))
-        b = MagicMock(backup=_get_test_manifest('b'))
+        app_a = MagicMock(backup=_get_test_manifest('a'))
+        app_b = MagicMock(backup=_get_test_manifest('b'))
         apps = [
-            ('a', a),
-            ('b', b),
+            ('a', app_a),
+            ('b', app_b),
         ]
-        manifests = _get_manifests(apps)
-        assert ('a', a, a.backup) in manifests
-        assert ('b', b, b.backup) in manifests
+        manifests = api._get_manifests(apps)
+        assert ('a', app_a, app_a.backup) in manifests
+        assert ('b', app_b, app_b.backup) in manifests
 
-    def test__lockdown_apps(self):
+    @staticmethod
+    def test__lockdown_apps():
         """Test that locked flag is set for each app."""
-        a = MagicMock(locked=False)
-        b = MagicMock(locked=None)
+        app_a = MagicMock(locked=False)
+        app_b = MagicMock(locked=None)
         apps = [
-            ('a', a),
-            ('b', b),
+            ('a', app_a),
+            ('b', app_b),
         ]
-        _lockdown_apps(apps, True)
-        assert a.locked is True
-        assert b.locked is True
+        api._lockdown_apps(apps, True)
+        assert app_a.locked is True
+        assert app_b.locked is True
 
+    @staticmethod
     @patch('plinth.action_utils.service_is_running')
     @patch('plinth.actions.superuser_run')
-    def test__shutdown_services(self, run, is_running):
+    def test__shutdown_services(run, is_running):
         """Test that services are stopped in correct order."""
         manifests = [
             ('a', None, _get_test_manifest('a')),
             ('b', None, _get_test_manifest('b')),
         ]
         is_running.return_value = True
-        state = _shutdown_services(manifests)
+        state = api._shutdown_services(manifests)
         assert 'a' in state
         assert 'b' in state
         is_running.assert_any_call('a')
@@ -149,15 +155,22 @@ class TestBackupProcesses(unittest.TestCase):
         ]
         run.assert_has_calls(calls)
 
+    @staticmethod
     @patch('plinth.actions.superuser_run')
-    def test__restore_services(self, run):
+    def test__restore_services(run):
         """Test that services are restored in correct order."""
         original_state = collections.OrderedDict()
         original_state['a'] = {
-            'app_name': 'a', 'app': None, 'was_running': True}
+            'app_name': 'a',
+            'app': None,
+            'was_running': True
+        }
         original_state['b'] = {
-            'app_name': 'b', 'app': None, 'was_running': False}
-        _restore_services(original_state)
+            'app_name': 'b',
+            'app': None,
+            'was_running': False
+        }
+        api._restore_services(original_state)
         run.assert_called_once_with('service', ['start', 'a'])
 
 
@@ -181,12 +194,12 @@ class TestBackupModule(unittest.TestCase):
 	# posting a video should fail
         video_file = SimpleUploadedFile("video.mp4", b"file_content",
             content_type="video/mp4")
-        form = UploadForm(post_data, {'file': video_file})
+        form = forms.UploadForm(post_data, {'file': video_file})
         self.assertFalse(form.is_valid())
 
 	# posting an archive file should work
         archive_file = SimpleUploadedFile("backup.tar.gz", b"file_content",
             content_type="application/gzip")
-        form = UploadForm(post_data, {'file': archive_file})
+        form = forms.UploadForm(post_data, {'file': archive_file})
         form.is_valid()
         self.assertTrue(form.is_valid())
