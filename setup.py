@@ -19,19 +19,20 @@
 FreedomBox Service setup file.
 """
 
+import glob
+import os
+import shutil
+import subprocess
 from distutils import log
 from distutils.command.build import build
-from distutils.dir_util import remove_tree
 from distutils.command.clean import clean
 from distutils.command.install_data import install_data
 from distutils.core import Command
+from distutils.dir_util import remove_tree
 from distutils.util import change_root
-import glob
-import os
+
 import setuptools
 from setuptools.command.install import install
-import shutil
-import subprocess
 
 from plinth import __version__
 from plinth.tests.coverage import coverage
@@ -59,9 +60,7 @@ DISABLED_APPS_TO_REMOVE = [
     'udiskie',
 ]
 
-LOCALE_PATHS = [
-    'plinth/locale'
-]
+LOCALE_PATHS = ['plinth/locale']
 
 
 class DjangoCommand(Command):
@@ -90,7 +89,7 @@ class DjangoCommand(Command):
 
 class CompileTranslations(DjangoCommand):
     """New command to compile .po translation files."""
-    description = "compile .po translation files into .mo files"""
+    description = "compile .po translation files into .mo files" ""
 
     def run(self):
         """Execute the command."""
@@ -102,7 +101,7 @@ class CompileTranslations(DjangoCommand):
 
 class UpdateTranslations(DjangoCommand):
     """New command to update .po translation files."""
-    description = "update .po translation files from source code"""
+    description = "update .po translation files from source code" ""
 
     def run(self):
         """Execute the command."""
@@ -151,6 +150,7 @@ class CustomInstall(install):
 
 class CustomInstallData(install_data):
     """Override install command to allow directory creation and copy"""
+
     def run(self):
         """Execute install command"""
         subprocess.check_call(['make', '-C', 'doc'])
@@ -222,48 +222,57 @@ setuptools.setup(
     ],
     tests_require=['coverage >= 3.7'],
     include_package_data=True,
-    package_data={'plinth': ['templates/*',
-                             'modules/*/static/*',
-                             'modules/*/templates/*',
-                             'locale/*/LC_MESSAGES/*.[pm]o']},
-    data_files=[('/usr/lib/firewalld/services/',
-                 glob.glob('data/usr/lib/firewalld/services/*.xml')),
-                ('/etc/apache2/conf-available',
-                 glob.glob('data/etc/apache2/conf-available/*.conf')),
-                ('/etc/apache2/sites-available',
-                 glob.glob('data/etc/apache2/sites-available/*.conf')),
-                ('/etc/apache2/includes',
-                 glob.glob('data/etc/apache2/includes/*.conf')),
-                ('/etc/apt/apt.conf.d',
-                 glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
-                ('/etc/avahi/services/',
-                 glob.glob('data/etc/avahi/services/*.service')),
-                ('/etc/ikiwiki',
-                 glob.glob('data/etc/ikiwiki/*.setup')),
-                ('/etc/NetworkManager/dispatcher.d/',
-                 ['data/etc/NetworkManager/dispatcher.d/10-freedombox-batman']),
-                ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
-                ('/lib/systemd/system',
-                 glob.glob('data/lib/systemd/system/*.service')),
-                ('/etc/mediawiki', glob.glob('data/etc/mediawiki/*.php')),
-                ('/usr/share/plinth/actions',
-                 glob.glob(os.path.join('actions', '*'))),
-                ('/usr/share/polkit-1/rules.d',
-                 ['data/usr/share/polkit-1/rules.d/50-plinth.rules']),
-                ('/usr/share/man/man1', ['doc/plinth.1']),
-                ('/etc/plinth', ['data/etc/plinth/plinth.config']),
-                ('/usr/share/augeas/lenses',
-                 glob.glob('data/usr/share/augeas/lenses/*.aug')),
-                ('/usr/share/augeas/lenses/tests',
-                 glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
-                ('/usr/share/pam-configs/',
-                 glob.glob('data/usr/share/pam-configs/*-freedombox')),
-                ('/etc/plinth/modules-enabled',
-                 glob.glob(os.path.join('data/etc/plinth/modules-enabled',
-                                        '*'))),
-                ('/var/lib/polkit-1/localauthority/10-vendor.d',
-                 ['data/var/lib/polkit-1/localauthority/10-vendor.d/'
-                  'org.freedombox.NetworkManager.pkla'])],
+    package_data={
+        'plinth': [
+            'templates/*', 'modules/*/static/*', 'modules/*/templates/*',
+            'locale/*/LC_MESSAGES/*.[pm]o'
+        ]
+    },
+    data_files=[
+        ('/usr/lib/firewalld/services/',
+         glob.glob('data/usr/lib/firewalld/services/*.xml')),
+        ('/etc/apache2/conf-available',
+         glob.glob('data/etc/apache2/conf-available/*.conf')),
+        ('/etc/apache2/sites-available',
+         glob.glob('data/etc/apache2/sites-available/*.conf')),
+        ('/etc/apache2/includes',
+         glob.glob('data/etc/apache2/includes/*.conf')),
+        ('/etc/apt/apt.conf.d',
+         glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
+        ('/etc/avahi/services/',
+         glob.glob('data/etc/avahi/services/*.service')),
+        ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
+        ('/etc/NetworkManager/dispatcher.d/',
+         ['data/etc/NetworkManager/dispatcher.d/10-freedombox-batman']),
+        ('/etc/sudoers.d', ['data/etc/sudoers.d/plinth']),
+        ('/lib/systemd/system',
+         glob.glob('data/lib/systemd/system/*.service')),
+        ('/etc/mediawiki', glob.glob('data/etc/mediawiki/*.php')),
+        ('/usr/share/plinth/actions', glob.glob(os.path.join('actions', '*'))),
+        ('/usr/share/polkit-1/rules.d',
+         ['data/usr/share/polkit-1/rules.d/50-plinth.rules']),
+        ('/usr/share/man/man1', ['doc/plinth.1']),
+        ('/etc/plinth', ['data/etc/plinth/plinth.config']),
+        ('/usr/share/augeas/lenses',
+         glob.glob('data/usr/share/augeas/lenses/*.aug')),
+        ('/usr/share/augeas/lenses/tests',
+         glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
+        ('/usr/share/pam-configs/',
+         glob.glob('data/usr/share/pam-configs/*-freedombox')),
+        ('/etc/plinth/modules-enabled',
+         glob.glob(os.path.join('data/etc/plinth/modules-enabled', '*'))),
+        ('/var/lib/polkit-1/localauthority/10-vendor.d', [
+            'data/var/lib/polkit-1/localauthority/10-vendor.d/'
+            'org.freedombox.NetworkManager.pkla'
+        ]),
+        (
+            '/var/www/plinth/custom/static/theme/icons/',
+            [
+                'data/var/www/plinth/custom/static/themes/default/icons/.gitignore',
+                # TODO Cannot be copied since a symlink is not a regular file
+                # 'data/var/www/plinth/custom/static/theme',
+            ])
+    ],
     cmdclass={
         'install': CustomInstall,
         'build': CustomBuild,
