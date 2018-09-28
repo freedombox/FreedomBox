@@ -29,6 +29,9 @@ clients = validate([{
 }])
 
 backup = validate_backup({
+    'config': {
+        'files': ['/etc/mediawiki/FreedomBoxSettings.php']
+    },
     'data': {
         'directories': ['/var/lib/mediawiki-db/']
     }
