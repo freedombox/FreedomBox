@@ -25,7 +25,7 @@ from django.core import validators
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext_lazy as _
 
-from . import backups as backups_api
+from . import api
 from . import get_export_locations, get_archive_path, get_location_path
 
 
@@ -44,7 +44,7 @@ class CreateArchiveForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
         super().__init__(*args, **kwargs)
-        apps = backups_api.get_all_apps_for_backup()
+        apps = api.get_all_apps_for_backup()
         self.fields['selected_apps'].choices = [
             (app[0], app[1].name) for app in apps]
         self.fields['selected_apps'].initial = [app[0] for app in apps]

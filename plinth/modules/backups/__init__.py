@@ -29,7 +29,7 @@ from plinth.errors import PlinthError
 from plinth.menu import main_menu
 from plinth.modules import storage
 
-from .backups import backup_apps, restore_apps
+from . import api
 
 version = 1
 
@@ -100,7 +100,7 @@ def _backup_handler(packet):
 
 
 def create_archive(name, app_names):
-    backup_apps(_backup_handler, app_names, name)
+    api.backup_apps(_backup_handler, app_names, name)
 
 
 def delete_archive(name):
@@ -177,5 +177,5 @@ def _restore_handler(packet):
 def restore_exported(label, archive_name, apps=None):
     """Restore files from exported backup archive."""
     filename = find_exported_archive(label, archive_name)
-    restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
-                 backup_file=filename)
+    api.restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
+                     backup_file=filename)

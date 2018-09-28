@@ -34,8 +34,7 @@ from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
 
-from . import backups as backups_api, find_exported_archive
-from .forms import CreateArchiveForm, ExportArchiveForm, RestoreForm, UploadForm
+from . import api, find_exported_archive, forms
 
 
 subsubmenu = [{
@@ -60,14 +59,14 @@ class IndexView(TemplateView):
         context['archives'] = backups.list_archives()
         context['exports'] = backups.get_export_files()
         context['subsubmenu'] = subsubmenu
-        apps = backups_api.get_all_apps_for_backup()
+        apps = api.get_all_apps_for_backup()
         context['available_apps'] = [app[0] for app in apps]
         return context
 
 
 class CreateArchiveView(SuccessMessageMixin, FormView):
     """View to create a new archive."""
-    form_class = CreateArchiveForm
+    form_class = forms.CreateArchiveForm
     prefix = 'backups'
     template_name = 'backups_form.html'
     success_url = reverse_lazy('backups:index')
@@ -134,7 +133,7 @@ class DownloadArchiveView(View):
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):
-    form_class = UploadForm
+    form_class = forms.UploadForm
     prefix = 'backups'
     template_name = 'backups_upload.html'
     success_url = reverse_lazy('backups:index')
@@ -157,7 +156,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
 
 class ExportArchiveView(SuccessMessageMixin, FormView):
     """View to export an archive."""
-    form_class = ExportArchiveForm
+    form_class = forms.ExportArchiveForm
     prefix = 'backups'
     template_name = 'backups_form.html'
     success_url = reverse_lazy('backups:index')
@@ -181,7 +180,7 @@ class ExportArchiveView(SuccessMessageMixin, FormView):
 
 class RestoreView(SuccessMessageMixin, FormView):
     """View to restore files from an exported archive."""
-    form_class = RestoreForm
+    form_class = forms.RestoreForm
     prefix = 'backups'
     template_name = 'backups_restore.html'
     success_url = reverse_lazy('backups:index')
@@ -198,7 +197,7 @@ class RestoreView(SuccessMessageMixin, FormView):
         """Pass additional keyword args for instantiating the form."""
         kwargs = super().get_form_kwargs()
         included_apps = self._get_included_apps()
-        installed_apps = backups_api.get_all_apps_for_backup()
+        installed_apps = api.get_all_apps_for_backup()
         kwargs['apps'] = [
             app for app in installed_apps if app[0] in included_apps
         ]
