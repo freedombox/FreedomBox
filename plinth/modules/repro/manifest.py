@@ -77,16 +77,14 @@ clients = validate([{
 
 backup = validate_backup({
     'config': {
-        'directories': [],
-        'files': ['/etc/repro/repro.config', '/etc/repro/users.txt'],
+        'files': ['/etc/repro/repro.config', '/etc/repro/users.txt']
     },
     'data': {
-        'directories': ['/var/lib/repro/'],
-        'files': [],
+        'directories': ['/var/lib/repro/']
     },
     'secrets': {
         'directories': ['/etc/repro/ssl/'],
-        'files': ['/etc/repro/dh2048.pem'],
+        'files': ['/etc/repro/dh2048.pem']
     },
     'services': ['repro']
 })

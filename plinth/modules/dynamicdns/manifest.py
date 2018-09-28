@@ -17,18 +17,4 @@
 
 from plinth.modules.backups.backups import validate as validate_backup
 
-backup = validate_backup({
-    'config': {
-        'directories': ['/etc/ez-ipupdate/'],
-        'files': [],
-    },
-    'data': {
-        'directories': [],
-        'files': [],
-    },
-    'secrets': {
-        'directories': [],
-        'files': [],
-    },
-    'services': []
-})
+backup = validate_backup({'config': {'directories': ['/etc/ez-ipupdate/']}})

@@ -54,16 +54,10 @@ clients = validate([{
 
 backup = validate_backup({
     'config': {
-        'directories': [],
-        'files': ['/etc/minetest/minetest.conf'],
+        'files': ['/etc/minetest/minetest.conf']
     },
     'data': {
-        'directories': ['/var/games/minetest-server/'],
-        'files': [],
-    },
-    'secrets': {
-        'directories': [],
-        'files': [],
+        'directories': ['/var/games/minetest-server/']
     },
     'services': ['minetest-server']
 })

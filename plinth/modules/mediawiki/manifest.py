@@ -29,17 +29,7 @@ clients = validate([{
 }])
 
 backup = validate_backup({
-    'config': {
-        'directories': [],
-        'files': [],
-    },
     'data': {
-        'directories': ['/var/lib/mediawiki-db/'],
-        'files': [],
-    },
-    'secrets': {
-        'directories': [],
-        'files': [],
-    },
-    'services': []
+        'directories': ['/var/lib/mediawiki-db/']
+    }
 })

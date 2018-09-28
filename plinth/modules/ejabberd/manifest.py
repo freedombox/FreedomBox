@@ -124,16 +124,13 @@ clients = _clients
 
 backup = validate_backup({
     'config': {
-        'directories': [],
-        'files': ['/etc/ejabberd/ejabberd.yml'],
+        'files': ['/etc/ejabberd/ejabberd.yml']
     },
     'data': {
-        'directories': ['/var/lib/ejabberd/'],
-        'files': [],
+        'directories': ['/var/lib/ejabberd/']
     },
     'secrets': {
-        'directories': [],
-        'files': ['/etc/ejabberd/ejabberd.pem'],
+        'files': ['/etc/ejabberd/ejabberd.pem']
     },
     'services': ['ejabberd']
 })

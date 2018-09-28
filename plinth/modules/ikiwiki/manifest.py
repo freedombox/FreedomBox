@@ -29,17 +29,7 @@ clients = validate([{
 }])
 
 backup = validate_backup({
-    'config': {
-        'directories': [],
-        'files': [],
-    },
     'data': {
-        'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/'],
-        'files': [],
-    },
-    'secrets': {
-        'directories': [],
-        'files': [],
-    },
-    'services': []
+        'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/']
+    }
 })

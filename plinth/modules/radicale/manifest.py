@@ -88,17 +88,8 @@ clients = validate([{
 }])
 
 backup = validate_backup({
-    'config': {
-        'directories': [],
-        'files': [],
-    },
     'data': {
-        'directories': ['/var/lib/radicale/'],
-        'files': [],
-    },
-    'secrets': {
-        'directories': [],
-        'files': [],
+        'directories': ['/var/lib/radicale/']
     },
     'services': ['radicale']
 })

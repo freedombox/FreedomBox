@@ -48,16 +48,10 @@ clients = validate([{
 }])
 
 backup = validate_backup({
-    'config': {
-        'directories': [],
-        'files': [],
-    },
     'data': {
-        'directories': ['/var/lib/infinoted/'],
-        'files': [],
+        'directories': ['/var/lib/infinoted/']
     },
     'secrets': {
-        'directories': [],
         'files': [
             '/etc/infinoted/infinoted-cert.pem',
             '/etc/infinoted/infinoted-key.pem'
