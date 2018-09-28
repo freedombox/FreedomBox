@@ -20,12 +20,13 @@ FreedomBox app for api for android app.
 
 import copy
 import json
+import os
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.templatetags.static import static
 
-from plinth import frontpage, module_loader
+from plinth import cfg, frontpage, module_loader
 from plinth.modules import names
 
 
@@ -44,14 +45,31 @@ def shortcuts(request, **kwargs):
     """API view to return the list of frontpage services."""
     # XXX: Get the module (or module name) from shortcut properly.
     username = str(request.user) if request.user.is_authenticated else None
+    response = get_shortcuts_as_json(username)
+    return HttpResponse(
+        json.dumps(response, cls=DjangoJSONEncoder),
+        content_type='application/json')
+
+
+def get_shortcuts_as_json(username=None):
     shortcuts = [
         _get_shortcut_data(shortcut['id'].split('_')[0], shortcut)
         for shortcut in frontpage.get_shortcuts(username)
     ]
-    response = {'shortcuts': shortcuts}
-    return HttpResponse(
-        json.dumps(response, cls=DjangoJSONEncoder),
-        content_type='application/json')
+    custom_shortcuts = get_custom_shortcuts()
+    if custom_shortcuts:
+        shortcuts += custom_shortcuts['shortcuts']
+    return {'shortcuts': shortcuts}
+
+
+def get_custom_shortcuts():
+    cfg_dir = os.path.dirname(cfg.config_file)
+    shortcuts_file = os.path.join(cfg_dir, 'custom-shortcuts.json')
+    if os.path.isfile(shortcuts_file) and os.stat(shortcuts_file).st_size:
+        with open(shortcuts_file) as shortcuts:
+            custom_shortcuts = json.load(shortcuts)
+            return custom_shortcuts
+    return None
 
 
 def _get_shortcut_data(module_name, shortcut):

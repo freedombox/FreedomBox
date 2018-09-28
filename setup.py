@@ -252,7 +252,10 @@ setuptools.setup(
         ('/usr/share/polkit-1/rules.d',
          ['data/usr/share/polkit-1/rules.d/50-plinth.rules']),
         ('/usr/share/man/man1', ['doc/plinth.1']),
-        ('/etc/plinth', ['data/etc/plinth/plinth.config']),
+        ('/etc/plinth', [
+            'data/etc/plinth/plinth.config',
+            'data/etc/plinth/custom-shortcuts.json'
+        ]),
         ('/usr/share/augeas/lenses',
          glob.glob('data/usr/share/augeas/lenses/*.aug')),
         ('/usr/share/augeas/lenses/tests',
@@ -271,7 +274,7 @@ setuptools.setup(
                 'data/var/www/plinth/custom/static/themes/default/icons/.gitignore',
                 # TODO Cannot be copied since a symlink is not a regular file
                 # 'data/var/www/plinth/custom/static/theme',
-            ])
+            ]),
     ],
     cmdclass={
         'install': CustomInstall,
