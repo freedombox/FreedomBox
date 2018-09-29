@@ -23,7 +23,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import unittest
 from unittest.mock import MagicMock, call, patch
 
-
+from plinth import cfg, module_loader
 from plinth.errors import PlinthError
 from plinth.module_loader import load_modules
 from .. import api, forms, get_export_locations, get_location_path
@@ -51,6 +51,12 @@ def _get_test_manifest(name):
 
 class TestBackupProcesses(unittest.TestCase):
     """Test cases for backup processes"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Setup all the test cases."""
+        super().setUpClass()
+        cfg.read()
 
     @staticmethod
     def test_packet_process_manifests():
@@ -82,13 +88,34 @@ class TestBackupProcesses(unittest.TestCase):
         api.restore_apps(restore_handler)
         restore_handler.assert_called_once()
 
-    @staticmethod
-    def test_get_all_apps_for_backups():
-        """Test that apps supporting backup are included in returned list."""
-        load_modules()
-        apps = api.get_all_apps_for_backup()
-        assert isinstance(apps, list)
-        # apps may be empty, if no apps supporting backup are installed.
+    @patch('plinth.module_loader.loaded_modules.items')
+    def test_get_all_apps_for_backup(self, modules):
+        """Test listing apps supporting backup and needing backup."""
+        apps = [
+            ('a', MagicMock(backup=_get_test_manifest('a'))),
+            ('b', MagicMock(backup=_get_test_manifest('b'))),
+            ('c', MagicMock(backup=None)),
+            ('d', MagicMock()),
+        ]
+        del apps[3][1].backup
+        modules.return_value = apps
+
+        module_loader.load_modules()
+        returned_apps = api.get_all_apps_for_backup()
+        expected_apps = [{
+            'name': 'a',
+            'app': apps[0][1],
+            'has_data': True
+        }, {
+            'name': 'b',
+            'app': apps[1][1],
+            'has_data': True
+        }, {
+            'name': 'c',
+            'app': apps[2][1],
+            'has_data': False
+        }]
+        self.assertEqual(returned_apps, expected_apps)
 
     def test_export_locations(self):
         """Check get_export_locations returns a list of tuples of length 2."""
@@ -99,7 +126,7 @@ class TestBackupProcesses(unittest.TestCase):
     @staticmethod
     def test__get_apps_in_order():
         """Test that apps are listed in correct dependency order."""
-        load_modules()
+        module_loader.load_modules()
         app_names = ['config', 'names']
         apps = api._get_apps_in_order(app_names)
         ordered_app_names = [app[0] for app in apps]

@@ -23,10 +23,24 @@ import os
 from django import forms
 from django.core import validators
 from django.core.validators import FileExtensionValidator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from . import api
 from . import get_export_locations, get_archive_path, get_location_path
+
+
+def _get_app_choices(apps):
+    """Return a list of check box multiple choices from list of apps."""
+    choices = []
+    for app in apps:
+        name = app['app'].name
+        if not app['has_data']:
+            name = ugettext('{app} (No data to backup)').format(
+                app=app['app'].name)
+
+        choices.append((app['name'], name))
+
+    return choices
 
 
 class CreateArchiveForm(forms.Form):
@@ -37,17 +51,15 @@ class CreateArchiveForm(forms.Form):
         ])
 
     selected_apps = forms.MultipleChoiceField(
-        label=_('Included apps'),
-        help_text=_('Apps to include in the backup'),
+        label=_('Included apps'), help_text=_('Apps to include in the backup'),
         widget=forms.CheckboxSelectMultiple)
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with selectable apps."""
         super().__init__(*args, **kwargs)
         apps = api.get_all_apps_for_backup()
-        self.fields['selected_apps'].choices = [
-            (app[0], app[1].name) for app in apps]
-        self.fields['selected_apps'].initial = [app[0] for app in apps]
+        self.fields['selected_apps'].choices = _get_app_choices(apps)
+        self.fields['selected_apps'].initial = [app['name'] for app in apps]
 
 
 class ExportArchiveForm(forms.Form):
@@ -72,9 +84,8 @@ class RestoreForm(forms.Form):
         """Initialize the form with selectable apps."""
         apps = kwargs.pop('apps')
         super().__init__(*args, **kwargs)
-        self.fields['selected_apps'].choices = [
-            (app[0], app[1].name) for app in apps]
-        self.fields['selected_apps'].initial = [app[0] for app in apps]
+        self.fields['selected_apps'].choices = _get_app_choices(apps)
+        self.fields['selected_apps'].initial = [app['name'] for app in apps]
 
 
 class UploadForm(forms.Form):

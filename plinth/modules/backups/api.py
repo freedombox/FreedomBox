@@ -202,7 +202,11 @@ def get_all_apps_for_backup():
         if not hasattr(module, 'backup'):
             continue
 
-        apps.append((module_name, module))
+        apps.append({
+            'name': module_name,
+            'app': module,
+            'has_data': bool(module.backup)
+        })
 
     return apps
 
