@@ -178,23 +178,16 @@ def subcommand_restore(arguments):
     locations_data = ''.join(sys.stdin)
     locations = json.loads(locations_data)
 
-    found_file = False
-    with tarfile.open(arguments.filename) as t:
-        for member in t.getmembers():
+    with tarfile.open(arguments.filename) as tar_handle:
+        for member in tar_handle.getmembers():
             path = '/' + member.name
             if path in locations['files']:
-                t.extract(member, '/')
-                found_file = True
+                tar_handle.extract(member, '/')
             else:
-                for d in locations['directories']:
-                    if path.startswith(d):
-                        t.extract(member, '/')
-                        found_file = True
+                for directory in locations['directories']:
+                    if path.startswith(directory):
+                        tar_handle.extract(member, '/')
                         break
-
-    if not found_file:
-        print('No matching files or directories found in archive:', locations)
-        sys.exit(1)
 
 
 def main():
