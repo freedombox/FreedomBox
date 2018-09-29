@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @privoxy
+@apps @privoxy @backups
 Feature: Privoxy Web Proxy
   Proxy web connections for enhanced privacy.
 
@@ -32,3 +32,10 @@ Scenario: Disable privoxy application
   Given the privoxy application is enabled
   When I disable the privoxy application
   Then the privoxy service should not be running
+
+Scenario: Backup and restore privoxy
+  Given the privoxy application is enabled
+  When I create a backup of the privoxy app data
+  And I export the privoxy app data backup
+  And I restore the privoxy app data backup
+  Then the privoxy service should be running

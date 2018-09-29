@@ -27,6 +27,8 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
+from .manifest import backup
+
 version = 1
 
 is_essential = False
