@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @mumble
+@apps @mumble @backups
 Feature: Mumble Voice Chat
   Run Mumble voice chat server.
 
@@ -32,3 +32,12 @@ Scenario: Disable mumble application
   Given the mumble application is enabled
   When I disable the mumble application
   Then the mumble service should not be running
+
+# TODO: Improve this to actually check that data such as rooms, identity or
+# certificates are restored.
+Scenario: Backup and restore mumble
+  Given the mumble application is enabled
+  When I create a backup of the mumble app data
+  And I export the mumble app data backup
+  And I restore the mumble app data backup
+  Then the mumble service should be running
