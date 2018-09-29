@@ -15,21 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-URLs for Cockpit module.
+Application manifest for cockpit.
 """
 
-from django.conf.urls import url
+from django.utils.translation import ugettext_lazy as _
 
-from plinth.views import ServiceView
-from plinth.modules import cockpit
+from plinth.modules.backups.api import validate as validate_backup
+from plinth.clients import validate
 
-urlpatterns = [
-    url(r'^sys/cockpit/$',
-        ServiceView.as_view(
-            service_id=cockpit.managed_services[0],
-            diagnostics_module_name='cockpit',
-            description=cockpit.description,
-            show_status_block=True,
-            clients=cockpit.clients),
-        name='index'),
-]
+clients = validate([{
+    'name': _('Cockpit'),
+    'platforms': [{
+        'type': 'web',
+        'url': '/_cockpit/'
+    }]
+}])
+
+# cockpit.conf need not be backed up because add/remove domain signals are
+# triggered on every Plinth domain change (and cockpit application install) and
+# will set the value of allowed domains correctly. This is the only key the is
+# customized in cockpit.conf.
+backup = validate_backup({})

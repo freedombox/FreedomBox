@@ -28,6 +28,8 @@ from plinth.modules import names
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
 
+from .manifest import backup, clients
+
 version = 1
 
 managed_services = ['cockpit.socket']
