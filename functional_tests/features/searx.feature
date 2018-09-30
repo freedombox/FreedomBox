@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @searx
+@apps @searx @backups
 Feature: Searx Web Search
   Run Searx metasearch engine.
 
@@ -32,3 +32,10 @@ Scenario: Disable searx application
   Given the searx application is enabled
   When I disable the searx application
   Then the searx site should not be available
+
+Scenario: Backup and restore searx
+  Given the searx application is enabled
+  When I create a backup of the searx app data
+  And I export the searx app data backup
+  And I restore the searx app data backup
+  Then the searx site should be available
