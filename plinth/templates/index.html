@@ -87,7 +87,11 @@
                           {{ shortcut.name }}
                         </div>
                         <div class="card-icon">
-                          <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png"/>
+                          {% if "custom" in shortcut.icon %}
+                            <img src="{{ shortcut.icon }}"/>
+                          {% else %}
+                            <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.png"/>
+                          {% endif %}
                         </div>
                         <div class="card-description">
                           {{ shortcut.short_description }}

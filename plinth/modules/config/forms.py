@@ -44,7 +44,8 @@ def domain_label_validator(domainname):
 
 def get_default_app_choices():
     shortcuts = frontpage.get_shortcuts(web_apps_only=True, sort_by='name')
-    apps = [(shortcut['id'], shortcut['name']) for shortcut in shortcuts]
+    apps = [(shortcut['id'], shortcut['name']) for shortcut in shortcuts
+            if shortcut['id']]
     return [('plinth', 'FreedomBox Service (Plinth)')] + apps
 
 

@@ -37,9 +37,10 @@ NEXTCLOUD_SHORTCUT = {
         'NextCloud',
     'short_description':
         'File Hosting Service',
-    'description':
+    'description': [
         'Nextcloud is a suite of client-server software for creating '
-        'and using file hosting services.',
+        'and using file hosting services.'
+    ],
     'icon_url':
         '/plinth/custom/static/themes/default/icons/nextcloud.png',
     'clients': [{

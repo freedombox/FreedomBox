@@ -17,6 +17,11 @@
 """
 Manage application shortcuts on front page.
 """
+import json
+import os
+
+from plinth import cfg
+
 from . import actions
 
 shortcuts = {}
@@ -49,6 +54,37 @@ def get_shortcuts(username=None, web_apps_only=False, sort_by='label'):
         }
 
     return sorted(shortcuts_to_return.values(), key=lambda item: item[sort_by])
+
+
+def add_custom_shortcuts():
+    custom_shortcuts = get_custom_shortcuts()
+
+    if custom_shortcuts:
+        for shortcut in custom_shortcuts['shortcuts']:
+            web_app_url = _extract_web_app_url(shortcut)
+            if web_app_url:
+                add_shortcut(None, shortcut['name'],
+                             shortcut['short_description'],
+                             icon=shortcut['icon_url'], url=web_app_url)
+
+
+def _extract_web_app_url(custom_shortcut):
+    if custom_shortcut.get('clients'):
+        for client in custom_shortcut['clients']:
+            if client.get('platforms'):
+                for platform in client['platforms']:
+                    if platform['type'] == 'web':
+                        return platform['url']
+
+
+def get_custom_shortcuts():
+    cfg_dir = os.path.dirname(cfg.config_file)
+    shortcuts_file = os.path.join(cfg_dir, 'custom-shortcuts.json')
+    if os.path.isfile(shortcuts_file) and os.stat(shortcuts_file).st_size:
+        with open(shortcuts_file) as shortcuts:
+            custom_shortcuts = json.load(shortcuts)
+            return custom_shortcuts
+    return None
 
 
 def add_shortcut(shortcut_id, name, short_description="", login_required=False,

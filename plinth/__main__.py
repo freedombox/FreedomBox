@@ -24,14 +24,14 @@ import stat
 import sys
 import warnings
 
+import axes
+import cherrypy
 import django.conf
 import django.core.management
 import django.core.wsgi
 from django.contrib.messages import constants as message_constants
 
-import axes
-import cherrypy
-from plinth import cfg, menu, module_loader, service, setup
+from plinth import cfg, frontpage, menu, module_loader, service, setup
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
 precedence_commandline_arguments = ["server_dir", "develop"]
@@ -47,9 +47,10 @@ def parse_arguments():
     # TODO: server_dir is actually a url prefix; use a better variable name
     parser.add_argument('--server_dir', default=None,
                         help='web server path under which to serve')
-    parser.add_argument('--develop', action='store_true', default=None,
-                        help=('run Plinth *insecurely* from current folder; '
-                            'enable auto-reloading and debugging options'))
+    parser.add_argument(
+        '--develop', action='store_true', default=None,
+        help=('run Plinth *insecurely* from current folder; '
+              'enable auto-reloading and debugging options'))
     parser.add_argument(
         '--setup', default=False, nargs='*',
         help='run setup tasks on all essential modules and exit')
@@ -283,7 +284,7 @@ def configure_django():
         DEBUG=cfg.develop,
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
-        IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR',),
+        IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR', ),
         LOGGING=logging_configuration,
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='index',
@@ -301,7 +302,8 @@ def configure_django():
             'plinth.middleware.AdminRequiredMiddleware',
             'plinth.middleware.FirstSetupMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
-            'plinth.middleware.SetupMiddleware', ),
+            'plinth.middleware.SetupMiddleware',
+        ),
         ROOT_URLCONF='plinth.urls',
         SECURE_BROWSER_XSS_FILTER=True,
         SECURE_CONTENT_TYPE_NOSNIFF=True,
@@ -314,7 +316,8 @@ def configure_django():
             'captcha-image',
             'captcha-image-2x',
             'captcha-audio',
-            'captcha-refresh', ),
+            'captcha-refresh',
+        ),
         TEMPLATES=templates,
         USE_L10N=True,
         USE_X_FORWARDED_HOST=cfg.use_x_forwarded_host)
@@ -422,6 +425,7 @@ def main():
     menu.init()
 
     module_loader.load_modules()
+    frontpage.add_custom_shortcuts()
 
     if arguments.setup is not False:
         run_setup_and_exit(arguments.setup, allow_install=True)
