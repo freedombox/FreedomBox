@@ -18,16 +18,17 @@
 FreedomBox app to configure XMPP web client/jsxc.
 """
 
-from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
 import logging
 import socket
+
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
 from plinth import frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
-from .manifest import clients
 
+from .manifest import backup, clients
 
 version = 1
 
@@ -38,7 +39,6 @@ name = _('JSXC')
 short_description = _('Chat Client')
 
 description = [
-
     _('JSXC is a web client for XMPP. Typically it is used with an XMPP '
       'server running locally.'),
 ]
@@ -81,8 +81,7 @@ def setup(helper, old_version=None):
 def add_shortcut():
     frontpage.add_shortcut('jsxc', name=name,
                            short_description=short_description,
-                           url=reverse_lazy('jsxc:jsxc'),
-                           login_required=True)
+                           url=reverse_lazy('jsxc:jsxc'), login_required=True)
 
 
 def is_enabled():

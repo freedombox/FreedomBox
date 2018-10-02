@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @jsxc
+@apps @jsxc @backups
 Feature: JSXC XMPP Client
   Run the JSXC XMPP client.
 
@@ -24,4 +24,11 @@ Background:
 
 Scenario: Install jsxc application
   Given the jsxc application is installed
+  Then the jsxc site should be available
+
+Scenario: Backup and restore jsxc
+  Given the jsxc application is installed
+  When I create a backup of the jsxc app data
+  And I export the jsxc app data backup
+  And I restore the jsxc app data backup
   Then the jsxc site should be available
