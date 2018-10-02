@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @coquelicot
+@apps @coquelicot @backups
 Feature: Coquelicot File Sharing
   Run Coquelicot File Sharing server.
 
@@ -47,3 +47,16 @@ Scenario: Modify maximum upload size in disabled case
   Given the coquelicot application is disabled
   When I modify the maximum file size of coquelicot to 123
   Then the coquelicot service should not be running
+
+Scenario: Backup and restore coquelicot
+  Given the coquelicot application is enabled
+  When I modify the coquelicot upload password to beforebackup123
+  And I modify the maximum file size of coquelicot to 128
+  And I create a backup of the coquelicot app data
+  And I export the coquelicot app data backup
+  And I modify the coquelicot upload password to afterbackup123
+  And I modify the maximum file size of coquelicot to 64
+  And I restore the coquelicot app data backup
+  Then the coquelicot service should be running
+  And I should be able to login to coquelicot with password beforebackup123
+  And the maximum file size of coquelicot should be 128
