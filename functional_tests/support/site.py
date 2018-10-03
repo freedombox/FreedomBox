@@ -24,7 +24,6 @@ from selenium.webdriver.common.keys import Keys
 from support import application, config, interface, system
 from support.service import eventually, wait_for_page_update
 
-
 # unlisted sites just use '/' + site_name as url
 site_url = {
     'wiki': '/ikiwiki',
@@ -61,6 +60,17 @@ def verify_coquelicot_upload_password(browser, password):
     actions.perform()
     assert eventually(browser.is_element_present_by_css,
                       args=['div[style*="display: none;"]'])
+
+
+def upload_file_to_coquelicot(browser, file_path, password):
+    """Upload a local file from disk to coquelicot."""
+    verify_coquelicot_upload_password(browser, password)
+    browser.attach_file('file', file_path)
+    interface.submit(browser)
+    assert eventually(browser.is_element_present_by_css,
+                      args=['#content .url'])
+    url_textarea = browser.find_by_css('#content .url textarea').first
+    return url_textarea.value
 
 
 def verify_mediawiki_create_account_link(browser):
@@ -111,8 +121,7 @@ def upload_image_mediawiki(browser, username, password, image):
 
     # Upload file
     browser.visit(config['DEFAULT']['url'] + '/mediawiki/Special:Upload')
-    file_path = os.path.realpath(
-        '../static/themes/default/img/' + image)
+    file_path = os.path.realpath('../static/themes/default/img/' + image)
     browser.attach_file('wpUploadFile', file_path)
     interface.submit(browser, element=browser.find_by_name('wpUpload')[0])
 

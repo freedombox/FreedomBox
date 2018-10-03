@@ -17,7 +17,7 @@
 
 from pytest_bdd import given, parsers, then, when
 
-from support import site
+from support import interface, site
 
 
 @then(parsers.parse('the {site_name:w} site should be available'))
@@ -54,6 +54,28 @@ def uploaded_image_should_be_available(browser, image):
         'I should be able to login to coquelicot with password {password:w}'))
 def verify_upload_password(browser, password):
     site.verify_coquelicot_upload_password(browser, password)
+
+
+@when(
+    parsers.parse(
+        'I upload the sample local file to coquelicot with password {password:w}'
+    ))
+def coquelicot_upload_file(browser, sample_local_file, password):
+    url = site.upload_file_to_coquelicot(
+        browser, sample_local_file['file_path'], password)
+    sample_local_file['upload_url'] = url
+
+
+@when('I download the uploaded file from coquelicot')
+def coquelicot_download_file(sample_local_file):
+    file_path = interface.download_file(sample_local_file['upload_url'])
+    sample_local_file['download_path'] = file_path
+
+
+@then('contents of downloaded sample file should be same as sample local file')
+def coquelicot_compare_upload_download_files(sample_local_file):
+    interface.compare_files(sample_local_file['file_path'],
+                            sample_local_file['download_path'])
 
 
 @then(parsers.parse('the mediawiki site should allow creating accounts'))

@@ -77,3 +77,9 @@ def new_user_is_listed(browser, name):
 @then(parsers.parse('{name:w} should not be listed as a user'))
 def new_user_is_not_listed(browser, name):
     assert not interface.is_user(browser, name)
+
+
+@given('a sample local file')
+def sample_local_file():
+    file_path, contents = interface.create_sample_local_file()
+    return dict(file_path=file_path, contents=contents)

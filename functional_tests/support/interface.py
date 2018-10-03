@@ -15,6 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+import random
+import tempfile
+
+import requests
+
 from support import config
 
 from .service import wait_for_page_update
@@ -115,3 +121,31 @@ def submit(browser, element=None, form_class=None):
                 '.{} input[type=submit]'.format(form_class)).click()
         else:
             browser.find_by_css('input[type=submit]').click()
+
+
+def create_sample_local_file():
+    """Create a sample file for upload using browser."""
+    contents = bytearray(random.getrandbits(8) for _ in range(64))
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(contents)
+
+    return temp_file.name, contents
+
+
+def download_file(url):
+    """Download a file to disk given a URL."""
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        logging.captureWarnings(True)
+        request = requests.get(url, verify=False)
+        logging.captureWarnings(False)
+        temp_file.write(request.content)
+
+    return temp_file.name
+
+
+def compare_files(file1, file2):
+    """Assert that the contents of two files are the same."""
+    file1_contents = open(file1, 'rb').read()
+    file2_contents = open(file2, 'rb').read()
+
+    assert file1_contents == file2_contents
