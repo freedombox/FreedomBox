@@ -133,3 +133,21 @@ def repro_delete_config(browser):
 @then('the repro configuration should be restored')
 def repro_is_configured(browser):
     assert site.repro_is_configured(browser)
+
+
+@when('all torrents are removed from transmission')
+def transmission_remove_all_torrents(browser):
+    site.transmission_remove_all_torrents(browser)
+
+
+@when('I upload a sample torrent to transmission')
+def transmission_upload_sample_torrent(browser):
+    site.transmission_upload_sample_torrent(browser)
+
+
+@then(
+    parsers.parse(
+        'there should be {torrents_number:d} torrents listed in transmission'
+    ))
+def transmission_assert_number_of_torrents(browser, torrents_number):
+    assert torrents_number == site.transmission_get_number_of_torrents(browser)

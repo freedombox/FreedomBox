@@ -224,3 +224,42 @@ def jsxc_has_contact(browser):
     jsxc_login(browser)
     contact = browser.find_by_text('alice@localhost')
     return bool(contact)
+
+
+def transmission_remove_all_torrents(browser):
+    """Remove all torrents from transmission."""
+    browser.visit(config['DEFAULT']['url'] + '/transmission')
+    while True:
+        torrents = browser.find_by_css('#torrent_list .torrent')
+        if not torrents:
+            break
+
+        torrents.first.click()
+        eventually(browser.is_element_not_present_by_css,
+                   args=['#toolbar-remove.disabled'])
+        browser.click_link_by_id('toolbar-remove')
+        eventually(browser.is_element_not_present_by_css,
+                   args=['#dialog-container[style="display: none;"]'])
+        browser.click_link_by_id('dialog_confirm_button')
+        eventually(browser.is_element_present_by_css,
+                   args=['#toolbar-remove.disabled'])
+
+
+def transmission_upload_sample_torrent(browser):
+    """Upload a sample torrent into transmission."""
+    browser.visit(config['DEFAULT']['url'] + '/transmission')
+    file_path = os.path.join(
+        os.path.dirname(__file__), '..', 'data', 'sample.torrent')
+    browser.click_link_by_id('toolbar-open')
+    eventually(browser.is_element_not_present_by_css,
+               args=['#upload-container[style="display: none;"]'])
+    browser.attach_file('torrent_files[]', [file_path])
+    browser.click_link_by_id('upload_confirm_button')
+    eventually(browser.is_element_present_by_css,
+               args=['#torrent_list .torrent'])
+
+
+def transmission_get_number_of_torrents(browser):
+    """Return the number torrents currently in transmission."""
+    browser.visit(config['DEFAULT']['url'] + '/transmission')
+    return len(browser.find_by_css('#torrent_list .torrent'))

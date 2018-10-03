@@ -32,3 +32,9 @@ Scenario: Disable transmission application
   Given the transmission application is enabled
   When I disable the transmission application
   Then the transmission site should not be available
+
+Scenario: Upload a torrent to transmission
+  Given the transmission application is enabled
+  When all torrents are removed from transmission
+  And I upload a sample torrent to transmission
+  Then there should be 1 torrents listed in transmission
