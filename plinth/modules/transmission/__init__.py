@@ -27,7 +27,7 @@ from plinth import action_utils, actions, frontpage
 from plinth.menu import main_menu
 from plinth.modules.users import register_group
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 2
 
