@@ -53,6 +53,8 @@ def access_url(browser, site_name):
 
 def verify_coquelicot_upload_password(browser, password):
     browser.visit(config['DEFAULT']['url'] + '/coquelicot')
+    # ensure the password form is scrolled into view
+    browser.execute_script('window.scrollTo(100, 0)')
     browser.find_by_id('upload_password').fill(password)
     actions = ActionChains(browser.driver)
     actions.send_keys(Keys.RETURN)
