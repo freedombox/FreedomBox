@@ -18,6 +18,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from plinth.clients import store_url, validate
+from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name':
@@ -58,3 +59,10 @@ clients = validate([{
         'url': store_url('google-play', 'com.iskrembilen.quasseldroid'),
     }]
 }])
+
+backup = validate_backup({
+    'secrets': {
+        'directories': ['/var/lib/quassel/']
+    },
+    'services': ['quassel-core'],
+})

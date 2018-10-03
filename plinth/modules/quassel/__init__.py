@@ -27,7 +27,7 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 1
 
