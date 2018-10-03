@@ -116,12 +116,20 @@ def select_domain_name(browser, app_name, domain_name):
     interface.submit(browser, form_class='form-configuration')
 
 
-def configure_shadowsocks(browser):
-    """Configure shadowsocks client with some fake server details"""
+def configure_shadowsocks(browser, server, password):
+    """Configure shadowsocks client with given server details."""
     browser.visit('{}/plinth/apps/shadowsocks/'.format(default_url))
-    browser.find_by_id('id_server').fill('some.shadow.tunnel')
-    browser.find_by_id('id_password').fill('fakepassword')
+    browser.find_by_id('id_server').fill(server)
+    browser.find_by_id('id_password').fill(password)
     interface.submit(browser, form_class='form-configuration')
+
+
+def shadowsocks_get_configuration(browser):
+    """Return the server and password currently configured in shadowsocks."""
+    browser.visit('{}/plinth/apps/shadowsocks/'.format(default_url))
+    server = browser.find_by_id('id_server').value
+    password = browser.find_by_id('id_password').value
+    return server, password
 
 
 def modify_max_file_size(browser, size):

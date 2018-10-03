@@ -96,7 +96,25 @@ def select_domain_name(browser, app_name, domain_name):
 
 @given('the shadowsocks application is configured')
 def configure_shadowsocks(browser):
-    application.configure_shadowsocks(browser)
+    application.configure_shadowsocks(browser, 'some.shadow.tunnel',
+                                      'fakepassword')
+
+
+@when(
+    parsers.parse(
+        'I configure shadowsocks with server {server:S} and password {password:w}'
+    ))
+def configure_shadowsocks_with_details(browser, server, password):
+    application.configure_shadowsocks(browser, server, password)
+
+
+@then(
+    parsers.parse(
+        'shadowsocks should be configured with server {server:S} and password {password:w}'
+    ))
+def assert_shadowsocks_configuration(browser, server, password):
+    assert (server,
+            password) == application.shadowsocks_get_configuration(browser)
 
 
 @when(

@@ -34,3 +34,12 @@ Scenario: Disable shadowsocks application
   When I disable the shadowsocks application
   Then the shadowsocks service should not be running
 
+Scenario: Backup and restore shadowsocks
+  Given the shadowsocks application is enabled
+  When I configure shadowsocks with server beforebackup.example.com and password beforebackup123
+  And I create a backup of the shadowsocks app data
+  And I configure shadowsocks with server afterbackup.example.com and password afterbackup123
+  And I export the shadowsocks app data backup
+  And I restore the shadowsocks app data backup
+  Then the shadowsocks service should be running
+  And shadowsocks should be configured with server beforebackup.example.com and password beforebackup123
