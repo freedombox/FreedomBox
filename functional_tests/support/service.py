@@ -49,13 +49,14 @@ def is_not_running(browser, service_name):
 def eventually(function, args=[], timeout=30):
     """Execute a function returning a boolean expression till it returns
     True or a timeout is reached"""
-    counter = 1
-    while counter < timeout:
+    waited_time = 0
+    while waited_time < timeout:
         if function(*args):
             return True
-        else:
-            counter += 1
-            sleep(1)
+
+        sleep(0.1)
+        waited_time += 0.1
+
     return False
 
 
