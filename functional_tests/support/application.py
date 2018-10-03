@@ -281,7 +281,7 @@ def ejabberd_delete_contact(browser):
 
 def ejabberd_has_contact(browser):
     """Check whether the contact is in Ejabberd user's roster."""
-    return site.jsxc_has_contact(browser)
+    return eventually(site.jsxc_has_contact, [browser])
 
 
 def ikiwiki_create_wiki_if_needed(browser):
