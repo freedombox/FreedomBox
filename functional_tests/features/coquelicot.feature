@@ -49,7 +49,8 @@ Scenario: Modify maximum upload size in disabled case
   Then the coquelicot service should not be running
 
 Scenario: Upload a file to coquelicot
-  Given a sample local file
+  Given the coquelicot application is enabled
+  And a sample local file
   When I modify the coquelicot upload password to whatever123
   And I upload the sample local file to coquelicot with password whatever123
   And I download the uploaded file from coquelicot
