@@ -49,6 +49,8 @@ MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 BACKUP_FOLDER_NAME = 'FreedomBox-backups'
 # default backup path for temporary actions like imports or download
 TMP_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
+# session variable name that stores when a backup file should be deleted
+SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
 
 
 def init():
@@ -108,6 +110,10 @@ def create_archive(name, app_names):
 
 def delete_archive(name):
     actions.superuser_run('backups', ['delete', '--name', name])
+
+def delete_tmp_backup_file():
+    if os.path.isfile(TMP_BACKUP_PATH):
+        os.remove(TMP_BACKUP_PATH)
 
 
 def export_archive(name, location, tmp_dir=False):
@@ -192,6 +198,12 @@ def _restore_handler(packet):
     locations_data = json.dumps(locations)
     actions.superuser_run('backups', ['restore', '--filename', packet.label],
                           input=locations_data.encode())
+
+
+def restore_from_tmp(apps=None):
+    """Restore files from temporary backup file"""
+    api.restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
+                 backup_file=TMP_BACKUP_PATH)
 
 
 def restore_exported(device, archive_name, apps=None):

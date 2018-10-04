@@ -308,6 +308,7 @@ def configure_django():
             'plinth.middleware.FirstSetupMiddleware',
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
+            'plinth.modules.backups.middleware.BackupsMiddleware',
         ),
         ROOT_URLCONF='plinth.urls',
         SECURE_BROWSER_XSS_FILTER=True,

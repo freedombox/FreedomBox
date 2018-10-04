@@ -75,6 +75,20 @@ class ExportArchiveForm(forms.Form):
                                        for location in get_export_locations()]
 
 
+class RestoreFromTmpForm(forms.Form):
+    selected_apps = forms.MultipleChoiceField(
+        label=_('Restore apps'),
+        widget=forms.CheckboxSelectMultiple)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form with selectable apps."""
+        apps = kwargs.pop('apps')
+        super().__init__(*args, **kwargs)
+        self.fields['selected_apps'].choices = [
+            (app[0], app[1].name) for app in apps]
+        self.fields['selected_apps'].initial = [app[0] for app in apps]
+
+
 class RestoreForm(forms.Form):
     selected_apps = forms.MultipleChoiceField(
         label=_('Restore apps'),
@@ -123,3 +137,10 @@ class UploadForm(forms.Form):
                     "File %s already exists" % file.name)
             else:
                 self.cleaned_data.update({'filepath': filepath})
+
+
+class UploadToTmpForm(forms.Form):
+    file = forms.FileField(label=_('Upload File'), required=True,
+            validators=[FileExtensionValidator(['gz'],
+                'Backup files have to be in .tar.gz format')],
+            help_text=_('Select the backup file you want to upload'))

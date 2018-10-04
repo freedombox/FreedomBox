@@ -19,8 +19,9 @@ Views for the backups app.
 """
 
 import mimetypes
-import os
 from datetime import datetime
+import os
+import time
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -34,8 +35,11 @@ from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
 
-from . import api, find_exported_archive, TMP_BACKUP_PATH, forms
+from . import api, find_exported_archive, TMP_BACKUP_PATH, forms, \
+        SESSION_BACKUP_VARIABLE, delete_tmp_backup_file
 
+# number of seconds an uploaded backup file should be kept/stored
+KEEP_UPLOADED_BACKUP_FOR = 60*10
 
 subsubmenu = [{
     'url': reverse_lazy('backups:index'),
@@ -161,16 +165,14 @@ class create_temporary_backup_file:
         return self.path
 
     def __exit__(self, type, value, traceback):
-        if os.path.isfile(self.path):
-            os.remove(self.path)
+        delete_tmp_backup_file()
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):
-    form_class = forms.UploadForm
+    form_class = forms.UploadToTmpForm
     prefix = 'backups'
     template_name = 'backups_upload.html'
-    success_url = reverse_lazy('backups:index')
-    success_message = _('Backup file uploaded.')
+    success_url = reverse_lazy('backups:restore-from-tmp')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -181,9 +183,11 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """store uploaded file."""
-        with open(form.cleaned_data['filepath'], 'wb+') as destination:
+        with open(TMP_BACKUP_PATH, 'wb+') as destination:
             for chunk in self.request.FILES['backups-file'].chunks():
                 destination.write(chunk)
+        self.request.session[SESSION_BACKUP_VARIABLE] = time.time() + \
+                KEEP_UPLOADED_BACKUP_FOR
         return super().form_valid(form)
 
 
@@ -223,7 +227,10 @@ class RestoreView(SuccessMessageMixin, FormView):
         """Save some data used to instantiate the form."""
         device = unquote(self.kwargs['device'])
         name = unquote(self.kwargs['name'])
-        filename = backups.find_exported_archive(device, name)
+        if self.kwargs['use_tmp_file'] == 'true':
+            filename = TMP_BACKUP_PATH
+        else:
+            filename = backups.find_exported_archive(device, name)
         return backups.get_export_apps(filename)
 
     def get_form_kwargs(self):
@@ -249,4 +256,48 @@ class RestoreView(SuccessMessageMixin, FormView):
         backups.restore_exported(
             unquote(self.kwargs['device']), self.kwargs['name'],
             form.cleaned_data['selected_apps'])
+        return super().form_valid(form)
+
+
+class RestoreFromTmpView(SuccessMessageMixin, FormView):
+    """View to restore files from an exported archive.
+    
+    TODO: combine with RestoreView"""
+    # TODO: display more information about the backup, like the date
+    form_class = forms.RestoreFromTmpForm
+    prefix = 'backups'
+    template_name = 'backups_restore_from_tmp.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = _('Restored files from backup.')
+
+    def get(self, *args, **kwargs):
+        if not os.path.isfile(TMP_BACKUP_PATH):
+            messages.error(self.request, _('No backup file found.'))
+            return redirect(reverse_lazy('backups:index'))
+        else:
+            return super().get(*args, **kwargs)
+
+    def _get_included_apps(self):
+        """Save some data used to instantiate the form."""
+        return backups.get_export_apps(TMP_BACKUP_PATH)
+
+    def get_form_kwargs(self):
+        """Pass additional keyword args for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        included_apps = self._get_included_apps()
+        installed_apps = api.get_all_apps_for_backup()
+        kwargs['apps'] = [
+            app for app in installed_apps if app[0] in included_apps
+        ]
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Restore data')
+        return context
+
+    def form_valid(self, form):
+        """Restore files from the archive on valid form submission."""
+        backups.restore_from_tmp(form.cleaned_data['selected_apps'])
         return super().form_valid(form)
