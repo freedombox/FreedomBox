@@ -82,13 +82,19 @@
           <tr id="archive-{{ archive.name }}" class="archive">
             <td class="archive-name">{{ archive.name }}</td>
             <td class="archive-operations">
+              <!-- TODO: use or remove
               <a class="archive-export btn btn-sm btn-default"
                  href="{% url 'backups:export' archive.name %}">
                 {% trans "Export" %}
               </a>
+              -->
               <a class="archive-export btn btn-sm btn-default" target="_blank"
                  href="{% url 'backups:export-and-download' archive.name %}">
                 {% trans "Download" %}
+              </a>
+              <a class="archive-export btn btn-sm btn-default"
+                 href="{% url 'backups:restore-archive' archive.name %}">
+                {% trans "Restore" %}
               </a>
               <a class="archive-delete btn btn-sm btn-default"
                  href="{% url 'backups:delete' archive.name %}">

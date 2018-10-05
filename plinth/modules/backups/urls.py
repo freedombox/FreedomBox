@@ -22,7 +22,7 @@ from django.conf.urls import url
 
 from .views import IndexView, CreateArchiveView, DownloadArchiveView, \
     DeleteArchiveView, ExportArchiveView, RestoreView, UploadArchiveView, \
-    ExportAndDownloadView, RestoreFromTmpView
+    ExportAndDownloadView, RestoreArchiveView, RestoreFromTmpView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^sys/backups/upload/$', UploadArchiveView.as_view(), name='upload'),
     url(r'^sys/backups/restore/(?P<device>[^/]+)/(?P<name>[^/]+)/$',
         RestoreView.as_view(), name='restore'),
+    url(r'^sys/backups/restore-archive/(?P<name>[^/]+)/$',
+        RestoreArchiveView.as_view(), name='restore-archive'),
     url(r'^sys/backups/restore-from-tmp/$',
         RestoreFromTmpView.as_view(), name='restore-from-tmp'),
 ]

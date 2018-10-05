@@ -140,21 +140,15 @@ class ExportAndDownloadView(View):
     """View to export and download an archive."""
     def get(self, request, name):
         name = unquote(name)
-        with create_temporary_backup_file(name) as filename, \
-                open(filename, 'rb') as file_handle:
-            (content_type, encoding) = mimetypes.guess_type(filename)
-            response = HttpResponse(File(file_handle),
-                content_type=content_type)
-            content_disposition = 'attachment; filename="%s"' % filename
-            response['Content-Disposition'] = content_disposition
-            if encoding:
-                response['Content-Encoding'] = encoding
-
-            return response
+        filename = "%s.tar.gz" % name
+        with create_temporary_backup_file(name) as filepath:
+            return _get_file_response(filepath, filename)
 
 
 class create_temporary_backup_file:
     """Create a temporary backup file that gets deleted after using it"""
+    # TODO: try using export-tar with FILE parameter '-' and reading stdout:
+    # https://borgbackup.readthedocs.io/en/stable/usage/tar.html
 
     def __init__(self, name):
         self.name = name
@@ -287,7 +281,7 @@ class RestoreFromTmpView(SuccessMessageMixin, FormView):
         included_apps = self._get_included_apps()
         installed_apps = api.get_all_apps_for_backup()
         kwargs['apps'] = [
-            app for app in installed_apps if app[0] in included_apps
+            app for app in installed_apps if app.name in included_apps
         ]
         return kwargs
 
@@ -300,4 +294,42 @@ class RestoreFromTmpView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         backups.restore_from_tmp(form.cleaned_data['selected_apps'])
+        return super().form_valid(form)
+
+
+class RestoreArchiveView(SuccessMessageMixin, FormView):
+    """View to restore files from an archive."""
+    form_class = forms.RestoreForm
+    prefix = 'backups'
+    template_name = 'backups_restore.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = _('Restored files from backup.')
+
+    def _get_included_apps(self):
+        """Save some data used to instantiate the form."""
+        name = unquote(self.kwargs['name'])
+        archive_path = backups.get_archive_path(name)
+        return backups.get_archive_apps(archive_path)
+
+    def get_form_kwargs(self):
+        """Pass additional keyword args for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        included_apps = self._get_included_apps()
+        installed_apps = api.get_all_apps_for_backup()
+        kwargs['apps'] = [
+            app for app in installed_apps if app.name in included_apps
+        ]
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Restore from backup')
+        context['name'] = self.kwargs['name']
+        return context
+
+    def form_valid(self, form):
+        """Restore files from the archive on valid form submission."""
+        archive_path = backups.get_archive_path(self.kwargs['name'])
+        backups.restore(archive_path, form.cleaned_data['selected_apps'])
         return super().form_valid(form)

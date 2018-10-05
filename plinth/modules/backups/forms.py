@@ -26,7 +26,8 @@ from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from . import api
-from . import get_export_locations, get_archive_path, get_location_path
+from . import get_export_locations, get_exported_archive_path, \
+        get_location_path
 
 
 def _get_app_choices(apps):
@@ -84,9 +85,8 @@ class RestoreFromTmpForm(forms.Form):
         """Initialize the form with selectable apps."""
         apps = kwargs.pop('apps')
         super().__init__(*args, **kwargs)
-        self.fields['selected_apps'].choices = [
-            (app[0], app[1].name) for app in apps]
-        self.fields['selected_apps'].initial = [app[0] for app in apps]
+        self.fields['selected_apps'].choices = _get_app_choices(apps)
+        self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
 class RestoreForm(forms.Form):
@@ -131,7 +131,7 @@ class UploadForm(forms.Form):
         location_path = get_location_path(location_device)
         # if other errors occured before, 'file' won't be in cleaned_data
         if (file and file.name):
-            filepath = get_archive_path(location_path, file.name)
+            filepath = get_exported_archive_path(location_path, file.name)
             if os.path.exists(filepath):
                 raise forms.ValidationError(
                     "File %s already exists" % file.name)

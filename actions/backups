@@ -29,7 +29,7 @@ import subprocess
 import sys
 import tarfile
 
-REPOSITORY = '/var/lib/freedombox/borgbackup'
+from plinth.modules.backups import MANIFESTS_FOLDER, REPOSITORY
 
 
 def parse_arguments():
@@ -55,10 +55,10 @@ def parse_arguments():
     extract.add_argument('--destination', help='Extract destination',
                          required=True)
 
-    export = subparsers.add_parser('export',
+    export_tar = subparsers.add_parser('export-tar',
                                    help='Export archive contents as tarball')
-    export.add_argument('--name', help='Archive name', required=True)
-    export.add_argument('--filename', help='Tarball file name', required=True)
+    export_tar.add_argument('--name', help='Archive name', required=True)
+    export_tar.add_argument('--filename', help='Tarball file name', required=True)
 
     list_exports = subparsers.add_parser(
         'list-exports', help='List exported backup archive files')
@@ -71,9 +71,24 @@ def parse_arguments():
     get_export_apps.add_argument(
         '--filename', help='Tarball file name', required=True)
 
-    restore = subparsers.add_parser(
-        'restore', help='Restore files from an exported archive')
-    restore.add_argument('--filename', help='Tarball file name', required=True)
+    get_archive_apps = subparsers.add_parser(
+        'get-archive-apps',
+        help='Get list of apps included in archive')
+    get_archive_apps.add_argument(
+        '--path', help='Path of the archive', required=True)
+
+    restore_exported_archive = subparsers.add_parser(
+        'restore-exported-archive',
+        help='Restore files from an exported archive')
+    # TODO: rename filename to filepath (or just path)
+    restore_exported_archive.add_argument('--filename',
+            help='Tarball file name', required=True)
+
+    restore_archive = subparsers.add_parser(
+        'restore-archive', help='Restore files from an archive')
+    restore_archive.add_argument('--path', help='Archive path', required=True)
+    restore_archive.add_argument('--destination', help='Destination',
+            required=True)
 
     subparsers.required = True
     return parser.parse_args()
@@ -120,20 +135,29 @@ def subcommand_delete(arguments):
 
 def subcommand_extract(arguments):
     """Extract archive contents."""
+    path = REPOSITORY + '::' + arguments.name
+    return _extract(path, arguments.destination)
+
+
+def _extract(archive_path, destination, locations=None):
+    """Extract archive contents."""
     prev_dir = os.getcwd()
     env = dict(os.environ, LANG='C.UTF-8')
+    borg_call = ['borg', 'extract', archive_path]
+    if locations is not None:
+        borg_call.append(locations)
+        print(borg_call)
     try:
-        os.chdir(os.path.expanduser(arguments.destination))
-        subprocess.run(['borg', 'extract', REPOSITORY + '::' + arguments.name],
-                       env=env, check=True)
+        os.chdir(os.path.expanduser(destination))
+        subprocess.run(borg_call, env=env, check=True)
     finally:
         os.chdir(prev_dir)
 
 
-def subcommand_export(arguments):
+def subcommand_export_tar(arguments):
     """Export archive contents as tarball."""
     # TODO: if this is only used for files in /tmp, add checks to verify that
-    # arguments.filename is within /tmp
+    # arguments.filename is within /tmp (does this actually increase security?)
     # TODO: arguments.filename is not a filename but a path
     path = os.path.dirname(arguments.filename)
     if not os.path.exists(path):
@@ -165,6 +189,32 @@ def subcommand_list_exports(arguments):
     print(json.dumps(exports))
 
 
+def _read_archive_file(archive, filepath):
+    """Read the content of a file inside an archive"""
+    arguments = ['borg', 'extract', archive, filepath, '--stdout']
+    return subprocess.check_output(arguments).decode()
+
+
+def subcommand_get_archive_apps(arguments):
+    """Get list of apps included in archive."""
+    manifest_folder = os.path.relpath(MANIFESTS_FOLDER, '/')
+    borg_call = ['borg', 'list', arguments.path, manifest_folder,
+            '--format', '{path}{NEWLINE}']
+    try:
+        manifest_path = subprocess.check_output(borg_call).decode().strip()
+    except subprocess.CalledProcessError:
+        sys.exit(1)
+
+    manifest = None
+    if manifest_path:
+        manifest_data = _read_archive_file(arguments.path,
+                manifest_path)
+        manifest = json.loads(manifest_data)
+    if manifest:
+        for app in manifest:
+            print(app['name'])
+
+
 def subcommand_get_export_apps(arguments):
     """Get list of apps included in exported archive file."""
     manifest = None
@@ -182,7 +232,17 @@ def subcommand_get_export_apps(arguments):
             print(app['name'])
 
 
-def subcommand_restore(arguments):
+def subcommand_restore_archive(arguments):
+    """Restore files from an archive."""
+    locations_data = ''.join(sys.stdin)
+    locations = json.loads(locations_data)
+
+    locations_string = " ".join(locations['directories'])
+    locations_string += " ".join(locations['files'])
+    _extract(arguments.path, arguments.destination, locations=locations_string)
+
+
+def subcommand_restore_exported_archive(arguments):
     """Restore files from an exported archive."""
     locations_data = ''.join(sys.stdin)
     locations = json.loads(locations_data)

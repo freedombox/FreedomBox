@@ -115,6 +115,7 @@ class Packet:
         self.scope = scope
         self.root = root
         self.apps = apps
+        # TODO: label is an archive path -- rename
         self.label = label
         self.errors = []
 

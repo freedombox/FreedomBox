@@ -30,7 +30,6 @@ from plinth.menu import main_menu
 from plinth.modules import storage
 
 from . import api
-from .manifest import backup
 
 version = 1
 
@@ -44,13 +43,14 @@ description = [
 
 service = None
 
-MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
-
 BACKUP_FOLDER_NAME = 'FreedomBox-backups'
+DEFAULT_BACKUP_LOCATION = ('/var/lib/freedombox/', _('Root Filesystem'))
+MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
+REPOSITORY = '/var/lib/freedombox/borgbackup'
+SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
 # default backup path for temporary actions like imports or download
 TMP_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
 # session variable name that stores when a backup file should be deleted
-SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
 
 
 def init():
@@ -109,7 +109,9 @@ def create_archive(name, app_names):
 
 
 def delete_archive(name):
+    # TODO: is name actually a path?
     actions.superuser_run('backups', ['delete', '--name', name])
+
 
 def delete_tmp_backup_file():
     if os.path.isfile(TMP_BACKUP_PATH):
@@ -121,21 +123,16 @@ def export_archive(name, location, tmp_dir=False):
     if tmp_dir:
         filepath = TMP_BACKUP_PATH
     else:
-        location_path = get_location_path(location)
-        filepath = get_archive_path(location_path,
-                                    get_valid_filename(name) + '.tar.gz')
+        filename = get_valid_filename(name) + '.tar.gz'
+        filepath = get_exported_archive_path(location, filename)
     # TODO: that's a full path, not a filename; rename argument
     actions.superuser_run('backups',
-                          ['export', '--name', name, '--filename', filepath])
+                          ['export-tar', '--name', name, '--filename', filepath])
 
 
 def get_export_locations():
     """Return a list of storage locations for exported backup archives."""
-    locations = [{
-        'path': '/var/lib/freedombox/',
-        'label': _('Root Filesystem'),
-        'device': '/'
-    }]
+    locations = [DEFAULT_BACKUP_LOCATION]
     if storage.is_running():
         devices = storage.udisks2.list_devices()
         for device in devices:
@@ -175,14 +172,27 @@ def get_export_files():
     return export_files
 
 
-def get_archive_path(location, archive_name):
+def get_archive_path(archive_name):
+    """Get path of an archive"""
+    return "::".join([REPOSITORY, archive_name])
+
+
+def get_exported_archive_path(location, archive_name):
+    """Get path of an exported archive"""
     return os.path.join(location, BACKUP_FOLDER_NAME, archive_name)
 
 
 def find_exported_archive(device, archive_name):
     """Return the full path for the exported archive file."""
     location_path = get_location_path(device)
-    return get_archive_path(location_path, archive_name)
+    return get_exported_archive_path(location_path, archive_name)
+
+
+def get_archive_apps(path):
+    """Get list of apps included in an archive."""
+    output = actions.superuser_run('backups',
+                                   ['get-archive-apps', '--path', path])
+    return output.splitlines()
 
 
 def get_export_apps(filename):
@@ -192,22 +202,36 @@ def get_export_apps(filename):
     return output.splitlines()
 
 
-def _restore_handler(packet):
+def _restore_exported_archive_handler(packet):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    actions.superuser_run('backups', ['restore', '--filename', packet.label],
-                          input=locations_data.encode())
+    actions.superuser_run('backups', ['restore-exported-archive',
+        '--path', packet.label], input=locations_data.encode())
+
+
+def _restore_archive_handler(packet):
+    """Perform restore operation on packet."""
+    locations = {'directories': packet.directories, 'files': packet.files}
+    locations_data = json.dumps(locations)
+    actions.superuser_run('backups', ['restore-archive', '--path',
+                packet.label, '--destination', '/'], input=locations_data.encode())
 
 
 def restore_from_tmp(apps=None):
     """Restore files from temporary backup file"""
-    api.restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
-                 backup_file=TMP_BACKUP_PATH)
+    api.restore_apps(_restore_exported_archive_handler, app_names=apps,
+                     create_subvolume=False, backup_file=TMP_BACKUP_PATH)
 
 
 def restore_exported(device, archive_name, apps=None):
     """Restore files from exported backup archive."""
     filename = find_exported_archive(device, archive_name)
-    api.restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
-                     backup_file=filename)
+    api.restore_apps(_restore_exported_archive_handler, app_names=apps,
+                     create_subvolume=False, backup_file=filename)
+
+
+def restore(archive_path, apps=None):
+    """Restore files from a backup archive."""
+    api.restore_apps(_restore_archive_handler, app_names=apps,
+                     create_subvolume=False, backup_file=archive_path)
