@@ -170,9 +170,8 @@ def backup_create(browser, app_name):
 def backup_export(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
-    browser.find_link_by_href(
-        '/plinth/sys/backups/export/_functional_test_'
-        + app_name + '/').first.click()
+    browser.find_link_by_href('/plinth/sys/backups/export/_functional_test_' +
+                              app_name + '/').first.click()
     browser.find_by_id('id_backups-disk_0').first.check()
     submit(browser)
 
@@ -181,6 +180,51 @@ def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
-        '/plinth/sys/backups/restore/Root%2520Filesystem/_functional_test_'
-        + app_name + '.tar.gz/').first.click()
+        '/plinth/sys/backups/restore/Root%2520Filesystem/_functional_test_' +
+        app_name + '.tar.gz/').first.click()
     submit(browser)
+
+
+def pagekite_enable(browser, should_enable):
+    """Enable/disable pagekite service."""
+    nav_to_module(browser, 'pagekite')
+    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    checkbox = browser.find_by_id('id_pagekite-enabled').first
+    if checkbox.checked == should_enable:
+        return
+
+    if should_enable:
+        checkbox.check()
+    else:
+        checkbox.uncheck()
+
+    submit(browser)
+
+
+def pagekite_is_enabled(browser):
+    """Return whether pagekite is enabled."""
+    nav_to_module(browser, 'pagekite')
+    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    return browser.find_by_id('id_pagekite-enabled').value
+
+
+def pagekite_configure(browser, host, port, kite_name, kite_secret):
+    """Configure pagekite basic parameters."""
+    nav_to_module(browser, 'pagekite')
+    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    #time.sleep(0.250)  # Wait for 200ms show animation to complete
+    browser.fill('pagekite-server_domain', host)
+    browser.fill('pagekite-server_port', str(port))
+    browser.fill('pagekite-kite_name', kite_name)
+    browser.fill('pagekite-kite_secret', kite_secret)
+    submit(browser)
+
+
+def pagekite_get_configuration(browser):
+    """Return pagekite basic parameters."""
+    nav_to_module(browser, 'pagekite')
+    browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
+    return (browser.find_by_name('pagekite-server_domain').value,
+            int(browser.find_by_name('pagekite-server_port').value),
+            browser.find_by_name('pagekite-kite_name').value,
+            browser.find_by_name('pagekite-kite_secret').value)

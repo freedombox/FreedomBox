@@ -130,3 +130,50 @@ def backup_export(browser, app_name):
 @when(parsers.parse('I restore the {app_name:w} app data backup'))
 def backup_restore(browser, app_name):
     system.backup_restore(browser, app_name)
+
+
+@given('pagekite is enabled')
+def pagekite_is_enabled(browser):
+    system.pagekite_enable(browser, True)
+
+
+@given('pagekite is disabled')
+def pagekite_is_disabled(browser):
+    system.pagekite_enable(browser, False)
+
+
+@when('I enable pagekite')
+def pagekite_enable(browser):
+    system.pagekite_enable(browser, True)
+
+
+@when('I disable pagekite')
+def pagekite_disable(browser):
+    system.pagekite_enable(browser, False)
+
+
+@then('pagekite should be enabled')
+def pagekite_assert_enabled(browser):
+    assert system.pagekite_is_enabled(browser)
+
+
+@then('pagekite should be disabled')
+def pagekite_assert_disabled(browser):
+    assert not system.pagekite_is_enabled(browser)
+
+
+@when(
+    parsers.parse(
+        'I configure pagekite with host {host:S}, port {port:d}, kite name {kite_name:S} and kite secret {kite_secret:w}'
+    ))
+def pagekite_configure(browser, host, port, kite_name, kite_secret):
+    system.pagekite_configure(browser, host, port, kite_name, kite_secret)
+
+
+@then(
+    parsers.parse(
+        'pagekite should be configured with host {host:S}, port {port:d}, kite name {kite_name:S} and kite secret {kite_secret:w}'
+    ))
+def pagekite_assert_configured(browser, host, port, kite_name, kite_secret):
+    assert (host, port, kite_name,
+            kite_secret) == system.pagekite_get_configuration(browser)
