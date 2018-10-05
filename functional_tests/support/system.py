@@ -205,7 +205,7 @@ def pagekite_is_enabled(browser):
     """Return whether pagekite is enabled."""
     nav_to_module(browser, 'pagekite')
     browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
-    return browser.find_by_id('id_pagekite-enabled').value
+    return browser.find_by_id('id_pagekite-enabled').checked
 
 
 def pagekite_configure(browser, host, port, kite_name, kite_secret):

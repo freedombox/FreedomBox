@@ -25,10 +25,13 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
 from . import utils
+from .manifest import backup
 
 version = 1
 
 depends = ['names']
+
+managed_services = ['pagekite']
 
 managed_packages = ['pagekite']
 
@@ -52,8 +55,8 @@ description = [
           'the rest of the Internet. This includes the following '
           'situations:'), box_name=_(cfg.box_name)),
     format_lazy(
-        _('{box_name} is behind a restricted firewall.'), box_name=_(
-            cfg.box_name)),
+        _('{box_name} is behind a restricted firewall.'),
+        box_name=_(cfg.box_name)),
     format_lazy(
         _('{box_name} is connected to a (wireless) router which you '
           'don\'t control.'), box_name=_(cfg.box_name)),

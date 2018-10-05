@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @pagekite
+@apps @pagekite @backups
 Feature: Pagekite Public Visibility
   Configure Pagekite public visitbility server.
 
@@ -37,3 +37,13 @@ Scenario: Configure pagekite application
   Given pagekite is enabled
   When I configure pagekite with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
   Then pagekite should be configured with host pagekite.example.com, port 8080, kite name mykite.example.com and kite secret mysecret
+
+Scenario: Backup and restore pagekite
+  Given pagekite is enabled
+  When I configure pagekite with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
+  And I create a backup of the pagekite app data
+  And I configure pagekite with host afterbackup.example.com, port 8082, kite name afterbackup.example.com and kite secret afterbackupsecret
+  And I export the pagekite app data backup
+  And I restore the pagekite app data backup
+  Then pagekite should be enabled
+  And pagekite should be configured with host beforebackup.example.com, port 8081, kite name beforebackup.example.com and kite secret beforebackupsecret
