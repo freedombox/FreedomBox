@@ -25,8 +25,6 @@ TODO:
 - Implement unit tests.
 """
 
-import collections
-
 from plinth import actions, action_utils, module_loader
 
 
@@ -49,7 +47,9 @@ def validate(backup):
     if 'services' in backup:
         assert isinstance(backup['services'], list)
         for service in backup['services']:
-            assert isinstance(service, str)
+            assert isinstance(service, (str, dict))
+            if isinstance(service, dict):
+                _validate_service(service)
 
     return backup
 
@@ -67,10 +67,19 @@ def _validate_directories_and_files(section):
             assert isinstance(file_path, str)
 
 
+def _validate_service(service):
+    """Validate a service manifest provided as a dictionary."""
+    assert isinstance(service['name'], str)
+    assert isinstance(service['type'], str)
+    assert service['type'] in ('apache', 'uwsgi', 'system')
+    if service['type'] == 'apache':
+        assert service['kind'] in ('config', 'site', 'module')
+
+
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 
-    def __init__(self, operation, scope, root, manifests=None, label=None):
+    def __init__(self, operation, scope, root, apps=None, label=None):
         """Initialize the packet.
 
         operation is either 'backup' or 'restore.
@@ -86,7 +95,7 @@ class Packet:
         self.operation = operation
         self.scope = scope
         self.root = root
-        self.manifests = manifests
+        self.apps = apps
         self.label = label
 
         self.directories = []
@@ -96,12 +105,11 @@ class Packet:
 
     def _process_manifests(self):
         """Look at manifests and fill up the list of directories/files."""
-        for manifest in self.manifests:
-            backup = manifest[2]
+        for app in self.apps:
             for section in ['config', 'data', 'secrets']:
-                self.directories += backup.get(section, {}).get(
+                self.directories += app.manifest.get(section, {}).get(
                     'directories', [])
-                self.files += backup.get(section, {}).get('files', [])
+                self.files += app.manifest.get(section, {}).get('files', [])
 
 
 def backup_full(backup_handler, label=None):
@@ -138,19 +146,17 @@ def backup_apps(backup_handler, app_names=None, label=None):
     else:
         apps = _get_apps_in_order(app_names)
 
-    manifests = _get_manifests(apps)
-
     if _is_snapshot_available():
         snapshot = _take_snapshot()
         backup_root = snapshot['mount_path']
         snapshotted = True
     else:
         _lockdown_apps(apps, lockdown=True)
-        original_state = _shutdown_services(manifests)
+        original_state = _shutdown_services(apps)
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, manifests, label)
+    packet = Packet('backup', 'apps', backup_root, apps, label)
     _run_operation(backup_handler, packet)
 
     if snapshotted:
@@ -168,19 +174,17 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
     else:
         apps = _get_apps_in_order(app_names)
 
-    manifests = _get_manifests(apps)
-
     if _is_snapshot_available() and create_subvolume:
         subvolume = _create_subvolume(empty=False)
         restore_root = subvolume['mount_path']
         subvolume = True
     else:
         _lockdown_apps(apps, lockdown=True)
-        original_state = _shutdown_services(manifests)
+        original_state = _shutdown_services(apps)
         restore_root = '/'
         subvolume = False
 
-    packet = Packet('restore', 'apps', restore_root, manifests, backup_file)
+    packet = Packet('restore', 'apps', restore_root, apps, backup_file)
     _run_operation(restore_handler, packet)
 
     if subvolume:
@@ -190,23 +194,42 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         _lockdown_apps(apps, lockdown=False)
 
 
+class BackupApp:
+    """A application that can be backed up and its manifest."""
+
+    def __init__(self, name, app):
+        """Initialize object and load manfiest."""
+        self.name = name
+        self.app = app
+
+        # Not installed
+        if app.setup_helper.get_state() == 'needs-setup':
+            raise TypeError
+
+        # Has no backup related meta data
+        try:
+            self.manifest = app.backup
+        except AttributeError:
+            raise TypeError
+
+        self.has_data = bool(app.backup)
+
+    def __eq__(self, other_app):
+        """Check if this app is same as another."""
+        return self.name == other_app.name and \
+            self.app == other_app.app and \
+            self.manifest == other_app.manifest and \
+            self.has_data == other_app.has_data
+
+
 def get_all_apps_for_backup():
     """Return a list of all applications that can be backed up."""
     apps = []
     for module_name, module in module_loader.loaded_modules.items():
-        # Not installed
-        if module.setup_helper.get_state() == 'needs-setup':
-            continue
-
-        # Has no backup related meta data
-        if not hasattr(module, 'backup'):
-            continue
-
-        apps.append({
-            'name': module_name,
-            'app': module,
-            'has_data': bool(module.backup)
-        })
+        try:
+            apps.append(BackupApp(module_name, module))
+        except TypeError:  # Application not available for backup/restore
+            pass
 
     return apps
 
@@ -216,24 +239,9 @@ def _get_apps_in_order(app_names):
     apps = []
     for module_name, module in module_loader.loaded_modules.items():
         if module_name in app_names:
-            apps.append((module_name, module))
+            apps.append(BackupApp(module_name, module))
 
     return apps
-
-
-def _get_manifests(apps):
-    """Return a dictionary of apps' backup manifest data.
-
-    Maintain the application order in returned data.
-    """
-    manifests = []
-    for app_name, app in apps:
-        try:
-            manifests.append((app_name, app, app.backup))
-        except AttributeError:
-            pass
-
-    return manifests
 
 
 def _lockdown_apps(apps, lockdown):
@@ -243,8 +251,8 @@ def _lockdown_apps(apps, lockdown):
     will intercept all interaction and show a lockdown message.
 
     """
-    for _, app in apps:
-        app.locked = lockdown
+    for app in apps:
+        app.app.locked = lockdown
 
     # XXX: Lockdown the application UI by implementing a middleware
 
@@ -293,7 +301,89 @@ def _switch_to_subvolume(subvolume):
     raise NotImplementedError
 
 
-def _shutdown_services(manifests):
+class ServiceHandler:
+    """Abstraction to help with service shutdown/restart."""
+
+    @staticmethod
+    def create(backup_app, service):
+        service_type = 'system'
+        if isinstance(service, dict):
+            service_type = service['type']
+
+        service_map = {
+            'system': SystemServiceHandler,
+            'apache': ApacheServiceHandler,
+        }
+        assert service_type in service_map
+        return service_map[service_type](backup_app, service)
+
+    def __init__(self, backup_app, service):
+        """Initialize the object."""
+        self.backup_app = backup_app
+        self.service = service
+
+    def stop(self):
+        """Stop the service."""
+        raise NotImplementedError
+
+    def restart(self):
+        """Stop the service."""
+        raise NotImplementedError
+
+    def __eq__(self, other_handler):
+        """Compare that two handlers are the same."""
+        return self.backup_app == other_handler.backup_app and \
+            self.service == other_handler.service
+
+
+class SystemServiceHandler(ServiceHandler):
+    """Handle starting and stoping of system services for backup."""
+
+    def __init__(self, backup_app, service):
+        """Initialize the object."""
+        super().__init__(backup_app, service)
+        self.was_running = None
+
+    def stop(self):
+        """Stop the service."""
+        self.was_running = action_utils.service_is_running(self.service)
+        if self.was_running:
+            actions.superuser_run('service', ['stop', self.service])
+
+    def restart(self):
+        """Restart the service if it was earlier running."""
+        if self.was_running:
+            actions.superuser_run('service', ['start', self.service])
+
+
+class ApacheServiceHandler(ServiceHandler):
+    """Handle starting and stoping of Apache services for backup."""
+
+    def __init__(self, backup_app, service):
+        """Initialize the object."""
+        super().__init__(backup_app, service)
+        self.was_enabled = None
+        self.web_name = service['name']
+        self.kind = service['kind']
+
+    def stop(self):
+        """Stop the service."""
+        self.was_enabled = action_utils.webserver_is_enabled(
+            self.web_name, kind=self.kind)
+        if self.was_enabled:
+            actions.superuser_run(
+                'apache',
+                ['disable', '--name', self.web_name, '--kind', self.kind])
+
+    def restart(self):
+        """Restart the service if it was earlier running."""
+        if self.was_enabled:
+            actions.superuser_run(
+                'apache',
+                ['enable', '--name', self.web_name, '--kind', self.kind])
+
+
+def _shutdown_services(apps):
     """Shutdown all services specified by manifests.
 
     - Services are shutdown in the reverse order of the apps listing.
@@ -301,19 +391,13 @@ def _shutdown_services(manifests):
     Return the current state of the services so they can be restored
     accurately.
     """
-    state = collections.OrderedDict()
-    for app_name, app, manifest in manifests:
-        for service in manifest.get('services', []):
-            if service not in state:
-                state[service] = {'app_name': app_name, 'app': app}
-
-    for service in state:
-        state[service]['was_running'] = action_utils.service_is_running(
-            service)
+    state = []
+    for app in apps:
+        for service in app.manifest.get('services', []):
+            state.append(ServiceHandler.create(app, service))
 
     for service in reversed(state):
-        if state[service]['was_running']:
-            actions.superuser_run('service', ['stop', service])
+        service.stop()
 
     return state
 
@@ -323,9 +407,8 @@ def _restore_services(original_state):
 
     Maintain exact order of services so dependencies are satisfied.
     """
-    for service in original_state:
-        if original_state[service]['was_running']:
-            actions.superuser_run('service', ['start', service])
+    for service_handler in original_state:
+        service_handler.restart()
 
 
 def _run_operation(handler, packet):

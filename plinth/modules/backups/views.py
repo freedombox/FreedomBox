@@ -60,7 +60,7 @@ class IndexView(TemplateView):
         context['exports'] = backups.get_export_files()
         context['subsubmenu'] = subsubmenu
         apps = api.get_all_apps_for_backup()
-        context['available_apps'] = [app['name'] for app in apps]
+        context['available_apps'] = [app.name for app in apps]
         return context
 
 
@@ -199,7 +199,7 @@ class RestoreView(SuccessMessageMixin, FormView):
         included_apps = self._get_included_apps()
         installed_apps = api.get_all_apps_for_backup()
         kwargs['apps'] = [
-            app for app in installed_apps if app['name'] in included_apps
+            app for app in installed_apps if app.name in included_apps
         ]
         return kwargs
 

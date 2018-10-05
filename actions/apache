@@ -36,6 +36,16 @@ def parse_arguments():
     subparser.add_argument(
         '--old-version', type=int, required=True,
         help='Earlier version of the app that is already setup.')
+    subparser = subparsers.add_parser(
+        'enable', help='Enable a site/config/module in apache')
+    subparser.add_argument('--name',
+                           help='Name of the site/config/module to enable')
+    subparser.add_argument('--kind', choices=['site', 'config', 'module'])
+    subparser = subparsers.add_parser(
+        'disable', help='Disable a site/config/module in apache')
+    subparser.add_argument('--name',
+                           help='Name of the site/config/module to disable')
+    subparser.add_argument('--kind', choices=['site', 'config', 'module'])
 
     subparsers.required = True
     return parser.parse_args()
@@ -146,6 +156,18 @@ def subcommand_setup(arguments):
         webserver.enable('default-tls', kind='site')
         webserver.enable('plinth', kind='site')
         webserver.enable('plinth-ssl', kind='site')
+
+
+# TODO: Check that the (name, kind) is a managed by FreedomBox before
+# performing operation.
+def subcommand_enable(arguments):
+    """Enable an Apache site/config/module."""
+    action_utils.webserver_enable(arguments.name, arguments.kind)
+
+
+def subcommand_disable(arguments):
+    """Disable an Apache site/config/module."""
+    action_utils.webserver_disable(arguments.name, arguments.kind)
 
 
 def main():

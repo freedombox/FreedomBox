@@ -33,12 +33,12 @@ def _get_app_choices(apps):
     """Return a list of check box multiple choices from list of apps."""
     choices = []
     for app in apps:
-        name = app['app'].name
-        if not app['has_data']:
+        name = app.app.name
+        if not app.has_data:
             name = ugettext('{app} (No data to backup)').format(
-                app=app['app'].name)
+                app=app.app.name)
 
-        choices.append((app['name'], name))
+        choices.append((app.name, name))
 
     return choices
 
@@ -59,7 +59,7 @@ class CreateArchiveForm(forms.Form):
         super().__init__(*args, **kwargs)
         apps = api.get_all_apps_for_backup()
         self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app['name'] for app in apps]
+        self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
 class ExportArchiveForm(forms.Form):
@@ -85,21 +85,18 @@ class RestoreForm(forms.Form):
         apps = kwargs.pop('apps')
         super().__init__(*args, **kwargs)
         self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app['name'] for app in apps]
+        self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
 class UploadForm(forms.Form):
     location = forms.ChoiceField(
-        choices=(),
-        label=_('Location'),
-        initial='',
-        widget=forms.Select(),
-        required=True,
-        help_text=_('Location to upload the archive to'))
-    file = forms.FileField(label=_('Upload File'), required=True,
-            validators=[FileExtensionValidator(['gz'],
-                'Backup files have to be in .tar.gz format')],
-            help_text=_('Select the backup file you want to upload'))
+        choices=(), label=_('Location'), initial='', widget=forms.Select(),
+        required=True, help_text=_('Location to upload the archive to'))
+    file = forms.FileField(
+        label=_('Upload File'), required=True, validators=[
+            FileExtensionValidator(['gz'],
+                                   'Backup files have to be in .tar.gz format')
+        ], help_text=_('Select the backup file you want to upload'))
 
     def __init__(self, *args, **kwargs):
         """Initialize the form with location choices."""
@@ -107,7 +104,8 @@ class UploadForm(forms.Form):
         locations = get_export_locations()
         # users should only be able to select a location name -- don't
         # provide paths as a form input for security reasons
-        location_labels = [(location[1], location[1]) for location in locations]
+        location_labels = [(location[1], location[1])
+                           for location in locations]
         self.fields['location'].choices = location_labels
 
     def clean(self):
@@ -120,6 +118,7 @@ class UploadForm(forms.Form):
         if (file and file.name):
             filepath = get_archive_path(location_path, file.name)
             if os.path.exists(filepath):
-                raise forms.ValidationError("File %s already exists" % file.name)
+                raise forms.ValidationError(
+                    "File %s already exists" % file.name)
             else:
                 self.cleaned_data.update({'filepath': filepath})
