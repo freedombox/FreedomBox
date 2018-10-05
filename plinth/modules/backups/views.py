@@ -24,8 +24,7 @@ from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.files.base import File
-from django.http import Http404, HttpResponse
+from django.http import Http404, FileResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
@@ -120,16 +119,16 @@ class DownloadArchiveView(View):
         label = unquote(label)
         name = unquote(name)
         filepath = find_exported_archive(label, name)
-        (content_type, encoding) = mimetypes.guess_type(name)
-        with open(filepath, 'rb') as file_handle:
-            response = HttpResponse(File(file_handle),
-                content_type=content_type)
-            content_disposition = 'attachment; filename="%s"' % name
-            response['Content-Disposition'] = content_disposition
-            if encoding:
-                response['Content-Encoding'] = encoding
+        return _get_file_response(filepath, name)
 
-        return response
+
+def _get_file_response(path, filename):
+    """Read and return a downloadable file"""
+    (content_type, encoding) = mimetypes.guess_type(filename)
+    response = FileResponse(open(path, 'rb'), content_type=content_type)
+    content_disposition = 'attachment; filename="%s"' % filename
+    response['Content-Disposition'] = content_disposition
+    return response
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):
