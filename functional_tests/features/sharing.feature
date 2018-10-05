@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @sharing
+@apps @sharing @backups
 Feature: Sharing
   Share server folders over HTTP, etc.
 

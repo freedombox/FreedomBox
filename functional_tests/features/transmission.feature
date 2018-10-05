@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @transmission
+@apps @transmission @backups
 Feature: Transmission BitTorrent Client
   Run the Transmission BitTorrent client.
 

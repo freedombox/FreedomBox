@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @shadowsocks
+@apps @shadowsocks @backups
 Feature: Shadowsocks Socks5 Proxy
   Run the Shadowsocks Socks5 proxy client.
 

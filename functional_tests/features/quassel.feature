@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @quassel
+@apps @quassel @backups
 Feature: Quassel IRC Client
   Run Quassel core.
 
