@@ -22,8 +22,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     cd /vagrant/
     ./setup.py install
-    apt update
-    DEBIAN_FRONTEND=noninteractive apt install -y $(plinth --list-dependencies)
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y $(plinth --list-dependencies)
     systemctl daemon-reload
   SHELL
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
     # Disable automatic upgrades
     /vagrant/actions/upgrades disable-auto
     # Install ncurses-term
-    DEBIAN_FRONTEND=noninteractive apt install -y ncurses-term
+    DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
   SHELL
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
