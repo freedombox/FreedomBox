@@ -26,7 +26,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup, clients
 
-version = 5
+version = 6
 
 managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
 
