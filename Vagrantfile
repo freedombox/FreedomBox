@@ -19,6 +19,9 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/plinth-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 2048
+  end
   config.vm.provision "shell", inline: <<-SHELL
     cd /vagrant/
     ./setup.py install
