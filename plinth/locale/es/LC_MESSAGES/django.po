@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-24 18:47-0400\n"
+"POT-Creation-Date: 2018-10-08 21:19-0400\n"
 "PO-Revision-Date: 2018-09-26 10:23+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -116,7 +116,7 @@ msgstr ""
 "desactivado para incrementar la seguridad, especialmente cuando se conecta a "
 "redes locales inseguras o de poca confianza."
 
-#: plinth/modules/backups/__init__.py:38
+#: plinth/modules/backups/__init__.py:38 plinth/modules/backups/views.py:42
 msgid "Backups"
 msgstr "Copias de seguridad"
 
@@ -126,55 +126,82 @@ msgstr ""
 "Copias de seguridad le permite crear y gestionar archivos de copia de "
 "seguridad."
 
-#: plinth/modules/backups/__init__.py:120
+#: plinth/modules/backups/__init__.py:119
 msgid "Root Filesystem"
 msgstr "Sistema de archivos raíz"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:38
+#, python-brace-format
+msgid "{app} (No data to backup)"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:48
 msgid "Archive name"
 msgstr "Nombre de archivo"
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:49
 msgid "Name for new backup archive."
 msgstr "Nombre para el nuevo archivo de copia de seguridad."
 
-#: plinth/modules/backups/forms.py:33
+#: plinth/modules/backups/forms.py:50
 msgid "Invalid archive name"
 msgstr "Nombre de archivo no válido"
 
-#: plinth/modules/backups/forms.py:37
+#: plinth/modules/backups/forms.py:54
 msgid "Included apps"
 msgstr "Aplicaciones incluidas"
 
-#: plinth/modules/backups/forms.py:38
+#: plinth/modules/backups/forms.py:54
 msgid "Apps to include in the backup"
 msgstr "Aplicaciones a incluir en la copia de seguridad"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:67
 msgid "Disk"
 msgstr "Disco"
 
-#: plinth/modules/backups/forms.py:53
+#: plinth/modules/backups/forms.py:68
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Disco o almacenamiento extraíble donde se guardará la copia de seguridad."
 
-#: plinth/modules/backups/forms.py:64
+#: plinth/modules/backups/forms.py:79
 msgid "Restore apps"
 msgstr "Restaurar aplicaciones"
 
-#: plinth/modules/backups/forms.py:65
+#: plinth/modules/backups/forms.py:80
 msgid "Apps data to restore from the backup"
 msgstr "Datos de las aplicaciones para restaurar desde la copia de seguridad"
 
-#: plinth/modules/backups/templates/backups.html:44
-#: plinth/modules/backups/templates/backups.html:47
-#: plinth/modules/backups/templates/backups.html:52
-#: plinth/modules/backups/templates/backups.html:55
+#: plinth/modules/backups/forms.py:93
+#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups_restore.html:33
+msgid "Location"
+msgstr "Ubicación"
+
+#: plinth/modules/backups/forms.py:94
+msgid "Location to upload the archive to"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:96
+msgid "Upload File"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:99
+msgid "Select the backup file you want to upload"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:42
+msgid "Backup archives"
+msgstr "Copias de seguridad"
+
+#: plinth/modules/backups/templates/backups.html:46
+#: plinth/modules/backups/templates/backups.html:49
+#: plinth/modules/backups/templates/backups.html:54
+#: plinth/modules/backups/templates/backups.html:57
 msgid "New backup"
 msgstr "Nueva copia de seguridad"
 
-#: plinth/modules/backups/templates/backups.html:59
+#: plinth/modules/backups/templates/backups.html:61
 msgid ""
 "No apps that support backup are currently installed. Backup can be created "
 "after an app supporting backups is installed."
@@ -183,16 +210,12 @@ msgstr ""
 "puede crear una copia de seguridad después de que se instale una aplicación "
 "que la soporte."
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "Backup archives"
-msgstr "Copias de seguridad"
-
-#: plinth/modules/backups/templates/backups.html:68
+#: plinth/modules/backups/templates/backups.html:69
 msgid "No archives currently exist."
 msgstr "Actualmente no existe ningún archivo."
 
-#: plinth/modules/backups/templates/backups.html:74
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:110
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -201,26 +224,41 @@ msgstr "Actualmente no existe ningún archivo."
 msgid "Name"
 msgstr "Nombre"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:87
 msgid "Export"
 msgstr "Exportar"
 
-#: plinth/modules/backups/templates/backups.html:100
-msgid "Exported backup archives"
-msgstr "Copias de seguridad exportadas"
+#: plinth/modules/backups/templates/backups.html:101
+#, fuzzy
+#| msgid "Existing custom services"
+msgid "Existing backup files"
+msgstr "Servicios personalizados existentes"
 
-#: plinth/modules/backups/templates/backups.html:102
-msgid "No exported backup archives were found."
+#: plinth/modules/backups/templates/backups.html:103
+#, fuzzy
+#| msgid "No exported backup archives were found."
+msgid "No existing backup files were found."
 msgstr "No se encontraron copias de seguridad exportadas."
 
-#: plinth/modules/backups/templates/backups.html:108
-#: plinth/modules/backups/templates/backups_restore.html:33
-msgid "Location"
-msgstr "Ubicación"
+#: plinth/modules/backups/templates/backups.html:124
+#, fuzzy
+#| msgid "downloading"
+msgid "Download"
+msgstr "descargando"
 
-#: plinth/modules/backups/templates/backups.html:123
+#: plinth/modules/backups/templates/backups.html:128
 msgid "Restore"
 msgstr "Restaurar"
+
+#: plinth/modules/backups/templates/backups.html:139
+msgid "Upload a backup file"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:142
+#, fuzzy
+#| msgid "Exported backup archives"
+msgid "Upload backup file"
+msgstr "Copias de seguridad exportadas"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -251,35 +289,55 @@ msgstr "¿Restaurar los datos de este archivo?"
 msgid "Restore data from %(name)s"
 msgstr "Restaurar datos desde %(name)s"
 
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/templates/backups_upload.html:37
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Upload file"
+msgstr "Descargar mi perfil"
+
+#: plinth/modules/backups/views.py:45
+#, fuzzy
+#| msgid "New backup"
+msgid "Upload backup"
+msgstr "Nueva copia de seguridad"
+
+#: plinth/modules/backups/views.py:73
 msgid "Archive created."
 msgstr "Archivo creado."
 
-#: plinth/modules/backups/views.py:66
+#: plinth/modules/backups/views.py:78
 msgid "New Backup"
 msgstr "Nueva copia de seguridad"
 
-#: plinth/modules/backups/views.py:90
+#: plinth/modules/backups/views.py:103
 msgid "Delete Archive"
 msgstr "Borrar archivo"
 
-#: plinth/modules/backups/views.py:100
+#: plinth/modules/backups/views.py:113
 msgid "Archive deleted."
 msgstr "Archivo borrado."
 
-#: plinth/modules/backups/views.py:110
+#: plinth/modules/backups/views.py:140
+msgid "Backup file uploaded."
+msgstr ""
+
+#: plinth/modules/backups/views.py:145
+msgid "Upload Backup File"
+msgstr ""
+
+#: plinth/modules/backups/views.py:163
 msgid "Archive exported."
 msgstr "Archivo exportado."
 
-#: plinth/modules/backups/views.py:115
+#: plinth/modules/backups/views.py:168
 msgid "Export Archive"
 msgstr "Exportar archivo"
 
-#: plinth/modules/backups/views.py:134
+#: plinth/modules/backups/views.py:187
 msgid "Restored files from backup."
 msgstr "Archivos restaurados desde la copia de seguridad."
 
-#: plinth/modules/backups/views.py:156
+#: plinth/modules/backups/views.py:209
 msgid "Restore from backup"
 msgstr "Restaurar desde la copia de seguridad"
 
@@ -336,15 +394,15 @@ msgstr "Activar Extensiones de Seguridad del Sistema de Nombre de Dominios"
 msgid "Configuration updated"
 msgstr "Configuración actualizada"
 
-#: plinth/modules/cockpit/__init__.py:37
+#: plinth/modules/cockpit/__init__.py:39 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:39
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Administración del servidor"
 
-#: plinth/modules/cockpit/__init__.py:43
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -357,7 +415,7 @@ msgstr ""
 "muchas funciones avanzadas que normalmente no requieren atención. También "
 "ofrece una terminal de consola basada en web."
 
-#: plinth/modules/cockpit/__init__.py:49
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -371,7 +429,7 @@ msgstr ""
 "{box_name}. Solo los usuarios que pertenecen al grupo «admin» pueden acceder "
 "a la información delicada o modificar el sistema."
 
-#: plinth/modules/cockpit/__init__.py:55
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "Actualmente solo está disponible una funcionalidad limitada."
 
@@ -382,22 +440,22 @@ msgstr "Actualmente solo está disponible una funcionalidad limitada."
 msgid "Configure"
 msgstr "Configurar"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
 #: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Nombre de dominio"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Nombre de dominio no válido"
 
-#: plinth/modules/config/forms.py:59
+#: plinth/modules/config/forms.py:60
 msgid "Hostname"
 msgstr "Nombre de anfitrión"
 
-#: plinth/modules/config/forms.py:61
+#: plinth/modules/config/forms.py:62
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -410,11 +468,11 @@ msgstr ""
 "número y solo puede contener letras, números y guiones. Su longitud puede "
 "ser de hasta 63 caracteres."
 
-#: plinth/modules/config/forms.py:68
+#: plinth/modules/config/forms.py:69
 msgid "Invalid hostname"
 msgstr "Nombre de anfitrión no válido"
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:75
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -431,11 +489,11 @@ msgstr ""
 "La longitud de cada palabra puede ser de hasta 63 caracteres y la del nombre "
 "de dominio de hasta 253."
 
-#: plinth/modules/config/forms.py:88
+#: plinth/modules/config/forms.py:89
 msgid "Default App"
 msgstr "Aplicación por defecto"
 
-#: plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:91
 #, python-brace-format
 msgid ""
 "Choose the default web application that must be served when someone visits "
@@ -545,7 +603,7 @@ msgstr ""
 "Define el tamaño máximo de los archivos que pueden compartirse con "
 "Coquelicot."
 
-#: plinth/modules/coquelicot/manifest.py:23
+#: plinth/modules/coquelicot/manifest.py:24
 msgid "coquelicot"
 msgstr "coquelicot"
 
@@ -1305,7 +1363,7 @@ msgid "Documentation"
 msgstr "Documentación"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
 msgid "Manual"
 msgstr "Manual"
 
@@ -1673,11 +1731,11 @@ msgstr ""
 "Inicie Gobby, seleccione \"Conectar al servidor\" e introduzca el nombre de "
 "dominio de su {box_name}."
 
-#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:24
+#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:38
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Cliente de Chat"
 
@@ -2081,7 +2139,7 @@ msgstr "Registro público desactivado"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2436,7 +2494,7 @@ msgstr "Publicada la clave en el servidor de claves."
 msgid "Error occurred while publishing key."
 msgstr "Se ha producido un error al publicar la clave."
 
-#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:26
+#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:27
 msgid "Mumble"
 msgstr "Mumble"
 
@@ -2462,11 +2520,11 @@ msgstr ""
 "disponibles <a href=\"http://mumble.info\">Clientes</a> para conectar desde "
 "sus dispositivos de escritorio o Android."
 
-#: plinth/modules/mumble/manifest.py:51
+#: plinth/modules/mumble/manifest.py:52
 msgid "Plumble"
 msgstr "Plumble"
 
-#: plinth/modules/mumble/manifest.py:65
+#: plinth/modules/mumble/manifest.py:66
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
@@ -3202,15 +3260,15 @@ msgstr "Configuración completada."
 msgid "Setup failed."
 msgstr "Ha fallado la configuración."
 
-#: plinth/modules/pagekite/__init__.py:43
+#: plinth/modules/pagekite/__init__.py:46
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:45
+#: plinth/modules/pagekite/__init__.py:48
 msgid "Public Visibility"
 msgstr "Visibilidad pública"
 
-#: plinth/modules/pagekite/__init__.py:49
+#: plinth/modules/pagekite/__init__.py:52
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -3223,18 +3281,18 @@ msgstr ""
 "servicios de su {box_name} no son accesibles desde Internet. Esto incluye "
 "las siguientes situaciones:"
 
-#: plinth/modules/pagekite/__init__.py:55
+#: plinth/modules/pagekite/__init__.py:58
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} está detrás de un firewall restringido."
 
-#: plinth/modules/pagekite/__init__.py:58
+#: plinth/modules/pagekite/__init__.py:61
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} está conectado a un router (inalámbrico) que usted no controla."
 
-#: plinth/modules/pagekite/__init__.py:60
+#: plinth/modules/pagekite/__init__.py:63
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -3242,7 +3300,7 @@ msgstr ""
 "Su proveedor de servicio no le da una dirección IP externa y, por el "
 "contrario, le facilita conexión a Internet a través de un NAT."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:65
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -3250,11 +3308,11 @@ msgstr ""
 "Su proveedor de servicios no le da una dirección IP estática por lo que su "
 "IP cambia cada vez que se conecta a Internet."
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:67
 msgid "Your ISP limits incoming connections."
 msgstr "Su proveedor de servicios limita las conexiones entrantes."
 
-#: plinth/modules/pagekite/__init__.py:66
+#: plinth/modules/pagekite/__init__.py:69
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP-address limitations by using a "
@@ -3620,15 +3678,15 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Apagar ahora"
 
-#: plinth/modules/privoxy/__init__.py:38
+#: plinth/modules/privoxy/__init__.py:40
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:40
+#: plinth/modules/privoxy/__init__.py:42
 msgid "Web Proxy"
 msgstr "Proxy Web"
 
-#: plinth/modules/privoxy/__init__.py:43
+#: plinth/modules/privoxy/__init__.py:45
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -3639,7 +3697,7 @@ msgstr ""
 "cabeceras HTTP, controlar el acceso y eliminar publicidad y otra basura de "
 "Internet. "
 
-#: plinth/modules/privoxy/__init__.py:48
+#: plinth/modules/privoxy/__init__.py:50
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -3654,12 +3712,12 @@ msgstr ""
 "documentación  en <a href=\"http://config.privoxy.org\">http://config."
 "privoxy.org/</a> o <a href=\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:142
+#: plinth/modules/privoxy/__init__.py:144
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Acceso a {url} con proxy {proxy} en tcp {kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:24
+#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
@@ -3696,7 +3754,7 @@ msgstr ""
 "quassel-irc.org/downloads\">escritorio</a> y <a href=\"http://quasseldroid."
 "iskrembilen.com/\">móvil</a>."
 
-#: plinth/modules/quassel/manifest.py:48
+#: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
@@ -3899,7 +3957,7 @@ msgstr ""
 "reStore</a>."
 
 #: plinth/modules/roundcube/__init__.py:33
-#: plinth/modules/roundcube/manifest.py:23
+#: plinth/modules/roundcube/manifest.py:24
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -3950,7 +4008,7 @@ msgstr ""
 "google.com/settings/security/lesssecureapps\">https://www.google.com/"
 "settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
 msgid "Searx"
 msgstr "Searx"
 
@@ -4068,15 +4126,15 @@ msgstr ""
 "\">/shaarli</a> de su servidor. Note que Shaarli solo soporta una cuenta de "
 "usuaria/o, que debe configurar en el primer acceso."
 
-#: plinth/modules/shadowsocks/__init__.py:31
+#: plinth/modules/shadowsocks/__init__.py:33
 msgid "Shadowsocks"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:33
+#: plinth/modules/shadowsocks/__init__.py:35
 msgid "Socks5 Proxy"
 msgstr "Proxy Socks5"
 
-#: plinth/modules/shadowsocks/__init__.py:42
+#: plinth/modules/shadowsocks/__init__.py:44
 msgid ""
 "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
 "your Internet traffic. It can be used to bypass Internet filtering and "
@@ -4086,7 +4144,7 @@ msgstr ""
 "tráfico en Internet. Se puede usar para eludir el filtrado o la censura de "
 "Internet."
 
-#: plinth/modules/shadowsocks/__init__.py:46
+#: plinth/modules/shadowsocks/__init__.py:48
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -4099,7 +4157,7 @@ msgstr ""
 "Los dispositivos locales pueden conectarse a este proxy y la información se "
 "enviará cifrada a través del servidor Shadowsocks."
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:53
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -4132,11 +4190,11 @@ msgstr "Clave para cifrar los datos. Debe coincidir con la clave del servidor."
 msgid "Encryption method. Must match setting on server."
 msgstr "Método de cifrado. Debe coincidir con la configuración del servidor."
 
-#: plinth/modules/sharing/__init__.py:31
+#: plinth/modules/sharing/__init__.py:33
 msgid "Sharing"
 msgstr "Compartir"
 
-#: plinth/modules/sharing/__init__.py:35
+#: plinth/modules/sharing/__init__.py:37
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -4501,9 +4559,9 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
-"Este módulo le permite gestionar el almacenamiento conectado a su {box_name}"
-". Puede ver el medio de almacenamiento que está usando, montar y desmontar "
-"medios extraíbles, ampliar la partición raíz, etc."
+"Este módulo le permite gestionar el almacenamiento conectado a su "
+"{box_name}. Puede ver el medio de almacenamiento que está usando, montar y "
+"desmontar medios extraíbles, ampliar la partición raíz, etc."
 
 #: plinth/modules/storage/__init__.py:164
 #, python-brace-format
@@ -5021,7 +5079,7 @@ msgstr ""
 "9050."
 
 #: plinth/modules/transmission/__init__.py:38
-#: plinth/modules/transmission/manifest.py:23
+#: plinth/modules/transmission/manifest.py:24
 msgid "Transmission"
 msgstr "Transmission"
 
@@ -5528,7 +5586,7 @@ msgstr "Seleccionar idioma"
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: plinth/templates/base.html:250 plinth/templates/index.html:178
+#: plinth/templates/base.html:250 plinth/templates/index.html:182
 msgid "JavaScript license information"
 msgstr "Información de licencia de JavaScript"
 
@@ -5614,7 +5672,7 @@ msgstr ""
 msgid "Configure &raquo;"
 msgstr "Configurar &raquo;"
 
-#: plinth/templates/index.html:118
+#: plinth/templates/index.html:122
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5626,7 +5684,7 @@ msgstr ""
 "Proporciona herramientas de comunicación online que respetan su privacidad y "
 "la propiedad de sus datos."
 
-#: plinth/templates/index.html:127
+#: plinth/templates/index.html:131
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5637,27 +5695,27 @@ msgstr ""
 "software libre, distribuido bajo la Licencia Pública General de GNU Affero, "
 "versión 3 o posterior."
 
-#: plinth/templates/index.html:147
+#: plinth/templates/index.html:151
 msgid "Homepage"
 msgstr "Página inicio"
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:154
 msgid "Source Code"
 msgstr "Código fuente"
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:157
 msgid "Donate"
 msgstr "Donar"
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:161
 msgid "FreedomBox Foundation"
 msgstr "Fundación FreedomBox"
 
-#: plinth/templates/index.html:164
+#: plinth/templates/index.html:168
 msgid "IRC Chatroom"
 msgstr "Sala de chat IRC"
 
-#: plinth/templates/index.html:169
+#: plinth/templates/index.html:173
 msgid "Mailing list"
 msgstr "Lista de correo"
 

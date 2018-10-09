@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-24 18:47-0400\n"
+"POT-Creation-Date: 2018-10-08 21:19-0400\n"
 "PO-Revision-Date: 2018-10-03 18:24+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -115,7 +115,7 @@ msgstr ""
 "nutné a funguje pouze na vnitřních sítích. Je možné ho vypnout a posílit tak "
 "zabezpečení, hlavně v případě připojení do nepříliš přátelské místní sítě."
 
-#: plinth/modules/backups/__init__.py:38
+#: plinth/modules/backups/__init__.py:38 plinth/modules/backups/views.py:42
 msgid "Backups"
 msgstr "Zálohy"
 
@@ -123,54 +123,81 @@ msgstr "Zálohy"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Zálohy umožňují vytváření a správu archivů se zálohami."
 
-#: plinth/modules/backups/__init__.py:120
+#: plinth/modules/backups/__init__.py:119
 msgid "Root Filesystem"
 msgstr "Kořenový souborový systém"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:38
+#, python-brace-format
+msgid "{app} (No data to backup)"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:48
 msgid "Archive name"
 msgstr "Název archivu"
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:49
 msgid "Name for new backup archive."
 msgstr "Název pro nový archiv zálohy."
 
-#: plinth/modules/backups/forms.py:33
+#: plinth/modules/backups/forms.py:50
 msgid "Invalid archive name"
 msgstr "Neplatný název archivu"
 
-#: plinth/modules/backups/forms.py:37
+#: plinth/modules/backups/forms.py:54
 msgid "Included apps"
 msgstr "Obsažené aplikace"
 
-#: plinth/modules/backups/forms.py:38
+#: plinth/modules/backups/forms.py:54
 msgid "Apps to include in the backup"
 msgstr "Zálohy které zahrnout do zálohy"
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:67
 msgid "Disk"
 msgstr "Disk"
 
-#: plinth/modules/backups/forms.py:53
+#: plinth/modules/backups/forms.py:68
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr "Disk nebo vyjímatelné úložiště na které uložit archiv zálohy."
 
-#: plinth/modules/backups/forms.py:64
+#: plinth/modules/backups/forms.py:79
 msgid "Restore apps"
 msgstr "Obnovit aplikace"
 
-#: plinth/modules/backups/forms.py:65
+#: plinth/modules/backups/forms.py:80
 msgid "Apps data to restore from the backup"
 msgstr "Data aplikací které obnovit ze zálohy"
 
-#: plinth/modules/backups/templates/backups.html:44
-#: plinth/modules/backups/templates/backups.html:47
-#: plinth/modules/backups/templates/backups.html:52
-#: plinth/modules/backups/templates/backups.html:55
+#: plinth/modules/backups/forms.py:93
+#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups_restore.html:33
+msgid "Location"
+msgstr "Umístění"
+
+#: plinth/modules/backups/forms.py:94
+msgid "Location to upload the archive to"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:96
+msgid "Upload File"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:99
+msgid "Select the backup file you want to upload"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:42
+msgid "Backup archives"
+msgstr "Archivy záloh"
+
+#: plinth/modules/backups/templates/backups.html:46
+#: plinth/modules/backups/templates/backups.html:49
+#: plinth/modules/backups/templates/backups.html:54
+#: plinth/modules/backups/templates/backups.html:57
 msgid "New backup"
 msgstr "Nová záloha"
 
-#: plinth/modules/backups/templates/backups.html:59
+#: plinth/modules/backups/templates/backups.html:61
 msgid ""
 "No apps that support backup are currently installed. Backup can be created "
 "after an app supporting backups is installed."
@@ -179,16 +206,12 @@ msgstr ""
 "Nicméně až budou nainstalované aplikace, u kterých to lze, bude je možné "
 "zálohovat."
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "Backup archives"
-msgstr "Archivy záloh"
-
-#: plinth/modules/backups/templates/backups.html:68
+#: plinth/modules/backups/templates/backups.html:69
 msgid "No archives currently exist."
 msgstr "V tuto chvíli neexistují žádné archivy."
 
-#: plinth/modules/backups/templates/backups.html:74
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:110
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -197,26 +220,41 @@ msgstr "V tuto chvíli neexistují žádné archivy."
 msgid "Name"
 msgstr "Název"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:87
 msgid "Export"
 msgstr "Export"
 
-#: plinth/modules/backups/templates/backups.html:100
-msgid "Exported backup archives"
-msgstr "Exportované archivy záloh"
+#: plinth/modules/backups/templates/backups.html:101
+#, fuzzy
+#| msgid "Existing custom services"
+msgid "Existing backup files"
+msgstr "Stávají uživatelem určené služby"
 
-#: plinth/modules/backups/templates/backups.html:102
-msgid "No exported backup archives were found."
+#: plinth/modules/backups/templates/backups.html:103
+#, fuzzy
+#| msgid "No exported backup archives were found."
+msgid "No existing backup files were found."
 msgstr "Nebyly nalezeny žádné exportované archivy záloh."
 
-#: plinth/modules/backups/templates/backups.html:108
-#: plinth/modules/backups/templates/backups_restore.html:33
-msgid "Location"
-msgstr "Umístění"
+#: plinth/modules/backups/templates/backups.html:124
+#, fuzzy
+#| msgid "downloading"
+msgid "Download"
+msgstr "stahování"
 
-#: plinth/modules/backups/templates/backups.html:123
+#: plinth/modules/backups/templates/backups.html:128
 msgid "Restore"
 msgstr "Obnovit"
+
+#: plinth/modules/backups/templates/backups.html:139
+msgid "Upload a backup file"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:142
+#, fuzzy
+#| msgid "Exported backup archives"
+msgid "Upload backup file"
+msgstr "Exportované archivy záloh"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -247,35 +285,55 @@ msgstr "Obnovit data z tohoto archivu?"
 msgid "Restore data from %(name)s"
 msgstr "Obnovit data z %(name)s"
 
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/templates/backups_upload.html:37
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Upload file"
+msgstr "Stáhnout si svůj profil"
+
+#: plinth/modules/backups/views.py:45
+#, fuzzy
+#| msgid "New backup"
+msgid "Upload backup"
+msgstr "Nová záloha"
+
+#: plinth/modules/backups/views.py:73
 msgid "Archive created."
 msgstr "Archiv vytvořen."
 
-#: plinth/modules/backups/views.py:66
+#: plinth/modules/backups/views.py:78
 msgid "New Backup"
 msgstr "Nová záloha"
 
-#: plinth/modules/backups/views.py:90
+#: plinth/modules/backups/views.py:103
 msgid "Delete Archive"
 msgstr "Smazat archiv"
 
-#: plinth/modules/backups/views.py:100
+#: plinth/modules/backups/views.py:113
 msgid "Archive deleted."
 msgstr "Archiv smazán."
 
-#: plinth/modules/backups/views.py:110
+#: plinth/modules/backups/views.py:140
+msgid "Backup file uploaded."
+msgstr ""
+
+#: plinth/modules/backups/views.py:145
+msgid "Upload Backup File"
+msgstr ""
+
+#: plinth/modules/backups/views.py:163
 msgid "Archive exported."
 msgstr "Archiv exportován."
 
-#: plinth/modules/backups/views.py:115
+#: plinth/modules/backups/views.py:168
 msgid "Export Archive"
 msgstr "Exportovat archiv"
 
-#: plinth/modules/backups/views.py:134
+#: plinth/modules/backups/views.py:187
 msgid "Restored files from backup."
 msgstr "Soubory obnovené ze zálohy."
 
-#: plinth/modules/backups/views.py:156
+#: plinth/modules/backups/views.py:209
 msgid "Restore from backup"
 msgstr "Obnovit ze zálohy"
 
@@ -330,15 +388,15 @@ msgstr "Zapnout zabezpečovací rozšíření systému doménových názvů"
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
-#: plinth/modules/cockpit/__init__.py:37
+#: plinth/modules/cockpit/__init__.py:39 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:39
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Správa serveru"
 
-#: plinth/modules/cockpit/__init__.py:43
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -351,7 +409,7 @@ msgstr ""
 "pokročilých funkcí, které obvykle nejsou potřeba. Je také k dispozici webový "
 "terminál pro operace na příkazovém řádku."
 
-#: plinth/modules/cockpit/__init__.py:49
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -364,7 +422,7 @@ msgstr ""
 "\"{users_url}\">uživatele s účtem na {box_name}</a>. Citlivé informace a "
 "pozměňování systému jsou omezeny na uživatele, náležející do skupiny admin."
 
-#: plinth/modules/cockpit/__init__.py:55
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "Zatím je k dispozici pouze omezená funkčnost."
 
@@ -375,22 +433,22 @@ msgstr "Zatím je k dispozici pouze omezená funkčnost."
 msgid "Configure"
 msgstr "Nastavit"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
 #: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: plinth/modules/config/forms.py:59
+#: plinth/modules/config/forms.py:60
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: plinth/modules/config/forms.py:61
+#: plinth/modules/config/forms.py:62
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -403,11 +461,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: plinth/modules/config/forms.py:68
+#: plinth/modules/config/forms.py:69
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:75
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -424,11 +482,11 @@ msgstr ""
 "ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
 "nejvýše 253 znaků."
 
-#: plinth/modules/config/forms.py:88
+#: plinth/modules/config/forms.py:89
 msgid "Default App"
 msgstr "Výchozí aplikace"
 
-#: plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:91
 #, python-brace-format
 msgid ""
 "Choose the default web application that must be served when someone visits "
@@ -539,7 +597,7 @@ msgstr ""
 "Nastavte nejvyšší umožněnou velikost jednotlivých souborů, jakou bude možné "
 "na Coquelicot nahrát."
 
-#: plinth/modules/coquelicot/manifest.py:23
+#: plinth/modules/coquelicot/manifest.py:24
 msgid "coquelicot"
 msgstr "coquelicot"
 
@@ -1281,8 +1339,8 @@ msgid ""
 "You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
 "modify it if necessary."
 msgstr ""
-"Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</a>"
-" a případně upravit."
+"Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</"
+"a> a případně upravit."
 
 #: plinth/modules/first_boot/templates/firstboot_navbar.html:23
 #: plinth/modules/help/templates/help_index.html:27
@@ -1303,7 +1361,7 @@ msgid "Documentation"
 msgstr "Dokumentace"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
 msgid "Manual"
 msgstr "Příručka"
 
@@ -1668,11 +1726,11 @@ msgstr ""
 "Spusťte Goggy a zvolte „Připojit k serveru“ a zadejte doménový název svého "
 "{box_name}."
 
-#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:24
+#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:38
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Chatovací klient"
 
@@ -2074,7 +2132,7 @@ msgstr "Registrace pro veřejnost zavřena"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2425,7 +2483,7 @@ msgstr "Klíč zveřejněn na server s klíči."
 msgid "Error occurred while publishing key."
 msgstr "Při zveřejňování klíče došlo k chybě."
 
-#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:26
+#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:27
 msgid "Mumble"
 msgstr "Mumble"
 
@@ -2451,11 +2509,11 @@ msgstr ""
 "dispozici jsou <a href=\"http://mumble.info\">klienti</a> pro připojení z "
 "desktopu a Android zařízení."
 
-#: plinth/modules/mumble/manifest.py:51
+#: plinth/modules/mumble/manifest.py:52
 msgid "Plumble"
 msgstr "Plumble"
 
-#: plinth/modules/mumble/manifest.py:65
+#: plinth/modules/mumble/manifest.py:66
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
@@ -3190,15 +3248,15 @@ msgstr "Nastavování dokončeno."
 msgid "Setup failed."
 msgstr "Nastavování se nezdařilo."
 
-#: plinth/modules/pagekite/__init__.py:43
+#: plinth/modules/pagekite/__init__.py:46
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:45
+#: plinth/modules/pagekite/__init__.py:48
 msgid "Public Visibility"
 msgstr "Viditelnost na veřejnosti"
 
-#: plinth/modules/pagekite/__init__.py:49
+#: plinth/modules/pagekite/__init__.py:52
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -3210,19 +3268,19 @@ msgstr ""
 "němu nejste připojení napřímo. Potřebujete ho pouze když jsou služby služby "
 "vašeho {box_name} nedostupné z Internetu. To zahrnuje následující situace:"
 
-#: plinth/modules/pagekite/__init__.py:55
+#: plinth/modules/pagekite/__init__.py:58
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} se nachází za omezující bránou firewall."
 
-#: plinth/modules/pagekite/__init__.py:58
+#: plinth/modules/pagekite/__init__.py:61
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} je připojený k (bezdrátovému) směrovači, který není ve vaší "
 "správě."
 
-#: plinth/modules/pagekite/__init__.py:60
+#: plinth/modules/pagekite/__init__.py:63
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -3230,7 +3288,7 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje vnější (veřejnou) IP adresu a "
 "namísto toho poskytuje připojení prostřednictvím NAT překladu."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:65
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -3238,11 +3296,11 @@ msgstr ""
 "Váš poskytovatel připojení vám neposkytuje pevnou IP adresu a ta se proto "
 "mění pokaždé, když se připojíte k Internetu."
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:67
 msgid "Your ISP limits incoming connections."
 msgstr "Váš poskytovatel připojení k Internetu omezuje příchozí spojení."
 
-#: plinth/modules/pagekite/__init__.py:66
+#: plinth/modules/pagekite/__init__.py:69
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP-address limitations by using a "
@@ -3606,15 +3664,15 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Vypnout nyní"
 
-#: plinth/modules/privoxy/__init__.py:38
+#: plinth/modules/privoxy/__init__.py:40
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:40
+#: plinth/modules/privoxy/__init__.py:42
 msgid "Web Proxy"
 msgstr "Webová proxy"
 
-#: plinth/modules/privoxy/__init__.py:43
+#: plinth/modules/privoxy/__init__.py:45
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -3624,7 +3682,7 @@ msgstr ""
 "zlepšujícími soukromí, upravující data webových stánek a HTTP hlaviček, "
 "řídící přístup a odebírající reklamy a ostatní otravné Internetové smetí. "
 
-#: plinth/modules/privoxy/__init__.py:48
+#: plinth/modules/privoxy/__init__.py:50
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -3639,12 +3697,12 @@ msgstr ""
 "privoxy.org\">http://config.privoxy.org/</a> nebo <a href=\"http://p.p"
 "\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:142
+#: plinth/modules/privoxy/__init__.py:144
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Přistupte {url} s proxy {proxy} na tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:24
+#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
@@ -3681,7 +3739,7 @@ msgstr ""
 "\"http://quassel-irc.org/downloads\">desktopu</a> a <a href=\"http://"
 "quasseldroid.iskrembilen.com/\">mobilních</a> zařízení."
 
-#: plinth/modules/quassel/manifest.py:48
+#: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
@@ -3884,7 +3942,7 @@ msgstr ""
 "reStore</a>."
 
 #: plinth/modules/roundcube/__init__.py:33
-#: plinth/modules/roundcube/manifest.py:23
+#: plinth/modules/roundcube/manifest.py:24
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -3935,7 +3993,7 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
 msgid "Searx"
 msgstr "Searx"
 
@@ -4052,15 +4110,15 @@ msgstr ""
 "shaarli</a> na webovém serveru. Poznamenejme, že Shaarli podporuje pouze "
 "jeden uživatelský účet, který bude třeba nastavit při první návštěvě."
 
-#: plinth/modules/shadowsocks/__init__.py:31
+#: plinth/modules/shadowsocks/__init__.py:33
 msgid "Shadowsocks"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:33
+#: plinth/modules/shadowsocks/__init__.py:35
 msgid "Socks5 Proxy"
 msgstr "Socks5 proxy"
 
-#: plinth/modules/shadowsocks/__init__.py:42
+#: plinth/modules/shadowsocks/__init__.py:44
 msgid ""
 "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
 "your Internet traffic. It can be used to bypass Internet filtering and "
@@ -4070,7 +4128,7 @@ msgstr ""
 "vašeho Internetového provozu. Je možné ji použít pro obejití filtrování "
 "Internetu a cenzury."
 
-#: plinth/modules/shadowsocks/__init__.py:46
+#: plinth/modules/shadowsocks/__init__.py:48
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -4083,7 +4141,7 @@ msgstr ""
 "připojit k této proxy a jejich data budou šifrována a posílána "
 "prostřednictvím Shadowsocks serveru."
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:53
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -4119,11 +4177,11 @@ msgid "Encryption method. Must match setting on server."
 msgstr ""
 "Metoda šifrování. Je třeba, aby byla stejná, jaká je nastavená na serveru."
 
-#: plinth/modules/sharing/__init__.py:31
+#: plinth/modules/sharing/__init__.py:33
 msgid "Sharing"
 msgstr "Sdílení"
 
-#: plinth/modules/sharing/__init__.py:35
+#: plinth/modules/sharing/__init__.py:37
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -4488,9 +4546,9 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
-"Tento modul umožňuje spravovat úložná zařízení, připojená k vašemu {box_name}"
-". Lze zobrazit úložná zařízení, která jsou využívána, připojovat a odpojovat "
-"ta vyjímatelná."
+"Tento modul umožňuje spravovat úložná zařízení, připojená k vašemu "
+"{box_name}. Lze zobrazit úložná zařízení, která jsou využívána, připojovat a "
+"odpojovat ta vyjímatelná."
 
 #: plinth/modules/storage/__init__.py:164
 #, python-brace-format
@@ -4999,7 +5057,7 @@ msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Tor SOCKS port je k dispozici na vašem %(box_name)s na TCP portu 9050."
 
 #: plinth/modules/transmission/__init__.py:38
-#: plinth/modules/transmission/manifest.py:23
+#: plinth/modules/transmission/manifest.py:24
 msgid "Transmission"
 msgstr "Transmission"
 
@@ -5501,7 +5559,7 @@ msgstr "Vyberte jazyk"
 msgid "Log in"
 msgstr "Přihlásit"
 
-#: plinth/templates/base.html:250 plinth/templates/index.html:178
+#: plinth/templates/base.html:250 plinth/templates/index.html:182
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -5587,7 +5645,7 @@ msgstr ""
 msgid "Configure &raquo;"
 msgstr "Nastavit &raquo;"
 
-#: plinth/templates/index.html:118
+#: plinth/templates/index.html:122
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5599,7 +5657,7 @@ msgstr ""
 "aplikací na malých strojích. Poskytuje nástroje pro online komunikaci, "
 "respektující vaše soukromí a vlastnictví dat."
 
-#: plinth/templates/index.html:127
+#: plinth/templates/index.html:131
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5610,27 +5668,27 @@ msgstr ""
 "svobodný software, šířený pod licencí GNU Affero General Public License, "
 "verze 3 a novějších."
 
-#: plinth/templates/index.html:147
+#: plinth/templates/index.html:151
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:154
 msgid "Source Code"
 msgstr "Zdrojové kódy"
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:157
 msgid "Donate"
 msgstr "Podpořit darem"
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:161
 msgid "FreedomBox Foundation"
 msgstr "Nadace FreedomBox"
 
-#: plinth/templates/index.html:164
+#: plinth/templates/index.html:168
 msgid "IRC Chatroom"
 msgstr "Chatovací místnost na IRC"
 
-#: plinth/templates/index.html:169
+#: plinth/templates/index.html:173
 msgid "Mailing list"
 msgstr "Poštovní konference"
 

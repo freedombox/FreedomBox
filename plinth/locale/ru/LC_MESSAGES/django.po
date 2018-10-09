@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-24 18:47-0400\n"
+"POT-Creation-Date: 2018-10-08 21:19-0400\n"
 "PO-Revision-Date: 2018-08-28 13:13+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -117,7 +117,7 @@ msgstr ""
 "Она может быть отключена в целях повышения безопасности, особенно при "
 "подключении к вражеской сети."
 
-#: plinth/modules/backups/__init__.py:38
+#: plinth/modules/backups/__init__.py:38 plinth/modules/backups/views.py:42
 msgid "Backups"
 msgstr "Резервные копии"
 
@@ -126,74 +126,97 @@ msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Резервное копирование позволяет создавать и управлять резервными архивами."
 
-#: plinth/modules/backups/__init__.py:120
+#: plinth/modules/backups/__init__.py:119
 msgid "Root Filesystem"
 msgstr "Корневая файловая система"
 
-#: plinth/modules/backups/forms.py:31
+#: plinth/modules/backups/forms.py:38
+#, python-brace-format
+msgid "{app} (No data to backup)"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:48
 msgid "Archive name"
 msgstr "Имя архива"
 
-#: plinth/modules/backups/forms.py:32
+#: plinth/modules/backups/forms.py:49
 msgid "Name for new backup archive."
 msgstr "Имя для нового архива."
 
-#: plinth/modules/backups/forms.py:33
+#: plinth/modules/backups/forms.py:50
 msgid "Invalid archive name"
 msgstr "Недопустимое имя архива"
 
-#: plinth/modules/backups/forms.py:37
+#: plinth/modules/backups/forms.py:54
 msgid "Included apps"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:38
+#: plinth/modules/backups/forms.py:54
 msgid "Apps to include in the backup"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:52
+#: plinth/modules/backups/forms.py:67
 msgid "Disk"
 msgstr "Диск"
 
-#: plinth/modules/backups/forms.py:53
+#: plinth/modules/backups/forms.py:68
 msgid "Disk or removable storage where the backup archive will be saved."
 msgstr ""
 "Диск или сменное хранилище, на котором будет сохранена резервная копия."
 
-#: plinth/modules/backups/forms.py:64
+#: plinth/modules/backups/forms.py:79
 #, fuzzy
 #| msgid "Restore"
 msgid "Restore apps"
 msgstr "Восстановить"
 
-#: plinth/modules/backups/forms.py:65
+#: plinth/modules/backups/forms.py:80
 #, fuzzy
 #| msgid "Restore from backup"
 msgid "Apps data to restore from the backup"
 msgstr "Восстановить из резервной копии"
 
-#: plinth/modules/backups/templates/backups.html:44
-#: plinth/modules/backups/templates/backups.html:47
-#: plinth/modules/backups/templates/backups.html:52
-#: plinth/modules/backups/templates/backups.html:55
+#: plinth/modules/backups/forms.py:93
+#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups_restore.html:33
+msgid "Location"
+msgstr "Местоположение"
+
+#: plinth/modules/backups/forms.py:94
+msgid "Location to upload the archive to"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:96
+msgid "Upload File"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:99
+msgid "Select the backup file you want to upload"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:42
+msgid "Backup archives"
+msgstr "Резервные копии"
+
+#: plinth/modules/backups/templates/backups.html:46
+#: plinth/modules/backups/templates/backups.html:49
+#: plinth/modules/backups/templates/backups.html:54
+#: plinth/modules/backups/templates/backups.html:57
 msgid "New backup"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:59
+#: plinth/modules/backups/templates/backups.html:61
 msgid ""
 "No apps that support backup are currently installed. Backup can be created "
 "after an app supporting backups is installed."
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:66
-msgid "Backup archives"
-msgstr "Резервные копии"
-
-#: plinth/modules/backups/templates/backups.html:68
+#: plinth/modules/backups/templates/backups.html:69
 msgid "No archives currently exist."
 msgstr "В настоящее время архивов нет."
 
-#: plinth/modules/backups/templates/backups.html:74
-#: plinth/modules/backups/templates/backups.html:109
+#: plinth/modules/backups/templates/backups.html:75
+#: plinth/modules/backups/templates/backups.html:110
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/backups/templates/backups_restore.html:34
 #: plinth/modules/ikiwiki/forms.py:34
@@ -202,26 +225,41 @@ msgstr "В настоящее время архивов нет."
 msgid "Name"
 msgstr "Имя"
 
-#: plinth/modules/backups/templates/backups.html:86
+#: plinth/modules/backups/templates/backups.html:87
 msgid "Export"
 msgstr "Экспортировать"
 
-#: plinth/modules/backups/templates/backups.html:100
-msgid "Exported backup archives"
-msgstr "Экспортированные резервные копии"
+#: plinth/modules/backups/templates/backups.html:101
+#, fuzzy
+#| msgid "Existing custom services"
+msgid "Existing backup files"
+msgstr "Существующие пользовательские службы"
 
-#: plinth/modules/backups/templates/backups.html:102
-msgid "No exported backup archives were found."
+#: plinth/modules/backups/templates/backups.html:103
+#, fuzzy
+#| msgid "No exported backup archives were found."
+msgid "No existing backup files were found."
 msgstr "Экспортированных резервных копий не найдено."
 
-#: plinth/modules/backups/templates/backups.html:108
-#: plinth/modules/backups/templates/backups_restore.html:33
-msgid "Location"
-msgstr "Местоположение"
+#: plinth/modules/backups/templates/backups.html:124
+#, fuzzy
+#| msgid "downloading"
+msgid "Download"
+msgstr "Загрузка"
 
-#: plinth/modules/backups/templates/backups.html:123
+#: plinth/modules/backups/templates/backups.html:128
 msgid "Restore"
 msgstr "Восстановить"
+
+#: plinth/modules/backups/templates/backups.html:139
+msgid "Upload a backup file"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:142
+#, fuzzy
+#| msgid "Exported backup archives"
+msgid "Upload backup file"
+msgstr "Экспортированные резервные копии"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -252,39 +290,57 @@ msgstr "Восстановить данные из этого архива?"
 msgid "Restore data from %(name)s"
 msgstr "Восстановить данные из %(name)s"
 
-#: plinth/modules/backups/views.py:61
+#: plinth/modules/backups/templates/backups_upload.html:37
+#, fuzzy
+#| msgid "Download my profile"
+msgid "Upload file"
+msgstr "Скачать мой профиль"
+
+#: plinth/modules/backups/views.py:45
+msgid "Upload backup"
+msgstr ""
+
+#: plinth/modules/backups/views.py:73
 msgid "Archive created."
 msgstr "Архив создан."
 
-#: plinth/modules/backups/views.py:66
+#: plinth/modules/backups/views.py:78
 #, fuzzy
 #| msgid "Backups"
 msgid "New Backup"
 msgstr "Резервные копии"
 
-#: plinth/modules/backups/views.py:90
+#: plinth/modules/backups/views.py:103
 msgid "Delete Archive"
 msgstr "Удалить архив"
 
-#: plinth/modules/backups/views.py:100
+#: plinth/modules/backups/views.py:113
 msgid "Archive deleted."
 msgstr "Архив удалён."
 
-#: plinth/modules/backups/views.py:110
+#: plinth/modules/backups/views.py:140
+msgid "Backup file uploaded."
+msgstr ""
+
+#: plinth/modules/backups/views.py:145
+msgid "Upload Backup File"
+msgstr ""
+
+#: plinth/modules/backups/views.py:163
 msgid "Archive exported."
 msgstr "Архив экспортирован."
 
-#: plinth/modules/backups/views.py:115
+#: plinth/modules/backups/views.py:168
 msgid "Export Archive"
 msgstr "Экспортировать архив"
 
-#: plinth/modules/backups/views.py:134
+#: plinth/modules/backups/views.py:187
 #, fuzzy
 #| msgid "Restored data from backup."
 msgid "Restored files from backup."
 msgstr "Данные из резервной копии восстановлены."
 
-#: plinth/modules/backups/views.py:156
+#: plinth/modules/backups/views.py:209
 msgid "Restore from backup"
 msgstr "Восстановить из резервной копии"
 
@@ -339,15 +395,15 @@ msgstr "Включить расширения безопасности сист�
 msgid "Configuration updated"
 msgstr "Конфигурация обновлена"
 
-#: plinth/modules/cockpit/__init__.py:37
+#: plinth/modules/cockpit/__init__.py:39 plinth/modules/cockpit/manifest.py:27
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:39
+#: plinth/modules/cockpit/__init__.py:41
 msgid "Server Administration"
 msgstr "Администрирование сервера"
 
-#: plinth/modules/cockpit/__init__.py:43
+#: plinth/modules/cockpit/__init__.py:45
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -360,7 +416,7 @@ msgstr ""
 "многих продвинутых функций, которые, как правило, не требуется. Веб-терминал "
 "на основе консоли управления также доступен."
 
-#: plinth/modules/cockpit/__init__.py:49
+#: plinth/modules/cockpit/__init__.py:51
 #, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -373,7 +429,7 @@ msgstr ""
 "a> {box_name}. Конфиденциальная информация и возможности системы доступны "
 "только группе администраторов."
 
-#: plinth/modules/cockpit/__init__.py:55
+#: plinth/modules/cockpit/__init__.py:57
 msgid "Currently only limited functionality is available."
 msgstr "В настоящее время доступен только ограниченный функционал."
 
@@ -384,22 +440,22 @@ msgstr "В настоящее время доступен только огра�
 msgid "Configure"
 msgstr "Настроить"
 
-#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:72
+#: plinth/modules/config/__init__.py:94 plinth/modules/config/forms.py:73
 #: plinth/modules/config/views.py:168
 #: plinth/modules/dynamicdns/dynamicdns.py:145
 msgid "Domain Name"
 msgstr "Доменное имя"
 
-#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:84
+#: plinth/modules/config/forms.py:42 plinth/modules/config/forms.py:85
 #: plinth/modules/dynamicdns/dynamicdns.py:148
 msgid "Invalid domain name"
 msgstr "Недопустимое имя домена"
 
-#: plinth/modules/config/forms.py:59
+#: plinth/modules/config/forms.py:60
 msgid "Hostname"
 msgstr "Имя хоста"
 
-#: plinth/modules/config/forms.py:61
+#: plinth/modules/config/forms.py:62
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -412,11 +468,11 @@ msgstr ""
 "букв или цифр, внутри так же могут быть цифры, буквы или дефисы. Общая "
 "длинна должна быть не более 63 символов."
 
-#: plinth/modules/config/forms.py:68
+#: plinth/modules/config/forms.py:69
 msgid "Invalid hostname"
 msgstr "Недопустимое имя хоста"
 
-#: plinth/modules/config/forms.py:74
+#: plinth/modules/config/forms.py:75
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -432,11 +488,11 @@ msgstr ""
 "должны быть 63 символов или меньше. Общая длина имени домена должно быть 253 "
 "символов или меньше."
 
-#: plinth/modules/config/forms.py:88
+#: plinth/modules/config/forms.py:89
 msgid "Default App"
 msgstr "Приложение по умолчанию"
 
-#: plinth/modules/config/forms.py:90
+#: plinth/modules/config/forms.py:91
 #, python-brace-format
 msgid ""
 "Choose the default web application that must be served when someone visits "
@@ -547,7 +603,7 @@ msgstr ""
 "Установить максимальный размер файлов, которые могут быть загружены на "
 "Coquelicot."
 
-#: plinth/modules/coquelicot/manifest.py:23
+#: plinth/modules/coquelicot/manifest.py:24
 msgid "coquelicot"
 msgstr "Coquelicot"
 
@@ -1302,7 +1358,7 @@ msgid "Documentation"
 msgstr "Документация"
 
 #: plinth/modules/help/help.py:40 plinth/modules/networks/forms.py:62
-#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:138
+#: plinth/modules/networks/forms.py:102 plinth/templates/index.html:142
 msgid "Manual"
 msgstr "Руководство"
 
@@ -1667,11 +1723,11 @@ msgstr ""
 "Запустите Gobby, выберите \"Подключиться к серверу\"  и введите доменное имя "
 "вашего {box_name}."
 
-#: plinth/modules/jsxc/__init__.py:36 plinth/modules/jsxc/manifest.py:24
+#: plinth/modules/jsxc/__init__.py:37 plinth/modules/jsxc/manifest.py:25
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:38
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Чат-клиент"
 
@@ -2071,7 +2127,7 @@ msgstr "Публичная регистрация отключена"
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:142
+#: plinth/modules/mediawiki/__init__.py:35 plinth/templates/index.html:146
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2425,7 +2481,7 @@ msgstr "Опубликованый ключ на сервере ключей."
 msgid "Error occurred while publishing key."
 msgstr "Произошла ошибка при публикации ключа."
 
-#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:26
+#: plinth/modules/mumble/__init__.py:33 plinth/modules/mumble/manifest.py:27
 msgid "Mumble"
 msgstr "Mumble"
 
@@ -2451,11 +2507,11 @@ msgstr ""
 "64738. На <a href=\"http://mumble.info\"> Клиенты</a> вы можете найти "
 "клиенты для вашего компьютера и Android устройств."
 
-#: plinth/modules/mumble/manifest.py:51
+#: plinth/modules/mumble/manifest.py:52
 msgid "Plumble"
 msgstr "Plumble"
 
-#: plinth/modules/mumble/manifest.py:65
+#: plinth/modules/mumble/manifest.py:66
 msgid "Mumblefly"
 msgstr "Mumblefly"
 
@@ -3189,15 +3245,15 @@ msgstr "Установка завершена."
 msgid "Setup failed."
 msgstr "Установка не удалась."
 
-#: plinth/modules/pagekite/__init__.py:43
+#: plinth/modules/pagekite/__init__.py:46
 msgid "PageKite"
 msgstr "PаgeKite"
 
-#: plinth/modules/pagekite/__init__.py:45
+#: plinth/modules/pagekite/__init__.py:48
 msgid "Public Visibility"
 msgstr "Публичная видимость"
 
-#: plinth/modules/pagekite/__init__.py:49
+#: plinth/modules/pagekite/__init__.py:52
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -3210,19 +3266,19 @@ msgstr ""
 "недоступны из остальной части интернета. Это включает в себя следующие "
 "ситуации:"
 
-#: plinth/modules/pagekite/__init__.py:55
+#: plinth/modules/pagekite/__init__.py:58
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} ограничен брандмауэром."
 
-#: plinth/modules/pagekite/__init__.py:58
+#: plinth/modules/pagekite/__init__.py:61
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} подключен к маршрутизатору (беспроводному), который вы не "
 "контролируете."
 
-#: plinth/modules/pagekite/__init__.py:60
+#: plinth/modules/pagekite/__init__.py:63
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -3230,7 +3286,7 @@ msgstr ""
 "Ваш провайдер не предоставляет вам внешний IP-адрес и вместо этого "
 "обеспечивает подключение к Интернету через NAT."
 
-#: plinth/modules/pagekite/__init__.py:62
+#: plinth/modules/pagekite/__init__.py:65
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -3238,11 +3294,11 @@ msgstr ""
 "Ваш провайдер не предоставляет вам статический IP-адрес, и ваш-IP адрес "
 "изменяется каждый раз при подключении к Интернету."
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:67
 msgid "Your ISP limits incoming connections."
 msgstr "Ваш провайдер ограничивает входящие соединения."
 
-#: plinth/modules/pagekite/__init__.py:66
+#: plinth/modules/pagekite/__init__.py:69
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP-address limitations by using a "
@@ -3605,15 +3661,15 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Завершить работу сейчас"
 
-#: plinth/modules/privoxy/__init__.py:38
+#: plinth/modules/privoxy/__init__.py:40
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:40
+#: plinth/modules/privoxy/__init__.py:42
 msgid "Web Proxy"
 msgstr "Web-прокси"
 
-#: plinth/modules/privoxy/__init__.py:43
+#: plinth/modules/privoxy/__init__.py:45
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -3624,7 +3680,7 @@ msgstr ""
 "HTTP, контроля доступа и удаления рекламы и прочего неприятного мусора в "
 "интернете. "
 
-#: plinth/modules/privoxy/__init__.py:48
+#: plinth/modules/privoxy/__init__.py:50
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -3639,12 +3695,12 @@ msgstr ""
 "config.privoxy.org\">http://config.privoxy.org</a> или <a href=\"http://p.p"
 "\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:142
+#: plinth/modules/privoxy/__init__.py:144
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Доступ к {url} с прокси {proxy} на tcp{kind}"
 
-#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:24
+#: plinth/modules/quassel/__init__.py:40 plinth/modules/quassel/manifest.py:25
 msgid "Quassel"
 msgstr "Quassel"
 
@@ -3681,7 +3737,7 @@ msgstr ""
 "downloads\">для десктопов</a> и <a href=\"http://quasseldroid.iskrembilen."
 "com/\">мобильных устройств</a>."
 
-#: plinth/modules/quassel/manifest.py:48
+#: plinth/modules/quassel/manifest.py:49
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
@@ -3884,7 +3940,7 @@ msgstr ""
 "интерфейсе reStore</a>."
 
 #: plinth/modules/roundcube/__init__.py:33
-#: plinth/modules/roundcube/manifest.py:23
+#: plinth/modules/roundcube/manifest.py:24
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -3935,7 +3991,7 @@ msgstr ""
 "security/lesssecureapps\" >https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:23
+#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:24
 msgid "Searx"
 msgstr "Searx"
 
@@ -4053,15 +4109,15 @@ msgstr ""
 "на веб-сервере. Обратите внимание, что Shaarli поддерживает только одну "
 "учетную запись для начальной установки."
 
-#: plinth/modules/shadowsocks/__init__.py:31
+#: plinth/modules/shadowsocks/__init__.py:33
 msgid "Shadowsocks"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:33
+#: plinth/modules/shadowsocks/__init__.py:35
 msgid "Socks5 Proxy"
 msgstr "Socks5 Прокси"
 
-#: plinth/modules/shadowsocks/__init__.py:42
+#: plinth/modules/shadowsocks/__init__.py:44
 msgid ""
 "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
 "your Internet traffic. It can be used to bypass Internet filtering and "
@@ -4071,7 +4127,7 @@ msgstr ""
 "защитить ваш интернет-трафик. Он может использоваться для обхода Интернет-"
 "фильтрации и цензуры."
 
-#: plinth/modules/shadowsocks/__init__.py:46
+#: plinth/modules/shadowsocks/__init__.py:48
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -4083,7 +4139,7 @@ msgstr ""
 "к серверу Shadowsocks. Он также запускать SOCKS5 прокси.Локальные устройства "
 "могут подключиться к этому прокси, и их данные будут зашифрованы."
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:53
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -4118,11 +4174,11 @@ msgstr ""
 msgid "Encryption method. Must match setting on server."
 msgstr "Метод шифрования. Должен соответствовать параметру на сервере."
 
-#: plinth/modules/sharing/__init__.py:31
+#: plinth/modules/sharing/__init__.py:33
 msgid "Sharing"
 msgstr "Общий доступ"
 
-#: plinth/modules/sharing/__init__.py:35
+#: plinth/modules/sharing/__init__.py:37
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -5000,7 +5056,7 @@ msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "Порт Tor SOCKS вашего %(box_name)s доступен по порту TCP 9050."
 
 #: plinth/modules/transmission/__init__.py:38
-#: plinth/modules/transmission/manifest.py:23
+#: plinth/modules/transmission/manifest.py:24
 msgid "Transmission"
 msgstr "Transmissiоn"
 
@@ -5504,7 +5560,7 @@ msgstr "Выберите язык"
 msgid "Log in"
 msgstr "Войти"
 
-#: plinth/templates/base.html:250 plinth/templates/index.html:178
+#: plinth/templates/base.html:250 plinth/templates/index.html:182
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -5590,7 +5646,7 @@ msgstr ""
 msgid "Configure &raquo;"
 msgstr "Настроить &raquo;"
 
-#: plinth/templates/index.html:118
+#: plinth/templates/index.html:122
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -5602,7 +5658,7 @@ msgstr ""
 "Он предоставляет онлайн инструменты онлайн-коммуникации, уважающих вашу "
 "приватность и владение данными."
 
-#: plinth/templates/index.html:127
+#: plinth/templates/index.html:131
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -5613,27 +5669,27 @@ msgstr ""
 "программное обеспечение, выпускаемое под лицензией GNU Affero General Public "
 "License, Версии 3 или старше."
 
-#: plinth/templates/index.html:147
+#: plinth/templates/index.html:151
 msgid "Homepage"
 msgstr "Домашняя страница"
 
-#: plinth/templates/index.html:150
+#: plinth/templates/index.html:154
 msgid "Source Code"
 msgstr "Исходный код"
 
-#: plinth/templates/index.html:153
+#: plinth/templates/index.html:157
 msgid "Donate"
 msgstr "Пожертвовать"
 
-#: plinth/templates/index.html:157
+#: plinth/templates/index.html:161
 msgid "FreedomBox Foundation"
 msgstr "Фонд FrеedomBox"
 
-#: plinth/templates/index.html:164
+#: plinth/templates/index.html:168
 msgid "IRC Chatroom"
 msgstr "Чат IRC"
 
-#: plinth/templates/index.html:169
+#: plinth/templates/index.html:173
 msgid "Mailing list"
 msgstr "Список рассылки"
 
