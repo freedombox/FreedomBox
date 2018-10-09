@@ -115,16 +115,21 @@ def setup_server():
 
     custom_static_dir = cfg.custom_static_dir
     custom_static_url = '/plinth/custom/static'
-    config = {
-        '/': {
-            'tools.staticdir.root': custom_static_dir,
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': '.'
+    if os.path.exists(custom_static_dir):
+        config = {
+            '/': {
+                'tools.staticdir.root': custom_static_dir,
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': '.'
+            }
         }
-    }
-    cherrypy.tree.mount(None, custom_static_url, config)
-    logger.debug('Serving custom static directory %s on %s', custom_static_dir,
-                 custom_static_url)
+        cherrypy.tree.mount(None, custom_static_url, config)
+        logger.debug('Serving custom static directory %s on %s',
+                     custom_static_dir, custom_static_url)
+    else:
+        logger.debug(
+            'Not serving custom static directory %s on %s, '
+            'directory does not exist', custom_static_dir, custom_static_url)
 
     js_dir = '/usr/share/javascript'
     js_url = '/javascript'
