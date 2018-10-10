@@ -25,9 +25,7 @@ from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
-from plinth.errors import PlinthError
 from plinth.menu import main_menu
-from plinth.modules import storage
 
 from . import api
 
@@ -43,8 +41,6 @@ description = [
 
 service = None
 
-BACKUP_FOLDER_NAME = 'FreedomBox-backups'
-DEFAULT_BACKUP_LOCATION = ('/var/lib/freedombox/', _('Root Filesystem'))
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 REPOSITORY = '/var/lib/freedombox/borgbackup'
 SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
@@ -118,74 +114,14 @@ def delete_tmp_backup_file():
         os.remove(TMP_BACKUP_PATH)
 
 
-def export_archive(name, location, tmp_dir=False):
-    # TODO: find a better solution for distinguishing exports to /tmp
-    if tmp_dir:
-        filepath = TMP_BACKUP_PATH
-    else:
-        filename = get_valid_filename(name) + '.tar.gz'
-        filepath = get_exported_archive_path(location, filename)
-    # TODO: that's a full path, not a filename; rename argument
-    actions.superuser_run('backups',
-                          ['export-tar', '--name', name, '--filename', filepath])
-
-
-def get_export_locations():
-    """Return a list of storage locations for exported backup archives."""
-    locations = [DEFAULT_BACKUP_LOCATION]
-    if storage.is_running():
-        devices = storage.udisks2.list_devices()
-        for device in devices:
-            if 'mount_points' in device and len(device['mount_points']) > 0:
-                location = {
-                    'path': device['mount_points'][0],
-                    'label': device['label'] or device['device'],
-                    'device': device['device']
-                }
-                locations.append(location)
-
-    return locations
-
-
-def get_location_path(device, locations=None):
-    """Returns the location path given a disk label"""
-    if locations is None:
-        locations = get_export_locations()
-
-    for location in locations:
-        if location['device'] == device:
-            return location['path']
-
-    raise PlinthError('Could not find path of location %s' % device)
-
-
-def get_export_files():
-    """Return a dict of exported backup archives found in storage locations."""
-    locations = get_export_locations()
-    export_files = []
-    for location in locations:
-        output = actions.superuser_run(
-            'backups', ['list-exports', '--location', location['path']])
-        location['files'] = json.loads(output)
-        export_files.append(location)
-
-    return export_files
+def export_archive(name, filepath=TMP_BACKUP_PATH):
+    arguments = ['export-tar', '--name', name, '--filename', filepath]
+    actions.superuser_run('backups', arguments)
 
 
 def get_archive_path(archive_name):
     """Get path of an archive"""
     return "::".join([REPOSITORY, archive_name])
-
-
-def get_exported_archive_path(location, archive_name):
-    """Get path of an exported archive"""
-    return os.path.join(location, BACKUP_FOLDER_NAME, archive_name)
-
-
-def find_exported_archive(device, archive_name):
-    """Return the full path for the exported archive file."""
-    location_path = get_location_path(device)
-    return get_exported_archive_path(location_path, archive_name)
 
 
 def get_archive_apps(path):
@@ -195,10 +131,10 @@ def get_archive_apps(path):
     return output.splitlines()
 
 
-def get_export_apps(filename):
+def get_apps_of_exported_archive(path):
     """Get list of apps included in exported archive file."""
-    output = actions.superuser_run('backups',
-                                   ['get-export-apps', '--filename', filename])
+    arguments = ['get-apps-of-exported-archive', '--path', path]
+    output = actions.superuser_run('backups', arguments)
     return output.splitlines()
 
 
@@ -222,13 +158,6 @@ def restore_from_tmp(apps=None):
     """Restore files from temporary backup file"""
     api.restore_apps(_restore_exported_archive_handler, app_names=apps,
                      create_subvolume=False, backup_file=TMP_BACKUP_PATH)
-
-
-def restore_exported(device, archive_name, apps=None):
-    """Restore files from exported backup archive."""
-    filename = find_exported_archive(device, archive_name)
-    api.restore_apps(_restore_exported_archive_handler, app_names=apps,
-                     create_subvolume=False, backup_file=filename)
 
 
 def restore(archive_path, apps=None):

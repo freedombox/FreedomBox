@@ -27,6 +27,12 @@
 {% block content %}
 
   <h3>{{ title }}</h3>
+  <p>
+  {% blocktrans %}
+  You can choose the apps you wish to import after uploading a backup file.
+  {% endblocktrans %}
+  </p>
+  <br />
 
   <form class="form" enctype="multipart/form-data" method="post">
       {% csrf_token %}

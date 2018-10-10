@@ -21,7 +21,6 @@ Configuration helper for backups.
 """
 
 import argparse
-import glob
 import json
 import os
 import shutil
@@ -60,16 +59,11 @@ def parse_arguments():
     export_tar.add_argument('--name', help='Archive name', required=True)
     export_tar.add_argument('--filename', help='Tarball file name', required=True)
 
-    list_exports = subparsers.add_parser(
-        'list-exports', help='List exported backup archive files')
-    list_exports.add_argument('--location', required=True,
-                              help='location to check')
-
-    get_export_apps = subparsers.add_parser(
-        'get-export-apps',
+    get_apps_of_exported_archive = subparsers.add_parser(
+        'get-apps-of-exported-archive',
         help='Get list of apps included in exported archive file')
-    get_export_apps.add_argument(
-        '--filename', help='Tarball file name', required=True)
+    get_apps_of_exported_archive.add_argument(
+        '--path', help='Tarball file path', required=True)
 
     get_archive_apps = subparsers.add_parser(
         'get-archive-apps',
@@ -80,9 +74,8 @@ def parse_arguments():
     restore_exported_archive = subparsers.add_parser(
         'restore-exported-archive',
         help='Restore files from an exported archive')
-    # TODO: rename filename to filepath (or just path)
-    restore_exported_archive.add_argument('--filename',
-            help='Tarball file name', required=True)
+    restore_exported_archive.add_argument('--path',
+            help='Tarball file path', required=True)
 
     restore_archive = subparsers.add_parser(
         'restore-archive', help='Restore files from an archive')
@@ -184,21 +177,6 @@ def subcommand_export_tar(arguments):
         pass
 
 
-def subcommand_list_exports(arguments):
-    """List exported backup archive files."""
-    exports = []
-    path = arguments.location
-    if path[-1] != '/':
-        path += '/'
-
-    path += 'FreedomBox-backups/'
-    if os.path.exists(path):
-        for filename in glob.glob(path + '*.tar.gz'):
-            exports.append(os.path.basename(filename))
-
-    print(json.dumps(exports))
-
-
 def _read_archive_file(archive, filepath):
     """Read the content of a file inside an archive"""
     arguments = ['borg', 'extract', archive, filepath, '--stdout']
@@ -225,10 +203,10 @@ def subcommand_get_archive_apps(arguments):
             print(app['name'])
 
 
-def subcommand_get_export_apps(arguments):
+def subcommand_get_apps_of_exported_archive(arguments):
     """Get list of apps included in exported archive file."""
     manifest = None
-    with tarfile.open(arguments.filename) as t:
+    with tarfile.open(arguments.path) as t:
         filenames = t.getnames()
         for name in filenames:
             if 'var/lib/plinth/backups-manifests/' in name \
@@ -257,7 +235,7 @@ def subcommand_restore_exported_archive(arguments):
     locations_data = ''.join(sys.stdin)
     locations = json.loads(locations_data)
 
-    with tarfile.open(arguments.filename) as tar_handle:
+    with tarfile.open(arguments.path) as tar_handle:
         for member in tar_handle.getmembers():
             path = '/' + member.name
             if path in locations['files']:

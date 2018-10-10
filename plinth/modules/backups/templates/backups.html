@@ -39,31 +39,7 @@
     <p>{{ paragraph|safe }}</p>
   {% endfor %}
 
-  <h3>{% trans 'Backup archives' %}</h3>
-
-  {% if available_apps %}
-    <p>
-      <a title="{% trans 'New backup' %}"
-         role="button" class="btn btn-primary"
-         href="{% url 'backups:create' %}">
-        {% trans 'New backup' %}
-      </a>
-    </p>
-  {% else %}
-    <p>
-      <a title="{% trans 'New backup' %}"
-         role="button" class="btn btn-primary disabled"
-         href="{% url 'backups:create' %}">
-        {% trans 'New backup' %}
-      </a>
-    </p>
-    <p>
-      {% blocktrans trimmed %}
-        No apps that support backup are currently installed. Backup can be
-        created after an app supporting backups is installed.
-      {% endblocktrans %}
-    </p>
-  {% endif %}
+  <h3>{% trans 'Existing backups' %}</h3>
 
   {% if not archives %}
     <p>{% trans 'No archives currently exist.' %}</p>
@@ -82,12 +58,6 @@
           <tr id="archive-{{ archive.name }}" class="archive">
             <td class="archive-name">{{ archive.name }}</td>
             <td class="archive-operations">
-              <!-- TODO: use or remove
-              <a class="archive-export btn btn-sm btn-default"
-                 href="{% url 'backups:export' archive.name %}">
-                {% trans "Export" %}
-              </a>
-              -->
               <a class="archive-export btn btn-sm btn-default" target="_blank"
                  href="{% url 'backups:export-and-download' archive.name %}">
                 {% trans "Download" %}
@@ -107,50 +77,5 @@
       </tbody>
     </table>
   {% endif %}
-
-  <h3>{% trans 'Existing backup files' %}</h3>
-  {% if not exports %}
-    <p>{% trans 'No existing backup files were found.' %}</p>
-  {% else %}
-    <table class="table table-bordered table-condensed table-striped"
-           id="exports-list">
-      <thead>
-        <tr>
-          <th>{% trans "Location" %}</th>
-          <th>{% trans "Name" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for export in exports %}
-          {% for name in export.files %}
-            <tr id="export-{{ label }}-{{ name }}" class="export">
-              <td class="export-label">{{ export.label }}</td>
-              <td class="export-name">{{ name }}</td>
-              <td class="export-operations">
-                <a class="download btn btn-sm btn-default" target="_blank"
-                   href="{% url 'backups:download' export.device|urlencode:'' name|urlencode:'' %}">
-                  {% trans "Download" %}
-                </a>
-                <a class="restore btn btn-sm btn-default"
-                   href="{% url 'backups:restore' export.device|urlencode:'' name|urlencode:'' %}">
-                  {% trans "Restore" %}
-                </a>
-              </td>
-            </tr>
-          {% endfor %}
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}
-
-  <p>
-    <a title="{% trans 'Upload a backup file' %}"
-       role="button" class="btn btn-primary"
-       href="{% url 'backups:upload' %}">
-      {% trans 'Upload backup file' %}
-    </a>
-  </p>
 
 {% endblock %}

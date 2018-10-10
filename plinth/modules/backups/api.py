@@ -113,6 +113,7 @@ class Packet:
         """
         self.operation = operation
         self.scope = scope
+        # TODO: do we need root if we have the path?
         self.root = root
         self.apps = apps
         # TODO: label is an archive path -- rename

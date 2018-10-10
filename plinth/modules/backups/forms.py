@@ -18,16 +18,12 @@
 Forms for backups module.
 """
 
-import os
-
 from django import forms
 from django.core import validators
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from . import api
-from . import get_export_locations, get_exported_archive_path, \
-        get_location_path
 
 
 def _get_app_choices(apps):
@@ -63,32 +59,6 @@ class CreateArchiveForm(forms.Form):
         self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
-class ExportArchiveForm(forms.Form):
-    disk = forms.ChoiceField(
-        label=_('Disk'), widget=forms.RadioSelect(),
-        help_text=_('Disk or removable storage where the backup archive will '
-                    'be saved.'))
-
-    def __init__(self, *args, **kwargs):
-        """Initialize the form with disk choices."""
-        super().__init__(*args, **kwargs)
-        self.fields['disk'].choices = [(location['device'], location['label'])
-                                       for location in get_export_locations()]
-
-
-class RestoreFromTmpForm(forms.Form):
-    selected_apps = forms.MultipleChoiceField(
-        label=_('Restore apps'),
-        widget=forms.CheckboxSelectMultiple)
-
-    def __init__(self, *args, **kwargs):
-        """Initialize the form with selectable apps."""
-        apps = kwargs.pop('apps')
-        super().__init__(*args, **kwargs)
-        self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app.name for app in apps]
-
-
 class RestoreForm(forms.Form):
     selected_apps = forms.MultipleChoiceField(
         label=_('Restore apps'),
@@ -103,40 +73,17 @@ class RestoreForm(forms.Form):
         self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
-class UploadForm(forms.Form):
-    location = forms.ChoiceField(
-        choices=(), label=_('Location'), initial='', widget=forms.Select(),
-        required=True, help_text=_('Location to upload the archive to'))
-    file = forms.FileField(
-        label=_('Upload File'), required=True, validators=[
-            FileExtensionValidator(['gz'],
-                                   'Backup files have to be in .tar.gz format')
-        ], help_text=_('Select the backup file you want to upload'))
+class RestoreFromTmpForm(forms.Form):
+    selected_apps = forms.MultipleChoiceField(
+        label=_('Restore apps'),
+        widget=forms.CheckboxSelectMultiple)
 
     def __init__(self, *args, **kwargs):
-        """Initialize the form with location choices."""
+        """Initialize the form with selectable apps."""
+        apps = kwargs.pop('apps')
         super().__init__(*args, **kwargs)
-        locations = get_export_locations()
-        # users should only be able to select a location name -- don't
-        # provide paths as a form input for security reasons
-        location_labels = [(location['device'], location['label'])
-                           for location in locations]
-        self.fields['location'].choices = location_labels
-
-    def clean(self):
-        """Check that the uploaded file does not yet exist."""
-        cleaned_data = super().clean()
-        file = cleaned_data.get('file')
-        location_device = cleaned_data.get('location')
-        location_path = get_location_path(location_device)
-        # if other errors occured before, 'file' won't be in cleaned_data
-        if (file and file.name):
-            filepath = get_exported_archive_path(location_path, file.name)
-            if os.path.exists(filepath):
-                raise forms.ValidationError(
-                    "File %s already exists" % file.name)
-            else:
-                self.cleaned_data.update({'filepath': filepath})
+        self.fields['selected_apps'].choices = _get_app_choices(apps)
+        self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
 class UploadToTmpForm(forms.Form):
