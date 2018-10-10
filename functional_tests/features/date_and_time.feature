@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@essential @date-and-time @system
+@essential @date-and-time @system @backups
 Feature: Date and Time
   Configure time zone and network time service.
 
@@ -35,3 +35,11 @@ Scenario: Disable network time application
 Scenario: Set timezone
   When I set the time zone to Africa/Abidjan
   Then the time zone should be Africa/Abidjan
+
+Scenario: Backup and restore datetime
+  When I set the time zone to Africa/Accra
+  And I create a backup of the datetime app data
+  And I set the time zone to Africa/Addis_Ababa
+  And I export the datetime app data backup
+  And I restore the datetime app data backup
+  Then the time zone should be Africa/Accra

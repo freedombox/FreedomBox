@@ -25,6 +25,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import service as service_module
 from plinth.menu import main_menu
 
+from .manifest import backup
+
 version = 1
 
 is_essential = True
