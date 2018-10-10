@@ -31,3 +31,7 @@ Scenario: Disable network time application
   Given the network time application is enabled
   When I disable the network time application
   Then the network time service should not be running
+
+Scenario: Set timezone
+  When I set the time zone to Africa/Abidjan
+  Then the time zone should be Africa/Abidjan

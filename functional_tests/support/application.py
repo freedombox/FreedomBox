@@ -322,3 +322,16 @@ def ikiwiki_wiki_exists(browser):
     browser.find_link_by_href('/plinth/apps/ikiwiki/manage/').first.click()
     wiki = browser.find_link_by_href('/ikiwiki/wiki')
     return bool(wiki)
+
+
+def time_zone_set(browser, time_zone):
+    """Set the system time zone."""
+    interface.nav_to_module(browser, 'datetime')
+    browser.select('time_zone', time_zone)
+    interface.submit(browser, form_class='form-configuration')
+
+
+def time_zone_get(browser):
+    """Set the system time zone."""
+    interface.nav_to_module(browser, 'datetime')
+    return browser.find_by_name('time_zone').first.value

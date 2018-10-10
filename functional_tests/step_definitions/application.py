@@ -47,6 +47,16 @@ def ntp_is_disabled(browser):
     application.disable(browser, 'ntp')
 
 
+@when(parsers.parse('I set the time zone to {time_zone:S}'))
+def time_zone_set(browser, time_zone):
+    application.time_zone_set(browser, time_zone)
+
+
+@then(parsers.parse('the time zone should be {time_zone:S}'))
+def time_zone_assert(browser, time_zone):
+    assert time_zone == application.time_zone_get(browser)
+
+
 @given(parsers.parse('the service discovery application is enabled'))
 def avahi_is_enabled(browser):
     application.enable(browser, 'avahi')
