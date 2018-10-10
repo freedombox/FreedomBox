@@ -149,7 +149,17 @@ def _extract(archive_path, destination, locations=None):
         print(borg_call)
     try:
         os.chdir(os.path.expanduser(destination))
-        subprocess.run(borg_call, env=env, check=True)
+        # TODO: with python 3.7 use subprocess.run with the 'capture_output'
+        # argument
+        process = subprocess.run(borg_call, env=env,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        if process.returncode != 0:
+            error = process.stderr.decode()
+            # Don't fail on the borg error when no files were matched
+            if "never matched" not in error:
+                raise subprocess.CalledProcessError(process.returncode,
+                                                    process.args)
     finally:
         os.chdir(prev_dir)
 
