@@ -115,7 +115,7 @@ def delete_tmp_backup_file():
 
 
 def export_archive(name, filepath=TMP_BACKUP_PATH):
-    arguments = ['export-tar', '--name', name, '--filename', filepath]
+    arguments = ['export-tar', '--archive', name, '--filepath', filepath]
     actions.superuser_run('backups', arguments)
 
 

@@ -56,8 +56,10 @@ def parse_arguments():
 
     export_tar = subparsers.add_parser('export-tar',
                                    help='Export archive contents as tarball')
-    export_tar.add_argument('--name', help='Archive name', required=True)
-    export_tar.add_argument('--filename', help='Tarball file name', required=True)
+    export_tar.add_argument('--archive', help='Archive name',
+                            required=True)
+    export_tar.add_argument('--filepath', help='Destination tarball file path',
+                            required=True)
 
     get_apps_of_exported_archive = subparsers.add_parser(
         'get-apps-of-exported-archive',
@@ -137,9 +139,9 @@ def _extract(archive_path, destination, locations=None):
     prev_dir = os.getcwd()
     env = dict(os.environ, LANG='C.UTF-8')
     borg_call = ['borg', 'extract', archive_path]
+    # do not extract any files when we get an empty locations list
     if locations is not None:
-        borg_call.append(locations)
-        print(borg_call)
+        borg_call.extend(locations)
     try:
         os.chdir(os.path.expanduser(destination))
         # TODO: with python 3.7 use subprocess.run with the 'capture_output'
@@ -159,16 +161,13 @@ def _extract(archive_path, destination, locations=None):
 
 def subcommand_export_tar(arguments):
     """Export archive contents as tarball."""
-    # TODO: if this is only used for files in /tmp, add checks to verify that
-    # arguments.filename is within /tmp (does this actually increase security?)
-    # TODO: arguments.filename is not a filename but a path
-    path = os.path.dirname(arguments.filename)
-    if not os.path.exists(path):
-        os.makedirs(path)
+    directory, filename = os.path.split(arguments.filepath)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
     subprocess.run([
-        'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
-        arguments.filename
+        'borg', 'export-tar', REPOSITORY + '::' + arguments.archive,
+        arguments.filepath
     ], check=True)
 
     try:
@@ -223,11 +222,11 @@ def subcommand_get_apps_of_exported_archive(arguments):
 def subcommand_restore_archive(arguments):
     """Restore files from an archive."""
     locations_data = ''.join(sys.stdin)
-    locations = json.loads(locations_data)
-
-    locations_string = " ".join(locations['directories'])
-    locations_string += " ".join(locations['files'])
-    _extract(arguments.path, arguments.destination, locations=locations_string)
+    _locations = json.loads(locations_data)
+    locations = _locations['directories'] + _locations['files']
+    locations = [os.path.relpath(location, '/') for location in locations]
+    _extract(arguments.path, arguments.destination,
+             locations=locations)
 
 
 def subcommand_restore_exported_archive(arguments):
