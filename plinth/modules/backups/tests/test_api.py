@@ -26,7 +26,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from plinth import cfg, module_loader
 from plinth.errors import PlinthError
 
-from .. import api, forms, get_export_locations, get_location_path
+from .. import api, forms, get_location_path
 
 # pylint: disable=protected-access
 
@@ -136,17 +136,6 @@ class TestBackupProcesses(unittest.TestCase):
             api.BackupApp('c', apps[2][1])
         ]
         self.assertEqual(returned_apps, expected_apps)
-
-    @staticmethod
-    def test_export_locations():
-        """Check get_export_locations returns a list of locations."""
-        locations = get_export_locations()
-        assert locations
-        for location in locations:
-            assert isinstance(location, dict)
-            assert isinstance(location['path'], str)
-            assert isinstance(location['device'], str)
-            assert str(location['label'])
 
     @staticmethod
     @patch('plinth.module_loader.loaded_modules.items')
