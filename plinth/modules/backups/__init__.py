@@ -43,10 +43,10 @@ service = None
 
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 REPOSITORY = '/var/lib/freedombox/borgbackup'
-SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
-# default backup path for temporary actions like imports or download
-TMP_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
 # session variable name that stores when a backup file should be deleted
+SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
+# default backup path for temporary backup files during down- or upload
+UPLOAD_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
 
 
 def init():
@@ -105,17 +105,20 @@ def create_archive(name, app_names):
 
 
 def delete_archive(name):
-    # TODO: is name actually a path?
     actions.superuser_run('backups', ['delete', '--name', name])
 
 
-def delete_tmp_backup_file():
-    if os.path.isfile(TMP_BACKUP_PATH):
-        os.remove(TMP_BACKUP_PATH)
+def delete_upload_backup_file():
+    if os.path.isfile(UPLOAD_BACKUP_PATH):
+        os.remove(UPLOAD_BACKUP_PATH)
 
 
-def export_archive(name, filepath=TMP_BACKUP_PATH):
-    arguments = ['export-tar', '--archive', name, '--filepath', filepath]
+def export_archive(name, filepath=UPLOAD_BACKUP_PATH):
+    """Export an archive as .tar.gz file
+
+    name: name of the repository (w/o path)
+    """
+    arguments = ['export-tar', '--name', name, '--filepath', filepath]
     actions.superuser_run('backups', arguments)
 
 
@@ -131,9 +134,9 @@ def get_archive_apps(path):
     return output.splitlines()
 
 
-def get_apps_of_exported_archive(path):
+def get_exported_archive_apps(path):
     """Get list of apps included in exported archive file."""
-    arguments = ['get-apps-of-exported-archive', '--path', path]
+    arguments = ['get-exported-archive-apps', '--path', path]
     output = actions.superuser_run('backups', arguments)
     return output.splitlines()
 
@@ -154,10 +157,10 @@ def _restore_archive_handler(packet):
                 packet.label, '--destination', '/'], input=locations_data.encode())
 
 
-def restore_from_tmp(apps=None):
-    """Restore files from temporary backup file"""
+def restore_from_upload(apps=None):
+    """Restore files from (uploaded) eported backup file"""
     api.restore_apps(_restore_exported_archive_handler, app_names=apps,
-                     create_subvolume=False, backup_file=TMP_BACKUP_PATH)
+                     create_subvolume=False, backup_file=UPLOAD_BACKUP_PATH)
 
 
 def restore(archive_path, apps=None):

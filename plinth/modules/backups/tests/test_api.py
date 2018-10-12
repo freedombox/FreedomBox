@@ -24,9 +24,8 @@ from unittest.mock import MagicMock, call, patch
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from plinth import cfg, module_loader
-from plinth.errors import PlinthError
 
-from .. import api, forms, get_location_path
+from .. import api, forms
 
 # pylint: disable=protected-access
 
@@ -244,35 +243,16 @@ class TestBackupProcesses(unittest.TestCase):
 class TestBackupModule(unittest.TestCase):
     """Tests of the backups django module, like views or forms."""
 
-    def test_get_location_path(self):
-        """Test the 'get_location_path' method"""
-        locations = [{
-            'path': '/var/www',
-            'device': '/dummy/device'
-        }, {
-            'path': '/etc',
-            'device': '/dangerous'
-        }]
-        location_path = get_location_path('/dummy/device', locations)
-        self.assertEqual(location_path, locations[0]['path'])
-        # verify that an unknown location raises an error
-        with self.assertRaises(PlinthError):
-            get_location_path('/unknown/device', locations)
-
     def test_file_upload(self):
-        locations = get_export_locations()
-        location_name = locations[0]['device']
-        post_data = {'location': location_name}
-
         # posting a video should fail
         video_file = SimpleUploadedFile("video.mp4", b"file_content",
                                         content_type="video/mp4")
-        form = forms.UploadForm(post_data, {'file': video_file})
+        form = forms.UploadForm({}, {'file': video_file})
         self.assertFalse(form.is_valid())
 
         # posting an archive file should work
         archive_file = SimpleUploadedFile("backup.tar.gz", b"file_content",
                                           content_type="application/gzip")
-        form = forms.UploadForm(post_data, {'file': archive_file})
+        form = forms.UploadForm({}, {'file': archive_file})
         form.is_valid()
         self.assertTrue(form.is_valid())

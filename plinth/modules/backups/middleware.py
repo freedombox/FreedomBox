@@ -16,8 +16,7 @@
 #
 
 """
-Django middleware to redirect to firstboot wizard if it has not be run
-yet.
+Django middleware to occasionally delete temporary backup files
 """
 
 import logging
@@ -41,8 +40,8 @@ class BackupsMiddleware(MiddlewareMixin):
             if request.session.has_key(backups.SESSION_BACKUP_VARIABLE):
                 now = time.time()
                 if now > request.session[backups.SESSION_BACKUP_VARIABLE]:
-                    backups.delete_tmp_backup_file()
+                    backups.delete_upload_backup_file()
                     del request.session[backups.SESSION_BACKUP_VARIABLE]
             else:
-                backups.delete_tmp_backup_file()
+                backups.delete_upload_backup_file()
         return

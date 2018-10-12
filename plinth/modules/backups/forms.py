@@ -61,8 +61,7 @@ class CreateArchiveForm(forms.Form):
 
 class RestoreForm(forms.Form):
     selected_apps = forms.MultipleChoiceField(
-        label=_('Restore apps'),
-        help_text=_('Apps data to restore from the backup'),
+        label=_('Select the apps you want to restore'),
         widget=forms.CheckboxSelectMultiple)
 
     def __init__(self, *args, **kwargs):
@@ -73,20 +72,7 @@ class RestoreForm(forms.Form):
         self.fields['selected_apps'].initial = [app.name for app in apps]
 
 
-class RestoreFromTmpForm(forms.Form):
-    selected_apps = forms.MultipleChoiceField(
-        label=_('Restore apps'),
-        widget=forms.CheckboxSelectMultiple)
-
-    def __init__(self, *args, **kwargs):
-        """Initialize the form with selectable apps."""
-        apps = kwargs.pop('apps')
-        super().__init__(*args, **kwargs)
-        self.fields['selected_apps'].choices = _get_app_choices(apps)
-        self.fields['selected_apps'].initial = [app.name for app in apps]
-
-
-class UploadToTmpForm(forms.Form):
+class UploadForm(forms.Form):
     file = forms.FileField(label=_('Upload File'), required=True,
             validators=[FileExtensionValidator(['gz'],
                 'Backup files have to be in .tar.gz format')],

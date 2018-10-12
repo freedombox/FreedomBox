@@ -56,15 +56,14 @@ def parse_arguments():
 
     export_tar = subparsers.add_parser('export-tar',
                                    help='Export archive contents as tarball')
-    export_tar.add_argument('--archive', help='Archive name',
-                            required=True)
+    export_tar.add_argument('--name', help='Archive name)', required=True)
     export_tar.add_argument('--filepath', help='Destination tarball file path',
                             required=True)
 
-    get_apps_of_exported_archive = subparsers.add_parser(
-        'get-apps-of-exported-archive',
+    get_exported_archive_apps = subparsers.add_parser(
+        'get-exported-archive-apps',
         help='Get list of apps included in exported archive file')
-    get_apps_of_exported_archive.add_argument(
+    get_exported_archive_apps.add_argument(
         '--path', help='Tarball file path', required=True)
 
     get_archive_apps = subparsers.add_parser(
@@ -166,7 +165,7 @@ def subcommand_export_tar(arguments):
         os.makedirs(directory)
 
     subprocess.run([
-        'borg', 'export-tar', REPOSITORY + '::' + arguments.archive,
+        'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
         arguments.filepath
     ], check=True)
 
@@ -202,8 +201,8 @@ def subcommand_get_archive_apps(arguments):
             print(app['name'])
 
 
-def subcommand_get_apps_of_exported_archive(arguments):
-    """Get list of apps included in exported archive file."""
+def subcommand_get_exported_archive_apps(arguments):
+    """Get list of apps included in an exported archive file."""
     manifest = None
     with tarfile.open(arguments.path) as t:
         filenames = t.getnames()
@@ -225,8 +224,7 @@ def subcommand_restore_archive(arguments):
     _locations = json.loads(locations_data)
     locations = _locations['directories'] + _locations['files']
     locations = [os.path.relpath(location, '/') for location in locations]
-    _extract(arguments.path, arguments.destination,
-             locations=locations)
+    _extract(arguments.path, arguments.destination, locations=locations)
 
 
 def subcommand_restore_exported_archive(arguments):

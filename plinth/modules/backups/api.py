@@ -110,13 +110,15 @@ class Packet:
         All paths populated are relative to the 'root' path. The root path
         itself must not be stored in the backup.
 
+        label is either an archive name (w/o path), or the full path of an
+        exported archive.
+        TODO: create two variables out of it as it's distinct information.
+
         """
         self.operation = operation
         self.scope = scope
-        # TODO: do we need root if we have the path?
         self.root = root
         self.apps = apps
-        # TODO: label is an archive path -- rename
         self.label = label
         self.errors = []
 
