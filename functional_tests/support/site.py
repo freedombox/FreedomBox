@@ -16,7 +16,7 @@
 #
 
 import os
-from time import sleep
+import time
 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -41,7 +41,7 @@ def get_site_url(site_name):
 
 def is_available(browser, site_name):
     browser.visit(config['DEFAULT']['url'] + get_site_url(site_name))
-    sleep(3)
+    time.sleep(3)
     browser.reload()
     return '404' not in browser.title
 
@@ -263,3 +263,158 @@ def transmission_get_number_of_torrents(browser):
     """Return the number torrents currently in transmission."""
     browser.visit(config['DEFAULT']['url'] + '/transmission')
     return len(browser.find_by_css('#torrent_list .torrent'))
+
+
+def _deluge_get_active_window_title(browser):
+    """Return the title of the currently active window in Deluge."""
+    return browser.evaluate_script(
+        'Ext.WindowMgr.getActive() ? Ext.WindowMgr.getActive().title : null')
+
+
+def _deluge_ensure_logged_in(browser):
+    """Ensure that password dialog is answered and we can interact."""
+    url = config['DEFAULT']['url'] + '/deluge'
+    if browser.url != url:
+        browser.visit(url)
+        time.sleep(1)  # Wait for Ext.js application in initialize
+
+    if _deluge_get_active_window_title(browser) != 'Login':
+        return
+
+    browser.find_by_id('_password').first.fill('deluge')
+    _deluge_click_active_window_button(browser, 'Login')
+
+    assert eventually(
+        lambda: _deluge_get_active_window_title(browser) != 'Login')
+    eventually(browser.is_element_not_present_by_css,
+               args=['#add.x-item-disabled'], timeout=0.3)
+
+
+def _deluge_open_connection_manager(browser):
+    """Open the connection manager dialog if not already open."""
+    title = 'Connection Manager'
+    if _deluge_get_active_window_title(browser) == title:
+        return
+
+    browser.find_by_css('button.x-deluge-connection-manager').first.click()
+    eventually(lambda: _deluge_get_active_window_title(browser) == title)
+
+
+def _deluge_ensure_daemon_started(browser):
+    """Start the deluge daemon if it is not started."""
+    _deluge_open_connection_manager(browser)
+
+    browser.find_by_xpath('//em[text()="127.0.0.1:58846"]').first.click()
+
+    if browser.is_element_present_by_xpath('//button[text()="Stop Daemon"]'):
+        return
+
+    browser.find_by_xpath('//button[text()="Start Daemon"]').first.click()
+
+    assert eventually(browser.is_element_present_by_xpath,
+                      args=['//button[text()="Stop Daemon"]'])
+
+
+def _deluge_ensure_connected(browser):
+    """Type the connection password if required and start Deluge daemon."""
+    _deluge_ensure_logged_in(browser)
+
+    # If the add button is enabled, we are already connected
+    if not browser.is_element_present_by_css('#add.x-item-disabled'):
+        return
+
+    _deluge_ensure_daemon_started(browser)
+
+    if browser.is_element_present_by_xpath('//button[text()="Disconnect"]'):
+        _deluge_click_active_window_button(browser, 'Close')
+    else:
+        _deluge_click_active_window_button(browser, 'Connect')
+
+    assert eventually(browser.is_element_not_present_by_css,
+                      args=['#add.x-item-disabled'])
+
+
+def deluge_remove_all_torrents(browser):
+    """Remove all torrents from deluge."""
+    _deluge_ensure_connected(browser)
+
+    while browser.find_by_css('#torrentGrid .torrent-name'):
+        browser.find_by_css('#torrentGrid .torrent-name').first.click()
+
+        # Click remove toolbar button
+        browser.find_by_id('remove').first.click()
+
+        # Remove window shows up
+        assert eventually(
+            lambda: _deluge_get_active_window_title(browser) == 'Remove Torrent'
+        )
+
+        _deluge_click_active_window_button(browser, 'Remove With Data')
+
+        # Remove window disappears
+        assert eventually(lambda: not _deluge_get_active_window_title(browser))
+
+
+def _deluge_get_active_window_id(browser):
+    """Return the ID of the currently active window."""
+    return browser.evaluate_script('Ext.WindowMgr.getActive().id')
+
+
+def _deluge_click_active_window_button(browser, button_text):
+    """Click an action button in the active window."""
+    browser.execute_script('''
+        active_window = Ext.WindowMgr.getActive();
+        active_window.buttons.forEach(function (button) {{
+            if (button.text == "{button_text}")
+                button.btnEl.dom.click()
+        }})'''.format(button_text=button_text))
+
+
+def deluge_upload_sample_torrent(browser):
+    """Upload a sample torrent into deluge."""
+    _deluge_ensure_connected(browser)
+
+    number_of_torrents = _deluge_get_number_of_torrents(browser)
+
+    # Click add toolbar button
+    browser.find_by_id('add').first.click()
+
+    # Add window appears
+    eventually(
+        lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
+
+    browser.find_by_css('button.x-deluge-add-file').first.click()
+
+    # Add from file window appears
+    eventually(
+        lambda: _deluge_get_active_window_title(browser) == 'Add from File')
+
+    # Attach file
+    file_path = os.path.join(
+        os.path.dirname(__file__), '..', 'data', 'sample.torrent')
+    browser.attach_file('file', file_path)
+
+    # Click Add
+    _deluge_click_active_window_button(browser, 'Add')
+
+    eventually(
+        lambda: _deluge_get_active_window_title(browser) == 'Add Torrents')
+
+    # Click Add
+    time.sleep(1)
+    _deluge_click_active_window_button(browser, 'Add')
+
+    eventually(
+        lambda: _deluge_get_number_of_torrents(browser) > number_of_torrents)
+
+
+def _deluge_get_number_of_torrents(browser):
+    """Return the number torrents currently in deluge."""
+    return len(browser.find_by_css('#torrentGrid .torrent-name'))
+
+
+def deluge_get_number_of_torrents(browser):
+    """Return the number torrents currently in deluge."""
+    _deluge_ensure_connected(browser)
+
+    return _deluge_get_number_of_torrents(browser)

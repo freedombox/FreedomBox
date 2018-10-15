@@ -151,3 +151,21 @@ def transmission_upload_sample_torrent(browser):
     ))
 def transmission_assert_number_of_torrents(browser, torrents_number):
     assert torrents_number == site.transmission_get_number_of_torrents(browser)
+
+
+@when('all torrents are removed from deluge')
+def deluge_remove_all_torrents(browser):
+    site.deluge_remove_all_torrents(browser)
+
+
+@when('I upload a sample torrent to deluge')
+def deluge_upload_sample_torrent(browser):
+    site.deluge_upload_sample_torrent(browser)
+
+
+@then(
+    parsers.parse(
+        'there should be {torrents_number:d} torrents listed in deluge'
+    ))
+def deluge_assert_number_of_torrents(browser, torrents_number):
+    assert torrents_number == site.deluge_get_number_of_torrents(browser)

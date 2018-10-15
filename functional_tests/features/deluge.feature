@@ -32,3 +32,9 @@ Scenario: Disable deluge application
   Given the deluge application is enabled
   When I disable the deluge application
   Then the deluge site should not be available
+
+Scenario: Upload a torrent to deluge
+  Given the deluge application is enabled
+  When all torrents are removed from deluge
+  And I upload a sample torrent to deluge
+  Then there should be 1 torrents listed in deluge
