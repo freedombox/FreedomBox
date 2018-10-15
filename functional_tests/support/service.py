@@ -16,7 +16,7 @@
 #
 
 from contextlib import contextmanager
-from time import sleep
+import time
 
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -49,13 +49,14 @@ def is_not_running(browser, service_name):
 def eventually(function, args=[], timeout=30):
     """Execute a function returning a boolean expression till it returns
     True or a timeout is reached"""
-    waited_time = 0
-    while waited_time < timeout:
+    end_time = time.time() + timeout
+    current_time = time.time()
+    while current_time < end_time:
         if function(*args):
             return True
 
-        sleep(0.1)
-        waited_time += 0.1
+        time.sleep(0.1)
+        current_time = time.time()
 
     return False
 
