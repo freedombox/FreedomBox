@@ -30,6 +30,7 @@ from plinth.menu import main_menu
 from plinth.modules import storage
 
 from . import api
+from .manifest import backup
 
 version = 1
 
