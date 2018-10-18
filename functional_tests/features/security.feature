@@ -31,3 +31,11 @@ Scenario: Disable restricted console logins
   Given restricted console logins are enabled
   When I disable restricted console logins
   Then restricted console logins should be disabled
+
+Scenario: Backup and restore security
+  When I enable restricted console logins
+  And I create a backup of the security app data
+  And I disable restricted console logins
+  And I export the security app data backup
+  And I restore the security app data backup
+  Then restricted console logins should be enabled
