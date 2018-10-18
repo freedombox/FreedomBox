@@ -162,7 +162,7 @@ def _get_default_snapshot():
 
 def subcommand_disable_apt_snapshot(arguments):
     """Set flag to Enable/Disable apt software snapshots in config files"""
-    """Initialize Augeas."""
+    # Initialize Augeas
     aug = augeas.Augeas(
         flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
@@ -215,7 +215,7 @@ def _get_delete_arg(range_list):
 
 
 def subcommand_set_config(arguments):
-    command = ['snapper', 'set-config', arguments.config]
+    command = ['snapper', 'set-config'] + arguments.config.split()
     subprocess.run(command, check=True)
 
 
