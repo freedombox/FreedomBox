@@ -50,3 +50,15 @@ Scenario: Disable bind DNSSEC
   And bind DNSSEC is disabled
   When I disable bind DNSSEC
   Then bind DNSSEC should be disabled
+
+Scenario: Backup and restore bind
+  Given the bind application is enabled
+  When I set bind forwarders to 1.1.1.1
+  And I disable bind DNSSEC
+  And I create a backup of the bind app data
+  And I set bind forwarders to 1.0.0.1
+  And I enable bind DNSSEC
+  And I export the bind app data backup
+  And I restore the bind app data backup
+  Then bind forwarders should be 1.1.1.1
+  And bind DNSSEC should be disabled
