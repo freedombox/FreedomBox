@@ -26,6 +26,8 @@ from plinth.menu import main_menu
 from plinth.utils import format_lazy
 from plinth.views import ServiceView
 
+from .manifest import backup
+
 # pylint: disable=C0103
 
 version = 1
