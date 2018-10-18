@@ -22,9 +22,11 @@ Configuration helper for filesystem snapshots.
 import argparse
 import json
 import os
+import signal
 import subprocess
 
 import augeas
+import dbus
 
 FSTAB = '/etc/fstab'
 AUG_FSTAB = '/files/etc/fstab'
@@ -51,6 +53,8 @@ def parse_arguments():
     subparser = subparsers.add_parser('set-config',
                                       help='Configure automatic snapshots')
     subparser.add_argument('config')
+    subparsers.add_parser('kill-daemon',
+                          help='Kill snapperd to reload configuration')
 
     subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
     subparser.add_argument('number', help='Number of snapshot to rollback to')
@@ -94,8 +98,8 @@ def _add_fstab_entry(mount_point):
     """Add mountpoint for subvolumes."""
     snapshots_mount_point = os.path.join(mount_point, '.snapshots')
 
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Fstab/lens', 'Fstab.lns')
     aug.set('/augeas/load/Fstab/incl[last() + 1]', FSTAB)
     aug.load()
@@ -163,8 +167,8 @@ def _get_default_snapshot():
 def subcommand_disable_apt_snapshot(arguments):
     """Set flag to Enable/Disable apt software snapshots in config files"""
     # Initialize Augeas
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()
@@ -228,6 +232,29 @@ def subcommand_get_config(_):
         parts = [part.strip() for part in line.split('|')]
         config[parts[0]] = parts[1]
     print(json.dumps(config))
+
+
+def subcommand_kill_daemon(_):
+    """Kill the snapper daemon.
+
+    This is generally not necessary because we do configuration changes via
+    snapperd. However, when the configuration is restored from a backup. We
+    need to kill the daemon to reload configuration.
+
+    Ideally, we should be able to reload/terminate the service using systemd.
+
+    """
+    bus = dbus.SystemBus()
+
+    dbus_object = bus.get_object('org.freedesktop.DBus', '/')
+    dbus_interface = dbus.Interface(dbus_object,
+                                    dbus_interface='org.freedesktop.DBus')
+    try:
+        pid = dbus_interface.GetConnectionUnixProcessID('org.opensuse.Snapper')
+    except dbus.exceptions.DBusException:
+        pass
+    else:
+        os.kill(pid, signal.SIGTERM)
 
 
 def subcommand_rollback(arguments):

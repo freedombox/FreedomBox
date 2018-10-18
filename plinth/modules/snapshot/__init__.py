@@ -26,6 +26,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth import actions
 from plinth.menu import main_menu
 
+from .manifest import backup
+
 version = 3
 
 managed_packages = ['snapper']
@@ -112,3 +114,8 @@ def get_configuration():
         'number_min_age':
             round(int(output['NUMBER_MIN_AGE']) / 86400),
     }
+
+
+def restore_post(packet):
+    """Run after restore."""
+    actions.superuser_run('snapshot', ['kill-daemon'])
