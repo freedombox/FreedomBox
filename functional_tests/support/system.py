@@ -228,3 +228,33 @@ def pagekite_get_configuration(browser):
             int(browser.find_by_name('pagekite-server_port').value),
             browser.find_by_name('pagekite-kite_name').value,
             browser.find_by_name('pagekite-kite_secret').value)
+
+
+def bind_set_forwarders(browser, forwarders):
+    """Set the forwarders list (space separated) in bind configuration."""
+    nav_to_module(browser, 'bind')
+    browser.fill('forwarders', forwarders)
+    submit(browser, form_class='form-configuration')
+
+
+def bind_get_forwarders(browser):
+    """Return the forwarders list (space separated) in bind configuration."""
+    nav_to_module(browser, 'bind')
+    return browser.find_by_name('forwarders').first.value
+
+
+def bind_enable_dnssec(browser, enable):
+    """Enable/disable DNSSEC in bind configuration."""
+    nav_to_module(browser, 'bind')
+    if enable:
+        browser.check('enable_dnssec')
+    else:
+        browser.uncheck('enable_dnssec')
+
+    submit(browser, form_class='form-configuration')
+
+
+def bind_get_dnssec(browser):
+    """Return whether DNSSEC is enabled/disabled in bind configuration."""
+    nav_to_module(browser, 'bind')
+    return browser.find_by_name('enable_dnssec').first.checked

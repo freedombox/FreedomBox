@@ -177,3 +177,35 @@ def pagekite_configure(browser, host, port, kite_name, kite_secret):
 def pagekite_assert_configured(browser, host, port, kite_name, kite_secret):
     assert (host, port, kite_name,
             kite_secret) == system.pagekite_get_configuration(browser)
+
+
+@given(parsers.parse('bind forwarders are set to {forwarders}'))
+def bind_given_set_forwarders(browser, forwarders):
+    system.bind_set_forwarders(browser, forwarders)
+
+
+@when(parsers.parse('I set bind forwarders to {forwarders}'))
+def bind_set_forwarders(browser, forwarders):
+    system.bind_set_forwarders(browser, forwarders)
+
+
+@then(parsers.parse('bind forwarders should be {forwarders}'))
+def bind_assert_forwarders(browser, forwarders):
+    assert system.bind_get_forwarders(browser) == forwarders
+
+
+@given(parsers.parse('bind DNSSEC is {enable:w}'))
+def bind_given_enable_dnssec(browser, enable):
+    should_enable = (enable == 'enabled')
+    system.bind_enable_dnssec(browser, should_enable)
+
+
+@when(parsers.parse('I {enable:w} bind DNSSEC'))
+def bind_enable_dnssec(browser, enable):
+    should_enable = (enable == 'enable')
+    system.bind_enable_dnssec(browser, should_enable)
+
+
+@then(parsers.parse('bind DNSSEC should be {enabled:w}'))
+def bind_assert_dnssec(browser, enabled):
+    assert system.bind_get_dnssec(browser) == (enabled == 'enabled')
