@@ -209,3 +209,21 @@ def bind_enable_dnssec(browser, enable):
 @then(parsers.parse('bind DNSSEC should be {enabled:w}'))
 def bind_assert_dnssec(browser, enabled):
     assert system.bind_get_dnssec(browser) == (enabled == 'enabled')
+
+
+@given(parsers.parse('restricted console logins are {enabled}'))
+def security_given_enable_restricted_logins(browser, enabled):
+    should_enable = (enabled == 'enabled')
+    system.security_enable_restricted_logins(browser, should_enable)
+
+
+@when(parsers.parse('I {enable} restricted console logins'))
+def security_enable_restricted_logins(browser, enable):
+    should_enable = (enable == 'enable')
+    system.security_enable_restricted_logins(browser, should_enable)
+
+
+@then(parsers.parse('restricted console logins should be {enabled}'))
+def security_assert_restricted_logins(browser, enabled):
+    enabled = (enabled == 'enabled')
+    assert system.security_get_restricted_logins(browser) == enabled

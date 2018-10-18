@@ -28,7 +28,8 @@ from .service import wait_for_page_update
 sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
-    'networks', 'pagekite', 'power', 'snapshot', 'upgrades', 'users'
+    'networks', 'pagekite', 'power', 'security', 'snapshot', 'upgrades',
+    'users'
 ]
 
 default_url = config['DEFAULT']['url']

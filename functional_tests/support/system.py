@@ -258,3 +258,20 @@ def bind_get_dnssec(browser):
     """Return whether DNSSEC is enabled/disabled in bind configuration."""
     nav_to_module(browser, 'bind')
     return browser.find_by_name('enable_dnssec').first.checked
+
+
+def security_enable_restricted_logins(browser, should_enable):
+    """Enable/disable restricted logins in security module."""
+    nav_to_module(browser, 'security')
+    if should_enable:
+        browser.check('security-restricted_access')
+    else:
+        browser.uncheck('security-restricted_access')
+
+    submit(browser)
+
+
+def security_get_restricted_logins(browser):
+    """Return whether restricted console logins is enabled."""
+    nav_to_module(browser, 'security')
+    return browser.find_by_name('security-restricted_access').first.checked
