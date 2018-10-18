@@ -97,6 +97,56 @@ def verify_snapshot_count(browser, count):
     assert num_snapshots == count
 
 
+@given(
+    parsers.parse(
+        'snapshots are configured with timeline snapshots '
+        '{timeline_enabled:w}, software snapshots {software_enabled:w}, hourly '
+        'limit {hourly:d}, daily limit {daily:d}, weekly limit {weekly:d}, '
+        'monthly limit {monthly:d}, yearly limit {yearly:d}, delete old '
+        'software snapshots {delete_old:d}'))
+def snapshot_given_set_configuration(browser, timeline_enabled,
+                                     software_enabled, hourly, daily, weekly,
+                                     monthly, yearly, delete_old):
+    timeline_enabled = (timeline_enabled == 'enabled')
+    software_enabled = (software_enabled == 'enabled')
+    system.snapshot_set_configuration(browser, timeline_enabled,
+                                      software_enabled, hourly, daily, weekly,
+                                      monthly, yearly, delete_old)
+
+
+@when(
+    parsers.parse(
+        'I configure snapshots with timeline snapshots {timeline_enabled:w}, '
+        'software snapshots {software_enabled:w}, hourly limit {hourly:d}, '
+        'daily limit {daily:d}, weekly limit {weekly:d}, monthly limit '
+        '{monthly:d}, yearly limit {yearly:d}, delete old software snapshots '
+        '{delete_old:d}'))
+def snapshot_set_configuration(browser, timeline_enabled, software_enabled,
+                               hourly, daily, weekly, monthly, yearly,
+                               delete_old):
+    timeline_enabled = (timeline_enabled == 'enabled')
+    software_enabled = (software_enabled == 'enabled')
+    system.snapshot_set_configuration(browser, timeline_enabled,
+                                      software_enabled, hourly, daily, weekly,
+                                      monthly, yearly, delete_old)
+
+
+@then(
+    parsers.parse(
+        'snapshots should be configured with timeline snapshots '
+        '{timeline_enabled:w}, software snapshots {software_enabled:w}, hourly '
+        'limit {hourly:d}, daily limit {daily:d}, weekly limit {weekly:d}, '
+        'monthly limit {monthly:d}, yearly limit {yearly:d}, delete old '
+        'software snapshots {delete_old:d}'))
+def snapshot_assert_configuration(browser, timeline_enabled, software_enabled,
+                                  hourly, daily, weekly, monthly, yearly,
+                                  delete_old):
+    timeline_enabled = (timeline_enabled == 'enabled')
+    software_enabled = (software_enabled == 'enabled')
+    assert (timeline_enabled, software_enabled, hourly, daily, weekly, monthly,
+            yearly, delete_old) == system.snapshot_get_configuration(browser)
+
+
 @then(parsers.parse('the default app should be {app_name:w}'))
 def default_app_should_be(browser, app_name):
     assert system.check_home_page_redirect(browser, app_name)

@@ -27,3 +27,8 @@ Scenario: Create a snapshot
   Given the list of snapshots is empty
   When I manually create a snapshot
   Then there should be 1 snapshot in the list
+
+Scenario: Configure snapshots
+  Given snapshots are configured with timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0, delete old software snapshots 15
+  When I configure snapshots with timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1, delete old software snapshots 2
+  Then snapshots should be configured with timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1, delete old software snapshots 2
