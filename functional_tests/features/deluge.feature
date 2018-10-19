@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @deluge
+@apps @deluge @backups
 Feature: Deluge BitTorrent Client
   Run the Deluge BitTorrent client.
 
