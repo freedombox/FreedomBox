@@ -58,6 +58,27 @@ def _get_backup_app(name):
     return api.BackupApp(name, MagicMock(backup=_get_test_manifest(name)))
 
 
+class TestBackupApp(unittest.TestCase):
+    """Test the BackupApp class."""
+    def test_run_hook(self):
+        """Test running a hook on an application."""
+        packet = api.Packet('backup', 'apps', '/', [])
+        hook = 'testhook_pre'
+        app = MagicMock()
+        backup_app = api.BackupApp('app_name', app)
+        backup_app.run_hook(hook, packet)
+        app.testhook_pre.assert_has_calls([call(packet)])
+        assert not packet.errors
+
+        app.testhook_pre.reset_mock()
+        app.testhook_pre.side_effect = Exception()
+        backup_app.run_hook(hook, packet)
+        self.assertEqual(packet.errors, [api.BackupError('hook', app, hook=hook)])
+
+        del app.testhook_pre
+        backup_app.run_hook(hook, packet)
+
+
 class TestBackupProcesses(unittest.TestCase):
     """Test cases for backup processes"""
 
@@ -208,6 +229,21 @@ class TestBackupProcesses(unittest.TestCase):
             call('apache', ['enable', '--name', 'c-service', '--kind', 'site'])
         ]
         run.assert_has_calls(calls)
+
+    @staticmethod
+    def test__run_operation():
+        """Test that operation runs handler and app hooks."""
+        apps = [_get_backup_app('a'), _get_backup_app('b')]
+        packet = api.Packet('backup', 'apps', '/', apps)
+        packet.apps[0].run_hook = MagicMock()
+        packet.apps[1].run_hook = MagicMock()
+        handler = MagicMock()
+        api._run_operation(handler, packet)
+        handler.assert_has_calls([call(packet)])
+
+        calls = [call('backup_pre', packet), call('backup_post', packet)]
+        packet.apps[0].run_hook.assert_has_calls(calls)
+        packet.apps[1].run_hook.assert_has_calls(calls)
 
 
 class TestBackupModule(unittest.TestCase):

@@ -25,7 +25,11 @@ TODO:
 - Implement unit tests.
 """
 
+import logging
+
 from plinth import actions, action_utils, module_loader
+
+logger = logging.getLogger(__name__)
 
 
 def validate(backup):
@@ -76,6 +80,21 @@ def _validate_service(service):
         assert service['kind'] in ('config', 'site', 'module')
 
 
+class BackupError:
+    """Represent an backup/restore operation error."""
+    def __init__(self, error_type, app, hook=None):
+        """Initialize the error object."""
+        self.error_type = error_type
+        self.app = app
+        self.hook = hook
+
+    def __eq__(self, other_error):
+        """Compare to error objects."""
+        return (self.error_type == other_error.error_type and
+                self.app == other_error.app and
+                self.hook == other_error.hook)
+
+
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 
@@ -97,6 +116,7 @@ class Packet:
         self.root = root
         self.apps = apps
         self.label = label
+        self.errors = []
 
         self.directories = []
         self.files = []
@@ -220,6 +240,19 @@ class BackupApp:
             self.app == other_app.app and \
             self.manifest == other_app.manifest and \
             self.has_data == other_app.has_data
+
+    def run_hook(self, hook, packet):
+        """Run a hook inside an application."""
+        if not hasattr(self.app, hook):
+            return
+
+        try:
+            getattr(self.app, hook)(packet)
+        except Exception as exception:
+            logger.exception(
+                'Error running backup/restore hook for app %s: %s', self.name,
+                exception)
+            packet.errors.append(BackupError('hook', self.app, hook=hook))
 
 
 def get_all_apps_for_backup():
@@ -411,6 +444,40 @@ def _restore_services(original_state):
         service_handler.restart()
 
 
+def _run_hooks(hook, packet):
+    """Run pre/post operation hooks in applications.
+
+    Using the manifest mechanism, applications will convey to the backups
+    framework how they needs to be backed up. Using this declarative approach
+    reduces the burden of implementation on behalf of the applications.
+    However, not all backup necessities may be satisfied in this manner no
+    matter how feature rich the framework. So, applications should have the
+    ability to customize the backup/restore processes suiting to their needs.
+
+    For this, each application may optionally implement methods (hooks) that
+    will be called during the backup or restore process. If these methods are
+    named appropriately, the backups API will automatically call the methods
+    and there is no need to register the methods.
+
+    The following hooks are currently available for implementation:
+
+    - backup_pre(packet):
+      Called before the backup process starts for the application.
+    - backup_post(packet):
+      Called after the backup process has completed for the application.
+    - restore_pre(packet):
+      Called before the restore process starts for the application.
+    - restore_post(packet):
+      Called after the restore process has completed for the application.
+
+    """
+    logger.info('Running %s hooks', hook)
+    for app in packet.apps:
+        app.run_hook(hook, packet)
+
+
 def _run_operation(handler, packet):
     """Run handler and pre/post hooks for backup/restore operations."""
+    _run_hooks(packet.operation + '_pre', packet)
     handler(packet)
+    _run_hooks(packet.operation + '_post', packet)
