@@ -219,10 +219,8 @@
   </div>
 
   {% block container %}
-    <div id="container-wrapper" class="container">
-      <div class="row">
+    <div id="container-wrapper" class="container thumbnail">
         {% block content_row %}
-          <div class="col-md-8 col-md-offset-2">
             {% block subsubmenu %}
               {% if subsubmenu %}
                 {% show_subsubmenu subsubmenu %}
@@ -234,14 +232,11 @@
             {% block content %}
               {# main content goes here #}
             {% endblock %}
-          </div>
         {% endblock %}
-      </div>
     </div>
   {% endblock %}
 
   <footer>
-    <hr>
     <div class="container">
       {% block footer_block %}
         <div class="license-info">
