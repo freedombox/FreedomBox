@@ -25,6 +25,8 @@ from django.utils.translation import ugettext_lazy as _
 from plinth.menu import main_menu
 from plinth.signals import domain_added, domain_removed
 
+from .manifest import backup
+
 SERVICES = (
     ('http', _('HTTP'), 80),
     ('https', _('HTTPS'), 443),
