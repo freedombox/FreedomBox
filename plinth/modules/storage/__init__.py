@@ -28,6 +28,8 @@ from plinth import action_utils, actions, cfg
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
+from .manifest import backup
+
 version = 3
 
 name = _('Storage')
