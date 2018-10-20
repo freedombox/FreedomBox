@@ -28,6 +28,8 @@ from plinth.menu import main_menu
 from plinth.signals import service_enabled
 from plinth.utils import format_lazy
 
+from .manifest import backup
+
 version = 1
 
 is_essential = True
