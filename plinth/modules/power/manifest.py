@@ -15,24 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-FreedomBox app for power controls.
+Application manifest for power.
 """
 
-from django.utils.translation import ugettext_lazy as _
+from plinth.modules.backups.api import validate as validate_backup
 
-from .manifest import backup
-
-version = 1
-
-is_essential = True
-
-name = _('Power')
-
-description = [_('Restart or shut down the system.')]
-
-manual_page = 'Power'
-
-
-def init():
-    """Initialize the power module."""
-    pass  # not in menu, see issue #834
+backup = validate_backup({})
