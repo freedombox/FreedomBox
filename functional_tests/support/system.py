@@ -194,6 +194,8 @@ def backup_create(browser, app_name):
     for app in browser.find_by_css('input[type=checkbox]'):
         app.uncheck()
 
+    # ensure the checkbox is scrolled into view
+    browser.execute_script('window.scrollTo(0, 0)')
     browser.find_by_value(app_name).first.check()
     submit(browser)
 
