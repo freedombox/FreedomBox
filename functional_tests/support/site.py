@@ -319,6 +319,10 @@ def _deluge_ensure_connected(browser):
     """Type the connection password if required and start Deluge daemon."""
     _deluge_ensure_logged_in(browser)
 
+    # Change Default Password window appears once.
+    if _deluge_get_active_window_title(browser) == 'Change Default Password':
+        _deluge_click_active_window_button(browser, 'No')
+
     # If the add button is enabled, we are already connected
     if not browser.is_element_present_by_css('#add.x-item-disabled'):
         return
