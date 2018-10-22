@@ -213,8 +213,8 @@ def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
-        '/plinth/sys/backups/restore/Root%2520Filesystem/_functional_test_' +
-        app_name + '.tar.gz/').first.click()
+        '/plinth/sys/backups/restore/%252F/_functional_test_' + app_name +
+        '.tar.gz/').first.click()
     submit(browser)
 
 

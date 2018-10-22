@@ -113,18 +113,18 @@
       </thead>
 
       <tbody>
-        {% for label, file_list in exports.items %}
-          {% for name in file_list %}
+        {% for export in exports %}
+          {% for name in export.files %}
             <tr id="export-{{ label }}-{{ name }}" class="export">
-              <td class="export-label">{{ label }}</td>
+              <td class="export-label">{{ export.label }}</td>
               <td class="export-name">{{ name }}</td>
               <td class="export-operations">
                 <a class="download btn btn-sm btn-default" target="_blank"
-                   href="{% url 'backups:download' label|urlencode:'' name|urlencode:'' %}">
+                   href="{% url 'backups:download' export.device|urlencode:'' name|urlencode:'' %}">
                   {% trans "Download" %}
                 </a>
                 <a class="restore btn btn-sm btn-default"
-                   href="{% url 'backups:restore' label|urlencode:'' name|urlencode:'' %}">
+                   href="{% url 'backups:restore' export.device|urlencode:'' name|urlencode:'' %}">
                   {% trans "Restore" %}
                 </a>
               </td>

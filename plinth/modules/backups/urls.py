@@ -28,11 +28,11 @@ urlpatterns = [
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
     url(r'^sys/backups/export/(?P<name>[^/]+)/$',
         ExportArchiveView.as_view(), name='export'),
-    url(r'^sys/backups/download/(?P<label>[^/]+)/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/download/(?P<device>[^/]+)/(?P<name>[^/]+)/$',
         DownloadArchiveView.as_view(), name='download'),
     url(r'^sys/backups/delete/(?P<name>[^/]+)/$',
         DeleteArchiveView.as_view(), name='delete'),
     url(r'^sys/backups/upload/$', UploadArchiveView.as_view(), name='upload'),
-    url(r'^sys/backups/restore/(?P<label>[^/]+)/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/restore/(?P<device>[^/]+)/(?P<name>[^/]+)/$',
         RestoreView.as_view(), name='restore'),
 ]

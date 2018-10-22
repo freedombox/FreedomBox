@@ -109,7 +109,9 @@ def delete_archive(name):
 
 
 def export_archive(name, location):
-    filepath = get_archive_path(location, get_valid_filename(name) + '.tar.gz')
+    location_path = get_location_path(location)
+    filepath = get_archive_path(location_path,
+                                get_valid_filename(name) + '.tar.gz')
     # TODO: that's a full path, not a filename; rename argument
     actions.superuser_run('backups',
                           ['export', '--name', name, '--filename', filepath])
@@ -117,35 +119,46 @@ def export_archive(name, location):
 
 def get_export_locations():
     """Return a list of storage locations for exported backup archives."""
-    locations = [('/var/lib/freedombox/', _('Root Filesystem'))]
+    locations = [{
+        'path': '/var/lib/freedombox/',
+        'label': _('Root Filesystem'),
+        'device': '/'
+    }]
     if storage.is_running():
         devices = storage.udisks2.list_devices()
         for device in devices:
             if 'mount_points' in device and len(device['mount_points']) > 0:
-                name = device['label'] or device['device']
-                locations.append((device['mount_points'][0], name))
+                location = {
+                    'path': device['mount_points'][0],
+                    'label': device['label'] or device['device'],
+                    'device': device['device']
+                }
+                locations.append(location)
 
     return locations
 
 
-def get_location_path(label, locations=None):
+def get_location_path(device, locations=None):
     """Returns the location path given a disk label"""
     if locations is None:
         locations = get_export_locations()
-    for (location_path, location_label) in locations:
-        if location_label == label:
-            return location_path
-    raise PlinthError("Could not find path of location %s" % label)
+
+    for location in locations:
+        if location['device'] == device:
+            return location['path']
+
+    raise PlinthError('Could not find path of location %s' % device)
 
 
 def get_export_files():
     """Return a dict of exported backup archives found in storage locations."""
     locations = get_export_locations()
-    export_files = {}
+    export_files = []
     for location in locations:
         output = actions.superuser_run(
-            'backups', ['list-exports', '--location', location[0]])
-        export_files[location[1]] = json.loads(output)
+            'backups', ['list-exports', '--location', location['path']])
+        location['files'] = json.loads(output)
+        export_files.append(location)
 
     return export_files
 
@@ -154,9 +167,9 @@ def get_archive_path(location, archive_name):
     return os.path.join(location, BACKUP_FOLDER_NAME, archive_name)
 
 
-def find_exported_archive(disk_label, archive_name):
+def find_exported_archive(device, archive_name):
     """Return the full path for the exported archive file."""
-    location_path = get_location_path(disk_label)
+    location_path = get_location_path(device)
     return get_archive_path(location_path, archive_name)
 
 
@@ -175,8 +188,8 @@ def _restore_handler(packet):
                           input=locations_data.encode())
 
 
-def restore_exported(label, archive_name, apps=None):
+def restore_exported(device, archive_name, apps=None):
     """Restore files from exported backup archive."""
-    filename = find_exported_archive(label, archive_name)
+    filename = find_exported_archive(device, archive_name)
     api.restore_apps(_restore_handler, app_names=apps, create_subvolume=False,
                      backup_file=filename)

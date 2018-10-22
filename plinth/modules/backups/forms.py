@@ -71,7 +71,8 @@ class ExportArchiveForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Initialize the form with disk choices."""
         super().__init__(*args, **kwargs)
-        self.fields['disk'].choices = get_export_locations()
+        self.fields['disk'].choices = [(location['device'], location['label'])
+                                       for location in get_export_locations()]
 
 
 class RestoreForm(forms.Form):
@@ -104,7 +105,7 @@ class UploadForm(forms.Form):
         locations = get_export_locations()
         # users should only be able to select a location name -- don't
         # provide paths as a form input for security reasons
-        location_labels = [(location[1], location[1])
+        location_labels = [(location['device'], location['label'])
                            for location in locations]
         self.fields['location'].choices = location_labels
 
@@ -112,8 +113,8 @@ class UploadForm(forms.Form):
         """Check that the uploaded file does not yet exist."""
         cleaned_data = super().clean()
         file = cleaned_data.get('file')
-        location_label = cleaned_data.get('location')
-        location_path = get_location_path(location_label)
+        location_device = cleaned_data.get('location')
+        location_path = get_location_path(location_device)
         # if other errors occured before, 'file' won't be in cleaned_data
         if (file and file.name):
             filepath = get_archive_path(location_path, file.name)

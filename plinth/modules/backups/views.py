@@ -115,10 +115,10 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
 
 class DownloadArchiveView(View):
     """View to download an archive."""
-    def get(self, request, label, name):
-        label = unquote(label)
+    def get(self, request, device, name):
+        device = unquote(device)
         name = unquote(name)
-        filepath = find_exported_archive(label, name)
+        filepath = find_exported_archive(device, name)
         return _get_file_response(filepath, name)
 
 
@@ -187,9 +187,9 @@ class RestoreView(SuccessMessageMixin, FormView):
 
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
-        label = unquote(self.kwargs['label'])
+        device = unquote(self.kwargs['device'])
         name = unquote(self.kwargs['name'])
-        filename = backups.find_exported_archive(label, name)
+        filename = backups.find_exported_archive(device, name)
         return backups.get_export_apps(filename)
 
     def get_form_kwargs(self):
@@ -206,13 +206,13 @@ class RestoreView(SuccessMessageMixin, FormView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Restore from backup')
-        context['label'] = unquote(self.kwargs['label'])
+        context['device'] = unquote(self.kwargs['device'])
         context['name'] = self.kwargs['name']
         return context
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         backups.restore_exported(
-            unquote(self.kwargs['label']), self.kwargs['name'],
+            unquote(self.kwargs['device']), self.kwargs['name'],
             form.cleaned_data['selected_apps'])
         return super().form_valid(form)

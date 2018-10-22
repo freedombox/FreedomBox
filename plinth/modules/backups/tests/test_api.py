@@ -60,6 +60,7 @@ def _get_backup_app(name):
 
 class TestBackupApp(unittest.TestCase):
     """Test the BackupApp class."""
+
     def test_run_hook(self):
         """Test running a hook on an application."""
         packet = api.Packet('backup', 'apps', '/', [])
@@ -73,7 +74,8 @@ class TestBackupApp(unittest.TestCase):
         app.testhook_pre.reset_mock()
         app.testhook_pre.side_effect = Exception()
         backup_app.run_hook(hook, packet)
-        self.assertEqual(packet.errors, [api.BackupError('hook', app, hook=hook)])
+        self.assertEqual(packet.errors,
+                         [api.BackupError('hook', app, hook=hook)])
 
         del app.testhook_pre
         backup_app.run_hook(hook, packet)
@@ -137,10 +139,14 @@ class TestBackupProcesses(unittest.TestCase):
 
     @staticmethod
     def test_export_locations():
-        """Check get_export_locations returns a list of tuples of length 2."""
+        """Check get_export_locations returns a list of locations."""
         locations = get_export_locations()
         assert locations
-        assert len(locations[0]) == 2
+        for location in locations:
+            assert isinstance(location, dict)
+            assert isinstance(location['path'], str)
+            assert isinstance(location['device'], str)
+            assert str(location['label'])
 
     @staticmethod
     @patch('plinth.module_loader.loaded_modules.items')
@@ -251,16 +257,22 @@ class TestBackupModule(unittest.TestCase):
 
     def test_get_location_path(self):
         """Test the 'get_location_path' method"""
-        locations = [('/var/www', 'dummy location'), ('/etc', 'dangerous')]
-        location = get_location_path('dummy location', locations)
-        self.assertEquals(location, locations[0][0])
+        locations = [{
+            'path': '/var/www',
+            'device': '/dummy/device'
+        }, {
+            'path': '/etc',
+            'device': '/dangerous'
+        }]
+        location_path = get_location_path('/dummy/device', locations)
+        self.assertEqual(location_path, locations[0]['path'])
         # verify that an unknown location raises an error
         with self.assertRaises(PlinthError):
-            get_location_path('unknown location', locations)
+            get_location_path('/unknown/device', locations)
 
     def test_file_upload(self):
         locations = get_export_locations()
-        location_name = locations[0][1]
+        location_name = locations[0]['device']
         post_data = {'location': location_name}
 
         # posting a video should fail
