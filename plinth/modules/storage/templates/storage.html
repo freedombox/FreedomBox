@@ -141,7 +141,7 @@
               <td>
                 {% if device.mount_points %}
                   <form class="form" method="post"
-                        action="{% url 'storage:eject' device.device|urlencode:"" %}">
+                        action="{% url 'storage:eject' device.device|urlencode:'' %}">
                     {% csrf_token %}
 
                     <button type="submit"
