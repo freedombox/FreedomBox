@@ -141,7 +141,10 @@ def subcommand_export(arguments):
         arguments.filename
     ], check=True)
 
-    shutil.chown(arguments.filename, user='plinth', group='plinth')
+    try:
+        shutil.chown(arguments.filename, user='plinth', group='plinth')
+    except PermissionError:
+        pass
 
 
 def subcommand_list_exports(arguments):
