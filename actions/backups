@@ -24,6 +24,7 @@ import argparse
 import glob
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -139,6 +140,8 @@ def subcommand_export(arguments):
         'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
         arguments.filename
     ], check=True)
+
+    shutil.chown(arguments.filename, user='plinth', group='plinth')
 
 
 def subcommand_list_exports(arguments):
