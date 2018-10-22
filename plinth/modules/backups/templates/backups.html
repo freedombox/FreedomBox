@@ -120,11 +120,11 @@
               <td class="export-name">{{ name }}</td>
               <td class="export-operations">
                 <a class="download btn btn-sm btn-default" target="_blank"
-                   href="{% url 'backups:download' label|urlencode name|urlencode %}">
+                   href="{% url 'backups:download' label|urlencode:'' name|urlencode:'' %}">
                   {% trans "Download" %}
                 </a>
                 <a class="restore btn btn-sm btn-default"
-                   href="{% url 'backups:restore' label|urlencode name|urlencode %}">
+                   href="{% url 'backups:restore' label|urlencode:'' name|urlencode:'' %}">
                   {% trans "Restore" %}
                 </a>
               </td>
