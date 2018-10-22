@@ -36,6 +36,5 @@ Scenario: Disable privoxy application
 Scenario: Backup and restore privoxy
   Given the privoxy application is enabled
   When I create a backup of the privoxy app data
-  And I export the privoxy app data backup
   And I restore the privoxy app data backup
   Then the privoxy service should be running

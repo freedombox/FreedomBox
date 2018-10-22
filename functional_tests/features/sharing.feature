@@ -56,7 +56,6 @@ Scenario: Backup and restore sharing
   When I add a share tmp from path /tmp for admin
   And I create a backup of the sharing app data
   And I remove share tmp
-  And I export the sharing app data backup
   And I restore the sharing app data backup
   Then the share tmp should be listed from path /tmp for admin
   And the share tmp should be accessible

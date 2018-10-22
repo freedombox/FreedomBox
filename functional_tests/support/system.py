@@ -202,21 +202,12 @@ def backup_create(browser, app_name):
     submit(browser)
 
 
-def backup_export(browser, app_name):
-    browser.visit(default_url)
-    nav_to_module(browser, 'backups')
-    browser.find_link_by_href('/plinth/sys/backups/export/_functional_test_' +
-                              app_name + '/').first.click()
-    browser.find_by_id('id_backups-disk_0').first.check()
-    submit(browser)
-
-
 def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
-        '/plinth/sys/backups/restore/%252F/_functional_test_' + app_name +
-        '.tar.gz/').first.click()
+        '/plinth/sys/backups/restore-archive/%252F/_functional_test_' +
+        app_name + '/').first.click()
     submit(browser)
 
 

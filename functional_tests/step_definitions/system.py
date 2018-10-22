@@ -172,11 +172,6 @@ def backup_create(browser, app_name):
     system.backup_create(browser, app_name)
 
 
-@when(parsers.parse('I export the {app_name:w} app data backup'))
-def backup_export(browser, app_name):
-    system.backup_export(browser, app_name)
-
-
 @when(parsers.parse('I restore the {app_name:w} app data backup'))
 def backup_restore(browser, app_name):
     system.backup_restore(browser, app_name)

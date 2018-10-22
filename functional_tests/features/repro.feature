@@ -38,6 +38,5 @@ Scenario: Backup and restore repro
   And repro has been configured
   When I create a backup of the repro app data
   And I delete the repro configuration
-  And I export the repro app data backup
   And I restore the repro app data backup
   Then the repro configuration should be restored

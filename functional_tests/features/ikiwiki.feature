@@ -38,6 +38,5 @@ Scenario: Backup and restore wiki
   When there is an ikiwiki wiki
   And I create a backup of the ikiwiki app data
   And I delete the ikiwiki wiki
-  And I export the ikiwiki app data backup
   And I restore the ikiwiki app data backup
   Then the ikiwiki wiki should be restored

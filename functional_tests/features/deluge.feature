@@ -44,7 +44,6 @@ Scenario: Backup and restore deluge
   When all torrents are removed from deluge
   And I upload a sample torrent to deluge
   And I create a backup of the deluge app data
-  And I export the deluge app data backup
   And all torrents are removed from deluge
   And I restore the deluge app data backup
   Then the deluge service should be running

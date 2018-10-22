@@ -58,7 +58,6 @@ Scenario: Backup and restore bind
   And I create a backup of the bind app data
   And I set bind forwarders to 1.0.0.1
   And I enable bind DNSSEC
-  And I export the bind app data backup
   And I restore the bind app data backup
   Then bind forwarders should be 1.1.1.1
   And bind DNSSEC should be disabled

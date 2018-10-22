@@ -36,6 +36,5 @@ Scenario: Disable searx application
 Scenario: Backup and restore searx
   Given the searx application is enabled
   When I create a backup of the searx app data
-  And I export the searx app data backup
   And I restore the searx app data backup
   Then the searx site should be available

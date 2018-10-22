@@ -38,6 +38,5 @@ Scenario: Disable ssh application
 Scenario: Backup and restore ssh
   Given the ssh application is enabled
   When I create a backup of the ssh app data
-  And I export the ssh app data backup
   And I restore the ssh app data backup
   Then the ssh service should be running

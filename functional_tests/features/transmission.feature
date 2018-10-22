@@ -44,7 +44,6 @@ Scenario: Backup and restore transmission
   When all torrents are removed from transmission
   And I upload a sample torrent to transmission
   And I create a backup of the transmission app data
-  And I export the transmission app data backup
   And all torrents are removed from transmission
   And I restore the transmission app data backup
   Then the transmission service should be running

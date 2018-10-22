@@ -48,6 +48,5 @@ Scenario: Backup and restore ejabberd
   And I have added a contact to my roster
   When I create a backup of the ejabberd app data
   And I delete the contact from my roster
-  And I export the ejabberd app data backup
   And I restore the ejabberd app data backup
   Then I should have a contact on my roster

@@ -38,6 +38,5 @@ Scenario: Disable mumble application
 Scenario: Backup and restore mumble
   Given the mumble application is enabled
   When I create a backup of the mumble app data
-  And I export the mumble app data backup
   And I restore the mumble app data backup
   Then the mumble service should be running
