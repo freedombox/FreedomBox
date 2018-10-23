@@ -335,3 +335,59 @@ def time_zone_get(browser):
     """Set the system time zone."""
     interface.nav_to_module(browser, 'datetime')
     return browser.find_by_name('time_zone').first.value
+
+
+_TOR_FEATURE_TO_ELEMENT = {
+    'relay': 'tor-relay_enabled',
+    'bridge-relay': 'tor-bridge_relay_enabled',
+    'hidden-services': 'tor-hs_enabled',
+    'software': 'tor-apt_transport_tor_enabled'
+}
+
+
+def tor_feature_enable(browser, feature, should_enable):
+    """Enable/disable a Tor feature."""
+    if not isinstance(should_enable, bool):
+        should_enable = should_enable in ('enable', 'enabled')
+
+    element_name = _TOR_FEATURE_TO_ELEMENT[feature]
+    interface.nav_to_module(browser, 'tor')
+    checkbox_element = browser.find_by_name(element_name).first
+    if should_enable == checkbox_element.checked:
+        return
+
+    if should_enable:
+        if feature == 'bridge-relay':
+            browser.find_by_name('tor-relay_enabled').first.check()
+
+        checkbox_element.check()
+    else:
+        checkbox_element.uncheck()
+
+    interface.submit(browser, form_class='form-configuration')
+    wait_for_config_update(browser, 'tor')
+
+
+def tor_assert_feature_enabled(browser, feature, enabled):
+    """Assert whether Tor relay is enabled or disabled."""
+    if not isinstance(enabled, bool):
+        enabled = enabled in ('enable', 'enabled')
+
+    element_name = _TOR_FEATURE_TO_ELEMENT[feature]
+    interface.nav_to_module(browser, 'tor')
+    assert browser.find_by_name(element_name).first.checked == enabled
+
+
+def tor_get_relay_ports(browser):
+    """Return the list of ports shown in the relay table."""
+    interface.nav_to_module(browser, 'tor')
+    return [
+        port_name.text
+        for port_name in browser.find_by_css('.tor-relay-port-name')
+    ]
+
+
+def tor_assert_hidden_services(browser):
+    """Assert that hidden service information is shown."""
+    interface.nav_to_module(browser, 'tor')
+    assert browser.find_by_css('.tor-hs .tor-hs-hostname')

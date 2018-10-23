@@ -61,7 +61,7 @@
     {% include "diagnostics_button.html" with module="tor" enabled=status.enabled %}
 
     {% if status.hs_enabled %}
-      <table class="table table-bordered table-condensed table-striped">
+      <table class="table table-bordered table-condensed table-striped tor-hs">
         <thead>
           <tr>
             <th>{% trans "Hidden Service" %}</th>
@@ -71,9 +71,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ status.hs_hostname }}</td>
-            <td>{{ status.hs_status }}</td>
-            <td>
+            <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
+            <td class="tor-hs-status">{{ status.hs_status }}</td>
+            <td class="tor-hs-services">
               {% for service in status.hs_services %}
                 {{ service }}
               {% endfor %}
@@ -107,7 +107,7 @@
       </p>
       <div class="row">
         <div class="col-sm-6">
-          <table class="table table-bordered table-condensed table-striped">
+          <table class="table table-bordered table-condensed table-striped tor-relay-ports">
             <thead>
               <tr>
                 <th>{% trans "Service" %}</th>
@@ -117,8 +117,8 @@
             <tbody>
               {% for name, port in status.ports.items %}
                 <tr>
-                  <td>{{ name }}</td>
-                  <td>{{ port }}</td>
+                  <td class="tor-relay-port-name">{{ name }}</td>
+                  <td class="tor-relay-port-number">{{ port }}</td>
                 </tr>
               {% endfor %}
             </tbody>

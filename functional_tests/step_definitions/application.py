@@ -257,3 +257,74 @@ def ejabberd_delete_contact(browser):
 @then('I should have a contact on my roster')
 def ejabberd_should_have_contact(browser):
     assert application.ejabberd_has_contact(browser)
+
+
+@given(parsers.parse('tor relay is {enabled:w}'))
+def tor_given_relay_enable(browser, enabled):
+    application.tor_feature_enable(browser, 'relay', enabled)
+
+
+@when(parsers.parse('I {enable:w} tor relay'))
+def tor_relay_enable(browser, enable):
+    application.tor_feature_enable(browser, 'relay', enable)
+
+
+@then(parsers.parse('tor relay should be {enabled:w}'))
+def tor_assert_relay_enabled(browser, enabled):
+    application.tor_assert_feature_enabled(browser, 'relay', enabled)
+
+
+@then(parsers.parse('tor {port_name:w} port should be displayed'))
+def tor_assert_port_displayed(browser, port_name):
+    assert port_name in application.tor_get_relay_ports(browser)
+
+
+@given(parsers.parse('tor bridge relay is {enabled:w}'))
+def tor_given_bridge_relay_enable(browser, enabled):
+    application.tor_feature_enable(browser, 'bridge-relay', enabled)
+
+
+@when(parsers.parse('I {enable:w} tor bridge relay'))
+def tor_bridge_relay_enable(browser, enable):
+    application.tor_feature_enable(browser, 'bridge-relay', enable)
+
+
+@then(parsers.parse('tor bridge relay should be {enabled:w}'))
+def tor_assert_bridge_relay_enabled(browser, enabled):
+    application.tor_assert_feature_enabled(browser, 'bridge-relay', enabled)
+
+
+@given(parsers.parse('tor hidden services are {enabled:w}'))
+def tor_given_hidden_services_enable(browser, enabled):
+    application.tor_feature_enable(browser, 'hidden-services', enabled)
+
+
+@when(parsers.parse('I {enable:w} tor hidden services'))
+def tor_hidden_services_enable(browser, enable):
+    application.tor_feature_enable(browser, 'hidden-services', enable)
+
+
+@then(parsers.parse('tor hidden services should be {enabled:w}'))
+def tor_assert_hidden_services_enabled(browser, enabled):
+    application.tor_assert_feature_enabled(browser, 'hidden-services', enabled)
+
+
+@then(parsers.parse('tor hidden services information should be displayed'))
+def tor_assert_hidden_services(browser):
+    application.tor_assert_hidden_services(browser)
+
+
+@given(parsers.parse('download software packages over tor is {enabled:w}'))
+def tor_given_download_software_over_tor_enable(browser, enabled):
+    application.tor_feature_enable(browser, 'software', enabled)
+
+
+@when(parsers.parse('I {enable:w} download software packages over tor'))
+def tor_download_software_over_tor_enable(browser, enable):
+    application.tor_feature_enable(browser, 'software', enable)
+
+
+@then(
+    parsers.parse('download software packages over tor should be {enabled:w}'))
+def tor_assert_download_software_over_tor(browser, enabled):
+    application.tor_assert_feature_enabled(browser, 'software', enabled)
