@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@essential @upgrades @system
+@essential @upgrades @system @backups
 Feature: Software Upgrades
   Configure automatic software upgrades
 
@@ -31,3 +31,11 @@ Scenario: Disable automatic upgrades
   Given automatic upgrades are enabled
   When I disable automatic upgrades
   Then automatic upgrades should be disabled
+
+Scenario: Backup and restore upgrades
+  When I enable automatic upgrades
+  And I create a backup of the upgrades app data
+  And I disable automatic upgrades
+  And I export the upgrades app data backup
+  And I restore the upgrades app data backup
+  Then automatic upgrades should be enabled

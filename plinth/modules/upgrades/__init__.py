@@ -24,6 +24,8 @@ from plinth import service as service_module
 from plinth import actions
 from plinth.menu import main_menu
 
+from .manifest import backup
+
 version = 1
 
 is_essential = True
