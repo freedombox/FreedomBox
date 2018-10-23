@@ -277,3 +277,21 @@ def security_enable_restricted_logins(browser, enable):
 def security_assert_restricted_logins(browser, enabled):
     enabled = (enabled == 'enabled')
     assert system.security_get_restricted_logins(browser) == enabled
+
+
+@given(parsers.parse('automatic upgrades are {enabled:w}'))
+def upgrades_given_enable_automatic(browser, enabled):
+    should_enable = (enabled == 'enabled')
+    system.upgrades_enable_automatic(browser, should_enable)
+
+
+@when(parsers.parse('I {enable:w} automatic upgrades'))
+def upgrades_enable_automatic(browser, enable):
+    should_enable = (enable == 'enable')
+    system.upgrades_enable_automatic(browser, should_enable)
+
+
+@then(parsers.parse('automatic upgrades should be {enabled:w}'))
+def upgrades_assert_automatic(browser, enabled):
+    should_be_enabled = (enabled == 'enabled')
+    assert system.upgrades_get_automatic(browser) == should_be_enabled

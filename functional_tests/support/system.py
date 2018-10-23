@@ -308,3 +308,24 @@ def security_get_restricted_logins(browser):
     """Return whether restricted console logins is enabled."""
     nav_to_module(browser, 'security')
     return browser.find_by_name('security-restricted_access').first.checked
+
+
+def upgrades_enable_automatic(browser, should_enable):
+    """Enable/disable automatic software upgrades."""
+    nav_to_module(browser, 'upgrades')
+    checkbox_element = browser.find_by_name('auto_upgrades_enabled').first
+    if should_enable == checkbox_element.checked:
+        return
+
+    if should_enable:
+        checkbox_element.check()
+    else:
+        checkbox_element.uncheck()
+
+    submit(browser)
+
+
+def upgrades_get_automatic(browser):
+    """Return whether automatic software upgrades is enabled."""
+    nav_to_module(browser, 'upgrades')
+    return browser.find_by_name('auto_upgrades_enabled').first.checked
