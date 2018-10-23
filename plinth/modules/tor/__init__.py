@@ -29,7 +29,7 @@ from plinth.modules.names import SERVICES
 from plinth.signals import domain_added, domain_removed
 
 from . import utils
-from .manifest import clients
+from .manifest import backup, clients
 
 version = 2
 

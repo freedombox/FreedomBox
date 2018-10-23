@@ -52,6 +52,23 @@ Scenario: Set download software packages over tor
   When I enable download software packages over tor
   Then download software packages over tor should be enabled
 
+# TODO: Test more thoroughly by checking same hidden service is restored and by
+# actually connecting using Tor.
+Scenario: Backup and restore tor
+  Given the tor application is enabled
+  And tor relay is enabled
+  And tor bridge relay is enabled
+  And tor hidden services are enabled
+  When I create a backup of the tor app data
+  And I disable tor relay
+  And I disable tor hidden services
+  And I export the tor app data backup
+  And I restore the tor app data backup
+  Then the tor service should be running
+  And tor relay should be enabled
+  And tor bridge relay should be enabled
+  And tor hidden services should be enabled
+
 Scenario: Disable tor application
   Given the tor application is enabled
   When I disable the tor application
