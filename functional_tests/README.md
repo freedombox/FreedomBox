@@ -24,12 +24,12 @@ Geckodriver will then use whatever version of Firefox you symlink as /usr/local/
  should run the tests using FreedomBox running on a throw-away VM.
 
 The VM should have NAT port-forwarding enabled so that 4430 on the
-host forwards to 443 on the guest. The web interface of FreedomBox
-should be accessible from the host system at https://localhost:4430/.
+host forwards to 443 on the guest. From where the tests are running, the web
+interface of FreedomBox should be accessible at https://localhost:4430/.
 
 # Setup FreedomBox Service for tests
 
-Create a new user as follows:
+Via Plinth, create a new user as follows:
 
 * Username: tester
 * Password: testingtesting
