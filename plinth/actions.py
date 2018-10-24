@@ -176,8 +176,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     if cfg.develop and sudo_call:
         # Passing 'env' does not work with sudo, so append the PYTHONPATH
         # as part of the command
-        pythonpath = _get_local_pythonpath()
-        sudo_call += ["PYTHONPATH=%s" % pythonpath]
+        sudo_call += ["PYTHONPATH=%s" % cfg.root]
     if sudo_call:
         cmd = sudo_call + cmd
 
@@ -193,7 +192,7 @@ def _run(action, options=None, input=None, run_in_background=False,
     }
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
-        kwargs['env'] = {'PYTHONPATH': _get_local_pythonpath()}
+        kwargs['env'] = {'PYTHONPATH': cfg.root}
     proc = subprocess.Popen(cmd, **kwargs)
 
     if not run_in_background:
@@ -208,17 +207,3 @@ def _run(action, options=None, input=None, run_in_background=False,
         return output
     else:
         return proc
-
-def _get_local_pythonpath():
-    """Use local plinth folder in pythonpath instead of system plinth"""
-    pythonpath = cfg.root
-    try:
-        current_pythonpath = os.environ['PYTHONPATH']
-    except KeyError:
-        pass
-    else:
-        current_pythonpath = current_pythonpath.strip(os.path.pathsep)
-        if current_pythonpath:
-            pythonpath += os.path.pathsep.join([pythonpath,
-                                               current_pythonpath])
-    return pythonpath
