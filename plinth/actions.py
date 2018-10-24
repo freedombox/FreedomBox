@@ -168,17 +168,33 @@ def _run(action, options=None, input=None, run_in_background=False,
         cmd += list(options)  # No escaping necessary
 
     # Contract 1: commands can run via sudo.
+    sudo_call = []
     if run_as_root:
-        cmd = ['sudo', '-n'] + cmd
+        sudo_call = ['sudo', '-n']
     elif become_user:
-        cmd = ['sudo', '-n', '-u', become_user] + cmd
+        sudo_call = ['sudo', '-n', '-u', become_user]
+    if cfg.develop and sudo_call:
+        # Passing 'env' does not work with sudo, so append the PYTHONPATH
+        # as part of the command
+        pythonpath = _get_local_pythonpath()
+        sudo_call += ["PYTHONPATH=%s" % pythonpath]
+    if sudo_call:
+        cmd = sudo_call + cmd
 
     LOGGER.info('Executing command - %s', cmd)
 
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE, shell=False)
+    kwargs = {
+        "stdin": subprocess.PIPE,
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "shell": False,
+    }
+    if cfg.develop:
+        # In development mode pass on local pythonpath to access Plinth
+        kwargs['env'] = {'PYTHONPATH': _get_local_pythonpath()}
+    proc = subprocess.Popen(cmd, **kwargs)
 
     if not run_in_background:
         output, error = proc.communicate(input=input)
@@ -192,3 +208,17 @@ def _run(action, options=None, input=None, run_in_background=False,
         return output
     else:
         return proc
+
+def _get_local_pythonpath():
+    """Use local plinth folder in pythonpath instead of system plinth"""
+    pythonpath = cfg.root
+    try:
+        current_pythonpath = os.environ['PYTHONPATH']
+    except KeyError:
+        pass
+    else:
+        current_pythonpath = current_pythonpath.strip(os.path.pathsep)
+        if current_pythonpath:
+            pythonpath += os.path.pathsep.join([pythonpath,
+                                               current_pythonpath])
+    return pythonpath

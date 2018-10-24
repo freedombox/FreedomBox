@@ -44,11 +44,11 @@ class TestActions(unittest.TestCase):
         """Initial setup for all the classes."""
         cls.action_directory = tempfile.TemporaryDirectory()
         cfg.actions_dir = cls.action_directory.name
+        actions_dir = os.path.join(os.path.dirname(__file__), '..', '..',
+            'actions')
 
-        shutil.copy(
-            os.path.join(
-                os.path.dirname(__file__), '..', '..', 'actions', 'packages'),
-            cfg.actions_dir)
+        shutil.copy(os.path.join(actions_dir, 'packages'), cfg.actions_dir)
+        shutil.copy(os.path.join(actions_dir, 'test_path'), cfg.actions_dir)
         shutil.copy('/bin/echo', cfg.actions_dir)
         shutil.copy('/usr/bin/id', cfg.actions_dir)
 
@@ -166,3 +166,23 @@ class TestActions(unittest.TestCase):
         # An ActionError is raised in this case.
         with self.assertRaises(ActionError):
             superuser_run('packages', ['is-package-manager-busy'])
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_action_path(self):
+        """Test that in development mode, python action scripts get the
+        correct PYTHONPATH"""
+        try:
+            cfg.develop = True
+            self._clear_env()
+            plinth_path = run('test_path').strip()
+            su_plinth_path = superuser_run('test_path').strip()
+            self.assertTrue(plinth_path.startswith(cfg.root))
+            self.assertEquals(plinth_path, su_plinth_path)
+        finally:
+            cfg.develop = False
+
+    def _clear_env(self):
+        try:
+            del os.environ['PYTHONPATH']
+        except KeyError:
+            pass
