@@ -15,22 +15,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for monkeysphere.
 """
 
 import argparse
-import augeas
 import contextlib
 import json
 import os
-import psutil
 import re
 import shutil
 import signal
 import subprocess
 import tempfile
+
+import augeas
+import psutil
 
 
 def parse_arguments():
@@ -40,20 +40,20 @@ def parse_arguments():
 
     host_show_keys = subparsers.add_parser(
         'host-show-keys', help='Show imported/importable keys')
-    host_show_keys.add_argument(
-        'key_id', nargs='?', help='Optional KEYID to retrieve details for')
+    host_show_keys.add_argument('key_id', nargs='?',
+                                help='Optional KEYID to retrieve details for')
 
     host_import_key = subparsers.add_parser(
         'host-import-key', help='Import a key into monkeysphere')
-    host_import_key.add_argument(
-        'ssh_fingerprint', help='SSH fingerprint of the key to import')
-    host_import_key.add_argument(
-        'domains', nargs='*', help='List of available domains')
+    host_import_key.add_argument('ssh_fingerprint',
+                                 help='SSH fingerprint of the key to import')
+    host_import_key.add_argument('domains', nargs='*',
+                                 help='List of available domains')
 
-    host_publish_key = subparsers.add_parser(
-        'host-publish-key', help='Push host key to keyserver')
-    host_publish_key.add_argument(
-        'key_ids', nargs='*', help='Optional list of KEYIDs')
+    host_publish_key = subparsers.add_parser('host-publish-key',
+                                             help='Push host key to keyserver')
+    host_publish_key.add_argument('key_ids', nargs='*',
+                                  help='Optional list of KEYIDs')
 
     host_cancel_publish = subparsers.add_parser(
         'host-cancel-publish', help='Cancel a running publish operation')
@@ -72,10 +72,12 @@ def get_ssh_keys(fingerprint_hash):
         output = subprocess.check_output(
             ['ssh-keygen', '-l', '-E', fingerprint_hash, '-f', key_file])
         fingerprint = output.decode().split()[1]
-        keys[fingerprint] = {'ssh_fingerprint': fingerprint,
-                             'service': 'ssh',
-                             'key_file': key_file,
-                             'available_domains': ['*']}
+        keys[fingerprint] = {
+            'ssh_fingerprint': fingerprint,
+            'service': 'ssh',
+            'key_file': key_file,
+            'available_domains': ['*']
+        }
 
     return keys
 
@@ -188,7 +190,8 @@ def get_merged_keys(key_id=None):
         if ssh_fingerprint in keys:
             keys[ssh_fingerprint].update({
                 'available_domains': key['available_domains'],
-                'key_file': key['key_file']})
+                'key_file': key['key_file']
+            })
         else:
             keys[ssh_fingerprint] = key
 
@@ -253,10 +256,10 @@ def subcommand_host_import_key(arguments, second_run=False):
                 continue
 
             env = dict(os.environ, MONKEYSPHERE_PROMPT='false')
-            subprocess.check_call(
-                ['monkeysphere-host', 'add-servicename',
-                 key['service'] + '://' + domain, key['openpgp_fingerprint']],
-                env=env)
+            subprocess.check_call([
+                'monkeysphere-host', 'add-servicename',
+                key['service'] + '://' + domain, key['openpgp_fingerprint']
+            ], env=env)
 
 
 def subcommand_host_publish_key(arguments):
@@ -264,10 +267,8 @@ def subcommand_host_publish_key(arguments):
     # setting TMPDIR as workaround for Debian bug #656750
     proc = subprocess.Popen(
         ['monkeysphere-host', 'publish-keys'] + arguments.key_ids,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env=dict(
-            os.environ,
-            TMPDIR='/var/lib/monkeysphere/authentication/tmp/',
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=dict(
+            os.environ, TMPDIR='/var/lib/monkeysphere/authentication/tmp/',
             MONKEYSPHERE_PROMPT='false'))
     output, error = proc.communicate()
     output, error = output.decode(), error.decode()
