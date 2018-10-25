@@ -295,3 +295,30 @@ def upgrades_enable_automatic(browser, enable):
 def upgrades_assert_automatic(browser, enabled):
     should_be_enabled = (enabled == 'enabled')
     assert system.upgrades_get_automatic(browser) == should_be_enabled
+
+
+@given(
+    parsers.parse(
+        'the {key_type:w} key for {domain:S} is imported in monkeysphere'))
+def monkeysphere_given_import_key(browser, key_type, domain):
+    system.monkeysphere_import_key(browser, key_type.lower(), domain)
+
+
+@when(
+    parsers.parse('I import {key_type:w} key for {domain:S} in monkeysphere'))
+def monkeysphere_import_key(browser, key_type, domain):
+    system.monkeysphere_import_key(browser, key_type.lower(), domain)
+
+
+@then(
+    parsers.parse(
+        'the {key_type:w} key should imported for {domain:S} in monkeysphere'))
+def monkeysphere_assert_imported_key(browser, key_type, domain):
+    system.monkeysphere_assert_imported_key(browser, key_type.lower(), domain)
+
+
+@then(
+    parsers.parse('I should be able to publish {key_type:w} key for '
+                  '{domain:S} in monkeysphere'))
+def monkeysphere_publish_key(browser, key_type, domain):
+    system.monkeysphere_publish_key(browser, key_type.lower(), domain)

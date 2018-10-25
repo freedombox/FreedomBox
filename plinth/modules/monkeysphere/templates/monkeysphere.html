@@ -80,7 +80,7 @@
     </thead>
     <tbody>
       {% for key in status.keys.values|dictsort:"ssh_fingerprint" %}
-        <tr>
+        <tr class="monkeysphere-service-{{ key.service }}">
           <td>
             {% if key.service == 'ssh' %}
               {% trans "Secure Shell" %}
@@ -93,22 +93,31 @@
           <td>
             <ul>
               {% for domain in key.all_domains %}
-                <li>
-                  {% if domain not in key.imported_domains %}
+                {% if domain not in key.imported_domains %}
+                  <li>
                     <span class="label label-default"
                       ><span class="glyphicon glyphicon-remove"
                              aria-hidden="true"></span></span>
-                  {% elif domain not in key.available_domains %}
+                    <span class="monkeysphere-importable-domain"
+                      >{{ domain }}</span>
+                  </li>
+                {% elif domain not in key.available_domains %}
+                  <li>
                     <span class="label label-warning"
                       ><span class="glyphicon glyphicon-warning-sign"
                              aria-hidden="true"></span></span>
-                  {% else %}
+                    <span class="monkeysphere-unavailable-domain"
+                      >{{ domain }}</span>
+                  </li>
+                {% else %}
+                  <li>
                     <span class="label label-success"
                       ><span class="glyphicon glyphicon-ok"
                              aria-hidden="true"></span></span>
-                  {% endif %}
-                  {{ domain }}
-                </li>
+                    <span class="monkeysphere-imported-domain"
+                      >{{ domain }}</span>
+                  </li>
+                {% endif %}
               {% endfor %}
             </ul>
           </td>
@@ -126,29 +135,29 @@
           </td>
           <td>
             {% if not key.openpgp_fingerprint %}
-              <form class="form pull-right" method="post"
+              <form class="form pull-right form-import" method="post"
                     action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                 {% csrf_token %}
 
-                <button type="submit" class="btn btn-primary btn-sm pull-right">
+                <button type="submit" class="btn btn-primary btn-sm pull-right button-import">
                   {% trans "Import Key" %}</button>
               </form>
             {% else %}
               {% if not running %}
-                <form class="form pull-right" method="post"
+                <form class="form pull-right form-publish" method="post"
                       action="{% url 'monkeysphere:publish' key.openpgp_fingerprint %}">
                   {% csrf_token %}
 
-                  <button type="submit" class="btn btn-warning btn-sm pull-right">
+                  <button type="submit" class="btn btn-warning btn-sm pull-right button-publish">
                     {% trans "Publish Key" %}</button>
                 </form>
               {% endif %}
               {% if key.importable_domains %}
-                <form class="form pull-right" method="post"
+                <form class="form pull-right form-add-domain" method="post"
                       action="{% url 'monkeysphere:import' key.ssh_fingerprint %}">
                   {% csrf_token %}
 
-                  <button type="submit" class="btn btn-primary btn-sm pull-right">
+                  <button type="submit" class="btn btn-primary btn-sm pull-right button-add-domains">
                     {% trans "Add Domains" %}</button>
                 </form>
               {% endif %}

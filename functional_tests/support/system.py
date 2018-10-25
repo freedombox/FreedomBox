@@ -17,7 +17,9 @@
 
 from support import application, config
 
+from . import application
 from .interface import default_url, nav_to_module, submit
+from .service import wait_for_page_update
 
 config_page_title_language_map = {
     'da': 'Generel Konfiguration',
@@ -329,3 +331,47 @@ def upgrades_get_automatic(browser):
     """Return whether automatic software upgrades is enabled."""
     nav_to_module(browser, 'upgrades')
     return browser.find_by_name('auto_upgrades_enabled').first.checked
+
+
+def _monkeysphere_find_domain(browser, key_type, domain_type, domain):
+    """Iterate every domain of a given type which given key type."""
+    keys_of_type = browser.find_by_css(
+        '.monkeysphere-service-{}'.format(key_type))
+    for key_of_type in keys_of_type:
+        search_domains = key_of_type.find_by_css(
+            '.monkeysphere-{}-domain'.format(domain_type))
+        for search_domain in search_domains:
+            if search_domain.text == domain:
+                return key_of_type, search_domain
+
+    raise IndexError('Domain not found')
+
+
+def monkeysphere_import_key(browser, key_type, domain):
+    """Import a key of specified type for given domain into monkeysphere."""
+    try:
+        monkeysphere_assert_imported_key(browser, key_type, domain)
+    except IndexError:
+        pass
+    else:
+        return
+
+    key, _ = _monkeysphere_find_domain(browser, key_type, 'importable', domain)
+    with wait_for_page_update(browser):
+        key.find_by_css('.button-import').click()
+
+
+def monkeysphere_assert_imported_key(browser, key_type, domain):
+    """Assert that a key of specified type for given domain was imported.."""
+    nav_to_module(browser, 'monkeysphere')
+    return _monkeysphere_find_domain(browser, key_type, 'imported', domain)
+
+
+def monkeysphere_publish_key(browser, key_type, domain):
+    """Publish a key of specified type for given domain from monkeysphere."""
+    nav_to_module(browser, 'monkeysphere')
+    key, _ = _monkeysphere_find_domain(browser, key_type, 'imported', domain)
+    with wait_for_page_update(browser):
+        key.find_by_css('.button-publish').click()
+
+    application.wait_for_config_update(browser, 'monkeysphere')
