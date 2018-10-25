@@ -33,10 +33,10 @@ from .forms import ConfigureForm
 
 subsubmenu = [{
     'url': reverse_lazy('upgrades:index'),
-    'text': ugettext_lazy('Automatic Upgrades')
+    'text': ugettext_lazy('Auto-update')
 }, {
     'url': reverse_lazy('upgrades:upgrade'),
-    'text': ugettext_lazy('Upgrade Packages')
+    'text': ugettext_lazy('Manual update')
 }]
 
 

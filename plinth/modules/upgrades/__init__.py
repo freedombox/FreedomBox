@@ -32,12 +32,10 @@ is_essential = True
 
 managed_packages = ['unattended-upgrades']
 
-name = _('Software Upgrades')
+name = _('Update')
 
 description = [
-    _('Upgrades install the latest software and security updates. When '
-      'automatic upgrades are enabled, upgrades are automatically run every '
-      'night. You don\'t normally need to start the upgrade process.')
+    _('Search for and apply the latest software and security updates. ')
 ]
 
 service = None

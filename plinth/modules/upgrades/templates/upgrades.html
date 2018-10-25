@@ -34,36 +34,46 @@
 
 {% block configuration %}
 
-  <p>
-    {% blocktrans trimmed %}
-      Depending on the number of packages to install, this may take a long time
-      to complete.  While upgrades are in progress, you will not be able to
-      install other packages.  During the upgrade, this web interface may be
-      temporarily unavailable and show an error.  Refresh the page to continue.
-    {% endblocktrans %}
-  </p>
-
   {% if not is_busy %}
+  <p>
     <form class="form" method="post" action="{% url 'upgrades:upgrade' %}">
       {% csrf_token %}
 
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Upgrade now &raquo;" %}"/>
+      <input type="submit" class="btn btn-primary btn-lg"
+      value="{% trans "Update now" %}"/>
     </form>
+  </p>
   {% endif %}
 
   {% if is_busy %}
-    <p class="running-status-parent">
-      <span class="running-status loading"></span>
-      {% trans "A package manager is running." %}
-    </p>
+  <p class="running-status-parent text-center btn btn-primary btn-lg">
+    <span class="running-status loading"></span>
+    {% trans "Updating..." %}
+  </p>
   {% endif %}
+
+  <p>
+    {% blocktrans trimmed %}
+      <b>This may take a long time to complete</b>. During an update, you
+      can not install apps. Also, this web interface may be temporarily
+       unavailable and show an error. In that case refresh the page to continue.
+    {% endblocktrans %}
+  </p>
+
+
 
   {% if log %}
-    <h5>{% trans "Recent log from upgrades:" %}</h5>
+  <p>
+    <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseLog" aria-expanded="false" aria-controls="collapseLog">
+        Toggle recent update logs
+    </a>
 
-    <pre>{{ log }}</pre>
+    <div class="collapse" id="collapseLog">
+      <pre>{{ log }}</pre>
+    </div>
+  </p>
   {% endif %}
+
 
 {% endblock %}
 
@@ -80,4 +90,3 @@
     <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
   {% endif %}
 {% endblock %}
-

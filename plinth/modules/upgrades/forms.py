@@ -26,7 +26,5 @@ from django.utils.translation import ugettext_lazy as _
 class ConfigureForm(forms.Form):
     """Configuration form to enable/disable automatic upgrades."""
     auto_upgrades_enabled = forms.BooleanField(
-        label=_('Enable automatic upgrades'), required=False,
-        help_text=_('When enabled, the unattended-upgrades program will be run '
-                    'once per day. It will attempt to perform any package '
-                    'upgrades that are available.'))
+        label=_('Enable auto-update'), required=False,
+        help_text=_('When enabled, FreedomBox automatically updates once a day.'))
