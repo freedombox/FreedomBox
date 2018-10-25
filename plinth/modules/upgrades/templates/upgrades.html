@@ -39,24 +39,24 @@
     <form class="form" method="post" action="{% url 'upgrades:upgrade' %}">
       {% csrf_token %}
 
-      <input type="submit" class="btn btn-primary btn-lg"
-      value="{% trans "Update now" %}"/>
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Update now" %}"/>
     </form>
   </p>
   {% endif %}
 
   {% if is_busy %}
-  <p class="running-status-parent text-center btn btn-primary btn-lg">
+  <button type="button" disabled="disabled" class="running-status-parent btn btn-default" >
     <span class="running-status loading"></span>
     {% trans "Updating..." %}
-  </p>
+  </button>
   {% endif %}
 
   <p>
     {% blocktrans trimmed %}
-      <b>This may take a long time to complete</b>. During an update, you
+      <strong>This may take a long time to complete</strong>. During an update, you
       can not install apps. Also, this web interface may be temporarily
-       unavailable and show an error. In that case refresh the page to continue.
+      unavailable and show an error. In that case, refresh the page to continue.
     {% endblocktrans %}
   </p>
 
@@ -64,11 +64,11 @@
 
   {% if log %}
   <p>
-    <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseLog" aria-expanded="false" aria-controls="collapseLog">
+    <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapse-log" aria-expanded="false" aria-controls="collapse-log">
         Toggle recent update logs
     </a>
 
-    <div class="collapse" id="collapseLog">
+    <div class="collapse" id="collapse-log">
       <pre>{{ log }}</pre>
     </div>
   </p>
