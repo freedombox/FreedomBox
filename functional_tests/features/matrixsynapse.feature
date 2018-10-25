@@ -21,9 +21,9 @@ Feature: Matrix Synapse VoIP and Chat Server
 
 Background:
   Given I'm a logged in user
-  Given the domain name is set to mydomain
+  Given the domain name is set to mydomain.example
   Given the matrixsynapse application is installed
-  Given the domain name for matrixsynapse is set to mydomain
+  Given the domain name for matrixsynapse is set to mydomain.example
 
 Scenario: Enable matrixsynapse application
   Given the matrixsynapse application is disabled

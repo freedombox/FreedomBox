@@ -27,8 +27,8 @@ Scenario: Change hostname
   Then the hostname should be mybox
 
 Scenario: Change domain name
-  When I change the domain name to mydomain
-  Then the domain name should be mydomain
+  When I change the domain name to mydomain.example
+  Then the domain name should be mydomain.example
 
 Scenario: Change default app
   Given the syncthing application is installed

@@ -41,7 +41,7 @@ def set_default_app(browser, app_name):
     system.set_default_app(browser, app_name)
 
 
-@given(parsers.parse('the domain name is set to {domain:w}'))
+@given(parsers.parse('the domain name is set to {domain:S}'))
 def set_domain_name(browser, domain):
     system.set_domain_name(browser, domain)
 
