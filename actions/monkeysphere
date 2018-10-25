@@ -22,12 +22,15 @@ Configuration helper for monkeysphere.
 
 import argparse
 import augeas
+import contextlib
 import json
 import os
 import psutil
 import re
+import shutil
 import signal
 import subprocess
+import tempfile
 
 
 def parse_arguments():
@@ -192,6 +195,33 @@ def get_merged_keys(key_id=None):
     return keys
 
 
+@contextlib.contextmanager
+def _get_ssh_key_file_for_import(original_key_file, service):
+    """Return an SSH key file that can be imported into monkeysphere.
+
+    If the key file is in PEM format, the key file can be used as it is.
+    Otherwise, if the file is in the OpenSSH key format, which is default since
+    7.8, then convert it to PEM format.
+
+    """
+    if service != 'ssh':
+        yield original_key_file
+        return
+
+    first_line = open(original_key_file, 'r').readline()
+    if '--BEGIN OPENSSH PRIVATE KEY--' not in first_line:
+        yield original_key_file
+        return
+
+    with tempfile.TemporaryDirectory() as temp_directory:
+        key_file = os.path.join(temp_directory, 'ssh_key_file')
+        shutil.copy2(original_key_file, key_file)
+        # Convert OpenSSH format to PEM
+        subprocess.run(
+            ['ssh-keygen', '-p', '-N', '', '-m', 'PEM', '-f', key_file])
+        yield key_file
+
+
 def subcommand_host_show_keys(arguments):
     """Show host key fingerprints."""
     print(json.dumps({'keys': get_merged_keys(arguments.key_id)}))
@@ -209,10 +239,13 @@ def subcommand_host_import_key(arguments, second_run=False):
 
     if 'openpgp_fingerprint' not in key and not second_run:
         env = dict(os.environ, MONKEYSPHERE_PROMPT='false')
-        subprocess.check_call(
-            ['monkeysphere-host', 'import-key',
-             key['key_file'], key['service'] + '://' +
-             key['available_domains'][0]], env=env)
+        with _get_ssh_key_file_for_import(key['key_file'],
+                                          key['service']) as key_file:
+            subprocess.check_call([
+                'monkeysphere-host', 'import-key', key_file,
+                key['service'] + '://' + key['available_domains'][0]
+            ], env=env)
+
         subcommand_host_import_key(arguments, second_run=True)
     else:
         for domain in key['available_domains']:
