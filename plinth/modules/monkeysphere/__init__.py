@@ -22,6 +22,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth.menu import main_menu
 
+from .manifest import backup
+
 version = 1
 
 managed_packages = ['monkeysphere']

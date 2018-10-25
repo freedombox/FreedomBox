@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @monkeysphere
+@apps @monkeysphere @backups
 Feature: Monkeysphere
   Import and publish OpenPGP keys for SSH and HTTPS keys
 
@@ -39,3 +39,12 @@ Scenario: Publish SSH keys
 Scenario: Publish HTTPS keys
   Given the HTTPS key for mydomain.example is imported in monkeysphere
   Then I should be able to publish HTTPS key for mydomain.example in monkeysphere
+
+Scenario: Backup and restore monkeysphere
+  When I import SSH key for mydomain.example in monkeysphere
+  And I import HTTPS key for mydomain.example in monkeysphere
+  And I create a backup of the monkeysphere app data
+  And I export the monkeysphere app data backup
+  And I restore the monkeysphere app data backup
+  Then the SSH key should imported for mydomain.example in monkeysphere
+  And the HTTPS key should imported for mydomain.example in monkeysphere
