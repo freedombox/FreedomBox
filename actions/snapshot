@@ -134,7 +134,7 @@ def _get_snapper_list():
 def subcommand_list(_):
     """List snapshots."""
     lines = _get_snapper_list()
-    keys = ('type', 'number', 'pre_number', 'date', 'user', 'cleanup',
+    keys = ('number', 'type', 'pre_number', 'date', 'user', 'cleanup',
             'description')
     snapshots = []
     for line in lines[2:]:
@@ -192,7 +192,7 @@ def subcommand_delete(arguments):
 def subcommand_delete_all(_):
     """Delete all the snapshots (except the active one)."""
     lines = _get_snapper_list()
-    snapshot_range = [line.split('|')[1].strip() for line in lines[3:]]
+    snapshot_range = [line.split('|')[0].strip() for line in lines[3:]]
     default_snapshot = _get_default_snapshot()
     if snapshot_range:
         if default_snapshot:
