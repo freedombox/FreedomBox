@@ -18,6 +18,7 @@
 Views for storage module.
 """
 
+import json
 import logging
 import urllib.parse
 
@@ -28,6 +29,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
+from plinth import actions
 from plinth.modules import storage
 from plinth.utils import format_lazy, is_user_admin
 
@@ -125,7 +127,8 @@ def eject(request, device_path):
     device_path = urllib.parse.unquote(device_path)
 
     try:
-        drive = udisks2.eject_drive_of_device(device_path)
+        drive = json.loads(
+            actions.superuser_run('storage', ['eject', device_path]))
         if drive:
             messages.success(
                 request,

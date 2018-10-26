@@ -24,14 +24,6 @@ from plinth import utils
 from plinth.modules.storage import format_bytes
 
 
-def _get_options():
-    """Return the common options used for udisks2 operations."""
-    glib = utils.import_from_gi('GLib', '2.0')
-    options = glib.Variant(
-        'a{sv}', {'auth.no_user_interaction': glib.Variant('b', True)})
-    return options
-
-
 def list_devices():
     """List devices that can be ejected."""
     udisks = utils.import_from_gi('UDisks', '2.0')
@@ -68,68 +60,6 @@ def list_devices():
         devices.append(device)
 
     return devices
-
-
-def eject_drive_of_device(device_path):
-    """Eject a device after unmounting all of its partitions.
-
-    Return the details (model, vendor) of drives ejected.
-    """
-    udisks = utils.import_from_gi('UDisks', '2.0')
-    client = udisks.Client.new_sync()
-    object_manager = client.get_object_manager()
-
-    found_objects = [
-        obj for obj in object_manager.get_objects()
-        if obj.get_block() and obj.get_block().props.device == device_path
-    ]
-
-    if not found_objects:
-        raise ValueError(
-            _('No such device - {device_path}').format(
-                device_path=device_path))
-
-    obj = found_objects[0]
-
-    # Unmount filesystems
-    block_device = obj.get_block()
-    drive_object_path = block_device.props.drive
-    if drive_object_path != '/':
-        umount_all_filesystems_of_drive(drive_object_path)
-    else:
-        # Block device has not associated drive
-        umount_filesystem(obj.get_filesystem())
-
-    # Eject the drive
-    drive = client.get_drive_for_block(block_device)
-    if drive:
-        drive.call_eject_sync(_get_options(), None)
-        return {
-            'vendor': drive.props.vendor,
-            'model': drive.props.model,
-        }
-
-    return None
-
-
-def umount_filesystem(filesystem):
-    """Unmount a filesystem """
-    if filesystem and filesystem.props.mount_points:
-        filesystem.call_unmount_sync(_get_options())
-
-
-def umount_all_filesystems_of_drive(drive_object_path):
-    """Unmount all filesystems on block devices of a drive."""
-    udisks = utils.import_from_gi('UDisks', '2.0')
-    client = udisks.Client.new_sync()
-    object_manager = client.get_object_manager()
-
-    for obj in object_manager.get_objects():
-        block_device = obj.get_block()
-        if not block_device or block_device.props.drive != drive_object_path:
-            continue
-
-        umount_filesystem(obj.get_filesystem())
 
 
 def get_error_message(error):
