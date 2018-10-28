@@ -18,15 +18,17 @@
 Views for the backups app.
 """
 
+import gzip
 import mimetypes
 from datetime import datetime
 import os
+from io import BytesIO
 import time
 from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404, FileResponse
+from django.http import Http404, FileResponse, StreamingHttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
@@ -34,9 +36,9 @@ from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
 from plinth.modules import backups
+from plinth import actions
 
-from . import api, UPLOAD_BACKUP_PATH, forms, \
-        SESSION_BACKUP_VARIABLE, delete_upload_backup_file
+from . import api, forms, SESSION_BACKUP_VARIABLE, delete_upload_backup_file
 
 # number of seconds an uploaded backup file should be kept/stored
 KEEP_UPLOADED_BACKUP_FOR = 60*10
@@ -129,15 +131,6 @@ def _get_file_response(path, filename):
     return response
 
 
-class ExportAndDownloadView(View):
-    """View to export and download an archive."""
-    def get(self, request, name):
-        name = unquote(name)
-        filename = "%s.tar.gz" % name
-        with create_temporary_backup_file(name) as filepath:
-            return _get_file_response(filepath, filename)
-
-
 class create_temporary_backup_file:
     """Create a temporary backup file that gets deleted after using it"""
     # TODO: try using export-tar with FILE parameter '-' and reading stdout:
@@ -152,7 +145,7 @@ class create_temporary_backup_file:
         return self.path
 
     def __exit__(self, type, value, traceback):
-        delete_upload_backup_file()
+        delete_upload_backup_file(self.path)
 
 
 class UploadArchiveView(SuccessMessageMixin, FormView):
@@ -244,3 +237,46 @@ class RestoreArchiveView(BaseRestoreView):
         archive_path = backups.get_archive_path(self.kwargs['name'])
         backups.restore(archive_path, form.cleaned_data['selected_apps'])
         return super().form_valid(form)
+
+
+class ZipStream(object):
+    """Zip a stream that yields binary data"""
+
+    def __init__(self, stream, get_chunk_method):
+        """
+        - stream: the input stream
+        - get_chunk_method: name of the method that yields chunks
+        """
+        self.stream = stream
+        self.buffer = BytesIO()
+        self.zipfile = gzip.GzipFile(mode='wb', fileobj=self.buffer)
+        self.get_chunk = getattr(self.stream, get_chunk_method)
+
+    def __next__(self):
+        line = self.get_chunk()
+        if not len(line):
+            raise StopIteration
+        self.zipfile.write(line)
+        self.zipfile.flush()
+        zipped = self.buffer.getvalue()
+        self.buffer.truncate(0)
+        self.buffer.seek(0)
+        return zipped
+
+    def __iter__(self):
+        return self
+
+
+class ExportAndDownloadView(View):
+    """View to export and download an archive as stream."""
+    def get(self, request, name):
+        name = unquote(name)
+        filename = "%s.tar.gz" % name
+        args = ['export-stream', '--name', name]
+        proc = actions.superuser_run('backups', args, run_in_background=True,
+                bufsize=1)
+        zipStream = ZipStream(proc.stdout, 'readline')
+        response = StreamingHttpResponse(zipStream,
+                content_type="application/x-gzip")
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        return response

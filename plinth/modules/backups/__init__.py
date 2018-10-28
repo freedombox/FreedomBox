@@ -45,8 +45,6 @@ MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 REPOSITORY = '/var/lib/freedombox/borgbackup'
 # session variable name that stores when a backup file should be deleted
 SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
-# default backup path for temporary backup files during down- or upload
-UPLOAD_BACKUP_PATH = '/tmp/freedombox-backup.tar.gz'
 
 
 def init():
@@ -108,15 +106,16 @@ def delete_archive(name):
     actions.superuser_run('backups', ['delete', '--name', name])
 
 
-def delete_upload_backup_file():
-    if os.path.isfile(UPLOAD_BACKUP_PATH):
-        os.remove(UPLOAD_BACKUP_PATH)
+def delete_upload_backup_file(path):
+    if os.path.isfile(path):
+        os.remove(path)
 
 
-def export_archive(name, filepath=UPLOAD_BACKUP_PATH):
+def export_archive(name, filepath):
     """Export an archive as .tar.gz file
 
     name: name of the repository (w/o path)
+    filepath: filepath the archive should be exported to
     """
     arguments = ['export-tar', '--name', name, '--filepath', filepath]
     actions.superuser_run('backups', arguments)

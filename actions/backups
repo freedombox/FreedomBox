@@ -60,6 +60,11 @@ def parse_arguments():
     export_tar.add_argument('--filepath', help='Destination tarball file path',
                             required=True)
 
+    export_stream = subparsers.add_parser('export-stream',
+                               help='Export archive contents as tar stream')
+    export_stream.add_argument('--name', help='Archive name)',
+                               required=True)
+
     get_exported_archive_apps = subparsers.add_parser(
         'get-exported-archive-apps',
         help='Get list of apps included in exported archive file')
@@ -173,6 +178,13 @@ def subcommand_export_tar(arguments):
         shutil.chown(arguments.filename, user='plinth', group='plinth')
     except PermissionError:
         pass
+
+
+def subcommand_export_stream(arguments):
+    """Export archive contents as tar stream."""
+    subprocess.run([
+        'borg', 'export-tar', REPOSITORY + '::' + arguments.name, '-'],
+        check=True)
 
 
 def _read_archive_file(archive, filepath):

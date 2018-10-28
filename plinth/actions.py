@@ -100,35 +100,38 @@ from plinth.errors import ActionError
 LOGGER = logging.getLogger(__name__)
 
 
-def run(action, options=None, input=None, run_in_background=False):
+def run(action, options=None, input=None, run_in_background=False,
+        bufsize=None):
     """Safely run a specific action as the current user.
 
     See actions._run for more information.
     """
-    return _run(action, options, input, run_in_background, False)
+    return _run(action, options, input, run_in_background, False,
+                bufsize=bufsize)
 
 
 def superuser_run(action, options=None, input=None, run_in_background=False,
-                  log_error=True):
+                  bufsize=None, log_error=True):
     """Safely run a specific action as root.
 
     See actions._run for more information.
     """
     return _run(action, options, input, run_in_background, True,
-                log_error=log_error)
+                bufsize=bufsize, log_error=log_error)
 
 
 def run_as_user(action, options=None, input=None, run_in_background=False,
-                become_user=None):
+                bufsize=None, become_user=None):
     """Run a command as a different user.
 
     If become_user is None, run as current user.
     """
-    return _run(action, options, input, run_in_background, False, become_user)
+    return _run(action, options, input, run_in_background, False, become_user,
+                bufsize=bufsize)
 
 
 def _run(action, options=None, input=None, run_in_background=False,
-         run_as_root=False, become_user=None, log_error=True):
+         run_as_root=False, become_user=None, log_error=True, bufsize=None):
     """Safely run a specific action as a normal user or root.
 
     Actions are pulled from the actions directory.
@@ -182,6 +185,10 @@ def _run(action, options=None, input=None, run_in_background=False,
 
     LOGGER.info('Executing command - %s', cmd)
 
+    # Use default bufsize if no bufsize is given.
+    if bufsize is None:
+        bufsize = -1
+
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
     kwargs = {
@@ -189,6 +196,7 @@ def _run(action, options=None, input=None, run_in_background=False,
         "stdout": subprocess.PIPE,
         "stderr": subprocess.PIPE,
         "shell": False,
+        "bufsize": bufsize,
     }
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
