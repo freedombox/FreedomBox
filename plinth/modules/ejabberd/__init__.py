@@ -178,8 +178,8 @@ def diagnose():
     results.append(action_utils.diagnose_port_listening(5222, 'tcp6'))
     results.append(action_utils.diagnose_port_listening(5269, 'tcp4'))
     results.append(action_utils.diagnose_port_listening(5269, 'tcp6'))
-    results.append(action_utils.diagnose_port_listening(5280, 'tcp4'))
-    results.append(action_utils.diagnose_port_listening(5280, 'tcp6'))
+    results.append(action_utils.diagnose_port_listening(5443, 'tcp4'))
+    results.append(action_utils.diagnose_port_listening(5443, 'tcp6'))
     results.extend(action_utils.diagnose_url_on_all('http://{host}/bosh/'))
 
     return results
