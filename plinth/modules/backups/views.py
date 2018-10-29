@@ -18,12 +18,12 @@
 Views for the backups app.
 """
 
-import gzip
-import mimetypes
 from datetime import datetime
-import os
+import gzip
 from io import BytesIO
-import time
+import mimetypes
+import os
+import tempfile
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -31,6 +31,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404, FileResponse, StreamingHttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
@@ -38,10 +39,8 @@ from django.views.generic import View, FormView, TemplateView
 from plinth.modules import backups
 from plinth import actions
 
-from . import api, forms, SESSION_BACKUP_VARIABLE, delete_upload_backup_file
-
-# number of seconds an uploaded backup file should be kept/stored
-KEEP_UPLOADED_BACKUP_FOR = 60*10
+from . import api, forms, SESSION_BACKUP_PATH
+from .decorators import delete_tmp_backup_file
 
 subsubmenu = [{
     'url': reverse_lazy('backups:index'),
@@ -55,6 +54,7 @@ subsubmenu = [{
 }]
 
 
+@method_decorator(delete_tmp_backup_file, name='dispatch')
 class IndexView(TemplateView):
     """View to show list of archives."""
     template_name = 'backups.html'
@@ -131,23 +131,6 @@ def _get_file_response(path, filename):
     return response
 
 
-class create_temporary_backup_file:
-    """Create a temporary backup file that gets deleted after using it"""
-    # TODO: try using export-tar with FILE parameter '-' and reading stdout:
-    # https://borgbackup.readthedocs.io/en/stable/usage/tar.html
-
-    def __init__(self, name):
-        self.name = name
-        self.path = UPLOAD_BACKUP_PATH
-
-    def __enter__(self):
-        backups.export_archive(self.name, self.path)
-        return self.path
-
-    def __exit__(self, type, value, traceback):
-        delete_upload_backup_file(self.path)
-
-
 class UploadArchiveView(SuccessMessageMixin, FormView):
     form_class = forms.UploadForm
     prefix = 'backups'
@@ -163,11 +146,10 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """store uploaded file."""
-        with open(UPLOAD_BACKUP_PATH, 'wb+') as destination:
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            self.request.session[SESSION_BACKUP_PATH] = tmp_file.name
             for chunk in self.request.FILES['backups-file'].chunks():
-                destination.write(chunk)
-        self.request.session[SESSION_BACKUP_VARIABLE] = time.time() + \
-                KEEP_UPLOADED_BACKUP_FOR
+                tmp_file.write(chunk)
         return super().form_valid(form)
 
 
@@ -201,7 +183,8 @@ class RestoreFromUploadView(BaseRestoreView):
     """View to restore files from an (uploaded) exported archive."""
 
     def get(self, *args, **kwargs):
-        if not os.path.isfile(UPLOAD_BACKUP_PATH):
+        path = self.request.session.get(SESSION_BACKUP_PATH)
+        if not os.path.isfile(path):
             messages.error(self.request, _('No backup file found.'))
             return redirect(reverse_lazy('backups:index'))
         else:
@@ -215,11 +198,13 @@ class RestoreFromUploadView(BaseRestoreView):
 
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
-        return backups.get_exported_archive_apps(UPLOAD_BACKUP_PATH)
+        path = self.request.session.get(SESSION_BACKUP_PATH)
+        return backups.get_exported_archive_apps(path)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        backups.restore_from_upload(form.cleaned_data['selected_apps'])
+        path = self.request.session.get(SESSION_BACKUP_PATH)
+        backups.restore_from_upload(path, form.cleaned_data['selected_apps'])
         return super().form_valid(form)
 
 

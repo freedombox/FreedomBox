@@ -44,7 +44,7 @@ service = None
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 REPOSITORY = '/var/lib/freedombox/borgbackup'
 # session variable name that stores when a backup file should be deleted
-SESSION_BACKUP_VARIABLE = 'fbx-backup-filestamp'
+SESSION_BACKUP_PATH = 'fbx-backup-path'
 
 
 def init():
@@ -106,11 +106,6 @@ def delete_archive(name):
     actions.superuser_run('backups', ['delete', '--name', name])
 
 
-def delete_upload_backup_file(path):
-    if os.path.isfile(path):
-        os.remove(path)
-
-
 def export_archive(name, filepath):
     """Export an archive as .tar.gz file
 
@@ -156,10 +151,10 @@ def _restore_archive_handler(packet):
                 packet.label, '--destination', '/'], input=locations_data.encode())
 
 
-def restore_from_upload(apps=None):
+def restore_from_upload(path, apps=None):
     """Restore files from (uploaded) eported backup file"""
     api.restore_apps(_restore_exported_archive_handler, app_names=apps,
-                     create_subvolume=False, backup_file=UPLOAD_BACKUP_PATH)
+                     create_subvolume=False, backup_file=path)
 
 
 def restore(archive_path, apps=None):
