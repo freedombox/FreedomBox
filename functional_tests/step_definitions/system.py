@@ -16,6 +16,7 @@
 #
 
 import os
+import time
 
 from pytest import fixture
 from pytest_bdd import given, parsers, then, when
@@ -345,3 +346,19 @@ def monkeysphere_assert_imported_key(browser, key_type, domain):
                   '{domain:S} in monkeysphere'))
 def monkeysphere_publish_key(browser, key_type, domain):
     system.monkeysphere_publish_key(browser, key_type.lower(), domain)
+
+
+@when(parsers.parse('I wait for {seconds} seconds'))
+def sleep_for(seconds):
+    seconds = int(seconds)
+    time.sleep(seconds)
+
+
+@when(parsers.parse('I open the main page'))
+def open_main_page(browser):
+    system.open_main_page(browser)
+
+
+@then(parsers.parse('the main page should be shown'))
+def main_page_is_shown(browser):
+    assert(browser.url.endswith('/plinth/'))

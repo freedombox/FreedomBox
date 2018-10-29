@@ -394,3 +394,8 @@ def monkeysphere_publish_key(browser, key_type, domain):
         key.find_by_css('.button-publish').click()
 
     application.wait_for_config_update(browser, 'monkeysphere')
+
+
+def open_main_page(browser):
+    with wait_for_page_update(browser):
+        browser.find_link_by_href('/plinth/').first.click()
