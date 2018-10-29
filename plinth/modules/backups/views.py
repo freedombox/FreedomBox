@@ -21,6 +21,7 @@ Views for the backups app.
 from datetime import datetime
 import gzip
 from io import BytesIO
+import logging
 import mimetypes
 import os
 import tempfile
@@ -36,11 +37,14 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
-from plinth.modules import backups
 from plinth import actions
+from plinth.errors import PlinthError
+from plinth.modules import backups, storage
 
 from . import api, forms, SESSION_PATH_VARIABLE
 from .decorators import delete_tmp_backup_file
+
+logger = logging.getLogger(__name__)
 
 subsubmenu = [{
     'url': reverse_lazy('backups:index'),
@@ -142,6 +146,13 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Upload and restore a backup file')
         context['subsubmenu'] = subsubmenu
+        try:
+            disk_info = storage.get_disk_info('/', self.request)
+        except (PlinthError, PermissionError):
+            logger.error('Error getting information about root partition.')
+        else:
+            context['free_space'] = storage.format_bytes(
+                    disk_info["free_bytes"])
         return context
 
     def form_valid(self, form):

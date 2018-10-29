@@ -30,10 +30,11 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST
 
 from plinth import actions
+from plinth.errors import PlinthError
 from plinth.modules import storage
-from plinth.utils import format_lazy, is_user_admin
+from plinth.utils import format_lazy
 
-from . import udisks2
+from . import udisks2, get_disk_info
 
 logger = logging.getLogger(__name__)
 
@@ -91,29 +92,22 @@ def expand_partition(request, device):
 
 def warn_about_low_disk_space(request):
     """Warn about insufficient space on root partition."""
-    if not is_user_admin(request, cached=True):
-        return
-
-    disks = storage.get_disks()
-    list_root = [disk for disk in disks if disk['mountpoint'] == '/']
-    if not list_root:
+    try:
+        root_info = get_disk_info('/', request)
+    except (PlinthError, PermissionError):
         logger.error('Error getting information about root partition.')
         return
-
-    percent_used = list_root[0]['percent_used']
-    free_bytes = list_root[0]['free']
-    free_gib = free_bytes / (1024**3)
 
     message = format_lazy(
         # Translators: xgettext:no-python-format
         _('Warning: Low space on system partition ({percent_used}% used, '
           '{free_space} free).'),
-        percent_used=percent_used,
-        free_space=storage.format_bytes(free_bytes))
+        percent_used=root_info["percent_used"],
+        free_space=storage.format_bytes(root_info["free_bytes"]))
 
-    if percent_used > 90 or free_gib < 1:
+    if root_info["percent_used"] > 90 or root_info["free_gib"] < 1:
         messages.error(request, message)
-    elif percent_used > 75 or free_gib < 2:
+    elif root_info["percent_used"] > 75 or root_info["free_gib"] < 2:
         messages.warning(request, message)
 
 

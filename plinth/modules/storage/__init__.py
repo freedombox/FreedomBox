@@ -25,8 +25,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
 from plinth import action_utils, actions, cfg
+from plinth.errors import PlinthError
 from plinth.menu import main_menu
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, is_user_admin
 
 from .manifest import backup
 
@@ -75,6 +76,24 @@ def get_disks():
                 combined_list.append(disk_from_df)
 
     return combined_list
+
+
+def get_disk_info(mountpoint, request):
+    """Get information about the free space of a drive"""
+    if not is_user_admin(request, cached=True):
+        raise PermissionError
+    disks = get_disks()
+    list_root = [disk for disk in disks if disk['mountpoint'] == mountpoint]
+    if not list_root:
+        raise PlinthError
+    percent_used = list_root[0]['percent_used']
+    free_bytes = list_root[0]['free']
+    free_gib = free_bytes / (1024**3)
+    return {
+        "percent_used": percent_used,
+        "free_bytes": free_bytes,
+        "free_gib": free_gib
+    }
 
 
 def _get_disks_from_df():

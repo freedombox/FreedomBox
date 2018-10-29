@@ -32,7 +32,10 @@
       You can choose the apps you wish to import after uploading a backup file.
     {% endblocktrans %}
   </p>
-  <br />
+  <div class="alert alert-info" role="alert">
+    {% trans "Free disk space" %}: {{ free_space }}<br />
+    {% trans "Make sure the uploaded file is smaller than that." %}
+  </div>
 
   <form class="form" enctype="multipart/form-data" method="post">
     {% csrf_token %}
