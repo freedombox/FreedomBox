@@ -23,7 +23,6 @@ Configuration helper for backups.
 import argparse
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tarfile
@@ -49,20 +48,9 @@ def parse_arguments():
     delete = subparsers.add_parser('delete', help='Delete archive')
     delete.add_argument('--name', help='Archive name', required=True)
 
-    extract = subparsers.add_parser('extract', help='Extract archive contents')
-    extract.add_argument('--name', help='Archive name', required=True)
-    extract.add_argument('--destination', help='Extract destination',
-                         required=True)
-
-    export_tar = subparsers.add_parser('export-tar',
-                                   help='Export archive contents as tarball')
-    export_tar.add_argument('--name', help='Archive name)', required=True)
-    export_tar.add_argument('--filepath', help='Destination tarball file path',
-                            required=True)
-
-    export_stream = subparsers.add_parser('export-stream',
-                               help='Export archive contents as tar stream')
-    export_stream.add_argument('--name', help='Archive name)',
+    export_help='Export archive contents as tar on stdout'
+    export_tar = subparsers.add_parser('export-tar', help=export_help)
+    export_tar.add_argument('--name', help='Archive name)',
                                required=True)
 
     get_exported_archive_apps = subparsers.add_parser(
@@ -132,12 +120,6 @@ def subcommand_delete(arguments):
                    check=True)
 
 
-def subcommand_extract(arguments):
-    """Extract archive contents."""
-    path = REPOSITORY + '::' + arguments.name
-    return _extract(path, arguments.destination)
-
-
 def _extract(archive_path, destination, locations=None):
     """Extract archive contents."""
     prev_dir = os.getcwd()
@@ -164,24 +146,7 @@ def _extract(archive_path, destination, locations=None):
 
 
 def subcommand_export_tar(arguments):
-    """Export archive contents as tarball."""
-    directory, filename = os.path.split(arguments.filepath)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    subprocess.run([
-        'borg', 'export-tar', REPOSITORY + '::' + arguments.name,
-        arguments.filepath
-    ], check=True)
-
-    try:
-        shutil.chown(arguments.filename, user='plinth', group='plinth')
-    except PermissionError:
-        pass
-
-
-def subcommand_export_stream(arguments):
-    """Export archive contents as tar stream."""
+    """Export archive contents as tar stream on stdout."""
     subprocess.run([
         'borg', 'export-tar', REPOSITORY + '::' + arguments.name, '-'],
         check=True)

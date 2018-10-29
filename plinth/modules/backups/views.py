@@ -39,7 +39,7 @@ from django.views.generic import View, FormView, TemplateView
 from plinth.modules import backups
 from plinth import actions
 
-from . import api, forms, SESSION_BACKUP_PATH
+from . import api, forms, SESSION_PATH_VARIABLE
 from .decorators import delete_tmp_backup_file
 
 subsubmenu = [{
@@ -147,7 +147,7 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """store uploaded file."""
         with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-            self.request.session[SESSION_BACKUP_PATH] = tmp_file.name
+            self.request.session[SESSION_PATH_VARIABLE] = tmp_file.name
             for chunk in self.request.FILES['backups-file'].chunks():
                 tmp_file.write(chunk)
         return super().form_valid(form)
@@ -183,7 +183,7 @@ class RestoreFromUploadView(BaseRestoreView):
     """View to restore files from an (uploaded) exported archive."""
 
     def get(self, *args, **kwargs):
-        path = self.request.session.get(SESSION_BACKUP_PATH)
+        path = self.request.session.get(SESSION_PATH_VARIABLE)
         if not os.path.isfile(path):
             messages.error(self.request, _('No backup file found.'))
             return redirect(reverse_lazy('backups:index'))
@@ -198,12 +198,12 @@ class RestoreFromUploadView(BaseRestoreView):
 
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
-        path = self.request.session.get(SESSION_BACKUP_PATH)
+        path = self.request.session.get(SESSION_PATH_VARIABLE)
         return backups.get_exported_archive_apps(path)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        path = self.request.session.get(SESSION_BACKUP_PATH)
+        path = self.request.session.get(SESSION_PATH_VARIABLE)
         backups.restore_from_upload(path, form.cleaned_data['selected_apps'])
         return super().form_valid(form)
 
@@ -230,7 +230,7 @@ class ZipStream(object):
     def __init__(self, stream, get_chunk_method):
         """
         - stream: the input stream
-        - get_chunk_method: name of the method that yields chunks
+        - get_chunk_method: name of the method to get a chunk of the stream
         """
         self.stream = stream
         self.buffer = BytesIO()
@@ -257,11 +257,12 @@ class ExportAndDownloadView(View):
     def get(self, request, name):
         name = unquote(name)
         filename = "%s.tar.gz" % name
-        args = ['export-stream', '--name', name]
+        args = ['export-tar', '--name', name]
         proc = actions.superuser_run('backups', args, run_in_background=True,
                 bufsize=1)
         zipStream = ZipStream(proc.stdout, 'readline')
         response = StreamingHttpResponse(zipStream,
                 content_type="application/x-gzip")
-        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        response['Content-Disposition'] = 'attachment; filename="%s"' % \
+                filename
         return response

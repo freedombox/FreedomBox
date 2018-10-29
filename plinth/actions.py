@@ -185,10 +185,6 @@ def _run(action, options=None, input=None, run_in_background=False,
 
     LOGGER.info('Executing command - %s', cmd)
 
-    # Use default bufsize if no bufsize is given.
-    if bufsize is None:
-        bufsize = -1
-
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
     kwargs = {
@@ -196,11 +192,12 @@ def _run(action, options=None, input=None, run_in_background=False,
         "stdout": subprocess.PIPE,
         "stderr": subprocess.PIPE,
         "shell": False,
-        "bufsize": bufsize,
     }
     if cfg.develop:
         # In development mode pass on local pythonpath to access Plinth
         kwargs['env'] = {'PYTHONPATH': cfg.root}
+    if bufsize is not None:
+        kwargs['bufsize'] = bufsize
     proc = subprocess.Popen(cmd, **kwargs)
 
     if not run_in_background:

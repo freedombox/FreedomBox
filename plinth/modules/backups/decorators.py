@@ -20,18 +20,18 @@ Decorators for the backup views.
 
 import os
 
-from . import SESSION_BACKUP_PATH
+from . import SESSION_PATH_VARIABLE
 
 
 def delete_tmp_backup_file(function):
     """Decorator to delete uploaded backup files"""
 
     def wrap(request, *args, **kwargs):
-        path = request.session.get(SESSION_BACKUP_PATH, None)
+        path = request.session.get(SESSION_PATH_VARIABLE, None)
         if path: 
             if os.path.isfile(path):
                 os.remove(path)
-            del request.session[SESSION_BACKUP_PATH]
+            del request.session[SESSION_PATH_VARIABLE]
         return function(request, *args, **kwargs)
 
     wrap.__doc__ = function.__doc__
