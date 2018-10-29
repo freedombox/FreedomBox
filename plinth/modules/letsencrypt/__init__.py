@@ -30,6 +30,8 @@ from plinth.modules import config, names
 from plinth.signals import domain_added, domain_removed, domainname_change
 from plinth.utils import format_lazy
 
+from .manifest import backup
+
 version = 1
 
 is_essential = True
