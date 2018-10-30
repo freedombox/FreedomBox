@@ -42,7 +42,7 @@
 {% block configuration %}
   <h3>{% trans "Configuration" %}</h3>
 
-  <form class="form" method="post">
+  <form class="form form-configuration" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
@@ -53,58 +53,61 @@
   <br/>
 
   <h4>{% trans "Local introducer" %}</h4>
-  <table class="table table-bordered">
-      <thead>
-          <tr>
-              <th>{% trans "Pet Name" %}</th>
-              <th> furl </th>
-          </tr>
-      </thead>
+  <table class="table table-bordered local-introducers">
+    <thead>
       <tr>
-          <td> {{ local_introducer.0 }} </td>
-          <td> {{ local_introducer.1 }} </td>
+        <th>{% trans "Pet Name" %}</th>
+        <th> furl </th>
       </tr>
+    </thead>
+    <tr>
+      <td class="introducer-pet-name">{{ local_introducer.0 }}</td>
+      <td class="introducer-furl">{{ local_introducer.1 }}</td>
+    </tr>
   </table>
 
-  <form class="form" method="post" action="{% url 'tahoe:add-introducer' %}">
-      {% csrf_token %}
-      <h4>{% trans "Add new introducer" %}</h4>
+  <form class="form form-add-introducer" method="post"
+        action="{% url 'tahoe:add-introducer' %}">
+    {% csrf_token %}
+    <h4>{% trans "Add new introducer" %}</h4>
 
-      <div class="form-group">
-          <label>{% trans "Pet Name" %}:</label>
-          <input type="text" class="form-control" name="pet_name">
-      </div>
-      <div class="form-group">
-          <label>furl:</label>
-          <textarea class="form-control" rows="5" name="furl"></textarea>
-      </div>
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Add" %}"/>
+    <div class="form-group">
+      <label>{% trans "Pet Name" %}:</label>
+      <input type="text" class="form-control" name="pet_name">
+    </div>
+    <div class="form-group">
+      <label>furl:</label>
+      <textarea class="form-control" rows="5" name="furl"></textarea>
+    </div>
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Add" %}"/>
   </form>
 
   <br/>
 
- <h4>{% trans "Connected introducers" %}</h4>
-  <table class="table table-bordered">
-      <thead>
-          <tr>
-              <th>{% trans "Pet Name" %}</th>
-              <th> furl </th>
-          </tr>
-      </thead>
-      {% for introducer, furl in introducers %}
+  <h4>{% trans "Connected introducers" %}</h4>
+  <table class="table table-bordered connected-introducers">
+    <thead>
       <tr>
-          <td> {{ introducer }} </td>
-          <td> {{ furl }} </td>
-          <form class="form" method="post"
-                action="{% url 'tahoe:remove-introducer' introducer %}" id="introducer_list">
-                 {% csrf_token %}
-              <td><button type="submit" class="btn btn-danger">
-                  {% trans "Remove" %}
-              </button></td>
-          </form>
+        <th>{% trans "Pet Name" %}</th>
+        <th> furl </th>
       </tr>
-      {% endfor %}
+    </thead>
+    {% for introducer, furl in introducers %}
+      <tr>
+        <td class="introducer-pet-name">{{ introducer }}</td>
+        <td class="introducer-furl">{{ furl }}</td>
+        <td class="introducer-operations">
+          <form class="form form-remove" method="post"
+                action="{% url 'tahoe:remove-introducer' introducer %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+              {% trans "Remove" %}
+            </button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
   </table>
 
 {% endblock %}
