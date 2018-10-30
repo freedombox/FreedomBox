@@ -19,7 +19,7 @@
 # /var/lib/tahoe-lafs and failes to start in the next run. Enable tests after
 # this is fixed.
 
-@apps @tahoe @skip
+@apps @tahoe @backups @skip
 Feature: Tahoe-LAFS distribute file storage
   Run the Tahoe distribute file storage server
 
@@ -33,11 +33,6 @@ Scenario: Enable tahoe application
   Given the tahoe application is disabled
   When I enable the tahoe application
   Then the tahoe service should be running
-
-Scenario: Disable tahoe application
-  Given the tahoe application is enabled
-  When I disable the tahoe application
-  Then the tahoe service should not be running
 
 Scenario: Default tahoe introducers
   Given the tahoe application is enabled
@@ -55,3 +50,18 @@ Scenario: Remove tahoe introducer
   And anotherdomain.example is a tahoe introducer
   When I remove anotherdomain.example as a tahoe introducer
   Then anotherdomain.example should not be a tahoe connected introducer
+
+Scenario: Backup and restore tahoe
+  Given the tahoe application is enabled
+  And backupdomain.example is a tahoe introducer
+  When I create a backup of the tahoe app data
+  And I remove backupdomain.example as a tahoe introducer
+  And I export the tahoe app data backup
+  And I restore the tahoe app data backup
+  Then the tahoe service should be running
+  And backupdomain.example should be a tahoe connected introducer
+
+Scenario: Disable tahoe application
+  Given the tahoe application is enabled
+  When I disable the tahoe application
+  Then the tahoe service should not be running
