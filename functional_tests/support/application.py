@@ -391,3 +391,31 @@ def tor_assert_hidden_services(browser):
     """Assert that hidden service information is shown."""
     interface.nav_to_module(browser, 'tor')
     assert browser.find_by_css('.tor-hs .tor-hs-hostname')
+
+
+def tahoe_get_introducer(browser, domain, introducer_type):
+    """Return an introducer element with a given type from tahoe-lafs."""
+    interface.nav_to_module(browser, 'tahoe')
+    css_class = '.{}-introducers .introducer-furl'.format(introducer_type)
+    for furl in browser.find_by_css(css_class):
+        if domain in furl.text:
+            return furl.parent
+
+    return None
+
+
+def tahoe_add_introducer(browser, domain):
+    """Add a new introducer into tahoe-lafs."""
+    interface.nav_to_module(browser, 'tahoe')
+
+    furl = 'pb://ewe4zdz6kxn7xhuvc7izj2da2gpbgeir@tcp:{}:3456/' \
+           'fko4ivfwgqvybppwar3uehkx6spaaou7'.format(domain)
+    browser.fill('pet_name', 'testintroducer')
+    browser.fill('furl', furl)
+    submit(browser, form_class='form-add-introducer')
+
+
+def tahoe_remove_introducer(browser, domain):
+    """Remove an introducer from tahoe-lafs."""
+    introducer = tahoe_get_introducer(browser, domain, 'connected')
+    submit(browser, element=introducer.find_by_css('.form-remove'))

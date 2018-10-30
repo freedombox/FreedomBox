@@ -328,3 +328,35 @@ def tor_download_software_over_tor_enable(browser, enable):
     parsers.parse('download software packages over tor should be {enabled:w}'))
 def tor_assert_download_software_over_tor(browser, enabled):
     application.tor_assert_feature_enabled(browser, 'software', enabled)
+
+
+@then(parsers.parse('{domain:S} should be a tahoe {introducer_type:w} introducer'))
+def tahoe_assert_introducer(browser, domain, introducer_type):
+    assert application.tahoe_get_introducer(browser, domain, introducer_type)
+
+
+@then(parsers.parse('{domain:S} should not be a tahoe {introducer_type:w} introducer'))
+def tahoe_assert_not_introducer(browser, domain, introducer_type):
+    assert not application.tahoe_get_introducer(browser, domain, introducer_type)
+
+
+@given(parsers.parse('{domain:S} is not a tahoe introducer'))
+def tahoe_given_remove_introducer(browser, domain):
+    if application.tahoe_get_introducer(browser, domain, 'connected'):
+        application.tahoe_remove_introducer(browser, domain)
+
+
+@when(parsers.parse('I add {domain:S} as a tahoe introducer'))
+def tahoe_add_introducer(browser, domain):
+    application.tahoe_add_introducer(browser, domain)
+
+
+@given(parsers.parse('{domain:S} is a tahoe introducer'))
+def tahoe_given_add_introducer(browser, domain):
+    if not application.tahoe_get_introducer(browser, domain, 'connected'):
+        application.tahoe_add_introducer(browser, domain)
+
+
+@when(parsers.parse('I remove {domain:S} as a tahoe introducer'))
+def tahoe_remove_introducer(browser, domain):
+    application.tahoe_remove_introducer(browser, domain)
