@@ -51,7 +51,7 @@ def change_hostname_to(browser, hostname):
     system.set_hostname(browser, hostname)
 
 
-@when(parsers.parse('I change the domain name to {domain:w}'))
+@when(parsers.parse('I change the domain name to {domain:S}'))
 def change_domain_name_to(browser, domain):
     system.set_domain_name(browser, domain)
 
@@ -71,7 +71,7 @@ def hostname_should_be(browser, hostname):
     assert system.get_hostname(browser) == hostname
 
 
-@then(parsers.parse('the domain name should be {domain:w}'))
+@then(parsers.parse('the domain name should be {domain:S}'))
 def domain_name_should_be(browser, domain):
     assert system.get_domain_name(browser) == domain
 

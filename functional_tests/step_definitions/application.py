@@ -98,7 +98,7 @@ def disable_avahi(browser):
 
 
 @given(
-    parsers.parse('the domain name for {app_name:w} is set to {domain_name:w}')
+    parsers.parse('the domain name for {app_name:w} is set to {domain_name:S}')
 )
 def select_domain_name(browser, app_name, domain_name):
     application.select_domain_name(browser, app_name, domain_name)
