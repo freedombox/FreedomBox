@@ -23,10 +23,7 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import action_utils
-from plinth import actions
-from plinth import cfg
-from plinth import frontpage
+from plinth import action_utils, actions, cfg, frontpage
 from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
@@ -80,8 +77,7 @@ description = [
     format_lazy(
         _('This {box_name} hosts a storage node and an introducer by default. '
           'Additional introducers can be added, which will introduce this '
-          'node to the other storage nodes.'),
-        box_name=_(cfg.box_name)),
+          'node to the other storage nodes.'), box_name=_(cfg.box_name)),
 ]
 
 
@@ -93,15 +89,11 @@ def init():
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup' and is_setup():
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['tahoe-plinth'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'tahoe-plinth'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
 
         if is_enabled():
             add_shortcut()
@@ -125,15 +117,11 @@ def post_setup(configured_domain_name):
 
     global service
     if service is None:
-        service = service_module.Service(
-            managed_services[0],
-            name,
-            ports=['tahoe-plinth'],
-            is_external=True,
-            is_enabled=is_enabled,
-            enable=enable,
-            disable=disable,
-            is_running=is_running)
+        service = service_module.Service(managed_services[0], name, ports=[
+            'tahoe-plinth'
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
     service.notify_enabled(None, True)
     add_shortcut()
 
@@ -154,8 +142,8 @@ def is_running():
 
 def is_enabled():
     """Return whether the module is enabled."""
-    return (action_utils.service_is_enabled(managed_services[0]) and
-            action_utils.webserver_is_enabled('tahoe-plinth'))
+    return (action_utils.service_is_enabled(managed_services[0])
+            and action_utils.webserver_is_enabled('tahoe-plinth'))
 
 
 def enable():
@@ -172,25 +160,24 @@ def disable():
 
 def diagnose():
     """Run diagnostics and return the results."""
-    return [action_utils.diagnose_url(
-        'http://localhost:5678', kind='4', check_certificate=False),
-            action_utils.diagnose_url(
-                'http://localhost:5678', kind='6', check_certificate=False),
-            action_utils.diagnose_url(
-                'http://{}:5678'.format(get_configured_domain_name()),
-                kind='4',
-                check_certificate=False)]
+    return [
+        action_utils.diagnose_url('http://localhost:5678', kind='4',
+                                  check_certificate=False),
+        action_utils.diagnose_url('http://localhost:5678', kind='6',
+                                  check_certificate=False),
+        action_utils.diagnose_url(
+            'http://{}:5678'.format(get_configured_domain_name()), kind='4',
+            check_certificate=False)
+    ]
 
 
 def add_introducer(introducer):
     """Add an introducer to the storage node's list of introducers.
     Param introducer must be a tuple of (pet_name, furl)
     """
-    actions.run_as_user('tahoe-lafs',
-                        ['add-introducer',
-                         "--introducer",
-                         ",".join(introducer)],
-                        become_user='tahoe-lafs')
+    actions.run_as_user(
+        'tahoe-lafs', ['add-introducer', "--introducer", ",".join(introducer)],
+        become_user='tahoe-lafs')
 
 
 def remove_introducer(pet_name):
