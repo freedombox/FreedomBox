@@ -210,7 +210,8 @@ def backup_restore(browser, app_name):
     browser.find_link_by_href(
         '/plinth/sys/backups/restore-archive/_functional_test_' +
         app_name + '/').first.click()
-    submit(browser)
+    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
+        submit(browser)
 
 
 def backup_upload_and_restore(browser, app_name, downloaded_file_path):
@@ -222,7 +223,7 @@ def backup_upload_and_restore(browser, app_name, downloaded_file_path):
     # submit upload form
     submit(browser)
     # submit restore form
-    with wait_for_page_update(browser):
+    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
         submit(browser)
 
 

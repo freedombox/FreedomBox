@@ -62,19 +62,32 @@ def eventually(function, args=[], timeout=30):
 
 
 @contextmanager
-def wait_for_page_update(browser, timeout=300):
-    current_page = browser.find_by_tag('body').first
+def wait_for_page_update(browser, timeout=300, expected_url=None):
+    page_body = browser.find_by_tag('body').first
     yield
-    WebDriverWait(browser, timeout).until(is_stale(current_page))
+    WebDriverWait(browser, timeout).until(page_loaded(page_body, expected_url))
 
 
-class is_stale():
-    def __init__(self, element):
+class page_loaded():
+    """
+    Wait until a page (re)loaded.
+
+    - element: Wait until this element gets stale
+    - expected_url (optional): Wait for the URL to become <expected_url>.
+      This can be necessary to wait for a redirect to finish.
+    """
+    def __init__(self, element, expected_url=None):
         self.element = element
+        self.expected_url = expected_url
 
     def __call__(self, driver):
+        is_stale = False
         try:
             self.element.has_class('whatever_class')
-            return False
         except StaleElementReferenceException:
-            return True
+            if self.expected_url is None:
+                is_stale = True
+            else:
+                if driver.url.endswith(self.expected_url):
+                    is_stale = True
+        return is_stale
