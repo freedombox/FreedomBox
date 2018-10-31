@@ -25,6 +25,7 @@ from support import application
 @given(parsers.parse('the {app_name:w} application is installed'))
 def application_is_installed(browser, app_name):
     application.install(browser, app_name)
+    assert(application.is_installed(browser, app_name))
 
 
 @given(parsers.parse('the {app_name:w} application is enabled'))

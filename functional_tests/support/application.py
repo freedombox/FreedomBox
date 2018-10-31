@@ -85,6 +85,12 @@ def install(browser, app_name):
         sleep(2)  # XXX This shouldn't be required.
 
 
+def is_installed(browser, app_name):
+    interface.nav_to_module(browser, get_app_module(app_name))
+    install_button = browser.find_by_css('.form-install input[type=submit]')
+    return not bool(install_button)
+
+
 def _change_status(browser, app_name, change_status_to='enabled',
                    checkbox_id=None):
     interface.nav_to_module(browser, get_app_module(app_name))

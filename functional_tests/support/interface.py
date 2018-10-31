@@ -113,8 +113,8 @@ def create_admin_account(browser, username, password):
     submit(browser)
 
 
-def submit(browser, element=None, form_class=None):
-    with wait_for_page_update(browser):
+def submit(browser, element=None, form_class=None, expected_url=None):
+    with wait_for_page_update(browser, expected_url=expected_url):
         if element:
             element.click()
         elif form_class:
