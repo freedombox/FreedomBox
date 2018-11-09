@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
+
 from pytest_bdd import given, parsers, then, when
 
 from support import system
@@ -172,9 +174,29 @@ def backup_create(browser, app_name):
     system.backup_create(browser, app_name)
 
 
+@when(parsers.parse('I download the {app_name:w} app data backup'))
+def backup_download(browser, app_name, downloaded_file_info):
+    url = '/plinth/sys/backups/export-and-download/_functional_test_%s/' % \
+        app_name
+    file_path = system.download_file_logged_in(browser, url, app_name,
+                                               suffix='.tar.gz')
+    downloaded_file_info['path'] = file_path
+
+
 @when(parsers.parse('I restore the {app_name:w} app data backup'))
 def backup_restore(browser, app_name):
     system.backup_restore(browser, app_name)
+
+
+@when(parsers.parse('I restore the downloaded {app_name:w} app data backup'))
+def backup_restore_from_upload(browser, app_name, downloaded_file_info):
+    path = downloaded_file_info["path"]
+    try:
+        system.backup_upload_and_restore(browser, app_name, path)
+    except Exception as err:
+        raise err
+    finally:
+        os.remove(path)
 
 
 @given('pagekite is enabled')

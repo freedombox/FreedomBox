@@ -15,9 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from support import application, config
+from urllib.parse import urlparse
+import requests
+import tempfile
 
-from . import application
+from . import application, config
 from .interface import default_url, nav_to_module, submit
 from .service import wait_for_page_update
 
@@ -206,9 +208,35 @@ def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
-        '/plinth/sys/backups/restore-archive/%252F/_functional_test_' +
+        '/plinth/sys/backups/restore-archive/_functional_test_' +
         app_name + '/').first.click()
     submit(browser)
+
+
+def backup_upload_and_restore(browser, app_name, downloaded_file_path):
+    browser.visit(default_url)
+    nav_to_module(browser, 'backups')
+    browser.find_link_by_href('/plinth/sys/backups/upload/').first.click()
+    fileinput = browser.driver.find_element_by_id('id_backups-file')
+    fileinput.send_keys(downloaded_file_path)
+    # submit upload form
+    submit(browser)
+    # submit restore form
+    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
+        submit(browser)
+
+
+def download_file_logged_in(browser, url_path, app_names, suffix=''):
+    """Download a file from Plinth, pretend being logged in via cookies"""
+    current_url = urlparse(browser.url)
+    url = "%s://%s%s" % (current_url.scheme, current_url.netloc, url_path)
+    cookies = browser.driver.get_cookies()
+    cookies = {cookie["name"]: cookie["value"] for cookie in cookies}
+    response = requests.get(url, verify=False, cookies=cookies)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp_file:
+        for chunk in response.iter_content(chunk_size=128):
+            temp_file.write(chunk)
+    return temp_file.name
 
 
 def pagekite_enable(browser, should_enable):
