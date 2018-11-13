@@ -26,6 +26,7 @@ import datetime
 import os
 
 from OpenSSL import crypto
+
 from plinth import action_utils
 
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
@@ -36,9 +37,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('create-key-pair',
-                          help='create a key pair for the apache server '
-                          'to sign auth_pubtkt tickets')
+    subparsers.add_parser(
+        'create-key-pair', help='create a key pair for the apache server '
+        'to sign auth_pubtkt tickets')
     subparsers.add_parser('enable-mod',
                           help='enabled the Apache module auth_pubtkt')
     gen_tkt = subparsers.add_parser('generate-ticket',
@@ -115,8 +116,8 @@ def subcommand_generate_ticket(arguments):
     tokens = arguments.tokens
     with open(private_key_file, 'r') as fil:
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
-    valid_until = minutes_from_now(60)
-    grace_period = minutes_from_now(55)
+    valid_until = minutes_from_now(12 * 60)
+    grace_period = minutes_from_now(11 * 60)
     print(create_ticket(pkey, uid, valid_until, tokens=tokens,
                         graceperiod=grace_period))
 
