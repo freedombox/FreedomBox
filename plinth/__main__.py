@@ -91,6 +91,7 @@ def setup_server():
 
     # Configure default server
     cherrypy.config.update({
+        'server.max_request_body_size': 0,
         'server.socket_host': cfg.host,
         'server.socket_port': cfg.port,
         'server.thread_pool': 10,
