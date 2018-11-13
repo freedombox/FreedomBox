@@ -27,6 +27,7 @@ import subprocess
 import sys
 import tarfile
 
+from plinth.errors import ActionError
 from plinth.modules.backups import MANIFESTS_FOLDER, REPOSITORY
 
 
@@ -174,8 +175,22 @@ def subcommand_get_archive_apps(arguments):
                 manifest_path)
         manifest = json.loads(manifest_data)
     if manifest:
-        for app in manifest:
+        for app in _get_apps_of_manifest(manifest):
             print(app['name'])
+
+
+def _get_apps_of_manifest(manifest):
+    """
+    Get apps of a manifest.
+    Supports both dict format as well as list format of plinth <=0.42
+    """
+    if type(manifest) is list:
+        apps = manifest
+    elif type(manifest) is dict and 'apps' in manifest:
+        apps = manifest['apps']
+    else:
+        raise ActionError('Unknown manifest format')
+    return apps
 
 
 def subcommand_get_exported_archive_apps(arguments):
@@ -191,7 +206,7 @@ def subcommand_get_exported_archive_apps(arguments):
                 break
 
     if manifest:
-        for app in manifest:
+        for app in _get_apps_of_manifest(manifest):
             print(app['name'])
 
 
