@@ -22,13 +22,14 @@ Configuration helper for OpenVPN server.
 import argparse
 import os
 import subprocess
+
 import augeas
 
 from plinth import action_utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
-DH_KEY = '/etc/openvpn/freedombox-keys/dh4096.pem'
+DH_KEY = '/etc/openvpn/freedombox-keys/pki/dh.pem'
 
 OLD_SERVER_CONFIGURATION_PATH = '/etc/openvpn/freedombox.conf'
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
@@ -36,19 +37,21 @@ SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 OLD_SERVICE_NAME = 'openvpn@freedombox'
 SERVICE_NAME = 'openvpn-server@freedombox'
 
-CA_CERTIFICATE_PATH = KEYS_DIRECTORY + '/ca.crt'
-USER_CERTIFICATE_PATH = KEYS_DIRECTORY + '/{username}.crt'
-USER_KEY_PATH = KEYS_DIRECTORY + '/{username}.key'
-ATTR_FILE = KEYS_DIRECTORY + '/index.txt.attr'
+CA_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'ca.crt')
+USER_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'issued',
+                                     '{username}.crt')
+USER_KEY_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'private',
+                             '{username}.key')
+ATTR_FILE = os.path.join(KEYS_DIRECTORY, 'pki', 'index.txt.attr')
 
 SERVER_CONFIGURATION = '''
 port 1194
 proto udp
 dev tun
-ca /etc/openvpn/freedombox-keys/ca.crt
-cert /etc/openvpn/freedombox-keys/server.crt
-key /etc/openvpn/freedombox-keys/server.key
-dh /etc/openvpn/freedombox-keys/dh4096.pem
+ca /etc/openvpn/freedombox-keys/pki/ca.crt
+cert /etc/openvpn/freedombox-keys/pki/issued/server.crt
+key /etc/openvpn/freedombox-keys/pki/private/server.key
+dh /etc/openvpn/freedombox-keys/pki/dh.pem
 server 10.91.0.0 255.255.255.0
 keepalive 10 120
 cipher AES-256-CBC
@@ -75,19 +78,20 @@ verb 3
 {key}</key>'''
 
 CERTIFICATE_CONFIGURATION = {
-    'KEY_CONFIG': '/usr/share/easy-rsa/openssl-1.0.0.cnf',
+    'EASYRSA_BATCH': '1',
+    'EASYRSA_KEY_SIZE': '4096',
+    'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
     'KEY_DIR': KEYS_DIRECTORY,
-    'OPENSSL': 'openssl',
-    'KEY_SIZE': '4096',
-    'CA_EXPIRE': '3650',
-    'KEY_EXPIRE': '3650',
-    'KEY_COUNTRY': 'US',
-    'KEY_PROVINCE': 'NY',
-    'KEY_CITY': 'New York',
-    'KEY_ORG': 'FreedomBox',
-    'KEY_EMAIL': 'me@freedombox',
-    'KEY_OU': 'Home',
-    'KEY_NAME': 'FreedomBox'
+    'EASYRSA_OPENSSL': 'openssl',
+    'EASYRSA_CA_EXPIRE': '3650',
+    'EASYRSA_REQ_EXPIRE': '3650',
+    'EASYRSA_REQ_COUNTRY': 'US',
+    'EASYRSA_REQ_PROVINCE': 'NY',
+    'EASYRSA_REQ_CITY': 'New York',
+    'EASYRSA_REQ_ORG': 'FreedomBox',
+    'EASYRSA_REQ_EMAIL': 'me@freedombox',
+    'EASYRSA_REQ_OU': 'Home',
+    'EASYRSA_REQ_NAME': 'FreedomBox'
 }
 
 COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
@@ -167,12 +171,15 @@ def _create_certificates():
     except FileExistsError:
         pass
 
-    subprocess.check_call(['/usr/share/easy-rsa/clean-all'], **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/pkitool', '--initca'],
+    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'init-pki'],
                           **COMMON_ARGS)
     subprocess.check_call(
-        ['/usr/share/easy-rsa/pkitool', '--server', 'server'], **COMMON_ARGS)
-    subprocess.check_call(['/usr/share/easy-rsa/build-dh'], **COMMON_ARGS)
+        ['/usr/share/easy-rsa/easyrsa', 'build-ca', 'nopass'], **COMMON_ARGS)
+    subprocess.check_call([
+        '/usr/share/easy-rsa/easyrsa', 'build-server-full', 'server', 'nopass'
+    ], **COMMON_ARGS)
+    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'gen-dh'],
+                          **COMMON_ARGS)
 
 
 def subcommand_get_profile(arguments):
@@ -189,8 +196,10 @@ def subcommand_get_profile(arguments):
     if not _is_non_empty_file(user_certificate) or \
        not _is_non_empty_file(user_key):
         set_unique_subject('no')  # Set unique subject in attribute file to no
-        subprocess.check_call(['/usr/share/easy-rsa/pkitool', username],
-                              **COMMON_ARGS)
+        subprocess.check_call([
+            '/usr/share/easy-rsa/easyrsa', 'build-client-full', username,
+            'nopass'
+        ], **COMMON_ARGS)
 
     user_certificate_string = _read_file(user_certificate)
     user_key_string = _read_file(user_key)
@@ -223,8 +232,8 @@ def _is_non_empty_file(filepath):
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
