@@ -151,8 +151,15 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         except (PlinthError, PermissionError):
             logger.error('Error getting information about root partition.')
         else:
-            context['free_space'] = storage.format_bytes(
-                    disk_info["free_bytes"])
+            # The maximum file size that can be uploaded and restored is at
+            # most half of the available disk space:
+            # - Django stores uploaded files that do not fit into memory to
+            #   disk (/tmp/). These are only copied by form_valid() after
+            #   the upload is finished.
+            # - For restoring it's highly advisable to have at least as much
+            #   free disk space as the file size.
+            context['max_filesize'] = storage.format_bytes(
+                    disk_info["free_bytes"] / 2)
         return context
 
     def form_valid(self, form):

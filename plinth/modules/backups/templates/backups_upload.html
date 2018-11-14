@@ -32,9 +32,11 @@
       You can choose the apps you wish to import after uploading a backup file.
     {% endblocktrans %}
   </p>
-  <div class="alert alert-info" role="alert">
-    {% trans "Free disk space" %}: {{ free_space }}<br />
-    {% trans "Make sure the uploaded file is smaller than that." %}
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans trimmed %}
+      WARNING: You have {{ max_filesize }} available to restore a backup.<br />
+      Exceeding this limit can leave your {{ box_name }} unusable.
+    {% endblocktrans %}
   </div>
 
   <form class="form" enctype="multipart/form-data" method="post">
