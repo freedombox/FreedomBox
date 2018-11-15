@@ -23,6 +23,9 @@ from django.core import validators
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
 
+from plinth.utils import format_lazy
+from plinth import cfg
+
 from . import api
 
 
@@ -77,3 +80,43 @@ class UploadForm(forms.Form):
             validators=[FileExtensionValidator(['gz'],
                 'Backup files have to be in .tar.gz format')],
             help_text=_('Select the backup file you want to upload'))
+
+
+class CreateRepositoryForm(forms.Form):
+    repository = forms.CharField(
+        label=_('Repository path'), strip=True,
+        help_text=_('Path of the new repository.'))
+    encryption = forms.ChoiceField(
+        label=_('Encryption'),
+        help_text=format_lazy(_('"Key in Repository" means that a '
+            'password-protected key is stored with the backup. <br />'
+            '<b>You need this password to restore a backup!</b>')),
+        choices=[('repokey', 'Key in Repository'), ('none', 'None')]
+        )
+    passphrase = forms.CharField(
+        label=_('Passphrase'),
+        help_text=_('Passphrase; Only needed when using encryption.'),
+        widget=forms.PasswordInput()
+    )
+    confirm_passphrase = forms.CharField(
+        label=_('Confirm Passphrase'),
+        help_text=_('Repeat the passphrase.'),
+        widget=forms.PasswordInput()
+    )
+    store_passphrase = forms.BooleanField(
+        label=_('Store passphrase on FreedomBox'),
+        help_text=format_lazy(_('Store the passphrase on your {box_name}.'
+            '<br />You need to store the passphrase if you want to run '
+            'recurrent backups.'), box_name=_(cfg.box_name)),
+        required=False
+    )
+
+    def clean(self):
+        cleaned_data = super(CreateRepositoryForm, self).clean()
+        passphrase = cleaned_data.get("passphrase")
+        confirm_passphrase = cleaned_data.get("confirm_passphrase")
+
+        if passphrase != confirm_passphrase:
+            raise forms.ValidationError(
+                "passphrase and confirm_passphrase do not match"
+            )

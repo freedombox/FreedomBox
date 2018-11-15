@@ -20,11 +20,13 @@ Views for the backups app.
 
 from datetime import datetime
 import gzip
+import json
 from io import BytesIO
 import logging
 import mimetypes
 import os
 import tempfile
+from uuid import uuid1
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -37,7 +39,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
-from plinth import actions
+from plinth import actions, kvstore
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
@@ -51,10 +53,13 @@ subsubmenu = [{
     'text': ugettext_lazy('Backups')
 }, {
     'url': reverse_lazy('backups:upload'),
-    'text': ugettext_lazy('Upload backup')
+    'text': ugettext_lazy('Upload')
 }, {
     'url': reverse_lazy('backups:create'),
-    'text': ugettext_lazy('Create backup')
+    'text': ugettext_lazy('Create')
+}, {
+    'url': reverse_lazy('backups:repositories'),
+    'text': ugettext_lazy('Repositories')
 }]
 
 
@@ -284,3 +289,49 @@ class ExportAndDownloadView(View):
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
                 filename
         return response
+
+
+class RepositoriesView(TemplateView):
+    """View list of repositories."""
+    template_name = 'backups_repositories.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Backup repositories'
+        repositories = kvstore.get_default('backups_repositories', [])
+        context['repositories'] = json.loads(repositories)
+        context['subsubmenu'] = subsubmenu
+        return context
+
+
+class CreateRepositoryView(SuccessMessageMixin, FormView):
+    """View to create a new repository."""
+    form_class = forms.CreateRepositoryForm
+    prefix = 'backups'
+    template_name = 'backups_form.html'
+    success_url = reverse_lazy('backups:repositories')
+    success_message = _('Created new repository.')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Create new repository')
+        context['subsubmenu'] = subsubmenu
+        return context
+
+    def form_valid(self, form):
+        """Restore files from the archive on valid form submission."""
+        repositories = kvstore.get_default('backups_repositories', [])
+        if repositories:
+            repositories = json.loads(repositories)
+        new_repo = {
+            'uuid': str(uuid1()),
+            'repository': form.cleaned_data['repository'],
+            'encryption': form.cleaned_data['encryption'],
+        }
+        if form.cleaned_data['store_passphrase']:
+            new_repo['passphrase'] = form.cleaned_data['passphrase']
+        repositories.append(new_repo)
+        kvstore.set('backups_repositories', json.dumps(repositories))
+        return super().form_valid(form)
