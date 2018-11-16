@@ -222,7 +222,7 @@ def backup_upload_and_restore(browser, app_name, downloaded_file_path):
     # submit upload form
     submit(browser)
     # submit restore form
-    with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
+    with wait_for_page_update(browser):
         submit(browser)
 
 

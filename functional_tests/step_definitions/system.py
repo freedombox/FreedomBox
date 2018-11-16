@@ -17,6 +17,7 @@
 
 import os
 
+from pytest import fixture
 from pytest_bdd import given, parsers, then, when
 
 from support import system
@@ -36,6 +37,11 @@ language_codes = {
     'తెలుగు': 'te',
     '简体中文': 'zh-hans'
 }
+
+
+@fixture(scope='session')
+def downloaded_file_info():
+    return dict()
 
 
 @given(parsers.parse('the default app is {app_name:w}'))
