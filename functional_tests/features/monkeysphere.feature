@@ -45,7 +45,6 @@ Scenario: Backup and restore monkeysphere
   When I import SSH key for mydomain.example in monkeysphere
   And I import HTTPS key for mydomain.example in monkeysphere
   And I create a backup of the monkeysphere app data
-  And I export the monkeysphere app data backup
   And I restore the monkeysphere app data backup
   Then the SSH key should imported for mydomain.example in monkeysphere
   And the HTTPS key should imported for mydomain.example in monkeysphere

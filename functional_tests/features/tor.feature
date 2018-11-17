@@ -62,7 +62,6 @@ Scenario: Backup and restore tor
   When I create a backup of the tor app data
   And I disable tor relay
   And I disable tor hidden services
-  And I export the tor app data backup
   And I restore the tor app data backup
   Then the tor service should be running
   And tor relay should be enabled

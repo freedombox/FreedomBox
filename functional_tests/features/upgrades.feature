@@ -36,6 +36,5 @@ Scenario: Backup and restore upgrades
   When I enable automatic upgrades
   And I create a backup of the upgrades app data
   And I disable automatic upgrades
-  And I export the upgrades app data backup
   And I restore the upgrades app data backup
   Then automatic upgrades should be enabled

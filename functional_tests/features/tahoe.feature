@@ -56,7 +56,6 @@ Scenario: Backup and restore tahoe
   And backupdomain.example is a tahoe introducer
   When I create a backup of the tahoe app data
   And I remove backupdomain.example as a tahoe introducer
-  And I export the tahoe app data backup
   And I restore the tahoe app data backup
   Then the tahoe service should be running
   And backupdomain.example should be a tahoe connected introducer
