@@ -46,7 +46,8 @@
   {% endif %}
 
   {% if is_busy %}
-  <button type="button" disabled="disabled" class="running-status-parent btn btn-default" >
+  <button type="button" disabled="disabled"
+          class="running-status-parent btn btn-default" >
     <span class="running-status loading"></span>
     {% trans "Updating..." %}
   </button>
@@ -54,18 +55,18 @@
 
   <p>
     {% blocktrans trimmed %}
-      <strong>This may take a long time to complete</strong>. During an update, you
-      can not install apps. Also, this web interface may be temporarily
-      unavailable and show an error. In that case, refresh the page to continue.
+      <strong>This may take a long time to complete</strong>. During an update,
+      you can not install apps. Also, this web interface may be temporarily
+      unavailable and show an error. In that case, refresh the page to
+      continue.
     {% endblocktrans %}
   </p>
 
-
-
   {% if log %}
   <p>
-    <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapse-log" aria-expanded="false" aria-controls="collapse-log">
-        Toggle recent update logs
+    <a class="btn btn-default" role="button" data-toggle="collapse"
+       href="#collapse-log" aria-expanded="false" aria-controls="collapse-log">
+        {% trans "Toggle recent update logs" %}
     </a>
 
     <div class="collapse" id="collapse-log">
@@ -73,7 +74,6 @@
     </div>
   </p>
   {% endif %}
-
 
 {% endblock %}
 

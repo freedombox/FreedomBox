@@ -35,7 +35,7 @@ managed_packages = ['unattended-upgrades']
 name = _('Update')
 
 description = [
-    _('Check for and apply the latest software and security updates. ')
+    _('Check for and apply the latest software and security updates.')
 ]
 
 service = None

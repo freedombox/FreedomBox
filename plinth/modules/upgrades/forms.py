@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Forms for configuring unattended-upgrades.
 """
@@ -26,5 +25,5 @@ from django.utils.translation import ugettext_lazy as _
 class ConfigureForm(forms.Form):
     """Configuration form to enable/disable automatic upgrades."""
     auto_upgrades_enabled = forms.BooleanField(
-        label=_('Enable auto-update'), required=False,
-        help_text=_('When enabled, FreedomBox automatically updates once a day.'))
+        label=_('Enable auto-update'), required=False, help_text=_(
+            'When enabled, FreedomBox automatically updates once a day.'))
