@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @sip @backups
+@apps @sip @backups @sso
 Feature: Repro SIP Server
   Make audio and video calls.
 

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @syncthing
+@apps @syncthing @sso
 Feature: Syncthing File Synchronization
   Run Syncthing File Synchronization server.
 

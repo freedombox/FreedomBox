@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @ttrss
+@apps @ttrss @sso
 Feature: TT-RSS News Feed Reader
   Run TT-RSS News Feed Reader.
 

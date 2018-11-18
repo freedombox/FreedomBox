@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-@apps @searx @backups
+@apps @searx @backups @sso
 Feature: Searx Web Search
   Run Searx metasearch engine.
 
