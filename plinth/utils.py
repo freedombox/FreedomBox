@@ -154,3 +154,7 @@ def gunzip(gzip_file, output_file):
 
     with open(output_file, 'wb', opener=opener) as file_handle:
         file_handle.write(contents)
+
+
+def is_non_empty_file(file_path):
+    return os.path.isfile(file_path) and os.path.getsize(file_path) > 0

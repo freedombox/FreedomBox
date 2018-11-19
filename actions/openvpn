@@ -25,7 +25,7 @@ import subprocess
 
 import augeas
 
-from plinth import action_utils
+from plinth import action_utils, utils
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
@@ -120,7 +120,7 @@ def parse_arguments():
 
 def subcommand_is_setup(_):
     """Return whether setup is complete."""
-    print('true' if os.path.isfile(DH_KEY) else 'false')
+    print('true' if utils.is_non_empty_file(DH_KEY) else 'false')
 
 
 def subcommand_setup(_):
