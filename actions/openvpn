@@ -147,9 +147,6 @@ def subcommand_upgrade(_):
 
 def _create_server_config():
     """Write server configuration."""
-    if os.path.exists(SERVER_CONFIGURATION_PATH):
-        return
-
     with open(SERVER_CONFIGURATION_PATH, 'w') as file_handle:
         file_handle.write(SERVER_CONFIGURATION)
 
