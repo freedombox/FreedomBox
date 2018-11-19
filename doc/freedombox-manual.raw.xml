@@ -2068,22 +2068,38 @@ file = /etc/radicale/rights]]></screen>
         <screen><![CDATA[client
 remote mybox.sds-ip.de 1194
 proto udp]]></screen>
-        <orderedlist numeration="arabic">
-          <listitem>
-            <para>Install an OpenVPN client for your system </para>
-          </listitem>
-          <listitem>
-            <para>Open the ovpn file with the OpenVPN client. </para>
-          </listitem>
-          <listitem>
-            <para>Try to ping the FreedomBox or other devices on the local network. </para>
-          </listitem>
-        </orderedlist>
+      </section>
+      <section>
+        <title>Usage</title>
+        <section>
+          <title>On Debian</title>
+          <para>Install an OpenVPN client for your system </para>
+          <screen><![CDATA[$ sudo apt install openvpn]]></screen>
+          <para>Open the ovpn file with the OpenVPN client. </para>
+          <screen><![CDATA[$ sudo openvpn --config /path/to/<USER>.ovpn]]></screen>
+        </section>
+      </section>
+      <section>
+        <title>Checking if you are connected</title>
+        <section>
+          <title>On Debian</title>
+          <orderedlist numeration="arabic">
+            <listitem>
+              <para>Try to ping the FreedomBox or other devices on the local network. </para>
+            </listitem>
+            <listitem>
+              <para>Running the command <code>ip addr</code> should show a <code>tun0</code> connection. </para>
+            </listitem>
+            <listitem>
+              <para>The command <code>traceroute freedombox.org</code> should show you the ip address of the VPN server as the first hop. </para>
+            </listitem>
+          </orderedlist>
+        </section>
       </section>
       <section>
         <title>External Links</title>
         <para>
-          <ulink url="https://openvpn.net/index.php/open-source/overview.html"/>
+          <ulink url="https://community.openvpn.net/openvpn"/>
         </para>
       </section>
     </section>
@@ -7732,6 +7748,43 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.43.0 (2018-11-19)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Backups improvements: </para>
+            <itemizedlist>
+              <listitem>
+                <para>Allow backups to be downloaded directly, without export step. </para>
+              </listitem>
+              <listitem>
+                <para>Restore directly from uploaded backup. </para>
+              </listitem>
+              <listitem>
+                <para>Avoid error for apps with no data to backup. </para>
+              </listitem>
+              <listitem>
+                <para>Show free disk space on upload and restore page. </para>
+              </listitem>
+              <listitem>
+                <para>Do not limit maximum upload size. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>openvpn: Migrate to easy-rsa 3 and fix setup issues. </para>
+          </listitem>
+          <listitem>
+            <para>Make single sign-on tickets valid for 12 hours. </para>
+          </listitem>
+          <listitem>
+            <para>Use consistent terminology for updates. </para>
+          </listitem>
+          <listitem>
+            <para>Updated translations for Czech and Portuguese. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.42.0 (2018-11-05)</title>
         <itemizedlist>
