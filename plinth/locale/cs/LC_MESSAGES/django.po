@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-19 16:46-0500\n"
-"PO-Revision-Date: 2018-11-17 14:18+0000\n"
-"Last-Translator: Anthony Stalker <anthony.e.stalker@gmail.com>\n"
+"PO-Revision-Date: 2018-11-21 07:07+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/plinth/"
 "cs/>\n"
 "Language: cs\n"
@@ -149,10 +149,8 @@ msgid "Apps to include in the backup"
 msgstr "Aplikace k zahrnoutí do zálohy"
 
 #: plinth/modules/backups/forms.py:64
-#, fuzzy
-#| msgid "Select the backup file you want to upload"
 msgid "Select the apps you want to restore"
-msgstr "Vyberte soubor se zálohou který chcete nahrát"
+msgstr "Vyberte aplikace které chcete obnovit"
 
 #: plinth/modules/backups/forms.py:76
 msgid "Upload File"
@@ -163,10 +161,8 @@ msgid "Select the backup file you want to upload"
 msgstr "Vyberte soubor se zálohou který chcete nahrát"
 
 #: plinth/modules/backups/templates/backups.html:42
-#, fuzzy
-#| msgid "Existing backup files"
 msgid "Existing backups"
-msgstr "Existující soubory zálohy"
+msgstr "Existující zálohy"
 
 #: plinth/modules/backups/templates/backups.html:45
 msgid "No archives currently exist."
@@ -211,15 +207,13 @@ msgid "Submit"
 msgstr "Potvrdit"
 
 #: plinth/modules/backups/templates/backups_restore.html:29
-#, fuzzy
-#| msgid "Restore data from %(name)s"
 msgid "Restore data from"
-msgstr "Obnovit data z %(name)s"
+msgstr "Obnovit data z"
 
 #: plinth/modules/backups/templates/backups_restore.html:43
 #: plinth/modules/backups/templates/backups_restore.html:46
 msgid "Abort"
-msgstr ""
+msgstr "Přerušit"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 msgid ""
@@ -228,6 +222,10 @@ msgid ""
 "file.\n"
 "    "
 msgstr ""
+"\n"
+"      Po nahrání souboru se zálohou můžete zvolit aplikace které si přejete "
+"importovat.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_upload.html:36
 #, python-format
@@ -235,6 +233,9 @@ msgid ""
 "WARNING: You have %(max_filesize)s available to restore a backup.<br /> "
 "Exceeding this limit can leave your %(box_name)s unusable."
 msgstr ""
+"VAROVÁNÍ: Máte k dispozici %(max_filesize)s pro obnovení zálohy.<br /> "
+"Překročení tohoto limitu může vést k tomu, že váš %(box_name)s nebude "
+"použitelný."
 
 #: plinth/modules/backups/templates/backups_upload.html:48
 msgid "Upload file"
@@ -245,10 +246,8 @@ msgid "Upload backup"
 msgstr "Nahrát zálohu"
 
 #: plinth/modules/backups/views.py:57
-#, fuzzy
-#| msgid "New backup"
 msgid "Create backup"
-msgstr "Nová záloha"
+msgstr "Vytvořit zálohu"
 
 #: plinth/modules/backups/views.py:85
 msgid "Archive created."
@@ -267,26 +266,20 @@ msgid "Archive deleted."
 msgstr "Archiv smazán."
 
 #: plinth/modules/backups/views.py:147
-#, fuzzy
-#| msgid "Upload a backup file"
 msgid "Upload and restore a backup file"
-msgstr "Nahrát soubor se zálohou"
+msgstr "Nahrát soubor soubor se zálohou a obnovit z něj"
 
 #: plinth/modules/backups/views.py:180
 msgid "Restored files from backup."
 msgstr "Soubory obnovené ze zálohy."
 
 #: plinth/modules/backups/views.py:206
-#, fuzzy
-#| msgid "No existing backup files were found."
 msgid "No backup file found."
-msgstr "Nebyly nalezeny existující archivy záloh."
+msgstr "Nebyl nalezen žádný soubor se zálohou."
 
 #: plinth/modules/backups/views.py:214
-#, fuzzy
-#| msgid "Restore from backup"
 msgid "Restore from uploaded file"
-msgstr "Obnovit ze zálohy"
+msgstr "Obnovit z nahraného souboru"
 
 #: plinth/modules/bind/__init__.py:36
 msgid "BIND"
@@ -3126,14 +3119,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:43
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  See <a href=\"https://wiki."
-#| "debian.org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - "
-#| "OpenVPN\">documentation</a> on recommended clients and instructions on "
-#| "how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine.  OpenVPN Clients are "
@@ -3143,10 +3129,9 @@ msgid ""
 msgstr ""
 "Pro připojení k VPN na %(box_name)s je třeba si stáhnout profil a načíst ho "
 "v OpenVPN klientovi na svém mobilním zařízení či desktopu. OpenVPN klienti "
-"jsou k dispozici pro většinu platforem. Viz <a href=\"https://wiki.debian."
-"org/FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - OpenVPN"
-"\">dokumentace</a> ohledně doporučených klientů a pokynů pro jejich "
-"nastavení."
+"jsou k dispozici pro většinu platforem. Viz <a href=\"/plinth/help/manual/"
+"OpenVPN\" title=\"%(box_name)s Manual - OpenVPN\">manuálová stránka</a> "
+"ohledně doporučených klientů a pokynů pro jejich nastavení."
 
 #: plinth/modules/openvpn/templates/openvpn.html:55
 #, python-format
@@ -5093,59 +5078,45 @@ msgstr "Aktualizovat"
 #: plinth/modules/upgrades/__init__.py:38
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
+"Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
 #: plinth/modules/upgrades/forms.py:28
-#, fuzzy
-#| msgid "Enable automatic upgrades"
 msgid "Enable auto-update"
-msgstr "Aktualizovat automaticky"
+msgstr "Zapnout automatické aktualizace"
 
 #: plinth/modules/upgrades/forms.py:29
 msgid "When enabled, FreedomBox automatically updates once a day."
-msgstr ""
+msgstr "Když je zapnuto, FreedomBox se jednou denně automaticky zaktualizuje."
 
 #: plinth/modules/upgrades/templates/upgrades.html:43
-#, fuzzy
-#| msgid "Update"
 msgid "Update now"
-msgstr "Aktualizovat"
+msgstr "Aktualizovat nyní"
 
 #: plinth/modules/upgrades/templates/upgrades.html:52
 msgid "Updating..."
-msgstr ""
+msgstr "Aktualizace…"
 
 #: plinth/modules/upgrades/templates/upgrades.html:57
-#, fuzzy
-#| msgid ""
-#| "Depending on the number of packages to install, this may take a long time "
-#| "to complete.  While upgrades are in progress, you will not be able to "
-#| "install other packages.  During the upgrade, this web interface may be "
-#| "temporarily unavailable and show an error.  Refresh the page to continue."
 msgid ""
 "<strong>This may take a long time to complete</strong>. During an update, "
 "you can not install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
-"V závislosti na počtu balíčků k instalaci, dokončení může trvat dlouho. V "
-"průběhu aktualizace nebude možné instalovat další balíčky. Také webové "
-"rozhraní může být dočasně nedostupné a zobrazovat chybu. Pokračujte "
-"opětovným načtením stránky."
+"<strong>Dokončení tohoto může trvat dlouhou dobu</strong>. V průběhu "
+"aktualizace není možné instalovat aplikace. Také webové rozhraní může být "
+"dočasně nedostupné a zobrazovat chybu. V takovém případě ho načtěte znovu."
 
 #: plinth/modules/upgrades/templates/upgrades.html:69
 msgid "Toggle recent update logs"
-msgstr ""
+msgstr "Vyp/zap. záznamy událostí při nedávných aktualizacích"
 
 #: plinth/modules/upgrades/views.py:36
-#, fuzzy
-#| msgid "Last update"
 msgid "Auto-update"
-msgstr "Minulá aktualizace"
+msgstr "Automatická aktualizace"
 
 #: plinth/modules/upgrades/views.py:39
-#, fuzzy
-#| msgid "Last update"
 msgid "Manual update"
-msgstr "Minulá aktualizace"
+msgstr "Ruční aktualizace"
 
 #: plinth/modules/upgrades/views.py:78
 #, python-brace-format
