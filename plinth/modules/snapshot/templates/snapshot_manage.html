@@ -23,27 +23,19 @@
 
 {% block content %}
   {% block configuration %}
+  <form class="form" method="post">
     <div class="button-table">
 
       <div class="button-row row">
-        <form class="form" method="post">
           {% csrf_token %}
           <div class="col-xs-6 text-left">
             <input type="submit" class="btn btn-primary" name="create"
                    value="{% trans 'Create Snapshot' %}"/>
           </div>
-        </form>
-        <div class="col-xs-6 text-right">
-          <a title="{% trans 'Delete all the snapshots' %}"
-             role="button" class="btn btn-danger"
-             {% if not has_deletable_snapshots %}
-             disabled="disabled"
-             {% else %}
-             href="{% url 'snapshot:delete-all' %}"
-             {% endif %}>
-            {% trans 'Delete All' %}
-          </a>
-        </div>
+          <div class="col-xs-6 text-right">
+            <input type="submit" class="btn btn-primary" name="delete_selected"
+                   value="{% trans 'Delete Snapshots' %}"/>
+          </div>
       </div>
 
       <table class="table table-bordered table-condensed table-striped">
@@ -80,14 +72,7 @@
                 </td>
                 <td>
                   {% if not snapshot.is_default %}
-                    <a href="{% url 'snapshot:delete' snapshot.number %}"
-                       class="btn btn-default btn-sm" role="button"
-                       title="{% blocktrans trimmed with number=snapshot.number %}
-                             Delete snapshot #{{ number }}
-                       {% endblocktrans %}">
-                      <span class="glyphicon glyphicon-trash"
-                            aria-hidden="true"></span>
-                    </a>
+                    <input type="checkbox" name="snapshot_list" value={{ snapshot.number }} />
                   {% endif %}
                 </td>
               </tr>
@@ -95,7 +80,7 @@
           {% endfor %}
         </tbody>
       </table>
-
     </div>
+  </form>
   {% endblock %}
 {% endblock %}

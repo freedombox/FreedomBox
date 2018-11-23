@@ -24,7 +24,7 @@
 {% block content %}
   <h2>{{ title }}</h2>
 
-  <p>{% trans "Delete this snapshot permanently?" %}</p>
+  <p>{% trans "Delete the following snapshots permanently?" %}</p>
 
   <table class="table table-bordered table-condensed table-striped">
     <thead>
@@ -33,22 +33,23 @@
       <th>{% trans "Description" %}</th>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ snapshot.number }}</td>
-        <td>{{ snapshot.date }}</td>
-        <td>{{ snapshot.description }}</td>
-      </tr>
+      {% for snapshot in snapshot_list %}
+        {% if not snapshot.is_default %}
+          <tr>
+            <td>{{ snapshot.number }}</td>
+            <td>{{ snapshot.date }}</td>
+            <td>{{ snapshot.description }}</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
     </tbody>
   </table>
 
   <p>
     <form class="form" method="post">
       {% csrf_token %}
-
-      <input type="submit" class="btn btn-danger"
-             value="{% blocktrans trimmed with number=snapshot.number %}
-                      Delete Snapshot #{{ number }}
-                    {% endblocktrans %}"/>
+      <input type="submit" class="btn btn-danger" name="delete_confirm"
+             value="{% trans 'Delete Snapshots' %}"/>
     </form>
   </p>
 

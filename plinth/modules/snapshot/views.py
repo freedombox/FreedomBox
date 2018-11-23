@@ -70,6 +70,10 @@ def manage(request):
         if 'create' in request.POST:
             actions.superuser_run('snapshot', ['create'])
             messages.success(request, _('Created snapshot.'))
+        if 'delete_selected' in request.POST:
+            snapshot_to_delete = request.POST.getlist('snapshot_list')
+            request.session['snapshots'] = snapshot_to_delete
+            return redirect(reverse('snapshot:delete-selected'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
@@ -124,22 +128,26 @@ def update_configuration(request, old_status, new_status):
                            exception.args[2]))
 
 
-def delete(request, number):
-    """Show confirmation to delete a snapshot."""
-    if request.method == 'POST':
-        actions.superuser_run('snapshot', ['delete', number])
-        messages.success(
-            request, _('Deleted snapshot #{number}.').format(number=number))
-        return redirect(reverse('snapshot:manage'))
-
+def delete_selected(request):
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
-    snapshot = next(s for s in snapshots if s['number'] == number)
 
-    return TemplateResponse(request, 'snapshot_delete.html', {
-        'title': _('Delete Snapshot'),
-        'snapshot': snapshot
-    })
+    if request.method == 'POST':
+        if 'snapshots' in request.session:
+            to_delete = request.session['snapshots']
+            for snapshot in to_delete:
+                actions.superuser_run('snapshot', ['delete', snapshot])
+            messages.success(request, _('Deleted the selected snapshots'))
+            return redirect(reverse('snapshot:manage'))
+
+    if 'snapshots' in request.session:
+        data = request.session['snapshots']
+        to_delete = list(filter(lambda x: x['number'] in data, snapshots))
+
+        return TemplateResponse(request, 'snapshot_delete_all.html', {
+            'title': _('Delete Snapshots'),
+            'snapshots': to_delete
+        })
 
 
 def delete_all(request):
