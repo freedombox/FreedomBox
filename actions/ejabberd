@@ -154,6 +154,11 @@ def upgrade_config():
        (not current_version or current_version > MOD_IRC_DEPRECATED_VERSION):
         conf['modules'].pop('mod_irc')
 
+    # BOSH port was changed from 5280 to 5443.
+    for listen_port in conf['listen']:
+        if listen_port['port'] == 5280:
+            listen_port['port'] = 5443
+
     # Write changes back to the file
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         ruamel.yaml.round_trip_dump(conf, file_handle)
