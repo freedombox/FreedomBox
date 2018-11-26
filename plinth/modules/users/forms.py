@@ -146,7 +146,9 @@ class UserUpdateForm(ValidNewUsernameCheckMixin,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
     ssh_keys = forms.CharField(
-        label=ugettext_lazy('SSH Keys'), required=False, widget=forms.Textarea,
+        label=ugettext_lazy('Authorized SSH Keys'),
+        required=False,
+        widget=forms.Textarea,
         help_text=ugettext_lazy(
             'Setting an SSH public key will allow this user to '
             'securely log in to the system without using a '

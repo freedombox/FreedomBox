@@ -76,38 +76,52 @@ class RestoreForm(forms.Form):
 
 
 class UploadForm(forms.Form):
-    file = forms.FileField(label=_('Upload File'), required=True,
-            validators=[FileExtensionValidator(['gz'],
-                'Backup files have to be in .tar.gz format')],
-            help_text=_('Select the backup file you want to upload'))
+    file = forms.FileField(
+        label=_('Upload File'),
+        required=True,
+        validators=[FileExtensionValidator(['gz'],
+                    'Backup files have to be in .tar.gz format')],
+        help_text=_('Select the backup file you want to upload'))
 
 
 class CreateRepositoryForm(forms.Form):
     repository = forms.CharField(
-        label=_('Repository path'), strip=True,
-        help_text=_('Path of the new repository.'))
+        label=_('SSH Repository Path'), strip=True,
+        help_text=_('Path of the new repository. Example: '
+                    '<i>user@host/path/to/repo/</i>'))
+    ssh_password = forms.CharField(
+        label=_('SSH password'), strip=True,
+        help_text=_('Password of the SSH  Server.<br />'
+                    'If you have set up <a href="https://www.ssh.com/ssh/key/"'
+                    'target="_blank">SSH key-based authentication</a> you can '
+                    'omit the password.'),
+        required=False)
     encryption = forms.ChoiceField(
         label=_('Encryption'),
-        help_text=format_lazy(_('"Key in Repository" means that a '
-            'password-protected key is stored with the backup. <br />'
-            '<b>You need this password to restore a backup!</b>')),
+        help_text=format_lazy(
+            _('"Key in Repository" means that a '
+              'password-protected key is stored with the backup. <br />'
+              '<b>You need this password to restore a backup!</b>')),
         choices=[('repokey', 'Key in Repository'), ('none', 'None')]
         )
     passphrase = forms.CharField(
         label=_('Passphrase'),
         help_text=_('Passphrase; Only needed when using encryption.'),
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(),
+        required=False
     )
     confirm_passphrase = forms.CharField(
         label=_('Confirm Passphrase'),
         help_text=_('Repeat the passphrase.'),
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(),
+        required=False
     )
     store_passphrase = forms.BooleanField(
         label=_('Store passphrase on FreedomBox'),
-        help_text=format_lazy(_('Store the passphrase on your {box_name}.'
-            '<br />You need to store the passphrase if you want to run '
-            'recurrent backups.'), box_name=_(cfg.box_name)),
+        help_text=format_lazy(
+            _('Store the passphrase on your {box_name}.'
+              '<br />You need to store the passphrase if you want to run '
+              'recurrent backups.'), box_name=_(cfg.box_name)),
         required=False
     )
 

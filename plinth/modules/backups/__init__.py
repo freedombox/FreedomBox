@@ -59,8 +59,12 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'backups', ['setup'])
 
 
-def get_info():
-    output = actions.superuser_run('backups', ['info'])
+def get_info(repository, password=None):
+    args = ['backups', ['info', '--repository', repository]]
+    kwargs = {}
+    if password is not None:
+        kwargs['input'] = password.encode()
+    output = actions.superuser_run(*args, **kwargs)
     return json.loads(output)
 
 

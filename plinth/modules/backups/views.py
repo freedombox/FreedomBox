@@ -40,10 +40,10 @@ from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
 from plinth import actions, kvstore
-from plinth.errors import PlinthError
+from plinth.errors import PlinthError, ActionError
 from plinth.modules import backups, storage
 
-from . import api, forms, SESSION_PATH_VARIABLE
+from . import api, forms, SESSION_PATH_VARIABLE, REPOSITORY
 from .decorators import delete_tmp_backup_file
 
 logger = logging.getLogger(__name__)
@@ -73,7 +73,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = backups.name
         context['description'] = backups.description
-        context['info'] = backups.get_info()
+        context['info'] = backups.get_info(REPOSITORY)
         context['archives'] = backups.list_archives()
         context['subsubmenu'] = subsubmenu
         apps = api.get_all_apps_for_backup()
@@ -282,12 +282,12 @@ class ExportAndDownloadView(View):
         filename = "%s.tar.gz" % name
         args = ['export-tar', '--name', name]
         proc = actions.superuser_run('backups', args, run_in_background=True,
-                bufsize=1)
+                                     bufsize=1)
         zipStream = ZipStream(proc.stdout, 'readline')
         response = StreamingHttpResponse(zipStream,
-                content_type="application/x-gzip")
+                                         content_type="application/x-gzip")
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
-                filename
+            filename
         return response
 
 
@@ -309,7 +309,7 @@ class CreateRepositoryView(SuccessMessageMixin, FormView):
     """View to create a new repository."""
     form_class = forms.CreateRepositoryForm
     prefix = 'backups'
-    template_name = 'backups_form.html'
+    template_name = 'backups_create_repository.html'
     success_url = reverse_lazy('backups:repositories')
     success_message = _('Created new repository.')
 
@@ -335,3 +335,25 @@ class CreateRepositoryView(SuccessMessageMixin, FormView):
         repositories.append(new_repo)
         kvstore.set('backups_repositories', json.dumps(repositories))
         return super().form_valid(form)
+
+
+class TestRepositoryView(TemplateView):
+    """View to create a new repository."""
+    template_name = 'backups_test_repository.html'
+
+    def post(self, request):
+        context = self.get_context_data()
+        repository = request.POST['backups-repository']
+        ssh_password = request.POST['backups-ssh_password']
+        try:
+            info = backups.get_info(repository, password=ssh_password)
+        except ActionError as err:
+            if "subprocess.TimeoutExpired" in str(err):
+                msg = _("Server not reachable - try providing a password.")
+                context["error"] = msg
+            else:
+                context["error"] = str(err)
+        else:
+            context["message"] = info
+
+        return self.render_to_response(context)

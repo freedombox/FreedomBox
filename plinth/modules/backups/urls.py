@@ -22,7 +22,8 @@ from django.conf.urls import url
 
 from .views import IndexView, CreateArchiveView, CreateRepositoryView, \
         DeleteArchiveView, UploadArchiveView, ExportAndDownloadView, \
-        RepositoriesView, RestoreArchiveView, RestoreFromUploadView
+        RepositoriesView, RestoreArchiveView, RestoreFromUploadView, \
+        TestRepositoryView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -40,4 +41,6 @@ urlpatterns = [
         RepositoriesView.as_view(), name='repositories'),
     url(r'^sys/backups/repositories/create/$',
         CreateRepositoryView.as_view(), name='create-repository'),
+    url(r'^sys/backups/repositories/test/$',
+        TestRepositoryView.as_view(), name='test-repository'),
 ]

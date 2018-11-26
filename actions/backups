@@ -27,8 +27,9 @@ import subprocess
 import sys
 import tarfile
 
-from plinth.errors import ActionError
 from plinth.modules.backups import MANIFESTS_FOLDER, REPOSITORY
+
+TIMEOUT = 5
 
 
 def parse_arguments():
@@ -38,7 +39,8 @@ def parse_arguments():
 
     subparsers.add_parser(
         'setup', help='Create repository if it does not already exist')
-    subparsers.add_parser('info', help='Show repository information')
+    info = subparsers.add_parser('info', help='Show repository information')
+    info.add_argument('--repository', help='Repository path', required=True)
     subparsers.add_parser('list', help='List repository contents')
 
     create = subparsers.add_parser('create', help='Create archive')
@@ -94,9 +96,9 @@ def subcommand_setup(_):
         subprocess.run(['borg', 'init', '--encryption', 'none', REPOSITORY])
 
 
-def subcommand_info(_):
+def subcommand_info(arguments):
     """Show repository information."""
-    subprocess.run(['borg', 'info', '--json', REPOSITORY], check=True)
+    run(['borg', 'info', '--json', arguments.repository])
 
 
 def subcommand_list(_):
@@ -189,7 +191,7 @@ def _get_apps_of_manifest(manifest):
     elif type(manifest) is dict and 'apps' in manifest:
         apps = manifest['apps']
     else:
-        raise ActionError('Unknown manifest format')
+        raise RuntimeError('Unknown manifest format')
     return apps
 
 
@@ -234,6 +236,29 @@ def subcommand_restore_exported_archive(arguments):
                     if path.startswith(directory):
                         tar_handle.extract(member, '/')
                         break
+
+
+def read_password():
+    """Read the password from stdin."""
+    if sys.stdin.isatty():
+        return ''
+    else:
+        return ''.join(sys.stdin)
+
+
+def run(cmd):
+    """Pass provided passwords on to borg"""
+    env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
+    password = read_password()
+    timeout = None
+    if password:
+        env['SSHPASS'] = password
+        env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
+    else:
+        # When no password is given ssh might ask for a password and get stuck.
+        # Use timeout to abort early.
+        timeout = TIMEOUT
+    subprocess.run(cmd, check=True, env=env, timeout=timeout)
 
 
 def main():
