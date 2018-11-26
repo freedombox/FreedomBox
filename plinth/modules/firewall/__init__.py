@@ -30,11 +30,11 @@ from plinth.utils import format_lazy
 
 from .manifest import backup
 
-version = 1
+version = 2
 
 is_essential = True
 
-managed_packages = ['firewalld']
+managed_packages = ['firewalld', 'nftables']
 
 name = _('Firewall')
 
