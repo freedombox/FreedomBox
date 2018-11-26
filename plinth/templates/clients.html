@@ -68,16 +68,18 @@
             {% for platform in client.platforms %}
               {% if platform.type == 'download' %}
                 <a class="btn btn-default" href="{{ platform.url }}" role="button">
-                  {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
-                    <img class="client-icon" src="{% static icon %}" />
-                    {% if platform.os == 'gnu-linux' %}
-                      {% trans 'GNU/Linux' %}
-                    {% elif platform.os == 'windows' %}
-                      {% trans 'Windows' %}
-                    {% elif platform.os == 'macos' %}
-                      {% trans 'macOS' %}
-                    {% endif %}
-                  {% endwith %}
+                  <span>
+                    {% with 'theme/icons/'|add:platform.os|add:'.png' as icon %}
+                      <img class="client-icon" src="{% static icon %}" />
+                      {% if platform.os == 'gnu-linux' %}
+                        {% trans 'GNU/Linux' %}
+                      {% elif platform.os == 'windows' %}
+                        {% trans 'Windows' %}
+                      {% elif platform.os == 'macos' %}
+                        {% trans 'macOS' %}
+                      {% endif %}
+                    {% endwith %}
+                  </span>
                 </a>
               {% endif %}
             {% endfor %}
@@ -97,16 +99,18 @@
             {% for platform in client.platforms %}
               {% if platform.type == 'store' and platform.os == 'android' or platform.os == 'ios' %}
                 <a class="btn btn-default" href="{{ platform.url }}" role="button">
-                  {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
-                    <img class="client-icon" src="{% static icon %}" />
-                    {% if platform.store_name == 'google-play' %}
-                      {% trans 'Play Store' %}
-                    {% elif platform.store_name == 'f-droid' %}
-                      {% trans 'F-Droid' %}
-                    {% elif platform.store_name == 'app-store' %}
-                      {% trans 'App Store' %}
-                    {% endif %}
-                  {% endwith %}
+                  <span>
+                    {% with 'theme/icons/'|add:platform.store_name|add:'.png' as icon %}
+                      <img class="client-icon" src="{% static icon %}" />
+                      {% if platform.store_name == 'google-play' %}
+                        {% trans 'Play Store' %}
+                      {% elif platform.store_name == 'f-droid' %}
+                        {% trans 'F-Droid' %}
+                      {% elif platform.store_name == 'app-store' %}
+                        {% trans 'App Store' %}
+                      {% endif %}
+                    {% endwith %}
+                  </span>
                 </a>
               {% endif %}
             {% endfor %}
