@@ -33,7 +33,7 @@
                    value="{% trans 'Create Snapshot' %}"/>
           </div>
           <div class="col-xs-6 text-right">
-            <input type="submit" class="btn btn-primary" name="delete_selected"
+            <input type="submit" class="btn btn-danger" name="delete_selected"
                    value="{% trans 'Delete Snapshots' %}"/>
           </div>
       </div>
@@ -44,7 +44,7 @@
           <th>{% trans "Date" %}</th>
           <th>{% trans "Description" %}</th>
           <th>{% trans "Rollback" %}</th>
-          <th>{% trans "Delete" %}</th>
+          <th><input type="checkbox" name="select_all" onclick="toggle(this)"></th>
         </thead>
         <tbody>
           {% for snapshot in snapshots %}
@@ -81,6 +81,19 @@
         </tbody>
       </table>
     </div>
-  </form>
-  {% endblock %}
+</form>
 {% endblock %}
+{% endblock %}
+
+{% block page_js %}
+<script>
+function toggle(source) {
+   var checkedState = source.checked;
+   checkboxes = document.getElementsByName('snapshot_list');
+   jQuery.each(checkboxes, function(i, checkbox) {
+       checkbox.checked = checkedState;
+   })
+}
+</script>
+{% endblock %}
+

@@ -71,9 +71,10 @@ def manage(request):
             actions.superuser_run('snapshot', ['create'])
             messages.success(request, _('Created snapshot.'))
         if 'delete_selected' in request.POST:
-            snapshot_to_delete = request.POST.getlist('snapshot_list')
-            request.session['snapshots'] = snapshot_to_delete
-            return redirect(reverse('snapshot:delete-selected'))
+            if request.POST.getlist('snapshot_list'):
+                snapshot_to_delete = request.POST.getlist('snapshot_list')
+                request.session['snapshots'] = snapshot_to_delete
+                return redirect(reverse('snapshot:delete-selected'))
 
     output = actions.superuser_run('snapshot', ['list'])
     snapshots = json.loads(output)
@@ -135,35 +136,23 @@ def delete_selected(request):
     if request.method == 'POST':
         if 'snapshots' in request.session:
             to_delete = request.session['snapshots']
-            for snapshot in to_delete:
-                actions.superuser_run('snapshot', ['delete', snapshot])
-            messages.success(request, _('Deleted the selected snapshots'))
+            if to_delete == len(snapshots):
+                actions.superuser_run('snapshot', ['delete_all'])
+                messages.success(request, _('Deleted all snapshots'))
+            else:
+                for snapshot in to_delete:
+                    actions.superuser_run('snapshot', ['delete', snapshot])
+                messages.success(request, _('Deleted selected snapshots'))
             return redirect(reverse('snapshot:manage'))
 
     if 'snapshots' in request.session:
         data = request.session['snapshots']
         to_delete = list(filter(lambda x: x['number'] in data, snapshots))
 
-        return TemplateResponse(request, 'snapshot_delete_all.html', {
+        return TemplateResponse(request, 'snapshot_delete_selected.html', {
             'title': _('Delete Snapshots'),
             'snapshots': to_delete
         })
-
-
-def delete_all(request):
-    """Show confirmation to delete all snapshots."""
-    if request.method == 'POST':
-        actions.superuser_run('snapshot', ['delete-all'])
-        messages.success(request, _('Deleted all snapshots.'))
-        return redirect(reverse('snapshot:manage'))
-
-    output = actions.superuser_run('snapshot', ['list'])
-    snapshots = json.loads(output)
-
-    return TemplateResponse(request, 'snapshot_delete_all.html', {
-        'title': _('Delete Snapshots'),
-        'snapshots': snapshots[1:]
-    })
 
 
 def rollback(request, number):
