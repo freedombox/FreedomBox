@@ -35,13 +35,19 @@ service = None
 
 managed_services = ['minetest-server']
 
-managed_packages = [
-    'minetest-server', 'minetest-mod-advspawning',
-    'minetest-mod-animalmaterials', 'minetest-mod-animals',
-    'minetest-mod-mesecons', 'minetest-mod-mobf-core',
-    'minetest-mod-mobf-trap', 'minetest-mod-moreblocks', 'minetest-mod-nether',
-    'minetest-mod-torches'
+mods = [
+    'minetest-mod-character-creator', 'minetest-mod-craftguide',
+    'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
+    'minetest-mod-maidroid', 'minetest-mod-mesecons',
+    'minetest-mod-moreblocks', 'minetest-mod-moreores', 'minetest-mod-nether',
+    'minetest-mod-pipeworks', 'minetest-mod-player-3d-armor',
+    'minetest-mod-protector', 'minetest-mod-quartz', 'minetest-mod-skyblock',
+    'minetest-mod-throwing', 'minetest-mod-torches',
+    'minetest-mod-unified-inventory', 'minetest-mod-unifieddyes',
+    'minetest-mod-worldedit'
 ]
+
+managed_packages = ['minetest-server'] + mods
 
 name = _('Minetest')
 
@@ -69,8 +75,7 @@ AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'minetest', 'minetest:index',
-                     short_description)
+    menu.add_urlname(name, 'minetest', 'minetest:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
@@ -125,8 +130,8 @@ def diagnose():
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Php/lens', 'Php.lns')
     aug.set('/augeas/load/Php/incl[last() + 1]', CONFIG_FILE)
     aug.load()
