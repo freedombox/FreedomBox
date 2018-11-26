@@ -47,10 +47,12 @@ $ sudo /vagrant/run --develop
 Plinth will be available at https://localhost:4430/plinth (with
 an invalid SSL certificate).
 "
+
   config.trigger.before :destroy do |trigger|
-    trigger.warn = "Dropping Plinth database"
-    trigger.run_remote = {
-      inline: "rm /vagrant/data/var/lib/plinth/plinth.sqlite3"
+    trigger.warn = "Performing cleanup steps"
+    trigger.run = {
+      path: "post-box-destroy.py"
     }
   end
+  config.vm.boot_timeout=1200
 end
