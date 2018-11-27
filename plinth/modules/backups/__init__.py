@@ -33,7 +33,7 @@ from . import api
 
 version = 1
 
-managed_packages = ['borgbackup']
+managed_packages = ['borgbackup', 'sshfs']
 
 name = _('Backups')
 

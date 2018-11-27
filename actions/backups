@@ -32,6 +32,10 @@ from plinth.modules.backups import MANIFESTS_FOLDER, REPOSITORY
 TIMEOUT = 5
 
 
+class AlreadyMountedError(Exception):
+    pass
+
+
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
     parser = argparse.ArgumentParser()
@@ -47,6 +51,18 @@ def parse_arguments():
     init.add_argument('--repository', help='Repository path', required=True)
     init.add_argument('--encryption', help='Enryption of the repository',
                       required=True)
+
+    # TODO: ssh commands should be in SSH or a separate action script
+    mount = subparsers.add_parser('mount', help='mount an ssh filesystem')
+    mount.add_argument('--mountpoint', help='Local mountpoint', required=True)
+    umount = subparsers.add_parser('umount',
+                                   help='unmount an ssh filesystem')
+    umount.add_argument('--mountpoint', help='Mountpoint to unmount',
+                        required=True)
+    is_mounted = subparsers.add_parser('is-mounted',
+                                       help='Check whether an sshfs is mouned')
+    is_mounted.add_argument('--mountpoint', help='Mountpoint to check',
+                            required=True)
 
     list_repo = subparsers.add_parser('list-repo',
                                       help='List repository contents')
@@ -70,7 +86,7 @@ def parse_arguments():
 
     # TODO: add parameters to missing commands (export etc)
     for cmd in [info, init, list_repo, create_archive, delete_archive,
-                get_archive_apps]:
+                get_archive_apps, mount]:
         cmd.add_argument('--path', help='Repository or Archive path',
                          required=False)  # TODO: set required to True!
         cmd.add_argument('--ssh-keyfile', help='Path of private ssh key',
@@ -139,6 +155,20 @@ def get_env(arguments):
     return env
 
 
+def get_sshfs_env(arguments):
+    """Create encryption and ssh kwargs out of given arguments"""
+    env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
+    if arguments.encryption_passphrase:
+        env['BORG_PASSPHRASE'] = arguments.encryption_passphrase
+    if arguments.ssh_keyfile:
+        env['SSHKEY'] = arguments.ssh_keyfile
+    else:
+        password = read_password()
+        if password:
+            env['SSHPASS'] = password
+    return env
+
+
 def subcommand_init(arguments):
     env = get_env(arguments)
     init(arguments.repository, arguments.encryption, env=env)
@@ -148,6 +178,66 @@ def subcommand_info(arguments):
     """Show repository information."""
     env = get_env(arguments)
     run(['borg', 'info', '--json', arguments.repository], env=env)
+
+
+def subcommand_mount(arguments):
+    """Show repository information."""
+    try:
+        validate_mountpoint(arguments.mountpoint)
+    except AlreadyMountedError:
+        return
+
+    env = get_env(arguments)
+    remote_path = arguments.path
+    kwargs = {}
+    # the shell would expand ~/ to the local home directory
+    remote_path = remote_path.replace('~/', '').replace('~', '')
+    cmd = ['sshfs', remote_path, arguments.mountpoint, '-o',
+           'UserKnownHostsFile=/dev/null', '-o',
+           'StrictHostKeyChecking=no']
+    timeout = None
+    if 'SSHPASS' in env:
+        cmd += ['-o', 'password_stdin']
+        kwargs['input'] = env['SSHPASS'].encode()
+    elif 'SSHKEY' in env:
+        cmd += ['-o', 'IdentityFile=$SSHKEY']
+        timeout = TIMEOUT
+    else:
+        raise ValueError('mount requires either SSHPASS or SSHKEY in env')
+    subprocess.run(cmd, check=True, env=env, timeout=timeout, **kwargs)
+
+
+def subcommand_umount(arguments):
+    """Show repository information."""
+    run(['umount', arguments.mountpoint])
+
+
+def validate_mountpoint(mountpoint):
+    """Check that the folder is empty, and create it if it doesn't exist"""
+    if os.path.exists(mountpoint):
+        if _is_mounted(mountpoint):
+            raise AlreadyMountedError('Mountpoint %s already mounted' %
+                                      mountpoint)
+        if os.listdir(mountpoint) or not os.path.isdir(mountpoint):
+            raise ValueError('Mountpoint %s is not an empty directory' %
+                             mountpoint)
+    else:
+        os.makedirs(mountpoint)
+
+
+def _is_mounted(mountpoint):
+    """Return boolean whether a local directory is a mountpoint."""
+    cmd = ['mountpoint', '-q', mountpoint]
+    # mountpoint exits with status non-zero if it didn't find a mountpoint
+    try:
+        subprocess.run(cmd, check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def subcommand_is_mounted(arguments):
+    print(json.dumps(_is_mounted(arguments.mountpoint)))
 
 
 def subcommand_list_repo(arguments):
@@ -207,7 +297,6 @@ def _read_archive_file(archive, filepath):
 
 def subcommand_get_archive_apps(arguments):
     """Get list of apps included in archive."""
-    import ipdb; ipdb.set_trace()
     env = get_env(arguments)
     manifest_folder = os.path.relpath(MANIFESTS_FOLDER, '/')
     borg_call = ['borg', 'list', arguments.path, manifest_folder,
@@ -301,7 +390,7 @@ def run(cmd, env=None):
     # If the remote server asks for a password but no password is
     # provided, we get stuck at asking the password.
     timeout = None
-    if 'BORG_RSH' in env and 'SSHPASS' not in env:
+    if env and 'BORG_RSH' in env and 'SSHPASS' not in env:
         timeout = TIMEOUT
     subprocess.run(cmd, check=True, env=env, timeout=timeout)
 

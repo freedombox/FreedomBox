@@ -75,7 +75,7 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['info'] = backups.get_info(REPOSITORY)
-        context['archives'] = backups.list_archives()
+        context['archives'] = backups.list_archives(REPOSITORY)
         context['subsubmenu'] = subsubmenu
         apps = api.get_all_apps_for_backup()
         context['available_apps'] = [app.name for app in apps]
@@ -300,6 +300,8 @@ class RepositoriesView(TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = 'Backup repositories'
+        # TODO: rename backups_repositories to something more generic,
+        # that can be used/managed by the storage module too
         repositories = kvstore.get_default('backups_repositories', [])
         context['repositories'] = json.loads(repositories)
         context['subsubmenu'] = subsubmenu

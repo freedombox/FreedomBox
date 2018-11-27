@@ -25,7 +25,15 @@ import unittest
 
 from plinth import cfg
 from plinth.modules import backups
+from plinth.modules.backups import sshfs
 from plinth import actions
+
+from . import config
+
+try:
+    from . import config_local as config
+except ImportError:
+    from . import config
 
 
 euid = os.geteuid()
@@ -108,3 +116,36 @@ class TestBackups(unittest.TestCase):
         backups.delete_archive(archive_path)
         content = backups.list_archives(repo_path)
         assert len(content) == 0
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_is_mounted(self):
+        assert not sshfs.is_mounted(self.action_directory.name)
+        assert sshfs.is_mounted('/')
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_mount(self):
+        """Test (un)mounting if credentials for a remote location are given"""
+        import ipdb; ipdb.set_trace()
+        if config.backups_ssh_path:
+            access_params = self.get_remote_access_params()
+            if not access_params:
+                return
+            mountpoint = config.backups_ssh_mountpoint
+            ssh_path = config.backups_ssh_path
+
+            sshfs.mount(ssh_path, mountpoint, access_params)
+            assert sshfs.is_mounted(mountpoint)
+            sshfs.umount(mountpoint)
+            assert not sshfs.is_mounted(mountpoint)
+
+    def get_remote_access_params(self):
+        """
+        Get access params for a remote location.
+        Return an empty dict if no valid access params are found.
+        """
+        access_params = {}
+        if config.backups_ssh_password:
+            access_params['ssh_password'] = config.backups_ssh_password
+        elif config.backups_ssh_keyfile:
+            access_params['ssh_keyfile'] = config.backups_ssh_keyfile
+        return access_params
