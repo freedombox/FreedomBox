@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-Configuration helper for backups.
+Wrapper to handle backups using borg-backups.
 """
 
 import argparse
@@ -41,6 +41,10 @@ def parse_arguments():
         'setup', help='Create repository if it does not already exist')
     info = subparsers.add_parser('info', help='Show repository information')
     info.add_argument('--repository', help='Repository path', required=True)
+    init = subparsers.add_parser('init', help='Initialize a repository')
+    init.add_argument('--repository', help='Repository path', required=True)
+    init.add_argument('--encryption', help='Enryption of the repository',
+                      required=True)
     subparsers.add_parser('list', help='List repository contents')
 
     create = subparsers.add_parser('create', help='Create archive')
@@ -51,10 +55,17 @@ def parse_arguments():
     delete = subparsers.add_parser('delete', help='Delete archive')
     delete.add_argument('--name', help='Archive name', required=True)
 
-    export_help='Export archive contents as tar on stdout'
+    export_help = 'Export archive contents as tar on stdout'
     export_tar = subparsers.add_parser('export-tar', help=export_help)
     export_tar.add_argument('--name', help='Archive name)',
-                               required=True)
+                            required=True)
+    # TODO: add parameters to missing commands (list, create, delete, export)
+    for cmd in [info, init]:
+        cmd.add_argument('--ssh-keyfile', help='Path of private ssh key',
+                         default=None)
+        cmd.add_argument('--encryption-passphrase',
+                         help='Encryption passphrase',
+                         default=None)
 
     get_exported_archive_apps = subparsers.add_parser(
         'get-exported-archive-apps',
@@ -71,14 +82,14 @@ def parse_arguments():
     restore_exported_archive = subparsers.add_parser(
         'restore-exported-archive',
         help='Restore files from an exported archive')
-    restore_exported_archive.add_argument('--path',
-            help='Tarball file path', required=True)
+    restore_exported_archive.add_argument('--path', help='Tarball file path',
+                                          required=True)
 
     restore_archive = subparsers.add_parser(
         'restore-archive', help='Restore files from an archive')
     restore_archive.add_argument('--path', help='Archive path', required=True)
     restore_archive.add_argument('--destination', help='Destination',
-            required=True)
+                                 required=True)
 
     subparsers.required = True
     return parser.parse_args()
@@ -93,34 +104,65 @@ def subcommand_setup(_):
         if not os.path.exists(path):
             os.makedirs(path)
 
-        subprocess.run(['borg', 'init', '--encryption', 'none', REPOSITORY])
+        run(['borg', 'init', '--encryption', 'none', REPOSITORY])
+
+
+def init(repository, encryption, env=None):
+    """Initialize a local or remote borg repository"""
+    # TODO: verify that the repository does not exist?
+    # TODO: does remote borg also create folders if they don't exist?
+    if encryption != 'none' and 'BORG_PASSPHRASE' not in env:
+        raise ValueError('No encryption passphrase provided')
+    cmd = ['borg', 'init', '--encryption', encryption, repository]
+    run(cmd, env=env)
+
+
+def get_env(arguments):
+    """Create encryption and ssh kwargs out of given arguments"""
+    env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
+    if arguments.encryption_passphrase:
+        env['BORG_PASSPHRASE'] = arguments.encryption_passphrase
+    if arguments.ssh_keyfile:
+        env['BORG_RSH'] = "ssh -i %s" % arguments.ssh_keyfile
+    else:
+        password = read_password()
+        if password:
+            env['SSHPASS'] = password
+            env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
+    return env
+
+
+def subcommand_init(arguments):
+    env = get_env(arguments)
+    init(arguments.repository, arguments.encryption, env=env)
 
 
 def subcommand_info(arguments):
     """Show repository information."""
-    run(['borg', 'info', '--json', arguments.repository])
+    env = get_env(arguments)
+    cmd = ['borg', 'info', '--json', arguments.repository]
+    run(cmd, env=env)
 
 
 def subcommand_list(_):
     """List repository contents."""
-    subprocess.run(['borg', 'list', '--json', REPOSITORY], check=True)
+    run(['borg', 'list', '--json', REPOSITORY])
 
 
 def subcommand_create(arguments):
     """Create archive."""
     paths = filter(os.path.exists, arguments.paths)
-    subprocess.run([
+    run([
         'borg',
         'create',
         '--json',
         REPOSITORY + '::' + arguments.name,
-    ] + list(paths), check=True)
+    ] + list(paths))
 
 
 def subcommand_delete(arguments):
     """Delete archive."""
-    subprocess.run(['borg', 'delete', REPOSITORY + '::' + arguments.name],
-                   check=True)
+    run(['borg', 'delete', REPOSITORY + '::' + arguments.name])
 
 
 def _extract(archive_path, destination, locations=None):
@@ -150,9 +192,7 @@ def _extract(archive_path, destination, locations=None):
 
 def subcommand_export_tar(arguments):
     """Export archive contents as tar stream on stdout."""
-    subprocess.run([
-        'borg', 'export-tar', REPOSITORY + '::' + arguments.name, '-'],
-        check=True)
+    run(['borg', 'export-tar', REPOSITORY + '::' + arguments.name, '-'])
 
 
 def _read_archive_file(archive, filepath):
@@ -165,7 +205,7 @@ def subcommand_get_archive_apps(arguments):
     """Get list of apps included in archive."""
     manifest_folder = os.path.relpath(MANIFESTS_FOLDER, '/')
     borg_call = ['borg', 'list', arguments.path, manifest_folder,
-            '--format', '{path}{NEWLINE}']
+                 '--format', '{path}{NEWLINE}']
     try:
         manifest_path = subprocess.check_output(borg_call).decode().strip()
     except subprocess.CalledProcessError:
@@ -173,8 +213,7 @@ def subcommand_get_archive_apps(arguments):
 
     manifest = None
     if manifest_path:
-        manifest_data = _read_archive_file(arguments.path,
-                manifest_path)
+        manifest_data = _read_archive_file(arguments.path, manifest_path)
         manifest = json.loads(manifest_data)
     if manifest:
         for app in _get_apps_of_manifest(manifest):
@@ -246,17 +285,12 @@ def read_password():
         return ''.join(sys.stdin)
 
 
-def run(cmd):
-    """Pass provided passwords on to borg"""
-    env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
-    password = read_password()
+def run(cmd, env=None):
+    """Wrap the command with ssh password or keyfile authentication"""
+    # If the remote server asks for a password but no password is
+    # provided, we get stuck at asking the password.
     timeout = None
-    if password:
-        env['SSHPASS'] = password
-        env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
-    else:
-        # When no password is given ssh might ask for a password and get stuck.
-        # Use timeout to abort early.
+    if 'BORG_RSH' in env and 'SSHPASS' not in env:
         timeout = TIMEOUT
     subprocess.run(cmd, check=True, env=env, timeout=timeout)
 

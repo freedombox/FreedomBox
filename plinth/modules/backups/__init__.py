@@ -26,6 +26,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
+from plinth.errors import ActionError
+from .errors import BorgError, BorgRepositoryDoesNotExistError
 
 from . import api
 
@@ -45,6 +47,23 @@ MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 REPOSITORY = '/var/lib/freedombox/borgbackup'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
+# known errors that come up when remotely accessing a borg repository
+# 'errors' are error strings to look for in the stacktrace.
+KNOWN_ERRORS = [{
+        "errors": ["subprocess.TimeoutExpired"],
+        "message": _("Server not reachable - try providing a password."),
+        "raise_as": BorgError,
+    },
+    {
+        "errors": ["Connection refused"],
+        "message": _("Connection refused"),
+        "raise_as": BorgError,
+    },
+    {
+        "errors": ["not a valid repository", "does not exist"],
+        "message": _("Connection works - Repository does not exist"),
+        "raise_as": BorgRepositoryDoesNotExistError,
+    }]
 
 
 def init():
@@ -59,12 +78,17 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'backups', ['setup'])
 
 
-def get_info(repository, password=None):
-    args = ['backups', ['info', '--repository', repository]]
+def get_info(repository, encryption_passphrase=None, ssh_password=None,
+             ssh_keyfile=None):
+    args = ['info', '--repository', repository]
     kwargs = {}
-    if password is not None:
-        kwargs['input'] = password.encode()
-    output = actions.superuser_run(*args, **kwargs)
+    if ssh_password is not None:
+        kwargs['input'] = ssh_password.encode()
+    if ssh_keyfile is not None:
+        args += ['--ssh-keyfile', ssh_keyfile]
+    if encryption_passphrase is not None:
+        args += ['--encryption-passphrase', encryption_passphrase]
+    output = actions.superuser_run('backups', args, **kwargs)
     return json.loads(output)
 
 
@@ -79,6 +103,30 @@ def get_archive(name):
             return archive
 
     return None
+
+
+def test_connection(repository, encryption_passphrase=None, ssh_password=None,
+                    ssh_keyfile=None):
+    """
+    Test connecting to a local or remote borg repository.
+    Tries to detect (and throw) some known ssh or borg errors.
+    Returns 'borg info' information otherwise.
+    """
+    try:
+        # TODO: instead of passing encryption_passphrase, ssh_password and
+        # ssh_keyfile around all the time, try using an 'options' dict.
+        message = get_info(repository,
+                           encryption_passphrase=encryption_passphrase,
+                           ssh_password=ssh_password, ssh_keyfile=ssh_keyfile)
+        return message
+    except ActionError as err:
+        caught_error = str(err)
+        for known_error in KNOWN_ERRORS:
+            for error in known_error["errors"]:
+                if error in caught_error:
+                    raise known_error["raise_as"](known_error["message"])
+        else:
+            raise
 
 
 def _backup_handler(packet):
@@ -106,6 +154,24 @@ def _backup_handler(packet):
 
 def create_archive(name, app_names):
     api.backup_apps(_backup_handler, app_names, name)
+
+
+def create_repository(repository, encryption, encryption_passphrase=None,
+                      ssh_keyfile=None, ssh_password=None):
+    cmd = ['init', '--repository', repository, '--encryption', encryption]
+    if ssh_keyfile:
+        cmd += ['--ssh-keyfile', ssh_keyfile]
+    if encryption_passphrase:
+        cmd += ['--encryption-passphrase', encryption_passphrase]
+
+    kwargs = {}
+    if ssh_password:
+        kwargs['input'] = ssh_password.encode()
+
+    output = actions.superuser_run('backups', cmd, **kwargs)
+    if output:
+        output = json.loads(output)
+    return output
 
 
 def delete_archive(name):

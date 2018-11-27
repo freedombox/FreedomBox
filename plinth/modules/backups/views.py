@@ -40,11 +40,12 @@ from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
 from plinth import actions, kvstore
-from plinth.errors import PlinthError, ActionError
+from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import api, forms, SESSION_PATH_VARIABLE, REPOSITORY
 from .decorators import delete_tmp_backup_file
+from .errors import BorgRepositoryDoesNotExistError
 
 logger = logging.getLogger(__name__)
 
@@ -316,22 +317,41 @@ class CreateRepositoryView(SuccessMessageMixin, FormView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = _('Create new repository')
+        context['title'] = _('Create remote backup repository')
         context['subsubmenu'] = subsubmenu
         return context
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
+        repository = form.cleaned_data['repository']
+        encryption = form.cleaned_data['encryption']
+        encryption_passphrase = form.cleaned_data['encryption_passphrase']
+        ssh_password = form.cleaned_data['ssh_password']
+        ssh_keyfile = form.cleaned_data['ssh_keyfile']
+
+        # TODO: create borg repository if it doesn't exist
+        import pdb; pdb.set_trace()
+        try:
+            backups.test_connection(repository, ssh_password)
+        except BorgRepositoryDoesNotExistError:
+            kwargs = {}
+            if encryption_passphrase:
+                kwargs['encryption_passphrase'] = encryption_passphrase
+            if ssh_keyfile:
+                kwargs['ssh_keyfile'] = ssh_keyfile
+            backups.create_repository(repository, encryption, **kwargs)
+
         repositories = kvstore.get_default('backups_repositories', [])
         if repositories:
             repositories = json.loads(repositories)
         new_repo = {
             'uuid': str(uuid1()),
-            'repository': form.cleaned_data['repository'],
-            'encryption': form.cleaned_data['encryption'],
+            'repository': repository,
+            'encryption': encryption,
         }
-        if form.cleaned_data['store_passphrase']:
-            new_repo['passphrase'] = form.cleaned_data['passphrase']
+        if form.cleaned_data['store_passwords']:
+            new_repo['encryption_passphrase'] = \
+                    form.cleaned_data['encryption_passphrase']
         repositories.append(new_repo)
         kvstore.set('backups_repositories', json.dumps(repositories))
         return super().form_valid(form)
@@ -342,18 +362,12 @@ class TestRepositoryView(TemplateView):
     template_name = 'backups_test_repository.html'
 
     def post(self, request):
+        # TODO: add support for borg encryption
         context = self.get_context_data()
         repository = request.POST['backups-repository']
         ssh_password = request.POST['backups-ssh_password']
-        try:
-            info = backups.get_info(repository, password=ssh_password)
-        except ActionError as err:
-            if "subprocess.TimeoutExpired" in str(err):
-                msg = _("Server not reachable - try providing a password.")
-                context["error"] = msg
-            else:
-                context["error"] = str(err)
-        else:
-            context["message"] = info
+        (error, message) = backups.test_connection(repository, ssh_password)
+        context["message"] = message
+        context["error"] = error
 
         return self.render_to_response(context)

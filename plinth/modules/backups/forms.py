@@ -88,13 +88,12 @@ class CreateRepositoryForm(forms.Form):
     repository = forms.CharField(
         label=_('SSH Repository Path'), strip=True,
         help_text=_('Path of the new repository. Example: '
-                    '<i>user@host/path/to/repo/</i>'))
+                    '<i>user@host:~/path/to/repo/</i>'))
     ssh_password = forms.CharField(
-        label=_('SSH password'), strip=True,
-        help_text=_('Password of the SSH  Server.<br />'
-                    'If you have set up <a href="https://www.ssh.com/ssh/key/"'
-                    'target="_blank">SSH key-based authentication</a> you can '
-                    'omit the password.'),
+        label=_('SSH server password'), strip=True,
+        help_text=_('Password of the SSH Server.<br />'
+                    'SSH key-based authentication is not yet possible.'),
+        widget=forms.PasswordInput(),
         required=False)
     encryption = forms.ChoiceField(
         label=_('Encryption'),
@@ -104,33 +103,33 @@ class CreateRepositoryForm(forms.Form):
               '<b>You need this password to restore a backup!</b>')),
         choices=[('repokey', 'Key in Repository'), ('none', 'None')]
         )
-    passphrase = forms.CharField(
+    encryption_passphrase = forms.CharField(
         label=_('Passphrase'),
         help_text=_('Passphrase; Only needed when using encryption.'),
         widget=forms.PasswordInput(),
         required=False
     )
-    confirm_passphrase = forms.CharField(
+    confirm_encryption_passphrase = forms.CharField(
         label=_('Confirm Passphrase'),
         help_text=_('Repeat the passphrase.'),
         widget=forms.PasswordInput(),
         required=False
     )
-    store_passphrase = forms.BooleanField(
-        label=_('Store passphrase on FreedomBox'),
+    store_passwords = forms.BooleanField(
+        label=_('Store passwords on FreedomBox'),
         help_text=format_lazy(
-            _('Store the passphrase on your {box_name}.'
-              '<br />You need to store the passphrase if you want to run '
+            _('Store the passwords on your {box_name}.'
+              '<br />You need to store passwords if you want to run '
               'recurrent backups.'), box_name=_(cfg.box_name)),
         required=False
     )
 
     def clean(self):
         cleaned_data = super(CreateRepositoryForm, self).clean()
-        passphrase = cleaned_data.get("passphrase")
-        confirm_passphrase = cleaned_data.get("confirm_passphrase")
+        passphrase = cleaned_data.get("encryption_passphrase")
+        confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
 
         if passphrase != confirm_passphrase:
             raise forms.ValidationError(
-                "passphrase and confirm_passphrase do not match"
+                "The entered encryption passphrases do not match"
             )
