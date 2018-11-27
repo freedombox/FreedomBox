@@ -39,28 +39,40 @@ def parse_arguments():
 
     subparsers.add_parser(
         'setup', help='Create repository if it does not already exist')
+
     info = subparsers.add_parser('info', help='Show repository information')
     info.add_argument('--repository', help='Repository path', required=True)
+
     init = subparsers.add_parser('init', help='Initialize a repository')
     init.add_argument('--repository', help='Repository path', required=True)
     init.add_argument('--encryption', help='Enryption of the repository',
                       required=True)
-    subparsers.add_parser('list', help='List repository contents')
 
-    create = subparsers.add_parser('create', help='Create archive')
-    create.add_argument('--name', help='Archive name', required=True)
-    create.add_argument('--paths', help='Paths to include in archive',
-                        nargs='+')
+    list_repo = subparsers.add_parser('list-repo',
+                                      help='List repository contents')
 
-    delete = subparsers.add_parser('delete', help='Delete archive')
-    delete.add_argument('--name', help='Archive name', required=True)
+    create_archive = subparsers.add_parser('create-archive',
+                                           help='Create archive')
+    create_archive.add_argument('--paths', help='Paths to include in archive',
+                                nargs='+')
+
+    delete_archive = subparsers.add_parser('delete-archive',
+                                           help='Delete archive')
 
     export_help = 'Export archive contents as tar on stdout'
     export_tar = subparsers.add_parser('export-tar', help=export_help)
     export_tar.add_argument('--name', help='Archive name)',
                             required=True)
-    # TODO: add parameters to missing commands (list, create, delete, export)
-    for cmd in [info, init]:
+
+    get_archive_apps = subparsers.add_parser(
+        'get-archive-apps',
+        help='Get list of apps included in archive')
+
+    # TODO: add parameters to missing commands (export etc)
+    for cmd in [info, init, list_repo, create_archive, delete_archive,
+                get_archive_apps]:
+        cmd.add_argument('--path', help='Repository or Archive path',
+                         required=False)  # TODO: set required to True!
         cmd.add_argument('--ssh-keyfile', help='Path of private ssh key',
                          default=None)
         cmd.add_argument('--encryption-passphrase',
@@ -72,12 +84,6 @@ def parse_arguments():
         help='Get list of apps included in exported archive file')
     get_exported_archive_apps.add_argument(
         '--path', help='Tarball file path', required=True)
-
-    get_archive_apps = subparsers.add_parser(
-        'get-archive-apps',
-        help='Get list of apps included in archive')
-    get_archive_apps.add_argument(
-        '--path', help='Path of the archive', required=True)
 
     restore_exported_archive = subparsers.add_parser(
         'restore-exported-archive',
@@ -97,6 +103,7 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Create repository if it does not already exist."""
+    # TODO: use init()
     try:
         subprocess.run(['borg', 'info', REPOSITORY], check=True)
     except:
@@ -140,29 +147,26 @@ def subcommand_init(arguments):
 def subcommand_info(arguments):
     """Show repository information."""
     env = get_env(arguments)
-    cmd = ['borg', 'info', '--json', arguments.repository]
-    run(cmd, env=env)
+    run(['borg', 'info', '--json', arguments.repository], env=env)
 
 
-def subcommand_list(_):
+def subcommand_list_repo(arguments):
     """List repository contents."""
-    run(['borg', 'list', '--json', REPOSITORY])
+    env = get_env(arguments)
+    run(['borg', 'list', '--json', arguments.path], env=env)
 
 
-def subcommand_create(arguments):
+def subcommand_create_archive(arguments):
     """Create archive."""
+    env = get_env(arguments)
     paths = filter(os.path.exists, arguments.paths)
-    run([
-        'borg',
-        'create',
-        '--json',
-        REPOSITORY + '::' + arguments.name,
-    ] + list(paths))
+    run(['borg', 'create', '--json', arguments.path] + list(paths), env=env)
 
 
-def subcommand_delete(arguments):
+def subcommand_delete_archive(arguments):
     """Delete archive."""
-    run(['borg', 'delete', REPOSITORY + '::' + arguments.name])
+    env = get_env(arguments)
+    run(['borg', 'delete', arguments.path], env=env)
 
 
 def _extract(archive_path, destination, locations=None):
@@ -203,11 +207,18 @@ def _read_archive_file(archive, filepath):
 
 def subcommand_get_archive_apps(arguments):
     """Get list of apps included in archive."""
+    import ipdb; ipdb.set_trace()
+    env = get_env(arguments)
     manifest_folder = os.path.relpath(MANIFESTS_FOLDER, '/')
     borg_call = ['borg', 'list', arguments.path, manifest_folder,
                  '--format', '{path}{NEWLINE}']
+    timeout = None
+    if 'BORG_RSH' in env and 'SSHPASS' not in env:
+        timeout = TIMEOUT
     try:
-        manifest_path = subprocess.check_output(borg_call).decode().strip()
+        manifest_path = subprocess.check_output(borg_call, env=env,
+                                                timeout=timeout).decode()\
+                                                .strip()
     except subprocess.CalledProcessError:
         sys.exit(1)
 

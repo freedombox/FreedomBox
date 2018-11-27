@@ -25,6 +25,8 @@ import unittest
 
 from plinth import cfg
 from plinth.modules import backups
+from plinth import actions
+
 
 euid = os.geteuid()
 
@@ -37,6 +39,8 @@ class TestBackups(unittest.TestCase):
         """Initial setup for all the classes."""
         cls.action_directory = tempfile.TemporaryDirectory()
         cls.backup_directory = tempfile.TemporaryDirectory()
+        cls.data_directory = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), 'data')
         cfg.actions_dir = cls.action_directory.name
         actions_dir = os.path.join(os.path.dirname(__file__), '..', '..',
                                    'actions')
@@ -73,11 +77,34 @@ class TestBackups(unittest.TestCase):
     def test_create_encrypted_repository(self):
         repo_path = os.path.join(self.backup_directory.name,
                                  'borgbackup_encrypted')
-        passphrase = '12345'
-        # create_repository is supposed to create the folder automatically
-        # if it does not exist
+        # 'borg init' creates missing folders automatically
+        access_params = {'encryption_passphrase': '12345'}
         backups.create_repository(repo_path, 'repokey',
-                                  encryption_passphrase=passphrase)
-        assert backups.get_info(repo_path, encryption_passphrase=passphrase)
-        assert backups.test_connection(repo_path,
-                                       encryption_passphrase=passphrase)
+                                  access_params=access_params)
+        assert backups.get_info(repo_path, access_params)
+        assert backups.test_connection(repo_path, access_params)
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_create_and_delete_archive(self):
+        """
+        - Create a repo
+        - Create an archive
+        - Verify archive content
+        - Delete archive
+        """
+        repo_name = 'test_create_and_delete'
+        archive_name = 'first_archive'
+        repo_path = os.path.join(self.backup_directory.name, repo_name)
+
+        backups.create_repository(repo_path, 'none')
+        archive_path = "::".join([repo_path, archive_name])
+        actions.superuser_run(
+            'backups', ['create-archive', '--path', archive_path, '--paths',
+                        self.data_directory])
+
+        archive = backups.list_archives(repo_path)[0]
+        assert archive['name'] == archive_name
+
+        backups.delete_archive(archive_path)
+        content = backups.list_archives(repo_path)
+        assert len(content) == 0

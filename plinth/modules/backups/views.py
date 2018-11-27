@@ -334,12 +334,13 @@ class CreateRepositoryView(SuccessMessageMixin, FormView):
         try:
             backups.test_connection(repository, ssh_password)
         except BorgRepositoryDoesNotExistError:
-            kwargs = {}
+            access_params = {}
             if encryption_passphrase:
-                kwargs['encryption_passphrase'] = encryption_passphrase
+                access_params['encryption_passphrase'] = encryption_passphrase
             if ssh_keyfile:
-                kwargs['ssh_keyfile'] = ssh_keyfile
-            backups.create_repository(repository, encryption, **kwargs)
+                access_params['ssh_keyfile'] = ssh_keyfile
+            backups.create_repository(repository, encryption,
+                                      access_params=access_params)
 
         repositories = kvstore.get_default('backups_repositories', [])
         if repositories:

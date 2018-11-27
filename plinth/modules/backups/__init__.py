@@ -49,6 +49,7 @@ REPOSITORY = '/var/lib/freedombox/borgbackup'
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 # known errors that come up when remotely accessing a borg repository
 # 'errors' are error strings to look for in the stacktrace.
+ACCESS_PARAMS = ['ssh_keyfile', 'ssh_password', 'encryption_passphrase']
 KNOWN_ERRORS = [{
         "errors": ["subprocess.TimeoutExpired"],
         "message": _("Server not reachable - try providing a password."),
@@ -78,22 +79,14 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'backups', ['setup'])
 
 
-def get_info(repository, encryption_passphrase=None, ssh_password=None,
-             ssh_keyfile=None):
-    args = ['info', '--repository', repository]
-    kwargs = {}
-    if ssh_password is not None:
-        kwargs['input'] = ssh_password.encode()
-    if ssh_keyfile is not None:
-        args += ['--ssh-keyfile', ssh_keyfile]
-    if encryption_passphrase is not None:
-        args += ['--encryption-passphrase', encryption_passphrase]
-    output = actions.superuser_run('backups', args, **kwargs)
+def get_info(repository, access_params=None):
+    cmd = ['info', '--repository', repository]
+    output = run(cmd, access_params)
     return json.loads(output)
 
 
-def list_archives():
-    output = actions.superuser_run('backups', ['list'])
+def list_archives(repository, access_params=None):
+    output = run(['list-repo', '--path', repository], access_params)
     return json.loads(output)['archives']
 
 
@@ -105,20 +98,14 @@ def get_archive(name):
     return None
 
 
-def test_connection(repository, encryption_passphrase=None, ssh_password=None,
-                    ssh_keyfile=None):
+def test_connection(repository, access_params=None):
     """
     Test connecting to a local or remote borg repository.
     Tries to detect (and throw) some known ssh or borg errors.
     Returns 'borg info' information otherwise.
     """
     try:
-        # TODO: instead of passing encryption_passphrase, ssh_password and
-        # ssh_keyfile around all the time, try using an 'options' dict.
-        message = get_info(repository,
-                           encryption_passphrase=encryption_passphrase,
-                           ssh_password=ssh_password, ssh_keyfile=ssh_keyfile)
-        return message
+        return get_info(repository, access_params)
     except ActionError as err:
         caught_error = str(err)
         for known_error in KNOWN_ERRORS:
@@ -149,33 +136,22 @@ def _backup_handler(packet):
     paths = packet.directories + packet.files
     paths.append(manifest_path)
     actions.superuser_run(
-        'backups', ['create', '--name', packet.label, '--paths'] + paths)
+        'backups', ['create-archive', '--name', packet.label, '--paths'] +
+        paths)
 
 
-def create_archive(name, app_names):
-    api.backup_apps(_backup_handler, app_names, name)
+def create_archive(name, app_names, access_params=None):
+    api.backup_apps(_backup_handler, app_names, name,
+                    access_params=access_params)
 
 
-def create_repository(repository, encryption, encryption_passphrase=None,
-                      ssh_keyfile=None, ssh_password=None):
+def create_repository(repository, encryption, access_params=None):
     cmd = ['init', '--repository', repository, '--encryption', encryption]
-    if ssh_keyfile:
-        cmd += ['--ssh-keyfile', ssh_keyfile]
-    if encryption_passphrase:
-        cmd += ['--encryption-passphrase', encryption_passphrase]
-
-    kwargs = {}
-    if ssh_password:
-        kwargs['input'] = ssh_password.encode()
-
-    output = actions.superuser_run('backups', cmd, **kwargs)
-    if output:
-        output = json.loads(output)
-    return output
+    run(cmd, access_params=access_params)
 
 
-def delete_archive(name):
-    actions.superuser_run('backups', ['delete', '--name', name])
+def delete_archive(path):
+    actions.superuser_run('backups', ['delete-archive', '--path', path])
 
 
 def get_archive_path(archive_name):
@@ -223,3 +199,34 @@ def restore(archive_path, apps=None):
     """Restore files from a backup archive."""
     api.restore_apps(_restore_archive_handler, app_names=apps,
                      create_subvolume=False, backup_file=archive_path)
+
+
+def get_args(params):
+    args = []
+    kwargs = {}
+    if 'ssh_password' in params and params['ssh_password'] is not None:
+        kwargs['input'] = params['ssh_password'].encode()
+    if 'ssh_keyfile' in params and params['ssh_keyfile'] is not None:
+        args += ['--ssh-keyfile', params['ssh_keyfile']]
+    if 'encryption_passphrase' in params and \
+       params['encryption_passphrase'] is not None:
+        args += ['--encryption-passphrase', params['encryption_passphrase']]
+    return (args, kwargs)
+
+
+def run(arguments, access_params=None, superuser=True):
+    """Run a given command, appending (kw)args as necessary"""
+    command = 'backups'
+    kwargs = {}
+    if access_params:
+        for key in access_params.keys():
+            if key not in ACCESS_PARAMS:
+                raise ValueError('Unknown access parameter: %s' % key)
+
+        append_arguments, kwargs = get_args(access_params)
+        arguments += append_arguments
+
+    if superuser:
+        return actions.superuser_run(command, arguments, **kwargs)
+    else:
+        return actions.run(command, arguments, **kwargs)
