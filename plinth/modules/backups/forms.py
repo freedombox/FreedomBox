@@ -84,7 +84,7 @@ class UploadForm(forms.Form):
         help_text=_('Select the backup file you want to upload'))
 
 
-class CreateRepositoryForm(forms.Form):
+class AddRepositoryForm(forms.Form):
     repository = forms.CharField(
         label=_('SSH Repository Path'), strip=True,
         help_text=_('Path of the new repository. Example: '
@@ -125,7 +125,7 @@ class CreateRepositoryForm(forms.Form):
     )
 
     def clean(self):
-        cleaned_data = super(CreateRepositoryForm, self).clean()
+        cleaned_data = super(AddRepositoryForm, self).clean()
         passphrase = cleaned_data.get("encryption_passphrase")
         confirm_passphrase = cleaned_data.get("confirm_encryption_passphrase")
 

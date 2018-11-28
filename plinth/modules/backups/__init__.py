@@ -50,9 +50,12 @@ SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 # known errors that come up when remotely accessing a borg repository
 # 'errors' are error strings to look for in the stacktrace.
 ACCESS_PARAMS = ['ssh_keyfile', 'ssh_password', 'encryption_passphrase']
+# kvstore key for storing remote locations
+REMOTE_LOCATIONS_KEY = 'remote_locations'
 KNOWN_ERRORS = [{
         "errors": ["subprocess.TimeoutExpired"],
-        "message": _("Server not reachable - try providing a password."),
+        "message": _("Connection refused - make sure you provided correct "
+                     "credentials and the server is running."),
         "raise_as": BorgError,
     },
     {
@@ -62,7 +65,7 @@ KNOWN_ERRORS = [{
     },
     {
         "errors": ["not a valid repository", "does not exist"],
-        "message": _("Connection works - Repository does not exist"),
+        "message": _("Repository not found"),
         "raise_as": BorgRepositoryDoesNotExistError,
     }]
 
@@ -86,16 +89,32 @@ def get_info(repository, access_params=None):
 
 
 def list_archives(repository, access_params=None):
-    output = run(['list-repo', '--path', repository], access_params)
-    return json.loads(output)['archives']
+    try:
+        output = run(['list-repo', '--path', repository], access_params)
+    except ActionError as err:
+        reraise_known_error(err)
+    else:
+        return json.loads(output)['archives']
 
 
 def get_archive(name):
+    # TODO: can't we get this archive directly?
     for archive in list_archives():
         if archive['name'] == name:
             return archive
 
     return None
+
+
+def reraise_known_error(err):
+    """Look whether the caught error is known and re-raise it accordingly"""
+    caught_error = str(err)
+    for known_error in KNOWN_ERRORS:
+        for error in known_error["errors"]:
+            if error in caught_error:
+                raise known_error["raise_as"](known_error["message"])
+    else:
+        raise err
 
 
 def test_connection(repository, access_params=None):
@@ -107,13 +126,7 @@ def test_connection(repository, access_params=None):
     try:
         return get_info(repository, access_params)
     except ActionError as err:
-        caught_error = str(err)
-        for known_error in KNOWN_ERRORS:
-            for error in known_error["errors"]:
-                if error in caught_error:
-                    raise known_error["raise_as"](known_error["message"])
-        else:
-            raise
+        reraise_known_error(err)
 
 
 def _backup_handler(packet):
@@ -137,6 +150,7 @@ def _backup_handler(packet):
     paths.append(manifest_path)
     actions.superuser_run(
         'backups', ['create-archive', '--name', packet.label, '--paths'] +
+        # TODO: add ssh_keyfile
         paths)
 
 
@@ -177,8 +191,9 @@ def _restore_exported_archive_handler(packet):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    actions.superuser_run('backups', ['restore-exported-archive',
-        '--path', packet.label], input=locations_data.encode())
+    actions.superuser_run('backups', ['restore-exported-archive', '--path',
+                                      packet.label],
+                          input=locations_data.encode())
 
 
 def _restore_archive_handler(packet):
@@ -186,7 +201,8 @@ def _restore_archive_handler(packet):
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
     actions.superuser_run('backups', ['restore-archive', '--path',
-                packet.label, '--destination', '/'], input=locations_data.encode())
+                                      packet.label, '--destination', '/'],
+                          input=locations_data.encode())
 
 
 def restore_from_upload(path, apps=None):

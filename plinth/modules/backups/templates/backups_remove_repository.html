@@ -18,22 +18,39 @@
 #
 {% endcomment %}
 
+{% load bootstrap %}
 {% load i18n %}
 
 {% block content %}
-
-  <h3>{% trans 'Backup repositories' %}</h3>
+  <h2>{{ title }}</h2>
 
   <p>
-    {% for repository in repositories %}
-      Repository: {{ repository.repository }}<br />
-    {% endfor %}
+    <b>
+      {% trans "Are you sure that you want to remove the repository" %}
+      {{ location.path }}?
+    </b>
+  </p>
+    {% blocktrans %}
+      The remote repository will not be deleted.
+      This just removes the repository from the listing on the backup page, you
+      can add it again later on.
+    {% endblocktrans %}
   </p>
 
-  <a title="{% trans 'Create new repository' %}"
-     role="button" class="btn btn-primary"
-     href="{% url 'backups:create-repository' %}">
-    {% trans 'Add Repository' %}
-  </a>
+  <p>
+    <form class="form" method="post">
+      {% csrf_token %}
+
+      <input type="submit" class="btn btn-danger"
+             value="{% blocktrans trimmed with path=location.path %}
+                      Remove Repository
+                    {% endblocktrans %}"/>
+      <a class="abort btn btn-sm btn-default"
+         href="{% url 'backups:index' %}">
+        {% trans "Abort" %}
+      </a>
+    </form>
+  </p>
 
 {% endblock %}
+

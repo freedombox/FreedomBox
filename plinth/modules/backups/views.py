@@ -20,13 +20,11 @@ Views for the backups app.
 
 from datetime import datetime
 import gzip
-import json
 from io import BytesIO
 import logging
 import mimetypes
 import os
 import tempfile
-from uuid import uuid1
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -39,11 +37,11 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
-from plinth import actions, kvstore
-from plinth.errors import PlinthError
+from plinth import actions
+from plinth.errors import PlinthError, ActionError
 from plinth.modules import backups, storage
 
-from . import api, forms, SESSION_PATH_VARIABLE, REPOSITORY
+from . import api, forms, SESSION_PATH_VARIABLE, REPOSITORY, remote_locations
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
 
@@ -58,9 +56,6 @@ subsubmenu = [{
 }, {
     'url': reverse_lazy('backups:create'),
     'text': ugettext_lazy('Create')
-}, {
-    'url': reverse_lazy('backups:repositories'),
-    'text': ugettext_lazy('Repositories')
 }]
 
 
@@ -69,6 +64,9 @@ class IndexView(TemplateView):
     """View to show list of archives."""
     template_name = 'backups.html'
 
+    def get_remote_archives(self):
+        return {}  # uuid --> archive list
+
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
@@ -76,9 +74,8 @@ class IndexView(TemplateView):
         context['description'] = backups.description
         context['info'] = backups.get_info(REPOSITORY)
         context['archives'] = backups.list_archives(REPOSITORY)
+        context['remote_archives'] = remote_locations.get_archives()
         context['subsubmenu'] = subsubmenu
-        apps = api.get_all_apps_for_backup()
-        context['available_apps'] = [app.name for app in apps]
         return context
 
 
@@ -129,7 +126,7 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         """Delete the archive."""
         backups.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
-        return redirect(reverse_lazy('backups:index'))
+        return redirect('backups:index')
 
 
 def _get_file_response(path, filename):
@@ -292,29 +289,13 @@ class ExportAndDownloadView(View):
         return response
 
 
-class RepositoriesView(TemplateView):
-    """View list of repositories."""
-    template_name = 'backups_repositories.html'
-
-    def get_context_data(self, **kwargs):
-        """Return additional context for rendering the template."""
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Backup repositories'
-        # TODO: rename backups_repositories to something more generic,
-        # that can be used/managed by the storage module too
-        repositories = kvstore.get_default('backups_repositories', [])
-        context['repositories'] = json.loads(repositories)
-        context['subsubmenu'] = subsubmenu
-        return context
-
-
-class CreateRepositoryView(SuccessMessageMixin, FormView):
-    """View to create a new repository."""
-    form_class = forms.CreateRepositoryForm
+class AddLocationView(SuccessMessageMixin, FormView):
+    """View to create a new remote backup location."""
+    form_class = forms.AddRepositoryForm
     prefix = 'backups'
-    template_name = 'backups_create_repository.html'
-    success_url = reverse_lazy('backups:repositories')
-    success_message = _('Created new repository.')
+    template_name = 'backups_add_location.html'
+    success_url = reverse_lazy('backups:index')
+    success_message = _('Added new location.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -329,48 +310,83 @@ class CreateRepositoryView(SuccessMessageMixin, FormView):
         encryption = form.cleaned_data['encryption']
         encryption_passphrase = form.cleaned_data['encryption_passphrase']
         ssh_password = form.cleaned_data['ssh_password']
-        ssh_keyfile = form.cleaned_data['ssh_keyfile']
+        store_passwords = form.cleaned_data['store_passwords']
+        # TODO: add ssh_keyfile
+        # ssh_keyfile = form.cleaned_data['ssh_keyfile']
 
-        # TODO: create borg repository if it doesn't exist
-        import pdb; pdb.set_trace()
+        access_params = {}
+        if encryption_passphrase:
+            access_params['encryption_passphrase'] = encryption_passphrase
+        if ssh_password:
+            access_params['ssh_password'] = ssh_password
+        """
+        if ssh_keyfile:
+            access_params['ssh_keyfile'] = ssh_keyfile
+        """
+        remote_locations.add(repository, 'ssh', encryption, access_params,
+                             store_passwords, 'backups')
+        # Create the borg repository if it doesn't exist
         try:
-            backups.test_connection(repository, ssh_password)
+            backups.test_connection(repository, access_params)
         except BorgRepositoryDoesNotExistError:
-            access_params = {}
-            if encryption_passphrase:
-                access_params['encryption_passphrase'] = encryption_passphrase
-            if ssh_keyfile:
-                access_params['ssh_keyfile'] = ssh_keyfile
             backups.create_repository(repository, encryption,
                                       access_params=access_params)
-
-        repositories = kvstore.get_default('backups_repositories', [])
-        if repositories:
-            repositories = json.loads(repositories)
-        new_repo = {
-            'uuid': str(uuid1()),
-            'repository': repository,
-            'encryption': encryption,
-        }
-        if form.cleaned_data['store_passwords']:
-            new_repo['encryption_passphrase'] = \
-                    form.cleaned_data['encryption_passphrase']
-        repositories.append(new_repo)
-        kvstore.set('backups_repositories', json.dumps(repositories))
         return super().form_valid(form)
 
 
-class TestRepositoryView(TemplateView):
+class TestLocationView(TemplateView):
     """View to create a new repository."""
-    template_name = 'backups_test_repository.html'
+    template_name = 'backups_test_location.html'
 
     def post(self, request):
-        # TODO: add support for borg encryption
+        # TODO: add support for borg encryption and ssh keyfile
         context = self.get_context_data()
         repository = request.POST['backups-repository']
-        ssh_password = request.POST['backups-ssh_password']
-        (error, message) = backups.test_connection(repository, ssh_password)
-        context["message"] = message
-        context["error"] = error
+        access_params = {
+            'ssh_password': request.POST['backups-ssh_password'],
+        }
+        try:
+            repo_info = backups.test_connection(repository, access_params)
+            context["message"] = repo_info
+        except ActionError as err:
+            context["error"] = str(err)
 
         return self.render_to_response(context)
+
+
+class RemoveLocationView(SuccessMessageMixin, TemplateView):
+    """View to delete an archive."""
+    template_name = 'backups_remove_repository.html'
+
+    def get_context_data(self, uuid, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Remove Repository')
+        context['location'] = remote_locations.get_location(uuid)
+        return context
+
+    def post(self, request, uuid):
+        """Delete the archive."""
+        remote_locations.delete(uuid)
+        messages.success(request, _('Repository removed. The remote backup '
+                                    'itself was not deleted.'))
+        return redirect('backups:index')
+
+
+def umount_location(request, uuid):
+    remote_locations.umount_uuid(uuid)
+    if remote_locations.uuid_is_mounted(uuid):
+        messages.error(request, _('Unmounting failed!'))
+    return redirect('backups:index')
+
+
+def mount_location(request, uuid):
+    try:
+        remote_locations.mount_uuid(uuid)
+    except Exception as err:
+        msg = "%s: %s" % (_('Mounting failed'), str(err))
+        messages.error(request, msg)
+    else:
+        if not remote_locations.uuid_is_mounted(uuid):
+            messages.error(request, _('Mounting failed'))
+    return redirect('backups:index')

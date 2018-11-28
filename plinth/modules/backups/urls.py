@@ -20,10 +20,10 @@ URLs for the backups module.
 
 from django.conf.urls import url
 
-from .views import IndexView, CreateArchiveView, CreateRepositoryView, \
-        DeleteArchiveView, UploadArchiveView, ExportAndDownloadView, \
-        RepositoriesView, RestoreArchiveView, RestoreFromUploadView, \
-        TestRepositoryView
+from .views import IndexView, CreateArchiveView, AddLocationView, \
+        DeleteArchiveView, ExportAndDownloadView, RemoveLocationView, \
+        mount_location, umount_location, UploadArchiveView, \
+        RestoreArchiveView, RestoreFromUploadView, TestLocationView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -37,10 +37,14 @@ urlpatterns = [
         RestoreArchiveView.as_view(), name='restore-archive'),
     url(r'^sys/backups/restore-from-upload/$',
         RestoreFromUploadView.as_view(), name='restore-from-upload'),
-    url(r'^sys/backups/repositories/$',
-        RepositoriesView.as_view(), name='repositories'),
-    url(r'^sys/backups/repositories/create/$',
-        CreateRepositoryView.as_view(), name='create-repository'),
-    url(r'^sys/backups/repositories/test/$',
-        TestRepositoryView.as_view(), name='test-repository'),
+    url(r'^sys/backups/locations/add$',
+        AddLocationView.as_view(), name='location-add'),
+    url(r'^sys/backups/locations/test/$',
+        TestLocationView.as_view(), name='location-test'),
+    url(r'^sys/backups/locations/delete/(?P<uuid>[^/]+)/$',
+        RemoveLocationView.as_view(), name='location-remove'),
+    url(r'^sys/backups/locations/mount/(?P<uuid>[^/]+)/$',
+        mount_location, name='location-mount'),
+    url(r'^sys/backups/locations/umount/(?P<uuid>[^/]+)/$',
+        umount_location, name='location-umount'),
 ]

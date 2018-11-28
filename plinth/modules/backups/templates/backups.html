@@ -28,6 +28,17 @@
     .share-operations {
       text-align: right;
     }
+    .mount-error {
+      padding: 0px 10px 0px 10px;
+      color: orange;
+    }
+    .mount-success {
+      padding: 0px 10px 0px 10px;
+      color: black;
+    }
+    .inline-block {
+      display: inline-block;
+    }
   </style>
 {% endblock %}
 
@@ -48,7 +59,7 @@
            id="archives-list">
       <thead>
         <tr>
-          <th>{% trans "Name" %}</th>
+          <th>{{ box_name }} storage</th>
           <th></th>
         </tr>
       </thead>
@@ -77,5 +88,17 @@
       </tbody>
     </table>
   {% endif %}
+
+  {% for uuid,location in remote_archives.items %}
+    {% include "backups_location.inc" %}
+  {% endfor %}
+
+  <br />
+
+  <a title="{% trans 'Create new repository' %}"
+     role="button" class="btn btn-primary"
+     href="{% url 'backups:location-add' %}">
+    {% trans '+ Add Remote Repository' %}
+  </a>
 
 {% endblock %}
