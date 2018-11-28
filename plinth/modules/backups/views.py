@@ -73,8 +73,8 @@ class IndexView(TemplateView):
         context['title'] = backups.name
         context['description'] = backups.description
         context['info'] = backups.get_info(REPOSITORY)
-        context['archives'] = backups.list_archives(REPOSITORY)
-        context['remote_archives'] = remote_locations.get_archives()
+        context['root_location'] = backups.get_root_location_content()
+        context['remote_locations'] = remote_locations.get_locations_content()
         context['subsubmenu'] = subsubmenu
         return context
 
@@ -275,7 +275,8 @@ class ZipStream(object):
 
 class ExportAndDownloadView(View):
     """View to export and download an archive as stream."""
-    def get(self, request, name):
+    def get(self, request, uuid, name):
+        # The uuid is 'root' for the root repository
         name = unquote(name)
         filename = "%s.tar.gz" % name
         args = ['export-tar', '--name', name]

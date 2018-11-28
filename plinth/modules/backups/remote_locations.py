@@ -73,7 +73,7 @@ def delete(uuid):
             logger.error(err)
 
 
-def get_archives(uuid=None):
+def get_locations_content(uuid=None):
     """
     Get archives of one or all locations.
     returns: {
@@ -81,7 +81,7 @@ def get_archives(uuid=None):
             'path': path,
             'type': type,
             'archives': [],
-            'error': error_message
+            'error': error_message,
         }
     }
     """
@@ -89,7 +89,7 @@ def get_archives(uuid=None):
     for location in get_locations():
         mountpoint = os.path.join(MOUNTPOINT, location['uuid'])
         new_location = {
-            'path': location['path'],
+            'name': location['path'],
             'mounted': uuid_is_mounted(location['uuid']),
         }
         if new_location['mounted']:

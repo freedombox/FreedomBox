@@ -24,9 +24,10 @@ import os
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import actions
-from plinth.menu import main_menu
+from plinth import actions, cfg
 from plinth.errors import ActionError
+from plinth.menu import main_menu
+from plinth.utils import format_lazy
 from .errors import BorgError, BorgRepositoryDoesNotExistError
 
 from . import api
@@ -95,6 +96,19 @@ def list_archives(repository, access_params=None):
         reraise_known_error(err)
     else:
         return json.loads(output)['archives']
+
+
+def get_root_location_content():
+    """
+    Get information about the root backup location in the same format
+    that the remote repositories use
+    """
+    return {
+        'name': format_lazy(_('{box_name} storage'), box_name=cfg.box_name),
+        'mounted': True,
+        'archives': list_archives(REPOSITORY),
+        'type': 'rootfs',
+    }
 
 
 def get_archive(name):

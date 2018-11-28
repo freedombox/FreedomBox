@@ -28,7 +28,7 @@ from .views import IndexView, CreateArchiveView, AddLocationView, \
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
-    url(r'^sys/backups/export-and-download/(?P<name>[^/]+)/$',
+    url(r'^sys/backups/export-and-download/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
         ExportAndDownloadView.as_view(), name='export-and-download'),
     url(r'^sys/backups/delete/(?P<name>[^/]+)/$',
         DeleteArchiveView.as_view(), name='delete'),

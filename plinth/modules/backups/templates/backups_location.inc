@@ -24,34 +24,46 @@
   <thead>
     <tr>
       <th>
-        {{ location.path }}
-        {% if location.mounted %}
-          <form action="{% url 'backups:location-umount' uuid %}" method="POST"
-                class="inline-block" >
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-default"
-                   title="{% trans 'Unount Location' %}">
-             <span class="glyphicon glyphicon-eject" aria-hidden="true">
-             </button>
-          </form>
-        {% else %}
-          <!-- With GET redirects the browser URL would be pointing to the
-               redirected page - use POST instead.
-          -->
-          <form action="{% url 'backups:location-mount' uuid %}" method="POST"
-                class="inline-block" >
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-default"
-                   title="{% trans 'Mount Location' %}">
-             <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
-             </button>
-          </form>
+
+        {{ location.name }}
+
+        {% if editable %}
+
+          {% if location.mounted %}
+
+            <!-- With GET redirects the browser URL would be pointing to the
+                 redirected page - use POST instead.
+            -->
+            <form action="{% url 'backups:location-umount' uuid %}" method="POST"
+                  class="inline-block" >
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-default"
+                     title="{% trans 'Unount Location' %}">
+               <span class="glyphicon glyphicon-eject" aria-hidden="true">
+               </button>
+            </form>
+
+          {% else %}
+
+            <form action="{% url 'backups:location-mount' uuid %}" method="POST"
+                  class="inline-block" >
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-default"
+                     title="{% trans 'Mount Location' %}">
+               <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+               </button>
+            </form>
+
+          {% endif %}
+
+          <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
+             role="button" class="location-remove btn btn-sm btn-default"
+             href="{% url 'backups:location-remove' uuid %}">
+             <span class="glyphicon glyphicon-trash" aria-hidden="true">
+          </a>
+
         {% endif %}
-        <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
-           role="button" class="location-remove btn btn-sm btn-default"
-           href="{% url 'backups:location-remove' uuid %}">
-           <span class="glyphicon glyphicon-trash" aria-hidden="true">
-        </a>
+
       </th>
       <th>
       </th>
@@ -59,25 +71,33 @@
   </thead>
 
   <tbody>
-    {% for archive in location.archives %}
-      <tr id="archive-{{ archive.name }}" class="archive">
-        <td class="archive-name">{{ archive.name }}</td>
-        <td class="archive-operations">
-          <a class="archive-export btn btn-sm btn-default" target="_blank"
-             href="{% url 'backups:export-and-download' archive.name %}">
-            {% trans "Download" %}
-          </a>
-          <a class="archive-export btn btn-sm btn-default"
-             href="{% url 'backups:restore-archive' archive.name %}">
-            {% trans "Restore" %}
-          </a>
-          <a class="archive-delete btn btn-sm btn-default"
-             href="{% url 'backups:delete' archive.name %}">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true">
-            </span>
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
+    {% if location.mounted %}
+
+      {% for archive in location.archives %}
+        <tr id="archive-{{ archive.name }}" class="archive">
+          <td class="archive-name">{{ archive.name }}</td>
+          <td class="archive-operations">
+            <a class="archive-export btn btn-sm btn-default" target="_blank"
+               href="{% url 'backups:export-and-download' uuid archive.name %}">
+              {% trans "Download" %}
+            </a>
+            <a class="archive-export btn btn-sm btn-default"
+               href="{% url 'backups:restore-archive' archive.name %}">
+              {% trans "Restore" %}
+            </a>
+            <a class="archive-delete btn btn-sm btn-default"
+               href="{% url 'backups:delete' archive.name %}">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true">
+              </span>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+
+      {% if not location.archives %}
+        <p>{% trans 'No archives currently exist.' %}</p>
+      {% endif %}
+
+    {% endif %}
   </tbody>
 </table>

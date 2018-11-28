@@ -52,45 +52,10 @@
 
   <h3>{% trans 'Existing backups' %}</h3>
 
-  {% if not archives %}
-    <p>{% trans 'No archives currently exist.' %}</p>
-  {% else %}
-    <table class="table table-bordered table-condensed table-striped"
-           id="archives-list">
-      <thead>
-        <tr>
-          <th>{{ box_name }} storage</th>
-          <th></th>
-        </tr>
-      </thead>
+  {% include "backups_location.inc" with location=root_location uuid='root' editable=False %}
 
-      <tbody>
-        {% for archive in archives %}
-          <tr id="archive-{{ archive.name }}" class="archive">
-            <td class="archive-name">{{ archive.name }}</td>
-            <td class="archive-operations">
-              <a class="archive-export btn btn-sm btn-default" target="_blank"
-                 href="{% url 'backups:export-and-download' archive.name %}">
-                {% trans "Download" %}
-              </a>
-              <a class="archive-export btn btn-sm btn-default"
-                 href="{% url 'backups:restore-archive' archive.name %}">
-                {% trans "Restore" %}
-              </a>
-              <a class="archive-delete btn btn-sm btn-default"
-                 href="{% url 'backups:delete' archive.name %}">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true">
-                </span>
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}
-
-  {% for uuid,location in remote_archives.items %}
-    {% include "backups_location.inc" %}
+  {% for uuid,location in remote_locations.items %}
+    {% include "backups_location.inc" with editable=True %}
   {% endfor %}
 
   <br />
