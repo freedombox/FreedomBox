@@ -13,7 +13,7 @@ Naming conventions:
 * 'Code change', 'patch', and 'commit' are used interchangeably.
 * 'Author' and 'contributor' are used interchangeably.
 * Git 'log' and 'history' are used interchangeably.
-* PR - pull request
+* PR, MR - pull request and merge request, used interchangeably.
 * 'Merging' often means 'applying a patch to git history' in a general sense,
   not literal execution of the command `git merge`.
 
@@ -49,6 +49,8 @@ Naming conventions:
   to a [Developer Certificate of Origin](http://developercertificate.org/).
 * If (part of) your code changes were inspired or plainly copied from another
   source, please indicate this in the PR, so the reviewer can handle it.
+* If your PR is not ready for merging yet, the title of your PR must start with
+  `WIP:`
 * Have fun contributing :)
 
 
@@ -82,6 +84,9 @@ Naming conventions:
 * In case more fundamental changes are necessary, or if the contributor is new,
   try to encourage them to make changes by giving appropriate feedback. This is
   a major way how we mentor new contributors.
+* Any PR whose title starts with `WIP:` cannot be merged. Communicate with the
+  author on what the pending changes are. Get the author to complete them or
+  complete them yourself in case of an emergency.
 * Have fun reviewing :)
 
 
