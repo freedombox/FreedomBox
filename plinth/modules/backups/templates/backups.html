@@ -52,17 +52,17 @@
 
   <h3>{% trans 'Existing backups' %}</h3>
 
-  {% include "backups_location.inc" with location=root_location uuid='root' editable=False %}
+  {% include "backups_repository.inc" with repository=root_repository uuid='root' editable=False %}
 
-  {% for uuid,location in remote_locations.items %}
-    {% include "backups_location.inc" with editable=True %}
+  {% for uuid,repository in ssh_repositories.items %}
+    {% include "backups_repository.inc" with editable=True %}
   {% endfor %}
 
   <br />
 
   <a title="{% trans 'Create new repository' %}"
      role="button" class="btn btn-primary"
-     href="{% url 'backups:location-add' %}">
+     href="{% url 'backups:repository-add' %}">
     {% trans '+ Add Remote Repository' %}
   </a>
 

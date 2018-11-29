@@ -20,10 +20,10 @@ URLs for the backups module.
 
 from django.conf.urls import url
 
-from .views import IndexView, CreateArchiveView, AddLocationView, \
-        DeleteArchiveView, ExportAndDownloadView, RemoveLocationView, \
-        mount_location, umount_location, UploadArchiveView, \
-        RestoreArchiveView, RestoreFromUploadView, TestLocationView
+from .views import IndexView, CreateArchiveView, AddRepositoryView, \
+        DeleteArchiveView, ExportAndDownloadView, RemoveRepositoryView, \
+        mount_repository, umount_repository, UploadArchiveView, \
+        RestoreArchiveView, RestoreFromUploadView, TestRepositoryView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -37,14 +37,14 @@ urlpatterns = [
         RestoreArchiveView.as_view(), name='restore-archive'),
     url(r'^sys/backups/restore-from-upload/$',
         RestoreFromUploadView.as_view(), name='restore-from-upload'),
-    url(r'^sys/backups/locations/add$',
-        AddLocationView.as_view(), name='location-add'),
-    url(r'^sys/backups/locations/test/$',
-        TestLocationView.as_view(), name='location-test'),
-    url(r'^sys/backups/locations/delete/(?P<uuid>[^/]+)/$',
-        RemoveLocationView.as_view(), name='location-remove'),
-    url(r'^sys/backups/locations/mount/(?P<uuid>[^/]+)/$',
-        mount_location, name='location-mount'),
-    url(r'^sys/backups/locations/umount/(?P<uuid>[^/]+)/$',
-        umount_location, name='location-umount'),
+    url(r'^sys/backups/repositories/add$',
+        AddRepositoryView.as_view(), name='repository-add'),
+    url(r'^sys/backups/repositories/test/$',
+        TestRepositoryView.as_view(), name='repository-test'),
+    url(r'^sys/backups/repositories/delete/(?P<uuid>[^/]+)/$',
+        RemoveRepositoryView.as_view(), name='repository-remove'),
+    url(r'^sys/backups/repositories/mount/(?P<uuid>[^/]+)/$',
+        mount_repository, name='repository-mount'),
+    url(r'^sys/backups/repositories/umount/(?P<uuid>[^/]+)/$',
+        umount_repository, name='repository-umount'),
 ]

@@ -25,16 +25,16 @@
     <tr>
       <th>
 
-        {{ location.name }}
+        {{ repository.name }}
 
         {% if editable %}
 
-          {% if location.mounted %}
+          {% if repository.mounted %}
 
             <!-- With GET redirects the browser URL would be pointing to the
                  redirected page - use POST instead.
             -->
-            <form action="{% url 'backups:location-umount' uuid %}" method="POST"
+            <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
                   class="inline-block" >
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-default"
@@ -45,7 +45,7 @@
 
           {% else %}
 
-            <form action="{% url 'backups:location-mount' uuid %}" method="POST"
+            <form action="{% url 'backups:repository-mount' uuid %}" method="POST"
                   class="inline-block" >
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-default"
@@ -57,8 +57,8 @@
           {% endif %}
 
           <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
-             role="button" class="location-remove btn btn-sm btn-default"
-             href="{% url 'backups:location-remove' uuid %}">
+             role="button" class="repository-remove btn btn-sm btn-default"
+             href="{% url 'backups:repository-remove' uuid %}">
              <span class="glyphicon glyphicon-trash" aria-hidden="true">
           </a>
 
@@ -71,9 +71,9 @@
   </thead>
 
   <tbody>
-    {% if location.mounted %}
+    {% if repository.mounted %}
 
-      {% for archive in location.archives %}
+      {% for archive in repository.archives %}
         <tr id="archive-{{ archive.name }}" class="archive">
           <td class="archive-name">{{ archive.name }}</td>
           <td class="archive-operations">
@@ -94,7 +94,7 @@
         </tr>
       {% endfor %}
 
-      {% if not location.archives %}
+      {% if not repository.archives %}
         <p>{% trans 'No archives currently exist.' %}</p>
       {% endif %}
 

@@ -22,19 +22,35 @@
 {% load i18n %}
 
 {% block content %}
+  <h2>{{ title }}</h2>
 
-  <h3>{{ title }}</h3>
+  <p>
+    <b>
+      {% trans "Are you sure that you want to remove the repository" %}
+      {{ repository.path }}?
+    </b>
+  </p>
+    {% blocktrans %}
+      The remote repository will not be deleted.
+      This just removes the repository from the listing on the backup page, you
+      can add it again later on.
+    {% endblocktrans %}
+  </p>
 
-  <form class="form" method="post" target="_blank">
-    {% csrf_token %}
+  <p>
+    <form class="form" method="post">
+      {% csrf_token %}
 
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Submit" %}"/>
-    <input type="submit" class="btn btn-secondary" value="Test Connection"
-           title="{% trans 'Test Connection to Repository' %}"
-           formaction="{% url 'backups:location-test' %}" />
-  </form>
+      <input type="submit" class="btn btn-danger"
+             value="{% blocktrans trimmed with path=repository.path %}
+                      Remove Repository
+                    {% endblocktrans %}"/>
+      <a class="abort btn btn-sm btn-default"
+         href="{% url 'backups:index' %}">
+        {% trans "Abort" %}
+      </a>
+    </form>
+  </p>
 
 {% endblock %}
+

@@ -41,7 +41,8 @@ from plinth import actions
 from plinth.errors import PlinthError, ActionError
 from plinth.modules import backups, storage
 
-from . import api, forms, SESSION_PATH_VARIABLE, REPOSITORY, remote_locations
+from . import api, forms, SESSION_PATH_VARIABLE, ROOT_REPOSITORY
+from .repository import BorgRepository, SshBorgRepository, get_ssh_repositories
 from .decorators import delete_tmp_backup_file
 from .errors import BorgRepositoryDoesNotExistError
 
@@ -72,9 +73,9 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = backups.name
         context['description'] = backups.description
-        context['info'] = backups.get_info(REPOSITORY)
-        context['root_location'] = backups.get_root_location_content()
-        context['remote_locations'] = remote_locations.get_locations_content()
+        root_repository = BorgRepository(ROOT_REPOSITORY)
+        context['root_repository'] = root_repository.get_view_content()
+        context['ssh_repositories'] = get_ssh_repositories()
         context['subsubmenu'] = subsubmenu
         return context
 
@@ -290,13 +291,13 @@ class ExportAndDownloadView(View):
         return response
 
 
-class AddLocationView(SuccessMessageMixin, FormView):
-    """View to create a new remote backup location."""
+class AddRepositoryView(SuccessMessageMixin, FormView):
+    """View to create a new remote backup repository."""
     form_class = forms.AddRepositoryForm
     prefix = 'backups'
-    template_name = 'backups_add_location.html'
+    template_name = 'backups_repository_add.html'
     success_url = reverse_lazy('backups:index')
-    success_message = _('Added new location.')
+    success_message = _('Added new repository.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -307,47 +308,42 @@ class AddLocationView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        repository = form.cleaned_data['repository']
-        encryption = form.cleaned_data['encryption']
-        encryption_passphrase = form.cleaned_data['encryption_passphrase']
-        ssh_password = form.cleaned_data['ssh_password']
-        store_passwords = form.cleaned_data['store_passwords']
-        # TODO: add ssh_keyfile
-        # ssh_keyfile = form.cleaned_data['ssh_keyfile']
+        path = form.cleaned_data['repository']
+        credentials = {}
+        if form.cleaned_data['store_passwords']:
+            encryption_passphrase = form.cleaned_data['encryption_passphrase']
+            if encryption_passphrase:
+                credentials['encryption_passphrase'] = encryption_passphrase
+            if form.cleaned_data['ssh_password']:
+                credentials['ssh_password'] = form.cleaned_data['ssh_password']
+            # TODO: add ssh_keyfile
+            # ssh_keyfile = form.cleaned_data['ssh_keyfile']
 
-        access_params = {}
-        if encryption_passphrase:
-            access_params['encryption_passphrase'] = encryption_passphrase
-        if ssh_password:
-            access_params['ssh_password'] = ssh_password
-        """
-        if ssh_keyfile:
-            access_params['ssh_keyfile'] = ssh_keyfile
-        """
-        remote_locations.add(repository, 'ssh', encryption, access_params,
-                             store_passwords, 'backups')
-        # Create the borg repository if it doesn't exist
+        repository = SshBorgRepository(path=path, credentials=credentials)
+
         try:
-            backups.test_connection(repository, access_params)
+            repository.get_info()
         except BorgRepositoryDoesNotExistError:
-            backups.create_repository(repository, encryption,
-                                      access_params=access_params)
+            repository.create_repository(form.cleaned_data['encryption'])
+        repository.save()
         return super().form_valid(form)
 
 
-class TestLocationView(TemplateView):
+class TestRepositoryView(TemplateView):
     """View to create a new repository."""
-    template_name = 'backups_test_location.html'
+    template_name = 'backups_repository_test.html'
 
     def post(self, request):
         # TODO: add support for borg encryption and ssh keyfile
         context = self.get_context_data()
-        repository = request.POST['backups-repository']
-        access_params = {
+        credentials = {
             'ssh_password': request.POST['backups-ssh_password'],
         }
+        repository = SshBorgRepository(path=request.POST['backups-repository'],
+                                       credentials=credentials)
+
         try:
-            repo_info = backups.test_connection(repository, access_params)
+            repo_info = repository.get_info()
             context["message"] = repo_info
         except ActionError as err:
             context["error"] = str(err)
@@ -355,39 +351,42 @@ class TestLocationView(TemplateView):
         return self.render_to_response(context)
 
 
-class RemoveLocationView(SuccessMessageMixin, TemplateView):
+class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
     """View to delete an archive."""
-    template_name = 'backups_remove_repository.html'
+    template_name = 'backups_repository_remove.html'
 
     def get_context_data(self, uuid, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Remove Repository')
-        context['location'] = remote_locations.get_location(uuid)
+        context['repository'] = SshBorgRepository(uuid=uuid)
         return context
 
     def post(self, request, uuid):
         """Delete the archive."""
-        remote_locations.delete(uuid)
+        repository = SshBorgRepository(uuid)
+        repository.remove()
         messages.success(request, _('Repository removed. The remote backup '
                                     'itself was not deleted.'))
         return redirect('backups:index')
 
 
-def umount_location(request, uuid):
-    remote_locations.umount_uuid(uuid)
-    if remote_locations.uuid_is_mounted(uuid):
+def umount_repository(request, uuid):
+    repository = SshBorgRepository(uuid=uuid)
+    repository.umount()
+    if repository.is_mounted:
         messages.error(request, _('Unmounting failed!'))
     return redirect('backups:index')
 
 
-def mount_location(request, uuid):
+def mount_repository(request, uuid):
+    repository = SshBorgRepository(uuid=uuid)
     try:
-        remote_locations.mount_uuid(uuid)
+        repository.mount()
     except Exception as err:
         msg = "%s: %s" % (_('Mounting failed'), str(err))
         messages.error(request, msg)
     else:
-        if not remote_locations.uuid_is_mounted(uuid):
+        if not repository.is_mounted:
             messages.error(request, _('Mounting failed'))
     return redirect('backups:index')

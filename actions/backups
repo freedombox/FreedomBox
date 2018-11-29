@@ -27,7 +27,7 @@ import subprocess
 import sys
 import tarfile
 
-from plinth.modules.backups import MANIFESTS_FOLDER, REPOSITORY
+from plinth.modules.backups import MANIFESTS_FOLDER
 
 TIMEOUT = 5
 
@@ -41,28 +41,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser(
+    setup = subparsers.add_parser(
         'setup', help='Create repository if it does not already exist')
 
-    info = subparsers.add_parser('info', help='Show repository information')
-    info.add_argument('--repository', help='Repository path', required=True)
-
     init = subparsers.add_parser('init', help='Initialize a repository')
-    init.add_argument('--repository', help='Repository path', required=True)
     init.add_argument('--encryption', help='Enryption of the repository',
                       required=True)
 
-    # TODO: ssh commands should be in SSH or a separate action script
-    mount = subparsers.add_parser('mount', help='mount an ssh filesystem')
-    mount.add_argument('--mountpoint', help='Local mountpoint', required=True)
-    umount = subparsers.add_parser('umount',
-                                   help='unmount an ssh filesystem')
-    umount.add_argument('--mountpoint', help='Mountpoint to unmount',
-                        required=True)
-    is_mounted = subparsers.add_parser('is-mounted',
-                                       help='Check whether an sshfs is mouned')
-    is_mounted.add_argument('--mountpoint', help='Mountpoint to check',
-                            required=True)
+    info = subparsers.add_parser('info', help='Show repository information')
 
     list_repo = subparsers.add_parser('list-repo',
                                       help='List repository contents')
@@ -77,16 +63,25 @@ def parse_arguments():
 
     export_help = 'Export archive contents as tar on stdout'
     export_tar = subparsers.add_parser('export-tar', help=export_help)
-    export_tar.add_argument('--name', help='Archive name)',
-                            required=True)
 
     get_archive_apps = subparsers.add_parser(
         'get-archive-apps',
         help='Get list of apps included in archive')
 
-    # TODO: add parameters to missing commands (export etc)
+    # SSH mount actions
+    mount = subparsers.add_parser('mount', help='mount an ssh filesystem')
+    mount.add_argument('--mountpoint', help='Local mountpoint', required=True)
+    umount = subparsers.add_parser('umount',
+                                   help='unmount an ssh filesystem')
+    umount.add_argument('--mountpoint', help='Mountpoint to unmount',
+                        required=True)
+    is_mounted = subparsers.add_parser('is-mounted',
+                                       help='Check whether an sshfs is mouned')
+    is_mounted.add_argument('--mountpoint', help='Mountpoint to check',
+                            required=True)
+
     for cmd in [info, init, list_repo, create_archive, delete_archive,
-                get_archive_apps, mount]:
+                export_tar, get_archive_apps, mount, setup]:
         cmd.add_argument('--path', help='Repository or Archive path',
                          required=False)  # TODO: set required to True!
         cmd.add_argument('--ssh-keyfile', help='Path of private ssh key',
@@ -117,26 +112,26 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Create repository if it does not already exist."""
-    # TODO: use init()
+    env = get_env(arguments)
     try:
-        subprocess.run(['borg', 'info', REPOSITORY], check=True)
+        run(['borg', 'info', arguments.path], check=True, env=env)
     except:
-        path = os.path.dirname(REPOSITORY)
+        path = os.path.dirname(arguments.path)
         if not os.path.exists(path):
             os.makedirs(path)
 
-        run(['borg', 'init', '--encryption', 'none', REPOSITORY])
+        init(arguments.path, 'none', env=env)
 
 
-def init(repository, encryption, env=None):
+def init(path, encryption, env=None):
     """Initialize a local or remote borg repository"""
     # TODO: verify that the repository does not exist?
     # TODO: does remote borg also create folders if they don't exist?
     if encryption != 'none' and 'BORG_PASSPHRASE' not in env:
         raise ValueError('No encryption passphrase provided')
-    cmd = ['borg', 'init', '--encryption', encryption, repository]
+    cmd = ['borg', 'init', '--encryption', encryption, path]
     run(cmd, env=env)
 
 
@@ -171,13 +166,13 @@ def get_sshfs_env(arguments):
 
 def subcommand_init(arguments):
     env = get_env(arguments)
-    init(arguments.repository, arguments.encryption, env=env)
+    init(arguments.path, arguments.encryption, env=env)
 
 
 def subcommand_info(arguments):
     """Show repository information."""
     env = get_env(arguments)
-    run(['borg', 'info', '--json', arguments.repository], env=env)
+    run(['borg', 'info', '--json', arguments.path], env=env)
 
 
 def subcommand_mount(arguments):
@@ -286,7 +281,9 @@ def _extract(archive_path, destination, locations=None):
 
 def subcommand_export_tar(arguments):
     """Export archive contents as tar stream on stdout."""
-    run(['borg', 'export-tar', REPOSITORY + '::' + arguments.name, '-'])
+    env = get_env(arguments)
+    run(['borg', 'export-tar', arguments.path, '-'],
+        env=env)
 
 
 def _read_archive_file(archive, filepath):
@@ -385,14 +382,14 @@ def read_password():
         return ''.join(sys.stdin)
 
 
-def run(cmd, env=None):
+def run(cmd, env=None, check=True):
     """Wrap the command with ssh password or keyfile authentication"""
     # If the remote server asks for a password but no password is
     # provided, we get stuck at asking the password.
     timeout = None
     if env and 'BORG_RSH' in env and 'SSHPASS' not in env:
         timeout = TIMEOUT
-    subprocess.run(cmd, check=True, env=env, timeout=timeout)
+    subprocess.run(cmd, check=check, env=env, timeout=timeout)
 
 
 def main():
