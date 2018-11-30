@@ -138,7 +138,7 @@ def subcommand_list(_):
             'description')
     snapshots = []
     for line in lines[2:]:
-        parts = [part.strip() for part in line.split('|')]
+        parts = [part.strip('* ') for part in line.split('|')]
         snapshots.append(dict(zip(keys, parts)))
 
     default = _get_default_snapshot()
