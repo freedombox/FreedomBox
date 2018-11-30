@@ -191,7 +191,7 @@ def backup_create(browser, app_name):
     browser.visit(default_url)
     application.install(browser, 'backups')
     delete = browser.find_link_by_href(
-        '/plinth/sys/backups/delete/_functional_test_' + app_name + '/')
+        '/plinth/sys/backups/delete/root/_functional_test_' + app_name + '/')
     if delete:
         delete.first.click()
         submit(browser)
@@ -211,7 +211,7 @@ def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
     browser.find_link_by_href(
-        '/plinth/sys/backups/restore-archive/_functional_test_' +
+        '/plinth/sys/backups/restore-archive/root/_functional_test_' +
         app_name + '/').first.click()
     with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
         submit(browser)
@@ -270,7 +270,7 @@ def pagekite_configure(browser, host, port, kite_name, kite_secret):
     """Configure pagekite basic parameters."""
     nav_to_module(browser, 'pagekite')
     browser.find_link_by_href('/plinth/sys/pagekite/configure/').first.click()
-    #time.sleep(0.250)  # Wait for 200ms show animation to complete
+    # time.sleep(0.250)  # Wait for 200ms show animation to complete
     browser.fill('pagekite-server_domain', host)
     browser.fill('pagekite-server_port', str(port))
     browser.fill('pagekite-kite_name', kite_name)

@@ -250,7 +250,7 @@ class RestoreArchiveView(BaseRestoreView):
         return super().form_valid(form)
 
 
-class ExportAndDownloadView(View):
+class DownloadArchiveView(View):
     """View to export and download an archive as stream."""
     def get(self, request, uuid, name):
         repository = get_repository(uuid)

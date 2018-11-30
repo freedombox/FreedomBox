@@ -183,7 +183,7 @@ def backup_create(browser, app_name):
 
 @when(parsers.parse('I download the {app_name:w} app data backup'))
 def backup_download(browser, app_name, downloaded_file_info):
-    url = '/plinth/sys/backups/export-and-download/_functional_test_%s/' % \
+    url = '/plinth/sys/backups/download/root/_functional_test_%s/' % \
         app_name
     file_path = system.download_file_logged_in(browser, url, app_name,
                                                suffix='.tar.gz')

@@ -21,15 +21,15 @@ URLs for the backups module.
 from django.conf.urls import url
 
 from .views import IndexView, CreateArchiveView, AddRepositoryView, \
-        DeleteArchiveView, ExportAndDownloadView, RemoveRepositoryView, \
+        DeleteArchiveView, DownloadArchiveView, RemoveRepositoryView, \
         mount_repository, umount_repository, UploadArchiveView, \
         RestoreArchiveView, RestoreFromUploadView, TestRepositoryView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
     url(r'^sys/backups/create/$', CreateArchiveView.as_view(), name='create'),
-    url(r'^sys/backups/export-and-download/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
-        ExportAndDownloadView.as_view(), name='export-and-download'),
+    url(r'^sys/backups/download/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
+        DownloadArchiveView.as_view(), name='download'),
     url(r'^sys/backups/delete/(?P<uuid>[^/]+)/(?P<name>[^/]+)/$',
         DeleteArchiveView.as_view(), name='delete'),
     url(r'^sys/backups/upload/$', UploadArchiveView.as_view(), name='upload'),

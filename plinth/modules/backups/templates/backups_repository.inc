@@ -82,7 +82,7 @@
           <td class="archive-name">{{ archive.name }}</td>
           <td class="archive-operations">
             <a class="archive-export btn btn-sm btn-default" target="_blank"
-               href="{% url 'backups:export-and-download' uuid archive.name %}">
+               href="{% url 'backups:download' uuid archive.name %}">
               {% trans "Download" %}
             </a>
             <a class="archive-export btn btn-sm btn-default"
