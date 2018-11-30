@@ -88,6 +88,7 @@ def delete_all_snapshots(browser):
     browser.find_by_name('select_all').check()
 
     submit(browser, browser.find_by_name('delete_selected'))
+    submit(browser, browser.find_by_name('delete_confirm'))
 
 
 def create_snapshot(browser):
