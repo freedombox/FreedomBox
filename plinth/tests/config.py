@@ -25,10 +25,10 @@ the variables defined here.
 backups_ssh_path = None
 backups_ssh_password = None
 backups_ssh_keyfile = None
-backups_ssh_mountpoint = '/mnt/plinth_test_sshfs'
+backups_ssh_repo_uuid = 'plinth_test_sshfs'  # will be mounted to /media/<uuid>
 
 # Import config_local to override the default variables
 try:
-    from config_local.py import *
+    from .config_local import *
 except ImportError:
     pass

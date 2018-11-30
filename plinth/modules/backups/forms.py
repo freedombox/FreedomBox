@@ -26,7 +26,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from plinth.utils import format_lazy
 from plinth import cfg
 
-from . import api
+from . import api, network_storage, ROOT_REPOSITORY_NAME
 
 
 def _get_app_choices(apps):
@@ -43,7 +43,17 @@ def _get_app_choices(apps):
     return choices
 
 
+def _get_repository_choices():
+    """Return the list of available repositories."""
+    choices = [('root', ROOT_REPOSITORY_NAME)]
+    storages = network_storage.get_storages()
+    for storage in storages:
+        choices += [(storage['uuid'], storage['path'])]
+    return choices
+
+
 class CreateArchiveForm(forms.Form):
+    repository = forms.ChoiceField()
     name = forms.CharField(
         label=_('Archive name'), strip=True,
         help_text=_('Name for new backup archive.'), validators=[
@@ -60,6 +70,7 @@ class CreateArchiveForm(forms.Form):
         apps = api.get_all_apps_for_backup()
         self.fields['selected_apps'].choices = _get_app_choices(apps)
         self.fields['selected_apps'].initial = [app.name for app in apps]
+        self.fields['repository'].choices = _get_repository_choices()
 
 
 class RestoreForm(forms.Form):
@@ -115,7 +126,7 @@ class AddRepositoryForm(forms.Form):
         widget=forms.PasswordInput(),
         required=False
     )
-    store_passwords = forms.BooleanField(
+    store_credentials = forms.BooleanField(
         label=_('Store passwords on FreedomBox'),
         help_text=format_lazy(
             _('Store the passwords on your {box_name}.'

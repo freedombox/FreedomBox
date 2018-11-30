@@ -44,7 +44,7 @@ from plinth.modules import backups, storage
 from . import api, forms, SESSION_PATH_VARIABLE, ROOT_REPOSITORY
 from .repository import BorgRepository, SshBorgRepository, get_ssh_repositories
 from .decorators import delete_tmp_backup_file
-from .errors import BorgRepositoryDoesNotExistError
+from .errors import BorgError, BorgRepositoryDoesNotExistError
 
 logger = logging.getLogger(__name__)
 
@@ -310,14 +310,13 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
         """Restore files from the archive on valid form submission."""
         path = form.cleaned_data['repository']
         credentials = {}
-        if form.cleaned_data['store_passwords']:
-            encryption_passphrase = form.cleaned_data['encryption_passphrase']
-            if encryption_passphrase:
-                credentials['encryption_passphrase'] = encryption_passphrase
-            if form.cleaned_data['ssh_password']:
-                credentials['ssh_password'] = form.cleaned_data['ssh_password']
-            # TODO: add ssh_keyfile
-            # ssh_keyfile = form.cleaned_data['ssh_keyfile']
+        encryption_passphrase = form.cleaned_data['encryption_passphrase']
+        if encryption_passphrase:
+            credentials['encryption_passphrase'] = encryption_passphrase
+        if form.cleaned_data['ssh_password']:
+            credentials['ssh_password'] = form.cleaned_data['ssh_password']
+        # TODO: add ssh_keyfile
+        # ssh_keyfile = form.cleaned_data['ssh_keyfile']
 
         repository = SshBorgRepository(path=path, credentials=credentials)
 
@@ -325,7 +324,8 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
             repository.create_repository(form.cleaned_data['encryption'])
-        repository.save()
+        repository.save(store_credentials=
+                        form.cleaned_data['store_credentials'])
         return super().form_valid(form)
 
 
@@ -345,6 +345,8 @@ class TestRepositoryView(TemplateView):
         try:
             repo_info = repository.get_info()
             context["message"] = repo_info
+        except BorgError as err:
+            context["error"] = str(err)
         except ActionError as err:
             context["error"] = str(err)
 

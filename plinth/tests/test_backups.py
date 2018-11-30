@@ -25,16 +25,10 @@ import unittest
 
 from plinth import cfg
 from plinth.modules import backups
-from plinth.modules.backups import sshfs
+from plinth.modules.backups.repository import BorgRepository, SshBorgRepository
 from plinth import actions
 
 from . import config
-
-try:
-    from . import config_local as config
-except ImportError:
-    from . import config
-
 
 euid = os.geteuid()
 
@@ -64,33 +58,25 @@ class TestBackups(unittest.TestCase):
     def test_nonexisting_repository(self):
         nonexisting_dir = os.path.join(self.backup_directory.name,
                                        'does_not_exist')
+        repository = BorgRepository(nonexisting_dir)
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
-            backups.test_connection(nonexisting_dir)
+            repository.get_info()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_empty_dir(self):
         empty_dir = os.path.join(self.backup_directory.name, 'empty_dir')
         os.mkdir(empty_dir)
+        repository = BorgRepository(empty_dir)
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
-            backups.test_connection(empty_dir)
+            repository.get_info()
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_create_unencrypted_repository(self):
         repo_path = os.path.join(self.backup_directory.name, 'borgbackup')
-        backups.create_repository(repo_path, 'none')
-        info = backups.get_info(repo_path)
+        repository = BorgRepository(repo_path)
+        repository.create_repository()
+        info = repository.get_info()
         assert 'encryption' in info
-
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_create_encrypted_repository(self):
-        repo_path = os.path.join(self.backup_directory.name,
-                                 'borgbackup_encrypted')
-        # 'borg init' creates missing folders automatically
-        access_params = {'encryption_passphrase': '12345'}
-        backups.create_repository(repo_path, 'repokey',
-                                  access_params=access_params)
-        assert backups.get_info(repo_path, access_params)
-        assert backups.test_connection(repo_path, access_params)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_create_and_delete_archive(self):
@@ -104,48 +90,58 @@ class TestBackups(unittest.TestCase):
         archive_name = 'first_archive'
         repo_path = os.path.join(self.backup_directory.name, repo_name)
 
-        backups.create_repository(repo_path, 'none')
+        repository = BorgRepository(repo_path)
+        repository.create_repository()
         archive_path = "::".join([repo_path, archive_name])
         actions.superuser_run(
             'backups', ['create-archive', '--path', archive_path, '--paths',
                         self.data_directory])
 
-        archive = backups.list_archives(repo_path)[0]
+        archive = repository.list_archives()[0]
         assert archive['name'] == archive_name
 
-        backups.delete_archive(archive_path)
-        content = backups.list_archives(repo_path)
+        repository.delete_archive(archive_name)
+        content = repository.list_archives()
         assert len(content) == 0
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_is_mounted(self):
-        assert not sshfs.is_mounted(self.action_directory.name)
-        assert sshfs.is_mounted('/')
-
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_mount(self):
+    @unittest.skipUnless(euid == 0 and config.backups_ssh_path,
+                         'Needs to be root and ssh credentials provided')
+    def test_ssh_mount(self):
         """Test (un)mounting if credentials for a remote location are given"""
-        import ipdb; ipdb.set_trace()
-        if config.backups_ssh_path:
-            access_params = self.get_remote_access_params()
-            if not access_params:
-                return
-            mountpoint = config.backups_ssh_mountpoint
-            ssh_path = config.backups_ssh_path
+        credentials = self.get_credentials()
+        if not credentials:
+            return
+        ssh_path = config.backups_ssh_path
 
-            sshfs.mount(ssh_path, mountpoint, access_params)
-            assert sshfs.is_mounted(mountpoint)
-            sshfs.umount(mountpoint)
-            assert not sshfs.is_mounted(mountpoint)
+        ssh_repo = SshBorgRepository(uuid='plinth_test_sshfs',
+                                     path=ssh_path,
+                                     credentials=credentials)
+        ssh_repo.mount()
+        assert ssh_repo.is_mounted
+        ssh_repo.umount()
+        assert not ssh_repo.is_mounted
 
-    def get_remote_access_params(self):
+    @unittest.skipUnless(euid == 0 and config.backups_ssh_path,
+                         'Needs to be root and ssh credentials provided')
+    def test_ssh_create_encrypted_repository(self):
+        credentials = self.get_credentials()
+        encrypted_repo = os.path.join(self.backup_directory.name,
+                                      'borgbackup_encrypted')
+        credentials['encryption_passphrase'] = '12345'
+        repository = SshBorgRepository(path=encrypted_repo,
+                                       credentials=credentials)
+        # 'borg init' creates missing folders automatically
+        repository.create_repository(encryption='repokey')
+        assert repository.get_info()
+
+    def get_credentials(self):
         """
         Get access params for a remote location.
         Return an empty dict if no valid access params are found.
         """
-        access_params = {}
+        credentials = {}
         if config.backups_ssh_password:
-            access_params['ssh_password'] = config.backups_ssh_password
+            credentials['ssh_password'] = config.backups_ssh_password
         elif config.backups_ssh_keyfile:
-            access_params['ssh_keyfile'] = config.backups_ssh_keyfile
-        return access_params
+            credentials['ssh_keyfile'] = config.backups_ssh_keyfile
+        return credentials
