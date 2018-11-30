@@ -121,17 +121,17 @@ class TestBackups(unittest.TestCase):
         ssh_repo.umount()
         assert not ssh_repo.is_mounted
 
-    @unittest.skipUnless(euid == 0 and config.backups_ssh_path,
-                         'Needs to be root and ssh credentials provided')
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_ssh_create_encrypted_repository(self):
         credentials = self.get_credentials()
         encrypted_repo = os.path.join(self.backup_directory.name,
                                       'borgbackup_encrypted')
         credentials['encryption_passphrase'] = '12345'
+        # using SshBorgRepository to provide credentials because
+        # BorgRepository does not allow creating encrypted repositories
         repository = SshBorgRepository(path=encrypted_repo,
                                        credentials=credentials)
-        # 'borg init' creates missing folders automatically
-        repository.create_repository(encryption='repokey')
+        repository.create_repository('repokey')
         assert repository.get_info()
 
     def get_credentials(self):

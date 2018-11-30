@@ -98,7 +98,7 @@ class BackupError:
 class Packet:
     """Information passed to a handlers for backup/restore operations."""
 
-    def __init__(self, operation, scope, root, apps=None, label=None):
+    def __init__(self, operation, scope, root, apps=None, path=None):
         """Initialize the packet.
 
         operation is either 'backup' or 'restore.
@@ -110,8 +110,7 @@ class Packet:
         All paths populated are relative to the 'root' path. The root path
         itself must not be stored in the backup.
 
-        label is either an archive name (w/o path), or the full path of an
-        exported archive.
+        path is the full path of an (possibly exported) archive.
         TODO: create two variables out of it as it's distinct information.
 
         """
@@ -119,7 +118,7 @@ class Packet:
         self.scope = scope
         self.root = root
         self.apps = apps
-        self.label = label
+        self.path = path
         self.errors = []
 
         self.directories = []
@@ -136,7 +135,7 @@ class Packet:
                 self.files += app.manifest.get(section, {}).get('files', [])
 
 
-def backup_full(backup_handler, label=None):
+def backup_full(backup_handler, path=None):
     """Backup the entire system."""
     if not _is_snapshot_available():
         raise Exception('Full backup is not supported without snapshots.')
@@ -144,7 +143,7 @@ def backup_full(backup_handler, label=None):
     snapshot = _take_snapshot()
     backup_root = snapshot['mount_path']
 
-    packet = Packet('backup', 'full', backup_root, label)
+    packet = Packet('backup', 'full', backup_root, path)
     _run_operation(backup_handler, packet)
 
     _delete_snapshot(snapshot)
@@ -163,7 +162,7 @@ def restore_full(restore_handler):
     _switch_to_subvolume(subvolume)
 
 
-def backup_apps(backup_handler, app_names=None, label=None):
+def backup_apps(backup_handler, path, app_names=None):
     """Backup data belonging to a set of applications."""
     if not app_names:
         apps = get_all_apps_for_backup()
@@ -180,7 +179,7 @@ def backup_apps(backup_handler, app_names=None, label=None):
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, apps, label)
+    packet = Packet('backup', 'apps', backup_root, apps, path)
     _run_operation(backup_handler, packet)
 
     if snapshotted:

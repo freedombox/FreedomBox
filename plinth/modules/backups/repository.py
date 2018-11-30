@@ -19,15 +19,17 @@ Remote and local Borg backup repositories
 """
 
 import json
-import os
 import logging
+import os
 
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.errors import ActionError
 
-from . import api, network_storage, _backup_handler, ROOT_REPOSITORY_NAME
+from . import api, network_storage, _backup_handler, ROOT_REPOSITORY_NAME, \
+        ROOT_REPOSITORY_UUID, ROOT_REPOSITORY, restore_archive_handler, \
+        zipstream
 from .errors import BorgError, BorgRepositoryDoesNotExistError
 
 logger = logging.getLogger(__name__)
@@ -93,20 +95,25 @@ class BorgRepository(object):
         archive_path = self.get_archive_path(archive_name)
         self._run(['delete-archive', '--path', archive_path])
 
-    def remove(self):
+    def remove_repository(self):
         """Remove a borg repository"""
         raise NotImplementedError
 
-    def create_archive(self, app_names, archive_name):
-        api.backup_apps(_backup_handler, app_names=app_names,
-                        label=archive_name),
+    def create_archive(self, archive_name, app_names):
+        archive_path = self.get_archive_path(archive_name)
+        api.backup_apps(_backup_handler, path=archive_path,
+                        app_names=app_names)
 
     def create_repository(self):
         self._run(['init', '--path', self.path, '--encryption', 'none'])
 
-    def download_archive(self, name):
-        # TODO
-        pass
+    def get_zipstream(self, archive_name):
+        archive_path = self.get_archive_path(archive_name)
+        args = ['export-tar', '--path', archive_path]
+        kwargs = {'run_in_background': True,
+                  'bufsize': 1}
+        proc = self._run(args, kwargs=kwargs, use_credentials=False)
+        return zipstream.ZipStream(proc.stdout, 'readline')
 
     def get_archive(self, name):
         # TODO: can't we get this archive directly?
@@ -122,33 +129,27 @@ class BorgRepository(object):
         output = self._run(['get-archive-apps', '--path', archive_path])
         return output.splitlines()
 
-    def restore_archive(self):
-        # TODO
-        pass
+    def restore_archive(self, archive_name, apps=None):
+        archive_path = self.get_archive_path(archive_name)
+        api.restore_apps(restore_archive_handler, app_names=apps,
+                         create_subvolume=False, backup_file=archive_path)
 
     def get_archive_path(self, archive_name):
         return "::".join([self.path, archive_name])
 
-    def _get_arguments(self, arguments, credentials):
-        kwargs = {}
-        if 'encryption_passphrase' in credentials and \
-           credentials['encryption_passphrase']:
-            arguments += ['--encryption-passphrase',
-                          credentials['encryption_passphrase']]
-        return (arguments, kwargs)
+    def _get_env(self):
+        return dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
 
-    def _run(self, arguments, superuser=True):
-        """Run a backups action script command.
-
-        Automatically passes on credentials via self._get_arguments to the
-        backup script via environment variables or input, except if you
-        set use_credentials to False.
-        """
+    def _run(self, arguments, superuser=True, kwargs=None,
+             use_credentials=False):
+        """Run a backups action script command."""
+        if kwargs is None:
+            kwargs = {}
         try:
             if superuser:
-                return actions.superuser_run(self.command, arguments)
+                return actions.superuser_run(self.command, arguments, **kwargs)
             else:
-                return actions.run(self.command, arguments)
+                return actions.run(self.command, arguments, **kwargs)
         except ActionError as err:
             self.reraise_known_error(err)
 
@@ -168,8 +169,10 @@ class SshBorgRepository(BorgRepository):
     KNOWN_CREDENTIALS = ['ssh_keyfile', 'ssh_password',
                          'encryption_passphrase']
     storage_type = 'ssh'
+    uuid = None
 
-    def __init__(self, uuid=None, path=None, credentials=None, **kwargs):
+    def __init__(self, uuid=None, path=None, credentials=None, automount=True,
+                 **kwargs):
         """
         Provide a uuid to instanciate an existing repository,
         or 'path' and 'credentials' for a new repository.
@@ -188,6 +191,9 @@ class SshBorgRepository(BorgRepository):
             self.credentials = credentials
         else:
             raise ValueError('Invalid arguments.')
+        if automount:
+            if self.uuid and not self.is_mounted:
+                self.mount()
 
     @property
     def mountpoint(self):
@@ -201,6 +207,9 @@ class SshBorgRepository(BorgRepository):
     def is_mounted(self):
         output = self._run(['is-mounted', '--mountpoint', self.mountpoint])
         return json.loads(output)
+
+    def get_archive_path(self, archive_name):
+        return "::".join([self.mountpoint, archive_name])
 
     def _load_from_kvstore(self):
         storage = network_storage.get(self.uuid)
@@ -216,15 +225,11 @@ class SshBorgRepository(BorgRepository):
             'storage_type': self.storage_type,
             'added_by_module': 'backups'
         }
-        if hasattr(self, 'uuid'):
+        if self.uuid:
             storage['uuid'] = self.uuid
         if store_credentials:
             storage['credentials'] = self.credentials
         return storage
-
-    def create_archive(self, app_names, archive_name):
-        raise NotImplementedError
-        # api.backup_apps(_backup_handler, app_names=app_names,
 
     def create_repository(self, encryption):
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
@@ -242,7 +247,7 @@ class SshBorgRepository(BorgRepository):
     def umount(self):
         self._run(['umount', '--mountpoint', self.mountpoint])
 
-    def remove(self):
+    def remove_repository(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
         network_storage.delete(self.uuid)
         try:
@@ -256,22 +261,27 @@ class SshBorgRepository(BorgRepository):
         except Exception as err:
             logger.error(err)
 
-    def _get_arguments(self, arguments, credentials):
-        arguments, kwargs = super()._get_arguments(arguments, credentials)
+    def _get_run_arguments(self, arguments, credentials, kwargs=None):
+        if kwargs is None:
+            kwargs = {}
+        if 'encryption_passphrase' in credentials and \
+           credentials['encryption_passphrase']:
+            arguments += ['--encryption-passphrase',
+                          credentials['encryption_passphrase']]
         if 'ssh_password' in credentials and credentials['ssh_password']:
             kwargs['input'] = credentials['ssh_password'].encode()
         if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
         return (arguments, kwargs)
 
-    def _run(self, arguments, superuser=True, use_credentials=True):
+    def _run(self, arguments, superuser=True, use_credentials=True,
+             kwargs=None):
         """Run a backups action script command.
 
-        Automatically passes on credentials via self._get_arguments to the
+        Automatically passes on credentials via self._get_run_arguments to the
         backup script via environment variables or input, except if you
         set use_credentials to False.
         """
-        kwargs = {}
         if use_credentials:
             if not self.credentials:
                 msg = 'Cannot access ssh repo without credentials'
@@ -279,8 +289,9 @@ class SshBorgRepository(BorgRepository):
             for key in self.credentials.keys():
                 if key not in self.KNOWN_CREDENTIALS:
                     raise ValueError('Unknown credentials entry: %s' % key)
-            arguments, kwargs = self._get_arguments(arguments,
-                                                    self.credentials)
+            arguments, kwargs = self._get_run_arguments(arguments,
+                                                        self.credentials,
+                                                        kwargs=kwargs)
         try:
             if superuser:
                 return actions.superuser_run(self.command, arguments, **kwargs)
@@ -294,6 +305,13 @@ def get_ssh_repositories():
     """Get all SSH Repositories including the archive content"""
     repositories = {}
     for storage in network_storage.get_storages():
-        repository = SshBorgRepository(**storage)
+        repository = SshBorgRepository(automount=False, **storage)
         repositories[storage['uuid']] = repository.get_view_content()
     return repositories
+
+
+def get_repository(uuid):
+    if uuid == ROOT_REPOSITORY_UUID:
+        return BorgRepository(path=ROOT_REPOSITORY)
+    else:
+        return SshBorgRepository(uuid=uuid, automount=False)

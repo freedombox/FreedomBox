@@ -19,8 +19,6 @@ Views for the backups app.
 """
 
 from datetime import datetime
-import gzip
-from io import BytesIO
 import logging
 import mimetypes
 import os
@@ -37,12 +35,12 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
-from plinth import actions
 from plinth.errors import PlinthError, ActionError
 from plinth.modules import backups, storage
 
 from . import api, forms, SESSION_PATH_VARIABLE, ROOT_REPOSITORY
-from .repository import BorgRepository, SshBorgRepository, get_ssh_repositories
+from .repository import BorgRepository, SshBorgRepository, get_repository, \
+        get_ssh_repositories
 from .decorators import delete_tmp_backup_file
 from .errors import BorgError, BorgRepositoryDoesNotExistError
 
@@ -104,8 +102,9 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Create the archive on valid form submission."""
-        backups.create_archive(form.cleaned_data['name'],
-                               form.cleaned_data['selected_apps'])
+        repository = get_repository(form.cleaned_data['repository'])
+        repository.create_archive(form.cleaned_data['name'],
+                                  form.cleaned_data['selected_apps'])
         return super().form_valid(form)
 
 
@@ -117,15 +116,17 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Delete Archive')
-        context['archive'] = backups.get_archive(self.kwargs['name'])
+        repository = get_repository(self.kwargs['uuid'])
+        context['archive'] = repository.get_archive(self.kwargs['name'])
         if context['archive'] is None:
             raise Http404
 
         return context
 
-    def post(self, request, name):
+    def post(self, request, uuid, name):
         """Delete the archive."""
-        backups.delete_archive(name)
+        repository = get_repository(uuid)
+        repository.delete_archive(name)
         messages.success(request, _('Archive deleted.'))
         return redirect('backups:index')
 
@@ -198,6 +199,7 @@ class BaseRestoreView(SuccessMessageMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['title'] = _('Restore')
         context['name'] = self.kwargs.get('name', None)
+        context['uuid'] = self.kwargs.get('uuid', None)
         return context
 
 
@@ -236,55 +238,25 @@ class RestoreArchiveView(BaseRestoreView):
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
         name = unquote(self.kwargs['name'])
-        archive_path = backups.get_archive_path(name)
-        return backups.get_archive_apps(archive_path)
+        uuid = self.kwargs['uuid']
+        repository = get_repository(uuid)
+        return repository.get_archive_apps(name)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
-        archive_path = backups.get_archive_path(self.kwargs['name'])
-        backups.restore(archive_path, form.cleaned_data['selected_apps'])
+        repository = get_repository(self.kwargs['uuid'])
+        repository.restore_archive(self.kwargs['name'],
+                                   form.cleaned_data['selected_apps'])
         return super().form_valid(form)
-
-
-class ZipStream(object):
-    """Zip a stream that yields binary data"""
-
-    def __init__(self, stream, get_chunk_method):
-        """
-        - stream: the input stream
-        - get_chunk_method: name of the method to get a chunk of the stream
-        """
-        self.stream = stream
-        self.buffer = BytesIO()
-        self.zipfile = gzip.GzipFile(mode='wb', fileobj=self.buffer)
-        self.get_chunk = getattr(self.stream, get_chunk_method)
-
-    def __next__(self):
-        line = self.get_chunk()
-        if not len(line):
-            raise StopIteration
-        self.zipfile.write(line)
-        self.zipfile.flush()
-        zipped = self.buffer.getvalue()
-        self.buffer.truncate(0)
-        self.buffer.seek(0)
-        return zipped
-
-    def __iter__(self):
-        return self
 
 
 class ExportAndDownloadView(View):
     """View to export and download an archive as stream."""
     def get(self, request, uuid, name):
-        # The uuid is 'root' for the root repository
-        name = unquote(name)
+        repository = get_repository(uuid)
         filename = "%s.tar.gz" % name
-        args = ['export-tar', '--name', name]
-        proc = actions.superuser_run('backups', args, run_in_background=True,
-                                     bufsize=1)
-        zipStream = ZipStream(proc.stdout, 'readline')
-        response = StreamingHttpResponse(zipStream,
+
+        response = StreamingHttpResponse(repository.get_zipstream(name),
                                          content_type="application/x-gzip")
         response['Content-Disposition'] = 'attachment; filename="%s"' % \
             filename
@@ -324,8 +296,8 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
             repository.create_repository(form.cleaned_data['encryption'])
-        repository.save(store_credentials=
-                        form.cleaned_data['store_credentials'])
+        repository.save(
+            store_credentials=form.cleaned_data['store_credentials'])
         return super().form_valid(form)
 
 
@@ -354,7 +326,7 @@ class TestRepositoryView(TemplateView):
 
 
 class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
-    """View to delete an archive."""
+    """View to delete a repository."""
     template_name = 'backups_repository_remove.html'
 
     def get_context_data(self, uuid, **kwargs):
@@ -367,7 +339,7 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
     def post(self, request, uuid):
         """Delete the archive."""
         repository = SshBorgRepository(uuid)
-        repository.remove()
+        repository.remove_repository()
         messages.success(request, _('Repository removed. The remote backup '
                                     'itself was not deleted.'))
         return redirect('backups:index')

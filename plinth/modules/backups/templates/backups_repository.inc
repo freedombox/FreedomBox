@@ -23,7 +23,13 @@
        id="archives-list">
   <thead>
     <tr>
-      <th>
+      <th colspan="2">
+
+        {% if repository.error %}
+           <span class="glyphicon glyphicon-warning-sign mount-error"
+                 aria-hidden="true" title="{{ repository.error }}">
+           </span>
+        {% endif %}
 
         {{ repository.name }}
 
@@ -31,8 +37,8 @@
 
           {% if repository.mounted %}
 
-            <!-- With GET redirects the browser URL would be pointing to the
-                 redirected page - use POST instead.
+            <!-- With GET redirects, the browser URL points to the
+                 redirected page (bad when reloading) - use POST instead.
             -->
             <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
                   class="inline-block" >
@@ -65,8 +71,6 @@
         {% endif %}
 
       </th>
-      <th>
-      </th>
     </tr>
   </thead>
 
@@ -82,11 +86,11 @@
               {% trans "Download" %}
             </a>
             <a class="archive-export btn btn-sm btn-default"
-               href="{% url 'backups:restore-archive' archive.name %}">
+               href="{% url 'backups:restore-archive' uuid archive.name %}">
               {% trans "Restore" %}
             </a>
             <a class="archive-delete btn btn-sm btn-default"
-               href="{% url 'backups:delete' archive.name %}">
+               href="{% url 'backups:delete' uuid archive.name %}">
               <span class="glyphicon glyphicon-trash" aria-hidden="true">
               </span>
             </a>
@@ -94,7 +98,7 @@
         </tr>
       {% endfor %}
 
-      {% if not repository.archives %}
+      {% if not repository.error and not repository.archives %}
         <p>{% trans 'No archives currently exist.' %}</p>
       {% endif %}
 

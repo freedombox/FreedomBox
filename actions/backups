@@ -127,15 +127,13 @@ def subcommand_setup(arguments):
 
 def init(path, encryption, env=None):
     """Initialize a local or remote borg repository"""
-    # TODO: verify that the repository does not exist?
-    # TODO: does remote borg also create folders if they don't exist?
     if encryption != 'none' and 'BORG_PASSPHRASE' not in env:
         raise ValueError('No encryption passphrase provided')
     cmd = ['borg', 'init', '--encryption', encryption, path]
     run(cmd, env=env)
 
 
-def get_env(arguments):
+def get_env(arguments, read_input=True):
     """Create encryption and ssh kwargs out of given arguments"""
     env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
     if arguments.encryption_passphrase:
@@ -143,24 +141,10 @@ def get_env(arguments):
     if arguments.ssh_keyfile:
         env['BORG_RSH'] = "ssh -i %s" % arguments.ssh_keyfile
     else:
-        password = read_password()
+        password = read_password() if read_input else None
         if password:
             env['SSHPASS'] = password
             env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
-    return env
-
-
-def get_sshfs_env(arguments):
-    """Create encryption and ssh kwargs out of given arguments"""
-    env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
-    if arguments.encryption_passphrase:
-        env['BORG_PASSPHRASE'] = arguments.encryption_passphrase
-    if arguments.ssh_keyfile:
-        env['SSHKEY'] = arguments.ssh_keyfile
-    else:
-        password = read_password()
-        if password:
-            env['SSHPASS'] = password
     return env
 
 
@@ -281,9 +265,9 @@ def _extract(archive_path, destination, locations=None):
 
 def subcommand_export_tar(arguments):
     """Export archive contents as tar stream on stdout."""
-    env = get_env(arguments)
-    run(['borg', 'export-tar', arguments.path, '-'],
-        env=env)
+    # TODO: Get read_password to reliably detect if a password is provided
+    env = get_env(arguments, read_input=False)
+    run(['borg', 'export-tar', arguments.path, '-'], env=env)
 
 
 def _read_archive_file(archive, filepath):
@@ -384,8 +368,7 @@ def read_password():
 
 def run(cmd, env=None, check=True):
     """Wrap the command with ssh password or keyfile authentication"""
-    # If the remote server asks for a password but no password is
-    # provided, we get stuck at asking the password.
+    # Set a timeout to not get stuck if the remote server asks for a password.
     timeout = None
     if env and 'BORG_RSH' in env and 'SSHPASS' not in env:
         timeout = TIMEOUT

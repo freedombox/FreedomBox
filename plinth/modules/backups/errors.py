@@ -19,7 +19,7 @@ from plinth.errors import PlinthError
 
 
 class BorgError(PlinthError):
-    """Generic class for borg errors that """
+    """Generic borg errors"""
     pass
 
 

@@ -26,6 +26,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from plinth import cfg, module_loader
 
 from .. import api, forms
+from .. import ROOT_REPOSITORY
 
 # pylint: disable=protected-access
 
@@ -105,7 +106,7 @@ class TestBackupProcesses(unittest.TestCase):
     def test_backup_apps():
         """Test that backup_handler is called."""
         backup_handler = MagicMock()
-        api.backup_apps(backup_handler)
+        api.backup_apps(backup_handler, path=ROOT_REPOSITORY)
         backup_handler.assert_called_once()
 
     @staticmethod

@@ -46,6 +46,7 @@ MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 ROOT_REPOSITORY = '/var/lib/freedombox/borgbackup'
 ROOT_REPOSITORY_NAME = format_lazy(_('{box_name} storage'),
                                    box_name=cfg.box_name)
+ROOT_REPOSITORY_UUID = 'root'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 
@@ -69,7 +70,7 @@ def _backup_handler(packet):
         os.makedirs(MANIFESTS_FOLDER)
 
     manifest_path = os.path.join(MANIFESTS_FOLDER,
-                                 get_valid_filename(packet.label) + '.json')
+                                 get_valid_filename(packet.path) + '.json')
     manifests = {
         'apps': [{
             'name': app.name,
@@ -83,8 +84,7 @@ def _backup_handler(packet):
     paths = packet.directories + packet.files
     paths.append(manifest_path)
     actions.superuser_run(
-        'backups', ['create-archive', '--name', packet.label, '--paths'] +
-        # TODO: add ssh_keyfile
+        'backups', ['create-archive', '--path', packet.path, '--paths'] +
         paths)
 
 
@@ -100,16 +100,16 @@ def _restore_exported_archive_handler(packet):
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
     actions.superuser_run('backups', ['restore-exported-archive', '--path',
-                                      packet.label],
+                                      packet.path],
                           input=locations_data.encode())
 
 
-def _restore_archive_handler(packet):
+def restore_archive_handler(packet):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
     actions.superuser_run('backups', ['restore-archive', '--path',
-                                      packet.label, '--destination', '/'],
+                                      packet.path, '--destination', '/'],
                           input=locations_data.encode())
 
 
@@ -117,9 +117,3 @@ def restore_from_upload(path, apps=None):
     """Restore files from an uploaded .tar.gz backup file"""
     api.restore_apps(_restore_exported_archive_handler, app_names=apps,
                      create_subvolume=False, backup_file=path)
-
-
-def restore(archive_path, apps=None):
-    """Restore files from a backup archive."""
-    api.restore_apps(_restore_archive_handler, app_names=apps,
-                     create_subvolume=False, backup_file=archive_path)
