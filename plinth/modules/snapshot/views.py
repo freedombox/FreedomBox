@@ -81,11 +81,15 @@ def manage(request):
     has_deletable_snapshots = any(
         [snapshot for snapshot in snapshots[1:] if not snapshot['is_default']])
 
-    return TemplateResponse(request, 'snapshot_manage.html', {
-        'snapshots': snapshots,
-        'has_deletable_snapshots': has_deletable_snapshots,
-        'subsubmenu': subsubmenu,
-    })
+    return TemplateResponse(
+        request, 'snapshot_manage.html', {
+            'title': snapshot_module.name,
+            'description': snapshot_module.description,
+            'manual_page': snapshot_module.manual_page,
+            'snapshots': snapshots,
+            'has_deletable_snapshots': has_deletable_snapshots,
+            'subsubmenu': subsubmenu,
+        })
 
 
 def update_configuration(request, old_status, new_status):

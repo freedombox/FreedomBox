@@ -1,4 +1,4 @@
-{% extends "simple_service.html" %}
+{% extends "service-subsubmenu.html" %}
 {% comment %}
 #
 # This file is part of FreedomBox.
@@ -22,7 +22,6 @@
 {% load i18n %}
 
 {% block configuration %}
-
   <form class="form-horizontal" method="post">
     {% csrf_token %}
     <h3>{% trans "Configuration" %}</h3>
@@ -30,5 +29,4 @@
     <input type="submit" class="btn btn-primary" name="update"
            value="{% trans "Update setup" %}"/>
   </form>
-
 {% endblock %}
