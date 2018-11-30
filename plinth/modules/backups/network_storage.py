@@ -29,40 +29,40 @@ REQUIRED_FIELDS = ['path', 'storage_type', 'added_by_module']
 
 
 def get_storages(storage_type=None):
-    """Get list of network storage storages"""
-    storages = kvstore.get_default(NETWORK_STORAGE_KEY, [])
+    """Get network storage"""
+    storages = kvstore.get_default(NETWORK_STORAGE_KEY, {})
     if storages:
         storages = json.loads(storages)
     if storage_type:
-        storages = [storage for storage in storages if 'type' in storage
-                    and storage['type'] == storage_type]
+        storages = {uuid: storage for uuid, storage in storages.items() if
+                    storage['storage_type'] == storage_type}
     return storages
 
 
 def get(uuid):
     storages = get_storages()
-    return list(filter(lambda storage: storage['uuid'] == uuid,
-                       storages))[0]
+    return storages[uuid]
 
 
 def update_or_add(storage):
     """Update an existing or create a new network location"""
     for field in REQUIRED_FIELDS:
-        assert field in storage
-    storages = get_storages()
+        if field not in storage:
+            raise ValueError('missing storage parameter: %s' % field)
+    existing_storages = get_storages()
     if 'uuid' in storage:
         # Replace the existing storage
-        storages = [_storage if _storage['uuid'] != storage['uuid'] else
-                    storage for _storage in storages]
+        existing_storages[storage['uuid']] = storage
     else:
-        storage['uuid'] = str(uuid1())
-        storages.append(storage)
-    kvstore.set(NETWORK_STORAGE_KEY, json.dumps(storages))
+        uuid = str(uuid1())
+        storage['uuid'] = uuid
+        existing_storages[uuid] = storage
+    kvstore.set(NETWORK_STORAGE_KEY, json.dumps(existing_storages))
+    return storage['uuid']
 
 
 def delete(uuid):
     """Remove a network storage from kvstore"""
     storages = get_storages()
-    storages = list(filter(lambda storage: storage['uuid'] != uuid,
-                           storages))
+    del storages[uuid]
     kvstore.set(NETWORK_STORAGE_KEY, json.dumps(storages))

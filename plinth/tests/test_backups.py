@@ -76,7 +76,7 @@ class TestBackups(unittest.TestCase):
         repository = BorgRepository(repo_path)
         repository.create_repository()
         info = repository.get_info()
-        assert 'encryption' in info
+        self.assertTrue('encryption' in info)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_create_and_delete_archive(self):
@@ -98,11 +98,11 @@ class TestBackups(unittest.TestCase):
                         self.data_directory])
 
         archive = repository.list_archives()[0]
-        assert archive['name'] == archive_name
+        self.assertEquals(archive['name'], archive_name)
 
         repository.delete_archive(archive_name)
         content = repository.list_archives()
-        assert len(content) == 0
+        self.assertEquals(len(content), 0)
 
     @unittest.skipUnless(euid == 0 and config.backups_ssh_path,
                          'Needs to be root and ssh credentials provided')
@@ -117,9 +117,9 @@ class TestBackups(unittest.TestCase):
                                      path=ssh_path,
                                      credentials=credentials)
         ssh_repo.mount()
-        assert ssh_repo.is_mounted
+        self.assertTrue(ssh_repo.is_mounted)
         ssh_repo.umount()
-        assert not ssh_repo.is_mounted
+        self.assertFalse(ssh_repo.is_mounted)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_ssh_create_encrypted_repository(self):
@@ -129,10 +129,11 @@ class TestBackups(unittest.TestCase):
         credentials['encryption_passphrase'] = '12345'
         # using SshBorgRepository to provide credentials because
         # BorgRepository does not allow creating encrypted repositories
+        # TODO: find better way to test encryption
         repository = SshBorgRepository(path=encrypted_repo,
                                        credentials=credentials)
         repository.create_repository('repokey')
-        assert repository.get_info()
+        self.assertTrue(bool(repository.get_info()))
 
     def get_credentials(self):
         """

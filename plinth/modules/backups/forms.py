@@ -47,7 +47,7 @@ def _get_repository_choices():
     """Return the list of available repositories."""
     choices = [('root', ROOT_REPOSITORY_NAME)]
     storages = network_storage.get_storages()
-    for storage in storages:
+    for storage in storages.values():
         choices += [(storage['uuid'], storage['path'])]
     return choices
 

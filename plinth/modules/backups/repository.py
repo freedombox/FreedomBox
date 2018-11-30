@@ -304,7 +304,7 @@ class SshBorgRepository(BorgRepository):
 def get_ssh_repositories():
     """Get all SSH Repositories including the archive content"""
     repositories = {}
-    for storage in network_storage.get_storages():
+    for storage in network_storage.get_storages().values():
         repository = SshBorgRepository(automount=False, **storage)
         repositories[storage['uuid']] = repository.get_view_content()
     return repositories
