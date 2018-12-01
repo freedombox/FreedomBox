@@ -58,7 +58,6 @@ KNOWN_ERRORS = [{
 
 class BorgRepository(object):
     """Borg repository on the root filesystem"""
-    command = 'backups'
     storage_type = 'root'
     name = ROOT_REPOSITORY_NAME
     is_mounted = True
@@ -68,11 +67,11 @@ class BorgRepository(object):
         self.credentials = credentials
 
     def get_info(self):
-        output = self._run(['info', '--path', self.path])
+        output = self._run('backups', ['info', '--path', self.path])
         return json.loads(output)
 
     def list_archives(self):
-        output = self._run(['list-repo', '--path', self.path])
+        output = self._run('backups', ['list-repo', '--path', self.path])
         return json.loads(output)['archives']
 
     def get_view_content(self):
@@ -93,7 +92,7 @@ class BorgRepository(object):
 
     def delete_archive(self, archive_name):
         archive_path = self.get_archive_path(archive_name)
-        self._run(['delete-archive', '--path', archive_path])
+        self._run('backups', ['delete-archive', '--path', archive_path])
 
     def remove_repository(self):
         """Remove a borg repository"""
@@ -105,18 +104,18 @@ class BorgRepository(object):
                         app_names=app_names)
 
     def create_repository(self):
-        self._run(['init', '--path', self.path, '--encryption', 'none'])
+        self._run('backups', ['init', '--path', self.path, '--encryption',
+                              'none'])
 
     def get_zipstream(self, archive_name):
         archive_path = self.get_archive_path(archive_name)
         args = ['export-tar', '--path', archive_path]
         kwargs = {'run_in_background': True,
                   'bufsize': 1}
-        proc = self._run(args, kwargs=kwargs, use_credentials=False)
+        proc = self._run('backups', args, kwargs=kwargs, use_credentials=False)
         return zipstream.ZipStream(proc.stdout, 'readline')
 
     def get_archive(self, name):
-        # TODO: can't we get this archive directly?
         for archive in self.list_archives():
             if archive['name'] == name:
                 return archive
@@ -126,7 +125,8 @@ class BorgRepository(object):
     def get_archive_apps(self, archive_name):
         """Get list of apps included in an archive."""
         archive_path = self.get_archive_path(archive_name)
-        output = self._run(['get-archive-apps', '--path', archive_path])
+        output = self._run('backups', ['get-archive-apps', '--path',
+                                       archive_path])
         return output.splitlines()
 
     def restore_archive(self, archive_name, apps=None):
@@ -140,16 +140,16 @@ class BorgRepository(object):
     def _get_env(self):
         return dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes')
 
-    def _run(self, arguments, superuser=True, kwargs=None,
+    def _run(self, cmd, arguments, superuser=True, kwargs=None,
              use_credentials=False):
         """Run a backups action script command."""
         if kwargs is None:
             kwargs = {}
         try:
             if superuser:
-                return actions.superuser_run(self.command, arguments, **kwargs)
+                return actions.superuser_run(cmd, arguments, **kwargs)
             else:
-                return actions.run(self.command, arguments, **kwargs)
+                return actions.run(cmd, arguments, **kwargs)
         except ActionError as err:
             self.reraise_known_error(err)
 
@@ -205,7 +205,8 @@ class SshBorgRepository(BorgRepository):
 
     @property
     def is_mounted(self):
-        output = self._run(['is-mounted', '--mountpoint', self.mountpoint])
+        output = self._run('sshfs', ['is-mounted', '--mountpoint',
+                                     self.mountpoint])
         return json.loads(output)
 
     def get_archive_path(self, archive_name):
@@ -234,18 +235,20 @@ class SshBorgRepository(BorgRepository):
     def create_repository(self, encryption):
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
-        self._run(['init', '--path', self.path, '--encryption', encryption])
+        self._run('backups', ['init', '--path', self.path, '--encryption',
+                              encryption])
 
     def save(self, store_credentials=True):
         storage = self._get_network_storage_format(store_credentials)
         self.uuid = network_storage.update_or_add(storage)
 
     def mount(self):
-        cmd = ['mount', '--mountpoint', self.mountpoint, '--path', self.path]
-        self._run(cmd)
+        arguments = ['mount', '--mountpoint', self.mountpoint, '--path',
+                     self.path]
+        self._run('sshfs', arguments)
 
     def umount(self):
-        self._run(['umount', '--mountpoint', self.mountpoint])
+        self._run('sshfs', ['umount', '--mountpoint', self.mountpoint])
 
     def remove_repository(self):
         """Remove a repository from the kvstore and delete its mountpoint"""
@@ -274,7 +277,7 @@ class SshBorgRepository(BorgRepository):
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
         return (arguments, kwargs)
 
-    def _run(self, arguments, superuser=True, use_credentials=True,
+    def _run(self, cmd, arguments, superuser=True, use_credentials=True,
              kwargs=None):
         """Run a backups action script command.
 
@@ -294,9 +297,9 @@ class SshBorgRepository(BorgRepository):
                                                         kwargs=kwargs)
         try:
             if superuser:
-                return actions.superuser_run(self.command, arguments, **kwargs)
+                return actions.superuser_run(cmd, arguments, **kwargs)
             else:
-                return actions.run(self.command, arguments, **kwargs)
+                return actions.run(cmd, arguments, **kwargs)
         except ActionError as err:
             self.reraise_known_error(err)
 

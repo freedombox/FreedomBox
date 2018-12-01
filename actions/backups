@@ -68,22 +68,10 @@ def parse_arguments():
         'get-archive-apps',
         help='Get list of apps included in archive')
 
-    # SSH mount actions
-    mount = subparsers.add_parser('mount', help='mount an ssh filesystem')
-    mount.add_argument('--mountpoint', help='Local mountpoint', required=True)
-    umount = subparsers.add_parser('umount',
-                                   help='unmount an ssh filesystem')
-    umount.add_argument('--mountpoint', help='Mountpoint to unmount',
-                        required=True)
-    is_mounted = subparsers.add_parser('is-mounted',
-                                       help='Check whether an sshfs is mouned')
-    is_mounted.add_argument('--mountpoint', help='Mountpoint to check',
-                            required=True)
-
     for cmd in [info, init, list_repo, create_archive, delete_archive,
-                export_tar, get_archive_apps, mount, setup]:
+                export_tar, get_archive_apps, setup]:
         cmd.add_argument('--path', help='Repository or Archive path',
-                         required=False)  # TODO: set required to True!
+                         required=False)
         cmd.add_argument('--ssh-keyfile', help='Path of private ssh key',
                          default=None)
         cmd.add_argument('--encryption-passphrase',
@@ -157,66 +145,6 @@ def subcommand_info(arguments):
     """Show repository information."""
     env = get_env(arguments)
     run(['borg', 'info', '--json', arguments.path], env=env)
-
-
-def subcommand_mount(arguments):
-    """Show repository information."""
-    try:
-        validate_mountpoint(arguments.mountpoint)
-    except AlreadyMountedError:
-        return
-
-    env = get_env(arguments)
-    remote_path = arguments.path
-    kwargs = {}
-    # the shell would expand ~/ to the local home directory
-    remote_path = remote_path.replace('~/', '').replace('~', '')
-    cmd = ['sshfs', remote_path, arguments.mountpoint, '-o',
-           'UserKnownHostsFile=/dev/null', '-o',
-           'StrictHostKeyChecking=no']
-    timeout = None
-    if 'SSHPASS' in env:
-        cmd += ['-o', 'password_stdin']
-        kwargs['input'] = env['SSHPASS'].encode()
-    elif 'SSHKEY' in env:
-        cmd += ['-o', 'IdentityFile=$SSHKEY']
-        timeout = TIMEOUT
-    else:
-        raise ValueError('mount requires either SSHPASS or SSHKEY in env')
-    subprocess.run(cmd, check=True, env=env, timeout=timeout, **kwargs)
-
-
-def subcommand_umount(arguments):
-    """Show repository information."""
-    run(['umount', arguments.mountpoint])
-
-
-def validate_mountpoint(mountpoint):
-    """Check that the folder is empty, and create it if it doesn't exist"""
-    if os.path.exists(mountpoint):
-        if _is_mounted(mountpoint):
-            raise AlreadyMountedError('Mountpoint %s already mounted' %
-                                      mountpoint)
-        if os.listdir(mountpoint) or not os.path.isdir(mountpoint):
-            raise ValueError('Mountpoint %s is not an empty directory' %
-                             mountpoint)
-    else:
-        os.makedirs(mountpoint)
-
-
-def _is_mounted(mountpoint):
-    """Return boolean whether a local directory is a mountpoint."""
-    cmd = ['mountpoint', '-q', mountpoint]
-    # mountpoint exits with status non-zero if it didn't find a mountpoint
-    try:
-        subprocess.run(cmd, check=True)
-        return True
-    except subprocess.CalledProcessError:
-        return False
-
-
-def subcommand_is_mounted(arguments):
-    print(json.dumps(_is_mounted(arguments.mountpoint)))
 
 
 def subcommand_list_repo(arguments):

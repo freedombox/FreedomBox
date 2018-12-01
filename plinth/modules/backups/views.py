@@ -63,9 +63,6 @@ class IndexView(TemplateView):
     """View to show list of archives."""
     template_name = 'backups.html'
 
-    def get_remote_archives(self):
-        return {}  # uuid --> archive list
-
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)

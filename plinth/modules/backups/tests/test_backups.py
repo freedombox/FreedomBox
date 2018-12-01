@@ -28,7 +28,7 @@ from plinth.modules import backups
 from plinth.modules.backups.repository import BorgRepository, SshBorgRepository
 from plinth import actions
 
-from . import config
+from plinth.tests import config as test_config
 
 euid = os.geteuid()
 
@@ -42,17 +42,20 @@ class TestBackups(unittest.TestCase):
         cls.action_directory = tempfile.TemporaryDirectory()
         cls.backup_directory = tempfile.TemporaryDirectory()
         cls.data_directory = os.path.join(os.path.dirname(
-            os.path.realpath(__file__)), 'data')
+            os.path.realpath(__file__)), 'backup_data')
+        cls.actions_dir_factory = cfg.actions_dir
         cfg.actions_dir = cls.action_directory.name
-        actions_dir = os.path.join(os.path.dirname(__file__), '..', '..',
-                                   'actions')
+        actions_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..',
+                                   '..', 'actions')
         shutil.copy(os.path.join(actions_dir, 'backups'), cfg.actions_dir)
+        shutil.copy(os.path.join(actions_dir, 'sshfs'), cfg.actions_dir)
 
     @classmethod
     def tearDownClass(cls):
         """Cleanup after all the tests are completed."""
         cls.action_directory.cleanup()
         cls.backup_directory.cleanup()
+        cfg.actions_dir = cls.actions_dir_factory
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_nonexisting_repository(self):
@@ -79,7 +82,7 @@ class TestBackups(unittest.TestCase):
         self.assertTrue('encryption' in info)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_create_and_delete_archive(self):
+    def test_create_export_delete_archive(self):
         """
         - Create a repo
         - Create an archive
@@ -104,18 +107,19 @@ class TestBackups(unittest.TestCase):
         content = repository.list_archives()
         self.assertEquals(len(content), 0)
 
-    @unittest.skipUnless(euid == 0 and config.backups_ssh_path,
+    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
                          'Needs to be root and ssh credentials provided')
     def test_ssh_mount(self):
         """Test (un)mounting if credentials for a remote location are given"""
         credentials = self.get_credentials()
         if not credentials:
             return
-        ssh_path = config.backups_ssh_path
+        ssh_path = test_config.backups_ssh_path
 
         ssh_repo = SshBorgRepository(uuid='plinth_test_sshfs',
                                      path=ssh_path,
-                                     credentials=credentials)
+                                     credentials=credentials,
+                                     automount=False)
         ssh_repo.mount()
         self.assertTrue(ssh_repo.is_mounted)
         ssh_repo.umount()
@@ -141,8 +145,8 @@ class TestBackups(unittest.TestCase):
         Return an empty dict if no valid access params are found.
         """
         credentials = {}
-        if config.backups_ssh_password:
-            credentials['ssh_password'] = config.backups_ssh_password
-        elif config.backups_ssh_keyfile:
-            credentials['ssh_keyfile'] = config.backups_ssh_keyfile
+        if test_config.backups_ssh_password:
+            credentials['ssh_password'] = test_config.backups_ssh_password
+        elif test_config.backups_ssh_keyfile:
+            credentials['ssh_keyfile'] = test_config.backups_ssh_keyfile
         return credentials

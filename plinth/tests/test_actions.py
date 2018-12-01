@@ -43,6 +43,7 @@ class TestActions(unittest.TestCase):
     def setUpClass(cls):
         """Initial setup for all the classes."""
         cls.action_directory = tempfile.TemporaryDirectory()
+        cls.actions_dir_factory = cfg.actions_dir
         cfg.actions_dir = cls.action_directory.name
         actions_dir = os.path.join(os.path.dirname(__file__), '..', '..',
             'actions')
@@ -56,6 +57,7 @@ class TestActions(unittest.TestCase):
     def tearDownClass(cls):
         """Cleanup after all the tests are completed."""
         cls.action_directory.cleanup()
+        cfg.actions_dir = cls.actions_dir_factory
 
     def notest_run_as_root(self):
         """1. Privileged actions run as root. """
