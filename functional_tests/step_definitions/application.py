@@ -221,12 +221,12 @@ def set_mediawiki_admin_password(browser, password):
 
 
 @when(parsers.parse('I enable message archive management'))
-def set_mediawiki_admin_password(browser):
+def mediawiki_enable_archive_management(browser):
     application.enable_ejabberd_message_archive_management(browser)
 
 
 @when(parsers.parse('I disable message archive management'))
-def set_mediawiki_admin_password(browser):
+def mediawiki_disable_archive_management(browser):
     application.disable_ejabberd_message_archive_management(browser)
 
 

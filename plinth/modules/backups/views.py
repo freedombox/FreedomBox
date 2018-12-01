@@ -90,18 +90,11 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         context['subsubmenu'] = subsubmenu
         return context
 
-    def get_initial(self):
-        """Return the initial data to use for forms on this view."""
-        initial = super().get_initial()
-        initial['name'] = 'FreedomBox_backup_' + datetime.now().strftime(
-            '%Y-%m-%d:%H:%M')
-        return initial
-
     def form_valid(self, form):
         """Create the archive on valid form submission."""
         repository = get_repository(form.cleaned_data['repository'])
-        repository.create_archive(form.cleaned_data['name'],
-                                  form.cleaned_data['selected_apps'])
+        name = datetime.now().strftime('%Y-%m-%d:%H:%M')
+        repository.create_archive(name, form.cleaned_data['selected_apps'])
         return super().form_valid(form)
 
 
@@ -293,8 +286,7 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             repository.get_info()
         except BorgRepositoryDoesNotExistError:
             repository.create_repository(form.cleaned_data['encryption'])
-        repository.save(
-            store_credentials=form.cleaned_data['store_credentials'])
+        repository.save(store_credentials=True)
         return super().form_valid(form)
 
 

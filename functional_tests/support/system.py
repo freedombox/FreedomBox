@@ -187,14 +187,20 @@ def dynamicdns_change_config(browser):
     submit(browser)
 
 
+def backup_delete_root_archives(browser):
+    """Delete all archives of the root borg repository"""
+    browser.visit(default_url + '/plinth/sys/backups/')
+    path = "//a[starts-with(@href,'/plinth/sys/backups/delete/root/')]"
+    while browser.find_by_xpath(path):
+        browser.find_by_xpath(path).first.click()
+        with wait_for_page_update(browser,
+                                  expected_url='/plinth/sys/backups/'):
+            submit(browser)
+
+
 def backup_create(browser, app_name):
     browser.visit(default_url)
     application.install(browser, 'backups')
-    delete = browser.find_link_by_href(
-        '/plinth/sys/backups/delete/root/_functional_test_' + app_name + '/')
-    if delete:
-        delete.first.click()
-        submit(browser)
 
     browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
     browser.find_by_id('id_backups-name').fill('_functional_test_' + app_name)
@@ -210,9 +216,9 @@ def backup_create(browser, app_name):
 def backup_restore(browser, app_name):
     browser.visit(default_url)
     nav_to_module(browser, 'backups')
-    browser.find_link_by_href(
-        '/plinth/sys/backups/restore-archive/root/_functional_test_' +
-        app_name + '/').first.click()
+    path = "//a[starts-with(@href,'/plinth/sys/backups/restore-archive/root/')]"
+    # assume that want to restore the last (most recently created) backup
+    browser.find_by_xpath(path).last.click()
     with wait_for_page_update(browser, expected_url='/plinth/sys/backups/'):
         submit(browser)
 

@@ -19,12 +19,10 @@ Forms for backups module.
 """
 
 from django import forms
-from django.core import validators
 from django.core.validators import FileExtensionValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from plinth.utils import format_lazy
-from plinth import cfg
 
 from . import api, network_storage, ROOT_REPOSITORY_NAME
 
@@ -54,12 +52,6 @@ def _get_repository_choices():
 
 class CreateArchiveForm(forms.Form):
     repository = forms.ChoiceField()
-    name = forms.CharField(
-        label=_('Archive name'), strip=True,
-        help_text=_('Name for new backup archive.'), validators=[
-            validators.RegexValidator(r'^[^/]+$', _('Invalid archive name'))
-        ])
-
     selected_apps = forms.MultipleChoiceField(
         label=_('Included apps'), help_text=_('Apps to include in the backup'),
         widget=forms.CheckboxSelectMultiple)
@@ -98,7 +90,7 @@ class UploadForm(forms.Form):
 class AddRepositoryForm(forms.Form):
     repository = forms.CharField(
         label=_('SSH Repository Path'), strip=True,
-        help_text=_('Path of the new repository. Example: '
+        help_text=_('Path of a new or existing repository. Example: '
                     '<i>user@host:~/path/to/repo/</i>'))
     ssh_password = forms.CharField(
         label=_('SSH server password'), strip=True,
@@ -124,14 +116,6 @@ class AddRepositoryForm(forms.Form):
         label=_('Confirm Passphrase'),
         help_text=_('Repeat the passphrase.'),
         widget=forms.PasswordInput(),
-        required=False
-    )
-    store_credentials = forms.BooleanField(
-        label=_('Store passwords on FreedomBox'),
-        help_text=format_lazy(
-            _('Store the passwords on your {box_name}.'
-              '<br />You need to store passwords if you want to run '
-              'recurrent backups.'), box_name=_(cfg.box_name)),
         required=False
     )
 

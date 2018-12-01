@@ -21,7 +21,7 @@ import time
 from pytest import fixture
 from pytest_bdd import given, parsers, then, when
 
-from support import system
+from support import config, system
 
 language_codes = {
     'Deutsch': 'de',
@@ -178,6 +178,8 @@ def dynamicdns_has_original_config(browser):
 
 @when(parsers.parse('I create a backup of the {app_name:w} app data'))
 def backup_create(browser, app_name):
+    if config.getboolean('DEFAULT', 'delete_root_backup_archives'):
+        system.backup_delete_root_archives(browser)
     system.backup_create(browser, app_name)
 
 

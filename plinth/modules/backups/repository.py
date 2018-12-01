@@ -233,12 +233,17 @@ class SshBorgRepository(BorgRepository):
         return storage
 
     def create_repository(self, encryption):
+        """Initialize / create a borg repository."""
         if encryption not in SUPPORTED_BORG_ENCRYPTION:
             raise ValueError('Unsupported encryption: %s' % encryption)
         self._run('backups', ['init', '--path', self.path, '--encryption',
                               encryption])
 
     def save(self, store_credentials=True):
+        """
+        Save the repository in network_storage (kvstore).
+        - store_credentials: Boolean whether credentials should be stored.
+        """
         storage = self._get_network_storage_format(store_credentials)
         self.uuid = network_storage.update_or_add(storage)
 
@@ -314,6 +319,7 @@ def get_ssh_repositories():
 
 
 def get_repository(uuid):
+    """Get a repository (BorgRepository or SshBorgRepository)"""
     if uuid == ROOT_REPOSITORY_UUID:
         return BorgRepository(path=ROOT_REPOSITORY)
     else:
