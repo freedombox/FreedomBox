@@ -64,7 +64,7 @@ def setup(helper, old_version=None):
                                                            ROOT_REPOSITORY])
 
 
-def _backup_handler(packet):
+def _backup_handler(packet, encryption_passphrase=None):
     """Performs backup operation on packet."""
     if not os.path.exists(MANIFESTS_FOLDER):
         os.makedirs(MANIFESTS_FOLDER)
@@ -83,9 +83,10 @@ def _backup_handler(packet):
 
     paths = packet.directories + packet.files
     paths.append(manifest_path)
-    actions.superuser_run(
-        'backups', ['create-archive', '--path', packet.path, '--paths'] +
-        paths)
+    arguments = ['create-archive', '--path', packet.path, '--paths'] + paths
+    if encryption_passphrase:
+        arguments += ['--encryption-passphrase', encryption_passphrase]
+    actions.superuser_run('backups', arguments)
 
 
 def get_exported_archive_apps(path):
@@ -104,13 +105,15 @@ def _restore_exported_archive_handler(packet):
                           input=locations_data.encode())
 
 
-def restore_archive_handler(packet):
+def restore_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
-    actions.superuser_run('backups', ['restore-archive', '--path',
-                                      packet.path, '--destination', '/'],
-                          input=locations_data.encode())
+    arguments = ['restore-archive', '--path', packet.path, '--destination',
+                 '/']
+    if encryption_passphrase:
+        arguments += ['--encryption-passphrase', encryption_passphrase]
+    actions.superuser_run('backups', arguments, input=locations_data.encode())
 
 
 def restore_from_upload(path, apps=None):

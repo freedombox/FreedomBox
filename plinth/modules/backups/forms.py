@@ -25,6 +25,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from plinth.utils import format_lazy
 
 from . import api, network_storage, ROOT_REPOSITORY_NAME
+from .errors import BorgRepositoryDoesNotExistError
+from .repository import SshBorgRepository
 
 
 def _get_app_choices(apps):
@@ -119,6 +121,15 @@ class AddRepositoryForm(forms.Form):
         required=False
     )
 
+    def get_credentials(self):
+        credentials = {}
+        for field_name in ["ssh_password", "encryption_passphrase"]:
+            field_value = self.cleaned_data.get(field_name, None)
+            if field_value:
+                credentials[field_name] = field_value
+
+        return credentials
+
     def clean(self):
         cleaned_data = super(AddRepositoryForm, self).clean()
         passphrase = cleaned_data.get("encryption_passphrase")
@@ -128,3 +139,14 @@ class AddRepositoryForm(forms.Form):
             raise forms.ValidationError(
                 "The entered encryption passphrases do not match"
             )
+
+        path = cleaned_data.get("repository")
+        credentials = self.get_credentials()
+        self.repository = SshBorgRepository(path=path, credentials=credentials)
+        try:
+            self.repository.get_info()
+        except BorgRepositoryDoesNotExistError:
+            pass
+        except Exception as err:
+            msg = _('Accessing the remote repository failed. Details: %(err)s')
+            raise forms.ValidationError(msg, params={'err': str(err)})

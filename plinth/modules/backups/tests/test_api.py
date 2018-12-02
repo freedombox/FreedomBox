@@ -234,7 +234,7 @@ class TestBackupProcesses(unittest.TestCase):
         packet.apps[1].run_hook = MagicMock()
         handler = MagicMock()
         api._run_operation(handler, packet)
-        handler.assert_has_calls([call(packet)])
+        handler.assert_has_calls([call(packet, encryption_passphrase=None)])
 
         calls = [call('backup_pre', packet), call('backup_post', packet)]
         packet.apps[0].run_hook.assert_has_calls(calls)

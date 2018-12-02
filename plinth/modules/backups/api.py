@@ -162,7 +162,8 @@ def restore_full(restore_handler):
     _switch_to_subvolume(subvolume)
 
 
-def backup_apps(backup_handler, path, app_names=None):
+def backup_apps(backup_handler, path, app_names=None,
+                encryption_passphrase=None):
     """Backup data belonging to a set of applications."""
     if not app_names:
         apps = get_all_apps_for_backup()
@@ -180,7 +181,8 @@ def backup_apps(backup_handler, path, app_names=None):
         snapshotted = False
 
     packet = Packet('backup', 'apps', backup_root, apps, path)
-    _run_operation(backup_handler, packet)
+    _run_operation(backup_handler, packet,
+                   encryption_passphrase=encryption_passphrase)
 
     if snapshotted:
         _delete_snapshot(snapshot)
@@ -190,7 +192,7 @@ def backup_apps(backup_handler, path, app_names=None):
 
 
 def restore_apps(restore_handler, app_names=None, create_subvolume=True,
-                 backup_file=None):
+                 backup_file=None, encryption_passphrase=None):
     """Restore data belonging to a set of applications."""
     if not app_names:
         apps = get_all_apps_for_backup()
@@ -208,7 +210,8 @@ def restore_apps(restore_handler, app_names=None, create_subvolume=True,
         subvolume = False
 
     packet = Packet('restore', 'apps', restore_root, apps, backup_file)
-    _run_operation(restore_handler, packet)
+    _run_operation(restore_handler, packet,
+                   encryption_passphrase=encryption_passphrase)
 
     if subvolume:
         _switch_to_subvolume(subvolume)
@@ -479,8 +482,8 @@ def _run_hooks(hook, packet):
         app.run_hook(hook, packet)
 
 
-def _run_operation(handler, packet):
+def _run_operation(handler, packet, encryption_passphrase=None):
     """Run handler and pre/post hooks for backup/restore operations."""
     _run_hooks(packet.operation + '_pre', packet)
-    handler(packet)
+    handler(packet, encryption_passphrase=encryption_passphrase)
     _run_hooks(packet.operation + '_post', packet)

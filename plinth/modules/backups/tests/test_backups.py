@@ -22,6 +22,7 @@ import os
 import shutil
 import tempfile
 import unittest
+import uuid
 
 from plinth import cfg
 from plinth.modules import backups
@@ -35,6 +36,13 @@ euid = os.geteuid()
 
 class TestBackups(unittest.TestCase):
     """Test creating, reading and deleting a repository"""
+    # try to access a non-existing url and a URL that exists but does not
+    # grant access
+    nonexisting_repo_url = "user@%s.com.au:~/repo" % str(uuid.uuid1())
+    inaccessible_repo_url = "user@heise.de:~/repo"
+    dummy_credentials = {
+        'ssh_password': 'invalid_password'
+    }
 
     @classmethod
     def setUpClass(cls):
@@ -116,14 +124,14 @@ class TestBackups(unittest.TestCase):
             return
         ssh_path = test_config.backups_ssh_path
 
-        ssh_repo = SshBorgRepository(uuid='plinth_test_sshfs',
-                                     path=ssh_path,
-                                     credentials=credentials,
-                                     automount=False)
-        ssh_repo.mount()
-        self.assertTrue(ssh_repo.is_mounted)
-        ssh_repo.umount()
-        self.assertFalse(ssh_repo.is_mounted)
+        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
+                                       path=ssh_path,
+                                       credentials=credentials,
+                                       automount=False)
+        repository.mount()
+        self.assertTrue(repository.is_mounted)
+        repository.umount()
+        self.assertFalse(repository.is_mounted)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_ssh_create_encrypted_repository(self):
@@ -134,10 +142,31 @@ class TestBackups(unittest.TestCase):
         # using SshBorgRepository to provide credentials because
         # BorgRepository does not allow creating encrypted repositories
         # TODO: find better way to test encryption
-        repository = SshBorgRepository(path=encrypted_repo,
-                                       credentials=credentials)
+        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
+                                       path=encrypted_repo,
+                                       credentials=credentials,
+                                       automount=False)
         repository.create_repository('repokey')
         self.assertTrue(bool(repository.get_info()))
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_access_nonexisting_url(self):
+        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
+                                       path=self.nonexisting_repo_url,
+                                       credentials=self.dummy_credentials,
+                                       automount=False)
+        with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
+            repository.get_info()
+
+    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    def test_inaccessible_repo_url(self):
+        """Test accessing an existing URL with wrong credentials"""
+        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
+                                       path=self.inaccessible_repo_url,
+                                       credentials=self.dummy_credentials,
+                                       automount=False)
+        with self.assertRaises(backups.errors.BorgError):
+            repository.get_info()
 
     def get_credentials(self):
         """

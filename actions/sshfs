@@ -42,6 +42,8 @@ def parse_arguments():
     mount.add_argument('--mountpoint', help='Local mountpoint', required=True)
     mount.add_argument('--path', help='Remote ssh path to mount',
                        required=True)
+    mount.add_argument('--ssh-keyfile', help='Path of private ssh key',
+                       default=None, required=False)
     umount = subparsers.add_parser('umount',
                                    help='unmount an ssh filesystem')
     umount.add_argument('--mountpoint', help='Mountpoint to unmount',
@@ -55,16 +57,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def get_env(arguments, read_input=True):
-    """Create encryption and ssh kwargs out of given arguments"""
-    env = dict(os.environ)
-    password = read_password() if read_input else None
-    if password:
-        env['SSHPASS'] = password
-        env['BORG_RSH'] = 'sshpass -e ssh -o StrictHostKeyChecking=no'
-    return env
-
-
 def subcommand_mount(arguments):
     """Show repository information."""
     try:
@@ -72,7 +64,6 @@ def subcommand_mount(arguments):
     except AlreadyMountedError:
         return
 
-    env = get_env(arguments)
     remote_path = arguments.path
     kwargs = {}
     # the shell would expand ~/ to the local home directory
@@ -80,16 +71,15 @@ def subcommand_mount(arguments):
     cmd = ['sshfs', remote_path, arguments.mountpoint, '-o',
            'UserKnownHostsFile=/dev/null', '-o',
            'StrictHostKeyChecking=no']
-    timeout = None
-    if 'SSHPASS' in env:
-        cmd += ['-o', 'password_stdin']
-        kwargs['input'] = env['SSHPASS'].encode()
-    elif 'SSHKEY' in env:
+    if arguments.ssh_keyfile:
         cmd += ['-o', 'IdentityFile=$SSHKEY']
-        timeout = TIMEOUT
     else:
-        raise ValueError('mount requires either SSHPASS or SSHKEY in env')
-    subprocess.run(cmd, check=True, env=env, timeout=timeout, **kwargs)
+        password = read_password()
+        if not password:
+            raise ValueError('mount requires either a password or ssh_keyfile')
+        cmd += ['-o', 'password_stdin']
+        kwargs['input'] = password.encode()
+    subprocess.run(cmd, check=True, timeout=TIMEOUT, **kwargs)
 
 
 def subcommand_umount(arguments):

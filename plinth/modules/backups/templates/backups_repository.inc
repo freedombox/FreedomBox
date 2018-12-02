@@ -99,7 +99,11 @@
       {% endfor %}
 
       {% if not repository.error and not repository.archives %}
-        <p>{% trans 'No archives currently exist.' %}</p>
+        <tr>
+          <td>
+            <p>{% trans 'No archives currently exist.' %}</p>
+          </td>
+        </tr>
       {% endif %}
 
     {% endif %}

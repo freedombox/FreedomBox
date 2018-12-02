@@ -235,6 +235,7 @@ class RestoreArchiveView(BaseRestoreView):
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         repository = get_repository(self.kwargs['uuid'])
+        import ipdb; ipdb.set_trace()
         repository.restore_archive(self.kwargs['name'],
                                    form.cleaned_data['selected_apps'])
         return super().form_valid(form)
@@ -269,24 +270,12 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
         return context
 
     def form_valid(self, form):
-        """Restore files from the archive on valid form submission."""
-        path = form.cleaned_data['repository']
-        credentials = {}
-        encryption_passphrase = form.cleaned_data['encryption_passphrase']
-        if encryption_passphrase:
-            credentials['encryption_passphrase'] = encryption_passphrase
-        if form.cleaned_data['ssh_password']:
-            credentials['ssh_password'] = form.cleaned_data['ssh_password']
-        # TODO: add ssh_keyfile
-        # ssh_keyfile = form.cleaned_data['ssh_keyfile']
-
-        repository = SshBorgRepository(path=path, credentials=credentials)
-
+        """Create and store the repository."""
         try:
-            repository.get_info()
+            form.repository.get_info()
         except BorgRepositoryDoesNotExistError:
-            repository.create_repository(form.cleaned_data['encryption'])
-        repository.save(store_credentials=True)
+            form.repository.create_repository(form.cleaned_data['encryption'])
+        form.repository.save(store_credentials=True)
         return super().form_valid(form)
 
 
@@ -322,12 +311,12 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Remove Repository')
-        context['repository'] = SshBorgRepository(uuid=uuid)
+        context['repository'] = SshBorgRepository(uuid=uuid, automount=False)
         return context
 
     def post(self, request, uuid):
         """Delete the archive."""
-        repository = SshBorgRepository(uuid)
+        repository = SshBorgRepository(uuid, automount=False)
         repository.remove_repository()
         messages.success(request, _('Repository removed. The remote backup '
                                     'itself was not deleted.'))
@@ -343,7 +332,7 @@ def umount_repository(request, uuid):
 
 
 def mount_repository(request, uuid):
-    repository = SshBorgRepository(uuid=uuid)
+    repository = SshBorgRepository(uuid=uuid, automount=False)
     try:
         repository.mount()
     except Exception as err:
