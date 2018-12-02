@@ -96,7 +96,9 @@ class BorgRepository(object):
 
     def list_archives(self):
         output = self.run(['list-repo', '--path', self.repo_path])
-        return json.loads(output)['archives']
+        archives = json.loads(output)['archives']
+        return sorted(archives, key=lambda archive: archive['start'],
+                      reverse=True)
 
     def get_view_content(self):
         """Get archives with additional information as needed by the view"""

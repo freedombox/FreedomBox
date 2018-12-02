@@ -203,7 +203,6 @@ def backup_create(browser, app_name):
     application.install(browser, 'backups')
 
     browser.find_link_by_href('/plinth/sys/backups/create/').first.click()
-    browser.find_by_id('id_backups-name').fill('_functional_test_' + app_name)
     for app in browser.find_by_css('input[type=checkbox]'):
         app.uncheck()
 
@@ -236,10 +235,20 @@ def backup_upload_and_restore(browser, app_name, downloaded_file_path):
         submit(browser)
 
 
-def download_file_logged_in(browser, url_path, app_names, suffix=''):
+def download_latest_backup(browser):
+    nav_to_module(browser, 'backups')
+    path = "//a[starts-with(@href,'/plinth/sys/backups/download/root')]"
+    ele = browser.driver.find_elements_by_xpath(path)[0]
+    url = ele.get_attribute('href')
+    file_path = download_file_logged_in(browser, url, suffix='.tar.gz')
+    return file_path
+
+
+def download_file_logged_in(browser, url, suffix=''):
     """Download a file from Plinth, pretend being logged in via cookies"""
-    current_url = urlparse(browser.url)
-    url = "%s://%s%s" % (current_url.scheme, current_url.netloc, url_path)
+    if not url.startswith("http"):
+        current_url = urlparse(browser.url)
+        url = "%s://%s%s" % (current_url.scheme, current_url.netloc, url)
     cookies = browser.driver.get_cookies()
     cookies = {cookie["name"]: cookie["value"] for cookie in cookies}
     response = requests.get(url, verify=False, cookies=cookies)

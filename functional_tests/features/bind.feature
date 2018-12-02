@@ -67,6 +67,6 @@ Scenario: Download, upload and restore a backup
   When I set bind forwarders to 1.1.1.1
   And I create a backup of the bind app data
   And I set bind forwarders to 1.0.0.1
-  And I download the bind app data backup
-  And I restore the downloaded bind app data backup
+  And I download the latest app data backup
+  And I restore the downloaded app data backup
   Then bind forwarders should be 1.1.1.1

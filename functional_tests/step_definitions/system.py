@@ -183,12 +183,9 @@ def backup_create(browser, app_name):
     system.backup_create(browser, app_name)
 
 
-@when(parsers.parse('I download the {app_name:w} app data backup'))
-def backup_download(browser, app_name, downloaded_file_info):
-    url = '/plinth/sys/backups/download/root/_functional_test_%s/' % \
-        app_name
-    file_path = system.download_file_logged_in(browser, url, app_name,
-                                               suffix='.tar.gz')
+@when(parsers.parse('I download the latest app data backup'))
+def backup_download(browser, downloaded_file_info):
+    file_path = system.download_latest_backup(browser)
     downloaded_file_info['path'] = file_path
 
 
@@ -197,7 +194,7 @@ def backup_restore(browser, app_name):
     system.backup_restore(browser, app_name)
 
 
-@when(parsers.parse('I restore the downloaded {app_name:w} app data backup'))
+@when(parsers.parse('I restore the downloaded app data backup'))
 def backup_restore_from_upload(browser, app_name, downloaded_file_info):
     path = downloaded_file_info["path"]
     try:

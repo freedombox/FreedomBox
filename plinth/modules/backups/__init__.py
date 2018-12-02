@@ -96,7 +96,7 @@ def get_exported_archive_apps(path):
     return output.splitlines()
 
 
-def _restore_exported_archive_handler(packet):
+def _restore_exported_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
     locations = {'directories': packet.directories, 'files': packet.files}
     locations_data = json.dumps(locations)
