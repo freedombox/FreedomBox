@@ -142,8 +142,9 @@ class AddRepositoryForm(forms.Form):
 
         path = cleaned_data.get("repository")
         credentials = self.get_credentials()
-        self.repository = SshBorgRepository(path=path, credentials=credentials)
         try:
+            self.repository = SshBorgRepository(path=path,
+                                                credentials=credentials)
             self.repository.get_info()
         except BorgRepositoryDoesNotExistError:
             pass

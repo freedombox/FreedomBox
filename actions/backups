@@ -45,7 +45,7 @@ def parse_arguments():
         'setup', help='Create repository if it does not already exist')
 
     init = subparsers.add_parser('init', help='Initialize a repository')
-    init.add_argument('--encryption', help='Enryption of the repository',
+    init.add_argument('--encryption', help='Encryption of the repository',
                       required=True)
 
     info = subparsers.add_parser('info', help='Show repository information')
@@ -151,7 +151,6 @@ def _extract(archive_path, destination, locations=None, env=None):
     """Extract archive contents."""
     if not env:
         env = dict(os.environ)
-    # TODO: is LANG necessary?
     env['LANG'] = 'C.UTF-8'
 
     prev_dir = os.getcwd()

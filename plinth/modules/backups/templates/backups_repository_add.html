@@ -31,10 +31,11 @@
     {{ form|bootstrap }}
 
     <input type="submit" class="btn btn-primary"
-           value="{% trans "Submit" %}"/>
-    <input type="submit" class="btn btn-secondary" value="Test Connection"
-           title="{% trans 'Test Connection to Repository' %}"
-           formaction="{% url 'backups:repository-test' %}" />
+           value="{% trans "Create Repository" %}"/>
+    <a class="abort btn btn-sm btn-default"
+       href="{% url 'backups:index' %}">
+      {% trans "Abort" %}
+    </a>
   </form>
 
 {% endblock %}

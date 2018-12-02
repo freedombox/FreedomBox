@@ -21,6 +21,7 @@ Remote and local Borg backup repositories
 import json
 import logging
 import os
+from uuid import uuid1
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -30,7 +31,7 @@ from plinth.errors import ActionError
 from . import api, network_storage, _backup_handler, ROOT_REPOSITORY_NAME, \
         ROOT_REPOSITORY_UUID, ROOT_REPOSITORY, restore_archive_handler, \
         zipstream
-from .errors import BorgError, BorgRepositoryDoesNotExistError
+from .errors import BorgError, BorgRepositoryDoesNotExistError, SshfsError
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +54,17 @@ KNOWN_ERRORS = [{
         "errors": ["not a valid repository", "does not exist"],
         "message": _("Repository not found"),
         "raise_as": BorgRepositoryDoesNotExistError,
+    },
+    {
+        "errors": [("passphrase supplied in BORG_PASSPHRASE or by "
+                    "BORG_PASSCOMMAND is incorrect")],
+        "message": _("Incorrect encryption passphrase"),
+        "raise_as": BorgError,
+    },
+    {
+        "errors": [("Connection reset by peer")],
+        "message": _("SSH access denied"),
+        "raise_as": SshfsError,
     }]
 
 
@@ -192,23 +204,23 @@ class SshBorgRepository(BorgRepository):
         Provide a uuid to instanciate an existing repository,
         or 'ssh_path' and 'credentials' for a new repository.
         """
-        if uuid:
-            self.uuid = uuid
-            # If all data are given, instanciate right away.
-            if path and credentials:
-                self._path = path
-                self.credentials = credentials
-            else:
-                self._load_from_kvstore()
-        # No uuid given: new instance.
-        elif path and credentials:
+        is_new_instance = not bool(uuid)
+        if not uuid:
+            uuid = str(uuid1())
+        self.uuid = uuid
+
+        if path and credentials:
             self._path = path
             self.credentials = credentials
         else:
-            raise ValueError('Invalid arguments.')
+            if is_new_instance:
+                # Either a uuid, or both a path and credentials must be given
+                raise ValueError('Invalid arguments.')
+            else:
+                self._load_from_kvstore()
+
         if automount:
-            if self.uuid and not self.is_mounted:
-                self.mount()
+            self.mount()
 
     @property
     def repo_path(self):
@@ -273,6 +285,9 @@ class SshBorgRepository(BorgRepository):
         self.uuid = network_storage.update_or_add(storage)
 
     def mount(self):
+        if self.is_mounted:
+            return
+
         arguments = ['mount', '--mountpoint', self.mountpoint, '--path',
                      self._path]
         arguments, kwargs = self._append_sshfs_arguments(arguments,
@@ -280,6 +295,8 @@ class SshBorgRepository(BorgRepository):
         self._run('sshfs', arguments, kwargs=kwargs)
 
     def umount(self):
+        if not self.is_mounted:
+            return
         self._run('sshfs', ['umount', '--mountpoint', self.mountpoint])
 
     def remove_repository(self):

@@ -48,8 +48,8 @@ def parse_arguments():
                                    help='unmount an ssh filesystem')
     umount.add_argument('--mountpoint', help='Mountpoint to unmount',
                         required=True)
-    is_mounted = subparsers.add_parser('is-mounted',
-                                       help='Check whether an sshfs is mouned')
+    is_mounted = subparsers.add_parser(
+        'is-mounted', help='Check whether a mountpoint is mounted')
     is_mounted.add_argument('--mountpoint', help='Mountpoint to check',
                             required=True)
 
@@ -83,7 +83,7 @@ def subcommand_mount(arguments):
 
 
 def subcommand_umount(arguments):
-    """Show repository information."""
+    """Unmount a mountpoint."""
     run(['umount', arguments.mountpoint])
 
 

@@ -35,14 +35,14 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.views.generic import View, FormView, TemplateView
 
-from plinth.errors import PlinthError, ActionError
+from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
 from . import api, forms, SESSION_PATH_VARIABLE, ROOT_REPOSITORY
 from .repository import BorgRepository, SshBorgRepository, get_repository, \
         get_ssh_repositories
 from .decorators import delete_tmp_backup_file
-from .errors import BorgError, BorgRepositoryDoesNotExistError
+from .errors import BorgRepositoryDoesNotExistError
 
 logger = logging.getLogger(__name__)
 
@@ -235,7 +235,6 @@ class RestoreArchiveView(BaseRestoreView):
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""
         repository = get_repository(self.kwargs['uuid'])
-        import ipdb; ipdb.set_trace()
         repository.restore_archive(self.kwargs['name'],
                                    form.cleaned_data['selected_apps'])
         return super().form_valid(form)
@@ -277,30 +276,6 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             form.repository.create_repository(form.cleaned_data['encryption'])
         form.repository.save(store_credentials=True)
         return super().form_valid(form)
-
-
-class TestRepositoryView(TemplateView):
-    """View to create a new repository."""
-    template_name = 'backups_repository_test.html'
-
-    def post(self, request):
-        # TODO: add support for borg encryption and ssh keyfile
-        context = self.get_context_data()
-        credentials = {
-            'ssh_password': request.POST['backups-ssh_password'],
-        }
-        repository = SshBorgRepository(path=request.POST['backups-repository'],
-                                       credentials=credentials)
-
-        try:
-            repo_info = repository.get_info()
-            context["message"] = repo_info
-        except BorgError as err:
-            context["error"] = str(err)
-        except ActionError as err:
-            context["error"] = str(err)
-
-        return self.render_to_response(context)
 
 
 class RemoveRepositoryView(SuccessMessageMixin, TemplateView):

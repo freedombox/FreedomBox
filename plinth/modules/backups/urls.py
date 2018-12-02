@@ -23,7 +23,7 @@ from django.conf.urls import url
 from .views import IndexView, CreateArchiveView, AddRepositoryView, \
         DeleteArchiveView, DownloadArchiveView, RemoveRepositoryView, \
         mount_repository, umount_repository, UploadArchiveView, \
-        RestoreArchiveView, RestoreFromUploadView, TestRepositoryView
+        RestoreArchiveView, RestoreFromUploadView
 
 urlpatterns = [
     url(r'^sys/backups/$', IndexView.as_view(), name='index'),
@@ -39,8 +39,6 @@ urlpatterns = [
         RestoreFromUploadView.as_view(), name='restore-from-upload'),
     url(r'^sys/backups/repositories/add$',
         AddRepositoryView.as_view(), name='repository-add'),
-    url(r'^sys/backups/repositories/test/$',
-        TestRepositoryView.as_view(), name='repository-test'),
     url(r'^sys/backups/repositories/delete/(?P<uuid>[^/]+)/$',
         RemoveRepositoryView.as_view(), name='repository-remove'),
     url(r'^sys/backups/repositories/mount/(?P<uuid>[^/]+)/$',

@@ -26,3 +26,8 @@ class BorgError(PlinthError):
 class BorgRepositoryDoesNotExistError(BorgError):
     """Borg access to a repository works but the repository does not exist"""
     pass
+
+
+class SshfsError(PlinthError):
+    """Generic sshfs errors"""
+    pass
