@@ -27,7 +27,7 @@ from plinth import service as service_module
 from plinth import action_utils, actions, cfg
 from plinth.errors import PlinthError
 from plinth.menu import main_menu
-from plinth.utils import format_lazy, is_user_admin
+from plinth.utils import format_lazy, import_from_gi, is_user_admin
 
 from .manifest import backup
 
@@ -75,25 +75,10 @@ def get_disks():
                 disk_from_df.update(disk_from_lsblk)
                 combined_list.append(disk_from_df)
 
+    for disk in combined_list:
+        disk['is_root_device'] = is_root_device(disk)
+
     return combined_list
-
-
-def get_disk_info(mountpoint, request):
-    """Get information about the free space of a drive"""
-    if not is_user_admin(request, cached=True):
-        raise PermissionError
-    disks = get_disks()
-    list_root = [disk for disk in disks if disk['mountpoint'] == mountpoint]
-    if not list_root:
-        raise PlinthError
-    percent_used = list_root[0]['percent_used']
-    free_bytes = list_root[0]['free']
-    free_gib = free_bytes / (1024**3)
-    return {
-        "percent_used": percent_used,
-        "free_bytes": free_bytes,
-        "free_gib": free_gib
-    }
 
 
 def _get_disks_from_df():
@@ -130,7 +115,9 @@ def _get_disks_from_df():
 
 def _get_disks_from_lsblk():
     """Return the list of disks and other information from 'lsblk'."""
-    command = ['lsblk', '--json', '--output', 'kname,pkname,mountpoint,type']
+    command = [
+        'lsblk', '--json', '--output', 'label,kname,pkname,mountpoint,type'
+    ]
     try:
         process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
     except subprocess.CalledProcessError as exception:
@@ -145,16 +132,35 @@ def _get_disks_from_lsblk():
     return disks
 
 
+def get_disk_info(mountpoint, request):
+    """Get information about the free space of a drive"""
+    if not is_user_admin(request, cached=True):
+        raise PermissionError
+    disks = get_disks()
+    list_root = [disk for disk in disks if disk['mountpoint'] == mountpoint]
+    if not list_root:
+        raise PlinthError
+    percent_used = list_root[0]['percent_used']
+    free_bytes = list_root[0]['free']
+    free_gib = free_bytes / (1024**3)
+    return {
+        "percent_used": percent_used,
+        "free_bytes": free_bytes,
+        "free_gib": free_gib
+    }
+
+
 def get_root_device(disks):
     """Return the root partition's device from list of partitions."""
-    devices = [
-        disk['dev_kname'] for disk in disks
-        if disk['mountpoint'] == '/' and disk['type'] == 'part'
-    ]
-    try:
-        return devices[0]
-    except IndexError:
-        return None
+    for disk in disks:
+        if is_root_device(disk):
+            return disk['dev_kname']
+    return None
+
+
+def is_root_device(disk):
+    """Return whether a given disk is a root device or not."""
+    return disk['mountpoint'] == '/' and disk['type'] == 'part'
 
 
 def is_expandable(device):
@@ -198,6 +204,49 @@ def format_bytes(size):
 
     size /= 1024**4
     return _('{disk_size:.1f} TiB').format(disk_size=size)
+
+
+def get_error_message(error):
+    """Return an error message given an exception."""
+    udisks = import_from_gi('UDisks', '2.0')
+    if error.matches(udisks.Error.quark(), udisks.Error.FAILED):
+        message = _('The operation failed.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.CANCELLED):
+        message = _('The operation was cancelled.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_UNMOUNTING):
+        message = _('The device is already unmounting.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_SUPPORTED):
+        message = _('The operation is not supported due to '
+                    'missing driver/tool support.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.TIMED_OUT):
+        message = _('The operation timed out.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.WOULD_WAKEUP):
+        message = _('The operation would wake up a disk that is '
+                    'in a deep-sleep state.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.DEVICE_BUSY):
+        message = _('Attempting to unmount a device that is busy.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_CANCELLED):
+        message = _('The operation has already been cancelled.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_AUTHORIZED) or \
+        error.matches(udisks.Error.quark(),
+                      udisks.Error.NOT_AUTHORIZED_CAN_OBTAIN) or \
+        error.matches(udisks.Error.quark(),
+                      udisks.Error.NOT_AUTHORIZED_DISMISSED):
+        message = _('Not authorized to perform the requested operation.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.ALREADY_MOUNTED):
+        message = _('The device is already mounted.')
+    elif error.matches(udisks.Error.quark(), udisks.Error.NOT_MOUNTED):
+        message = _('The device is not mounted.')
+    elif error.matches(udisks.Error.quark(),
+                       udisks.Error.OPTION_NOT_PERMITTED):
+        message = _('Not permitted to use the requested option.')
+    elif error.matches(udisks.Error.quark(),
+                       udisks.Error.MOUNTED_BY_OTHER_USER):
+        message = _('The device is mounted by another user.')
+    else:
+        message = error.message
+
+    return message
 
 
 def is_running():

@@ -34,7 +34,7 @@ from plinth.errors import PlinthError
 from plinth.modules import storage
 from plinth.utils import format_lazy
 
-from . import udisks2, get_disk_info
+from . import get_disk_info, get_error_message
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,6 @@ def index(request):
             'title': _('Storage'),
             'description': storage.description,
             'disks': disks,
-            'devices': udisks2.list_devices(),
             'manual_page': storage.manual_page,
             'expandable_root_size': expandable_root_size
         })
@@ -133,7 +132,7 @@ def eject(request, device_path):
             messages.success(request, _('Device can be safely unplugged.'))
     except Exception as exception:
         try:
-            message = udisks2.get_error_message(exception)
+            message = get_error_message(exception)
         except AttributeError:
             message = str(exception)
 

@@ -56,15 +56,18 @@
     <thead>
       <tr>
         <th>{% trans "Device" %}</th>
+        <th>{% trans "Label" %}</th>
         <th>{% trans "Mount Point" %}</th>
         <th>{% trans "Type" %}</th>
         <th>{% trans "Used" %}</th>
+        <th>{% trans "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
       {% for disk in disks %}
         <tr>
           <td>{{ disk.dev_kname }}</td>
+          <td>{{ disk.label|default_if_none:"" }}</td>
           <td>{{ disk.mount_point }}</td>
           <td>{{ disk.file_system_type }}</td>
           <td>
@@ -83,6 +86,18 @@
                     </div>
                   </div>
                   <div>{{ disk.used_str }} / {{ disk.size_str }}</div>
+          </td>
+          <td>
+            {% if not disk.is_root_device %}
+              <form class="form" method="post"
+                    action="{% url 'storage:eject' disk.dev_kname|urlencode:'' %}">
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="btn btn-sm btn-default glyphicon glyphicon-eject">
+                </button>
+              </form>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}
@@ -109,52 +124,6 @@
   {% block status %}
 
     {{ block.super }}
-
-    <h3>{% trans "Removable Devices" %}</h3>
-
-    {% if not devices %}
-      <p>
-        {% blocktrans trimmed %}
-          There are no additional storage devices attached.
-        {% endblocktrans %}
-      </p>
-    {% else %}
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <tr>
-            <th>{% trans "Device" %}</th>
-            <th>{% trans "Label" %}</th>
-            <th>{% trans "Mount Point" %}</th>
-            <th>{% trans "Type" %}</th>
-            <th>{% trans "Size" %}</th>
-            <th>{% trans "Actions" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for device in devices %}
-            <tr>
-              <td>{{ device.device }}</td>
-              <td>{{ device.label }}</td>
-              <td>{{ device.mount_points|join:', ' }}</td>
-              <td>{{ device.filesystem_type }}</td>
-              <td>{{ device.size }}</td>
-              <td>
-                {% if device.mount_points %}
-                  <form class="form" method="post"
-                        action="{% url 'storage:eject' device.device|urlencode:'' %}">
-                    {% csrf_token %}
-
-                    <button type="submit"
-                            class="btn btn-sm btn-default glyphicon glyphicon-eject">
-                    </button>
-                  </form>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% endif %}
 
   {% endblock %}
 {% endblock %}
