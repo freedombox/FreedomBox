@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-19 16:46-0500\n"
+"POT-Creation-Date: 2018-12-03 19:11-0500\n"
 "PO-Revision-Date: 2018-08-28 13:13+0000\n"
 "Last-Translator: Igor <f2404@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -470,8 +470,8 @@ msgstr ""
 #: plinth/modules/power/templates/power_restart.html:42
 #: plinth/modules/power/templates/power_shutdown.html:41
 #: plinth/modules/storage/templates/storage.html:48
-#: plinth/templates/service.html:42 plinth/templates/setup.html:44
-#: plinth/templates/simple_service.html:38
+#: plinth/templates/service-subsubmenu.html:45 plinth/templates/service.html:42
+#: plinth/templates/setup.html:44 plinth/templates/simple_service.html:38
 msgid "Learn more..."
 msgstr "Подробнее..."
 
@@ -761,7 +761,7 @@ msgstr ""
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:32
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:63
 #: plinth/modules/openvpn/templates/openvpn.html:127
-#: plinth/modules/snapshot/templates/snapshot.html:31
+#: plinth/modules/snapshot/templates/snapshot.html:30
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
 #: plinth/modules/tahoe/templates/tahoe-pre-setup.html:58
 #: plinth/modules/tor/templates/tor.html:96
@@ -1153,7 +1153,7 @@ msgstr "Запустить веб-клиент"
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:38
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #: plinth/modules/openvpn/templates/openvpn.html:119
-#: plinth/modules/snapshot/templates/snapshot.html:28
+#: plinth/modules/snapshot/templates/snapshot.html:27
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:43
 #: plinth/modules/tor/templates/tor.html:88 plinth/templates/service.html:79
 msgid "Configuration"
@@ -1794,7 +1794,6 @@ msgstr "Получить повторно"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:112
 #: plinth/modules/networks/templates/connection_show.html:63
-#: plinth/modules/snapshot/templates/snapshot_manage.html:55
 msgid "Delete"
 msgstr "Удалить"
 
@@ -2178,16 +2177,16 @@ msgstr "Режим приватности включен"
 msgid "Private mode disabled"
 msgstr "Режим приватности выключен"
 
-#: plinth/modules/minetest/__init__.py:46
+#: plinth/modules/minetest/__init__.py:52
 #: plinth/modules/minetest/manifest.py:25
 msgid "Minetest"
 msgstr "Minetest"
 
-#: plinth/modules/minetest/__init__.py:48
+#: plinth/modules/minetest/__init__.py:54
 msgid "Block Sandbox"
 msgstr "Песочница"
 
-#: plinth/modules/minetest/__init__.py:52
+#: plinth/modules/minetest/__init__.py:58
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -2905,9 +2904,8 @@ msgid "Interface"
 msgstr "Интерфейс"
 
 #: plinth/modules/networks/templates/connection_show.html:110
-#: plinth/modules/snapshot/templates/snapshot_delete.html:33
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:33
-#: plinth/modules/snapshot/templates/snapshot_manage.html:53
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:33
+#: plinth/modules/snapshot/templates/snapshot_manage.html:44
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:41
 msgid "Description"
 msgstr "Описание"
@@ -4341,67 +4339,44 @@ msgstr ""
 "Снимки программного обеспечения старше будут удаляться. Это не ограничивает "
 "количество создаваемых снимков программного обеспечения."
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:27
-msgid "Delete this snapshot permanently?"
-msgstr "Окончательно удалить этот снимок?"
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:27
+msgid "Delete the following snapshots permanently?"
+msgstr "Окончательно удалить этот снапшот?"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:31
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:31
-#: plinth/modules/snapshot/templates/snapshot_manage.html:51
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:31
+#: plinth/modules/snapshot/templates/snapshot_manage.html:42
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:39
 msgid "Number"
 msgstr "Номер"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:32
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:32
-#: plinth/modules/snapshot/templates/snapshot_manage.html:52
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:32
+#: plinth/modules/snapshot/templates/snapshot_manage.html:43
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:40
 msgid "Date"
 msgstr "Дата"
 
-#: plinth/modules/snapshot/templates/snapshot_delete.html:49
-#, python-format
-msgid "Delete Snapshot #%(number)s"
-msgstr "Удалить снимок %(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:27
-msgid "Delete the following snapshots permanently?"
-msgstr "Окончательно удалить этот снапшот?"
-
-#: plinth/modules/snapshot/templates/snapshot_delete_all.html:53
-#: plinth/modules/snapshot/views.py:156
+#: plinth/modules/snapshot/templates/snapshot_delete_selected.html:52
+#: plinth/modules/snapshot/templates/snapshot_manage.html:36
+#: plinth/modules/snapshot/views.py:157
 msgid "Delete Snapshots"
 msgstr "Удалить снапшот"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:33
+#: plinth/modules/snapshot/templates/snapshot_manage.html:32
 msgid "Create Snapshot"
 msgstr "Создать снимок"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:37
-msgid "Delete all the snapshots"
-msgstr "Удалить все снапшоты"
-
-#: plinth/modules/snapshot/templates/snapshot_manage.html:44
-msgid "Delete All"
-msgstr "Удалить все"
-
-#: plinth/modules/snapshot/templates/snapshot_manage.html:54
+#: plinth/modules/snapshot/templates/snapshot_manage.html:45
 msgid "Rollback"
 msgstr "Откат"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:65
+#: plinth/modules/snapshot/templates/snapshot_manage.html:56
 msgid "active"
 msgstr "активен"
 
-#: plinth/modules/snapshot/templates/snapshot_manage.html:74
+#: plinth/modules/snapshot/templates/snapshot_manage.html:65
 #, python-format
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Откат к снимку #%(number)s"
-
-#: plinth/modules/snapshot/templates/snapshot_manage.html:85
-#, python-format
-msgid "Delete snapshot #%(number)s"
-msgstr "Удалить снимок #%(number)s"
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Roll back the system to this snapshot?"
@@ -4429,38 +4404,37 @@ msgstr "Управление снапшотами"
 msgid "Created snapshot."
 msgstr "Создан снимок."
 
-#: plinth/modules/snapshot/views.py:119
+#: plinth/modules/snapshot/views.py:128
 msgid "Storage snapshots configuration updated"
 msgstr "Настройки хранения снапшотов обновлены"
 
-#: plinth/modules/snapshot/views.py:122 plinth/modules/tor/views.py:72
+#: plinth/modules/snapshot/views.py:131 plinth/modules/tor/views.py:72
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Ошибка действий: {0}[{1}][{2}]"
 
-#: plinth/modules/snapshot/views.py:132
-#, python-brace-format
-msgid "Deleted snapshot #{number}."
-msgstr "Удаленный снимок {number}."
-
-#: plinth/modules/snapshot/views.py:140
-msgid "Delete Snapshot"
-msgstr "Удалить снимок"
-
-#: plinth/modules/snapshot/views.py:149
-msgid "Deleted all snapshots."
+#: plinth/modules/snapshot/views.py:145
+#, fuzzy
+#| msgid "Deleted all snapshots."
+msgid "Deleted all snapshots"
 msgstr "Удалить все снапшоты."
 
-#: plinth/modules/snapshot/views.py:167
+#: plinth/modules/snapshot/views.py:149
+#, fuzzy
+#| msgid "Delete all the snapshots"
+msgid "Deleted selected snapshots"
+msgstr "Удалить все снапшоты"
+
+#: plinth/modules/snapshot/views.py:168
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Откат к снимку #{number}."
 
-#: plinth/modules/snapshot/views.py:170
+#: plinth/modules/snapshot/views.py:171
 msgid "The system must be restarted to complete the rollback."
 msgstr "Необходимо перезагрузить систему для завершения отката."
 
-#: plinth/modules/snapshot/views.py:182
+#: plinth/modules/snapshot/views.py:183
 msgid "Rollback to Snapshot"
 msgstr "Откат к снимку"
 
@@ -5519,7 +5493,7 @@ msgstr "Выберите язык"
 msgid "Log in"
 msgstr "Войти"
 
-#: plinth/templates/base.html:250 plinth/templates/index.html:182
+#: plinth/templates/base.html:245 plinth/templates/index.html:182
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -5539,47 +5513,47 @@ msgstr "Запуск"
 msgid "Desktop"
 msgstr "Десктоп"
 
-#: plinth/templates/clients.html:74
+#: plinth/templates/clients.html:75
 msgid "GNU/Linux"
 msgstr "GNU/Linux"
 
-#: plinth/templates/clients.html:76
+#: plinth/templates/clients.html:77
 msgid "Windows"
 msgstr "Windows"
 
-#: plinth/templates/clients.html:78
+#: plinth/templates/clients.html:79
 msgid "macOS"
 msgstr "macOS"
 
-#: plinth/templates/clients.html:93
+#: plinth/templates/clients.html:95
 msgid "Mobile"
 msgstr "Mobile"
 
-#: plinth/templates/clients.html:103
+#: plinth/templates/clients.html:106
 msgid "Play Store"
 msgstr "Play Store"
 
-#: plinth/templates/clients.html:105
+#: plinth/templates/clients.html:108
 msgid "F-Droid"
 msgstr "F-Droid"
 
-#: plinth/templates/clients.html:107
+#: plinth/templates/clients.html:110
 msgid "App Store"
 msgstr "App Store"
 
-#: plinth/templates/clients.html:122
+#: plinth/templates/clients.html:126
 msgid "Package"
 msgstr "Пакет"
 
-#: plinth/templates/clients.html:129
+#: plinth/templates/clients.html:133
 msgid "Debian:"
 msgstr "Debian:"
 
-#: plinth/templates/clients.html:132
+#: plinth/templates/clients.html:136
 msgid "Homebrew:"
 msgstr "Homebrew:"
 
-#: plinth/templates/clients.html:135
+#: plinth/templates/clients.html:139
 msgid "RPM:"
 msgstr "RPM:"
 
@@ -5726,6 +5700,24 @@ msgstr "Установка %(package_names)s: %(status)s"
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% завершено"
+
+#~ msgid "Delete this snapshot permanently?"
+#~ msgstr "Окончательно удалить этот снимок?"
+
+#~ msgid "Delete Snapshot #%(number)s"
+#~ msgstr "Удалить снимок %(number)s"
+
+#~ msgid "Delete All"
+#~ msgstr "Удалить все"
+
+#~ msgid "Delete snapshot #%(number)s"
+#~ msgstr "Удалить снимок #%(number)s"
+
+#~ msgid "Deleted snapshot #{number}."
+#~ msgstr "Удаленный снимок {number}."
+
+#~ msgid "Delete Snapshot"
+#~ msgstr "Удалить снимок"
 
 #~ msgid "Root Filesystem"
 #~ msgstr "Корневая файловая система"
