@@ -1,0 +1,59 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% block page_head %}
+  <style type="text/css">
+    .library-label {
+        display: inline-block;
+        width: 40%;
+    }
+    .list-group-item .btn {
+        margin: -5px 2px;
+    }
+  </style>
+{% endblock %}
+
+{% block configuration %}
+  {{ block.super }}
+
+  <h3>{% trans "Manage Libraries" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'calibre:create-library' %}" class="btn btn-default"
+       role="button" title="{% trans 'Create Library' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create Library' %}
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      {% if not libraries %}
+        <p>{% trans 'No libraries available.' %}</p>
+      {% else %}
+        <div id="calibre-libraries" class="list-group">
+          {% for library in libraries %}
+            <div class="list-group-item clearfix">
+              <a href="{% url 'calibre:delete-library' library %}"
+                 class="btn btn-default btn-sm pull-right" role="button"
+                 title="{% blocktrans %}Delete library {{ library }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
+              </a>
+
+              <a class="library-label"
+                 href="/calibre/#library_id={{ library }}&panel=book_list"
+                 title="{% blocktrans %}Go to library {{ library }}{% endblocktrans %}">
+                  {{ library }}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
