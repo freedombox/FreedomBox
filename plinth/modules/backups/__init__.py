@@ -30,7 +30,7 @@ from plinth.utils import format_lazy
 
 from . import api
 
-version = 1
+version = 2
 
 managed_packages = ['borgbackup', 'sshfs']
 
