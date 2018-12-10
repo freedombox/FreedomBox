@@ -104,8 +104,7 @@ class AddRepositoryForm(forms.Form):
         label=_('Encryption'),
         help_text=format_lazy(
             _('"Key in Repository" means that a '
-              'password-protected key is stored with the backup. <br />'
-              '<b>You need this password to restore a backup!</b>')),
+              'password-protected key is stored with the backup.')),
         choices=[('repokey', 'Key in Repository'), ('none', 'None')]
         )
     encryption_passphrase = forms.CharField(

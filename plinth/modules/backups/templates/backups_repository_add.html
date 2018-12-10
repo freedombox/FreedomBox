@@ -30,6 +30,15 @@
 
     {{ form|bootstrap }}
 
+    <div class="alert alert-warning" role="alert">
+      {% blocktrans trimmed %}
+      The credentials for this repository are stored on your {{ box_name }}.
+      <br />
+      To restore a backup on a new {{ box_name }} you need the ssh
+      credentials and, if chosen, the encryption passphrase.
+      {% endblocktrans %}
+    </div>
+
     <input type="submit" class="btn btn-primary"
            value="{% trans "Create Repository" %}"/>
     <a class="abort btn btn-sm btn-default"
