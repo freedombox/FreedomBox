@@ -116,9 +116,27 @@ class TestBackups(unittest.TestCase):
         self.assertEquals(len(content), 0)
 
     @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
-                         'Needs to be root and ssh credentials provided')
-    def test_ssh_mount(self):
-        """Test (un)mounting if credentials for a remote location are given"""
+                         'Needs to be root and ssh password provided')
+    def test_sshfs_mount_password(self):
+        """Test (un)mounting if password for a remote location is given"""
+        credentials = self.get_credentials()
+        if not credentials:
+            return
+        ssh_path = test_config.backups_ssh_path
+
+        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
+                                       path=ssh_path,
+                                       credentials=credentials,
+                                       automount=False)
+        repository.mount()
+        self.assertTrue(repository.is_mounted)
+        repository.umount()
+        self.assertFalse(repository.is_mounted)
+
+    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_keyfile,
+                         'Needs to be root and ssh keyfile provided')
+    def test_sshfs_mount_keyfile(self):
+        """Test (un)mounting if keyfile for a remote location is given"""
         credentials = self.get_credentials()
         if not credentials:
             return

@@ -58,7 +58,7 @@ def parse_arguments():
 
 
 def subcommand_mount(arguments):
-    """Show repository information."""
+    """Mount a remote ssh path via sshfs."""
     try:
         validate_mountpoint(arguments.mountpoint)
     except AlreadyMountedError:
@@ -72,7 +72,7 @@ def subcommand_mount(arguments):
            'UserKnownHostsFile=/dev/null', '-o',
            'StrictHostKeyChecking=no']
     if arguments.ssh_keyfile:
-        cmd += ['-o', 'IdentityFile=$SSHKEY']
+        cmd += ['-o', 'IdentityFile=' + arguments.ssh_keyfile]
     else:
         password = read_password()
         if not password:
@@ -84,7 +84,7 @@ def subcommand_mount(arguments):
 
 def subcommand_umount(arguments):
     """Unmount a mountpoint."""
-    run(['umount', arguments.mountpoint])
+    subprocess.run(['umount', arguments.mountpoint], check=True)
 
 
 def validate_mountpoint(mountpoint):
@@ -121,12 +121,6 @@ def read_password():
         return ''
     else:
         return ''.join(sys.stdin)
-
-
-def run(cmd, env=None, check=True):
-    """Wrap the command with ssh password or keyfile authentication"""
-    # Set a timeout to not get stuck if the remote server asks for a password.
-    subprocess.run(cmd, check=check, env=env, timeout=TIMEOUT)
 
 
 def main():
