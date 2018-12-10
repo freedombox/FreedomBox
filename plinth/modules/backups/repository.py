@@ -359,9 +359,9 @@ def get_ssh_repositories():
     return repositories
 
 
-def get_repository(uuid):
+def get_repository(uuid, automount=False):
     """Get a repository (BorgRepository or SshBorgRepository)"""
     if uuid == ROOT_REPOSITORY_UUID:
         return BorgRepository(path=ROOT_REPOSITORY)
     else:
-        return SshBorgRepository(uuid=uuid, automount=False)
+        return SshBorgRepository(uuid=uuid, automount=automount)
