@@ -78,9 +78,9 @@ class BorgRepository(object):
         self._path = path
         self.credentials = credentials
 
-    def append_credentials(self, arguments):
+    def append_encryption_passphrase(self, arguments, credentials):
         """Append '--encryption-passphrase' argument to backups call"""
-        passphrase = self.credentials.get('encryption_passphrase', None)
+        passphrase = credentials.get('encryption_passphrase', None)
         if passphrase:
             arguments += ['--encryption-passphrase', passphrase]
         return arguments
@@ -138,7 +138,7 @@ class BorgRepository(object):
     def get_zipstream(self, archive_name):
         archive_path = self.get_archive_path(archive_name)
         args = ['export-tar', '--path', archive_path]
-        args = self.append_credentials(args)
+        args = self.append_encryption_passphrase(args, self.credentials)
         kwargs = {'run_in_background': True,
                   'bufsize': 1}
         proc = self._run('backups', args, kwargs=kwargs)
@@ -148,7 +148,6 @@ class BorgRepository(object):
         for archive in self.list_archives():
             if archive['name'] == name:
                 return archive
-
         return None
 
     def get_archive_apps(self, archive_name):
@@ -203,8 +202,9 @@ class SshBorgRepository(BorgRepository):
     def __init__(self, uuid=None, path=None, credentials=None, automount=True,
                  **kwargs):
         """
-        Provide a uuid to instanciate an existing repository,
-        or 'ssh_path' and 'credentials' for a new repository.
+        Instanciate a new repository.
+
+        If only a uuid is given, load the values from kvstore.
         """
         is_new_instance = not bool(uuid)
         if not uuid:
@@ -229,7 +229,7 @@ class SshBorgRepository(BorgRepository):
         """
         Return the path to use for backups actions.
 
-        This is either the mountpoint or the remote ssh path,
+        This could either be the mountpoint or the remote ssh path,
         depending on whether borg is running on the remote server.
         """
         return self.mountpoint
@@ -289,7 +289,6 @@ class SshBorgRepository(BorgRepository):
     def mount(self):
         if self.is_mounted:
             return
-
         arguments = ['mount', '--mountpoint', self.mountpoint, '--path',
                      self._path]
         arguments, kwargs = self._append_sshfs_arguments(arguments,
@@ -316,6 +315,7 @@ class SshBorgRepository(BorgRepository):
             logger.error(err)
 
     def _append_sshfs_arguments(self, arguments, credentials, kwargs=None):
+        """Add credentials to a run command and kwargs"""
         if kwargs is None:
             kwargs = {}
         if 'ssh_password' in credentials and credentials['ssh_password']:
@@ -324,29 +324,13 @@ class SshBorgRepository(BorgRepository):
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
         return (arguments, kwargs)
 
-    def _append_run_arguments(self, arguments, credentials):
-        kwargs = {}
-        passphrase = credentials.get('encryption_passphrase', None)
-        if passphrase:
-            arguments += ['--encryption-passphrase', passphrase]
-        # TODO: use or remove
-        """
-        if 'ssh_password' in credentials and credentials['ssh_password']:
-            kwargs['input'] = credentials['ssh_password'].encode()
-        if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
-            arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
-        """
-        return (arguments, kwargs)
-
     def run(self, arguments, superuser=True):
-        """Run a backups action script command.
-
-        Add credentials via self._append_run_arguments to the backup script.
-        """
+        """Add credentials and run a backups action script command."""
         for key in self.credentials.keys():
             if key not in self.KNOWN_CREDENTIALS:
                 raise ValueError('Unknown credentials entry: %s' % key)
-        arguments = self.append_credentials(arguments)
+        arguments = self.append_encryption_passphrase(arguments,
+                                                      self.credentials)
         return self._run('backups', arguments, superuser=superuser)
 
 

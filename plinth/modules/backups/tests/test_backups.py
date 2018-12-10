@@ -18,6 +18,7 @@
 Test the backups action script.
 """
 
+import json
 import os
 import shutil
 import tempfile
@@ -43,6 +44,7 @@ class TestBackups(unittest.TestCase):
     dummy_credentials = {
         'ssh_password': 'invalid_password'
     }
+    repokey_encryption_passphrase = '12345'
 
     @classmethod
     def setUpClass(cls):
@@ -117,15 +119,45 @@ class TestBackups(unittest.TestCase):
 
     @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
                          'Needs to be root and ssh password provided')
+    def test_remote_backup_actions(self):
+        """
+        Test creating an encrypted remote repository using borg directly.
+
+        This relies on borgbackups being installed on the remote machine.
+        """
+        credentials = self.get_credentials(add_encryption_passphrase=True)
+        repo_path = os.path.join(test_config.backups_ssh_path,
+                                 str(uuid.uuid1()))
+        arguments = ['init', '--path', repo_path, '--encryption', 'repokey']
+        arguments, kwargs = self.append_borg_arguments(arguments, credentials)
+        actions.superuser_run('backups', arguments, **kwargs)
+
+        arguments = ['info', '--path', repo_path]
+        arguments, kwargs = self.append_borg_arguments(arguments, credentials)
+        info = actions.superuser_run('backups', arguments, **kwargs)
+        info = json.loads(info)
+        self.assertEquals(info['encryption']['mode'], 'repokey')
+
+    def append_borg_arguments(self, arguments, credentials):
+        """Append run arguments for running borg directly"""
+        kwargs = {}
+        passphrase = credentials.get('encryption_passphrase', None)
+        if passphrase:
+            arguments += ['--encryption-passphrase', passphrase]
+        if 'ssh_password' in credentials and credentials['ssh_password']:
+            kwargs['input'] = credentials['ssh_password'].encode()
+        if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
+            arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
+        return (arguments, kwargs)
+
+    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
+                         'Needs to be root and ssh password provided')
     def test_sshfs_mount_password(self):
         """Test (un)mounting if password for a remote location is given"""
         credentials = self.get_credentials()
-        if not credentials:
-            return
         ssh_path = test_config.backups_ssh_path
 
-        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
-                                       path=ssh_path,
+        repository = SshBorgRepository(path=ssh_path,
                                        credentials=credentials,
                                        automount=False)
         repository.mount()
@@ -138,12 +170,9 @@ class TestBackups(unittest.TestCase):
     def test_sshfs_mount_keyfile(self):
         """Test (un)mounting if keyfile for a remote location is given"""
         credentials = self.get_credentials()
-        if not credentials:
-            return
         ssh_path = test_config.backups_ssh_path
 
-        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
-                                       path=ssh_path,
+        repository = SshBorgRepository(path=ssh_path,
                                        credentials=credentials,
                                        automount=False)
         repository.mount()
@@ -152,25 +181,8 @@ class TestBackups(unittest.TestCase):
         self.assertFalse(repository.is_mounted)
 
     @unittest.skipUnless(euid == 0, 'Needs to be root')
-    def test_ssh_create_encrypted_repository(self):
-        credentials = self.get_credentials()
-        encrypted_repo = os.path.join(self.backup_directory.name,
-                                      'borgbackup_encrypted')
-        credentials['encryption_passphrase'] = '12345'
-        # using SshBorgRepository to provide credentials because
-        # BorgRepository does not allow creating encrypted repositories
-        # TODO: find better way to test encryption
-        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
-                                       path=encrypted_repo,
-                                       credentials=credentials,
-                                       automount=False)
-        repository.create_repository('repokey')
-        self.assertTrue(bool(repository.get_info()))
-
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_access_nonexisting_url(self):
-        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
-                                       path=self.nonexisting_repo_url,
+        repository = SshBorgRepository(path=self.nonexisting_repo_url,
                                        credentials=self.dummy_credentials,
                                        automount=False)
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
@@ -179,14 +191,13 @@ class TestBackups(unittest.TestCase):
     @unittest.skipUnless(euid == 0, 'Needs to be root')
     def test_inaccessible_repo_url(self):
         """Test accessing an existing URL with wrong credentials"""
-        repository = SshBorgRepository(uuid=str(uuid.uuid1()),
-                                       path=self.inaccessible_repo_url,
+        repository = SshBorgRepository(path=self.inaccessible_repo_url,
                                        credentials=self.dummy_credentials,
                                        automount=False)
         with self.assertRaises(backups.errors.BorgError):
             repository.get_info()
 
-    def get_credentials(self):
+    def get_credentials(self, add_encryption_passphrase=False):
         """
         Get access params for a remote location.
         Return an empty dict if no valid access params are found.
@@ -196,4 +207,8 @@ class TestBackups(unittest.TestCase):
             credentials['ssh_password'] = test_config.backups_ssh_password
         elif test_config.backups_ssh_keyfile:
             credentials['ssh_keyfile'] = test_config.backups_ssh_keyfile
+        if add_encryption_passphrase:
+            credentials['encryption_passphrase'] = \
+                self.repokey_encryption_passphrase
+
         return credentials

@@ -29,7 +29,7 @@ REQUIRED_FIELDS = ['path', 'storage_type', 'added_by_module']
 
 
 def get_storages(storage_type=None):
-    """Get network storage"""
+    """Get network storages"""
     storages = kvstore.get_default(NETWORK_STORAGE_KEY, {})
     if storages:
         storages = json.loads(storages)
@@ -45,7 +45,7 @@ def get(uuid):
 
 
 def update_or_add(storage):
-    """Update an existing or create a new network location"""
+    """Update an existing or create a new network storage"""
     for field in REQUIRED_FIELDS:
         if field not in storage:
             raise ValueError('missing storage parameter: %s' % field)
