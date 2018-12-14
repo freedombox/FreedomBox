@@ -84,8 +84,8 @@ class UploadForm(forms.Form):
     file = forms.FileField(
         label=_('Upload File'),
         required=True,
-        validators=[FileExtensionValidator(['gz'],
-                    'Backup files have to be in .tar.gz format')],
+        validators=[FileExtensionValidator(
+            ['gz'], _('Backup files have to be in .tar.gz format'))],
         help_text=_('Select the backup file you want to upload'))
 
 
@@ -136,7 +136,7 @@ class AddRepositoryForm(forms.Form):
 
         if passphrase != confirm_passphrase:
             raise forms.ValidationError(
-                "The entered encryption passphrases do not match"
+                _("The entered encryption passphrases do not match")
             )
 
         path = cleaned_data.get("repository")

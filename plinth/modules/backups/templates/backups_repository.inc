@@ -44,7 +44,7 @@
                   class="inline-block" >
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-default"
-                     title="{% trans 'Unount Location' %}">
+                     title="{% trans 'Unmount Location' %}">
                <span class="glyphicon glyphicon-eject" aria-hidden="true">
                </button>
             </form>
