@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-03 19:11-0500\n"
+"POT-Creation-Date: 2018-12-17 18:32-0500\n"
 "PO-Revision-Date: 2018-08-09 20:39+0000\n"
 "Last-Translator: Gayathri Das <gaya3das@live.unc.edu>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/plinth/"
@@ -114,88 +114,162 @@ msgstr ""
 "सुरक्षा के लिये, ख़ास तौर पर एक अनजान नेटवर्क से जोड़ करके समय, सर्विस डिस्कोवरि बंद कर "
 "सकते हैं."
 
-#: plinth/modules/backups/__init__.py:36 plinth/modules/backups/views.py:51
+#: plinth/modules/backups/__init__.py:37 plinth/modules/backups/views.py:51
 msgid "Backups"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/__init__.py:39
+#: plinth/modules/backups/__init__.py:40
 msgid "Backups allows creating and managing backup archives."
 msgstr "बैकअपस पुरालेखागार बनाने और  प्रबंधित करने की अनुमति देता है."
 
-#: plinth/modules/backups/forms.py:35
+#: plinth/modules/backups/__init__.py:47
+#, fuzzy, python-brace-format
+#| msgid "{box_name} Manual"
+msgid "{box_name} storage"
+msgstr "{box_name} मैनुअल"
+
+#: plinth/modules/backups/forms.py:38
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:45
-msgid "Archive name"
-msgstr "पुरालेख नाम"
-
-#: plinth/modules/backups/forms.py:46
-msgid "Name for new backup archive."
-msgstr "नया बैकअप पुरालेख के लिये नाम."
-
-#: plinth/modules/backups/forms.py:47
-msgid "Invalid archive name"
-msgstr "पुरालेख नाम अमान्य है"
-
-#: plinth/modules/backups/forms.py:51
+#: plinth/modules/backups/forms.py:58
 msgid "Included apps"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:51
+#: plinth/modules/backups/forms.py:58
 msgid "Apps to include in the backup"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:64
+#: plinth/modules/backups/forms.py:72
 #, fuzzy
 #| msgid "The subdomain you want to register"
 msgid "Select the apps you want to restore"
 msgstr "जो सबडोमेन आप पंजीकृत करना चाहते हैं"
 
-#: plinth/modules/backups/forms.py:76
+#: plinth/modules/backups/forms.py:85
 msgid "Upload File"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:79
+#: plinth/modules/backups/forms.py:88
+msgid "Backup files have to be in .tar.gz format"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:89
 msgid "Select the backup file you want to upload"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:42
+#: plinth/modules/backups/forms.py:94
+msgid "SSH Repository Path"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:95
+msgid ""
+"Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
+"i>"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:98
+#, fuzzy
+#| msgid "Save Password"
+msgid "SSH server password"
+msgstr "पासवर्ड सहेजें"
+
+#: plinth/modules/backups/forms.py:99
+msgid ""
+"Password of the SSH Server.<br />SSH key-based authentication is not yet "
+"possible."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:104
+#, fuzzy
+#| msgid "Description"
+msgid "Encryption"
+msgstr "विवरण"
+
+#: plinth/modules/backups/forms.py:106
+msgid ""
+"\"Key in Repository\" means that a password-protected key is stored with the "
+"backup."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:298
+msgid "Passphrase"
+msgstr "पासफ्रेज़"
+
+#: plinth/modules/backups/forms.py:112
+msgid "Passphrase; Only needed when using encryption."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:117
+#, fuzzy
+#| msgid "Passphrase"
+msgid "Confirm Passphrase"
+msgstr "पासफ्रेज़"
+
+#: plinth/modules/backups/forms.py:118
+msgid "Repeat the passphrase."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:139
+msgid "The entered encryption passphrases do not match"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:151
+#, python-format
+msgid "Accessing the remote repository failed. Details: %(err)s"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:44
+msgid ""
+"Connection refused - make sure you provided correct credentials and the "
+"server is running."
+msgstr ""
+
+#: plinth/modules/backups/repository.py:50
+#, fuzzy
+#| msgid "Connection Type"
+msgid "Connection refused"
+msgstr "कनेक्शन टाइप"
+
+#: plinth/modules/backups/repository.py:55
+msgid "Repository not found"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:61
+msgid "Incorrect encryption passphrase"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:66
+msgid "SSH access denied"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:53
 #, fuzzy
 #| msgid "Existing custom services"
 msgid "Existing backups"
 msgstr "मौजूदा कस्टम सर्विसस"
 
-#: plinth/modules/backups/templates/backups.html:45
-msgid "No archives currently exist."
-msgstr "वर्तमान में कोई संग्रह मौजूद नहीं है."
+#: plinth/modules/backups/templates/backups.html:63
+#, fuzzy
+#| msgid "Create Snapshot"
+msgid "Create new repository"
+msgstr "स्नैपशॉट बनाइये"
 
-#: plinth/modules/backups/templates/backups.html:51
+#: plinth/modules/backups/templates/backups.html:66
+msgid "+ Add Remote Repository"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_delete.html:27
+msgid "Delete this archive permanently?"
+msgstr "इस पुरालेख हमेशा के लिया हटाईये?"
+
 #: plinth/modules/backups/templates/backups_delete.html:33
 #: plinth/modules/ikiwiki/forms.py:34
 #: plinth/modules/networks/templates/connection_show.html:78
 #: plinth/modules/sharing/templates/sharing.html:56
 msgid "Name"
 msgstr "नाम"
-
-#: plinth/modules/backups/templates/backups.html:63
-#, fuzzy
-#| msgid "downloading"
-msgid "Download"
-msgstr "डाउनलोडिंग"
-
-#: plinth/modules/backups/templates/backups.html:67
-#: plinth/modules/backups/templates/backups_restore.html:40
-#: plinth/modules/backups/views.py:195
-#, fuzzy
-#| msgid "reStore"
-msgid "Restore"
-msgstr "रीस्‍टोर"
-
-#: plinth/modules/backups/templates/backups_delete.html:27
-msgid "Delete this archive permanently?"
-msgstr "इस पुरालेख हमेशा के लिया हटाईये?"
 
 #: plinth/modules/backups/templates/backups_delete.html:34
 msgid "Time"
@@ -213,16 +287,58 @@ msgstr "पुरालेख हटाईये %(name)s"
 msgid "Submit"
 msgstr "जमा करें"
 
+#: plinth/modules/backups/templates/backups_repository_add.html:34
+#, python-format
+msgid ""
+"The credentials for this repository are stored on your %(box_name)s. <br /> "
+"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"if chosen, the encryption passphrase."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_add.html:43
+#, fuzzy
+#| msgid "Create User"
+msgid "Create Repository"
+msgstr "यूसर बनाये"
+
+#: plinth/modules/backups/templates/backups_repository_add.html:46
+#: plinth/modules/backups/templates/backups_repository_remove.html:49
+#: plinth/modules/backups/templates/backups_restore.html:43
+#: plinth/modules/backups/templates/backups_restore.html:46
+msgid "Abort"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:28
+msgid "Are you sure that you want to remove this repository?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:34
+msgid ""
+"\n"
+"      The remote repository will not be deleted.\n"
+"      This just removes the repository from the listing on the backup page, "
+"you\n"
+"      can add it again later on.\n"
+"    "
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:46
+#: plinth/modules/backups/views.py:289
+msgid "Remove Repository"
+msgstr ""
+
 #: plinth/modules/backups/templates/backups_restore.html:29
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore data from"
 msgstr "रीस्‍टोर"
 
-#: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/templates/backups_restore.html:46
-msgid "Abort"
-msgstr ""
+#: plinth/modules/backups/templates/backups_restore.html:40
+#: plinth/modules/backups/views.py:191
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "रीस्‍टोर"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 msgid ""
@@ -246,52 +362,76 @@ msgid "Upload file"
 msgstr "मेरी प्रोफ़ाइल डाउनलोड करें"
 
 #: plinth/modules/backups/views.py:54
-msgid "Upload backup"
-msgstr ""
-
-#: plinth/modules/backups/views.py:57
 #, fuzzy
-#| msgid "Create Account"
-msgid "Create backup"
-msgstr "अकाउंट बनाएँ"
+#| msgid "Download my profile"
+msgid "Upload"
+msgstr "मेरी प्रोफ़ाइल डाउनलोड करें"
 
-#: plinth/modules/backups/views.py:85
+#: plinth/modules/backups/views.py:57 plinth/modules/ikiwiki/views.py:41
+msgid "Create"
+msgstr "बनाइये"
+
+#: plinth/modules/backups/views.py:84
 msgid "Archive created."
 msgstr "पुरालेख बनाया गया."
 
-#: plinth/modules/backups/views.py:90
+#: plinth/modules/backups/views.py:89
 #, fuzzy
 #| msgid "Backups"
 msgid "New Backup"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/views.py:115
+#: plinth/modules/backups/views.py:109
 msgid "Delete Archive"
 msgstr "पुरालेख हटाईये"
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:121
 msgid "Archive deleted."
 msgstr "पुरालेख हटा गया है."
 
-#: plinth/modules/backups/views.py:147
+#: plinth/modules/backups/views.py:143
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Upload and restore a backup file"
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/views.py:180
+#: plinth/modules/backups/views.py:176
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:206
+#: plinth/modules/backups/views.py:203
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "No backup file found."
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/views.py:214
+#: plinth/modules/backups/views.py:211
 msgid "Restore from uploaded file"
 msgstr ""
+
+#: plinth/modules/backups/views.py:263
+#, fuzzy
+#| msgid "Add new introducer"
+msgid "Added new repository."
+msgstr "नया इंट्रोड्यूसर जोड़ें"
+
+#: plinth/modules/backups/views.py:268
+msgid "Create remote backup repository"
+msgstr ""
+
+#: plinth/modules/backups/views.py:297
+msgid "Repository removed. The remote backup itself was not deleted."
+msgstr ""
+
+#: plinth/modules/backups/views.py:306
+msgid "Unmounting failed!"
+msgstr ""
+
+#: plinth/modules/backups/views.py:315 plinth/modules/backups/views.py:319
+#, fuzzy
+#| msgid "The operation failed."
+msgid "Mounting failed"
+msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
 
 #: plinth/modules/bind/__init__.py:36
 msgid "BIND"
@@ -1488,8 +1628,7 @@ msgstr "विकी एप्लिकेशन को देखें और �
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:60
-#: plinth/modules/storage/templates/storage.html:128
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "टाइप"
 
@@ -1551,10 +1690,6 @@ msgstr "साइट पर जाएं %(site)s"
 #: plinth/modules/ikiwiki/views.py:38
 msgid "Manage"
 msgstr "प्रबंध"
-
-#: plinth/modules/ikiwiki/views.py:41
-msgid "Create"
-msgstr "बनाइये"
 
 #: plinth/modules/ikiwiki/views.py:67
 msgid "Manage Wikis and Blogs"
@@ -1712,7 +1847,7 @@ msgid "Website Security"
 msgstr "वेबसईट सुरक्षा"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:130
+#: plinth/modules/storage/templates/storage.html:63
 msgid "Actions"
 msgstr "एक्सआयन"
 
@@ -2697,10 +2832,6 @@ msgstr "WPA"
 msgid "Open"
 msgstr "खुला"
 
-#: plinth/modules/networks/forms.py:298
-msgid "Passphrase"
-msgstr "पासफ्रेज़"
-
 #: plinth/modules/networks/networks.py:38
 #: plinth/modules/networks/networks.py:54
 msgid "Network Connections"
@@ -2835,7 +2966,6 @@ msgstr "हाँ"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 #: plinth/modules/storage/templates/storage.html:58
-#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "यंत्र"
 
@@ -4384,30 +4514,82 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:185
+#: plinth/modules/storage/__init__.py:191
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} बाइट्स"
 
-#: plinth/modules/storage/__init__.py:189
+#: plinth/modules/storage/__init__.py:195
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} किब"
 
-#: plinth/modules/storage/__init__.py:193
+#: plinth/modules/storage/__init__.py:199
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} मेब"
 
-#: plinth/modules/storage/__init__.py:197
+#: plinth/modules/storage/__init__.py:203
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} जिब"
 
-#: plinth/modules/storage/__init__.py:200
+#: plinth/modules/storage/__init__.py:206
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} टीब"
+
+#: plinth/modules/storage/__init__.py:213
+msgid "The operation failed."
+msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
+
+#: plinth/modules/storage/__init__.py:215
+msgid "The operation was cancelled."
+msgstr "ऑपरेशन रद्द किया गया."
+
+#: plinth/modules/storage/__init__.py:217
+msgid "The device is already unmounting."
+msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
+
+#: plinth/modules/storage/__init__.py:219
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
+
+#: plinth/modules/storage/__init__.py:222
+msgid "The operation timed out."
+msgstr "ऑपरेशन टाइम आउट हो गया."
+
+#: plinth/modules/storage/__init__.py:224
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
+
+#: plinth/modules/storage/__init__.py:227
+msgid "Attempting to unmount a device that is busy."
+msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
+
+#: plinth/modules/storage/__init__.py:229
+msgid "The operation has already been cancelled."
+msgstr "ऑपरेशन पहले से रद्द किया गया."
+
+#: plinth/modules/storage/__init__.py:235
+msgid "Not authorized to perform the requested operation."
+msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
+
+#: plinth/modules/storage/__init__.py:237
+msgid "The device is already mounted."
+msgstr "यह डिवाइस पहले से माउंट किया गया."
+
+#: plinth/modules/storage/__init__.py:239
+msgid "The device is not mounted."
+msgstr "यह डिवाइस नहीं माउंट किया गया."
+
+#: plinth/modules/storage/__init__.py:242
+msgid "Not permitted to use the requested option."
+msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
+
+#: plinth/modules/storage/__init__.py:245
+msgid "The device is mounted by another user."
+msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
 
 #: plinth/modules/storage/templates/storage.html:53
 #, fuzzy
@@ -4416,19 +4598,22 @@ msgid "The following storage devices are in use:"
 msgstr "निम्नलिखित डिस्कस उपयोग में है:"
 
 #: plinth/modules/storage/templates/storage.html:59
-#: plinth/modules/storage/templates/storage.html:127
+msgid "Label"
+msgstr "लेबल"
+
+#: plinth/modules/storage/templates/storage.html:60
 msgid "Mount Point"
 msgstr "माउन्ट प्वाइंट"
 
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:62
 msgid "Used"
 msgstr "उपयोग किया गया"
 
-#: plinth/modules/storage/templates/storage.html:93
+#: plinth/modules/storage/templates/storage.html:108
 msgid "Partition Expansion"
 msgstr "पारटिशन एक्सपांसन"
 
-#: plinth/modules/storage/templates/storage.html:95
+#: plinth/modules/storage/templates/storage.html:110
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4439,29 +4624,11 @@ msgstr ""
 "पार्टीशन इस स्थान ज्यादा बनने के लिए उपयोग किया जा सकता है. यह आपको आपकी फ़ाइलों "
 "स्टोर करने के लिए अतिरिक्त मुक्त स्थान प्रदान करेगा."
 
-#: plinth/modules/storage/templates/storage.html:105
+#: plinth/modules/storage/templates/storage.html:120
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:75
+#: plinth/modules/storage/views.py:74
 msgid "Expand Root Partition"
 msgstr "रूट पारटिशन विस्तार करें"
-
-#: plinth/modules/storage/templates/storage.html:113
-#, fuzzy
-#| msgid "Removable Media"
-msgid "Removable Devices"
-msgstr "रिमूवेबल मीडिया"
-
-#: plinth/modules/storage/templates/storage.html:117
-msgid "There are no additional storage devices attached."
-msgstr "कोई अतिरिक्त स्टोरेज डिवाइस अनुलग्न नहीं हैं."
-
-#: plinth/modules/storage/templates/storage.html:126
-msgid "Label"
-msgstr "लेबल"
-
-#: plinth/modules/storage/templates/storage.html:129
-msgid "Size"
-msgstr "आकार"
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4473,68 +4640,16 @@ msgstr ""
 "आगे बढ़ने से पहले अपने डेटा का बैकअप करें. इस ऑपरेशन के बाद, %(expandable_root_size)s से "
 "अतिरिक्त खाली जगह आपके रूट पार्टीशन में उपलब्ध होगा."
 
-#: plinth/modules/storage/udisks2.py:69
-msgid "The operation failed."
-msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
-
-#: plinth/modules/storage/udisks2.py:71
-msgid "The operation was cancelled."
-msgstr "ऑपरेशन रद्द किया गया."
-
-#: plinth/modules/storage/udisks2.py:73
-msgid "The device is already unmounting."
-msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
-
-#: plinth/modules/storage/udisks2.py:75
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
-
-#: plinth/modules/storage/udisks2.py:78
-msgid "The operation timed out."
-msgstr "ऑपरेशन टाइम आउट हो गया."
-
-#: plinth/modules/storage/udisks2.py:80
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
-
-#: plinth/modules/storage/udisks2.py:83
-msgid "Attempting to unmount a device that is busy."
-msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
-
-#: plinth/modules/storage/udisks2.py:85
-msgid "The operation has already been cancelled."
-msgstr "ऑपरेशन पहले से रद्द किया गया."
-
-#: plinth/modules/storage/udisks2.py:91
-msgid "Not authorized to perform the requested operation."
-msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
-
-#: plinth/modules/storage/udisks2.py:93
-msgid "The device is already mounted."
-msgstr "यह डिवाइस पहले से माउंट किया गया."
-
-#: plinth/modules/storage/udisks2.py:95
-msgid "The device is not mounted."
-msgstr "यह डिवाइस नहीं माउंट किया गया."
-
-#: plinth/modules/storage/udisks2.py:98
-msgid "Not permitted to use the requested option."
-msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
-
-#: plinth/modules/storage/udisks2.py:101
-msgid "The device is mounted by another user."
-msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
-
-#: plinth/modules/storage/views.py:87
+#: plinth/modules/storage/views.py:86
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "पार्टीशन का विस्तार करने में त्रुटि: {exception}"
 
-#: plinth/modules/storage/views.py:90
+#: plinth/modules/storage/views.py:89
 msgid "Partition expanded successfully."
 msgstr "पार्टीशन सफलतापूर्वक विस्तारित हुआ."
 
-#: plinth/modules/storage/views.py:103
+#: plinth/modules/storage/views.py:102
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4543,16 +4658,16 @@ msgstr ""
 "वार्निंग: सिस्टम पार्टीशन पर कम जगह ({percent_used}% उपयोग किया गया, "
 "{free_space} free)."
 
-#: plinth/modules/storage/views.py:129
+#: plinth/modules/storage/views.py:128
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr "{drive_vendor}{drive_model} को सुरक्षित रूप से अनप्लग किया जा सकता है."
 
-#: plinth/modules/storage/views.py:133
+#: plinth/modules/storage/views.py:132
 msgid "Device can be safely unplugged."
 msgstr "डिवाइस सुरक्षित रूप से अनप्लग किया जा सकता है."
 
-#: plinth/modules/storage/views.py:143
+#: plinth/modules/storage/views.py:142
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
@@ -5060,7 +5175,7 @@ msgstr "सब सर्विसस और सिस्टम सेटिं�
 msgid "Username is taken or is reserved."
 msgstr "यूसरनाम लिया है या आरक्षित है."
 
-#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:193
+#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:195
 msgid "Permissions"
 msgstr "अनुमतियाँ"
 
@@ -5077,7 +5192,7 @@ msgstr ""
 "<br /><br /> एडमिन ग्रुप के यूसरस सब सर्विसस पर लॉग इन कर सकेगें. SSH के माध्यम से भी "
 "सिस्टम पर लॉग इन कर सकते है अाैर उनको प्रशासनिक विशेषाधिकार (sudo) है."
 
-#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:325
 msgid "Creating LDAP user failed."
 msgstr "एलडीएपी यूसर बनाना विफल रहा."
 
@@ -5087,10 +5202,10 @@ msgid "Failed to add new user to {group} group."
 msgstr "{group} समूह में नया यूसर जोड़ने में विफल."
 
 #: plinth/modules/users/forms.py:149
-msgid "SSH Keys"
-msgstr "एसएसएच कीज़"
+msgid "Authorized SSH Keys"
+msgstr ""
 
-#: plinth/modules/users/forms.py:151
+#: plinth/modules/users/forms.py:153
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -5100,39 +5215,39 @@ msgstr ""
 "बिना सिस्टम में प्रवेश करने की अनुमति देगा. आप एकाधिक कीज़ दर्ज कर सकते हैं, हर लाइन रक "
 "एक. खाली लाइनस या # से प्रारंभ होने वाले लाइनस अनदेखा कर दिया जाएगा."
 
-#: plinth/modules/users/forms.py:230
+#: plinth/modules/users/forms.py:232
 msgid "Renaming LDAP user failed."
 msgstr "एलडीएपी यूसर का नाम बदलना विफल रहा."
 
-#: plinth/modules/users/forms.py:242
+#: plinth/modules/users/forms.py:244
 msgid "Failed to remove user from group."
 msgstr "समूह से यूसर को हटाने में विफल."
 
-#: plinth/modules/users/forms.py:253
+#: plinth/modules/users/forms.py:255
 msgid "Failed to add user to group."
 msgstr "समूह से यूसर को जोड़ने में विफल."
 
-#: plinth/modules/users/forms.py:262
+#: plinth/modules/users/forms.py:264
 msgid "Unable to set SSH keys."
 msgstr "एसएसएच कीज़ सेट करने में असमर्थ."
 
-#: plinth/modules/users/forms.py:270
+#: plinth/modules/users/forms.py:272
 msgid "Cannot delete the only administrator in the system."
 msgstr "सिस्टम में केवल व्यवस्थापक को नहीं हटा सकता."
 
-#: plinth/modules/users/forms.py:299
+#: plinth/modules/users/forms.py:301
 msgid "Changing LDAP user password failed."
 msgstr "एलडीएपी यूसर का पासवर्ड बदलना विफल रहा."
 
-#: plinth/modules/users/forms.py:332
+#: plinth/modules/users/forms.py:334
 msgid "Failed to add new user to admin group."
 msgstr "व्यवस्थापक समूह में नया यूसर जोड़ने में विफल."
 
-#: plinth/modules/users/forms.py:349
+#: plinth/modules/users/forms.py:351
 msgid "Failed to restrict console access."
 msgstr "कंसोल एक्सेस प्रतिबंधित करने में विफल."
 
-#: plinth/modules/users/forms.py:361
+#: plinth/modules/users/forms.py:363
 msgid "User account created, you are now logged in"
 msgstr "युसर अकाउंट बनाया, अब आप लॉगड इन हैं"
 
@@ -5585,6 +5700,42 @@ msgstr "%(package_names)s:%(status)s इंस्टॉलेशन किया
 #, python-format
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% पूर्ण"
+
+#~ msgid "Archive name"
+#~ msgstr "पुरालेख नाम"
+
+#~ msgid "Name for new backup archive."
+#~ msgstr "नया बैकअप पुरालेख के लिये नाम."
+
+#~ msgid "Invalid archive name"
+#~ msgstr "पुरालेख नाम अमान्य है"
+
+#~ msgid "No archives currently exist."
+#~ msgstr "वर्तमान में कोई संग्रह मौजूद नहीं है."
+
+#, fuzzy
+#~| msgid "downloading"
+#~ msgid "Download"
+#~ msgstr "डाउनलोडिंग"
+
+#, fuzzy
+#~| msgid "Create Account"
+#~ msgid "Create backup"
+#~ msgstr "अकाउंट बनाएँ"
+
+#, fuzzy
+#~| msgid "Removable Media"
+#~ msgid "Removable Devices"
+#~ msgstr "रिमूवेबल मीडिया"
+
+#~ msgid "There are no additional storage devices attached."
+#~ msgstr "कोई अतिरिक्त स्टोरेज डिवाइस अनुलग्न नहीं हैं."
+
+#~ msgid "Size"
+#~ msgstr "आकार"
+
+#~ msgid "SSH Keys"
+#~ msgstr "एसएसएच कीज़"
 
 #~ msgid "Delete this snapshot permanently?"
 #~ msgstr "इस स्नैपशॉट को स्थाई रूप से हटाएं?"

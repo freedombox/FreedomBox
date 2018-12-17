@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-03 19:11-0500\n"
+"POT-Creation-Date: 2018-12-17 18:32-0500\n"
 "PO-Revision-Date: 2018-01-03 17:10+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -117,94 +117,166 @@ msgstr ""
 "çalışır. Özellikle düşman bir yerel ağa bağlanıldığında güvenliği arttırmak "
 "için devre dışı bırakılabilir."
 
-#: plinth/modules/backups/__init__.py:36 plinth/modules/backups/views.py:51
+#: plinth/modules/backups/__init__.py:37 plinth/modules/backups/views.py:51
 msgid "Backups"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:39
+#: plinth/modules/backups/__init__.py:40
 msgid "Backups allows creating and managing backup archives."
 msgstr ""
 
-#: plinth/modules/backups/forms.py:35
+#: plinth/modules/backups/__init__.py:47
+#, fuzzy, python-brace-format
+#| msgid "{box_name} Manual"
+msgid "{box_name} storage"
+msgstr "{box_name} Kılavuzu"
+
+#: plinth/modules/backups/forms.py:38
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:45
-#, fuzzy
-#| msgid "Kite name"
-msgid "Archive name"
-msgstr "Kite ismi"
-
-#: plinth/modules/backups/forms.py:46
-msgid "Name for new backup archive."
-msgstr ""
-
-#: plinth/modules/backups/forms.py:47
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Invalid archive name"
-msgstr "Geçersiz sunucu ismi"
-
-#: plinth/modules/backups/forms.py:51
+#: plinth/modules/backups/forms.py:58
 msgid "Included apps"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:51
+#: plinth/modules/backups/forms.py:58
 msgid "Apps to include in the backup"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:64
+#: plinth/modules/backups/forms.py:72
 #, fuzzy
 #| msgid "The subdomain you want to register"
 msgid "Select the apps you want to restore"
 msgstr "Kaydetmek istediğiniz alt alan"
 
-#: plinth/modules/backups/forms.py:76
+#: plinth/modules/backups/forms.py:85
 msgid "Upload File"
 msgstr ""
 
-#: plinth/modules/backups/forms.py:79
+#: plinth/modules/backups/forms.py:88
+msgid "Backup files have to be in .tar.gz format"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:89
 msgid "Select the backup file you want to upload"
 msgstr ""
 
-#: plinth/modules/backups/templates/backups.html:42
+#: plinth/modules/backups/forms.py:94
+msgid "SSH Repository Path"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:95
+msgid ""
+"Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
+"i>"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:98
+#, fuzzy
+#| msgid "Save Password"
+msgid "SSH server password"
+msgstr "Parolayı Kaydet"
+
+#: plinth/modules/backups/forms.py:99
+msgid ""
+"Password of the SSH Server.<br />SSH key-based authentication is not yet "
+"possible."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:104
+#, fuzzy
+#| msgid "Description"
+msgid "Encryption"
+msgstr "Açıklama"
+
+#: plinth/modules/backups/forms.py:106
+msgid ""
+"\"Key in Repository\" means that a password-protected key is stored with the "
+"backup."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:298
+msgid "Passphrase"
+msgstr "Parola"
+
+#: plinth/modules/backups/forms.py:112
+msgid "Passphrase; Only needed when using encryption."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:117
+#, fuzzy
+#| msgid "Passphrase"
+msgid "Confirm Passphrase"
+msgstr "Parola"
+
+#: plinth/modules/backups/forms.py:118
+msgid "Repeat the passphrase."
+msgstr ""
+
+#: plinth/modules/backups/forms.py:139
+msgid "The entered encryption passphrases do not match"
+msgstr ""
+
+#: plinth/modules/backups/forms.py:151
+#, python-format
+msgid "Accessing the remote repository failed. Details: %(err)s"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:44
+msgid ""
+"Connection refused - make sure you provided correct credentials and the "
+"server is running."
+msgstr ""
+
+#: plinth/modules/backups/repository.py:50
+#, fuzzy
+#| msgid "Connection Type"
+msgid "Connection refused"
+msgstr "Bağlantı Türü"
+
+#: plinth/modules/backups/repository.py:55
+#, fuzzy
+#| msgid "packages not found"
+msgid "Repository not found"
+msgstr "paketler bulunamadı"
+
+#: plinth/modules/backups/repository.py:61
+msgid "Incorrect encryption passphrase"
+msgstr ""
+
+#: plinth/modules/backups/repository.py:66
+msgid "SSH access denied"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups.html:53
 #, fuzzy
 #| msgid "Existing custom services"
 msgid "Existing backups"
 msgstr "Mevcut özel servisler"
 
-#: plinth/modules/backups/templates/backups.html:45
-msgid "No archives currently exist."
-msgstr ""
-
-#: plinth/modules/backups/templates/backups.html:51
-#: plinth/modules/backups/templates/backups_delete.html:33
-#: plinth/modules/ikiwiki/forms.py:34
-#: plinth/modules/networks/templates/connection_show.html:78
-#: plinth/modules/sharing/templates/sharing.html:56
-msgid "Name"
-msgstr "İsim"
-
 #: plinth/modules/backups/templates/backups.html:63
 #, fuzzy
-#| msgid "downloading"
-msgid "Download"
-msgstr "indiriliyor"
+#| msgid "Create Snapshot"
+msgid "Create new repository"
+msgstr "Anlık Oluştur"
 
-#: plinth/modules/backups/templates/backups.html:67
-#: plinth/modules/backups/templates/backups_restore.html:40
-#: plinth/modules/backups/views.py:195
-#, fuzzy
-#| msgid "reStore"
-msgid "Restore"
-msgstr "reStore"
+#: plinth/modules/backups/templates/backups.html:66
+msgid "+ Add Remote Repository"
+msgstr ""
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 #, fuzzy
 #| msgid "Delete this snapshot permanently?"
 msgid "Delete this archive permanently?"
 msgstr "Bu anlık daimi olarak silinsin mi?"
+
+#: plinth/modules/backups/templates/backups_delete.html:33
+#: plinth/modules/ikiwiki/forms.py:34
+#: plinth/modules/networks/templates/connection_show.html:78
+#: plinth/modules/sharing/templates/sharing.html:56
+msgid "Name"
+msgstr "İsim"
 
 #: plinth/modules/backups/templates/backups_delete.html:34
 #, fuzzy
@@ -225,16 +297,58 @@ msgstr "%(name)s unsurunu sil"
 msgid "Submit"
 msgstr "İbraz Et"
 
+#: plinth/modules/backups/templates/backups_repository_add.html:34
+#, python-format
+msgid ""
+"The credentials for this repository are stored on your %(box_name)s. <br /> "
+"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"if chosen, the encryption passphrase."
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_add.html:43
+#, fuzzy
+#| msgid "Create User"
+msgid "Create Repository"
+msgstr "Kullanıcı Oluştur"
+
+#: plinth/modules/backups/templates/backups_repository_add.html:46
+#: plinth/modules/backups/templates/backups_repository_remove.html:49
+#: plinth/modules/backups/templates/backups_restore.html:43
+#: plinth/modules/backups/templates/backups_restore.html:46
+msgid "Abort"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:28
+msgid "Are you sure that you want to remove this repository?"
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:34
+msgid ""
+"\n"
+"      The remote repository will not be deleted.\n"
+"      This just removes the repository from the listing on the backup page, "
+"you\n"
+"      can add it again later on.\n"
+"    "
+msgstr ""
+
+#: plinth/modules/backups/templates/backups_repository_remove.html:46
+#: plinth/modules/backups/views.py:289
+msgid "Remove Repository"
+msgstr ""
+
 #: plinth/modules/backups/templates/backups_restore.html:29
 #, fuzzy
 #| msgid "Welcome to %(box_name)s!"
 msgid "Restore data from"
 msgstr "%(box_name)s kutusuna hoş geldiniz!"
 
-#: plinth/modules/backups/templates/backups_restore.html:43
-#: plinth/modules/backups/templates/backups_restore.html:46
-msgid "Abort"
-msgstr ""
+#: plinth/modules/backups/templates/backups_restore.html:40
+#: plinth/modules/backups/views.py:191
+#, fuzzy
+#| msgid "reStore"
+msgid "Restore"
+msgstr "reStore"
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 msgid ""
@@ -258,49 +372,71 @@ msgid "Upload file"
 msgstr "Profilimi indir"
 
 #: plinth/modules/backups/views.py:54
-msgid "Upload backup"
-msgstr ""
-
-#: plinth/modules/backups/views.py:57
 #, fuzzy
-#| msgid "Create Account"
-msgid "Create backup"
-msgstr "Hesap Oluştur"
+#| msgid "Download my profile"
+msgid "Upload"
+msgstr "Profilimi indir"
 
-#: plinth/modules/backups/views.py:85
+#: plinth/modules/backups/views.py:57 plinth/modules/ikiwiki/views.py:41
+msgid "Create"
+msgstr "Oluştur"
+
+#: plinth/modules/backups/views.py:84
 msgid "Archive created."
 msgstr ""
 
-#: plinth/modules/backups/views.py:90
+#: plinth/modules/backups/views.py:89
 msgid "New Backup"
 msgstr ""
 
-#: plinth/modules/backups/views.py:115
+#: plinth/modules/backups/views.py:109
 #, fuzzy
 #| msgid "Delete All"
 msgid "Delete Archive"
 msgstr "Tümünü Sil"
 
-#: plinth/modules/backups/views.py:125
+#: plinth/modules/backups/views.py:121
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Archive deleted."
 msgstr "{name} silindi."
 
-#: plinth/modules/backups/views.py:147
+#: plinth/modules/backups/views.py:143
 msgid "Upload and restore a backup file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:180
+#: plinth/modules/backups/views.py:176
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:206
+#: plinth/modules/backups/views.py:203
 msgid "No backup file found."
 msgstr ""
 
-#: plinth/modules/backups/views.py:214
+#: plinth/modules/backups/views.py:211
 msgid "Restore from uploaded file"
+msgstr ""
+
+#: plinth/modules/backups/views.py:263
+#, fuzzy
+#| msgid "Add new introducer"
+msgid "Added new repository."
+msgstr "Yeni tanıtıcı ekle"
+
+#: plinth/modules/backups/views.py:268
+msgid "Create remote backup repository"
+msgstr ""
+
+#: plinth/modules/backups/views.py:297
+msgid "Repository removed. The remote backup itself was not deleted."
+msgstr ""
+
+#: plinth/modules/backups/views.py:306
+msgid "Unmounting failed!"
+msgstr ""
+
+#: plinth/modules/backups/views.py:315 plinth/modules/backups/views.py:319
+msgid "Mounting failed"
 msgstr ""
 
 #: plinth/modules/bind/__init__.py:36
@@ -1574,8 +1710,7 @@ msgstr "Viki uygulamalarını görüntüle ve düzenle"
 
 #: plinth/modules/ikiwiki/forms.py:30
 #: plinth/modules/networks/templates/connection_show.html:98
-#: plinth/modules/storage/templates/storage.html:60
-#: plinth/modules/storage/templates/storage.html:128
+#: plinth/modules/storage/templates/storage.html:61
 msgid "Type"
 msgstr "Tür"
 
@@ -1638,10 +1773,6 @@ msgstr "%(site)s sitesine git"
 #: plinth/modules/ikiwiki/views.py:38
 msgid "Manage"
 msgstr "Yönet"
-
-#: plinth/modules/ikiwiki/views.py:41
-msgid "Create"
-msgstr "Oluştur"
 
 #: plinth/modules/ikiwiki/views.py:67
 msgid "Manage Wikis and Blogs"
@@ -1808,7 +1939,7 @@ msgid "Website Security"
 msgstr "Site Güvenliği"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:47
-#: plinth/modules/storage/templates/storage.html:130
+#: plinth/modules/storage/templates/storage.html:63
 msgid "Actions"
 msgstr "Eylemler"
 
@@ -2846,10 +2977,6 @@ msgstr "WPA"
 msgid "Open"
 msgstr "Açık"
 
-#: plinth/modules/networks/forms.py:298
-msgid "Passphrase"
-msgstr "Parola"
-
 #: plinth/modules/networks/networks.py:38
 #: plinth/modules/networks/networks.py:54
 msgid "Network Connections"
@@ -2986,7 +3113,6 @@ msgstr "evet"
 
 #: plinth/modules/networks/templates/connection_show.html:84
 #: plinth/modules/storage/templates/storage.html:58
-#: plinth/modules/storage/templates/storage.html:125
 msgid "Device"
 msgstr "Cihaz"
 
@@ -4633,30 +4759,88 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:185
+#: plinth/modules/storage/__init__.py:191
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bayt"
 
-#: plinth/modules/storage/__init__.py:189
+#: plinth/modules/storage/__init__.py:195
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:193
+#: plinth/modules/storage/__init__.py:199
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:197
+#: plinth/modules/storage/__init__.py:203
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:200
+#: plinth/modules/storage/__init__.py:206
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
+
+#: plinth/modules/storage/__init__.py:213
+msgid "The operation failed."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:215
+msgid "The operation was cancelled."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:217
+#, fuzzy
+#| msgid "repro service is running"
+msgid "The device is already unmounting."
+msgstr "repro servisi çalışmaktadır"
+
+#: plinth/modules/storage/__init__.py:219
+msgid "The operation is not supported due to missing driver/tool support."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:222
+msgid "The operation timed out."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:224
+msgid "The operation would wake up a disk that is in a deep-sleep state."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:227
+msgid "Attempting to unmount a device that is busy."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:229
+msgid "The operation has already been cancelled."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:235
+msgid "Not authorized to perform the requested operation."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:237
+#, fuzzy
+#| msgid "This service already exists"
+msgid "The device is already mounted."
+msgstr "Bu servis zaten mevcuttur"
+
+#: plinth/modules/storage/__init__.py:239
+#, fuzzy
+#| msgid "repro service is not running"
+msgid "The device is not mounted."
+msgstr "repro servisi çalışmamaktadır"
+
+#: plinth/modules/storage/__init__.py:242
+msgid "Not permitted to use the requested option."
+msgstr ""
+
+#: plinth/modules/storage/__init__.py:245
+msgid "The device is mounted by another user."
+msgstr ""
 
 #: plinth/modules/storage/templates/storage.html:53
 #, fuzzy
@@ -4665,19 +4849,22 @@ msgid "The following storage devices are in use:"
 msgstr "Aşağıdaki diskler kullanımdadır:"
 
 #: plinth/modules/storage/templates/storage.html:59
-#: plinth/modules/storage/templates/storage.html:127
+msgid "Label"
+msgstr ""
+
+#: plinth/modules/storage/templates/storage.html:60
 msgid "Mount Point"
 msgstr "Bağlama Noktası"
 
-#: plinth/modules/storage/templates/storage.html:61
+#: plinth/modules/storage/templates/storage.html:62
 msgid "Used"
 msgstr "Kullanılan"
 
-#: plinth/modules/storage/templates/storage.html:93
+#: plinth/modules/storage/templates/storage.html:108
 msgid "Partition Expansion"
 msgstr "Bölüm Genişletme"
 
-#: plinth/modules/storage/templates/storage.html:95
+#: plinth/modules/storage/templates/storage.html:110
 #, python-format
 msgid ""
 "There is %(expandable_root_size)s of unallocated space available after your "
@@ -4689,29 +4876,11 @@ msgstr ""
 "genişletilebilir. Bu, size dosyalarınızı saklamak için ilave boş alan "
 "sunacaktır."
 
-#: plinth/modules/storage/templates/storage.html:105
+#: plinth/modules/storage/templates/storage.html:120
 #: plinth/modules/storage/templates/storage_expand.html:39
-#: plinth/modules/storage/views.py:75
+#: plinth/modules/storage/views.py:74
 msgid "Expand Root Partition"
 msgstr "Kök Bölümünü Genişlet"
-
-#: plinth/modules/storage/templates/storage.html:113
-#, fuzzy
-#| msgid "Name Services"
-msgid "Removable Devices"
-msgstr "İsim Servisleri"
-
-#: plinth/modules/storage/templates/storage.html:117
-msgid "There are no additional storage devices attached."
-msgstr ""
-
-#: plinth/modules/storage/templates/storage.html:126
-msgid "Label"
-msgstr ""
-
-#: plinth/modules/storage/templates/storage.html:129
-msgid "Size"
-msgstr ""
 
 #: plinth/modules/storage/templates/storage_expand.html:29
 #, python-format
@@ -4724,74 +4893,16 @@ msgstr ""
 "bölümünüzde ilave  %(expandable_root_size)s değerinde boş alan "
 "kullanılabilir olacaktır."
 
-#: plinth/modules/storage/udisks2.py:69
-msgid "The operation failed."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:71
-msgid "The operation was cancelled."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:73
-#, fuzzy
-#| msgid "repro service is running"
-msgid "The device is already unmounting."
-msgstr "repro servisi çalışmaktadır"
-
-#: plinth/modules/storage/udisks2.py:75
-msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:78
-msgid "The operation timed out."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:80
-msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:83
-msgid "Attempting to unmount a device that is busy."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:85
-msgid "The operation has already been cancelled."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:91
-msgid "Not authorized to perform the requested operation."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:93
-#, fuzzy
-#| msgid "This service already exists"
-msgid "The device is already mounted."
-msgstr "Bu servis zaten mevcuttur"
-
-#: plinth/modules/storage/udisks2.py:95
-#, fuzzy
-#| msgid "repro service is not running"
-msgid "The device is not mounted."
-msgstr "repro servisi çalışmamaktadır"
-
-#: plinth/modules/storage/udisks2.py:98
-msgid "Not permitted to use the requested option."
-msgstr ""
-
-#: plinth/modules/storage/udisks2.py:101
-msgid "The device is mounted by another user."
-msgstr ""
-
-#: plinth/modules/storage/views.py:87
+#: plinth/modules/storage/views.py:86
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
 msgstr "Bölümün genişletilmesinde hata: {exception}"
 
-#: plinth/modules/storage/views.py:90
+#: plinth/modules/storage/views.py:89
 msgid "Partition expanded successfully."
 msgstr "Bölüm başarılı bir şekilde genişletildi."
 
-#: plinth/modules/storage/views.py:103
+#: plinth/modules/storage/views.py:102
 #, no-python-format, python-brace-format
 msgid ""
 "Warning: Low space on system partition ({percent_used}% used, {free_space} "
@@ -4800,16 +4911,16 @@ msgstr ""
 "İkaz: sistem disk bölümünde düşük alan (%{percent_used} kullanıldı, "
 "{free_space} boş)."
 
-#: plinth/modules/storage/views.py:129
+#: plinth/modules/storage/views.py:128
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:133
+#: plinth/modules/storage/views.py:132
 msgid "Device can be safely unplugged."
 msgstr ""
 
-#: plinth/modules/storage/views.py:143
+#: plinth/modules/storage/views.py:142
 #, python-brace-format
 msgid "Error ejecting device: {error_message}"
 msgstr ""
@@ -5346,7 +5457,7 @@ msgstr "Tüm servislere ve sistem ayarlarına erişim"
 msgid "Username is taken or is reserved."
 msgstr "Kullanıcı ismi zaten alınmış ya da ayrılmıştır."
 
-#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:193
+#: plinth/modules/users/forms.py:88 plinth/modules/users/forms.py:195
 msgid "Permissions"
 msgstr "İzinler"
 
@@ -5364,7 +5475,7 @@ msgstr ""
 "servislere giriş yapabilecektir. Aynı zamanda sisteme SSH aracılığıyla giriş "
 "yapıp yönetici izinlerine (sudo) erişebileceklerdir."
 
-#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:323
+#: plinth/modules/users/forms.py:125 plinth/modules/users/forms.py:325
 msgid "Creating LDAP user failed."
 msgstr "LDAP kullanıcısı oluşturması başarısız oldu."
 
@@ -5374,10 +5485,10 @@ msgid "Failed to add new user to {group} group."
 msgstr "{group} grubuna yeni kullanıcı ilâve edilmesi başarısız oldu."
 
 #: plinth/modules/users/forms.py:149
-msgid "SSH Keys"
-msgstr "SSH Anahtarları"
+msgid "Authorized SSH Keys"
+msgstr ""
 
-#: plinth/modules/users/forms.py:151
+#: plinth/modules/users/forms.py:153
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -5388,39 +5499,39 @@ msgstr ""
 "çok anahtar girebilirsiniz, her anahtarı yeni bir satırda girin. Boş "
 "satırlar ve # ile başlayan satırlar görmezden gelinecektir."
 
-#: plinth/modules/users/forms.py:230
+#: plinth/modules/users/forms.py:232
 msgid "Renaming LDAP user failed."
 msgstr "LDAP kullanıcısının tekrar adlandırılması başarısız oldu."
 
-#: plinth/modules/users/forms.py:242
+#: plinth/modules/users/forms.py:244
 msgid "Failed to remove user from group."
 msgstr "Kullanıcının gruptan kaldırılması başarısız oldu."
 
-#: plinth/modules/users/forms.py:253
+#: plinth/modules/users/forms.py:255
 msgid "Failed to add user to group."
 msgstr "Kullanıcının gruba eklenmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:262
+#: plinth/modules/users/forms.py:264
 msgid "Unable to set SSH keys."
 msgstr "SSH anahtarları ayarlanamadı."
 
-#: plinth/modules/users/forms.py:270
+#: plinth/modules/users/forms.py:272
 msgid "Cannot delete the only administrator in the system."
 msgstr ""
 
-#: plinth/modules/users/forms.py:299
+#: plinth/modules/users/forms.py:301
 msgid "Changing LDAP user password failed."
 msgstr "LDAP kullanıcı parolasının değiştirilmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:332
+#: plinth/modules/users/forms.py:334
 msgid "Failed to add new user to admin group."
 msgstr "Yeni kullanıcının admin (yönetici) grubuna eklenmesi başarısız oldu."
 
-#: plinth/modules/users/forms.py:349
+#: plinth/modules/users/forms.py:351
 msgid "Failed to restrict console access."
 msgstr "Konsol erişiminin kısıtlanması başarısız oldu."
 
-#: plinth/modules/users/forms.py:361
+#: plinth/modules/users/forms.py:363
 msgid "User account created, you are now logged in"
 msgstr "Kullanıcı hesabı oluşturuldu, artık giriş yaptınız"
 
@@ -5900,6 +6011,34 @@ msgstr "%(package_names)s kuruluyor: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% tamamlandı"
 
+#, fuzzy
+#~| msgid "Kite name"
+#~ msgid "Archive name"
+#~ msgstr "Kite ismi"
+
+#, fuzzy
+#~| msgid "Invalid server name"
+#~ msgid "Invalid archive name"
+#~ msgstr "Geçersiz sunucu ismi"
+
+#, fuzzy
+#~| msgid "downloading"
+#~ msgid "Download"
+#~ msgstr "indiriliyor"
+
+#, fuzzy
+#~| msgid "Create Account"
+#~ msgid "Create backup"
+#~ msgstr "Hesap Oluştur"
+
+#, fuzzy
+#~| msgid "Name Services"
+#~ msgid "Removable Devices"
+#~ msgstr "İsim Servisleri"
+
+#~ msgid "SSH Keys"
+#~ msgstr "SSH Anahtarları"
+
 #~ msgid "Delete this snapshot permanently?"
 #~ msgstr "Bu anlık daimi olarak silinsin mi?"
 
@@ -6378,9 +6517,6 @@ msgstr "%(percentage)s%% tamamlandı"
 
 #~ msgid "ejabberd is not running"
 #~ msgstr "ejabberd çalışmamaktadır"
-
-#~ msgid "packages not found"
-#~ msgstr "paketler bulunamadı"
 
 #~ msgid "Enable service discovery"
 #~ msgstr "Servis keşfini etkinleştir"
