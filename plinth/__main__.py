@@ -161,22 +161,17 @@ def configure_django():
         'formatters': {
             'default': {
                 'format':
-                    '[%(asctime)s] %(name)-14s %(levelname)-8s %(message)s',
+                    '%(name)-14s %(levelname)-8s %(message)s',
             }
         },
         'handlers': {
-            'file': {
-                'class': 'logging.FileHandler',
-                'filename': cfg.status_log_file,
-                'formatter': 'default'
-            },
             'console': {
                 'class': 'logging.StreamHandler',
                 'formatter': 'default'
             }
         },
         'root': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'DEBUG' if cfg.develop else 'INFO'
         }
     }
