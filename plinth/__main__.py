@@ -22,7 +22,6 @@ import logging
 import os
 import stat
 import sys
-import warnings
 
 import axes
 import cherrypy
@@ -31,7 +30,7 @@ import django.core.management
 import django.core.wsgi
 from django.contrib.messages import constants as message_constants
 
-from plinth import cfg, frontpage, menu, module_loader, service, setup
+from . import cfg, frontpage, log, menu, module_loader, service, setup
 
 axes.default_app_config = "plinth.axes_app_config.AppConfig"
 precedence_commandline_arguments = ["server_dir", "develop"]
@@ -67,23 +66,6 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def setup_logging():
-    """Setup logging framework"""
-    # Remove default handlers and let the log message propagate to root logger.
-    for cherrypy_logger in [cherrypy.log.error_log, cherrypy.log.access_log]:
-        for handler in list(cherrypy_logger.handlers):
-            cherrypy_logger.removeHandler(handler)
-
-    # Capture all Python warnings such as deprecation warnings
-    logging.captureWarnings(True)
-
-    # Log all deprecation warnings when in develop mode
-    if cfg.develop:
-        warnings.filterwarnings('default', '', DeprecationWarning)
-        warnings.filterwarnings('default', '', PendingDeprecationWarning)
-        warnings.filterwarnings('default', '', ImportWarning)
-
-
 def _mount_static_directory(static_dir, static_url):
     config = {
         '/': {
@@ -93,10 +75,7 @@ def _mount_static_directory(static_dir, static_url):
         }
     }
     app = cherrypy.tree.mount(None, static_url, config)
-    # Don't log requests for static files as they are rarely useful.
-    app.log.access_log.propagate = False
-    app.log.error_log.propagate = False
-
+    log.setup_cherrypy_static_directory(app)
     logger.debug('Serving static directory %s on %s', static_dir, static_url)
 
 
@@ -155,38 +134,6 @@ def on_server_stop():
 
 def configure_django():
     """Setup Django configuration in the absence of .settings file"""
-    logging_configuration = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'formatters': {
-            'default': {
-                'format':
-                    '%(name)-14s %(levelname)-8s %(message)s',
-            }
-        },
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-                'formatter': 'default'
-            }
-        },
-        'root': {
-            'handlers': ['console'],
-            'level': 'DEBUG' if cfg.develop else 'INFO'
-        }
-    }
-
-    try:
-        importlib.import_module('systemd.journal')
-    except ModuleNotFoundError:
-        pass
-    else:
-        logging_configuration['handlers']['journal'] = {
-            'class': 'systemd.journal.JournalHandler'
-        }
-        logging_configuration['root']['handlers'].append('journal')
-
-
     templates = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -267,7 +214,7 @@ def configure_django():
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
         IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR', ),
-        LOGGING=logging_configuration,
+        LOGGING=log.get_configuration(),
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='index',
         MESSAGE_TAGS={message_constants.ERROR: 'danger'},
@@ -393,7 +340,7 @@ def main():
 
     adapt_config(arguments)
 
-    setup_logging()
+    log.init()
 
     service.init()
 
