@@ -69,11 +69,10 @@ def parse_arguments():
 
 def setup_logging():
     """Setup logging framework"""
-    # Don't propagate cherrypy log messages to root logger
-    logging.getLogger('cherrypy').propagate = False
-
-    cherrypy.log.error_file = cfg.status_log_file
-    cherrypy.log.access_file = cfg.access_log_file
+    # Remove default handlers and let the log message propagate to root logger.
+    for cherrypy_logger in [cherrypy.log.error_log, cherrypy.log.access_log]:
+        for handler in list(cherrypy_logger.handlers):
+            cherrypy_logger.removeHandler(handler)
 
     # Capture all Python warnings such as deprecation warnings
     logging.captureWarnings(True)
