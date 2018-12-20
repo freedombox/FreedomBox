@@ -85,6 +85,22 @@ def setup_logging():
         warnings.filterwarnings('default', '', ImportWarning)
 
 
+def _mount_static_directory(static_dir, static_url):
+    config = {
+        '/': {
+            'tools.staticdir.root': static_dir,
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': '.'
+        }
+    }
+    app = cherrypy.tree.mount(None, static_url, config)
+    # Don't log requests for static files as they are rarely useful.
+    app.log.access_log.propagate = False
+    app.log.error_log.propagate = False
+
+    logger.debug('Serving static directory %s on %s', static_dir, static_url)
+
+
 def setup_server():
     """Setup CherryPy server"""
     logger.info('Setting up CherryPy server')
@@ -103,59 +119,23 @@ def setup_server():
     cherrypy.tree.graft(application, cfg.server_dir)
 
     static_dir = os.path.join(cfg.file_root, 'static')
-    config = {
-        '/': {
-            'tools.staticdir.root': static_dir,
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': '.'
-        }
-    }
-    cherrypy.tree.mount(None, django.conf.settings.STATIC_URL, config)
-    logger.debug('Serving static directory %s on %s', static_dir,
-                 django.conf.settings.STATIC_URL)
+    _mount_static_directory(static_dir, django.conf.settings.STATIC_URL)
 
     custom_static_dir = cfg.custom_static_dir
     custom_static_url = '/plinth/custom/static'
     if os.path.exists(custom_static_dir):
-        config = {
-            '/': {
-                'tools.staticdir.root': custom_static_dir,
-                'tools.staticdir.on': True,
-                'tools.staticdir.dir': '.'
-            }
-        }
-        cherrypy.tree.mount(None, custom_static_url, config)
-        logger.debug('Serving custom static directory %s on %s',
-                     custom_static_dir, custom_static_url)
+        _mount_static_directory(custom_static_dir, custom_static_url)
     else:
         logger.debug(
             'Not serving custom static directory %s on %s, '
             'directory does not exist', custom_static_dir, custom_static_url)
 
-    js_dir = '/usr/share/javascript'
-    js_url = '/javascript'
-    config = {
-        '/': {
-            'tools.staticdir.root': js_dir,
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': '.'
-        }
-    }
-    cherrypy.tree.mount(None, js_url, config)
-    logger.debug('Serving javascript directory %s on %s', js_dir, js_url)
+    _mount_static_directory('/usr/share/javascript', '/javascript')
 
     manual_dir = os.path.join(cfg.doc_dir, 'images')
     manual_url = '/'.join([cfg.server_dir, 'help/manual/images']) \
         .replace('//', '/')
-    config = {
-        '/': {
-            'tools.staticdir.root': manual_dir,
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': '.'
-        }
-    }
-    cherrypy.tree.mount(None, manual_url, config)
-    logger.debug('Serving manual images %s on %s', manual_dir, manual_url)
+    _mount_static_directory(manual_dir, manual_url)
 
     for module_name, module in module_loader.loaded_modules.items():
         module_path = os.path.dirname(module.__file__)
@@ -163,17 +143,8 @@ def setup_server():
         if not os.path.isdir(static_dir):
             continue
 
-        config = {
-            '/': {
-                'tools.staticdir.root': static_dir,
-                'tools.staticdir.on': True,
-                'tools.staticdir.dir': '.'
-            }
-        }
         urlprefix = "%s%s" % (django.conf.settings.STATIC_URL, module_name)
-        cherrypy.tree.mount(None, urlprefix, config)
-        logger.debug('Serving static directory %s on %s', static_dir,
-                     urlprefix)
+        _mount_static_directory(static_dir, urlprefix)
 
     cherrypy.engine.signal_handler.subscribe()
 
