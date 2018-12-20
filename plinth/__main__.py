@@ -176,6 +176,17 @@ def configure_django():
         }
     }
 
+    try:
+        importlib.import_module('systemd.journal')
+    except ModuleNotFoundError:
+        pass
+    else:
+        logging_configuration['handlers']['journal'] = {
+            'class': 'systemd.journal.JournalHandler'
+        }
+        logging_configuration['root']['handlers'].append('journal')
+
+
     templates = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',

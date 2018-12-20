@@ -16,7 +16,7 @@
 #
 
 [Unit]
-Description=Plinth Web Interface
+Description=FreedomBox Service (Plinth)
 Documentation=man:plinth(1)
 After=network.target
 
@@ -26,6 +26,8 @@ Restart=on-failure
 ExecReload=/bin/kill -HUP $MAINPID
 User=plinth
 Group=plinth
+StandardOutput=null
+StandardError=null
 
 [Install]
 WantedBy=multi-user.target
