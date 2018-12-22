@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Let's Encrypt.
 """
@@ -34,48 +33,13 @@ from plinth.errors import ActionError
 from plinth.modules import config
 from plinth.modules import letsencrypt as le
 
-
 TEST_MODE = False
 RENEWAL_DIRECTORY = '/etc/letsencrypt/renewal/'
 AUTHENTICATOR = 'webroot'
 WEB_ROOT_PATH = '/var/www/html'
 APACHE_PREFIX = '/etc/apache2/sites-available/'
 APACHE_CONFIGURATION = '''
-<IfModule mod_gnutls.c>
-<VirtualHost _default_:443>
-	ServerAdmin webmaster@localhost
-	ServerName {domain}
-	DocumentRoot /var/www/html
-	<Directory />
-		Options FollowSymLinks
-		AllowOverride None
-	</Directory>
-	<Directory /var/www/html>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride None
-		Order allow,deny
-		allow from all
-	</Directory>
-	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-	<Directory "/usr/lib/cgi-bin">
-		AllowOverride None
-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-		Order allow,deny
-		Allow from all
-	</Directory>
-	ErrorLog ${{APACHE_LOG_DIR}}/error.log
-	# Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
-	LogLevel warn
-	CustomLog ${{APACHE_LOG_DIR}}/ssl_access.log combined
-	#   GnuTLS Switch: Enable/Disable SSL/TLS for this virtual host.
-	GnuTLSEnable On
-	#   Automatically obtained certificates from Let's Encrypt
-	GnuTLSCertificateFile	/etc/letsencrypt/live/{domain}/fullchain.pem
-	GnuTLSKeyFile /etc/letsencrypt/live/{domain}/privkey.pem
-	#   See http://www.outoforder.cc/projects/apache/mod_gnutls/docs/#GnuTLSPriorities
-	GnuTLSPriorities NORMAL
-</VirtualHost>
-</IfModule>
+Use FreedomBoxTLSSiteMacro {domain}
 '''
 
 
@@ -84,8 +48,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser(
-        'get-status', help='Return the status of configured domains.')
+    setup_parser = subparsers.add_parser(
+        'setup', help='Run any setup/upgrade activities.')
+    setup_parser.add_argument(
+        '--old-version', type=int, required=True, help=
+        'Version number being upgraded from or None if setting up first time.')
+
+    subparsers.add_parser('get-status',
+                          help='Return the status of configured domains.')
     revoke_parser = subparsers.add_parser(
         'revoke', help='Revoke certificate of a domain and disable website.')
     revoke_parser.add_argument('--domain', required=True,
@@ -144,8 +114,8 @@ def parse_arguments():
 def get_certificate_expiry(domain):
     """Return the expiry date of a certificate."""
     certificate_file = os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')
-    output = subprocess.check_output(['openssl', 'x509', '-enddate', '-noout',
-                                      '-in', certificate_file])
+    output = subprocess.check_output(
+        ['openssl', 'x509', '-enddate', '-noout', '-in', certificate_file])
     return output.decode().strip().split('=')[1]
 
 
@@ -175,19 +145,38 @@ def get_status():
     except OSError:
         domains = []
 
-    domains = [domain for domain in domains
-               if os.path.isdir(os.path.join(le.LIVE_DIRECTORY, domain))]
+    domains = [
+        domain for domain in domains
+        if os.path.isdir(os.path.join(le.LIVE_DIRECTORY, domain))
+    ]
 
     domain_status = {}
     for domain in domains:
         domain_status[domain] = {
-            'certificate_available': True,
-            'expiry_date': get_certificate_expiry(domain),
+            'certificate_available':
+                True,
+            'expiry_date':
+                get_certificate_expiry(domain),
             'web_enabled':
-            action_utils.webserver_is_enabled(domain, kind='site'),
-            'validity': get_validity_status(domain)
+                action_utils.webserver_is_enabled(domain, kind='site'),
+            'validity':
+                get_validity_status(domain)
         }
     return domain_status
+
+
+def subcommand_setup(arguments):
+    """Upgrade old site configuration to new macro based style.
+
+    Nothing to do for first time setup and for newer versions.
+    """
+    if arguments.old_version != 1:
+        return
+
+    domain_status = get_status()
+    with action_utils.WebserverChange() as webserver_change:
+        for domain in domain_status:
+            setup_webserver_config(domain, webserver_change)
 
 
 def subcommand_get_status(_):
@@ -200,8 +189,10 @@ def subcommand_revoke(arguments):
     """Disable a domain and revoke the certificate."""
     domain = arguments.domain
 
-    command = ['certbot', 'revoke', '--domain', domain, '--cert-path',
-               os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')]
+    command = [
+        'certbot', 'revoke', '--domain', domain, '--cert-path',
+        os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')
+    ]
     if TEST_MODE:
         command.append('--staging')
 
@@ -223,7 +214,8 @@ def subcommand_obtain(arguments):
         'certbot', 'certonly', '--text', '--agree-tos',
         '--register-unsafely-without-email', '--domain', arguments.domain,
         '--authenticator', AUTHENTICATOR, '--webroot-path', WEB_ROOT_PATH,
-        '--renew-by-default']
+        '--renew-by-default'
+    ]
     if TEST_MODE:
         command.append('--staging')
 
@@ -234,9 +226,8 @@ def subcommand_obtain(arguments):
         print(stderr.decode(), file=sys.stderr)
         sys.exit(1)
 
-    setup_webserver_config(domain)
-
-    action_utils.webserver_enable(domain, kind='site')
+    with action_utils.WebserverChange() as webserver_change:
+        setup_webserver_config(domain, webserver_change)
 
 
 def subcommand_manage_hooks(arguments):
@@ -280,8 +271,8 @@ def subcommand_manage_hooks(arguments):
     config_certbot = configobj.ConfigObj(config_path)
     if 'renewalparams' not in config_certbot:
         msg, code = ('Aborted', 6) if cmd_is_enable else ('Disabled', 0)
-        print('%s: No section [renewalparams] in config file at %s.'
-              % (msg, config_path))
+        print('%s: No section [renewalparams] in config file at %s.' %
+              (msg, config_path))
         sys.exit(code)
 
     script_path = os.path.realpath(__file__)
@@ -289,24 +280,33 @@ def subcommand_manage_hooks(arguments):
     call_pre = script_path + ' run_pre_hooks --domain ' + arguments.domain
     call_renew = script_path + ' run_renew_hooks --domain ' + arguments.domain
     call_post = script_path + ' run_post_hooks --domain ' + arguments.domain
-    config_plinth = {'renewalparams':
-                     {'authenticator': AUTHENTICATOR,
-                      # 'webroot_path': [WEB_ROOT_PATH],  # removed by renew...
-                      'webroot_map': {arguments.domain: WEB_ROOT_PATH},
-                      'installer': 'None',
-                      'pre_hook': call_pre,
-                      'renew_hook': call_renew,
-                      'post_hook': call_post}}
+    config_plinth = {
+        'renewalparams': {
+            'authenticator': AUTHENTICATOR,
+            # 'webroot_path': [WEB_ROOT_PATH],  # removed by renew...
+            'webroot_map': {
+                arguments.domain: WEB_ROOT_PATH
+            },
+            'installer': 'None',
+            'pre_hook': call_pre,
+            'renew_hook': call_renew,
+            'post_hook': call_post
+        }
+    }
     comment_plinth = '# This file was edited by Plinth.'
-    config_edited_by_plinth = any(['edited by plinth' in line.lower()
-                                   for line in config_certbot.initial_comment])
+    config_edited_by_plinth = any([
+        'edited by plinth' in line.lower()
+        for line in config_certbot.initial_comment
+    ])
 
     if arguments.command == 'status':
         # check for presence of expected minimal configuration
-        config_checks = [(entry in config_certbot['renewalparams']) and
-                         (str(config_plinth['renewalparams'][entry]) in
-                          str(config_certbot['renewalparams'][entry]))
-                         for entry in config_plinth['renewalparams'].keys()]
+        config_checks = [
+            (entry in config_certbot['renewalparams'])
+            and (str(config_plinth['renewalparams'][entry]) in str(
+                config_certbot['renewalparams'][entry]))
+            for entry in config_plinth['renewalparams'].keys()
+        ]
 
         if not all(config_checks):
             print('disabled')
@@ -452,9 +452,8 @@ def _run_action(action, action_options=None):
 
     # Contract 3C: don't interpret shell escape sequences.
     # Contract 5 (and 6-ish).
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                            shell=False)
+    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, shell=False)
 
     output, error = proc.communicate()
     output, error = output.decode(), error.decode()
@@ -496,17 +495,21 @@ def subcommand_delete(arguments):
     action_utils.webserver_disable(domain, kind='site')
 
 
-def setup_webserver_config(domain):
+def setup_webserver_config(domain, webserver_change):
     """Create SSL web server configuration for a domain.
 
     Do so only if there is no configuration existing.
     """
     file_name = os.path.join(APACHE_PREFIX, domain + '.conf')
     if os.path.isfile(file_name):
-        return
+        os.rename(file_name, file_name + '.fbx-bak')
 
     with open(file_name, 'w') as file_handle:
         file_handle.write(APACHE_CONFIGURATION.format(domain=domain))
+
+    webserver_change.enable('macro', kind='module')
+    webserver_change.enable('freedombox-tls-site-macro', kind='config')
+    webserver_change.enable(domain, kind='site')
 
 
 def main():

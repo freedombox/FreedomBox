@@ -32,7 +32,7 @@ from plinth.utils import format_lazy
 
 from .manifest import backup
 
-version = 1
+version = 2
 
 is_essential = True
 
@@ -81,6 +81,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
+    actions.superuser_run(
+        'letsencrypt',
+        ['setup', '--old-version', str(old_version)])
 
 
 def diagnose():
