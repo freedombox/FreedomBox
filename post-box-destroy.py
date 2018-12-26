@@ -27,11 +27,3 @@ try:
     os.remove('data/var/lib/plinth/plinth.sqlite3')
 except OSError:
     pass
-
-# Truncate status.log
-with open('data/var/log/plinth/status.log', 'w') as status_log:
-    status_log.truncate()
-
-# Truncate access.log
-with open('data/var/log/plinth/access.log', 'w') as access_log:
-    access_log.truncate()
