@@ -37,7 +37,7 @@ name = _('Storage')
 
 managed_services = ['freedombox-udiskie']
 
-managed_packages = ['udiskie', 'gir1.2-udisks-2.0']
+managed_packages = ['parted', 'udiskie', 'gir1.2-udisks-2.0']
 
 description = [
     format_lazy(
