@@ -169,3 +169,23 @@ def deluge_upload_sample_torrent(browser):
     ))
 def deluge_assert_number_of_torrents(browser, torrents_number):
     assert torrents_number == site.deluge_get_number_of_torrents(browser)
+
+
+@then('the calendar should be available')
+def assert_calendar_is_available(browser):
+    assert site.calendar_is_available(browser)
+
+
+@then('the calendar should not be available')
+def assert_calendar_is_not_available(browser):
+    assert not site.calendar_is_available(browser)
+
+
+@then('the addressbook should be available')
+def assert_addressbook_is_available(browser):
+    assert site.addressbook_is_available(browser)
+
+
+@then('the addressbook should not be available')
+def assert_addressbook_is_not_available(browser):
+    assert not site.addressbook_is_available(browser)

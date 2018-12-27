@@ -27,8 +27,12 @@ Scenario: Enable radicale application
   Given the radicale application is disabled
   When I enable the radicale application
   Then the radicale service should be running
+  And the calendar should be available
+  And the addressbook should be available
 
 Scenario: Disable radicale application
   Given the radicale application is enabled
   When I disable the radicale application
   Then the radicale service should not be running
+  And the calendar should not be available
+  And the addressbook should not be available

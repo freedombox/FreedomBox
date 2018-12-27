@@ -15,8 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
 import os
 import time
+
+import requests
 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -422,3 +425,25 @@ def deluge_get_number_of_torrents(browser):
     _deluge_ensure_connected(browser)
 
     return _deluge_get_number_of_torrents(browser)
+
+
+def calendar_is_available(browser):
+    """Return whether calendar is available at well-known URL."""
+    conf = config['DEFAULT']
+    url = conf['url'] + '/.well-known/caldav'
+    logging.captureWarnings(True)
+    request = requests.get(
+        url, auth=(conf['username'], conf['password']), verify=False)
+    logging.captureWarnings(False)
+    return request.status_code != 404
+
+
+def addressbook_is_available(browser):
+    """Return whether addressbook is available at well-known URL."""
+    conf = config['DEFAULT']
+    url = conf['url'] + '/.well-known/carddav'
+    logging.captureWarnings(True)
+    request = requests.get(
+        url, auth=(conf['username'], conf['password']), verify=False)
+    logging.captureWarnings(False)
+    return request.status_code != 404
