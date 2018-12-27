@@ -40,7 +40,6 @@ from plinth.tests.coverage import coverage
 DIRECTORIES_TO_CREATE = [
     '/var/lib/plinth',
     '/var/lib/plinth/sessions',
-    '/var/log/plinth',
 ]
 
 DIRECTORIES_TO_COPY = [

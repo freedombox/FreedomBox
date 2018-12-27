@@ -5,7 +5,10 @@ set -e
 case "$1" in
 purge)
 	deluser --system --quiet plinth || true
-	rm -rf /var/log/plinth /var/lib/plinth
+	rm -rf /var/lib/plinth
+
+	# Remove legacy directory too
+	rm -rf /var/log/plinth
 	;;
 esac
 

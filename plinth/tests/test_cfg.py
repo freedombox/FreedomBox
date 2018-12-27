@@ -115,7 +115,7 @@ class TestCfg(unittest.TestCase):
         """Compare two sets of configuration values."""
         # Note that the count of items within each section includes the number
         # of default items (1, for 'root').
-        self.assertEqual(12, len(parser.items('Path')))
+        self.assertEqual(9, len(parser.items('Path')))
         self.assertEqual(parser.get('Path', 'root'), cfg.root)
         self.assertEqual(parser.get('Path', 'file_root'), cfg.file_root)
         self.assertEqual(parser.get('Path', 'config_dir'), cfg.config_dir)
@@ -125,10 +125,6 @@ class TestCfg(unittest.TestCase):
         self.assertEqual(parser.get('Path', 'store_file'), cfg.store_file)
         self.assertEqual(parser.get('Path', 'actions_dir'), cfg.actions_dir)
         self.assertEqual(parser.get('Path', 'doc_dir'), cfg.doc_dir)
-        self.assertEqual(
-            parser.get('Path', 'status_log_file'), cfg.status_log_file)
-        self.assertEqual(
-            parser.get('Path', 'access_log_file'), cfg.access_log_file)
 
         self.assertEqual(5, len(parser.items('Network')))
         self.assertEqual(parser.get('Network', 'host'), cfg.host)

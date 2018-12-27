@@ -30,8 +30,6 @@ custom_static_dir = None
 store_file = None
 actions_dir = None
 doc_dir = None
-status_log_file = None
-access_log_file = None
 host = None
 port = None
 use_x_forwarded_host = False
@@ -96,8 +94,6 @@ def read(config_path=None, root_directory=None):
         ('Path', 'store_file', 'string'),
         ('Path', 'actions_dir', 'string'),
         ('Path', 'doc_dir', 'string'),
-        ('Path', 'status_log_file', 'string'),
-        ('Path', 'access_log_file', 'string'),
         ('Path', 'server_dir', 'string'),
         ('Network', 'host', 'string'),
         ('Network', 'port', 'int'),
