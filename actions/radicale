@@ -22,11 +22,14 @@ Configuration helper for Radicale.
 
 import argparse
 import augeas
+import subprocess
+from distutils.version import LooseVersion as LV
 
 from plinth import action_utils
 
 CONFIG_FILE = '/etc/radicale/config'
 DEFAULT_FILE = '/etc/default/radicale'
+DEFAULT_FILE_DEPRECATED_VERSION = LV('2.1.10')
 
 
 def parse_arguments():
@@ -48,9 +51,14 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup Radicale configuration."""
+    current_version = _get_version()
+    if not current_version:
+        print('Warning: Unable to get radicale version.')
+
     aug = load_augeas()
 
-    aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
+    if current_version and current_version < DEFAULT_FILE_DEPRECATED_VERSION:
+        aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
 
     aug.set('/files' + CONFIG_FILE + '/server/hosts',
             '127.0.0.1:5232, [::1]:5232')
@@ -64,6 +72,7 @@ def subcommand_setup(_):
 
     aug.save()
 
+    action_utils.service_enable('radicale')
     action_utils.service_restart('radicale')
     action_utils.webserver_enable('radicale-plinth')
 
@@ -87,6 +96,18 @@ def subcommand_disable(_):
     """Stop service."""
     action_utils.webserver_disable('radicale-plinth')
     action_utils.service_disable('radicale')
+
+
+def _get_version():
+    try:
+        proc = subprocess.run(
+            ['radicale', '--version'], stdout=subprocess.PIPE, check=True)
+        output = proc.stdout.decode('utf-8')
+    except subprocess.CalledProcessError:
+        return None
+
+    version = str(output.strip())
+    return LV(version)
 
 
 def load_augeas():
