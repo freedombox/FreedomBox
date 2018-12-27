@@ -53,8 +53,10 @@ Depends:
  ${misc:Depends},
  ${plinth:Depends},
  adduser,
- debconf,
  augeas-tools,
+ curl,
+ debconf,
+ dnsutils,
  e2fsprogs,
  fonts-lato,
  gettext,
@@ -65,6 +67,8 @@ Depends:
  libjs-bootstrap,
  libjs-jquery,
  libjs-modernizr,
+ lsof,
+ netcat-openbsd,
  network-manager,
  node-turbolinks,
  ppp,
@@ -85,7 +89,64 @@ Depends:
  python3-ruamel.yaml,
  python3-yaml,
  sudo,
-Recommends: python3-systemd
+ wget,
+Recommends:
+# Priority: standard
+ bzip2,
+# Provides brctl for controlling bridges
+ bridge-utils,
+# Read, write to char devices
+ devio,
+# Create, repair DOS filesystems
+ dosfstools,
+# Priority: standard
+ file,
+# Provide entropy using HAVEGE algorithm
+ haveged,
+# Monitor system resources
+ htop,
+# Monitor network traffic statistics
+ iftop,
+# Basic network utitlity ping
+ iputils-ping,
+# Manage wireless devices
+ iw,
+# Resolve gateway.localhost
+ libnss-gw-name,
+# Resolve .local address using mDNS
+ libnss-mdns,
+# Resolve current hostname without /etc/hosts
+ libnss-myhostname,
+# Tighter $TMPDIR permissions
+ libpam-tmpdir,
+# Block repeated failed PAM login attempts
+ libpam-abl,
+# Priority: standard
+ locales,
+# Precompiled data for all locales
+ locales-all,
+# Priority: standard
+ openssh-client,
+# Priority: standard
+ pciutils,
+# fuser, pstree and other utilites
+ psmisc,
+# Optional FreedomBox dependency
+ python3-systemd,
+# Manage /etc/resolv.conf
+ resolvconf,
+# Tool to kill WLAN, Bluetooth and moble broadband
+ rfkill,
+# Monitor network traffic
+ tcpdump,
+# Basic editor, VIM style
+ vim-tiny,
+# iwconfig, iwlist and other wireless network tools
+ wireless-tools,
+# Priority: standard
+ whois,
+# Basic editor, Emacs style
+ zile,
 Description: web front end for administering every aspect of a FreedomBox
  The FreedomBox is a net appliance conceived by Eben Moglen.  It
  contains free software and is designed to allow you to interface with
