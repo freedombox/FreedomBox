@@ -1,0 +1,48 @@
+# Based on ftp://ftp.skolelinux.no/installer-wheezy.dat
+# To debug, boot with DEBCONF_DEBUG=developer as kernel argument
+
+# Skip the local user
+passwd passwd/make-user boolean false
+
+# if you want popcon enabled by default
+d-i     popularity-contest/participate boolean false
+
+# If you want to avoid the password question
+#d-i passwd/root-password-crypted password passwordhash
+
+# Avoid questions about mirrors, using manual setup
+choose-mirror-bin     mirror/codename string  stretch
+choose-mirror-bin     mirror/country          string  manual
+choose-mirror-bin     mirror/protocol select  http
+choose-mirror-bin     mirror/http/hostname    string  httpredir.debian.org
+choose-mirror-bin     mirror/http/directory   string  /debian/
+
+tasksel tasksel/first   multiselect     ssh-server
+
+# list extra packages to install here
+d-i     pkgsel/include string freedombox-setup
+
+grub-installer grub-installer/only_debian boolean true
+
+# Make sure DNS lookup work after resolvconf is installed
+# and set up the Freedombox.  Block init.d scripts from running using
+# policy-rc.d to make sure dnsmasq do not overwrite the resolv.conf
+# file we just inserted (and to keep services from starting in the chroot).
+d-i     preseed/late_command   string cp /etc/resolv.conf /target/etc/resolvconf/run/resolv.conf
+
+# Avoid that last message about the install being complete.
+d-i finish-install/reboot_in_progress note
+
+# Set up partition, use guided with LVM, separate /var, /usr, /home, etc
+partman-auto    partman-auto/init_automatically_partition       select  60some_device_lvm__________lvm
+partman-auto    partman-auto/choose_recipe      select  /lib/partman/recipes/80multi
+partman-lvm partman-lvm/device_remove_lvm boolean true
+partman-lvm partman-lvm/confirm boolean true
+partman-lvm partman-lvm/confirm_nooverwrite boolean true
+partman partman/choose_partition Finish partitioning and write changes to disk
+# write changes
+partman partman/confirm boolean true
+partman partman/confirm_nooverwrite boolean true
+
+# Fix timezone to UTC to avoid one question during installation
+tzsetup-udeb    time/zone       select  Etc/UTC
