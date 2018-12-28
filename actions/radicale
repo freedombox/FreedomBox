@@ -29,7 +29,7 @@ from plinth import action_utils
 
 CONFIG_FILE = '/etc/radicale/config'
 DEFAULT_FILE = '/etc/default/radicale'
-DEFAULT_FILE_DEPRECATED_VERSION = LV('2.1.10')
+VERSION_2 = LV('2')
 
 
 def parse_arguments():
@@ -57,18 +57,21 @@ def subcommand_setup(_):
 
     aug = load_augeas()
 
-    if current_version and current_version < DEFAULT_FILE_DEPRECATED_VERSION:
+    if current_version and current_version < VERSION_2:
         aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
 
     aug.set('/files' + CONFIG_FILE + '/server/hosts',
             '127.0.0.1:5232, [::1]:5232')
-    aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
-    aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
-            '/radicale/%(user)s/caldav/')
-    aug.set('/files' + CONFIG_FILE + '/well-known/carddav',
-            '/radicale/%(user)s/carddav/')
-    aug.set('/files' + CONFIG_FILE + '/auth/type', 'remote_user')
     aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
+    if current_version and current_version < VERSION_2:
+        aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
+        aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
+                '/radicale/%(user)s/caldav/')
+        aug.set('/files' + CONFIG_FILE + '/well-known/carddav',
+                '/radicale/%(user)s/carddav/')
+        aug.set('/files' + CONFIG_FILE + '/auth/type', 'remote_user')
+    else:
+        aug.set('/files' + CONFIG_FILE + '/auth/type', 'http_x_remote_user')
 
     aug.save()
 
