@@ -43,7 +43,7 @@ DIRECTORIES_TO_CREATE = [
 ]
 
 DIRECTORIES_TO_COPY = [
-    ('/usr/share/doc/plinth', 'doc'),
+    ('/usr/share/doc/freedombox', 'doc'),
     ('/usr/share/plinth/static', 'static'),
 ]
 
