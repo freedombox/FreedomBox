@@ -227,48 +227,51 @@ setuptools.setup(
             'locale/*/LC_MESSAGES/*.[pm]o'
         ]
     },
-    data_files=[('/usr/lib/firewalld/services/',
-                 glob.glob('data/usr/lib/firewalld/services/*.xml')),
-                ('/etc/apache2/conf-available',
-                 glob.glob('data/etc/apache2/conf-available/*.conf')),
-                ('/etc/apache2/sites-available',
-                 glob.glob('data/etc/apache2/sites-available/*.conf')),
-                ('/etc/apache2/includes',
-                 glob.glob('data/etc/apache2/includes/*.conf')),
-                ('/etc/apt/apt.conf.d',
-                 glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
-                ('/etc/avahi/services/',
-                 glob.glob('data/etc/avahi/services/*.service')),
-                ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
-                ('/etc/NetworkManager/dispatcher.d/', [
-                    'data/etc/NetworkManager/dispatcher.d/10-freedombox-batman'
-                ]), ('/etc/sudoers.d', [
-                    'data/etc/sudoers.d/plinth'
-                ]), ('/lib/systemd/system',
-                     glob.glob('data/lib/systemd/system/*.service')),
-                ('/etc/mediawiki', glob.glob('data/etc/mediawiki/*.php')),
-                ('/usr/share/plinth/actions',
-                 glob.glob(os.path.join(
-                     'actions', '*'))), ('/usr/share/polkit-1/rules.d', [
-                         'data/usr/share/polkit-1/rules.d/50-plinth.rules'
-                     ]), ('/usr/share/man/man1', [
-                         'doc/plinth.1'
-                     ]), ('/etc/plinth', [
-                         'data/etc/plinth/plinth.config',
-                         'data/etc/plinth/custom-shortcuts.json'
-                     ]), ('/usr/share/augeas/lenses',
-                          glob.glob('data/usr/share/augeas/lenses/*.aug')),
-                ('/usr/share/augeas/lenses/tests',
-                 glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
-                ('/usr/share/pam-configs/',
-                 glob.glob('data/usr/share/pam-configs/*-freedombox')),
-                ('/etc/plinth/modules-enabled',
-                 glob.glob(
-                     os.path.join('data/etc/plinth/modules-enabled', '*'))),
-                ('/var/lib/polkit-1/localauthority/10-vendor.d', [
-                    'data/var/lib/polkit-1/localauthority/10-vendor.d/'
-                    'org.freedombox.NetworkManager.pkla'
-                ])],
+    data_files=[
+        ('/usr/lib/firewalld/services/',
+         glob.glob('data/usr/lib/firewalld/services/*.xml')),
+        ('/etc/apache2/conf-available',
+         glob.glob('data/etc/apache2/conf-available/*.conf')),
+        ('/etc/apache2/sites-available',
+         glob.glob('data/etc/apache2/sites-available/*.conf')),
+        ('/etc/apache2/includes',
+         glob.glob('data/etc/apache2/includes/*.conf')),
+        ('/etc/apt/apt.conf.d',
+         glob.glob('data/etc/apt/apt.conf.d/60unattended-upgrades')),
+        ('/etc/avahi/services/',
+         glob.glob('data/etc/avahi/services/*.service')),
+        ('/etc/ikiwiki', glob.glob('data/etc/ikiwiki/*.setup')),
+        ('/etc/NetworkManager/dispatcher.d/', [
+            'data/etc/NetworkManager/dispatcher.d/10-freedombox-batman'
+        ]), ('/etc/sudoers.d', [
+            'data/etc/sudoers.d/plinth'
+        ]), ('/lib/systemd/system',
+             glob.glob('data/lib/systemd/system/*.service')),
+        ('/etc/mediawiki',
+         glob.glob('data/etc/mediawiki/*.php')), ('/etc/update-motd.d/', [
+             'data/etc/update-motd.d/50-freedombox'
+         ]), ('/usr/share/plinth/actions',
+              glob.glob(os.path.join(
+                  'actions', '*'))), ('/usr/share/polkit-1/rules.d', [
+                      'data/usr/share/polkit-1/rules.d/50-plinth.rules'
+                  ]), ('/usr/share/man/man1',
+                       ['doc/plinth.1']), ('/etc/plinth', [
+                           'data/etc/plinth/plinth.config',
+                           'data/etc/plinth/custom-shortcuts.json'
+                       ]), ('/usr/share/augeas/lenses',
+                            glob.glob('data/usr/share/augeas/lenses/*.aug')),
+        ('/usr/share/augeas/lenses/tests',
+         glob.glob('data/usr/share/augeas/lenses/tests/test_*.aug')),
+        ('/usr/share/pam-configs/',
+         glob.glob('data/usr/share/pam-configs/*-freedombox')),
+        ('/etc/plinth/modules-enabled',
+         glob.glob(os.path.join(
+             'data/etc/plinth/modules-enabled',
+             '*'))), ('/var/lib/polkit-1/localauthority/10-vendor.d', [
+                 'data/var/lib/polkit-1/localauthority/10-vendor.d/'
+                 'org.freedombox.NetworkManager.pkla'
+             ])
+    ],
     cmdclass={
         'install': CustomInstall,
         'build': CustomBuild,
