@@ -889,6 +889,18 @@ Primary key fingerprint: BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971]]></
         <title>Running a Tor relay</title>
         <para>When Tor is installed, it is configured by default to run as a bridge relay. The relay or bridge option can be disabled through the Tor configuration page in Plinth. </para>
         <para>At the bottom of the Tor page in Plinth, there is a list of ports used by the Tor relay. If your FreedomBox is behind a router, you will need to configure port forwarding on your router so that these ports can be reached from the public Internet. </para>
+        <para>The requirements to run a relay are listed in the <ulink url="https://trac.torproject.org/projects/tor/wiki/TorRelayGuide">Tor Relay Guide</ulink>. In short, it is   </para>
+        <itemizedlist>
+          <listitem>
+            <para>recommended that a relay has at least 16 Mbit/s (Mbps) upload and download bandwidth available for Tor. More is better. </para>
+          </listitem>
+          <listitem>
+            <para>required that a Tor relay be allowed to use a minimum of 100 GByte of outbound and of incoming traffic per month. </para>
+          </listitem>
+          <listitem>
+            <para>recommended that a &lt;40 Mbit/s non-exit relay should have at least 512 MB of RAM available; A relay faster than 40 Mbit/s should have at least 1 GB of RAM.  </para>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Using Tor SOCKS port (advanced)</title>
@@ -1367,7 +1379,8 @@ file = /etc/radicale/rights]]></screen>
       <title>File Sharing (Coquelicot)</title>
       <section>
         <title>About Coquelicot</title>
-        <para>Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy.  </para>
+        <para>Coquelicot is a "one-click" file sharing web application with a focus on protecting users' privacy. The basic principle is simple: users can upload a file to the server, in return they get a unique URL which can be shared with others in order to download the file. A download password can be defined. </para>
+        <para>After the upload you get a unique link that can be shared to your partners in order to  </para>
         <para>Read more about Coquelicot at <ulink url="https://coquelicot.potager.org/README">the Coquelicot README</ulink> </para>
         <para><emphasis role="strong">Available since:</emphasis>  version 0.24.0 </para>
       </section>
@@ -6356,7 +6369,9 @@ Password:
         <title>Known Issues</title>
         <itemizedlist>
           <listitem>
-            <para>None </para>
+            <para>
+              <ulink url="https://salsa.debian.org/freedombox-team/freedom-maker/issues/148">LIME2: Not working properly</ulink>
+            </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -7759,6 +7774,20 @@ wget https://www.thinkpenguin.com/files/ath9k_firmware_free-version/htc_7010.fw]
     <section>
       <title>Release Notes</title>
       <para>The following are the release notes for each FreedomBox version. </para>
+      <section>
+        <title>Version 0.46.0 (2018-12-31)</title>
+        <itemizedlist>
+          <listitem>
+            <para>Updated translations for Czech, German, Spanish, Ukrainian, and Norwegian Bokmål. </para>
+          </listitem>
+          <listitem>
+            <para>Use systemd journal for logging. </para>
+          </listitem>
+          <listitem>
+            <para>Rename plinth binary package to "freedombox", and merge freedombox-setup package into it. </para>
+          </listitem>
+        </itemizedlist>
+      </section>
       <section>
         <title>Version 0.45.0 (2018-12-17)</title>
         <itemizedlist>
