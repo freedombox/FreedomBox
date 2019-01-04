@@ -45,8 +45,12 @@ Vcs-Git: https://salsa.debian.org/freedombox-team/plinth.git
 Vcs-Browser: https://salsa.debian.org/freedombox-team/plinth
 
 Package: freedombox
-Breaks: freedombox-setup (<< 0.13~)
-Replaces: freedombox-setup (<< 0.13~)
+Breaks:
+ freedombox-setup (<< 0.13~),
+ plinth (<< 0.46.0~),
+Replaces:
+ freedombox-setup (<< 0.13~),
+ plinth (<< 0.46.0~),
 Architecture: all
 Provides: plinth
 Depends:
@@ -164,7 +168,7 @@ Priority: optional
 Section: oldlibs
 Depends:
  ${misc:Depends},
- freedombox,
+ freedombox (>> 0.46.0),
 Description: easy to manage, privacy oriented home server (transitional package)
  FreedomBox is designed to be your own inexpensive server at home. It runs free
  software and offers an increasing number of services ranging from a calendar or
