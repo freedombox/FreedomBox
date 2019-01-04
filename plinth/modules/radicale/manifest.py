@@ -17,15 +17,15 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-from plinth.modules.backups.api import validate as validate_backup
 from plinth.clients import store_url, validate
+from plinth.modules.backups.api import validate as validate_backup
 
 clients = validate([{
     'name':
-        _('DAVDroid'),
+        _('DAVx5'),
     'usage':
         _('Enter the URL of the Radicale server (e.g. '
-          'http://localhost:5232) and your user name. DAVdroid will '
+          'http://localhost:5232) and your user name. DAVx5 will '
           'show all existing calendars and address books and you can '
           'create new.'),
     'platforms': [{
