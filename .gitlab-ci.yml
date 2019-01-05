@@ -7,7 +7,7 @@ before_script:
   - apt-get install -y build-essential  # Build dependencies
   - apt-get install -y sshpass parted  # Test dependencies
   - apt-get install -y sudo
-  - apt-mark hold fuse  # not installable in CI environment
+  - apt-mark hold fuse fuse3  # not installable in CI environment
   - apt-get install -y $(./run --list-dependencies)  # Module dependencies
 
 stages:
