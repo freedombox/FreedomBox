@@ -98,25 +98,28 @@ def update_configuration(request, old_status, new_status):
     def make_config(args):
         key, stamp = args[0], args[1]
         if old_status[key] != new_status[key]:
-            return stamp.format(new_status[key])
+            if 'limit' in key:
+                return stamp.format('0-{}'.format(new_status[key]))
+            else:
+                return stamp.format(new_status[key])
         else:
             return None
 
     new_status['number_min_age'] = int(new_status['number_min_age']) * 86400
 
-    config = filter(None,
-                    map(make_config, [
-                        ('enable_timeline_snapshots', 'TIMELINE_CREATE={}'),
-                        ('hourly_limit', 'TIMELINE_LIMIT_HOURLY={}'),
-                        ('daily_limit', 'TIMELINE_LIMIT_DAILY={}'),
-                        ('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}'),
-                        ('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}'),
-                        ('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}'),
-                        ('number_min_age', 'NUMBER_MIN_AGE={}'),
-                    ]))
+    config = filter(
+        None,
+        map(make_config, [
+            ('enable_timeline_snapshots', 'TIMELINE_CREATE={}'),
+            ('hourly_limit', 'TIMELINE_LIMIT_HOURLY={}'),
+            ('daily_limit', 'TIMELINE_LIMIT_DAILY={}'),
+            ('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}'),
+            ('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}'),
+            ('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}'),
+            ('number_min_age', 'NUMBER_MIN_AGE={}'),
+        ]))
 
-    if old_status['enable_software_snapshots'] != new_status[
-            'enable_software_snapshots']:
+    if old_status['enable_software_snapshots'] != new_status['enable_software_snapshots']:
         if new_status['enable_software_snapshots'] == 'yes':
             actions.superuser_run('snapshot', ['disable-apt-snapshot', 'no'])
         else:

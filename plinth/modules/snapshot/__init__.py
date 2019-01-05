@@ -28,7 +28,7 @@ from plinth.menu import main_menu
 
 from .manifest import backup
 
-version = 3
+version = 4
 
 managed_packages = ['snapper']
 
@@ -67,13 +67,16 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
+    if old_version:
+        helper.call('post', actions.superuser_run, 'snapshot', ['migrate'])
+    else:
+        helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
 
 
 def load_augeas():
     """Initialize Augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # shell-script config file lens
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
@@ -96,21 +99,24 @@ def get_configuration():
     def get_boolean_choice(status):
         return ('yes', 'Enabled') if status else ('no', 'Disabled')
 
+    def get_max_from_range(key):
+        return output[key].split('-')[-1]
+
     return {
         'enable_timeline_snapshots':
             get_boolean_choice(output['TIMELINE_CREATE'] == 'yes'),
         'enable_software_snapshots':
             get_boolean_choice(is_apt_snapshots_enabled(aug)),
         'hourly_limit':
-            output['TIMELINE_LIMIT_HOURLY'],
+            get_max_from_range('TIMELINE_LIMIT_HOURLY'),
         'daily_limit':
-            output['TIMELINE_LIMIT_DAILY'],
+            get_max_from_range('TIMELINE_LIMIT_DAILY'),
         'weekly_limit':
-            output['TIMELINE_LIMIT_WEEKLY'],
-        'yearly_limit':
-            output['TIMELINE_LIMIT_YEARLY'],
+            get_max_from_range('TIMELINE_LIMIT_WEEKLY'),
         'monthly_limit':
-            output['TIMELINE_LIMIT_MONTHLY'],
+            get_max_from_range('TIMELINE_LIMIT_MONTHLY'),
+        'yearly_limit':
+            get_max_from_range('TIMELINE_LIMIT_YEARLY'),
         'number_min_age':
             round(int(output['NUMBER_MIN_AGE']) / 86400),
     }
