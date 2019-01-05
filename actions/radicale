@@ -77,7 +77,7 @@ def subcommand_setup(_):
 
     action_utils.service_enable('radicale')
     action_utils.service_restart('radicale')
-    action_utils.webserver_enable('radicale-plinth')
+    action_utils.webserver_enable(_get_web_config(current_version))
 
 
 def subcommand_configure(arguments):
@@ -92,12 +92,12 @@ def subcommand_configure(arguments):
 def subcommand_enable(_):
     """Start service."""
     action_utils.service_enable('radicale')
-    action_utils.webserver_enable('radicale-plinth')
+    action_utils.webserver_enable(_get_web_config())
 
 
 def subcommand_disable(_):
     """Stop service."""
-    action_utils.webserver_disable('radicale-plinth')
+    action_utils.webserver_disable(_get_web_config())
     action_utils.service_disable('radicale')
 
 
@@ -111,6 +111,17 @@ def _get_version():
 
     version = str(output.strip())
     return LV(version)
+
+
+def _get_web_config(current_version=None):
+    """Return the name of the webserver configuration based on version."""
+    if current_version is None:
+        current_version = _get_version()
+
+    if current_version and current_version < VERSION_2:
+        return 'radicale-plinth'
+
+    return 'radicale2-freedombox'
 
 
 def load_augeas():
