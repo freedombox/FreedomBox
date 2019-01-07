@@ -52,9 +52,7 @@ class TestBackups(unittest.TestCase):
     # grant access
     nonexisting_repo_url = "user@%s.com.au:~/repo" % str(uuid.uuid1())
     inaccessible_repo_url = "user@heise.de:~/repo"
-    dummy_credentials = {
-        'ssh_password': 'invalid_password'
-    }
+    dummy_credentials = {'ssh_password': 'invalid_password'}
     repokey_encryption_passphrase = '12345'
 
     @classmethod
@@ -62,12 +60,12 @@ class TestBackups(unittest.TestCase):
         """Initial setup for all the classes."""
         cls.action_directory = tempfile.TemporaryDirectory()
         cls.backup_directory = tempfile.TemporaryDirectory()
-        cls.data_directory = os.path.join(os.path.dirname(
-            os.path.realpath(__file__)), 'backup_data')
+        cls.data_directory = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), 'backup_data')
         cls.actions_dir_factory = cfg.actions_dir
         cfg.actions_dir = cls.action_directory.name
-        actions_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..',
-                                   '..', 'actions')
+        actions_dir = os.path.join(
+            os.path.dirname(__file__), '..', '..', '..', '..', 'actions')
         shutil.copy(os.path.join(actions_dir, 'backups'), cfg.actions_dir)
         shutil.copy(os.path.join(actions_dir, 'sshfs'), cfg.actions_dir)
 
@@ -121,9 +119,10 @@ class TestBackups(unittest.TestCase):
         repository = BorgRepository(repo_path)
         repository.create_repository()
         archive_path = "::".join([repo_path, archive_name])
-        actions.superuser_run(
-            'backups', ['create-archive', '--path', archive_path, '--paths',
-                        self.data_directory])
+        actions.superuser_run('backups', [
+            'create-archive', '--path', archive_path, '--paths',
+            self.data_directory
+        ])
 
         archive = repository.list_archives()[0]
         self.assertEquals(archive['name'], archive_name)
@@ -174,8 +173,7 @@ class TestBackups(unittest.TestCase):
         credentials = self.get_credentials()
         ssh_path = test_config.backups_ssh_path
 
-        repository = SshBorgRepository(path=ssh_path,
-                                       credentials=credentials,
+        repository = SshBorgRepository(path=ssh_path, credentials=credentials,
                                        automount=False)
         repository.mount()
         self.assertTrue(repository.is_mounted)
@@ -190,8 +188,7 @@ class TestBackups(unittest.TestCase):
         credentials = self.get_credentials()
         ssh_path = test_config.backups_ssh_path
 
-        repository = SshBorgRepository(path=ssh_path,
-                                       credentials=credentials,
+        repository = SshBorgRepository(path=ssh_path, credentials=credentials,
                                        automount=False)
         repository.mount()
         self.assertTrue(repository.is_mounted)
