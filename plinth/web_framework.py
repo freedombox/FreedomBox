@@ -135,6 +135,12 @@ def init():
             'plinth.modules.first_boot.middleware.FirstBootMiddleware',
             'plinth.middleware.SetupMiddleware',
         ),
+        PASSWORD_HASHERS=[
+            'django.contrib.auth.hashers.Argon2PasswordHasher',
+            'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+            'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+            'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        ],
         ROOT_URLCONF='plinth.urls',
         SECURE_BROWSER_XSS_FILTER=True,
         SECURE_CONTENT_TYPE_NOSNIFF=True,
