@@ -21,6 +21,7 @@ Test the backups action script.
 import json
 import os
 import shutil
+import subprocess
 import tempfile
 import unittest
 import uuid
@@ -33,6 +34,16 @@ from plinth import actions
 from plinth.tests import config as test_config
 
 euid = os.geteuid()
+
+
+def _borg_is_installed():
+    """Return whether borg is installed on the system."""
+    try:
+        subprocess.run(['borg', '--version'], stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True)
+        return True
+    except FileNotFoundError:
+        return False
 
 
 class TestBackups(unittest.TestCase):
@@ -67,7 +78,8 @@ class TestBackups(unittest.TestCase):
         cls.backup_directory.cleanup()
         cfg.actions_dir = cls.actions_dir_factory
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_nonexisting_repository(self):
         nonexisting_dir = os.path.join(self.backup_directory.name,
                                        'does_not_exist')
@@ -75,7 +87,8 @@ class TestBackups(unittest.TestCase):
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
             repository.get_info()
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_empty_dir(self):
         empty_dir = os.path.join(self.backup_directory.name, 'empty_dir')
         os.mkdir(empty_dir)
@@ -83,7 +96,8 @@ class TestBackups(unittest.TestCase):
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
             repository.get_info()
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_create_unencrypted_repository(self):
         repo_path = os.path.join(self.backup_directory.name, 'borgbackup')
         repository = BorgRepository(repo_path)
@@ -91,7 +105,8 @@ class TestBackups(unittest.TestCase):
         info = repository.get_info()
         self.assertTrue('encryption' in info)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_create_export_delete_archive(self):
         """
         - Create a repo
@@ -117,7 +132,8 @@ class TestBackups(unittest.TestCase):
         content = repository.list_archives()
         self.assertEquals(len(content), 0)
 
-    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
+    @unittest.skipUnless(euid == 0 and _borg_is_installed()
+                         and test_config.backups_ssh_path,
                          'Needs to be root and ssh password provided')
     def test_remote_backup_actions(self):
         """
@@ -150,7 +166,8 @@ class TestBackups(unittest.TestCase):
             arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
         return (arguments, kwargs)
 
-    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_path,
+    @unittest.skipUnless(euid == 0 and _borg_is_installed()
+                         and test_config.backups_ssh_path,
                          'Needs to be root and ssh password provided')
     def test_sshfs_mount_password(self):
         """Test (un)mounting if password for a remote location is given"""
@@ -165,7 +182,8 @@ class TestBackups(unittest.TestCase):
         repository.umount()
         self.assertFalse(repository.is_mounted)
 
-    @unittest.skipUnless(euid == 0 and test_config.backups_ssh_keyfile,
+    @unittest.skipUnless(euid == 0 and _borg_is_installed()
+                         and test_config.backups_ssh_keyfile,
                          'Needs to be root and ssh keyfile provided')
     def test_sshfs_mount_keyfile(self):
         """Test (un)mounting if keyfile for a remote location is given"""
@@ -180,7 +198,8 @@ class TestBackups(unittest.TestCase):
         repository.umount()
         self.assertFalse(repository.is_mounted)
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_access_nonexisting_url(self):
         repository = SshBorgRepository(path=self.nonexisting_repo_url,
                                        credentials=self.dummy_credentials,
@@ -188,7 +207,8 @@ class TestBackups(unittest.TestCase):
         with self.assertRaises(backups.errors.BorgRepositoryDoesNotExistError):
             repository.get_info()
 
-    @unittest.skipUnless(euid == 0, 'Needs to be root')
+    @unittest.skipUnless(euid == 0 and _borg_is_installed(),
+                         'Needs to be root')
     def test_inaccessible_repo_url(self):
         """Test accessing an existing URL with wrong credentials"""
         repository = SshBorgRepository(path=self.inaccessible_repo_url,
