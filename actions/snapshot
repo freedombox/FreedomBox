@@ -38,10 +38,10 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-    subparsers.add_parser('setup', help='Configure snapper')
-    subparsers.add_parser(
-        'migrate',
-        help='Migrate existing user configuration to the new format')
+    subparser = subparsers.add_parser('setup', help='Configure snapper')
+    subparser.add_argument(
+        '--old-version', type=int, required=True,
+        help='Earlier version of the app that is already setup.')
     subparsers.add_parser('list', help='List snapshots')
     subparsers.add_parser('create', help='Create snapshot')
     subparsers.add_parser('get-config', help='Configurations of snapshot')
@@ -70,20 +70,49 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def subcommand_setup(_):
+def subcommand_setup(arguments):
     """Configure snapper."""
-    # Check if root config exists.
-    command = ['snapper', 'list-configs']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    output = process.stdout.decode()
 
-    # Create root config if needed.
-    if 'root' not in output:
-        command = ['snapper', 'create-config', '/']
+    if arguments.old_version == 0:
+        # Check if root config exists.
+        command = ['snapper', 'list-configs']
+        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+        output = process.stdout.decode()
+
+        # Create root config if needed.
+        if 'root' not in output:
+            command = ['snapper', 'create-config', '/']
+            subprocess.run(command, check=True)
+
+        _set_default_config()
+        _add_fstab_entry('/')
+
+    else:
+        # Migrate existing user configuration for snapshots
+        # to the new configuration format.
+        config = _get_config()
+
+        def convert_to_range(key):
+            value = config[key]
+            value = value if '-' in value else '0-{}'.format(value)
+            return '{}={}'.format(key, value)
+
+        command = [
+            'snapper',
+            'set-config',
+            'TIMELINE_MIN_AGE=0',
+            convert_to_range('TIMELINE_LIMIT_HOURLY'),
+            convert_to_range('TIMELINE_LIMIT_DAILY'),
+            convert_to_range('TIMELINE_LIMIT_WEEKLY'),
+            convert_to_range('TIMELINE_LIMIT_MONTHLY'),
+            convert_to_range('TIMELINE_LIMIT_YEARLY'),
+            'NUMBER_MIN_AGE=0',
+            'NUMBER_LIMIT=0-100',
+            'NUMBER_LIMIT_IMPORTANT=0-20',
+            'EMPTY_PRE_POST_MIN_AGE=0',
+            'FREE_LIMIT=0.3',
+        ]
         subprocess.run(command, check=True)
-
-    _set_default_config()
-    _add_fstab_entry('/')
 
 
 def _set_default_config():
@@ -251,37 +280,6 @@ def _get_config():
 def subcommand_get_config(_):
     config = _get_config()
     print(json.dumps(config))
-
-
-def subcommand_migrate(_):
-    """Migrate existing user configuration for snapshots
-    to the new configuration format.
-    Added in version 4 of the snapshots module.
-    This command will not check or perform first setup steps.
-    """
-    config = _get_config()
-
-    def convert_to_range(key):
-        value = config[key]
-        value = value if '-' in value else '0-{}'.format(value)
-        return '{}={}'.format(key, value)
-
-    command = [
-        'snapper',
-        'set-config',
-        'TIMELINE_MIN_AGE=0',
-        convert_to_range('TIMELINE_LIMIT_HOURLY'),
-        convert_to_range('TIMELINE_LIMIT_DAILY'),
-        convert_to_range('TIMELINE_LIMIT_WEEKLY'),
-        convert_to_range('TIMELINE_LIMIT_MONTHLY'),
-        convert_to_range('TIMELINE_LIMIT_YEARLY'),
-        'NUMBER_MIN_AGE=0',
-        'NUMBER_LIMIT=0-100',
-        'NUMBER_LIMIT_IMPORTANT=0-20',
-        'EMPTY_PRE_POST_MIN_AGE=0',
-        'FREE_LIMIT=0.3',
-    ]
-    subprocess.run(command, check=True)
 
 
 def subcommand_kill_daemon(_):

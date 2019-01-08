@@ -64,10 +64,9 @@ def init():
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    if old_version:
-        helper.call('post', actions.superuser_run, 'snapshot', ['migrate'])
-    else:
-        helper.call('post', actions.superuser_run, 'snapshot', ['setup'])
+    helper.call(
+        'post', actions.superuser_run, 'snapshot',
+        ['setup', '--old-version', str(old_version)])
 
 
 def load_augeas():
