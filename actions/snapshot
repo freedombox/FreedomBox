@@ -72,47 +72,60 @@ def parse_arguments():
 
 def subcommand_setup(arguments):
     """Configure snapper."""
+    # Check if root config exists.
+    command = ['snapper', 'list-configs']
+    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    output = process.stdout.decode()
 
-    if arguments.old_version == 0:
-        # Check if root config exists.
-        command = ['snapper', 'list-configs']
-        process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-        output = process.stdout.decode()
-
-        # Create root config if needed.
-        if 'root' not in output:
-            command = ['snapper', 'create-config', '/']
-            subprocess.run(command, check=True)
-
-        _set_default_config()
-        _add_fstab_entry('/')
-
-    else:
-        # Migrate existing user configuration for snapshots
-        # to the new configuration format.
-        config = _get_config()
-
-        def convert_to_range(key):
-            value = config[key]
-            value = value if '-' in value else '0-{}'.format(value)
-            return '{}={}'.format(key, value)
-
-        command = [
-            'snapper',
-            'set-config',
-            'TIMELINE_MIN_AGE=0',
-            convert_to_range('TIMELINE_LIMIT_HOURLY'),
-            convert_to_range('TIMELINE_LIMIT_DAILY'),
-            convert_to_range('TIMELINE_LIMIT_WEEKLY'),
-            convert_to_range('TIMELINE_LIMIT_MONTHLY'),
-            convert_to_range('TIMELINE_LIMIT_YEARLY'),
-            'NUMBER_MIN_AGE=0',
-            'NUMBER_LIMIT=0-100',
-            'NUMBER_LIMIT_IMPORTANT=0-20',
-            'EMPTY_PRE_POST_MIN_AGE=0',
-            'FREE_LIMIT=0.3',
-        ]
+    # Create root config if needed.
+    if 'root' not in output:
+        command = ['snapper', 'create-config', '/']
         subprocess.run(command, check=True)
+
+    _add_fstab_entry('/')
+    if arguments.old_version == 0:
+        _set_default_config()
+    elif arguments.old_version <= 3:
+        _migrate_config_from_version_3()
+    else:
+        pass  # After version 4 and above don't reset configuration
+
+
+def _migrate_config_from_version_3():
+    """Upgrade configuration from version <=3.
+
+    - This configuration was not using ranges for limits which would make free
+      space setting unused.
+    - Force set yes to cleanups.
+    - Reset all number cleanup settings.
+    - Make free space setting 30% by default instead of 20%.
+
+    """
+    config = _get_config()
+
+    def convert_to_range(key):
+        value = config[key]
+        value = value if '-' in value else '0-{}'.format(value)
+        return '{}={}'.format(key, value)
+
+    command = [
+        'snapper',
+        'set-config',
+        'TIMELINE_CLEANUP=yes',
+        'TIMELINE_MIN_AGE=0',
+        convert_to_range('TIMELINE_LIMIT_HOURLY'),
+        convert_to_range('TIMELINE_LIMIT_DAILY'),
+        convert_to_range('TIMELINE_LIMIT_WEEKLY'),
+        convert_to_range('TIMELINE_LIMIT_MONTHLY'),
+        convert_to_range('TIMELINE_LIMIT_YEARLY'),
+        'NUMBER_CLEANUP=yes',
+        'NUMBER_MIN_AGE=0',
+        'NUMBER_LIMIT=0-100',
+        'NUMBER_LIMIT_IMPORTANT=0-20',
+        'EMPTY_PRE_POST_MIN_AGE=0',
+        'FREE_LIMIT=0.3',
+    ]
+    subprocess.run(command, check=True)
 
 
 def _set_default_config():
