@@ -105,8 +105,6 @@ def update_configuration(request, old_status, new_status):
         else:
             return None
 
-    new_status['number_min_age'] = int(new_status['number_min_age']) * 86400
-
     config = filter(
         None,
         map(make_config, [
@@ -116,7 +114,7 @@ def update_configuration(request, old_status, new_status):
             ('weekly_limit', 'TIMELINE_LIMIT_WEEKLY={}'),
             ('monthly_limit', 'TIMELINE_LIMIT_MONTHLY={}'),
             ('yearly_limit', 'TIMELINE_LIMIT_YEARLY={}'),
-            ('number_min_age', 'NUMBER_MIN_AGE={}'),
+            ('free_space', 'FREE_LIMIT={}'),
         ]))
 
     if old_status['enable_software_snapshots'] != new_status['enable_software_snapshots']:

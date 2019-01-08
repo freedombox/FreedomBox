@@ -117,8 +117,8 @@ def get_configuration():
             get_max_from_range('TIMELINE_LIMIT_MONTHLY'),
         'yearly_limit':
             get_max_from_range('TIMELINE_LIMIT_YEARLY'),
-        'number_min_age':
-            round(int(output['NUMBER_MIN_AGE']) / 86400),
+        'free_space':
+            output['FREE_LIMIT'],
     }
 
 
