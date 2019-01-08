@@ -108,7 +108,7 @@ def verify_snapshot_count(browser, count):
 
 @given(
     parsers.parse(
-        'snapshots are configured with free_space {free_space:d}, timeline '
+        'snapshots are configured with free space {free_space:d}, timeline '
         'snapshots {timeline_enabled:w}, software snapshots '
         '{software_enabled:w}, hourly limit {hourly:d}, daily limit {daily:d}'
         ', weekly limit {weekly:d}, monthly limit {monthly:d}, yearly limit '
@@ -125,7 +125,7 @@ def snapshot_given_set_configuration(browser, free_space, timeline_enabled,
 
 @when(
     parsers.parse(
-        'I configure snapshots with free_space {free_space:d}, '
+        'I configure snapshots with free space {free_space:d}, '
         'timeline snapshots {timeline_enabled:w}, '
         'software snapshots {software_enabled:w}, hourly limit {hourly:d}, '
         'daily limit {daily:d}, weekly limit {weekly:d}, monthly limit '
@@ -142,7 +142,7 @@ def snapshot_set_configuration(browser, free_space, timeline_enabled,
 
 @then(
     parsers.parse(
-        'snapshots should be configured with free_space {free_space:d}, '
+        'snapshots should be configured with free space {free_space:d}, '
         'timeline snapshots {timeline_enabled:w}, software snapshots '
         '{software_enabled:w}, hourly limit {hourly:d}, daily limit '
         '{daily:d}, weekly limit {weekly:d}, monthly limit {monthly:d}, '
@@ -152,7 +152,6 @@ def snapshot_assert_configuration(browser, free_space, timeline_enabled,
                                   monthly, yearly):
     timeline_enabled = (timeline_enabled == 'enabled')
     software_enabled = (software_enabled == 'enabled')
-    print(system.snapshot_get_configuration(browser))
     assert (free_space, timeline_enabled, software_enabled, hourly, daily,
             weekly, monthly,
             yearly) == system.snapshot_get_configuration(browser)

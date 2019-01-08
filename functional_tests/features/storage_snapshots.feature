@@ -29,13 +29,13 @@ Scenario: Create a snapshot
   Then there should be 1 snapshot in the list
 
 Scenario: Configure snapshots
-  Given snapshots are configured with free_space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
-  When I configure snapshots with free_space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
-  Then snapshots should be configured with free_space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
+  Given snapshots are configured with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
+  When I configure snapshots with free space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
+  Then snapshots should be configured with free space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
 
 Scenario: Backup and restore snapshot
-  When I configure snapshots with free_space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
+  When I configure snapshots with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
   And I create a backup of the snapshot app data
-  And I configure snapshots with free_space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
+  And I configure snapshots with free space 20, timeline snapshots enabled, software snapshots enabled, hourly limit 3, daily limit 2, weekly limit 1, monthly limit 1, yearly limit 1
   And I restore the snapshot app data backup
-  Then snapshots should be configured with free_space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0
+  Then snapshots should be configured with free space 30, timeline snapshots disabled, software snapshots disabled, hourly limit 10, daily limit 3, weekly limit 2, monthly limit 2, yearly limit 0

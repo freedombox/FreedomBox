@@ -100,10 +100,10 @@ def update_configuration(request, old_status, new_status):
         if old_status[key] != new_status[key]:
             if 'limit' in key:
                 return stamp.format('0-{}'.format(new_status[key]))
-            else:
-                return stamp.format(new_status[key])
-        else:
-            return None
+
+            return stamp.format(new_status[key])
+
+        return None
 
     config = filter(
         None,
