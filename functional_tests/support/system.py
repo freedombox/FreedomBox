@@ -102,11 +102,12 @@ def get_snapshot_count(browser):
     return len(browser.find_by_xpath('//tr')) - 1
 
 
-def snapshot_set_configuration(browser, timeline_enabled, software_enabled,
-                               hourly, daily, weekly, monthly, yearly,
-                               delete_old):
+def snapshot_set_configuration(browser, free_space, timeline_enabled,
+                               software_enabled, hourly, daily, weekly,
+                               monthly, yearly):
     """Set the configuration for snapshots."""
     nav_to_module(browser, 'snapshot')
+    browser.find_by_name('free_space').select(free_space / 100)
     browser.find_by_name('enable_timeline_snapshots').select(
         'yes' if timeline_enabled else 'no')
     browser.find_by_name('enable_software_snapshots').select(
@@ -116,21 +117,20 @@ def snapshot_set_configuration(browser, timeline_enabled, software_enabled,
     browser.find_by_name('weekly_limit').fill(weekly)
     browser.find_by_name('monthly_limit').fill(monthly)
     browser.find_by_name('yearly_limit').fill(yearly)
-    browser.find_by_name('number_min_age').fill(delete_old)
     submit(browser)
 
 
 def snapshot_get_configuration(browser):
     """Return the current configuration for snapshots."""
     nav_to_module(browser, 'snapshot')
-    return (browser.find_by_name('enable_timeline_snapshots').value == 'yes',
+    return (int(float(browser.find_by_name('free_space').value) * 100),
+            browser.find_by_name('enable_timeline_snapshots').value == 'yes',
             browser.find_by_name('enable_software_snapshots').value == 'yes',
             int(browser.find_by_name('hourly_limit').value),
             int(browser.find_by_name('daily_limit').value),
             int(browser.find_by_name('weekly_limit').value),
             int(browser.find_by_name('monthly_limit').value),
-            int(browser.find_by_name('yearly_limit').value),
-            int(browser.find_by_name('number_min_age').value))
+            int(browser.find_by_name('yearly_limit').value))
 
 
 def check_home_page_redirect(browser, app_name):
