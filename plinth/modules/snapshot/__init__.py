@@ -18,13 +18,14 @@
 FreedomBox app to manage filesystem snapshots.
 """
 
-import augeas
 import json
 
+import augeas
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import actions
 from plinth.menu import main_menu
+from plinth.modules import storage
 
 from .manifest import backup
 
@@ -54,6 +55,8 @@ manual_page = 'Snapshots'
 
 DEFAULT_FILE = '/etc/default/snapper'
 
+fs_types_supported = ['btrfs']
+
 
 def init():
     """Initialize the module."""
@@ -61,12 +64,19 @@ def init():
     menu.add_urlname(name, 'glyphicon-film', 'snapshot:index')
 
 
+def is_supported():
+    """Return whether snapshots are support on current setup."""
+    fs_type = storage.get_filesystem_type()
+    return fs_type in fs_types_supported
+
+
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.install(managed_packages)
-    helper.call(
-        'post', actions.superuser_run, 'snapshot',
-        ['setup', '--old-version', str(old_version)])
+    if is_supported():
+        helper.call('post', actions.superuser_run, 'snapshot',
+                    ['setup', '--old-version',
+                     str(old_version)])
 
 
 def load_augeas():

@@ -30,6 +30,7 @@ from django.utils.translation import ugettext_lazy
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
+from plinth.modules import storage
 
 from . import get_configuration
 from .forms import SnapshotForm
@@ -43,8 +44,24 @@ subsubmenu = [{
 }]
 
 
+def not_supported_view(request):
+    """Show that snapshots are not supported on the system."""
+    template_data = {
+        'title': snapshot_module.name,
+        'description': snapshot_module.description,
+        'fs_type': storage.get_filesystem_type(),
+        'fs_types_supported': snapshot_module.fs_types_supported,
+        'manual_page': snapshot_module.manual_page,
+    }
+    return TemplateResponse(request, 'snapshot_not_supported.html',
+                            template_data)
+
+
 def index(request):
     """Show snapshot list."""
+    if not snapshot_module.is_supported():
+        return not_supported_view(request)
+
     status = get_configuration()
     if request.method == 'POST':
         form = SnapshotForm(request.POST)
@@ -66,6 +83,9 @@ def index(request):
 
 def manage(request):
     """Show snapshot list."""
+    if not snapshot_module.is_supported():
+        return not_supported_view(request)
+
     if request.method == 'POST':
         if 'create' in request.POST:
             actions.superuser_run('snapshot', ['create'])
@@ -128,10 +148,10 @@ def update_configuration(request, old_status, new_status):
 
         messages.success(request, _('Storage snapshots configuration updated'))
     except ActionError as exception:
-        messages.error(request,
-                       _('Action error: {0} [{1}] [{2}]').format(
-                           exception.args[0], exception.args[1],
-                           exception.args[2]))
+        messages.error(
+            request,
+            _('Action error: {0} [{1}] [{2}]').format(
+                exception.args[0], exception.args[1], exception.args[2]))
 
 
 def delete_selected(request):

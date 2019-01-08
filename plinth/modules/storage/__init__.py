@@ -21,10 +21,11 @@ import json
 import logging
 import subprocess
 
+import psutil
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions, cfg
+from plinth import service as service_module
 from plinth.errors import PlinthError
 from plinth.menu import main_menu
 from plinth.utils import format_lazy, import_from_gi, is_user_admin
@@ -130,6 +131,15 @@ def _get_disks_from_lsblk():
         disk['dev_kname'] = '/dev/{0}'.format(disk['kname'])
 
     return disks
+
+
+def get_filesystem_type(mount_point='/'):
+    """Returns the type of the filesystem mounted at mountpoint."""
+    for partition in psutil.disk_partitions():
+        if partition.mountpoint == mount_point:
+            return partition.fstype
+
+    raise ValueError('No such mount point')
 
 
 def get_disk_info(mountpoint, request):
