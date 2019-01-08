@@ -42,7 +42,7 @@ description = [
     _('Snapshots are taken periodically (called timeline snapshots) and also '
       'before and after a software installation. Older snapshots will be '
       'automatically cleaned up according to the settings below.'),
-    _('Snapshots work on btrfs file systems only and on the root '
+    _('Snapshots currently work on btrfs file systems only and on the root '
       'partition only. Snapshots are not a replacement for '
       '<a href="/plinth/sys/backups">backups</a> since '
       'they can only be stored on the same partition. ')

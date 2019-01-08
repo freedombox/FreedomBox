@@ -24,21 +24,23 @@ from django.utils.translation import ugettext_lazy as _
 
 class SnapshotForm(forms.Form):
     free_space = forms.ChoiceField(
-        label=_('Free Space'),
+        label=_('Free Disk Space to Maintain'),
         help_text=_('Maintain this percentage of free space on the disk. '
-                    'The default value is 30%.'),
-        choices=[(i / 100, i) for i in range(10, 70, 10)])
-
-    enable_software_snapshots = forms.ChoiceField(
-        label=_('Software Installation Snapshots'), help_text=_(
-            'Enable or disable snapshots before and after software '
-            'installation'), choices=[('yes', 'Enabled'), ('no', 'Disabled')])
+                    'If free space falls below this value, older snapshots '
+                    'are removed until this much free space is regained. The '
+                    'default value is 30%.'),
+        choices=[(i / 100, '{}%'.format(i)) for i in range(10, 80, 10)])
 
     enable_timeline_snapshots = forms.ChoiceField(
         label=_('Timeline Snapshots'),
         help_text=_('Enable or disable timeline snapshots '
                     '(hourly, daily, monthly and yearly).'),
         choices=[('yes', 'Enabled'), ('no', 'Disabled')])
+
+    enable_software_snapshots = forms.ChoiceField(
+        label=_('Software Installation Snapshots'), help_text=_(
+            'Enable or disable snapshots before and after software '
+            'installation'), choices=[('yes', 'Enabled'), ('no', 'Disabled')])
 
     hourly_limit = forms.IntegerField(
         label=_('Hourly Snapshots Limit'), min_value=0,
