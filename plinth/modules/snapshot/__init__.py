@@ -39,16 +39,13 @@ description = [
       'These can be used to roll back the system to a previously known '
       'good state in case of unwanted changes to the system.'),
     # Translators: xgettext:no-python-format
-    _('Snapshots are taken every hour, day and month (called timeline '
-      'snapshots). Snapshots are also taken before and after a software '
-      'installation. Although snapshots are efficient and only store the '
-      'differences, they may be deleted to reclaim free space.  Individual '
-      'files from older snapshots can be accessed by visiting "/.snapshots" '
-      'directory in the filesystem. It is recommended to enable snapshots '
-      'only if you have at least 50% free space on your root partition.'),
+    _('Snapshots are taken periodically (called timeline snapshots) and also '
+      'before and after a software installation. Older snapshots will be '
+      'automatically cleaned up according to the settings below.'),
     _('Snapshots work on btrfs file systems only and on the root '
-      'partition only. Snapshots are not a replacement for backups since '
-      'they are stored on the same partition. ')
+      'partition only. Snapshots are not a replacement for '
+      '<a href="/plinth/sys/backups">backups</a> since '
+      'they can only be stored on the same partition. ')
 ]
 
 service = None
