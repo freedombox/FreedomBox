@@ -161,13 +161,23 @@ def delete_selected(request):
     if request.method == 'POST':
         if 'snapshots' in request.session:
             to_delete = request.session['snapshots']
-            if to_delete == len(snapshots):
-                actions.superuser_run('snapshot', ['delete_all'])
-                messages.success(request, _('Deleted all snapshots'))
-            else:
-                for snapshot in to_delete:
-                    actions.superuser_run('snapshot', ['delete', snapshot])
-                messages.success(request, _('Deleted selected snapshots'))
+            try:
+                if to_delete == len(snapshots):
+                    actions.superuser_run('snapshot', ['delete_all'])
+                    messages.success(request, _('Deleted all snapshots'))
+                else:
+                    for snapshot in to_delete:
+                        actions.superuser_run('snapshot', ['delete', snapshot])
+                    messages.success(request, _('Deleted selected snapshots'))
+            except ActionError as exception:
+                if 'Config is in use.' in exception.args[2]:
+                    messages.error(
+                        request,
+                        _('Snapshot is currently in use. '
+                          'Please try again later.'))
+                else:
+                    raise
+
             return redirect(reverse('snapshot:manage'))
 
     if 'snapshots' in request.session:
