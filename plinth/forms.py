@@ -69,14 +69,21 @@ class LanguageSelectionFormMixin:
         supported_languages = [
             (None, _('Use the language preference set in the browser'))
         ]
+
+        def _get_local_name(language_code, language_name):
+            try:
+                return get_language_info(language_code)['name_local']
+            except KeyError:
+                return language_name
+
         for language_code, language_name in settings.LANGUAGES:
             locale_code = translation.to_locale(language_code)
             plinth_dir = os.path.dirname(plinth.__file__)
             if language_code == 'en' or os.path.exists(
                     os.path.join(plinth_dir, 'locale', locale_code)):
-                supported_languages.append(
-                    (language_code,
-                     get_language_info(language_code)['name_local']))
+                supported_languages.append((language_code,
+                                            _get_local_name(
+                                                language_code, language_name)))
 
         self.fields['language'].choices = supported_languages
 

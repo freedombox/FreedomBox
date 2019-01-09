@@ -25,6 +25,7 @@ import stat
 import django.conf
 import django.core.management
 import django.core.wsgi
+from django.conf import global_settings
 from django.contrib.messages import constants as message_constants
 
 from . import cfg, log, module_loader
@@ -114,6 +115,7 @@ def init():
         FORCE_SCRIPT_NAME=cfg.server_dir,
         INSTALLED_APPS=applications,
         IPWARE_META_PRECEDENCE_ORDER=('HTTP_X_FORWARDED_FOR', ),
+        LANGUAGES=get_languages(),
         LOGGING=log.get_configuration(),
         LOGIN_URL='users:login',
         LOGIN_REDIRECT_URL='index',
@@ -159,6 +161,21 @@ def init():
     django.core.management.call_command('migrate', '--fake-initial',
                                         interactive=False, verbosity=verbosity)
     os.chmod(cfg.store_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
+
+
+def get_languages():
+    """Return list of languages to show in the interface.
+
+    Add additional languages that FreedomBox support but Django doesn't.
+
+    """
+    def gettext_noop(string):
+        """Django's actual translation methods need Django to be setup."""
+        return string
+
+    return sorted(list(global_settings.LANGUAGES) + [
+        ('gu', gettext_noop('Gujarati')),
+    ])
 
 
 def get_wsgi_application():
