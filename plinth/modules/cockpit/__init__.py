@@ -59,6 +59,8 @@ description = [
 
 service = None
 
+manual_page = 'Cockpit'
+
 
 def init():
     """Intialize the module."""

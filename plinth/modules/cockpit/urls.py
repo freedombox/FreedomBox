@@ -30,6 +30,7 @@ urlpatterns = [
             diagnostics_module_name='cockpit',
             description=cockpit.description,
             show_status_block=True,
-            clients=cockpit.clients),
+            clients=cockpit.clients,
+            manual_page=cockpit.manual_page),
         name='index'),
 ]
