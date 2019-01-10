@@ -50,11 +50,9 @@ description = [
     format_lazy(
         _('When enabled, Cockpit will be available from <a href="/_cockpit/">'
           '/_cockpit/</a> path on the web server. It can be accessed by '
-          '<a href="{users_url}">any user</a> with a {box_name} login. '
-          'Sensitive information and system altering abilities are limited to '
-          'users belonging to admin group.'), box_name=_(cfg.box_name),
+          '<a href="{users_url}">any user</a> on {box_name} belonging to '
+          'the admin group.'), box_name=_(cfg.box_name),
         users_url=reverse_lazy('users:index')),
-    _('Currently only limited functionality is available.'),
 ]
 
 service = None
