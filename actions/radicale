@@ -22,13 +22,20 @@ Configuration helper for Radicale.
 
 import argparse
 import augeas
+import os
 import subprocess
 from distutils.version import LooseVersion as LV
 
 from plinth import action_utils
 
 CONFIG_FILE = '/etc/radicale/config'
+
 DEFAULT_FILE = '/etc/default/radicale'
+
+UWSGI_FILE = '/etc/uwsgi/apps-available/radicale.ini'
+
+UWSGI_LINK = '/etc/uwsgi/apps-enabled/radicale.ini'
+
 VERSION_2 = LV('2')
 
 
@@ -78,6 +85,14 @@ def subcommand_setup(_):
     action_utils.service_enable('radicale')
     action_utils.service_restart('radicale')
     action_utils.webserver_enable(_get_web_config(current_version))
+
+    # Enable uwsgi for radicale 2.x. Do this after radicale is
+    # started, so it creates the necessary folders.
+    if current_version and current_version >= VERSION_2:
+        if not os.path.exists(UWSGI_LINK):
+            os.symlink(UWSGI_FILE, UWSGI_LINK)
+        action_utils.webserver_enable('proxy_uwsgi', kind='module')
+        action_utils.service_restart('uwsgi')
 
 
 def subcommand_configure(arguments):

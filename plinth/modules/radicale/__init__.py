@@ -35,7 +35,7 @@ service = None
 
 managed_services = ['radicale']
 
-managed_packages = ['radicale']
+managed_packages = ['radicale', 'uwsgi', 'uwsgi-plugin-python3']
 
 name = _('Radicale')
 
