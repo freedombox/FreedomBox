@@ -50,7 +50,7 @@ manual_page = 'NameServices'
 def init():
     """Initialize the names module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-tag', 'names:index')
+    menu.add_urlname(name, 'fa-tags', 'names:index')
 
     domain_added.connect(on_domain_added)
     domain_removed.connect(on_domain_removed)

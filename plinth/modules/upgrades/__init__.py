@@ -46,7 +46,7 @@ manual_page = 'Upgrades'
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-refresh', 'upgrades:index')
+    menu.add_urlname(name, 'fa-refresh', 'upgrades:index')
     global service
     service = service_module.Service('auto-upgrades', name, is_external=False,
                                      is_enabled=is_enabled, enable=enable,

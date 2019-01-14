@@ -52,7 +52,7 @@ manual_page = 'Shaarli'
 def init():
     """Initialize the module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'glyphicon-bookmark', 'shaarli:index',
+    menu.add_urlname(name, 'fa-bookmark', 'shaarli:index',
                      short_description)
 
     global service

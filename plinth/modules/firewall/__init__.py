@@ -54,7 +54,7 @@ LOGGER = logging.getLogger(__name__)
 def init():
     """Initailze firewall module"""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-fire', 'firewall:index')
+    menu.add_urlname(name, 'fa-shield', 'firewall:index')
 
     service_enabled.connect(on_service_enabled)
 

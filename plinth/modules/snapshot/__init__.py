@@ -61,7 +61,7 @@ fs_types_supported = ['btrfs']
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-film', 'snapshot:index')
+    menu.add_urlname(name, 'fa-film', 'snapshot:index')
 
 
 def is_supported():

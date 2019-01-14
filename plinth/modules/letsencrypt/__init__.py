@@ -71,7 +71,7 @@ logger = logging.getLogger(__name__)
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-lock', 'letsencrypt:index',
+    menu.add_urlname(name, 'fa-lock', 'letsencrypt:index',
                      short_description)
     domainname_change.connect(on_domainname_change)
     domain_added.connect(on_domain_added)

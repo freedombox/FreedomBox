@@ -50,7 +50,7 @@ service = None
 def init():
     """Intialize the ssh module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-console', 'ssh:index')
+    menu.add_urlname(name, 'fa-terminal', 'ssh:index')
 
     global service
     service = service_module.Service(

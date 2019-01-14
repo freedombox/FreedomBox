@@ -35,15 +35,15 @@ from plinth.menu import main_menu
 def init():
     """Initialize the Help module"""
     menu = main_menu.add_urlname(
-        ugettext_lazy('Documentation'), 'glyphicon-book', 'help:index')
+        ugettext_lazy('Documentation'), 'fa-book', 'help:index')
     menu.add_urlname(
-        ugettext_lazy('Manual'), 'glyphicon-info-sign', 'help:manual',
+        ugettext_lazy('Manual'), 'fa-info-circle', 'help:manual',
         order=10)
     menu.add_urlname(
-        ugettext_lazy('Download Manual'), 'glyphicon-download-alt',
+        ugettext_lazy('Download Manual'), 'fa-download',
         'help:download-manual', order=15)
     menu.add_urlname(
-        ugettext_lazy('About'), 'glyphicon-star', 'help:about', order=100)
+        ugettext_lazy('About'), 'fa-star', 'help:about', order=100)
 
 
 def index(request):

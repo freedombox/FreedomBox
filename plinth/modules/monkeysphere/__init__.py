@@ -58,7 +58,7 @@ def init():
     """Initialize the monkeysphere module."""
     menu = main_menu.get('system')
     menu.add_urlname(
-        _('Monkeysphere'), 'glyphicon-certificate', 'monkeysphere:index')
+        _('Monkeysphere'), 'fa-certificate', 'monkeysphere:index')
 
 
 def setup(helper, old_version=None):

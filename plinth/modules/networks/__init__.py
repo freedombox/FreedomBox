@@ -42,7 +42,7 @@ manual_page = 'Networks'
 def init():
     """Initialize the Networks module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-signal', 'networks:index')
+    menu.add_urlname(name, 'fa-signal', 'networks:index')
 
 
 def setup(helper, old_version=None):

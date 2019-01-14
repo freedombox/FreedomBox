@@ -58,7 +58,7 @@ manual_page = 'DynamicDNS'
 def init():
     """Initialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-refresh', 'dynamicdns:index')
+    menu.add_urlname(name, 'fa-refresh', 'dynamicdns:index')
     current_status = dynamicdns.get_status()
     if current_status['enabled']:
         services = dynamicdns.get_enabled_services(

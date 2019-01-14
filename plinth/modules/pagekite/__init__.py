@@ -80,7 +80,7 @@ manual_page = 'PageKite'
 def init():
     """Intialize the PageKite module"""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-flag', 'pagekite:index',
+    menu.add_urlname(name, 'fa-flag', 'pagekite:index',
                      short_description)
 
     # Register kite name with Name Services module.

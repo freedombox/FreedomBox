@@ -63,7 +63,7 @@ manual_page = 'Cockpit'
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-wrench', 'cockpit:index',
+    menu.add_urlname(name, 'fa-wrench', 'cockpit:index',
                      short_description)
 
     global service

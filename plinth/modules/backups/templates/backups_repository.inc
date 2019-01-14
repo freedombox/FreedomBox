@@ -26,7 +26,7 @@
       <th colspan="2">
 
         {% if repository.error %}
-           <span class="glyphicon glyphicon-warning-sign mount-error"
+           <span class="fa fa-exclamation-triangle mount-error"
                  aria-hidden="true" title="{{ repository.error }}">
            </span>
         {% endif %}
@@ -45,7 +45,7 @@
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-default"
                      title="{% trans 'Unmount Location' %}">
-               <span class="glyphicon glyphicon-eject" aria-hidden="true">
+               <span class="fa fa-eject" aria-hidden="true">
                </button>
             </form>
 
@@ -56,7 +56,7 @@
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-default"
                      title="{% trans 'Mount Location' %}">
-               <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+               <span class="fa fa-eye" aria-hidden="true">
                </button>
             </form>
 
@@ -65,7 +65,7 @@
           <a title="{% trans 'Remove Location. This will not delete the remote backup.' %}"
              role="button" class="repository-remove btn btn-sm btn-default"
              href="{% url 'backups:repository-remove' uuid %}">
-             <span class="glyphicon glyphicon-trash" aria-hidden="true">
+             <span class="fa fa-trash" aria-hidden="true">
           </a>
 
         {% endif %}
@@ -91,7 +91,7 @@
             </a>
             <a class="archive-delete btn btn-sm btn-default"
                href="{% url 'backups:delete' uuid archive.name %}">
-              <span class="glyphicon glyphicon-trash" aria-hidden="true">
+              <span class="fa fa-trash" aria-hidden="true">
               </span>
             </a>
           </td>

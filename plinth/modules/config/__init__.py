@@ -73,7 +73,7 @@ def init():
     """Initialize the module"""
     menu = main_menu.get('system')
     menu.add_urlname(
-        ugettext_lazy('Configure'), 'glyphicon-cog', 'config:index')
+        ugettext_lazy('Configure'), 'fa-cog', 'config:index')
 
     # Register domain with Name Services module.
     domainname = get_domainname()

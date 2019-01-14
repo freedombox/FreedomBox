@@ -60,7 +60,7 @@ is_essential = True
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-hdd', 'storage:index')
+    menu.add_urlname(name, 'fa-hdd-o', 'storage:index')
 
 
 def get_disks():

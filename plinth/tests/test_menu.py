@@ -73,12 +73,12 @@ class MenuTestCase(TestCase):
 
         apps_menu = main_menu.get('apps')
         self.assertEqual(apps_menu.label, '')
-        self.assertEqual(apps_menu.icon, 'glyphicon-download-alt')
+        self.assertEqual(apps_menu.icon, 'fa-download')
         self.assertEqual(str(apps_menu.url), '/apps/')
 
         system_menu = main_menu.get('system')
         self.assertEqual(system_menu.label, '')
-        self.assertEqual(system_menu.icon, 'glyphicon-cog')
+        self.assertEqual(system_menu.icon, 'fa-cog')
         self.assertEqual(str(system_menu.url), '/sys/')
 
     def test_menu_creation_without_arguments(self):

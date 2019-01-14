@@ -54,7 +54,7 @@ SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 def init():
     """Intialize the module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-duplicate', 'backups:index')
+    menu.add_urlname(name, 'fa-files-o', 'backups:index')
 
 
 def setup(helper, old_version=None):

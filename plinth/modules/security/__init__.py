@@ -46,7 +46,7 @@ ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-lock', 'security:index')
+    menu.add_urlname(name, 'fa-lock', 'security:index')
 
 
 def setup(helper, old_version=None):

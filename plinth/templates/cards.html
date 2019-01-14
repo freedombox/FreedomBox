@@ -39,8 +39,8 @@
             <a href="{{ item.url }}" class="nav-link">
               <div class="card-title">{{ item.name }}</div>
               <div class="card-icon">
-                {% if 'glyphicon-' in item.icon %}
-                  <span class="{{ item.icon }} glyphicon"></span>
+                {% if 'fa-' in item.icon %}
+                  <span class="fa {{ item.icon }} fa-3x"></span>
                 {% else %}
                   <img src="{% static 'theme/icons/' %}{{ item.icon }}.png"/>
                 {% endif %}

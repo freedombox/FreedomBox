@@ -51,7 +51,7 @@ groups = dict()
 def init():
     """Intialize the user module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-user', 'users:index')
+    menu.add_urlname(name, 'fa-users', 'users:index')
 
 
 def setup(helper, old_version=None):

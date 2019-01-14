@@ -59,7 +59,7 @@ manual_page = 'ServiceDiscovery'
 def init():
     """Intialize the service discovery module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-lamp', 'avahi:index')
+    menu.add_urlname(name, 'fa-compass', 'avahi:index')
 
     global service  # pylint: disable=W0603
     service = service_module.Service(managed_services[0], name, ports=['mdns'],

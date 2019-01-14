@@ -43,7 +43,7 @@ manual_page = 'Diagnostics'
 def init():
     """Initialize the module"""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-screenshot', 'diagnostics:index')
+    menu.add_urlname(name, 'fa-heartbeat', 'diagnostics:index')
 
 
 def diagnose():

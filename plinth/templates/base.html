@@ -69,6 +69,7 @@
 
   <!-- Bootstrap base CSS -->
   <link rel="stylesheet" href="{% static '/javascript/bootstrap/css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" href="{% static '/javascript/fork-awesome/css/fork-awesome.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/plinth.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/responsive.css' %}"/>
   <!-- Local link to system Turbolinks JS -->
@@ -100,8 +101,7 @@
         {% block mainmenu_left %}
           <a href="{% url 'index' %}"  class="navbar-brand"
              title="{{ box_name }}">
-            <img src="{% static 'theme/img/FreedomBox-logo-32px-white.png' %}"
-                 alt="{{ box_name }}" />
+            <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
         {% endblock %}
       </div>
@@ -121,7 +121,7 @@
               <a href="{{ apps_url }}" title='{% trans " Apps" %}'
                  class="{% if apps_url == submenu.url %}
                  menu_link_active {% else %} menu_link {% endif %}">
-                <span class="glyphicon glyphicon-th"></span>
+                <span class="fa fa-th"></span>
                 {% trans "Apps" %}
               </a>
             </li>
@@ -130,7 +130,7 @@
               <a href="{{ system_url }}" title='{% trans " System" %}'
                  class="{% if system_url == submenu.url %}
                  menu_link_active {% else %} menu_link {% endif %}">
-                <span class="glyphicon glyphicon-cog nav-icon"></span>
+                <span class="fa fa-cog nav-icon"></span>
                 {% trans "System" %}
               </a>
             </li>
@@ -142,14 +142,14 @@
             {% if user.is_authenticated %}
               <li>
                 <a href="{% url 'help:index' %}" title="{% trans "Help" %}">
-                  <span class="glyphicon-question-sign glyphicon nav-icon"></span>
+                  <span class="fa fa-question-circle nav-icon"></span>
                 </a>
               </li>
               <li class="dropdown">
                 <a href="{% url 'users:edit' request.user.username %}"
                    class="dropdown-toggle" data-toggle="dropdown"
                    role="button" aria-expanded="false">
-                  <i class="glyphicon glyphicon-user nav-icon"></i>
+                  <i class="fa fa-user nav-icon"></i>
                   {{ request.user.username }}
                   <span class="caret"></span>
                 </a>
@@ -194,12 +194,12 @@
               <li>
                 <a href="{% url 'language-selection' %}?next={{ request.path|iriencode }}"
                    title="{% trans "Select language" %}">
-                  <i class="glyphicon glyphicon-globe nav-icon"></i>
+                  <i class="fa fa-globe-w  nav-icon"></i>
                 </a>
               </li>
               <li>
                   <a href="{% url 'users:login' %}" title="{% trans "Log in" %}">
-                    <i class="glyphicon glyphicon-user nav-icon"></i>
+                    <i class="fa fa-user nav-icon"></i>
                     {% trans "Log in" %}</a>
               </li>
             {% endif %}
@@ -207,7 +207,7 @@
             {% if user.is_authenticated %}
               <li id="logout-nojs">
                 <a href="{% url 'users:logout' %}" title="{% trans "Log out" %}">
-                  <i class="glyphicon glyphicon-remove-circle nav-icon"></i>
+                  <i class="fa fa-times-circle nav-icon"></i>
                   {% trans "Log out" %}</a>
               </li>
             {% endif %}

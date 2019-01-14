@@ -83,7 +83,7 @@ listen-on-v6 { any; };
 def init():
     """Intialize the BIND module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-globe', 'bind:index', short_description)
+    menu.add_urlname(name, 'fa-globe-w', 'bind:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']

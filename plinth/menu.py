@@ -100,5 +100,5 @@ main_menu = Menu()
 
 def init():
     """Create main menu and other essential menus."""
-    main_menu.add_urlname('', 'glyphicon-download-alt', 'apps')
-    main_menu.add_urlname('', 'glyphicon-cog', 'system')
+    main_menu.add_urlname('', 'fa-download', 'apps')
+    main_menu.add_urlname('', 'fa-cog', 'system')

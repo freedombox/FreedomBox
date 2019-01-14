@@ -50,7 +50,7 @@ service = None
 def init():
     """Intialize the date/time module."""
     menu = main_menu.get('system')
-    menu.add_urlname(name, 'glyphicon-time', 'datetime:index')
+    menu.add_urlname(name, 'fa-clock-o', 'datetime:index')
 
     global service
     setup_helper = globals()['setup_helper']
