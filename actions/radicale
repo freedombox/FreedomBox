@@ -15,28 +15,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 """
 Configuration helper for Radicale.
 """
 
 import argparse
+
 import augeas
-import os
-import subprocess
-from distutils.version import LooseVersion as LV
 
 from plinth import action_utils
+from plinth.modules import radicale
 
 CONFIG_FILE = '/etc/radicale/config'
 
 DEFAULT_FILE = '/etc/default/radicale'
-
-UWSGI_FILE = '/etc/uwsgi/apps-available/radicale.ini'
-
-UWSGI_LINK = '/etc/uwsgi/apps-enabled/radicale.ini'
-
-VERSION_2 = LV('2')
 
 
 def parse_arguments():
@@ -58,19 +50,19 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Setup Radicale configuration."""
-    current_version = _get_version()
+    current_version = radicale.get_package_version()
     if not current_version:
         print('Warning: Unable to get radicale version.')
 
     aug = load_augeas()
 
-    if current_version and current_version < VERSION_2:
+    if current_version and current_version < radicale.VERSION_2:
         aug.set('/files' + DEFAULT_FILE + '/ENABLE_RADICALE', 'yes')
 
     aug.set('/files' + CONFIG_FILE + '/server/hosts',
             '127.0.0.1:5232, [::1]:5232')
     aug.set('/files' + CONFIG_FILE + '/rights/type', 'owner_only')
-    if current_version and current_version < VERSION_2:
+    if current_version and current_version < radicale.VERSION_2:
         aug.set('/files' + CONFIG_FILE + '/server/base_prefix', '/radicale/')
         aug.set('/files' + CONFIG_FILE + '/well-known/caldav',
                 '/radicale/%(user)s/caldav/')
@@ -82,17 +74,7 @@ def subcommand_setup(_):
 
     aug.save()
 
-    action_utils.service_enable('radicale')
-    action_utils.service_restart('radicale')
-    action_utils.webserver_enable(_get_web_config(current_version))
-
-    # Enable uwsgi for radicale 2.x. Do this after radicale is
-    # started, so it creates the necessary folders.
-    if current_version and current_version >= VERSION_2:
-        if not os.path.exists(UWSGI_LINK):
-            os.symlink(UWSGI_FILE, UWSGI_LINK)
-        action_utils.webserver_enable('proxy_uwsgi', kind='module')
-        action_utils.service_restart('uwsgi')
+    subcommand_enable(None)
 
 
 def subcommand_configure(arguments):
@@ -106,37 +88,26 @@ def subcommand_configure(arguments):
 
 def subcommand_enable(_):
     """Start service."""
-    action_utils.service_enable('radicale')
-    action_utils.webserver_enable(_get_web_config())
+    if radicale.get_package_version() >= radicale.VERSION_2:
+        # Enable uwsgi for radicale 2.x. Do this after radicale is
+        # started, so it creates the necessary folders.
+        action_utils.service_disable('radicale')
+        action_utils.uwsgi_enable('radicale')
+        action_utils.webserver_enable('proxy_uwsgi', kind='module')
+    else:
+        action_utils.service_enable('radicale')
+        action_utils.service_restart('radicale')
+
+    action_utils.webserver_enable(radicale.get_web_config())
 
 
 def subcommand_disable(_):
     """Stop service."""
-    action_utils.webserver_disable(_get_web_config())
-    action_utils.service_disable('radicale')
-
-
-def _get_version():
-    try:
-        proc = subprocess.run(
-            ['radicale', '--version'], stdout=subprocess.PIPE, check=True)
-        output = proc.stdout.decode('utf-8')
-    except subprocess.CalledProcessError:
-        return None
-
-    version = str(output.strip())
-    return LV(version)
-
-
-def _get_web_config(current_version=None):
-    """Return the name of the webserver configuration based on version."""
-    if current_version is None:
-        current_version = _get_version()
-
-    if current_version and current_version < VERSION_2:
-        return 'radicale-plinth'
-
-    return 'radicale2-freedombox'
+    action_utils.webserver_disable(radicale.get_web_config())
+    if radicale.get_package_version() >= radicale.VERSION_2:
+        action_utils.uwsgi_disable('radicale')
+    else:
+        action_utils.service_disable('radicale')
 
 
 def load_augeas():

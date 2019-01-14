@@ -18,12 +18,15 @@
 FreedomBox app for radicale.
 """
 
+import subprocess
+from distutils.version import LooseVersion as LV
+
 import augeas
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from plinth import service as service_module
 from plinth import action_utils, actions, cfg, frontpage
+from plinth import service as service_module
 from plinth.menu import main_menu
 from plinth.utils import format_lazy
 
@@ -58,21 +61,24 @@ manual_page = 'Radicale'
 
 CONFIG_FILE = '/etc/radicale/config'
 
+VERSION_2 = LV('2')
+
 
 def init():
     """Initialize the radicale module."""
     menu = main_menu.get('apps')
-    menu.add_urlname(name, 'radicale', 'radicale:index',
-                     short_description)
+    menu.add_urlname(name, 'radicale', 'radicale:index', short_description)
 
     global service
     setup_helper = globals()['setup_helper']
     if setup_helper.get_state() != 'needs-setup':
         service = service_module.Service(managed_services[0], name, ports=[
             'http', 'https'
-        ], is_external=True, enable=enable, disable=disable)
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
 
-        if service.is_enabled():
+        if is_enabled():
             add_shortcut()
 
 
@@ -84,7 +90,9 @@ def setup(helper, old_version=None):
     if service is None:
         service = service_module.Service(managed_services[0], name, ports=[
             'http', 'https'
-        ], is_external=True, enable=enable, disable=disable)
+        ], is_external=True, is_enabled=is_enabled, enable=enable,
+                                         disable=disable,
+                                         is_running=is_running)
     helper.call('post', service.notify_enabled, None, True)
     helper.call('post', add_shortcut)
 
@@ -94,6 +102,50 @@ def add_shortcut():
         'radicale', name, short_description=short_description,
         details=description, configure_url=reverse_lazy('radicale:index'),
         login_required=True)
+
+
+def get_package_version():
+    try:
+        proc = subprocess.run(['radicale', '--version'],
+                              stdout=subprocess.PIPE, check=True)
+        output = proc.stdout.decode('utf-8')
+    except subprocess.CalledProcessError:
+        return None
+
+    package_version = str(output.strip())
+    return LV(package_version)
+
+
+def get_web_config(current_version=None):
+    """Return the name of the webserver configuration based on version."""
+    if current_version is None:
+        current_version = get_package_version()
+
+    if current_version and current_version < VERSION_2:
+        return 'radicale-plinth'
+
+    return 'radicale2-freedombox'
+
+
+def is_running():
+    """Return whether the service is running."""
+    if get_package_version() < VERSION_2:
+        return action_utils.service_is_running('radicale')
+
+    return action_utils.service_is_running('uwsgi') \
+        and action_utils.uwsgi_is_enabled('radicale')
+
+
+def is_enabled():
+    """Return whether the module is enabled."""
+    package_version = get_package_version()
+    if package_version >= VERSION_2:
+        daemon_enabled = action_utils.uwsgi_is_enabled('radicale')
+    else:
+        daemon_enabled = action_utils.service_is_enabled('radicale')
+
+    return (action_utils.webserver_is_enabled(get_web_config(package_version))
+            and daemon_enabled)
 
 
 def enable():
@@ -110,8 +162,8 @@ def disable():
 
 def load_augeas():
     """Prepares the augeas."""
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
 
     # INI file lens
     aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
