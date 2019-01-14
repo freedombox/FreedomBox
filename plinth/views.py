@@ -203,9 +203,9 @@ class SetupView(TemplateView):
                 response.status_code = 303
                 return response
 
-            elif 'refresh-packages' in request.POST:
+            if 'refresh-packages' in request.POST:
                 # Refresh apt package lists
                 package.refresh_package_lists()
                 return self.render_to_response(self.get_context_data())
-        else:
-            return super(SetupView, self).dispatch(request, *args, **kwargs)
+
+        return super(SetupView, self).dispatch(request, *args, **kwargs)

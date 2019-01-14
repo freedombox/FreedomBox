@@ -145,8 +145,8 @@ class Helper(object):
 
         if not current_version:
             return 'needs-setup'
-        else:
-            return 'needs-update'
+
+        return 'needs-update'
 
     def get_setup_version(self):
         """Return the setup version of a module."""
