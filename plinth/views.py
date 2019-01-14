@@ -184,7 +184,10 @@ class SetupView(TemplateView):
         context['setup_state'] = setup_helper.get_state()
         context['setup_current_operation'] = setup_helper.current_operation
 
-        context['package_manager_is_busy'] = package.is_package_manager_busy()
+        # Perform expensive operation only if needed
+        if not context['setup_current_operation']:
+            context['package_manager_is_busy'] = package.is_package_manager_busy()
+
         return context
 
     def dispatch(self, request, *args, **kwargs):
