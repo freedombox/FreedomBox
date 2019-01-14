@@ -21,9 +21,9 @@ function sleep(ms) {
 
 // Refresh the page once in n seconds
 async function refresh(ms) {
+    if (typeof ms === 'undefined')
+        ms = 3000;
+
     await sleep(ms);
     window.location.reload();
 }
-
-refresh(3000);
-
