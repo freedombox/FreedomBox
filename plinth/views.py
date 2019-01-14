@@ -177,7 +177,13 @@ class SetupView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
         context = super(SetupView, self).get_context_data(**kwargs)
-        context['setup_helper'] = self.kwargs['setup_helper']
+        setup_helper = self.kwargs['setup_helper']
+        context['setup_helper'] = setup_helper
+
+        # Reuse the value of setup_state throughout the view for consistency.
+        context['setup_state'] = setup_helper.get_state()
+        context['setup_current_operation'] = setup_helper.current_operation
+
         context['package_manager_is_busy'] = package.is_package_manager_busy()
         return context
 

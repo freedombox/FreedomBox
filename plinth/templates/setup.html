@@ -23,7 +23,7 @@
 {% load static %}
 
 {% block page_head %}
-  {% if setup_helper.current_operation %}
+  {% if setup_current_operation or setup_state == 'up-to-date' %}
     <noscript>
       <meta http-equiv="refresh" content="3" />
     </noscript>
@@ -48,14 +48,18 @@
 
   {% include "clients.html" with clients=setup_helper.module.clients %}
 
-  {% if not setup_helper.current_operation %}
+  {% if setup_state == 'up-to-date' %}
+
+     {% trans "Application installated." %}
+
+  {% elif not setup_current_operation %}
 
     <p>
-      {% if setup_helper.get_state == 'needs-setup' %}
+      {% if setup_state == 'needs-setup' %}
         {% blocktrans trimmed %}
           Install this application?
         {% endblocktrans %}
-      {% elif setup_helper.get_state == 'needs-update' %}
+      {% elif setup_state == 'needs-update' %}
         {% blocktrans trimmed %}
           This application needs an update. Update now?
         {% endblocktrans %}
@@ -87,27 +91,26 @@
              {% if package_manager_is_busy or setup_helper.has_unavailable_packages %}
              disabled="disabled"
              {% endif %}
-             {% if setup_helper.get_state == 'needs-setup' %}
+             {% if setup_state == 'needs-setup' %}
              value="{% trans "Install" %}"
-             {% elif setup_helper.get_state == 'needs-upgrade' %}
+             {% elif setup_state == 'needs-upgrade' %}
              value="{% trans "Update" %}"
              {% endif %} />
 
     </form>
 
-
   {% else %}
 
-    {% if setup_helper.current_operation.step == 'pre' %}
+    {% if setup_current_operation.step == 'pre' %}
       <div class="install-state-pre">
         {% trans "Performing pre-install operation" %}
       </div>
-    {% elif setup_helper.current_operation.step == 'post' %}
+    {% elif setup_current_operation.step == 'post' %}
       <div class="install-state-post">
         {% trans "Performing post-install operation" %}
       </div>
-    {% elif setup_helper.current_operation.step == 'install' %}
-      {% with transaction=setup_helper.current_operation.transaction %}
+    {% elif setup_current_operation.step == 'install' %}
+      {% with transaction=setup_current_operation.transaction %}
         <div class="install-state-installing">
           {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
             Installing {{ package_names }}: {{ status }}
@@ -135,7 +138,7 @@
 
 {% block page_js %}
 
-  {% if setup_helper.current_operation %}
+  {% if setup_current_operation or setup_state == 'up-to-date' %}
     <script type="text/javascript" src="{% static 'theme/js/refresh.js' %}"></script>
   {% endif %}
 
