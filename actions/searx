@@ -152,20 +152,14 @@ def subcommand_setup(_):
 
 def subcommand_enable(_):
     """Enable web configuration and reload."""
-    if not os.path.exists('/etc/uwsgi/apps-enabled/searx.ini'):
-        os.symlink('/etc/uwsgi/apps-available/searx.ini',
-                   '/etc/uwsgi/apps-enabled/searx.ini')
-
-    action_utils.service_enable('uwsgi')
-    action_utils.service_restart('uwsgi')
+    action_utils.uwsgi_enable('searx')
     action_utils.webserver_enable('searx-freedombox')
 
 
 def subcommand_disable(_):
     """Disable web configuration and reload."""
     action_utils.webserver_disable('searx-freedombox')
-    os.unlink('/etc/uwsgi/apps-enabled/searx.ini')
-    action_utils.service_restart('uwsgi')
+    action_utils.uwsgi_disable('searx')
 
 
 def main():

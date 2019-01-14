@@ -18,8 +18,6 @@
 FreedomBox app to configure Searx.
 """
 
-import os
-
 from django.utils.translation import ugettext_lazy as _
 
 from plinth import service as service_module
@@ -105,7 +103,7 @@ def get_safe_search_setting():
 def is_enabled():
     """Return whether the module is enabled."""
     return (action_utils.webserver_is_enabled('searx-freedombox')
-            and os.path.exists('/etc/uwsgi/apps-enabled/searx.ini'))
+            and action_utils.uwsgi_is_enabled('searx'))
 
 
 def enable():
