@@ -20,6 +20,7 @@ Configuration helper for Radicale.
 """
 
 import argparse
+import os
 
 import augeas
 
@@ -89,8 +90,9 @@ def subcommand_configure(arguments):
 def subcommand_enable(_):
     """Start service."""
     if radicale.get_package_version() >= radicale.VERSION_2:
-        # Enable uwsgi for radicale 2.x. Do this after radicale is
-        # started, so it creates the necessary folders.
+        # Workaround for bug in radicale's uwsgi script (#919339)
+        if not os.path.exists('/var/lib/radicale/collections'):
+            os.makedirs('/var/lib/radicale/collections')
         action_utils.service_disable('radicale')
         action_utils.uwsgi_enable('radicale')
         action_utils.webserver_enable('proxy_uwsgi', kind='module')

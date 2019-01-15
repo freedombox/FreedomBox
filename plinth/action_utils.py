@@ -249,7 +249,7 @@ class WebserverChange(object):
 
 
 def uwsgi_is_enabled(config_name):
-    """Return whether a config is enabled in Radicale."""
+    """Return whether a uwsgi config is enabled."""
     enabled_path = UWSGI_ENABLED_PATH.format(config_name=config_name)
     return os.path.exists(enabled_path)
 
