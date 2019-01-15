@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-31 16:14-0500\n"
-"PO-Revision-Date: 2019-01-15 03:39+0000\n"
+"PO-Revision-Date: 2019-01-16 11:20+0000\n"
 "Last-Translator: Doma Gergő <domag02@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "plinth/hu/>\n"
@@ -179,6 +179,8 @@ msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
 msgstr ""
+"Jelszó az SSH kiszolgálóhoz.<br />SSH kulcs alapú azonosítás még nem "
+"lehetséges."
 
 #: plinth/modules/backups/forms.py:104
 msgid "Encryption"
@@ -189,6 +191,8 @@ msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
 msgstr ""
+"A \"Kulcs a tárolóban\" azt jelenti, hogy a jelszóval védett kulcs a "
+"biztonsági mentéssel együtt van tárolva."
 
 #: plinth/modules/backups/forms.py:111 plinth/modules/networks/forms.py:298
 msgid "Passphrase"
@@ -196,7 +200,7 @@ msgstr "Jelszó"
 
 #: plinth/modules/backups/forms.py:112
 msgid "Passphrase; Only needed when using encryption."
-msgstr ""
+msgstr "Jelszó, csak akkor szükséges ha titkosítást is használsz."
 
 #: plinth/modules/backups/forms.py:117
 msgid "Confirm Passphrase"
@@ -204,22 +208,24 @@ msgstr "Jelszó megerősítése"
 
 #: plinth/modules/backups/forms.py:118
 msgid "Repeat the passphrase."
-msgstr ""
+msgstr "Ismételd meg a jelszót."
 
 #: plinth/modules/backups/forms.py:139
 msgid "The entered encryption passphrases do not match"
-msgstr ""
+msgstr "A megadott titkosítási jelszavak nem egyeznek meg"
 
 #: plinth/modules/backups/forms.py:151
 #, python-format
 msgid "Accessing the remote repository failed. Details: %(err)s"
-msgstr ""
+msgstr "Sikertelen a távoli tárolóhoz való hozzáférés. Részletek: %(err)s"
 
 #: plinth/modules/backups/repository.py:44
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr ""
+"Kapcsolat elutasítva – győződj meg róla hogy a megfelelő hitelesítő adatokat "
+"adtad meg és hogy a kiszolgáló is üzemel."
 
 #: plinth/modules/backups/repository.py:50
 msgid "Connection refused"
@@ -227,15 +233,15 @@ msgstr "Kapcsolat elutasítva"
 
 #: plinth/modules/backups/repository.py:55
 msgid "Repository not found"
-msgstr ""
+msgstr "Tároló nem található"
 
 #: plinth/modules/backups/repository.py:61
 msgid "Incorrect encryption passphrase"
-msgstr ""
+msgstr "Helytelen titkosítási jelszó"
 
 #: plinth/modules/backups/repository.py:66
 msgid "SSH access denied"
-msgstr ""
+msgstr "SSH hozzáférés megtagadva"
 
 #: plinth/modules/backups/templates/backups.html:53
 msgid "Existing backups"
@@ -243,11 +249,11 @@ msgstr "Meglévő biztonsági másolatok"
 
 #: plinth/modules/backups/templates/backups.html:63
 msgid "Create new repository"
-msgstr ""
+msgstr "Új tároló létrehozása"
 
 #: plinth/modules/backups/templates/backups.html:66
 msgid "+ Add Remote Repository"
-msgstr ""
+msgstr "+ Távoli tároló hozzáadása"
 
 #: plinth/modules/backups/templates/backups_delete.html:27
 msgid "Delete this archive permanently?"
@@ -283,6 +289,10 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the ssh credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
+"Az ehhez a tárolóhoz tartozó hitelesítő adatok a Te %(box_name)s eszközödön "
+"lesznek eltárolva.<br />Ahhoz, hogy helyreállítsd a mentést egy újabb "
+"%(box_name)s eszközödön, szükséged lesz az ssh hitelesítő adatokra, és ha "
+"azt választottad, a titkosítási jelszóra."
 
 #: plinth/modules/backups/templates/backups_repository_add.html:43
 msgid "Create Repository"
@@ -297,7 +307,7 @@ msgstr "Megszakítás"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:28
 msgid "Are you sure that you want to remove this repository?"
-msgstr ""
+msgstr "Biztosan el szeretnéd távolítani ezt a tárolót?"
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:34
 msgid ""
@@ -308,11 +318,16 @@ msgid ""
 "      can add it again later on.\n"
 "    "
 msgstr ""
+"\n"
+"      A távoli tároló nem lesz törölve.\n"
+"      Ez csak eltávolítja a tárolót a biztonsági mentés oldal listájáról,\n"
+"      és később akár újra hozzá is adhatod.\n"
+"    "
 
 #: plinth/modules/backups/templates/backups_repository_remove.html:46
 #: plinth/modules/backups/views.py:289
 msgid "Remove Repository"
-msgstr ""
+msgstr "Tároló eltávolítása"
 
 #: plinth/modules/backups/templates/backups_restore.html:29
 msgid "Restore data from"
@@ -391,19 +406,21 @@ msgstr "Visszaállítás a feltöltött fájlból"
 
 #: plinth/modules/backups/views.py:263
 msgid "Added new repository."
-msgstr ""
+msgstr "Új tároló hozzáadva."
 
 #: plinth/modules/backups/views.py:268
 msgid "Create remote backup repository"
-msgstr ""
+msgstr "Távoli biztonsági másolat tároló létrehozása"
 
 #: plinth/modules/backups/views.py:297
 msgid "Repository removed. The remote backup itself was not deleted."
 msgstr ""
+"Tároló eltávolítva. Viszont maga a távoli biztonsági mentés nem lett "
+"kitörölve."
 
 #: plinth/modules/backups/views.py:306
 msgid "Unmounting failed!"
-msgstr ""
+msgstr "Lecsatolás sikertelen!"
 
 #: plinth/modules/backups/views.py:315 plinth/modules/backups/views.py:319
 msgid "Mounting failed"
@@ -484,23 +501,16 @@ msgstr ""
 "terminál szintén elérhető a konzolos műveletekhez."
 
 #: plinth/modules/cockpit/__init__.py:51
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
-#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
-#| "\"{users_url}\">any user</a> with a {box_name} login. Sensitive "
-#| "information and system altering abilities are limited to users belonging "
-#| "to admin group."
+#, python-brace-format
 msgid ""
 "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
 "_cockpit/</a> path on the web server. It can be accessed by <a href="
 "\"{users_url}\">any user</a> on {box_name} belonging to the admin group."
 msgstr ""
 "Ha engedélyezett, a Cockpit elérhető lesz a webkiszolgáló <a href=\"/"
-"_cockpit/\">/_cockpit/</a> útvonalán. Elérhető lesz <a href="
-"\"{users_url}\">bármely felhasználónak</a> {box_name} felhasználónévvel. A "
-"bizalmas adatok és a rendszert módosító képességek az adminisztrátori "
-"csoportba tartozó felhasználókra van korlátozva."
+"_cockpit/\">/_cockpit/</a> útvonalán. Használhatja majd a {box_name} eszköz "
+"bármely adminisztrátori csoportba tartozó <a href=\"{users_url}\""
+">felhasználója</a>."
 
 #: plinth/modules/config/__init__.py:76
 #: plinth/modules/dynamicdns/dynamicdns.py:45
@@ -3896,21 +3906,16 @@ msgstr ""
 
 #: plinth/modules/radicale/manifest.py:25
 msgid "DAVx5"
-msgstr ""
+msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:27
-#, fuzzy
-#| msgid ""
-#| "Enter the URL of the Radicale server (e.g. http://localhost:5232) and "
-#| "your user name. DAVdroid will show all existing calendars and address "
-#| "books and you can create new."
 msgid ""
 "Enter the URL of the Radicale server (e.g. http://localhost:5232) and your "
 "user name. DAVx5 will show all existing calendars and address books and you "
 "can create new."
 msgstr ""
 "Add meg a Radicale kiszolgáló URL címét (pl.: http://localhost:5232) és a "
-"felhasználónevet. A DAVdroid meg fogja mutatni az összes elérhető naptárt és "
+"felhasználónevet. A DAVx5 meg fogja mutatni az összes elérhető naptárt és "
 "címjegyzéket, és létre is hozhatsz újakat."
 
 #: plinth/modules/radicale/manifest.py:44
@@ -4335,6 +4340,8 @@ msgid ""
 "Users who have these permissions will also be able to read the files in the "
 "share."
 msgstr ""
+"Azok a felhasználók akiknek ilyen jogosultságaik vannak, képesek lesznek a "
+"megosztásban lévő fájlokat is olvasni."
 
 #: plinth/modules/sharing/forms.py:62
 msgid "A share with this name already exists."
